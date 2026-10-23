@@ -209,6 +209,86 @@
       "redistribution": "vendored",
       "sha256": "3f226cb89df80503a070c28cb47953232a282b6aad07e94f61f4eaf86061374f",
       "path": "upstream/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean"
+    },
+    {
+      "id": "ac2015_unique_minimizer",
+      "kind": "literature",
+      "url": "https://doi.org/10.1007/s00220-014-2254-z",
+      "revision": "CMP 335 (2015), 1429–1444",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "jt2016_dynamic_programming",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/1502.04398v4",
+      "revision": "arXiv:1502.04398v4",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "chl2018_zero_temperature",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/1609.04368v4",
+      "revision": "arXiv:1609.04368v4",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "montanari2025_sk_optimization",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/1812.10897v2",
+      "revision": "arXiv:1812.10897v2",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "eams2021_mean_field_optimization",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2001.00904v1",
+      "revision": "arXiv:2001.00904v1",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "lopatto2026_interval_support",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2607.11756v3",
+      "revision": "arXiv:2607.11756v3",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "eams2023_finite_step",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2111.06813v2",
+      "revision": "arXiv:2111.06813v2",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "fggz2022_fixed_depth",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/1910.08187v4",
+      "revision": "arXiv:1910.08187v4",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "bfmvz2022_tree_transfer",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2110.14206v3",
+      "revision": "arXiv:2110.14206v3",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "zhou2026_near_critical",
+      "kind": "literature",
+      "url": "https://doi.org/10.1002/cpa.70038",
+      "revision": "CPAM 79 (2026), DOI 10.1002/cpa.70038",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
     }
   ],
   "citations": [
@@ -337,6 +417,76 @@
       "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean#L106-L162",
       "source_id": "full_support_gaussian_log_density",
       "locator": "gaussian_shape_coercivity, lines 106–162; zero half-line divergence integral at lines 135–140 and reflection at lines 154–160."
+    },
+    {
+      "id": "ac2015_unique_minimizer",
+      "title": "The Parisi formula has a unique minimizer",
+      "url": "https://doi.org/10.1007/s00220-014-2254-z",
+      "source_id": "ac2015_unique_minimizer",
+      "locator": "Finite-temperature strict convexity and uniqueness; historical control-method antecedent, not the zero-temperature terminal-cusp theorem."
+    },
+    {
+      "id": "jt2016_dynamic_programming",
+      "title": "A dynamic programming approach to the Parisi functional",
+      "url": "https://arxiv.org/abs/1502.04398v4",
+      "source_id": "jt2016_dynamic_programming",
+      "locator": "Dynamic programming and control for the finite-temperature terminal datum; distinguish from zero-temperature compact-strip approximation."
+    },
+    {
+      "id": "chl2018_zero_temperature",
+      "title": "On the energy landscape of the mixed even p-spin model",
+      "url": "https://arxiv.org/abs/1609.04368v4",
+      "source_id": "chl2018_zero_temperature",
+      "locator": "Proposition 2, Theorems 4–5 and Lemma 3: zero-temperature regularity, uniqueness, control and gradient martingale."
+    },
+    {
+      "id": "montanari2025_sk_optimization",
+      "title": "Optimization of the Sherrington–Kirkpatrick Hamiltonian",
+      "url": "https://arxiv.org/abs/1812.10897v2",
+      "source_id": "montanari2025_sk_optimization",
+      "locator": "Inspected 2019 preprint: Assumption 1, Theorem 2 and Remark 1.2; conditional classical algorithm and operation model. Journal issue year 2025 does not identify the inspected theorem numbering."
+    },
+    {
+      "id": "eams2021_mean_field_optimization",
+      "title": "Optimization of mean-field spin glasses",
+      "url": "https://arxiv.org/abs/2001.00904v1",
+      "source_id": "eams2021_mean_field_optimization",
+      "locator": "Assumptions 1–2, Propositions 5.3–5.4 and Corollary 2.2 in the cited preprint; normalized discretization and optimization context, not the shifted coefficient identity."
+    },
+    {
+      "id": "lopatto2026_interval_support",
+      "title": "Full replica symmetry breaking in the Sherrington–Kirkpatrick model",
+      "url": "https://arxiv.org/abs/2607.11756v3",
+      "source_id": "lopatto2026_interval_support",
+      "locator": "Theorem 1.1: finite positive-temperature interval support and regularity; separate input to the positive-temperature route."
+    },
+    {
+      "id": "eams2023_finite_step",
+      "title": "Local algorithms for Maximum Cut and Minimum Bisection on locally treelike regular graphs of large degree",
+      "url": "https://arxiv.org/abs/2111.06813v2",
+      "source_id": "eams2023_finite_step",
+      "locator": "Proposition 2.1, Lemma 2.8 equation (2.21), Lemma 4.3 equation (4.6), and displays (4.5), (4.18); exact-edition finite-step formulas compared with the corrected formulas already used by the OpenAI QAOA manuscript."
+    },
+    {
+      "id": "fggz2022_fixed_depth",
+      "title": "The Quantum Approximate Optimization Algorithm and the Sherrington-Kirkpatrick Model at Infinite Size",
+      "url": "https://arxiv.org/abs/1910.08187v4",
+      "source_id": "fggz2022_fixed_depth",
+      "locator": "Fixed-depth, fixed-parameter first- and second-moment limits; distinguish from an increasing-depth optimality theorem."
+    },
+    {
+      "id": "bfmvz2022_tree_transfer",
+      "title": "The Quantum Approximate Optimization Algorithm at High Depth for MaxCut on Large-Girth Regular Graphs and the Sherrington-Kirkpatrick Model",
+      "url": "https://arxiv.org/abs/2110.14206v3",
+      "source_id": "bfmvz2022_tree_transfer",
+      "locator": "Section 6 of the full preprint supplies the proof of the fixed-depth transfer; eventual Parisi optimality remains a conjecture in this antecedent."
+    },
+    {
+      "id": "zhou2026_near_critical",
+      "title": "Existence of full replica symmetry breaking for the Sherrington–Kirkpatrick model at low temperature",
+      "url": "https://doi.org/10.1002/cpa.70038",
+      "source_id": "zhou2026_near_critical",
+      "locator": "Theorem 1 in the publisher edition: finite-temperature interval support near criticality. The privately acquired author manuscript arXiv:2504.00269v2 is a separate edition, with equivalence unverified."
     }
   ],
   "nodes": [
@@ -355,7 +505,8 @@
         "lean_build_not_run",
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
-        "full_support_comparator_not_run"
+        "full_support_comparator_not_run",
+        "full_support_comparator_unavailable_20261023"
       ],
       "citation_ids": [
         "scope_281",
@@ -380,7 +531,8 @@
         "lean_build_not_run",
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
-        "full_support_comparator_not_run"
+        "full_support_comparator_not_run",
+        "full_support_comparator_unavailable_20261023"
       ],
       "citation_ids": [
         "full_support_implementation",
@@ -724,6 +876,28 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "details": "Only the public theorem statement, assumptions, scope limits, and stated proof routes were inspected. The complete QAOA proof and its imported theorems have not been independently verified; no Lean circuit-convergence declaration is asserted."
+    },
+    {
+      "id": "full_support_comparator_unavailable_20261023",
+      "kind": "comparator",
+      "status": "unavailable",
+      "command": [
+        "comparator",
+        "ComparatorChallenges/SKFullSupport.json"
+      ],
+      "tool": "Standalone Comparator; unavailable before checker startup",
+      "source_ids": [
+        "full_support_config",
+        "full_support_statement",
+        "full_support_proof"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support"
+      ],
+      "receipt_path": "verification/comparator-unavailable.json",
+      "receipt_sha256": "608016004ab9efb7f53758088f79bfa02f85e710fdc0b1c6c1b2d00f1f98fe23",
+      "details": "Observed 2026-10-23T17:03:01.081472+00:00. The executable was absent; no checker process started and no build or statement comparison ran. The null return code denotes unavailable startup, not rejection of a theorem. The earlier not_run records describe the original intake plans. This record binds only the two named full-support subjects, although the receipt inventories a larger source tree."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",
@@ -734,7 +908,7 @@
     "The 347 vendored OAI modules form two static import closures. Their internal declarations and proof terms have not been exported into this graph; an absent dependency edge must not be read as dependency independence.",
     "The QAOA introduction (lines 50–72) names a primary zero-temperature companion route and an independent positive-temperature route. No cross-manuscript supports edges are asserted because correspondence between those imported scalar formulations and these exact formal interfaces has not been independently reviewed.",
     "The whole QAOA theorem remains a separate unverified manuscript target. Selecting or explaining full_support or scalar_value must not be reported as formal verification of QAOA circuit-energy convergence.",
-    "Build, axiom audit, Comparator replay, elaborated dependency extraction, independent manuscript alignment, complete proof review, and reader review are missing. No failed run has been observed: these checks are unrun, rather than passed or failed.",
+    "The original intake recorded planned, unrun checks. A separately retained standalone full-support Comparator attempt was unavailable before startup; it was not a mathematical rejection. No completed research replay, axiom audit or elaborated research dependency extraction is established by these records. Fixture and Minimal-tool checks do not supply research-target evidence. Independent complete manuscript review and human reader review remain open.",
     "The three axioms named in the Comparator configs are the permitted-axiom policy, not the output of an axiom audit. Both configs set enable_nanoda=false.",
     "The challenge statements intentionally contain sorry; the implementing proof sources are separate. Source acquisition and hashing do not establish that those implementations compile or satisfy the challenge under the permitted axioms.",
     "The original full OpenAI package has unrelated dependencies and patch hooks; the active minimal package and all derivation inputs are identified in source-lock.json. The two exact manuscript trees and PDFs are vendored under the repository root Apache-2.0 licence, with original READMEs; the secondary Latent Seminar article is reference-only."

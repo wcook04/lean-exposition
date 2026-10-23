@@ -192,6 +192,38 @@ class BundleConsumerTests(unittest.TestCase):
                 self.rebind(payload, name, encoded(record))
                 self.assert_rejected(self.archive(payload))
 
+    def test_graph_version_migration_preserves_bundle_and_reader_versions(self):
+        payload = self.payload.copy()
+        graph = json.loads(payload["graph.json"])
+        graph["schema_version"] = "1.1"
+        graph_bytes = encoded(graph)
+        self.rebind(payload, "graph.json", graph_bytes)
+        for stage in bundle.STAGES:
+            name = f"papers/{stage}.json"
+            mapping = json.loads(payload[name])
+            mapping["graph_sha256"] = digest(graph_bytes)
+            self.rebind(payload, name, encoded(mapping))
+        archive = self.archive(payload)
+        self.assertTrue(bundle.check_bundle(archive)["valid"])
+        self.assertEqual(self.standalone(archive).returncode, 0)
+        self.assertEqual(json.loads(payload["manifest.json"])["schema_version"], "1.0")
+        self.assertEqual(json.loads(payload["papers/long.json"])["schema_version"], "1.0")
+
+        graph["schema_version"] = "1.0"
+        graph["nodes"][0]["lean_kind"] = "theorem"
+        graph["nodes"][0]["is_unsafe"] = False
+        graph["nodes"][0]["is_partial"] = False
+        graph_bytes = encoded(graph)
+        self.rebind(payload, "graph.json", graph_bytes)
+        for stage in bundle.STAGES:
+            name = f"papers/{stage}.json"
+            mapping = json.loads(payload[name])
+            mapping["graph_sha256"] = digest(graph_bytes)
+            self.rebind(payload, name, encoded(mapping))
+        archive = self.archive(payload)
+        self.assert_rejected(archive)
+        self.assertEqual(self.standalone(archive).returncode, 1)
+
     def test_modified_payload_fails_its_manifest_hash(self):
         for name in ("graph.json", "papers/short.md", "papers/expository.json"):
             with self.subTest(name=name):
@@ -233,6 +265,36 @@ class BundleConsumerTests(unittest.TestCase):
         ):
             with self.subTest(names=[name for name, _ in entries]):
                 self.assert_rejected(self.archive(entries=entries))
+
+    def test_overflowing_json_number_in_receipt_is_rejected_by_both_readers(self):
+        graph = graph_with_recorded_failures()
+        graph["evidence"][0]["receipt"]["diagnostic_number"] = 1.0
+        root = self.tmp / "numeric-fixture"
+        bundle.scaffold(graph, root)
+        original = {name: (root / name).read_bytes() for name in EXPECTED_MEMBERS}
+        for token, accepted in ((b"1e308", True), (b"1e309", False), (b"-1e309", False)):
+            with self.subTest(token=token):
+                payload = original.copy()
+                graph_bytes = payload["graph.json"].replace(b'"diagnostic_number": 1.0',
+                                                            b'"diagnostic_number": ' + token)
+                self.rebind(payload, "graph.json", graph_bytes)
+                for stage in bundle.STAGES:
+                    name = f"papers/{stage}.json"
+                    mapping = json.loads(payload[name])
+                    mapping["graph_sha256"] = digest(graph_bytes)
+                    self.rebind(payload, name, encoded(mapping))
+                archive = self.archive(payload)
+                independent = self.standalone(archive)
+                self.assertEqual(independent.returncode, 0 if accepted else 1)
+                if accepted:
+                    self.assertTrue(bundle.check_bundle(archive)["valid"])
+                else:
+                    self.assert_rejected(archive)
+
+    def test_encoder_does_not_emit_nonfinite_float_tokens(self):
+        for value in (float("inf"), float("-inf"), float("nan")):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                encoded({"nested": {"value": value}})
 
     def test_unsafe_member_names_are_rejected_without_writing_files(self):
         for name in ("../escape.json", "/absolute.json", "papers/../graph.json", "./graph.json",

@@ -23,12 +23,13 @@ def extraction_fixture(root: Path):
     hashes = {name: digest((root / name).read_bytes())
               for name in ("Minimal.lean", "lean-toolchain")}
     report = {
-        "schema_version": 1, "module": "Minimal", "roots": ["result"],
+        "schema_version": 2, "module": "Minimal", "roots": ["result"],
         "module_prefixes": ["Minimal"], "scope_complete": True,
         "declarations": [{
             "name": "result", "kind": "theorem", "type": "True",
             "type_dependencies": [], "value_dependencies": [],
             "structural_dependencies": [], "axioms": [], "has_sorry": False,
+            "is_unsafe": False, "is_partial": False,
             "body_available": True, "source": {"module": "Minimal", "line": 1},
         }],
         "external_dependencies": [], "missing_declarations": [],
@@ -38,6 +39,7 @@ def extraction_fixture(root: Path):
     report["receipt"] = {
         "status": "passed", "returncode": 0, "command": ["lake", "env", "lean", "--stdin"],
         "module": "Minimal", "source_hashes": hashes, "source_changed": False,
+        "report_schema_version": 2,
         "stdout": "synthetic diagnostic", "stderr": "",
         "report_sha256": digest(encoded(report)),
         "evidence_kind": "elaboration_process",
@@ -67,6 +69,51 @@ class ExtractionBindingTests(unittest.TestCase):
         built = to_graph(self.report, self.root, self.build)
         self.assertEqual(built["nodes"][0]["status"], "kernel_checked")
         self.assertFalse(validate_graph(built)["semantic_certification"])
+
+    def test_unsafe_and_partial_declarations_keep_build_evidence_without_promotion(self):
+        for flag in ("is_unsafe", "is_partial"):
+            with self.subTest(flag=flag):
+                report = copy.deepcopy(self.report)
+                report["declarations"][0][flag] = True
+                rebind(report)
+                graph = to_graph(report, self.root, self.build)
+                self.assertEqual(graph["nodes"][0]["status"], "unverified")
+                self.assertIn("build", graph["nodes"][0]["evidence_ids"])
+                graph["nodes"][0]["status"] = "kernel_checked"
+                with self.assertRaises(ContractError):
+                    validate_graph(graph)
+
+    def test_opaque_partiality_is_unknown_and_cannot_be_promoted(self):
+        report = copy.deepcopy(self.report)
+        report["declarations"][0].update(kind="opaque", is_partial=None)
+        rebind(report)
+        graph = to_graph(report, self.root, self.build)
+        node = graph["nodes"][0]
+        self.assertIsNone(node["is_partial"])
+        self.assertEqual(node["status"], "unverified")
+        self.assertIn("build", node["evidence_ids"])
+        node["status"] = "kernel_checked"
+        with self.assertRaisesRegex(ContractError, "safe declaration classification"):
+            validate_graph(graph)
+
+        report["declarations"][0]["is_partial"] = False
+        rebind(report)
+        with self.assertRaisesRegex(ContractError, "null for opaque"):
+            to_graph(report, self.root, self.build)
+
+    def test_public_failed_build_keeps_launch_stage_without_diagnostics(self):
+        failed = copy.deepcopy(self.build)
+        failed.update(status="unavailable", returncode=None, stdout="", stderr="private path",
+                      failure_stage="process_launch", error_type="PermissionError", errno=13)
+        graph = to_graph(self.report, self.root, failed)
+        public = next(item["receipt"] for item in graph["evidence"] if item["id"] == "build")
+        self.assertEqual((public["failure_stage"], public["error_type"], public["errno"]),
+                         ("process_launch", "PermissionError", 13))
+        self.assertNotIn("stderr", public)
+        validate_graph(graph)
+        failed["failure_stage"] = "/private/host/path"
+        with self.assertRaisesRegex(ContractError, "invalid receipt failure_stage"):
+            to_graph(self.report, self.root, failed)
 
     def test_extraction_process_receipt_cannot_stand_in_for_a_build(self):
         with self.assertRaisesRegex(ContractError, "lean_build evidence"):
@@ -116,6 +163,10 @@ class ExtractionBindingTests(unittest.TestCase):
     def test_body_flag_marks_partial_even_if_summary_omits_it(self):
         self.report["declarations"][0]["body_available"] = False
         rebind(self.report)
+        with self.assertRaisesRegex(ContractError, "claims complete scope"):
+            to_graph(self.report, self.root)
+        self.report["scope_complete"] = False
+        rebind(self.report)
         graph = to_graph(self.report, self.root)
         self.assertEqual(graph["extraction_status"], "partial")
         self.assertIn("Declaration body unavailable", graph["nodes"][0]["boundary"])
@@ -126,6 +177,34 @@ class ExtractionBindingTests(unittest.TestCase):
         graph = to_graph(self.report, self.root)
         self.assertEqual(graph["extraction_status"], "complete")
         self.assertEqual(graph["nodes"][0]["boundary"], "Elaborated type/proof references; theorem hypotheses remain in the displayed type.")
+
+    def test_direct_translation_rejects_malformed_raw_report(self):
+        for field, value in (("scope_complete", "false"), ("schema_version", True)):
+            with self.subTest(field=field):
+                report = copy.deepcopy(self.report)
+                report[field] = value
+                rebind(report)
+                with self.assertRaises(ContractError):
+                    to_graph(report, self.root)
+
+    def test_direct_translation_rejects_nonencodable_report(self):
+        for metadata in (False, True):
+            with self.subTest(metadata=metadata):
+                report = copy.deepcopy(self.report)
+                if metadata:
+                    report["note"] = "\ud800"
+                else:
+                    report["declarations"][0]["type"] = "\ud800"
+                with self.assertRaisesRegex(ContractError, "UTF-8"):
+                    to_graph(report, self.root)
+
+    def test_incomplete_dependency_inventory_remains_partial(self):
+        self.report["scope_complete"] = False
+        self.report["declarations"][0]["value_dependencies"] = ["unclassified"]
+        rebind(self.report)
+        graph = to_graph(self.report, self.root)
+        self.assertEqual(graph["extraction_status"], "partial")
+        self.assertIn("unclassified", validate_graph(graph)["unresolved"])
 
     def test_custom_source_directory_fails_with_the_expected_module_path(self):
         (self.root / "src").mkdir()

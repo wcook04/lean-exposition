@@ -23,7 +23,7 @@
     "docs": "Authored documentation, contracts, reference records and selected licensed research readings",
     "examples": "Runnable examples, licensed source snapshots and fixtures",
     "lean": "Lean integration documentation",
-    "papers": "Source-grounded mathematical manuscripts and their citation records",
+    "papers": "Source-grounded mathematical manuscripts, citation records and the architectural reading companion",
     "scripts": "Repository maintenance commands",
     "skills": "Optional authoring instructions independent of runtime",
     "src": "Installable Python runtime and packaged resources",

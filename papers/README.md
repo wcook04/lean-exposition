@@ -26,6 +26,11 @@ retained formal interfaces and the manuscript arguments they are meant to repres
 These are drafts of explanations of existing results. Their mappings retain the
 remaining review obligations and the source graph's formal-check status.
 
+For an introduction to how the repository connects proofs, papers and recorded
+checks, read the separate [architectural companion](architecture/README.md)
+or its [PDF](architecture/paper.pdf). It explains the local workflow and its
+limits for a reader entering through the mathematics.
+
 ## Assemble the authored bundle
 
 After installing the package, run from the repository root:

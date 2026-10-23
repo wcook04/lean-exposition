@@ -39,9 +39,72 @@ different question. `not_run`, `unavailable` and `failed` remain separate outcom
 An empty failed-evidence list does not imply that checks ran. Argument closure and
 platform closure have distinct [edge semantics](contracts.md#graph).
 
+## Follow one kind of relationship
+
+For a focused view of the same recorded graph, choose a relation and a root:
+
+```sh
+lean-exposition inspect examples/minimal/evidence-graph.json --view declarations --goal Minimal.result
+lean-exposition inspect examples/qaoa-sk/evidence-graph.json --view arguments --goal full_support --include-assumptions
+lean-exposition inspect examples/qaoa-sk/evidence-graph.json --view arguments --goal assumptions.full_support_minimizer --direction consumers --include-assumptions
+lean-exposition inspect examples/qaoa-sk/evidence-graph.json --view citations --goal full_support
+lean-exposition inspect examples/qaoa-sk/evidence-graph.json --view provenance --goal lean.full_support
+```
+
+The five views are `declarations`, `arguments`, `citations`, `platform` and
+`provenance`. Declaration views follow elaborated Lean relationships; choose a
+formal declaration explicitly as the root. Argument views follow curated
+support and formalisation correspondence; they do not also traverse Lean
+expression edges. Explicit assumptions are an opt-in traversal in these two views.
+Citation views retain attribution without turning cited assumptions into proof
+premises. Platform decomposition remains its own relation. Provenance views
+connect records through their stored source and evidence references.
+
+Each returned link retains its original `from` and `to`, its exact `kind`, and a
+`semantic_class`. Stored graph edges have `derived: false` and `record_ref`;
+links projected from record fields have `derived: true`, `owner_ref` and
+`source_field`. `traversal.recorded_from_to` confirms that a reverse query changes
+reachability only, while `orientation_by_kind` and `relation_semantics` state the
+meaning and source of each kind. In particular:
+
+| Kind | Returned `from → to` means |
+| --- | --- |
+| `lean_type_dependency` | Declaration → constant in its elaborated type |
+| `lean_value_dependency` | Declaration → constant in its elaborated value or proof |
+| `lean_structural_dependency` | Declaration → structural inductive, constructor or recursor reference |
+| `supports` | Curated claim → recorded ingredient; mathematical sufficiency is not certified |
+| `formalizes` | Informal goal or claim → selected formal declaration; correspondence, not implication |
+| `cites` | Citing node → referenced node; attribution, not a premise |
+| `platform_decomposition` | Platform item → reported child; not a Lean expression edge |
+| `assumption_ids` | Node → explicitly named assumption, projected from its field |
+
+Provenance links point from the field-owning record to the named record:
+`source_id`/`source_ids` → source, `evidence_ids` → evidence, `citation_ids` →
+citation, `subject_ids` → subject node, and graph-edge fields `from`/`to` →
+their original endpoint nodes. These field links are navigation references,
+not argument edges. The output's kind-specific orientation map distinguishes
+them even when a view contains no link of a particular kind.
+
+`--direction consumers` follows reverse recorded relationships while retaining
+their original consumer-to-prerequisite orientation in the output. It is available
+for declaration, argument and platform views. This can help find affected passages,
+but a partial graph cannot establish a complete change-impact analysis.
+
+View format `0.1.0` binds record handles to the exact graph bytes. Cycles are
+retained as strongly connected components; the component graph is acyclic without
+pretending the original relations are. The view preserves statuses and reports
+its completeness limits. It is a read-only projection, not a replacement graph,
+proof checker or interactive viewer. An empty traversal means no relation was
+recorded, not that the declarations are independent.
+`relation_scope: recorded_relation_reachability` means SCCs are calculated over
+that view's returned links only. A provenance node–evidence–subject cycle is a
+cycle of references, not of proofs. Components list their internal link IDs and
+kinds; condensation links list both contributing IDs and kinds, so aggregation
+does not hide the original relation types.
+
 ## The eight files
 
-Bundle format `0.1.0`, with schema version `1.0`, contains exactly:
+Bundle format `0.1.0` contains exactly:
 
 ```text
 manifest.json
@@ -53,6 +116,11 @@ papers/short.json
 papers/expository.md
 papers/expository.json
 ```
+
+The manifest and paper mappings use schema `1.0`. The graph may use `1.0` or
+`1.1`; graph `1.1` carries the declaration safety fields bound by version 2
+extraction. Historical `1.0` graphs keep their original evidence and its limits.
+An older consumer that supports graph `1.0` alone must reject `1.1` explicitly.
 
 The manifest names the graph and three paper stages, with SHA-256 hashes of the
 other seven files. Each paper mapping binds its exact Markdown bytes and exact
@@ -114,6 +182,81 @@ step. A consumer should display those states without upgrading them because ZIP
 or schema validation passed. Full contract validation also does not authenticate
 the reported checks or replace mathematical or reader review.
 
+## View one paper as a graph
+
+Each authored paper already has its own passage mapping. The paper view joins
+that mapping to the exact Markdown and evidence graph in a validated bundle:
+
+```sh
+lean-exposition inspect-bundle build/qaoa-sk-authored --paper short
+lean-exposition inspect-bundle build/qaoa-sk-authored --paper short --passage main-result
+```
+
+The Python entry is `project_paper(bundle_path, stage, passages=None)` in
+`lean_exposition.consumer`. A stage is `long`, `short` or `expository`; the
+optional passage list selects explicit anchors from that paper. A directory
+and a ZIP containing the same eight files give the same view. Invalid or stale
+paper mappings fail the existing bundle checks before projection.
+
+The view has two connected parts. Its document structure identifies sections
+and passages, their text and locations, and their order in the actual Markdown.
+Its support subgraph follows the selected passages' recorded claims,
+assumptions and citations to the relevant declarations, sources and checks.
+Containment and reading order are document relations; they are never used as
+proof dependencies. The mathematical relations retain their existing kinds
+and statuses. A platform observation remains separate from a Lean dependency.
+
+Snapshot references and the exact manifest, graph, text and mapping hashes let
+a consumer join these parts without inventing another graph authority. The
+same graph record has the same graph reference in different paper views of
+that snapshot. A passage reference identifies its paper edition; it is not a
+promise of unchanged meaning across revisions. Text locations address UTF-8
+Markdown bytes and lines, not coordinates in a rendered PDF.
+
+The outline recognises ATX Markdown headings and excludes fenced code and YAML
+front matter; it does not parse Setext or HTML headings. Containment links keep
+their literal meaning. Separate section–passage overlap links expose exact
+nonempty text intersections when a passage contains subheadings or crosses a
+section boundary. These navigation links add no mathematical support claim.
+
+Every paper-view link retains a `kind` and `semantic_class`. Document links are
+derived from exact Markdown bytes and carry its `source_ref`: `next_in_text`
+orders the start positions of headings and passage markers, `subsection` runs
+parent section → child section, `contains_passage` runs an enclosing section →
+the full passage marker block, and `text_overlap` runs section → passage with
+the exact nonempty `overlap_span` of their text intervals. A passage can have
+several overlap links, including ancestors, without acquiring several claims.
+All these document links have `derived: true`; none enters argument reachability.
+
+`correspondence_links` run selected passage → mapped graph record. `maps_claim`
+comes from the mapping's `claim_ids` (which can name a declaration),
+`maps_citation` from `citation_ids`, and `maps_assumption` from
+`assumption_ids`. Each link names the exact mapping `source_ref`, anchor and
+field. These correspondences do not certify a sentence or create a graph edge.
+
+The graph part calls its selected relation set `argument_links`: stored Lean
+references, curated `supports`, curated `formalizes`, and node-field
+`assumption_ids`, each retaining its own kind, class and stored-edge or field
+origin. `relation_scope: recorded_argument_relation_reachability` applies to
+its SCCs and condensation, not to proof correctness. Condensation entries
+expose `link_kinds` alongside `link_ids`. `provenance_links` separately connect
+the field-owning node, citation, evidence or edge record to named sources,
+citations, evidence, subjects or edge endpoints. These are field-derived
+references with owner and field metadata; they never enter the argument SCC.
+
+A front end can therefore open a passage from the graph, show its local support,
+or find other passages referring to the same claim. It can switch between the
+short, long and expository accounts while retaining the common evidence
+references. It need not duplicate the evidence graph or interpret reading order
+as logical implication.
+
+The output identifies text outside mapped passages and the scope of a selected
+view. Unmapped text is still part of the document; it has no inferred claim or
+verification link. Selecting one passage does not remove the rest from the
+bundle. The view reports recorded correspondence, not complete mathematical
+dependence, sentence-level formal verification or reader acceptance. No website
+or additional persistent bundle member is required for this API.
+
 ## Assemble authored papers
 
 Keep `scaffold` for new empty documents. To assemble completed or in-progress
@@ -155,6 +298,41 @@ assembler does not rewrite links or rebind reviewed passages. Check both the
 source reader path and the exported reader path after changes.
 
 ## Extension boundary
+
+### Identify a revision before requesting review
+
+Keep three identities separate: `bundle_id` names the continuing work,
+`bundle_version` names its format, and `manifest_sha256` identifies one exact
+captured revision. Preserve the original manifest bytes; reformatting its JSON
+changes that last identity. The ZIP digest identifies the delivered archive.
+Re-encoding an otherwise identical archive can change its ZIP digest without
+changing its manifest or payloads.
+
+Retain the expected manifest digest independently and compare it with the
+validated capture. Internal consistency alone cannot tell you whether a valid
+successor is the edition a reviewer was asked to read. A download location helps
+retrieve the edition but does not guarantee its identity or continued availability.
+
+Keep the request and response beside the bundle, outside its fixed eight files.
+Name the exact question, paper path, content and mapping hashes, selected goals
+and intended coverage. For a passage, retain its anchor and `text_sha256` too.
+A PDF or HTML rendition requires its own digest and locator; the Markdown hash
+neither identifies its rendered bytes nor verifies its appearance. Record which
+external sources were actually accessible and opened.
+
+Feedback remains attached to the edition and question actually assessed. Preserve
+the original response, the author's disposition and any later reviewer confirmation
+as separate records. A corrected paper creates a successor; it does not make the
+reviewer an assessor of that successor. Even unchanged prose can have a changed
+mapping rationale, assumption, source or evidence classification that needs review.
+Refreshing hashes cannot carry acceptance forward automatically.
+
+Store a review outside the artifact it assesses. If feedback on edition A leads
+to edition B, record the adoption decision after B exists and name both digests.
+This avoids making a bundle contain a claim about its own future hash. Preserve
+old responses and corrections against a retained previous checkpoint. Hashes can
+detect changes relative to that checkpoint; they do not authenticate a reviewer.
+The [bounded reader-review guide](reader-review.md) gives a practical first session.
 
 An application can consume these files without importing the CLI or agent skills.
 Keep application-specific storage and presentation outside the eight-file

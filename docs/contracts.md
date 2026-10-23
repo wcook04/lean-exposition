@@ -3,15 +3,51 @@
 The package has one local command interface and one evidence graph. `cli.py`
 coordinates operations; `intake.py` acquires locked public bytes; `verification.py`
 invokes Lean tools; `extraction.py` translates their report; `contracts.py` checks
-shape and references; `bundle.py` packages the result. The optional `prove2me.py`
+shape and references; `bundle.py` packages the result; `consumer.py` projects
+read-only graph and paper views from those validated records. The optional `prove2me.py`
 adapter reads public platform metadata into that same graph. Agent skills describe how to
 write from the evidence. Runtime code does not load those instructions.
 
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
-Version `1.0` is the graph/artifact contract; bundle format is `0.1.0`. Unknown schema
+Graph version `1.0` remains supported; version `1.1` adds the Lean declaration
+kind and safety fields for new extraction. Artifact version `1.0` and bundle format `0.1.0`
+are unchanged. Unknown schema
 fields fail validation. A consumer should reject unsupported versions rather than
 silently guessing new semantics.
+The eight-file bundle can therefore contain either a graph `1.0` or graph `1.1`
+while its manifest and paper mappings remain at schema `1.0` and its bundle
+format stays `0.1.0`. The independent example reader accepts that matrix as a
+transport check; its `full_contract_validation` remains false. A previous
+reader with a strict graph `1.0` gate should reject graph `1.1` explicitly.
+
+The raw Lean extraction report has its own version. New runs emit version `2`,
+which records `is_unsafe` and `is_partial` for each in-scope declaration. Their
+graph translation uses the `lean-extraction-v2` projection profile. That digest
+binds the Lean declaration kind, safety flags and displayed locator alongside the previously bound
+formal fields. Lean can store `partial def` or its recursive auxiliary as an
+opaque constant whose `ConstantInfo.isPartial` is false; an opaque declaration records
+`is_partial: null` (unknown), rather than a misleading `false`. The graph
+validator also rejects an opaque declaration labelled `false`, even if its
+projection digest is recomputed. A passed build
+promotes only declarations explicitly classified as neither unsafe nor partial
+and without `sorryAx`. The build receipt remains
+visible for the other declarations. Direct translation can still read a version
+`1` raw report, but the live extractor requires version `2`. Translating legacy
+data cannot create a new `kernel_checked` status because its
+safety classification is unknown. Already retained version `1` graphs validate
+under their original projection profile; validation of that historical binding
+does not add the missing safety or locator assurance. Do not rehash an old graph
+under the new profile as though its extractor had emitted new fields.
+
+The research checkout, source distribution, installed wheel and explanation
+bundle serve different purposes. The checkout carries authored papers and
+source history; the source distribution is an installable Python package
+source archive; the wheel supplies runtime code and packaged schemas, templates
+and Lean helper; the eight-file bundle exchanges one selected authored result.
+Offline execution means dependencies and the selected toolchain are already
+installed. A bundle reader can inspect its captured files offline without the
+original source or receipt paths; that does not rerun Lean or certify the paper.
 
 ## Graph
 

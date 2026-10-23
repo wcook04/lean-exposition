@@ -13,6 +13,7 @@
     "full_support_manuscript",
     "full_support_type",
     "qaoa_main_theorem",
+    "qaoa_manuscript_arguments",
     "qaoa_routes",
     "scalar_value_comparator",
     "scalar_value_implementation",
@@ -26,8 +27,8 @@
     "lean.value_consequences",
     "qaoa_thermodynamic_first"
   ],
-  "content_sha256": "152cab98fa69da7b6f0ca91d71b7a655e83d176e9381c30ee339db9810715736",
-  "graph_sha256": "48e34b95d9ef07160454d5da5357a0e0f9a51d48d087af62911e590527c144a9",
+  "content_sha256": "dcb06a002c2e735d36450fa21658a075e7f2ae5b8b68caf202d37d28cf4a84e0",
+  "graph_sha256": "dcf52c8435791afaf57d2e2cdeb7f0807f8fc6ced205d48956e5a4769e2275b6",
   "passages": [
     {
       "anchor": "opening",
@@ -57,8 +58,8 @@
         "qaoa_thermodynamic_first"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Reader promise and exact source-level headline. The premise is an admissible minimizer; the broader circuit statement remains distinct. Scope and evidence classes match the source interfaces and graph.",
-      "text_sha256": "2543b83bd7e3f5c7d8c327c5de0a7cc009b60de0ba022942639a70dd42019210"
+      "rationale": "Introduces the random pair optimisation and minimising cumulative profile before specialist statements; gives an operation-level prerequisite contract and three reading routes. Preserves conditional headline and distinct circuit claim. FS main.tex 41–107, 119–152, 232–248; Q introduction 50–72, 76–133.",
+      "text_sha256": "ddbc96d3638ed1be47ccd9fb1f85c3f0c10069e7a5d5ff47a8f4c42639744aae"
     },
     {
       "anchor": "spins-and-overlap",
@@ -69,8 +70,8 @@
       ],
       "claim_ids": [],
       "evidence_class": "example",
-      "rationale": "Independent algebra for the n=2 Hamiltonian, Gaussian absolute first moment, covariance correction and common Gaussian shift. Definitions follow SKValue/Model.lean lines 90–100 and full-support build/main.tex lines 42–107. The finite example is not a thermodynamic-limit proof.",
-      "text_sha256": "eb377df823d6b0c767fd9eb89d238f6789fff22b0313a67284b9fa2d3407451e"
+      "rationale": "Preserves two-spin and covariance derivations; narrows the sign-convention attribution to the article and retained OpenAI manuscripts. Adds independently derived three-spin conflict and finite log-sum bound. The latter explains inverse temperature (Auffinger–Chen v2, §1 p.2) without proving a thermodynamic limit. Examples are not claims of typical finite-SK performance.",
+      "text_sha256": "98b7443c8b192e41563734469b27c7fd6995cdc7abac214f784b0ed148aca76e"
     },
     {
       "anchor": "order-parameter-example",
@@ -81,8 +82,8 @@
       ],
       "claim_ids": [],
       "evidence_class": "example",
-      "rationale": "Synthetic admissible piecewise-linear function separates infinite support and absence of a final plateau from full support. Its cumulative measure and support follow directly from the displayed function. The integrable unbounded candidate illustrates total-mass scope, not minimization.",
-      "text_sha256": "24bf132e696bb740658405952bcbfde5027082c10275e4495b258809cceec21d"
+      "rationale": "Preserves the admissible continuous plateau, non-probability measure and infinite-mass examples. Foregrounds support of increments rather than positivity of the function, moves the existing constant c delta_0 comparison to first use, and explains relative neighbourhoods and local finiteness. FS main.tex 53–63 and variation.tex 81–128, 215–249.",
+      "text_sha256": "ccce4c848277c8bd4561a9c9ff6c35a05405ce03871265c78a721ef054a9a26c"
     },
     {
       "anchor": "value-and-diffusion",
@@ -102,8 +103,8 @@
         "lean.full_support"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Definitions match the control formulation, with compact-strip regularity, almost-everywhere time PDE and gradient martingale from the source regularity section. Formula and attainment are attributed through the source to Auffinger–Chen; their complete proof is not audited here.",
-      "text_sha256": "bff45ca0f0b5c5aa82f5138a4b833e7494c862a87e940720f522f79f5a2be26d"
+      "rationale": "Separates candidate, functional and inner/outer optimisation; evaluates gamma=0 as a candidate upper bound; states formula and attainment as separate external inputs. Teaches conditional expectation, mean-square convergence and scalar object roles while keeping PDE/martingale/regularity facts as source inputs. FS main.tex 65–117; regularity.tex 16–44, 189–237; Auffinger–Chen Theorem 1 and proof of Lemma 3. R and q are distinct objects.",
+      "text_sha256": "fba607e4f293e9f64de0637fd9ba0a9dc8007a4bf3342fb51087635e4584997c"
     },
     {
       "anchor": "full-support-statement",
@@ -122,8 +123,20 @@
         "lean.full_support"
       ],
       "evidence_class": "source_argument",
-      "rationale": "FullSupportConclusion is paraphrased with all five clauses: measure and diffusion existence, every representing measure, strict increase and moment identities for every associated diffusion below one. The formal source has not been replayed locally.",
-      "text_sha256": "b3563b1c3739067ad2aac12c5be8402e23bf43ba855c213752457014fc74d221"
+      "rationale": "FullSupportConclusion is paraphrased with all five clauses: measure and diffusion existence, every representing measure, strict increase and moment identities for every associated diffusion below one. The formal source has not been replayed locally. The theorem is placed before the nonminimiser example, with direct source, Lean and challenge links at the claim; execution status remains in the closing record.",
+      "text_sha256": "bc45e2809cf289ce23ce507fc85ce3624426120e81526e3505f9adc36ba0bca3"
+    },
+    {
+      "anchor": "zero-candidate-example",
+      "assumption_ids": [],
+      "citation_ids": [
+        "full_support_manuscript",
+        "full_support_type"
+      ],
+      "claim_ids": [],
+      "evidence_class": "example",
+      "rationale": "New exact admissible SK competitor, not a minimiser. The original model and heat formula supply definitions; Gaussian integration, the constant-c functional and its one-sided expansion are independently derived teaching calculations. Original main.tex 53–85,109–117; regularity.tex 46–56,189–237. No formal declaration or support proof is inferred. The exact zero-coefficient calculation now follows the theorem as Section 4.1 to test the minimiser hypothesis.",
+      "text_sha256": "fe1199d4274450cc6ff76430cf20728151925ad2d4add790df0946e73204b840"
     },
     {
       "anchor": "contact-and-gap",
@@ -142,8 +155,19 @@
         "lean.full_support"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Reconstruction of variation.tex contact proof and curvature.tex proposition. Includes one-sided contact at zero. The c²/1000 coefficient follows from the source v=c·Phi_xx. The rational identity is an attributed analytic input, not reproved or pointwise-positivity asserted.",
-      "text_sha256": "970c5fc3abdcdbeae6f9cabf5578c1c9a1e1cd2495e2353a564be9c62ab5bc3b"
+      "rationale": "Preserves the source reconstruction of first variation, compact mass removal, origin contact and positive-gap contradiction. Adds the one-sided feasible-direction explanation, atom-to-tail-integral warrant, compact-Fubini bound and q triple-prime equals second derivative of q-prime. The strict c² E[a⁴]/1000 inequality remains an attributed analytic input after expectation, not a pointwise or independently reproved assertion. An inline grayscale adaptation of source Figure 1 shows the chord and area obstruction beside the strict inequality; it is explicitly schematic and attributed to the Apache-2.0 source collection.",
+      "text_sha256": "2472469d0b69734bc0f757b6cdce8bf405080d40d69bf5e57f159f35cd7808c2"
+    },
+    {
+      "anchor": "gap-area-example",
+      "assumption_ids": [],
+      "citation_ids": [
+        "full_support_manuscript"
+      ],
+      "claim_ids": [],
+      "evidence_class": "example",
+      "rationale": "Original polynomial teaching model of the area mechanism already in the source Figure 1 (gap-convexity.tex 1–31) and variation.tex 223–237. Exact area deficit lambda/18. It is not asserted to arise from an SK diffusion, and lambda is not identified with a plateau height. The general analytic curvature input remains separate. The polynomial model follows the adapted source figure and computes its deficit without representing an SK diffusion.",
+      "text_sha256": "68a9c608340403ea4e4cc82b33f36fc86b6f14153de635cda7065fb7f692d47b"
     },
     {
       "anchor": "endpoints",
@@ -163,7 +187,7 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "variation.tex treats zero plateaus, initial gaps and terminal plateaus separately. The boundary-layer estimate gives negative contact potential near one, without assuming a support point at the excluded endpoint.",
-      "text_sha256": "1f2cba8e547ff80892d8e3c10711bc225e0ba992c3e14f7f65ffad29fcb522e9"
+      "text_sha256": "587595d1771f3669bbce976eba42e48d8c48b53a9d15edfa035f028c2d5d7888"
     },
     {
       "anchor": "scalar-identities",
@@ -184,8 +208,8 @@
         "lean.value_consequences"
       ],
       "evidence_class": "source_argument",
-      "rationale": "ScalarValueConclusion and consequences.tex corollary value: almost-sure and L² terminal convergence, U²=1, finite-SK sequence convergence and the three value representations. The Parisi equality needs a minimizer only; other clauses use an associated diffusion. Distinct namespace representations are not silently composed.",
-      "text_sha256": "ac3a455cf4b90069cef06f6001119fc6303ecc7314e888a3b065353b239e77fd"
+      "rationale": "ScalarValueConclusion and consequences.tex corollary value: almost-sure and L² terminal convergence, U²=1, finite-SK sequence convergence and the three value representations. The Parisi equality needs a minimizer only; other clauses use an associated diffusion. Distinct namespace representations are not silently composed. Direct Lean and formal-challenge links stay beside the scalar identity, while verification history and distinct formal interfaces are explained in the closing record.",
+      "text_sha256": "12da4568918cfda572bf5ecb2466e0fa5df7888c82dc7b469a0eee913577b571"
     },
     {
       "anchor": "finite-gaussian",
@@ -205,8 +229,8 @@
         "lean.value_consequences"
       ],
       "evidence_class": "source_argument",
-      "rationale": "FiniteGaussianConclusion and consequences.tex proposition gaussian, with one-based expository indices matching the source manuscript. Preserves eventual normalizer positivity, shifted A_j D_{j+1} sum (D renames the source B to avoid collision with Brownian motion) and fixed T before its endpoint limit. Conditional-mean-preserving rounding is derived explicitly.",
-      "text_sha256": "fa8b11e7c42cc0545c8a0964f4772650ad2fb138b485caf1f7042875e2eaa295"
+      "rationale": "FiniteGaussianConclusion and consequences.tex proposition gaussian, with one-based expository indices matching the source manuscript. Preserves eventual normalizer positivity, shifted A_j D_{j+1} sum (D renames the source B to avoid collision with Brownian motion) and fixed T before its endpoint limit. Conditional-mean-preserving rounding is derived explicitly. A three-job map and the literal N=2 shifted-sum check explain the role of the rounding input without changing fixed-T or whole-vector estimates.",
+      "text_sha256": "e722be60c46f4ba38a7a16a4878e60d7a9a1e831e9bb94b0e3948f5da06292b1"
     },
     {
       "anchor": "qaoa-boundary",
@@ -215,6 +239,7 @@
       ],
       "citation_ids": [
         "qaoa_main_theorem",
+        "qaoa_manuscript_arguments",
         "qaoa_routes",
         "scope_281"
       ],
@@ -222,8 +247,20 @@
         "qaoa_thermodynamic_first"
       ],
       "evidence_class": "source_argument",
-      "rationale": "QAOA introduction model/quantifiers and main theorem. Cost angles are renamed theta to avoid collision with the Parisi coefficient. Finite depth and deterministic angles precede n→∞, then p increases. No finite-size/depth/angle-selection guarantee or formal circuit theorem is inferred.",
-      "text_sha256": "f3c973d49022a5e6f74a93bfb8bc7135245ff10de4066d0d880e77f3acb47e63"
+      "rationale": "Retains QAOA model, independent deterministic real angles and fixed-parameter thermodynamic limit before growing depth. Adds the coordinate weighted-average meaning of the diagonal cost expectation and specifies expectation over J. No finite-size/depth/angle-selection guarantee or circuit theorem is inferred from scalar targets. The existing qaoa_manuscript_arguments citation locates the original construction in sections 2–6; long record §9 explains its rooted-energy, synthesis, seed-removal and fixed-word transfers, with remaining acceptance obligations O4–O6. This routing does not certify the circuit proof. Cost phases and mixer-induced amplitude redistribution are explained before the circuit word, without inferring angle construction from scalar limits.",
+      "text_sha256": "aff7ec71a05353a443efd3cbae2d82717135622e521ca841ad083245fbbf4047"
+    },
+    {
+      "anchor": "limit-order-example",
+      "assumption_ids": [],
+      "citation_ids": [
+        "qaoa_main_theorem",
+        "qaoa_routes"
+      ],
+      "claim_ids": [],
+      "evidence_class": "example",
+      "rationale": "Artificial rational array, with algebraic iterated limits, integer accuracy thresholds and diagonal examples. Illustrates the fixed-word quantifier order of QAOA introduction 95–133 and assembly 36–53; it is neither an SK simulation nor a counterexample to the QAOA theorem. Lack of a specified quantitative schedule is distinguished from nonexistence of any schedule.",
+      "text_sha256": "60db64f81840758c5f3a4f188848398e0f0c1c812c0290d64a87428cdb1640d9"
     },
     {
       "anchor": "changed-cases",
@@ -253,8 +290,8 @@
         "qaoa_thermodynamic_first"
       ],
       "evidence_class": "example",
-      "rationale": "Answered author-provided checks: infinite versus full support, strict versus non-strict convexity, atom at zero, excluded T=1 and disorder-independent circuit parameters. These are not recorded human reader outcomes.",
-      "text_sha256": "1c7c7359caec9ed43b9a322ce820528eda8a0c4051b950d14df086a98b4cd921"
+      "rationale": "Worked changed-case tasks reuse the checked zero-candidate, strict-area and limit-order calculations, then test support, terminal spin and quantified circuit boundaries. Answers distinguish a failed inference from a false theorem; no human reader response is claimed. The original analytic and source obligations remain.",
+      "text_sha256": "cd5b9ae158a28352100bf5ad4c9570233e393828711ebefd378fd9a1c12352db"
     },
     {
       "anchor": "source-record",
@@ -286,19 +323,21 @@
         "qaoa_thermodynamic_first"
       ],
       "evidence_class": "context",
-      "rationale": "Source credit, immutable public revision and exact proof destinations. Challenge statements are distinguished from implementing declarations; graph execution and independent semantic-review states are preserved. Chen attribution is as stated in the source manuscript, without a fresh novelty adjudication.",
-      "text_sha256": "e75d35393ce46635aa5281e621af04ccfca6256ee8b352d1d450533181becd2e"
+      "rationale": "Preserves exact source credit and pinned original links, admitted challenge versus implementation distinction, Chen attribution and no novelty claim. Adds scoped receipt disposition and explicit current draft/review limits. Earlier source/render/agent notes remain historical, not evidence for current-byte acceptance. The closing status distinguishes verified source bytes, a historical unavailable Comparator startup, and the absence of a completed research replay or human reader review.",
+      "text_sha256": "74b73cb3c2aa9ceec9a60cf31b9b20238ec3d0fd1ff741353cb1d9ce7cefe9cd"
     }
   ],
   "path": "papers/expository.md",
   "review_notes": [
     "Draft for mathematically trained readers with calculus, expectations and linear algebra. Learning tasks: reconstruct the no-gap contradiction, derive terminal-spin cancellation, and state the ordered limits in the circuit claim.",
     "The two-spin and covariance examples were independently checked by exact rational enumeration for 1≤n≤7; displayed algebra proves the general covariance formula. Plateau and rounding examples are explanatory calculations, not claimed Lean declarations.",
-    "Source-statement comparison covered both Comparator interfaces, implementing Main declarations, full-support introduction/variation/curvature/consequences and QAOA introduction. No fresh Lean build, Comparator replay, elaborated extraction or complete independent manuscript proof review was performed.",
+    "Source-statement comparison covered the two Comparator interfaces, implementing Main declarations, full-support introduction/variation/curvature/consequences and QAOA introduction. There is no completed research-target Lean or Comparator replay receipt bound to this draft; a retained historical full-support Comparator startup stopped before its checker began. The complete analytic manuscripts have not received independent proof review here.",
     "Agent mathematical review identified a missing supported origin endpoint; the draft now includes G(h)=½(1−q′(0))h²+o(h²) and permits r=0. It also made the PDE time qualifier explicit for admissible coefficients that can jump. These are manuscript repairs, not new mathematical results.",
-    "Rendered inspection used Pandoc standalone HTML with native MathML and the in-app browser. The opening, support theorem, gap/endpoints, scalar formulas and circuit limits were inspected; unsupported old-style roman math notation was replaced with standard mathrm. No custom figure or generated proof graphic was introduced.",
+    "23 October 2026: the source-adapted gap-area figure is inline in Section 5, with schematic and rights attribution. The final Pandoc/Tectonic PDF was inspected at reading size, including the figure and changed theorem, finite-Gaussian, QAOA and verification passages. Earlier HTML inspection remains historical.",
     "Public exposition methods applied: concrete example before abstraction, local warrants between established and required claims, preserving the distinction between an excluded hypothesis and a false conclusion. The no-gap argument carries the paper; the analytic coercive estimate is precisely attributed and its proof linked.",
-    "A reader-oriented agent reconstructed the no-gap argument and circuit quantifier order, then requested explicit max-to-min, finite-increment, penalty cancellation, mass-removal and shifted-coefficient warrants. These explanations were added from the pinned source. The draft remains provisional pending complete independent manuscript correspondence review and a human reconstruction task; neither has been recorded."
+    "A reader-oriented agent reconstructed the no-gap argument and circuit quantifier order, then requested explicit max-to-min, finite-increment, penalty cancellation, mass-removal and shifted-coefficient warrants. These explanations were added from the pinned source. The draft remains provisional pending complete independent manuscript correspondence review and a human reconstruction task; neither has been recorded.",
+    "23 October 2026: source-grounded synthesis of returns 07/09/11/12; author and agent comparison only. New example calculations and changed passages have byte bindings; draft review state is retained pending independent reader reconstruction and research verification.",
+    "23 October 2026 theorem-first teaching revision: source-grounded order and explanations only; direct claim-site formal links retained, source-adapted gap figure attributed, and N=2/QAOA action examples added. Review state remains needs_revision pending independent mathematical and reader review."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.0",

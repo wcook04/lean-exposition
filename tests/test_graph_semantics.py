@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 from lean_exposition.contracts import (
-    ContractError, closure, digest, encoded, portable_path, required_citation_ids, select,
+    ContractError, closure, digest, encoded, extraction_projection_digest, portable_path, required_citation_ids, select,
     validate_graph,
 )
 from lean_exposition.extraction import to_graph
@@ -52,6 +52,40 @@ class FormalProjectionTests(unittest.TestCase):
         self.graph["nodes"][0]["boundary"] = "A different inspection claim."
         with self.assertRaisesRegex(ContractError, "projection differs"):
             validate_graph(self.graph)
+
+    def test_version_two_binds_locator_kind_and_safety(self):
+        for field, value in (("locator", "Minimal:999"), ("is_unsafe", True),
+                             ("is_partial", True), ("lean_kind", "opaque")):
+            with self.subTest(field=field):
+                graph = copy.deepcopy(self.graph)
+                graph["nodes"][0][field] = value
+                with self.assertRaises(ContractError):
+                    validate_graph(graph)
+
+    def test_opaque_false_is_rejected_even_if_projection_is_rehashed(self):
+        graph = copy.deepcopy(self.graph)
+        graph["nodes"][0]["lean_kind"] = "opaque"
+        extract = graph["evidence"][0]
+        extract["receipt"]["projection_sha256"] = extraction_projection_digest(
+            graph, extract["subject_ids"], profile="lean-extraction-v2")
+        with self.assertRaisesRegex(ContractError, "opaque partiality"):
+            validate_graph(graph)
+
+    def test_legacy_report_cannot_create_new_checked_status(self):
+        report, build = copy.deepcopy(self.report), copy.deepcopy(self.build)
+        report["schema_version"] = 1
+        report["receipt"].pop("report_schema_version")
+        for row in report["declarations"]:
+            row.pop("is_unsafe")
+            row.pop("is_partial")
+        rebind(report)
+        graph = to_graph(report, self.root, build)
+        self.assertEqual(graph["nodes"][0]["status"], "unverified")
+        self.assertEqual(graph["evidence"][0]["receipt"]["projection_profile"], "lean-extraction-v1")
+        validate_graph(graph)
+        graph["schema_version"] = "1.1"
+        with self.assertRaisesRegex(ContractError, "legacy extraction"):
+            validate_graph(graph)
 
     def test_human_label_and_graph_notes_remain_editable(self):
         self.graph["nodes"][0]["label"] = "An explanatory name"

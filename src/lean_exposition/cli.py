@@ -6,9 +6,9 @@ import json
 import sys
 from pathlib import Path
 
-from .bundle import check_bundle, export_bundle, scaffold
+from .bundle import STAGES, check_bundle, export_bundle, scaffold
 from .contracts import ContractError, read_json, select, validate_graph, write_json
-from .consumer import inspect_bundle, inspect_graph
+from .consumer import inspect_bundle, inspect_graph, project_graph, project_paper
 from .extraction import to_graph
 from .intake import audit_sources, fetch
 from .prove2me import intake_prove2me
@@ -34,8 +34,13 @@ def parser() -> argparse.ArgumentParser:
     cmd = commands.add_parser("inspect", help="Inspect a graph and its distinct argument/platform closures")
     cmd.add_argument("graph", type=Path)
     cmd.add_argument("--goal", action="append")
+    cmd.add_argument("--view", choices=("declarations", "arguments", "citations", "platform", "provenance"))
+    cmd.add_argument("--direction", choices=("prerequisites", "consumers"), default="prerequisites")
+    cmd.add_argument("--include-assumptions", action="store_true")
     cmd = commands.add_parser("inspect-bundle", help="Inspect a validated directory or ZIP bundle")
     cmd.add_argument("bundle", type=Path)
+    cmd.add_argument("--paper", choices=STAGES, help="Project one paper and its graph correspondence")
+    cmd.add_argument("--passage", action="append", help="Select a passage anchor (repeatable; requires --paper)")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -74,8 +79,17 @@ def run(args):
     if args.command == "validate":
         return validate_graph(read_json(args.graph))
     if args.command == "inspect":
+        if args.view is not None:
+            return project_graph(args.graph.read_bytes(), args.view, args.goal,
+                                 direction=args.direction, include_assumptions=args.include_assumptions)
+        if args.direction != "prerequisites" or args.include_assumptions:
+            raise ContractError("direction and assumption options require --view")
         return inspect_graph(read_json(args.graph), args.goal)
     if args.command == "inspect-bundle":
+        if args.passage is not None and args.paper is None:
+            raise ContractError("--passage requires --paper")
+        if args.paper is not None:
+            return project_paper(args.bundle, args.paper, args.passage)
         return inspect_bundle(args.bundle)
     if args.command == "assemble":
         from .bundle import assemble_bundle

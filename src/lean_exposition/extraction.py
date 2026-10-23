@@ -2,7 +2,7 @@
 import re
 from pathlib import Path
 
-from .contracts import ContractError, digest, encoded, extraction_projection_digest, local_path, validate_graph
+from .contracts import ContractError, digest, encoded, extraction_projection_digest, local_path, validate_extraction_report, validate_graph
 
 
 def _bound_receipt(receipt: dict, project: Path, module: str, *, evidence_kind: str) -> None:
@@ -25,8 +25,20 @@ def _public_receipt(receipt: dict) -> dict:
     """Keep evidence metadata, excluding machine-specific diagnostic output."""
     fields = {"status", "returncode", "module", "source_hashes", "source_changed",
               "evidence_kind", "extractor_sha256", "report_sha256", "failure_reason",
-              "changed_paths", "command_sha256", "command_paths_redacted"}
+              "changed_paths", "command_sha256", "command_paths_redacted",
+              "report_schema_version", "projection_profile", "failure_stage",
+              "error_type", "errno"}
     result = {k: v for k, v in receipt.items() if k in fields}
+    for key in ("failure_stage", "error_type"):
+        if key in result and (
+            not isinstance(result[key], str)
+            or re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", result[key]) is None
+        ):
+            raise ContractError(f"invalid receipt {key}")
+    if "errno" in result and result["errno"] is not None and (
+        type(result["errno"]) is not int or result["errno"] < 0
+    ):
+        raise ContractError("invalid receipt errno")
     if "command_sha256" in result and (
         not isinstance(result["command_sha256"], str)
         or re.fullmatch(r"[0-9a-f]{64}", result["command_sha256"]) is None
@@ -53,12 +65,25 @@ def _public_receipt(receipt: dict) -> dict:
 def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> dict:
     """Source and environment bytes bind results; unresolved boundary nodes remain."""
     project = project.resolve()
-    if report.get("schema_version") != 1:
-        raise ContractError("unsupported extraction report version")
+    validate_extraction_report(report)
+    profile = "lean-extraction-v2" if report["schema_version"] == 2 else "lean-extraction-v1"
     receipt = report.get("receipt", {})
+    if (report["schema_version"] == 2 and
+            (type(receipt.get("report_schema_version")) is not int
+             or receipt["report_schema_version"] != 2)):
+        raise ContractError("version 2 extraction requires its report version receipt")
+    if "report_schema_version" in receipt and (
+        type(receipt["report_schema_version"]) is not int
+        or receipt["report_schema_version"] != report["schema_version"]
+    ):
+        raise ContractError("extraction report version differs from its receipt")
     if receipt.get("status") != "passed" or receipt.get("returncode") != 0:
         raise ContractError("extraction report requires a successful process receipt")
-    if receipt.get("report_sha256") != digest(encoded({k: v for k, v in report.items() if k != "receipt"})):
+    try:
+        report_hash = digest(encoded({k: v for k, v in report.items() if k != "receipt"}))
+    except UnicodeEncodeError as exc:
+        raise ContractError("extraction report is not canonical UTF-8 JSON") from exc
+    if receipt.get("report_sha256") != report_hash:
         raise ContractError("extraction report differs from its receipt")
     _bound_receipt(receipt, project, report["module"], evidence_kind="elaboration_process")
     if build_receipt is not None:
@@ -123,9 +148,14 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
              "label": d["name"], "declaration": d["name"], "statement": d["type"],
              "status": "axiom" if d["kind"] == "axiom" else "unverified",
              "source_id": module_sources[d["source"]["module"]],
-             "locator": f"{d['source']['module']}:{d['source']['line']}",
+             "locator": (f"{d['source']['module']}:{d['source']['line']}"
+                         if d["source"]["line"] is not None else d["source"]["module"]),
              "assumption_ids": sorted(d["axioms"]), "evidence_ids": ["extract"], "citation_ids": [],
              "boundary": "Elaborated type/proof references; theorem hypotheses remain in the displayed type."}
+        if report["schema_version"] == 2:
+            nodes[d["name"]]["lean_kind"] = d["kind"]
+            nodes[d["name"]]["is_unsafe"] = d["is_unsafe"]
+            nodes[d["name"]]["is_partial"] = d["is_partial"]
         if d["name"] in unavailable_bodies:
             nodes[d["name"]]["boundary"] = (
                 "Declaration body unavailable: proof-value dependencies and transitive axiom inspection are incomplete. "
@@ -181,9 +211,12 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
                          "details": "Local Lake build of the selected module, using its pinned environment; cached dependencies may be reused.", "receipt": public_build_receipt})
         for d in report["declarations"]:
             nodes[d["name"]]["evidence_ids"].append("build")
-            if status == "passed" and not d["has_sorry"] and d["kind"] != "axiom":
+            if (status == "passed" and not d["has_sorry"] and d["kind"] != "axiom"
+                    and report["schema_version"] == 2
+                    and d["is_unsafe"] is False and d["is_partial"] is False):
                 nodes[d["name"]]["status"] = "kernel_checked"
-    graph = {"schema_version": "1.0", "id": "lean:" + report["module"], "title": "Selected Lean declaration closure",
+    graph = {"schema_version": "1.1" if report["schema_version"] == 2 else "1.0",
+             "id": "lean:" + report["module"], "title": "Selected Lean declaration closure",
              "selected_goals": report["roots"], "sources": sources, "citations": [],
              "nodes": sorted(nodes.values(), key=lambda n:n["id"]), "edges": edges, "evidence": evidence,
              "scope": "Elaborated expression references within selected module prefixes; external dependencies remain explicit.",
@@ -194,6 +227,9 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
                        "Receipts bind project source and environment bytes; imported package sources and cached compiled artifacts are outside that snapshot.",
                        "Diagnostic output is retained by hash only; absolute executable paths are reduced to their final component.",
                        "Environment file hashes: " + str(env_files)]}
-    evidence[0]["receipt"]["projection_sha256"] = extraction_projection_digest(graph, evidence[0]["subject_ids"])
+    evidence[0]["receipt"]["report_schema_version"] = report["schema_version"]
+    evidence[0]["receipt"]["projection_profile"] = profile
+    evidence[0]["receipt"]["projection_sha256"] = extraction_projection_digest(
+        graph, evidence[0]["subject_ids"], profile=profile)
     validate_graph(graph)
     return graph

@@ -38,8 +38,9 @@ the rendered edition of the Markdown.
 
 The selected formal declarations are
 `OAI.ZeroTemperatureSK.full_support` and
-`OAI.SKValue.value_consequences`. Their exact scope, source versions and unrun
-checks are recorded in the [source example](../../../examples/qaoa-sk/README.md).
+`OAI.SKValue.value_consequences`. Their exact scope, source versions, historical
+unavailable startup, and lack of a completed research-target replay
+are recorded in the [source example](../../../examples/qaoa-sk/README.md).
 The [long record](../long/reasoning-record.md) retains the broader recovery route.
 
 | Short-paper argument | Companion section in the long record |

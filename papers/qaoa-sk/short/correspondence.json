@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "7f7e2df31857106896a057303d212078e32574f4cc557ecc2b112052a3fadcd3",
-  "graph_sha256": "48e34b95d9ef07160454d5da5357a0e0f9a51d48d087af62911e590527c144a9",
+  "content_sha256": "c9703e05e7cc0122418e188bcc91266bd81958855bbf311fef4b7ea7ff6a4880",
+  "graph_sha256": "dcf52c8435791afaf57d2e2cdeb7f0807f8fc6ced205d48956e5a4769e2275b6",
   "selected_goal_ids": [
     "full_support"
   ],
@@ -24,6 +24,7 @@
     "full_support_manuscript",
     "full_support_type",
     "qaoa_main_theorem",
+    "qaoa_manuscript_arguments",
     "qaoa_routes",
     "scalar_value_comparator",
     "scalar_value_implementation",
@@ -50,7 +51,7 @@
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "34a7fa70a3b7416955fe0328d12e6a133b6fb5b93c3599b695791af6c6500be4",
+      "text_sha256": "91b8f6c966032e302135423a63b7dec3e88c4e37b6455868ee7527e96327ee68",
       "claim_ids": [
         "full_support"
       ],
@@ -65,11 +66,11 @@
         "assumptions.full_support_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Full-support manuscript main.tex, thm:full-support (Theorem 1.1, p.2); variation.tex, lem:contact and final theorem proof; curvature.tex, prop:gap-curvature. Abstract retains pure zero-field, integrable minimizer and relative-support scope; QAOA is named only as a later construction."
+      "rationale": "Proposed editorial selection, not a new theorem. Same FS Theorem 1.1 and variation/curvature inputs as the original; Chen v1 Proposition 4.2 is the directly inspected comparison, in the minimiser setting fixed in Chen §3.1. Main object, zero field, integrability and relative support retained."
     },
     {
       "anchor": "model",
-      "text_sha256": "f9eae5354e00d83f2ed7ec216078af7b5ed46b7e619baed9e7bfdf7fb29538ab",
+      "text_sha256": "1fe64c81df82f5b6653ff0d5f07e54a5af46919d88bddb0fb52a8c0494b70b83",
       "claim_ids": [
         "full_support"
       ],
@@ -89,7 +90,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "d004f29e56ba5c7d730f1ba3a0a0d4cfadec2444339b02aac1319c58b70d6cc2",
+      "text_sha256": "c2dc90666cb2acec691638e872a970ee6d349dd381be1c8c11cfc69e5b96c6f8",
       "claim_ids": [
         "full_support"
       ],
@@ -106,11 +107,11 @@
         "assumptions.full_support_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Full-support manuscript main.tex, thm:full-support (lines 119–130) and attribution discussion (lines 133–153, 171–179). Compare ComparatorChallenges/SKFullSupport.lean, FullSupportConclusion. The illustrative atomic measure is authored to distinguish infinite from full support; the stated historical results retain [ACZ] and [Chen] attribution."
+      "rationale": "FS main.tex 119–150 and 171–205; ACZ v2 Theorem 1 and Remark 7; Chen v1 Theorem 1.3. Same selected theorem, hypotheses and conclusion; smooth density remains a separately attributed consequence, not an added claim. Formal interface scope retained."
     },
     {
       "anchor": "contact",
-      "text_sha256": "a2c0dfa79d38d7f17a1153eb66bd12bd10c8422e3742ff1344ea8f2cd4debe54",
+      "text_sha256": "4dc96a5c32ab76db4a540292eed41cff90be277eff575645f7ce263be44210a3",
       "claim_ids": [
         "full_support"
       ],
@@ -129,7 +130,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "8f8030161bd21ea7bf35294b6cbbc4d8848981bd251bd7315ac7e56681a952f3",
+      "text_sha256": "758f58a9e3cba5fe3b7f75c558710707af9dc1c6e48b9f36150577cea471f567",
       "claim_ids": [
         "full_support"
       ],
@@ -144,11 +145,11 @@
         "assumptions.full_support_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Full-support manuscript signs.tex, shape:backward, shape:forward, shape:ibp; certificate.tex, cert:identity-lemma and cert:coercivity; curvature.tex, prop:gap-curvature (lines 9–52). The derivative correction, positive remainder and integrated limit are explained; analytic sign/regularity proofs remain sourced inputs. Long destination: reasoning-record.md#curvature-and-gap-certificate."
+      "rationale": "FS regularity.tex 240–308, signs.tex 17–63, 195–203, 289–297 and 416–473, certificate.tex 19–33 and 117–199, curvature.tex 9–52. Adds the two Itô drift computations and defines q for the arbitrary coefficient. Exact comparison: Chen, arXiv:2607.18032v1, §3.1 (minimiser convention), Proposition 4.2 eq. (4.2), and Proposition 4.3. Analytic signs, tails and approximation remain cited inputs. The omitted rational table remains in FS; Long §4 retains the certificate structure and zero-step strictness argument. A separate finite rational check is recorded in this proposal's validation files; it is not a theorem-status upgrade."
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "0d9dcba90d494288920237161d2a77719f79b55781fb72be4ada7381ccea5aea",
+      "text_sha256": "3fb9c03e57abf5d57bab907e110fd1be5e2defa6a374f1ca77fd36a0d34b05ef",
       "claim_ids": [
         "full_support"
       ],
@@ -168,7 +169,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "2c47894df2100eeedb277d020381ee16bce329a07d274dff311a5eaaf23c3404",
+      "text_sha256": "9cf6984e6467cc72655a3687c1b60fc3895d25ed413d70038c5425f7112ca087",
       "claim_ids": [
         "scalar_value"
       ],
@@ -189,12 +190,13 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "c0a02e50c07e559eae10a9f25cbe5926056d91efb372ba2464b3c43a51848f38",
+      "text_sha256": "d5139b47f9475e1a95faf7fbd44b0ef1bef98227b0b8f57a4f6a2b63637ec35c",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
       "citation_ids": [
         "qaoa_main_theorem",
+        "qaoa_manuscript_arguments",
         "qaoa_routes",
         "scope_281"
       ],
@@ -202,11 +204,11 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "context",
-      "rationale": "QAOA manuscript 01-introduction.tex, definitions lines 74–109, thm:main lines 111–119, limitations lines 131–133 and two routes lines 50–72; construction in sections 3–6, independent route in Appendix A. Reported manuscript claim only; deterministic angles precede the n limit and may depend on accuracy. Long destination: qaoa-construction."
+      "rationale": "Q 01-introduction.tex 95–133 fixes deterministic angles and n before p; 03-classical-optimization.tex 15–135, 06-assembly.tex 7–52, and Appendix A support the route summary. Long reasoning-record.md §9, lines 530–667, was read as the destination; O4/O5 remain unresolved in §10. Quantifiers and absence of quantitative guarantees unchanged. The existing qaoa_manuscript_arguments citation locates the original construction in sections 2–6; long record §9 explains its rooted-energy, synthesis, seed-removal and fixed-word transfers, with remaining acceptance obligations O4–O6. This routing does not certify the circuit proof."
     },
     {
       "anchor": "evidence-scope",
-      "text_sha256": "4f1a3f19480a0bcbb75585131523499ea295a0668d9f651e5d8a9ae4dc0a34a2",
+      "text_sha256": "2c7c9c2f5ee4f0e5325821f63b83d8bfc524ee8c84ace9a12e12f00dd03a5228",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -233,7 +235,7 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "Public family scope lean/docs/281.md, both Comparator challenge and implementation Main files, and current source-intake evidence receipts. Source inspection does not upgrade the unverified node statuses. Full-support measure/diffusion existence and every-diffusion moment scope are distinct from minimizer existence; final scalar Parisi clause does not require a supplied diffusion."
+      "rationale": "Both challenge files and implementation Main files; full-support moments quantify every associated diffusion. Historical receipts: examples/qaoa-sk/verification/preflight-observed.json 63–79 (source audit passed, overall unavailable); comparator-unavailable.json 2–14 and 369 (no checker started); example README 71–76 (scalar unrun); context/verification/linux-4341-tool-validation.json 3 and 257–284 (fixtures/Minimal only). The graph now binds the dated unavailable startup as a distinct verification event without changing theorem statuses; it is not a proof failure or completed checker run."
     }
   ],
   "review_state": "needs_revision",
@@ -241,6 +243,7 @@
     "Draft reconstruction of source arguments; no new theorem or authorship claim. Source scope, exact hypotheses, bibliography, compression and mathematical prose received bounded AI-assisted checks.",
     "The analytic profile inequalities, rational certificate and compact-strip regularity are explicit cited inputs. This document does not reproduce or independently verify every upstream analytic proof.",
     "No fresh QAOA/SK Lean build, axiom audit, Comparator replay, complete manuscript equivalence review or independent human reader review is recorded. Graph evidence statuses remain unchanged.",
-    "The bibliography and passage citations retain the external formula/attainment, infinite-support and same-full-support antecedents under the primary-source IDs in the intake graph. Metadata and source attribution checks are not full proof audits."
+    "The bibliography and passage citations retain the external formula/attainment, infinite-support and same-full-support antecedents under the primary-source IDs in the intake graph. Metadata and source attribution checks are not full proof audits.",
+    "23 October 2026: source-grounded synthesis of returns 07/09/11/12; author and agent comparison only. New example calculations and changed passages have byte bindings; draft review state is retained pending independent reader reconstruction and research verification."
   ]
 }

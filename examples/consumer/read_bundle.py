@@ -66,7 +66,8 @@ def json_object(data: bytes, name: str) -> dict:
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise BundleError(f"{name}: malformed UTF-8 JSON") from exc
     require(isinstance(result, dict), f"{name}: expected a JSON object")
-    require(result.get("schema_version") == "1.0", f"{name}: unsupported schema version")
+    supported = {"1.0", "1.1"} if name == "graph.json" else {"1.0"}
+    require(result.get("schema_version") in supported, f"{name}: unsupported schema version")
     return result
 
 
@@ -158,6 +159,10 @@ def read_bundle(path: Path) -> dict:
     goals = identifiers(graph.get("selected_goals"), "selected goals")
     require(bool(goals), "at least one selected goal is required")
     nodes = {row["id"]: row for row in records(graph.get("nodes"), "nodes")}
+    if graph["schema_version"] == "1.0":
+        require(all("lean_kind" not in row and "is_unsafe" not in row and "is_partial" not in row
+                    for row in nodes.values()),
+                "graph.json: version 1.0 cannot carry declaration safety fields")
     require(set(goals) <= set(nodes), "selected goal is absent from graph nodes")
     selected = [{"id": goal, "label": text(nodes[goal].get("label"), f"{goal} label")} for goal in goals]
     evidence = []

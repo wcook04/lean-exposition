@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 import re
 from datetime import datetime
 from importlib.resources import files
@@ -22,7 +23,7 @@ def digest(data: bytes) -> str:
 
 
 def encoded(value: dict) -> bytes:
-    return (json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n").encode()
+    return (json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
 
 
 def decode_json(data: bytes) -> dict:
@@ -36,8 +37,13 @@ def decode_json(data: bytes) -> dict:
         return result
     def invalid_constant(value):
         raise ContractError(f"non-finite JSON number: {value}")
+    def finite_float(value):
+        result = float(value)
+        if not math.isfinite(result):
+            raise ContractError(f"non-finite JSON number: {value}")
+        return result
     return json.loads(data.decode("utf-8"), object_pairs_hook=pairs,
-                      parse_constant=invalid_constant)
+                      parse_constant=invalid_constant, parse_float=finite_float)
 
 
 def read_json(path: Path) -> dict:
@@ -103,8 +109,131 @@ ARGUMENT_EDGES = LEAN_EDGES | {"formalizes", "supports"}
 EDGE_KINDS = ARGUMENT_EDGES | {"platform_decomposition", "cites"}
 
 
-def extraction_projection_digest(graph: dict, subject_ids: list[str]) -> str:
+def validate_extraction_report(report: dict) -> None:
+    """Check the raw report protocol before hashing or translating it.
+
+    This checks shape and classification consistency, not Lean semantics.
+    Dependency arrays may repeat structural references. Optional metadata
+    remains extensible; required evidence fields must have exact JSON types.
+    """
+    kinds = {"axiom", "definition", "theorem", "opaque", "quotient_primitive",
+             "inductive", "constructor", "recursor"}
+    body_kinds = {"definition", "theorem", "opaque"}
+
+    def fields(value, required, label):
+        if not isinstance(value, dict) or not required <= value.keys():
+            raise ContractError(f"extraction report {label} lacks required fields")
+
+    def text(value, label):
+        if not isinstance(value, str) or not value:
+            raise ContractError(f"extraction report {label} must be nonempty text")
+
+    def names(value, label):
+        if not isinstance(value, list):
+            raise ContractError(f"extraction report {label} must be a name array")
+        for name in value:
+            text(name, label)
+        return set(value)
+
+    fields(report, {"schema_version", "module", "roots", "module_prefixes",
+                   "declarations", "external_dependencies", "missing_declarations",
+                   "unexpanded_declarations", "unavailable_bodies", "scope_complete",
+                   "evidence_kind"}, "object")
+    if type(report["schema_version"]) is not int or report["schema_version"] not in {1, 2}:
+        raise ContractError("unsupported extraction report version")
+    text(report["module"], "module")
+    roots = names(report["roots"], "roots")
+    if not roots:
+        raise ContractError("extraction report requires at least one root")
+    names(report["module_prefixes"], "module_prefixes")
+    if type(report["scope_complete"]) is not bool:
+        raise ContractError("extraction report scope_complete must be boolean")
+    if report["evidence_kind"] != "elaborated_expression_dependencies":
+        raise ContractError("unexpected extraction report evidence_kind")
+    if "type_rendering" in report:
+        text(report["type_rendering"], "type_rendering")
+
+    records = {}
+    for field in ("declarations", "external_dependencies"):
+        if not isinstance(report[field], list):
+            raise ContractError(f"extraction report {field} must be an array")
+        records[field] = {}
+        for row in report[field]:
+            fields(row, {"name", "kind"}, field)
+            text(row["name"], f"{field} name")
+            if not isinstance(row["kind"], str) or row["kind"] not in kinds:
+                raise ContractError("unsupported extracted declaration kind")
+            if row["name"] in records[field]:
+                raise ContractError(f"duplicate extracted declaration in {field}")
+            records[field][row["name"]] = row
+
+    references = set()
+    declarations = records["declarations"]
+    for row in declarations.values():
+        fields(row, {"type", "type_dependencies", "value_dependencies", "structural_dependencies",
+                     "axioms", "has_sorry", "body_available", "source"}, "declaration")
+        text(row["type"], "declaration type")
+        for flag in ("has_sorry", "body_available"):
+            if type(row[flag]) is not bool:
+                raise ContractError(f"extraction report {flag} must be boolean")
+        if report["schema_version"] == 2:
+            fields(row, {"is_unsafe", "is_partial"}, "declaration safety")
+            if type(row["is_unsafe"]) is not bool:
+                raise ContractError("extraction report is_unsafe must be boolean")
+            if ((row["kind"] == "opaque" and row["is_partial"] is not None)
+                    or (row["kind"] != "opaque" and type(row["is_partial"]) is not bool)):
+                raise ContractError("extraction report is_partial must be boolean, or null for opaque")
+        for field in ("type_dependencies", "value_dependencies", "structural_dependencies"):
+            references.update(names(row[field], field))
+        axioms = names(row["axioms"], "axioms")
+        if row["has_sorry"] != ("sorryAx" in axioms):
+            raise ContractError("inconsistent extracted sorry inventory")
+        fields(row["source"], {"module", "line"}, "source")
+        text(row["source"]["module"], "source module")
+        for field in ("line", "column", "end_line"):
+            value = row["source"].get(field)
+            minimum = 0 if field == "column" else 1
+            if value is not None and (type(value) is not int or value < minimum):
+                raise ContractError(f"extraction report source {field} must be an integer or null")
+        start, end = row["source"]["line"], row["source"].get("end_line")
+        if start is not None and end is not None and end < start:
+            raise ContractError("extraction report source range ends before it starts")
+    for row in records["external_dependencies"].values():
+        fields(row, {"module"}, "external dependency")
+        text(row["module"], "external module")
+        if "reason" in row and row["reason"] != "outside_module_prefixes":
+            raise ContractError("unexpected external dependency reason")
+
+    classifications = [set(declarations), set(records["external_dependencies"])]
+    classifications.extend(names(report[field], field) for field in
+                           ("missing_declarations", "unexpanded_declarations"))
+    classified = set()
+    for group in classifications:
+        if classified & group:
+            raise ContractError("extraction report declaration classifications overlap")
+        classified.update(group)
+    if not roots <= set(declarations) | set(report["unexpanded_declarations"]):
+        raise ContractError("Lean report omits a requested root declaration")
+    unavailable = names(report["unavailable_bodies"], "unavailable_bodies")
+    if not unavailable <= set(declarations) or any(
+        declarations[name]["kind"] not in body_kinds or declarations[name]["body_available"]
+        for name in unavailable
+    ):
+        raise ContractError("extraction report unavailable_bodies contradicts declarations")
+    unavailable_by_flag = {name for name, row in declarations.items()
+                           if row["kind"] in body_kinds and not row["body_available"]}
+    if report["scope_complete"] and (
+        report["missing_declarations"] or report["unexpanded_declarations"]
+        or unavailable or unavailable_by_flag or references - classified
+    ):
+        raise ContractError("Lean report claims complete scope with unresolved declarations")
+
+
+def extraction_projection_digest(graph: dict, subject_ids: list[str], *,
+                                 profile: str = "lean-extraction-v1") -> str:
     """Bind translated formal data while leaving prose and goal selection editable."""
+    if profile not in {"lean-extraction-v1", "lean-extraction-v2"}:
+        raise ContractError("unsupported extraction projection profile")
     subjects = set(subject_ids)
     edges = sorted(
         ({k: e[k] for k in ("from", "to", "kind")}
@@ -114,6 +243,8 @@ def extraction_projection_digest(graph: dict, subject_ids: list[str]) -> str:
     identifiers = subjects | {e["to"] for e in edges}
     identifiers |= {a for n in graph["nodes"] if n["id"] in subjects for a in n["assumption_ids"]}
     fields = ("id", "kind", "declaration", "statement", "source_id", "assumption_ids", "boundary")
+    if profile == "lean-extraction-v2":
+        fields += ("locator", "lean_kind", "is_unsafe", "is_partial")
     nodes = sorted(({k: n[k] for k in fields if k in n} for n in graph["nodes"] if n["id"] in identifiers), key=lambda n: n["id"])
     return digest(encoded({"nodes": nodes, "edges": edges, "extraction_status": graph["extraction_status"]}))
 
@@ -152,6 +283,11 @@ def required_citation_ids(graph: dict, roots=None) -> set[str]:
 
 def validate_graph(graph: dict) -> dict:
     validate_schema(graph, "graph")
+    if graph["schema_version"] == "1.0" and any(
+        "lean_kind" in node or "is_unsafe" in node or "is_partial" in node
+        for node in graph["nodes"]
+    ):
+        raise ContractError("graph version 1.0 cannot contain declaration classification fields")
     nodes = indexed(graph["nodes"], "node")
     sources = indexed(graph["sources"], "source")
     cites = indexed(graph["citations"], "citation")
@@ -237,7 +373,15 @@ def validate_graph(graph: dict) -> dict:
             if item["kind"] == "extraction":
                 if not isinstance(receipt.get("report_sha256"), str) or re.fullmatch(r"[0-9a-f]{64}", receipt["report_sha256"]) is None:
                     raise ContractError("successful extraction requires its report content hash")
-                if receipt.get("projection_sha256") != extraction_projection_digest(graph, item["subject_ids"]):
+                profile = receipt.get("projection_profile", "lean-extraction-v1")
+                if profile == "lean-extraction-v2" and graph["schema_version"] != "1.1":
+                    raise ContractError("version 2 extraction requires graph version 1.1")
+                if profile == "lean-extraction-v1" and graph["schema_version"] != "1.0":
+                    raise ContractError("legacy extraction cannot be reclassified as graph version 1.1")
+                if (type(receipt.get("report_schema_version", 1)) is not int
+                        or receipt.get("report_schema_version", 1) != (2 if profile == "lean-extraction-v2" else 1)):
+                    raise ContractError("extraction report and projection versions disagree")
+                if receipt.get("projection_sha256") != extraction_projection_digest(graph, item["subject_ids"], profile=profile):
                     raise ContractError("formal graph projection differs from extraction receipt")
                 for subject in item["subject_ids"]:
                     node = nodes[subject]
@@ -245,7 +389,27 @@ def validate_graph(graph: dict) -> dict:
                         raise ContractError("extraction subjects must identify formal declarations")
                     if node["source_id"] not in item["source_ids"]:
                         raise ContractError("extraction receipt must include each subject's source")
+                    if profile == "lean-extraction-v2" and (
+                        node.get("lean_kind") not in {"axiom", "definition", "theorem", "opaque",
+                                                       "quotient_primitive", "inductive", "constructor", "recursor"}
+                        or type(node.get("is_unsafe")) is not bool
+                        or not (type(node.get("is_partial")) is bool or node.get("is_partial") is None)
+                        or "is_partial" not in node
+                        or not isinstance(node.get("locator"), str) or not node["locator"]
+                    ):
+                        raise ContractError("version 2 extraction requires bound safety and locator fields")
+                    if profile == "lean-extraction-v2" and (
+                        (node["lean_kind"] == "opaque" and node["is_partial"] is not None)
+                        or (node["lean_kind"] != "opaque" and type(node["is_partial"]) is not bool)
+                    ):
+                        raise ContractError("opaque partiality must remain unknown in version 2")
+    safety_subjects = {subject for item in evidence.values()
+                       if item["kind"] == "extraction" and item["status"] == "passed"
+                       and item.get("receipt", {}).get("projection_profile") == "lean-extraction-v2"
+                       for subject in item["subject_ids"]}
     for node in nodes.values():
+        if ("lean_kind" in node or "is_unsafe" in node or "is_partial" in node) and node["id"] not in safety_subjects:
+            raise ContractError("declaration safety requires version 2 extraction evidence")
         require_refs(node["assumption_ids"], nodes, "assumption")
         if any(nodes[a]["kind"] != "assumption" for a in node["assumption_ids"]):
             raise ContractError("assumption_ids must reference assumption nodes")
@@ -258,6 +422,14 @@ def validate_graph(graph: dict) -> dict:
         if node["kind"] == "assumption" and (node["id"] == "sorryAx" or node.get("declaration") == "sorryAx") and node["status"] != "open":
             raise ContractError("sorryAx must remain an open obligation")
         if node["status"] == "kernel_checked":
+            if node.get("is_unsafe") is True or node.get("is_partial") is True:
+                raise ContractError("unsafe or partial declaration cannot be kernel_checked")
+            if any(evidence[e]["kind"] == "extraction" and evidence[e]["status"] == "passed"
+                   and evidence[e].get("receipt", {}).get("projection_profile") == "lean-extraction-v2"
+                   for e in node["evidence_ids"]) and (
+                node.get("is_unsafe") is not False or node.get("is_partial") is not False
+            ):
+                raise ContractError("kernel_checked requires safe declaration classification")
             if node["kind"] != "declaration" or not {"source_id", "declaration", "statement"} <= node.keys():
                 raise ContractError("kernel_checked is reserved for identified formal declarations")
             relevant = [evidence[e] for e in node["evidence_ids"] if evidence[e]["kind"] == "lean_build" and node["id"] in evidence[e]["subject_ids"]]

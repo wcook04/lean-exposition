@@ -79,6 +79,10 @@ scalar-value statements, not the whole QAOA convergence claim. The
 recorded check status. See the [papers guide](papers/README.md) to assemble the
 three drafts into one portable bundle.
 
+The separate [architectural companion](papers/architecture/README.md) ·
+[PDF](papers/architecture/paper.pdf) explains how the sources, papers and checks
+fit together and what another application can inspect.
+
 ### YouTube walkthrough — coming soon
 
 A planned walkthrough will start with a concrete example, explain the question
@@ -93,6 +97,12 @@ file connecting mathematical claims to their assumptions, citations and recorded
 checks. It gives the writer a source map and lets a reviewer follow a passage
 back to its support.
 
+Each paper also has a [graph view](docs/bundle-consumers.md#view-one-paper-as-a-graph):
+its sections and passages in reading order, connected to their recorded claims,
+sources and checks. The three papers share the same underlying evidence, so an
+application can move between a passage, its support and another account of the
+same result. The local API supplies these views for a future front end.
+
 The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
 cover selecting the material, reconstructing an argument, writing for specialists
 and teaching it to a stated audience. They include methods illustrated by
@@ -106,7 +116,8 @@ the mathematics and prose. The `scaffold` command creates empty writing template
 
 Review has two distinct questions: does the writing faithfully describe the
 mathematics, and can its intended reader follow it? Use answers to revise both
-the document and the writing method. Automated checks catch missing references
+the document and the writing method. The [reader-review guide](docs/reader-review.md)
+shows how to run one bounded session against an exact edition. Automated checks catch missing references
 and changed text; they cannot answer those questions for the reader.
 
 ## First run
@@ -155,7 +166,9 @@ or turn a platform's “Proved” label into a local proof check.
 For local sources, the [verification guide](docs/verification.md) explains Lean
 builds, dependency extraction and the optional Comparator tool. The saved minimal
 example has an actual build and extraction. The larger QAOA / SK graph is curated
-from source, with its extraction and formal replay marked `not_run`. A source hash,
+from source. It retains planned checks and a separate startup-unavailable attempt;
+no completed research replay or elaborated research extraction is established by
+those records. A source hash,
 a successful build and a mathematical review answer different questions; the
 records preserve those distinctions.
 
@@ -163,7 +176,7 @@ records preserve those distinctions.
 
 | Location | What you will find |
 | --- | --- |
-| [papers/](papers/) · [reading guide](papers/README.md) | The long record, short paper and exposition, with their source mappings |
+| [papers/](papers/) · [reading guide](papers/README.md) | The three mathematical accounts, source mappings and architectural companion |
 | [examples/](examples/) · [example guide](examples/README.md) | The small Lean proof, pinned QAOA / SK corpus, Prove2Me intake and independent bundle reader |
 | [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
 | [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |

@@ -32,6 +32,8 @@ to the selected `Minimal` module prefix.
 The [recorded real extraction](../examples/minimal/receipts/extraction.json)
 returns both theorems, their source ranges, empty transitive axiom lists and
 available proof bodies. `Minimal.result` has a proof-value edge to `Minimal.swap`.
+This retained report uses version 1; it does not establish the safety fields
+added by the current version 2 extractor.
 Its selected module scope is complete. The resulting
 [evidence graph](../examples/minimal/evidence-graph.json) contains six nodes and
 eight typed edges; its overall status remains `partial` because four
@@ -70,6 +72,15 @@ is `unavailable`. Supplied legacy or custom commands retain nonzero exits as
 `failed`; they do not inherit the integrated checker's exit-code convention.
 Exit code 1 also covers build, export and operational errors in the integrated
 tool. Read its diagnostic before describing the outcome as a rejected proof.
+A failed process launch records `failure_stage: process_launch`, its OS error
+type and errno, and `unavailable`; no Comparator proof verdict exists in that
+case. More generally, an expected nonzero exit counts as intended rejection
+only when the diagnostic establishes the expected stage. For adversarial code,
+stage evidence must come from the trusted controller rather than child text.
+Tool names and source/config hashes alone do not identify the effective binary,
+cache policy or sandbox controls of a run; retain those separately when making
+a reproducibility or security claim. A Linux preflight flag establishes OS
+eligibility, not a successful sandboxed invocation.
 
 Extraction and build receipts bind the selected module and SHA-256 hashes of
 the project's Lean sources and environment files before execution. The adapter
@@ -81,7 +92,8 @@ two observations.
 
 ## What the extracted graph means
 
-The report has `schema_version: 1` and these fields:
+New reports have `schema_version: 2` and these fields. The old version `1`
+report lacks safety flags and remains a historical record:
 
 | Field | Meaning |
 | --- | --- |
@@ -91,24 +103,39 @@ The report has `schema_version: 1` and these fields:
 | `value_dependencies` | Constants in each elaborated body, including opaque theorem bodies when available |
 | `structural_dependencies` | Inductive families, constructors and recursor rules needed in addition to expression references |
 | `axioms`, `has_sorry` | Transitive axiom names from Lean's `collectAxioms`; `sorryAx` is recorded explicitly |
+| `kind`, `is_unsafe`, `is_partial` | Lean's declaration kind and safety classification; required in version `2` and bound into the new graph projection as `lean_kind` and the two flags. `is_partial` is null (unknown) for opaque constants because Lean also stores `partial def` in that class. Unknown cannot be promoted to `kernel_checked`. |
 | `source` | Defining logical module and available declaration range; line numbers are one based |
 | `type_rendering` | The expression renderer used for types; the lightweight driver uses Lean's debug expression rendering |
 | `external_dependencies` | Referenced declarations outside the selected module prefixes, without expanding their bodies |
 | `missing_declarations`, `unexpanded_declarations` | Unresolved references and declarations stopped by the size limit |
 | `unavailable_bodies` | In-scope definitions or theorems whose bodies were unavailable for traversal |
-| `scope_complete` | Whether the selected scope was exhausted; external boundaries remain explicit |
+| `scope_complete` | Whether the selected traversal exhausted its in-scope records; external boundaries remain explicit |
 | `receipt` | Actual command output, exit code and generated extractor digest |
+
+These flags classify compiled constants, not source keywords. A `partial def`
+may appear as a safe wrapper that depends on an opaque recursive auxiliary;
+the dependency edge and the auxiliary's unknown partiality remain visible.
 
 Edges run from a declaration to its prerequisite. The module boundary defaults
 to the requested module and its child module names. Select a wider project
 prefix explicitly when helper modules live elsewhere. A bounded report can
 still have complete transitive root axiom lists, because Lean collects those
 independently of this graph's presentation boundary.
+Traversal stops at the first out-of-prefix defining module and does not re-enter
+the prefix through that external declaration. Explicit roots are included even
+outside the prefix. `max_declarations` bounds expanded in-scope records; it does
+not bound the imported environment, the external inventory, pending queue or
+independent axiom work. This expression graph is not a standalone kernel export.
+The generated-source API accepts ordinary dotted Lean identifiers; Lean names
+outside that subset are rejected until a safe data-to-name route is added.
 
 This is an expression dependency graph. It does not identify which source
 tactics, macros or elaborator extensions were needed to generate a term, nor
 which dependencies carry the mathematical idea. Missing source ranges are
-null rather than invented. An elaborated dependency report is distinct from
+null rather than invented; a graph locator with no line is module-only. These
+locations are coarse provenance, not a proof of a precise source span. The
+version `2` projection binds the displayed locator, while old version `1`
+receipts did not. An elaborated dependency report is distinct from
 a successful source build, kernel replay, statement comparison, manuscript
 equivalence review and reader review.
 
@@ -206,10 +233,19 @@ an upper bound, not a report of which axioms the proofs actually use.
 
 For historical version selection, Comparator commit
 `d03acab154d269c06e60e4de7e4cc85deebff94b` pins Lean `v4.34.0` and exporter
-`076e8e57707e813375e8f9da8bf989799ace9680`. Those are source-observed pins,
-not a tested compatibility claim for Lean `v4.34.1`. Comparator, the exporter,
-Lean and optional Nanoda use Apache-2.0; Landrun uses MIT. Keep each adopted
-component's notices and validate the exact selected binary pair.
+`076e8e57707e813375e8f9da8bf989799ace9680`. A separate
+[23 October 2026 tool receipt](../examples/qaoa-sk/verification/linux-4341-tool-validation.json)
+records an Ubuntu 24.04/aarch64 run after changing only the toolchain pins in
+disposable Comparator and exporter copies to Lean `v4.34.1`. Their builds,
+exporter tests and three upstream core tests passed. Of sixteen fixtures,
+four reached positive kernel/comparison acceptance, nine reached their intended
+rejection, and three stopped at missing-constant export failures. Those last
+three do not test the intended semantic rejection. The receipt also records
+ten named sandbox probes and a Minimal extraction using the helper hash saved
+there; it does not validate the current v2 helper or either research target.
+Comparator, the exporter, Lean and optional Nanoda use Apache-2.0; Landrun uses
+MIT. Keep each adopted component's notices and validate the exact selected
+binary pair.
 
 The historical exporter imports built modules from Lean's search path. Its
 [export parser](https://github.com/leanprover/lean4export/blob/076e8e57707e813375e8f9da8bf989799ace9680/Export/Parse.lean#L487)
@@ -251,9 +287,13 @@ elaborated graphs. This repository's small synthetic example demonstrates the
 mechanism without claiming a fresh replay of those research proofs.
 
 The corpus's [preflight command](../examples/qaoa-sk/verification/preflight.py)
-checks locked input bytes, selected dependency pins, the exact installed Lean
-toolchain and required executable availability. It does not invoke Lean or
-Comparator. Its [observed receipt](../examples/qaoa-sk/verification/preflight-observed.json)
+checks locked input bytes, selected dependency pins, whether the pinned Lean
+toolchain is installed, and discovery of required executables. It does not
+invoke Lean or Comparator. Its Linux sandbox flag records operating-system
+eligibility only; functional sandbox checks, effective tool compatibility and
+dependency checkout bytes remain unchecked. A `ready` result therefore means
+these discovery prerequisites were met, not that an isolated replay worked or
+that cached modules were authenticated. Its [observed receipt](../examples/qaoa-sk/verification/preflight-observed.json)
 reports passed source/pin checks and unavailable replay prerequisites.
 The separate [Comparator receipt](../examples/qaoa-sk/verification/comparator-unavailable.json)
 records a real attempt to execute `comparator ComparatorChallenges/SKFullSupport.json`:
@@ -278,5 +318,12 @@ The published receipt retains project-relative source hashes and the config
 hash. Diagnostic streams are represented by SHA-256 digests and a short factual
 summary. For a real legacy replay, first provision the pinned environment and
 compatible checker, then use the documented `lake env comparator` route so
-the project library search path is available. Keep failed and unavailable
-receipts alongside successful ones and bind each to its selected target.
+the project library search path is available. Record the resolved tools,
+relevant overrides, dependency/cache provenance and sandbox controls for that
+invocation. If an outer service launches the replay, retain the actual checker
+receipt inside it; the outer service-client exit is operational evidence. Keep
+failed and unavailable receipts alongside successful ones and bind each to its
+selected target. Distinguish launch, build, export and parsing failures from
+an established statement, axiom-policy or kernel rejection. For negative
+fixtures, a matching nonzero exit is insufficient unless the intended rejection
+stage was reached.

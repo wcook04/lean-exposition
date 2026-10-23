@@ -34,6 +34,14 @@ scope table below distinguishes its claim from the two retained formal targets.
 
 The QAOA manuscript takes system size to infinity before increasing circuit depth. Its finite depth and deterministic angles may depend on the desired accuracy; the statement supplies no quantitative depth bound or efficient angle-selection procedure. Keep this manuscript claim distinct from the two formal interfaces.
 
+A later [30 September 2026 preprint](https://arxiv.org/abs/2609.40309v1),
+Corollary S3.1, states an explicit finite-size bound for the mean energy of a
+fixed QAOA word under its mixed-spin assumptions. It appeared after the
+OpenAI manuscript's displayed 25 September date. The stated corollary and
+model were inspected; its full proof was not independently checked here.
+It gives neither a quantitative way to choose the word for a desired accuracy
+nor a new verification result for this example.
+
 ## Source map
 
 - [source-lock.json](source-lock.json): immutable public URLs, SHA-256 hashes, byte lengths, source licences, target declarations, and the exact inline contents of the two derived configurations. File paths are relative to this example directory.
@@ -45,6 +53,7 @@ The QAOA manuscript takes system size to infinity before increasing circuit dept
 - [upstream/preprints/](upstream/preprints/): both exact public manuscript directories, including the original PDFs, TeX/BibTeX sources, and attribution READMEs. The QAOA directory has 12 files (929,329 bytes); full support has 14 (619,968 bytes).
 - [upstream/provenance/](upstream/provenance/): original build configurations and dependency metadata, retained as data.
 - [references.bib](references.bib): manuscript citations with immutable upstream links.
+- The original [full-support bibliography](upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/references.bib) and the references in the [QAOA manuscript](upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf) remain the complete inventories of their respective source manuscripts. Our navigation bibliography is a selection, not a replacement for them. A bibliography entry alone does not establish that the manuscript uses it or that its full text was read.
 - [verification/preflight.py](verification/preflight.py): source and dependency-pin checks plus an inventory of local replay prerequisites. Its [recorded preflight](verification/preflight-observed.json) and [unavailable Comparator invocation](verification/comparator-unavailable.json) preserve the actual local outcomes.
 
 A static scan followed every `OAI` import from the two `Main` modules. Every imported `OAI` module lies in these two trees; the only external import name is `Mathlib`. This checks source coverage only. The local verification attempts and their limits are recorded below.
@@ -74,6 +83,13 @@ standalone Comparator tools were unavailable on that host. The attempted
 full-support Comparator invocation could not start because `comparator` was
 not installed. No research-corpus build, extraction, axiom audit or statement
 comparison was performed; the scalar-value Comparator invocation remains unrun.
+
+A later [Linux tool-validation receipt](verification/linux-4341-tool-validation.json)
+records completed checks on disposable Lean `v4.34.1` tool copies: four positive
+fixtures, nine intended rejections, three export-blocked cases, named sandbox
+probes and a Minimal extraction. The [verification guide](../../docs/verification.md#comparator)
+explains their exact scope. These are tool observations, separate from the
+research targets and from the current extractor's safety classification.
 
 With the exact toolchain and dependencies provisioned, run from the repository root:
 

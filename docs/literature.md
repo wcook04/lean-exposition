@@ -14,6 +14,11 @@ node or axiom, then subtracts statement dependencies from proof dependencies
 except for `sorryAx`. Its LaTeX path combines inferred and authored uses and
 applies exclusions. Its JSON facet instead serializes stored node metadata;
 that path does not invoke dependency inference. These are different views.
+The later [LeanArchitect ITP 2026 paper](https://doi.org/10.4230/LIPIcs.ITP.2026.25)
+credits Thomas Zhu, Pietro Monticone, Sean Welleck and Jeremy Avigad for the
+published design. Its article, archived software artifact and the selected
+implementation commit are separate editions; the commit remains the evidence
+for the JSON-path observation here.
 The exporter here preserves direct type, value and structural references as
 separate edge categories, with toolchain identity. Authored presentation choices
 must not silently replace those observations.
@@ -46,6 +51,12 @@ with Lean FRO, LLC and Henrik Böving attribution retained in its source header.
 That Apache-2.0 input has its own pinned record in the annex. The later README
 pin above documents migration; it is not the adaptation's acquisition revision.
 
+## Collaborative formalization and source handoff
+
+[Chen, Marwaha, Lu, Yuen and Peng, Prove2Me (arXiv:2608.28433v2)](https://arxiv.org/abs/2608.28433v2) describe immutable theorem statements separate from proof submissions, with pinned Lean environments and optional source links (§3). A mission captain audits the goal, definitions and selected milestones for fidelity to the source; a separate agent translates Lean statements back into ordinary mathematics for human comparison (§3.3). Sorry-free proof-sketches may depend on open child theorems and resolve when those children receive proofs (§4.2); source-linked milestones give contributors a shared target (§4.4). This is a useful model for keeping statement meaning, dependency closure and human judgment distinct. The paper’s mission results are case studies, not a controlled comparison, and its cost columns use different conventions (§5).
+
+The [local Prove2Me intake](prove2me.md) reads public theorem metadata and decomposition links. The paper does not specify a generic versioned-paper attachment, external evidence manifest or scoped-feedback contract for that adapter. It therefore informs the design of a future source handoff without establishing a current submission channel or independent review of this repository. The exact v2 PDF and version record are retained only in the private source annex; this public checkout records their hashes and selected reading in [references.json](references.json).
+
 ## A small reference annex
 
 ### QAOA and the SK model
@@ -57,19 +68,22 @@ formal interfaces remain separate from the broader circuit-energy argument.
 
 | Reference | Use and boundary |
 | --- | --- |
-| [Basso, Farhi, Marwaha, Villalonga and Zhou, TQC 2022](https://doi.org/10.4230/LIPIcs.TQC.2022.7) | Section 4, Theorem 1 relates fixed-depth SK performance to the large-degree graph expression. Section 5, equation (5.2) conjectures eventual Parisi optimality. Preserve the thermodynamic-first order and distinguish the theorem from the conjecture; the proceedings sends the theorem's proof to the full version. |
+| [Basso, Farhi, Marwaha, Villalonga and Zhou, TQC 2022](https://doi.org/10.4230/LIPIcs.TQC.2022.7) | Section 4, Theorem 1 relates fixed-depth SK performance to the large-degree graph expression. Section 5, equation (5.2) conjectures eventual Parisi optimality. Preserve the thermodynamic-first order and distinguish the theorem from the conjecture; the proceedings sends the theorem's proof to the [full arXiv:2110.14206v3](https://arxiv.org/abs/2110.14206v3), §6. A separate 23 October reading inspected that section, not every auxiliary proof. |
 | [Farhi, Goldstone, Gutmann and Zhou, Quantum 2022](https://doi.org/10.22331/q-2022-07-07-759) | Section 4 gives fixed-depth energy-moment limits and concentration at fixed angles. These results provide context for circuit energies at infinite system size; they do not establish optimality as depth grows. |
 | [Montanari, Optimization of the Sherrington–Kirkpatrick Hamiltonian](https://arxiv.org/abs/1812.10897v2) | In the inspected 2019 preprint, Assumption 1 and Theorem 2 give a conditional classical comparison. The support hypothesis concerns all sufficiently large finite inverse temperatures; zero-temperature full support alone does not discharge it. Remark 1.2 specifies the oracle operations included in the computation model. |
 | [Auffinger and Chen, Parisi formula for the ground state energy](https://arxiv.org/abs/1606.05335v2) | Theorem 1 identifies the limiting ground-state energy with a zero-temperature variational infimum. The proof of Lemma 3 constructs an attaining coefficient when combined with the upper bound. Cite that argument when choosing a minimizer; neither result supplies full support or QAOA convergence. |
 | [Auffinger, Chen and Zeng, Infinite Step Replica Symmetry Breaking](https://arxiv.org/abs/1703.06872v2) | Theorem 1 gives infinitely many support points. Remark 1 explicitly separates that conclusion from interval support. Infinite support and full relative support on `[0,1)` are different claims. |
+| [Boulebnane and coauthors, arXiv:2609.40309v1](https://arxiv.org/abs/2609.40309v1) | Corollary S3.1 states an explicit finite-size mean-energy threshold for a fixed QAOA word in its mixed-spin model. This 30 September 2026 source postdates the OpenAI manuscript's displayed 25 September date. Its statement and model were inspected; its full cavity and majorisation proof was not independently checked. It does not give an efficient choice of depth or angles, or a measurement-tail rate. |
 
 The two QAOA publisher editions carry CC-BY-4.0 and are retained unmodified in
 the [selected source readings](annex/README.md), with attribution, licence and
-original notes on their applied use. The other three inspected preprints use
-arXiv's non-exclusive distribution licence, which grants rights to arXiv rather
-than general permission to redistribute their PDFs; they remain references
-only. Citation links neither certify the prose-to-Lean correspondence nor
-extend formal coverage.
+original notes on their applied use. The inspected Basso full preprint and the
+three earlier SK preprints use arXiv's non-exclusive distribution licence,
+which grants rights to arXiv rather than general permission to redistribute
+their PDFs; they remain references only. The later Boulebnane preprint's exact
+arXiv version carries CC-BY-4.0, but its PDF is kept in the private reading
+annex, outside this repository. Citation links neither certify the
+prose-to-Lean correspondence nor extend formal coverage.
 
 The reference records distinguish retained sources from link-only references.
 The packaged Lean extractor separately adapts Comparator's structural traversal

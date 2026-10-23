@@ -94,6 +94,12 @@ separate selected-source contract. Metadata sources therefore remain
 submission listings and theorem-to-mission navigation are not currently imported;
 select the mission's public goal theorem URL instead.
 
+For a paper handoff, use the existing [bundle and review convention](bundle-consumers.md#identify-a-revision-before-requesting-review).
+This adapter does not provide a paper-upload or review-history API. A future
+platform integration would need its own documented artifact-version, attachment
+and feedback contract. A mission discussion or theorem status must not be
+silently reinterpreted as review of a particular paper edition.
+
 The Python wrapper interface is
 `intake_prove2me(url, out, credentials=None, max_nodes=100, max_depth=10, timeout=30.0)`
 with the options after `out` passed as keywords. It returns a small JSON-compatible

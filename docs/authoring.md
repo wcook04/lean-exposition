@@ -160,6 +160,49 @@ an acceptance, so the author must revisit it.
 
 ## Review a transition
 
+### Read the paper in order
+
+Read each mathematical draft from its first sentence, without consulting its
+mapping or anticipating a later definition. At every transition, identify what
+the reader already knows, why the next object is needed, and what justifies the
+next inference. Record the first point where a definition, motivation, argument
+or citation arrives too late. A coherent overview does not repair a broken
+sequence of paragraphs.
+
+The short paper should state one result with its hypotheses, explain the
+mechanism, give the decisive argument and delimit its reach. The long record
+should let a reader reconstruct every argument it promises; an exact external
+proof destination must be described honestly when it supplies a substantial
+step. The exposition should teach the necessary objects through connected
+explanation and worked examples before asking the reader to use them. Assess
+these deliverables separately rather than awarding a single quality score.
+
+Use ordinary mathematical names, theorem and section references, and literature
+citations in the reading path. Repository paths, declaration identifiers, hashes
+and execution history belong in the companion mappings and verification record.
+A compact formal-source link may support a statement without turning its proof
+into software documentation. Remove object-role inventories and workflow labels
+when a mathematical paragraph explains their relationship more naturally.
+
+Before a long calculation, say what question it answers and where its result
+will be used. If an example tests a theorem's hypothesis, state that theorem
+first. After dense notation, work one small literal case before taking a limit.
+Explain what an operation does to the mathematical objects before relying on
+its symbolic form. Examples should separate the intended statement from a
+plausible false inference, not merely repeat a definition with new letters.
+
+Give each figure a specific explanatory job. Place it beside the inference it
+shows, define its variables and explain the relation between its geometry and
+the argument. Label schematic curves as schematic and credit adapted source
+figures. Inspect the rendered page at reading size and in grayscale; successful
+compilation does not establish that the reader can follow the picture.
+Every connector must name the relation it depicts, with a clear direction where
+direction matters. Keep proof dependencies, passage correspondence, reading order
+and workflow transitions distinct. Give labels room before shrinking them; split
+a crowded overview into connected views with explicit shared referents.
+
+### Compare the revision with its sources
+
 Freeze the input graph and source versions before a substantial revision. Keep
 the proposed text, changed statements and affected mappings recoverable. Review
 meaning before fluency, then accept, repair, reject or defer each substantive
@@ -184,6 +227,10 @@ State which sources and sections were assessed, sampled, unavailable or not
 reviewed. An author's cold reread is useful but differs from an independent
 reader test. A successful compile checks the production process; inspect the
 delivered pages, formulas, bibliography and reference destinations separately.
+
+Use the [bounded reader-review procedure](reader-review.md) to freeze one edition,
+retain the reader's first response and distinguish later assistance. No schema or
+hash check can establish that a previous acceptance applies to revised prose.
 
 Useful negative checks include removing an essential hypothesis, replacing a
 conditional sentence with an unconditional claim, changing an implication to

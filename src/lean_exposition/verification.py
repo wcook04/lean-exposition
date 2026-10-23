@@ -18,6 +18,8 @@ import subprocess
 import tempfile
 from typing import Any, Sequence
 
+from .contracts import ContractError, decode_json, validate_extraction_report
+
 
 class VerificationError(RuntimeError):
     """A tool failed or did not return a usable report; receipt retains why."""
@@ -25,6 +27,14 @@ class VerificationError(RuntimeError):
     def __init__(self, message: str, receipt: dict[str, Any]):
         super().__init__(message)
         self.receipt = receipt
+
+
+class _ProcessLaunchError(RuntimeError):
+    """Popen could not launch a usable tool process."""
+
+    def __init__(self, error: OSError):
+        super().__init__(str(error))
+        self.error = error
 
 
 def _text(value: str | bytes | None) -> str:
@@ -38,11 +48,14 @@ def _execute(
 ) -> subprocess.CompletedProcess[str]:
     # Kill this invocation's descendants too when a Lake child exceeds its
     # deadline; never leave a Lean build running after reporting a timeout.
-    process = subprocess.Popen(
-        args, cwd=project, stdin=subprocess.PIPE if input_text is not None else None,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-        start_new_session=os.name == "posix",
-    )
+    try:
+        process = subprocess.Popen(
+            args, cwd=project, stdin=subprocess.PIPE if input_text is not None else None,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            start_new_session=os.name == "posix",
+        )
+    except OSError as exc:
+        raise _ProcessLaunchError(exc) from exc
     try:
         stdout, stderr = process.communicate(input=input_text, timeout=timeout)
     except subprocess.TimeoutExpired:
@@ -79,6 +92,11 @@ def _run(
         raise ValueError("tool command must not be empty")
     try:
         result = _execute(args, project, input_text, timeout)
+    except _ProcessLaunchError as exc:
+        return {"status": "unavailable", "command": args, "returncode": None,
+                "stdout": "", "stderr": str(exc),
+                "failure_stage": "process_launch", "failure_reason": "process_launch_failed",
+                "error_type": type(exc.error).__name__, "errno": exc.error.errno}
     except FileNotFoundError as exc:
         return {"status": "unavailable", "command": args, "returncode": None,
                 "stdout": "", "stderr": str(exc)}
@@ -205,23 +223,25 @@ def extract_dependencies(
     if len(lines) != 1:
         raise invalid_report("Lean did not emit exactly one extraction report")
     try:
-        report = json.loads(lines[0])
-    except json.JSONDecodeError as exc:
+        report = decode_json(lines[0].encode("utf-8"))
+    except (ContractError, json.JSONDecodeError, UnicodeError) as exc:
         raise invalid_report("Lean emitted invalid extraction JSON") from exc
-    if not isinstance(report, dict) or report.get("schema_version") != 1 or report.get("module") != module:
+    try:
+        validate_extraction_report(report)
+    except ContractError as exc:
+        raise invalid_report(str(exc)) from exc
+    if report["schema_version"] != 2:
+        raise invalid_report("current extractor requires version 2 safety metadata")
+    if report["module"] != module:
         raise invalid_report("Lean emitted an unexpected extraction report")
-    if report.get("roots") != list(roots) or report.get("module_prefixes") != list(prefixes):
+    if report["roots"] != list(roots) or report["module_prefixes"] != list(prefixes):
         raise invalid_report("Lean report roots or module prefixes differ from the request")
-    names = {d.get("name") for d in report.get("declarations", []) if isinstance(d, dict)}
-    pending = set(report.get("unexpanded_declarations", []))
-    if any(root not in names | pending for root in roots):
-        raise invalid_report("Lean report omits a requested root declaration")
-    if report.get("scope_complete") is True and (
-        report.get("missing_declarations") or pending or report.get("unavailable_bodies")
-    ):
-        raise invalid_report("Lean report claims complete scope with unresolved declarations")
-    canonical = json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
-    receipt["report_sha256"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    try:
+        canonical = json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
+        receipt["report_sha256"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        receipt["report_schema_version"] = report["schema_version"]
+    except UnicodeEncodeError as exc:
+        raise invalid_report("Lean extraction report is not canonical UTF-8 JSON") from exc
     report["receipt"] = receipt
     return report
 
@@ -264,6 +284,9 @@ def verify_comparator(
     receipt["sandbox_disabled_explicitly"] = "--inadvisably-no-sandbox" in prefix
     if command is None and receipt["returncode"] == 2 and not receipt["source_changed"]:
         receipt["status"] = "unavailable"
+        receipt["failure_stage"] = "checker_start"
+    elif receipt["status"] == "failed" and "failure_stage" not in receipt:
+        receipt["failure_stage"] = "unknown"
     config_after = hashlib.sha256(config_path.read_bytes()).hexdigest() if config_path.is_file() else None
     receipt["config_sha256"] = config_before
     if config_before != config_after:

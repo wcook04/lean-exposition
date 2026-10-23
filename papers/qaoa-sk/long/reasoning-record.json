@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "701ff62969a0081f7d1cf850004f08758995adb7b3de523ffd186c53ed4d5ce0",
-  "graph_sha256": "48e34b95d9ef07160454d5da5357a0e0f9a51d48d087af62911e590527c144a9",
+  "content_sha256": "00480e6a5fb33f44452775fba5e8dd825443597b5c49c58ca264b1b753b10b8d",
+  "graph_sha256": "dcf52c8435791afaf57d2e2cdeb7f0807f8fc6ced205d48956e5a4769e2275b6",
   "selected_goal_ids": [
     "full_support"
   ],
@@ -16,22 +16,32 @@
     "qaoa_thermodynamic_first"
   ],
   "citation_ids": [
+    "ac2015_unique_minimizer",
     "ac2017_ground_state",
     "acz2020_infinite_support",
+    "bfmvz2022_tree_transfer",
     "chen2026_full_support",
+    "chl2018_zero_temperature",
+    "eams2021_mean_field_optimization",
+    "eams2023_finite_step",
+    "fggz2022_fixed_depth",
     "full_support_chord_derivative",
     "full_support_comparator",
     "full_support_implementation",
     "full_support_manuscript",
     "full_support_origin_coercivity",
     "full_support_type",
+    "jt2016_dynamic_programming",
+    "lopatto2026_interval_support",
+    "montanari2025_sk_optimization",
     "qaoa_main_theorem",
     "qaoa_manuscript_arguments",
     "qaoa_routes",
     "scalar_value_comparator",
     "scalar_value_implementation",
     "scalar_value_type",
-    "scope_281"
+    "scope_281",
+    "zhou2026_near_critical"
   ],
   "assumption_ids": [
     "assumptions.full_support_minimizer",
@@ -53,7 +63,7 @@
   "passages": [
     {
       "anchor": "overview",
-      "text_sha256": "8a0df9ccf946bf2f6c4887aa341bfb7cb275a6a03954ca61b4d95286409ea7a0",
+      "text_sha256": "573c49e1cd7c2174656c59b6a6c29cd3665ab34622d322d1590bbe4ac174902f",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -79,11 +89,11 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "Source reconstruction of overview. Exact manuscript labels, source sections and formal declaration destinations are named in the passage. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
+      "rationale": "FS build/main.tex thm:full-support (lines 119–131), variation.tex proof of thm:full-support (215–249), and consequences.tex cor:value and prop:gaussian (14–197) supply the analytic route summarised here. Q sections/01-introduction.tex thm:main (111–133) states the distinct thermodynamic-first circuit claim. SKFullSupport.lean 81–92 and SKValue.lean 106–170 identify the two selected conditional analytic interfaces. The formal-check wording is scoped to original not_run research checks and the separately retained unavailable full-support Comparator startup (evidence-graph.json, verification records 605–750), without inferring any completed research replay. No QAOA formal convergence or independent proof acceptance is inferred."
     },
     {
       "anchor": "model",
-      "text_sha256": "5c7fda87d66206973ee6507f77e1b6d4cbcbefbd70911653747cc99e632639d4",
+      "text_sha256": "b4675a511243f2e601d877c2ec5bf197d07322a595c3d7b3a51894f181792ade",
       "claim_ids": [
         "full_support",
         "scalar_value"
@@ -109,7 +119,7 @@
     },
     {
       "anchor": "targets",
-      "text_sha256": "874c1a04f02d05e6375e9a171e282e63f0752a16a25c86cd03934af84bd92f74",
+      "text_sha256": "faac0953772ae1cda52b3cc5914db23f758c7df96b3dae8d4149c3238c458069",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -135,11 +145,11 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "Source reconstruction of targets. Exact manuscript labels, source sections and formal declaration destinations are named in the passage. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
+      "rationale": "Source reconstruction of targets. Exact statement and source-section destinations are preserved in this mapping and the source-review correspondence. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "71a1ae9332723ba0632064d61910bc12c98c541e0db3b73d8e49ce4738b23256",
+      "text_sha256": "f6e54aade278750d2cd24fc52cd6dd42facbcd2ee40f65f4e6c627921c26a7d7",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -148,20 +158,27 @@
         "qaoa_thermodynamic_first"
       ],
       "citation_ids": [
+        "ac2015_unique_minimizer",
         "ac2017_ground_state",
         "acz2020_infinite_support",
         "chen2026_full_support",
+        "chl2018_zero_temperature",
+        "eams2021_mean_field_optimization",
         "full_support_comparator",
         "full_support_implementation",
         "full_support_manuscript",
         "full_support_type",
+        "jt2016_dynamic_programming",
+        "lopatto2026_interval_support",
+        "montanari2025_sk_optimization",
         "qaoa_main_theorem",
         "qaoa_manuscript_arguments",
         "qaoa_routes",
         "scalar_value_comparator",
         "scalar_value_implementation",
         "scalar_value_type",
-        "scope_281"
+        "scope_281",
+        "zhou2026_near_critical"
       ],
       "assumption_ids": [
         "assumptions.full_support_minimizer",
@@ -170,11 +187,11 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "FS regularity, variation, signs, certificate, curvature and consequences sections define the proof-input chain. QAOA sections 02–06 and appendix 07 provide additional rooted, circuit and alternative-temperature arguments. AC2017, ACZ2020 and Chen2026 have distinct formula, infinite-support and full-support roles. Primary links in the passage preserve the cited methods in an exported paper; mathematical dependency and source attribution remain distinct."
+      "rationale": "FS regularity.tex lem:regularity (16–43), approximation/diffusion arguments (157–237) and lem:constant-transfer (240–308) distinguish fixed-strip derivatives from terminal control. FS variation.tex lem:first-variation and lem:contact (12–127), terminal-plateau and gap arguments (130–249), signs.tex shape:backward/forward/ibp (195–474), certificate.tex cert:coercivity (166–199), curvature.tex prop:gap-curvature (9–52), and consequences.tex cor:value/prop:gaussian (14–197) support the authored input-output table. Q sections 02–06 supply the later circuit stages; this table is not Lean dependency extraction. External originals: Auffinger–Chen arXiv:1606.05335v2 Theorem 1 p.3 and Lemma 3 proof pp.10–12 distinguish infimum and attainment; Auffinger–Chen–Zeng arXiv:1703.06872v2 Theorem 1 p.5 and Remark 7 p.15 distinguish infinite support and terminal exclusion; Hong-Bin Chen arXiv:2607.18032v1 Theorem 1.3 p.3 and Proposition 4.2 p.19 give full support and conditional crossing, distinct from FS unconditional positive-interval curvature. Inline JT/CHL/Montanari/EAMS references retain antecedent roles, not a new shifted-coefficient theorem or priority claim."
     },
     {
       "anchor": "contact",
-      "text_sha256": "e67be2fae55c58fc15cce360e51b74073fb36e23613aa264f3fdea61aff3004c",
+      "text_sha256": "0c01b66428378ea736803955990ec20fdd403274a1e4a526fe7cb41f5da2ee45",
       "claim_ids": [
         "full_support"
       ],
@@ -193,7 +210,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "bb53dfcb1c0315c6440ae48f0fdc68d7f3876fe41ae20ed74df7fd14dd513a7c",
+      "text_sha256": "82e4fafc52cb55fed6cdba9122146ff1366af5e2a2964088dc7ca65632740c8d",
       "claim_ids": [
         "full_support"
       ],
@@ -208,11 +225,11 @@
         "assumptions.full_support_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Source reconstruction of curvature. Exact manuscript labels, source sections and formal declaration destinations are named in the passage. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
+      "rationale": "FS regularity.tex lem:constant-transfer (240–308), signs.tex shape:backward/forward/ibp (195–474), certificate.tex cert:QT–cert:coercivity (35–199), and curvature.tex prop:gap-curvature (9–52) supply this reconstruction. The passage derives the Itô coefficients; identifies B=-2H and S₁=2rH_x (signs.tex 396–446); explains cancellation through ∂_bF₂=2Q+T₁ and the favourable L correction (certificate.tex 35–93); and separates analytic zero-flux/integrability hypotheses (signs.tex 423–474; certificate.tex 166–199) from finite polynomial positivity. Compact-strip transfer uses derivative/path convergence only (regularity.tex 157–237; curvature.tex 23–44). Strict Hessian positivity is supplied by a tilted-variance argument (regularity.tex 275–286), rather than inferred merely from positive approximants; the zero-coefficient case is separate (298–308). The supplied rational checker was reproduced with SymPy 1.14.0, but checks no analytic hypothesis or Lean result."
     },
     {
       "anchor": "gaps",
-      "text_sha256": "2b8c04707f3cc8d73374fe1b1bb590fff3f092d64bb924610c7ea136c17dec08",
+      "text_sha256": "f0f35f90ceb32b8cdd4a836f15725af0bd351ee395bd85e0ff0f935e89938a49",
       "claim_ids": [
         "full_support"
       ],
@@ -231,7 +248,7 @@
     },
     {
       "anchor": "value",
-      "text_sha256": "f9b86f60e484b02047ad5c009770037c792bedea848552f9875c60f9ef001df3",
+      "text_sha256": "a800fc9838bdb40d1e0e10c945b227102eed3c8a139bc7f8e3623f35e91982b2",
       "claim_ids": [
         "scalar_value"
       ],
@@ -252,7 +269,7 @@
     },
     {
       "anchor": "gaussian",
-      "text_sha256": "f505f0d222db436480864cc8bef270306efde5b93110d3f0e546486df95d4703",
+      "text_sha256": "aa6d0da75c89d693cf32132d944b09b695d174e2a87d963709b7bdd5de38d731",
       "claim_ids": [
         "scalar_value",
         "qaoa_thermodynamic_first"
@@ -273,11 +290,11 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "FS consequences.tex prop:gaussian, lines 92–196: fixed-T Euler coupling, normalized increments, conditional-mean rounding, l2 coefficient errors and shifted-product limit. QAOA sections/03-classical-optimization.tex lines 62–121 supplies the positive-curvature tail bound and use of that scalar input. Mesh count N remains distinct from spin size n."
+      "rationale": "FS consequences.tex prop:gaussian, lines 92–196: fixed-T Euler coupling, normalized increments, conditional-mean rounding, l2 coefficient errors and shifted-product limit. QAOA sections/03-classical-optimization.tex lines 62–121 supplies the positive-curvature tail bound and use of that scalar input. Mesh count N remains distinct from spin size n. The fixed-T whole-vector residual and rounding-coordinate inequality make the shifted coefficient limit explicit; it does not establish rooted or circuit energy."
     },
     {
       "anchor": "formal",
-      "text_sha256": "4e80b8ac9de980d51f2d6d978865af923903da187620b8833dd512b268921a13",
+      "text_sha256": "d583a4f28ad47575837272637a20ec4270ac16589655c071daa6cf31003900e5",
       "claim_ids": [
         "lean.full_support",
         "lean.value_consequences"
@@ -299,15 +316,17 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "SKFullSupport.lean lines 81–92 and SKValue.lean lines 106–173 give exact selected types. SKSupport/Support/VariationIntegrals.lean lines 152–175 gives a discrete chord derivative; SKSupport/Density/GaussianLogDensity.lean lines 106–166 integrates on the positive half-line. These are source-inspected intermediate formulations, not literal equivalences to every manuscript lemma or replay evidence."
+      "rationale": "SKFullSupport.lean 12–79 defines the coefficient, Brownian system, elapsed control and diffusion; 81–92 gives the exact conditional conclusion. SKSupport/Main.lean 19–61 assembles its source-inspected route. VariationIntegrals.lean parisi_chord_derivative/minimizer_variational_inequality (152–175) and GaussianLogDensity.lean gaussian_shape_coercivity (106–162) justify the discrete-chord and half-line-origin distinctions. SKValue.lean 21–31 and 120–161 provide the table's zero-based Gaussian/raw-coefficient/normaliser/increment indices while coefficientA and coefficientB retain the displayed manuscript indices; 33–88 defines the separately represented model; 106–170 gives the three conditional conclusions. SKValue/GroundState/MainConclusions.lean 13–27 and Main.lean 16–27 construct a diffusion for an assumed minimiser, not a minimiser. The new model-comparison table names translations still required for controls, laws, values, derivatives, minimisation and common witnesses. Definition comparison is not a proved cross-API conversion or a local replay. The support-model chord derivative is sequential in Lean; coefficient convexity gives the full feasible right derivative as an ordinary deduction for that same model, without a new Lean declaration."
     },
     {
       "anchor": "qaoa",
-      "text_sha256": "9ca135685deb5ad28d51d54c86852063b59d048266d20a3b9ae56959cac98062",
+      "text_sha256": "0bcb853f440e980cfc795daf00b5b8c6f9c861b75f7b0dee9d00b6ed969fce69",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
       "citation_ids": [
+        "bfmvz2022_tree_transfer",
+        "fggz2022_fixed_depth",
         "qaoa_main_theorem",
         "qaoa_manuscript_arguments",
         "qaoa_routes",
@@ -317,15 +336,17 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "source_argument",
-      "rationale": "QAOA sections/03-classical-optimization.tex lines 132–218 proves rooted Gaussian realization and first-chaos energy identity; later density/exclusion lemmas give a bounded formula. sections/04-classical-synthesis.tex thm:classical-synthesis and prop:helper-contraction supply seeded synthesis; sections/05-seed-simulation.tex lem:seed-one-echo and lem:seed-gram-induction supply seed removal and energy identification; sections/02-foundations.tex prop:tree-transfer and energy argument supply fixed-word transfer; sections/06-assembly.tex lines 8–53 fixes errors and choice order. These manuscript arguments exceed both retained formal targets."
+      "rationale": "Q sections/01-introduction.tex 76–119 fixes the Pauli cost/mixer model, plus-state circuit, real angle vectors and thermodynamic-first quantifiers; the revised passage expands the standard matrix and plus-state notation and defines the fixed finite word explicitly. sections/02-foundations.tex 178–209 and 293–357 supplies the root shift, covariance rule, compatible embeddings and first-chaos projection; sections/03-classical-optimization.tex lem:gaussian-rooted-realization (132–218) supplies orthonormal induction, parity/centring and the adjacent-correlation energy identity. The later classical-density/colour-exclusion lemmas, sections/04-classical-synthesis.tex thm:classical-synthesis/prop:helper-contraction, and sections/05-seed-simulation.tex thm:seed-simulation/lem:seed-one-echo/lem:seed-gram-induction retain distinct construction obligations. Foundations prop:tree-transfer (17–45) fixes the (D+1)-regular-tree positive-cost normalisation; its occupation interpretation (53–60) and prop:energy number-operator definition and remainder argument (213–250, within 191–266) distinguish excited child-subtree factors from physical spins and justify the separate bound on occupation divided by D+1. Basso, Farhi, Marwaha, Villalonga and Zhou, arXiv:2110.14206v3, Theorem 1, equations (2.3), (2.6), (6.1)–(6.3) and selected §6 proof entries, is the inspected full-preprint destination; the shorter TQC 2022 edition is distinguished and not substituted. sections/06-assembly.tex 8–53 fixes the word before n→∞. These remain manuscript arguments beyond both retained analytic Lean targets; no uniform-in-depth transfer or complete circuit-proof acceptance is asserted."
     },
     {
       "anchor": "alternative",
-      "text_sha256": "32713076ca62c68046b83b3dba5446ec05de376296df5858b3eb5b7711cb7162",
+      "text_sha256": "97f66d02e5f92e4339d51ba71a138ab8aed855ffd21274f67a029d5416d43a6a",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
       "citation_ids": [
+        "eams2023_finite_step",
+        "lopatto2026_interval_support",
         "qaoa_main_theorem",
         "qaoa_manuscript_arguments",
         "qaoa_routes",
@@ -335,11 +356,11 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "source_argument",
-      "rationale": "QAOA sections/07-positive-temperature.tex lines 85–144 defines positive-temperature support endpoint, rescaled PDE and value estimate; lem:eams-finite-step (lines 300–449), lem:eams-positive-continuum (462–532) and lem:classical-strong-limit (549–697) supply separate finite-step, continuum and occupation/energy steps. The source gives an alternative scalar route, not a consequence of the zero-temperature formal interfaces."
+      "rationale": "Q sections/07-positive-temperature.tex 61–76 and 139–208 derives the positive-temperature log-sum squeeze and scalar value bound, independently of the zero-temperature companion. Its finite-tree recursions (218–320) now support the explicit iid Gaussian initialisation, directed-edge/vertex message sums, D versus D+1 normalisers, Euler updates, c_D,r factors, output z_i^L and one-step lag; fixed-step convergence and regularity checks (284–449), continuum estimate (462–532) and strong occupation/energy step (549–697) have distinct degree, mesh and operator roles. Lopatto arXiv:2607.11756v3 Theorem 1.1 supplies the separate support hypothesis; the cited v3 is retained. Direct comparison with El Alaoui–Montanari–Sellke arXiv:2111.06813v2, Proposition 2.1 p.7, Lemma 2.8 equation (2.21) and proof p.9, Theorem 4.1 equation (4.5) p.13, Lemma 4.3 equation (4.6) p.14, and Proposition 4.7 equation (4.18) p.16 supports the local missing-1/k and shifted-endpoint observations. Reindexing r=ℓ−1 gives 1,…,L−1; Q 328–341 and 396–397 supplies the spatial Lipschitz bound for a needed in this application. This comparison is recorded through direct primary links and the reading ledger; qaoa_manuscript_arguments denotes Q, not an unrecorded EAMS graph source. Only the local display comparison is discharged, not the whole EAMS theorem or Q appendix/circuit proof. Exact EAMS v2 displayed-formula counterwitnesses are local checks; Q corrects the factor and endpoint indexing, and the continuum/general theorem is not independently certified."
     },
     {
       "anchor": "obligations",
-      "text_sha256": "e48c479da6e5df3a9cb49e6caab5bbcc780359eb4b430a1e9f402f6f7dd1e1bd",
+      "text_sha256": "64e546e0a0da8c3c176cf025fbaa4a7a217f843d8534c300b622a705dc845783",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -365,11 +386,11 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "open_question",
-      "rationale": "Source reconstruction of obligations. Exact manuscript labels, source sections and formal declaration destinations are named in the passage. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
+      "rationale": "O1 remains the cross-model and common-witness conversion described by SKFullSupport.lean 12–79 and SKValue.lean 33–88. O2 is explicitly receipt-bound: evidence-graph.json 605–750 retains original not_run observations and the later unavailable full-support Comparator startup; context/verification/linux-4341-tool-validation.json 257–284 concerns Minimal extraction and excludes research-target Comparator certification. O3–O7 remain substantive analytic, scalar-to-circuit, construction, exact-edition and reader obligations. The index table and EAMS-v2 comparison narrow particular explanatory gaps but do not discharge full correspondence, external-application or circuit review. The shortcut list records logical insufficiencies, not invented historical failed attempts. All graph statuses and unresolved IDs are preserved."
     },
     {
       "anchor": "verification",
-      "text_sha256": "2f66868c59f4fa2487b6a9ba9169896564be816b05f61504b63cb15b557bba74",
+      "text_sha256": "a31985808c09d96a9c36b7df6eac844b1429976e2463c9aa2e4a28a737fbac30",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -395,13 +416,14 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "Source reconstruction of verification. Exact manuscript labels, source sections and formal declaration destinations are named in the passage. Hypotheses and source/verification boundaries are preserved; correspondence is not a claim of proof equivalence."
+      "rationale": "The pinned source lock retains 347 OAI modules and the stated Lean/mathlib metadata. This revision reproduced audit-sources over 387 locked plus 2 derived files and the supplied check_certificate.py with SymPy 1.14.0: exact identity, 22 positive remainder terms, surplus 140507/1521000000; the initial missing-SymPy attempt remains in the separate validation record. Existing artifact validation checks graph/document/passage byte bindings and declared scope, as defined in contracts.py 328–399 and bundle.py 219–254, not mathematical entailment. Graph records 605–750 retain the original not_run research checks and a distinct unavailable full-support Comparator startup, with no completed research replay. context/verification/linux-4341-tool-validation.json 2–3 and 257–284 scopes its successes to tools, fixtures and Minimal extraction; clean-clone-validation.json 99–123 supplies a documentation delta, not a new proof receipt. Historical negative, unavailable and timed-out synthetic receipts remain distinct. No source-bound research-target replay, transitive axiom audit, Nanoda result or complete independent proof acceptance is created by this revision."
     }
   ],
   "review_state": "not_reviewed",
   "review_notes": [
     "Draft source reconstruction. Read full-support contact/gap argument, rational certificate, scalar consequences, exact formal interfaces and selected implementation spines; traced QAOA construction dependencies and error ordering. Bounded source and adversarial readings informed revisions. Complete independent mathematical acceptance and reader reconstruction remain pending.",
     "Exact finite polynomial identity from FS cert:identity re-expanded with check_certificate.py and SymPy 1.14.0: all 22 positive remainder terms matched; surplus 140507/1521000000. This checks no analytic hypothesis or Lean result.",
-    "Primary bibliographic metadata and selected cited theorem hypotheses compared with stated editions; not a complete audit of all cited proofs. Distinct model representations, derivative formulations and ratio-at-zero handling remain explicit correspondence obligations."
+    "Primary bibliographic metadata and selected cited theorem hypotheses compared with stated editions; not a complete audit of all cited proofs. Distinct model representations, derivative formulations and ratio-at-zero handling remain explicit correspondence obligations.",
+    "23 October 2026: source-grounded synthesis of returns 07/09/11/12; author and agent comparison only. New example calculations and changed passages have byte bindings; draft review state is retained pending independent reader reconstruction and research verification."
   ]
 }

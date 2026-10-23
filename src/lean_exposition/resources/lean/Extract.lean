@@ -91,6 +91,11 @@ private def inspect : CoreM Json := do
       ("line", ranges?.map (fun r => toJson r.range.pos.line) |>.getD Json.null),
       ("column", ranges?.map (fun r => toJson r.range.pos.column) |>.getD Json.null),
       ("end_line", ranges?.map (fun r => toJson r.range.endPos.line) |>.getD Json.null)]
+    -- Lean stores `partial def` as opaqueInfo, whose isPartial accessor returns
+    -- false. OpaqueVal does not retain the partial modifier, so report unknown.
+    let partialStatus := match ci with
+      | .opaqueInfo _ => Json.null
+      | _ => toJson ci.isPartial
     declarations := declarations.push <| Json.mkObj [
       ("name", toJson n.toString), ("kind", toJson (declarationKind ci)),
       ("type", toJson ty), ("type_dependencies", namesJson typeDeps),
@@ -98,9 +103,11 @@ private def inspect : CoreM Json := do
       ("structural_dependencies", namesJson structuralDeps),
       ("axioms", namesJson axioms),
       ("has_sorry", toJson (axioms.contains ``sorryAx)),
+      ("is_unsafe", toJson ci.isUnsafe),
+      ("is_partial", partialStatus),
       ("body_available", toJson value?.isSome), ("source", source)]
   return Json.mkObj [
-    ("schema_version", toJson (1 : Nat)),
+    ("schema_version", toJson (2 : Nat)),
     ("module", toJson __LEAN_EXPOSITION_MODULE__),
     ("roots", namesJson roots), ("module_prefixes", namesJson prefixes),
     ("declarations", toJson declarations), ("external_dependencies", toJson externals),

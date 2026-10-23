@@ -16,7 +16,7 @@ convergence.
 
 | File | Purpose |
 | --- | --- |
-| [reasoning-record.md](reasoning-record.md) | Authored long manuscript; source links and obligations O1–O7 |
+| [reasoning-record.md](reasoning-record.md) | Authored long manuscript; source links and correspondence obligations |
 | [reasoning-record.json](reasoning-record.json) | Draft stage mapping, source graph hash and exact passage bindings |
 | [references.bib](references.bib) | Primary literature, exact editions and distinct citation keys |
 | [check_certificate.py](check_certificate.py) | Reproducible rational polynomial identity from the full-support manuscript |
@@ -34,11 +34,13 @@ Complete independent mathematical acceptance, formal replay and a reader
 reconstruction study remain pending. The mapping therefore stays draft with
 review_state not_reviewed.
 
-The source comparison preserves differences between manuscript and formal
-proof architecture: discrete convex-chord variation versus the manuscript's
-full directional derivative; half-line quotient integration versus smooth
-extensions at zero; and separately represented SKSupport and SKValue models.
-These are correspondence obligations, not demonstrated source theorem defects.
+The source comparison distinguishes the sampled convex-chord declaration
+from the manuscript's full right-derivative statement. Coefficient convexity
+gives an ordinary bridge for the same support functional; the Lean declaration
+itself remains sequential. The record also compares half-line quotient
+integration with smooth extensions at zero, and keeps SKSupport and SKValue
+as separate representations. These are correspondence questions, not
+demonstrated source theorem defects.
 
 ## Finite certificate check
 
@@ -67,5 +69,6 @@ Montanari's article appeared online in 2021 and in the 2025 journal issue.
 
 Primary metadata and selected theorem hypotheses were inspected.
 This is not a claim that every cited proof was independently checked.
-Public writing-method sources are credited in the manuscript's final
-section and are kept distinct from mathematical inputs.
+The manuscript follows the writing discipline of the public Erdős papers:
+state the exact theorem, develop its decisive step, and keep formal and
+circuit conclusions distinct. Writing models are not mathematical inputs.

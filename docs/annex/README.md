@@ -35,6 +35,16 @@ from the full preprint must cite that edition: proceedings Section 6 instead
 discusses Max-q-XORSAT. This retained PDF cannot substitute for a full-version
 locator merely because the title and authors match.
 
+A separate reading on 23 October 2026 inspected Section 6, pp. 14–18, of
+[arXiv:2110.14206v3](https://arxiv.org/abs/2110.14206v3), including the
+fixed-word SK/large-degree identity, and selected supporting sections listed
+in [references.json](../references.json). This closes the earlier access gap
+without changing the proceedings-only reading recorded above. The full
+preprint is kept in the private source annex: its exact v3 record uses arXiv's
+non-exclusive distribution licence, so the publisher PDF's CC-BY-4.0 licence
+must not be transferred to it. The reading is not an independent check of every
+auxiliary proof or of increasing-depth optimality.
+
 ### Farhi, Goldstone, Gutmann and Zhou (2022)
 
 [The Quantum Approximate Optimization Algorithm and the Sherrington-Kirkpatrick
@@ -59,6 +69,8 @@ selection has its own Apache-2.0 licence and retained source headers. It is
 read-only reference material here, not a complete buildable checkout.
 
 ## Coverage and reuse
+
+The Prove2Me platform paper, arXiv:2608.28433v2, was read for its theorem/proof object model, mission audit, proof-sketch and case-study limits. Its PDF and version record remain in the private source annex because the exact arXiv record gives no general downstream redistribution licence; [references.json](../references.json) records the edition, hashes and reading scope. No platform paper or current metadata intake is evidence of independent review of this project.
 
 The other mathematical references remain links and metadata in
 [the literature guide](../literature.md); their PDFs are not redistributed.
