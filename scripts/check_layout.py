@@ -106,6 +106,13 @@ def read_policy(tree: CandidateTree) -> dict:
             not isinstance(p, str) or not portable_path(p.rstrip("/")) for p in value
         ) or len(set(value)) != len(value):
             raise LayoutError(f"layout policy {field} must contain unique relative paths")
+    aliases = policy.get("entry_aliases", {})
+    if not isinstance(aliases, dict) or any(
+        not isinstance(alias, str) or "/" in alias or not portable_path(alias)
+        or not isinstance(target, str) or "/" in target or not portable_path(target)
+        or alias == target for alias, target in aliases.items()
+    ):
+        raise LayoutError("layout policy entry_aliases must map root files to their entry owner")
     return policy
 
 
@@ -150,31 +157,38 @@ def check(root: Path, *, index: bool = False) -> dict:
                 errors.append(str(exc))
                 return ""
 
-        targets = readme_targets(text("README.md"))
-        local_targets = set()
-        for target in sorted(targets):
-            try:
-                url = urlsplit(target)
-            except ValueError:
-                errors.append(f"malformed README link: {target}")
-                continue
-            if url.scheme or url.netloc or not url.path:
-                continue
-            path = unquote(url.path)
-            while path.startswith("./"):
-                path = path[2:]
-            local_targets.add(path.rstrip("/"))
-            if not portable_path(path.rstrip("/")):
-                errors.append(f"README link leaves the portable tree: {target}")
-            elif path.rstrip("/") not in existing and not any(p.startswith(path.rstrip("/") + "/") for p in existing):
-                errors.append(f"README link has no candidate destination: {target}")
+        def local_links(document: str, label: str) -> set[str]:
+            local_targets = set()
+            for target in sorted(readme_targets(document)):
+                try:
+                    url = urlsplit(target)
+                except ValueError:
+                    errors.append(f"malformed {label} link: {target}")
+                    continue
+                if url.scheme or url.netloc or not url.path:
+                    continue
+                path = unquote(url.path)
+                while path.startswith("./"):
+                    path = path[2:]
+                local_targets.add(path.rstrip("/"))
+                if not portable_path(path.rstrip("/")):
+                    errors.append(f"{label} link leaves the portable tree: {target}")
+                elif path.rstrip("/") not in existing and not any(p.startswith(path.rstrip("/") + "/") for p in existing):
+                    errors.append(f"{label} link has no candidate destination: {target}")
+            return local_targets
+
+        local_targets = local_links(text("README.md"), "README")
         for target in policy["readme_map"]:
             if target.rstrip("/") not in local_targets:
                 errors.append(f"README map is missing a link to {target}")
         entry = text("AGENTS.md")
+        local_links(entry, "AGENTS.md")
         for reference in policy["entry_references"]:
             if reference not in entry:
                 errors.append(f"AGENTS.md is missing its entry reference: {reference}")
+        for alias, target in policy.get("entry_aliases", {}).items():
+            if target not in local_links(text(alias), alias):
+                errors.append(f"{alias} must link to its entry owner: {target}")
         try:
             project = tomllib.loads(text("pyproject.toml"))
             command = project.get("project", {}).get("scripts", {}).get("lean-exposition")

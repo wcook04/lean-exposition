@@ -5,17 +5,18 @@
     ".gitattributes": "Git text and distribution conventions",
     ".gitignore": "Unmaintained local output exclusions",
     ".python-version": "Optional Python version selection",
-    "AGENTS.md": "Contributor entry instructions",
+    "AGENTS.md": "Canonical agent routing and working instructions",
     "CHANGELOG.md": "Release notes",
     "CITATION.cff": "Software citation metadata",
     "CONTRIBUTING.md": "Contribution instructions",
     "LICENSE": "Repository license",
     "Makefile": "Optional developer command entry",
     "NOTICE": "Copyright and attribution notices",
-    "README.md": "User entry, runnable example and repository map",
+    "README.md": "Human introduction, reading routes, runnable example and repository map",
     "SECURITY.md": "Security reporting instructions",
     "pyproject.toml": "Python package and command interface",
-    "uv.lock": "Optional dependency lock"
+    "uv.lock": "Optional dependency lock",
+    "CLAUDE.md": "Thin Claude entry pointing to AGENTS.md"
   },
   "directory_roles": {
     ".github": "Hosted checks and repository automation",
@@ -30,30 +31,33 @@
   },
   "required_paths": [
     "AGENTS.md",
+    "CLAUDE.md",
     "LICENSE",
     "README.md",
-    "pyproject.toml",
+    "docs/README.md",
     "docs/authoring.md",
     "docs/contracts.md",
     "docs/repository_layout.json",
+    "examples/README.md",
     "examples/minimal/Minimal.lean",
     "lean/README.md",
     "papers/README.md",
+    "pyproject.toml",
     "scripts/check_layout.py",
     "skills/README.md",
-    "skills/source-to-graph/SKILL.md",
     "skills/graph-to-long/SKILL.md",
     "skills/long-to-short/SKILL.md",
     "skills/record-to-expository/SKILL.md",
+    "skills/source-to-graph/SKILL.md",
     "src/lean_exposition/__init__.py",
     "src/lean_exposition/cli.py",
     "src/lean_exposition/resources/lean/Extract.lean",
-    "src/lean_exposition/resources/schemas/graph.schema.json",
     "src/lean_exposition/resources/schemas/artifact.schema.json",
     "src/lean_exposition/resources/schemas/bundle.schema.json",
+    "src/lean_exposition/resources/schemas/graph.schema.json",
+    "src/lean_exposition/resources/templates/expository.md",
     "src/lean_exposition/resources/templates/long.md",
     "src/lean_exposition/resources/templates/short.md",
-    "src/lean_exposition/resources/templates/expository.md",
     "tests/test_layout.py"
   ],
   "readme_map": [
@@ -69,7 +73,19 @@
   ],
   "entry_references": [
     "README.md",
+    "CONTRIBUTING.md",
     "docs/contracts.md",
-    "scripts/check_layout.py"
-  ]
+    "docs/README.md",
+    "docs/repository_layout.json",
+    "skills/README.md",
+    "skills/source-to-graph/SKILL.md",
+    "skills/graph-to-long/SKILL.md",
+    "skills/long-to-short/SKILL.md",
+    "skills/record-to-expository/SKILL.md",
+    "scripts/check_layout.py",
+    "scripts/check_links.py"
+  ],
+  "entry_aliases": {
+    "CLAUDE.md": "AGENTS.md"
+  }
 }

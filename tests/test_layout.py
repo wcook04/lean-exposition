@@ -32,6 +32,8 @@ class LayoutTests(unittest.TestCase):
         ) + "\n"
         self.write("README.md", self.readme)
         self.write("AGENTS.md", "\n".join(POLICY["entry_references"]) + "\n")
+        for alias, target in POLICY.get("entry_aliases", {}).items():
+            self.write(alias, f"Go to [{target}]({target}).\n")
         self.write("pyproject.toml", '[project.scripts]\nlean-exposition = "lean_exposition.cli:main"\n'
                    '[tool.setuptools.package-data]\nlean_exposition = ["resources/**/*"]\n')
         self.write(".github/workflows/ci.yml", "name: fixture\n")
@@ -122,6 +124,27 @@ class LayoutTests(unittest.TestCase):
     def test_stale_readme_link_is_detected(self):
         self.write("README.md", self.readme + "\n[Missing](docs/missing.md)\n")
         self.assert_error("README link has no candidate destination")
+
+    def test_staged_agent_route_is_checked_even_when_working_is_repaired(self):
+        original = (self.root / "AGENTS.md").read_text()
+        self.write("AGENTS.md", original + "\n[Old route](docs/missing-owner.md)\n")
+        self.git("add", "AGENTS.md")
+        self.write("AGENTS.md", original)
+        self.assert_valid()
+        self.assert_error("AGENTS.md link has no candidate destination", index=True)
+
+    def test_staged_claude_pointer_must_reach_canonical_entry(self):
+        self.write("CLAUDE.md", "Go to [README.md](README.md).\n")
+        self.git("add", "CLAUDE.md")
+        self.write("CLAUDE.md", "Go to [AGENTS.md](AGENTS.md).\n")
+        self.assert_valid()
+        self.assert_error("CLAUDE.md must link to its entry owner: AGENTS.md", index=True)
+
+    def test_invalid_entry_alias_policy_fails_clearly(self):
+        policy = copy.deepcopy(POLICY)
+        policy["entry_aliases"] = {"CLAUDE.md": "../AGENTS.md"}
+        self.write("docs/repository_layout.json", json.dumps(policy))
+        self.assert_error("entry_aliases must map root files")
 
     def test_map_accepts_leading_dot_and_optional_trailing_slash(self):
         self.write("README.md", "# Fixture\n" + "\n".join(

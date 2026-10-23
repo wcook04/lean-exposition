@@ -1,24 +1,113 @@
 # lean-exposition
 
-Turn a selected Lean goal and its checking evidence into a traceable starting point
-for mathematical writing. The local CLI collects pinned sources, extracts declaration
-dependencies, validates an evidence graph, prepares **empty** long-record,
-short-paper and expository-paper scaffolds, and packages authored papers with their
-claim and citation mappings.
+**From formal proofs to mathematics people can understand.**
 
-Start by reading the [QAOA / SK source example](examples/qaoa-sk/README.md), or run
-the offline workflow below. The example keeps OpenAI's full-support and scalar-value
-formal targets separate from the manuscript's broader QAOA convergence argument.
+[Lean](https://lean-lang.org/) is a language and proof assistant that checks
+precisely stated mathematical arguments. A checked proof gives a reader something
+valuable to inspect, but understanding it still takes work: what is the question,
+which idea makes the proof work, and why does the result matter?
 
-The worked drafts develop that example as a
-[long reasoning record](papers/qaoa-sk/long/reasoning-record.md), a
-[short mathematical paper](papers/qaoa-sk/short/paper.md), and an
-[exposition](papers/qaoa-sk/expository/main.md). See the
-[paper bundle workflow](papers/README.md) to assemble all three.
+lean-exposition helps authors turn a selected result and its supporting sources
+into three complementary documents: a detailed reasoning record, a focused
+research paper, and an explanation for readers learning the subject. Each keeps
+a route back to the statements, assumptions and sources it uses. You can read
+the [worked papers](#read-the-worked-example) without installing anything.
 
-[Contracts](docs/contracts.md) · [Authoring skills](skills/README.md) ·
-[Lean and Comparator](docs/verification.md) · [Prove2Me](docs/prove2me.md) ·
-[Bundle consumers](docs/bundle-consumers.md) · [Research sources](docs/literature.md)
+## Why this project exists
+
+As more mathematics is developed with AI and formal proof tools, the amount of
+checkable material can grow faster than people's ability to understand it.
+A long list of definitions and lemmas rarely tells a mathematician which idea
+deserves their attention. A short summary can hide the very condition on which
+an argument depends.
+
+Different readers need different accounts of the same mathematics. A specialist
+wants the result, its relation to the literature and the main proof. Someone
+learning the subject needs the objects introduced, examples they can calculate,
+and an explanation of why each step is useful. Someone checking a difficult step
+needs enough detail to reconstruct it.
+
+The aim is to make all three accounts useful while keeping their mathematical
+claims consistent. The project combines writing methods, tools for tracking
+sources and checks, and worked drafts that show how the methods can be applied.
+
+## Three documents, three jobs
+
+| Document | What it helps you do |
+| --- | --- |
+| **Long reasoning record** | Reconstruct the argument, including supporting derivations, assumptions, source references and unresolved questions. |
+| **Short research paper** | See the main result and proof in the language of the relevant literature, with routes to the details. |
+| **Expository paper** | Learn a selected result through definitions, examples and the ideas behind the proof, with prerequisites stated at the outset. |
+
+These are different writing tasks, not fixed page counts. An exposition may draw
+directly on the detailed record and original sources. Shortening an argument
+must preserve the conditions under which it is valid.
+
+## Read the worked example
+
+Imagine choosing an up or down direction for each of many interacting spins.
+Some pairs favour the same direction; others favour opposite directions. Finding
+the best arrangement is an optimisation problem. The **Sherrington–Kirkpatrick
+(SK) model** studies a random version of this problem. The **Quantum Approximate
+Optimization Algorithm (QAOA)** is a quantum algorithm for seeking good solutions
+to optimisation problems.
+
+The example starts from the manuscripts and Lean sources accompanying OpenAI's
+[QAOA / SK result](https://lowrank.github.io/latent-seminar/OpenAI-Math/281-qaoa-sk-parisi-support).
+The broader manuscript studies whether this algorithm can approach the model's
+best attainable energy. Our drafts concentrate on a mathematical ingredient:
+the function used to calculate that value. Under the stated hypotheses, an optimal
+choice of this function cannot be flat across any interval below its endpoint.
+The drafts explain why this property matters and how the argument works.
+
+Start with the account that suits your purpose:
+
+- **[Exposition](papers/qaoa-sk/expository/main.md):** begin with a two-spin
+  calculation, then build up the objects and the no-gap argument. It assumes
+  calculus, expectations and elementary linear algebra.
+- **[Short paper](papers/qaoa-sk/short/paper.md) · [PDF](papers/qaoa-sk/short/paper.pdf):**
+  follow the full-support argument and its scalar consequence. This is the
+  specialist account, using stochastic calculus and variational arguments.
+- **[Long reasoning record](papers/qaoa-sk/long/reasoning-record.md):** inspect
+  the derivations, source destinations and further steps needed for the broader
+  QAOA claim.
+
+These are drafts of explanations of existing results; mathematical and reader
+review remain open. The retained Lean interfaces cover the full-support and
+scalar-value statements, not the whole QAOA convergence claim. The
+[source guide](examples/qaoa-sk/README.md) identifies their exact scope and
+recorded check status. See the [papers guide](papers/README.md) to assemble the
+three drafts into one portable bundle.
+
+### YouTube walkthrough — coming soon
+
+A planned walkthrough will start with a concrete example, explain the question
+and the key proof idea, then show how to follow the same mathematics through the
+papers and Lean sources. The video link will appear here once it is available.
+
+## Use the workflow for another result
+
+Start with one result you want to explain and identify the sources and arguments
+it depends on. Record those relationships in an **evidence graph**: a structured
+file connecting mathematical claims to their assumptions, citations and recorded
+checks. It gives the writer a source map and lets a reviewer follow a passage
+back to its support.
+
+The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
+cover selecting the material, reconstructing an argument, writing for specialists
+and teaching it to a stated audience. They include methods illustrated by
+[eight Erdős problem corpora](docs/erdos-method-transfer.md).
+
+The software is a local Python command-line tool. It collects exact source
+versions, extracts dependencies from Lean projects, checks the graph and packages
+authored papers with their source mappings. A human or an AI assistant supplies
+the mathematics and prose. The `scaffold` command creates empty writing templates;
+`assemble` packages documents that have already been written.
+
+Review has two distinct questions: does the writing faithfully describe the
+mathematics, and can its intended reader follow it? Use answers to revise both
+the document and the writing method. Automated checks catch missing references
+and changed text; they cannot answer those questions for the reader.
 
 ## First run
 
@@ -28,124 +117,72 @@ Python 3.11 or newer is required. From a checkout:
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install .
-lean-exposition audit-sources examples/qaoa-sk/source-lock.json --root examples/qaoa-sk
-lean-exposition validate examples/qaoa-sk/evidence-graph.json
-lean-exposition scaffold examples/qaoa-sk/evidence-graph.json --out build/qaoa-sk
-lean-exposition check-bundle build/qaoa-sk
-lean-exposition export build/qaoa-sk --out build/qaoa-sk.zip
+lean-exposition validate examples/minimal/evidence-graph.json
+lean-exposition inspect examples/minimal/evidence-graph.json
 ```
 
-After installation, these commands need no network or Lean installation. The first
-command checks every locked source and derived configuration. The resulting bundle
-contains a graph, three empty Markdown templates, their correspondence records and a
-hashed manifest. The paper state is `scaffold`; no paper or mathematical review has
-been generated. The checked-in QAOA graph is a curated source intake, with extraction
-and formal replay explicitly marked `not_run`.
+After installation, these two commands work offline without Lean. They read a
+saved extraction of a small proof: from “P and Q”, conclude “Q and P”. The JSON
+output shows the selected result, its helper lemma and the recorded build and
+extraction checks. Imported definitions remain explicitly outside the inspected
+module. The [minimal example](examples/minimal/README.md) explains how to rerun
+the extraction with the pinned Lean toolchain.
 
-To choose the companion formal target or the whole manuscript's question, use
-`select` before `scaffold`:
+To create an empty writing bundle:
 
 ```sh
-lean-exposition select examples/qaoa-sk/evidence-graph.json --goal scalar_value --out build/value-selection.json
+lean-exposition scaffold examples/minimal/evidence-graph.json --out build/minimal
+lean-exposition check-bundle build/minimal
+lean-exposition export build/minimal --out build/minimal.zip
 ```
 
-See the graph's `nodes` for available IDs. Selection retains all evidence and computes
-the relevant closure; it does not delete inconvenient open obligations.
+The ZIP contains the graph, three Markdown templates, their mapping records and
+a manifest listing the files and hashes. To package the existing authored papers
+instead, follow the [assembly commands](papers/README.md#assemble-the-authored-bundle).
+The [consumer guide](docs/bundle-consumers.md) explains how another application
+can read a bundle without depending on this CLI.
 
-## From Lean to evidence
+## Sources and verification
 
-The [minimal example](examples/minimal/README.md) proves a conjunction swap using
-only Lean's standard library. With its pinned toolchain installed:
+The [examples guide](examples/README.md) covers three starting points:
+a local Lean project, a pinned collection of manuscripts and formal sources,
+or a public theorem on [Prove2Me](docs/prove2me.md).
 
-```sh
-lean-exposition extract examples/minimal --module Minimal --goal Minimal.result --build --timeout 600 --out build/minimal-graph.json
-lean-exposition scaffold build/minimal-graph.json --out build/minimal
-```
+The Prove2Me adapter preserves public theorem identifiers, decomposition links
+and platform status. Its intake is partial: it does not download proof bodies
+or turn a platform's “Proved” label into a local proof check.
 
-The extractor reads elaborated expressions. It records separate references from
-statement types, proof values and inductive structure, plus transitive axioms.
-Dependencies outside the chosen module prefixes remain visible boundary nodes.
-This is not a tactic trace or an automatically reconstructed mathematical argument.
-The [saved minimal extraction](examples/minimal/evidence-graph.json) records an
-actual run, with the two local declarations checked and imported dependencies
-retained as external boundaries. Its [receipts](examples/minimal/receipts/)
-keep build, extraction and Comparator outcomes separate.
-
-Comparator is an optional real tool, with version and platform requirements:
-
-```sh
-lean-exposition comparator examples/minimal --config comparator.json --out build/comparator.json
-```
-
-A nonpassing invocation writes its receipt and exits nonzero. On platforms without
-the required sandbox, it reports `unavailable`. The OpenAI corpus uses an earlier
-Lean version and the standalone Comparator interface; read the
-[verification guide](docs/verification.md) before attempting it. Source hashes,
-Lean builds, Comparator checks, mathematical review and reader understanding remain
-separate kinds of evidence.
-
-## From Prove2Me
-
-The optional adapter reads a public theorem and its public decomposition into the
-same evidence graph. Supply an existing API key through `PROVE2ME_API_KEY` or a
-credential file outside this repository:
-
-```sh
-lean-exposition prove2me https://prove2.me/theorems/e9f7d6cb-af95-435c-b432-ce5018f08276 --out build/prove2me
-```
-
-It preserves platform IDs, the upstream source link, the platform environment and
-the observation date. A platform's `Proved` label is recorded as platform evidence;
-it does not become a local Lean or Comparator result. Proof bodies are not downloaded,
-so the result is explicitly partial. The [adapter guide](docs/prove2me.md) explains
-authentication, limits and how to scaffold its graph. There is no upload operation.
-
-## Writing stages
-
-| Transition and instructions | Current implementation |
-| --- | --- |
-| [Sources and checks → graph](skills/source-to-graph/SKILL.md) | Intake, extraction and validation |
-| [Graph → long reasoning record](skills/graph-to-long/SKILL.md) | Empty template and claim mappings |
-| [Long record → short paper](skills/long-to-short/SKILL.md) | Empty template and selection method |
-| [Source-backed record → exposition](skills/record-to-expository/SKILL.md) | Empty template and reader review method |
-
-Writers supply the argument and prose. A passage records its claims, assumptions,
-citations and exact text hash. Shortening a paper may omit routine detail, but it
-must preserve the selected result, its validity conditions and a route to the full
-argument. The checker catches missing references and stale bindings; it does not
-judge whether a fluent sentence faithfully explains a theorem.
-
-The offline workflow needs only Python and the installed package. The bundle is a
-local interface that another application can consume.
-
-Use `lean-exposition inspect GRAPH` to read a goal's evidence and dependencies,
-or `lean-exposition inspect-bundle BUNDLE` for a validated directory or ZIP. The
-[consumer guide](docs/bundle-consumers.md) includes an independent reader and the
-`assemble` command for packaging authored Markdown and mapping pairs. The
-[Erdős method examples](docs/erdos-method-transfer.md) show concrete approaches
-to selecting, preserving and explaining an argument.
+For local sources, the [verification guide](docs/verification.md) explains Lean
+builds, dependency extraction and the optional Comparator tool. The saved minimal
+example has an actual build and extraction. The larger QAOA / SK graph is curated
+from source, with its extraction and formal replay marked `not_run`. A source hash,
+a successful build and a mathematical review answer different questions; the
+records preserve those distinctions.
 
 ## Repository map
 
-| Location | Owner |
+| Location | What you will find |
 | --- | --- |
-| [src/lean_exposition/](src/lean_exposition/) | CLI, contracts, intake, bundle and Lean/Prove2Me adapters; packaged schemas/templates |
-| [examples/](examples/) | Small Lean proof and licensed pinned QAOA / SK corpus |
-| [lean/](lean/) | Extractor entry and its boundary |
-| [papers/](papers/) | Long, short and expository mathematical drafts with source correspondence |
-| [skills/](skills/) | Four portable transition methods and routing index |
-| [docs/](docs/) | Contracts, authoring, verification, layout policy and [licensed research readings](docs/annex/) |
-| [tests/](tests/) | Offline contract, source, packaging and layout regressions |
-| [scripts/](scripts/) | Repository checks |
-| [.github/](.github/) | CI definition; no publishing workflow |
+| [papers/](papers/) · [reading guide](papers/README.md) | The long record, short paper and exposition, with their source mappings |
+| [examples/](examples/) · [example guide](examples/README.md) | The small Lean proof, pinned QAOA / SK corpus, Prove2Me intake and independent bundle reader |
+| [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
+| [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |
+| [src/lean_exposition/](src/lean_exposition/) | Python CLI and library, with packaged schemas and templates |
+| [lean/](lean/) | Lean extractor entry and integration guide |
+| [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
+| [scripts/](scripts/) | Repository layout and link checks |
+| [.github/](.github/) | Continuous integration checks |
 
 ## Development and licence
 
-Run `python scripts/check_layout.py` and `python -m unittest discover -s tests -v`.
-Use `python scripts/check_layout.py --index` before committing staged changes.
-[CONTRIBUTING.md](CONTRIBUTING.md) explains checks and source intake.
+The [contribution guide](CONTRIBUTING.md) covers setup and validation; the
+[architecture and contracts](docs/contracts.md) describe the software's boundaries.
+Run `python scripts/check_layout.py`, `python scripts/check_links.py` and
+`python -m unittest discover -s tests -v` after a change. Use
+`python scripts/check_layout.py --index` to check the staged tree before committing.
 
 Original code and documentation are Apache-2.0; see [LICENSE](LICENSE) and
-[NOTICE](NOTICE). Vendored sources retain their own licences and attribution.
-The [source lock](examples/qaoa-sk/source-lock.json) records exact public URLs,
-revisions and content hashes. The literature annex records redistribution decisions.
+[NOTICE](NOTICE). Included upstream sources retain their own licences and credit.
+The [source lock](examples/qaoa-sk/source-lock.json) identifies exact revisions
+and content hashes. [Research references](docs/literature.md) and the
+[licensed readings](docs/annex/README.md) provide the supporting literature.
