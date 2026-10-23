@@ -1,0 +1,20 @@
+{
+  "decompositions": [
+    {
+      "children": [
+        {
+          "entity": "definition",
+          "id": "072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+        },
+        {
+          "entity": "definition",
+          "id": "a045c882-6fb6-4e72-8597-31d270c6cd54"
+        }
+      ],
+      "deprecated": false,
+      "omitted_children": 0,
+      "submission_id": null
+    }
+  ],
+  "theorem_id": "cbe4d178-ea2a-4afa-baed-b89df8166175"
+}

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lean-exposition"
+version = "0.1.0"
+description = "Pinned Lean evidence and traceable mathematical exposition bundles"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+dependencies = ["jsonschema>=4.23,<5"]
+
+[project.scripts]
+lean-exposition = "lean_exposition.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+lean_exposition = ["resources/**/*"]

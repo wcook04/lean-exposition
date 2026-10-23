@@ -1,0 +1,277 @@
+{
+  "description": "Curated source-review locators for the QAOA/SK drafts. This is an authored reading index, not an extracted evidence graph or a verification receipt. Paths are repository-root-relative; line intervals are one-based and inclusive.",
+  "upstream_revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sources": {
+    "full_support_interface": {
+      "path": "examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKFullSupport.lean",
+      "sha256": "d8694501338ef2719c0b22738ccc2aca29ddb94cfe82ce048b842f71279d4085",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean"
+    },
+    "full_support_implementation": {
+      "path": "examples/qaoa-sk/upstream/lean/OAI/Probability/SKSupport/Main.lean",
+      "sha256": "99bee3ef9c623855a5c0194b07b4ddb47ac76c3a3ff5b925c0ffa9b6ffd68cc6",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Main.lean"
+    },
+    "full_support_manuscript": {
+      "path": "examples/qaoa-sk/upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex",
+      "sha256": "81883e687493504caf10dbc250a34445eb24b3d3e45322fc02d2b655951e4310",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex"
+    },
+    "scalar_value_interface": {
+      "path": "examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKValue.lean",
+      "sha256": "1c059a9b0e733ab43a2944ee6af222191f12b27c14714582613e1d5ff99f1d6e",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKValue.lean"
+    },
+    "scalar_value_implementation": {
+      "path": "examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Main.lean",
+      "sha256": "390733e213a313ee1203cfec1be71022a601ee338b2c06202aae0bae75f83cb2",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Main.lean"
+    },
+    "scalar_value_assembly": {
+      "path": "examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+      "sha256": "5dea2e50a2b0c71e8e16ca222505c18bfddca0091ea9f81052bb604e350022c7",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/MainConclusions.lean"
+    },
+    "qaoa_introduction": {
+      "path": "examples/qaoa-sk/upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex",
+      "sha256": "b14a192b301cc839f84eeed4b36f6eb0e5842ed1da59cf09af5be37e7d767642",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex"
+    },
+    "full_support_configuration": {
+      "path": "examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKFullSupport.json",
+      "sha256": "15a00a19f702bd58a30ca37d606d67e9d5cbc41aeae2334c76b5b3c50d5bea6c",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.json"
+    },
+    "scalar_value_configuration": {
+      "path": "examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKValue.json",
+      "sha256": "6a6c5c7039e3a475c7f777375498ccff393b0d5334d2cee111ca3eeefab3ec11",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKValue.json"
+    },
+    "scope": {
+      "path": "examples/qaoa-sk/upstream/lean/docs/281.md",
+      "sha256": "244155dd6e7310ab65b1b4ec342c499149057fe90ae0aba8340a0c5bd656a072",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md"
+    },
+    "full_support_pdf": {
+      "path": "examples/qaoa-sk/upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf",
+      "sha256": "86256ac3e995c880c1f9075b3e2410d6cb5ca37e4f00ef6303c7605e87e1d3d8",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf"
+    },
+    "qaoa_pdf": {
+      "path": "examples/qaoa-sk/upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf",
+      "sha256": "4d07ebe181b03157398deef72b23eff8046183f67855d30f9e48e222550a44ba",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf"
+    }
+  },
+  "mappings": [
+    {
+      "id": "full_support",
+      "graph_ids": [
+        "full_support",
+        "lean.full_support",
+        "assumptions.full_support_minimizer"
+      ],
+      "relation": "curated_statement_correspondence",
+      "locations": [
+        {
+          "source": "full_support_interface",
+          "lines": [
+            17,
+            22
+          ],
+          "locator": "OrderParameter"
+        },
+        {
+          "source": "full_support_interface",
+          "lines": [
+            81,
+            92
+          ],
+          "locator": "FullSupportConclusion; full_support"
+        },
+        {
+          "source": "full_support_implementation",
+          "lines": [
+            19,
+            59
+          ],
+          "locator": "minimizer_full_support_actual; full_support"
+        },
+        {
+          "source": "full_support_manuscript",
+          "lines": [
+            119,
+            131
+          ],
+          "locator": "thm:full-support; eq:main-consistency"
+        }
+      ],
+      "review": "full-support-interface.md",
+      "boundary": "Every admissible integrable minimizer; existence of a minimizer is not a conclusion. The relative support domain is [0,1). The selected target does not state smoothness or positive density.",
+      "pdf_location": {
+        "source": "full_support_pdf",
+        "page": 2,
+        "locator": "Theorem 1.1; equation (1.6)"
+      }
+    },
+    {
+      "id": "scalar_value",
+      "graph_ids": [
+        "scalar_value",
+        "lean.value_consequences",
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "relation": "curated_statement_correspondence",
+      "locations": [
+        {
+          "source": "scalar_value_interface",
+          "lines": [
+            92,
+            100
+          ],
+          "locator": "hamiltonian; groundStateSequence; groundStateValue"
+        },
+        {
+          "source": "scalar_value_interface",
+          "lines": [
+            106,
+            118
+          ],
+          "locator": "ScalarValueConclusion"
+        },
+        {
+          "source": "scalar_value_interface",
+          "lines": [
+            155,
+            170
+          ],
+          "locator": "FiniteGaussianConclusion; value_consequences"
+        },
+        {
+          "source": "scalar_value_implementation",
+          "lines": [
+            16,
+            24
+          ],
+          "locator": "value_consequences"
+        },
+        {
+          "source": "scalar_value_assembly",
+          "lines": [
+            13,
+            27
+          ],
+          "locator": "three target lemmas"
+        }
+      ],
+      "review": "scalar-value-interface.md",
+      "boundary": "Scalar and finite Gaussian clauses assume a minimizer and its diffusion; the final Parisi-value equality assumes only the minimizer. Defining groundStateValue by limUnder is separate from the asserted Tendsto result."
+    },
+    {
+      "id": "qaoa",
+      "graph_ids": [
+        "qaoa_thermodynamic_first",
+        "assumptions.qaoa_model_and_limits"
+      ],
+      "relation": "manuscript_statement",
+      "locations": [
+        {
+          "source": "qaoa_introduction",
+          "lines": [
+            74,
+            119
+          ],
+          "locator": "eq:sk-model; eq:qaoa-value; thm:main"
+        },
+        {
+          "source": "scope",
+          "lines": [
+            10,
+            12
+          ],
+          "locator": "scalar formalization scope"
+        }
+      ],
+      "review": "qaoa-dependency-chain.md",
+      "boundary": "Fix depth and deterministic angles before n tends to infinity; optimize the limiting expected value and then let depth increase. Neither selected Lean interface asserts QAOA circuit-energy convergence.",
+      "pdf_location": {
+        "source": "qaoa_pdf",
+        "page": 3,
+        "locator": "Theorem 1.1; equations (1.4) and (1.5)"
+      }
+    },
+    {
+      "id": "interfaces_are_distinct",
+      "graph_ids": [
+        "lean.full_support",
+        "lean.value_consequences"
+      ],
+      "relation": "representation_boundary",
+      "locations": [
+        {
+          "source": "full_support_interface",
+          "lines": [
+            12,
+            29
+          ],
+          "locator": "Time; OrderParameter; BrownianSystem"
+        },
+        {
+          "source": "full_support_interface",
+          "lines": [
+            68,
+            75
+          ],
+          "locator": "IsDiffusion"
+        },
+        {
+          "source": "scalar_value_interface",
+          "lines": [
+            33,
+            47
+          ],
+          "locator": "OrderParameter; BrownianSpace"
+        },
+        {
+          "source": "scalar_value_interface",
+          "lines": [
+            83,
+            88
+          ],
+          "locator": "IsDiffusion"
+        }
+      ],
+      "review": "full-support-interface.md",
+      "boundary": "The targets use different namespaces and representations. The static import scan found no import from either retained OAI tree into the other. This is not a proof of semantic independence, formal equivalence, or a complete declaration dependency audit."
+    },
+    {
+      "id": "axiom_policy",
+      "graph_ids": [
+        "lean.full_support",
+        "lean.value_consequences"
+      ],
+      "relation": "configured_policy",
+      "locations": [
+        {
+          "source": "full_support_configuration",
+          "lines": [
+            1,
+            14
+          ],
+          "locator": "Comparator configuration"
+        },
+        {
+          "source": "scalar_value_configuration",
+          "lines": [
+            1,
+            14
+          ],
+          "locator": "Comparator configuration"
+        }
+      ],
+      "review": "README.md",
+      "boundary": "The permitted axioms are propext, Quot.sound and Classical.choice; enable_nanoda is false. These are configured allowances, not observed axiom-audit or Comparator results."
+    }
+  ]
+}

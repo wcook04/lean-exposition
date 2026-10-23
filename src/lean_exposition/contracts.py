@@ -1,0 +1,399 @@
+"""Structural checks and cross-record invariants; never a semantic proof checker."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+import re
+from datetime import datetime
+from importlib.resources import files
+from pathlib import Path, PurePosixPath
+from urllib.parse import urlsplit
+
+from jsonschema import Draft202012Validator
+
+
+class ContractError(ValueError):
+    """An artifact violates a declared contract."""
+
+
+def digest(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def encoded(value: dict) -> bytes:
+    return (json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n").encode()
+
+
+def decode_json(data: bytes) -> dict:
+    """Decode exactly the bytes checked or captured, without ambiguous JSON."""
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            if key in result:
+                raise ContractError(f"duplicate JSON key: {key}")
+            result[key] = value
+        return result
+    def invalid_constant(value):
+        raise ContractError(f"non-finite JSON number: {value}")
+    return json.loads(data.decode("utf-8"), object_pairs_hook=pairs,
+                      parse_constant=invalid_constant)
+
+
+def read_json(path: Path) -> dict:
+    return decode_json(path.read_bytes())
+
+
+def write_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(encoded(value))
+
+
+def portable_path(relative: str) -> PurePosixPath:
+    """Check a reference's syntax without resolving it against the caller's CWD."""
+    if not isinstance(relative, str) or not relative:
+        raise ContractError(f"not a portable relative path: {relative}")
+    name = PurePosixPath(relative)
+    if name.is_absolute() or any(p in ("", "..", ".") for p in relative.split("/")) or "\\" in relative or ":" in relative or any(ord(c) < 32 for c in relative):
+        raise ContractError(f"not a portable relative path: {relative}")
+    devices = {"CON", "PRN", "AUX", "NUL"} | {f"{prefix}{n}" for prefix in ("COM", "LPT") for n in "123456789¹²³"}
+    if any(part.endswith((".", " ")) or part.split(".", 1)[0].upper() in devices
+           or any(c in '<>"|?*' for c in part) for part in name.parts):
+        raise ContractError(f"not a portable relative path: {relative}")
+    return name
+
+
+def local_path(root: Path, relative: str) -> Path:
+    """Resolve an artifact for I/O without traversal or symlink ancestry."""
+    name = portable_path(relative)
+    root = root.resolve()
+    current = root
+    for part in name.parts:
+        current /= part
+        if current.is_symlink():
+            raise ContractError(f"symlink is not a bundle artifact: {relative}")
+    if not current.resolve().is_relative_to(root):
+        raise ContractError(f"path escapes artifact root: {relative}")
+    return current
+
+
+def validate_schema(value: dict, name: str) -> None:
+    schema = json.loads(files("lean_exposition").joinpath(f"resources/schemas/{name}.schema.json").read_text())
+    errors = sorted(Draft202012Validator(schema).iter_errors(value), key=lambda e: str(e.path))
+    if errors:
+        e = errors[0]
+        raise ContractError(f"{name}:{'/'.join(map(str, e.path))}: {e.message}")
+
+
+def indexed(rows: list[dict], label: str) -> dict[str, dict]:
+    result = {r["id"]: r for r in rows}
+    if len(result) != len(rows):
+        raise ContractError(f"duplicate {label} id")
+    return result
+
+
+def require_refs(values, universe, label):
+    missing = set(values) - set(universe)
+    if missing:
+        raise ContractError(f"unknown {label}: {', '.join(sorted(missing))}")
+
+
+LEAN_EDGES = {"lean_type_dependency", "lean_value_dependency", "lean_structural_dependency"}
+ARGUMENT_EDGES = LEAN_EDGES | {"formalizes", "supports"}
+EDGE_KINDS = ARGUMENT_EDGES | {"platform_decomposition", "cites"}
+
+
+def extraction_projection_digest(graph: dict, subject_ids: list[str]) -> str:
+    """Bind translated formal data while leaving prose and goal selection editable."""
+    subjects = set(subject_ids)
+    edges = sorted(
+        ({k: e[k] for k in ("from", "to", "kind")}
+         for e in graph["edges"] if e["from"] in subjects and e["kind"] in LEAN_EDGES),
+        key=lambda e: (e["from"], e["to"], e["kind"]),
+    )
+    identifiers = subjects | {e["to"] for e in edges}
+    identifiers |= {a for n in graph["nodes"] if n["id"] in subjects for a in n["assumption_ids"]}
+    fields = ("id", "kind", "declaration", "statement", "source_id", "assumption_ids", "boundary")
+    nodes = sorted(({k: n[k] for k in fields if k in n} for n in graph["nodes"] if n["id"] in identifiers), key=lambda n: n["id"])
+    return digest(encoded({"nodes": nodes, "edges": edges, "extraction_status": graph["extraction_status"]}))
+
+
+def closure(graph: dict, roots=None, edge_kinds=None) -> set[str]:
+    """Consumer -> prerequisite; only argument closure adds explicit assumptions."""
+    nodes = indexed(graph["nodes"], "node")
+    pending = list(graph["selected_goals"] if roots is None else roots)
+    require_refs(pending, nodes, "closure root")
+    kinds = ARGUMENT_EDGES if edge_kinds is None else set(edge_kinds)
+    require_refs(kinds, EDGE_KINDS, "closure edge kind")
+    neighbors: dict[str, set[str]] = {}
+    for e in graph["edges"]:
+        if e["kind"] in kinds:
+            require_refs([e["from"], e["to"]], nodes, "closure edge endpoint")
+            neighbors.setdefault(e["from"], set()).add(e["to"])
+    result = set()
+    while pending:
+        node = pending.pop()
+        if node in result:
+            continue
+        result.add(node)
+        pending.extend(neighbors.get(node, ()))
+        if kinds & ARGUMENT_EDGES:
+            require_refs(nodes[node]["assumption_ids"], nodes, "closure assumption")
+            pending.extend(nodes[node]["assumption_ids"])
+    return result
+
+
+def required_citation_ids(graph: dict, roots=None) -> set[str]:
+    """Preserve reference credit without treating cited claims as prerequisites."""
+    argument = closure(graph, roots)
+    cited = closure(graph, argument, {"cites"})
+    return {c for n in graph["nodes"] if n["id"] in cited for c in n["citation_ids"]}
+
+
+def validate_graph(graph: dict) -> dict:
+    validate_schema(graph, "graph")
+    nodes = indexed(graph["nodes"], "node")
+    sources = indexed(graph["sources"], "source")
+    cites = indexed(graph["citations"], "citation")
+    evidence = indexed(graph["evidence"], "evidence")
+    if not graph["selected_goals"]:
+        raise ContractError("at least one selected goal is required")
+    require_refs(graph["selected_goals"], nodes, "selected goal")
+    for source in sources.values():
+        if source["redistribution"] == "vendored" and not {"path", "sha256"} <= source.keys():
+            raise ContractError("vendored source needs path and content hash")
+        if "path" in source:
+            portable_path(source["path"])
+            if "sha256" not in source:
+                raise ContractError("a source path requires a content hash")
+        url = urlsplit(source["url"])
+        if url.username or url.password:
+            raise ContractError("source URLs must not contain credentials")
+        if source["url"].startswith("urn:lean-source:sha256:") and (
+            source.get("sha256") != source["url"].rsplit(":", 1)[-1]
+            or source["revision"] != source.get("sha256")
+        ):
+            raise ContractError("Lean source identity differs from its content hash")
+        if source["kind"] == "api_snapshot":
+            if not {"sha256", "observed_at"} <= source.keys():
+                raise ContractError("API snapshot requires content hash and observation time")
+            if source["revision"] != "sha256:" + source["sha256"]:
+                raise ContractError("API snapshot revision differs from its content hash")
+            try:
+                datetime.fromisoformat(source["observed_at"].replace("Z", "+00:00"))
+            except ValueError as exc:
+                raise ContractError("invalid API snapshot observation time") from exc
+    for cite in cites.values():
+        require_refs([cite["source_id"]], sources, "citation source")
+        url = urlsplit(cite["url"])
+        if url.username or url.password:
+            raise ContractError("citation URLs must not contain credentials")
+    for item in evidence.values():
+        require_refs(item["source_ids"], sources, "evidence source")
+        require_refs(item["subject_ids"], nodes, "evidence subject")
+        if ("receipt_path" in item) != ("receipt_sha256" in item):
+            raise ContractError("receipt path and hash must appear together")
+        if "receipt_path" in item:
+            portable_path(item["receipt_path"])
+        receipt = item.get("receipt")
+        if receipt is not None and "status" in receipt:
+            recorded = "unavailable" if receipt["status"] == "timed_out" else receipt["status"]
+            if recorded != item["status"]:
+                raise ContractError("evidence status differs from its receipt")
+        if item["kind"] in {"lean_build", "extraction", "comparator"} and item["status"] == "passed":
+            if not item["source_ids"] or not item["command"] or not item["subject_ids"]:
+                raise ContractError("successful Lean evidence requires sources, subjects and command")
+            if receipt is None or type(receipt.get("returncode")) is not int or receipt["returncode"] != 0 or receipt.get("source_changed") is not False:
+                raise ContractError("successful Lean evidence requires an unchanged source snapshot")
+            expected_kind = "elaboration_process" if item["kind"] == "extraction" else item["kind"]
+            if receipt.get("evidence_kind") != expected_kind:
+                raise ContractError("Lean receipt purpose differs from its evidence kind")
+            if receipt.get("status") != "passed" or receipt.get("command") != item["command"]:
+                raise ContractError("successful Lean evidence must match its receipt status and command")
+            if item["kind"] != "comparator" and (not isinstance(receipt.get("module"), str) or not receipt["module"]):
+                raise ContractError("successful Lean evidence requires its module")
+            if item["kind"] == "comparator":
+                config_hash = receipt.get("config_sha256")
+                if not isinstance(config_hash, str) or re.fullmatch(r"[0-9a-f]{64}", config_hash) is None:
+                    raise ContractError("successful Comparator evidence requires its configuration hash")
+                if not any(sources[s].get("sha256") == config_hash for s in item["source_ids"]):
+                    raise ContractError("Comparator configuration must match an identified source")
+            hashes = receipt.get("source_hashes", {})
+            if not isinstance(hashes, dict) or "lean-toolchain" not in hashes:
+                raise ContractError("successful Lean evidence requires pinned environment hashes")
+            for path, sha in hashes.items():
+                portable_path(path)
+                if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{64}", sha) is None:
+                    raise ContractError("invalid receipt source hash")
+            for sid in item["source_ids"]:
+                source = sources[sid]
+                is_comparator_config = item["kind"] == "comparator" and source.get("sha256") == receipt["config_sha256"]
+                if "path" in source and not is_comparator_config and hashes.get(source["path"]) != source.get("sha256"):
+                    raise ContractError("Lean receipt does not bind its source bytes")
+                if source["url"].startswith("urn:lean-environment:sha256:"):
+                    environment = {p: sha for p, sha in hashes.items() if p in {"lean-toolchain", "lake-manifest.json", "lakefile.lean", "lakefile.toml"}}
+                    if source.get("sha256") != digest(encoded(environment)) or source["url"] != "urn:lean-environment:sha256:" + source["sha256"]:
+                        raise ContractError("Lean environment identity differs from receipt hashes")
+            if item["kind"] == "extraction":
+                if not isinstance(receipt.get("report_sha256"), str) or re.fullmatch(r"[0-9a-f]{64}", receipt["report_sha256"]) is None:
+                    raise ContractError("successful extraction requires its report content hash")
+                if receipt.get("projection_sha256") != extraction_projection_digest(graph, item["subject_ids"]):
+                    raise ContractError("formal graph projection differs from extraction receipt")
+                for subject in item["subject_ids"]:
+                    node = nodes[subject]
+                    if node["kind"] not in {"declaration", "assumption"} or not {"source_id", "declaration", "statement"} <= node.keys():
+                        raise ContractError("extraction subjects must identify formal declarations")
+                    if node["source_id"] not in item["source_ids"]:
+                        raise ContractError("extraction receipt must include each subject's source")
+    for node in nodes.values():
+        require_refs(node["assumption_ids"], nodes, "assumption")
+        if any(nodes[a]["kind"] != "assumption" for a in node["assumption_ids"]):
+            raise ContractError("assumption_ids must reference assumption nodes")
+        require_refs(node["evidence_ids"], evidence, "node evidence")
+        require_refs(node["citation_ids"], cites, "node citation")
+        if "source_id" in node:
+            require_refs([node["source_id"]], sources, "node source")
+        if node["status"] == "axiom" and node["kind"] != "assumption":
+            raise ContractError("axiom status is reserved for assumption nodes")
+        if node["kind"] == "assumption" and (node["id"] == "sorryAx" or node.get("declaration") == "sorryAx") and node["status"] != "open":
+            raise ContractError("sorryAx must remain an open obligation")
+        if node["status"] == "kernel_checked":
+            if node["kind"] != "declaration" or not {"source_id", "declaration", "statement"} <= node.keys():
+                raise ContractError("kernel_checked is reserved for identified formal declarations")
+            relevant = [evidence[e] for e in node["evidence_ids"] if evidence[e]["kind"] == "lean_build" and node["id"] in evidence[e]["subject_ids"]]
+            if not relevant or not any(e["status"] == "passed" and node["source_id"] in e["source_ids"] for e in relevant):
+                raise ContractError("kernel_checked needs a passed, source-bound Lean build receipt for that node")
+            if "sha256" not in sources[node["source_id"]] or "path" not in sources[node["source_id"]]:
+                raise ContractError("kernel_checked requires identified source file bytes")
+            if any(a == "sorryAx" or nodes[a].get("declaration") == "sorryAx" for a in node["assumption_ids"]):
+                raise ContractError("kernel_checked cannot depend on sorryAx")
+            extractions = [evidence[e] for e in node["evidence_ids"] if evidence[e]["kind"] == "extraction" and evidence[e]["status"] == "passed" and node["id"] in evidence[e]["subject_ids"]]
+            if not extractions:
+                raise ContractError("kernel_checked requires an extracted declaration binding")
+            if not any(build["receipt"]["module"] == extract["receipt"]["module"] and build["receipt"]["source_hashes"] == extract["receipt"]["source_hashes"]
+                       for build in relevant if build["status"] == "passed" and node["source_id"] in build["source_ids"] for extract in extractions):
+                raise ContractError("kernel_checked requires matching build and extraction source snapshots")
+            if any(e["kind"] == "lean_build" and e["status"] == "failed"
+                   and node["id"] in e["subject_ids"] and node["source_id"] in e["source_ids"]
+                   for e in evidence.values()):
+                raise ContractError("conflicting Lean build receipts require explicit resolution before kernel_checked")
+    seen_edges = set()
+    for edge in graph["edges"]:
+        require_refs([edge["from"], edge["to"]], nodes, "edge endpoint")
+        require_refs(edge["evidence_ids"], evidence, "edge evidence")
+        identity = (edge["from"], edge["to"], edge["kind"])
+        if identity in seen_edges:
+            raise ContractError("duplicate typed edge")
+        seen_edges.add(identity)
+        if edge["kind"] == "formalizes" and (
+            nodes[edge["from"]]["kind"] not in {"goal", "claim"}
+            or nodes[edge["to"]]["kind"] != "declaration"
+        ):
+            raise ContractError("formalizes must point from an informal claim to a declaration")
+        if edge["kind"] in LEAN_EDGES:
+            if any(nodes[x]["kind"] not in {"declaration", "assumption"} for x in (edge["from"], edge["to"])):
+                raise ContractError("Lean dependencies must join declarations or assumptions")
+            if not any(evidence[e]["kind"] == "extraction" and evidence[e]["status"] == "passed" and edge["from"] in evidence[e]["subject_ids"] and nodes[edge["from"]].get("source_id") in evidence[e]["source_ids"] for e in edge["evidence_ids"]):
+                raise ContractError("Lean dependency needs successful extraction evidence")
+        if edge["kind"] == "platform_decomposition":
+            endpoints = [nodes[edge[key]] for key in ("from", "to")]
+            if any("platform" not in node or "source_id" not in node for node in endpoints) or endpoints[0]["platform"]["provider"] != endpoints[1]["platform"]["provider"]:
+                raise ContractError("platform decomposition needs compatible platform endpoints")
+            if not any(evidence[e]["kind"] == "platform_observation" and evidence[e]["status"] == "passed"
+                       and all(node["id"] in evidence[e]["subject_ids"] and node["source_id"] in evidence[e]["source_ids"] for node in endpoints)
+                       for e in edge["evidence_ids"]):
+                raise ContractError("platform decomposition needs source-bound platform observation evidence")
+    selected = closure(graph)
+    if graph["extraction_status"] in {"partial", "complete"} and not any(e["kind"] == "extraction" and e["status"] == "passed" for e in evidence.values()):
+        raise ContractError("extraction status requires successful extraction evidence")
+    return {
+        "id": graph["id"], "selected_goals": graph["selected_goals"],
+        "argument_closure": sorted(selected),
+        "platform_closure": sorted(closure(graph, edge_kinds={"platform_decomposition"})),
+        "assumptions": sorted(n for n in selected if nodes[n]["kind"] == "assumption"),
+        "unresolved": sorted(n for n in selected if nodes[n]["status"] in {"open", "unverified", "external", "conditional"}),
+        "failed_evidence": sorted(e["id"] for e in evidence.values() if e["status"] == "failed"),
+        "extraction_status": graph["extraction_status"],
+        "semantic_certification": False,
+    }
+
+
+def select(graph: dict, goals: list[str]) -> dict:
+    result = copy.deepcopy(graph)
+    result["selected_goals"] = list(goals)
+    validate_graph(result)
+    return result
+
+
+def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: bytes) -> None:
+    validate_schema(artifact, "artifact")
+    validate_graph(graph)
+    nodes = indexed(graph["nodes"], "node")
+    cites = indexed(graph["citations"], "citation")
+    if artifact["graph_sha256"] != graph_hash or artifact["content_sha256"] != digest(content):
+        raise ContractError("artifact content or graph hash is stale")
+    if artifact["selected_goal_ids"] != graph["selected_goals"]:
+        raise ContractError("artifact changed selected goals")
+    for field in ("claim_ids", "assumption_ids", "unresolved_ids"):
+        require_refs(artifact[field], nodes, field)
+    if any(nodes[n]["kind"] != "assumption" for n in artifact["assumption_ids"]):
+        raise ContractError("artifact assumption_ids must identify assumptions")
+    require_refs(artifact["citation_ids"], cites, "artifact citation")
+    required = closure(graph, artifact["claim_ids"] + graph["selected_goals"])
+    assumptions = {n for n in required if nodes[n]["kind"] == "assumption"}
+    unresolved = {n for n in required if nodes[n]["status"] in {"open", "unverified", "external", "conditional"}}
+    if not assumptions <= set(artifact["assumption_ids"]) or not unresolved <= set(artifact["unresolved_ids"]):
+        raise ContractError("artifact omits assumptions or unresolved obligations")
+    required_cites = required_citation_ids(graph, artifact["claim_ids"] + graph["selected_goals"])
+    if not required_cites <= set(artifact["citation_ids"]):
+        raise ContractError("artifact dropped a claim citation")
+    if artifact["state"] == "scaffold":
+        if artifact["passages"] or artifact["review_state"] != "not_reviewed":
+            raise ContractError("empty scaffold cannot carry authored passages or review")
+        if "EMPTY SCAFFOLD" not in content.decode():
+            raise ContractError("scaffold must visibly identify itself")
+    else:
+        if not artifact["passages"] or not artifact["claim_ids"]:
+            raise ContractError("authored artifact requires claim and passage correspondence")
+        if "EMPTY SCAFFOLD" in content.decode():
+            raise ContractError("authored state still contains scaffold marker")
+        if not set(graph["selected_goals"]) <= set(artifact["claim_ids"]):
+            raise ContractError("authored artifact must cover every selected goal")
+        anchors = [p["anchor"] for p in artifact["passages"]]
+        if len(set(anchors)) != len(anchors):
+            raise ContractError("duplicate passage anchor")
+        intervals = []
+        text = content.decode("utf-8")
+        if set(re.findall(r"<!-- /?passage:([^>]+) -->", text)) != set(anchors):
+            raise ContractError("unmapped passage marker")
+        for passage in artifact["passages"]:
+            require_refs(passage["claim_ids"], artifact["claim_ids"], "passage claim")
+            require_refs(passage["citation_ids"], artifact["citation_ids"], "passage citation")
+            require_refs(passage["assumption_ids"], artifact["assumption_ids"], "passage assumption")
+            if passage["evidence_class"] == "formal_result" and (
+                not passage["claim_ids"] or any(nodes[n]["kind"] != "declaration" or nodes[n]["status"] != "kernel_checked" for n in passage["claim_ids"])
+            ):
+                raise ContractError("formal_result passage requires kernel-checked declarations")
+            passage_closure = closure(graph, passage["claim_ids"])
+            if not {n for n in passage_closure if nodes[n]["kind"] == "assumption"} <= set(passage["assumption_ids"]):
+                raise ContractError("passage omits an applicable assumption")
+            if not required_citation_ids(graph, passage["claim_ids"]) <= set(passage["citation_ids"]):
+                raise ContractError("passage omits an applicable citation")
+            # A stable explicit marker binds the exact passage bytes, not a fuzzy heading.
+            marker = f"<!-- passage:{passage['anchor']} -->"
+            end = f"<!-- /passage:{passage['anchor']} -->"
+            if text.count(marker) != 1 or text.count(end) != 1:
+                raise ContractError("passage markers missing or duplicated")
+            start = text.index(marker) + len(marker)
+            stop = text.index(end)
+            if stop < start or digest(text[start:stop].encode()) != passage["text_sha256"]:
+                raise ContractError("passage content hash is stale")
+            intervals.append((start - len(marker), stop + len(end)))
+        intervals.sort()
+        if any(a[1] > b[0] for a, b in zip(intervals, intervals[1:])):
+            raise ContractError("passage markers overlap")
+        covered = {c for p in artifact["passages"] for c in p["claim_ids"]}
+        if not set(artifact["claim_ids"]) <= covered:
+            raise ContractError("claimed coverage has no passage correspondence")
+    if artifact["state"] == "reviewed" and (artifact["review_state"] != "accepted" or not artifact["review_notes"]):
+        raise ContractError("reviewed artifact requires an explicit acceptance record")

@@ -1,0 +1,377 @@
+{
+  "citations": [
+    {
+      "id": "cite:prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "locator": "public platform record; proof source remains reference-only",
+      "source_id": "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "title": "SKFullSupport",
+      "url": "https://prove2.me/definitions/072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+    },
+    {
+      "id": "source-reference:prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "locator": "source field in public platform record; linked bytes not retrieved or verified",
+      "source_id": "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "title": "Platform-provided source reference",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean"
+    },
+    {
+      "id": "cite:prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54",
+      "locator": "public platform record; proof source remains reference-only",
+      "source_id": "definition-a045c882-6fb6-4e72-8597-31d270c6cd54",
+      "title": "OAIQWZT002",
+      "url": "https://prove2.me/definitions/a045c882-6fb6-4e72-8597-31d270c6cd54"
+    },
+    {
+      "id": "cite:prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "locator": "public platform record; proof source remains reference-only",
+      "source_id": "theorem-cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "title": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+      "url": "https://prove2.me/theorems/cbe4d178-ea2a-4afa-baed-b89df8166175"
+    },
+    {
+      "id": "cite:prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "locator": "public platform record; proof source remains reference-only",
+      "source_id": "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "title": "OAI.ZeroTemperatureSK.full_support",
+      "url": "https://prove2.me/theorems/e9f7d6cb-af95-435c-b432-ce5018f08276"
+    },
+    {
+      "id": "source-reference:prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "locator": "source field in public platform record; linked bytes not retrieved or verified",
+      "source_id": "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "title": "Platform-provided source reference",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean"
+    }
+  ],
+  "edges": [
+    {
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "from": "prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "kind": "platform_decomposition",
+      "to": "prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+    },
+    {
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "from": "prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "kind": "platform_decomposition",
+      "to": "prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54"
+    },
+    {
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "from": "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "platform_decomposition",
+      "to": "prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+    },
+    {
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "from": "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "platform_decomposition",
+      "to": "prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54"
+    },
+    {
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "from": "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "platform_decomposition",
+      "to": "prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175"
+    }
+  ],
+  "evidence": [
+    {
+      "command": [
+        "lean-exposition",
+        "prove2me",
+        "https://prove2.me/theorems/e9f7d6cb-af95-435c-b432-ce5018f08276"
+      ],
+      "details": "Public metadata observed and filtered. No proof, assumption, or mathematical correctness check performed.",
+      "id": "platform-intake",
+      "kind": "platform_observation",
+      "receipt": {
+        "assumption_audit": "not_run",
+        "environments": [
+          {
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "toolchain": "leanprover/lean4:v4.33.1"
+          }
+        ],
+        "hidden_relations": "unknown",
+        "limits": {
+          "max_depth": 10,
+          "max_nodes": 100
+        },
+        "local_verification": "not_run",
+        "omissions": {
+          "definition_dependencies_not_expanded": 2
+        },
+        "platform": "prove2me",
+        "platform_closure_status": "partial",
+        "platform_version": "0.13.2",
+        "provenance": [
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:14.551439Z",
+            "response_sha256": "6ffb0ee3cd9159945e2b618f265eaae53ce66cbd8c3ea9cee809aa23824b2a94",
+            "retained_sha256": "e7e18443442773b9ecc8796283bb18209c5ce4ae9920e26c736751799ac58d3c",
+            "source_id": "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:15.787916Z",
+            "response_sha256": "f48806d159cac2020cde3388858995d7b8e676534043376c9ddcc35f7c878868",
+            "retained_sha256": "6a24bdefd6c7172764bf12c59e826c3fdbb48b5a7b64f4ebf2167a977797e034",
+            "source_id": "definition-a045c882-6fb6-4e72-8597-31d270c6cd54"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:16.180165Z",
+            "response_sha256": "0aabda2f72f366e36f22768e0774587f93865155244c0f91fe56d8392f5406d9",
+            "retained_sha256": "71cc911ecec4939e64aba2902a352606675b8e65cc0c979eaede77bf6fe7f350",
+            "source_id": "theorem-cbe4d178-ea2a-4afa-baed-b89df8166175"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:13.625468Z",
+            "response_sha256": "24bea473e0166bbeb9f7e7929e69f6d9c58e6056e70322368534b078e72d41c8",
+            "retained_sha256": "7cf43fd0ccae1d88bb1c5ecb6c69af4b8f4e3bc677a35e3f9c92bd08c60917a3",
+            "source_id": "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:16.681979Z",
+            "response_sha256": "98960b51e940ec0b7dd012ed9d059e7d2eb855fe02d15583006cadc86fe8c986",
+            "retained_sha256": "61ee1c1e2487f7a1f62a98c82194516a39884a72bf2d87687e431a3167ddbedd",
+            "source_id": "decompositions-cbe4d178-ea2a-4afa-baed-b89df8166175"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:13.967968Z",
+            "response_sha256": "716ef6f2fbee0352c3f2997ebb67dc9b72cbd46220b93f9a58470c1c0a430e4c",
+            "retained_sha256": "c74e1a5c4121208cf51b93ae7194eb257f516b859606cbc8694b65f77a0e9443",
+            "source_id": "decompositions-e9f7d6cb-af95-435c-b432-ce5018f08276"
+          },
+          {
+            "filtered": true,
+            "observed_at": "2026-10-23T16:48:17.119633Z",
+            "response_sha256": "570715244f2fd1eec137be095f3036142b18da356fa22483e46a1e234e9f0345",
+            "retained_sha256": "1200e4803e43ce5b0ed18622c8356c5ef8cf2c59a2e8e4344eb3e743eb0b9dec",
+            "source_id": "environments"
+          }
+        ]
+      },
+      "source_ids": [
+        "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+        "definition-a045c882-6fb6-4e72-8597-31d270c6cd54",
+        "theorem-cbe4d178-ea2a-4afa-baed-b89df8166175",
+        "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276",
+        "decompositions-cbe4d178-ea2a-4afa-baed-b89df8166175",
+        "decompositions-e9f7d6cb-af95-435c-b432-ce5018f08276",
+        "environments"
+      ],
+      "status": "passed",
+      "subject_ids": [
+        "prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+        "prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54",
+        "prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175",
+        "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276"
+      ],
+      "tool": "Prove2Me API 0.13.2"
+    }
+  ],
+  "extraction_status": "not_run",
+  "id": "prove2me:e9f7d6cb-af95-435c-b432-ce5018f08276",
+  "nodes": [
+    {
+      "assumption_ids": [],
+      "boundary": "No local proof body, Lean extraction, assumption audit, or replay.",
+      "citation_ids": [
+        "cite:prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+        "source-reference:prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+      ],
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "id": "prove2me:definition:072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "kind": "claim",
+      "label": "SKFullSupport",
+      "platform": {
+        "entity": "definition",
+        "id": "072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "provider": "prove2me",
+        "status": "not_reported",
+        "visibility": "public"
+      },
+      "source_id": "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "status": "unverified"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "No local proof body, Lean extraction, assumption audit, or replay.",
+      "citation_ids": [
+        "cite:prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54"
+      ],
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "id": "prove2me:definition:a045c882-6fb6-4e72-8597-31d270c6cd54",
+      "kind": "claim",
+      "label": "OAIQWZT002",
+      "platform": {
+        "entity": "definition",
+        "id": "a045c882-6fb6-4e72-8597-31d270c6cd54",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "provider": "prove2me",
+        "status": "not_reported",
+        "visibility": "public"
+      },
+      "source_id": "definition-a045c882-6fb6-4e72-8597-31d270c6cd54",
+      "status": "unverified"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "No local proof body, Lean extraction, assumption audit, or replay.",
+      "citation_ids": [
+        "cite:prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175"
+      ],
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "id": "prove2me:theorem:cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "kind": "goal",
+      "label": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+      "platform": {
+        "entity": "theorem",
+        "id": "cbe4d178-ea2a-4afa-baed-b89df8166175",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "provider": "prove2me",
+        "status": "Proved",
+        "visibility": "public"
+      },
+      "source_id": "theorem-cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "status": "unverified"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "No local proof body, Lean extraction, assumption audit, or replay.",
+      "citation_ids": [
+        "cite:prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+        "source-reference:prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276"
+      ],
+      "evidence_ids": [
+        "platform-intake"
+      ],
+      "id": "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "goal",
+      "label": "OAI.ZeroTemperatureSK.full_support",
+      "platform": {
+        "entity": "theorem",
+        "id": "e9f7d6cb-af95-435c-b432-ce5018f08276",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "provider": "prove2me",
+        "status": "Proved",
+        "visibility": "public"
+      },
+      "source_id": "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "status": "unverified"
+    }
+  ],
+  "notes": [
+    "Platform status is an observation, not local verification.",
+    "Decomposition edges unite alternative groups; they are not a conjunctive proof obligation.",
+    "Definition dependencies, hidden platform relations and proof-body dependencies are not audited."
+  ],
+  "schema_version": "1.0",
+  "scope": "Partial public platform metadata; no Lean extraction, proof bodies, or local replay.",
+  "selected_goals": [
+    "prove2me:theorem:e9f7d6cb-af95-435c-b432-ce5018f08276"
+  ],
+  "sources": [
+    {
+      "id": "definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:14.551439Z",
+      "path": "snapshots/definition-072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:e7e18443442773b9ecc8796283bb18209c5ce4ae9920e26c736751799ac58d3c",
+      "sha256": "e7e18443442773b9ecc8796283bb18209c5ce4ae9920e26c736751799ac58d3c",
+      "url": "https://prove2.me/api/v1/definitions/072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+    },
+    {
+      "id": "definition-a045c882-6fb6-4e72-8597-31d270c6cd54",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:15.787916Z",
+      "path": "snapshots/definition-a045c882-6fb6-4e72-8597-31d270c6cd54.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:6a24bdefd6c7172764bf12c59e826c3fdbb48b5a7b64f4ebf2167a977797e034",
+      "sha256": "6a24bdefd6c7172764bf12c59e826c3fdbb48b5a7b64f4ebf2167a977797e034",
+      "url": "https://prove2.me/api/v1/definitions/a045c882-6fb6-4e72-8597-31d270c6cd54"
+    },
+    {
+      "id": "theorem-cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:16.180165Z",
+      "path": "snapshots/theorem-cbe4d178-ea2a-4afa-baed-b89df8166175.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:71cc911ecec4939e64aba2902a352606675b8e65cc0c979eaede77bf6fe7f350",
+      "sha256": "71cc911ecec4939e64aba2902a352606675b8e65cc0c979eaede77bf6fe7f350",
+      "url": "https://prove2.me/api/v1/theorems/cbe4d178-ea2a-4afa-baed-b89df8166175"
+    },
+    {
+      "id": "theorem-e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:13.625468Z",
+      "path": "snapshots/theorem-e9f7d6cb-af95-435c-b432-ce5018f08276.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:7cf43fd0ccae1d88bb1c5ecb6c69af4b8f4e3bc677a35e3f9c92bd08c60917a3",
+      "sha256": "7cf43fd0ccae1d88bb1c5ecb6c69af4b8f4e3bc677a35e3f9c92bd08c60917a3",
+      "url": "https://prove2.me/api/v1/theorems/e9f7d6cb-af95-435c-b432-ce5018f08276"
+    },
+    {
+      "id": "decompositions-cbe4d178-ea2a-4afa-baed-b89df8166175",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:16.681979Z",
+      "path": "snapshots/decompositions-cbe4d178-ea2a-4afa-baed-b89df8166175.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:61ee1c1e2487f7a1f62a98c82194516a39884a72bf2d87687e431a3167ddbedd",
+      "sha256": "61ee1c1e2487f7a1f62a98c82194516a39884a72bf2d87687e431a3167ddbedd",
+      "url": "https://prove2.me/api/v1/theorems/cbe4d178-ea2a-4afa-baed-b89df8166175/decompositions"
+    },
+    {
+      "id": "decompositions-e9f7d6cb-af95-435c-b432-ce5018f08276",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:13.967968Z",
+      "path": "snapshots/decompositions-e9f7d6cb-af95-435c-b432-ce5018f08276.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:c74e1a5c4121208cf51b93ae7194eb257f516b859606cbc8694b65f77a0e9443",
+      "sha256": "c74e1a5c4121208cf51b93ae7194eb257f516b859606cbc8694b65f77a0e9443",
+      "url": "https://prove2.me/api/v1/theorems/e9f7d6cb-af95-435c-b432-ce5018f08276/decompositions"
+    },
+    {
+      "id": "environments",
+      "kind": "api_snapshot",
+      "license": "NOASSERTION",
+      "observed_at": "2026-10-23T16:48:17.119633Z",
+      "path": "snapshots/environments.json",
+      "redistribution": "reference_only",
+      "revision": "sha256:1200e4803e43ce5b0ed18622c8356c5ef8cf2c59a2e8e4344eb3e743eb0b9dec",
+      "sha256": "1200e4803e43ce5b0ed18622c8356c5ef8cf2c59a2e8e4344eb3e743eb0b9dec",
+      "url": "https://prove2.me/api/v1/environments"
+    }
+  ],
+  "title": "OAI.ZeroTemperatureSK.full_support"
+}

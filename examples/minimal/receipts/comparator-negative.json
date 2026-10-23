@@ -1,0 +1,30 @@
+{
+  "status": "failed",
+  "command": [
+    "lake",
+    "comparator",
+    "--inadvisably-no-sandbox",
+    "--config",
+    "comparator-negative.json"
+  ],
+  "returncode": 1,
+  "source_hashes": {
+    "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+    "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+    "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+    "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+  },
+  "source_changed": false,
+  "evidence_kind": "comparator",
+  "sandbox_disabled_explicitly": true,
+  "config_sha256": "2a47de35f18a05734308eb4edc65ad49964f5265e67e710f872bb185483df7d7",
+  "stdout_sha256": "8041e008d5a8b4a35e0f6d797da2f36627e6e0ca9258ab70dc35cae4af9f702d",
+  "stderr_sha256": "f92af1651064174af2ddd537c7df77820b1bec2985886c34bb8b5a4838878700",
+  "project": "examples/minimal",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "boundary": "Trusted synthetic fixture; sandbox explicitly disabled.",
+  "diagnostic_summary": "Illegal axiom detected: 'sorryAx'"
+}

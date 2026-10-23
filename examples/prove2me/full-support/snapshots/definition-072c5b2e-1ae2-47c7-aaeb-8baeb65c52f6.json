@@ -1,0 +1,10 @@
+{
+  "deprecated": false,
+  "entity": "definition",
+  "id": "072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "name": "SKFullSupport",
+  "source_reference": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean",
+  "status": "not_reported",
+  "visibility": "public"
+}

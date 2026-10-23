@@ -1,0 +1,10 @@
+{
+  "deprecated": false,
+  "entity": "theorem",
+  "id": "e9f7d6cb-af95-435c-b432-ce5018f08276",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "name": "OAI.ZeroTemperatureSK.full_support",
+  "source_reference": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean",
+  "status": "Proved",
+  "visibility": "public"
+}

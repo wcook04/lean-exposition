@@ -1,0 +1,131 @@
+{
+  "declarations": [
+    {
+      "axioms": [],
+      "body_available": true,
+      "has_sorry": false,
+      "kind": "theorem",
+      "name": "Minimal.result",
+      "source": {
+        "column": 0,
+        "end_line": 12,
+        "line": 11,
+        "module": "Minimal"
+      },
+      "structural_dependencies": [],
+      "type": "forall (p : Prop) (q : Prop), (And p q) -> (And q p)",
+      "type_dependencies": [
+        "And"
+      ],
+      "value_dependencies": [
+        "And",
+        "Minimal.swap"
+      ]
+    },
+    {
+      "axioms": [],
+      "body_available": true,
+      "has_sorry": false,
+      "kind": "theorem",
+      "name": "Minimal.swap",
+      "source": {
+        "column": 0,
+        "end_line": 9,
+        "line": 8,
+        "module": "Minimal"
+      },
+      "structural_dependencies": [],
+      "type": "forall (p : Prop) (q : Prop), (And p q) -> (And q p)",
+      "type_dependencies": [
+        "And"
+      ],
+      "value_dependencies": [
+        "And",
+        "And.intro",
+        "And.right",
+        "And.left"
+      ]
+    }
+  ],
+  "evidence_kind": "elaborated_expression_dependencies",
+  "external_dependencies": [
+    {
+      "kind": "inductive",
+      "module": "Init.Prelude",
+      "name": "And",
+      "reason": "outside_module_prefixes"
+    },
+    {
+      "kind": "constructor",
+      "module": "Init.Prelude",
+      "name": "And.intro",
+      "reason": "outside_module_prefixes"
+    },
+    {
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "And.right",
+      "reason": "outside_module_prefixes"
+    },
+    {
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "And.left",
+      "reason": "outside_module_prefixes"
+    }
+  ],
+  "missing_declarations": [],
+  "module": "Minimal",
+  "module_prefixes": [
+    "Minimal"
+  ],
+  "receipt": {
+    "boundary": "Trusted synthetic source; elaborated expression extraction, not a fresh independent kernel replay.",
+    "command": [
+      "lean",
+      "--run",
+      "LeanExpositionDriver.lean"
+    ],
+    "command_paths_redacted": true,
+    "command_sha256": "d51c6da982c950ac1aa4b14d7586c776f17234be904809812bebc249f9382f8e",
+    "diagnostic_summary": "Minimal.result and Minimal.swap extracted with complete selected scope, empty transitive axiom lists, available proof bodies and four external declarations.",
+    "environment_overrides": [
+      "LEAN_PATH"
+    ],
+    "evidence_kind": "elaboration_process",
+    "extractor_sha256": "e0ee28bb7ba2f6d8110339da8e65577e2a0de4aef860f9693c569ecadd56d65f",
+    "module": "Minimal",
+    "project": "examples/minimal",
+    "report_sha256": "8921a885b3e47245f72e0e6e88ade5a7f9b64008e56a6b2be37ecfc2fd53d48e",
+    "returncode": 0,
+    "runtime_artifact_snapshot": {
+      "bytes": 402298056,
+      "files": 2665,
+      "manifest_sha256": "26268f77f4d4d193e7640e3529dc2c73c5f2043c92c70857f65e5ba702c17bf3",
+      "toolchain": "leanprover/lean4:v4.35.0-rc2",
+      "verification": "Every copied artifact matched the installed-toolchain manifest hash and size."
+    },
+    "source_changed": false,
+    "source_hashes": {
+      "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+      "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+      "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+      "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+      "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+      "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+      "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+    },
+    "status": "passed",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b37436813bf9d3a7ac9ec5424d9328534e63aa22bd10b94a398695df0074bfc9",
+    "toolchain": "leanprover/lean4:v4.35.0-rc2"
+  },
+  "roots": [
+    "Minimal.result"
+  ],
+  "schema_version": 1,
+  "scope_complete": true,
+  "type_rendering": "Lean.Expr.dbgToString",
+  "unavailable_bodies": [],
+  "unexpanded_declarations": []
+}

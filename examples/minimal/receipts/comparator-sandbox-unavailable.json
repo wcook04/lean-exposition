@@ -1,0 +1,12 @@
+{
+  "evidence_kind": "comparator",
+  "status": "unavailable",
+  "command": ["lake", "comparator", "--config", "comparator.json"],
+  "project": "examples/minimal",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "returncode": 2,
+  "stdout": "",
+  "stderr": "error: `lake comparator` sandboxes the code it checks with `bwrap`, which needs Linux namespaces.\n",
+  "sandbox_disabled_explicitly": false,
+  "boundary": "The checker could not start on this platform. No proof verdict was produced."
+}

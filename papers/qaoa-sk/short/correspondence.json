@@ -1,0 +1,246 @@
+{
+  "schema_version": "1.0",
+  "stage": "short",
+  "state": "draft",
+  "path": "papers/short.md",
+  "content_sha256": "7f7e2df31857106896a057303d212078e32574f4cc557ecc2b112052a3fadcd3",
+  "graph_sha256": "48e34b95d9ef07160454d5da5357a0e0f9a51d48d087af62911e590527c144a9",
+  "selected_goal_ids": [
+    "full_support"
+  ],
+  "claim_ids": [
+    "full_support",
+    "lean.full_support",
+    "scalar_value",
+    "lean.value_consequences",
+    "qaoa_thermodynamic_first"
+  ],
+  "citation_ids": [
+    "ac2017_ground_state",
+    "acz2020_infinite_support",
+    "chen2026_full_support",
+    "full_support_comparator",
+    "full_support_implementation",
+    "full_support_manuscript",
+    "full_support_type",
+    "qaoa_main_theorem",
+    "qaoa_routes",
+    "scalar_value_comparator",
+    "scalar_value_implementation",
+    "scalar_value_type",
+    "scope_281"
+  ],
+  "assumption_ids": [
+    "assumptions.full_support_minimizer",
+    "assumptions.qaoa_model_and_limits",
+    "assumptions.value_diffusion",
+    "assumptions.value_minimizer"
+  ],
+  "unresolved_ids": [
+    "assumptions.full_support_minimizer",
+    "assumptions.qaoa_model_and_limits",
+    "assumptions.value_diffusion",
+    "assumptions.value_minimizer",
+    "full_support",
+    "lean.full_support",
+    "lean.value_consequences",
+    "qaoa_thermodynamic_first",
+    "scalar_value"
+  ],
+  "passages": [
+    {
+      "anchor": "abstract",
+      "text_sha256": "34a7fa70a3b7416955fe0328d12e6a133b6fb5b93c3599b695791af6c6500be4",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript main.tex, thm:full-support (Theorem 1.1, p.2); variation.tex, lem:contact and final theorem proof; curvature.tex, prop:gap-curvature. Abstract retains pure zero-field, integrable minimizer and relative-support scope; QAOA is named only as a later construction."
+    },
+    {
+      "anchor": "model",
+      "text_sha256": "f9eae5354e00d83f2ed7ec216078af7b5ed46b7e619baed9e7bfdf7fb29538ab",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "ac2017_ground_state",
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "context",
+      "rationale": "Full-support manuscript main.tex, lines 42–117, equations (1.1)–(1.5): model normalization, admissible class, Stieltjes convention, Parisi functional and imported formula/attainment. Bibliographic [AC] identifies the separate external theorem; it is not promoted to a local check."
+    },
+    {
+      "anchor": "main-result",
+      "text_sha256": "d004f29e56ba5c7d730f1ba3a0a0d4cfadec2444339b02aac1319c58b70d6cc2",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "acz2020_infinite_support",
+        "chen2026_full_support",
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript main.tex, thm:full-support (lines 119–130) and attribution discussion (lines 133–153, 171–179). Compare ComparatorChallenges/SKFullSupport.lean, FullSupportConclusion. The illustrative atomic measure is authored to distinguish infinite from full support; the stated historical results retain [ACZ] and [Chen] attribution."
+    },
+    {
+      "anchor": "contact",
+      "text_sha256": "a2c0dfa79d38d7f17a1153eb66bd12bd10c8422e3742ff1344ea8f2cd4debe54",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript regularity.tex, lem:diffusion; variation.tex, lem:first-variation (lines 12–78) and lem:contact (81–128). Reconstruction retains arbitrary compact Stieltjes-mass removal and the one-sided condition at zero."
+    },
+    {
+      "anchor": "curvature",
+      "text_sha256": "8f8030161bd21ea7bf35294b6cbbc4d8848981bd251bd7315ac7e56681a952f3",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript signs.tex, shape:backward, shape:forward, shape:ibp; certificate.tex, cert:identity-lemma and cert:coercivity; curvature.tex, prop:gap-curvature (lines 9–52). The derivative correction, positive remainder and integrated limit are explained; analytic sign/regularity proofs remain sourced inputs. Long destination: reasoning-record.md#curvature-and-gap-certificate."
+    },
+    {
+      "anchor": "gap-proof",
+      "text_sha256": "0d9dcba90d494288920237161d2a77719f79b55781fb72be4ada7381ccea5aea",
+      "claim_ids": [
+        "full_support"
+      ],
+      "citation_ids": [
+        "acz2020_infinite_support",
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript variation.tex, lem:no-terminal-plateau (lines 130–213) and proof of thm:full-support (215–249). Positive, zero, initial and terminal cases are distinct; only after eliminating all gaps are q=t and the two moments inferred. Long destination: reasoning-record.md#gap-elimination."
+    },
+    {
+      "anchor": "scalar-value",
+      "text_sha256": "2c47894df2100eeedb277d020381ee16bce329a07d274dff311a5eaaf23c3404",
+      "claim_ids": [
+        "scalar_value"
+      ],
+      "citation_ids": [
+        "ac2017_ground_state",
+        "full_support_manuscript",
+        "scalar_value_comparator",
+        "scalar_value_implementation",
+        "scalar_value_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.value_diffusion",
+        "assumptions.value_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Full-support manuscript consequences.tex, cor:value (lines 14–68) and prop:gaussian (92–121); main.tex formula/attainment input [AC]. The ordinary scalar deduction is separated from the formal interface. The finite Gaussian approximation is summarized without reproducing its proof; N→∞ at fixed T<1 precedes T↑1. Long destinations: scalar-value-identities and finite-gaussian-approximation."
+    },
+    {
+      "anchor": "qaoa-boundary",
+      "text_sha256": "c0a02e50c07e559eae10a9f25cbe5926056d91efb372ba2464b3c43a51848f38",
+      "claim_ids": [
+        "qaoa_thermodynamic_first"
+      ],
+      "citation_ids": [
+        "qaoa_main_theorem",
+        "qaoa_routes",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.qaoa_model_and_limits"
+      ],
+      "evidence_class": "context",
+      "rationale": "QAOA manuscript 01-introduction.tex, definitions lines 74–109, thm:main lines 111–119, limitations lines 131–133 and two routes lines 50–72; construction in sections 3–6, independent route in Appendix A. Reported manuscript claim only; deterministic angles precede the n limit and may depend on accuracy. Long destination: qaoa-construction."
+    },
+    {
+      "anchor": "evidence-scope",
+      "text_sha256": "4f1a3f19480a0bcbb75585131523499ea295a0668d9f651e5d8a9ae4dc0a34a2",
+      "claim_ids": [
+        "full_support",
+        "lean.full_support",
+        "scalar_value",
+        "lean.value_consequences",
+        "qaoa_thermodynamic_first"
+      ],
+      "citation_ids": [
+        "full_support_comparator",
+        "full_support_implementation",
+        "full_support_manuscript",
+        "full_support_type",
+        "qaoa_main_theorem",
+        "qaoa_routes",
+        "scalar_value_comparator",
+        "scalar_value_implementation",
+        "scalar_value_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer",
+        "assumptions.qaoa_model_and_limits",
+        "assumptions.value_diffusion",
+        "assumptions.value_minimizer"
+      ],
+      "evidence_class": "context",
+      "rationale": "Public family scope lean/docs/281.md, both Comparator challenge and implementation Main files, and current source-intake evidence receipts. Source inspection does not upgrade the unverified node statuses. Full-support measure/diffusion existence and every-diffusion moment scope are distinct from minimizer existence; final scalar Parisi clause does not require a supplied diffusion."
+    }
+  ],
+  "review_state": "needs_revision",
+  "review_notes": [
+    "Draft reconstruction of source arguments; no new theorem or authorship claim. Source scope, exact hypotheses, bibliography, compression and mathematical prose received bounded AI-assisted checks.",
+    "The analytic profile inequalities, rational certificate and compact-strip regularity are explicit cited inputs. This document does not reproduce or independently verify every upstream analytic proof.",
+    "No fresh QAOA/SK Lean build, axiom audit, Comparator replay, complete manuscript equivalence review or independent human reader review is recorded. Graph evidence statuses remain unchanged.",
+    "The bibliography and passage citations retain the external formula/attainment, infinite-support and same-full-support antecedents under the primary-source IDs in the intake graph. Metadata and source attribution checks are not full proof audits."
+  ]
+}

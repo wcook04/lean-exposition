@@ -1,0 +1,29 @@
+lean-exposition
+Copyright 2026 lean-exposition contributors
+
+Original implementation and documentation are licensed under Apache-2.0.
+The public OpenAI corpus under examples/qaoa-sk/upstream retains its own notices,
+licences, public provenance URLs and immutable file hashes. See that example's
+README and source-lock.json. No ownership or endorsement by upstream authors
+is implied. Public research and method references are documented in docs/.
+
+The selected publisher papers in docs/annex/ are redistributed unmodified under
+Creative Commons Attribution 4.0 International (CC-BY-4.0):
+
+- Joao Basso, Edward Farhi, Kunal Marwaha, Benjamin Villalonga and Leo Zhou,
+  "The Quantum Approximate Optimization Algorithm at High Depth for MaxCut
+  on Large-Girth Regular Graphs and the Sherrington-Kirkpatrick Model,"
+  LIPIcs TQC 2022, article 7. DOI: 10.4230/LIPIcs.TQC.2022.7.
+- Edward Farhi, Jeffrey Goldstone, Sam Gutmann and Leo Zhou,
+  "The Quantum Approximate Optimization Algorithm and the
+  Sherrington-Kirkpatrick Model at Infinite Size,"
+  Quantum 6, 759 (2022). DOI: 10.22331/q-2022-07-07-759.
+
+Their original author and publisher notices remain in the PDFs. See
+docs/annex/README.md for exact editions, source links, hashes and attribution.
+CC-BY-4.0: https://creativecommons.org/licenses/by/4.0/
+
+Selected LeanArchitect source files under docs/annex/leanarchitect/ are
+reproduced unmodified from hanwenzhu/LeanArchitect, revision
+9f3bb53916b9d6fa05b7777389e1844f82b1c9a6, under Apache-2.0. See the retained
+LICENSE and docs/references.json for the source inventory and file hashes.

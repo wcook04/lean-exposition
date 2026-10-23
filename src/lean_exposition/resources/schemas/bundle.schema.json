@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle_id", "bundle_version", "graph", "documents", "files", "status", "publication"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "bundle_id": {"type": "string", "minLength": 1},
+    "bundle_version": {"const": "0.1.0"},
+    "graph": {"const": "graph.json"},
+    "status": {"enum": ["scaffold", "authored"]},
+    "publication": {"const": "local_only"},
+    "documents": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["stage", "mapping"],
+        "properties": {
+          "stage": {"enum": ["long", "short", "expository"]},
+          "mapping": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "files": {
+      "type": "array", "minItems": 7, "maxItems": 7,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

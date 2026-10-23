@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "stage": {
+      "enum": [
+        "long",
+        "short",
+        "expository"
+      ]
+    },
+    "state": {
+      "enum": [
+        "scaffold",
+        "draft",
+        "reviewed"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "graph_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "selected_goal_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "citation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "assumption_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "unresolved_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "passages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "anchor": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          },
+          "text_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "citation_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "assumption_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "evidence_class": {
+            "enum": [
+              "formal_result",
+              "source_argument",
+              "example",
+              "context",
+              "open_question"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "anchor",
+          "text_sha256",
+          "claim_ids",
+          "citation_ids",
+          "assumption_ids",
+          "evidence_class",
+          "rationale"
+        ],
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "review_state": {
+      "enum": [
+        "not_reviewed",
+        "needs_revision",
+        "accepted"
+      ]
+    },
+    "review_notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "stage",
+    "state",
+    "path",
+    "content_sha256",
+    "graph_sha256",
+    "selected_goal_ids",
+    "claim_ids",
+    "citation_ids",
+    "assumption_ids",
+    "unresolved_ids",
+    "passages",
+    "review_state",
+    "review_notes"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "command": [
+    "lake",
+    "comparator",
+    "--inadvisably-no-sandbox",
+    "--config",
+    "comparator.json"
+  ],
+  "returncode": 0,
+  "source_hashes": {
+    "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+    "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+    "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+    "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+  },
+  "source_changed": false,
+  "evidence_kind": "comparator",
+  "sandbox_disabled_explicitly": true,
+  "config_sha256": "64e6c04a87fce31b89504730961a267112dd1d67a38b7f97b2177166c26c3db3",
+  "stdout_sha256": "eebb8d6da4cd3e7636322091e449031912edba81006f02fa8a00089aa094dc80",
+  "stderr_sha256": "f5116b885fb9675a2e3518a60a8f0540ad3b6bd72e6ca28a52db834ec4cccf96",
+  "project": "examples/minimal",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "boundary": "Trusted synthetic fixture; sandbox explicitly disabled.",
+  "diagnostic_summary": "Lean default kernel accepts the solution"
+}

@@ -1,0 +1,293 @@
+{
+  "citations": [],
+  "edges": [
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.result",
+      "kind": "lean_type_dependency",
+      "to": "And"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.result",
+      "kind": "lean_value_dependency",
+      "to": "And"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.result",
+      "kind": "lean_value_dependency",
+      "to": "Minimal.swap"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.swap",
+      "kind": "lean_type_dependency",
+      "to": "And"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.swap",
+      "kind": "lean_value_dependency",
+      "to": "And"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.swap",
+      "kind": "lean_value_dependency",
+      "to": "And.intro"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.swap",
+      "kind": "lean_value_dependency",
+      "to": "And.left"
+    },
+    {
+      "evidence_ids": [
+        "extract"
+      ],
+      "from": "Minimal.swap",
+      "kind": "lean_value_dependency",
+      "to": "And.right"
+    }
+  ],
+  "evidence": [
+    {
+      "command": [
+        "lean",
+        "--run",
+        "LeanExpositionDriver.lean"
+      ],
+      "details": "Expression extraction executed; not a fresh kernel replay, equivalence proof, or prose review.",
+      "id": "extract",
+      "kind": "extraction",
+      "receipt": {
+        "command": [
+          "lean",
+          "--run",
+          "LeanExpositionDriver.lean"
+        ],
+        "command_paths_redacted": true,
+        "command_sha256": "d51c6da982c950ac1aa4b14d7586c776f17234be904809812bebc249f9382f8e",
+        "evidence_kind": "elaboration_process",
+        "extractor_sha256": "e0ee28bb7ba2f6d8110339da8e65577e2a0de4aef860f9693c569ecadd56d65f",
+        "module": "Minimal",
+        "projection_sha256": "495aa6765741ae546c90007ffd8674ff3b97c38a70e32530652325b1e7480a4b",
+        "report_sha256": "8921a885b3e47245f72e0e6e88ade5a7f9b64008e56a6b2be37ecfc2fd53d48e",
+        "returncode": 0,
+        "source_changed": false,
+        "source_hashes": {
+          "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+          "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+          "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+          "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+          "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+          "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+          "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+        },
+        "status": "passed",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "b37436813bf9d3a7ac9ec5424d9328534e63aa22bd10b94a398695df0074bfc9"
+      },
+      "receipt_path": "receipts/extraction.json",
+      "receipt_sha256": "e4c2184bb2afe3439a07ffc03ba5c0c5eaa6fa46443df277a526838791eec2bc",
+      "source_ids": [
+        "module:Minimal",
+        "environment"
+      ],
+      "status": "passed",
+      "subject_ids": [
+        "Minimal.result",
+        "Minimal.swap"
+      ],
+      "tool": "leanprover/lean4:v4.35.0-rc2"
+    },
+    {
+      "command": [
+        "lake",
+        "build",
+        "Minimal"
+      ],
+      "details": "Local Lake build of the selected module, using its pinned environment; cached dependencies may be reused.",
+      "id": "build",
+      "kind": "lean_build",
+      "receipt": {
+        "command": [
+          "lake",
+          "build",
+          "Minimal"
+        ],
+        "evidence_kind": "lean_build",
+        "module": "Minimal",
+        "returncode": 0,
+        "source_changed": false,
+        "source_hashes": {
+          "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+          "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+          "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+          "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+          "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+          "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+          "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+        },
+        "status": "passed",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "31da234bfb532d5d412798fc13e5b1d95ac91fa58156c6feb697b60d6a371c19"
+      },
+      "source_ids": [
+        "module:Minimal",
+        "environment"
+      ],
+      "status": "passed",
+      "subject_ids": [
+        "Minimal.result",
+        "Minimal.swap"
+      ],
+      "tool": "leanprover/lean4:v4.35.0-rc2"
+    }
+  ],
+  "extraction_status": "partial",
+  "id": "lean:Minimal",
+  "nodes": [
+    {
+      "assumption_ids": [],
+      "boundary": "Outside selected module prefixes; declaration body not traversed.",
+      "citation_ids": [],
+      "evidence_ids": [
+        "extract"
+      ],
+      "id": "And",
+      "kind": "declaration",
+      "label": "And",
+      "locator": "Init.Prelude",
+      "source_id": "environment",
+      "status": "external"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "Outside selected module prefixes; declaration body not traversed.",
+      "citation_ids": [],
+      "evidence_ids": [
+        "extract"
+      ],
+      "id": "And.intro",
+      "kind": "declaration",
+      "label": "And.intro",
+      "locator": "Init.Prelude",
+      "source_id": "environment",
+      "status": "external"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "Outside selected module prefixes; declaration body not traversed.",
+      "citation_ids": [],
+      "evidence_ids": [
+        "extract"
+      ],
+      "id": "And.left",
+      "kind": "declaration",
+      "label": "And.left",
+      "locator": "Init.Prelude",
+      "source_id": "environment",
+      "status": "external"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "Outside selected module prefixes; declaration body not traversed.",
+      "citation_ids": [],
+      "evidence_ids": [
+        "extract"
+      ],
+      "id": "And.right",
+      "kind": "declaration",
+      "label": "And.right",
+      "locator": "Init.Prelude",
+      "source_id": "environment",
+      "status": "external"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "Elaborated type/proof references; theorem hypotheses remain in the displayed type.",
+      "citation_ids": [],
+      "declaration": "Minimal.result",
+      "evidence_ids": [
+        "extract",
+        "build"
+      ],
+      "id": "Minimal.result",
+      "kind": "declaration",
+      "label": "Minimal.result",
+      "locator": "Minimal:11",
+      "source_id": "module:Minimal",
+      "statement": "forall (p : Prop) (q : Prop), (And p q) -> (And q p)",
+      "status": "kernel_checked"
+    },
+    {
+      "assumption_ids": [],
+      "boundary": "Elaborated type/proof references; theorem hypotheses remain in the displayed type.",
+      "citation_ids": [],
+      "declaration": "Minimal.swap",
+      "evidence_ids": [
+        "extract",
+        "build"
+      ],
+      "id": "Minimal.swap",
+      "kind": "declaration",
+      "label": "Minimal.swap",
+      "locator": "Minimal:8",
+      "source_id": "module:Minimal",
+      "statement": "forall (p : Prop) (q : Prop), (And p q) -> (And q p)",
+      "status": "kernel_checked"
+    }
+  ],
+  "notes": [
+    "Type, proof-value and structural edges point from consumer to prerequisite.",
+    "No tactic execution, macro dependency, informal argument or pedagogical order is inferred.",
+    "Source licensing must be established before redistributing a new corpus.",
+    "Receipts bind project source and environment bytes; imported package sources and cached compiled artifacts are outside that snapshot.",
+    "Diagnostic output is retained by hash only; absolute executable paths are reduced to their final component.",
+    "Environment file hashes: {'lean-toolchain': '8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a', 'lake-manifest.json': '51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16', 'lakefile.toml': '204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe'}"
+  ],
+  "schema_version": "1.0",
+  "scope": "Elaborated expression references within selected module prefixes; external dependencies remain explicit.",
+  "selected_goals": [
+    "Minimal.result"
+  ],
+  "sources": [
+    {
+      "id": "module:Minimal",
+      "kind": "file",
+      "license": "NOASSERTION",
+      "path": "Minimal.lean",
+      "redistribution": "reference_only",
+      "revision": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+      "sha256": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+      "url": "urn:lean-source:sha256:a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a"
+    },
+    {
+      "id": "environment",
+      "kind": "repository",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "revision": "leanprover/lean4:v4.35.0-rc2",
+      "sha256": "dc6a5f4b4021f0d9e323ace34b9251a0a2fdbae458c7b533419b10768b74969f",
+      "url": "urn:lean-environment:sha256:dc6a5f4b4021f0d9e323ace34b9251a0a2fdbae458c7b533419b10768b74969f"
+    }
+  ],
+  "title": "Selected Lean declaration closure"
+}

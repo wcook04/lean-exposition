@@ -1,0 +1,665 @@
+{
+  "schema": "lean-exposition.references.v1",
+  "retrieved_on": "2026-10-23",
+  "retrieval_methods": [
+    "native_web_search",
+    "public_github_api",
+    "public_http",
+    "arxiv_atom_api"
+  ],
+  "scope": "Source metadata for compiled Lean evidence, traceable authoring and mathematical context. Selected licensed readings are retained under docs/annex; each retained file has a local path and hash. Implementation adaptations and the separately locked example corpus retain their own attribution.",
+  "hash_algorithm": "sha256",
+  "hash_scope": "Exact bytes of each selected public file; retained copies identify a repository-relative local_path.",
+  "references": [
+    {
+      "id": "lean-core",
+      "title": "Lean expression traversal, axiom collection, and proof validation",
+      "url": "https://github.com/leanprover/lean4",
+      "kind": "primary_implementation_and_official_documentation",
+      "pin": {
+        "version": "v4.35.0",
+        "commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
+      },
+      "selected_files": [
+        {
+          "path": "src/Lean/Util/CollectAxioms.lean",
+          "url": "https://raw.githubusercontent.com/leanprover/lean4/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/src/Lean/Util/CollectAxioms.lean",
+          "sha256": "64f340d42f18c51ee83527f03fa69cc26415dd71dcf7fe71031b7760be90007d"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/leanprover/lean4/eb6cafb7290e8bd5f2937522d8d804f58f02bafc/LICENSE",
+          "sha256": "8b28515ffffc5c0fe2807d8ae3735b00b324d9b7ce807dd63ff6ac8922fbce7e"
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE and selected Lean file's explicit Apache-2.0 header.",
+        "redistribution_decision": "Reference only. Future source reuse must preserve applicable copyright, license and notices."
+      },
+      "consumer": "Small exporter using compiled declaration types/bodies, Expr.getUsedConstants, and axiom evidence under the input project's toolchain.",
+      "disposition": "reference_only",
+      "related_sources": [
+        {
+          "title": "Validating a Lean Proof",
+          "url": "https://lean-lang.org/doc/reference/4.35.0/ValidatingProofs/",
+          "version": "4.35.0",
+          "sha256": "a47be236844c9ca1c18dc4a8f10eb52dd307cd8b0f63d8b0025bc5da89aa90a4",
+          "pin_status": "Versioned documentation; hash identifies the response retrieved on the register date."
+        },
+        {
+          "title": "Lake challenges and external checkers",
+          "url": "https://lean-lang.org/doc/reference/4.35.0/Build-Tools-and-Distribution/Lake/",
+          "version": "4.35.0",
+          "sha256": "6edc410e97365cc537ff0a5c7d91a3bf7b166cebfc9d0c334e83eef5477dbd22",
+          "pin_status": "Versioned documentation; hash identifies the response retrieved on the register date."
+        },
+        {
+          "title": "Standalone Comparator deprecation notice",
+          "url": "https://github.com/leanprover/comparator/blob/865edc14486c3388e9225daa971da8e157488c3e/README.md",
+          "commit": "865edc14486c3388e9225daa971da8e157488c3e",
+          "sha256": "39e03761a9b24379478d88ceaa02b3b1051f39d7c21e698118e39e145a4aec58",
+          "license": "Apache-2.0",
+          "disposition": "historical_interface_reference"
+        }
+      ],
+      "boundary": "The core Comparator interface starts at Lean 4.35.0. Current sandbox support is Linux-specific. Formal statement agreement and proof acceptance do not establish agreement with English."
+    },
+    {
+      "id": "leanarchitect",
+      "title": "LeanArchitect",
+      "url": "https://github.com/hanwenzhu/LeanArchitect",
+      "kind": "primary_implementation",
+      "pin": {
+        "version": "v4.35.0",
+        "commit": "9f3bb53916b9d6fa05b7777389e1844f82b1c9a6"
+      },
+      "selected_files": [
+        {
+          "path": "Architect/Basic.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/Architect/Basic.lean",
+          "local_path": "docs/annex/leanarchitect/Architect/Basic.lean",
+          "bytes": 4611,
+          "sha256": "92ed89acca564cdfb0cb696a3c2e3b62a7ccca82cb6fca85d0f994ffd2b2cb60",
+          "modified": false
+        },
+        {
+          "path": "Architect/CollectUsed.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/Architect/CollectUsed.lean",
+          "local_path": "docs/annex/leanarchitect/Architect/CollectUsed.lean",
+          "bytes": 2564,
+          "sha256": "921633f79fef58cf0d8540477785c4d9213608642685c21733dd3c61855d154d",
+          "modified": false
+        },
+        {
+          "path": "Architect/Content.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/Architect/Content.lean",
+          "local_path": "docs/annex/leanarchitect/Architect/Content.lean",
+          "bytes": 2125,
+          "sha256": "73de49bb499fc140dce470251e3f657368b788dca1659317e902f476ebb9556b",
+          "modified": false
+        },
+        {
+          "path": "Architect/Attribute.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/Architect/Attribute.lean",
+          "local_path": "docs/annex/leanarchitect/Architect/Attribute.lean",
+          "bytes": 11218,
+          "sha256": "1bce2337ed4de0e6e735819e89b4d35ad81c7e996e6cade79e8a9ef781dba314",
+          "modified": false
+        },
+        {
+          "path": "Architect/Output.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/Architect/Output.lean",
+          "local_path": "docs/annex/leanarchitect/Architect/Output.lean",
+          "bytes": 15192,
+          "sha256": "ef52349573a02ff0714638fb47dfaf335c8c8a8c8b98192d3fc4d190ef4923d3",
+          "modified": false
+        },
+        {
+          "path": "lakefile.lean",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/lakefile.lean",
+          "local_path": "docs/annex/leanarchitect/lakefile.lean",
+          "bytes": 4814,
+          "sha256": "72980df9cb8f28b0acc3758e9d9af75e793e8e11bc678d9b065104835c15da56",
+          "modified": false
+        },
+        {
+          "path": "lean-toolchain",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/lean-toolchain",
+          "local_path": "docs/annex/leanarchitect/lean-toolchain",
+          "bytes": 25,
+          "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+          "modified": false
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/hanwenzhu/LeanArchitect/9f3bb53916b9d6fa05b7777389e1844f82b1c9a6/LICENSE",
+          "local_path": "docs/annex/leanarchitect/LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "modified": false
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE; the Dagstuhl archived software artifact also identifies Apache-2.0.",
+        "redistribution_decision": "Eight unmodified source/configuration/license files retained with upstream source headers and Apache-2.0 licence in docs/annex/leanarchitect; original reading notes are separate. No upstream NOTICE or COPYRIGHT file occurs in the selected source archive.",
+        "attribution": "LeanArchitect contributors, https://github.com/hanwenzhu/LeanArchitect",
+        "local_license_path": "docs/annex/leanarchitect/LICENSE"
+      },
+      "consumer": "Source study of tagged-node traversal, authored dependency additions/exclusions and separate JSON/LaTeX output paths; preserves the distinction between raw extracted dependencies and curated blueprint views.",
+      "disposition": "retained_source",
+      "related_sources": [
+        {
+          "title": "Lean Architect supplementary material",
+          "url": "https://drops.dagstuhl.de/entities/artifact/10.4230/artifacts.27122",
+          "published_on": "2026-07-16",
+          "archived_commit": "f1c14e1c14290117ffcb017cf2d089a6a5e1523a",
+          "note": "Archived artifact is distinct from the selected v4.35.0 source pin."
+        }
+      ],
+      "boundary": "The inspected collector produces a compressed blueprint view. Annotation choices and exclusions influence its presentation; JSON output is stored metadata rather than the fully inferred LaTeX dependency view.",
+      "reading_scope": "Architect/Basic.lean, CollectUsed.lean, Content.lean, Attribute.lean, Output.lean and lakefile.lean read to trace annotation storage, collection and export. Partial source selection is not a runnable installation; no upstream build or test result claimed.",
+      "reading_notes": "docs/annex/leanarchitect/README.md",
+      "applied_decision": "Keep direct Lean type/value/structural edges separate from authored views. Statement dependencies are removed from LeanArchitect proof sets except sorryAx; tagged nodes stop helper traversal. Output.moduleToJson serializes stored NodePart fields without Node.inferUses, whereas the LaTeX output invokes inference. Do not treat JSON metadata, authored exclusions or leanOk as a replacement for extracted edges or verification/review receipts."
+    },
+    {
+      "id": "doc-gen4",
+      "title": "doc-gen4",
+      "url": "https://github.com/leanprover/doc-gen4",
+      "kind": "primary_implementation",
+      "pin": {
+        "version": "v4.35.0",
+        "commit": "0e1ffe2e4ba5ecfdfaf15c65b8d3805dbb7134ae"
+      },
+      "selected_files": [
+        {
+          "path": "DocGen4/Output/ToJson.lean",
+          "url": "https://raw.githubusercontent.com/leanprover/doc-gen4/0e1ffe2e4ba5ecfdfaf15c65b8d3805dbb7134ae/DocGen4/Output/ToJson.lean",
+          "sha256": "606be13fb654aa75f06aeebd58044444bf496ad2121949945164cfb9bd6d49f9"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/leanprover/doc-gen4/0e1ffe2e4ba5ecfdfaf15c65b8d3805dbb7134ae/LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE.",
+        "redistribution_decision": "Reference only; no source or generated documentation copied."
+      },
+      "consumer": "Reference for declaration identity, source locations, documentation links, and module import records.",
+      "disposition": "reference_only",
+      "boundary": "Declaration search metadata and module imports are different from declaration-level proof dependencies. Match the documentation tool's release line to Lean."
+    },
+    {
+      "id": "verso",
+      "title": "Verso An Authoring Tool for Lean",
+      "url": "https://github.com/leanprover/verso",
+      "kind": "primary_implementation",
+      "pin": {
+        "version": "v4.35.0",
+        "commit": "304b8561790c50222551c937ce02928df0d5b445"
+      },
+      "selected_files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/leanprover/verso/304b8561790c50222551c937ce02928df0d5b445/README.md",
+          "sha256": "32b80e3c9886a5214a118961a56f8b51fc7139d1e5ff219e6a259a143a563a66"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/leanprover/verso/304b8561790c50222551c937ce02928df0d5b445/LICENSE",
+          "sha256": "8b28515ffffc5c0fe2807d8ae3735b00b324d9b7ce807dd63ff6ac8922fbce7e"
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE.",
+        "redistribution_decision": "Reference only; no renderer assets copied."
+      },
+      "consumer": "Optional future Lean-aware document consumer; retained for extensible authoring and proof-state annotations.",
+      "disposition": "reference_only",
+      "boundary": "Document authoring and annotated rendering do not provide a mathematical prose review."
+    },
+    {
+      "id": "verso-blueprint",
+      "title": "Verso Blueprint",
+      "url": "https://github.com/leanprover/verso-blueprint",
+      "kind": "primary_implementation",
+      "pin": {
+        "branch": "v4.35.0",
+        "commit": "4932a7e3b283dd763f546e949ece88c3aed58a5a"
+      },
+      "selected_files": [
+        {
+          "path": "src/VersoBlueprint/DependencyAnalysis.lean",
+          "url": "https://raw.githubusercontent.com/leanprover/verso-blueprint/4932a7e3b283dd763f546e949ece88c3aed58a5a/src/VersoBlueprint/DependencyAnalysis.lean",
+          "sha256": "81c7bc39c1e30d1812690920a05e6e9a68cb4b9b77be163eee8ddd76b5417571"
+        },
+        {
+          "path": "doc/API.md",
+          "url": "https://raw.githubusercontent.com/leanprover/verso-blueprint/4932a7e3b283dd763f546e949ece88c3aed58a5a/doc/API.md",
+          "sha256": "c5f17138958d773b13d93440a97a3bb3bbf2fc3a23df0d6b4ebcda76ece628d4"
+        }
+      ],
+      "license": {
+        "spdx": null,
+        "selected_file_notice": "DependencyAnalysis.lean explicitly declares Apache-2.0, copyright 2026 Lean FRO LLC.",
+        "evidence": "The inspected repository tree has no root LICENSE file despite the source header referring to one; GitHub repository license metadata is null.",
+        "redistribution_decision": "Reference-only links and independently authored notes. Complete file-level licensing inventory before any copying."
+      },
+      "consumer": "Reference for separating provenance, informal content and formal evidence; manual/automatic dependency origins; pinned generated-data consumers.",
+      "disposition": "reference_only",
+      "boundary": "Documented APIs may change across versions. CLI query JSON is an unstable agent interface; generated HTML must not become the semantic database."
+    },
+    {
+      "id": "leanblueprint",
+      "title": "Lean blueprints",
+      "url": "https://github.com/PatrickMassot/leanblueprint",
+      "kind": "primary_implementation",
+      "pin": {
+        "version": "v0.0.20",
+        "commit": "56e066d30fb7b608a63f4241fee80982d7eae3ef"
+      },
+      "selected_files": [
+        {
+          "path": "setup.cfg",
+          "url": "https://raw.githubusercontent.com/PatrickMassot/leanblueprint/56e066d30fb7b608a63f4241fee80982d7eae3ef/setup.cfg",
+          "sha256": "aeaf82f4471ca7f45c2baf8f463b751cc825417d3363a2a335debb344eb1e3c2"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/PatrickMassot/leanblueprint/56e066d30fb7b608a63f4241fee80982d7eae3ef/LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+        },
+        {
+          "path": "NOTICE",
+          "url": "https://raw.githubusercontent.com/PatrickMassot/leanblueprint/56e066d30fb7b608a63f4241fee80982d7eae3ef/NOTICE",
+          "sha256": "c9fa60b939bcab7a3ef341bfa8aeafb21e8d4412f99daeed1e6780ac89b340b6"
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE and NOTICE. setup.cfg's MIT classifier conflicts with that license text and must not be used as the authority.",
+        "redistribution_decision": "Reference only. Preserve LICENSE, NOTICE and applicable headers in any future adaptation."
+      },
+      "consumer": "Optional LaTeX/plasTeX publication adapter and examples of informal formalization plans.",
+      "disposition": "reference_only",
+      "boundary": "A planning dependency is an authored claim that may predate its formal statement or proof."
+    },
+    {
+      "id": "hattori-informalization",
+      "title": "Natural Language Translation of Formal Proofs through Informalization of Proof Steps and Recursive Summarization along Proof Structure",
+      "authors": [
+        "Seiji Hattori",
+        "Takuya Matsuzaki",
+        "Makoto Fujiwara"
+      ],
+      "url": "https://aclanthology.org/2025.inlg-main.23/",
+      "kind": "primary_peer_reviewed_paper",
+      "pin": {
+        "publication": "INLG 2025",
+        "pages": "376-389",
+        "arxiv": "2509.09726v1",
+        "arxiv_submitted_on": "2025-09-10"
+      },
+      "selected_files": [
+        {
+          "path": "2025.inlg-main.23.pdf",
+          "url": "https://aclanthology.org/2025.inlg-main.23.pdf",
+          "sha256": "0682f6d1e2c0db2285e3602318b436b169a3d9dd209e8bbb9a998ea9d96f6425"
+        }
+      ],
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "evidence": "ACL Anthology's publication page states that material published from 2016 onward is CC BY 4.0.",
+        "redistribution_decision": "Reference only; no paper bytes or figures copied. Attribute and indicate changes if reusing licensed material later."
+      },
+      "consumer": "Optional draft stage: premise context, tactic templates, proof-state extraction and recursive summarization.",
+      "disposition": "reference_only",
+      "related_sources": [
+        {
+          "title": "AutoInformalizationWithTemplate companion implementation",
+          "url": "https://github.com/hattori-matsuzakilab/AutoInformalizationWithTemplate/tree/b140d32223f48e06ab210c346d76a9928cf37e09",
+          "commit": "b140d32223f48e06ab210c346d76a9928cf37e09",
+          "selected_readme_url": "https://raw.githubusercontent.com/hattori-matsuzakilab/AutoInformalizationWithTemplate/b140d32223f48e06ab210c346d76a9928cf37e09/README.md",
+          "sha256": "959eed1865358e0d3261c289a35be126f28be4942cb89d58883d38fbc1535030",
+          "license": null,
+          "license_evidence": "No repository license detected or license file found in inspected tree.",
+          "redistribution_decision": "Link only; no code copying absent a verified license."
+        }
+      ],
+      "boundary": "The study's 17 textbook proofs plus 21 lemmas and first-author manual evaluation do not establish general research-level semantic reliability. Generated prose requires independent human review."
+    },
+    {
+      "id": "plectis-public-authoring",
+      "title": "Public mathematical writing methods and reviewed-revision guide",
+      "authors": [
+        "Will Cook"
+      ],
+      "url": "https://github.com/wcook04/plectis-erdos/tree/a0878310af794d7a0f76cc11f4de3a20c795dc60",
+      "kind": "primary_authoring_method_and_implementation",
+      "pin": {
+        "commit": "a0878310af794d7a0f76cc11f4de3a20c795dc60"
+      },
+      "selected_files": [
+        {
+          "path": "paper/exposition/writing-a-good-mathematical-paper.tex",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/paper/exposition/writing-a-good-mathematical-paper.tex",
+          "sha256": "e96a5d3154eabc36ecd618ca3590672486f1be6d71868377ef1fc6b4c38b7452"
+        },
+        {
+          "path": "paper/exposition/writing-mathematics-from-reviewed-revisions.tex",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/paper/exposition/writing-mathematics-from-reviewed-revisions.tex",
+          "sha256": "96b7f3e3bad868197b0207ec66ac4496bc205193b49dc6ec8033df8de4d27d5e"
+        },
+        {
+          "path": "paper/exposition/parts/reading.tex",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/paper/exposition/parts/reading.tex",
+          "sha256": "4e80a17ad9d57281ad2acbf11fe63bf004c81fff8900885b7b152d27cfbaf352"
+        },
+        {
+          "path": "paper/exposition/parts/review.tex",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/paper/exposition/parts/review.tex",
+          "sha256": "6dac232d3cb954231d52165102e3b80703a9b33840f2a6d6269f7815fc06a31c"
+        },
+        {
+          "path": "paper/exposition/parts/practice.tex",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/paper/exposition/parts/practice.tex",
+          "sha256": "6a1971fdb963bb14a67b33d68c4f5d80d2ac6e124f7c635e680b5487126c0553"
+        },
+        {
+          "path": "skills/public-mathematical-writing/SKILL.md",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/skills/public-mathematical-writing/SKILL.md",
+          "sha256": "dd7b387f17a361c95fb805d340488327489c1023d0cb21f11f25ebfb690ef1fb"
+        },
+        {
+          "path": "scripts/short_paper_writer.py",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/scripts/short_paper_writer.py",
+          "sha256": "6e3b6a9de5f55cfa38f4c5458cd636ca5a558b7da4cbf528815908fc4fd499fe"
+        },
+        {
+          "path": "REUSE.toml",
+          "url": "https://raw.githubusercontent.com/wcook04/plectis-erdos/a0878310af794d7a0f76cc11f4de3a20c795dc60/REUSE.toml",
+          "sha256": "184d2c8a68d13fcf3eefb7a32531b4762cbb96ebea6b89e8d3902a3623268a30"
+        }
+      ],
+      "license": {
+        "spdx": "CC-BY-4.0 AND Apache-2.0",
+        "evidence": "Manuscript sources carry CC-BY-4.0 SPDX headers; scripts carry Apache-2.0 headers; REUSE.toml assigns repository documentation Apache-2.0 and manuscripts CC-BY-4.0, subject to in-file headers.",
+        "redistribution_decision": "Reference only. Portable instructions are original prose informed by the inspected methods; no upstream text, script or paper payload is bundled."
+      },
+      "consumer": "Four authoring transitions: source sufficiency, local inference warrants, statement fidelity, recoverable omitted proofs, citation roles, and observed reader reconstruction.",
+      "disposition": "reference_only",
+      "boundary": "Method inspection and documented editorial practice do not establish independent mathematical review or measured improvement in reader comprehension. Source-project commands are not commands for this package."
+    },
+    {
+      "id": "comparator-traversal",
+      "title": "Comparator structural constant traversal",
+      "authors": [
+        "Henrik Böving",
+        "Lean FRO, LLC"
+      ],
+      "url": "https://github.com/leanprover/comparator/blob/d03acab154d269c06e60e4de7e4cc85deebff94b/Comparator/Util.lean",
+      "kind": "primary_implementation",
+      "pin": {
+        "commit": "d03acab154d269c06e60e4de7e4cc85deebff94b"
+      },
+      "selected_files": [
+        {
+          "path": "Comparator/Util.lean",
+          "url": "https://raw.githubusercontent.com/leanprover/comparator/d03acab154d269c06e60e4de7e4cc85deebff94b/Comparator/Util.lean",
+          "sha256": "693d845330dd7122565aeb19314a3e3de4b49f9a8a7ac6e1fadbc9ab374b9f88"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/leanprover/comparator/d03acab154d269c06e60e4de7e4cc85deebff94b/LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ],
+      "license": {
+        "spdx": "Apache-2.0",
+        "evidence": "Root LICENSE and Comparator/Util.lean header identify Apache-2.0, Copyright (c) 2025 Lean FRO, LLC, author Henrik Böving.",
+        "redistribution_decision": "Adapted structural traversal cases in src/lean_exposition/resources/lean/Extract.lean. Attribution and source URL retained in its header; repository LICENSE supplies Apache-2.0 terms."
+      },
+      "consumer": "Lean extractor handling inductive, constructor and recursor references.",
+      "disposition": "adapted_source",
+      "boundary": "This pin identifies the actual adaptation input. The later 865edc14486c3388e9225daa971da8e157488c3e README is a separate deprecation/migration reference; use of traversal cases does not mean Comparator checks were run."
+    },
+    {
+      "id": "qaoa-high-depth-2022",
+      "title": "The Quantum Approximate Optimization Algorithm at High Depth for MaxCut on Large-Girth Regular Graphs and the Sherrington-Kirkpatrick Model",
+      "authors": [
+        "Joao Basso",
+        "Edward Farhi",
+        "Kunal Marwaha",
+        "Benjamin Villalonga",
+        "Leo Zhou"
+      ],
+      "url": "https://doi.org/10.4230/LIPIcs.TQC.2022.7",
+      "kind": "primary_mathematical_paper",
+      "pin": {
+        "publication": "TQC 2022, LIPIcs 232, 7:1–7:21",
+        "published_on": "2022-07-04",
+        "edition": "publisher proceedings"
+      },
+      "selected_files": [
+        {
+          "path": "qaoa-high-depth-2022.pdf",
+          "url": "https://drops.dagstuhl.de/storage/00lipics/lipics-vol232-tqc2022/LIPIcs.TQC.2022.7/LIPIcs.TQC.2022.7.pdf",
+          "bytes": 1526596,
+          "sha256": "2347068add8e8db67770ed82d4d3447a5288dea642f22e7f368be01fa2fd6f1e",
+          "local_path": "docs/annex/basso-et-al-2022-qaoa-high-depth.pdf",
+          "modified": false
+        }
+      ],
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "evidence": "Publisher record and PDF first-page CC-BY-4.0 notice.",
+        "evidence_url": "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.TQC.2022.7",
+        "redistribution_decision": "Unmodified publisher PDF retained with original notices, full attribution in docs/annex/README.md and CC-BY-4.0 legal code.",
+        "local_license_path": "docs/annex/CC-BY-4.0.txt",
+        "local_license_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "license_text_url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+      },
+      "locator": "Section 4, Theorem 1 (p. 7:9); Section 5, equation (5.2) (p. 7:10).",
+      "consumer": "Fixed-depth SK performance relation and provenance of eventual Parisi-optimality conjecture.",
+      "disposition": "retained_source",
+      "boundary": "Equation (5.2) is a conjecture, not a consequence of the fixed-depth theorem. The proceedings refers the theorem proof to Section 6 of the full version. No claim of correspondence to the retained Lean declarations.",
+      "reading_scope": "Section 4 Theorem 1, Section 5 equation (5.2), surrounding definitions and discussion; theorem proof delegated by the proceedings to the full preprint, not independently checked in this reading.",
+      "applied_decision": "Preserve fixed-depth versus increasing-depth status and the thermodynamic-first order of limits in the QAOA drafts. Use edition-specific locators: proceedings Section 6 is not the full preprint's proof section.",
+      "reading_notes": "docs/annex/README.md"
+    },
+    {
+      "id": "qaoa-infinite-size-2022",
+      "title": "The Quantum Approximate Optimization Algorithm and the Sherrington-Kirkpatrick Model at Infinite Size",
+      "authors": [
+        "Edward Farhi",
+        "Jeffrey Goldstone",
+        "Sam Gutmann",
+        "Leo Zhou"
+      ],
+      "url": "https://doi.org/10.22331/q-2022-07-07-759",
+      "kind": "primary_mathematical_paper",
+      "pin": {
+        "publication": "Quantum 6, 759",
+        "published_on": "2022-07-07",
+        "edition": "publisher PDF",
+        "associated_preprint": "1910.08187v4"
+      },
+      "selected_files": [
+        {
+          "path": "qaoa-infinite-size-2022.pdf",
+          "url": "https://quantum-journal.org/papers/q-2022-07-07-759/pdf/",
+          "bytes": 981379,
+          "sha256": "ff48c8f26cceafaf9bee2eee13b7679c0c66039d0acb21bebfb860cc434b57db",
+          "local_path": "docs/annex/farhi-et-al-2022-qaoa-infinite-size.pdf",
+          "modified": false
+        }
+      ],
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "evidence": "Publisher page and PDF footers identify CC-BY-4.0.",
+        "evidence_url": "https://quantum-journal.org/papers/q-2022-07-07-759/",
+        "redistribution_decision": "Unmodified publisher PDF retained with original notices, full attribution in docs/annex/README.md and CC-BY-4.0 legal code.",
+        "local_license_path": "docs/annex/CC-BY-4.0.txt",
+        "local_license_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "license_text_url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+      },
+      "locator": "Section 4, unnumbered Theorem, equations (13)–(14), Concentration Corollary, equations (15)–(16), pp. 4–5.",
+      "consumer": "Fixed-depth energy-moment limits and concentration under the stated coupling and angle conditions.",
+      "disposition": "retained_source",
+      "boundary": "Depth and angles are fixed in the limit. These results do not prove optimality as depth tends to infinity.",
+      "reading_scope": "Section 3 model and Section 4 theorem, concentration corollary and variance argument, equations (13)-(17).",
+      "applied_decision": "Keep depth and angles fixed before the system-size limit; do not infer growing-depth optimality from concentration. Compare minimizing/maximizing signs and Hamiltonian normalization before transferring formulas or values.",
+      "reading_notes": "docs/annex/README.md"
+    },
+    {
+      "id": "montanari-sk-optimization",
+      "title": "Optimization of the Sherrington–Kirkpatrick Hamiltonian",
+      "authors": [
+        "Andrea Montanari"
+      ],
+      "url": "https://doi.org/10.1137/20M132016X",
+      "kind": "primary_mathematical_paper",
+      "pin": {
+        "publication": "SIAM Journal on Computing 54(4), FOCS19-1–FOCS19-38",
+        "online_publication_on": "2021-01-07",
+        "issue": "August 2025",
+        "inspected_preprint": "1812.10897v2",
+        "preprint_submitted_on": "2019-04-05",
+        "displayed_manuscript_date": "2019-04-08"
+      },
+      "selected_files": [
+        {
+          "path": "montanari-sk-optimization.pdf",
+          "url": "https://arxiv.org/pdf/1812.10897v2",
+          "bytes": 353396,
+          "sha256": "39f086f17661e9286fb7534c894d25c7c127fc932592e84125d51d913764e1a1"
+        }
+      ],
+      "license": {
+        "spdx": null,
+        "evidence": "Version-specific arXiv record links its non-exclusive distribution licence. This is a grant to arXiv, not a general third-party redistribution licence. SIAM retains copyright in the journal edition.",
+        "evidence_url": "https://arxiv.org/abs/1812.10897v2",
+        "redistribution_decision": "Reference only; no PDF, source, figures or passages bundled."
+      },
+      "locator": "Inspected preprint Section 1, Assumption 1, Theorem 2 and Remark 1.2, pp. 2–3.",
+      "consumer": "Conditional classical comparison for near-optimal GOE optimization.",
+      "disposition": "reference_only",
+      "boundary": "Assumption 1 concerns strictly increasing positive-temperature Parisi CDFs for every sufficiently large finite beta. Zero-temperature full support does not alone discharge it. The operation model assumes constant-cost access to the Parisi distribution, PDE solution and selected derivatives. Journal theorem numbering was not verified."
+    },
+    {
+      "id": "parisi-ground-state-2017",
+      "title": "Parisi formula for the ground state energy in the mixed p-spin model",
+      "authors": [
+        "Antonio Auffinger",
+        "Wei-Kuo Chen"
+      ],
+      "url": "https://doi.org/10.1214/16-AOP1173",
+      "kind": "primary_mathematical_paper",
+      "pin": {
+        "publication": "Annals of Probability 45(6B), 4617–4631 (2017)",
+        "inspected_preprint": "1606.05335v2",
+        "preprint_submitted_on": "2016-06-28",
+        "displayed_manuscript_date": "2016-06-29"
+      },
+      "selected_files": [
+        {
+          "path": "parisi-ground-state-2017.pdf",
+          "url": "https://arxiv.org/pdf/1606.05335v2",
+          "bytes": 170695,
+          "sha256": "19abfa99c606191e3c33d0c90492b79f5aa1f3a3a7ac32d44ff43aec15bf6978"
+        }
+      ],
+      "license": {
+        "spdx": null,
+        "evidence": "Version-specific arXiv record links its non-exclusive distribution licence, not a general third-party redistribution licence.",
+        "evidence_url": "https://arxiv.org/abs/1606.05335v2",
+        "redistribution_decision": "Reference only; no PDF, source, figures or passages bundled."
+      },
+      "locator": "Inspected preprint Section 1, Theorem 1, equation (5), p. 3; Section 3, Lemma 2 and proof of Lemma 3, especially the concluding bound at the constructed gamma_0, pp. 9-12.",
+      "consumer": "Zero-temperature variational formula and the separate attainment argument needed before choosing a minimizer.",
+      "disposition": "reference_only",
+      "boundary": "The variational class contains nonnegative, nondecreasing, right-continuous integrable functions on [0,1). The mixed Gaussian model has its stated coefficient conditions. The result does not establish full-interval support or QAOA convergence.",
+      "applied_decision": "All three QAOA drafts cite Theorem 1 together with the proof of Lemma 3 when importing formula and attainment. The infimum formula alone does not supply a minimizer."
+    },
+    {
+      "id": "sk-infinite-step-2020",
+      "title": "The SK Model Is Infinite Step Replica Symmetry Breaking at Zero Temperature",
+      "authors": [
+        "Antonio Auffinger",
+        "Wei-Kuo Chen",
+        "Qiang Zeng"
+      ],
+      "url": "https://doi.org/10.1002/cpa.21886",
+      "kind": "primary_mathematical_paper",
+      "pin": {
+        "publication": "Communications on Pure and Applied Mathematics 73(5), 921–943 (2020)",
+        "inspected_preprint": "1703.06872v2",
+        "preprint_revised_on": "2021-06-17"
+      },
+      "selected_files": [
+        {
+          "path": "sk-infinite-step-2020.pdf",
+          "url": "https://arxiv.org/pdf/1703.06872v2",
+          "bytes": 245531,
+          "sha256": "51536a8db469141e2e24451cc1d41d1f3b41f41b6005377affd5e60d82f4902a"
+        }
+      ],
+      "license": {
+        "spdx": null,
+        "evidence": "Version-specific arXiv record links its non-exclusive distribution licence, not a general third-party redistribution licence.",
+        "evidence_url": "https://arxiv.org/abs/1703.06872v2",
+        "redistribution_decision": "Reference only; no PDF, source, figures or passages bundled."
+      },
+      "locator": "Inspected preprint Section 1.2, Theorem 1 and Remark 1, p. 5.",
+      "consumer": "Historical support boundary: infinitely many support points at zero temperature.",
+      "disposition": "reference_only",
+      "boundary": "Infinite support is weaker than full relative support on [0,1). Remark 1 distinguishes interval support; Remark 7 omits details for its terminal-flat-region discussion. The cited edition uses the revised Infinite Step title."
+    }
+  ],
+  "community_leads": [
+    {
+      "title": "Is it possible to map dependencies of theorems",
+      "url": "https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Is.20it.20possible.20to.20map.20dependencies.20of.20theorems.3F.html",
+      "discussion_on": "2025-09-06",
+      "retrieved_on": "2026-10-23",
+      "decision": "Distinguish an informal plan available before formalization from dependencies extracted from completed declarations.",
+      "followed_to_primary": [
+        "https://github.com/hanwenzhu/LeanArchitect",
+        "https://github.com/leanprover/verso-blueprint"
+      ],
+      "source_quality": "Community discussion; discovery context only."
+    },
+    {
+      "title": "How to make blueprint",
+      "url": "https://leanprover-community.github.io/archive/stream/113489-new-members/topic/How.20to.20make.20blueprint.html",
+      "discussion_on": "2024-04-14",
+      "retrieved_on": "2026-10-23",
+      "decision": "Use maintained package instructions rather than copying an old project's scaffold.",
+      "followed_to_primary": [
+        "https://github.com/PatrickMassot/leanblueprint"
+      ],
+      "source_quality": "Maintainer reply followed to primary repository."
+    }
+  ],
+  "validation": {
+    "status": "source_inspection_only",
+    "executed_upstream_tools": false,
+    "vendored_source": true,
+    "limitations": "Selected licensed readings are retained under docs/annex with exact-byte hashes and stated reading scope. Source inspections do not establish runtime compatibility or semantic certification. The packaged extractor contains an attributed Comparator adaptation; the example source lock independently records its vendored corpus.",
+    "adapted_source": [
+      "comparator-traversal"
+    ],
+    "retained_sources": [
+      "qaoa-high-depth-2022",
+      "qaoa-infinite-size-2022",
+      "leanarchitect"
+    ]
+  }
+}

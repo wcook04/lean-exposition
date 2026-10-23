@@ -1,0 +1,88 @@
+---
+name: long-to-short
+description: Select and write a short research paper from an authored long record while retaining exact claims, essential hypotheses, attribution and destinations for omitted proof detail.
+---
+
+# Long reasoning record to short paper
+
+Use this skill when an existing argument needs a coherent research paper.
+Shortening is a choice of contribution and explanation. It cannot strengthen
+the mathematics or upgrade its evidence.
+
+## Preconditions and inputs
+
+Read the current long record, selected graph, principal statements and their
+supporting arguments. Compare the closest prior results. Identify the intended
+reader, the principal contribution and the mechanism worth explaining. Fix the
+claim ceiling before editing prose; new mathematical discoveries return to
+research and review first.
+
+Select claims for their supported contribution and source passages for the
+explanation they supply. Keep the claim's graph identity distinct from those
+passage locations. An expository model can guide wording without proving the
+claim; identify the mathematical input that does.
+
+Check that the long record actually contains the proof the short paper will
+cite. A matching title, label or file is insufficient. Record unavailable
+material as unavailable rather than assuming a link's destination is adequate.
+
+## Procedure
+
+1. Select one connected argument. State what changes relative to prior work
+   and what the result enables or clarifies. Counts of lemmas or declarations
+   cannot choose the contribution.
+2. Draft the title, abstract and main theorem against the exact same statement.
+   Retain the domain, every essential hypothesis, quantifier order, dependence
+   of witnesses on parameters and direction of implication.
+   Explain the force of a restrictive hypothesis with familiar cases where known.
+3. Put the mechanism early, then allocate detail to the inference that makes
+   it work. Introduce definitions when their purpose can be understood. Use
+   notation only when it reduces repeated explanation.
+4. Give an intelligible proof or explicitly label a sketch. For every omitted
+   argument, give the long record's version and exact theorem or section, then
+   read that destination. Check that its proof supplies the missing inference
+   with the required assumptions and translated notation. A working link to a
+   nearby theorem is insufficient.
+5. Before cutting a passage, decide where its useful content will remain.
+   Preserve the complete long argument; never rebuild it from the shortened
+   paper. Independent routes may stay there. Essential assumptions,
+   attribution and the reason for the decisive step stay beside their uses.
+6. Reconcile the shared statements in both directions: corrections in the
+   short paper must reach the long record, and assumptions revealed by the
+   long argument must reach the short paper. Resolve differing evidence labels
+   from source and receipts rather than copying the stronger label.
+7. Update passage mappings and citation roles. Preserve credit for prior proofs,
+   adapted constructions, supplied ideas and corrections at their actual uses.
+   Carry still-used inputs and credit into the surviving passages; remove a
+   citation only when its role has gone.
+   Gather toolchain details and run history in one verification destination.
+8. Run `lean-exposition check-bundle DIR`. Inspect links and the rendered paper.
+   Review mathematical meaning before sentence polish. A successful bundle
+   check is not semantic acceptance or independent review.
+
+## Output contract
+
+Produce an authored short paper, its mapping and any required corrections to
+the long record's shared statements. Every claim has its graph identity,
+assumptions, evidence class and citation use preserved; every omitted proof has
+an exact destination. Use the existing mapping fields and passage `rationale`
+under the [authoring contract](../../docs/authoring.md#preserve-correspondence).
+List the exact remaining question. Report review scope and unresolved issues
+without presenting the scaffold or an unchecked draft as a finished paper.
+
+## Checks and example
+
+If the long record establishes “under `A`, conclusion `B` follows”, an abstract
+that states only `B` may overclaim. Retain `A` in the compressed claim unless
+a separately reviewed argument removes it. Moving `A` to a distant limitation
+does not repair an unconditional main theorem.
+
+For example, shortening the natural-number statement “if `n = 0`, then
+`n + 1 = 1`” to “`n + 1 = 1`” creates a false universal claim: `n = 1` refutes
+it. The proof by substitution is short enough to retain together with its guard.
+
+Read three routes: title through main theorem; theorem through its decisive
+proof step; and one short-paper reference through the full argument it names.
+Check that all three preserve the same statement. Then ask a cold reader to
+explain the mechanism and identify an excluded case where known. Preserve
+specific failed reconstruction attempts as revision evidence.

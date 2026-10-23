@@ -1,0 +1,28 @@
+{
+  "status": "timed_out",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "--run",
+    "LeanExpositionDriver.lean"
+  ],
+  "returncode": null,
+  "command_sha256": "ca41102ce8659bd30d7defc32f861e556f0b0100c7a4373d201e2eb62bc355e3",
+  "command_paths_redacted": true,
+  "source_hashes": {
+    "Challenge.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "ComparatorSolution.lean": "3bc54bd8a8c783091838b40fc06f6aa35c7185014f2bd529011afbb821cc4a58",
+    "Minimal.lean": "a6ef1c8ccfd666720602a4a818e83522f23e99bb0a1f119c2d2cb57a39c4d80a",
+    "NegativeSolution.lean": "e7a16a9b5fa974783112dffa216465b92d8ee441df5457a7f1b7d2db0d83fa3d",
+    "lake-manifest.json": "51d4a6318bcbeccde79fe60301efa203b1f6c4fe8f58a2281ec705218ef48f16",
+    "lakefile.toml": "204bfd51666c831a594c590497d73ce5737d82e05250320e4e990127365a26fe",
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
+  },
+  "source_changed": false,
+  "module": "Minimal",
+  "evidence_kind": "elaboration_process",
+  "extractor_sha256": "c11bd5888900acfca592f10acd8f0f38c72ccf07d6aecdc0513cfd864a520834",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

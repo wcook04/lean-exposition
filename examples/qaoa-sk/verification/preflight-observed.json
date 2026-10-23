@@ -1,0 +1,98 @@
+{
+  "axiom_audit": "not_run",
+  "boundary": "Input integrity and prerequisite availability only; no proof was checked.",
+  "comparator": "not_run",
+  "dependency_checkouts": "not_checked",
+  "dependency_pins": {
+    "checkout_bytes_checked": false,
+    "packages": {
+      "Cli": {
+        "revision": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204",
+        "url": "https://github.com/leanprover/lean4-cli"
+      },
+      "LeanSearchClient": {
+        "revision": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+        "url": "https://github.com/leanprover-community/LeanSearchClient"
+      },
+      "Qq": {
+        "revision": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+        "url": "https://github.com/leanprover-community/quote4"
+      },
+      "aesop": {
+        "revision": "355695d523e41d0554926416cba2a2b3544fbbc9",
+        "url": "https://github.com/leanprover-community/aesop"
+      },
+      "batteries": {
+        "revision": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+        "url": "https://github.com/leanprover-community/batteries"
+      },
+      "importGraph": {
+        "revision": "e928b72544873815af278d38681b31c0293588e3",
+        "url": "https://github.com/leanprover-community/import-graph"
+      },
+      "mathlib": {
+        "revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+        "url": "https://github.com/leanprover-community/mathlib4.git"
+      },
+      "plausible": {
+        "revision": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+        "url": "https://github.com/leanprover-community/plausible"
+      },
+      "proofwidgets": {
+        "revision": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+        "url": "https://github.com/leanprover-community/ProofWidgets4"
+      }
+    },
+    "status": "passed"
+  },
+  "evidence_kind": "corpus_preflight",
+  "extraction": "not_run",
+  "host": {
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "lean_build": "not_run",
+  "observed_at": "2026-10-23T17:08:22.474643+00:00",
+  "runner_sha256": "9a790728e8179692a48a3137e2d527e7fa9d4892b874dc4103eada31e88f0d95",
+  "sandbox": {
+    "functional_check": "not_run",
+    "requirement": "Standalone Comparator's documented landrun/systemd sandbox requires Linux.",
+    "status": "unavailable"
+  },
+  "schema_version": "1.0",
+  "source_audit": {
+    "bytes": 4114310,
+    "derived_files": 2,
+    "files": 387,
+    "lean_replay": "not_implied",
+    "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "status": "passed"
+  },
+  "source_lock_sha256": "63958783a80c414a55aa9cbf16c11c6825909939e93bd28c6b422af77e733e60",
+  "source_revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "statement_comparison": "not_run",
+  "status": "unavailable",
+  "tool_compatibility": "not_checked",
+  "toolchain": {
+    "pin": "leanprover/lean4:v4.34.1",
+    "reason": "exact_pin_not_installed",
+    "status": "unavailable"
+  },
+  "tools": {
+    "comparator": {
+      "available": false
+    },
+    "lake": {
+      "available": true
+    },
+    "landrun": {
+      "available": false
+    },
+    "lean4export": {
+      "available": false
+    },
+    "systemd-run": {
+      "available": false
+    }
+  }
+}

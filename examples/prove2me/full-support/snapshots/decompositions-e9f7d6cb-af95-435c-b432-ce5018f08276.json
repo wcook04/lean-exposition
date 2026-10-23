@@ -1,0 +1,35 @@
+{
+  "decompositions": [
+    {
+      "children": [
+        {
+          "entity": "definition",
+          "id": "072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+        }
+      ],
+      "deprecated": false,
+      "omitted_children": 0,
+      "submission_id": null
+    },
+    {
+      "children": [
+        {
+          "entity": "definition",
+          "id": "072c5b2e-1ae2-47c7-aaeb-8baeb65c52f6"
+        },
+        {
+          "entity": "definition",
+          "id": "a045c882-6fb6-4e72-8597-31d270c6cd54"
+        },
+        {
+          "entity": "theorem",
+          "id": "cbe4d178-ea2a-4afa-baed-b89df8166175"
+        }
+      ],
+      "deprecated": false,
+      "omitted_children": 0,
+      "submission_id": "10d5b56d-17dd-4142-9f2b-72428ce4d1e6"
+    }
+  ],
+  "theorem_id": "e9f7d6cb-af95-435c-b432-ce5018f08276"
+}
