@@ -3,6 +3,17 @@
 [Read the draft](paper.md) · [Rendered PDF](paper.pdf) ·
 [Passage correspondence](correspondence.json) · [Bibliography](references.bib)
 
+## Read alongside the original
+
+| OpenAI's full-support manuscript | This short reconstruction |
+| --- | --- |
+| [Original PDF](../../../examples/qaoa-sk/upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf) | [Draft PDF](paper.pdf) |
+| [Original TeX](../../../examples/qaoa-sk/upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex) | [Editable Markdown](paper.md) |
+
+The [source guide](../../../examples/qaoa-sk/README.md#read-the-source-and-the-short-paper)
+identifies the two OpenAI manuscripts and distinguishes them from this repository's
+writing and the separate Prove2Me metadata example.
+
 This short research-style reconstruction explains OpenAI's proof that an
 admissible integrable zero-temperature SK minimizer has full relative
 Stieltjes support. Its central argument is the contradiction between

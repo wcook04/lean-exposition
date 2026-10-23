@@ -4,6 +4,28 @@ This example contains the two Lean source trees selected by [OpenAI's family 281
 
 The source pin is `openai/math@adc7f1241b42e322a6451854ab7e4b4c146bf78a`, the initial public commit of 6 October 2026. The selected source trees, interfaces, build metadata, and manuscript directories were unchanged at public main `1581d4cbdd69a0faf34b2089614fe2a814316a6a` when checked on 23 October 2026.
 
+## Read the source and the short paper
+
+The short paper reconstructs the full-support argument and its scalar consequence.
+Use these links to read it alongside the corresponding OpenAI manuscript:
+
+| OpenAI release | This repository's short reconstruction |
+| --- | --- |
+| [Full-support manuscript (PDF)](upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf) | [Short paper (PDF)](../../papers/qaoa-sk/short/paper.pdf) |
+| [Original TeX source](upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex) | [Editable Markdown](../../papers/qaoa-sk/short/paper.md) |
+| Original statement and argument | Draft explanation with [passage-to-source mappings](../../papers/qaoa-sk/short/correspondence.json) |
+
+OpenAI supplied the original manuscripts and Lean sources. This repository adds
+the explanatory drafts, source mappings and local tooling. The separate
+[Prove2Me intake](../prove2me/README.md) records public platform metadata and
+decomposition links; its platform status stays distinct from local verification.
+
+The [papers guide](../../papers/README.md) also leads to the detailed reasoning
+record and exposition. The broader QAOA manuscript is a separate source; the
+scope table below distinguishes its claim from the two retained formal targets.
+
+## Mathematical scope
+
 | Object | Boundary |
 | --- | --- |
 | `OAI.ZeroTemperatureSK.full_support` | Every admissible integrable minimizer in the pure zero-field SK model has full relative Stieltjes support on `[0,1)`. The conclusion includes a diffusion and selected moment identities. Minimizer existence is not a separate conclusion. |
