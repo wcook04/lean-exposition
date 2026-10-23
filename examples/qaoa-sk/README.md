@@ -60,7 +60,7 @@ A static scan followed every `OAI` import from the two `Main` modules. Every imp
 
 ## Build configuration
 
-The runnable package is [upstream/lean/lakefile.lean](upstream/lean/lakefile.lean). It preserves Lean `v4.34.1`, the upstream `autoImplicit := false` setting, and mathlib revision `d13f23b723b8a846827a245b89c10fc7d3f11612`. Its default library has exactly the two retained `Main` modules as roots.
+The runnable package is [upstream/lean/lakefile.lean](upstream/lean/lakefile.lean). It preserves Lean `v4.34.1`, the upstream `autoImplicit := false` setting, and mathlib revision `d13f23b723b8a846827a245b89c10fc7d3f11612`. Its default library has the two retained `Main` modules as roots and explicit subtree globs so Lake can build their retained sibling imports. The earlier configuration omitted those globs: an actual Comparator invocation built and exported the full-support challenge, then failed while building the solution because an imported object file was missing. The corrected configuration is a new, separately locked edition; that failed attempt does not establish a proof rejection or a successful replay of this edition.
 
 The original OpenAI package resolves 42 package entries and runs compatibility-patch hooks for other parts of its large library. The derived package declares only mathlib and retains its eight transitive package pins. Each pin matches the original OpenAI lockfile. Its [derived lockfile](upstream/lean/lake-manifest.json) therefore contains nine packages. The original Lake configuration and lockfile remain under `upstream/provenance/` and are not the active package configuration.
 

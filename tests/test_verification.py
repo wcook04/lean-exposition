@@ -204,14 +204,27 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(receipt["stdout"], "partial")
 
     def test_real_timed_out_process_is_collected(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        processes = []
+        real_popen = subprocess.Popen
+
+        def start_process(*args, **kwargs):
+            process = real_popen(*args, **kwargs)
+            processes.append(process)
+            return process
+
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "lean_exposition.verification.subprocess.Popen", side_effect=start_process,
+        ):
             receipt = check_build(
                 tmp, "Minimal", timeout=0.2,
                 lake_command=[sys.executable, "-c",
                               "import time; print('started', flush=True); time.sleep(30)"],
             )
         self.assertEqual(receipt["status"], "timed_out")
-        self.assertIn("started", receipt["stdout"])
+        # A cold interpreter may not print before the deadline. The process
+        # must still be reaped; partial-output preservation is tested above.
+        self.assertEqual(len(processes), 1)
+        self.assertIsNotNone(processes[0].returncode)
 
     @patch("lean_exposition.verification._execute")
     def test_changed_source_invalidates_passing_process(self, run):

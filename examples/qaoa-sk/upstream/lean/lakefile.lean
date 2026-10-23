@@ -17,6 +17,7 @@ require mathlib from git
 
 @[default_target] lean_lib OAI where
   roots := #[`OAI.Probability.SKSupport.Main, `OAI.Probability.SKValue.Main]
+  globs := #[`OAI.Probability.SKSupport.+, `OAI.Probability.SKValue.+]
 
 lean_lib ComparatorChallenges where
   globs := #[`ComparatorChallenges.+]

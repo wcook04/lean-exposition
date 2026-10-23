@@ -3122,15 +3122,15 @@
   "derived_files": [
     {
       "path": "upstream/lean/lakefile.lean",
-      "sha256": "bbd2d0a9252732d76248fc35ff61ffcaa7818314619a85b68533ddd63a27063b",
-      "bytes": 728,
+      "sha256": "82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74",
+      "bytes": 799,
       "derived_from": [
         "upstream/provenance/lakefile.lean",
         "upstream/provenance/lake-manifest.json",
         "upstream/provenance/mathlib-lake-manifest.json"
       ],
-      "purpose": "Minimal package for the two retained module roots; see README.md.",
-      "content": "-- Derived for the qaoa-sk example from the Apache-2.0 OpenAI package.\n-- Modified: retain mathlib, the two selected roots, and ComparatorChallenges;\n-- omit unrelated dependencies and compatibility-patch hooks.\n-- Original configuration: ../provenance/lakefile.lean.\n\nimport Lake\n\nopen Lake DSL\n\npackage OAI where\n  version := v!\"0.1.0\"\n  fixedToolchain := true\n  leanOptions := #[⟨`autoImplicit, false⟩]\n\nrequire mathlib from git\n  \"https://github.com/leanprover-community/mathlib4.git\" @ \"d13f23b723b8a846827a245b89c10fc7d3f11612\"\n\n@[default_target] lean_lib OAI where\n  roots := #[`OAI.Probability.SKSupport.Main, `OAI.Probability.SKValue.Main]\n\nlean_lib ComparatorChallenges where\n  globs := #[`ComparatorChallenges.+]\n"
+      "purpose": "Minimal package for the two retained module roots and their complete retained import trees; explicit subtree globs make sibling modules buildable. See README.md.",
+      "content": "-- Derived for the qaoa-sk example from the Apache-2.0 OpenAI package.\n-- Modified: retain mathlib, the two selected roots, and ComparatorChallenges;\n-- omit unrelated dependencies and compatibility-patch hooks.\n-- Original configuration: ../provenance/lakefile.lean.\n\nimport Lake\n\nopen Lake DSL\n\npackage OAI where\n  version := v!\"0.1.0\"\n  fixedToolchain := true\n  leanOptions := #[⟨`autoImplicit, false⟩]\n\nrequire mathlib from git\n  \"https://github.com/leanprover-community/mathlib4.git\" @ \"d13f23b723b8a846827a245b89c10fc7d3f11612\"\n\n@[default_target] lean_lib OAI where\n  roots := #[`OAI.Probability.SKSupport.Main, `OAI.Probability.SKValue.Main]\n  globs := #[`OAI.Probability.SKSupport.+, `OAI.Probability.SKValue.+]\n\nlean_lib ComparatorChallenges where\n  globs := #[`ComparatorChallenges.+]\n"
     },
     {
       "path": "upstream/lean/lake-manifest.json",
