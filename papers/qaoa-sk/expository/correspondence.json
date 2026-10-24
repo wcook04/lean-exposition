@@ -10,6 +10,7 @@
   "citation_ids": [
     "ac2017_ground_state",
     "bfmvz2022_tree_transfer",
+    "chen2026_full_support",
     "circuit-r2-26-cite-additive-responses",
     "circuit-r2-26-cite-bounded-trigonometric",
     "circuit-r2-26-cite-classical-fixed-minimizer",
@@ -88,7 +89,6 @@
     "support_gap_lean_source",
     "support_model_lean_source",
     "support_model_source",
-    "support_optimality_chen",
     "support_optimality_chl",
     "support_regularity_source",
     "support_stieltjes_lean_source",
@@ -241,6 +241,7 @@
         "support.moment_saturation"
       ],
       "citation_ids": [
+        "chen2026_full_support",
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
@@ -265,7 +266,6 @@
         "support_gap_lean_source",
         "support_model_lean_source",
         "support_model_source",
-        "support_optimality_chen",
         "support_regularity_source",
         "support_stieltjes_lean_source",
         "support_tails_source",
