@@ -31,8 +31,8 @@ quantitative bound, with their analytic inputs and attribution retained.
 A configuration of $n$ spins is a list of signs
 $\sigma_1,\ldots,\sigma_n\in\{-1,1\}$. For each pair $i<j$, choose
 an independent Gaussian weight $J_{ij}$ with mean zero and variance one;
-these weights are called couplings. The
-[Sherrington–Kirkpatrick optimization problem][SK] is to maximise
+these weights are called couplings. The zero-temperature
+[Sherrington–Kirkpatrick problem][SK] is to maximise
 the energy
 $$
 H_n(\sigma)=n^{-1/2}\sum_{i<j}J_{ij}\sigma_i\sigma_j,
@@ -41,17 +41,17 @@ $$
 Write $P_*:=\lim_{n\to\infty}n^{-1}\mathbb E\max_\sigma H_n(\sigma)$
 for the limiting optimum per spin. The Parisi formula expresses this
 value as a minimum over nondecreasing functions (see [Auffinger and Chen
-(2017), Theorem 1 and proof of Lemma 3][AC]). The parameter $t$ ranges
-over nonnegative overlap scales: for two spin configurations
+(2017), Theorem 1 and proof of Lemma 3][AC]). For two spin configurations
 $\sigma,\tau$, their overlap $R=n^{-1}\sum_i\sigma_i\tau_i$
 measures their agreement, with $R=1$ when they coincide and $R=-1$
-when every sign is reversed. We explain why a minimising function
+when every sign is reversed. Reversing all signs preserves the energy,
+so we use nonnegative overlap scales $t$. We explain why a minimising function
 has no interval of constancy, and why the measure defined by its
 increments has positive density in the interior.
 
 This is the analytic part of one proof about the quantum approximate
-optimization algorithm (QAOA), which prepares spin configurations by a
-sequence of quantum operations. For each desired accuracy, that proof
+optimization algorithm (QAOA), which samples spin configurations by
+measuring a state prepared through quantum operations. For each desired accuracy, that proof
 chooses one finite sequence whose expected energy per spin approaches
 $P_*$ to that accuracy as $n\to\infty$.
 The absence of intervals on which the minimising function is constant
@@ -136,8 +136,6 @@ $$
 q(t)=t,\qquad \mathbb E[a(t,X_t)^2]=1.
 $$
 
-Its Stieltjes measure has a smooth density, strictly positive at every
-interior time; Corollary 3 gives the precise stronger statement.
 Existence of a minimiser is a separate input from
 [Auffinger and Chen (2017), Theorem 1 and the proof of Lemma 3][AC].
 Integrability allows $\gamma$ to grow near one. Zero field gives
@@ -212,8 +210,8 @@ $$
 The change of integration order is justified by $|q-t|\leq1$ and
 $\mu_\gamma(K)<\infty$. Since $G\geq0$, it vanishes almost
 everywhere for $\mu_\gamma$, and continuity makes it vanish on
-$S=\operatorname{supp}\mu_\gamma$. This removes diffuse mass as
-well as atoms; no density or probability constraint is assumed.
+$S=\operatorname{supp}\mu_\gamma$. The variation removes a fraction of
+all mass in $K$, not only atoms; no density or probability constraint is assumed.
 
 At a support point $s>0$, $G$ has a minimum. Hence
 $$
@@ -239,8 +237,8 @@ q'''(t)\geq\frac{c^2}{1000}\mathbb E[a(t,X_t)^4]>0
 $$
 If $c=0$, then $q''(t)=\mathbb E[\Phi_{xxx}(t,X_t)^2]>0$.
 
-Minimality is not a hypothesis of this lemma. Its integrated
-coercive estimate is explained in §3. We first show what it buys.
+Minimality is not a hypothesis of this lemma. The integrated
+lower bound is explained in §3. We first show what it buys.
 
 Suppose $(\ell,r)$ is a support gap with endpoints in $S$ and $r<1$.
 The coefficient is constant there. If its value is positive, strict
@@ -344,7 +342,7 @@ The exact identity is [OpenAI (2026a), Lemma 4.1][FS]; the
 shape hypotheses, correction and boundary justification are assembled
 in its Proposition 4.2. The long reasoning record, §4.4,
 “How the signs make a correction with zero expectation useful”,
-defines every auxiliary variable and reproduces the certificate.
+defines every auxiliary variable and reproduces the identity.
 Thus (5) is a cited analytic input here, with its mechanism exposed;
 it is not a pointwise assertion for arbitrary $v,w,z$.
 
@@ -482,7 +480,7 @@ We have passed spatial moments, not the time derivatives
 $q_\delta'''$. Indeed the limiting minimiser has $q(t)=t$ and
 $q'''=0$; the coefficient derivative in (8) is exactly what the
 constant-interval formula omits. The long record, §§5.1–5.2,
-retains the full moment bootstrap and fixed-time transfer.
+retains the smoothness argument and fixed-time transfer.
 <!-- /passage:density-consequence -->
 
 <a id="value-and-qaoa"></a>
@@ -546,7 +544,7 @@ record, §7, “A finite Gaussian spin and its adjacent correlations”.
 <!-- /passage:scalar-value -->
 
 <!-- passage:qaoa-boundary -->
-There is also a separate circuit theorem. QAOA begins with equal
+QAOA begins with equal
 quantum amplitudes on all spin configurations. Each layer alternates
 a phase change determined by $H_n$ (cost evolution) and single-spin
 rotations that mix the signs (transverse-field mixing). The depth is

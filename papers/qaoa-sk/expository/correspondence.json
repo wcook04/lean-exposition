@@ -174,12 +174,12 @@
     "support.stieltjes_measure",
     "support.zero_curvature"
   ],
-  "content_sha256": "97e59dde5cc05ce9e21674afbf9e819a4225230b957261c83f692cd0ad24ee87",
+  "content_sha256": "b437ae8136af3abc41e9e00cdd41dbf301baf3ed7fc442cb4c7b276e0d904619",
   "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
   "passages": [
     {
       "anchor": "opening",
-      "text_sha256": "e6b30ea344fcd6b222353b49b87dd97ac160c2fdc21e404282af15560f1831e1",
+      "text_sha256": "355c4a2d8b49bccb5d5d22c2a8fa65f0eb4662e38f3f51393bda1a3120a24ac6",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -241,7 +241,7 @@
     },
     {
       "anchor": "spins-and-overlap",
-      "text_sha256": "751ab3dca69c60c8a0045b57cb7a64f17ed5c0f113d2c128cebabd344ae9e1b8",
+      "text_sha256": "556c958a60d98e21fd56b21686e8c5b8e2846acdae67d95021da9d63fab1dae3",
       "claim_ids": [
         "scalar.parisi_formula"
       ],
@@ -257,7 +257,7 @@
     },
     {
       "anchor": "order-parameter-example",
-      "text_sha256": "70786f8eff59e72916aa7434ee8736f77d0ad5967a2699e9e7a8e4a8dbcbabef",
+      "text_sha256": "d046235ea312569e2e45c37c4a90542d4fc598374929c5976a8c49fcab59400e",
       "claim_ids": [
         "support.stieltjes_measure"
       ],
@@ -288,7 +288,7 @@
     },
     {
       "anchor": "value-and-diffusion",
-      "text_sha256": "e8f5b7fe8fdcf711f72cd6ebbdb9b7284c0f1ffa5970287dc026bd938d70483b",
+      "text_sha256": "4c6f30ede822f307378461ae34fb298d95c5b17df38b8ac82520e512c556b500",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -317,7 +317,7 @@
     },
     {
       "anchor": "full-support-statement",
-      "text_sha256": "8e38e6b1ee7ab472d6e94371bf6c54dca5ce0913041bdd68beb7da4a8c9d5866",
+      "text_sha256": "91b2380c79e7defffa039dc166000890069071c0eff7a18c9638be7aedc20a64",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -367,7 +367,7 @@
     },
     {
       "anchor": "zero-candidate-example",
-      "text_sha256": "8e28e9eb92ee4d13369fb0cc7f939afe383c2bd6384fae3f13c4fc3abacafb26",
+      "text_sha256": "df8280e56a3e2b7e8dab9cb4a1d008bc5d8dbc32d00795edce30b512a47753cd",
       "claim_ids": [
         "support.moment_identity"
       ],
@@ -386,7 +386,7 @@
     },
     {
       "anchor": "contact-and-gap",
-      "text_sha256": "be6d4141be1d8845fe0fc70de6b4ad22872a90eacd90089d826eea768c1916ac",
+      "text_sha256": "dc9c567b57fff31419a8021ec50450313b3a8f43f4fd049032e2d7165a330ac0",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -437,7 +437,7 @@
     },
     {
       "anchor": "endpoints",
-      "text_sha256": "7ef2db03145d0e129258b659873c3ad0cc27becc5b41b3cf9a4e2d98970aa1d5",
+      "text_sha256": "1fcc5246ead53a112308ac61ac38a59d6e885f5577f9c00c8b48c41d7ecba4a9",
       "claim_ids": [
         "support.zero_curvature",
         "support.no_initial_gap",
@@ -474,7 +474,7 @@
     },
     {
       "anchor": "density-and-approximation",
-      "text_sha256": "0d9b9e70d3c89d419ecc966b878f78ee58ffb8b0b830ac5338f448078d082574",
+      "text_sha256": "841bb69da38baff1648a24621c9833df49fdbc640026de3eb4cfcba0e9ddd1ac",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -522,7 +522,7 @@
     },
     {
       "anchor": "scalar-identities",
-      "text_sha256": "9da947aea385611ee340ece374a7e9d94b875204f5584d55a11d7cbec8909a00",
+      "text_sha256": "c827f8d62565cc2ae32ac766906f4b92a7126a20cef66822efdca8e8f1100d36",
       "claim_ids": [
         "scalar.manuscript_terminal_value"
       ],
@@ -577,7 +577,7 @@
     },
     {
       "anchor": "finite-gaussian",
-      "text_sha256": "96011ced67d971342fee65a4e2d26a761e0a8053eb9ad3fe4a05713f7453691b",
+      "text_sha256": "4de28a02f13c07c673e5f54756072b01b412a800d41430aed3aae0a5c39663a3",
       "claim_ids": [
         "scalar.euler_normalization",
         "scalar.conditional_rounding",
@@ -640,7 +640,7 @@
     },
     {
       "anchor": "gaussian-one-step-example",
-      "text_sha256": "54461e0fb0ae8b184c5bec73793200365d8a55f368402ab9d57462f6097f19cf",
+      "text_sha256": "2b852060bee92280cc6c7791857385407fe3f0bb1e0aa7d52896f7bf1155ec03",
       "claim_ids": [
         "scalar.conditional_rounding"
       ],
@@ -658,7 +658,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "b2baf9c8aeba5a8f8209f8bdab71e3072eeb38bacb8a3f620850bf6927e10f19",
+      "text_sha256": "7cf6042a71efcfd46f5b69cc1fded397f8c2e5fc9eff71fbde83006df36baec2",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -704,7 +704,7 @@
     },
     {
       "anchor": "rooted-energy",
-      "text_sha256": "07f865ee3c7b38fc6e13bb3094fc283495dcf7a073427b0287c91eb2fe3b6b5a",
+      "text_sha256": "4a5b1d667af04c9e485dfc8e63a087cf906759d6e32db3185c64cb5341f105c5",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -759,7 +759,7 @@
     },
     {
       "anchor": "circuit-synthesis",
-      "text_sha256": "30a73439b32d8ffb98fd1f6a5fd5d985a472a610e0d82c9de48d89d78609c8a1",
+      "text_sha256": "fc18d17060b415e46d9737bcbcf984b0a5f59ea96fa90528f840f50e0da278b2",
       "claim_ids": [
         "circuit.sign_smoothing",
         "circuit.bounded_trigonometric",
@@ -833,7 +833,7 @@
     },
     {
       "anchor": "seed-removal",
-      "text_sha256": "9d3c80cb30299005cb7b063be46e8ddb01377cfea79690aa781a93d366404300",
+      "text_sha256": "0a4837907df5ad8249426b3035125ecebacd1625f70373cb309ef197c48b48c3",
       "claim_ids": [
         "circuit.seed_removal",
         "circuit.singular_echo",
@@ -858,7 +858,7 @@
     },
     {
       "anchor": "fixed-word-transfer",
-      "text_sha256": "d6d628274dbf55b36b64b1bf1e589488a50750c0785dbaf8ae61f38e0e6c1413",
+      "text_sha256": "adf6f0951609658b84650f6c236513f7e9e1cf13bcd6abb3c6d49f7b93b4192a",
       "claim_ids": [
         "circuit.fixed_word_transfer",
         "circuit.ordinary_word_primary",
@@ -906,7 +906,7 @@
     },
     {
       "anchor": "measured-energy",
-      "text_sha256": "0992644b0b74566e9f732e2f387bcfa8f9a2f2c42a18cc7972f8531e46434b8e",
+      "text_sha256": "4dcdbc4fc543e217a389125bda9b316dbec923a5847f8ec2b43d22a745836ec9",
       "claim_ids": [
         "circuit.fixed_word_concentration",
         "circuit.one_measurement_near_optimum"
@@ -952,7 +952,7 @@
     },
     {
       "anchor": "classical-algorithm",
-      "text_sha256": "62f59636983424063eee3055ecaacec01ed06c3584f7e32b9ece9febcc9f28ab",
+      "text_sha256": "fb04758c5f4370ffd8deaf8afa04365379d2b4d8f752e3a835e3cd0ca9449e67",
       "claim_ids": [
         "scalar.separate_classical_algorithm"
       ],
@@ -969,7 +969,7 @@
     },
     {
       "anchor": "positive-temperature-route",
-      "text_sha256": "d1538ba05cea453794c3d0a18a91810a22f5a36da0305f989ee10687387add8f",
+      "text_sha256": "2d864ee09cd99ff52f13928d3734bb43796dca029c8002cb0233ae732d794c3c",
       "claim_ids": [
         "circuit.ordinary_word_positive"
       ],
@@ -1029,7 +1029,7 @@
     },
     {
       "anchor": "changed-cases",
-      "text_sha256": "d59d04dd386f0eb55edaf2fea4dc559900b745c6e14e61ac1d5d5321bc906e99",
+      "text_sha256": "839182fcfb18bd72a4bef51137f947adbb0dff57a2488e250604a6416a8d39f8",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.moment_identity",
@@ -1096,7 +1096,7 @@
     },
     {
       "anchor": "analytic-notes",
-      "text_sha256": "6dffdc591232cfbe38b19a1ab096af5b927a1ab9fb9418632db551e0e483263d",
+      "text_sha256": "24c124d93893997cc2ad8c9ac76dbe782995e88aebb1e2991fc8e2829e2fb1a0",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -1230,7 +1230,8 @@
   ],
   "path": "papers/expository.md",
   "review_notes": [
-    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred."
+    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
+    "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.0",

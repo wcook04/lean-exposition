@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "38d88e8f3ff7f015e356cb7a8856c61eb65399f095ed3f7d9da5ac5994177ec7",
+  "content_sha256": "06d3abd8ce4141e94fe2e4c328e8b2950040e8e0a1619f840dfa3ba5cf11751e",
   "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
   "selected_goal_ids": [
     "full_support"
@@ -290,7 +290,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "83f5dc034cf0eac04178d6e4a36d4a41400062a99946583ddc669478fdef0bd9",
+      "text_sha256": "1a98ab7eb5fbe88353205b5001f058c57289344e7b2c557a1770a86effd68087",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -320,7 +320,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "98baf2ba1e6383c903b21d8b789189231ca528c90911e1a11d9de0cda56d6af4",
+      "text_sha256": "e26a617d5b4db1b84e5ae266fae2ec9d0d98298d0dfff2847380336218312ec5",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -380,7 +380,7 @@
     },
     {
       "anchor": "contact",
-      "text_sha256": "9e1770731f634653041f322e44edd11fb93b80542a2d47a6f731795ab1e6709c",
+      "text_sha256": "c4cbf43df19c743d95264b59b032924f51a5632283c7115992f262886d2be58d",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -411,7 +411,7 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "cb1153a4dd5bfc006a0f47cfe563cc4f775c9e9140e3d4dc5e0bb63ce374ac80",
+      "text_sha256": "23d905d680cafeeaf26889839138c0954b5b563b01e075c1982d1f4be35a1191",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
@@ -462,7 +462,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "97bdd96cf4d48627596ecdd41f5558ccab746bb3dff5a85b8642dc5e1b0ded2a",
+      "text_sha256": "bc491a105f1d7a4ccd23eb38b7fdd807067274526e80506793b554f684a830dd",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -500,7 +500,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "637c12599091d0e18da727835670fded8fbcb6b7bb705621b992d8762ffad25d",
+      "text_sha256": "57a92525869c0e23eb29668693f74738ce26ab03165009091d0081519edada67",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -611,7 +611,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "b76858093f0e351300974f28454245cf5319f0e9b4b4856081248f4c49f8dc0b",
+      "text_sha256": "9c8648dd7ba934a3b08612204d16ab6df2e1a3921974da19d18087e3d77a3882",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -734,6 +734,7 @@
   ],
   "review_state": "needs_revision",
   "review_notes": [
-    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred."
+    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
+    "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance."
   ]
 }

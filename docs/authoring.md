@@ -187,6 +187,14 @@ forward reference does not by itself repair that dependence. Apply this review
 to every paper at its declared prerequisite level, including abstracts,
 captions, examples and the links between sections.
 
+Better grounding need not make a paper longer. First try a more precise word,
+a concrete description of the operation, or a change in sentence order. Introduce
+a specialist term beside the object it names, at the reader’s stated prerequisite
+level. Add explanation when it supplies a missing inference; cut repeated
+announcements and definitions that the argument no longer needs. Review the
+whole sequence for this failure class rather than repairing only the example
+that exposed it.
+
 The short paper should state one result with its hypotheses, explain the
 mechanism, give the decisive argument and delimit its reach. The long record
 should let a reader reconstruct every argument it promises; an exact external
