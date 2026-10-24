@@ -3,7 +3,7 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
+  "content_sha256": "427f2fe911f1e20282aa39155aa8d842673650049e8bb3631c4cfa1a12238671",
   "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
   "selected_goal_ids": [
     "full_support"
@@ -1163,7 +1163,7 @@
     },
     {
       "anchor": "gaussian-sanity-check",
-      "text_sha256": "c137004968eb9c0b204cf89fdaa1123ecd850276479f645f4d6b214e502ca283",
+      "text_sha256": "152d90201232dff050a99803d9007a4cc85235de6e1f9e3fffd035499fca7128",
       "claim_ids": [
         "support.moment_identity"
       ],
@@ -2032,6 +2032,7 @@
   ],
   "review_state": "needs_revision",
   "review_notes": [
-    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred."
+    "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
+    "24 October 2026 focused-scope revision: applied skills/graph-to-long/SKILL.md (SHA256 7259e3095b9fdbac55a22fbd04e48529318d2e4b222bb6db7bf8ec21bbefe790). Preserved the full no-gap, density, scalar and circuit destinations while removing the now-obsolete reference to exposition §4.1. This pass checked destination continuity and the selected no-gap correspondence; it is not a new complete audit of the long record."
   ]
 }

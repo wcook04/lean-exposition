@@ -1915,8 +1915,7 @@ for $0<t<1$. Thus $G_0(s)=\int_s^1(q_0(t)-t)\,dt<0$ for
 every $s<1$. Inserting an atom at $s$ is admissible, and its
 [first variation][fs-var] is $G_0(s)/2<0$. In particular, the derivative for inserting
 mass at zero is $1/4-1/\pi<0$. Hence this coefficient does not
-minimize. The expository companion's §4.1 gives the same descent
-directly from the constant-coefficient heat formula.
+minimize.
 
 Here the Euler scheme is exact: $Y_j=B_{t_j}$ under the Brownian
 coupling. Nevertheless its normalizers are

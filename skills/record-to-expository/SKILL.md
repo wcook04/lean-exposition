@@ -1,14 +1,16 @@
 ---
 name: record-to-expository
-description: Explain an established result from its evidence graph and reasoning record for a specified audience, using prerequisite teaching, worked examples and checks of understanding.
+description: Teach a selected result using the Lean corpus, complete long record and short paper, choosing prerequisites, examples and proof detail for a specified reader without weakening assumptions or evidence boundaries.
 ---
 
 # Research record to expository paper
 
 Use this skill when the goal is to help a reader understand and use an already
-established result. A short research paper is a useful input but not a required
-intermediate. The exposition derives its mathematical authority from the
-underlying argument and evidence, not from easier language.
+established result. In the three-paper funnel, use the Lean corpus, original
+sources and receipts, the long record and the short paper together. The short
+paper identifies the contribution; the long record supplies complete arguments;
+the original evidence fixes what can be claimed. The exposition derives its
+mathematical authority from that argument and evidence, not from easier language.
 
 ## Preconditions and inputs
 
@@ -16,6 +18,21 @@ Choose an established result and read its complete argument, source statement,
 assumptions, citations and recorded evidence. Identify the intended reader and
 the background they can reasonably supply. State what they should be able to
 reconstruct or do after reading.
+
+Read the short paper to identify the result and its position, then follow its
+proof destinations through the long record and original sources. Compare the
+selected formal statement and definitions with the account being taught. Keep
+all upstream context available, but report the passages actually inspected.
+For a standalone exposition without a short paper, explicitly select the result
+and scope that the short paper would otherwise supply; do not invent that input.
+
+Select one central result and its explanatory endpoint before drafting. A rich
+source corpus is context for the author, not a requirement to teach every
+consequence in one article. Include a prerequisite, example or proof detail
+when it helps the reader understand that result. Route substantial further
+results to the existing long record and give only the outlook needed to place
+the selected result. Length follows the explanation; do not equate exposition
+with an expanded version of the entire research record.
 
 Name the operations and results the reader is assumed to know, not just a
 level such as “graduate”. Separate those from what the exposition must teach.
@@ -94,6 +111,11 @@ teaching content in the document; keep the review account in its mapping.
 Keep the same evidence class and claim boundary as the source record. If the
 pass discovers a new theorem or a defect, record it for research review and
 update the source authority before advertising a changed conclusion.
+
+Record why this result was selected, what supporting material was taught or
+routed to the long record, and where a sequential reading stopped. Follow
+[skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills)
+when a revision suggests a general improvement to these instructions.
 
 ## Checks and example
 

@@ -1,6 +1,6 @@
 ---
 name: long-to-short
-description: Select and write a short research paper from an authored long record while retaining exact claims, essential hypotheses, attribution and destinations for omitted proof detail.
+description: Select a short research paper using the Lean corpus, original sources and complete long record, retaining the contribution, decisive proof, hypotheses, attribution and full-proof destinations.
 ---
 
 # Long reasoning record to short paper
@@ -10,6 +10,13 @@ Shortening is a choice of contribution and explanation. It cannot strengthen
 the mathematics or upgrade its evidence.
 
 ## Preconditions and inputs
+
+Keep the Lean corpus and its original-source and checking context available
+alongside the long record. For the selected result, inspect the formal
+statements and definitions again; the long record's interpretation is a claim
+to compare, not a substitute for that check. Use the long record for the full
+argument and omitted cases, the literature for credit and position, and actual
+receipts for the scope of formal assurance.
 
 Read the current long record, selected graph, principal statements and their
 supporting arguments. Compare the closest prior results. Identify the intended
@@ -31,6 +38,10 @@ material as unavailable rather than assuming a link's destination is adequate.
 1. Select one connected argument. State what changes relative to prior work
    and what the result enables or clarifies. Counts of lemmas or declarations
    cannot choose the contribution.
+   Compare plausible focal results before choosing. Retain a secondary result
+   when it advances the same argument or explains its use. For each substantial
+   cut, identify the full-proof destination; do not give every available result
+   equal space merely because it has a formal declaration.
 2. Draft the title, abstract and main theorem against the exact same statement.
    Retain the domain, every essential hypothesis, quantifier order, dependence
    of witnesses on parameters and direction of implication.
@@ -86,3 +97,8 @@ proof step; and one short-paper reference through the full argument it names.
 Check that all three preserve the same statement. Then ask a cold reader to
 explain the mechanism and identify an excluded case where known. Preserve
 specific failed reconstruction attempts as revision evidence.
+
+Record the input versions, contribution selected, consequential cuts and their
+destinations under [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
+The [Erdős method transfer](../../docs/erdos-method-transfer.md) illustrates
+selection by mathematical purpose and preservation of the decisive inference.

@@ -7,21 +7,52 @@ specified reader. These are different authoring tasks; the CLI supplies
 bindings and empty scaffolds, while a writer supplies the mathematics and prose.
 
 Start with the [transition skills](../skills/README.md) and the machine
-[contracts](contracts.md). The skills are optional instructions for people and
-agents. They are not runtime dependencies or a claim of measured writing benefit.
+[contracts](contracts.md). Authors working through this funnel load the matching
+skill before selecting or revising material. These are instructions for people
+and agents, not runtime dependencies or a claim of measured writing benefit.
 
 ## Choose a transition
 
 | Transition | Required input | Authored output | Principal review question |
 | --- | --- | --- | --- |
 | Source to graph | Identified source bytes, question, permissions, available checks | Claims, assumptions, citation roles and typed relations | Does each relation mean what the source actually establishes? |
-| Graph to long record | Selected goal closure and readable supporting arguments | Complete argument, informative failures and reproducibility account | Can another reader recover every load-bearing step? |
-| Long record to short paper | Current complete record and principal contribution | Coherent research paper with exact full-proof destinations | Did selection preserve the statement, hard step and credit? |
-| Record to exposition | Established result, full argument and reader profile | Prerequisite teaching, examples and changed-case tasks | Can this reader reconstruct and use the result? |
+| Graph to long record | Selected Lean corpus, definitions, original arguments, literature and source-bound evidence | Complete selected argument, informative failures and reproducibility account | Can another reader recover every load-bearing step? |
+| Long record to short paper | All original context plus the complete long record | One contribution and its decisive proof, with exact full-proof destinations | Did selection preserve the statement, hard step and credit? |
+| Record to exposition | All original context, long record, short paper and reader profile | An explanation of the selected result, with necessary prerequisites and examples | Can this reader reconstruct and use the result? |
 
-Exposition may start from the long record directly. A short paper is not a
-mandatory stage. A mathematical gap sends the affected claim back to research
-and review; it does not become a writing task merely because it appears in prose.
+Each writer retains access to the upstream context and chooses what the present
+reader needs. This is not a requirement to repeat every upstream result. For a
+standalone exposition without a short paper, explicitly select its result and
+scope from the complete argument. A mathematical gap sends the affected claim
+back to research and review; it does not become a writing task merely because
+it appears in prose.
+
+## Use and improve the transition skills
+
+Begin with the relevant skill and the current source versions. Choose the
+mathematical question, supported result and intended reader before choosing
+sections. Rank candidate material by its contribution to that purpose: a proof
+step, necessary prerequisite, useful consequence or revealing example. Keep
+essential assumptions and credit beside their uses. Preserve useful omitted
+detail at an exact long-record destination. Availability, declaration counts
+and page quotas do not decide what belongs in a paper.
+
+Apply the skill to the document, then read the delivered result in order. In the
+existing mapping's `review_notes` or source-review record, identify the skill
+version or repository commit, inputs actually inspected, significant selection
+decisions, passages revised, review performed and remaining limitations. The
+presence of a skill file proves neither its use nor improved comprehension.
+Use the current fields; no separate skill-execution service is required.
+
+When review finds a failure, first repair the affected passage and inspect its
+consumers. Then decide whether the case applies an existing instruction or
+exposes a reusable omission. For a new instruction, retain the before/after
+case, its mathematical justification, scope and a case where it would not
+apply. Update the owning skill and its examples, try it on an actual revision,
+and keep or adjust it according to the observed result. Record author, agent
+and independent reader reviews separately. The [Erdős method transfer](erdos-method-transfer.md)
+provides inspected examples of this practice; it does not establish a measured
+benefit for a new manuscript.
 
 ## Establish that the inputs suffice
 

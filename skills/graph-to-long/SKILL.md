@@ -1,6 +1,6 @@
 ---
 name: graph-to-long
-description: Turn a selected evidence graph into a long reasoning record with recoverable proofs, assumption uses, citations, informative failures and explicit unresolved steps.
+description: Reconstruct a long reasoning record from a selected Lean corpus and original arguments, using the evidence graph to preserve statements, proof dependencies, citations and unresolved steps.
 ---
 
 # Evidence graph to long reasoning record
@@ -15,6 +15,12 @@ and unresolved steps stable destinations. Its length follows the detail needed
 to recover the argument.
 
 ## Preconditions and inputs
+
+For a formally grounded record, read the selected Lean declarations, their
+definitions and proof dependencies, the original mathematical arguments and
+literature, and the source-bound checking receipts. The graph locates these
+inputs. It does not replace them. Distinguish an unavailable source from one
+read and found insufficient; report the scope of the corpus actually inspected.
 
 Read the selected goal, its prerequisite closure, exact source statements and
 evidence records. Run `lean-exposition validate GRAPH`. Resolve conflicting
@@ -35,6 +41,12 @@ to resolve them. Continue with sections whose support is unaffected. A name,
 dependency list, source hash or platform status cannot supply a derivation.
 
 ## Procedure
+
+Before drafting, compare the supported candidate results and choose the question
+this record will answer. Prefer a coherent, useful mathematical contribution
+with recoverable support over a large declaration count. Select its necessary
+proof closure, useful alternative arguments and informative obstructions;
+unrelated corpus material remains available without becoming a chapter.
 
 1. State the question and exact current result. Explain the central mechanism
    and name the step that still needs work, if any. Do not let an incomplete
@@ -112,3 +124,8 @@ its dependent passages.
 
 Use [long-to-short](../long-to-short/SKILL.md) for a research paper, or
 [record-to-expository](../record-to-expository/SKILL.md) for a teaching paper.
+
+Retain the selected inputs, decisions and observed reconstruction failures in
+the existing review record, following [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
+The [Erdős method transfer](../../docs/erdos-method-transfer.md) supplies worked
+cases of argument selection, complete construction and informative failures.

@@ -1,29 +1,23 @@
 # Expository paper: the SK order parameter
 
-Read [Why the SK order parameter has no gaps](main.md). The draft starts
-with two spins and an admissible function with a plateau, explains the
-variational no-gap argument, and develops its scalar value consequences
-before developing the separate QAOA claim. The opening defines the pair scoring
-rule, asks for the limiting optimal energy per spin, and explains why a minimum
-over functions answers that maximum problem. Only then does it introduce the
-question about quantum operations fixed before the system-size limit. The no-gap reading route ends
-with the scalar value in Section 6; the circuit route continues through the
-finite correlation construction and the additional operator theorems.
+Read [Why the SK order parameter has no gaps](main.md). This exposition
+teaches one result: an admissible minimiser cannot be constant on an interval.
+It starts from the finite spin problem, introduces the variational objects,
+and explains how minimality and curvature force the no-gap contradiction.
+Initial and terminal gaps receive their own arguments.
 
-The first route asks a reader comfortable with calculus proofs, Gaussian
-expectations and conditional expectation to reconstruct the no-gap
-contradiction and scalar energy cancellation from identified analytic inputs.
-The circuit continuation assumes complex inner products and tensor products;
-it explains the additional construction's inputs, outputs and quantifiers,
-while retaining its operator theorems as source results.
+The intended reader knows calculus and elementary probability. The necessary
+stochastic identities are explained where they enter and identified as source
+inputs. The paired cumulative/increment plot distinguishes a positive function
+from a measure with full support; the area picture shows the contradiction.
+The paper's task is to make that argument understandable, not to teach every
+result retained in the source corpus.
 
-A paired plot distinguishes a positive cumulative value from increment mass.
-The existing area figure and exact polynomial model explain the gap
-contradiction. The one-step Gaussian example now uses an asymmetric cutoff
-that detects an index error, and the continuation derives the actual
-measurement probability from first and second moments. Section 9 contains
-answered teaching checks; Section 10 retains supporting analytic and
-convention calculations after their applications. No reader study is claimed.
+Density, scalar-value and quantum-algorithm consequences have a brief outlook.
+Their detailed arguments remain in the [long reasoning record](../long/reasoning-record.md):
+§§5.1–5.2 treat density, §6 the scalar value, §7 its finite Gaussian
+approximation and §9 the circuit construction. Having these sources in a
+review packet does not make them required chapters of the exposition.
 
 [Correspondence](correspondence.json) binds the authored passages to the
 [evidence graph](../../../examples/qaoa-sk/evidence-graph.json), source

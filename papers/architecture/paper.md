@@ -70,7 +70,7 @@ theorems of exposition.
 \begin{tikzpicture}
 \path[draw=blue!65,fill=blue!5,line width=.7pt] (-5.55,0)--(5.55,0)--(5.05,-1.45)--(-5.05,-1.45)--cycle;
 \node[archnote,align=center,text width=9.3cm] at (0,-.725)
-  {\textbf{Pinned source and evidence context}\\Lean, manuscript, graph and status records};
+  {\textbf{Pinned mathematical context}\\Lean, definitions, proofs, literature and evidence};
 \path[draw=black!55,fill=black!2,line width=.7pt] (-4.6,-2.55)--(4.6,-2.55)--(4.08,-4.0)--(-4.08,-4.0)--cycle;
 \node[archnote,align=center,text width=7.7cm] at (0,-3.275)
   {\textbf{Long reasoning record}\\Contact, curvature and all gap cases};
@@ -80,14 +80,25 @@ theorems of exposition.
 \path[draw=blue!65,fill=blue!5,line width=.7pt] (-2.7,-7.65)--(2.7,-7.65)--(2.18,-9.1)--(-2.18,-9.1)--cycle;
 \node[archnote,align=center,text width=4.15cm] at (0,-8.375)
   {\textbf{Reader exposition}\\Prerequisites and the gap picture};
-\draw[archflow] (0,-1.46)--node[archnote,fill=white,inner sep=2pt,right]{reconstructs selected argument}(0,-2.54);
-\draw[archflow] (0,-4.01)--node[archnote,fill=white,inner sep=2pt,right]{selects theorem and credit}(0,-5.09);
-\draw[archflow] (0,-6.56)--node[archnote,fill=white,inner sep=2pt,right]{re-explains with prerequisites}(0,-7.64);
+\draw[archflow] (0,-1.46)--node[archnote,fill=white,inner sep=2pt,right]{reconstruct the\\complete argument}(0,-2.54);
+\draw[archflow] (0,-4.01)--node[archnote,fill=white,inner sep=2pt,right]{select contribution\\and decisive proof}(0,-5.09);
+\draw[archflow] (0,-6.56)--node[archnote,fill=white,inner sep=2pt,right]{teach the\\selected result}(0,-7.64);
 \draw[archflow,dashed] (-2.44,-8.375)--(-6.05,-8.375)--(-6.05,-.725)--(-5.3,-.725);
 \node[archnote,fill=white,align=center,text width=1.7cm] at (-6.05,-4.55) {claim-site links return to exact sources};
 \end{tikzpicture}
-\caption{An inverted reader funnel adapted from Will Cook's existing mathematics-map visual. It selects a way into one scoped result; the widths represent editorial selection, not page counts, proof strength or the length of the expository paper. Solid arrows name authoring transitions. The separate dashed route returns a reader from a claim to pinned evidence, without asserting that any text or check certifies mathematical meaning.}
+\caption{An inverted reader funnel adapted from Will Cook's existing mathematics-map visual. It selects a way into one scoped result; the widths represent editorial selection, not page counts, proof strength or the length of the expository paper. Solid arrows name the three writing methods. Authors retain the source context at every stage and add the preceding texts. The separate dashed route returns a reader from a claim to pinned evidence; it does not certify mathematical meaning.}
 \end{figure}
+
+The repository supplies three writing methods:
+[reconstructing a complete argument](../../skills/graph-to-long/SKILL.md),
+[selecting its contribution and decisive proof](../../skills/long-to-short/SKILL.md),
+and [teaching a selected result](../../skills/record-to-expository/SKILL.md).
+These are instructions for a human author or agent, not automatic command-line
+stages. Context accumulates as the author proceeds: the long record uses the
+Lean sources, definitions, ordinary proofs, literature and evidence records;
+the short paper uses that same material together with the long record; the
+exposition uses it together with both papers. Each text selects what its reader
+needs while the author retains all of that context.
 
 The sources have different authors and jobs. OpenAI supplies the two original
 mathematical manuscripts and the selected Lean development. Earlier papers

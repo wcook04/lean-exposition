@@ -115,12 +115,13 @@ separately. The authored drafts now supply examples of the transfers above:
   terminal gaps. It gives named long-record destinations for the certificate,
   gap elimination, value identities, Gaussian approximation and circuit route.
   This is selection of a proof mechanism with recoverable supporting detail.
-- The [exposition](../papers/qaoa-sk/expository/main.md), Sections 2 and 9, gives
+- The [exposition](../papers/qaoa-sk/expository/main.md), Sections 2 and 6, gives
   an admissible function with an interior plateau without calling it a minimizer.
-  Its changed-case questions distinguish infinite support from full support,
-  ordinary from strict convexity, and fixed-parameter limits from parameters
-  chosen after observing the disorder. These test particular inferences rather
-  than asking the reader to repeat the theorem.
+  Its changed-case calculation distinguishes ordinary from strict convexity
+  by preserving endpoint values while changing the sign of the missing area.
+  The broader scalar and circuit arguments remain in the long record. This
+  applies the same selection principle at a different reader level: retain
+  what explains the chosen result, with precise routes to further results.
 
 The full-support interface remains conditional on an admissible minimizer;
 the scalar-value clauses retain their own minimizer and diffusion premises.
