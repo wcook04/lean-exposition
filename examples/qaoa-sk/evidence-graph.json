@@ -584,6 +584,13 @@
   ],
   "citations": [
     {
+      "id": "acz2020_near_ground_pairs",
+      "title": "Prescribed-overlap pairs near ground energy",
+      "url": "https://arxiv.org/abs/1703.06872v2",
+      "source_id": "acz2020_infinite_support",
+      "locator": "Proposition 1, equation (5), p.5; proof pp.15–16. Mixed-spin covariance n xi(R); the long record supplies the common-Gaussian correction for unordered-pair SK."
+    },
+    {
       "id": "scope_281",
       "title": "OpenAI family 281 formalization scope",
       "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md",
@@ -1461,6 +1468,19 @@
   ],
   "nodes": [
     {
+      "id": "support.near_ground_pairs",
+      "kind": "claim",
+      "label": "Near-ground configurations at a prescribed overlap",
+      "status": "unverified",
+      "source_id": "acz2020_infinite_support",
+      "locator": "Proposition 1, equation (5), p.5; proof pp.15–16; pure-SK specialization reconstructed in the long record §5.3",
+      "statement": "For pure zero-field Gaussian SK H_n=n^(-1/2) sum_{i<j} J_ij sigma_i sigma_j, every fixed r in [0,1) and epsilon,eta>0 admit K=K(r,epsilon,eta)>0 independent of n, such that with disorder probability at least 1-K exp(-n/K) there exist sigma,tau with |R(sigma,tau)-r|<epsilon and both H_n(sigma)/n,H_n(tau)/n >= P_*-eta, for all n>=1.",
+      "assumption_ids": [],
+      "evidence_ids": ["near_ground_pair_warrants_20261024"],
+      "citation_ids": ["acz2020_near_ground_pairs"],
+      "boundary": "Ordinary consequence of the imported landscape theorem, full support and attained Parisi formula. Add a common independent N(0,1/2) offset to match covariance; remove it using its Gaussian tail. Each target overlap is fixed before taking size. No typical-pair law, continuum-simultaneous event, efficient construction, Lean extraction or formal proof acceptance is asserted."
+    },
+    {
       "id": "full_support",
       "kind": "goal",
       "label": "Full support of zero-temperature SK minimizers",
@@ -1531,7 +1551,8 @@
         "lean_build_not_run",
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
-        "scalar_value_comparator_not_run"
+        "scalar_value_comparator_not_run",
+        "scalar_value_solution_build_failure_20261024"
       ],
       "citation_ids": [
         "scope_281",
@@ -1557,7 +1578,8 @@
         "lean_build_not_run",
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
-        "scalar_value_comparator_not_run"
+        "scalar_value_comparator_not_run",
+        "scalar_value_solution_build_failure_20261024"
       ],
       "citation_ids": [
         "scalar_value_implementation",
@@ -3151,6 +3173,24 @@
   ],
   "edges": [
     {
+      "from": "support.near_ground_pairs",
+      "to": "support.full_relative_support",
+      "kind": "supports",
+      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+    },
+    {
+      "from": "support.near_ground_pairs",
+      "to": "scalar.parisi_formula",
+      "kind": "supports",
+      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+    },
+    {
+      "from": "support.near_ground_pairs",
+      "to": "scalar.minimizer_attainment",
+      "kind": "supports",
+      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+    },
+    {
       "from": "full_support",
       "to": "lean.full_support",
       "kind": "formalizes",
@@ -4604,6 +4644,16 @@
     }
   ],
   "evidence": [
+    {
+      "id": "near_ground_pair_warrants_20261024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source comparison; independent semantic acceptance not run",
+      "source_ids": ["acz2020_infinite_support", "ac2017_ground_state", "support_tex_variation"],
+      "subject_ids": ["support.near_ground_pairs", "support.full_relative_support", "scalar.parisi_formula", "scalar.minimizer_attainment"],
+      "details": "The full-support edge places every fixed r in [0,1) in the minimizing Stieltjes support required by ACZ Proposition1. The attainment edge permits choosing that minimizer. The Parisi-formula edge identifies its value with the same pure-SK ground-state limit. ACZ's constrained-pair result and concentration supply the pair; the common N(0,1/2) covariance correction preserves expected maxima and costs at most 2 exp(-eta^2 n^2/4) when removed at tolerance eta/2. These are curated mathematical warrants, not extracted Lean edges or independent proof acceptance."
+    },
     {
       "id": "source_bytes_verified",
       "kind": "source_hash",
@@ -7491,6 +7541,45 @@
         "qaoa_thermodynamic_first"
       ],
       "details": "FGGZ §4 equations (13)–(14) give joint disorder/measurement first and second moments at a fixed word; equations (17)–(22) explain concentration. Choose the QAOA word at epsilon/2 accuracy before n and J. Markov applied to (Y_n-v_W)^2 bounds near-optimum failure by 4 epsilon^(-2) E[(Y_n-v_W)^2] -> 0. This uses a quantum second moment, not merely the square of the conditional mean. No rate, efficient angle search, uniform variable-depth theorem, every-instance guarantee or Lean result is asserted. Local source read: docs/annex/farhi-et-al-2022-qaoa-infinite-size.pdf, printed pages4–5; derived argument papers/qaoa-sk/long/reasoning-record.md §9.8."
+    },
+    {
+      "id": "scalar_value_solution_build_failure_20261024",
+      "kind": "comparator",
+      "status": "failed",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--quiet",
+        "--collect",
+        "--wait",
+        "--pipe",
+        "--property=RestrictAddressFamilies=~AF_UNIX",
+        "--working-directory=/work/corpus/qaoa-sk/upstream/lean",
+        "-E",
+        "PATH=/work/toolchains/lean-4.34.1-linux_aarch64/bin:/work/bin:/usr/bin:/bin",
+        "-E",
+        "COMPARATOR_LANDRUN=/work/bin/landrun",
+        "-E",
+        "COMPARATOR_LEAN4EXPORT=/work/sources/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+        "--",
+        "lake",
+        "env",
+        "/work/sources/comparator/.lake/build/bin/comparator",
+        "ComparatorChallenges/SKValue.json"
+      ],
+      "tool": "Standalone Comparator on Lean 4.34.1; stopped during solution build before comparison",
+      "source_ids": [
+        "scalar_value_statement",
+        "scalar_value_config",
+        "scalar_value_proof"
+      ],
+      "subject_ids": [
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "receipt_path": "verification/scalar-value-build-failure-20261024.json",
+      "receipt_sha256": "defbc67198194bae2549967032b22f930512c28c56224429ceed2548bb59a20c",
+      "details": "Historical outcome of the original pre-repair build configuration. The original two-target driver is terminal; this scalar invocation stopped because IntegralPositiveMulGaussian.olean was missing. No solution export, kernel acceptance, comparison acceptance or mathematical rejection was observed. The corrected maintained Lake configuration has not been replayed. All 357 original materialized source hashes match their before-run hashes; no current-tree completeness or post-run dependency cleanliness claim is made. Preserve all older events and theorem statuses."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",

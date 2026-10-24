@@ -145,8 +145,8 @@
     "support.stieltjes_measure",
     "support.zero_curvature"
   ],
-  "content_sha256": "aa85398267406152a027c6bd0bb8229fa8b503a4c046aeb93c7d33f028bb55af",
-  "graph_sha256": "4940ad33c81b9b11107459d705bcbc898cbbe3d4d6d655038137a8cd9f993ad0",
+  "content_sha256": "46a2ee55da48463e719351241559a429586b3ffd8f1ca73dd1de80fdcde34023",
+  "graph_sha256": "5baa59dc7c37732b4ae2a4816e9499b76019436386b9c27abefe70cc031caf54",
   "passages": [
     {
       "anchor": "opening",
@@ -355,7 +355,7 @@
     },
     {
       "anchor": "zero-candidate-example",
-      "text_sha256": "a6bf7419a5dc75a0d00cc8aa3fbf6444f9a8aa86223a823c2c0853ddc29edd11",
+      "text_sha256": "231fb7bdbef3c1d7052b2b85b8e1c899cd6eddcb3adbd002a49c830a2166ee20",
       "claim_ids": [
         "support.moment_identity"
       ],
@@ -419,7 +419,7 @@
     },
     {
       "anchor": "endpoints",
-      "text_sha256": "749774949fe96634b211e087b2631be497df221412ab9aa41a5881e53b8ec4ee",
+      "text_sha256": "87f3cecb386462f862b9a849acad25b15a7a6365ac6752def4b29d9be4a87220",
       "claim_ids": [
         "support.zero_curvature",
         "support.no_initial_gap",
@@ -524,7 +524,7 @@
     },
     {
       "anchor": "finite-gaussian",
-      "text_sha256": "2d1f5ec7aa6dd6fb45bd72faa6e0afe20100eb7be6bf7852d90b3a585819da29",
+      "text_sha256": "5dc77d62dffb1aa407db1a46b5bde7adb2095bf55d517d76c5a65978974ef095",
       "claim_ids": [
         "scalar.euler_normalization",
         "scalar.conditional_rounding",
@@ -770,7 +770,7 @@
     },
     {
       "anchor": "source-record",
-      "text_sha256": "cd04d785269bf8a1113e5c74abfd23c6f921b2dd339753cd429796c66f1a2719",
+      "text_sha256": "08748bf89f66332358426462311a68c86bbac5f47daeb9701a1d3c64da965d00",
       "claim_ids": [
         "full_support",
         "lean.full_support",

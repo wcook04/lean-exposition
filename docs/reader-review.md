@@ -20,6 +20,13 @@ Keep the request, original response and subsequent author decisions outside the
 eight-file bundle. A request is a plan. Until a response exists, record the reading
 as unperformed; silence does not report either understanding or rejection.
 
+Keep the first-account prompt, later diagnostic questions and assessor answer key
+in separate files or separately released pages. Prepare a blank response sheet and
+an assistance log before use. Record the actual last passage read and any worked
+answers already seen; a planned reading range does not establish exposure. A new
+numerical instance may test use of a taught mechanism, but changing numbers does
+not make a previously exposed solution fresh.
+
 ## Pick a route
 
 For a specialist, a useful bounded question is whether the result, hard step,
@@ -53,6 +60,11 @@ and revised responses in order. Assess the result, conditions, proof mechanism,
 changed case and scope separately. Do not average a missing essential assumption
 away with correct arithmetic. Preserve unexpected valid reasoning; if it contradicts
 the proposed answer key, inspect the source before marking the reader wrong.
+
+Use separate facet observations with supporting response excerpts, not an aggregate
+pass score. Preserve an unassessed state for unread or interrupted material. Review
+each key against the current edition: a later theorem may strengthen a conclusion
+that an earlier task deliberately did not assume.
 
 Ask about difficulty and preferences separately from reconstruction. A repeated
 attempt after explanation measures something different from a first reading.

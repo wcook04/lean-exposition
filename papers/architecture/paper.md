@@ -272,6 +272,14 @@ in its source. The repository does not claim to have invented these mechanisms.
 
 ## 3. What each check can say
 
+The formal developments depend on Lean and mathlib. Their scholarly sources
+are de Moura and Ullrich's [*The Lean 4 Theorem Prover and Programming
+Language* (2021)](https://doi.org/10.1007/978-3-030-79876-5_37) and
+The mathlib Community's [*The Lean Mathematical Library*
+(2020)](https://doi.org/10.1145/3372885.3373824). These credits explain
+the software foundations; the exact toolchain and dependency pins identify
+the environment of a particular proof.
+
 Lean, Comparator and Prove2Me answer different questions. A successful Lean
 build concerns a particular formal statement in a pinned environment. The
 Comparator runs a separately stated challenge against a selected implementation
@@ -282,10 +290,10 @@ interface does not establish a result for that earlier environment. A platform o
 visibility, status, environment and decomposition links. These observations
 must stay separate. In particular, a platform's “proved” label does not mean
 this repository replayed the proof, and a Comparator startup failure is not a
-mathematical counterexample. The QAOA/SK example preserves two distinct observations. An early invocation
-could not start the Comparator. A later invocation built and exported the
-full-support challenge, then stopped during the solution build because an
-imported compiled module was missing. It did not export or accept the solution.
+mathematical counterexample. The QAOA/SK example preserves distinct observations. An early invocation
+could not start the Comparator. Later invocations built and exported the
+full-support and scalar-value challenges, then stopped during their solution
+builds because imported compiled modules were missing. Neither exported or accepted its solution.
 This is an operational failure before comparison, not a refutation. A corrected
 local build configuration is a new input edition and requires its own replay;
 repairing the configuration does not change the historical outcome.

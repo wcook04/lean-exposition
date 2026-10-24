@@ -377,10 +377,20 @@ stage was reached.
 
 The [retained full-support observation](../examples/qaoa-sk/verification/full-support-build-failure-20261023.json)
 records a challenge build/export followed by a solution-build failure for a
-missing imported object. It is a partial observation of the pre-repair build
-configuration, not a completed research-run receipt or a replay of the current
-configuration. The raw log digest is retained. No research acceptance or
-mathematical rejection follows; scalar-value checking remains separately unrun.
+missing `AbsIncrement.olean`. That earlier partial receipt remains unchanged.
+The original two-target driver has since finished: the
+[scalar-value observation](../examples/qaoa-sk/verification/scalar-value-build-failure-20261024.json)
+records another successful challenge build/export followed by a solution-build
+failure for missing `IntegralPositiveMulGaussian.olean`. Both invocations used
+the historical pre-repair Lake configuration. Neither reached solution export,
+kernel checking or comparison; no research acceptance or mathematical rejection
+follows. The corrected maintained configuration has not been replayed.
+
+All 357 files in the original runtime materialization manifest match their
+before-run hashes. That observation concerns the original runtime inventory,
+not completeness of the current tree. Post-run dependency worktree cleanliness
+was not established because the bounded combined audit timed out. The receipts
+retain exact configuration and log digests.
 
 ## Decisive validation after a change
 

@@ -1,0 +1,69 @@
+{
+  "schema": "historical_terminal_observation_v1",
+  "observed_at": "2026-10-24T02:03:44.040061+00:00",
+  "status": "failed",
+  "stage": "solution_build",
+  "target": "SKValue",
+  "returncode": 1,
+  "challenge_build": "passed",
+  "challenge_export": "observed",
+  "solution_export": "not_reached",
+  "comparison": "not_reached",
+  "kernel_check": "not_reached",
+  "kernel_accepted": false,
+  "command": [
+    "systemd-run",
+    "--user",
+    "--quiet",
+    "--collect",
+    "--wait",
+    "--pipe",
+    "--property=RestrictAddressFamilies=~AF_UNIX",
+    "--working-directory=/work/corpus/qaoa-sk/upstream/lean",
+    "-E",
+    "PATH=/work/toolchains/lean-4.34.1-linux_aarch64/bin:/work/bin:/usr/bin:/bin",
+    "-E",
+    "COMPARATOR_LANDRUN=/work/bin/landrun",
+    "-E",
+    "COMPARATOR_LEAN4EXPORT=/work/sources/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+    "--",
+    "lake",
+    "env",
+    "/work/sources/comparator/.lake/build/bin/comparator",
+    "ComparatorChallenges/SKValue.json"
+  ],
+  "seconds": 14643.317,
+  "log_sha256": "8fb7ca279fe486558b6e2030e5d5ecaefd6ee17a492a17b78ee0b36251e51aa4",
+  "log_path": "scalar-value-build-failure-20261024.log",
+  "source_revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "config_sha256": "6a6c5c7039e3a475c7f777375498ccff393b0d5334d2cee111ca3eeefab3ec11",
+  "source_bindings": [
+    {
+      "source_id": "scalar_value_statement",
+      "path": "upstream/lean/ComparatorChallenges/SKValue.lean",
+      "sha256": "1c059a9b0e733ab43a2944ee6af222191f12b27c14714582613e1d5ff99f1d6e"
+    },
+    {
+      "source_id": "scalar_value_config",
+      "path": "upstream/lean/ComparatorChallenges/SKValue.json",
+      "sha256": "6a6c5c7039e3a475c7f777375498ccff393b0d5334d2cee111ca3eeefab3ec11"
+    },
+    {
+      "source_id": "scalar_value_proof",
+      "path": "upstream/lean/OAI/Probability/SKValue/Main.lean",
+      "sha256": "390733e213a313ee1203cfec1be71022a601ee338b2c06202aae0bae75f83cb2"
+    }
+  ],
+  "original_lakefile_sha256": "bbd2d0a9252732d76248fc35ff61ffcaa7818314619a85b68533ddd63a27063b",
+  "original_run_status": "failed",
+  "original_run_receipt_sha256": "47db11847caa6e5bdfec51fa9cc0e10cd8d944bc882ffee1d11a14adb7b18db0",
+  "source_changed": false,
+  "source_observation": {
+    "scope": "The 357 files in the original runtime materialization manifest, including its pre-repair configuration; all after hashes equal the retained before hashes. This is not the current maintained source inventory.",
+    "files": 357,
+    "before_receipt_sha256": "c90b90b86c9e7938a145b55aafa91387a3e1bbac1e8b103a4cba61a4916a0a79",
+    "after_receipt_sha256": "b15948f8a043b44fa7bdacd2286578482d937ffbd82d399b0e9c6674f68eaec4",
+    "dependency_git_cleanliness_after_run": "not_established; bounded combined audit timed out"
+  },
+  "boundary": "Historical outcome of the original pre-repair build configuration. The original two-target driver is terminal; this scalar invocation stopped because IntegralPositiveMulGaussian.olean was missing. No solution export, kernel acceptance, comparison acceptance or mathematical rejection was observed. The corrected maintained Lake configuration has not been replayed."
+}

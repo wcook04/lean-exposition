@@ -439,3 +439,59 @@ with even q at least four. Its dense spin-glass corollary is explicitly
 conditional on swapping limits. The following discussion says the sparse/dense
 equivalence is established only at fixed depth and does not establish a dense
 logarithmic-depth obstruction. None of these hypotheses includes quadratic SK.
+
+## Local method credits and two support consequences
+
+The following primary-source passages were checked against the long record's
+uses. This reading checks their stated roles and the displayed normalization
+arguments; it is not an independent audit of every cited external proof.
+
+- [Boulebnane et al., arXiv:2505.07929v2, Theorem 2 (informal), equations
+  (10)–(11), p. 3](https://arxiv.org/abs/2505.07929v2), supplies the earlier
+  fixed-depth spin–boson representation. Long §9.1 now credits it before
+  explaining the further occupation, insertion and surrounding-circuit
+  estimates. The source's attribution is in its [§2, lines 47–63](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/02-foundations.tex#L47-L63).
+- [Jones and Knill, arXiv:quant-ph/9905008v1, §II, p. 2](https://arxiv.org/abs/quant-ph/9905008v1),
+  explains orthogonal-sign refocusing. Its role in long §9.3 is isolation
+  of commuting Ising subcosts, as credited in the source's
+  [§4, lines 184–205](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/04-classical-synthesis.tex#L184-L205).
+  It does not supply the subsequent helper-contraction estimates.
+- [Li and Khaneja, arXiv:quant-ph/0510012v1, §II, Examples 1–2,
+  pp. 2–3](https://arxiv.org/abs/quant-ph/0510012v1), supplies the Lie-bracket
+  and polynomial-approximation antecedent, with its parameter-sign
+  restrictions. Long §9.4 distinguishes this method from the source's
+  [finite-family exact zero-clock lemma and subsequent accuracy argument](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/05-seed-simulation.tex#L272-L343).
+- [Talagrand, Theorem 1.1, pp. 222–223](https://doi.org/10.4007/annals.2006.163.221),
+  supplies the positive-temperature Parisi formula in long §9.7.
+  Hypotheses (1.3)–(1.5) admit the fixed-temperature covariance error
+  $\beta_0^2/(2n)$; partition sum (1.14) is unnormalized. This input
+  is separate from the zero-temperature variational formula and attainment.
+- [Farhi, Goldstone and Gutmann, arXiv:1411.4028v1, §VI,
+  pp. 10–11](https://arxiv.org/abs/1411.4028v1), gives the adiabatic/Trotter
+  explanation of fixed-instance convergence. Long §9 places this credit
+  beside the different size-independent-word quantifier.
+
+Long §5.3 applies [Auffinger–Chen–Zeng, arXiv:1703.06872v2,
+Proposition 1, equation (5), p. 5, proof pp. 15–16](https://arxiv.org/abs/1703.06872v2)
+at every fixed overlap in the full-support measure. Its common-Gaussian
+covariance completion and Gaussian tail calculation were checked directly.
+This is an imported ordinary pair-existence consequence, with constants
+depending on the fixed overlap and tolerances, not a typical-pair theorem,
+an algorithm, or an additional selected formal statement.
+
+Long §2.3 makes the two limit topologies in [Chen, arXiv:2607.18032v1,
+Remarks 1.4–1.5, p. 3](https://arxiv.org/abs/2607.18032v1), explicit.
+The probability-measure example there has full interval support before the
+limit but a gap in the scaled vague limit, even with cumulative-coefficient
+$L^1$ error at most $3/(2n)$. Its normalization, endpoint atom, support,
+vague and weak limits, and error estimate were checked directly. It is
+explicitly not a sequence of Parisi minimizers.
+
+The [scalar-value historical receipt](../../../examples/qaoa-sk/verification/scalar-value-build-failure-20261024.json)
+and its [log](../../../examples/qaoa-sk/verification/scalar-value-build-failure-20261024.log)
+now record the terminal solution-build failure of the original invocation,
+after challenge build and export. The missing imported object is
+`Gaussian/IntegralPositiveMulGaussian`. The corrected build configuration
+has not been replayed, and no solution export, kernel acceptance or
+comparison acceptance is established by this event. This chronology is
+also stated in long §11.

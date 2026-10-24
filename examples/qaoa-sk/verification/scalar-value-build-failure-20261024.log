@@ -1,0 +1,13 @@
+Building ComparatorChallenges.SKValue
+⚠ [8924/8924] Built ComparatorChallenges.SKValue (791s)
+warning: ComparatorChallenges/SKValue.lean:163:8: declaration uses `sorry`
+Build completed successfully (8924 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, OAI.SKValue.value_consequences, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from ComparatorChallenges.SKValue
+Building OAI.Probability.SKValue.Main
+✖ [8924/8924] Building OAI.Probability.SKValue.Main (1949s)
+trace: .> LEAN_PATH=/work/corpus/qaoa-sk/upstream/lean/.lake/packages/Cli/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/batteries/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/Qq/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/aesop/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/importGraph/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/plausible/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/packages/mathlib/.lake/build/lib/lean:/work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean /work/toolchains/lean-4.34.1-linux_aarch64/bin/lean /work/corpus/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Main.lean -o /work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKValue/Main.olean -i /work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKValue/Main.ilean -c /work/corpus/qaoa-sk/upstream/lean/.lake/build/ir/OAI/Probability/SKValue/Main.c --setup /work/corpus/qaoa-sk/upstream/lean/.lake/build/ir/OAI/Probability/SKValue/Main.setup.json --json
+error: OAI/Probability/SKValue/Main.lean:1:0: object file '/work/corpus/qaoa-sk/upstream/lean/.lake/build/lib/lean/OAI/Probability/SKValue/Gaussian/IntegralPositiveMulGaussian.olean' of module OAI.Probability.SKValue.Gaussian.IntegralPositiveMulGaussian does not exist
+Some required targets logged failures:
+- OAI.Probability.SKValue.Main
+error: build failed
+uncaught exception: Child exited with 1

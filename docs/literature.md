@@ -1,6 +1,15 @@
 # Sources and implementation choices
 
-Lean Exposition starts with a small exporter over compiled Lean declarations. It records evidence for authors and reviewers; it does not turn proof acceptance into approval of an English claim. The sources below were retrieved on 23 October 2026. [references.json](references.json) records immutable source pins, selected-file hashes, license evidence, and the disposition of each reference.
+Lean Exposition starts with a small exporter over compiled Lean declarations. It records evidence for authors and reviewers; it does not turn proof acceptance into approval of an English claim. Sources were retrieved on 23 October 2026, with scholarly software credits checked on 24 October. [references.json](references.json) records immutable source pins, selected-file hashes, license evidence, and the disposition of each reference.
+
+The papers credit Lean through de Moura and Ullrich's [2021 system
+description](https://doi.org/10.1007/978-3-030-79876-5_37), and mathlib through
+[The mathlib Community's 2020 library paper](https://doi.org/10.1145/3372885.3373824).
+These explain the software's design and contribution; they do not identify
+the exact software edition or certify a target proof. The source lock and
+execution receipts retain the actual toolchain and dependency pins. Full
+reading copies of these two papers remain in the private annex; the public
+repository retains bibliographic metadata and links.
 
 ## Extract evidence before drafting prose
 

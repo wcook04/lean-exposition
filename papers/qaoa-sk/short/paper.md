@@ -477,18 +477,30 @@ statement assumes a minimiser and an associated diffusion for its scalar
 and finite-Gaussian clauses; its ground-state/Parisi equality assumes only
 the minimiser. Neither statement includes Corollary 3 or QAOA convergence.
 
+The formal developments use Lean and its mathematical library, mathlib;
+we credit the system description by [de Moura and Ullrich (2021)][Lean4]
+and [The mathlib Community (2020)][mathlib]. These scholarly references
+describe the tools; the accompanying source record identifies the exact
+versions used for the selected developments.
+
 Source-integrity checks passed. After an earlier unavailable Comparator
-startup, a later recorded attempt built and exported the admitted
-full-support challenge, then failed to build the implementing solution
-because an imported compiled object was missing. No successful corrected
-replay or completed scalar-target replay is recorded. Challenge export,
+startup, later invocations built and exported the admitted full-support
+and scalar-value challenges. Both stopped during the implementing solution
+build because imported compiled modules were missing. No successful
+replay of the corrected build configuration is recorded. Challenge export,
 tool-fixture success and the exact polynomial calculation establish no
 research-target acceptance, transitive axiom audit or independent human
-review. Exact versions, the partial attempt and remaining obligations are
+review. Exact versions, the failed attempts and remaining obligations are
 retained in the companion source review.
 <!-- /passage:evidence-scope -->
 
 ## References
+
+- de Moura, L. and Ullrich, S. (2021). “The Lean 4 Theorem Prover and
+  Programming Language (System Description).” *CADE 28*.
+  [System description][Lean4].
+- The mathlib Community (2020). “The Lean Mathematical Library.”
+  *Certified Programs and Proofs (CPP '20)*. [Library description][mathlib].
 
 - OpenAI (2026a). *Full support of the zero-temperature Sherrington–Kirkpatrick
   order parameter*. 27 September 2026. [Manuscript][FS], fixed revision.
@@ -542,6 +554,8 @@ retained in the companion source review.
   theorem and §7, equation (7.2); the full preprint has separate numbering.
 
 
+[Lean4]: https://doi.org/10.1007/978-3-030-79876-5_37
+[mathlib]: https://doi.org/10.1145/3372885.3373824
 [FS]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf
 [Q]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf
 [AC]: https://arxiv.org/abs/1606.05335v2

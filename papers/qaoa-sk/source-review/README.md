@@ -58,5 +58,11 @@ while building the solution because the imported `Diffusion/AbsIncrement`
 object was missing. It did not export the solution or reach comparison.
 The subsequent derived-configuration repair is separate from this historical
 observation; this receipt supplies no terminal result for the repaired target.
-Neither a current scalar-target outcome nor a successful research-target
-comparison is inferred from a historical unrun plan.
+The separate [24 October scalar-value receipt](../../../examples/qaoa-sk/verification/scalar-value-build-failure-20261024.json)
+and [log](../../../examples/qaoa-sk/verification/scalar-value-build-failure-20261024.log)
+record the original scalar invocation's terminal outcome: its admitted
+challenge built and exported, then the solution build failed because the
+imported `IntegralPositiveMulGaussian` object was missing. This invocation
+also used the pre-repair build configuration and reached neither solution
+export nor kernel/comparison checking. No successful replay of the corrected
+configuration has been recorded for either target.

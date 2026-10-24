@@ -747,6 +747,7 @@ illustrate the exact calculation, and are not estimates of the optimum.
 This example computes a feasible descent direction. It does not find a
 minimiser or establish full support. Section 5 will recover the same
 negative derivative from the general first-variation formula.
+
 ### 4.2 Even full support and positive density do not certify a minimum
 
 Take $\gamma(t)=12t$. Its Stieltjes density is the smooth positive
@@ -1028,6 +1029,7 @@ contact point, so $q(t)=t$ everywhere below one, including zero by
 symmetry. Differentiating yields $\mathbb E[a(t,X_t)^2]=1$.
 The mass-removal and endpoint arguments are given in
 [OpenAI (2026a), §6][support-variation].
+
 ### 5.5 Exact minimisers, densities and approximate minimisers
 
 Full support is a statement about every interval, not a regularity theorem
@@ -1320,6 +1322,7 @@ pairing cannot be substituted without proof. These are scalar Gaussian
 correlations, not the output of a finite-instance spin optimizer or a
 QAOA circuit. Their full construction and proof are in the
 [OpenAI (2026a), §7][support-consequences].
+
 ### 7.1 A one-step calculation, including the rounding coordinate
 
 The rounding and index shift can be computed exactly for the non-minimising
@@ -1854,12 +1857,19 @@ represent Brownian motion, the order parameter and the diffusion
 differently, so this article does not claim they have been formally
 composed.
 
+The formal proofs are written in Lean and use mathlib. The tools are
+described by de Moura and Ullrich in [*The Lean 4 Theorem Prover and
+Programming Language* (2021)](https://doi.org/10.1007/978-3-030-79876-5_37)
+and by The mathlib Community in [*The Lean Mathematical Library*
+(2020)](https://doi.org/10.1145/3372885.3373824). The companion source
+record gives the precise versions used here.
+
 The retained evidence distinguishes source presence, successful compilation,
 declaration extraction and Comparator acceptance. An early Comparator
-invocation could not start. A later attempt built and exported the
-full-support challenge, then stopped during the solution build because an
-imported compiled module was missing. It did not export or accept the
-solution. No completed corrected research replay is recorded. This is a
+invocation could not start. Later invocations built and exported the
+full-support and scalar-value challenges, then stopped during their solution
+builds because imported compiled modules were missing. Neither exported
+or accepted its solution. No completed corrected research replay is recorded. This is a
 build obstruction, not a mathematical rejection. The linked configurations
 state what is selected for comparison, not an acceptance result. Nor do
 these observations establish independent review of the complete analytic

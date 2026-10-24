@@ -230,12 +230,42 @@ identity is the different step in the full-support proof. Zhou's positive-temper
 interval-support result applies near the critical temperature, whereas
 Lopatto's cited theorem covers the low-temperature zero-field phase.
 Neither transfers full Stieltjes support to zero temperature on its own:
-the scaling examines $\beta\mu_\beta$ vaguely on $[0,1)$, while
-unscaled Parisi probability measures may converge weakly toward
-$\delta_1$. These are different measures and topologies. Convergence
+for the minimizers, $\beta\mu_\beta$ converges vaguely on $[0,1)$ to
+the zero-temperature Stieltjes measure, while the unscaled Parisi
+probability measures converge weakly on $[0,1]$ to $\delta_1$.
+These are different measures and topologies. Convergence
 without an interval-specific lower bound can lose support information.
 The direct zero-temperature gap proof
-below is therefore essential. [OpenAI (2026a), §§1–2][fs-main].
+below is therefore essential. [Chen (2026), Remarks 1.4–1.5][chen2026];
+[OpenAI (2026a), §§1–2][fs-main].
+
+Here is an explicit example of the information lost in such a limit.
+It concerns admissible measures, not Parisi minimizers. Put
+$g=\mathbf1_{[0,1/3]\cup[2/3,1)}$ and $q_n=1-n^{-2}$, and for $n\ge2$ define
+$$
+\mu_n(dt)=\frac{g(t)+n^{-1}}n\mathbf1_{[0,q_n]}(t)\,dt
++\left(1-\frac1n\int_0^{q_n}(g(t)+n^{-1})\,dt\right)\delta_{q_n}(dt).
+$$
+The continuous part has mass at most $(2/3+1/n)/n<1$, so these are
+probability measures with a positive endpoint atom. Their density is
+positive throughout $[0,q_n]$, giving $\operatorname{supp}\mu_n=[0,q_n]$.
+Their continuous mass tends to zero and $q_n\to1$, hence
+$\mu_n\Rightarrow\delta_1$ weakly on $[0,1]$.
+For a compactly supported continuous test function on $[0,1)$, the endpoint
+atom eventually lies outside its support. Consequently
+$n\mu_n\to g(t)\,dt$ vaguely there, although the limit vanishes on
+$(1/3,2/3)$. Even the cumulative coefficients converge in the topology
+used for the PDE: with $\gamma_n(t)=n\mu_n([0,t])$ and
+$\gamma(t)=\int_0^t g(s)\,ds$, their difference is $t/n$ below $q_n$,
+and $\gamma_n=n$ on the terminal strip of length $n^{-2}$. Thus
+$$
+\|\gamma_n-\gamma\|_{L^1(0,1)}\le\frac1{2n}+\frac1n\longrightarrow0.
+$$
+Every $\gamma_n$ is admissible, but $d\gamma$ has an interior gap.
+Minimality and the gap argument supply information that these convergences
+alone do not. An atom added at time one is likewise invisible to the
+coefficient on $[0,1)$ and hence to its PDE and variational functional;
+the zero-temperature problem does not select an endpoint mass.
 
 Control and gradient-martingale methods have antecedents in
 [Auffinger–Chen](https://doi.org/10.1007/s00220-014-2254-z) and
@@ -1406,6 +1436,49 @@ $$
 The final strict inequality uses $\mathbb E a^4\geq(\mathbb E a^2)^2=1$. Hence $\gamma'(t)>0$ for positive times below one. This argument proves only $\gamma'(0)\geq0$ at the left endpoint. It does not claim that the minimizing coefficient itself is constant on a neighbourhood, and it does not pass the approximants' third time derivatives to the limit. Only a spatial-derivative expectation is transferred. [OpenAI full-support manuscript, lines 102–152][fs-density].
 <!-- /passage:density -->
 
+### 5.3 Near-ground configurations at a prescribed overlap
+
+<!-- passage:overlap-pairs -->
+Full support also gives a geometric consequence for the finite-disorder
+energy landscape. For every fixed $r\in[0,1)$ and $\varepsilon,\eta>0$,
+there is a constant $K=K(r,\varepsilon,\eta)>0$, independent of $n$, such that
+$$
+\mathbb P\left(\exists\sigma,\tau\in\{-1,1\}^n:
+\left|\frac1n\sum_{i=1}^n\sigma_i\tau_i-r\right|<\varepsilon,
+\quad \frac{H_n(\sigma)}n,\frac{H_n(\tau)}n\ge P_*-\eta\right)
+\ge1-Ke^{-n/K},\qquad n\ge1.
+$$
+The probability is over the SK couplings; the configurations may depend on
+them. This is the specialization of [Auffinger–Chen–Zeng, Proposition 1,
+equation (5), p. 5][acz] to the full-support minimizer above. Their theorem
+applies to each point of its Stieltjes support. Its proof, on pp. 15–16,
+uses the coupled free energy constrained to a neighbourhood of that
+overlap, passes to the coupled maximum and applies Gaussian concentration.
+The coupled maximum approaches $2P_*$, while the unrestricted maximum
+approaches $P_*$; these two facts force both members of a maximizing pair
+to be near ground energy.
+
+The covariance normalization needs one small adjustment. Writing
+$R=n^{-1}\sum_i\sigma_i\tau_i$, our Hamiltonian has covariance
+$nR^2/2-1/2$. Adjoin a common independent Gaussian $C$ of variance $1/2$.
+Then $\widetilde H_n(\sigma)=H_n(\sigma)+C$ has covariance
+$n\xi(R)$ with $\xi(t)=t^2/2$, as in the cited mixed-spin theorem.
+Its expected maximum equals that of $H_n$, so its ground-state limit is
+the same $P_*$. Apply the theorem with energy tolerance $\eta/2$.
+On $|C|\le\eta n/2$, the resulting pair also satisfies the displayed
+energy inequalities for $H_n$. The omitted event has probability at most
+$2e^{-\eta^2n^2/4}$, which can be absorbed into $Ke^{-n/K}$ by enlarging
+$K$. Since the conclusion for $H_n$ depends only on its couplings,
+this also removes the auxiliary Gaussian from the probability statement.
+
+This ordinary consequence uses an external landscape theorem together with
+full support and the attained Parisi formula. It is outside the two selected
+formal statements in §8. It asserts existence for each fixed target overlap;
+it neither describes a typical sampled pair nor gives a procedure for
+finding the pair, and it asserts no event simultaneously indexed by every
+real overlap. The separate algorithmic consequence is in §7.4.
+<!-- /passage:overlap-pairs -->
+
 <a id="scalar-value-identities"></a>
 
 ## 6. Recovering the value from a martingale
@@ -1947,9 +2020,23 @@ $\lim_{p\to\infty}Q_p=P_*$. A cost expectation is bounded above by its
 maximum eigenvalue, and zero-angle padding makes $Q_p$ nondecreasing.
 It therefore suffices to construct one finite word for every accuracy.
 Fixed-instance convergence at increasing depth is a different quantifier
-order. [OpenAI (2026b), Theorem 1.1][q-intro].
+order. Farhi, Goldstone and Gutmann's original QAOA argument obtains that
+convergence by adiabatic evolution and its Trotter approximation, with depth
+allowed to depend on the instance; it does not supply the size-independent
+word required here. [Farhi–Goldstone–Gutmann (2014), equation (10) and
+§VI, pp. 10–11](https://arxiv.org/abs/1411.4028v1);
+[OpenAI (2026b), Theorem 1.1][q-intro].
 
 ### 9.1 Rooted realisation and the observable it preserves
+
+The fixed-depth spin–boson representation has an antecedent in
+[Boulebnane et al., Theorem 2 (informal), equations (10)–(11), p. 3][spin-boson]:
+as the degree grows with depth fixed, the symmetric tree state converges
+to a spin coupled to finitely many bosonic modes. The manuscript credits
+that representation, then proves the occupation, insertion and
+surrounding-circuit estimates needed below. Its additional task is to
+control the energy observable and substitutions inside a circuit, beyond
+identifying a limiting state. [OpenAI (2026b), §2][q-fock].
 
 The first change of setting preserves a specified quadratic form. At
 height zero the pointed space is
@@ -2189,7 +2276,11 @@ conjugations of $X$ generate $\cos(2ts)X$ and $\sin(2ts)Y$.
 Trigonometric approximation and matrix commutators give the required
 bounded measurable masked spin controls. Sign averaging of masked
 $X$ flips isolates an interaction between chosen types; the cost
-terms commute, so this isolation is exact. Finite commutator products
+terms commute, so this isolation is exact. This sign averaging is the
+refocusing method of [Jones and Knill (1999), §II, p. 2](https://arxiv.org/abs/quant-ph/9905008v1):
+orthogonal sign rows cancel unwanted Ising couplings, while identical
+rows retain a selected coupling. The source applies it to the finite
+partition of seed masks. Finite commutator products
 then approximate the desired pointwise matrices with smooth bounds.
 They can be substituted after the surrounding circuit has been fixed.
 The local masks are measurable functions of the seed; smoothness is
@@ -2373,7 +2464,13 @@ finite ensemble of spin rotations with *zero clocks*: the signed sum
 of pulse durations on each probe axis is exactly zero. Lie brackets
 produce independent rotations on the finite ensemble, while a finite
 local controllability argument gives exact reachability of the
-required rotation and zero clocks. Closure or density of attainable
+required rotation and zero clocks. The Lie-bracket and polynomial
+approximation method comes from [Li and Khaneja (2005), §II,
+Examples 1–2, pp. 2–3](https://arxiv.org/abs/quant-ph/0510012v1).
+Their approximation uses parameter ranges with the sign restrictions
+stated there. The present source proves its own finite-family statement
+with exact zero clocks, followed by the estimates for changing insertion
+directions. Closure or density of attainable
 rotations would not by itself give the required exact cancellation.
 The separate accuracy lemma then follows the actual insertion drift
 through every probe prefix. Its ordinary-component error is $o(r)$;
@@ -2601,7 +2698,13 @@ $$
 $$
 Choose first a sufficiently large finite $\beta_0$, then $T<q$ close
 enough to $q$. This route obtains the existence and value of the
-ground-state limit from the positive-temperature Parisi formula. With
+ground-state limit from the positive-temperature Parisi formula of
+[Talagrand (2006), Theorem 1.1, pp. 222–223](https://doi.org/10.4007/annals.2006.163.221).
+At each fixed $\beta_0$, his covariance hypotheses (1.3)–(1.5) hold with
+$\xi(t)=\beta_0^2t^2/2$ and error $c(n)=\beta_0^2/(2n)$.
+His partition sum (1.14) is unnormalized; dividing its logarithmic
+free energy by $\beta_0$ gives the convention here, including the
+$\log2/\beta_0$ entropy term. With
 $F_{n,\beta_0}=(n\beta_0)^{-1}\mathbb E\log\sum_\sigma e^{\beta_0H_n(\sigma)}$, use
 $$
 F_{n,\beta_0}-(\log2)/\beta_0\le n^{-1}\mathbb E\max H_n\le F_{n,\beta_0}.
@@ -2910,6 +3013,7 @@ bound alone would not prove optimality on every high-girth graph. See [OpenAI
 (2026b), Corollary 1.2 and its complete proof][q-maxcut]. This separate
 consequence is recorded to preserve the source's scope; it is not a
 new selected formal endpoint or a joint size–degree limit.
+
 ### 9.11 A later finite-size estimate and its limited depth consequence
 
 A separate, later source gives a quantitative comparison with the
@@ -3001,7 +3105,12 @@ remaining circuit estimates.
 <!-- passage:verification -->
 The source collection retains the two manuscripts, formal statements,
 their implementations and build metadata. The derived project specifies
-Lean 4.34.1 and a pinned mathlib revision. The retained polynomial computation
+Lean 4.34.1 and a pinned mathlib revision. The proof-assistant and library
+infrastructure is described by [de Moura and Ullrich (2021), *The Lean 4
+Theorem Prover and Programming Language*](https://doi.org/10.1007/978-3-030-79876-5_37)
+and [The mathlib Community (2020), *The Lean Mathematical Library*](https://doi.org/10.1145/3372885.3373824).
+These references credit the software; the retained project metadata identifies
+the versions used for this source. The retained polynomial computation
 in §4 uses exact rational arithmetic. Its expansion matches
 all 22 positive remainder
 coefficients. The surplus of the $v^4$ coefficient above $1/1000$ is
@@ -3016,31 +3125,39 @@ cases, not either selected SK theorem. Reading of the mathematical and
 formal sources supports the bounded comparisons reported here, without
 a complete independent proof acceptance or transitive axiom audit.
 
-Three observations must be kept separate. The original graph records
+The retained observations must be kept separate. The original graph records
 unrun plans and an earlier full-support attempt that could not start
 because the Comparator executable was unavailable. A later retained
 attempt, observed on 23 October 2026, built and exported the challenge,
-then stopped while building the implementing solution (the retained
-partial-observation receipt
-and its log
-preserve that event): the imported
+then stopped while building the implementing solution. The retained
+partial-observation receipt and log preserve that event: the imported
 object for `Diffusion/AbsIncrement` was missing. The challenge is an
 admitted specification, so its successful build and export are not a
 proof of the theorem. There was no successful solution export or
-research-target comparison in that observation. A subsequent repair to
-the derived build configuration was recorded, but a completed replay
-of the repaired target is not established by the supplied record.
+research-target comparison in that observation.
+
+The scalar-value invocation in the same original two-target run reached
+a terminal failure observed on 24 October 2026. Its challenge built and
+exported, but its solution build stopped because the imported object for
+`Gaussian/IntegralPositiveMulGaussian` was missing. The retained scalar
+receipt and log establish no solution export, kernel acceptance or
+comparison acceptance. The companion source review locates both records.
+Both failures concern the original build configuration. A subsequent
+repair to the derived configuration was recorded; the corrected
+configuration has not been replayed.
 
 The later observation is additional run history, not a replacement for
 the earlier event or a mathematical rejection of the theorem. Neither
 research target has a successful source-bound comparison and transitive
 axiom audit established here. Permitted axioms and checker settings
 describe configuration; source names and tool-fixture receipts cannot
-supply the missing target result. The retained later receipt records a historical partial observation, not
-a terminal replay of the subsequently repaired source configuration.
+supply the missing target result. The full-support receipt remains a
+historical partial observation; the scalar receipt is a terminal failure
+of its original invocation. Neither is a replay of the subsequently
+repaired source configuration.
 
-This record reports no fresh QAOA/SK Lean build, Comparator run or complete
-independent proof review. Detailed reading coverage, exact finite-check
+No additional QAOA/SK Lean build or Comparator run was performed for this
+editorial revision. Detailed reading coverage, exact finite-check
 results, preserved unsuccessful observations and the remaining obligations
 are recorded in the companion source review. This remains a draft after source-based agent review; independent mathematical acceptance and a human reconstruction study have not been performed.
 <!-- /passage:verification -->

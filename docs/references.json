@@ -12,6 +12,39 @@
   "hash_scope": "Exact bytes of each selected public file; retained copies identify a repository-relative local_path.",
   "references": [
     {
+      "id": "lean4-system-description-2021",
+      "title": "The Lean 4 Theorem Prover and Programming Language (System Description)",
+      "authors": ["Leonardo de Moura", "Sebastian Ullrich"],
+      "year": 2021,
+      "url": "https://doi.org/10.1007/978-3-030-79876-5_37",
+      "kind": "primary_system_description",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [{
+        "url": "https://lean-lang.org/papers/lean4.pdf",
+        "sha256": "2b907e98552f5ff4fe77be717f9423311a4d6bf4ac866b143d99f34e83f39c4d"
+      }],
+      "reading_scope": "Title, abstract and introduction: authorship, system design and relationship to mathlib.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Scholarly software credit; exact proof-environment versions remain in the source lock and execution receipts."
+    },
+    {
+      "id": "mathlib-library-2020",
+      "title": "The Lean Mathematical Library",
+      "authors": ["The mathlib Community"],
+      "year": 2020,
+      "url": "https://doi.org/10.1145/3372885.3373824",
+      "kind": "primary_library_description",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [{
+        "url": "https://arxiv.org/pdf/1910.09336v2",
+        "sha256": "f1c79b8dedb5b66a6cde3dab238387b8cd66ada1d7ed808d7d083621902f0d20"
+      }],
+      "citation_authority": "https://leanprover-community.github.io/cite.html",
+      "reading_scope": "Title, first-page publisher citation, abstract and introduction; canonical community citation checked separately.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Historical Lean3-era library description supplies scholarly credit, not the exact current mathlib4 dependency edition or a target-proof verdict."
+    },
+    {
       "id": "lean-core",
       "title": "Lean expression traversal, axiom collection, and proof validation",
       "url": "https://github.com/leanprover/lean4",

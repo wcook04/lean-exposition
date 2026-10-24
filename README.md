@@ -167,8 +167,8 @@ For local sources, the [verification guide](docs/verification.md) explains Lean
 builds, dependency extraction and the optional Comparator tool. The saved minimal
 example has an actual build and extraction. The larger QAOA / SK graph is curated
 from source. It retains planned checks and a separate startup-unavailable attempt;
-a later retained attempt built and exported the challenge before the solution
-build failed. No accepted research replay or elaborated research extraction
+later invocations built and exported the full-support and scalar-value
+challenges before their solution builds failed. No accepted research replay or elaborated research extraction
 is established by those records. A source hash,
 a successful build and a mathematical review answer different questions; the
 records preserve those distinctions.

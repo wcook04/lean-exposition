@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "a3f44574a92620d4ce49453aa5601030744e0f4c3eac5e21ca9dd779395cf4f2",
-  "graph_sha256": "4940ad33c81b9b11107459d705bcbc898cbbe3d4d6d655038137a8cd9f993ad0",
+  "content_sha256": "3446be585a320e3bd99092294d7c7fcd26f4404da230b7a4bf727555024912fc",
+  "graph_sha256": "5baa59dc7c37732b4ae2a4816e9499b76019436386b9c27abefe70cc031caf54",
   "selected_goal_ids": [
     "full_support"
   ],
@@ -49,6 +49,7 @@
     "support.integrated_coercivity",
     "support.moment_identity",
     "support.moment_saturation",
+    "support.near_ground_pairs",
     "support.no_bounded_gap",
     "support.no_initial_gap",
     "support.no_terminal_gap",
@@ -65,6 +66,7 @@
     "ac2015_unique_minimizer",
     "ac2017_ground_state",
     "acz2020_infinite_support",
+    "acz2020_near_ground_pairs",
     "bfmvz2022_tree_transfer",
     "chen2026_full_support",
     "chl2018_zero_temperature",
@@ -262,6 +264,7 @@
     "support.integrated_coercivity",
     "support.moment_identity",
     "support.moment_saturation",
+    "support.near_ground_pairs",
     "support.no_bounded_gap",
     "support.no_initial_gap",
     "support.no_terminal_gap",
@@ -471,7 +474,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "8aa8013b9cbabb5a48eba2285b9a6437bb5caace8a0d14fe55cc57c2f0715a91",
+      "text_sha256": "e9e46d5ba4e1e46552bb45b1677d59b69d8a3e191c778d319968340bff0f6d67",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -759,6 +762,49 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Maps this passage to Further manuscript corollary: smooth positive density. The source locations and local guards are retained in these graph records. Ordinary Corollary6.4, with smoothness on[0,1), strict derivative positivity only on(0,1), and a separately justified shrinking-plateau estimate. No formal promotion."
+    },
+    {
+      "anchor": "overlap-pairs",
+      "text_sha256": "f3ec056d11b81fa5bf9c8fde604415ade2b0ae7e427699fed458a475116f4a92",
+      "claim_ids": [
+        "support.near_ground_pairs"
+      ],
+      "citation_ids": [
+        "acz2020_near_ground_pairs",
+        "full_support_chord_derivative",
+        "full_support_type",
+        "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-parisi-formula",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Maps this passage to Near-ground configurations at a prescribed overlap. The source locations and local guards are retained in these graph records. Ordinary ACZ Proposition1 consequence, with full support, attainment and Parisi normalization. The common Gaussian offset is explicitly removed. Quantifiers concern one fixed overlap at a time; no efficient construction, typical pair, continuum-simultaneous event or formal acceptance is asserted."
     },
     {
       "anchor": "value",
@@ -1119,7 +1165,7 @@
     },
     {
       "anchor": "qaoa",
-      "text_sha256": "a294a0fe7d8bfb97db4d228d3786b5f92d4253f1b5f5c3765b3fb7b802c32c3b",
+      "text_sha256": "a75133728e966eff809b97b255a55b7e7491386d2a5aa29d8f97d9304cd3b3cb",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.rooted_realization",
@@ -1208,7 +1254,7 @@
     },
     {
       "anchor": "alternative",
-      "text_sha256": "1308588243fff77db63e31dc8f62f3047afece32feb0691cdc7d5a5f5f69e8c1",
+      "text_sha256": "d8eeaf46ef9151ca5f0b7e54acd5d4f711ed35817fbf335d6efd0ffa87397f83",
       "claim_ids": [
         "circuit.ordinary_word_positive"
       ],
@@ -1256,7 +1302,7 @@
     },
     {
       "anchor": "qaoa-quantifiers",
-      "text_sha256": "14e007ea3db0993225e088a40936f575462bb3aa23b310dc6e000f44fda8d665",
+      "text_sha256": "38e89e1d735a0e4d6ef8d54e256c3a4cb2cc26a7b136c5bf3cc9dc2793cd14c9",
       "claim_ids": [
         "circuit.fixed_word_concentration",
         "circuit.one_measurement_near_optimum",
@@ -1397,7 +1443,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "9ab8f3e31f89563b51150e9b1d2773d4287c8d3286975e178a62f290f1b915ff",
+      "text_sha256": "1f24ab28b1638d5c0edfb59d8f2d2bfa77016aa15f6086f1ab08c84bd89cd0da",
       "claim_ids": [
         "full_support",
         "lean.full_support",
