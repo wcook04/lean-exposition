@@ -157,10 +157,13 @@ class ComparatorAssuranceTests(unittest.TestCase):
     @unittest.skipUnless(os.name == "posix", "uses executable scripts")
     def test_launch_script_mutation_is_not_a_stable_tool_observation(self):
         tool = self.project / "launcher"
-        tool.write_text(f'#!{sys.executable}\nfrom pathlib import Path\nPath(__file__).write_text("# changed\\n")\n')
+        # A shebang cannot quote a Python executable path containing spaces.
+        # Mutate the actual first launcher with the fixed POSIX shell instead.
+        tool.write_text('#!/bin/sh\nprintf "# changed\\n" > "$0"\n')
         tool.chmod(0o700)
         receipt = verify_comparator(self.project, "config.json", command=["./launcher"])
         self.assertEqual(receipt["process_status"], "passed")
+        self.assertEqual(tool.read_text(), "# changed\n")
         self.assertEqual(receipt["status"], "failed")
         self.assertTrue(receipt["launch_executable_changed"])
         self.assertEqual(receipt["failure_reason"], "launch_executable_changed_during_run")
