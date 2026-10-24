@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
-      "revision": "sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "url": "urn:sha256:2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
+      "revision": "sha256:2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d"
+      "sha256": "2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -1725,7 +1725,7 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "url": "urn:sha256:2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
@@ -1739,7 +1739,7 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "url": "urn:sha256:2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §9.11, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     }
   ],

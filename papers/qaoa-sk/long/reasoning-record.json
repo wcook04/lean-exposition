@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
-  "graph_sha256": "4292c61a725efbaacaed90d940019788e4a0baff411eaca2116b0937e9b368e6",
+  "content_sha256": "2e12c40407b644c53caf90d1b71fe893d894701fc419f70dfae517442407103e",
+  "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
   "selected_goal_ids": [
     "full_support"
   ],
@@ -364,7 +364,7 @@
   "passages": [
     {
       "anchor": "overview",
-      "text_sha256": "6281262638f02b0ce0c35d0506fc03df875e5cc28a23cf41eefceff8b027b8dc",
+      "text_sha256": "5832daf04bba8dae5e7bb719378ce2595e8dbec1342d41cb472b74cef59e61c4",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -503,7 +503,7 @@
     },
     {
       "anchor": "targets",
-      "text_sha256": "faac0953772ae1cda52b3cc5914db23f758c7df96b3dae8d4149c3238c458069",
+      "text_sha256": "25947ee509af94e43db485902c74e1b6893e5f2c914f50a77b2fc4128005e3f2",
       "claim_ids": [
         "full_support",
         "scalar_value",
@@ -583,7 +583,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "d1d52b01eb61dbe119a643453204c236d83039a4a9a472af9e6f325c97497ff9",
+      "text_sha256": "d9ada4c47e0dbab73bf45ed45f47e7f16611a1c3156a2db72aa021f759de4f8f",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -664,7 +664,7 @@
     },
     {
       "anchor": "approximation-choices",
-      "text_sha256": "0d0ffc450b51eb1d18dd261a4cf1509fcc9fc96c7c72fd03c6406a5e8ed5e7c5",
+      "text_sha256": "940cc10ca8b088527f32986435e8f8cbd59a3794b1fcd830fd679891f8100c80",
       "claim_ids": [
         "support.plateau_transfer",
         "scalar.euler_normalization",
@@ -1361,7 +1361,7 @@
     },
     {
       "anchor": "qaoa-rooted",
-      "text_sha256": "582d0177998d1b85a62d23e6470c20fbb6e932120d35b9c082f6ee68b1e320fe",
+      "text_sha256": "486188e5f5dce79545e128b0abd245953fb12bdc7e408a3028ed731c809a868d",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -1491,7 +1491,7 @@
     },
     {
       "anchor": "qaoa-synthesis",
-      "text_sha256": "0d956f2756a75524e30b5c27696eaac7353ebda3b64371ee75ce199277550498",
+      "text_sha256": "5e595526669ce7c6fd9f3bcd89969bf430534508a9fa03e8b7461d3a3bfe639e",
       "claim_ids": [
         "circuit.masked_controls",
         "circuit.orthogonal_quadratics",
@@ -1606,7 +1606,7 @@
     },
     {
       "anchor": "alternative",
-      "text_sha256": "d34345bd6ab8d95017ba9621e829d201d613bff080e641e3349bfe280dc3881e",
+      "text_sha256": "26b86e4c74a2c33f3dbbfe82d204d60bd19ecfa06439db9da1f22bed0b6874e9",
       "claim_ids": [
         "circuit.positive_input",
         "circuit.positive_value",

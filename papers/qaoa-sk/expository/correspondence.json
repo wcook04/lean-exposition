@@ -174,12 +174,12 @@
     "support.stieltjes_measure",
     "support.zero_curvature"
   ],
-  "content_sha256": "8a279d571f18eb8256c70ebf674d75efd0fa6a340f30230c29bf06ed0aeba77b",
-  "graph_sha256": "4292c61a725efbaacaed90d940019788e4a0baff411eaca2116b0937e9b368e6",
+  "content_sha256": "97e59dde5cc05ce9e21674afbf9e819a4225230b957261c83f692cd0ad24ee87",
+  "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
   "passages": [
     {
       "anchor": "opening",
-      "text_sha256": "1a5a239c2b6a5d26068f09e8b6437eca646f354a7c621ad7126e7cabfb4d1997",
+      "text_sha256": "e6b30ea344fcd6b222353b49b87dd97ac160c2fdc21e404282af15560f1831e1",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -241,7 +241,7 @@
     },
     {
       "anchor": "spins-and-overlap",
-      "text_sha256": "ad6cdc067157c73632938e1d74458b45430aad60e5f851ee6cf7a1624ec974ea",
+      "text_sha256": "751ab3dca69c60c8a0045b57cb7a64f17ed5c0f113d2c128cebabd344ae9e1b8",
       "claim_ids": [
         "scalar.parisi_formula"
       ],
@@ -257,7 +257,7 @@
     },
     {
       "anchor": "order-parameter-example",
-      "text_sha256": "4f265839f4f57393b55d0e75abdddaf58a9b08895005d807ae01d00e0d073111",
+      "text_sha256": "70786f8eff59e72916aa7434ee8736f77d0ad5967a2699e9e7a8e4a8dbcbabef",
       "claim_ids": [
         "support.stieltjes_measure"
       ],
@@ -274,7 +274,7 @@
     },
     {
       "anchor": "gap-area-example",
-      "text_sha256": "2b182c82d9c7319b408fb690747c47ffc2655272312d693585079c70a047655a",
+      "text_sha256": "6aa4af332840779f62d566c787b91658e0476af968ad3a41ee46203da934dc66",
       "claim_ids": [
         "support.endpoint_chord_area"
       ],
@@ -288,7 +288,7 @@
     },
     {
       "anchor": "value-and-diffusion",
-      "text_sha256": "584d453b8c53f52fa7b9752f6cb0f5b0e53083939b290daca1e034b2c44d5f1c",
+      "text_sha256": "e8f5b7fe8fdcf711f72cd6ebbdb9b7284c0f1ffa5970287dc026bd938d70483b",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -317,7 +317,7 @@
     },
     {
       "anchor": "full-support-statement",
-      "text_sha256": "b5924fc6ae3af7e330eaaa4ef3c827592fd8957cd119bc63a5270456e5ec15d1",
+      "text_sha256": "8e38e6b1ee7ab472d6e94371bf6c54dca5ce0913041bdd68beb7da4a8c9d5866",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -386,7 +386,7 @@
     },
     {
       "anchor": "contact-and-gap",
-      "text_sha256": "02b2263049cb45b0caa0972a6899cadf1fcd4cb2d7cb408f6873603d0574e892",
+      "text_sha256": "be6d4141be1d8845fe0fc70de6b4ad22872a90eacd90089d826eea768c1916ac",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -474,7 +474,7 @@
     },
     {
       "anchor": "density-and-approximation",
-      "text_sha256": "ed8c12707849bb2b267dc5854c31c8526a131c029e94173bb02f782ae132ffa6",
+      "text_sha256": "0d9b9e70d3c89d419ecc966b878f78ee58ffb8b0b830ac5338f448078d082574",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -522,7 +522,7 @@
     },
     {
       "anchor": "scalar-identities",
-      "text_sha256": "dcc61f03fb86689ab473e28b675e05b6adaafb915ee40c7105c48277f5631f60",
+      "text_sha256": "9da947aea385611ee340ece374a7e9d94b875204f5584d55a11d7cbec8909a00",
       "claim_ids": [
         "scalar.manuscript_terminal_value"
       ],
@@ -577,7 +577,7 @@
     },
     {
       "anchor": "finite-gaussian",
-      "text_sha256": "2a88c662d722eb1aed0dd8ea9a3da3343ea7981e315adf49669c08e6beb6bf1a",
+      "text_sha256": "96011ced67d971342fee65a4e2d26a761e0a8053eb9ad3fe4a05713f7453691b",
       "claim_ids": [
         "scalar.euler_normalization",
         "scalar.conditional_rounding",
@@ -704,7 +704,7 @@
     },
     {
       "anchor": "rooted-energy",
-      "text_sha256": "50e2e8d43a8162691d3bac810dbefbf8f2d72b3405551ab5ca3e32e0d1473f21",
+      "text_sha256": "07f865ee3c7b38fc6e13bb3094fc283495dcf7a073427b0287c91eb2fe3b6b5a",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -759,7 +759,7 @@
     },
     {
       "anchor": "circuit-synthesis",
-      "text_sha256": "afc1f7f48496dd873a3fa28255003eaf9e30954d5f7380fb9bcc57a300fc0a54",
+      "text_sha256": "30a73439b32d8ffb98fd1f6a5fd5d985a472a610e0d82c9de48d89d78609c8a1",
       "claim_ids": [
         "circuit.sign_smoothing",
         "circuit.bounded_trigonometric",
@@ -833,7 +833,7 @@
     },
     {
       "anchor": "seed-removal",
-      "text_sha256": "d2bc4eecdeaddc613860af2e6694b073d307e0be6f1fd2e03ecc6f45afb1df4d",
+      "text_sha256": "9d3c80cb30299005cb7b063be46e8ddb01377cfea79690aa781a93d366404300",
       "claim_ids": [
         "circuit.seed_removal",
         "circuit.singular_echo",
@@ -858,7 +858,7 @@
     },
     {
       "anchor": "fixed-word-transfer",
-      "text_sha256": "620b178e9292a8d84de62ba84c8505500084eff64e00039473635e8bc4b7872c",
+      "text_sha256": "d6d628274dbf55b36b64b1bf1e589488a50750c0785dbaf8ae61f38e0e6c1413",
       "claim_ids": [
         "circuit.fixed_word_transfer",
         "circuit.ordinary_word_primary",
@@ -952,7 +952,7 @@
     },
     {
       "anchor": "classical-algorithm",
-      "text_sha256": "da83b1363627f47b1270068275b2e587b9f75885a9bff78ab29590ba441d7e40",
+      "text_sha256": "62f59636983424063eee3055ecaacec01ed06c3584f7e32b9ece9febcc9f28ab",
       "claim_ids": [
         "scalar.separate_classical_algorithm"
       ],
@@ -969,7 +969,7 @@
     },
     {
       "anchor": "positive-temperature-route",
-      "text_sha256": "cc874083c2e74784b327ee7a05e42888376a498d73bf20e562570a3ed9216fca",
+      "text_sha256": "d1538ba05cea453794c3d0a18a91810a22f5a36da0305f989ee10687387add8f",
       "claim_ids": [
         "circuit.ordinary_word_positive"
       ],
@@ -1029,7 +1029,7 @@
     },
     {
       "anchor": "changed-cases",
-      "text_sha256": "bc866a5823812664f08dafd40cf63af15217a96b0d09942f43e68c84cbfc2e84",
+      "text_sha256": "d59d04dd386f0eb55edaf2fea4dc559900b745c6e14e61ac1d5d5321bc906e99",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.moment_identity",

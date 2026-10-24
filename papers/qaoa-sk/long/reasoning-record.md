@@ -12,9 +12,10 @@ of the zero-temperature Parisi functional for the pure zero-field
 Sherrington–Kirkpatrick model has Stieltjes support equal to every overlap
 scale in [0,1). The proof turns a hypothetical support gap into a constant
 interval for the order parameter. Variational contact at the ends of that
-interval conflicts with a strict curvature inequality inside it. Full
-support then makes the gradient diffusion's second moment equal to time,
-and its correlation with Brownian motion represents the ground-state value.
+interval conflicts with a strict curvature inequality inside it. Along the
+auxiliary diffusion, the spatial gradient of the value function is a bounded
+martingale. Full support makes this martingale's second moment equal to time;
+its terminal correlation with Brownian motion gives the ground-state value.
 The manuscript's further argument gives a smooth Stieltjes density, strictly
 positive on $(0,1)$, and no atom at zero. Sections 5.1–5.2 derive this stronger
 ordinary conclusion separately from the selected formal support statement.
@@ -93,6 +94,8 @@ and [Auffinger and Chen (2017), Theorem 1 and proof of Lemma 3][ac2017].
 <!-- passage:targets -->
 Write $u=\Phi_x$, $a=\Phi_{xx}$, and
 $dX_t=\gamma(t)u(t,X_t)\,dt+dB_t$, $X_0=0$.
+Write $q(t)=\mathbb E[u(t,X_t)^2]$ for the second moment of this
+gradient along $X$.
 The first result assumes an admissible minimizer. It constructs its
 Stieltjes measure and an associated diffusion, proves
 $\operatorname{supp}\mu_\gamma=[0,1)$ and strict increase of $\gamma$,
@@ -130,7 +133,7 @@ receipt for either research target.
 ### 2.1 What each stage supplies
 
 The proof begins with regularity on strips bounded away from terminal
-time. It makes the gradient diffusion and its moment function $q$
+time. It makes the diffusion $X$ and the gradient moment $q$
 available, so a first variation can show where the minimizer is in
 contact. On a constant interval, the shape inequalities and the rational
 certificate give the strict curvature needed to contradict that contact.
@@ -429,7 +432,8 @@ retained throughout the scalar construction.
 
 For the plateau transfer, tail estimates for a fixed approximant may depend
 on that approximant. The passage to the limit uses the integrated
-polynomial in $v,w,z$ and the common strip bounds; it does not require
+polynomial in the scaled second, third and fourth spatial derivatives of
+the value function and the common strip bounds; it does not require
 uniform bounds on the auxiliary density scores. Sections 3 and 4 explain
 the variation and plateau-transfer arguments, and §7 gives a complete scalar error
 budget. The further choices used to produce a circuit appear in §9.6.
@@ -2275,6 +2279,12 @@ surrounding-circuit estimates needed below. Its additional task is to
 control the energy observable and substitutions inside a circuit, beyond
 identifying a limiting state. [OpenAI (2026b), §2][q-fock].
 
+The immediate task is to realise the finite Gaussian spin from §7 in a
+space where its shifted correlation sum becomes an energy observable.
+We will identify that sum with a rooted quadratic form, then relate the
+same form to the scaled edge energy of a fixed circuit; §9.5 supplies
+the final transfer to SK.
+
 On a rooted tree, factor a circuit as $U=(\bigotimes_jU_j)u$,
 where each $U_j$ contains operations wholly in child subtree $j$.
 Conjugating a root observable $P$ reduces to $u^*Pu$; its insertion
@@ -2535,6 +2545,9 @@ $Y$ rotations have $Z$ insertion
 $$
 v_{\rm cl}=|+\rangle m+|-\rangle n,\qquad m=\sin(2\theta).
 $$
+Here $n$ is the remaining seed-dependent coefficient of the $|-\rangle$
+component, not the number of spins. Both coefficients may depend on
+descendant seeds.
 The second term does not contribute to $\mathcal E$: $\mathsf L$ puts
 the root spin in $|+\rangle$, and shifting the $|-\rangle$ term puts a
 spin excitation into a child, orthogonal to the classical sector.
@@ -3014,7 +3027,17 @@ $$
 \quad
 \mathbb E\phi(q,X_q)=\phi(0,0)+\tfrac12\int_0^qt\gamma(t)dt.
 $$
-Using $x\tanh(\beta_0x)\ge\beta_0^{-1}\log(2\cosh\beta_0x)
+To compare this integral with the spin optimum, define the expected
+free energy in energy units by
+$$
+F_{n,\beta_0}=(n\beta_0)^{-1}\mathbb E\log\sum_\sigma
+e^{\beta_0H_n(\sigma)},\qquad
+F_{\beta_0}=\lim_{n\to\infty}F_{n,\beta_0}.
+$$
+The fixed-temperature limit is supplied by the positive-temperature
+Parisi formula cited below. The finite-size soft-maximum inequality
+gives $F_{\beta_0}\ge P_*$. Using
+$x\tanh(\beta_0x)\ge\beta_0^{-1}\log(2\cosh\beta_0x)
 -\beta_0^{-1}\log2$ and retaining the penalty on $[q,1]$ yields
 $$
 \int_0^q\mathbb E a\ge F_{\beta_0}
@@ -3029,8 +3052,7 @@ At each fixed $\beta_0$, his covariance hypotheses (1.3)–(1.5) hold with
 $\xi(t)=\beta_0^2t^2/2$ and error $c(n)=\beta_0^2/(2n)$.
 His partition sum (1.14) is unnormalized; dividing its logarithmic
 free energy by $\beta_0$ gives the convention here, including the
-$\log2/\beta_0$ entropy term. With
-$F_{n,\beta_0}=(n\beta_0)^{-1}\mathbb E\log\sum_\sigma e^{\beta_0H_n(\sigma)}$, use
+$\log2/\beta_0$ entropy term. The finite-size inequality used above is
 $$
 F_{n,\beta_0}-(\log2)/\beta_0\le n^{-1}\mathbb E\max H_n\le F_{n,\beta_0}.
 $$

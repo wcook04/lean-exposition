@@ -177,6 +177,16 @@ next inference. Record the first point where a definition, motivation, argument
 or citation arrives too late. A coherent overview does not repair a broken
 sequence of paragraphs.
 
+Read once without using knowledge from later pages. At each transition, track
+the question being answered, the objects and assumptions already available,
+and the inference that the next sentence asks the reader to make. A term may
+be defined yet still be unmotivated; a formula may be correct yet arrive before
+the problem it solves. Repair the sequence by explaining the purpose, moving
+the construction or supplying the missing inference. Adding a glossary or a
+forward reference does not by itself repair that dependence. Apply this review
+to every paper at its declared prerequisite level, including abstracts,
+captions, examples and the links between sections.
+
 The short paper should state one result with its hypotheses, explain the
 mechanism, give the decisive argument and delimit its reach. The long record
 should let a reader reconstruct every argument it promises; an exact external

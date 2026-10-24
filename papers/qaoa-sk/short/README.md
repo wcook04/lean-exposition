@@ -14,8 +14,10 @@ The [source guide](../../../examples/qaoa-sk/README.md#read-the-source-and-the-s
 identifies the two OpenAI manuscripts and distinguishes them from this repository's
 writing and the separate Prove2Me metadata example.
 
-The opening defines the SK optimisation problem and explains why support
-matters for the later circuit construction. This short research-style
+The opening defines a spin configuration as a list of signs, the random
+pair weights as couplings, and the energy being maximised. It then introduces
+the increment measure, support and density before stating the support theorem,
+and explains their role in the later circuit construction. This short research-style
 reconstruction then explains two uses of OpenAI's coercive estimate for an admissible integrable zero-temperature SK minimiser.
 First, variational contact at the endpoints of a support gap conflicts with
 strict curvature inside it. After full support saturates the diffusion

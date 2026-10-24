@@ -12,41 +12,53 @@ header-includes:
 **Expository draft · 24 October 2026**
 
 <!-- passage:opening -->
-Assign a sign, either $+1$ or $-1$, to each of many sites. Every pair has
-a random preference for whether its signs agree. The Sherrington–Kirkpatrick
-(SK) optimisation problem asks for the largest total reward. Pair preferences
-can conflict, so choosing the best sign for one pair need not help the others.
+Assign a sign, either $+1$ or $-1$, to each of many sites. Each pair of
+sites has a real number attached to it, called its coupling. Equal signs
+contribute that number to a score; opposite signs contribute its negative.
+A coupling of $3$ therefore favours agreement, while a coupling of $-3$
+favours disagreement. Once all the couplings are fixed, choose the signs
+to make the sum of these contributions as large as possible. These choices
+interact: three sites cannot all disagree with one another.
 
-One algorithmic question motivates the continuation: **can a finite sequence
-of QAOA layers and angles, chosen for a desired accuracy but independently
-of the system size and random couplings, produce average energy per spin
-arbitrarily close to the limiting optimum as the system grows?** Here QAOA
-is the quantum approximate optimisation algorithm, and the average includes
-both the random couplings and the measured output. Its layers are defined
-in Section 8; Section 8.2 states the exact order of limits.
+In the **Sherrington–Kirkpatrick (SK) model**, the couplings are drawn
+independently from a standard Gaussian distribution. Each sign is called
+a spin. A specified normalisation of the total score is called the energy;
+Section 1 gives its formula and a complete two-spin calculation. Our first
+question is how large the best energy per spin becomes as the number of
+spins grows, averaged over the random couplings.
 
-The route developed here first identifies the energy those layers must
-achieve. A theorem called the **Parisi formula** expresses the limiting reward per
-site as the minimum of a quantity assigned to a nondecreasing function.
-This function is the **order parameter**. Its increments describe which
-scales are present in the variational description. The question studied
-here is whether an exact minimiser can remain flat throughout an interval
-of scales. The full-support result rules this out in the pure, zero-field
-SK model, under the admissibility and minimiser hypotheses stated below.
+The **Parisi formula** answers this question through a different optimisation
+problem. Instead of choosing a finite list of signs, it assigns a number to
+each function in a specified class of nondecreasing functions and asks for
+the smallest such number. These functions are called **order parameters**.
+Sections 2 and 3 explain the class and the rule that assigns each function
+its value. The theorem says that this minimum equals the limiting maximum
+energy per spin. The change from a maximum to a minimum is a theorem about
+upper bounds on the spin problem, not a change of sign convention.
 
-The consequence is useful: optimality first gives identities only at scales
-where the increments have support. Excluding every gap makes those
-identities valid at every scale below one. They then yield a scalar
-representation of the optimal energy. That representation does more than
-give a number: its normalised random increments supply correlation products whose
-sum approaches the optimum. The circuit proof must realise and preserve
-those correlations. This is why the variational and stochastic construction
-comes before the gate construction.
+We study a property of the function attaining that minimum: **it cannot
+be constant on any interval of positive length in its domain $[0,1)$.** The precise
+statement in Section 4 concerns the pure, zero-field SK model defined in
+Section 1. To prove it, we ask what an allowed change to a minimising
+function can do to its value. Those restrictions give endpoint conditions
+on any proposed flat interval. A separate curvature estimate makes the
+conditions incompatible. Section 2.1 isolates this last step as a calculus
+calculation before we introduce the stochastic machinery that supplies it.
 
-This article reconstructs the argument in OpenAI's full-support manuscript
-of 27 September 2026 and explains its scalar consequence. The exact conditional theorem is in Section 4. The decisive
-calculus argument is in Section 5: contact fixes a change between two
-endpoints, while strict curvature makes the same change too small.
+Excluding flat intervals also lets us express the optimum using one real
+random process. That simpler representation is the starting point for a
+second question: **can a quantum algorithm approach the same optimum?**
+The algorithm considered here is the quantum approximate optimisation
+algorithm, or **QAOA**. Its number of alternating operations and their
+settings may depend on the desired accuracy, but must be chosen independently
+of the number of spins and the drawn couplings. The operations themselves
+use those couplings. Section 8 defines the algorithm and states precisely
+what its average energy approaches. Sections 6 and 7 explain what information
+from the real random process the circuit construction has to retain.
+
+This article reconstructs the no-gap argument in OpenAI's full-support
+manuscript of 27 September 2026 and explains that continuation. Source
+credit and the exact hypotheses accompany the results below.
 
 The first aim is to reconstruct the no-gap contradiction and scalar energy
 cancellation from stated analytic inputs. The reader should be comfortable
@@ -123,7 +135,19 @@ The three pair preferences conflict. The exact deterministic couplings
 are an illustration, not an event of positive probability for continuous
 Gaussian couplings, an SK average, or a large-system estimate.
 
-To compare two configurations, define their overlap
+The large-system question concerns
+
+$$
+P_* = \lim_{n\to\infty}\frac1n\mathbb E\max_\sigma H_n(\sigma).
+$$
+
+Here $\mathbb E$ averages over the random couplings $J_{ij}$. The
+maximisation occurs after those couplings have been drawn. Existence and
+evaluation of this limit follow from the ground-state Parisi theorem in
+Section 3.2; the two-spin calculation alone does not establish either.
+
+To understand why the random energies cannot be treated as independent,
+compare two configurations through their **overlap**
 
 $$
 R(\sigma,\tau)=\frac1n\sum_{i=1}^n\sigma_i\tau_i.
@@ -141,7 +165,10 @@ $$
 \end{aligned}
 $$
 
-This is why the scalar covariance function is $\xi(t)=t^2/2$.
+Thus the covariance has the form $n\xi(R(\sigma,\tau))-1/2$, where
+$\xi(t)=t^2/2$. The function $\xi$ records how similarity between two
+configurations determines the covariance of their energies. This is the
+covariance function used in the variational formula below.
 The finite-size correction $-1/2$ is real: for two configurations with
 zero overlap their energies can be negatively correlated. Adding the
 same independent centred Gaussian of variance $1/2$ to every energy
@@ -163,17 +190,6 @@ their rewards. Its mean is zero, so it also preserves the expected maximum.
 This is the ordered-pair convention with coefficient $1/\sqrt2$ that
 matches the cited Parisi formula.
 
-The large-system question concerns
-
-$$
-P_* = \lim_{n\to\infty}\frac1n\mathbb E\max_\sigma H_n(\sigma).
-$$
-
-Here $\mathbb E$ averages over the random couplings $J_{ij}$.
-Existence and evaluation of this limit follow from the ground-state
-Parisi theorem discussed below.
-
-
 ### Why this is called a zero-temperature problem
 
 For a finite list of rewards $h_1,\ldots,h_M$ and a parameter
@@ -191,6 +207,10 @@ h_{\max}\le\lambda^{-1}\log\sum_i e^{\lambda h_i}
 \le h_{\max}+\lambda^{-1}\log M.
 $$
 
+To favour large rewards without yet taking a maximum, assign probability
+$e^{\lambda h_i}/\sum_j e^{\lambda h_j}$ to outcome $i$. This is the
+**Gibbs distribution**. The parameter $\lambda$ is called inverse
+temperature: increasing it concentrates probability on the best outcomes.
 In the two-spin example, writing $h=J/\sqrt2$, the sum is
 $4\cosh(\lambda h)$: two configurations have reward $h$ and two have
 reward $-h$. Each aligned configuration has Gibbs probability
@@ -260,12 +280,6 @@ The measure records increments of $\gamma$: for $a<b$,
 $\mu_\gamma((a,b])=\gamma(b)-\gamma(a)$. Thus a gap means **no
 increase**, even if $\gamma$ is positive there. We study the support of
 the increments, rather than the set where the function itself is nonzero.
-For the displayed example it
-has density one on $(0,1/3)$ and $(2/3,1)$ and density zero on
-$(1/3,2/3)$. Its support is
-$[0,1/3]\cup[2/3,1)$, with endpoints understood relative to $[0,1)$.
-It has infinitely many support points and no final interval on which
-$\gamma$ is constant, but it still has an interior gap.
 
 A point belongs to the support when every relative neighbourhood of it
 has positive measure. **Full relative support** means that every point
@@ -273,6 +287,13 @@ of $[0,1)$ has this property. In particular, every nonempty open interval
 below one receives mass, so $\gamma(b)>\gamma(a)$ for every
 $0\le a<b<1$. The word *relative* matters: the endpoint $1$ is outside
 the underlying space.
+
+For the displayed example, interval masses are obtained by integrating
+a function equal to one on $(0,1/3)$ and $(2/3,1)$ and zero on
+$(1/3,2/3)$. This function is the measure's **density**. Its support is
+$[0,1/3]\cup[2/3,1)$, with endpoints understood relative to $[0,1)$.
+It has infinitely many support points and no final interval on which
+$\gamma$ is constant, but it still has an interior gap.
 
 For example, a neighbourhood of zero is relative to that space and
 contains an interval $[0,\delta)$. It can have positive mass even if
@@ -366,7 +387,7 @@ losing full support: the measure $(t-1/2)^2\,dt$ has positive mass in
 every interval. The support conclusion alone cannot distinguish these
 examples from a strictly positive density.
 
-It is locally finite: every $[0,T]$ with $T<1$ has finite mass
+Every $\mu_\gamma$ is **locally finite**: each $[0,T]$ with $T<1$ has finite mass
 $\gamma(T)$. Local finiteness will let us remove a small fraction of
 the mass on such an interval even if the total mass is infinite.
 Full support concerns where every neighbourhood receives mass; by itself
@@ -377,10 +398,15 @@ approximately optimal candidate with a plateau.
 <!-- passage:gap-area-example -->
 ### 2.1 The calculus contradiction in a small model
 
-A plateau will force two endpoint values for a moment function. Strict
-curvature will make their difference impossible. A polynomial model
-shows this calculus step before we construct that function. The model slope is
-not asserted to come from an SK diffusion.
+The proof will associate a differentiable function $q$ with a minimising
+order parameter. If that order parameter had a flat interval $(r,s)$,
+optimality would force $q(r)=r$ and $q(s)=s$. Thus $q$ would have to
+increase by exactly $s-r$ across the interval. A separate estimate would
+force its derivative to be strictly less than one there, making that
+increase impossible. For now, we can understand this contradiction without
+knowing how the proof constructs $q$. The following polynomial model
+isolates the calculus; Sections 3 and 5 will supply the actual function
+and justify the two requirements.
 
 Use the same interval $[1/3,2/3]$ as the plateau in Section 2. Set
 $x=3t-1$, so $0\le x\le1$, and for $0\le\kappa\le1$ define
@@ -400,17 +426,19 @@ $$
 =\frac13-\frac\kappa{18}.
 $$
 
-If the left contact condition is $q_\kappa(1/3)=1/3$, integration
+Require the left endpoint value $q_\kappa(1/3)=1/3$. Integration
 therefore forces
 
 $$
 q_\kappa(2/3)=\frac23-\frac\kappa{18}.
 $$
 
-For $\kappa=1$, the required right endpoint value $2/3=12/18$
+If we also require the right endpoint value $q_\kappa(2/3)=2/3$,
+these requirements conflict whenever $\kappa>0$. For $\kappa=1$,
+the required value $2/3=12/18$
 is missed by $1/18$: the model reaches only $11/18$. This is the
 incompatibility in the no-gap proof. When $\kappa=0$, the slope is
-constantly one, the deficit vanishes, and both endpoint contacts can
+constantly one, the deficit vanishes, and both endpoint requirements can
 hold. Ordinary convexity alone would allow that equality case.
 
 The source proof allows endpoint derivatives less than one as well;
@@ -427,9 +455,15 @@ terminal gaps. Sections 5.3 and 5.4 supply those source arguments.
 ### 3.1 A function goes in; a number comes out
 
 A **functional** assigns a number to an entire candidate function.
-Here the candidate is $\gamma$. To define its number, we first define
-a value function $\Phi_\gamma(t,x)$: the best expected reward from
-starting at position $x$ at scale $t$. The terminal reward $|x|$ itself
+Here the candidate is $\gamma$. Its value will be defined through an
+auxiliary one-dimensional optimisation with a random input and a cost for
+responding to that input. The coefficient $\gamma$ determines both how
+strongly the response changes the position and how much it costs. This
+is the variational description supplied by the Parisi theorem; we are
+not identifying its paths with configurations of the original spins.
+
+Write $\Phi_\gamma(t,x)$ for the best expected terminal reward minus
+that cost when starting at position $x$ at time $t$. The terminal reward $|x|$ itself
 is a one-spin optimisation: $|x|=\max_{\sigma\in\{-1,1\}}x\sigma$.
 
 Standard Brownian motion $B$ is a random continuous path starting at
@@ -476,7 +510,8 @@ $$
 $$
 
 Finite-step candidates can also be evaluated by a backward recursion of
-Gaussian integrals, derived in Section 10.1 after the PDE is available.
+Gaussian integrals, derived in Section 10.1 using the partial differential
+equation introduced in Section 3.3.
 
 This evaluates one candidate; it has not solved the minimisation.
 Once the Parisi formula below is supplied, it gives the upper bound
@@ -522,7 +557,7 @@ between $-1$ and $1$, so $a\ge0$ and $|u|\le1$ before the terminal time.
 The optimal response can be taken as the current slope $u$. We now
 check why the slope is the right choice.
 
-The source's backward differential equation is
+The source's backward partial differential equation (PDE) is
 
 $$
 \partial_t\Phi_\gamma
@@ -532,8 +567,10 @@ $$
 $$
 
 The quadratic term records the local choice of control. For a proposed
-response $\alpha\in[-1,1]$ and slope $u$, the drift benefit minus its
-cost is
+response $\alpha\in[-1,1]$, the control displaces the position by
+$\gamma\alpha\,dt$ over a short time $dt$. At spatial slope $u$,
+its first-order benefit is therefore $\gamma\alpha u\,dt$.
+Subtracting the control cost gives the rate
 
 $$
 \gamma\alpha u-\frac12\gamma\alpha^2
@@ -543,8 +580,10 @@ $$
 Since $|u|\le1$, the choice $\alpha=u$ is allowed and attains the
 maximum. Nonnegativity of $\gamma$ fixes the inequality. If $\gamma=0$,
 every response has the same local value; the slope remains a valid choice.
-Dynamic programming balances this optimised benefit with the Brownian
-second-derivative term $\Phi_{xx}/2$, giving the displayed equation.
+Choosing the response over a short first step and then using the optimal
+continuation is the principle of **dynamic programming**. Brownian variance
+adds the second-derivative term $\Phi_{xx}/2$ to that short-step calculation;
+balancing it with the optimised control benefit gives the displayed equation.
 
 Using the slope as a response gives the diffusion
 
@@ -552,8 +591,8 @@ $$
 X_t=B_t+\int_0^t\gamma(s)u(s,X_s)\,ds,\qquad X_0=0.
 $$
 
-The Brownian term is accumulated noise and the integral is accumulated
-drift. This auxiliary scalar process belongs to the variational problem;
+The Brownian term is accumulated noise. The integral is accumulated
+**drift**, the displacement chosen through the response. This auxiliary scalar process belongs to the variational problem;
 it is not the physical evolution of a spin configuration or a circuit.
 The deterministic quantity that will test optimality is
 $$
@@ -578,8 +617,12 @@ $$
 =\Phi_\gamma(r,x)-\frac12\mathbb E\int_r^T
 \gamma(t)\bigl(\alpha_t-u(t,Y_t)\bigr)^2\,dt.
 $$
-The stochastic integral has expectation zero because its integrand is
-adapted and bounded. The remaining integral is nonnegative and finite:
+The omitted noise term is a stochastic integral, the limit of sums of
+past-dependent coefficients multiplied by Brownian increments. Its
+expectation is zero here because the coefficient is bounded and
+**adapted**, meaning that it uses only noise already observed. Section 3.4
+shows the finite-sum calculation behind this assertion. The remaining
+integral is nonnegative and finite:
 $|\alpha-u|\le2$ and $\gamma$ is integrable. The formula identifies
 exactly what is lost by departing from the slope response.
 This verifies the control interpretation for smooth step approximations;
@@ -683,7 +726,7 @@ which proves the regularity, diffusion and constant-interval transfer lemmas.
 ## 4. The full-support result
 
 [Chen (2026), Theorem 1.3][chen-support] had already proved full relative
-support and smooth absolute continuity. The statement and quantitative
+support and that the measure is represented by a smooth density. The statement and quantitative
 no-gap argument below follow [OpenAI (2026a), Theorem 1.1][support-manuscript];
 its separate strict-positive-density consequence appears in Section 5.5.
 
@@ -872,7 +915,9 @@ or infinitesimal mass removed at $s$ lowers the cumulative function at
 all later times. For $0\le\varepsilon\le1$, scaling the mass on $K$ by
 $1-\varepsilon$ preserves nonnegativity and therefore an admissible
 cumulative function. Moreover,
-$\|\eta_K\|_1=\int_K(1-s)\,\mu_\gamma(ds)<\infty$.
+$\|\eta_K\|_1=\int_K(1-s)\,\mu_\gamma(ds)<\infty$, where
+$\|f\|_1=\int_0^1|f(t)|\,dt$ measures the total absolute size of a
+function on the time interval.
 For instance, removing a fraction of Lebesgue mass on $[a,b]$ changes
 $\gamma(t)$ by $-\varepsilon\max(0,\min(t,b)-a)$: zero before $a$,
 a linear decrease of its increment on $[a,b]$, and a constant decrease
@@ -1119,9 +1164,11 @@ derivatives at one fixed time. It does not assert convergence of third
 time derivatives of the approximating moment functions. The source credits Chen's independent full-support and smoothness
 results [Chen (2026), Theorem 1.3][chen-support].
 
-There is no contradiction with approximating the minimum using finite
-staircases. The control formula, using the same response for two
-coefficients, gives
+Full support describes an exact minimiser, but a finite calculation can
+store only an approximation to its coefficient. This raises a different
+question: can a function with finitely many flat steps have value close
+to the minimum? Yes. Comparing the control formula for two coefficients
+using the same response gives
 
 $$
 \|\Phi_\gamma-\Phi_{\widetilde\gamma}\|_\infty
@@ -1131,7 +1178,9 @@ $$
  \le2\|\gamma-\widetilde\gamma\|_1.
 $$
 
-The first bound uses one-Lipschitz terminal reward and $|\alpha|\le1$;
+Here the infinity norm is the supremum over all starting times and
+positions, and the $L^1$ norm is the integral of the absolute coefficient
+difference on $[0,1)$. The first bound uses one-Lipschitz terminal reward and $|\alpha|\le1$;
 the penalty adds at most half the $L^1$ difference. Truncation near one
 followed by monotone step approximation gives admissible finite staircases
 converging in $L^1$ to any admissible coefficient. For example,
@@ -1149,7 +1198,7 @@ $$
 \|\gamma-\gamma_{M,m}\|_1
 \le\int_0^1(\gamma(t)-M)_+\,dt+\frac1m.
 $$
-Choose $M$ first to control the integrable tail, then $m$ for the rounding
+Here $(x)_+=\max(x,0)$. Choose $M$ first to control the integrable tail, then $m$ for the rounding
 error. The functional bound above makes its value arbitrarily close to
 that of $\gamma$. Finite staircases have flat intervals, so there is no
 uniform positive loss for every approximate minimiser with a plateau.
@@ -1181,11 +1230,21 @@ $$
 Thus $M_t$ is the conditional mean of the terminal spin and $1-t$ is
 its mean-square prediction error. Since $\mathbb EM_t=0$, the two
 terminal signs have equal probability. The second moment $q(t)=t$
-does not say that $M_t$ is Brownian motion: $M_t$ is bounded, and its
-quadratic variation $\int_0^t a(s,X_s)^2\,ds$ is random. Only its
-expectation is fixed to $t$.
+does not say that $M_t$ is Brownian motion. At each positive time Brownian
+motion has positive probability of lying outside $[-1,1]$, whereas $M_t$
+always stays in that interval. A matching second moment does not determine
+a process's distribution.
 
-Thus the continuous scalar process ends in a spin. Combining the
+We also need the endpoint of the path $X_t$. Since $|u|\le1$ and
+$\gamma$ is integrable, its accumulated drift has a finite limit. Define
+$$
+X_1=B_1+\int_0^1\gamma(s)u(s,X_s)\,ds=\lim_{t\uparrow1}X_t.
+$$
+The spin $U$ and position $X_1$ are different quantities. The calculation
+below will show that $U X_1=|X_1|$, so $U$ chooses an optimal sign for
+this terminal position.
+
+Combining the
 Parisi value equality with the source's martingale identities gives
 
 $$
@@ -1210,22 +1269,34 @@ $$
 =\Phi_\gamma(0,0)+\frac12\int_0^t\gamma(s)q(s)\,ds.
 $$
 
-The endpoint passage has quantitative bounds. Since $|u|\le1$,
+The endpoint passage has quantitative bounds. Write
+$\|V\|_2=(\mathbb E|V|^2)^{1/2}$ for the root-mean-square size of
+a random variable. Since $|u|\le1$,
 
 $$
 \|X_1-X_t\|_2\le\sqrt{1-t}+\int_t^1\gamma(s)\,ds\longrightarrow0.
 $$
 
-The terminal-value estimate in Section 3.3 then gives
-$\Phi_\gamma(t,X_t)\to|X_1|$ in $L^1$. We may therefore let
+The control formula also gives
+$$
+0\le\Phi_\gamma(t,x)-|x|\le\delta_t,
+\qquad
+\delta_t=\sqrt{2(1-t)/\pi}+\frac12\int_t^1\gamma(s)\,ds\longrightarrow0.
+$$
+For the lower bound use the zero response and convexity of absolute value.
+For the upper bound use the triangle inequality and
+$|\alpha|-\alpha^2/2\le1/2$ for $|\alpha|\le1$.
+Together these estimates give
+$\mathbb E|\Phi_\gamma(t,X_t)-|X_1||\to0$, the asserted $L^1$
+convergence. We may therefore let
 $t\uparrow1$ and substitute $q(s)=s$. The left side tends to
 $\mathbb E|X_1|$, so $\Phi_\gamma(0,0)$ is that expectation minus
 half the integral. Subtracting the other half in $\mathcal P$ gives
 the whole integral in the value formula.
 
-Here is a direct way to pass through the terminal corner. Put
-$\delta_t=\sqrt{2(1-t)/\pi}+\frac12\int_t^1\gamma(s)\,ds$.
-The tangent inequality for a convex function gives
+It remains to show that the limiting slope chooses an optimal terminal
+sign. We cannot simply differentiate $|x|$ at zero. Instead, the
+tangent inequality for a convex function gives
 $xu(t,x)\ge\Phi_\gamma(t,x)-\Phi_\gamma(t,0)$.
 Together with $|u|\le1$, $\Phi_\gamma(t,x)\ge|x|$ and
 $\Phi_\gamma(t,0)\le\delta_t$, this yields
@@ -1293,8 +1364,14 @@ F_1=\operatorname{sgn}(\sqrt T Z_1+\sqrt{1-T}Z_2).
 $$
 Write $A_1=\mathbb E[F_1g_1]$ for its correlation with the direction,
 and $D_j=\mathbb E[F_1Z_j]$ for its correlation with the $j$th input.
-Gaussian projection gives $A_1=D_1=\sqrt{2T/\pi}$ and
-$D_2=\sqrt{2(1-T)/\pi}$. The adjacent product $A_1D_2$ pairs the
+To calculate these, put $V=\sqrt T Z_1+\sqrt{1-T}Z_2$, a standard
+Gaussian. The residual $Z_1-\sqrt T V$ is centred and independent of
+$V$: the two are jointly Gaussian with zero covariance. Thus
+$\mathbb E[Z_1\mid V]=\sqrt T V$ and
+$A_1=D_1=\mathbb E[\operatorname{sgn}(V)Z_1]
+=\sqrt T\,\mathbb E|V|=\sqrt{2T/\pi}$.
+The same calculation gives $D_2=\sqrt{2(1-T)/\pi}$.
+The adjacent product $A_1D_2$ pairs the
 first direction with the next input, which performs the rounding.
 At $T=4/5$ it is $4/(5\pi)$; pairing the same indices would instead
 give $8/(5\pi)$. Section 7.1 derives this model from the coefficient
@@ -1328,8 +1405,12 @@ where the $Z_j$ are independent standard Gaussians. Here $N$ counts
 time steps; it is not the number $n$ of spins. This Euler scheme
 replaces each Brownian increment by $\sqrt\Delta Z_j$.
 
-The exact diffusion satisfies $\mathbb E[a(t,X_t)^2]=1$, but the
-discrete scheme need not satisfy this exactly. Normalize its directions:
+We regard square-integrable random variables as vectors with inner product
+$\langle g,h\rangle=\mathbb E[gh]$. A direction is normalised when
+$\mathbb E g^2=1$; two directions are orthogonal when $\mathbb E[gh]=0$.
+This lets us control all their correlations together using inner-product
+estimates. The exact diffusion satisfies $\mathbb E[a(t,X_t)^2]=1$, but
+the discrete scheme need not satisfy this exactly. Normalize its directions:
 
 $$
 c_j=\bigl(\mathbb E[a(t_{j-1},Y_{j-1})^2]\bigr)^{-1/2},
@@ -1658,6 +1739,15 @@ selected formal support and scalar statements.
 <!-- passage:rooted-energy -->
 ### 8.3 Why the adjacent coefficient sum is an energy
 
+Section 7 gave a sum of scalar correlation products. Spin energy,
+however, depends on the correlation between outputs at neighbouring
+sites. To connect the two, the source arranges the scalar calculations
+on a tree and proves that a suitably scaled edge correlation equals
+that sum. Matching the separate distributions at individual sites would
+not establish this relation: the neighbouring outputs must be constructed
+together. This is the purpose of the common space and the operation that
+moves a calculation from a child to its parent below.
+
 A root is the site where an output is read; its children lie one
 generation farther down an auxiliary tree. A finite child calculation is built recursively from a site's own random
 seed and aggregate inputs from its children. If $f$ is the calculation
@@ -1735,9 +1825,14 @@ an orthogonal projection followed by moving the retained child vector
 back up one level.
 
 For a concrete instance, reuse Section 7's one-step sign for the
-non-minimising candidate $\gamma=0$. Use the compatible height embeddings
-to put successive child calculations in the same recursive space. Start
-from an independent root seed $g_0$, let $Z_1=\mathsf G(g_0)$ and $g_1=Z_1$,
+non-minimising candidate $\gamma=0$. Let $g_0$ be the function that reads
+a site's own standard Gaussian seed. The same rule can be evaluated at
+any site: $g_0$ at the receiving root reads its own seed, whereas
+$\mathsf G(g_0)$ aggregates the seeds read at its children. Those children
+use independent seeds, so the aggregate is independent of the receiving
+root's seed. Use the compatible height embeddings to put successive
+child calculations in the same recursive space. Let
+$Z_1=\mathsf G(g_0)$ and $g_1=Z_1$,
 and let $Z_2=\mathsf G(g_1)$. The directions $g_0,g_1$ are orthonormal,
 so $Z_1,Z_2$ are independent standard Gaussians. For
 $F_1=\operatorname{sgn}(\sqrt T Z_1+\sqrt{1-T}Z_2)$ the adjoint gives
@@ -1865,11 +1960,11 @@ to its type masks and controls the approximation inside a surrounding circuit.
 
 The synthesis theorem implements this target with cost and mixer gates
 plus temporary controls
-$\exp(-i\sigma\sum_i s_iZ_i^{\mathrm P})$.
-The $s_i$ are independent standard Gaussians, and the same seed family
+$\exp(-i\rho\sum_i s_iZ_i^{\mathrm P})$ with a real pulse parameter
+$\rho$. The $s_i$ are independent standard Gaussians, and the same seed family
 is reused at every seed gate. For a finite bounded odd formula with the
 type exclusions above, and disjoint unused helper types of positive probability reserved for its
-positive aggregation depths, it produces a finite seeded circuit with
+positive aggregation depths, and any requested error $\eta>0$, it produces a finite seeded circuit with
 root insertion $v$ satisfying
 
 $$
@@ -1878,8 +1973,9 @@ $$
 |\mathcal E(v)-\mathcal E(m)|\le2\eta+2\sqrt{p_H}.
 $$
 
-Here $H$ is the helper event, the desired output is zero there, and
-$p_H=\Pr(H)$. The two terms have separate meanings: $2\eta$ bounds the
+Here $H$ is the event that the root's type belongs to one of the classes
+reserved for temporary controls. The desired classical output is set to
+zero on those sites, and $p_H=\Pr(H)$. The two terms have separate meanings: $2\eta$ bounds the
 error away from helpers, while omitting the helper part of a unit-norm
 insertion costs at most $2\sqrt{p_H}$. The theorem supplies convergence
 inside any fixed surrounding circuit and the bounds on excitation
@@ -1889,10 +1985,10 @@ has the right energy.
 [OpenAI (2026b), §4, Classical synthesis theorem][qaoa-synthesis]
 
 Reusing the same seed is necessary even for one spin. The gates
-$e^{i\sigma sZ}$ and $e^{-i\sigma sZ}$ cancel exactly. If the second
+$e^{i\rho sZ}$ and $e^{-i\rho sZ}$ cancel exactly. If the second
 uses an independent standard Gaussian $s'$, their product has phase
-$\sigma(s-s')$. On the plus state its expected $X$ measurement is
-$\mathbb E\cos(2\sigma(s-s'))=e^{-4\sigma^2}$ instead of one.
+$\rho(s-s')$. On the plus state its expected $X$ measurement is
+$\mathbb E\cos(2\rho(s-s'))=e^{-4\rho^2}$ instead of one.
 Equal one-gate distributions therefore do not preserve a sequence of
 correlated gates.
 
@@ -1901,19 +1997,26 @@ correlated gates.
 <!-- passage:seed-removal -->
 ### 8.4.1 Removing the temporary random controls
 
-The temporary seed is removed in a further theorem. Its construction
-prepares a small component of amplitude $r$ displaced by order $r^{-1}$.
-Selective rotations change that component while cancelling to first
-order on the main component. Their Lie-bracket and polynomial-approximation
-method comes from [Li and Khaneja (2005), §II, Examples 1–2][li-khaneja].
-That work supplies approximate ensemble control; the exact finite pulse
-construction and the separate cancellation of the two signed pulse-duration
-sums required here are proved in the QAOA source. A sequence using cost evolution and its reverse, called a cost echo,
-with duration of order $r^{-1}$
-turns this small change into a finite longitudinal field. If $w_r$ denotes the bounded
-direction selected from that component, the insertion vectors before
-and after the selective flip satisfy $v'_r-v_r=-2rw_r+o(r)$; division by $r$ would make a
-mere $o(1)$ error insufficient. For example, errors $r^2$, $r$ and
+The circuit still uses operations depending on extra random seeds; QAOA
+allows only the original cost and mixer operations. The next source theorem
+replaces an entire fixed sequence of seed-dependent operations while
+preserving the correlations created by reusing the same seeds. Replacing
+each operation independently would fail even the one-spin cancellation
+test above.
+
+The construction uses a small parameter $r>0$. It prepares a part of
+the state with amplitude proportional to $r$ and selectively changes it.
+A sequence containing cost evolution and its reverse, with durations of
+order $1/r$, amplifies that small change into the required finite phase
+rotation. The errors therefore have to vanish faster than $r$, not merely
+tend to zero. The selective-control method builds on
+[Li and Khaneja (2005), §II, Examples 1–2][li-khaneja]; the finite pulse
+construction and cancellation estimates are proved in the QAOA source.
+
+More precisely, if $v_r$ and $v'_r$ are the insertion vectors before and
+after the selective change, the source constructs a bounded vector $w_r$
+such that $v'_r-v_r=-2rw_r+o(r)$. The notation $o(r)$ means an error
+whose norm divided by $r$ tends to zero. For example, errors $r^2$, $r$ and
 $\sqrt r$ all tend to zero, but division by $r$ sends them respectively
 to zero, one and infinity. The estimate must compare the actual selected
 direction $w_r$ on both sides; replacing it by a limiting direction with
@@ -1929,17 +2032,24 @@ sufficiently small. Every final angle is finite, though some may be large.
 <!-- passage:fixed-word-transfer -->
 ### 8.5 The final transfer and error choices
 
-A fixed ordinary word now contains only cost and mixer gates. For that
-same word $W$, a fixed-word transfer identity relates its limiting SK
-value to its large-degree tree edge correlation:
+Let $W$ be the fixed finite sequence of cost and mixer gates just
+constructed, with all its angles fixed. Such a sequence is also called a
+word. Write $v_W$ for its limiting SK energy $v_p$ from Section 8.2.
+To compare it with the auxiliary tree, apply the same sequence and angles
+using the tree's cost operator and mixer; call the resulting operation
+$W_D$ on a tree of degree $D+1$. For adjacent vertices $i,j$, the source's
+transfer identity is
 
 $$
 v_W=\lim_{D\to\infty}\frac{\sqrt D}{2}
 \langle W_D\Omega,Z_iZ_jW_D\Omega\rangle,
 $$
 
-where $\Omega$ is the all-plus input and the positive tree cost is
-$D^{-1/2}\sum_{\{i,j\}}Z_iZ_j$, counting each edge once.
+where $\Omega$ is the all-plus input, the tree mixer is $\sum_iX_i$,
+and the positive tree cost is
+$D^{-1/2}\sum_{\{i,j\}}Z_iZ_j$, counting each edge once. These are
+Pauli operators on tree sites. A finite sequence around the chosen edge
+uses only finitely many neighbouring generations.
 The source derives its convention from
 [Basso and coauthors, full preprint Theorem 1][bfmvz], with the opposite
 cost sign by flipping one bipartition of the tree. This reverses each
@@ -2010,14 +2120,20 @@ every-instance guarantee, or a result for arbitrary growing depth.
 <!-- passage:classical-algorithm -->
 ### 8.6 A distinct classical optimisation consequence
 
+The same scalar construction also informs a classical algorithm acting
+directly on a finite spin instance. To state its cost, extend the quadratic
+formula for $H_n$ from sign vectors to real vectors. Its gradient is a
+dense matrix–vector product: computing every coordinate costs $O(n^2)$
+arithmetic operations, and computing one coordinate costs $O(n)$.
+
 Full support makes the admissible minimiser strictly increasing, verifying
 [El Alaoui, Montanari and Sellke's Assumption 2][eams-meanfield]. Their
 Corollary 2.2 then gives near-optimality. The operation count comes from
 the displayed Theorem 3 on page 7 of that preprint, which the corollary
 calls Theorem 3.2: $C(\varepsilon)(\chi+n)+n\chi_1$, where $\chi$
 is the cost of a full gradient and $\chi_1$ that of one gradient coordinate.
-For the quadratic SK Hamiltonian these cost $O(n^2)$ and $O(n)$,
-respectively. Thus, in the source's real-arithmetic model, for every fixed $\varepsilon>0$ there is
+With the two costs just described, in the source's real-arithmetic model,
+for every fixed $\varepsilon>0$ there is
 a randomised algorithm using at most $C(\varepsilon)n^2$ operations
 and returning $\sigma^{\rm alg}$ with
 
@@ -2039,8 +2155,11 @@ scalar Gaussian approximation of Section 7 and from circuit synthesis.
 <!-- passage:positive-temperature-route -->
 ### 8.7 An alternative finite-temperature starting point
 
-The QAOA manuscript also gives an independent positive-temperature route.
-It fixes a large finite inverse temperature $\beta_0>1$, then a cutoff
+The previous construction began with an exact zero-temperature minimiser.
+The QAOA manuscript also reaches a near-optimal classical energy by starting
+with the smooth approximation to a maximum from Section 1. This is its
+independent positive-temperature route. It fixes a large finite inverse
+temperature $\beta_0>1$, then a cutoff
 $0<T<q_{\beta_0}$, the largest support point of the finite-temperature
 Parisi probability measure, and then a finite message-passing mesh.
 Its terminal function is $\beta_0^{-1}\log(2\cosh(\beta_0x))$.
@@ -2231,7 +2350,7 @@ Neither support nor smoothness supplies a sufficient optimality test.
 has mean one, so conditional centring and the martingale calculation
 fail. In the actual construction, $M$ is bounded by one; a nondegenerate
 Brownian marginal is unbounded. Equal second moments therefore do not
-identify these processes or their pathwise quadratic variations.
+identify these processes.
 
 **9. Gate order and the instance.** A mixer acts on the initial plus
 state by a common phase, and the subsequent cost gate preserves all

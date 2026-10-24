@@ -39,7 +39,12 @@ exact graph edition and records the state of review. The repository packages
 these materials for inspection; it does not generate a proof from prose or
 certify that the prose means what the author intended.
 
-The SK example makes the distinction concrete. An admissible order parameter
+In the Sherrington–Kirkpatrick (SK) model, one maximises a random sum of
+pair interactions over signs $\sigma_i\in\{-1,1\}$. The
+[Parisi formula](../qaoa-sk/long/reasoning-record.md#model-and-three-targets)
+expresses the limiting optimum per spin as the minimum of a functional of
+a nondecreasing function $\gamma$. The example below asks whether the
+increments of a minimising $\gamma$ leave any interval empty. An admissible order parameter
 is a nonnegative, nondecreasing, right-continuous, integrable function
 $\gamma:[0,1)\to[0,\infty)$. Its Stieltjes measure satisfies
 $\mu_\gamma([0,t])=\gamma(t)$, so an initial atom is allowed and no probability
@@ -153,6 +158,39 @@ to recorded bytes, not that the explanation is true.
 \caption{Passage-to-claim correspondence, not a proof dependency. Three authored passages can point to one recorded mathematical claim. The forked composition adapts the shared-support, three-version figure in the Plectis Erdős systems paper.}
 \end{figure}
 
+### Following one step through the three accounts
+
+Take the positive-coefficient case of the gap argument. The short paper uses
+contact at the endpoints and strict convexity of the derivative of a diffusion
+moment to obtain a contradiction. The long record reconstructs the analytic
+estimate behind that convexity. The exposition first illustrates the missing
+area, then defines the moment and derives the argument. These are three
+useful ways to approach the same step.
+
+The analytic model supplies a scalar function $q(t)$, the second moment
+of the value function's spatial gradient along its associated diffusion.
+In the notation defined in the
+[long record's §1](../qaoa-sk/long/reasoning-record.md#model-and-three-targets),
+$q(t)=\mathbb E[\Phi_x(t,X_t)^2]$. For this walkthrough, the needed
+inputs are the following contact and curvature statements. On a hypothetical
+gap $(\ell,r)$ with endpoints in the support and constant coefficient $c>0$,
+minimality gives $q(r)-q(\ell)=r-\ell$ and $q'(\ell),q'(r)\le1$.
+The separate local curvature estimate gives $q'''>0$, so $q'$ is strictly
+convex. Together these statements imply $q'(t)<1$ inside the gap. Integration
+then gives $q(r)-q(\ell)<r-\ell$, the contradiction. Zero coefficients and
+initial or terminal gaps require their own arguments. The long record's
+§§3–5 supply these steps; a picture of a curve alone cannot establish them.
+
+A passage query opens the paragraph with its exact hypotheses. Expanding its
+recorded prerequisites leads to the source-located contact and curvature
+claims. The latter leads further to the integrated coercive estimate, its
+rational identity, the sign inequalities and the approximation step. The
+selected Lean interface remains separately identifiable. Its presence does
+not certify every intermediate analytic reconstruction or the density
+corollary added to the short paper.
+
+### Selecting what to inspect
+
 The graph supports several *typed views* of the same records. A declaration
 view follows formal Lean dependencies; an argument view shows curated support
 and formalisation relations with their own meanings and directions;
@@ -217,33 +255,6 @@ itself remains a guide outside the bundle's three mathematical paper stages.
 \end{tikzpicture}
 \caption{A local paper view follows document structure, passage-to-claim mapping and recorded argument relations without discarding other graph records. The selected support includes typed relations whose meanings and directions remain explicit; this is not a uniform proof graph. The selection-and-support shape adapts the registered-support figure in the Plectis Erdős systems paper.}
 \end{figure}
-
-### Following one step through the three accounts
-
-Take the positive-coefficient case of the gap argument. The short paper uses
-contact at the endpoints and strict convexity of the derivative of a diffusion
-moment to obtain a contradiction. The long record reconstructs the analytic
-estimate behind that convexity. The exposition first illustrates the missing
-area, then defines the moment and derives the argument. These are three
-useful ways to approach the same step.
-
-Write $q(t)=\mathbb E[\Phi_x(t,X_t)^2]$, where $\Phi$ is the control value
-and $X$ its controlled diffusion for this same coefficient. On a hypothetical
-gap $(\ell,r)$ with endpoints in the support and constant coefficient $c>0$,
-minimality gives $q(r)-q(\ell)=r-\ell$ and $q'(\ell),q'(r)\le1$.
-The separate local curvature estimate gives $q'''>0$, so $q'$ is strictly
-convex. Together these statements imply $q'(t)<1$ inside the gap. Integration
-then gives $q(r)-q(\ell)<r-\ell$, the contradiction. Zero coefficients and
-initial or terminal gaps require their own arguments. The long record's
-§§3–5 supply these steps; a picture of a curve alone cannot establish them.
-
-A passage query opens the paragraph with its exact hypotheses. Expanding its
-recorded prerequisites leads to the source-located contact and curvature
-claims. The latter leads further to the integrated coercive estimate, its
-rational identity, the sign inequalities and the approximation step. The
-selected Lean interface remains separately identifiable. Its presence does
-not certify every intermediate analytic reconstruction or the density
-corollary added to the short paper.
 
 \begin{figure}[htbp]\centering
 \begin{tikzpicture}

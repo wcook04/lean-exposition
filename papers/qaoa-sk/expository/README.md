@@ -3,9 +3,10 @@
 Read [Why the SK order parameter has no gaps](main.md). The draft starts
 with two spins and an admissible function with a plateau, explains the
 variational no-gap argument, and develops its scalar value consequences
-before developing the separate QAOA claim. The opening states the motivating
-question: whether depth and angles fixed before the system-size limit can
-approach the optimal expected energy per spin. The no-gap reading route ends
+before developing the separate QAOA claim. The opening defines the pair scoring
+rule, asks for the limiting optimal energy per spin, and explains why a minimum
+over functions answers that maximum problem. Only then does it introduce the
+question about quantum operations fixed before the system-size limit. The no-gap reading route ends
 with the scalar value in Section 6; the circuit route continues through the
 finite correlation construction and the additional operator theorems.
 
@@ -32,7 +33,9 @@ uses pinned public mathematical-source URLs so its citations remain usable
 when the exact manuscript bytes are assembled into a portable bundle.
 
 The paper is a draft. Source and agent review checked the displayed
-statements, examples and reconstructed inference chain. Complete independent audit of the
+statements, examples and reconstructed inference chain. A further sequential
+agent review checked first-use explanations, purpose before construction and
+the inference joining successive steps. Complete independent audit of the
 analytic proofs, successful research Comparator replay and human reader
 understanding have not been independently assessed here. The mapping's
 review notes describe the actual scope and remaining review.
