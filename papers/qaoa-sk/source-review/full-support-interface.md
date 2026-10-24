@@ -185,9 +185,10 @@ The source imports `Mathlib` and multiple analytic, probabilistic, and
 deterministic support modules; the immediate imports are visible at
 [Main.lean, lines 1–8][main-imports]. The retained
 [toolchain](../../../examples/qaoa-sk/upstream/lean/lean-toolchain#L1) is Lean
-`v4.34.1`. The [derived Lake configuration, lines 10–19][lake] pins mathlib to
+`v4.34.1`. The [derived Lake configuration, lines 10–20][lake] pins mathlib to
 `d13f23b723b8a846827a245b89c10fc7d3f11612` and declares the two selected `Main`
-modules as roots. It is explicitly a derived configuration, not an unchanged
+modules as roots, with globs covering both proof trees. It is explicitly a
+derived configuration, not an unchanged
 copy of the full upstream package. A source reading of this interface does
 not audit the complete imported proof closure or substitute for a build in
 that environment.
@@ -234,21 +235,94 @@ Four details are particularly consequential when using this theorem in prose:
 [paper-smoothness]: ../../../examples/qaoa-sk/upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex#L133-L147
 [scope]: ../../../examples/qaoa-sk/upstream/lean/docs/281.md#L8-L16
 [comparator]: ../../../examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKFullSupport.json#L2-L13
-[lake]: ../../../examples/qaoa-sk/upstream/lean/lakefile.lean#L1-L19
+[lake]: ../../../examples/qaoa-sk/upstream/lean/lakefile.lean#L1-L20
 
-## Intermediate premises and their providers
+## Intermediate premises and their concrete providers
 
-The integrated certificate is an interface with analytic hypotheses, rather
-than the complete support theorem. Its source
+The rational identity, a general integral helper, and the particular
+integration argument used by the implementation have different interfaces.
+The algebraic
+[`rational_identity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/Certificate.lean#L62-L69)
+has no analytic hypotheses. The general helper
 [`integrated_coercivity_of_flux`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/Certificate.lean#L165-L194)
-requires the signs, the flux derivative, zero flux at both infinities, and
-three integrability conditions. The density and approximation development
-supplies these at the application. In particular,
-[`actual_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean#L135-L144)
-assumes positive time and continuity of the coefficient there; it does not
-assume a positive coefficient. Positivity enters
-[`positive_gap_curvature`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/GapCurvature.lean#L48-L71),
-which has no minimizer hypothesis and has a separate zero-coefficient case.
+assumes signs and a flux derivative at **every** real point, vanishing flux
+at both spatial infinities, and three integrability conditions. These are
+explicit premises of that helper. They are not additional hypotheses of
+`full_support`.
+
+The displayed concrete supplier is a different theorem:
+[`gaussian_shape_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean#L106-L162).
+It integrates the certificate on the open positive half-line, proves that
+the flux is zero at the origin and at positive infinity, and reflects the
+result by evenness. In the retained support sources, the name
+`integrated_coercivity_of_flux` occurs at its declaration only. In particular,
+[`finite_density_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean#L111-L167)
+ends with a direct application of `gaussian_shape_coercivity`, not the
+whole-line helper. This is an observation about the retained text and
+proof bodies, not a claim from an extracted dependency graph.
+
+### Why the origin changes the interface
+
+The distinction is mathematically consequential. The generic helper has
+literally the hypothesis
+
+```lean
+(hB : ∀ x, 0 ≤ b x - 2*v x)
+```
+
+Its flux-derivative premise is also universal in `x`; neither premise is
+merely almost everywhere. In contrast,
+[`certB`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean#L143-L150)
+is the totalized expression `-certW r x / r x`. The
+[`BackwardShape` predicate](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Backward/BackwardRescale.lean#L12-L17)
+requires oddness of `r` and strict positivity of `deriv r` everywhere.
+Consequently `r(0)=0` and `v(0)>0`. With Lean's totalized field division,
+`certB r 0=0`, so `certB r 0 - 2*certV r 0 < 0`. The concrete certificate
+variables therefore do **not** satisfy the generic helper's displayed
+`hB` at the origin.
+
+For an explicit ordinary calculation, take the example `r(x)=tanh x`
+already used in [long §4.1](../long/reasoning-record.md#41-why-the-uncorrected-expression-has-no-pointwise-sign).
+Then `r(0)=0`, `v(0)=1`, `w(0)=0`, and `z(0)=-2`. The totalized quotient
+has `b(0)=0`, so `b(0)-2v(0)=-2`. For `x≠0`, however,
+`-w(x)/r(x)=2 sech² x`, whose smooth extension has value `2` at zero.
+The manuscript uses that smooth extension; the particular Lean definition
+uses totalized division. A change at one spatial point does not change a
+Lebesgue integral, but it does change a universal hypothesis.
+
+The implementation handles exactly this difference. Its
+[`cert_halfLine_signs` and `cert_halfLine_coercive`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean#L181-L231)
+require `x>0`, where `r(x)>0` and division is valid. The separate
+[`cert_flux_continuous`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianTails.lean#L98-L115)
+proves continuity of the **whole flux** through zero using smooth quotient
+extensions and the factor `r(0)=0`. The
+[half-line integral argument](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean#L135-L160)
+then uses this zero boundary value, the derivative identity only for
+`x>0`, and the sign inequality almost everywhere on that open half-line.
+Evenness supplies the full-line integral inequality. This explains the
+source correspondence without replacing the actual proof by an
+inapplicable direct instantiation of the generic helper. It does not
+identify an error in the implemented half-line argument.
+
+### From finite data to the gap inequalities
+
+| Stage | Inputs that remain in its type | How the displayed source supplies the next stage |
+| --- | --- | --- |
+| [`gaussian_shape_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean#L106-L162) | A bounded smooth `r`, regular `s`, backward shape, oddness and forward signs for `s`, a nonnegative Wronskian on the nonnegative half-line, an even Lipschitz `U`, `d>0`, and `U′=r−s+2dx`. | Proves integrability and decay for the Gaussian-weighted expressions, integrates on `x>0`, and reflects. These premises are explicit at this local interface. |
+| [`finite_density_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean#L111-L167) | Positive nondecreasing coefficients `c_i≤M`, a positive mesh, and a positive index `0<i≤N`. | Constructs the backward drift, forward score and Gaussian weight; obtains all the preceding shape, regularity and derivative premises from their finite-data providers; calls `gaussian_shape_coercivity` at line 167. |
+| [`finite_feedback_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean#L173-L188) | The same finite data and an arbitrary supplied Brownian system. | Uses `finite_density_identity` twice to convert the density integrals into expectations along the finite feedback diffusion, then applies `finite_density_coercivity`. |
+| [`sample_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean#L78-L88) | Any admissible `γ`, any supplied Brownian system, a time in `[0,1)`, and a positive sampled mesh index. | Supplies positivity, monotonicity, boundedness and positive mesh for the constructed approximants before applying `finite_feedback_coercivity`. |
+| [`actual_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean#L90-L143) | Positive time `t>0` and continuity of `γ` at that time. **No minimizer or positive-coefficient hypothesis.** | Passes the integrated polynomial inequality through dominated convergence of spatial derivative moments. Positive time makes the sampled index eventually positive. No limiting score or score ratio is required. |
+| [`stripThird_pos`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Moments/Curvature.lean#L65-L90) | The previous time and continuity conditions, a compact-strip cutoff `t≤T<1`, and now `γ(t)>0`. | Combines the coercive lower bound with a strictly positive fourth moment and divides by `γ(t)²`. |
+| [`positive_gap_curvature` and `zero_gap_curvature`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/GapCurvature.lean#L48-L71) | Constancy on `(a,b)` with `0≤a<b<1`; the positive case additionally has `c>0`. Neither has a minimizer hypothesis. | Constancy supplies continuity for the positive case, giving the second derivative of the curvature moment strictly positive. The zero case instead uses `stripSecond_zero_pos` to obtain a strictly positive first derivative, without dividing by the coefficient. |
+
+The local existence, regularity, shape and integrability obligations in this
+table are discharged within the displayed source chain. A full replay and
+an audit of its imported closure would be further checks; this source
+review does not claim either. The term *density* in this chain refers to
+the spatial law of a diffusion. It does not establish the separate smooth
+Lebesgue density of the order parameter's Stieltjes measure discussed in
+the manuscript.
 
 Likewise, the scalar tree proves
 [`sourceStripRegularity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/Regularity.lean#L22-L42)

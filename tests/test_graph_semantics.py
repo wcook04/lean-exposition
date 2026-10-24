@@ -320,6 +320,15 @@ class AuthoredCorpusSemanticsTests(unittest.TestCase):
         self.assertNotIn('scalar.fixed_strip_input_bounds', finite)
         self.assertNotIn('scalar.formal_model_transport_open', finite)
 
+    def test_optimality_criterion_does_not_assume_its_minimizer_conclusion(self):
+        selected = closure(self.graph, ['support.optimality_criterion'])
+        self.assertIn('support.first_variation', selected)
+        self.assertIn('support.stieltjes_measure', selected)
+        self.assertIn('support.moment_identity', selected)
+        self.assertNotIn('support.contact', selected)
+        self.assertNotIn('assumptions.full_support_minimizer', selected)
+        self.assertNotIn('lean.full_support', selected)
+
     def test_alternative_route_and_density_are_not_silent_primary_prerequisites(self):
         primary = closure(self.graph, ['qaoa_thermodynamic_first'])
         self.assertIn('circuit.ordinary_word_primary', primary)
@@ -331,11 +340,14 @@ class AuthoredCorpusSemanticsTests(unittest.TestCase):
         self.assertNotIn('scalar.smooth_positive_density', closure(self.graph, ['scalar_value']))
         self.assertIn('circuit.positive_input', closure(self.graph, ['circuit.ordinary_word_positive']))
 
-    def test_authored_sources_match_locked_bytes_and_edges_keep_warrants(self):
+    def test_local_graph_sources_match_bytes_and_edges_keep_warrants(self):
         evidence = {e['id']: e for e in self.graph['evidence']}
         for source in self.graph['sources']:
-            if source.get('redistribution') == 'vendored' and 'path' in source:
-                self.assertEqual(digest((self.root / source['path']).read_bytes()), source['sha256'])
+            if 'path' in source:
+                with self.subTest(source=source['id']):
+                    path = self.root / source['path']
+                    self.assertTrue(path.is_file(), source['path'])
+                    self.assertEqual(digest(path.read_bytes()), source['sha256'])
         for edge in self.graph['edges']:
             self.assertNotIn(edge['kind'], {'lean_type_dependency', 'lean_value_dependency',
                                             'lean_structural_dependency'})

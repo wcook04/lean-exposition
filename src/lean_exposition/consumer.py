@@ -15,6 +15,9 @@ from .contracts import (
     encoded, require_refs, required_citation_ids, select, validate_graph,
 )
 
+PAPER_VIEW_VERSION = "0.1.1"
+PAPER_QUERY_VERSION = "0.1.1"
+
 
 # Meanings of projected links, not an additional graph schema or edge authority.
 _RELATION_SEMANTICS = {
@@ -246,7 +249,7 @@ def _byte_span(start: int, end: int, line_starts: list[int]) -> dict:
 def _paper_sections(content: bytes, paper_ref: str, line_starts: list[int]) -> list[dict]:
     """ATX outline in source order, excluding YAML front matter and fenced code."""
     headings = []
-    fence_char, fence_width, yaml = None, 0, content.startswith((b"---\n", b"---\r\n"))
+    fence_char, fence_width, yaml = None, 0, content.startswith((b"---\n", b"---\r"))
     offset = 0
     for line in content.splitlines(keepends=True):
         stripped = line.rstrip(b"\r\n")
@@ -318,7 +321,9 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
     if passages is not None and set(passages) - available:
         raise ContractError("unknown paper passage anchor: " + ", ".join(sorted(set(passages) - available)))
     selected = available if passages is None else set(passages)
-    line_starts = [0] + [index + 1 for index, byte in enumerate(content) if byte == 10]
+    # Markdown recognizes LF, CRLF and bare CR. Keep exact source bytes and count
+    # each line ending once, so navigation agrees with the outline's splitlines.
+    line_starts = [0] + [match.end() for match in re.finditer(rb"\r\n?|\n", content)]
     sections = _paper_sections(content, paper_ref, line_starts)
     paper_passages = []
     for row in mapping["passages"]:
@@ -486,7 +491,7 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                         section_passage_links, correspondence_links, argument_links,
                         provenance_links) for link in group}
     return {
-        "paper_view_version": "0.1.0", "stage": stage, "state": mapping["state"],
+        "paper_view_version": PAPER_VIEW_VERSION, "stage": stage, "state": mapping["state"],
         "review_state": mapping["review_state"], "semantic_certification": False,
         "relation_semantics": _relation_semantics(paper_link_kinds),
         "bundle": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
@@ -725,10 +730,10 @@ def query_papers(
                        "selected_section_refs": section_refs if section_refs is not None else [],
                        "support_boundary": boundary, "view": view})
     return {
-        "paper_query_version": "0.1.0", "query": query,
+        "paper_query_version": PAPER_QUERY_VERSION, "query": query,
         "snapshot": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
                      "manifest_sha256": manifest_hash, "graph_sha256": graph_hash},
-        "cache_key": "paper-query-v0.1.0:" + digest(encoded({"manifest_sha256": manifest_hash,
+        "cache_key": f"paper-query-v{PAPER_QUERY_VERSION}:" + digest(encoded({"manifest_sha256": manifest_hash,
                                                             "query": query})),
         "match_count": sum(len(paper["matches"]) for paper in papers),
         "papers": papers,

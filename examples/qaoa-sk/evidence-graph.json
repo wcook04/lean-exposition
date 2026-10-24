@@ -571,15 +571,180 @@
       "sha256": "f91ff15e40c243cf3ceaaa34bd219ac233e27e62287b48036767da36c951d5fb"
     },
     {
-      "id": "r2-26-captured-comparator-observation",
+      "id": "active_derived_lakefile",
       "kind": "file",
-      "url": "urn:lean-exposition:captured-observation:20261023:SKFullSupport",
-      "path": "verification/captured-research-failure-20261023.json",
-      "sha256": "ab91a7a2ef198f28ece020650b13da982bf4bd1ae75f84274ffeff4808d2501b",
-      "revision": "2026-10-23T21:58:24.268872+00:00",
-      "observed_at": "2026-10-23T21:58:24.268872+00:00",
-      "license": "Original derived status metadata; underlying supplied log not redistributed in this source file.",
-      "redistribution": "original"
+      "url": "urn:sha256:82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74",
+      "revision": "450c8947971dbad9be943b8705ea96f822240961",
+      "license": "Apache-2.0",
+      "redistribution": "original",
+      "sha256": "82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74",
+      "path": "upstream/lean/lakefile.lean"
+    },
+    {
+      "id": "active_derived_lake_lock",
+      "kind": "file",
+      "url": "urn:sha256:24de7b18068dd3465150ae082bfa3dee6f2423b5b66937bebfdc0489ba3c8058",
+      "revision": "450c8947971dbad9be943b8705ea96f822240961",
+      "license": "Apache-2.0",
+      "redistribution": "original",
+      "sha256": "24de7b18068dd3465150ae082bfa3dee6f2423b5b66937bebfdc0489ba3c8058",
+      "path": "upstream/lean/lake-manifest.json"
+    },
+    {
+      "id": "scalar-r2-13-source-regularity",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/Control/Regularity.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/Regularity.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "28cf931f415660bde6f3015562716ff8da8394245e264682cd98f51b44439937"
+    },
+    {
+      "id": "scalar-r2-13-source-strip-definition",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/Control/StripRegularity.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/StripRegularity.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "aeb6036f178ff43d186e573ca701ce95461594228f2a091497dfcb115d11e211"
+    },
+    {
+      "id": "scalar-r2-13-source-curvature-moment",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "b1f8b4872c5e007260d6ad6d5a5ed519dc640b55b65eba27fde4ef06ca2439f0"
+    },
+    {
+      "id": "scalar-r2-13-source-diffusion-existence",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "d6923f7a12f8ae9e33b432e7ed7898a1fef327b5f20f36fe5c052c295e025ee9"
+    },
+    {
+      "id": "scalar-r2-13-source-spin-limit",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "9220138b2e4fae336b12f8be5cf614d0bfe24c44ec438773837d0834136920ee"
+    },
+    {
+      "id": "scalar-r2-13-source-guerra-upper",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "e4d1c57072ff7ae7b37abd353d8abe0113e5a0184a0862bed60b1fb43cf76a78"
+    },
+    {
+      "id": "scalar-r2-13-source-literal-lower",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "4ebfab6b7de3dd1878f6d07a696bceb54ec99b28c7ffe28e896714d31f391ec3"
+    },
+    {
+      "id": "scalar-r2-13-source-rounding-spin",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/RoundingSpin.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/RoundingSpin.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "121420be02cc5d4c8eeb031c19f38ace933ae1f5321503a953fe92de3fb48c8f"
+    },
+    {
+      "id": "scalar-r2-13-source-constant-fatou",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "af3bae1e409791d4fd82491ba0e0675856cc8dfef88f7b7269d741bf6f1c031d"
+    },
+    {
+      "id": "scalar-r2-13-source-empirical-limit",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "c7e3201e4bbc01380c13717a1b3836651a360a1c134edc3484b26b3731c6a86a"
+    },
+    {
+      "id": "scalar-r2-13-source-gaussian-transpose",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/GaussianTranspose.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianTranspose.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "e7a77dae846c6b9f8ae9d6792a1e7841b9675756066c9ff9fedb66dcc8a92378"
+    },
+    {
+      "id": "scalar-r2-13-source-terminal-assembly",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "348a14fa51ab17f431cb82b11fec6a4161af7a71f7d06cc4e6b35d5b84bfdf2f"
+    },
+    {
+      "id": "support-r2-13-finite-density",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "76d765cb219fb63f9226becce8245c1a8b80efe9968b099e395a969f80e0e66d"
+    },
+    {
+      "id": "bgmz2022_even_spin",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2204.10306v2",
+      "revision": "arXiv:2204.10306v2",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "authored_long_comparisons_20261024",
+      "kind": "file",
+      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "revision": "sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "license": "Apache-2.0",
+      "redistribution": "original",
+      "sha256": "8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d"
+    },
+    {
+      "id": "qaoa_finite_size_2026",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2609.40309v1",
+      "revision": "arXiv:2609.40309v1",
+      "license": "CC-BY-4.0",
+      "redistribution": "reference_only",
+      "sha256": "8b80ae44e8ddf3692a08d4c199c91467951c10ff67598283098ca828b59a3319"
     }
   ],
   "citations": [
@@ -1464,6 +1629,118 @@
       "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/08-regular-maxcut.tex",
       "source_id": "circuit-r2-26-source-maxcut",
       "locator": "08-regular-maxcut.tex:1–61; eq:regular-tree-cut; 01-introduction.tex:219–232, cor:regular-maxcut"
+    },
+    {
+      "id": "scalar-r2-13-cite-strip-regularity",
+      "title": "Concrete strip regularity for every admissible coefficient",
+      "source_id": "scalar-r2-13-source-regularity",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/Regularity.lean#L22-L42",
+      "locator": "Control/Regularity.lean:22–42; sourceStripRegularity"
+    },
+    {
+      "id": "scalar-r2-13-cite-minimizer-curvature-moment",
+      "title": "Unit curvature moment after the concrete minimizer suppliers",
+      "source_id": "scalar-r2-13-source-curvature-moment",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean#L84-L90",
+      "locator": "Processes/GradientSquareIntegral.lean:84–90; IsDiffusion.curvature_unit_moment_of_contact; application in ContactAssembly.lean:65–69"
+    },
+    {
+      "id": "scalar-r2-13-cite-diffusion-exists",
+      "title": "Internally constructed diffusion for every admissible coefficient",
+      "source_id": "scalar-r2-13-source-diffusion-existence",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean#L74-L79",
+      "locator": "Processes/DiffusionExistence.lean:74–79; diffusionProcess_isDiffusion; exists_diffusion"
+    },
+    {
+      "id": "scalar-r2-13-cite-spin-sequence-limit",
+      "title": "Actual convergence of the normalized expected finite-spin maximum",
+      "source_id": "scalar-r2-13-source-spin-limit",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean#L237-L263",
+      "locator": "GroundState/BlockCoeff.lean:237–263; SKValueG.groundStateSequence_tendsto"
+    },
+    {
+      "id": "scalar-r2-13-cite-ground-state-upper",
+      "title": "Ground-state upper bound by every admissible Parisi value",
+      "source_id": "scalar-r2-13-source-guerra-upper",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean#L117-L142",
+      "locator": "GroundState/WeakGuerra.lean:117–142; expectedMaximum_le_parisi; groundStateValue_le_parisi"
+    },
+    {
+      "id": "scalar-r2-13-cite-terminal-parisi-assembly",
+      "title": "Terminal formulas at the Parisi value after concrete suppliers",
+      "source_id": "scalar-r2-13-source-terminal-assembly",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean#L37-L79",
+      "locator": "Evolution/IntegralPrimitiveTerminal.lean:37–79; IsDiffusion.parisi_value_assembly; application in ContactAssembly.lean:41–42,54–55,70"
+    },
+    {
+      "id": "scalar-r2-13-cite-fixed-strip-application",
+      "title": "Fixed-strip mesh limit with every analytic input supplied",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean#L61-L69",
+      "locator": "Variation/ContactAssembly.lean:61–69; IsDiffusion.finite_gaussian_of_contact, concrete fixed-strip application"
+    },
+    {
+      "id": "scalar-r2-13-cite-strip-value-lower",
+      "title": "Curvature integral bounded by the finite-spin value on each fixed strip",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean#L21-L34",
+      "locator": "Variation/ContactAssembly.lean:21–34; IsDiffusion.strip_value_le_groundState; minimizer-contact application"
+    },
+    {
+      "id": "scalar-r2-13-cite-ground-state-identity-with-diffusion",
+      "title": "Scalar ground-state identity from the two inequalities",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean#L36-L47",
+      "locator": "Variation/ContactAssembly.lean:36–47; IsDiffusion.groundState_eq_parisi_of_contact; minimizer-contact application"
+    },
+    {
+      "id": "support-r2-13-finite-density-call",
+      "source_id": "support-r2-13-finite-density",
+      "title": "Actual finite-data coercivity call and conversion to diffusion expectations",
+      "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean#L111-L188",
+      "locator": "finite_density_coercivity:111–167, direct gaussian_shape_coercivity call at167; finite_feedback_coercivity:174–188"
+    },
+    {
+      "id": "support_optimality_chl",
+      "source_id": "chl2018_zero_temperature",
+      "title": "Chord derivative and minimizer optimality criterion",
+      "url": "https://arxiv.org/abs/1609.04368v4",
+      "locator": "Proposition 4, printed p.14; nonnegative admissible chord derivatives are equivalent to minimality."
+    },
+    {
+      "id": "support_optimality_chen",
+      "source_id": "chen2026_full_support",
+      "title": "Contact conditions and absolutely convergent Stieltjes Fubini identity",
+      "url": "https://arxiv.org/abs/2607.18032v1",
+      "locator": "Proposition 3.2, printed pp.8–9, equations (3.11)–(3.12); necessity and weighted Fubini, not a separate citation for the converse."
+    },
+    {
+      "id": "bgmz2022_even_spin_obstruction",
+      "source_id": "bgmz2022_even_spin",
+      "title": "Performance and limitations of the QAOA at constant levels on large sparse hypergraphs and spin glass models",
+      "url": "https://arxiv.org/abs/2204.10306v2",
+      "locator": "Theorem 4 / (3.15), printed p.9; complete proof in §4.2, printed p.11; even pure order q>=4."
+    },
+    {
+      "id": "authored_gibbs_comparison",
+      "source_id": "authored_long_comparisons_20261024",
+      "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
+      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
+    },
+    {
+      "id": "qaoa_finite_size_corollary",
+      "source_id": "qaoa_finite_size_2026",
+      "title": "Later fixed-word finite-size estimate",
+      "url": "https://arxiv.org/abs/2609.40309v1",
+      "locator": "Corollary S3.1, printed pp.46–47, equations (S3.1)–(S3.4), with cost-angle convention (S3.7). Statement inspected; full cavity proof not independently checked."
+    },
+    {
+      "id": "authored_bounded_angle_depth_comparison",
+      "source_id": "authored_long_comparisons_20261024",
+      "title": "Conditional growing-depth consequence of the later estimate",
+      "url": "urn:sha256:8696fcd0b4f1e39a5b51362f50f50488826fa1f5aad91afb303dd8f83fae166d",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.11, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     }
   ],
   "nodes": [
@@ -1476,8 +1753,12 @@
       "locator": "Proposition 1, equation (5), p.5; proof pp.15–16; pure-SK specialization reconstructed in the long record §5.3",
       "statement": "For pure zero-field Gaussian SK H_n=n^(-1/2) sum_{i<j} J_ij sigma_i sigma_j, every fixed r in [0,1) and epsilon,eta>0 admit K=K(r,epsilon,eta)>0 independent of n, such that with disorder probability at least 1-K exp(-n/K) there exist sigma,tau with |R(sigma,tau)-r|<epsilon and both H_n(sigma)/n,H_n(tau)/n >= P_*-eta, for all n>=1.",
       "assumption_ids": [],
-      "evidence_ids": ["near_ground_pair_warrants_20261024"],
-      "citation_ids": ["acz2020_near_ground_pairs"],
+      "evidence_ids": [
+        "near_ground_pair_warrants_20261024"
+      ],
+      "citation_ids": [
+        "acz2020_near_ground_pairs"
+      ],
       "boundary": "Ordinary consequence of the imported landscape theorem, full support and attained Parisi formula. Add a common independent N(0,1/2) offset to match covariance; remove it using its Gaussian tail. Each target overlap is fixed before taking size. No typical-pair law, continuum-simultaneous event, efficient construction, Lean extraction or formal proof acceptance is asserted."
     },
     {
@@ -1497,7 +1778,10 @@
         "manuscript_alignment_not_run",
         "full_support_comparator_not_run",
         "full_support_comparator_unavailable_20261023",
-        "full_support_solution_build_failure_20261023"
+        "full_support_solution_build_failure_20261023",
+        "full_support_corrected_build_not_run_20261024",
+        "full_support_corrected_comparator_not_run_20261024",
+        "current_input_identity_20261024"
       ],
       "citation_ids": [
         "scope_281",
@@ -1524,7 +1808,10 @@
         "manuscript_alignment_not_run",
         "full_support_comparator_not_run",
         "full_support_comparator_unavailable_20261023",
-        "full_support_solution_build_failure_20261023"
+        "full_support_solution_build_failure_20261023",
+        "full_support_corrected_build_not_run_20261024",
+        "full_support_corrected_comparator_not_run_20261024",
+        "current_input_identity_20261024"
       ],
       "citation_ids": [
         "full_support_implementation",
@@ -1552,7 +1839,10 @@
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
         "scalar_value_comparator_not_run",
-        "scalar_value_solution_build_failure_20261024"
+        "scalar_value_solution_build_failure_20261024",
+        "scalar_value_corrected_build_not_run_20261024",
+        "scalar_value_corrected_comparator_not_run_20261024",
+        "current_input_identity_20261024"
       ],
       "citation_ids": [
         "scope_281",
@@ -1579,7 +1869,10 @@
         "lean_dependencies_not_run",
         "manuscript_alignment_not_run",
         "scalar_value_comparator_not_run",
-        "scalar_value_solution_build_failure_20261024"
+        "scalar_value_solution_build_failure_20261024",
+        "scalar_value_corrected_build_not_run_20261024",
+        "scalar_value_corrected_comparator_not_run_20261024",
+        "current_input_identity_20261024"
       ],
       "citation_ids": [
         "scalar_value_implementation",
@@ -1938,9 +2231,11 @@
       "citation_ids": [
         "support_coercivity_source",
         "support_flux_source",
-        "support_certificate_lean_source"
+        "support_certificate_lean_source",
+        "support-r2-13-finite-density-call",
+        "full_support_origin_coercivity"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Not a pointwise inequality for arbitrary v,w,z. The source also states a more general conditional integral proposition; this node is its instantiated smooth finite-step consequence. No minimizer is needed."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Not a pointwise inequality for arbitrary v,w,z. The source also states a more general conditional integral proposition; this node is its instantiated smooth finite-step consequence. No minimizer is needed. The concrete Lean finite-data integration uses gaussian_shape_coercivity on the positive half-line, not a raw instantiation of the generic whole-line helper; the accompanying citation relation records the representation difference at zero."
     },
     {
       "id": "support.plateau_transfer",
@@ -2248,15 +2543,17 @@
       "status": "unverified",
       "source_id": "scalar-r2-26-source-order-parameter-regularity",
       "locator": "order-parameter-regularity.tex:15–152; cor:smooth-measure",
-      "statement": "For an admissible minimizer, gamma(0)=0, gamma∈C∞([0,1)), gamma=E Phi_xxx²/(2 E Phi_xx³), and mu(dt)=gamma′(t)dt. For 0<t<1, 2 gamma′ E Phi_xx³≥gamma(t)² E Phi_xx⁴/1000>0. Only gamma′(0)≥0 is asserted at zero.",
+      "statement": "For an admissible minimizer, gamma(0)=0, gamma∈C∞([0,1)), gamma=E Phi_xxx²/(2 E Phi_xx³), and mu(dt)=gamma′(t)dt. For 0<t<1, 2 gamma′ E Phi_xx³≥gamma(t)² E Phi_xx⁴/1000>0. Only gamma′(0)≥0 is asserted at zero. Since E Phi_xx²=1 and Phi_xx>=0, moment Cauchy–Schwarz gives E Phi_xx³<=sqrt(E Phi_xx⁴)<=E Phi_xx⁴. Hence gamma′(t)>=gamma(t)²/2000 for 0<t<1, and mu((r,s])>=(s-r)gamma(r)²/2000 for 0<r<s<1.",
       "assumption_ids": [
         "scalar.paper_minimizer"
       ],
-      "evidence_ids": [],
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ],
       "citation_ids": [
         "scalar-r2-26-cite-smooth-positive-density"
       ],
-      "boundary": "Additional moment-bootstrap and fixed-time flattening argument. Not part of FullSupportConclusion and not needed by the QAOA scalar construction; do not place it in that prerequisite closure."
+      "boundary": "Additional moment-bootstrap and fixed-time flattening argument. Not part of FullSupportConclusion and not needed by the QAOA scalar construction; do not place it in that prerequisite closure. The numerical lower bound is an ordinary deduction in long §5.2, not an extra clause of the selected formal endpoint; it depends on the same minimizer and moment normalization."
     },
     {
       "id": "scalar.manuscript_terminal_value",
@@ -2367,7 +2664,7 @@
       "status": "unverified",
       "source_id": "scalar-r2-26-source-formal-targets",
       "locator": "GroundState/MainConclusions.lean:13–15; scalar_value_target",
-      "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–123.",
+      "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–118.",
       "assumption_ids": [
         "assumptions.value_minimizer",
         "assumptions.value_diffusion"
@@ -2420,7 +2717,7 @@
       "status": "unverified",
       "source_id": "scalar-r2-26-source-formal-targets",
       "locator": "GroundState/MainConclusions.lean:13–15; scalar_value_target",
-      "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–123.",
+      "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–118.",
       "assumption_ids": [
         "assumptions.value_minimizer",
         "assumptions.value_diffusion"
@@ -2574,7 +2871,7 @@
       "status": "unverified",
       "source_id": "scalar-r2-26-source-algorithm-application",
       "locator": "algorithm-application.tex:1–59; cor:algorithm",
-      "statement": "For every fixed epsilon>0, choose an attained minimizer gamma₀ using Auffinger–Chen. Apply the conditional full-support theorem to this witness to obtain strict increase, and then EAMS arXiv:2001.00904v1 Assumption 2, Theorem 3 and Corollary 2.2. This gives a randomized finite-spin output within epsilon n of max H_n with probability tending to one and at most C(epsilon)n² real-arithmetic operations in the stated oracle/preprocessing model. The chosen minimizer is locally bound in this application, not a caller-supplied premise.",
+      "statement": "For every fixed epsilon>0, choose an attained minimizer gamma₀ using Auffinger–Chen. Apply the conditional full-support theorem to this witness to obtain strict increase, and then EAMS arXiv:2001.00904v1 Assumption 2, Theorem 3 and Corollary 2.2. This gives a randomized finite-spin output within epsilon n of max H_n with probability tending to one over both Gaussian disorder and algorithmic randomness and at most C(epsilon)n² real-arithmetic operations in the stated oracle/preprocessing model. The chosen minimizer is locally bound in this application, not a caller-supplied premise.",
       "assumption_ids": [],
       "evidence_ids": [],
       "citation_ids": [
@@ -3169,6 +3466,304 @@
       ],
       "boundary": "Ordinary derived consequence of the cited thermodynamic-first QAOA theorem and the fixed-word moment theorem. No formalizes edge or kernel acceptance. This is a joint-disorder-and-measurement asymptotic statement, not a guarantee on every instance, a finite-size rate, a uniform p(n) claim, or an efficient angle-selection algorithm.",
       "locator": "Derived in the long reasoning record section 9.8, What is averaged, and a fixed-word probability consequence; premise locations are QAOA Theorem thm:main and FGGZ section 4 equations (13)-(14)."
+    },
+    {
+      "id": "scalar.source_strip_regularity",
+      "kind": "claim",
+      "label": "Concrete strip regularity for every admissible coefficient",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-regularity",
+      "locator": "Control/Regularity.lean:22–42; sourceStripRegularity",
+      "statement": "For every W:BrownianSpace and gamma:OrderParameter, SourceStripRegularity W gamma holds: for each T in Ico 0 1 there exist Kv,Lv,K,L,D,Lu,La supplying ValueStrip, GradientStrip, nonnegative D,Lu,La, a uniform curvature bound, and the stated joint time-space Lipschitz bounds for gradient and curvature on Icc 0 T × R.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-strip-regularity"
+      ],
+      "boundary": "No minimizer or diffusion premise. The constants are chosen separately for each fixed strip; no uniform terminal bound is asserted. Definition: Control/StripRegularity.lean:28–37. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_minimizer_curvature_moment",
+      "kind": "claim",
+      "label": "Unit curvature moment after the concrete minimizer suppliers",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-curvature-moment",
+      "locator": "Processes/GradientSquareIntegral.lean:84–90; IsDiffusion.curvature_unit_moment_of_contact; application in ContactAssembly.lean:65–69",
+      "statement": "For every W,gamma,X, IsMinimizer W gamma and IsDiffusion W gamma X imply E[(curvature W gamma t (X t))²]=1 for every t in Ico 0 1. This is the source application of the lower helper to sourceStripRegularity W gamma and the same minimizer's gradient_moment_contact.",
+      "assumption_ids": [
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-minimizer-curvature-moment"
+      ],
+      "boundary": "The helper itself takes strip regularity and contact as premises. This authored node records their supplied application under the displayed minimizer/diffusion hypotheses; it is not a transcription that erases those helper premises. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_diffusion_exists",
+      "kind": "claim",
+      "label": "Internally constructed diffusion for every admissible coefficient",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-diffusion-existence",
+      "locator": "Processes/DiffusionExistence.lean:74–79; diffusionProcess_isDiffusion; exists_diffusion",
+      "statement": "For every W:BrownianSpace and gamma:OrderParameter, IsDiffusion W gamma (diffusionProcess W gamma), and consequently there exists X with IsDiffusion W gamma X.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-diffusion-exists"
+      ],
+      "boundary": "No minimizer premise and no minimizer-existence conclusion. The source uses Brownian path continuity and its almost-sure zero initial value. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_spin_sequence_limit",
+      "kind": "claim",
+      "label": "Actual convergence of the normalized expected finite-spin maximum",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-spin-limit",
+      "locator": "GroundState/BlockCoeff.lean:237–263; SKValueG.groundStateSequence_tendsto",
+      "statement": "Tendsto groundStateSequence atTop (nhds groundStateValue). The statement has no W, gamma, minimizer, or diffusion argument.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-spin-sequence-limit"
+      ],
+      "boundary": "Proof uses expectedMaximum_superadditive at117–123 and expectedMaximum_upper at210–235. This is convergence of expectations, not an almost-sure finite-system optimum theorem; limUnder by itself would not establish it. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_ground_state_upper",
+      "kind": "claim",
+      "label": "Ground-state upper bound by every admissible Parisi value",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-guerra-upper",
+      "locator": "GroundState/WeakGuerra.lean:117–142; expectedMaximum_le_parisi; groundStateValue_le_parisi",
+      "statement": "For every W:BrownianSpace and gamma:OrderParameter, groundStateValue ≤ parisi W gamma. The preceding finite-spin theorem bounds expectedMaximum n by n * parisi W gamma for every positive n.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-ground-state-upper"
+      ],
+      "boundary": "No minimizer or diffusion premise. The source passes a finite smooth-profile comparison through smooth coefficient approximation and then the already proved spin-size limit. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_terminal_parisi_assembly",
+      "kind": "claim",
+      "label": "Terminal formulas at the Parisi value after concrete suppliers",
+      "status": "unverified",
+      "source_id": "scalar-r2-13-source-terminal-assembly",
+      "locator": "Evolution/IntegralPrimitiveTerminal.lean:37–79; IsDiffusion.parisi_value_assembly; application in ContactAssembly.lean:41–42,54–55,70",
+      "statement": "For every minimizer gamma and supplied diffusion X on W, there exists U with the stopped-gradient martingale, almost-sure |U|≤1, U²=1 and full t→1− gradient convergence, mean-square convergence to U, parisi W gamma = E|X_1|−∫₀¹t gamma(t)dt = E[U B_1] = ∫₀¹E curvature(t,X_t)dt, interval integrability, and cutoff convergence of that integral to parisi W gamma.",
+      "assumption_ids": [
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-terminal-parisi-assembly"
+      ],
+      "boundary": "This applied helper identifies the Parisi value before any substitution of groundStateValue. Its own declaration explicitly assumes strip regularity, gradient contact, and the unit curvature moment, supplied by the recorded application. The penalty here is the full integral. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_fixed_strip_application",
+      "kind": "claim",
+      "label": "Fixed-strip mesh limit with every analytic input supplied",
+      "status": "unverified",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "locator": "Variation/ContactAssembly.lean:61–69; IsDiffusion.finite_gaussian_of_contact, concrete fixed-strip application",
+      "statement": "For every W,gamma,X with IsMinimizer W gamma and IsDiffusion W gamma X, and every fixed T with 0<T<1, eventually for all N and all j<N the normalizer is positive, and shiftedCoefficientSum W gamma T N tends as N→∞ to ∫₀ᵀE curvature(t,X_t)dt.",
+      "assumption_ids": [
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-fixed-strip-application"
+      ],
+      "boundary": "The supplier application unpacks constants from sourceStripRegularity and restricts the unit curvature moment to Icc 0 T. It does not take these as new caller premises, assert positivity at every mesh, give a rate, or take a diagonal or uniform terminal limit. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_strip_value_lower",
+      "kind": "claim",
+      "label": "Curvature integral bounded by the finite-spin value on each fixed strip",
+      "status": "unverified",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "locator": "Variation/ContactAssembly.lean:21–34; IsDiffusion.strip_value_le_groundState; minimizer-contact application",
+      "statement": "For every minimizer gamma and supplied diffusion X on W, and every fixed 0<T<1, ∫₀ᵀE curvature(t,X_t)dt ≤ groundStateValue.",
+      "assumption_ids": [
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-strip-value-lower"
+      ],
+      "boundary": "The helper itself needs gradient contact rather than minimization; the application supplies contact. LiteralLower.lean:14–27 bounds each shifted sum for N>0 and positive raw moments; eventual positivity from the fixed-strip application satisfies these premises. The passage to N→∞ is at fixed T. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "claim",
+      "label": "Scalar ground-state identity from the two inequalities",
+      "status": "unverified",
+      "source_id": "scalar-r2-26-source-contact-assembly",
+      "locator": "Variation/ContactAssembly.lean:36–47; IsDiffusion.groundState_eq_parisi_of_contact; minimizer-contact application",
+      "statement": "For every W,gamma,X with IsMinimizer W gamma and IsDiffusion W gamma X, groundStateValue = parisi W gamma.",
+      "assumption_ids": [
+        "assumptions.value_minimizer",
+        "assumptions.value_diffusion"
+      ],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar-r2-13-cite-ground-state-identity-with-diffusion"
+      ],
+      "boundary": "The helper itself takes contact. The applied proof takes the strip lower bound to T→1− at the Parisi value, then combines parisi≤groundStateValue with the general groundStateValue≤parisi upper bound. It does not use a cross-target SKSupport transport or an external Parisi-formula assumption. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed."
+    },
+    {
+      "id": "support.source_finite_density_coercivity",
+      "kind": "claim",
+      "label": "Concrete finite-data half-line coercivity application",
+      "status": "unverified",
+      "source_id": "support-r2-13-finite-density",
+      "locator": "Density/FiniteDensity.lean:111–188",
+      "statement": "For c:N→NNReal strictly positive at every index, monotone and bounded above by M, h:NNReal with h>0, and natural indices 0<i≤N, put r(x)=c(i)*deriv(backwardBoundary c h (softAbs M) N i)(x). Then (1/1000) times the finiteDensity-weighted integral of quarticMoment r is at most the corresponding integral of coercivePolynomial r. The same inequality holds as a finite-feedback diffusion expectation after finite_density_identity.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "R2-13-SUP-001"
+      ],
+      "citation_ids": [
+        "support-r2-13-finite-density-call",
+        "full_support_origin_coercivity"
+      ],
+      "boundary": "All finite-data guards are local quantified premises. No minimizer is needed. The proof constructs backward and forward shape, Wronskian, Gaussian-tail and derivative premises and calls gaussian_shape_coercivity. That theorem integrates on Ioi 0, proves zero endpoint flux and reflects. This is an authored proof-body correspondence, not an extracted dependency or fresh Lean acceptance. The whole-line integrated_coercivity_of_flux helper is not this application."
+    },
+    {
+      "id": "support.optimality_criterion",
+      "kind": "claim",
+      "label": "An exact first-order criterion for the same admissible coefficient",
+      "status": "unverified",
+      "source_id": "chl2018_zero_temperature",
+      "locator": "CHL arXiv:1609.04368v4 Proposition 4, printed p.14; long reasoning record §3.5",
+      "statement": "For an admissible gamma in the pure zero-field SK normalization, let Phi, X and q(t)=E[Phi_x(t,X_t)^2] be the control value, diffusion and moment for this same gamma. Let mu([0,t])=gamma(t), S=supp_[0,1)(mu), and G(s)=integral_s^1(q(t)-t)dt. Then gamma minimizes the zero-temperature Parisi functional if and only if G(s)>=0 for every s<1 and G=0 on S.",
+      "assumption_ids": [],
+      "citation_ids": [
+        "support_optimality_chl",
+        "support_optimality_chen",
+        "support_variation_source",
+        "support_model_source"
+      ],
+      "evidence_ids": [
+        "support_optimality_warrant_20261024"
+      ],
+      "boundary": "Ordinary mathematical deduction, not a new selected Lean endpoint or Comparator result. All coefficient/PDE/diffusion requirements are local quantified guards. The iff has no minimizer premise. The converse uses |G(s)|<=1-s, weighted Fubini and convexity of the control-value functional. Arbitrary curves with contact properties need not arise from this gamma; the criterion alone neither proves full support nor constructs a minimizer."
+    },
+    {
+      "id": "scalar.fixed_strip_error_budget",
+      "kind": "claim",
+      "label": "Fixed-strip scalar accuracy with its cutoff dependence exposed",
+      "status": "unverified",
+      "source_id": "scalar-r2-26-source-consequences",
+      "locator": "consequences.tex:124–196; long reasoning record §7.1, ordinary quantitative deduction",
+      "statement": "For each fixed admissible minimizer gamma and fixed cutoff 0<T<1, the normalized Euler Gaussian construction has finite constants C_(gamma,T), N0_(gamma,T) such that |S_(T,N)-P_*|<=1-T+C_(gamma,T)*sqrt(T/N) for every N>=N0_(gamma,T). Here S_(T,N)=sum_(j=0)^N A_j B_(j+1), retaining the final independent rounding coordinate.",
+      "assumption_ids": [
+        "scalar.paper_minimizer"
+      ],
+      "citation_ids": [
+        "scalar-r2-26-cite-euler-normalization",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-terminal-loss",
+        "support_regularity_source"
+      ],
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ],
+      "boundary": "Ordinary deduction from fixed-strip spatial and temporal bounds, maximal coupled Euler estimates, Bessel control and the terminal tail. Monotone gamma may have jumps; the proof uses its total variation, not its derivative. Constants need not remain bounded as T approaches one, and no effective numerical minimizer bounds or arbitrary prescribed diagonal rate are asserted. This rate is not a selected Lean conclusion."
+    },
+    {
+      "id": "circuit.weighted_finite_horizon",
+      "kind": "claim",
+      "label": "Corrected weighted finite-tree estimate with explicit hypotheses",
+      "status": "unverified",
+      "source_id": "circuit-r2-26-source-positive",
+      "locator": "07-positive-temperature.tex:211–450; EAMS arXiv:2111.06813v2 Proposition 2.1 and Lemmas 3.2–3.4,4.2–4.3; long §9.7",
+      "statement": "In the specified EAMS one-step-lag recursion on a k-regular tree, k>=2, fix delta>0 and finite L>=1 with L*delta<1. Use iid Gaussian labels and the common node/cavity initial state sqrt(delta)*g_i. At the finitely many mesh times, assume |a_k|<=K>=1, spatial Lipschitz constants La,Lb for a_k,b_k uniform in k, identical normalized a_k for node/cavity updates, and E[(A_(i->j)^r)^2]=1. Then |k*E[z_o^L*z_v^L]-2*sqrt(k-1)*delta*sum_(r=1)^(L-1) E[B_o^r]|<=C(K,La,Lb,delta,L), independently of k. The sum is empty when L=1.",
+      "assumption_ids": [],
+      "citation_ids": [
+        "circuit-r2-26-cite-positive-finite-step",
+        "eams2023_finite_step"
+      ],
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ],
+      "boundary": "Conditional ordinary reconstruction for the specified finite recursion, not a new formal theorem. The coefficient expectation uses the vertex law; its normalization uses the cavity law. Fixed-horizon and spatial-Lipschitz hypotheses are essential. The generic temporal-sign counterexample concerns auxiliary Theorem 4.1 as printed, not specialized positive-Parisi Proposition 4.7 or EAMS Theorem 1.7. No horizon-, temperature- or terminal-cutoff-uniform constant is claimed."
+    },
+    {
+      "id": "circuit.even_p_spin_obstruction",
+      "kind": "claim",
+      "label": "A separate thermodynamic-first ceiling for even higher-spin models",
+      "status": "unverified",
+      "source_id": "bgmz2022_even_spin",
+      "locator": "arXiv:2204.10306v2 Theorem 4, equation (3.15), and proof §4.2",
+      "statement": "For each pure even interaction order q>=4, in the source normalization, every finite depth p and every fixed angle vector satisfy v_p^(q)(theta,beta)<=eta_OGP(G_q)<eta_OPT(G_q). The same ceiling bounds the supremum over all finite p and angles of their individual thermodynamic limits.",
+      "assumption_ids": [],
+      "citation_ids": [
+        "bgmz2022_even_spin_obstruction"
+      ],
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ],
+      "boundary": "External ordinary theorem used to delimit the quadratic SK result. The exclusion q>=4 is essential; this is not an obstruction for q=2. No interchange of depth and system size is required for this thermodynamic-first ceiling. This comparison is outside the primary SK QAOA prerequisite closure and has no selected formal endpoint."
+    },
+    {
+      "id": "support.endpoint_chord_area",
+      "kind": "claim",
+      "label": "The integrated endpoint-chord inequality",
+      "status": "unverified",
+      "source_id": "support_tex_variation",
+      "locator": "variation.tex:223–234; calculus step in the bounded-gap proof",
+      "statement": "Let r<s and q be continuously differentiable on [r,s]. If q′ is strictly convex on [r,s] and q′(r),q′(s)<=1, then q(s)-q(r)<s-r.",
+      "assumption_ids": [],
+      "citation_ids": [
+        "support_closure_source"
+      ],
+      "evidence_ids": [
+        "endpoint_chord_area_warrant_20261024"
+      ],
+      "boundary": "An ordinary one-dimensional calculus lemma with its own quantified hypotheses. It applies to toy curves as well as diffusion moments and carries no minimizer, PDE or stochastic premise. Strict convexity gives q′(t) below its endpoint chord for r<t<s; the chord is at most one, and continuity makes the integrated deficit strictly positive. The source uses this step inside a conditional full-support argument. This node does not assert a newly extracted Lean declaration or independently accepted formal check."
+    },
+    {
+      "id": "scalar.finite_gibbs_comparison",
+      "kind": "claim",
+      "label": "Finite Gibbs values and exact Gibbs samples",
+      "status": "unverified",
+      "source_id": "authored_long_comparisons_20261024",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution.",
+      "statement": "For the pure zero-field SK Hamiltonian and beta>0, let L_n=max_sigma H_n(sigma)/n, F_n,beta=(n beta)^(-1)log sum_sigma exp(beta H_n(sigma)), and U_n,beta be the exact Gibbs mean energy per spin. For each instance, 0<=F_n,beta-L_n<=log(2)/beta and 0<=L_n-U_n,beta<=log(2)/beta. For n>=2 and s>0, P_J(|L_n-E L_n|>s)<=2 exp(-n^2 s^2/(n-1)). For an exact Gibbs draw Sigma, P(H_n(Sigma)/n<=L_n-s | J)<=min(1,exp(n(log(2)-beta s))). Since E L_n tends to P_*, both value expectations tend to P_* along every joint n→infinity,beta→infinity; an exact Gibbs draw tends to P_* in the joint disorder-and-sampling probability.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "ordinary_comparison_warrants_20261024"
+      ],
+      "citation_ids": [
+        "authored_gibbs_comparison",
+        "scalar-r2-26-cite-parisi-formula"
+      ],
+      "boundary": "Ordinary derivation in this authored edition, not an attribution of the whole synthesis to a cited external paper. The log-sum and entropy identities give the deterministic bounds; Gaussian concentration uses Lipschitz constant sqrt((n-1)/(2n^2)); counting configurations gives the conditional tail. Exact Gibbs sampling is a distributional premise, not an efficient sampling algorithm. The Born law and QAOA angle construction are distinct. No Lean or Comparator coverage and no complete formal dependency audit are asserted."
+    },
+    {
+      "id": "circuit.later_finite_size_comparison",
+      "kind": "claim",
+      "label": "A later finite-size estimate for a bounded-angle class",
+      "status": "unverified",
+      "source_id": "qaoa_finite_size_2026",
+      "locator": "Corollary S3.1, printed pp.46–47, equations (S3.1)–(S3.4), with cost-angle convention (S3.7). Statement inspected; full cavity proof not independently checked. Authored consequence: long §9.11.",
+      "statement": "For the source ordered-tuple Gaussian finite-degree mixture xi(t)=sum_q c_q^2 t^q, a depth p>=1 word with every cost angle bounded in absolute value by Gamma>0, and x>0 with xi(2),xi′(1),xi′′(33)<=x and Gamma^2 p^2 x>=1, set B_p=256p^4(2e Gamma^2 p^2 x)^p, E_p=70 Gamma^2 p^2 x+p log(2), R_p=(2E_p/log(2))^(2p). For 0<epsilon<=4 Gamma p x min(exp(-1/2),2^(-(8p^2+3)/100)), the disorder-averaged energy error |nu_n-nu_infinity| is at most epsilon whenever n>=T_p=max{2^(8p^2+3) B_p (2^(deg(xi)+4) Gamma^2 p^2 x^2/epsilon^2)^R_p [2 log_2(4 Gamma p x/epsilon)+deg(xi)]^2,16 Gamma p x/epsilon}. No mixer-angle bound is imposed. Consequently, for fixed mixture,Gamma,x, deterministic words with p(n)→infinity, one common cost-angle bound Gamma, and p(n)log p(n)=o(log log n) satisfy |nu_n(W_n)-nu_infinity(W_n)|<=exp(-p(n)^2) eventually.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "ordinary_comparison_warrants_20261024"
+      ],
+      "citation_ids": [
+        "qaoa_finite_size_corollary",
+        "authored_bounded_angle_depth_comparison"
+      ],
+      "boundary": "The displayed finite estimate is quoted from the later arXiv:2609.40309v1 Corollary S3.1; the growing-depth consequence is the authored elementary deduction log log T_p=4p log p+O(p+log p) with epsilon_p=exp(-p^2). For SK, c_2=1/sqrt(2) matches the unordered-pair expectation after an independent mean-zero scalar diagonal offset. This does not show that the earlier near-optimal constructed words share a uniform angle bound, supply angle-selection complexity, or establish a growing-depth measurement tail. It is standalone context, not a prerequisite of the earlier SK QAOA construction or a selected formal endpoint."
     }
   ],
   "edges": [
@@ -3176,19 +3771,25 @@
       "from": "support.near_ground_pairs",
       "to": "support.full_relative_support",
       "kind": "supports",
-      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+      "evidence_ids": [
+        "near_ground_pair_warrants_20261024"
+      ]
     },
     {
       "from": "support.near_ground_pairs",
       "to": "scalar.parisi_formula",
       "kind": "supports",
-      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+      "evidence_ids": [
+        "near_ground_pair_warrants_20261024"
+      ]
     },
     {
       "from": "support.near_ground_pairs",
       "to": "scalar.minimizer_attainment",
       "kind": "supports",
-      "evidence_ids": ["near_ground_pair_warrants_20261024"]
+      "evidence_ids": [
+        "near_ground_pair_warrants_20261024"
+      ]
     },
     {
       "from": "full_support",
@@ -4641,6 +5242,326 @@
       "evidence_ids": [
         "concentration_source_warrant_pending"
       ]
+    },
+    {
+      "from": "scalar.source_minimizer_curvature_moment",
+      "to": "scalar.source_strip_regularity",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-001"
+      ]
+    },
+    {
+      "from": "scalar.source_minimizer_curvature_moment",
+      "to": "scalar.formal_contact_input",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-002"
+      ]
+    },
+    {
+      "from": "scalar.source_ground_state_upper",
+      "to": "scalar.source_spin_sequence_limit",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-003"
+      ]
+    },
+    {
+      "from": "scalar.source_terminal_parisi_assembly",
+      "to": "scalar.source_strip_regularity",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-004"
+      ]
+    },
+    {
+      "from": "scalar.source_terminal_parisi_assembly",
+      "to": "scalar.formal_contact_input",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-005"
+      ]
+    },
+    {
+      "from": "scalar.source_terminal_parisi_assembly",
+      "to": "scalar.source_minimizer_curvature_moment",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-006"
+      ]
+    },
+    {
+      "from": "scalar.source_fixed_strip_application",
+      "to": "scalar.source_strip_regularity",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-007"
+      ]
+    },
+    {
+      "from": "scalar.source_fixed_strip_application",
+      "to": "scalar.source_minimizer_curvature_moment",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-008"
+      ]
+    },
+    {
+      "from": "scalar.source_fixed_strip_application",
+      "to": "scalar.conditional_fixed_strip",
+      "kind": "cites",
+      "evidence_ids": [
+        "R2-13-SR-009"
+      ]
+    },
+    {
+      "from": "scalar.source_strip_value_lower",
+      "to": "scalar.source_fixed_strip_application",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-010"
+      ]
+    },
+    {
+      "from": "scalar.source_ground_state_identity_with_diffusion",
+      "to": "scalar.source_strip_value_lower",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-011"
+      ]
+    },
+    {
+      "from": "scalar.source_ground_state_identity_with_diffusion",
+      "to": "scalar.source_terminal_parisi_assembly",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-012"
+      ]
+    },
+    {
+      "from": "scalar.source_ground_state_identity_with_diffusion",
+      "to": "scalar.source_ground_state_upper",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-013"
+      ]
+    },
+    {
+      "from": "scalar.formal_scalar_clause",
+      "to": "scalar.source_spin_sequence_limit",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-014"
+      ]
+    },
+    {
+      "from": "scalar.formal_scalar_clause",
+      "to": "scalar.source_terminal_parisi_assembly",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-015"
+      ]
+    },
+    {
+      "from": "scalar.formal_scalar_clause",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-016"
+      ]
+    },
+    {
+      "from": "scalar.lean_scalar_target",
+      "to": "scalar.source_spin_sequence_limit",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-017"
+      ]
+    },
+    {
+      "from": "scalar.lean_scalar_target",
+      "to": "scalar.source_terminal_parisi_assembly",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-018"
+      ]
+    },
+    {
+      "from": "scalar.lean_scalar_target",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-019"
+      ]
+    },
+    {
+      "from": "scalar.formal_finite_gaussian_clause",
+      "to": "scalar.source_fixed_strip_application",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-020"
+      ]
+    },
+    {
+      "from": "scalar.formal_finite_gaussian_clause",
+      "to": "scalar.source_terminal_parisi_assembly",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-021"
+      ]
+    },
+    {
+      "from": "scalar.formal_finite_gaussian_clause",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-022"
+      ]
+    },
+    {
+      "from": "scalar.lean_gaussian_target",
+      "to": "scalar.source_fixed_strip_application",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-023"
+      ]
+    },
+    {
+      "from": "scalar.lean_gaussian_target",
+      "to": "scalar.source_terminal_parisi_assembly",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-024"
+      ]
+    },
+    {
+      "from": "scalar.lean_gaussian_target",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-025"
+      ]
+    },
+    {
+      "from": "scalar.formal_parisi_clause",
+      "to": "scalar.source_diffusion_exists",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-026"
+      ]
+    },
+    {
+      "from": "scalar.formal_parisi_clause",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "cites",
+      "evidence_ids": [
+        "R2-13-SR-027"
+      ]
+    },
+    {
+      "from": "scalar.lean_parisi_target",
+      "to": "scalar.source_diffusion_exists",
+      "kind": "supports",
+      "evidence_ids": [
+        "R2-13-SR-028"
+      ]
+    },
+    {
+      "from": "scalar.lean_parisi_target",
+      "to": "scalar.source_ground_state_identity_with_diffusion",
+      "kind": "cites",
+      "evidence_ids": [
+        "R2-13-SR-029"
+      ]
+    },
+    {
+      "from": "support.integrated_coercivity",
+      "to": "support.source_finite_density_coercivity",
+      "kind": "cites",
+      "evidence_ids": [
+        "R2-13-SUP-001"
+      ]
+    },
+    {
+      "from": "support.optimality_criterion",
+      "to": "support.first_variation",
+      "kind": "supports",
+      "evidence_ids": [
+        "support_optimality_warrant_20261024"
+      ]
+    },
+    {
+      "from": "support.optimality_criterion",
+      "to": "support.stieltjes_measure",
+      "kind": "supports",
+      "evidence_ids": [
+        "support_optimality_warrant_20261024"
+      ]
+    },
+    {
+      "from": "support.optimality_criterion",
+      "to": "support.moment_identity",
+      "kind": "supports",
+      "evidence_ids": [
+        "support_optimality_warrant_20261024"
+      ]
+    },
+    {
+      "from": "scalar.fixed_strip_error_budget",
+      "to": "scalar.euler_normalization",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ]
+    },
+    {
+      "from": "scalar.fixed_strip_error_budget",
+      "to": "scalar.correlation_vector_control",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ]
+    },
+    {
+      "from": "scalar.fixed_strip_error_budget",
+      "to": "scalar.terminal_loss",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ]
+    },
+    {
+      "from": "scalar.fixed_strip_error_budget",
+      "to": "support.regularity",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ]
+    },
+    {
+      "from": "circuit.positive_finite_step",
+      "to": "circuit.weighted_finite_horizon",
+      "kind": "cites",
+      "evidence_ids": [
+        "ordinary_reconstruction_bounds_20261024"
+      ]
+    },
+    {
+      "from": "support.no_bounded_gap",
+      "to": "support.endpoint_chord_area",
+      "kind": "supports",
+      "evidence_ids": [
+        "endpoint_chord_area_warrant_20261024"
+      ]
+    },
+    {
+      "from": "scalar.finite_gibbs_comparison",
+      "to": "scalar.parisi_formula",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_comparison_warrants_20261024"
+      ]
     }
   ],
   "evidence": [
@@ -4650,8 +5571,17 @@
       "status": "not_run",
       "command": [],
       "tool": "Authored source comparison; independent semantic acceptance not run",
-      "source_ids": ["acz2020_infinite_support", "ac2017_ground_state", "support_tex_variation"],
-      "subject_ids": ["support.near_ground_pairs", "support.full_relative_support", "scalar.parisi_formula", "scalar.minimizer_attainment"],
+      "source_ids": [
+        "acz2020_infinite_support",
+        "ac2017_ground_state",
+        "support_tex_variation"
+      ],
+      "subject_ids": [
+        "support.near_ground_pairs",
+        "support.full_relative_support",
+        "scalar.parisi_formula",
+        "scalar.minimizer_attainment"
+      ],
       "details": "The full-support edge places every fixed r in [0,1) in the minimizing Stieltjes support required by ACZ Proposition1. The attainment edge permits choosing that minimizer. The Parisi-formula edge identifies its value with the same pure-SK ground-state limit. ACZ's constrained-pair result and concentration supply the pair; the common N(0,1/2) covariance correction preserves expected maxima and costs at most 2 exp(-eta^2 n^2/4) when removed at tolerance eta/2. These are curated mathematical warrants, not extracted Lean edges or independent proof acceptance."
     },
     {
@@ -7580,6 +8510,714 @@
       "receipt_path": "verification/scalar-value-build-failure-20261024.json",
       "receipt_sha256": "defbc67198194bae2549967032b22f930512c28c56224429ceed2548bb59a20c",
       "details": "Historical outcome of the original pre-repair build configuration. The original two-target driver is terminal; this scalar invocation stopped because IntegralPositiveMulGaussian.olean was missing. No solution export, kernel acceptance, comparison acceptance or mathematical rejection was observed. The corrected maintained Lake configuration has not been replayed. All 357 original materialized source hashes match their before-run hashes; no current-tree completeness or post-run dependency cleanliness claim is made. Preserve all older events and theorem statuses."
+    },
+    {
+      "id": "current_input_identity_20261024",
+      "kind": "source_hash",
+      "status": "passed",
+      "command": [
+        "python",
+        "-m",
+        "lean_exposition.cli",
+        "audit-sources",
+        "examples/qaoa-sk/source-lock.json",
+        "--root",
+        "examples/qaoa-sk"
+      ],
+      "tool": "lean-exposition audit-sources; Python SHA-256",
+      "source_ids": [
+        "active_derived_lakefile",
+        "active_derived_lake_lock",
+        "lean_toolchain",
+        "full_support_statement",
+        "full_support_config",
+        "full_support_proof",
+        "scalar_value_statement",
+        "scalar_value_config",
+        "scalar_value_proof",
+        "mathlib_lake_lock"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support",
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "details": "Local assimilation audit of the maintained source-lock inputs at base 450c8947971dbad9be943b8705ea96f822240961: all 387 upstream files and two derived files matched. The active Lake file uses repaired subtree globs. This establishes byte consistency only, not dependency checkout integrity, build, extraction, kernel checking, Comparator acceptance or mathematical correspondence. Historical observations remain."
+    },
+    {
+      "id": "full_support_corrected_build_not_run_20261024",
+      "kind": "lean_build",
+      "status": "not_run",
+      "command": [
+        "lake",
+        "build",
+        "OAI.Probability.SKSupport.Main"
+      ],
+      "tool": "Lake / Lean 4.34.1",
+      "source_ids": [
+        "active_derived_lakefile",
+        "active_derived_lake_lock",
+        "lean_toolchain",
+        "full_support_statement",
+        "full_support_config",
+        "full_support_proof"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support"
+      ],
+      "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical full-support invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay."
+    },
+    {
+      "id": "full_support_corrected_comparator_not_run_20261024",
+      "kind": "comparator",
+      "status": "not_run",
+      "command": [
+        "lake",
+        "env",
+        "comparator",
+        "ComparatorChallenges/SKFullSupport.json"
+      ],
+      "tool": "Standalone Comparator for Lean 4.34.1",
+      "source_ids": [
+        "active_derived_lakefile",
+        "active_derived_lake_lock",
+        "lean_toolchain",
+        "full_support_statement",
+        "full_support_config",
+        "full_support_proof"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support"
+      ],
+      "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical full-support invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay."
+    },
+    {
+      "id": "scalar_value_corrected_build_not_run_20261024",
+      "kind": "lean_build",
+      "status": "not_run",
+      "command": [
+        "lake",
+        "build",
+        "OAI.Probability.SKValue.Main"
+      ],
+      "tool": "Lake / Lean 4.34.1",
+      "source_ids": [
+        "active_derived_lakefile",
+        "active_derived_lake_lock",
+        "lean_toolchain",
+        "scalar_value_statement",
+        "scalar_value_config",
+        "scalar_value_proof"
+      ],
+      "subject_ids": [
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical scalar-value invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay."
+    },
+    {
+      "id": "scalar_value_corrected_comparator_not_run_20261024",
+      "kind": "comparator",
+      "status": "not_run",
+      "command": [
+        "lake",
+        "env",
+        "comparator",
+        "ComparatorChallenges/SKValue.json"
+      ],
+      "tool": "Standalone Comparator for Lean 4.34.1",
+      "source_ids": [
+        "active_derived_lakefile",
+        "active_derived_lake_lock",
+        "lean_toolchain",
+        "scalar_value_statement",
+        "scalar_value_config",
+        "scalar_value_proof"
+      ],
+      "subject_ids": [
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical scalar-value invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay."
+    },
+    {
+      "id": "R2-13-SR-001",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-13-source-regularity",
+        "scalar-r2-13-source-curvature-moment",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.source_minimizer_curvature_moment",
+        "scalar.source_strip_regularity"
+      ],
+      "details": "GradientSquareIntegral:84–90 takes hreg and hmom; ContactAssembly:65–66 supplies sourceStripRegularity W gamma and uses the same hX. All W,gamma,X are unchanged. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-002",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-minimizer-contact",
+        "scalar-r2-13-source-curvature-moment",
+        "scalar-r2-26-source-formal-targets"
+      ],
+      "subject_ids": [
+        "scalar.source_minimizer_curvature_moment",
+        "scalar.formal_contact_input"
+      ],
+      "details": "MainConclusions:20 supplies hmin.gradient_moment_contact hX. The curvature helper consumes this same all-interior-time contact identity. Both claims retain minimizer and diffusion premises. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-003",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-13-source-guerra-upper",
+        "scalar-r2-13-source-spin-limit"
+      ],
+      "subject_ids": [
+        "scalar.source_ground_state_upper",
+        "scalar.source_spin_sequence_limit"
+      ],
+      "details": "WeakGuerra:129–142 explicitly passes expectedMaximum_le_parisi through groundStateSequence_tendsto. Neither result introduces a minimizer or diffusion premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-004",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-13-source-terminal-assembly",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-regularity"
+      ],
+      "subject_ids": [
+        "scalar.source_terminal_parisi_assembly",
+        "scalar.source_strip_regularity"
+      ],
+      "details": "IntegralPrimitiveTerminal:38 takes hreg; ContactAssembly:40–42 supplies sourceStripRegularity W gamma. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-005",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-13-source-terminal-assembly",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-26-source-minimizer-contact"
+      ],
+      "subject_ids": [
+        "scalar.source_terminal_parisi_assembly",
+        "scalar.formal_contact_input"
+      ],
+      "details": "IntegralPrimitiveTerminal:39 takes hmom; MainConclusions:13–23 supplies minimizer contact to the assembly, preserving the same model data. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-006",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-13-source-terminal-assembly",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-curvature-moment"
+      ],
+      "subject_ids": [
+        "scalar.source_terminal_parisi_assembly",
+        "scalar.source_minimizer_curvature_moment"
+      ],
+      "details": "IntegralPrimitiveTerminal:40 takes hamom; ContactAssembly:42,55,70 derives it by hX.curvature_unit_moment_of_contact hreg hmom. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-007",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-regularity",
+        "scalar-r2-26-source-fixed-strip"
+      ],
+      "subject_ids": [
+        "scalar.source_fixed_strip_application",
+        "scalar.source_strip_regularity"
+      ],
+      "details": "ContactAssembly:65,67 unpacks Kv,Lv,K,L,D,Lu,La and the proof fields from sourceStripRegularity W gamma at T. Lines68–69 pass the resulting GradientStrip and actual bounds into the fixed-strip theorem. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-008",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-curvature-moment",
+        "scalar-r2-26-source-fixed-strip"
+      ],
+      "subject_ids": [
+        "scalar.source_fixed_strip_application",
+        "scalar.source_minimizer_curvature_moment"
+      ],
+      "details": "ContactAssembly:66 derives hamom and line69 restricts its all-Ico-0-1 conclusion to Icc 0 T using T<1. No unit-moment premise is added to the caller. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-009",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-26-source-fixed-strip"
+      ],
+      "subject_ids": [
+        "scalar.source_fixed_strip_application",
+        "scalar.conditional_fixed_strip"
+      ],
+      "details": "Navigate to the generic fixed-strip implication and its explicitly scoped analytic premises. This is a cites edge because supports would incorrectly union those supplied local premises into the stronger minimizer branch; the two preceding support warrants record their concrete supply. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-010",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-literal-lower",
+        "scalar-r2-13-source-rounding-spin",
+        "scalar-r2-13-source-constant-fatou",
+        "scalar-r2-13-source-empirical-limit",
+        "scalar-r2-13-source-gaussian-transpose"
+      ],
+      "subject_ids": [
+        "scalar.source_strip_value_lower",
+        "scalar.source_fixed_strip_application"
+      ],
+      "details": "ContactAssembly:29–34 takes eventual positivity and the fixed-T mesh limit. normalizer_pos_iff:15–19 converts positivity to raw-moment positivity; eventually N>0 supplies the remaining grid premise of LiteralLower:14–27. RoundingSpin:63–120 constructs Boolean rounding and normalized orthonormal predictable columns; ConstantFatou:48–134 uses their empirical limit and actual finite-spin comparison. GaussianTranspose:119–140 supplies predictableDirection K n f and rowSpin K n F with measurability/unitOrZero and iid_gaussian_columns_law. The generic lower comparison is not assumed by the target; deeper interpolation lemmas are outside this reading audit. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-011",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.source_ground_state_identity_with_diffusion",
+        "scalar.source_strip_value_lower"
+      ],
+      "details": "ContactAssembly:44–47 uses the cutoff limit from terminal assembly and the inequality at every eventual 0<T<1 to obtain parisi W gamma≤groundStateValue. The order is first N→∞ on a fixed strip, then T→1−. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-012",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-terminal-assembly"
+      ],
+      "subject_ids": [
+        "scalar.source_ground_state_identity_with_diffusion",
+        "scalar.source_terminal_parisi_assembly"
+      ],
+      "details": "ContactAssembly:41–42 receives the endpoint Tendsto at parisi W gamma from parisi_value_assembly. This is the endpoint used for the lower half of the two-inequality proof, before substituting the ground-state value. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-013",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-guerra-upper"
+      ],
+      "subject_ids": [
+        "scalar.source_ground_state_identity_with_diffusion",
+        "scalar.source_ground_state_upper"
+      ],
+      "details": "ContactAssembly:43 combines the general groundStateValue_le_parisi upper bound with the reverse bound using le_antisymm. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-014",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-spin-limit"
+      ],
+      "subject_ids": [
+        "scalar.formal_scalar_clause",
+        "scalar.source_spin_sequence_limit"
+      ],
+      "details": "MainConclusions:13–15 invokes scalar_value_of_contact; ContactAssembly:56 inserts SKValueG.groundStateSequence_tendsto as the first conjunct of ScalarValueConclusion. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-015",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-terminal-assembly"
+      ],
+      "subject_ids": [
+        "scalar.formal_scalar_clause",
+        "scalar.source_terminal_parisi_assembly"
+      ],
+      "details": "ContactAssembly:54–59 inserts the terminal martingale, almost-sure and L² assertions, and rewrites its three Parisi formulas after value identification. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-016",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.formal_scalar_clause",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "ContactAssembly:57–59 explicitly rewrites each value formula via hX.groundState_eq_parisi_of_contact hmom. The same minimizer supplies hmom at MainConclusions:15. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-017",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-spin-limit"
+      ],
+      "subject_ids": [
+        "scalar.lean_scalar_target",
+        "scalar.source_spin_sequence_limit"
+      ],
+      "details": "MainConclusions:13–15 invokes scalar_value_of_contact; ContactAssembly:56 inserts SKValueG.groundStateSequence_tendsto as the first conjunct of ScalarValueConclusion. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-018",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-terminal-assembly"
+      ],
+      "subject_ids": [
+        "scalar.lean_scalar_target",
+        "scalar.source_terminal_parisi_assembly"
+      ],
+      "details": "ContactAssembly:54–59 inserts the terminal martingale, almost-sure and L² assertions, and rewrites its three Parisi formulas after value identification. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-019",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.lean_scalar_target",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "ContactAssembly:57–59 explicitly rewrites each value formula via hX.groundState_eq_parisi_of_contact hmom. The same minimizer supplies hmom at MainConclusions:15. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-020",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.formal_finite_gaussian_clause",
+        "scalar.source_fixed_strip_application"
+      ],
+      "details": "MainConclusions:17–20 invokes finite_gaussian_of_contact, whose first two returned conjuncts at ContactAssembly:71 are exactly the supplied fixed-strip hp,hl. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-021",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-terminal-assembly"
+      ],
+      "subject_ids": [
+        "scalar.formal_finite_gaussian_clause",
+        "scalar.source_terminal_parisi_assembly"
+      ],
+      "details": "ContactAssembly:70 obtains hend from parisi_value_assembly, giving the cutoff limit; line72 rewrites its endpoint to groundStateValue. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-022",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.formal_finite_gaussian_clause",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "ContactAssembly:72 rewrites the Parisi endpoint using the internally proved groundState_eq_parisi_of_contact. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-023",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.lean_gaussian_target",
+        "scalar.source_fixed_strip_application"
+      ],
+      "details": "MainConclusions:17–20 invokes finite_gaussian_of_contact, whose first two returned conjuncts at ContactAssembly:71 are exactly the supplied fixed-strip hp,hl. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-terminal-assembly"
+      ],
+      "subject_ids": [
+        "scalar.lean_gaussian_target",
+        "scalar.source_terminal_parisi_assembly"
+      ],
+      "details": "ContactAssembly:70 obtains hend from parisi_value_assembly, giving the cutoff limit; line72 rewrites its endpoint to groundStateValue. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-025",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly"
+      ],
+      "subject_ids": [
+        "scalar.lean_gaussian_target",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "ContactAssembly:72 rewrites the Parisi endpoint using the internally proved groundState_eq_parisi_of_contact. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-026",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-13-source-diffusion-existence"
+      ],
+      "subject_ids": [
+        "scalar.formal_parisi_clause",
+        "scalar.source_diffusion_exists"
+      ],
+      "details": "MainConclusions:25–27 inserts diffusionProcess_isDiffusion W gamma into the minimizer theorem. The supplied X is locally constructed for the same W,gamma. This support node has no minimizer or external diffusion assumption, so the branch retains only its own IsMinimizer premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-027",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-diffusion-existence"
+      ],
+      "subject_ids": [
+        "scalar.formal_parisi_clause",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "MainConclusions:21–27 first applies groundState_eq_parisi_of_contact with minimizer contact, then instantiates X with diffusionProcess W gamma and its proved diffusion property. This edge is citation navigation: a direct supports edge to the auxiliary supplied-diffusion claim would incorrectly make X an external caller premise in the current union-only graph closure. The local witness discharge is recorded here; no discharge inference is attributed to the graph engine. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-028",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-13-source-diffusion-existence"
+      ],
+      "subject_ids": [
+        "scalar.lean_parisi_target",
+        "scalar.source_diffusion_exists"
+      ],
+      "details": "MainConclusions:25–27 inserts diffusionProcess_isDiffusion W gamma into the minimizer theorem. The supplied X is locally constructed for the same W,gamma. This support node has no minimizer or external diffusion assumption, so the branch retains only its own IsMinimizer premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SR-029",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located warrant; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-formal-targets",
+        "scalar-r2-26-source-contact-assembly",
+        "scalar-r2-13-source-diffusion-existence"
+      ],
+      "subject_ids": [
+        "scalar.lean_parisi_target",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "details": "MainConclusions:21–27 first applies groundState_eq_parisi_of_contact with minimizer contact, then instantiates X with diffusionProcess W gamma and its proved diffusion property. This edge is citation navigation: a direct supports edge to the auxiliary supplied-diffusion claim would incorrectly make X an external caller premise in the current union-only graph closure. The local witness discharge is recorded here; no discharge inference is attributed to the graph engine. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+    },
+    {
+      "id": "R2-13-SUP-001",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source-located correspondence; independent semantic acceptance not run",
+      "source_ids": [
+        "support-r2-13-finite-density",
+        "full_support_gaussian_log_density",
+        "support_lean_certificate"
+      ],
+      "subject_ids": [
+        "support.integrated_coercivity",
+        "support.source_finite_density_coercivity"
+      ],
+      "details": "Citation navigation distinguishes the manuscript's smoothly extended variables from the totalized Lean quotients. FiniteDensity:124–166 constructs the shape/score/ratio/Lipschitz/derivative hypotheses; line167 calls GaussianLogDensity.gaussian_shape_coercivity. GaussianLogDensity:135–160 removes the positive-half-line flux and reflects. Certificate:168 instead assumes hB at every real x. BackwardShape gives r(0)=0, v(0)>0, hence totalized certB(0)=0 violates hB under the raw substitution. The ordinary tanh witness has raw b(0)-2v(0)=-2, while its smooth extension gives zero. No supports/formalizes edge is added between the two differently represented statements; no runtime extraction is claimed."
+    },
+    {
+      "id": "support_optimality_warrant_20261024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Ordinary derivation and primary-source reading; independent semantic acceptance not run",
+      "source_ids": [
+        "chl2018_zero_temperature",
+        "chen2026_full_support",
+        "support_tex_variation",
+        "support_tex_main",
+        "support_tex_regularity"
+      ],
+      "subject_ids": [
+        "support.optimality_criterion",
+        "support.first_variation",
+        "support.stieltjes_measure",
+        "support.moment_identity"
+      ],
+      "details": "For another admissible beta with Stieltjes measure nu, first variation and weighted Fubini give 2D+P(gamma)[beta-gamma]=integral G dnu-integral G dmu. The bound 0<=q<=1 gives |G(s)|<=1-s; integral (1-s)dmu=integral gamma<infinity, and similarly for nu. Nonnegativity and vanishing on support make the difference nonnegative. Convexity follows by fixing a common admissible control in the control formula, using convexity of the terminal absolute value and linearity of both penalties, then taking the supremum. CHL Proposition 4 identifies this chord criterion with minimality. Conversely, atom addition and compact mass removal prove contact. No support.contact prerequisite is used, since that conditional node would import minimality into the iff. Primary PDF passages and the current long §3.5 were inspected; no formal replay or independent acceptance is asserted."
+    },
+    {
+      "id": "ordinary_reconstruction_bounds_20261024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Ordinary source reconstruction; independent semantic acceptance not run",
+      "source_ids": [
+        "scalar-r2-26-source-order-parameter-regularity",
+        "scalar-r2-26-source-consequences",
+        "scalar-r2-26-source-qaoa-scalar",
+        "support_tex_regularity",
+        "circuit-r2-26-source-positive",
+        "eams2023_finite_step",
+        "bgmz2022_even_spin"
+      ],
+      "subject_ids": [
+        "scalar.smooth_positive_density",
+        "scalar.fixed_strip_error_budget",
+        "circuit.weighted_finite_horizon",
+        "circuit.even_p_spin_obstruction"
+      ],
+      "details": "Long §5.2 divides the positive-density bound using unit second moment and moment Cauchy–Schwarz. Long §7.1 bounds coupled Euler and martingale residuals by fixed-strip O(sqrt(delta)), retains shifted endpoint and terminal errors, and does not assert uniformity at one. Long §9.7 reconstructs a degree-uniform finite-horizon estimate from conditional variance recursion, node/cavity coupling and the exact edge decomposition, with spatial Lipschitz coefficients and actual common Gaussian initialization. Long §9.10 cites the independently inspected Basso–Gamarnik–Mei–Zhou fixed-depth theorem and proof. These are ordinary manuscript deductions or cited results; no graph status, Lean endpoint or Comparator acceptance is promoted."
+    },
+    {
+      "id": "endpoint_chord_area_warrant_20261024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Retained proof inspection; independent semantic acceptance not run",
+      "source_ids": [
+        "support_tex_variation"
+      ],
+      "subject_ids": [
+        "support.endpoint_chord_area",
+        "support.no_bounded_gap"
+      ],
+      "details": "The retained variation.tex bounded-gap proof explicitly compares q′ with the endpoint chord and integrates. Here that elementary step is stated separately with only the local calculus hypotheses. For an interior t, strict convexity gives q′(t)<((s-t)q′(r)+(t-r)q′(s))/(s-r)<=1. The continuous positive deficit has strictly positive integral. The new supports edge is used in the positive-height branch of the bounded-gap proof; the existing zero-height branch remains justified by strict increase. Neither branch is removed or claimed formally replayed."
+    },
+    {
+      "id": "ordinary_comparison_warrants_20261024",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored deductions and primary statement inspected; independent semantic acceptance not run",
+      "source_ids": [
+        "authored_long_comparisons_20261024",
+        "qaoa_finite_size_2026",
+        "ac2017_ground_state"
+      ],
+      "subject_ids": [
+        "scalar.finite_gibbs_comparison",
+        "circuit.later_finite_size_comparison",
+        "scalar.parisi_formula"
+      ],
+      "details": "Read the exact frozen long §9.7.2 and §9.11 and the private original PDF Corollary S3.1 printed pp.46–47. The source and PDF hashes identify the inspected editions. The Gibbs comparison follows from log-sum, entropy, standard Gaussian concentration and counting; the Parisi-formula dependency only identifies the limiting value. For the later estimate, epsilon_p=exp(-p^2) obeys the small-error condition eventually, log R_p=4p log p+O(p), and logarithms of the threshold give log log T_p=4p log p+O(p+log p). No independent replay of the later paper’s cavity proof or formal extraction was performed. Neither comparison receives an incoming SK proof-dependency edge."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",

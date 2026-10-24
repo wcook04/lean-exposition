@@ -137,9 +137,42 @@ The full QAOA scalar passage is [classical optimization, lines 23–121][qaoa-sc
 - `Main` assembles the three results from `GroundState/MainConclusions.lean`. Its first two branches use the minimizer's moment-contact identity \(\mathbb E[u(t,X_t)^2]=t\). [MainConclusions, lines 13–27][targets]; [MinimizerContact, lines 75–82][contact]
 - `ContactAssembly` obtains strip regularity, derives \(\mathbb E[a(t,X_t)^2]=1\), and invokes the finite-mesh and value-assembly results. The strip bounds are established inside the proof rather than supplied as extra hypotheses of the selected theorem. [ContactAssembly, lines 21–72][assembly]; [GradientSquareIntegral, lines 84–90][curvature-moment]
 - The lower-level fixed-strip lemma explicitly takes curvature bounds, time-space Lipschitz estimates, and the unit curvature moment. Its conclusion gives eventual positivity and the mesh limit. This is the source location for checking how the analytic strip assumptions enter the approximation. [FiniteGaussianFixedStrip, lines 29–49][fixed-strip]
-- `groundState_eq_parisi_of_contact` combines a ground-state upper bound by the Parisi value with a lower bound from finite Gaussian coefficient sums and passage to the terminal endpoint. `parisi_value_assembly` supplies the terminal martingale and equivalent value expressions. [ContactAssembly, lines 36–59][assembly]; [IntegralPrimitiveTerminal, lines 37–52][value-assembly]
+- `groundState_eq_parisi_of_contact` combines a ground-state upper bound by the Parisi value with a lower bound from finite Gaussian coefficient sums and passage to the terminal endpoint. `parisi_value_assembly` supplies the terminal martingale and equivalent value expressions. [ContactAssembly, lines 36–59][assembly]; [IntegralPrimitiveTerminal, lines 37–79][value-assembly]
 
 This scalar theorem supplies an input to the later rooted Gaussian construction. It contains no circuit, depth, angle schedule, rooted-space realization, or assertion about QAOA circuit energies. That boundary agrees with the upstream [family 281 scope statement, lines 10–16][scope].
+
+## Concrete suppliers and the two inequalities for the scalar value
+
+This extension records source applications read in the frozen implementation. Every quantifier remains within `OAI.SKValue` and the same `W`, `γ`, and, where present, `X`. None of the following is a new Lean or Comparator receipt.
+
+| Result | Inputs in its own declaration | Where the selected target obtains those inputs |
+| --- | --- | --- |
+| `sourceStripRegularity` (`Control/Regularity.lean:22–42`) | `W:BrownianSpace`, `γ:OrderParameter` | `phi_evolution W γ hT`; the coefficient's interval nonnegativity and monotonicity; `toValueStrip`, `toGradientStrip`, derivative `bound 1`, and `jet_joint 0,1`. The proof constructs the seven constants required by `SourceStripRegularity` (`Control/StripRegularity.lean:28–37`). |
+| `IsMinimizer.gradient_moment_contact` (`Variation/MinimizerContact.lean:75–82`) | The same `W,γ,X`, `IsMinimizer W γ`, `IsDiffusion W γ X` | `MainConclusions.lean:13–23` calls this result directly in every branch that initially accepts a diffusion. |
+| `IsDiffusion.curvature_unit_moment_of_contact` (`Processes/GradientSquareIntegral.lean:84–90`) | Diffusion, `SourceStripRegularity`, and gradient-square contact on `Ico 0 1` | `ContactAssembly.lean:26–30,40–42,53–55,65–69` supplies the regularity theorem and the contact identity. The fixed-strip application restricts the resulting curvature moment to `Icc 0 T`. |
+| `IsDiffusion.finite_gaussian_fixed_strip` (`Processes/FiniteGaussianFixedStrip.lean:29–49`) | Diffusion; `0<T<1`; `GradientStrip`; nonnegative curvature and Lipschitz constants with their bounds; unit curvature second moment on `Icc 0 T` | `ContactAssembly.lean:65–69` unpacks `sourceStripRegularity`, derives the moment, then passes each concrete witness. This result alone supplies eventual active-index positivity and the fixed-$T$ mesh limit, not the terminal identification with the finite-spin value. |
+| `IsDiffusion.parisi_value_assembly` (`Evolution/IntegralPrimitiveTerminal.lean:37–79`) | Diffusion, strip regularity, contact, and unit curvature moment | The same suppliers are passed at `ContactAssembly.lean:41–42,54–55,70`. The helper gives a terminal martingale, almost-sure and mean-square convergence, three identities **at `parisi W γ`**, integrability, and the cutoff limit to that Parisi value. |
+| `diffusionProcess_isDiffusion` (`Processes/DiffusionExistence.lean:74–77`) | `W:BrownianSpace`, `γ:OrderParameter`; no minimizer | `MainConclusions.lean:25–27` inserts the constructed `diffusionProcess W γ` into the theorem for a minimizer and diffusion. Hence the final exported branch needs no input `X`, and still needs the minimizer. |
+
+The word “constant” here means uniform on a *fixed* strip $[0,T]\times\mathbb R$; the constants are existentially selected for that strip. It does not assert a bound independent of $T$, a bounded coefficient at the terminal endpoint, or a smooth-density hypothesis on the order parameter.
+
+The source identification of the finite-spin constant is assembled as follows.
+
+1. `GroundState/BlockCoeff.lean:117–123,210–263` proves superadditivity of `expectedMaximum`, a linear upper bound, and then `SKValueG.groundStateSequence_tendsto`. The `limUnder` definition becomes an actual sequence limit through this proof, without a minimizer or Brownian-space argument.
+2. `GroundState/WeakGuerra.lean:117–142` proves `expectedMaximum_le_parisi` and `groundStateValue_le_parisi` for **every** admissible `γ` on every `W`. No diffusion or minimizer is assumed by the latter theorem. The proof passes its finite smooth-profile inequality through the smooth approximation and weighted-coefficient integral limit, and then the spin-system-size limit.
+3. `GroundState/LiteralLower.lean:14–27` proves `shiftedCoefficientSum_le_groundState` for `0≤T<1`, `N>0`, and positive raw second moments for every `j<N`. `RoundingSpin.lean:63–120` constructs normalized predictable orthonormal columns and the Boolean rounded spin. `ConstantFatou.lean:48–134` uses the actual empirical-energy limit and finite-spin comparison to bound their limiting shifted coefficient product. At `GaussianTranspose.lean:119–140`, the suppliers are the concrete `predictableDirection K n f` and `rowSpin K n F`, with the Gaussian column law and their measurability and normalization lemmas; the comparison is not a free assumption of the target.
+4. `ContactAssembly.lean:21–34` derives eventual positivity from the fixed-strip theorem, converts it to raw-moment positivity using `normalizer_pos_iff:15–19`, and passes the literal inequality to the mesh limit, obtaining $I_\gamma(T)\le P_*$ for every fixed $0<T<1$.
+5. `ContactAssembly.lean:36–47` uses the terminal helper's $I_\gamma(T)\to\mathcal P(\gamma)$ to obtain the reverse inequality $\mathcal P(\gamma)\le P_*$. It combines this with step 2 by `le_antisymm`. `MainConclusions.lean:21–27` first supplies contact from minimization and then, for the third branch only, supplies the constructed diffusion.
+
+In the ordinary manuscripts, the ground-state formula and attainment are imported from Auffinger–Chen. The steps above describe the retained scalar implementation's internal route. The associated graph records are curated source correspondences, not formal imports of the external paper or extracted Lean dependencies. A link to the more general literal lower bound or the conditional fixed-strip lemma is a citation unless the actual supplier application is recorded; its locally scoped premises must not leak into the exported branch's caller assumptions.
+
+The exact concrete comparison site in step 3 and its immediate suppliers were inspected. This review does not claim an independent correctness audit of every lower interpolation, adaptive-Gaussian, PDE, or mathlib lemma in the 212-module scalar import closure. In particular, the text of the deeper theorem `finite_adaptive_SK_lower` was not independently reconstructed here. The source-level route and its explicit hypotheses are the verified scope of this reading.
+
+### Existing statements retained after review
+
+The current treatment already preserves the three branches' different hypotheses, the full terminal penalty, the two successive scalar limits, the shifted coefficient index and final rounding coordinate, eventual uniform positivity over active indices, and the distinction between scalar construction, the EAMS finite-disorder algorithm, and QAOA synthesis. These are confirmed findings, not reopened defects. The claims about smooth positive Stieltjes density are also correctly kept outside the scalar interface and outside the prerequisites of the QAOA scalar construction.
+
+The small locator cleanup in the accompanying graph extension changes `Model.lean:106–123` to `Model.lean:106–118` in the two scalar-conclusion node statements. It removes the following Euler definition from the cited range; the mathematical statement does not change.
 
 ## Static trust boundary
 
@@ -166,7 +199,7 @@ Every link below is fixed to the OpenAI commit stated at the start. Paths are re
 | [Diffusion construction][existence] | `examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean:74–79` |
 | [Curvature moment][curvature-moment] | `examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean:84–90` |
 | [Fixed-strip approximation][fixed-strip] | `examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean:29–49` |
-| [Terminal value assembly][value-assembly] | `examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean:37–52` |
+| [Terminal value assembly][value-assembly] | `examples/qaoa-sk/upstream/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean:37–79` |
 | [Comparator configuration][config] | `examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKValue.json:1–14` |
 | [Scope][scope] | `examples/qaoa-sk/upstream/lean/docs/281.md:10–16` |
 | [QAOA normalization][intro] | `examples/qaoa-sk/upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex:76–91` |
@@ -191,7 +224,7 @@ Every link below is fixed to the OpenAI commit stated at the start. Paths are re
 [existence]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean#L74-L79
 [curvature-moment]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean#L84-L90
 [fixed-strip]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean#L29-L49
-[value-assembly]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean#L37-L52
+[value-assembly]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean#L37-L79
 [config]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKValue.json#L1-L14
 [scope]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md#L10-L16
 [intro]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex#L76-L91

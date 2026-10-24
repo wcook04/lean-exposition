@@ -66,3 +66,14 @@ imported `IntegralPositiveMulGaussian` object was missing. This invocation
 also used the pre-repair build configuration and reached neither solution
 export nor kernel/comparison checking. No successful replay of the corrected
 configuration has been recorded for either target.
+
+| Selected target and input edition | Challenge build/export | Solution build | Solution export, kernel check and comparison |
+| --- | --- | --- | --- |
+| Full support, historical pre-repair inputs | Completed | Failed: missing `AbsIncrement.olean` | Not reached |
+| Scalar value, historical pre-repair inputs | Completed | Failed: missing `IntegralPositiveMulGaussian.olean` | Not reached |
+| Either target, maintained corrected subtree-glob inputs | Not run | Not run | Not run |
+
+The graph separately identifies the active derived Lake file and lockfile by
+their exact digests. These are input identities, not a replacement for the
+historical records. The public source lock continues to distinguish the
+original upstream configuration from this derived configuration.

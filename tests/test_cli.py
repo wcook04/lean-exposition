@@ -104,10 +104,29 @@ class CliTests(unittest.TestCase):
                 path = GRAPH.parent / source['path']
                 self.assertTrue(path.is_file(), source['id'])
                 self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), source['sha256'])
+        authored_sources = {
+            'authored_long_comparisons_20261024':
+                ROOT / 'papers/qaoa-sk/long/reasoning-record.md',
+        }
         for citation in graph['citations']:
-            self.assertIn(citation['source_id'], sources)
-            self.assertTrue(citation['locator'])
-            self.assertTrue(citation['url'].startswith('https://'))
+            with self.subTest(citation=citation['id']):
+                self.assertIn(citation['source_id'], sources)
+                self.assertTrue(citation['locator'])
+                if citation['source_id'] in authored_sources:
+                    source = sources[citation['source_id']]
+                    self.assertEqual(source['kind'], 'file')
+                    self.assertEqual(source['redistribution'], 'original')
+                    self.assertRegex(source['sha256'], r'^[0-9a-f]{64}$')
+                    expected_url = 'urn:sha256:' + source['sha256']
+                    self.assertEqual(citation['url'], expected_url)
+                    self.assertEqual(source['url'], expected_url)
+                    self.assertEqual(source['revision'], 'sha256:' + source['sha256'])
+                    path = authored_sources[citation['source_id']]
+                    self.assertTrue(path.is_file())
+                    self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),
+                                     source['sha256'])
+                else:
+                    self.assertTrue(citation['url'].startswith('https://'))
 
 
 if __name__ == '__main__':

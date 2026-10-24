@@ -16,7 +16,7 @@ interval conflicts with a strict curvature inequality inside it. Full
 support then makes the gradient diffusion's second moment equal to time,
 and its correlation with Brownian motion represents the ground-state value.
 The manuscript's further argument gives a smooth Stieltjes density, strictly
-positive on $(0,1)$, and no atom at zero. Section 5.1 derives this stronger
+positive on $(0,1)$, and no atom at zero. Sections 5.1–5.2 derive this stronger
 ordinary conclusion separately from the selected formal support statement.
 
 This record reconstructs those arguments and follows the finite Gaussian
@@ -30,10 +30,13 @@ scope is described at the end. See [OpenAI (2026a), §§1–2][fs-main] and
 [OpenAI (2026b), Theorem 1.1][q-intro].
 <!-- /passage:overview -->
 
-The intended reader knows real analysis, elementary stochastic calculus and
-variational minimization. The central gap contradiction is given in full;
-the compact-strip estimates, variational proof, curvature certificate and circuit construction are reconstructed below, with exact source destinations for their analytic inputs.
-The companion short paper and exposition offer complementary reading routes.
+The support and scalar arguments assume real analysis, stochastic calculus
+and variational minimization. Section 9 additionally uses Hilbert-space
+tensor products, symmetric Fock space, unbounded operators and quantum
+control. Its weighted-domain and control estimates are additional analytic
+inputs from the QAOA manuscript; the text gives their precise uses and
+proof destinations. The companion short paper concentrates on the support
+theorem, while the exposition introduces its objects through examples.
 References to OpenAI (2026a) and OpenAI (2026b) distinguish the two
 manuscripts throughout.
 
@@ -123,6 +126,7 @@ receipt for either research target.
 ## 2. Dependencies and prior work
 
 <!-- passage:dependencies -->
+
 ### 2.1 What each stage supplies
 
 The proof begins with regularity on strips bounded away from terminal
@@ -144,6 +148,14 @@ The QAOA theorem additionally requires rooted energy identification,
 classical synthesis, removal of temporary seeds and transfer to fixed
 angles. Sections 3–9 explain the transitions in that order. The original analytic details are in [OpenAI (2026a), §§2–7][fs-main],
 and the circuit construction is in [OpenAI (2026b), §§2–6][q-intro].
+
+The density theorem in §§5.1–5.2 is a further consequence of support and
+the PDE, not a premise of the scalar or circuit construction. The
+positive-temperature route in §9.7 independently supplies the same bounded
+classical input used for synthesis. The probability consequence in §9.8
+requires a separate fixed-word second-moment theorem. These branches
+explain why the two selected formal statements are not a formal proof of
+the complete circuit theorem.
 
 ### 2.2 The regularity available before the proof starts
 
@@ -238,6 +250,21 @@ without an interval-specific lower bound can lose support information.
 The direct zero-temperature gap proof
 below is therefore essential. [Chen (2026), Remarks 1.4–1.5][chen2026];
 [OpenAI (2026a), §§1–2][fs-main].
+
+Two later editions sharpen the comparison without entering the pinned
+September proof. [Lopatto, arXiv:2607.11756v4, Proposition 5.1 and
+(5.8)–Corollary 5.6](https://arxiv.org/abs/2607.11756v4), proves a
+conditional curvature crossing on a positive constant interval. Its
+integrating factor makes a transformed curvature derivative strictly
+increasing, so the associated contact derivative decreases and then
+increases; it does not assert an unconditional positive third derivative.
+[Lopatto, arXiv:2610.00127v1, Theorem 2.3 and §8](https://arxiv.org/abs/2610.00127v1),
+works at positive temperature and positive external field. Its comparison
+requires one-sided bounds on the coefficient before and after the chosen
+time, a moment inequality and a stationarity equality. The subsequent
+moment bootstrap yields smooth, strictly positive density on a nontrivial
+support interval; a singleton support is a separate case. Neither theorem
+removes the hypotheses of the zero-temperature argument below.
 
 Here is an explicit example of the information lost in such a limit.
 It concerns admissible measures, not Parisi minimizers. Put
@@ -384,6 +411,7 @@ density scores or their quotients need converge.
 <!-- /passage:strip-recovery -->
 
 <!-- passage:approximation-choices -->
+
 ### 2.5 The approximation choices used below
 
 The same symbol for a small error must not conceal changing background
@@ -393,7 +421,7 @@ retained throughout the scalar construction.
 
 | Step | Objects held fixed | Approximation and its control |
 | --- | --- | --- |
-| Compact-strip regularity | Derivative order $k\ge1$, $T<1$, and $R$ | Coefficients converge in $L^1$ within the mass bound; spatial derivatives converge uniformly on the strip. |
+| Compact-strip regularity | Derivative order $k\ge1$, $T<1$, and a common coefficient $L^1$ bound | Coefficients converge in $L^1$ within the mass bound; spatial derivatives converge uniformly on the strip. |
 | Shape inequalities on a plateau | Plateau height $c>0$ and a closed interior neighbourhood | Choose step coefficients equal to $c$ there and smooth terminal values with $M_m\ge\|\gamma_m\|_\infty$, $M_m\to\infty$. Coefficient and terminal approximations may be chosen as one compatible sequence. |
 | First variation | $\gamma$, a feasible $\eta\in L^1$, and initially $\epsilon>0$ | Remove the terminal cutoff, then let $\epsilon\downarrow0$. The terminal remainder divided by $\epsilon$ is bounded by an $L^1$ tail of $\eta$. |
 | Terminal value | The chosen minimiser and diffusion | Use bounded-martingale convergence and integrability of $\gamma$ as $t\uparrow1$; no terminal derivative bound is needed. |
@@ -885,7 +913,15 @@ $$
 The backward signs and $\delta\ge0$ preserve the forward signs.
 
 A further comparison, not concavity alone, is needed. On $x>0$ set
-$d_s=s_x/s$, $d_r=r_x/r$ and $\rho=d_s-d_r$. Its equation is
+$d_s=s_x/s$, $d_r=r_x/r$ and $\rho=d_s-d_r$.
+The heat equation gives $s_t=\tfrac12s_{xx}-ss_x$, whereas $r_t=-rH$.
+Taking logarithmic derivatives yields
+$$
+(d_s)_t=\tfrac12(d_s)_{xx}+d_s(d_s)_x-s_{xx},\qquad
+(d_r)_t=-H_x.
+$$
+Since $\tfrac12(d_r)_{xx}+d_r(d_r)_x=\tfrac12(w/r)_x=H_x-w$,
+substitution of $d_s=d_r+\rho$ gives its equation
 
 $$
 \rho_t=\tfrac12\rho_{xx}+d_s\rho_x+(d_r)_x\rho
@@ -931,7 +967,13 @@ $$
 R,K,v,B,j,L,S_1\ge0,\qquad b=B+2v\ge0,\qquad Rb^2=w^2,
 $$
 
-because $B=-2H$ and $S_1=2rH_x$. The quantities are even and
+because $B=-2H$ and $S_1=2rH_x$. Here $s=-\partial_x\log g$
+belongs to the forward heat factor, while $\partial_x\log f=r-s$
+is the logarithmic derivative of the diffusion density. The signs have
+separate sources: $B\ge0$ comes from $H\le0$, $S_1\ge0$ from
+$H_x\ge0$ on the positive half-line, $j=s\rho\ge0$ from the
+relative-slope comparison, and $L=-rs_{xx}\ge0$ from forward concavity.
+Reflection extends these signs. The quantities are even and
 extend smoothly at zero. In particular,
 $b(0)=-z(0)/v(0)$, $j(0)=0$ and $S_1(0)=0$.
 
@@ -1073,7 +1115,7 @@ four. The next derivative bounds give a common spatial Lipschitz
 constant for those derivatives. Coupling with the same Brownian motion
 and applying Gronwall gives a deterministic bound
 $\sup_{s\le T}|X_s^n-X_s|\to0$. If $D_k^n=\partial_x^k\Phi_n$
-and $D_k=\partial_x^k\Phi$, then, for $k\le4$,
+and $D_k=\partial_x^k\Phi$, then, for $1\le k\le4$,
 
 $$
 |D_k^n(t,X_t^n)-D_k(t,X_t)|
@@ -1084,7 +1126,20 @@ $$
 After the nonnegative terms are discarded, the two surviving integrands
 $z_n^2-12v_nw_n^2+6v_n^4$ and $v_n^4$ are uniformly bounded,
 with $v_n=cD_2^n$, $w_n=cD_3^n$ and $z_n=cD_4^n$. Dominated convergence therefore passes their expectations
-to the limit. This transfer requires neither convergence of $s_n$ or
+to the limit. For completeness, let $V,W,Z$ bound both the limiting and approximating
+$v,w,z$, and let $e_v,e_w,e_z$ bound their coupled evaluation errors.
+Uniform spatial convergence and the path bound above give these errors
+with $e_v,e_w,e_z\to0$. Difference-of-powers identities give
+$$
+\begin{aligned}
+|\mathbb E\mathcal C(v_n,w_n,z_n)-\mathbb E\mathcal C(v,w,z)|
+ &\le(12W^2+24V^3)e_v+24VW e_w+2Ze_z,\\
+|\mathbb E v_n^4-\mathbb E v^4|&\le4V^3e_v,
+\end{aligned}
+$$
+where $\mathcal C(v,w,z)=z^2-12vw^2+6v^4$. These constants depend
+on the common strip and coefficient mass bound, not on plateau width.
+This transfer requires neither convergence of $s_n$ or
 $j_n$ nor a uniform bound on their tail constants: those auxiliary
 quantities have already disappeared after integration.
 [OpenAI (2026a), Lemmas 2.1–2.3][fs-reg];
@@ -1403,6 +1458,16 @@ Q_P=\tfrac12\sum_{k,l}\partial_{kl}P\,y_{k+1}y_{l+1},
 $$
 All these moments start continuous. Once $\gamma$ is continuous, the integral formula makes every moment $C^1$, and the quotient formula makes $\gamma$ itself $C^1$. If all moments and $\gamma$ are $C^r$, the same argument makes them $C^{r+1}$. Induction proves $\gamma\in C^\infty([0,1))$, with derivatives at zero taken from the right. Since $\gamma(0)=0$, there is no atom at zero; its Stieltjes measure is $\gamma'(t)\,dt$, and monotonicity gives $\gamma'\geq0$. This is the polynomial-moment method credited by the source to Auffinger–Chen and to Chen's zero-temperature treatment. [OpenAI full-support manuscript, lines 68–101][fs-density]; [Auffinger and Chen, proof of Theorem 2(ii), p. 16][ac-properties]; [Chen, Appendix B.6, p. 38][chen26].
 
+The exact arXiv edition of Auffinger–Chen's polynomial-moment proof has
+a local display discrepancy: p. 16 of arXiv:1303.3573v1 prints a square
+in $F_3$ below (40), whereas Proposition 3, p. 9, has the cube.
+The identity $d(a^2)=(-2\gamma a^3+b^2)dt+2ab\,dB$ requires the
+cube used above; the moment induction itself is unchanged.
+
+<!-- /passage:density -->
+
+<!-- passage:density-positive -->
+
 ### 5.2 Why the density is strictly positive away from zero
 
 A smooth increasing function can have zero derivative at an interior point. For example,
@@ -1419,7 +1484,22 @@ $$
 2\gamma'(t)\mathbb E a^3
 =\mathbb E d^2-12\gamma(t)\mathbb E(ab^2)+6\gamma(t)^2\mathbb E a^4.
 $$
-Fix $t\in(0,1)$, and set $c=\gamma(t)>0$; positivity follows from full support and $\gamma(0)=0$. Replace $\gamma$ on a shrinking interval about $t$ by the constant $c$. Monotonicity is preserved because values to the left are at most $c$ and values to the right are at least $c$. Truncation and monotone step approximation outside that interval give positive bounded step functions $\gamma_n\to\gamma$ in $L^1$, each exactly $c$ near this same fixed time. Choose smooth terminal parameters $M_n\to\infty$ with $M_n\geq\|\gamma_n\|_\infty$.
+Fix $t\in(0,1)$, and set $c=\gamma(t)>0$; positivity follows from full support and $\gamma(0)=0$. Replace $\gamma$ on a shrinking interval about $t$ by the constant $c$. Monotonicity is preserved because values to the left are at most $c$ and values to the right are at least $c$. One explicit approximation starts with
+$h_n=\max\{\epsilon_n,\min\{K_n,\eta_n\lfloor\gamma/\eta_n\rfloor\}\}$,
+where $0<\epsilon_n<c$, $\epsilon_n,\eta_n\downarrow0$ and
+$K_n\uparrow\infty$ with $K_n>c$. On the left of
+$[t-\delta_n,t+\delta_n)$ use $\min(c,h_n)$, on that interval use
+$c$, and on the right use $\max(c,h_n)$. These are positive,
+nondecreasing finite-step functions. Continuity of $\gamma$ gives
+$$
+\|\gamma_n-\gamma\|_1
+\le\epsilon_n+\eta_n+\int_0^1(\gamma-K_n)_+\,ds
+       +2\delta_n\sup_{|s-t|\le\delta_n}|\gamma(s)-c|\longrightarrow0.
+$$
+Choose $M_n\ge\max(n,K_n)$ for the smooth terminal data. Fix
+$t<T<T'<1$ independently of $\delta_n$. Their common $L^1$ bound
+$M$ implies $\gamma_n(T')\le M/(1-T')$, so the regularity estimates
+on $[0,T]$ do not deteriorate as the artificial plateau shrinks.
 
 Apply the integrated certificate at $t$ to the scaled derivatives
 $v_n=ca_n,w_n=cb_n,z_n=cd_n$. After dividing by $c^2$, it says
@@ -1433,8 +1513,19 @@ $$
 \geq\frac{\gamma(t)^2}{1000}\mathbb E a^4>0,
 \qquad 0<t<1.
 $$
-The final strict inequality uses $\mathbb E a^4\geq(\mathbb E a^2)^2=1$. Hence $\gamma'(t)>0$ for positive times below one. This argument proves only $\gamma'(0)\geq0$ at the left endpoint. It does not claim that the minimizing coefficient itself is constant on a neighbourhood, and it does not pass the approximants' third time derivatives to the limit. Only a spatial-derivative expectation is transferred. [OpenAI full-support manuscript, lines 102–152][fs-density].
-<!-- /passage:density -->
+The final strict inequality uses $\mathbb E a^4\geq(\mathbb E a^2)^2=1$. Cauchy–Schwarz also gives
+$\mathbb E a^3\le\sqrt{\mathbb E a^2\mathbb E a^4}
+=\sqrt{\mathbb E a^4}\le\mathbb E a^4$. Therefore the same estimate proves
+the quantitative ordinary consequence
+$$
+\gamma'(t)\ge\frac{\gamma(t)^2}{2000}>0\quad(0<t<1),\qquad
+\mu_\gamma((r,s])\ge\frac{s-r}{2000}\gamma(r)^2
+\quad(0<r<s<1).
+$$
+The second inequality follows by integration and monotonicity. Its lower
+bound depends on this minimizer and the left endpoint; it is not a
+uniform mass estimate for a family of finite-temperature measures. This argument proves only $\gamma'(0)\geq0$ at the left endpoint. It does not claim that the minimizing coefficient itself is constant on a neighbourhood, and it does not pass the approximants' third time derivatives to the limit. Only a spatial-derivative expectation is transferred. [OpenAI full-support manuscript, lines 102–152][fs-density].
+<!-- /passage:density-positive -->
 
 ### 5.3 Near-ground configurations at a prescribed overlap
 
@@ -1487,6 +1578,8 @@ real overlap. The separate algorithmic consequence is in §7.4.
 The bounded martingale $u(t,X_t)$ converges almost surely and in $L^2$
 to $U_1$. Its second moment tends to one because $q(t)=t$.
 Since $|U_1|\le1$, $\mathbb E U_1^2=1$ forces $U_1^2=1$ almost surely.
+Uniform integrability identifies $u(t,X_t)=\mathbb E[U_1\mid\mathcal F_t]$,
+which is the conditional-expectation identity used below.
 
 The drift bound $|\gamma u|\le\gamma\in L^1$ gives convergence of $X_t$
 to $X_1$. Uniform terminal convergence of $\Phi$ to $|x|$, together
@@ -1498,7 +1591,9 @@ Itô's formula gives
 $$
 \mathbb E\Phi(t,X_t)=\Phi(0,0)+\frac12\int_0^t\gamma(s)s\,ds.
 $$
-Letting $t\uparrow1$ and subtracting the functional penalty yields
+The terminal limit first gives
+$\Phi(0,0)=\mathbb E|X_1|-\tfrac12\int_0^1s\gamma(s)ds$.
+Subtracting the second half from the definition of the functional yields
 $\mathcal P(\gamma)=\mathbb E|X_1|-\int_0^1s\gamma(s)\,ds$.
 The ground-state Parisi formula identifies this with $P_*$.
 The diffusion equation, conditional expectation and Fubini give
@@ -1517,6 +1612,43 @@ $\mathbb E|a|\le(\mathbb E a^2)^{1/2}=1$.
 Full support supplies $\mathbb E a^2=1$, whereas the value uses
 $\int\mathbb E a$. Substituting the second moment into the value identity
 would change the assertion. [OpenAI (2026a), §7][fs-cons].
+The prediction error and the energy tail have different sizes:
+$$
+\|U_1-u(T,X_T)\|_2^2=1-T,
+$$
+$$
+P_*-\int_0^T\mathbb E a(t,X_t)\,dt
+=\mathbb E[(U_1-u(T,X_T))(B_1-B_T)]\in[0,1-T].
+$$
+The first identity is orthogonal projection onto $\mathcal F_T$.
+Martingale orthogonality removes the past Brownian component in the
+second; Cauchy–Schwarz bounds the product by $1-T$, and convexity
+makes it nonnegative. No uniform terminal curvature bound is needed.
+The stochastic value calculation has a direct antecedent in
+[Sellke, arXiv:2105.03506v4, Definition 1.3 and Lemma 3.11](https://arxiv.org/abs/2105.03506v4).
+There, “optimizable” means the contact identity $\mathbb E u(t,X_t)^2=t$
+on $[q,1)$, with $q$ the infimum of the support of the coefficient
+function. Lemma 3.11 derives the finite-cutoff value identity by applying
+Itô's formula to $\Phi$ and $xu$, before taking the terminal limit.
+This is the same value-recovery mechanism used here, specialized to
+zero field and $\xi''=1$.
+
+A cutoff must retain the full Parisi penalty. Set
+$\Psi(T,x)=\Phi(T,x)-xu(T,x)$ and
+$I(T)=\int_0^T\mathbb E a(t,X_t)\,dt$. Subtracting the complete penalty
+from the finite-time Itô identity gives
+$$
+\mathcal P(\gamma)-I(T)
+ =\mathbb E\Psi(T,X_T)
+  +\frac12\int_0^T\gamma(t)(q(t)-t)\,dt
+  -\frac12\int_T^1t\gamma(t)\,dt.
+$$
+Under contact the middle term vanishes. The final term is absent from
+the displayed equality in [El Alaoui, Montanari and Sellke,
+arXiv:2001.00904v1, §6.2, pp. 32–33][eams20]. Its sign is nonpositive,
+so the upper bound by $\mathbb E\Psi(T,X_T)$ used there remains valid;
+its magnitude tends to zero by integrability. This finite-cutoff
+correction is consistent with the exact terminal identity above.
 <!-- /passage:value -->
 
 <a id="finite-gaussian-approximation"></a>
@@ -1546,6 +1678,8 @@ Drift error estimates and discrete Gronwall yield
 $\mathbb E\max_{j\le N}|Y_j-X_{t_j}|^2\to0$, hence
 $\max_j|c_j-1|\to0$. The $g_j$ are orthonormal in $L^2$:
 they have unit variance and conditional mean zero given their past.
+Their predictable multipliers may depend on earlier coordinates, so
+orthonormality does not assert independence.
 
 With $F_{\rm G}$ the standard Gaussian distribution function, define
 $$
@@ -1575,7 +1709,13 @@ $$
 M_N=\sum_{j=1}^N\sqrt\Delta\,a(t_{j-1},Y_{j-1})Z_j
  =u(T,Y_N)+o_{L^2}(1)
 $$
-and Bessel's inequality give the vector estimates
+gives a common residual for both coefficient families. In
+$\mathbb E[M_NZ_i]$, a summand with $j<i$ is independent of centered
+$Z_i$; one with $j>i$ vanishes on conditioning on the first $j-1$
+coordinates; and the $j=i$ term is
+$\sqrt\Delta\,\mathbb E a(t_{i-1},Y_{i-1})$.
+Also $\mathbb E[M_Ng_j]=\sqrt\Delta/c_j$ by orthonormality.
+Bessel's inequality applied to that one residual gives the vector estimates
 $$
 (A_j)_{j=1}^N=(\sqrt\Delta/c_j)_{j=1}^N+o_{\ell^2}(1),
 $$
@@ -1627,6 +1767,7 @@ the construction in [OpenAI (2026b), §3][q-classical].
 <!-- /passage:gaussian -->
 
 <!-- passage:gaussian-error-budget -->
+
 ### 7.1 A scalar error budget with its dependencies exposed
 
 The preceding proof can be written as a finite inequality. This is an
@@ -1641,6 +1782,39 @@ $$
  d_N=\max_{1\le j\le N}
  \left|\mathbb E a(t_{j-1},Y_{j-1})^2-1\right|.
 $$
+These errors have a rate at each fixed strip, even if $\gamma$ has jumps.
+Put $\Gamma=\gamma(T)$ and $V=\gamma(T)-\gamma(0)$. Bounded spatial
+derivatives and the PDE give temporal Lipschitz constants
+$$
+J=\tfrac12\|u_{xx}\|_\infty+\Gamma K_T,\qquad
+H=\tfrac12\|a_{xx}\|_\infty+\Gamma(K_T^2+L_T)
+$$
+for $u$ and $a$, respectively, on this strip. No derivative of $\gamma$
+is used. Brownian coupling gives
+$\|X_s-X_{\pi_N(s)}\|_2\le\sqrt\Delta+\Gamma\Delta$.
+Subtract the Euler and diffusion equations, take a pathwise maximum over
+grid times, then apply Minkowski and discrete Gronwall. With
+$$
+R_N=\Gamma TK_T\sqrt\Delta+
+ [\Gamma T(J+\Gamma K_T)+V]\Delta,
+$$
+the result is
+$$
+\delta_N\le\left\|\max_{j\le N}|Y_j-X_{t_j}|\right\|_2
+\le e^{\Gamma K_TT}R_N.
+$$
+Indeed the maximal norm through index $j$ is at most
+$\Gamma K_T\Delta$ times the sum of its preceding values plus $R_N$;
+the term $V\Delta$ is exactly the monotone quadrature bound. For the
+martingale residual, Itô isometry and the same increment estimate give
+$$
+e_N\le K_T\delta_N+
+\sqrt T\{L_T\delta_N+L_T\sqrt\Delta+(H+\Gamma L_T)\Delta\}.
+$$
+Thus $\delta_N,e_N=O_{\gamma,T}(\sqrt\Delta)$.
+These are deductions from the compact-strip bounds and stochastic
+identities, not quantitative clauses of the selected Lean statement.
+
 Since $a$ is bounded and Lipschitz,
 $d_N\le2K_TL_T\delta_N\to0$. Whenever $d_N\le1/2$,
 $$
@@ -1654,7 +1828,9 @@ coarse mesh.
 
 Let
 $\omega_f(h)=\sup\{|f(t)-f(s)|:s,t\in[0,T],\,|t-s|\le h\}$.
-Continuity gives $\omega_f(h)\to0$ as $h\downarrow0$.
+The same increment bound gives
+$\omega_f(\Delta)\le L_T\sqrt\Delta+(H+\Gamma L_T)\Delta$;
+in particular this modulus tends to zero.
 The difference between the shifted interior sum and the integral is bounded by
 $$
  \left|\Delta\sum_{j=1}^{N-1}
@@ -1674,7 +1850,15 @@ $$
  &+TK_Td_N+TL_T\delta_N+T\omega_f(\Delta)+\Delta .
  \end{aligned}
 $$
-All terms after $1-T$ tend to zero at each fixed $T<1$. Given a scalar
+In particular, for each fixed minimizer and $T<1$ there are finite
+$C_{\gamma,T}$ and $N_0(\gamma,T)$ such that
+$$
+|S_{T,N}-P_*|\le1-T+C_{\gamma,T}\sqrt{T/N}
+\qquad(N\ge N_0(\gamma,T)).
+$$
+The constants are not uniform as $T\uparrow1$, and no numerical bound
+on the minimizing coefficient has been supplied. All terms after $1-T$
+tend to zero at each fixed $T<1$. Given a scalar
 tolerance $\zeta>0$, first choose $T$ with $1-T<\zeta/2$, then choose
 $N_0(\gamma,T,\zeta)$ so that their sum is below $\zeta/2$ for every
 $N\ge N_0$. This is the required finite choice of a Gaussian spin.
@@ -1697,6 +1881,7 @@ quantifier issue, not an asserted error law for the SK construction.
 <!-- /passage:gaussian-error-budget -->
 
 <!-- passage:gaussian-sanity-check -->
+
 ### 7.2 What fails without a minimizer
 
 The admissible coefficient $\gamma_0=0$ makes the use of minimality in
@@ -1718,7 +1903,10 @@ q_0(t)=\frac2\pi\arcsin t.
 $$
 
 The last identity follows by integrating $q_0'=\mathbb E a_0^2$
-from $q_0(0)=0$. Strict convexity of $\arcsin$ gives $q_0(t)<t$
+from $q_0(0)=0$. This heat and late-step variation argument is the
+zero-field specialization of [Chen, Handschy and Lerman, Theorem 6
+and its proof, arXiv:1609.04368v4, pp. 13–16](https://arxiv.org/abs/1609.04368v4).
+Strict convexity of $\arcsin$ gives $q_0(t)<t$
 for $0<t<1$. Thus $G_0(s)=\int_s^1(q_0(t)-t)\,dt<0$ for
 every $s<1$. Inserting an atom at $s$ is admissible, and its
 [first variation][fs-var] is $G_0(s)/2<0$. In particular, the derivative for inserting
@@ -1753,6 +1941,7 @@ supply the minimizing normalization or identify the ground-state value.
 <!-- /passage:gaussian-sanity-check -->
 
 <!-- passage:gaussian-one-step-example -->
+
 ### 7.3 An exact one-step calculation
 
 For a finite check of the definitions, use the admissible heat coefficient
@@ -1819,6 +2008,22 @@ The final term is the same for all spin configurations. Therefore the maximizing
 The imported operation count is
 $C(\varepsilon)(\chi+n)+n\chi_1$, where $\chi$ is the cost of evaluating the full gradient and $\chi_1$ is the cost of one coordinate of the distinct-index gradient. Here $\nabla\widehat H_n(x)=Ax$ costs $O(n^2)$, and one coordinate of $\nabla H_n(x)$ costs $O(n)$. The resulting count is $C(\varepsilon)n^2$, with $C(\varepsilon)$ independent of $n$. Real sums and multiplications have unit cost in the cited model; the scalar functions and normalizers prescribed for the chosen accuracy are part of that construction. This statement supplies neither a bound for their numerical preprocessing nor a finite-precision bit-complexity bound. [El Alaoui, Montanari and Sellke, Remark 2.1 and Theorem 3, p. 7][eams20]; [OpenAI full-support manuscript, lines 1–11 and 49–59][fs-algorithm].
 
+A distinct classical construction is [Jekel, Sandhu and Shi,
+*Potential Hessian Ascent*, arXiv:2408.02360v3, Assumption 1.4 and
+Theorem 1.5](https://arxiv.org/abs/2408.02360v3).
+Its hypothesis is finite-temperature interval support
+$\operatorname{supp}\mu_\beta=[0,q_\beta^*]$, with $q_\beta^*\to1$.
+Its inputs include oracles for the Parisi PDE, its derivatives and the
+minimizer's distribution function. For each fixed accuracy the stated
+runtime is polynomial in $n$, with an exponential dependence on inverse
+accuracy; it does not include implementing those oracles. Its Ginibre
+Hamiltonian has covariance $nR^2$: on spins it has the law
+$\sqrt2 H_n$ plus a Gaussian term independent of the configuration. Thus its energy
+and accuracy must be divided by $\sqrt2$ to compare with this paper's
+normalization. This is a separate algorithm theorem with separate
+analytic inputs, rather than another interpretation of the finite
+Gaussian spin in §7.
+
 The consequence is classical. It does not supply an efficient construction of QAOA angles, a quantum depth bound, or a clause of either selected Lean interface. The proof of the separate QAOA statement still requires its rooted energy, synthesis, seed-removal and transfer arguments.
 <!-- /passage:algorithm -->
 
@@ -1827,6 +2032,7 @@ The consequence is classical. It does not supply an efficient construction of QA
 ## 8. What the formal statements establish
 
 <!-- passage:formal -->
+
 ### 8.1 The support statement and the derivative bridge
 
 The first formal statement assumes a Brownian system and an admissible
@@ -1867,7 +2073,11 @@ At the origin, the manuscript smoothly extends auxiliary quotient
 variables. The formal density proof instead works on the positive
 half-line, controls the zero flux at the origin and reflects. What must
 agree is the resulting integrated inequality; auxiliary values at zero
-need not coincide. The precise source spans for both comparisons are in
+need not coincide. In particular, the declared generic flux lemma has
+a global derivative hypothesis that is not the supplier used here:
+the finite-density proof uses the Gaussian half-line coercivity lemma
+and reflection. A totalized quotient value at zero cannot silently
+satisfy the generic global hypothesis. The precise source spans are in
 the correspondence record.
 
 ### 8.2 The separate scalar statement
@@ -1901,8 +2111,9 @@ the growing mesh, for each already fixed $T$. The extra coordinate
 with formal index $N$ is $Z_{N+1}$. The formal martingale stops at its
 terminal random variable $U$ for all later times; $U^2=1$ almost surely,
 and the gradient converges to $U$ almost surely and in $L^2$ from below
-one. Its identity $UX_1=|X_1|$ does not require $X_1$ to have no atom
-at zero. See the [scalar statement][value-type] and its
+one. The internal terminal-gradient lemma proves $UX_1=|X_1|$
+without requiring $X_1$ to have no atom at zero. That identity is used
+inside the implementation; it is not an extra conjunct of the endpoint. See the [scalar statement][value-type] and its
 complete dictionary.
 
 ### 8.3 A separate route to scalar contact
@@ -1980,6 +2191,26 @@ with the same minimiser and diffusion witnesses. These translation
 theorems are not supplied by mathematical resemblance alone. The two
 separate implementations and the manuscript's mathematical sequence in
 Sections 3–7 remain meaningful without asserting that formal composition.
+
+### 8.5 The scalar implementation's own upper and lower bounds
+
+The scalar implementation constructs its regularity constants and contact
+identities internally. Its finite-spin limit follows from superadditivity
+and a uniform upper bound. A finite-profile Gaussian interpolation gives
+the upper bound $P_*\le\mathcal P(\gamma)$ for every admissible
+coefficient. In the other direction, the normalized rounded finite
+Gaussian sum is bounded above by $P_*$; contact and the fixed-strip
+mesh limit give $\int_0^T\mathbb E a\le P_*$. Terminal assembly then
+gives $\mathcal P(\gamma)\le P_*$ at the minimizer, and antisymmetry
+yields equality. Thus its proof route is not simply an invocation of the
+literature's Parisi formula used in §6. The third endpoint clause
+constructs its diffusion before applying this equality. The exact
+suppliers can be read in the pinned
+[upper-bound proof](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean#L117-L142),
+[finite-sum lower bound](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean#L14-L27)
+and [contact assembly][scalar-contact-assembly], with the hypotheses
+explained in §§8.2–8.3. These are source-inspection conclusions, with
+the replay outcome in §11.
 <!-- /passage:formal -->
 
 <a id="qaoa-construction"></a>
@@ -1989,8 +2220,10 @@ Sections 3–7 remain meaningful without asserting that formal composition.
 <!-- passage:qaoa -->
 On a single spin, let $Z=\operatorname{diag}(1,-1)$ and
 $X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$; $Z_i$ and $X_i$ act on spin $i$
-and as the identity on the other spins. Write
-$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$. The cost and mixer are
+and as the identity on the other spins. Also set
+$Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix}$ and
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$.
+Then $X|\pm\rangle=\pm|\pm\rangle$ and $Z|+\rangle=|-\rangle$. The cost and mixer are
 $$
 C_{n,J}=n^{-1/2}\sum_{i<j}J_{ij}Z_iZ_j,\qquad B_n=\sum_iX_i.
 $$
@@ -2027,6 +2260,10 @@ word required here. [Farhi–Goldstone–Gutmann (2014), equation (10) and
 §VI, pp. 10–11](https://arxiv.org/abs/1411.4028v1);
 [OpenAI (2026b), Theorem 1.1][q-intro].
 
+<!-- /passage:qaoa -->
+
+<!-- passage:qaoa-rooted -->
+
 ### 9.1 Rooted realisation and the observable it preserves
 
 The fixed-depth spin–boson representation has an antecedent in
@@ -2038,6 +2275,11 @@ surrounding-circuit estimates needed below. Its additional task is to
 control the energy observable and substitutions inside a circuit, beyond
 identifying a limiting state. [OpenAI (2026b), §2][q-fock].
 
+On a rooted tree, factor a circuit as $U=(\bigotimes_jU_j)u$,
+where each $U_j$ contains operations wholly in child subtree $j$.
+Conjugating a root observable $P$ reduces to $u^*Pu$; its insertion
+vector is $u^*Pu\,\mathrm{vac}$, centered when its vacuum mean is zero.
+This factorization is why child operations enter the recursion below.
 The first change of setting preserves a specified quadratic form. At
 height zero the pointed space is
 $\mathsf k=\mathbb C^2\otimes L^2(\text{seed})$, with distinguished vector
@@ -2056,7 +2298,15 @@ Adding empty descendants gives compatible embeddings between heights.
 [OpenAI (2026b), §2, pointed spaces and occupation embeddings][q-fock].
 
 For a child direction $f$, write
-$q(f)=a^*(f)+a(f)$ and $W(f)=e^{iq(f)}$.
+$q(f)=a^*(f)+a(f)$ and $W(f)=e^{iq(f)}$. Explicitly,
+$\Gamma_s(H)=\bigoplus_{m\ge0}H^{\otimes_s m}$, with vacuum $\Omega$
+in sector zero. On sector $m$,
+$a^*(f)\psi=\sqrt{m+1}\operatorname{Sym}(f\otimes\psi)$, and $a(f)$
+is its adjoint. The number operator is multiplication by $m$; more
+generally $d\Gamma(A)$ sums $A$ over those $m$ child factors. The
+vacuum characteristic function
+$\langle\Omega,e^{itq(f)}\Omega\rangle=e^{-t^2\|f\|^2/2}$ fixes the
+Gaussian normalization.
 In the real classical sector, a centred child vector $f$ produces a
 parent Gaussian position $\mathsf G(f)=q(f)$ with
 $$
@@ -2128,6 +2378,11 @@ $$
 $$
 Strong convergence alone does not control the scaled remainder. The
 occupation estimate is supplied later for the relevant finite circuits.
+The occupation assumption cannot be dropped merely because vectors
+converge in norm. For orthogonal unit vectors $e_m$ in sector $m$,
+$\psi_k=\sqrt{1-1/k}\,\Omega+k^{-1/2}e_{k^2}$ tends to $\Omega$
+in norm, whereas $\langle\psi_k,\mathsf N\psi_k\rangle=k$.
+
 The elementary continuity bound
 $$
 |\mathcal E(v)-\mathcal E(w)|
@@ -2137,11 +2392,22 @@ will control every subsequent approximation after the observable has
 been identified. [OpenAI (2026b), §2, “Energy as a root shift,” including
 its exact finite-degree decomposition][q-root-energy].
 
+<!-- /passage:qaoa-rooted -->
+
+<!-- passage:qaoa-regularization -->
+
 ### 9.2 Finite regularisation and the calculus needed for compilation
 
-Fix $T,N$ first. Smooth the final sign, truncate the transmitted
-functions, and approximate the resulting bounded functions by
-trigonometric polynomials. The source makes these choices from output
+Fix $T,N$ first. The independent continuous rounding coordinate makes
+the event at the sign discontinuity null. Bounded continuous odd
+approximations to that sign therefore converge in $L^2$ by dominated
+convergence. If the bounded output is $m^*$, shrink it to
+$(1-\kappa)m^*$, with fixed $0<\kappa<1$, before taking
+$\theta_\kappa=\tfrac12\arcsin((1-\kappa)m^*)$. This margin keeps
+the derivative of inverse sine bounded on its used range; the output
+loss is at most $\kappa$ in $L^2$. Then truncate the transmitted
+functions and approximate the resulting bounded maps by trigonometric
+polynomials. The source makes these choices from output
 toward leaves: each outer Lipschitz function is fixed before its inputs
 are approximated. The Gaussian isometry above converts an error in a
 transmitted child vector into the same $L^2$ error in its receiving
@@ -2225,8 +2491,9 @@ the general convergence and domain bounds.
 
 Commuting substitution is justified through a joint spectral calculus
 and Fourier estimates. It requires the physical control algebra, the
-local coefficients and the receiving seed to commute, with the stated
-weighted derivative bounds. It does not require a nonsingular
+self-adjoint signal operators and receiving seed to strongly commute,
+with joint exponential and weighted derivative bounds as stated in the
+source. This is stronger than a formal commutator identity on one domain. It does not require a nonsingular
 covariance matrix or an inverse Gram matrix. Exclusions establish that
 commuting algebra before a preceding circuit is conjugated through it;
 conjugation preserves commutation even when the signals share
@@ -2252,6 +2519,10 @@ statement covers a fixed finite surrounding sequence and its required
 parameter derivatives; it does not assert uniformity for arbitrary
 sequences whose length or channel count grows.
 [OpenAI (2026b), §2, smooth gate calculus and its cut recursion][q-gate-calculus].
+
+<!-- /passage:qaoa-regularization -->
+
+<!-- passage:qaoa-synthesis -->
 
 ### 9.3 Seeded synthesis: helper contraction and nested responses
 
@@ -2305,7 +2576,7 @@ $$
 $$
 When $j=j'$, the two sender factors cancel. If the helper spin has
 $X_k=1$, this backtracking path reproduces $H$, multiplied by the
-normalised number of helper neighbours, which tends to $p_K$.
+ratio $\#\{\text{helper neighbours}\}/(Dp_K)$, which tends to one.
 Terms with $j\ne j'$ are simple paths and must disappear under
 partition refinement. The factor $1/p_K$ is harmless only after a
 positive helper mass has been fixed.
@@ -2421,6 +2692,10 @@ is not a consequence of the scalar theorem or of a finite-degree
 central limit theorem alone.
 [OpenAI (2026b), §4, synthesis statement and its proof][q-synthesis-statement].
 
+<!-- /passage:qaoa-synthesis -->
+
+<!-- passage:qaoa-seed -->
+
 ### 9.4 Removing the seed controls without changing their joint law
 
 Seed removal must simulate one Gaussian variable per vertex, reused
@@ -2459,19 +2734,27 @@ actual current insertion. Toggling a cost rotates both its root Pauli
 axis and this direction; they cannot be selected independently.
 [OpenAI (2026b), §5, packet estimates][q-seed-packets].
 
-For the finite list of special centres, the source constructs a
-finite ensemble of spin rotations with *zero clocks*: the signed sum
-of pulse durations on each probe axis is exactly zero. Lie brackets
-produce independent rotations on the finite ensemble, while a finite
-local controllability argument gives exact reachability of the
-required rotation and zero clocks. The Lie-bracket and polynomial
-approximation method comes from [Li and Khaneja (2005), §II,
-Examples 1–2, pp. 2–3](https://arxiv.org/abs/quant-ph/0510012v1).
-Their approximation uses parameter ranges with the sign restrictions
-stated there. The present source proves its own finite-family statement
-with exact zero clocks, followed by the estimates for changing insertion
-directions. Closure or density of attainable
-rotations would not by itself give the required exact cancellation.
+For the finite list of nonzero special centres $h_j\in\mathbb R^2$,
+the source constructs the same rotation $e^{-i\theta X}$ at every
+centre, with *zero clocks*: the signed pulse durations on each of two
+perpendicular axes in the $ZY$ plane sum exactly to zero. Choose the
+axes so that $c_{j,a}=h_j\cdot P_a\ne0$, and the square pairs
+$(c_{j,1}^2,c_{j,2}^2)$ are distinct except for equal or opposite centres.
+Brackets have zero clock components and generate $iX$ coefficients
+$c_{j,1}c_{j,2}F(c_{j,1}^2,c_{j,2}^2)$. Polynomial interpolation makes
+all these coefficients one. Equal or opposite centres have the same
+product, so they cause no obstruction to this common rotation.
+
+This does not give arbitrary independent rotations: opposite centres
+obey $U_{-h}=XU_hX$. Exact finite reachability of the required common
+rotation follows by taking finitely many reachable conjugates spanning
+the generated Lie algebra; their product map contains an identity
+neighbourhood, and subdivision reaches the whole one-parameter path.
+Closure alone would not give exact cancellation. The Lie-bracket and
+polynomial method follows [Li and Khaneja (2005), §II, Examples 1–2,
+pp. 2–3](https://arxiv.org/abs/quant-ph/0510012v1); the finite-family,
+equal/opposite-centre and exact-clock assertions are proved in the
+QAOA source itself.
 The separate accuracy lemma then follows the actual insertion drift
 through every probe prefix. Its ordinary-component error is $o(r)$;
 the error on the normalised special component is $o(1)$ and hence
@@ -2480,6 +2763,12 @@ the bounded-tail families needed for insertions, and their constants
 refer to the chosen finite pulse list.
 [OpenAI (2026b), §5, “Selective rotations with zero clocks” and
 “Accuracy of selective probes”][q-seed-selective].
+
+The shared seed family is essential even for a single spin. Two gates
+$e^{-itSZ}$ applied to $|+\rangle$, with the same standard Gaussian $S$,
+give mean $X$ expectation $\mathbb E\cos(4tS)=e^{-8t^2}$.
+Replacing the second seed by an independent copy gives $e^{-4t^2}$.
+Agreement of marginal seed laws does not preserve a circuit's value.
 
 **The echo amplifies a controlled difference.**
 Consider a forward cost $t/r$, a selective flip of the special
@@ -2571,6 +2860,10 @@ allows those angles to be large or negative. It makes no claim of
 uniform bounds as the target word length grows or as the tolerance
 tends to zero. [OpenAI (2026b), §5, proof of seed removal][q-seed-visibility].
 
+<!-- /passage:qaoa-seed -->
+
+<!-- passage:qaoa-transfer -->
+
 ### 9.5 Transfer of the resulting ordinary word
 
 After all these choices there is one finite ordinary word $W$, fixed
@@ -2615,11 +2908,20 @@ transfer. Finally merge consecutive gates of the same type and
 insert zero-angle gates where needed to express $W$ in alternating
 QAOA form. [OpenAI (2026b), §2, “Ordinary root updates”][q-ordinary-updates].
 
+<!-- /passage:qaoa-transfer -->
+
+<!-- passage:qaoa-assembly -->
+
 ### 9.6 Fixing the word before the thermodynamic limit
 
-Allocate errors after choosing the desired $\varepsilon>0$. Choose
-the classical formula with loss below $\varepsilon/4$, and helpers
-with $2\sqrt{p_H}<\varepsilon/4$. With
+Allocate errors after choosing the desired $\varepsilon>0$. Apply the
+classical near-optimality proposition with the two tolerances
+$\varepsilon/4$ and $\eta_H=(\varepsilon/8)^2$. It supplies one
+formula and its helper law together, with classical loss below
+$\varepsilon/4$ and $0<p_H<\eta_H$. In its proof the uncoloured
+formula is fixed first, then the small positive helper probabilities
+and the excluded-colour approximation are selected. Thus changing a
+helper law does not silently preserve an already fixed formula. With
 $\eta=\varepsilon/8$, synthesis gives
 $$
 \mathcal E(v)\ge\mathcal E(m)-2\eta-2\sqrt{p_H}
@@ -2653,9 +2955,10 @@ efficient angle-selection procedure, or independent formal
 verification of this entire circuit construction follows from the
 selected formal statements.
 
-<!-- /passage:qaoa -->
+<!-- /passage:qaoa-assembly -->
 
 <!-- passage:alternative -->
+
 ### 9.7 The separate positive-temperature route
 
 The positive-temperature appendix supplies a separate classical input to
@@ -2696,8 +2999,30 @@ $$
 \int_0^T\mathbb E a(t,X_t)\,dt
 \ge P_*-\frac{1/4+\log2}{\beta_0}-(q-T).
 $$
-Choose first a sufficiently large finite $\beta_0$, then $T<q$ close
-enough to $q$. This route obtains the existence and value of the
+To recover its constants, martingale contact first gives
+$\int_0^t\mathbb E a(s,X_s)^2ds=t$ on $[0,q]$; continuity yields
+unit second moment including the endpoints. On $[q,1]$, $\gamma=\beta_0$,
+so Cole–Hopf gives
+$$
+\phi(q,x)=\beta_0^{-1}\log(2\cosh\beta_0x)+\beta_0(1-q)/2,
+\quad m(q,x)=\tanh(\beta_0x),\quad a(q,x)=\beta_0\operatorname{sech}^2(\beta_0x).
+$$
+Hence $1-q=\mathbb E\operatorname{sech}^2(\beta_0X_q)\le\beta_0^{-1}$.
+Itô's product rule and the value evolution give
+$$
+\int_0^q\mathbb E a=\mathbb E[X_qm(q,X_q)]-\int_0^qt\gamma(t)dt,
+\quad
+\mathbb E\phi(q,X_q)=\phi(0,0)+\tfrac12\int_0^qt\gamma(t)dt.
+$$
+Using $x\tanh(\beta_0x)\ge\beta_0^{-1}\log(2\cosh\beta_0x)
+-\beta_0^{-1}\log2$ and retaining the penalty on $[q,1]$ yields
+$$
+\int_0^q\mathbb E a\ge F_{\beta_0}
+-\frac{\beta_0(1-q)^2}{4}-\frac{\log2}{\beta_0}.
+$$
+The cutoff removes at most $q-T$, because $0\le\mathbb E a\le1$.
+This proves the displayed estimate. Choose first a sufficiently large
+finite $\beta_0$, then $T<q$ close enough to $q$. This route obtains the existence and value of the
 ground-state limit from the positive-temperature Parisi formula of
 [Talagrand (2006), Theorem 1.1, pp. 222–223](https://doi.org/10.4007/annals.2006.163.221).
 At each fixed $\beta_0$, his covariance hypotheses (1.3)–(1.5) hold with
@@ -2771,50 +3096,221 @@ moment identifies this edge limit with the rooted energy. A
 finite-dimensional central limit theorem alone does not identify that
 observable. [OpenAI (2026b), Appendix A][q-positive].
 
-The finite-step source comparison can be made precise.
-[El Alaoui–Montanari–Sellke, arXiv:2111.06813v2](https://arxiv.org/abs/2111.06813v2),
-Proposition 2.1 (p. 7), sums the adjacent-time term over
-$\ell=2,\ldots,L$. Lemma 4.3, equation (4.6) (p. 14), replaces its
-expectation by the coefficient at $r=\ell-1$, giving
-$r=1,\ldots,L-1$. The printed sums in (4.5) (p. 13) and (4.18)
-(p. 16) instead use $2,\ldots,L$. Also, the same-time display (2.21)
-in Lemma 2.8 (p. 9) omits the factor $1/k$ retained in its proof and
-Proposition 2.1. These local display discrepancies are visible in the
-cited v2 original; Q uses the proposition and the reindexed sum, with
-$k=D+1$, and explicitly supplies spatial Lipschitz bounds for both $a$
-and the drift in its application. Boundedness on the fixed strip makes the two endpoint terms
-$O(\delta)$, so the endpoint correction does not change the ensuing
-continuum value. This comparison neither audits the whole message-passing
-paper, repairs its general theorem statement, nor proves the quantum construction.
+<!-- /passage:alternative -->
 
-The missing factor has an exact first-step check. Let $v,w$ be adjacent
-vertices of a $k$-regular tree, $k\ge2$, and let $g_x$ be independent
-standard Gaussian seeds. Use $t=1$, $A^{-1}=1$ and the auxiliary test
-weights $Y_v^0=g_v$, $\widetilde Y_w^0=g_w$ in Lemma 2.8.
-Equations (2.1)–(2.2) give $u_v^1=k^{-1/2}\sum_{x\in\partial v}g_x$
-and the analogous expression for $u_w^1$. In
-$$
-\mathbb E[u_v^1u_w^1g_vg_w]
-=\frac1k\sum_{\substack{x\in\partial v\\y\in\partial w}}
- \mathbb E[g_xg_yg_vg_w]=\frac1k,
-$$
-only $x=w,y=v$ survives. The printed right side of (2.21) is instead
-$\mathbb E[g_v^2g_w^2]=1$. The nonconstant test weights are essential:
-with $Y_v^0=\widetilde Y_w^0=1$, both sides are zero.
-For the endpoint shift,
-at two steps with $\delta=\varepsilon=1/4$, $b=0$ and a time-dependent
-coefficient changing from $1$ to $-1$ at $t=3/8$, the scaled edge term
-is $\delta$ whereas the printed (4.5) gives $-\delta$.
-For this example the unnormalised discrepancy in the printed Theorem 4.1
-is $4\delta\sqrt{k-1}$: its actual term $k\mathbb E[z_o^Lz_v^L]$ at $L=2$ is
-$2\delta\sqrt{k-1}$, whereas its printed target is
-$-2\delta\sqrt{k-1}$. It cannot be bounded by a constant independent
-of $k$ with these fixed parameters. This contradicts that auxiliary finite
-statement as printed; it does not refute the corrected continuum limit or
-the paper's main Theorem 1.7. The source application's compact-strip spatial
-Lipschitz bounds also supply the regularity used in the cited finite-step
-lemma. [OpenAI (2026b), Appendix A][q-positive].
+<!-- passage:weighted-tree -->
+<a id="eams-finite-comparison"></a>
 
+**The finite source comparison.** The comparison in this paragraph is with
+[El Alaoui–Montanari–Sellke, arXiv:2111.06813v2, 3 February 2023](https://arxiv.org/abs/2111.06813v2).
+Proposition 2.1 (p. 7) sums the adjacent-time term over
+$\ell=2,\ldots,L$. Applying Lemma 4.3, equation (4.6) (p. 14),
+replaces the expectation in that summand by the coefficient at
+$r=\ell-1$, so the resulting range is $r=1,\ldots,L-1$.
+The displayed ranges in (4.5) (p. 13) and (4.18) (p. 16) are instead
+$2,\ldots,L$. Separately, the same-time display (2.21) in Lemma 2.8
+(p. 9) omits a factor $1/k$ that is present in its proof and in
+Proposition 2.1. The QAOA manuscript's Appendix A already uses the latter proposition,
+the reindexed sum and spatial Lipschitz bounds for both $a$ and $b$.
+The two following calculations establish the finite discrepancies and
+their precise scope. They do not compare formulae in the journal edition.
+
+**The test weights expose the missing factor.** Work on the $k$-regular
+tree, $k\ge2$, and let all initial labels $g_i$ be independent standard
+Gaussians. In particular, the adjacent vertices $o,v$ have distinct
+labels $g_o,g_v$. Set $u_i^0=u_{i\to j}^0=g_i$,
+$A_{i\to j}^{-1}=1$, and use constant algorithmic update functions
+$F_r=H_r=1$. These satisfy EAMS Assumption 2 and its later boundedness
+Assumption 3. For the auxiliary tests in Lemma 2.8 choose
+$Y_o^r=g_o$ and $\widetilde Y_v^r=g_v$ for every $r\ge0$.
+Each test is measurable with respect to its required initial-label
+sigma-field, and all moments are finite. The tests are separate from
+the constant update functions.
+
+At $t=1$, the recursion gives
+$$
+u_o^1=k^{-1/2}\sum_{x\sim o}g_x,\qquad
+u_v^1=k^{-1/2}\sum_{y\sim v}g_y.
+$$
+Hence
+$$
+\mathbb E[u_o^1u_v^1g_og_v]
+=\frac1k\sum_{x\sim o,\,y\sim v}\mathbb E[g_xg_yg_og_v]
+=\frac1k.
+$$
+Only $x=v,y=o$ survives. The printed right side of (2.21) is
+$\mathbb E[g_v^2g_o^2]=1$; multiplying it by $1/k$ agrees with the
+calculation. Both initial labels matter. With both test weights equal
+to one, both sides are zero; with just the neighbouring test omitted,
+the left side is an odd Gaussian moment and is again zero.
+
+A bounded version uses $Y_o^r=\operatorname{sgn}(g_o)$ and
+$\widetilde Y_v^r=\operatorname{sgn}(g_v)$. Only the same edge pair
+survives, so
+$$
+\mathbb E[u_o^1u_v^1\operatorname{sgn}(g_o)\operatorname{sgn}(g_v)]
+=\frac1k(\mathbb E|g|)^2=\frac{2}{\pi k},
+$$
+whereas the printed right side is $2/\pi$. These tests are bounded
+and initial-label measurable. Both witnesses concern the auxiliary
+weighted identity; neither substitutes arbitrary test weights into a
+Parisi output theorem.
+
+**The shifted endpoint violates the printed uniform finite bound.**
+For a separate test retain the initial labels and set
+$$
+\delta=\varepsilon=\frac14,\qquad L=2,\qquad b(t,x)=0,
+\qquad
+a(t,x)=
+\begin{cases}
+1,&0\le t<3/8,\\
+-1,&3/8\le t<1.
+\end{cases}
+$$
+Use the source's actual initial states
+$x_i^0=x_{i\to j}^0=\sqrt\delta\,g_i$ and its definitions
+$A_{i\to j}^r=a(r\delta,x_{i\to j}^r)$,
+$B_i^r=a(r\delta,x_i^r)$. The state initialization has not been set
+to zero; it drops out of these coefficients because $a$ is independent
+of $x$. This fixed function is bounded by $K=1$, has spatial
+Lipschitz constant zero, and satisfies $a^2=1$, so all directed-edge
+normalizers are exactly one. The drift has Lipschitz constant $M=0$,
+and $L\delta=1/2\le1-\varepsilon$. It therefore meets the printed
+hypotheses of Theorem 4.1 and Assumptions 2–3. That finite theorem
+does not require temporal continuity or positivity of $a$.
+
+At the mesh points, $a_0=a_1=1$ and $a_2=-1$. Thus
+$$
+u_i^2=\frac1{\sqrt{k(k-1)}}
+ \sum_{w\sim i}\sum_{y\sim w,\,y\ne i}g_y,
+\qquad z_i^2=\sqrt\delta\,(u_i^1+u_i^2).
+$$
+The equal-time covariances across the edge are zero. Each adjacent-time
+covariance is $\sqrt{k-1}/k$: exactly $k-1$ labels occur in both sums,
+and their product normalization is $k\sqrt{k-1}$. Therefore
+$$
+k\mathbb E[z_o^2z_v^2]=2\delta\sqrt{k-1},\qquad
+\frac{k}{2\sqrt{k-1}}\mathbb E[z_o^2z_v^2]=\delta.
+$$
+The target printed in (4.5) uses $a(2\delta,x_o^2)=-1$, so it is
+$-2\delta\sqrt{k-1}$. Its absolute error is
+$4\delta\sqrt{k-1}$, which is unbounded as $k\to\infty$ while all
+arguments of the claimed constant $C(M,K,\delta,\varepsilon)$ remain
+fixed. This refutes auxiliary Theorem 4.1 as printed. The example is
+not a Parisi curvature: it changes sign. Consequently it is not by
+itself a counterexample to the specialized assertion (4.18) in
+Proposition 4.7; the endpoint correction there comes from the exact
+proposition and reindexing explained above. Neither test refutes the
+main EAMS Theorem 1.7.
+
+**A finite estimate with the required hypotheses.** The source argument
+does provide a usable replacement. Fix $\delta>0$, $L\ge1$ and
+$L\delta<1$. Allow the coefficients $a_k,b_k$ to depend on degree, but
+require bounds independent of $k$ at the finitely many mesh times:
+$|a_k|\le K$ with $K\ge1$, and spatial Lipschitz constants $L_a,L_b$
+for $a_k,b_k$. Use the original initialization and the same normalized
+function for node and directed-edge coefficients, with
+$\mathbb E(A_{i\to j}^r)^2=1$. Then
+$$
+\left|k\mathbb E[z_o^Lz_v^L]
+ -2\sqrt{k-1}\,\delta\sum_{r=1}^{L-1}\mathbb E B_o^r\right|
+ \le C(K,L_a,L_b,\delta,L).
+$$
+The constant is independent of $k$, and the sum is empty when $L=1$.
+The coefficient expectation on the right uses the vertex law; its
+normalization was defined using the directed-edge law. The following
+proof keeps the two laws distinct. It reconstructs the finite estimate
+from EAMS Proposition 2.1 and Lemmas 3.2–3.4 and 4.2–4.3; it is not
+a claim that changing an index alone repairs every hypothesis of the
+printed theorem.
+
+Put $D=k-1$. Conditional on the earlier cavity labels, the new
+message is centered Gaussian with variance $(\tau^r)^2$. Its recursion is
+$$
+(\tau_{i\to j}^{r+1})^2=\frac1D
+\sum_{\substack{w\in\partial i\\w\ne j}}(A_{w\to i}^{r-1})^2(\tau_{w\to i}^r)^2,
+\qquad \tau^0=1.
+$$
+This conditional Gaussianity gives
+$\Delta_r=\mathbb E[((\tau^r)^2-1)^2]\le V_r/D$, where
+$$
+V_0=0,\qquad V_{r+1}=2K^4V_r+2(K^4+1).
+$$
+Indeed, split the conditional-variance recursion into the average of
+$(A^{r-1})^2((\tau^r)^2-1)$ and the average of $(A^{r-1})^2-1$.
+Jensen bounds the first square, while independence of child cavities
+and exact coefficient normalization bound the second by a constant
+over $D$. The moment recursion also gives
+$\mathbb E(u_{i\to j}^r)^2\le K^{2r}$.
+
+Splitting off the missing neighbour as in the source gives
+$\mathbb E|u_i^r-u_{i\to j}^r|^2\le4K^{2r}/k$.
+Subtract the node and directed-edge Euler recursions. Their equal
+initial states and the drift Lipschitz bound give
+$$
+\mathbb E|x_i^r-x_{i\to j}^r|^2\le d_r/k,
+\quad d_0=0,\qquad
+d_{r+1}=2(1+\delta L_b)^2d_r+8\delta K^{2(r+1)}.
+$$
+The bound
+$\|B_i^r-A_{i\to j}^r\|_2\le L_a\sqrt{d_r/k}$
+now uses spatial Lipschitzness of $a$. This property is invoked in the
+proof of EAMS Lemma 4.2 but omitted from the printed hypotheses of
+Theorem 4.1; it is available in the QAOA manuscript's compact-strip application.
+
+For $s=\ell-1$, the adjacent-time summand of Proposition 2.1 is
+$$
+Q_s=\mathbb E[A_{v\to o}^{s-1}(u_{v\to o}^s)^2B_v^{s-1}B_o^s].
+$$
+Let $\mathcal G_{i\to j}^{r,+}$ be the labels within distance $r$
+of $i$ in its cavity after removing edge $ij$. Condition on
+$\mathcal G_{v\to o}^{s-1,+}\vee\mathcal G_{o\to v}^{s,+}$.
+The three coefficient factors are measurable there: their vertex balls
+split into these two disjoint cavity balls. The newest layer driving
+$u_{v\to o}^s$ is outside this field; adding the initial label at $v$
+to the source's minus field does not change the conditional law, since
+that message and its variance exclude that label. Conditioning therefore replaces $(u_{v\to o}^s)^2-1$ by $(\tau_{v\to o}^s)^2-1$.
+Its contribution is bounded by $K^3\sqrt{V_s/D}$. Replacing the two
+node coefficients by directed-edge coefficients then costs at most
+$K^2L_a(\sqrt{d_{s-1}}+\sqrt{d_s})/\sqrt k$.
+The two directed-edge trees are independent; exact normalization
+reduces their product expectation to $\mathbb E A_{o\to v}^s$.
+One final comparison with $\mathbb E B_o^s$ proves
+$$
+|Q_s-\mathbb E B_o^s|\le\frac{C_s}{\sqrt D},\quad
+C_s=K^3\sqrt{V_s}+K^2L_a\sqrt{d_{s-1}}
+                         +(K^2+1)L_a\sqrt{d_s}.
+$$
+For the same-time remainder in that proposition,
+$|R_\ell|\le K^{2\ell+2}$ by boundedness and Cauchy–Schwarz. Hence
+the asserted finite bound holds, for example, with
+$$
+C=2\delta\sum_{s=1}^{L-1}C_s
+                  +\delta\sum_{\ell=1}^LK^{2\ell+2}.
+$$
+No constant uniform in increasing horizon, temperature or terminal
+cutoff has been asserted.
+
+**Why the continuum value survives the correction.** The QAOA manuscript already checks
+the convergence and uniform boundedness of its finitely many
+degree-dependent normalizers, and supplies both spatial Lipschitz
+bounds, before taking the degree limit. Its limiting coefficient
+$m_r=c_{\delta,r}\mathbb E a(t_r,X_r^\delta)$ satisfies $|m_r|\le1$
+by Cauchy–Schwarz and the definition of $c_{\delta,r}$. The shifted
+and corrected sums differ exactly by
+$$
+\delta\sum_{r=2}^Lm_r-\delta\sum_{r=1}^{L-1}m_r
+=\delta(m_L-m_1),\qquad |\delta(m_L-m_1)|\le2\delta.
+$$
+Thus the error in the printed unnormalized finite theorem can grow
+like $\sqrt{k}$ at fixed mesh even though the correction disappears
+in the subsequent normalized continuum limit. The fixed-temperature
+coupling and separate strong realization in the QAOA manuscript justify that limiting
+application. These checks neither reject nor independently certify
+the whole EAMS or QAOA theorem. [OpenAI (2026b), Appendix A][q-positive].
+<!-- /passage:weighted-tree -->
+
+<!-- passage:alternative-assembly -->
 After clipping and bounded approximation, the result enters the same
 synthesis and seed-removal route as the primary construction. Its source
 dependencies and fixed-temperature choice of parameters remain separate
@@ -2844,9 +3340,53 @@ choice; it never asks for a joint limit of the temperature, message
 mesh, graph degree and circuit depth. [OpenAI (2026b), Appendix A,
 Proposition “The independent positive-temperature construction”][q-positive];
 [§6][q-assembly].
-<!-- /passage:alternative -->
+<!-- /passage:alternative-assembly -->
+
+<!-- passage:gibbs-comparison -->
+
+### 9.7.2 Finite-temperature values and exact Gibbs samples
+
+For one fixed instance, let $L_n=\max_\sigma H_{n,J}(\sigma)/n$,
+$\mathcal F_{n,\beta}=(n\beta)^{-1}\log\sum_\sigma e^{\beta H_{n,J}(\sigma)}$,
+and let $\mathcal U_{n,\beta}$ be the mean energy per spin under the
+Gibbs law proportional to $e^{\beta H_{n,J}(\sigma)}$. Then
+$$
+0\le\mathcal F_{n,\beta}-L_n\le\frac{\log2}{\beta},\qquad
+0\le L_n-\mathcal U_{n,\beta}\le\frac{\log2}{\beta}.
+$$
+The first is the log-sum bound. The second uses
+$\mathcal F=\mathcal U+S/(n\beta)$, where the Gibbs entropy satisfies
+$0\le S\le n\log2$, together with $\mathcal U\le L_n\le\mathcal F$.
+Thus both disorder averages approach $P_*$ along every joint
+$n\to\infty$, $\beta\to\infty$, by the already established
+convergence of $\mathbb E L_n$.
+
+There is also a finite probability estimate. Every configuration has
+Gaussian coefficient-vector norm $\sqrt{(n-1)/(2n^2)}$ after division
+by $n$, and their maximum has the same Lipschitz bound. Gaussian
+concentration gives, for $n\ge2$,
+$$
+\Pr_J(|L_n-\mathbb E L_n|>s)
+\le2\exp\{-n^2s^2/(n-1)\}.
+$$
+For an exact Gibbs draw $\Sigma^{\rm G}$, count the at most $2^n$
+configurations with deficit at least $s$ and bound the partition sum
+below by its maximal term. This gives, for every instance,
+$$
+\Pr\{H_{n,J}(\Sigma^{\rm G})/n\le L_n-s\mid J\}
+\le\min\{1,e^{n(\log2-\beta s)}\}.
+$$
+The lower tail below $P_*-s$ is bounded by
+$\Pr_J(L_n<P_*-s/2)+\min\{1,e^{n(\log2-\beta s/2)}\}$;
+the upper tail is at most the upper tail of $L_n$. Hence an exact
+Gibbs sample also approaches $P_*$ in joint probability. These are
+elementary scalar consequences of the Gibbs law, entropy and Gaussian
+concentration. They supply neither an efficient sampler nor QAOA angles;
+the Born law in the next subsection is a separate distribution.
+<!-- /passage:gibbs-comparison -->
 
 <!-- passage:qaoa-quantifiers -->
+
 ### 9.8 What is averaged, and a fixed-word probability consequence
 
 The theorem in §9 is an existence statement about limiting expected
@@ -2880,6 +3420,14 @@ $$
 \Pr_{J,\Sigma}(|E_n-v_W|>s)\longrightarrow0
 \quad(s>0).
 $$
+The law of total variance separates what vanishes:
+$$
+\mathbb E(E_n-v_W)^2=
+\mathbb E_J\operatorname{Var}(E_n\mid J)
+ +\mathbb E_J(\overline E_n(J)-v_W)^2.
+$$
+Both terms are nonnegative and hence tend to zero. Concentration of the
+conditional mean alone would not control a measured string.
 This is the elementary second-moment deduction from [Farhi et al.,
 arXiv:1910.08187v4, §4, equations (13)–(22)][fggz].
 
@@ -2904,6 +3452,18 @@ probability for most disorder instances, in this precise sense. No
 claim is made for every instance, for arbitrarily varying depths, or
 with a quantitative size threshold.
 
+For $K$ fresh state preparations at the same disorder instance, the
+conditional failures are independent, so their joint failure probability
+is $\mathbb E_J b_n(J)^K$, not $(\mathbb E_J b_n(J))^K$.
+A fraction $\alpha$ of instances that always fail gives $\alpha$ for
+the former at every $K$. A bound $b_n(J)\le\tau$ on a particular
+instance does give $\tau^K$ there. Repeatedly measuring an already
+collapsed state is a different experiment.
+
+<!-- /passage:qaoa-quantifiers -->
+
+<!-- passage:qaoa-depth -->
+
 ### 9.9 Depth, angle choice and the order of quantifiers
 
 The complete witness is a finite ordered word, including every real
@@ -2926,20 +3486,23 @@ arXiv:2302.04968v1, Theorem 12][binkowski] fixes the optimization
 problem before selecting a sufficiently long circuit. It does not
 replace the construction of a size-independent word here.
 
-There is a narrower diagonal consequence. Choose a word $W_k$ with
-$v_{W_k}\ge P_*-1/k$. Its fixed-word convergence supplies a finite
-threshold $N_k$ beyond which its expected energy per spin is at least
-$P_*-2/k$. Increase the thresholds if necessary, and use $W_k$ for
-$N_k\le n<N_{k+1}$. Identity padding can make the selected depths
-increase. This nonconstructive schedule approaches $P_*$. In fact, for any
-prescribed integer depth allowance $d(n)\to\infty$, enlarge $N_k$ until
-$d(n)\ge\operatorname{depth}(W_k)$ for every $n\ge N_k$, as well as the
-fixed-word energy estimate. On $[N_k,N_{k+1})$, pad $W_k$ with zero-angle
-layers to depth $d(n)$. Padding changes no state, so the resulting family
-still approaches $P_*$. Its angle family is selected by this existence
-argument; it supplies neither effective thresholds nor convergence of an
-independently prescribed family of nonzero angles. The theorem's fixed-word construction and
-this diagonal deduction must not be confused with exchanging limits.
+There is a narrower diagonal consequence for sampled output. Choose
+$W_k$ with $P_*-1/k\le v_{W_k}\le P_*$. Fixed-word second-moment
+convergence supplies $N_k$ so that, for every $n\ge N_k$,
+$\mathbb E(E_n(W_k)-v_{W_k})^2\le k^{-2}$. Given any prescribed
+integer depth allowance $d(n)\to\infty$, enlarge these strictly
+increasing thresholds until $d(n)\ge\operatorname{depth}(W_k)$
+for every $n\ge N_k$. On $N_k\le n<N_{k+1}$, use $W_k$ padded
+with zero-angle layers to depth $d(n)$. Padding changes no state, and
+$$
+\mathbb E(E_n(W_k)-P_*)^2\le
+2\mathbb E(E_n(W_k)-v_{W_k})^2+2(v_{W_k}-P_*)^2\le4/k^2.
+$$
+Thus a suitable schedule approaches the optimum in joint $L^2$, even
+under an arbitrarily slowly diverging allowance. The word family and
+thresholds are selected nonconstructively. This says nothing about an
+independently prescribed family of nonzero angles, and is not an
+interchange of limits or an effective depth bound.
 
 Nor does a supremum over angles assert that an optimizing angle vector
 exists at any particular depth. The proof constructs a sufficiently
@@ -2968,6 +3531,27 @@ construction here** is not a claim that the wider literature contains
 none.
 
 The statement is specific to the quadratic, zero-field SK model.
+The pure even higher-spin model has a different thermodynamic-first
+conclusion. For every even interaction order $q\ge4$, [Basso,
+Gamarnik, Mei and Zhou, arXiv:2204.10306v2, Theorem 4, (3.15),
+and its proof in §4.2](https://arxiv.org/abs/2204.10306v2) show
+$$
+v_p^{(q)}(\boldsymbol\theta,\boldsymbol\beta)
+\le\eta_{\mathrm{OGP}}(G_q)<\eta_{\mathrm{OPT}}(G_q)
+$$
+for every finite $p$ and every fixed angle vector, in that source's
+normalization. The same ceiling bounds their supremum over all finite
+$p$ and angles. The proof combines its dense–sparse value identity
+with the coupled-overlap-gap obstruction of [Chou, Love, Sandhu and Shi,
+arXiv:2108.06049v3, Parameter 4.1 and Corollary 4.4](https://arxiv.org/abs/2108.06049v3).
+That local-algorithm obstruction applies to sparse random signed
+Max-$q$-XOR for even $q\ge4$, at sufficiently large fixed degree and
+under the source's logarithmic-depth bound. The Basso–Gamarnik–Mei–Zhou
+transfer above only needs the resulting obstruction at each fixed depth.
+It requires no interchange of depth and system size. The exclusion
+$q\ge4$ is essential; this is not an obstruction for the SK two-spin
+model treated here.
+
 For comparison, [Goh, arXiv:2404.06087v6, Theorem 4.2 and
 Corollary 4.2.1][goh], treats even interaction order at least four.
 Its logarithmic-depth obstruction concerns sparse random-regular
@@ -3007,12 +3591,23 @@ $$
 $$
 Size goes to infinity first at fixed degree and word. The probability is
 over the random graph; the cut fraction has already averaged the quantum
-measurement. The argument counts edges with nontree neighbourhoods and
-separately uses the asymptotic random-regular optimum. A high-girth lower
-bound alone would not prove optimality on every high-girth graph. See [OpenAI
+measurement. For fixed $D,p$, [McKay, Wormald and Wysocka (2004),
+Theorem 1](https://doi.org/10.37236/1819), gives tight counts of cycles
+of lengths at most $2p+3$. Every edge with a nontree neighbourhood is
+within bounded distance of one of these cycles, so their fraction tends
+to zero. The optimum is supplied separately by [Dembo, Montanari and
+Sen, arXiv:1503.03923v2, Theorem 1.6(b)](https://arxiv.org/abs/1503.03923v2):
+dividing their cut size per vertex by $(D+1)/2$ gives the leading cut
+fraction $1/2+P_*/\sqrt{D+1}$, with an error $o(D^{-1/2})$ in the
+stated iterated regime. A high-girth lower bound alone would not prove
+optimality on every high-girth graph. See [OpenAI
 (2026b), Corollary 1.2 and its complete proof][q-maxcut]. This separate
 consequence is recorded to preserve the source's scope; it is not a
 new selected formal endpoint or a joint size–degree limit.
+
+<!-- /passage:qaoa-depth -->
+
+<!-- passage:qaoa-finite-size -->
 
 ### 9.11 A later finite-size estimate and its limited depth consequence
 
@@ -3060,14 +3655,17 @@ $$
 \log R_p=4p\log p+O(p),\qquad
 \log\log T_p=4p\log p+O(p+\log p).
 $$
-Thus $p\log p=o(\log\log n)$ is a sufficient regime for this bound
-to compare bounded-cost-angle words with their infinite-size values.
+Consequently, for any deterministic sequence of words $W_n$ with
+depths $p(n)\to\infty$, one common cost-angle bound $\Gamma$,
+and $p(n)\log p(n)=o(\log\log n)$, the displayed hypotheses hold
+and $|\nu_n(W_n)-\nu_\infty(W_n)|\le e^{-p(n)^2}$ eventually.
+This is a uniform comparison along that specified bounded-angle class.
 It does not establish that the near-optimal words constructed in §9.6
 have a uniform cost-angle bound, that their angles can be found
 efficiently, or that a quantum measurement concentrates for this
 growing-depth regime. The fixed-word second-moment theorem in §9.8
 has separate quantifiers.
-<!-- /passage:qaoa-quantifiers -->
+<!-- /passage:qaoa-finite-size -->
 
 <a id="obligations"></a>
 
@@ -3164,6 +3762,26 @@ are recorded in the companion source review. This remains a draft after source-b
 
 ## References
 
+- Auffinger and Chen (2015), “On properties of Parisi measures,”
+  *Probability Theory and Related Fields* **161**, 817–850. Inspected
+  preprint: [arXiv:1303.3573v1](https://arxiv.org/abs/1303.3573v1).
+- Farhi, Goldstone and Gutmann (2014), *A Quantum Approximate Optimization
+  Algorithm*, [arXiv:1411.4028v1](https://arxiv.org/abs/1411.4028v1).
+- Binkowski, Koßmann, Ziegler and Schwonnek (2023), *Elementary Proof of
+  QAOA Convergence*, [arXiv:2302.04968v1](https://arxiv.org/abs/2302.04968v1).
+- Basso, Gamarnik, Mei and Zhou (2022), *Performance and limitations of
+  the QAOA at constant levels on large sparse hypergraphs and spin glass
+  models*, [arXiv:2204.10306v2](https://arxiv.org/abs/2204.10306v2).
+- Boulebnane, Khan, Liu, Larson, Herman, Shaydulin and Pistoia (2026),
+  *Spin–Boson Mapping of the Quantum Approximate Optimization Algorithm*,
+  [arXiv:2505.07929v2](https://arxiv.org/abs/2505.07929v2).
+- Boulebnane, Khan, Subrahmanya, Herman, Farhi, Villalonga and Shaydulin
+  (2026), *Decoupling of the QAOA into independent spin-boson systems and
+  high-depth performance on pure and mixed spin glasses*,
+  [arXiv 2609.40309, version 1](https://arxiv.org/abs/2609.40309v1).
+- Goh (2025), *The Overlap Gap Property limits limit swapping in the
+  QAOA*, [arXiv:2404.06087v6](https://arxiv.org/abs/2404.06087v6).
+
 - OpenAI (2026a), *Full support of the zero-temperature
   Sherrington–Kirkpatrick order parameter*, manuscript, 27 September 2026.
 - OpenAI (2026b), *QAOA attains the SK ground-state energy in the
@@ -3203,7 +3821,42 @@ are recorded in the companion source review. This remains a draft after source-b
   Sherrington–Kirkpatrick model at low temperature,” *Communications on
   Pure and Applied Mathematics* **79**, 1746–1770.
 
+- Sellke (2021), *Optimizing Mean Field Spin Glasses with External
+  Field*, [arXiv:2105.03506v4](https://arxiv.org/abs/2105.03506v4).
+- Jekel, Sandhu and Shi (2026), *Potential Hessian Ascent: The
+  Sherrington–Kirkpatrick Model*,
+  [arXiv:2408.02360v3](https://arxiv.org/abs/2408.02360v3).
+- Chou, Love, Sandhu and Shi (2022), *Limitations of Local Quantum
+  Algorithms on Random Max-k-XOR and Beyond*,
+  [arXiv:2108.06049v3](https://arxiv.org/abs/2108.06049v3).
+- Lopatto (2026), *Full replica symmetry breaking in the
+  Sherrington–Kirkpatrick model*,
+  [arXiv:2607.11756v4](https://arxiv.org/abs/2607.11756v4).
+  This later comparison is distinct from the v3 input cited above.
+- Lopatto (2026), *Parisi measure of the Sherrington–Kirkpatrick model
+  with external field*, [arXiv:2610.00127v1](https://arxiv.org/abs/2610.00127v1).
+- Jones and Knill (1999), “Efficient Refocussing of One Spin and Two
+  Spin Interactions for NMR Quantum Computation,” *Journal of Magnetic
+  Resonance* **141**, 322–325. Inspected preprint:
+  [arXiv:quant-ph/9905008v1](https://arxiv.org/abs/quant-ph/9905008v1).
+- Li and Khaneja (2005), *Noncommuting vector fields, polynomial
+  approximations and control of inhomogeneous quantum ensembles*,
+  [arXiv:quant-ph/0510012v1](https://arxiv.org/abs/quant-ph/0510012v1).
+- Talagrand (2006), “The Parisi formula,” *Annals of Mathematics*
+  **163**, 221–263. [Published article](https://doi.org/10.4007/annals.2006.163.221).
+- Dembo, Montanari and Sen (2017), “Extremal Cuts of Sparse Random
+  Graphs,” *Annals of Probability* **45**, 1190–1217. Inspected
+  preprint: [arXiv:1503.03923v2](https://arxiv.org/abs/1503.03923v2).
+- McKay, Wormald and Wysocka (2004), “Short Cycles in Random Regular
+  Graphs,” *Electronic Journal of Combinatorics* **11**, R66.
+  [Published article](https://doi.org/10.37236/1819).
 
+- de Moura and Ullrich (2021), “The Lean 4 Theorem Prover and
+  Programming Language,” *CADE 28*, 625–635.
+  [Published article](https://doi.org/10.1007/978-3-030-79876-5_37).
+- The mathlib Community (2020), “The Lean Mathematical Library,”
+  *CPP 2020*, 367–381.
+  [Published article](https://doi.org/10.1145/3372885.3373824).
 
 [scope]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
 [support-type]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean#L81-L92

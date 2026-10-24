@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 import json
 import sys
+import textwrap
 from pathlib import Path
 
 from .bundle import STAGES, check_bundle, export_bundle, scaffold
@@ -50,6 +52,8 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--relation", choices=("direct", "prerequisites"), default="direct",
                      help="Match direct mapping fields or their recorded prerequisite reachability")
     cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256 (64 lowercase hex characters)")
+    cmd.add_argument("--format", choices=("json", "text"), default="json",
+                     help="Full JSON (default), or a reader summary of the same validated query")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -151,6 +155,113 @@ def run(args):
     raise ContractError("unknown command")
 
 
+def _display_text(value: str) -> str:
+    """Keep source text on one terminal line without interpreting controls."""
+    return "".join(
+        f"\\u{ord(character):04x}" if ord(character) < 32 or 127 <= ord(character) < 160
+        or character in "\u2028\u2029\u202a\u202b\u202c\u202d\u202e\u2066\u2067\u2068\u2069"
+        else character for character in value
+    )
+
+
+def _paper_query_text(result: dict) -> str:
+    """A presentation of one query result; never re-read or re-query its input.
+
+    The public JSON response, cache identity and evidence remain authoritative.
+    This navigation summary intentionally omits full prose and source records.
+    """
+    display = _display_text
+
+    def names(values):
+        return ", ".join(display(value) for value in values) or "(none recorded)"
+
+    def span(value):
+        return (f"bytes [{value['start_byte']}, {value['end_byte']}); "
+                f"lines {value['start_line']}-{value['end_line']}")
+
+    lines = [
+        "Paper query: reader summary of recorded correspondence",
+        "Full passage text, source records and evidence details: use --format json (the default).",
+        f"Manifest SHA-256: {result['snapshot']['manifest_sha256']}",
+        f"Graph SHA-256: {result['snapshot']['graph_sha256']}",
+        f"Relation: {result['query']['relation']}; matched passages: {result['match_count']}",
+        "Semantic certification: false; completeness beyond recorded relations: unknown.",
+        f"Recorded extraction: {display(result['coverage']['recorded_extraction_status'])}; "
+        "external source/receipt bytes opened by this query: false.",
+        "Witnesses show recorded paths; a mapping or path is not a proof or an explanation-quality judgment.",
+    ]
+    if result['match_count'] == 0:
+        lines.append(display(result['coverage']['empty_result_meaning']))
+    evidence = {}
+    for paper in result['papers']:
+        view = paper['view']
+        passages = {p['anchor']: p for p in view['paper']['passages']}
+        boundary = paper['support_boundary']
+        lines.extend([
+            "", f"{paper['stage']}: {len(paper['matches'])} matching passage(s); "
+            f"paper state {view['state']}; review state {view['review_state']}",
+        ])
+        for match in paper['matches']:
+            passage = passages[match['anchor']]
+            lines.extend([
+                f"  {display(match['anchor'])} ({span(passage['content_span'])})",
+                f"    Mapping class: {display(match['evidence_class'])}",
+                f"    Mapping rationale: {display(passage['rationale'])}",
+            ])
+            for witness in match['witnesses']:
+                route = display(witness['root_node_id'])
+                for link in witness['links']:
+                    route += f" --{link['kind']}--> {display(link['to_node_id'])}"
+                if not witness['links']:
+                    route += " (direct mapping)"
+                lines.append(f"    Recorded path from {witness['root_mapping_field']}: {route}")
+            for overlap in match['section_overlaps']:
+                lines.append(f"    Selected section overlap: {span(overlap['overlap_span'])}")
+            if match['whole_passage_extends_beyond_selected_sections']:
+                lines.append("    The whole matched passage extends beyond the selected section(s); its requirements are retained.")
+        additional = sorted(set(boundary['retained_node_ids']) - set(boundary['seed_node_ids']))
+        lines.extend([
+            f"  Mapped claims: {names(boundary['mapped_claim_ids'])}",
+            f"  Mapped assumptions: {names(boundary['mapped_assumption_ids'])}",
+            f"  Additional recorded prerequisites ({len(additional)}): {names(additional)}",
+            f"  Required assumption records: {names(boundary['required_assumption_ids'])}",
+            f"  Unresolved-status records in this closure: {len(boundary['unresolved_node_ids'])}",
+            f"  Graph nodes outside this closure: {len(boundary['outside_closure_node_ids'])} "
+            "(retained in the bundle; not inferred irrelevant).",
+            f"  Other mapped passages outside this selection: {names(view['selection']['omitted_by_selector'])}",
+            "  Unmapped prose remains in the paper; no mathematical coverage is inferred for it.",
+        ])
+        for row in view['graph']['records']['evidence']:
+            evidence[row['ref']] = row['record']
+    grouped = defaultdict(list)
+    for record in evidence.values():
+        grouped[(record['kind'], record['status'])].append(record)
+    lines.extend([
+        "", "Evidence associated with the selected closures (distinct records, not proof verdicts):",
+        "Associated means referenced by a retained node/link or naming a retained subject. A record may also "
+        "name outside subjects; those subjects are not added as prerequisites.",
+    ])
+    if not grouped:
+        lines.append("  (none recorded for these selections; no check is inferred to have run)")
+    for (kind, status), records in sorted(grouped.items()):
+        records.sort(key=lambda row: row['id'])
+        lines.append(f"  {kind} / {status}: {len(records)}; {names([r['id'] for r in records])}")
+        if kind in {"comparator", "lean_build", "extraction", "platform_observation"}:
+            for record in records:
+                lines.append(f"    {display(record['id'])}: {display(record['details'])}")
+                receipt = record.get('receipt', {})
+                observations = [f"{field}={display(str(receipt[field]))}"
+                                for field in ('status', 'process_status') if field in receipt]
+                if observations:
+                    lines.append("      Recorded receipt: " + ", ".join(observations))
+    lines.append("Other evidence remains in the bundle. Successful byte checks do not accept mathematics or a reader's understanding.")
+    return "\n".join(
+        textwrap.fill(line, width=110, subsequent_indent=" " * (len(line) - len(line.lstrip()) + 2),
+                      break_long_words=False, break_on_hyphens=False)
+        if line else "" for line in lines
+    )
+
+
 def main(argv=None) -> int:
     args = parser().parse_args(argv)
     try:
@@ -161,7 +272,10 @@ def main(argv=None) -> int:
     except (ContractError, OSError, ValueError, KeyError, TypeError) as exc:
         print(json.dumps({"error": str(exc)}, indent=2), file=sys.stderr)
         return 1
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    if args.command == "query-papers" and args.format == "text":
+        print(_paper_query_text(result))
+    else:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
     return 0
 
 

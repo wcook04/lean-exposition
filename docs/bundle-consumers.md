@@ -8,7 +8,51 @@ The [independent example](../examples/consumer/README.md) reads an exported ZIP
 with Python's standard library. The installed package additionally validates the
 graph and passage contracts.
 
-## Select and inspect
+## Start with the authored support theorem
+
+From the repository root, install the package and assemble the supplied papers
+into a fresh directory:
+
+```sh
+python -m pip install -e .
+lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
+  --long papers/qaoa-sk/long/reasoning-record.md papers/qaoa-sk/long/reasoning-record.json \
+  --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
+  --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
+  --out build/qaoa-sk-authored
+lean-exposition check-bundle build/qaoa-sk-authored
+lean-exposition query-papers build/qaoa-sk-authored \
+  --paper short --passage main-result --format text
+```
+
+The query opens the support theorem's recorded claims and assumptions, then
+shows their additional prerequisites and associated evidence. It identifies
+the exact manifest and graph edition. A failed build, an unperformed check
+and a passed source-byte audit remain different observations. The query does
+not open external source or receipt bytes, and a valid mapping does not
+certify its mathematical interpretation.
+
+To find the different accounts of an ingredient, compare direct correspondence
+with recorded prerequisite use:
+
+```sh
+lean-exposition query-papers build/qaoa-sk-authored \
+  --node support.positive_curvature --format text
+lean-exposition query-papers build/qaoa-sk-authored \
+  --node support.positive_curvature --relation prerequisites --format text
+lean-exposition export build/qaoa-sk-authored --out build/qaoa-sk-authored.zip
+lean-exposition query-papers build/qaoa-sk-authored.zip \
+  --paper short --passage main-result --format text
+```
+
+The prerequisite query returns a typed witness path. A passage can use
+curvature without explaining its proof. Directory and exported ZIP queries
+have the same semantics. Keep the displayed manifest digest with a review
+request, and pass it using `--expect-manifest` when reopening that edition.
+The [architectural companion](../papers/architecture/paper.md) follows this
+route through the mathematical argument and its checking records.
+
+## Select a graph or start new documents
 
 ```sh
 lean-exposition inspect examples/qaoa-sk/evidence-graph.json
@@ -284,7 +328,23 @@ lean-exposition query-papers build/qaoa-sk-authored --paper short --passage gap-
 lean-exposition query-papers build/qaoa-sk-authored --node assumptions.full_support_minimizer --relation prerequisites
 ```
 
+Add `--format text` for a wrapped reader summary. The JSON default retains
+the complete query shape, including full passage text and source records.
+Both formats use one validated capture. The summary reports every matching
+anchor and witness, separates mapped roots from additional prerequisites,
+and groups evidence by its original kind and status. Evidence associated
+with a selected subject can also name outside subjects; this does not add
+those other subjects as prerequisites. Source-supplied terminal controls
+are escaped in the text presentation.
+
 `query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage and section selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. An explicitly empty list selects nothing, while an omitted selector adds no filter.
+
+Paper view and query format `0.1.1` corrects navigation for bare-CR and mixed
+line endings: CRLF counts once, and bare CR or LF each count once. YAML front
+matter is excluded for all three endings. Exact bytes, byte spans and hashes
+are preserved; LF and CRLF paper behavior is unchanged. The paper-query cache
+namespace includes this version, so old derived navigation is not reused.
+The graph-view and eight-file bundle formats remain `0.1.0`.
 
 Use a section's exact `ref` from the returned outline with `section_refs=[ref]` or `--section REF`. Titles can repeat, and offsets can move after edits. Unknown or stale references fail; the API does not guess a replacement. A section matches every passage with a content-span overlap containing non-whitespace text; a blank line before a heading does not select the next passage. The returned passage keeps its full mapping and prerequisites; `section_overlaps` identifies the exact intersection, and `whole_passage_extends_beyond_selected_sections` exposes a passage crossing the chosen boundary. This prevents a paragraph selection from silently dropping conditions elsewhere in its mapped passage.
 

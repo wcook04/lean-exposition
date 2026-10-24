@@ -86,6 +86,14 @@ assumptions, citations and evidence. Account for an unexplained bridge as
 unresolved. Do not treat a bibliography or a document-wide ID list as proof
 that every passage has support.
 
+Check a worked example against the hypotheses of each directly selected claim.
+An example using an admissible coefficient that is not a minimiser may illustrate
+conditional rounding, but it does not instantiate a convergence theorem whose
+premise is minimality. Select the applicable claim and explain the contrast in
+the rationale. Setting `evidence_class: example` does not remove assumptions
+inherited through the selected graph relations. Inspect the resulting passage
+query as well as the prose after changing its map.
+
 In the current graph schema, a citation's `source_id` resolves its version and
 hash through the source record, while `locator` identifies the theorem, section
 or passage. Put the citation's local role in the prose and passage `rationale`.

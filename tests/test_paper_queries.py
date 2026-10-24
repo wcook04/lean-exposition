@@ -61,6 +61,34 @@ class PaperQueryTests(unittest.TestCase):
     def fixture(self, temporary, **kwargs):
         return authored_bundle(Path(temporary), **kwargs)
 
+    def test_line_endings_preserve_outline_navigation_and_exact_source_bytes(self):
+        for style in ('lf', 'crlf', 'cr', 'mixed'):
+            with self.subTest(style=style), tempfile.TemporaryDirectory() as temporary:
+                root = self.fixture(temporary)
+                original = (root / 'papers/short.md').read_bytes()
+                endings = {'lf': [b'\n'], 'crlf': [b'\r\n'], 'cr': [b'\r'],
+                           'mixed': [b'\r\n', b'\r', b'\n']}[style]
+                content = b''.join(line + endings[index % len(endings)]
+                                   for index, line in enumerate(original.splitlines()))
+                rebind(root, content=content)
+                view = project_paper(root, 'short')
+                sections = view['paper']['sections']
+                self.assertEqual([s['title'] for s in sections], ['Paper', 'Result', 'Result'])
+                self.assertEqual([s['heading_span']['start_line'] for s in sections], [5, 9, 13])
+                self.assertEqual([s['heading_span']['end_line'] for s in sections], [5, 9, 13])
+                self.assertEqual(view['paper']['line_count'], 17)
+                passages = view['paper']['passages']
+                self.assertEqual([(p['content_span']['start_line'], p['content_span']['end_line'])
+                                  for p in passages], [(10, 11), (14, 15)])
+                for passage in passages:
+                    span = passage['content_span']
+                    self.assertEqual(content[span['start_byte']:span['end_byte']].decode(),
+                                     passage['text'])
+                self.assertEqual((root / 'papers/short.md').read_bytes(), content)
+                self.assertEqual(view['bundle']['markdown_sha256'], digest(content))
+                query = query_papers(root, stage='short', section_refs=[sections[-1]['ref']])
+                self.assertEqual([m['anchor'] for m in query['papers'][0]['matches']], ['result'])
+
     def test_direct_and_prerequisite_matches_have_different_warrants(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = self.fixture(temporary)
@@ -293,6 +321,132 @@ class PaperQueryTests(unittest.TestCase):
                 status = main(['query-papers', str(root), '--passage', 'result'])
             self.assertEqual(status, 1)
             self.assertIn('require one paper stage', errors.getvalue())
+
+    def test_text_summary_keeps_json_default_and_uses_one_validated_capture(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self.fixture(temporary, formalization=True)
+            args = ['query-papers', str(root), '--paper', 'short', '--passage', 'result']
+            expected = query_papers(root, stage='short', passages=['result'])
+            for format_args in ([], ['--format', 'json']):
+                output = io.StringIO()
+                with contextlib.redirect_stdout(output):
+                    status = main(args + format_args)
+                self.assertEqual(status, 0)
+                self.assertEqual(output.getvalue(), json.dumps(expected, indent=2, ensure_ascii=False) + '\n')
+            output = io.StringIO()
+            with patch.object(consumer, 'load_bundle', wraps=consumer.load_bundle) as load, \
+                    contextlib.redirect_stdout(output):
+                status = main(args + ['--format', 'text'])
+                self.assertEqual(load.call_count, 1)
+            self.assertEqual(status, 0)
+            summary = output.getvalue()
+            self.assertIn(expected['snapshot']['manifest_sha256'], summary)
+            self.assertIn('result (bytes [', summary)
+            self.assertIn('paper state draft; review state not_reviewed', summary)
+            self.assertIn('Mapped claims: goal', summary)
+            self.assertIn('Mapped assumptions: assumption', summary)
+            self.assertIn('Additional recorded prerequisites (2): decl, prerequisite', summary)
+            self.assertIn('source_hash / failed: 1; historical-failure', summary)
+            self.assertIn('completeness beyond recorded relations: unknown', summary)
+            self.assertIn('external source/receipt bytes opened by this query: false', summary)
+            self.assertIn('Other mapped passages outside this selection: premise', summary)
+
+    def test_text_summary_shows_cross_paper_witnesses_and_example_rationale(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self.fixture(temporary)
+            mapping_path = root / 'papers/short.json'
+            mapping = json.loads(mapping_path.read_bytes())
+            mapping['passages'][0]['evidence_class'] = 'example'
+            mapping['passages'][0]['rationale'] = 'Teaching illustration; not a proof premise.'
+            write_json(mapping_path, mapping)
+            rebind(root, copy_short_to_long=True)
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                status = main(['query-papers', str(root), '--node', 'prerequisite',
+                               '--relation', 'prerequisites', '--format', 'text'])
+            self.assertEqual(status, 0)
+            summary = output.getvalue()
+            self.assertIn('matched passages: 4', summary)
+            self.assertIn('long: 2 matching passage(s)', summary)
+            self.assertIn('short: 2 matching passage(s)', summary)
+            self.assertIn('expository: 0 matching passage(s)', summary)
+            self.assertIn('Mapping class: example', summary)
+            self.assertIn('Mapping rationale: Teaching illustration; not a proof premise.', summary)
+            self.assertIn('Recorded path from claim_ids: goal --supports--> prerequisite', summary)
+            self.assertIn('prerequisite (direct mapping)', summary)
+
+    def test_text_summary_does_not_collapse_failed_unavailable_and_not_run(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self.fixture(temporary)
+            graph = json.loads((root / 'graph.json').read_bytes())
+            graph['nodes'].append({'id': 'outside-subject', 'kind': 'claim', 'label': 'Outside subject',
+                                   'status': 'open', 'assumption_ids': [], 'citation_ids': [],
+                                   'evidence_ids': []})
+            for identity, status in [('failure', 'failed'), ('pending', 'not_run'), ('unavailable', 'unavailable')]:
+                graph['evidence'].append({
+                    'id': identity, 'kind': 'comparator', 'status': status,
+                    'command': [], 'tool': 'synthetic fixture', 'source_ids': ['public'],
+                    'subject_ids': ['goal', 'outside-subject'], 'details': f'Synthetic {status} observation only.',
+                })
+            graph['evidence'][-1]['receipt'] = {'status': 'timed_out', 'process_status': 'timed_out'}
+            rebind(root, graph=graph)
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                status = main(['query-papers', str(root), '--paper', 'short',
+                               '--passage', 'result', '--format', 'text'])
+            self.assertEqual(status, 0)
+            summary = output.getvalue()
+            for identity, state in [('failure', 'failed'), ('pending', 'not_run'), ('unavailable', 'unavailable')]:
+                self.assertIn(f'comparator / {state}: 1; {identity}', summary)
+                self.assertIn(f'{identity}: Synthetic {state} observation only.', summary)
+            self.assertIn('Recorded receipt: status=timed_out, process_status=timed_out', summary)
+            self.assertIn('Semantic certification: false', summary)
+            self.assertIn('those subjects are not added as prerequisites', ' '.join(summary.split()))
+            self.assertIn('Graph nodes outside this closure: 1', summary)
+            projected = query_papers(root, stage='short', passages=['result'])['papers'][0]
+            self.assertNotIn('outside-subject', projected['support_boundary']['retained_node_ids'])
+            self.assertIn('outside-subject', projected['support_boundary']['outside_closure_node_ids'])
+
+    def test_text_summary_explains_empty_match_and_preserves_stale_error(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self.fixture(temporary)
+            output, errors = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                status = main(['query-papers', str(root), '--paper', 'short', '--passage',
+                               'premise', '--node', 'goal', '--format', 'text'])
+            self.assertEqual(status, 0)
+            self.assertEqual(errors.getvalue(), '')
+            self.assertIn('matched passages: 0', output.getvalue())
+            self.assertIn('zero matches do not establish independence', ' '.join(output.getvalue().split()))
+            self.assertIn('no check is inferred to have run', output.getvalue())
+            (root / 'papers/short.md').write_bytes(b'Unchecked text change.\n')
+            errors_by_format = []
+            for output_format in ('json', 'text'):
+                output, errors = io.StringIO(), io.StringIO()
+                with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                    status = main(['query-papers', str(root), '--format', output_format])
+                self.assertEqual(status, 1)
+                self.assertEqual(output.getvalue(), '')
+                errors_by_format.append(json.loads(errors.getvalue()))
+            self.assertEqual(*errors_by_format)
+            self.assertIn('hash mismatch', errors_by_format[0]['error'])
+
+    def test_text_summary_escapes_source_control_characters(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self.fixture(temporary)
+            path = root / 'papers/short.json'
+            mapping = json.loads(path.read_bytes())
+            mapping['passages'][0]['rationale'] = 'Source text: \x1b[2J\n\u202eexample'
+            write_json(path, mapping)
+            rebind(root)
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                status = main(['query-papers', str(root), '--paper', 'short',
+                               '--passage', 'result', '--format', 'text'])
+            self.assertEqual(status, 0)
+            self.assertNotIn('\x1b', output.getvalue())
+            self.assertNotIn('\u202e', output.getvalue())
+            self.assertIn(r'Source text: \u001b[2J\u000a\u202eexample', output.getvalue())
 
 
 if __name__ == '__main__':

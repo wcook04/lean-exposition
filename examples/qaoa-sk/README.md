@@ -81,8 +81,13 @@ The recorded 23 October 2026 run passed all 387 source and two derived-file
 hash checks, and all nine dependency-pin comparisons. Lean `v4.34.1` and the
 standalone Comparator tools were unavailable on that host. The attempted
 full-support Comparator invocation could not start because `comparator` was
-not installed. No research-corpus build, extraction, axiom audit or statement
-comparison was performed; the scalar-value Comparator invocation remains unrun.
+not installed. That early invocation performed no research build, extraction,
+axiom audit or statement comparison. Later retained invocations built and
+exported both admitted challenges, then failed during their solution builds:
+see the [full-support observation](verification/full-support-build-failure-20261023.json)
+and [scalar-value observation](verification/scalar-value-build-failure-20261024.json).
+Neither reached solution export, kernel checking or comparison. Both used the
+pre-repair configuration; the corrected input edition remains unreplayed.
 
 A later [Linux tool-validation receipt](verification/linux-4341-tool-validation.json)
 records completed checks on disposable Lean `v4.34.1` tool copies: four positive
@@ -108,8 +113,10 @@ lake env comparator ComparatorChallenges/SKValue.json
 
 Both configurations permit only `propext`, `Quot.sound`, and `Classical.choice`; `enable_nanoda` is false. A successful build, a Comparator result, and a mathematical review answer different questions and should have separate receipts.
 
-The historical published Comparator/exporter pair is pinned to Lean `v4.34.0`;
-compatibility with this corpus's `v4.34.1` has not been tested here. The commands
+The historical published Comparator/exporter pair is pinned to Lean `v4.34.0`.
+The retained Linux receipt tests disposable copies retargeted to `v4.34.1`,
+including positive and negative fixtures; it does not accept either research
+target or authenticate the current compiled dependency closure. The commands
 above describe trusted-corpus use. See the [verification guide](../../docs/verification.md)
 for exact checker pins, source/cache limits and the additional legacy sandbox
 requirements for adversarial submissions. Do not upgrade this corpus to the

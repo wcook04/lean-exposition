@@ -21,7 +21,7 @@ contracts. It has not received independent mathematical or reader review. The
 repository's QAOA/SK papers are a worked example, not a claim that the system has
 verified their mathematical interpretation.
 
-## 1. Why keep more than a proof file?
+## 1. Start with a mathematical question
 
 A Lean theorem answers a precise question: whether a term has the type stated in
 a particular formal environment. A mathematician reading a paper asks additional
@@ -39,10 +39,21 @@ exact graph edition and records the state of review. The repository packages
 these materials for inspection; it does not generate a proof from prose or
 certify that the prose means what the author intended.
 
-The SK example makes the distinction concrete. OpenAI's full-support manuscript
-argues that an admissible minimiser of the zero-temperature Parisi functional
-for the pure SK model at zero external field has full relative Stieltjes
-support on $[0,1)$. A separate scalar-value argument
+The SK example makes the distinction concrete. An admissible order parameter
+is a nonnegative, nondecreasing, right-continuous, integrable function
+$\gamma:[0,1)\to[0,\infty)$. Its Stieltjes measure satisfies
+$\mu_\gamma([0,t])=\gamma(t)$, so an initial atom is allowed and no probability
+normalisation is imposed. The result we will follow is:
+
+**If $\gamma$ minimises the zero-temperature Parisi functional for the pure SK
+model at zero external field, then every nonempty relatively open interval in
+$[0,1)$ has positive $\mu_\gamma$ mass.** Equivalently,
+$\operatorname{supp}_{[0,1)}\mu_\gamma=[0,1)$.
+
+The short paper states this result, the long record reconstructs its proof,
+and the exposition teaches its definitions and mechanism. The original result
+and its credit remain with the cited full-support manuscript and antecedents.
+Minimiser existence is a separate imported theorem. A separate scalar-value argument
 and a further QAOA construction use related mathematics but do not follow merely
 from the words “full support.” The graph can record those distinct claims and
 their sources. The papers must still explain the analytic bridges and say which
@@ -81,7 +92,22 @@ Our contribution here is the reconstructed accounts, their source
 correspondence, and the local tools for inspecting and revising them. Neither
 an explanation nor a platform link transfers authorship of the mathematics.
 
-## 2. One route from source to reader
+## 2. Open a claim and follow its explanation
+
+The [consumer guide](../../docs/bundle-consumers.md#start-with-the-authored-support-theorem)
+gives one complete command to assemble the supplied papers. With that bundle
+in `build/qaoa-sk-authored`, a reader can open the theorem directly:
+
+```sh
+lean-exposition query-papers build/qaoa-sk-authored \
+  --paper short --passage main-result --format text
+```
+
+The result identifies the exact edition, the passage's mapped claims and
+assumptions, its recorded prerequisites, and the kinds and outcomes of its
+associated checks. The JSON format retains the full text and source records.
+Both formats read one validated capture; neither opens the external Lean
+checkout or proves that a mapping is mathematically faithful.
 
 The starting material is a chosen, pinned source: for example, a Lean checkout
 with its toolchain and a mathematical manuscript with a known edition. An author
@@ -92,25 +118,6 @@ citation identifies an external source edition. The reader can follow the
 recorded relation from a claim to its stated support, or ask which other claims
 refer to a changed item. The meaning and direction of each link remain visible.
 
-\begin{figure}[htbp]\centering
-\begin{tikzpicture}
-\node[archrecord,text width=7.7cm,minimum height=1.05cm,align=center] (source) at (0,0)
-  {\textbf{Pinned sources}\\Lean declarations, toolchain and manuscript editions};
-\node[archview,text width=7.7cm,minimum height=1.05cm,align=center] (graph) at (0,-2.3)
-  {\textbf{Evidence graph}\\Claims, citations, typed relations and distinct statuses};
-\node[archrecord,text width=7.7cm,minimum height=1.05cm,align=center] (papers) at (0,-4.6)
-  {\textbf{Three authored explanations}\\Long reasoning, short argument and exposition};
-\node[archview,text width=7.7cm,minimum height=1.05cm,align=center] (bundle) at (0,-6.9)
-  {\textbf{Versioned bundle}\\Exact graph, three texts, passage maps and manifest};
-\node[archgate,text width=7.7cm,minimum height=1.05cm,align=center] (reader) at (0,-9.2)
-  {\textbf{Reader or consumer}\\Opens a passage or goal and inspects its recorded support};
-\draw[archflow] (source.south)--node[archnote,fill=white,inner sep=2pt,right]{records selected evidence}(graph.north);
-\draw[archflow] (graph.south)--node[archnote,fill=white,inner sep=2pt,right]{anchors authored passages}(papers.north);
-\draw[archflow] (papers.south)--node[archnote,fill=white,inner sep=2pt,right]{assembles text and maps}(bundle.north);
-\draw[archflow] (bundle.south)--node[archnote,fill=white,inner sep=2pt,right]{opens selected view}(reader.north);
-\end{tikzpicture}
-\caption{Production and inspection workflow. The bundle includes the exact graph edition as well as authored papers and maps; its byte checks do not judge mathematical meaning. Adapted from the authored-records and derived-views composition in the Plectis Erdős systems paper.}
-\end{figure}
 
 An author can work through the SK example in a deliberate order. The long
 account reconstructs the full support-gap calculation and its dependence on
@@ -134,9 +141,12 @@ to recorded bytes, not that the explanation is true.
   {\textbf{Short paper}\\Theorem 1 and its proof outline.};
 \node[archbox,text width=3.15cm,minimum height=1.4cm] (expo) at (4.2,-3.0)
   {\textbf{Exposition}\\Support and gap intuition.};
-\draw[archlink,-{Stealth[length=2mm]}] (long.north) -- node[archnote,fill=white,inner sep=2pt,left]{map selects claim} (claim.south west);
-\draw[archlink,-{Stealth[length=2mm]}] (short.north) -- node[archnote,fill=white,inner sep=2pt,right]{map selects claim} (claim.south);
-\draw[archlink,-{Stealth[length=2mm]}] (expo.north) -- node[archnote,fill=white,inner sep=2pt,right]{map selects claim} (claim.south east);
+\draw[archlink,-{Stealth[length=2mm]}] (long.north) -- (-4.2,-1.45) -- (-2.5,-1.45) -- (claim.south -| -2.5,0);
+\node[archnote,fill=white,inner sep=2pt,left] at (-4.2,-1.9) {map selects claim};
+\draw[archlink,-{Stealth[length=2mm]}] (short.north) -- (claim.south);
+\node[archnote,fill=white,inner sep=2pt,align=center,text width=2.2cm] at (1.3,-1.45) {map selects\\claim};
+\draw[archlink,-{Stealth[length=2mm]}] (expo.north) -- (4.2,-1.45) -- (2.5,-1.45) -- (claim.south -| 2.5,0);
+\node[archnote,fill=white,inner sep=2pt,right] at (4.2,-1.9) {map selects claim};
 \node[archnote,text width=11.8cm] at (0,-4.65)
   {Each passage has its own text and mapping. These links select the same claim; they do not make the accounts interchangeable or reviewed.};
 \end{tikzpicture}
@@ -217,6 +227,16 @@ estimate behind that convexity. The exposition first illustrates the missing
 area, then defines the moment and derives the argument. These are three
 useful ways to approach the same step.
 
+Write $q(t)=\mathbb E[\Phi_x(t,X_t)^2]$, where $\Phi$ is the control value
+and $X$ its controlled diffusion for this same coefficient. On a hypothetical
+gap $(\ell,r)$ with endpoints in the support and constant coefficient $c>0$,
+minimality gives $q(r)-q(\ell)=r-\ell$ and $q'(\ell),q'(r)\le1$.
+The separate local curvature estimate gives $q'''>0$, so $q'$ is strictly
+convex. Together these statements imply $q'(t)<1$ inside the gap. Integration
+then gives $q(r)-q(\ell)<r-\ell$, the contradiction. Zero coefficients and
+initial or terminal gaps require their own arguments. The long record's
+§§3–5 supply these steps; a picture of a curve alone cannot establish them.
+
 A passage query opens the paragraph with its exact hypotheses. Expanding its
 recorded prerequisites leads to the source-located contact and curvature
 claims. The latter leads further to the integrated coercive estimate, its
@@ -230,13 +250,15 @@ corollary added to the short paper.
 \node[archrecord,text width=8.6cm,minimum height=1.25cm,align=center] (gap) at (0,0)
  {\textbf{The positive-gap contradiction}\\An admissible minimiser, a positive constant interval, and both endpoints in the support};
 \node[archbox,text width=4.1cm,minimum height=1.65cm,align=center] (contact) at (-3.8,-3.5)
- {\textbf{Endpoint contact}\\The moment changes by the interval's length; endpoint slopes are at most one.};
+ {\textbf{Endpoint contact}\\$q(r)-q(\ell)=r-\ell$\\$q'(\ell),q'(r)\le1$};
 \node[archbox,text width=4.1cm,minimum height=1.65cm,align=center] (curvature) at (3.8,-3.5)
- {\textbf{Strict curvature}\\The derivative lies below its endpoint chord, so its integral is too small.};
+ {\textbf{Strict curvature}\\$q'''>0$ makes $q'$ strictly convex on the positive plateau.};
 \draw[archflow] (-1,-.73)--(-1,-1.8)--(-3.8,-1.8)--(contact.north);
 \draw[archflow] (1,-.73)--(1,-1.8)--(3.8,-1.8)--(curvature.north);
 \node[archnote,anchor=south,align=center] at (-3.1,-1.65) {uses the endpoint identities};
 \node[archnote,anchor=south,align=center] at (3.1,-1.65) {uses the strict estimate};
+\node[archnote,text width=11.5cm,align=center] at (0,-5.05)
+ {Together: the endpoint slope bounds and strict convexity give $q'<1$,\\contradicting the required integral $r-\ell$.};
 \end{tikzpicture}
 \caption{A selected argument view. Arrows point from the contradiction to the ingredients it uses. This is the positive-coefficient bounded-gap branch only; zero coefficients and initial and terminal gaps have separate arguments. The figure adapts the shared-support composition above. Its relations are curated from the original proof, not extracted Lean dependencies.}
 \end{figure}
@@ -248,6 +270,21 @@ its mapped explanations. A prerequisite query also finds passages whose
 recorded argument uses it, and returns the relation path. This lets a future
 reader interface offer “explain this step” and “show where it is used” as
 different actions. Both remain limited by the coverage of the authored graph.
+
+For example, the following commands distinguish those two questions:
+
+```sh
+lean-exposition query-papers build/qaoa-sk-authored \
+  --node support.positive_curvature --format text
+lean-exposition query-papers build/qaoa-sk-authored \
+  --node support.positive_curvature --relation prerequisites --format text
+```
+
+An example can also test the correspondence. The long record's one-step
+Gaussian calculation uses $\gamma=0$, an admissible coefficient which is not
+a minimiser. Its map therefore selects conditional rounding, not the
+minimiser-dependent asymptotic construction. Labelling the prose an example
+would not excuse a map that imported the wrong hypotheses.
 
 Cycles may occur among recorded relations. The consumer reports their strongly
 connected components, the kinds of links within and between them, and a
@@ -271,6 +308,18 @@ from [Comparator](https://github.com/leanprover/comparator/blob/d03acab154d269c0
 in its source. The repository does not claim to have invented these mechanisms.
 
 ## 3. What each check can say
+
+The formal conclusion is more specific than a shared theorem title. In
+`OAI.ZeroTemperatureSK`, the selected declaration takes a Brownian system,
+an admissible coefficient and a proof of minimality. Its conclusion asserts
+existence of a Stieltjes measure and an associated diffusion, full relative
+support for every associated measure, strict increase of the coefficient,
+and both selected moment identities for every associated diffusion on
+$[0,1)$. It does not assert minimiser existence, positive Stieltjes density
+or QAOA convergence. The [challenge](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean#L81-L92)
+and [implementing theorem](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Main.lean#L35-L59)
+are distinct files at the same revision. The challenge's admitted proof
+specifies the comparison target; it is not the implementation's proof.
 
 The formal developments depend on Lean and mathlib. Their scholarly sources
 are de Moura and Ullrich's [*The Lean 4 Theorem Prover and Programming
@@ -391,8 +440,8 @@ its appearance.
 \draw[archflow] (fixed.south)--node[archnote,fill=white,inner sep=2pt,right]{proposes edit}(proposal.north);
 \draw[archflow] (proposal.south)--node[archnote,fill=white,inner sep=2pt,right]{rebinds changed bytes}(draft.north);
 \draw[archflow] (draft.south)--node[archnote,fill=white,inner sep=2pt,right]{submits draft}(review.north);
-\draw[archflow] (review.south west)--(-3.15,-5.9)--node[archnote,fill=white,inner sep=2pt,right]{accepts exact edition}(accept.north);
-\draw[archflow] (review.south east)--(3.15,-5.9)--node[archnote,fill=white,inner sep=2pt,right]{declines change}(decline.north);
+\draw[archflow] (review.south)--(0,-6.45)--(-3.15,-6.45)--node[archnote,fill=white,inner sep=2pt,right]{accepts exact edition}(accept.north);
+\draw[archflow] (review.south)--(0,-6.45)--(3.15,-6.45)--node[archnote,fill=white,inner sep=2pt,right]{declines change}(decline.north);
 \draw[archflow] (accept.south)--node[archnote,fill=white,inner sep=2pt,right]{opens reviewed bytes}(reader.north);
 \draw[archflow,dashed] (review.west)--(-6.05,-5.4)--(-6.05,-1.8)--node[archnote,fill=white,inner sep=2pt,above]{requests revision}(proposal.west);
 \end{tikzpicture}
@@ -421,7 +470,10 @@ metadata using an existing credential and pinned documentation version. It
 filters private or unknown children; it does not submit proofs, upload papers
 or receive bundle reviews. The Prove2Me paper separates immutable statements,
 proof submissions and human audit (Chen, Marwaha, Lu, Yuen and Peng, 2026,
-§§3–4). This is an analogy, not evidence these papers were attached to a
+§§3–4). It already includes natural-language descriptions, explanations,
+source links and curated milestones; our contribution is the particular
+combination of three authored accounts with exact-edition passage maps and
+queries that retain distinct support and evidence. This is an analogy, not evidence these papers were attached to a
 theorem card. An external paper handoff would need an explicit edition,
 attachment and feedback contract.
 
@@ -436,7 +488,7 @@ adapts Will Cook's existing mathematics-map video funnel. The remaining figures 
 Will Cook's
 [*A Repository-Based System for Research and Publication*](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
 ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)); the adapted
-compositions are labelled lifecycle, hypothesis, theorem, checks and refinement
+compositions are labelled hypothesis, theorem, checks and refinement
 in that source. The concrete argument view further adapts its shared-support
 composition. The editorial distinctions also follow the author's [public
 mathematical writing methods](https://github.com/wcook04/plectis-erdos/tree/a0878310af794d7a0f76cc11f4de3a20c795dc60). The Prove2Me boundary follows Chen, Marwaha, Lu, Yuen and Peng,

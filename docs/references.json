@@ -14,15 +14,20 @@
     {
       "id": "lean4-system-description-2021",
       "title": "The Lean 4 Theorem Prover and Programming Language (System Description)",
-      "authors": ["Leonardo de Moura", "Sebastian Ullrich"],
+      "authors": [
+        "Leonardo de Moura",
+        "Sebastian Ullrich"
+      ],
       "year": 2021,
       "url": "https://doi.org/10.1007/978-3-030-79876-5_37",
       "kind": "primary_system_description",
       "retrieved_on": "2026-10-24",
-      "selected_files": [{
-        "url": "https://lean-lang.org/papers/lean4.pdf",
-        "sha256": "2b907e98552f5ff4fe77be717f9423311a4d6bf4ac866b143d99f34e83f39c4d"
-      }],
+      "selected_files": [
+        {
+          "url": "https://lean-lang.org/papers/lean4.pdf",
+          "sha256": "2b907e98552f5ff4fe77be717f9423311a4d6bf4ac866b143d99f34e83f39c4d"
+        }
+      ],
       "reading_scope": "Title, abstract and introduction: authorship, system design and relationship to mathlib.",
       "disposition": "reference_only; complete reading copy retained privately",
       "boundary": "Scholarly software credit; exact proof-environment versions remain in the source lock and execution receipts."
@@ -30,15 +35,19 @@
     {
       "id": "mathlib-library-2020",
       "title": "The Lean Mathematical Library",
-      "authors": ["The mathlib Community"],
+      "authors": [
+        "The mathlib Community"
+      ],
       "year": 2020,
       "url": "https://doi.org/10.1145/3372885.3373824",
       "kind": "primary_library_description",
       "retrieved_on": "2026-10-24",
-      "selected_files": [{
-        "url": "https://arxiv.org/pdf/1910.09336v2",
-        "sha256": "f1c79b8dedb5b66a6cde3dab238387b8cd66ada1d7ed808d7d083621902f0d20"
-      }],
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/1910.09336v2",
+          "sha256": "f1c79b8dedb5b66a6cde3dab238387b8cd66ada1d7ed808d7d083621902f0d20"
+        }
+      ],
       "citation_authority": "https://leanprover-community.github.io/cite.html",
       "reading_scope": "Title, first-page publisher citation, abstract and introduction; canonical community citation checked separately.",
       "disposition": "reference_only; complete reading copy retained privately",
@@ -777,6 +786,112 @@
       "disposition": "reference_only",
       "reading_scope": "Introduction and related-work boundary, §§3–6, printed pp. 3–11, read on 23 October 2026. Identity, licence and hash checked against the exact arXiv v2 record and PDF; reported mission results were not independently reproduced.",
       "boundary": "The paper distinguishes kernel proof checking from semantic faithfulness and reports uncontrolled case studies with incomparable cost conventions. It documents theorem/proof objects, audited missions and proof-sketches, not a generic versioned-paper upload, external manifest, scoped-feedback endpoint, platform endorsement of this repository, or an independent review of its claims."
+    },
+    {
+      "id": "clss-local-quantum-obstruction-v3",
+      "title": "Limitations of Local Quantum Algorithms on Random Max-k-XOR and Beyond",
+      "authors": [
+        "Chi-Ning Chou",
+        "Peter J. Love",
+        "Juspreet Singh Sandhu",
+        "Jonathan Shi"
+      ],
+      "url": "https://arxiv.org/abs/2108.06049v3",
+      "kind": "primary_mathematical_preprint",
+      "version": "2108.06049v3",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2108.06049v3",
+          "sha256": "881b486e041d15f22e9a6d0807bc583c4ae03a825235bb09f34dec87949fe22e"
+        }
+      ],
+      "reading_scope": "Parameter 4.1 and Corollary 4.4, printed pp. 20–21 / PDF pp. 23–24.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Sparse signed even-interaction obstruction antecedent; no direct dense logarithmic-depth transfer."
+    },
+    {
+      "id": "sellke-external-field-v4",
+      "title": "Optimizing Mean Field Spin Glasses with External Field",
+      "authors": [
+        "Mark Sellke"
+      ],
+      "url": "https://arxiv.org/abs/2105.03506v4",
+      "kind": "primary_mathematical_preprint",
+      "version": "2105.03506v4",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2105.03506v4",
+          "sha256": "f774906b5273e81afc2dd92f551eae16a522150476135ec0b437277edbd0b328"
+        }
+      ],
+      "reading_scope": "Definition 1.3, p. 5; Lemma 3.11 and proof, pp. 17–18; Proposition 7.12, p. 31.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Method comparison only; does not add a terminal-proof premise. The unrestricted diffusion comparison statement is not endorsed."
+    },
+    {
+      "id": "lopatto-external-field-v1",
+      "title": "Parisi measure of the Sherrington-Kirkpatrick model with external field",
+      "authors": [
+        "Patrick Lopatto"
+      ],
+      "url": "https://arxiv.org/abs/2610.00127v1",
+      "kind": "primary_mathematical_preprint",
+      "version": "2610.00127v1",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2610.00127v1",
+          "sha256": "95bcf30036d5be03cd350e8547042c82ccaa5b0bc12d99b846035eb1a1af61b0"
+        }
+      ],
+      "reading_scope": "Title, abstract and Theorem 2.3, p. 11, including the one-sided coefficient and equality hypotheses.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Positive-temperature, positive-field comparison; no zero-temperature transfer. Metadata submission 9 September 2026 and PDF date 2 October 2026 are separately retained."
+    },
+    {
+      "id": "lopatto-full-rsb-v4",
+      "title": "Full replica symmetry breaking in the Sherrington-Kirkpatrick model",
+      "authors": [
+        "Patrick Lopatto"
+      ],
+      "url": "https://arxiv.org/abs/2607.11756v4",
+      "kind": "primary_mathematical_preprint",
+      "version": "2607.11756v4",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2607.11756v4",
+          "sha256": "ddf3f4fe27196acd031ba38c412abe4fba18f8eb0ff586fed701a1f4ae5c70d1"
+        }
+      ],
+      "reading_scope": "Theorems 1.1–1.2, p. 2; Proposition 5.1 and its definitions, p. 18.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Later exact edition, separate from v3 used for historical method credit; nonnegative smooth density and conditional crossing are distinct from zero-temperature strict density."
+    },
+    {
+      "id": "bgmz-higher-spin-barrier-v2",
+      "title": "Performance and limitations of the QAOA at constant levels on large sparse hypergraphs and spin glass models",
+      "authors": [
+        "Joao Basso",
+        "David Gamarnik",
+        "Song Mei",
+        "Leo Zhou"
+      ],
+      "url": "https://arxiv.org/abs/2204.10306v2",
+      "kind": "primary_mathematical_preprint",
+      "version": "2204.10306v2",
+      "retrieved_on": "2026-10-24",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2204.10306v2",
+          "sha256": "fda7f8d666c9834541373ae195f2b842c67da17f54e3fdb21575b0e950628563"
+        }
+      ],
+      "reading_scope": "Theorem 4 / (3.15), p. 9, and complete short proof, p. 11.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Uniform bound over all finite depths and fixed angles after their individual thermodynamic limits, for pure even order at least four; not quadratic SK."
     }
   ],
   "community_leads": [

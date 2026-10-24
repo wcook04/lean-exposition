@@ -37,6 +37,18 @@ The order of the displayed operations matters:
 
 No maximizer of the angle supremum is required. No single finite word is asserted to attain \(P_*\) exactly. The theorem supplies neither a quantitative \(p(\varepsilon)\), a finite-size rate, nor an efficient method for finding the angles. It states expected energy, rather than a per-instance or single-measurement guarantee. The introduction explicitly distinguishes its quantifiers from fixed-instance optimality as depth increases. [Section 1, lines 34–43 and 111–133][intro-order]
 
+The first- and second-moment theorem of Farhi–Goldstone–Gutmann–Zhou,
+[arXiv:1910.08187v4, §4, (13)–(22)](https://arxiv.org/abs/1910.08187v4),
+uses the same negative-exponential gate convention and permits arbitrary real
+angles. For each fixed word it supplies joint disorder-and-measurement
+\(L^2\) concentration about its limiting value. Combined with a word
+chosen at accuracy \(\varepsilon/2\), this gives one sampled output
+above \(P_*-\varepsilon\) with joint probability tending to one.
+This is an additional ordinary consequence, not a clause of the main
+source theorem or selected formal interfaces. The two variance terms,
+typical-instance meaning and nonconstructive padded diagonal are proved
+in the [long record, §§9.8–9.9](../long/reasoning-record.md).
+
 The tree degree \(D+1\) is a separate auxiliary parameter. For a **fixed ordinary word** \(W\), Proposition `prop:tree-transfer` imports the identity
 \[
 v_W=\lim_{D\to\infty}\frac{\sqrt D}{2}
@@ -196,7 +208,7 @@ Theorem `thm:seed-simulation` starts with a **whole finite seeded word**. Its co
 
 The manuscript fixes a small \(b>0\), then uses \(r\downarrow0\) with initialization cost \(b/r\). An exact decomposition retains a component of norm \(r\), with large coherent displacements, alongside an order-one component. The normalized special insertion direction \(w_r\) has norm one. The initial high directions \(w_r,\ell_r\) become orthogonal to each other and to bounded families of vectors with controlled top occupation moments. Large displacements themselves are not claimed to have uniformly bounded occupation. [Section 5, `lem:seed-packet-estimates` and initialization][seed-packets] [`lem:seed-high-directions`][seed-initial]
 
-Selective probes have two separate tasks: rotate each of finitely many displaced components in the same way, and cancel first-order action on every ordinary component. Lemma `lem:seed-ensemble-control` supplies a **finite exact** product with separate zero clock sums for the two axes. The actual insertion directions move during the pulses. Lemma `lem:seed-selective-accuracy` controls that motion, proves net \(o(r)\) error on ordinary packets, and \(o(1)\) error on normalized special packets. Uniformity over bounded tail families, including spin-inserted tails, is needed for later insertion comparisons. [Section 5, lines 287–503][seed-selective]
+Selective probes have two separate tasks: rotate each of finitely many displaced components in the same way, and cancel first-order action on every ordinary component. Lemma `lem:seed-ensemble-control` supplies a **finite exact** product giving one common X rotation, with separate zero clock sums for the two axes. Equal or opposite nonzero centres are allowed; arbitrary independent rotations are not asserted. The actual insertion directions move during the pulses. Lemma `lem:seed-selective-accuracy` controls that motion, proves net \(o(r)\) error on ordinary packets, and \(o(1)\) error on normalized special packets. Uniformity over bounded tail families, including spin-inserted tails, is needed for later insertion comparisons. [Section 5, lines 287–503][seed-selective]
 
 The singular echo uses cost \(t/r\), a selective special flip, cost \(-t/r\), and the undoing flip. Its central estimate is
 \[

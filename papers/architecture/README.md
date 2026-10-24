@@ -16,24 +16,24 @@ external metadata boundary.
 
 ## Try the route locally
 
-Install the repository as instructed in its [top-level README](../../README.md).
-With a selected local graph, the command-line route is:
+Install the repository as instructed in its [top-level README](../../README.md),
+then use the [complete authored-bundle command](../../docs/bundle-consumers.md#start-with-the-authored-support-theorem)
+to package the supplied mathematical papers. Start at their theorem:
 
 ```sh
-lean-exposition validate path/to/graph.json
-lean-exposition inspect path/to/graph.json --view arguments --goal GOAL_ID
-lean-exposition inspect path/to/graph.json --view declarations --goal DECLARATION_ID
-lean-exposition scaffold path/to/graph.json --out path/to/empty-draft-directory
+lean-exposition query-papers build/qaoa-sk-authored \
+  --paper short --passage main-result --format text
+lean-exposition query-papers build/qaoa-sk-authored \
+  --node support.positive_curvature --relation prerequisites --format text
 ```
 
-`scaffold` creates placeholders. After authors have written the three texts
-and their passage maps, `assemble` creates an eight-file bundle. Its required
-`--long`, `--short` and `--expository` arguments each take a Markdown path and
-a mapping path; see `lean-exposition assemble --help`. Then run
-`lean-exposition check-bundle BUNDLE_DIRECTORY` and
-`lean-exposition inspect-bundle BUNDLE_DIRECTORY`. The latter reports structural
-validity and `semantic_certification: false`; source files and verification
-receipts remain external.
+The first query opens the main theorem's mapped claims and hypotheses. The
+second finds passages using the recorded curvature ingredient and shows the
+typed paths. Omit `--format text` for complete machine-readable JSON. Both
+formats use one validated capture and preserve the distinct evidence outcomes.
+The existing `scaffold` command is for starting empty documents; it is not
+needed to read these authored papers. Source files and verification receipts
+remain external to the eight-file bundle.
 
 To begin at the short paper's support theorem rather than a graph ID, run:
 
@@ -57,20 +57,22 @@ requires the manifest digest and exact source edition, not only a bundle name.
 
 ## Figure provenance and rendering
 
-The seven TikZ figures in `paper.md` begin with an inverted reader funnel
+The six TikZ figures in `paper.md` begin with an inverted reader funnel
 adapted from Will Cook's existing mathematics-map visual. Its widths indicate
 editorial selection, not page length or proof strength; the return arrow
-marks claim-site links to exact evidence. The workflow, correspondence and review figures adapt the *authored
-records/derived views*, *three versions with shared support*, *registered
+marks claim-site links to exact evidence. The correspondence and review figures adapt the *three versions with shared support*, *registered
 supports*, *two correspondences* and *refinement* compositions in Will Cook's
 [active Plectis Erdős systems paper](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
-(figures `fig:lifecycle`, `fig:hypothesis`, `fig:theorem`, `fig:checks`
+(figures `fig:hypothesis`, `fig:theorem`, `fig:checks`
 and `fig:refinement`; source licence
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). This
 companion redraws their content for the Lean Exposition contracts; each
 connector names its workflow, mapping, argument or review relation. The
 additional concrete gap-argument figure adapts the same shared-support
 composition to two actual ingredients, under the positive-plateau guard.
+Its endpoint slope bounds and strict curvature are shown jointly supplying
+the contradiction. Passage-to-claim connectors use separate orthogonal routes;
+none of these arrows asserts a new Lean dependency.
 
 Render with the repository's paper toolchain:
 

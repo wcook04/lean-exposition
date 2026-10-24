@@ -106,3 +106,18 @@ natural-language paper informs an optional draft stage.
 The license records deliberately preserve inconsistencies: leanblueprint's actual license is Apache-2.0 despite an MIT packaging classifier; Verso Blueprint's inspected Lean file has an Apache-2.0 header but its repository root lacks the referenced LICENSE file. Any future source copying needs a file-level license inventory, retained notices, and a recorded change history.
 
 Community discovery sharpened these choices. A [September 2025 Zulip discussion](https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Is.20it.20possible.20to.20map.20dependencies.20of.20theorems.3F.html) distinguishes a plan written before formalization from a graph extracted afterward. An [April 2024 maintainer reply](https://leanprover-community.github.io/archive/stream/113489-new-members/topic/How.20to.20make.20blueprint.html) directs users away from copying an old project's folders and toward leanblueprint's maintained instructions. These discussions are discovery context; the technical choices above rely on the linked primary implementations.
+
+
+## Exact-edition mathematical comparisons
+
+The reference register now identifies five additional primary editions used in
+bounded comparisons: Basso–Gamarnik–Mei–Zhou v2 for the uniform finite-depth
+higher-spin obstruction; Chou–Love–Sandhu–Shi v3 for its sparse antecedent;
+Sellke v4 for optimizability and scalar value methods; and Lopatto's
+external-field v1 and zero-field v4 for positive-temperature comparisons.
+The v3 and v4 Lopatto texts remain distinct, as do finite-temperature probability
+measures and zero-temperature Stieltjes measures. Complete reading copies are
+retained privately; the public register carries source URLs, byte hashes and
+reading scopes. These citations supply mathematical context and method credit,
+not a new proof dependency or verification verdict. The long paper states the
+applicable theorem hypotheses and the scope of each comparison.

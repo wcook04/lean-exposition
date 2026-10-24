@@ -14,13 +14,15 @@ The [source guide](../../../examples/qaoa-sk/README.md#read-the-source-and-the-s
 identifies the two OpenAI manuscripts and distinguishes them from this repository's
 writing and the separate Prove2Me metadata example.
 
-This short research-style reconstruction explains OpenAI's proof that an
-admissible integrable zero-temperature SK minimizer has full relative
-Stieltjes support. Its central argument is the contradiction between
-variational contact at the endpoints of a support gap and strict curvature
-inside that gap. The scalar value identity and the connection to the separate
-QAOA manuscript follow after that argument. The separate smooth positive-density
-corollary reuses the coercive estimate, with its extra approximation step stated.
+The opening defines the SK optimisation problem and explains why support
+matters for the later circuit construction. This short research-style
+reconstruction then explains two uses of OpenAI's coercive estimate for an admissible integrable zero-temperature SK minimiser.
+First, variational contact at the endpoints of a support gap conflicts with
+strict curvature inside it. After full support saturates the diffusion
+moments, a fixed-time approximation applies the same estimate to prove
+strictly positive density. The paper explains why that passage transfers
+spatial moments rather than time derivatives. It then derives the scalar
+value identity and states the separate QAOA consequence with its limit order.
 
 The intended reader knows elementary stochastic calculus and variational
 arguments. The analytic sign propagation, rational polynomial certificate and
@@ -40,7 +42,7 @@ the rendered edition of the Markdown.
 The selected formal declarations are
 `OAI.ZeroTemperatureSK.full_support` and
 `OAI.SKValue.value_consequences`. Their exact scope, source versions, historical
-unavailable startup, later failed solution build, and lack of an accepted research-target replay
+unavailable startup, later failed solution builds, and lack of an accepted research-target replay
 are recorded in the [source example](../../../examples/qaoa-sk/README.md).
 The [long record](../long/reasoning-record.md) retains the broader recovery route.
 
