@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .bundle import STAGES, check_bundle, export_bundle, scaffold
 from .contracts import ContractError, read_json, select, validate_graph, write_json
-from .consumer import inspect_bundle, inspect_graph, project_graph, project_paper
+from .consumer import inspect_bundle, inspect_graph, project_graph, project_paper, query_papers
 from .extraction import to_graph
 from .intake import audit_sources, fetch
 from .prove2me import intake_prove2me
@@ -41,6 +41,15 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("bundle", type=Path)
     cmd.add_argument("--paper", choices=STAGES, help="Project one paper and its graph correspondence")
     cmd.add_argument("--passage", action="append", help="Select a passage anchor (repeatable; requires --paper)")
+    cmd = commands.add_parser("query-papers", help="Query source-bound paper, section and passage correspondence")
+    cmd.add_argument("bundle", type=Path)
+    cmd.add_argument("--paper", choices=STAGES, help="Limit to one paper; omitted means all three")
+    cmd.add_argument("--passage", action="append", help="Passage anchor (repeatable; requires --paper)")
+    cmd.add_argument("--section", action="append", help="Exact section ref from a paper view (repeatable; requires --paper)")
+    cmd.add_argument("--node", action="append", help="Find passages mapped to a graph node (repeatable)")
+    cmd.add_argument("--relation", choices=("direct", "prerequisites"), default="direct",
+                     help="Match direct mapping fields or their recorded prerequisite reachability")
+    cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256 (64 lowercase hex characters)")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -95,6 +104,10 @@ def run(args):
         from .bundle import assemble_bundle
         return assemble_bundle(args.graph, {s: tuple(getattr(args, s))
                                for s in ("long", "short", "expository")}, args.out)
+    if args.command == "query-papers":
+        return query_papers(args.bundle, stage=args.paper, passages=args.passage,
+                            section_refs=args.section, node_ids=args.node, relation=args.relation,
+                            expected_manifest_sha256=args.expect_manifest)
     if args.command == "select":
         graph = select(read_json(args.graph), args.goal)
         if args.out.exists():

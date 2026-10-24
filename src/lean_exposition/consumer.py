@@ -5,6 +5,7 @@ import copy
 import json
 import re
 from bisect import bisect_right
+from collections import deque
 from pathlib import Path
 from urllib.parse import quote
 
@@ -295,7 +296,11 @@ def project_paper(bundle_path: Path, stage: str, passages: list[str] | None = No
     """
     if stage not in STAGES:
         raise ContractError("unknown paper stage")
-    payload = load_bundle(bundle_path)
+    return _project_paper(load_bundle(bundle_path), stage, passages)
+
+
+def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | None = None) -> dict:
+    """Project an already validated capture; callers must not mutate its bytes."""
     manifest = decode_json(payload["manifest.json"])
     graph_bytes = payload["graph.json"]
     graph = decode_json(graph_bytes)
@@ -516,6 +521,227 @@ def project_paper(bundle_path: Path, stage: str, passages: list[str] | None = No
                      "per_root_dependency_completeness": "unknown",
                      "heading_syntax": "ATX headings only; Setext and HTML headings are not parsed",
                      "scope": "Mapped passages are correspondences, not sentence-level formal support. Section-passage overlaps are document structure, not claim or proof implications. Unmapped text and passages omitted by the selector remain in the validated paper. Graph records outside the selected prerequisite closure remain in the bundle and are not asserted absent. Argument links combine recorded Lean references, curated support, formalization correspondence and explicit assumptions; their SCCs describe only that mixed recorded reachability. Reading order and platform decomposition are separate."},
+    }
+
+
+def _query_selector(values, name: str) -> list[str] | None:
+    if values is None:
+        return None
+    if (not isinstance(values, list)
+            or any(not isinstance(value, str) or not value for value in values)
+            or len(values) != len(set(values))):
+        raise ContractError(f"{name} selection must be a list of distinct nonempty strings")
+    return sorted(values)
+
+
+def _argument_adjacency(graph: dict, graph_hash: str) -> dict[str, list[dict]]:
+    """Index the existing argument relation for one query, retaining its kinds."""
+    ref = lambda identity: _view_ref(graph_hash, "nodes", identity)
+    adjacency: dict[str, list[dict]] = {node["id"]: [] for node in graph["nodes"]}
+    for edge in graph["edges"]:
+        if edge["kind"] not in ARGUMENT_EDGES:
+            continue
+        identity = json.dumps([edge["from"], edge["to"], edge["kind"]],
+                              ensure_ascii=False, separators=(",", ":"))
+        edge_ref = _view_ref(graph_hash, "edges", identity)
+        adjacency[edge["from"]].append({
+            "id": edge_ref, "from": ref(edge["from"]), "to": ref(edge["to"]),
+            "from_node_id": edge["from"], "to_node_id": edge["to"],
+            "kind": edge["kind"], "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
+            "derived": False, "record_ref": edge_ref,
+        })
+    for node in graph["nodes"]:
+        for target in node["assumption_ids"]:
+            source_ref, target_ref = ref(node["id"]), ref(target)
+            adjacency[node["id"]].append({
+                "id": "field:" + digest(encoded({"from": source_ref, "to": target_ref,
+                                                 "field": "assumption_ids"})),
+                "from": source_ref, "to": target_ref,
+                "from_node_id": node["id"], "to_node_id": target,
+                "kind": "assumption_ids", "semantic_class": "explicit_assumption_reference",
+                "derived": True, "owner_ref": source_ref, "source_field": "assumption_ids",
+            })
+    for links in adjacency.values():
+        links.sort(key=lambda link: (link["to_node_id"], link["kind"], link["id"]))
+    return adjacency
+
+
+def _witness_tree(adjacency: dict[str, list[dict]], roots: set[str]) -> dict[str, tuple]:
+    """Deterministic shortest recorded paths, including cycles without recursion."""
+    paths = {root: (root, None) for root in sorted(roots)}
+    pending = deque(sorted(roots))
+    while pending:
+        node = pending.popleft()
+        for link in adjacency[node]:
+            target = link["to_node_id"]
+            if target not in paths:
+                paths[target] = (paths[node][0], link)
+                pending.append(target)
+    return paths
+
+
+def _query_witness(target: str, paths: dict[str, tuple], graph_hash: str,
+                   root_field: str) -> dict:
+    current, links = target, []
+    root = paths[target][0]
+    while paths[current][1] is not None:
+        link = paths[current][1]
+        links.append(copy.deepcopy(link))
+        current = link["from_node_id"]
+    links.reverse()
+    return {"root_node_id": root, "root_ref": _view_ref(graph_hash, "nodes", root),
+            "root_mapping_field": root_field, "target_node_id": target,
+            "target_ref": _view_ref(graph_hash, "nodes", target),
+            "links": links, "relation_scope": "recorded_argument_relation_reachability",
+            "semantic_certification": False}
+
+
+def query_papers(
+    bundle_path: Path, *, stage: str | None = None,
+    passages: list[str] | None = None, section_refs: list[str] | None = None,
+    node_ids: list[str] | None = None, relation: str = "direct",
+    expected_manifest_sha256: str | None = None,
+) -> dict:
+    """Query passage correspondence in one validated bundle capture.
+
+    Selectors are unions within a family and intersections between families.
+    Sections select complete passages by non-whitespace content overlap. ``direct``
+    matches claim/assumption fields; ``prerequisites`` also follows the existing
+    argument relation. Neither search infers an unstored relation or acceptance.
+    The result is derived data, with no new persistent authority or bundle member.
+    An expected manifest digest pins the request to one exact validated edition.
+    """
+    if stage is not None and (not isinstance(stage, str) or stage not in STAGES):
+        raise ContractError("unknown paper stage")
+    passages = _query_selector(passages, "passage")
+    section_refs = _query_selector(section_refs, "section")
+    node_ids = _query_selector(node_ids, "node")
+    if stage is None and (passages is not None or section_refs is not None):
+        raise ContractError("passage and section selectors require one paper stage")
+    if not isinstance(relation, str) or relation not in {"direct", "prerequisites"}:
+        raise ContractError("unknown paper query relation")
+    if expected_manifest_sha256 is not None and (
+            not isinstance(expected_manifest_sha256, str)
+            or re.fullmatch(r"[0-9a-f]{64}", expected_manifest_sha256) is None):
+        raise ContractError("expected manifest SHA-256 must be 64 lowercase hexadecimal characters")
+    payload = load_bundle(bundle_path)
+    manifest = decode_json(payload["manifest.json"])
+    graph = decode_json(payload["graph.json"])
+    graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
+    if expected_manifest_sha256 is not None and expected_manifest_sha256 != manifest_hash:
+        raise ContractError("bundle manifest SHA-256 differs from the requested edition")
+    nodes = {row["id"]: row for row in graph["nodes"]}
+    if node_ids is not None:
+        require_refs(node_ids, nodes, "paper query node")
+    adjacency = _argument_adjacency(graph, graph_hash)
+    query = {"stage": stage, "passages": passages, "section_refs": section_refs,
+             "node_ids": node_ids, "relation": relation,
+             "combination": "union_within_family_intersection_between_families",
+             "section_policy": "whole_passage_on_nonwhitespace_content_overlap"}
+    papers = []
+    stages = [stage] if stage is not None else list(STAGES)
+    for paper_stage in stages:
+        full = _project_paper(payload, paper_stage)
+        available_passages = {p["anchor"] for p in full["paper"]["passages"]}
+        sections = {s["ref"]: s for s in full["paper"]["sections"]}
+        if passages is not None:
+            require_refs(passages, available_passages, "paper passage anchor")
+        if section_refs is not None:
+            require_refs(section_refs, sections, "paper section reference (exact Markdown edition required)")
+        matches = []
+        for passage in full["paper"]["passages"]:
+            if passages is not None and passage["anchor"] not in passages:
+                continue
+            overlaps = [link for link in full["paper"]["section_passage_links"]
+                        if link["to"] == passage["ref"]
+                        and section_refs is not None and link["from"] in section_refs
+                        and full["paper"]["text"].encode("utf-8")[
+                            link["overlap_span"]["start_byte"]:link["overlap_span"]["end_byte"]
+                        ].decode("utf-8").strip()]
+            if section_refs is not None and not overlaps:
+                continue
+            claim_seeds, assumption_seeds = set(passage["claim_ids"]), set(passage["assumption_ids"])
+            direct = claim_seeds | assumption_seeds
+            paths = _witness_tree(adjacency, direct) if relation == "prerequisites" else {}
+            candidates = direct if relation == "direct" else set(paths)
+            matched_ids = sorted(candidates.intersection(node_ids)) if node_ids is not None else []
+            if node_ids is not None and not matched_ids:
+                continue
+            witnesses = []
+            for target in matched_ids:
+                if relation == "direct":
+                    field = "claim_ids" if target in claim_seeds else "assumption_ids"
+                    witness_paths = {target: (target, None)}
+                else:
+                    field = "claim_ids" if paths[target][0] in claim_seeds else "assumption_ids"
+                    witness_paths = paths
+                witnesses.append(_query_witness(target, witness_paths, graph_hash, field))
+            content_span = passage["content_span"]
+            covered_until = content_span["start_byte"]
+            for link in sorted(overlaps, key=lambda item: item["overlap_span"]["start_byte"]):
+                span = link["overlap_span"]
+                if span["start_byte"] > covered_until:
+                    break
+                covered_until = max(covered_until, span["end_byte"])
+            crosses = section_refs is not None and covered_until < content_span["end_byte"]
+            matches.append({
+                "stage": paper_stage, "anchor": passage["anchor"], "passage_ref": passage["ref"],
+                "evidence_class": passage["evidence_class"],
+                "matched_node_ids": matched_ids,
+                "direct_claim_ids": sorted(claim_seeds),
+                "direct_assumption_ids": sorted(assumption_seeds),
+                "section_overlaps": copy.deepcopy(overlaps),
+                "whole_passage_extends_beyond_selected_sections": crosses,
+                "witnesses": witnesses,
+            })
+        selected = [match["anchor"] for match in matches]
+        view = _project_paper(payload, paper_stage, selected)
+        selected_passages = [p for p in view["paper"]["passages"] if p["selected"]]
+        claims = {n for p in selected_passages for n in p["claim_ids"]}
+        assumptions = {n for p in selected_passages for n in p["assumption_ids"]}
+        paths = _witness_tree(adjacency, claims | assumptions)
+        required = set(paths)
+        prerequisite_only = required - claims
+        boundary_witnesses = []
+        for target in sorted(prerequisite_only):
+            field = "claim_ids" if paths[target][0] in claims else "assumption_ids"
+            boundary_witnesses.append(_query_witness(target, paths, graph_hash, field))
+        boundary = {
+            "mapped_claim_ids": sorted(claims), "mapped_assumption_ids": sorted(assumptions),
+            "seed_node_ids": sorted(claims | assumptions),
+            "retained_node_ids": sorted(required),
+            "not_mapped_as_claim_ids": sorted(prerequisite_only),
+            "required_assumption_ids": sorted(n for n in required if nodes[n]["kind"] == "assumption"),
+            "unresolved_node_ids": sorted(n for n in required if nodes[n]["status"] in
+                                          {"open", "unverified", "external", "conditional"}),
+            "outside_closure_node_ids": sorted(set(nodes) - required),
+            "recorded_boundaries": [{"node_id": n, "ref": _view_ref(graph_hash, "nodes", n),
+                                      "text": nodes[n]["boundary"]}
+                                     for n in sorted(required) if "boundary" in nodes[n]],
+            "witnesses": boundary_witnesses,
+            "meaning": "Not mapped as a claim means absent from the selected passages' claim_ids, not absent from their prose. Explicit assumption references and all recorded prerequisites are retained. No sentence-level explanation coverage is inferred.",
+        }
+        papers.append({"stage": paper_stage, "matches": matches,
+                       "selected_section_refs": section_refs if section_refs is not None else [],
+                       "support_boundary": boundary, "view": view})
+    return {
+        "paper_query_version": "0.1.0", "query": query,
+        "snapshot": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
+                     "manifest_sha256": manifest_hash, "graph_sha256": graph_hash},
+        "cache_key": "paper-query-v0.1.0:" + digest(encoded({"manifest_sha256": manifest_hash,
+                                                            "query": query})),
+        "match_count": sum(len(paper["matches"]) for paper in papers),
+        "papers": papers,
+        "relation_semantics": _relation_semantics(ARGUMENT_EDGES | {"assumption_ids"}),
+        "coverage": {
+            "recorded_extraction_status": graph["extraction_status"],
+            "stored_traversal_exhausted": True, "query_truncated": False,
+            "per_root_dependency_completeness": "unknown",
+            "source_bytes_opened": False, "receipt_bytes_opened": False,
+            "empty_result_meaning": "No matching recorded passage correspondence. An unmapped section may contain mathematics; zero matches do not establish independence or absence of a prerequisite.",
+            "scope": "One validated bundle capture. Direct matches use claim_ids and assumption_ids only. Prerequisite matches follow stored Lean, support, formalization and explicit assumption links, retaining each kind; citations, document order and platform decomposition never become premises. Witnesses show one deterministic shortest recorded path, not a proof or complete explanation.",
+        },
+        "semantic_certification": False,
     }
 
 

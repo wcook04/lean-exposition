@@ -133,7 +133,8 @@ class ExtractionBindingTests(unittest.TestCase):
         self.assertEqual(graph["extraction_status"], "partial")
         self.assertEqual(graph["nodes"][0]["status"], "unverified")
         self.assertIn("Declaration body unavailable", graph["nodes"][0]["boundary"])
-        self.assertIn("axiom inspection are incomplete", graph["nodes"][0]["boundary"])
+        self.assertIn("proof-value dependency traversal is incomplete", graph["nodes"][0]["boundary"])
+        self.assertIn("Axiom names are retained independently", graph["nodes"][0]["boundary"])
 
     def test_unavailable_body_and_successful_build_remain_distinct(self):
         self.report["declarations"][0]["body_available"] = False
@@ -145,7 +146,7 @@ class ExtractionBindingTests(unittest.TestCase):
         self.assertEqual(graph["nodes"][0]["status"], "kernel_checked")
         self.assertIn("Declaration body unavailable", graph["nodes"][0]["boundary"])
 
-    def test_unavailable_dependency_marks_consumer_axiom_inspection(self):
+    def test_unavailable_dependency_marks_consumer_body_traversal(self):
         dependency = copy.deepcopy(self.report["declarations"][0])
         dependency.update(name="support", body_available=False)
         self.report["declarations"].append(dependency)
@@ -156,9 +157,32 @@ class ExtractionBindingTests(unittest.TestCase):
         graph = to_graph(self.report, self.root, self.build)
         nodes = {n["id"]: n for n in graph["nodes"]}
         self.assertIn("A dependency body is unavailable", nodes["result"]["boundary"])
-        self.assertIn("axiom inspection are incomplete", nodes["result"]["boundary"])
+        self.assertIn("proof-value dependency traversal is incomplete", nodes["result"]["boundary"])
+        self.assertIn("Axiom names are retained independently", nodes["result"]["boundary"])
         self.assertIn("Declaration body unavailable", nodes["support"]["boundary"])
         self.assertEqual(nodes["result"]["status"], "kernel_checked")
+
+    def test_missing_body_preserves_reported_axioms_and_sorry_obligation(self):
+        # Synthetic wire data, not a Lean run: missing body and reported axiom
+        # metadata are independent fields. A successful build must not erase
+        # the reported sorry obligation.
+        for axiom in ("Classical.choice", "sorryAx"):
+            with self.subTest(axiom=axiom):
+                report = copy.deepcopy(self.report)
+                report["declarations"][0].update(
+                    body_available=False, axioms=[axiom], has_sorry=axiom == "sorryAx")
+                report.update(unavailable_bodies=["result"], scope_complete=False)
+                rebind(report)
+                graph = to_graph(report, self.root, self.build)
+                nodes = {node["id"]: node for node in graph["nodes"]}
+                self.assertEqual(nodes["result"]["assumption_ids"], [axiom])
+                self.assertEqual(nodes["result"]["status"],
+                                 "unverified" if axiom == "sorryAx" else "kernel_checked")
+                self.assertEqual(nodes[axiom]["status"], "open" if axiom == "sorryAx" else "axiom")
+                self.assertEqual(graph["extraction_status"], "partial")
+                self.assertIn("Axiom names are retained independently", nodes["result"]["boundary"])
+                self.assertNotIn("axiom inspection are incomplete", nodes["result"]["boundary"])
+                self.assertEqual(next(e for e in graph["evidence"] if e["id"] == "build")["status"], "passed")
 
     def test_body_flag_marks_partial_even_if_summary_omits_it(self):
         self.report["declarations"][0]["body_available"] = False

@@ -2,8 +2,9 @@
 
 Read [From Parisi full support to the QAOA question](reasoning-record.md).
 The draft reconstructs the support-gap contradiction, the scalar martingale
-value identity and its finite Gaussian approximation, then identifies the
-additional construction in the QAOA manuscript.
+value identity and its finite Gaussian approximation, then reconstructs the
+additional construction in the QAOA manuscript, its fixed-word sampling
+consequence and the limits of quantitative depth claims.
 
 The source is OpenAI's two public manuscripts and formal interfaces at
 revision adc7f1241b42e322a6451854ab7e4b4c146bf78a. The
@@ -30,9 +31,9 @@ This authoring pass inspected the full-support variational proof and
 certificate, scalar consequences, exact top-level formal types and selected
 proof dependencies, and the QAOA manuscript's argument and error-allocation
 structure. Bounded source and adversarial readings informed the draft.
-Complete independent mathematical acceptance, formal replay and a reader
+Independent mathematical acceptance, accepted research replay and a reader
 reconstruction study remain pending. The mapping therefore stays draft with
-review_state not_reviewed.
+review_state needs_revision.
 
 The source comparison distinguishes the sampled convex-chord declaration
 from the manuscript's full right-derivative statement. Coefficient convexity
@@ -72,3 +73,9 @@ This is not a claim that every cited proof was independently checked.
 The manuscript follows the writing discipline of the public Erdős papers:
 state the exact theorem, develop its decisive step, and keep formal and
 circuit conclusions distinct. Writing models are not mathematical inputs.
+
+The [historical full-support attempt](../../../examples/qaoa-sk/verification/full-support-build-failure-20261023.json)
+and [original diagnostic log](../../../examples/qaoa-sk/verification/full-support-build-failure-20261023.log)
+record challenge build/export followed by an implementation-build failure.
+They concern the earlier configuration, and do not establish acceptance of the
+current sources or a completed corrected replay.

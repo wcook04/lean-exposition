@@ -18,7 +18,7 @@ Its default templates remain empty so another project can use the same workflow.
 | Paper | Purpose |
 | --- | --- |
 | [Long reasoning record](qaoa-sk/long/reasoning-record.md) | Derivations, source destinations and the additional steps toward the QAOA claim |
-| [Short paper](qaoa-sk/short/paper.md) · [PDF](qaoa-sk/short/paper.pdf) | The full-support argument and its scalar consequence |
+| [Short paper](qaoa-sk/short/paper.md) · [PDF](qaoa-sk/short/paper.pdf) | The full-support and positive-density arguments, with their scalar consequence |
 | [Exposition](qaoa-sk/expository/main.md) | The model, contact mechanism and examples that test understanding |
 
 The [source correspondence review](qaoa-sk/source-review/README.md) records the

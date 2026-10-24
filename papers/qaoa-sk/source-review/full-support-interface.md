@@ -235,3 +235,26 @@ Four details are particularly consequential when using this theorem in prose:
 [scope]: ../../../examples/qaoa-sk/upstream/lean/docs/281.md#L8-L16
 [comparator]: ../../../examples/qaoa-sk/upstream/lean/ComparatorChallenges/SKFullSupport.json#L2-L13
 [lake]: ../../../examples/qaoa-sk/upstream/lean/lakefile.lean#L1-L19
+
+## Intermediate premises and their providers
+
+The integrated certificate is an interface with analytic hypotheses, rather
+than the complete support theorem. Its source
+[`integrated_coercivity_of_flux`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/Certificate.lean#L165-L194)
+requires the signs, the flux derivative, zero flux at both infinities, and
+three integrability conditions. The density and approximation development
+supplies these at the application. In particular,
+[`actual_coercivity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean#L135-L144)
+assumes positive time and continuity of the coefficient there; it does not
+assume a positive coefficient. Positivity enters
+[`positive_gap_curvature`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/GapCurvature.lean#L48-L71),
+which has no minimizer hypothesis and has a separate zero-coefficient case.
+
+Likewise, the scalar tree proves
+[`sourceStripRegularity`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/Regularity.lean#L22-L42)
+from its defined Brownian space and admissible coefficient. Its compact-strip
+predicate allows zero as the cutoff, whereas the finite-Gaussian target
+requires a strictly positive cutoff. These local requirements identify the
+providers that a complete dependency audit would check; they are not extra
+undischarged hypotheses on the selected endpoint. The long record's §§4, 5
+and 8 preserve this distinction.

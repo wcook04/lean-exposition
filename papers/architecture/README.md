@@ -1,11 +1,11 @@
 # Architectural companion: from Lean source to explanation
 
-[Read the first-draft paper](paper.md) · [Rendered PDF](paper.pdf)
+[Read the revised paper](paper.md) · [Rendered PDF](paper.pdf)
 
 This companion is for a mathematician entering the repository through its
 papers. It traces one selected theorem from pinned source through an evidence
 graph, three authored explanations and a versioned bundle, then explains what
-a consumer can inspect. It is a **first draft, not reviewed**; it does not
+a consumer can inspect. It is a **revised draft without independent human acceptance**; it does not
 upgrade any Lean, Comparator, platform or mathematical-review status.
 
 The [QAOA/SK source example](../../examples/qaoa-sk/README.md) provides the
@@ -57,10 +57,10 @@ requires the manifest digest and exact source edition, not only a bundle name.
 
 ## Figure provenance and rendering
 
-The six TikZ figures in `paper.md` begin with an inverted reader funnel
+The seven TikZ figures in `paper.md` begin with an inverted reader funnel
 adapted from Will Cook's existing mathematics-map visual. Its widths indicate
 editorial selection, not page length or proof strength; the return arrow
-marks claim-site links to exact evidence. Figures 2–6 adapt the *authored
+marks claim-site links to exact evidence. The workflow, correspondence and review figures adapt the *authored
 records/derived views*, *three versions with shared support*, *registered
 supports*, *two correspondences* and *refinement* compositions in Will Cook's
 [active Plectis Erdős systems paper](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
@@ -68,7 +68,9 @@ supports*, *two correspondences* and *refinement* compositions in Will Cook's
 and `fig:refinement`; source licence
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). This
 companion redraws their content for the Lean Exposition contracts; each
-connector names its workflow, mapping, argument or review relation.
+connector names its workflow, mapping, argument or review relation. The
+additional concrete gap-argument figure adapts the same shared-support
+composition to two actual ingredients, under the positive-plateau guard.
 
 Render with the repository's paper toolchain:
 

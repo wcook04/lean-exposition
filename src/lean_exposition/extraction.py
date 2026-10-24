@@ -2,10 +2,13 @@
 import re
 from pathlib import Path
 
-from .contracts import ContractError, digest, encoded, extraction_projection_digest, local_path, validate_extraction_report, validate_graph
+from .contracts import ContractError, digest, encoded, extraction_projection_digest, local_path, validate_extraction_report, validate_graph, validate_process_receipt
+from .verification import _source_hashes
 
 
 def _bound_receipt(receipt: dict, project: Path, module: str, *, evidence_kind: str) -> None:
+    if not isinstance(receipt, dict):
+        raise ContractError("receipt must be an object")
     if receipt.get("evidence_kind") != evidence_kind:
         raise ContractError(f"receipt must record {evidence_kind} evidence")
     if receipt.get("module") != module:
@@ -19,15 +22,42 @@ def _bound_receipt(receipt: dict, project: Path, module: str, *, evidence_kind: 
         target = local_path(project, path)
         if not target.is_file() or digest(target.read_bytes()) != sha:
             raise ContractError(f"source differs from command receipt: {path}")
+    # Checking only recorded paths misses newly added sources (or a receipt
+    # that omitted an existing source). Use the producer's snapshot boundary,
+    # including its explicit exclusions for caches and imported packages.
+    try:
+        current = _source_hashes(project)
+    except OSError as exc:
+        raise ContractError("current project source snapshot is unavailable") from exc
+    if current != hashes:
+        changed = sorted(path for path in current.keys() | hashes.keys()
+                         if current.get(path) != hashes.get(path))
+        raise ContractError("project source snapshot differs from command receipt: "
+                            + ", ".join(changed))
 
 
 def _public_receipt(receipt: dict) -> dict:
     """Keep evidence metadata, excluding machine-specific diagnostic output."""
+    # Raw diagnostics determine the legacy display-text digests during
+    # projection. Canonicalize a copy before checking newer byte observations;
+    # neither the caller's receipt nor a recorded raw-byte digest is rewritten.
+    receipt = receipt.copy()
+    for stream in ("stdout", "stderr"):
+        if stream in receipt:
+            if not isinstance(receipt[stream], str):
+                raise ContractError(f"receipt {stream} must be text")
+            try:
+                receipt[stream + "_sha256"] = digest(receipt[stream].encode("utf-8"))
+            except UnicodeEncodeError as exc:
+                raise ContractError(f"receipt {stream} is not encodable UTF-8 text") from exc
+    validate_process_receipt(receipt)
     fields = {"status", "returncode", "module", "source_hashes", "source_changed",
               "evidence_kind", "extractor_sha256", "report_sha256", "failure_reason",
               "changed_paths", "command_sha256", "command_paths_redacted",
               "report_schema_version", "projection_profile", "failure_stage",
-              "error_type", "errno"}
+              "error_type", "errno", "extraction_request", "extractor_template_sha256",
+              "process_status", "stdout_bytes_sha256", "stderr_bytes_sha256",
+              "stdout_utf8_valid", "stderr_utf8_valid", "output_decoding"}
     result = {k: v for k, v in receipt.items() if k in fields}
     for key in ("failure_stage", "error_type"):
         if key in result and (
@@ -46,16 +76,13 @@ def _public_receipt(receipt: dict) -> dict:
         raise ContractError("invalid receipt command_sha256")
     for stream in ("stdout", "stderr"):
         key = stream + "_sha256"
-        if stream in receipt:
-            if not isinstance(receipt[stream], str):
-                raise ContractError(f"receipt {stream} must be text")
-            result[key] = digest(receipt[stream].encode("utf-8"))
-        elif key in receipt:
-            sha = receipt[key]
-            if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{64}", sha) is None:
-                raise ContractError(f"invalid receipt {key}")
-            result[key] = sha
-    result["command"] = [Path(token).name if Path(token).is_absolute() else token for token in receipt["command"]]
+        if key in receipt:
+            result[key] = receipt[key]
+    command = receipt.get("command")
+    if (not isinstance(command, list) or not command
+            or any(not isinstance(token, str) or not token for token in command)):
+        raise ContractError("receipt command must be a nonempty text array")
+    result["command"] = [Path(token).name if Path(token).is_absolute() else token for token in command]
     if result["command"] != receipt["command"]:
         result.setdefault("command_sha256", digest(encoded({"command": receipt["command"]})))
         result["command_paths_redacted"] = True
@@ -68,6 +95,23 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
     validate_extraction_report(report)
     profile = "lean-extraction-v2" if report["schema_version"] == 2 else "lean-extraction-v1"
     receipt = report.get("receipt", {})
+    if not isinstance(receipt, dict):
+        raise ContractError("extraction receipt must be an object")
+    if "extraction_request" in receipt:
+        request = receipt["extraction_request"]
+        if (not isinstance(request, dict)
+                or set(request) != {"module", "roots", "module_prefixes", "max_declarations"}
+                or any(request.get(field) != report[field]
+                       for field in ("module", "roots", "module_prefixes"))
+                or type(request.get("max_declarations")) is not int
+                or request["max_declarations"] < 1
+                or len(report["declarations"]) > request["max_declarations"]):
+            raise ContractError("extraction request differs from report or declaration limit")
+    if "extractor_template_sha256" in receipt and (
+        not isinstance(receipt["extractor_template_sha256"], str)
+        or re.fullmatch(r"[0-9a-f]{64}", receipt["extractor_template_sha256"]) is None
+    ):
+        raise ContractError("invalid extractor template hash")
     if (report["schema_version"] == 2 and
             (type(receipt.get("report_schema_version")) is not int
              or receipt["report_schema_version"] != 2)):
@@ -158,12 +202,12 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
             nodes[d["name"]]["is_partial"] = d["is_partial"]
         if d["name"] in unavailable_bodies:
             nodes[d["name"]]["boundary"] = (
-                "Declaration body unavailable: proof-value dependencies and transitive axiom inspection are incomplete. "
+                "Declaration body unavailable: proof-value dependency traversal is incomplete. Axiom names are retained independently from Lean.collectAxioms; body availability alone does not establish axiom-inventory completeness. "
                 "Theorem hypotheses remain in the displayed type. Build status is recorded separately."
             )
         elif d["name"] in incomplete_inspections:
             nodes[d["name"]]["boundary"] = (
-                "A dependency body is unavailable: transitive proof-value dependencies and axiom inspection are incomplete. "
+                "A dependency body is unavailable: transitive proof-value dependency traversal is incomplete. Axiom names are retained independently from Lean.collectAxioms; body availability alone does not establish axiom-inventory completeness. "
                 "Theorem hypotheses remain in the displayed type. Build status is recorded separately."
             )
     for d in report["external_dependencies"]:
@@ -217,7 +261,7 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
                 nodes[d["name"]]["status"] = "kernel_checked"
     graph = {"schema_version": "1.1" if report["schema_version"] == 2 else "1.0",
              "id": "lean:" + report["module"], "title": "Selected Lean declaration closure",
-             "selected_goals": report["roots"], "sources": sources, "citations": [],
+             "selected_goals": list(dict.fromkeys(report["roots"])), "sources": sources, "citations": [],
              "nodes": sorted(nodes.values(), key=lambda n:n["id"]), "edges": edges, "evidence": evidence,
              "scope": "Elaborated expression references within selected module prefixes; external dependencies remain explicit.",
              "extraction_status": "complete" if report["scope_complete"] and not report["external_dependencies"] and not unknown and not unavailable_bodies else "partial",

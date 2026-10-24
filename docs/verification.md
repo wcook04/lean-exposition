@@ -49,6 +49,10 @@ Comparator fixture checks below remain distinct evidence classes.
 The extractor template is packaged at
 [`Extract.lean`](../src/lean_exposition/resources/lean/Extract.lean), so extraction
 does not depend on the source checkout remaining present after installation.
+The current request also records the template digest, generated-driver digest,
+module, roots, module prefixes and declaration cap. Those identify what was
+requested and generated; they do not identify an arbitrary custom command's
+effective Lean binary or its compiled imports.
 
 ## Python API
 
@@ -66,7 +70,9 @@ does not depend on the source checkout remaining present after installation.
 
 An extraction failure raises `VerificationError`; `.receipt` carries the
 command, return code, stdout and stderr. Other operations return receipts
-with `passed`, `failed`, `unavailable`, or `timed_out`. Comparator's documented
+with `passed`, `failed`, `unavailable`, or `timed_out`. The separate
+`process_status` retains the process outcome when a later input-binding check
+invalidates a zero exit. Comparator's documented
 exit code 2 in the integrated default command means it could not start, so it
 is `unavailable`. Supplied legacy or custom commands retain nonzero exits as
 `failed`; they do not inherit the integrated checker's exit-code convention.
@@ -82,9 +88,45 @@ cache policy or sandbox controls of a run; retain those separately when making
 a reproducibility or security claim. A Linux preflight flag establishes OS
 eligibility, not a successful sandboxed invocation.
 
+### Reading a new Comparator process receipt
+
+New wrapper receipts identify themselves as `comparator-process-v2`. A
+`passed` wrapper status means that the launched process exited zero and the
+observed bindings were usable and stable. It is not an authenticated inner
+checker verdict. In particular, a custom command that ignores its arguments
+cannot establish theorem acceptance merely by returning zero.
+
+| Record | Meaning and limit |
+| --- | --- |
+| `process_status`, `returncode` | The actual process outcome, retained separately from the wrapper's binding decision. An outer service-client exit is still an outer outcome. |
+| `config_sha256`, `config_sha256_after`, `config_changed` | The configuration bytes observed before and after the invocation. Missing, malformed, duplicate-key or empty-target configuration cannot support a passing wrapper receipt. |
+| `config_observation` | The selected module/target lists, axiom policy and external-checker settings read from those bytes. Unknown fields remain listed. This observation is not a verified correspondence to a graph goal or paper claim. |
+| `launch_executable_before`, `launch_executable_after` | The first executable resolved for the command, its path and digest. A `lake` digest does not identify the Comparator, exporter or kernel launched inside Lake. |
+| `source_hashes`, `source_hashes_after`, `source_changed` | The observed project source/environment inventory. A failed resnapshot has unknown stability, and cannot preserve a passing result. |
+| `stdout_bytes_sha256`, `stderr_bytes_sha256` | Hashes of the captured process bytes. Display text uses UTF-8 replacement on malformed diagnostics; validity flags expose that conversion. Historical text hashes retain their original meaning. |
+| `assurance` | Explicitly unestablished inner-checker identity, stage, sandbox, compiled imports and paper correspondence. These fields must not be inferred from child output. |
+
+These are before/after observations: they do not exclude a file being changed
+and restored between observations. They do not attest dynamically loaded code,
+interpreter scripts or transitive launchers. A trusted controller is still
+needed to record the effective checker/exporter/kernel binaries, source and
+cache policy, sandbox configuration, individual stage outcomes and final
+target-bound verdict. The distinction between input definition and observed
+run details also appears in the [SLSA provenance model](https://slsa.dev/spec/v1.2/build-provenance);
+these local receipts make no SLSA compliance or signer-authenticity claim.
+
+Timeout cleanup targets this invocation's process group. It records whether
+the parent was reaped and output pipes drained, rather than waiting forever
+on a detached descendant. Process-group cleanup is not a security sandbox.
+Keep the checker's real sandbox enabled for adversarial submissions.
+
 Extraction and build receipts bind the selected module and SHA-256 hashes of
 the project's Lean sources and environment files before execution. The adapter
 checks those hashes again afterward; a change invalidates passing evidence.
+Translation to a graph repeats the complete inventory check, so adding or
+removing a local Lean source after the run invalidates the binding as well as
+changing a previously listed file. Repeated requested roots remain preserved
+in the raw report; the graph's selected-goal list contains each root once.
 Imported package source outside the project is represented by the dependency
 lock and graph's external boundary. This does not certify arbitrary compiled
 dependency artifacts or prevent a file being changed and restored between the
@@ -115,6 +157,11 @@ report lacks safety flags and remains a historical record:
 These flags classify compiled constants, not source keywords. A `partial def`
 may appear as a safe wrapper that depends on an opaque recursive auxiliary;
 the dependency edge and the auxiliary's unknown partiality remain visible.
+`kernel_checked` is a declaration-level status, relative to its formal
+assumptions and imported environment. A safe definition or reflexive theorem
+can refer to an opaque symbol whose partiality is unknown. Its own status does
+not certify the entire dependency closure as total or justify evaluating that
+symbol. The opaque prerequisite and its `unverified` status remain visible.
 
 Edges run from a declaration to its prerequisite. The module boundary defaults
 to the requested module and its child module names. Select a wider project
@@ -327,3 +374,37 @@ selected target. Distinguish launch, build, export and parsing failures from
 an established statement, axiom-policy or kernel rejection. For negative
 fixtures, a matching nonzero exit is insufficient unless the intended rejection
 stage was reached.
+
+The [retained full-support observation](../examples/qaoa-sk/verification/full-support-build-failure-20261023.json)
+records a challenge build/export followed by a solution-build failure for a
+missing imported object. It is a partial observation of the pre-repair build
+configuration, not a completed research-run receipt or a replay of the current
+configuration. The raw log digest is retained. No research acceptance or
+mathematical rejection follows; scalar-value checking remains separately unrun.
+
+## Decisive validation after a change
+
+Run the Python tests, then build a wheel and install it in a separate virtual
+environment. From outside the source checkout, confirm that the imported
+package and `resources/lean/Extract.lean` come from that installation and match
+the wheel bytes. Run the actual trusted `LeanSafetyIntegrationTests` and
+`LeanInspectionIntegrationTests` with the selected Lean toolchain. The latter
+checks a private proof dependency, a named axiom, `sorryAx`, an inductive
+recursor, capped traversal, and a safe wrapper referring to an opaque partial
+definition. Retain exact fixture sources, build/extraction receipts, raw
+reports, graphs and tool identities. A mocked report is not an installed Lean
+integration result.
+
+Returned external fixture reports are advisory. A successful Safety or
+Inspection result must be reproduced locally and bound to the actual installed
+helper, source bytes and toolchain before it becomes local execution evidence.
+The opt-in integration tests below do not confer a research-proof result.
+
+Keep legacy research replay separate. Recreate the locked derived corpus in
+a new workspace, verify the exact `v4.34.1` dependencies and checker/exporter
+pair, test the required sandbox under the intended policy, and then run each
+research configuration independently. Retain controller stage outcomes and
+the actual inner-checker receipt. Do not borrow an active research job, reuse
+the fixture verdict as research evidence, or silently migrate the corpus to
+the newer integrated Comparator. A newer checker requires a new compatibility
+evaluation and new source-bound receipts.

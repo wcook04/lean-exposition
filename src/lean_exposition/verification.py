@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import signal
+import shutil
 import subprocess
 import tempfile
 from typing import Any, Sequence
@@ -45,42 +46,100 @@ def _text(value: str | bytes | None) -> str:
 
 def _execute(
     args: list[str], project: Path, input_text: str | None, timeout: float,
-) -> subprocess.CompletedProcess[str]:
-    # Kill this invocation's descendants too when a Lake child exceeds its
-    # deadline; never leave a Lean build running after reporting a timeout.
+) -> subprocess.CompletedProcess[bytes]:
+    # Collect this invocation and its process group after a deadline. This is
+    # lifecycle cleanup, not containment of children that escape that group.
     try:
         process = subprocess.Popen(
             args, cwd=project, stdin=subprocess.PIPE if input_text is not None else None,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             start_new_session=os.name == "posix",
         )
     except OSError as exc:
         raise _ProcessLaunchError(exc) from exc
+    cleanup_errors = []
+
+    def signal_invocation(*, force: bool = False) -> None:
+        try:
+            if os.name == "posix":
+                os.killpg(process.pid, signal.SIGKILL if force else signal.SIGTERM)
+            elif not force:
+                process.terminate()
+            else:
+                process.kill()
+        except ProcessLookupError:
+            # The launcher can exit before timeout cleanup; a surviving child
+            # may still hold its pipes. This is not a new launch failure.
+            pass
+        except OSError as exc:
+            cleanup_errors.append({"operation": "kill" if force else "terminate",
+                                   "error_type": type(exc).__name__, "errno": exc.errno})
+
     try:
-        stdout, stderr = process.communicate(input=input_text, timeout=timeout)
+        stdout, stderr = process.communicate(
+            input=input_text.encode("utf-8") if input_text is not None else None, timeout=timeout)
     except subprocess.TimeoutExpired:
-        if os.name == "posix":
-            os.killpg(process.pid, signal.SIGTERM)
-        else:
-            process.terminate()
+        signal_invocation()
+        pipes_drained = True
         try:
             stdout, stderr = process.communicate(timeout=2)
         except subprocess.TimeoutExpired:
-            if os.name == "posix":
-                os.killpg(process.pid, signal.SIGKILL)
-            else:
-                process.kill()
-            stdout, stderr = process.communicate()
-        raise subprocess.TimeoutExpired(args, timeout, output=stdout, stderr=stderr) from None
+            signal_invocation(force=True)
+            try:
+                stdout, stderr = process.communicate(timeout=2)
+            except subprocess.TimeoutExpired as remainder:
+                # Escaped/detached descendants can retain pipe descriptors.
+                # Do not wait indefinitely or claim their containment.
+                stdout, stderr = remainder.output, remainder.stderr
+                pipes_drained = False
+                for stream in (process.stdin, process.stdout, process.stderr):
+                    if stream is not None:
+                        stream.close()
+                try:
+                    process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    pass
+        error = subprocess.TimeoutExpired(args, timeout, output=stdout, stderr=stderr)
+        error.cleanup = {"parent_reaped": process.poll() is not None,
+                         "pipes_drained": pipes_drained,
+                         "scope": "invocation_process_group",
+                         "signal_errors": cleanup_errors}
+        raise error from None
     except BaseException:
         if process.poll() is None:
-            if os.name == "posix":
-                os.killpg(process.pid, signal.SIGKILL)
-            else:
-                process.kill()
-        process.communicate()
+            signal_invocation(force=True)
+        try:
+            process.communicate(timeout=2)
+        except subprocess.TimeoutExpired:
+            for stream in (process.stdin, process.stdout, process.stderr):
+                if stream is not None:
+                    stream.close()
         raise
     return subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
+
+
+def _stream_fields(stdout: str | bytes | None, stderr: str | bytes | None) -> dict[str, Any]:
+    """Retain byte identities even when diagnostics are not valid UTF-8."""
+    result: dict[str, Any] = {"output_decoding": "utf-8-with-replacement"}
+    for name, value in (("stdout", stdout), ("stderr", stderr)):
+        result[name] = _text(value)
+        if isinstance(value, bytes):
+            raw = value
+        else:
+            try:
+                raw = (value or "").encode("utf-8")
+            except UnicodeEncodeError:
+                # Only non-process providers (for example test doubles) can
+                # return an unencodable Python string. Do not invent raw bytes.
+                result[name + "_utf8_valid"] = False
+                continue
+        result[name + "_bytes_sha256"] = hashlib.sha256(raw).hexdigest()
+        try:
+            raw.decode("utf-8")
+            result[name + "_utf8_valid"] = True
+        except UnicodeDecodeError:
+            result[name + "_utf8_valid"] = False
+    return result
 
 
 def _run(
@@ -93,19 +152,23 @@ def _run(
     try:
         result = _execute(args, project, input_text, timeout)
     except _ProcessLaunchError as exc:
-        return {"status": "unavailable", "command": args, "returncode": None,
-                "stdout": "", "stderr": str(exc),
+        return {"status": "unavailable", "process_status": "unavailable", "command": args,
+                "returncode": None, **_stream_fields("", str(exc)),
                 "failure_stage": "process_launch", "failure_reason": "process_launch_failed",
                 "error_type": type(exc.error).__name__, "errno": exc.error.errno}
     except FileNotFoundError as exc:
-        return {"status": "unavailable", "command": args, "returncode": None,
-                "stdout": "", "stderr": str(exc)}
+        return {"status": "unavailable", "process_status": "unavailable", "command": args,
+                "returncode": None, **_stream_fields("", str(exc)),
+                "failure_stage": "process_launch", "failure_reason": "process_launch_failed",
+                "error_type": type(exc).__name__, "errno": exc.errno}
     except subprocess.TimeoutExpired as exc:
-        return {"status": "timed_out", "command": args, "returncode": None,
-                "stdout": _text(exc.stdout), "stderr": _text(exc.stderr)}
-    return {"status": "passed" if result.returncode == 0 else "failed",
-            "command": args, "returncode": result.returncode,
-            "stdout": result.stdout, "stderr": result.stderr}
+        return {"status": "timed_out", "process_status": "timed_out", "command": args,
+                "returncode": None, **_stream_fields(exc.stdout, exc.stderr),
+                "failure_stage": "process_timeout",
+                "cleanup": getattr(exc, "cleanup", {"scope": "not_observed"})}
+    status = "passed" if result.returncode == 0 else "failed"
+    return {"status": status, "process_status": status, "command": args,
+            "returncode": result.returncode, **_stream_fields(result.stdout, result.stderr)}
 
 
 def _identifier(value: str) -> str:
@@ -118,7 +181,9 @@ def _identifier(value: str) -> str:
 def _source_hashes(project: Path) -> dict[str, str]:
     """Snapshot project Lean sources and its environment, excluding caches."""
     paths: set[Path] = set()
-    for base, dirs, files in os.walk(project):
+    def walk_error(error: OSError) -> None:
+        raise error
+    for base, dirs, files in os.walk(project, onerror=walk_error):
         dirs[:] = sorted(d for d in dirs if d not in {".lake", ".git", ".venv", "__pycache__"})
         paths.update(Path(base) / name for name in files if name.endswith(".lean"))
     for name in ("lean-toolchain", "lakefile.lean", "lakefile.toml", "lake-manifest.json"):
@@ -130,34 +195,59 @@ def _source_hashes(project: Path) -> dict[str, str]:
 
 
 def _bind_sources(receipt: dict[str, Any], project: Path, before: dict[str, str]) -> None:
-    after = _source_hashes(project)
     receipt["source_hashes"] = before
+    try:
+        after = _source_hashes(project)
+    except OSError as exc:
+        receipt["source_changed"] = None
+        receipt["source_snapshot_error"] = {"error_type": type(exc).__name__, "errno": exc.errno}
+        if receipt["status"] == "passed":
+            receipt["status"] = "failed"
+            receipt["failure_stage"] = "receipt_binding"
+            receipt["failure_reason"] = "source_snapshot_unavailable"
+        return
     receipt["source_changed"] = before != after
     if before != after:
         receipt["status"] = "failed"
+        receipt["failure_stage"] = "receipt_binding"
         receipt["failure_reason"] = "source_changed_during_run"
         receipt["changed_paths"] = sorted(
             path for path in before.keys() | after.keys() if before.get(path) != after.get(path)
         )
+        receipt["source_hashes_after"] = after
+
+
+def _run_bound(
+    command: Sequence[str], project: Path, timeout: float,
+) -> dict[str, Any]:
+    """Retain a no-run or executed receipt even if a source snapshot fails."""
+    try:
+        before = _source_hashes(project)
+    except OSError as exc:
+        return {"status": "failed", "process_status": "not_run", "command": list(command),
+                "returncode": None, "stdout": "", "stderr": "",
+                "source_hashes": {}, "source_changed": None,
+                "failure_stage": "input_snapshot", "failure_reason": "source_snapshot_unavailable",
+                "source_snapshot_error": {"error_type": type(exc).__name__, "errno": exc.errno}}
+    receipt = _run(command, project, timeout)
+    _bind_sources(receipt, project, before)
+    return receipt
 
 
 def _lean_names(values: Sequence[str]) -> str:
     return "#[" + ", ".join("`" + _identifier(v) for v in values) + "]"
 
 
-def extractor_source(
-    module: str, roots: Sequence[str], module_prefixes: Sequence[str],
+def _render_extractor_source(
+    template: str, module: str, roots: Sequence[str], module_prefixes: Sequence[str],
     *, max_declarations: int = 1000,
 ) -> str:
     """Generate an import header and the packaged Lean extraction template."""
     _identifier(module)
     if not roots:
         raise ValueError("at least one root declaration is required")
-    if max_declarations < 1:
+    if type(max_declarations) is not int or max_declarations < 1:
         raise ValueError("max_declarations must be positive")
-    template = resources.files("lean_exposition").joinpath(
-        "resources/lean/Extract.lean"
-    ).read_text(encoding="utf-8")
     source = template.replace("__LEAN_EXPOSITION_ROOTS__", _lean_names(roots))
     source = source.replace("__LEAN_EXPOSITION_PREFIXES__", _lean_names(module_prefixes))
     source = source.replace("__LEAN_EXPOSITION_LIMIT__", str(max_declarations))
@@ -173,6 +263,21 @@ def extractor_source(
         "import Lean.DeclarationRange\n"
     )
     return imports + "\n" + source
+
+
+def _extractor_template() -> str:
+    return resources.files("lean_exposition").joinpath(
+        "resources/lean/Extract.lean"
+    ).read_text(encoding="utf-8")
+
+
+def extractor_source(
+    module: str, roots: Sequence[str], module_prefixes: Sequence[str],
+    *, max_declarations: int = 1000,
+) -> str:
+    """Generate an import header and the packaged Lean extraction template."""
+    return _render_extractor_source(_extractor_template(), module, roots, module_prefixes,
+                                    max_declarations=max_declarations)
 
 
 def extract_dependencies(
@@ -192,23 +297,26 @@ def extract_dependencies(
     """
     project = Path(project).resolve()
     prefixes = tuple(module_prefixes) if module_prefixes is not None else (module,)
-    source = extractor_source(module, roots, prefixes, max_declarations=max_declarations)
+    template = _extractor_template()
+    source = _render_extractor_source(template, module, roots, prefixes, max_declarations=max_declarations)
     command = tuple(lean_command) if lean_command is not None else (
         "lake", "env", "lean", "--run",
     )
-    before = _source_hashes(project)
     with tempfile.TemporaryDirectory(prefix="lean-exposition-") as driver_dir:
         driver = Path(driver_dir) / "LeanExpositionDriver.lean"
         driver.write_text(source, encoding="utf-8")
-        receipt = _run([*command, str(driver)], project, timeout)
+        receipt = _run_bound([*command, str(driver)], project, timeout)
         receipt["command_sha256"] = hashlib.sha256(json.dumps(
             {"command": receipt["command"]}, indent=2, ensure_ascii=False,
             sort_keys=True).encode() + b"\n").hexdigest()
         receipt["command"][-1] = driver.name
         receipt["command_paths_redacted"] = True
-    _bind_sources(receipt, project, before)
     receipt["module"] = module
     receipt["evidence_kind"] = "elaboration_process"
+    receipt["extraction_request"] = {"module": module, "roots": list(roots),
+                                      "module_prefixes": list(prefixes),
+                                      "max_declarations": max_declarations}
+    receipt["extractor_template_sha256"] = hashlib.sha256(template.encode("utf-8")).hexdigest()
     receipt["extractor_sha256"] = hashlib.sha256(source.encode()).hexdigest()
     if receipt["status"] != "passed":
         raise VerificationError("Lean dependency extraction did not succeed", receipt)
@@ -217,6 +325,8 @@ def extract_dependencies(
         receipt["failure_reason"] = "invalid_extraction_report"
         return VerificationError(message, receipt)
 
+    if receipt.get("stdout_utf8_valid") is False:
+        raise invalid_report("Lean emitted invalid extraction JSON: stdout is not UTF-8")
     marker = "LEAN_EXPOSITION_JSON:"
     lines = [line[len(marker):] for line in receipt["stdout"].splitlines()
              if line.startswith(marker)]
@@ -253,44 +363,162 @@ def check_build(
     """Build exactly the requested module; a build is its own evidence class."""
     _identifier(module)
     project = Path(project).resolve()
-    before = _source_hashes(project)
-    receipt = _run([*lake_command, "build", module], project, timeout)
-    _bind_sources(receipt, project, before)
+    receipt = _run_bound([*lake_command, "build", module], project, timeout)
     receipt["module"] = module
     receipt["evidence_kind"] = "lean_build"
     return receipt
+
+
+def _file_observation(path: Path) -> tuple[dict[str, Any], bytes | None]:
+    try:
+        data = path.read_bytes()
+    except OSError as exc:
+        return {"status": "unavailable", "sha256": None,
+                "error_type": type(exc).__name__, "errno": exc.errno}, None
+    return {"status": "read", "sha256": hashlib.sha256(data).hexdigest()}, data
+
+
+def _comparator_scope(data: bytes | None) -> dict[str, Any]:
+    """Observe known configuration fields; this is not a target-to-paper map."""
+    if data is None:
+        return {"status": "unavailable"}
+    try:
+        config = decode_json(data)
+        json.dumps(config, ensure_ascii=False).encode("utf-8")
+        if not isinstance(config, dict):
+            raise ValueError("configuration must be an object")
+        for key in ("challenge_module", "solution_module"):
+            if not isinstance(config.get(key), str) or not config[key].strip():
+                raise ValueError(f"{key} must be a nonempty string")
+        definitions = config.get("definition_names")
+        definitions = [] if definitions is None else definitions
+        for key in ("theorem_names", "permitted_axioms", "definition_names"):
+            value = definitions if key == "definition_names" else config.get(key)
+            if not isinstance(value, list) or any(not isinstance(x, str) or not x for x in value):
+                raise ValueError(f"{key} must be an array of nonempty strings")
+        if not config["theorem_names"] and not definitions:
+            raise ValueError("configuration selects no theorem or definition targets")
+        kernels = config.get("external_kernels")
+        kernels = {} if kernels is None else kernels
+        if not isinstance(kernels, dict) or any(
+            not isinstance(name, str) or not name or not isinstance(cmd, list) or not cmd
+            or any(not isinstance(arg, str) for arg in cmd) or not cmd[0]
+            for name, cmd in kernels.items()
+        ):
+            raise ValueError("external_kernels must contain nonempty command arrays")
+        nanoda = config.get("enable_nanoda")
+        nanoda = False if nanoda is None else nanoda
+        if type(nanoda) is not bool:
+            raise ValueError("enable_nanoda must be a Boolean")
+        if nanoda and kernels:
+            raise ValueError("enable_nanoda cannot be combined with external_kernels")
+        scope = {"challenge_module": config["challenge_module"],
+                 "solution_module": config["solution_module"],
+                 "theorem_names": config["theorem_names"],
+                 "definition_names": definitions,
+                 "permitted_axioms": config["permitted_axioms"],
+                 "external_kernels": kernels, "enable_nanoda": nanoda}
+        # The byte digest binds the whole JSON, including unknown fields. The
+        # observation does not claim a complete parser for every checker version.
+        return {"status": "observed", "scope": scope,
+                "unknown_fields": sorted(set(config) - set(scope)),
+                "claim_association": "not_checked"}
+    except (ContractError, ValueError, UnicodeError) as exc:
+        return {"status": "invalid", "reason": str(exc)}
+
+
+def _launch_observation(program: str, project: Path) -> dict[str, Any]:
+    """Observe only the first executable, never infer a nested checker identity."""
+    try:
+        if os.path.dirname(program):
+            candidate = Path(program)
+            candidate = candidate if candidate.is_absolute() else project / candidate
+        else:
+            # POSIX resolves relative PATH entries from the child's cwd.
+            search_path = os.pathsep.join(
+                str(Path(entry) if Path(entry).is_absolute() else project / entry)
+                for entry in os.get_exec_path()
+            )
+            located = shutil.which(program, path=search_path)
+            if located is None:
+                return {"status": "unavailable", "requested": program, "sha256": None}
+            candidate = Path(located)
+        resolved = candidate.resolve()
+        observation, _ = _file_observation(candidate)
+        return {**observation, "requested": program, "path": str(candidate),
+                "resolved_path": str(resolved)}
+    except (OSError, RuntimeError) as exc:
+        return {"status": "unavailable", "requested": program, "sha256": None,
+                "error_type": type(exc).__name__}
 
 
 def verify_comparator(
     project: Path | str, config: Path | str, *,
     command: Sequence[str] | None = None, timeout: float = 120,
 ) -> dict[str, Any]:
-    """Run a real Comparator command and retain its unmodified verdict.
+    """Run Comparator and retain process, input-binding and scope observations.
 
     Default prefix: ``lake comparator --config`` (Lean >= 4.35).
     Legacy prefix: ``["comparator"]``. ``config`` is always appended.
     The caller must select binaries compatible with the project's toolchain.
-    No sandbox-disabling flag is added automatically.
+    No sandbox-disabling flag is added automatically. ``passed`` records zero
+    process exit with usable, stable observed bindings; the caller must still
+    establish effective checker identity, stages, caches and sandbox controls.
     """
     project = Path(project).resolve()
     config = Path(config)
     config_path = config if config.is_absolute() else project / config
     prefix = tuple(command) if command is not None else ("lake", "comparator", "--config")
-    before = _source_hashes(project)
-    config_before = hashlib.sha256(config_path.read_bytes()).hexdigest() if config_path.is_file() else None
-    receipt = _run([*prefix, str(config)], project, timeout)
-    _bind_sources(receipt, project, before)
+    if not prefix:
+        raise ValueError("Comparator command prefix must not be empty")
+    config_before, config_bytes = _file_observation(config_path)
+    scope = _comparator_scope(config_bytes)
+    launch_before = _launch_observation(str(prefix[0]), project)
+    receipt = _run_bound([*prefix, str(config)], project, timeout)
+    config_after, _ = _file_observation(config_path)
+    launch_after = _launch_observation(str(prefix[0]), project)
+    receipt["receipt_profile"] = "comparator-process-v2"
     receipt["evidence_kind"] = "comparator"
     receipt["sandbox_disabled_explicitly"] = "--inadvisably-no-sandbox" in prefix
-    if command is None and receipt["returncode"] == 2 and not receipt["source_changed"]:
+    receipt["config_sha256"] = config_before["sha256"]
+    receipt["config_sha256_after"] = config_after["sha256"]
+    receipt["config_observation"] = scope
+    receipt["config_read_before"] = config_before
+    receipt["config_read_after"] = config_after
+    receipt["launch_executable_before"] = launch_before
+    receipt["launch_executable_after"] = launch_after
+    receipt["assurance"] = {
+        "status_meaning": "process_exit_and_observed_bindings",
+        "effective_checker_identity": "not_established",
+        "inner_stage_outcome": "not_established",
+        "sandbox_controls": "not_established",
+        "compiled_import_identity": "not_established",
+        "paper_claim_correspondence": "not_checked",
+    }
+    if command is None and receipt["returncode"] == 2 and receipt["source_changed"] is False:
         receipt["status"] = "unavailable"
         receipt["failure_stage"] = "checker_start"
     elif receipt["status"] == "failed" and "failure_stage" not in receipt:
         receipt["failure_stage"] = "unknown"
-    config_after = hashlib.sha256(config_path.read_bytes()).hexdigest() if config_path.is_file() else None
-    receipt["config_sha256"] = config_before
-    if config_before != config_after:
+    config_changed = config_before["sha256"] != config_after["sha256"]
+    receipt["config_changed"] = config_changed
+    launch_changed = launch_before != launch_after
+    receipt["launch_executable_changed"] = launch_changed
+    if config_changed:
         receipt["status"] = "failed"
         receipt["source_changed"] = True
-        receipt["failure_reason"] = "source_changed_during_run"
+        receipt["failure_stage"] = "receipt_binding"
+        receipt["failure_reason"] = "config_changed_during_run"
+    elif receipt["status"] == "passed" and scope["status"] != "observed":
+        receipt["status"] = "failed"
+        receipt["failure_stage"] = "receipt_binding"
+        receipt["failure_reason"] = "configuration_scope_unavailable"
+    if launch_changed:
+        receipt["status"] = "failed"
+        receipt["failure_stage"] = "receipt_binding"
+        receipt["failure_reason"] = "launch_executable_changed_during_run"
+    elif receipt["status"] == "passed" and launch_before["status"] != "read":
+        receipt["status"] = "failed"
+        receipt["failure_stage"] = "receipt_binding"
+        receipt["failure_reason"] = "launch_executable_identity_unavailable"
     return receipt

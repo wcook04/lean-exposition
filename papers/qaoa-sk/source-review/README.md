@@ -40,3 +40,23 @@ After exporting drafts, open their full-proof destinations from the exported
 document locations. Repository-relative links in these review inputs assume
 the source checkout. Graph and text hashes alone do not establish that a
 reader of a separate bundle can reach the linked proof or source.
+
+## Reconstruction and retained run history, 24 October 2026
+
+The [long record](../long/reasoning-record.md) now reconstructs compact-strip
+recovery (§2.4), the complete contact argument (§3), the rational certificate
+and analytic transfer (§4), every support-gap case and the smooth positive
+density consequence (§5), scalar finite-accuracy choices (§7), the independent
+scalar formal route (§8), and the circuit construction (§9). These are
+source-based mathematical reconstructions, not an independent proof acceptance.
+
+The [23 October partial-observation receipt](../../../examples/qaoa-sk/verification/full-support-build-failure-20261023.json)
+and [retained log](../../../examples/qaoa-sk/verification/full-support-build-failure-20261023.log)
+record a later full-support attempt after the earlier unavailable-Comparator
+event. That attempt built and exported the admitted challenge, then failed
+while building the solution because the imported `Diffusion/AbsIncrement`
+object was missing. It did not export the solution or reach comparison.
+The subsequent derived-configuration repair is separate from this historical
+observation; this receipt supplies no terminal result for the repaired target.
+Neither a current scalar-target outcome nor a successful research-target
+comparison is inferred from a historical unrun plan.

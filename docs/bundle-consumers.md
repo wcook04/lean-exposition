@@ -257,6 +257,84 @@ bundle. The view reports recorded correspondence, not complete mathematical
 dependence, sentence-level formal verification or reader acceptance. No website
 or additional persistent bundle member is required for this API.
 
+## Query sections and find passages across papers
+
+The optional query entry point joins the existing three passage maps to one validated bundle capture:
+
+```python
+from pathlib import Path
+from lean_exposition.consumer import query_papers
+
+# All passages whose mappings directly name this node.
+answer = query_papers(Path("build/qaoa-sk-authored"), node_ids=["support.full_relative_support"])
+
+# Passages whose mapped claims or assumptions reach this recorded prerequisite.
+answer = query_papers(
+    Path("build/qaoa-sk-authored"),
+    node_ids=["assumptions.full_support_minimizer"],
+    relation="prerequisites",
+)
+```
+
+The corresponding command is:
+
+```sh
+lean-exposition query-papers build/qaoa-sk-authored --node support.full_relative_support
+lean-exposition query-papers build/qaoa-sk-authored --paper short --passage gap-proof
+lean-exposition query-papers build/qaoa-sk-authored --node assumptions.full_support_minimizer --relation prerequisites
+```
+
+`query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage and section selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. An explicitly empty list selects nothing, while an omitted selector adds no filter.
+
+Use a section's exact `ref` from the returned outline with `section_refs=[ref]` or `--section REF`. Titles can repeat, and offsets can move after edits. Unknown or stale references fail; the API does not guess a replacement. A section matches every passage with a content-span overlap containing non-whitespace text; a blank line before a heading does not select the next passage. The returned passage keeps its full mapping and prerequisites; `section_overlaps` identifies the exact intersection, and `whole_passage_extends_beyond_selected_sections` exposes a passage crossing the chosen boundary. This prevents a paragraph selection from silently dropping conditions elsewhere in its mapped passage.
+
+The default `direct` node relation matches explicitly mapped `claim_ids` and `assumption_ids`. The `prerequisites` relation additionally follows the existing argument relation families and explicit assumptions. Its shortest typed witness paths explain why a passage matched. Citation, platform, reading-order and containment links do not become argument steps. A zero-length path is a direct match; `root_mapping_field` distinguishes a mapped claim from a mapped assumption. A path is recorded reachability, not a certificate that its premises suffice.
+
+Each returned paper includes a `view` with the established paper-view shape, a list of matching passages, and a `support_boundary`. The latter distinguishes mapped roots from retained prerequisites, reports required assumptions and unresolved nodes, preserves node boundary text, and names graph records outside the selected closure. A node “not mapped as a claim” is not necessarily absent from the prose. The map does not support that stronger conclusion. Empty matches mean no matching recorded correspondence, while unrecorded dependencies and unmarked text remain unknown.
+
+### Keep caches and bookmarks attached to the right edition
+
+For a review of an independently retained edition, supply its expected manifest digest with `expected_manifest_sha256` or `--expect-manifest`. The guard accepts exactly 64 lowercase hexadecimal characters and rejects a different validated capture before returning a query. It does not fetch a replacement or infer the expected edition from the input being checked. The guard is not a selector and need not enter the cache key because the snapshot already binds the edition.
+
+`paper_query_version`, `snapshot`, the normalized query and `cache_key` identify the result's contract and inputs. Cache by these values, not the filesystem path, paper title or modification time. Namespace an application's cache by its implementation build too, and change the public query version if output semantics change. A valid ZIP re-encoding can retain the same payloads and query result while having a different archive digest.
+
+The existing graph references remain shared across paper views of the same graph snapshot. A section reference identifies exact Markdown bytes. A passage reference also incorporates its mapping identity, so a mapping-only change is visible even if the prose is identical. Logical bookmarks such as a stage and anchor can help locate a successor, but cannot migrate a prior review or its evidence classification automatically.
+
+The spans are half-open UTF-8 byte intervals, with one-based line ranges for navigation. They are neither PDF coordinates nor browser character offsets. In particular, W3C Web Annotation `TextPositionSelector` counts normalized Unicode code points; a future adapter must convert deliberately or use byte-coordinate semantics. A rendition requires its own identity and a tested mapping to source coordinates. [Web Annotation Data Model, §§4.2.4–4.2.6 and 4.3](https://www.w3.org/TR/2017/REC-annotation-model-20170223/#selectors).
+
+Recompute a query after any manifest change. A text-only edit can move section offsets; a mapping-only edit can change the correspondence; a graph-only edit can change support, source identity or evidence. Source records still name external bytes: this query does not open them, and source access remains explicitly false in the view. A query cache is disposable presentation data. The graph and mappings remain its owners.
+
+### A source-grounded example
+
+After assembling the maintained QAOA/SK drafts, inspect the short paper's
+curvature and gap arguments:
+
+```sh
+lean-exposition query-papers build/qaoa-sk-authored --paper short --passage curvature
+lean-exposition query-papers build/qaoa-sk-authored --paper short --passage gap-proof
+lean-exposition query-papers build/qaoa-sk-authored --node support.positive_curvature
+lean-exposition query-papers build/qaoa-sk-authored --node support.positive_curvature --relation prerequisites
+```
+
+The `support.*`, `scalar.*` and `circuit.*` records describe distinct source
+arguments in the same graph. Their source locators and edge evidence explain
+what each ingredient supplies. All authored claims remain unverified; none is
+an elaborated dependency extraction or an accepted semantic review.
+
+A direct curvature query finds passages that name the ingredient in their map.
+The prerequisite query also finds consumers such as gap exclusion. Curvature
+has an admissibility and plateau guard, without a minimizer hypothesis; contact
+and gap exclusion quantify over admissible minimizers. The positive and zero
+plateau cases remain separate. Finite rational algebra, analytic signs, zero
+boundary flux and approximation have their own records.
+
+The scalar clauses distinguish supplied-diffusion hypotheses from the Parisi
+identity that constructs its diffusion internally. The circuit primary and
+positive-temperature routes remain separately selectable: the alternative uses
+citation navigation so traversal does not silently conjoin their hypotheses.
+Scoped existence and application steps are stated explicitly because this
+backend does not discharge hypotheses or bind mathematical witnesses.
+
 ## Assemble authored papers
 
 Keep `scaffold` for new empty documents. To assemble completed or in-progress

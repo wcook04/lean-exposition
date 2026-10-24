@@ -109,6 +109,60 @@ ARGUMENT_EDGES = LEAN_EDGES | {"formalizes", "supports"}
 EDGE_KINDS = ARGUMENT_EDGES | {"platform_decomposition", "cites"}
 
 
+def validate_process_receipt(receipt: dict, *, evidence_kind: str | None = None) -> None:
+    """Check optional process/stream observations without inventing legacy data.
+
+    Wrapper failure can follow a successful process, for example when source
+    binding fails. The converse cannot support passing evidence. Raw-byte and
+    display-text hashes agree only when the recorded UTF-8 decoding was valid.
+    This checks internal consistency; it does not authenticate the receipt.
+    """
+    if not isinstance(receipt, dict):
+        raise ContractError("receipt must be an object")
+    if "process_status" in receipt:
+        process_status = receipt["process_status"]
+        if (not isinstance(process_status, str) or process_status not in {
+            "passed", "failed", "unavailable", "timed_out", "not_run"
+        }):
+            raise ContractError("invalid receipt process_status")
+        if receipt.get("status") == "passed" and process_status != "passed":
+            raise ContractError("successful receipt requires a passed recorded process")
+    if "output_decoding" in receipt and receipt["output_decoding"] != "utf-8-with-replacement":
+        raise ContractError("invalid receipt output_decoding")
+    for stream in ("stdout", "stderr"):
+        text_key, raw_key = stream + "_sha256", stream + "_bytes_sha256"
+        validity_key = stream + "_utf8_valid"
+        for key in (text_key, raw_key):
+            if key in receipt and (
+                not isinstance(receipt[key], str)
+                or re.fullmatch(r"[0-9a-f]{64}", receipt[key]) is None
+            ):
+                raise ContractError(f"invalid receipt {key}")
+        if validity_key in receipt and type(receipt[validity_key]) is not bool:
+            raise ContractError(f"invalid receipt {validity_key}")
+        text_hash = receipt.get(text_key)
+        if stream in receipt:
+            if not isinstance(receipt[stream], str):
+                raise ContractError(f"receipt {stream} must be text")
+            try:
+                observed = digest(receipt[stream].encode("utf-8"))
+            except UnicodeEncodeError as exc:
+                raise ContractError(f"receipt {stream} is not encodable UTF-8 text") from exc
+            if text_hash is not None and text_hash != observed:
+                raise ContractError(f"receipt {stream} text differs from its digest")
+            text_hash = observed
+        if receipt.get(validity_key) is True and raw_key in receipt:
+            if text_hash is None:
+                raise ContractError(f"UTF-8-valid {stream} bytes require a text digest")
+            if receipt[raw_key] != text_hash:
+                raise ContractError(f"UTF-8-valid {stream} byte and text digests disagree")
+    kind = evidence_kind if evidence_kind is not None else receipt.get("evidence_kind")
+    if (kind in ("extraction", "elaboration_process")
+            and receipt.get("status") == "passed"
+            and receipt.get("stdout_utf8_valid") is False):
+        raise ContractError("successful extraction requires valid UTF-8 stdout")
+
+
 def validate_extraction_report(report: dict) -> None:
     """Check the raw report protocol before hashing or translating it.
 
@@ -336,6 +390,8 @@ def validate_graph(graph: dict) -> dict:
             recorded = "unavailable" if receipt["status"] == "timed_out" else receipt["status"]
             if recorded != item["status"]:
                 raise ContractError("evidence status differs from its receipt")
+        if receipt is not None and item["kind"] in {"lean_build", "extraction", "comparator"}:
+            validate_process_receipt(receipt, evidence_kind=item["kind"])
         if item["kind"] in {"lean_build", "extraction", "comparator"} and item["status"] == "passed":
             if not item["source_ids"] or not item["command"] or not item["subject_ids"]:
                 raise ContractError("successful Lean evidence requires sources, subjects and command")

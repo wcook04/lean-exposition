@@ -101,6 +101,24 @@ projection with `projection_sha256`, and the project bytes with `source_hashes`.
 `source_changed` records drift during a tool run. Exported graph evidence retains
 output hashes rather than raw process diagnostics. These bindings detect changed or
 inconsistent evidence; they do not authenticate who ran a check.
+The current adapter also records an extraction request and packaged-template
+digest. Before translating a raw report, it compares the complete current
+source inventory with the recorded one. Repeated roots remain in the raw
+request, while the graph selection lists each declaration once.
+The shared process-receipt validator rejects contradictory success/process
+statuses and invalid UTF-8 stdout for successful extraction. When valid UTF-8
+is recorded, raw-byte hashes must agree with retained text or its normalized
+digest. During raw-report translation, retained diagnostic text remains the
+authority for legacy text hashes; new byte hashes are never rewritten to make
+them agree. Direct graph ingestion validates its supplied text/hash pairs.
+Legacy receipts may omit the additive fields; their absence supplies no new
+execution evidence.
+New Comparator process receipts retain configuration scope and before/after
+configuration and first-launch-executable observations. Their `process_status`
+is separate from an input-binding failure. The `comparator-process-v2` receipt
+profile is an additive process record, not a graph-schema revision or a new
+proof-verdict format; effective nested checker, cache and sandbox identities
+remain explicitly unestablished. See the [receipt field contract](verification.md#reading-a-new-comparator-process-receipt).
 The extraction projection also binds its completeness state and each declaration's
 inspection boundary. Regenerate the receipt after changing those fields.
 

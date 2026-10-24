@@ -206,3 +206,41 @@ These are source correspondences, not an extracted complete dependency graph.
    the stated ingredients; these are observations about source. A replay
    receipt and a transitive axiom/dependency audit are additional evidence,
    and neither would by itself verify the manuscript's broader prose claims.
+
+
+## Reconstruction completed in the long record
+
+The [long record](../long/reasoning-record.md) gives the compact-strip
+approximation at §2.4 with two independent convergence conditions:
+$\|\gamma_m-\gamma\|_{L^1}\to0$ and $M_m\to\infty$, together with
+$M_m\ge\|\gamma_m\|_\infty$. The latter inequality alone does not make
+the terminal data approach $|x|$. Positive-order spatial derivatives
+are uniformly bounded on a fixed strip; the value itself grows with $|x|$.
+The source owner is P/regularity.tex:107–186.
+
+Long §3 gives the forward first-variation formula, its convex converse,
+compact-measure removal, the right-hand argument at zero and the quantitative
+terminal plateau contradiction. Long §4 includes every coefficient of the
+certificate, all five squares, all 22 positive remainder coefficients, and
+the density signs, jump rules and zero-flux justification needed before
+integration. The exact finite check remains distinct from those analytic
+arguments. Long §5 gives the exhaustive gap cases, the endpoint-slack area
+identity and the weaker conditional-crossing deduction; curvature is applied
+inside the constant interval, with only continuous endpoint values of $q'$.
+
+The smooth-density conclusion is an additional ordinary result from
+P/order-parameter-regularity.tex, Corollary 6.4, proved in long §5.1:
+$\gamma\in C^\infty([0,1))$, $\gamma(0)=0$, and
+$\mu_\gamma(dt)=\gamma'(t)dt$, with $\gamma'(t)>0$ for $0<t<1$.
+It uses saturated consistency and the artificial shrinking-plateau comparison;
+full support alone would not prove any density statement. These conclusions
+are not added to the selected `FullSupportConclusion` type.
+
+For example, full support can coexist with atoms: add any positive atom in
+$(0,1)$ to Lebesgue measure. A purely atomic full-support example is a summable
+series of positive weights over an enumeration of the rationals in $(0,1)$,
+interpreted as the convergent series $\sum_{j\ge1}2^{-j}\delta_{r_j}$.
+Neither is the minimizer established here; they delimit what support alone
+means. Local finiteness also need not give finite total mass:
+$\gamma(t)=(1-t)^{-1/2}-1$ is admissible, integrable, and has infinite
+Stieltjes mass near one. Its endpoint behaviour is allowed by the definitions.

@@ -1,4 +1,4 @@
-# Short paper: the support-gap argument
+# Short paper: full support and positive density
 
 [Read the draft](paper.md) · [Rendered PDF](paper.pdf) ·
 [Passage correspondence](correspondence.json) · [Bibliography](references.bib)
@@ -19,7 +19,8 @@ admissible integrable zero-temperature SK minimizer has full relative
 Stieltjes support. Its central argument is the contradiction between
 variational contact at the endpoints of a support gap and strict curvature
 inside that gap. The scalar value identity and the connection to the separate
-QAOA manuscript follow after that argument.
+QAOA manuscript follow after that argument. The separate smooth positive-density
+corollary reuses the coercive estimate, with its extra approximation step stated.
 
 The intended reader knows elementary stochastic calculus and variational
 arguments. The analytic sign propagation, rational polynomial certificate and
@@ -33,13 +34,13 @@ antecedents credited. It is not a new theorem or a fresh Lean/Comparator check.
 artifact schema, binds the exact Markdown and source-graph bytes, and names
 `papers/short.md` as its location in an assembled bundle. Its state remains
 `draft`; its review notes describe bounded source checks and remaining review.
-`references.bib` retains the five cited primary-source entries. `paper.pdf` is
+`references.bib` retains the cited primary-source entries. `paper.pdf` is
 the rendered edition of the Markdown.
 
 The selected formal declarations are
 `OAI.ZeroTemperatureSK.full_support` and
 `OAI.SKValue.value_consequences`. Their exact scope, source versions, historical
-unavailable startup, and lack of a completed research-target replay
+unavailable startup, later failed solution build, and lack of an accepted research-target replay
 are recorded in the [source example](../../../examples/qaoa-sk/README.md).
 The [long record](../long/reasoning-record.md) retains the broader recovery route.
 
@@ -47,6 +48,7 @@ The [long record](../long/reasoning-record.md) retains the broader recovery rout
 | --- | --- |
 | Integrated curvature estimate | [§4: Strict curvature on a constant interval](../long/reasoning-record.md#curvature-and-gap-certificate) |
 | The three kinds of support gap | [§5: Excluding terminal, interior and initial gaps](../long/reasoning-record.md#gap-elimination) |
+| Smooth positive density | [§§5.1–5.2](../long/reasoning-record.md#smooth-density-consequence) |
 | Scalar value identity | [§6: Recovering the value from a martingale](../long/reasoning-record.md#scalar-value-identities) |
 | Finite Gaussian approximation | [§7: A finite Gaussian spin and its adjacent correlations](../long/reasoning-record.md#finite-gaussian-approximation) |
 | Further circuit construction | [§9: From the scalar formula to one ordinary QAOA word](../long/reasoning-record.md#qaoa-construction) |

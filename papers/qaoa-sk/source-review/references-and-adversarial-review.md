@@ -45,12 +45,20 @@ attributing full support solely to the September OpenAI manuscript; this
 review does not adjudicate a broader priority claim.
 
 The EAMS v2 comparison is local. Its Proposition 2.1 and the proof of
-Lemma 2.8 carry a $1/k$ factor absent from displayed (2.21): constant
-first-step messages on a $k$-regular tree give $1/k$, rather than the
-printed $1$. Reindexing the adjacent-time sum from Proposition 2.1
+Lemma 2.8 carry a $1/k$ factor absent from displayed (2.21). For the
+constant first-step message rule, take the allowed Gaussian weights
+$Y_o^0=g_o$ and $\widetilde Y_v^0=g_v$. The weighted left side is
+$1/k$, while the printed right side is $1$. With both weights equal
+to one, both sides vanish, so that unweighted example would not detect
+the missing factor. Reindexing the adjacent-time sum from Proposition 2.1
 through Lemma 4.3 gives $r=1,\ldots,L-1$, while displays (4.5) and
 (4.18) print $2,\ldots,L$. A two-step coefficient changing sign between
-the two sampled times makes those finite expressions differ. At fixed
+the two sampled times makes those finite expressions differ. In particular,
+$\delta=\varepsilon=1/4$, $L=2$ and spatially constant
+$a_0=a_1=1$, $a_2=-1$ give a discrepancy
+$4\delta\sqrt{k-1}$ in the printed Theorem 4.1, which cannot be
+absorbed in its degree-independent constant. This refutes that literal
+finite-step statement, without refuting the corrected continuum result. At fixed
 positive temperature and on the bounded strip used by Q, the endpoint
 difference is $O(\delta)$. These checks support Q's narrow correction;
 they do not refute or repair EAMS's continuum theorem.
@@ -103,9 +111,12 @@ they do not refute or repair EAMS's continuum theorem.
    degree, `n` and disorder. Only that word enters the fixed-parameter
    thermodynamic limit. Thus Q's theorem has the stated
    `lim_{p -> infinity} sup_angles lim_{n -> infinity}` formulation, not an
-   interchange with finite-size optimization or an arbitrary diagonal
-   `p = p(n)`. It supplies no uniform depth, angle-search or finite-size
-   rate. [Q/sections/01-introduction.tex:95–133][q-main] and
+   interchange with finite-size optimization or an arbitrary prescribed angle family
+   at `p = p(n)`. A nonconstructive schedule of near-optimal words can
+   nevertheless be padded to any prescribed integer depth allowance
+   tending to infinity; long §9.9 proves this separately. The construction
+   supplies no effective angle-search or finite-size rate. Long §9.11
+   records a later source theorem for bounded-cost-angle families. [Q/sections/01-introduction.tex:95–133][q-main] and
    [Q/sections/06-assembly.tex:7–52][q-assembly] state the quantifiers and
    schedule. The positive-temperature route instead first fixes a finite
    inverse temperature and a cutoff below its support endpoint; it still

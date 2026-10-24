@@ -398,3 +398,44 @@ The construction's hardest transitions are therefore concrete: scalar coefficien
 [lean-value-contact]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/MinimizerContact.lean#L75-L82
 [lean-contact-assembly]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean#L21-L72
 [bibliography]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/references.tex#L6-L162
+
+
+## Consequences and quantifiers reconstructed on 24 October 2026
+
+Long §§9.1–9.6 give the operator and energy argument in detail: root-shift
+first chaos, occupation control of the scaled edge remainder, the unitary
+second-response identity with its nonzero cut baseline, helper compression
+with mixed lower-cut responses, and seed removal using the actual insertion
+direction and external Gaussian mode. The seed-vector decomposition need not
+be orthogonal, and a displaced component need not have bounded occupation;
+its occupation tail is what the source controls. Marginal Gaussian laws,
+vacuum compression or state-norm convergence alone cannot replace these
+statements. Their source owners remain Q/sections/02-foundations.tex,
+04-classical-synthesis.tex and 05-seed-simulation.tex as linked above.
+
+Long §9.8 uses Farhi–Goldstone–Gutmann–Zhou, arXiv:1910.08187v4,
+equations (13)–(14), to derive $L^2$ concentration of one measurement for
+each fixed word, jointly over disorder and measurement. This ordinary
+consequence combines with the near-optimal word before taking $n\to\infty$;
+it is neither a selected formal endpoint nor a growing-depth concentration
+theorem. Long §9.9 proves the padded existence schedule and distinguishes
+quadratic SK from higher-spin overlap-gap results. Long §9.10 preserves the
+source's separate high-girth lower bound and random-regular optimality limits.
+
+Long §9.7 includes the exact fixed-temperature change of variables from
+Lopatto's PDE and the uniform entropy estimate. The scalar free-energy
+values therefore permit a joint size–temperature limit, while the circuit
+construction still fixes its word first. Long §9.11 quotes the later
+arXiv:2609.40309v1 Corollary S3.1 with every parameter restriction and derives
+its sufficient bounded-angle regime $p\log p=o(\log\log n)$. This source
+postdates the QAOA manuscript's displayed date; it is context, not an input
+silently added to its proof. Its finite-size theorem is quoted at the stated
+edition, without claiming an independent audit of its entire derivation.
+
+The depth qualification in the higher-spin comparison is material. Goh,
+[arXiv:2404.06087v6, Theorem 4.2 and Corollary 4.2.1, pp. 11–12](https://arxiv.org/abs/2404.06087v6),
+states a logarithmic-depth obstruction for sparse random-regular Max-q-XORSAT
+with even q at least four. Its dense spin-glass corollary is explicitly
+conditional on swapping limits. The following discussion says the sparse/dense
+equivalence is established only at fixed depth and does not establish a dense
+logarithmic-depth obstruction. None of these hypotheses includes quadratic SK.

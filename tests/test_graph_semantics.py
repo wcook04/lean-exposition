@@ -293,6 +293,58 @@ class ComparatorEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "configuration must match"):
             validate_graph(graph)
 
+class AuthoredCorpusSemanticsTests(unittest.TestCase):
+    """Selection guards for the source-authored graph; no proof certification."""
+
+    def setUp(self):
+        import json
+        self.root = Path(__file__).resolve().parents[1] / 'examples/qaoa-sk'
+        self.graph = json.loads((self.root / 'evidence-graph.json').read_bytes())
+
+    def test_curvature_selection_does_not_import_minimality_or_formal_status(self):
+        selected = closure(self.graph, ['support.positive_curvature'])
+        self.assertIn('support.rational_certificate', selected)
+        self.assertIn('support.flux_identity', selected)
+        self.assertNotIn('support.contact', selected)
+        self.assertNotIn('assumptions.full_support_minimizer', selected)
+        self.assertNotIn('lean.full_support', selected)
+        self.assertTrue(all(n['status'] != 'kernel_checked' for n in self.graph['nodes']))
+        self.assertEqual(self.graph['extraction_status'], 'not_run')
+
+    def test_formal_scalar_clauses_preserve_distinct_diffusion_hypotheses(self):
+        parisi = closure(self.graph, ['scalar.formal_parisi_clause'])
+        finite = closure(self.graph, ['scalar.formal_finite_gaussian_clause'])
+        self.assertIn('assumptions.value_minimizer', parisi)
+        self.assertNotIn('assumptions.value_diffusion', parisi)
+        self.assertIn('assumptions.value_diffusion', finite)
+        self.assertNotIn('scalar.fixed_strip_input_bounds', finite)
+        self.assertNotIn('scalar.formal_model_transport_open', finite)
+
+    def test_alternative_route_and_density_are_not_silent_primary_prerequisites(self):
+        primary = closure(self.graph, ['qaoa_thermodynamic_first'])
+        self.assertIn('circuit.ordinary_word_primary', primary)
+        self.assertIn('circuit.seed_removal', primary)
+        self.assertNotIn('circuit.ordinary_word_positive', primary)
+        self.assertNotIn('circuit.positive_input', primary)
+        self.assertNotIn('scalar.paper_minimizer', primary)
+        self.assertNotIn('scalar.smooth_positive_density', primary)
+        self.assertNotIn('scalar.smooth_positive_density', closure(self.graph, ['scalar_value']))
+        self.assertIn('circuit.positive_input', closure(self.graph, ['circuit.ordinary_word_positive']))
+
+    def test_authored_sources_match_locked_bytes_and_edges_keep_warrants(self):
+        evidence = {e['id']: e for e in self.graph['evidence']}
+        for source in self.graph['sources']:
+            if source.get('redistribution') == 'vendored' and 'path' in source:
+                self.assertEqual(digest((self.root / source['path']).read_bytes()), source['sha256'])
+        for edge in self.graph['edges']:
+            self.assertNotIn(edge['kind'], {'lean_type_dependency', 'lean_value_dependency',
+                                            'lean_structural_dependency'})
+            if edge['kind'] == 'supports':
+                warrants = [evidence[e] for e in edge['evidence_ids']
+                            if evidence[e]['kind'] == 'semantic_review']
+                self.assertTrue(warrants, edge)
+                self.assertTrue(all(e['status'] == 'not_run' for e in warrants), edge)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,8 @@ variational no-gap argument, and develops its scalar value consequences
 before introducing the separate QAOA claim.
 
 The reader is assumed to know calculus, expectations and elementary linear
-algebra. The conditional theorem now precedes the zero-coefficient feasible
+algebra. Stochastic calculus is introduced at its point of use, with the
+analytic regularity statements identified as inputs. The conditional theorem now precedes the zero-coefficient feasible
 descent example. A source-adapted area figure and a polynomial model make the
 gap contradiction visible and calculable. A small two-limit array shows why
 QAOA needs one fixed word before the size limit.
@@ -21,8 +22,8 @@ uses pinned public mathematical-source URLs so its citations remain usable
 when the exact manuscript bytes are assembled into a portable bundle.
 
 The paper is a draft. Source and agent review checked the displayed
-statements, examples and reconstructed inference chain. The complete
-analytic proofs, fresh Lean/Comparator execution and human reader
+statements, examples and reconstructed inference chain. Complete independent audit of the
+analytic proofs, successful research Comparator replay and human reader
 understanding have not been independently assessed here. The mapping's
 review notes describe the actual scope and remaining review.
 
