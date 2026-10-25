@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .bundle import STAGES, check_bundle, export_bundle, scaffold
 from .contracts import ContractError, read_json, select, validate_graph, write_json
-from .consumer import inspect_bundle, inspect_graph, project_corpus, project_graph, project_paper, query_papers
+from .consumer import inspect_bundle, inspect_graph, project_corpus, project_graph, project_paper, query_corpus, query_papers
 from .extraction import to_graph
 from .intake import audit_sources, fetch
 from .prove2me import intake_prove2me
@@ -51,12 +51,27 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--paper", choices=STAGES, help="Limit to one paper; omitted means all three")
     cmd.add_argument("--passage", action="append", help="Passage anchor (repeatable; requires --paper)")
     cmd.add_argument("--section", action="append", help="Exact section ref from a paper view (repeatable; requires --paper)")
+    cmd.add_argument("--byte-range", nargs=2, type=int, action="append", metavar=("START", "END"),
+                     help="Half-open UTF-8 paper byte range (repeatable; requires --paper and --expect-manifest)")
     cmd.add_argument("--node", action="append", help="Find passages mapped to a graph node (repeatable)")
     cmd.add_argument("--relation", choices=("direct", "prerequisites"), default="direct",
                      help="Match direct mapping fields or their recorded prerequisite reachability")
     cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256 (64 lowercase hex characters)")
     cmd.add_argument("--format", choices=("json", "text"), default="json",
                      help="Full JSON (default), or a reader summary of the same validated query")
+    cmd = commands.add_parser("query-corpus", help="Browse typed neighbourhoods from a source, citation, receipt or node")
+    cmd.add_argument("bundle", type=Path)
+    cmd.add_argument("--record", nargs=2, action="append", metavar=("TABLE", "ID"),
+                     help="Seed a nodes, sources, citations or evidence record (repeatable)")
+    cmd.add_argument("--ref", action="append", help="Exact graph-qualified record ref, including an edge (repeatable)")
+    cmd.add_argument("--family", action="append", choices=("declarations", "arguments", "citations", "platform", "provenance"),
+                     help="Traverse only these typed families; omitted means all five")
+    cmd.add_argument("--direction", choices=("incoming", "outgoing", "both"), default="both")
+    cmd.add_argument("--max-depth", type=int, default=1)
+    cmd.add_argument("--max-records", type=int, default=100, help="Selected-record budget; supplementary context is separate")
+    cmd.add_argument("--paper", choices=STAGES, help="Restrict traversal to this paper's recorded support membership")
+    cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256")
+    cmd.add_argument("--format", choices=("json", "text"), default="json")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -109,13 +124,19 @@ def run(args):
         return inspect_bundle(args.bundle)
     if args.command == "inspect-corpus":
         return project_corpus(args.bundle, expected_manifest_sha256=args.expect_manifest)
+    if args.command == "query-corpus":
+        return query_corpus(args.bundle, records=args.record, record_refs=args.ref,
+                            families=args.family, direction=args.direction, max_depth=args.max_depth,
+                            max_records=args.max_records, stage=args.paper,
+                            expected_manifest_sha256=args.expect_manifest)
     if args.command == "assemble":
         from .bundle import assemble_bundle
         return assemble_bundle(args.graph, {s: tuple(getattr(args, s))
                                for s in ("long", "short", "expository")}, args.out)
     if args.command == "query-papers":
         return query_papers(args.bundle, stage=args.paper, passages=args.passage,
-                            section_refs=args.section, node_ids=args.node, relation=args.relation,
+                            section_refs=args.section, byte_ranges=args.byte_range,
+                            node_ids=args.node, relation=args.relation,
                             expected_manifest_sha256=args.expect_manifest)
     if args.command == "select":
         graph = select(read_json(args.graph), args.goal)
@@ -224,6 +245,11 @@ def _paper_query_text(result: dict) -> str:
                 lines.append(f"    Selected section overlap: {span(overlap['overlap_span'])}")
             if match['whole_passage_extends_beyond_selected_sections']:
                 lines.append("    The whole matched passage extends beyond the selected section(s); its requirements are retained.")
+            for overlap in match['byte_overlaps']:
+                interval = overlap['overlap_span']
+                lines.append(f"    Selected UTF-8 byte overlap: [{interval['start_byte']}, {interval['end_byte']})")
+            if match['whole_passage_extends_beyond_selected_ranges']:
+                lines.append("    The whole matched passage extends beyond the selected byte range(s); its requirements are retained.")
         additional = sorted(set(boundary['retained_node_ids']) - set(boundary['seed_node_ids']))
         lines.extend([
             f"  Mapped claims: {names(boundary['mapped_claim_ids'])}",
@@ -267,6 +293,56 @@ def _paper_query_text(result: dict) -> str:
     )
 
 
+def _corpus_query_text(result: dict) -> str:
+    """Readable navigation over the same records as JSON, without status promotion."""
+    pool = {row["ref"]: (table, row["record"])
+            for field in ("records", "supplementary_records")
+            for table, rows in result[field].items() for row in rows}
+
+    def label(ref):
+        table, record = pool[ref]
+        name = record.get("id") or f"{record['from']} --{record['kind']}--> {record['to']}"
+        return _display_text(f"{table}/{name}")
+
+    query, coverage = result["query"], result["coverage"]
+    lines = ["Recorded corpus neighbourhood", f"Edition: {result['snapshot']['manifest_sha256']}",
+             f"Direction: {query['direction']}; families: {', '.join(query['families'])}",
+             f"Selected: {coverage['selected_record_count']}; supplementary: {coverage['supplementary_record_count']}; max depth: {query['max_depth']}",
+             "Paper scope: " + (query["stage"] or "whole recorded corpus"),
+             "Reference navigation; no semantic certification.", "", "Selected records:"]
+    for witness in sorted(result["witnesses"], key=lambda row: (row["distance"], row["record_ref"])):
+        ref = witness["record_ref"]
+        record = pool[ref][1]
+        status = f"; status={_display_text(record['status'])}" if "status" in record else ""
+        lines.append(f"  {label(ref)} ({witness['distance']} hops{status})")
+        if witness["parent"]:
+            lines.append(f"    reached from {label(witness['parent']['record_ref'])}")
+    lines += ["", "Relations (stored direction):"]
+    for family, relations in result["relations"].items():
+        for link in relations:
+            lines.append(f"  {label(link['from'])} --{link['kind']}--> {label(link['to'])} [{family}]")
+    lines += ["", "Direct paper mappings:"]
+    found = False
+    for usage in result["record_usage"]:
+        by_stage = defaultdict(set)
+        for passage in usage["direct_passages"]:
+            by_stage[passage["stage"]].add(passage["anchor"])
+        for stage, anchors in sorted(by_stage.items()):
+            found = True
+            lines.append(f"  {label(usage['record_ref'])}: {stage} / " + ", ".join(_display_text(a) for a in sorted(anchors)))
+    if not found:
+        lines.append("  No direct mappings recorded for these selected records.")
+    lines += ["", "Frontier (not selected):"]
+    for boundary in result["frontier"]:
+        link = boundary["relation"]
+        lines.append(f"  {boundary['reason']}: {label(boundary['traversed_from'])} -> {label(boundary['traversed_to'])}")
+        lines.append(f"    stored: {label(link['from'])} --{link['kind']}--> {label(link['to'])}")
+    if not result["frontier"]:
+        lines.append("  No further recorded relation under this query.")
+    lines.append("Use JSON for exact refs, witness links, source locators and paper bindings. External source bytes were not opened.")
+    return "\n".join(lines)
+
+
 def main(argv=None) -> int:
     args = parser().parse_args(argv)
     try:
@@ -279,6 +355,8 @@ def main(argv=None) -> int:
         return 1
     if args.command == "query-papers" and args.format == "text":
         print(_paper_query_text(result))
+    elif args.command == "query-corpus" and args.format == "text":
+        print(_corpus_query_text(result))
     else:
         print(json.dumps(result, indent=2, ensure_ascii=False))
     return 0

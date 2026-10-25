@@ -16,8 +16,9 @@ from .contracts import (
 )
 
 PAPER_VIEW_VERSION = "0.3.0"
-PAPER_QUERY_VERSION = "0.3.0"
+PAPER_QUERY_VERSION = "0.4.0"
 CORPUS_VIEW_VERSION = "0.1.0"
+CORPUS_QUERY_VERSION = "0.1.0"
 
 
 # Meanings of projected links, not an additional graph schema or edge authority.
@@ -774,9 +775,161 @@ def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = 
     }
 
 
+def query_corpus(
+    bundle_path: Path, *, records: list[tuple[str, str]] | None = None,
+    record_refs: list[str] | None = None, families: list[str] | None = None,
+    direction: str = "both", max_depth: int = 1, max_records: int = 100,
+    stage: str | None = None, expected_manifest_sha256: str | None = None,
+) -> dict:
+    """Browse typed neighbourhoods; retain induced links separately from witnesses.
+
+    Paper restriction uses recorded support membership. Supplementary link owners
+    and frontier endpoints do not consume the selection budget or extend traversal.
+    """
+    tables = ("nodes", "edges", "sources", "citations", "evidence")
+    id_tables = set(tables) - {"edges"}
+    records = [] if records is None else records
+    if (not isinstance(records, list)
+            or any(not isinstance(row, (list, tuple)) or len(row) != 2
+                   or not all(isinstance(value, str) and value for value in row)
+                   or row[0] not in id_tables for row in records)):
+        raise ContractError("record selectors must be (nodes/sources/citations/evidence, ID) pairs; use refs for edges")
+    if len({tuple(row) for row in records}) != len(records):
+        raise ContractError("record selectors must be distinct")
+    record_refs = _query_selector(record_refs, "record reference") or []
+    if not records and not record_refs:
+        raise ContractError("corpus query requires at least one record selector or reference")
+    families = _query_selector(families, "relation family")
+    known = {"declarations", "arguments", "citations", "platform", "provenance"}
+    families = sorted(known) if families is None else families
+    if not families or not set(families) <= known:
+        raise ContractError("choose nonempty known relation families")
+    if not isinstance(direction, str) or direction not in {"incoming", "outgoing", "both"}:
+        raise ContractError("corpus direction must be incoming, outgoing or both")
+    if type(max_depth) is not int or max_depth < 0:
+        raise ContractError("max_depth must be a nonnegative integer")
+    if type(max_records) is not int or max_records < 1:
+        raise ContractError("max_records must be a positive integer")
+    if stage is not None and (not isinstance(stage, str) or stage not in STAGES):
+        raise ContractError("unknown paper stage")
+    corpus = project_corpus(bundle_path, expected_manifest_sha256=expected_manifest_sha256)
+    pool = {row["ref"]: (table, row) for table, rows in corpus["records"].items() for row in rows}
+    by_id = {(table, row["record"]["id"]): row["ref"]
+             for table, rows in corpus["records"].items() if table in id_tables for row in rows}
+    require_refs(record_refs, pool, "corpus record reference (exact graph edition required)")
+    roots = set(record_refs)
+    for selector in records:
+        key = tuple(selector)
+        if key not in by_id:
+            raise ContractError(f"unknown corpus record: {key[0]} / {key[1]}")
+        roots.add(by_id[key])
+    if len(roots) > max_records:
+        raise ContractError("root count exceeds max_records")
+    allowed, paper_scope = set(pool), None
+    if stage is not None:
+        paper = next(p for p in corpus["papers"] if p["stage"] == stage)
+        allowed = {ref for refs in paper["graph"]["record_refs"].values() for ref in refs}
+        if not roots <= allowed:
+            raise ContractError("corpus query root lies outside the selected paper's recorded support")
+        paper_scope = {"stage": stage, "subgraph_ref": paper["graph"]["ref"],
+                       "allowed_record_count": len(allowed),
+                       "meaning": "Recorded support membership, including associated records; not complete prose coverage."}
+    links = sorted(((family, link) for family in families
+                    for link in corpus["relations"][family]), key=lambda item: (item[0], item[1]["id"]))
+    adjacency = {ref: [] for ref in pool}
+    for family, link in links:
+        a, b = link["from"], link["to"]
+        if direction in {"outgoing", "both"}:
+            adjacency[a].append((b, family, link))
+        if direction in {"incoming", "both"} and (a != b or direction == "incoming"):
+            adjacency[b].append((a, family, link))
+    for neighbors in adjacency.values():
+        neighbors.sort(key=lambda item: (item[0], item[1], item[2]["id"]))
+    witnesses = {ref: {"record_ref": ref, "root_ref": ref, "distance": 0, "parent": None}
+                 for ref in sorted(roots)}
+    pending = deque(sorted(roots))
+    while pending:
+        current = pending.popleft()
+        witness = witnesses[current]
+        if witness["distance"] == max_depth:
+            continue
+        for target, family, link in adjacency[current]:
+            if target not in allowed or target in witnesses or len(witnesses) == max_records:
+                continue
+            witnesses[target] = {
+                "record_ref": target, "root_ref": witness["root_ref"],
+                "distance": witness["distance"] + 1,
+                "parent": {"record_ref": current, "relation_id": link["id"], "family": family},
+            }
+            pending.append(target)
+    selected = set(witnesses)
+    relations = {family: [] for family in families}
+    supplementary, frontier = set(), []
+
+    def retain_owner(link):
+        supplementary.add(link.get("record_ref", link.get("owner_ref")))
+
+    for family, link in links:
+        if link["from"] in selected and link["to"] in selected:
+            relations[family].append(copy.deepcopy(link))
+            retain_owner(link)
+    for current in sorted(selected):
+        for target, family, link in adjacency[current]:
+            if target in selected:
+                continue
+            reason = ("outside_paper" if target not in allowed else
+                      "depth_limit" if witnesses[current]["distance"] == max_depth else "record_limit")
+            frontier.append({"family": family, "relation": copy.deepcopy(link),
+                             "traversed_from": current, "traversed_to": target, "reason": reason})
+            supplementary.add(target)
+            retain_owner(link)
+    supplementary -= selected
+    selected_records, supplementary_records = ({table: [] for table in tables} for _ in range(2))
+    for refs, output in ((selected, selected_records), (supplementary, supplementary_records)):
+        for ref in sorted(refs):
+            table, row = pool[ref]
+            output[table].append(copy.deepcopy(row))
+    induced = [link for group in relations.values() for link in group]
+    components, condensation = _view_components(selected, induced)
+    query = {"root_refs": sorted(roots), "families": families, "direction": direction,
+             "max_depth": max_depth, "max_records": max_records, "stage": stage,
+             "selection": "breadth_first_reachability_with_induced_typed_relations"}
+    frontier_counts = {reason: sum(row["reason"] == reason for row in frontier)
+                       for reason in ("outside_paper", "depth_limit", "record_limit")}
+    truncated = bool(frontier_counts["depth_limit"] or frontier_counts["record_limit"])
+    return {
+        "corpus_query_version": CORPUS_QUERY_VERSION, "query": query,
+        "snapshot": copy.deepcopy(corpus["snapshot"]),
+        "cache_key": f"corpus-query-v{CORPUS_QUERY_VERSION}:" + digest(encoded({
+            "corpus_cache_key": corpus["snapshot"]["cache_key"], "query": query})),
+        "selected_record_refs": sorted(selected), "records": selected_records,
+        "supplementary_records": supplementary_records,
+        "relations": relations, "relation_semantics": copy.deepcopy(corpus["relation_semantics"]),
+        "witnesses": [witnesses[ref] for ref in sorted(witnesses)],
+        "frontier": frontier, "paper_scope": paper_scope,
+        "record_usage": [copy.deepcopy(row) for row in corpus["record_usage"]
+                         if row["record_ref"] in selected],
+        "components": components, "condensation": condensation,
+        "coverage": {
+            "recorded_extraction_status": corpus["graph"]["recorded_extraction_status"],
+            "allowed_record_count": len(allowed), "selected_record_count": len(selected),
+            "supplementary_record_count": len(supplementary), "frontier_counts": frontier_counts,
+            "query_truncated": truncated, "stored_traversal_exhausted": not truncated,
+            "paper_boundary_present": bool(frontier_counts["outside_paper"]),
+            "per_root_dependency_completeness": "unknown",
+            "source_bytes_opened": False, "receipt_bytes_opened": False,
+            "selection_budget": "max_records bounds selected traversal records, not supplementary owners, frontier endpoints or relation count.",
+            "scope": "Typed reference navigation in one captured edition, not proof impact or logical entailment. All selected-family relations between reached records are retained, including cycles and parallel kinds; witnesses form one deterministic shortest traversal forest. Stored from/to is unchanged even for incoming traversal. Paper restriction applies before traversal; outside subjects cannot enter through associated evidence. Boundary reasons prioritise paper scope, then depth, then record budget.",
+            "empty_result_meaning": "No further stored relation under this query; not mathematical independence or proof of complete source coverage.",
+        },
+        "semantic_certification": False,
+    }
+
+
 def query_papers(
     bundle_path: Path, *, stage: str | None = None,
     passages: list[str] | None = None, section_refs: list[str] | None = None,
+    byte_ranges: list[tuple[int, int]] | None = None,
     node_ids: list[str] | None = None, relation: str = "direct",
     expected_manifest_sha256: str | None = None,
 ) -> dict:
@@ -794,22 +947,42 @@ def query_papers(
     passages = _query_selector(passages, "passage")
     section_refs = _query_selector(section_refs, "section")
     node_ids = _query_selector(node_ids, "node")
-    if stage is None and (passages is not None or section_refs is not None):
-        raise ContractError("passage and section selectors require one paper stage")
+    if stage is None and (passages is not None or section_refs is not None or byte_ranges is not None):
+        raise ContractError("passage, section and byte-range selectors require one paper stage")
+    if byte_ranges is not None:
+        if (not isinstance(byte_ranges, list) or not byte_ranges
+                or any(not isinstance(row, (list, tuple)) or len(row) != 2
+                       or any(type(value) is not int for value in row)
+                       or not 0 <= row[0] < row[1] for row in byte_ranges)):
+            raise ContractError("byte ranges must be nonempty half-open integer pairs")
+        if len({tuple(row) for row in byte_ranges}) != len(byte_ranges):
+            raise ContractError("byte ranges must be distinct")
+        byte_ranges = [list(row) for row in sorted(tuple(row) for row in byte_ranges)]
+        if expected_manifest_sha256 is None:
+            raise ContractError("byte-range selection requires an expected manifest SHA-256")
     if not isinstance(relation, str) or relation not in {"direct", "prerequisites"}:
         raise ContractError("unknown paper query relation")
     payload = _capture_edition(bundle_path, expected_manifest_sha256)
     manifest = decode_json(payload["manifest.json"])
     graph = decode_json(payload["graph.json"])
     graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
+    if byte_ranges is not None:
+        content = payload[f"papers/{stage}.md"]
+        for start, end in byte_ranges:
+            if end > len(content):
+                raise ContractError("byte range lies outside the captured paper")
+            if any(offset < len(content) and content[offset] & 0xC0 == 0x80 for offset in (start, end)):
+                raise ContractError("byte range must use UTF-8 character boundaries")
     nodes = {row["id"]: row for row in graph["nodes"]}
     if node_ids is not None:
         require_refs(node_ids, nodes, "paper query node")
     adjacency = _argument_adjacency(graph, graph_hash)
     query = {"stage": stage, "passages": passages, "section_refs": section_refs,
+             "byte_ranges": byte_ranges,
              "node_ids": node_ids, "relation": relation,
              "combination": "union_within_family_intersection_between_families",
-             "section_policy": "whole_passage_on_nonwhitespace_content_overlap"}
+             "section_policy": "whole_passage_on_nonwhitespace_content_overlap",
+             "range_policy": "whole_passage_on_nonwhitespace_content_overlap_utf8_half_open"}
     papers = []
     stages = [stage] if stage is not None else list(STAGES)
     for paper_stage in stages:
@@ -831,6 +1004,17 @@ def query_papers(
                             link["overlap_span"]["start_byte"]:link["overlap_span"]["end_byte"]
                         ].decode("utf-8").strip()]
             if section_refs is not None and not overlaps:
+                continue
+            byte_overlaps = []
+            content_span = passage["content_span"]
+            for start, end in byte_ranges or []:
+                left, right = max(start, content_span["start_byte"]), min(end, content_span["end_byte"])
+                if left < right:
+                    byte_overlaps.append({"requested_range": {"start_byte": start, "end_byte": end},
+                                          "overlap_span": {"start_byte": left, "end_byte": right}})
+            if byte_ranges is not None and not any(payload[f"papers/{paper_stage}.md"][
+                    row["overlap_span"]["start_byte"]:row["overlap_span"]["end_byte"]
+                    ].decode("utf-8").strip() for row in byte_overlaps):
                 continue
             claim_seeds, assumption_seeds = set(passage["claim_ids"]), set(passage["assumption_ids"])
             direct = claim_seeds | assumption_seeds
@@ -856,6 +1040,12 @@ def query_papers(
                     break
                 covered_until = max(covered_until, span["end_byte"])
             crosses = section_refs is not None and covered_until < content_span["end_byte"]
+            range_covered_until = content_span["start_byte"]
+            for overlap in byte_overlaps:
+                span = overlap["overlap_span"]
+                if span["start_byte"] > range_covered_until:
+                    break
+                range_covered_until = max(range_covered_until, span["end_byte"])
             matches.append({
                 "stage": paper_stage, "anchor": passage["anchor"], "passage_ref": passage["ref"],
                 "evidence_class": passage["evidence_class"],
@@ -863,6 +1053,8 @@ def query_papers(
                 "direct_claim_ids": sorted(claim_seeds),
                 "direct_assumption_ids": sorted(assumption_seeds),
                 "section_overlaps": copy.deepcopy(overlaps),
+                "byte_overlaps": byte_overlaps,
+                "whole_passage_extends_beyond_selected_ranges": byte_ranges is not None and range_covered_until < content_span["end_byte"],
                 "whole_passage_extends_beyond_selected_sections": crosses,
                 "witnesses": witnesses,
             })

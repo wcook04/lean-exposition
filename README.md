@@ -104,8 +104,11 @@ application can move between a passage, its support and another account of the
 same result. A [whole-corpus view](docs/bundle-consumers.md#view-the-whole-recorded-corpus)
 keeps one shared record pool and lets an application look up which papers and
 passages use each record. Papers can select different goals while retaining
-their necessary assumptions and sources. The local API supplies these views
-for a future front end.
+their necessary assumptions and sources. A [record-neighbourhood query](docs/bundle-consumers.md#start-at-any-record-and-follow-its-neighbourhood)
+starts from a source, citation, evidence record or claim, follows typed links
+in either direction, and shows where the selected view stops. Exact text
+selections can also find mapped passages and their support. The local API
+supplies these operations for readers, agents and a future front end.
 
 The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
 cover selecting the material, reconstructing an argument, writing for specialists

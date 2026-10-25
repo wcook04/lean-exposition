@@ -237,28 +237,67 @@ recovers an authored record; a rewritten argument needs fresh editorial judgment
 
 ## 4. What the backend returns
 
-The implemented backend offers three scales of inspection from the same data:
+The reader can start from a paper, a mathematical claim or a source they want
+to trace. The backend uses the same captured records for each route:
 
 | Reader task | Existing Python entry and CLI |
 | --- | --- |
 | Inspect every captured graph record and all three papers | `project_corpus` / `inspect-corpus` |
 | Follow one kind of relation from selected nodes | `project_graph` / `inspect --view` |
+| Find what refers to a source, citation, evidence record or node | `query_corpus` / `query-corpus` |
 | Open a paper or passage and its recorded support | `project_paper` / `inspect-bundle --paper`; `query_papers` / `query-papers` also selects sections and finds cross-paper occurrences |
 
 The [API contract](../../docs/bundle-consumers.md#view-the-whole-recorded-corpus)
-specifies signatures and versions. The corpus projection retains unselected and
-disconnected records in one shared pool and separates paper focus, support
-membership and direct passage correspondence. A local typed view selects
-declaration, argument, citation, platform or provenance relations. Reverse
-consumer traversal preserves each recorded edge's direction and meaning.
+specifies signatures and versions. The corpus retains disconnected records and
+separates paper focus, support membership and direct passage correspondence.
+To ask where the curvature source enters the accounts, follow the references
+pointing into that source:
+
+```sh
+lean-exposition query-corpus build/qaoa-sk-authored \
+  --record sources support_tex_curvature --family provenance \
+  --direction incoming --max-depth 1 --max-records 40 --format text
+```
+
+On the edition identified in Section 2, this selects the source, two claim
+nodes, two citations and eight evidence records. The claims include
+`support.positive_curvature`; the citation `support_curvature_source` has
+direct mappings to the long record's `curvature`, the short paper's `gap-proof`
+and the exposition's `contact-and-gap`, among other passages. These are distinct
+authored uses of the source. Inspect the long passage and its recorded support:
+
+```sh
+lean-exposition inspect-bundle build/qaoa-sk-authored \
+  --paper long --passage curvature
+```
+
+The neighbourhood query can follow incoming, outgoing or both directions in
+selected declaration, argument, citation, platform or provenance families.
+Browsing backwards leaves the stored arrows unchanged: a citation still points
+to its source, and a claim to its ingredient. The returned subgraph retains
+every selected-family link between reached records, including cross-links,
+parallel kinds and cycles. Separate witnesses record one deterministic shortest
+route to each reached record; they do not replace that subgraph with a tree.
+
+Depth, record budget and optional paper membership define the view's boundary.
+Excluded neighbours carry `depth_limit`, `record_limit` or `outside_paper`
+reasons. Supplementary records identify boundary endpoints and the records
+owning links; they do not extend traversal or count against the selected-record
+budget. A paper restriction follows its recorded support membership, not every
+mention in its prose. An empty continuation means no further stored relation
+under these choices, not mathematical independence or complete source coverage.
 
 A paper subgraph retains selected claims and assumptions, recorded prerequisites
 and associated source/evidence records. Document links separately record heading
 structure, passage overlap and reading order. Whole passages remain available
 when a section cuts across them; unmapped text stays visible. Locations are
-half-open **UTF-8 Markdown byte spans**, with line positions. They are not PDF
-highlight boxes, browser character offsets or a rendered-page map. A rendered
-edition needs its own identity and tested source mapping.
+half-open **UTF-8 Markdown byte spans**, with line positions. A
+`query-papers --byte-range` selection requires the paper and expected manifest
+digest. It finds mapped content overlapping the selected bytes and returns
+the whole passage's requirements with the exact overlap. Whitespace, markers
+and unmapped text create no correspondence. These positions are not PDF
+highlight boxes, browser character offsets or formal source coordinates.
+A rendered edition needs its own identity and tested source mapping.
 
 A graph's `supports` arrow runs from claim to ingredient; `formalizes` runs
 from informal claim to formal declaration; `cites` identifies a reference.
@@ -269,7 +308,8 @@ cycle may be harmless, while circular proof justification still needs
 examination. “Whole” means the whole captured graph, not all Lean declarations
 or a complete mathematical dependency audit.
 
-These local read-only projections require no second graph or prose database.
+These local read-only projections require no second graph or prose database
+and do not open the external source or receipt bytes.
 A visual reader is not part of the delivered implementation; the API results
 themselves are the demonstrated inspection surface.
 

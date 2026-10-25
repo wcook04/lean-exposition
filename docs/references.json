@@ -947,6 +947,90 @@
       "reading_scope": "Section II, equations (14)–(26), including the backwards support calculation for an edge observable.",
       "disposition": "reference_only; original reading copy retained privately",
       "boundary": "Supports the ordinary QAOA local-support explanation. It does not establish the later SK transfer or increasing-depth optimality result."
+    },
+    {
+      "id": "networkx-typed-neighbourhood-design",
+      "title": "NetworkX traversal and induced subgraphs",
+      "url": "https://github.com/networkx/networkx",
+      "kind": "primary_implementation_reference",
+      "retrieved_on": "2026-10-25",
+      "pin": {
+        "commit": "9d866a5f447d9fe1c989b31f90c520dc2813ee26",
+        "commit_date": "2026-10-22T20:48:41Z"
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "redistribution_decision": "No upstream code redistributed; selected implementation retained in local research annex."
+      },
+      "selected_files": [
+        {
+          "url": "https://github.com/networkx/networkx/blob/9d866a5f447d9fe1c989b31f90c520dc2813ee26/networkx/algorithms/traversal/breadth_first_search.py",
+          "sha256": "fe45bf02a09e0317a3253649656820a6f53b6871df9aa552562d30d604c02342"
+        },
+        {
+          "url": "https://github.com/networkx/networkx/blob/9d866a5f447d9fe1c989b31f90c520dc2813ee26/networkx/classes/function.py",
+          "sha256": "e836dd94f419dbb9beb8a44e2db14f7e8f632d44972da9c366ab9620e554e852"
+        }
+      ],
+      "consumer": "Separate breadth-first discovery and its witness forest from induced typed relations. Existing standard-library implementation; no runtime dependency or code import.",
+      "disposition": "pattern_comparison",
+      "boundary": "Implementation research is not evidence of mathematical correctness or improved reader comprehension."
+    },
+    {
+      "id": "leanblueprint-dependency-navigation",
+      "title": "Lean blueprint dependency navigation",
+      "url": "https://github.com/PatrickMassot/leanblueprint",
+      "kind": "primary_implementation_reference",
+      "retrieved_on": "2026-10-25",
+      "pin": {
+        "commit": "56e066d30fb7b608a63f4241fee80982d7eae3ef",
+        "commit_date": "2025-12-23T15:55:53Z"
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "redistribution_decision": "No upstream code redistributed; selected implementation retained in local research annex."
+      },
+      "selected_files": [
+        {
+          "url": "https://github.com/PatrickMassot/leanblueprint/blob/56e066d30fb7b608a63f4241fee80982d7eae3ef/leanblueprint/Packages/blueprint.py",
+          "sha256": "88279c89082d111fce058429ac81e639a66fc21715272957db95acc23f587353"
+        },
+        {
+          "url": "https://github.com/PatrickMassot/leanblueprint/blob/56e066d30fb7b608a63f4241fee80982d7eae3ef/README.md",
+          "sha256": "bcda8d018bf403111622198da52519f5f7cff5a4b026315bf88317fad300bc88"
+        }
+      ],
+      "consumer": "Compare manual correspondence, cyclic graph behaviour and per-node views; retain explicit evidence rather than generated status colours. No frontend or upstream code imported.",
+      "disposition": "pattern_comparison",
+      "boundary": "Implementation research is not evidence of mathematical correctness or improved reader comprehension."
+    },
+    {
+      "id": "scip-explicit-position-contract",
+      "title": "SCIP position encodings and occurrence ranges",
+      "url": "https://github.com/scip-code/scip",
+      "kind": "primary_implementation_reference",
+      "retrieved_on": "2026-10-25",
+      "pin": {
+        "commit": "d556dd3c24b3c1787e0b62cd31f25188300e3098",
+        "commit_date": "2026-10-22T03:15:31Z"
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "redistribution_decision": "No upstream code redistributed; selected implementation retained in local research annex."
+      },
+      "selected_files": [
+        {
+          "url": "https://github.com/scip-code/scip/blob/d556dd3c24b3c1787e0b62cd31f25188300e3098/scip.proto",
+          "sha256": "b38021b65ef90cbbf6af9c829ff75192859ad9b5da05439ef154bea4ceb2bf03"
+        },
+        {
+          "url": "https://github.com/scip-code/scip/blob/d556dd3c24b3c1787e0b62cd31f25188300e3098/README.md",
+          "sha256": "fce767acbc4242c6f589fedf6f81a3089d6da766789e4d5a0a5673d2f6a927c0"
+        }
+      ],
+      "consumer": "Use explicit half-open UTF-8 coordinates for pinned Markdown passage queries. No indexer, protobuf or formal-source resolver added.",
+      "disposition": "pattern_comparison",
+      "boundary": "Implementation research is not evidence of mathematical correctness or improved reader comprehension."
     }
   ],
   "community_leads": [

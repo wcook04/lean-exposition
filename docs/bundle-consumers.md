@@ -294,9 +294,89 @@ visible. An empty correspondence result does not mean absence from the prose.
 still be partial. It does not mean every Lean declaration or a merge of unrelated
 editions. Use existing typed `project_graph` views for subgraphs rooted at other
 recorded nodes, and `query_papers` for passage discovery and typed witness paths.
-These selectors accept node IDs; other record classes are addressable in the
-pool and through explicit links. No external source or receipt bytes are opened.
+Those selectors accept node IDs. The record-neighbourhood query below also starts
+from sources, citations, evidence and edge records. No external source or receipt bytes are opened.
 No server, database or frontend is needed, and no proof or review status changes.
+
+## Start at any record and follow its neighbourhood
+
+A reader may arrive at a source or checking record before knowing which claim
+to inspect. This query follows its references and exposes routes to the papers:
+
+```sh
+lean-exposition query-corpus build/qaoa-sk-authored \
+  --record sources support_tex_curvature \
+  --family provenance --direction incoming --max-depth 1 --format text
+```
+
+In the supplied QAOA/SK edition, the selected source has twelve incoming
+references: two claims, two citations and eight evidence records. Together
+with the source these make thirteen selected records. The citation
+`support_curvature_source` has 32 directly mapped passages across the three
+papers. A source reference is an association, not evidence that every associated
+claim has been proved. Open a returned passage with `query-papers --paper STAGE
+--passage ANCHOR`, retaining the returned manifest digest with `--expect-manifest`.
+
+```python
+from pathlib import Path
+from lean_exposition.consumer import query_corpus, query_papers
+
+nearby = query_corpus(Path("build/qaoa-sk-authored"),
+    records=[("sources", "support_tex_curvature")],
+    families=["provenance"], direction="incoming", max_depth=1)
+locations = [p for use in nearby["record_usage"] for p in use["direct_passages"]]
+location = locations[0]
+passage = query_papers(Path("build/qaoa-sk-authored"),
+    stage=location["stage"], passages=[location["anchor"]],
+    expected_manifest_sha256=nearby["snapshot"]["manifest_sha256"])
+```
+
+`query_corpus` accepts `records=[(TABLE, ID), ...]` for `nodes`, `sources`,
+`citations` and `evidence`, or `record_refs=[REF, ...]` for any exact record
+reference, including edges. The CLI equivalents are repeated `--record TABLE ID`
+and `--ref REF`. Unknown IDs, references from another graph edition and roots
+outside an explicitly selected paper fail. At least one root is required.
+
+| Choice | Meaning |
+| --- | --- |
+| `families` / repeated `--family` | `declarations`, `arguments`, `citations`, `platform`, `provenance`; default is all five, with kinds kept distinct |
+| `direction` / `--direction` | `incoming`, `outgoing`, or `both` (default); browsing backward never reverses a stored relation |
+| `max_depth` / `--max-depth` | Maximum hops from the roots; default 1; 0 selects only the roots |
+| `max_records` / `--max-records` | Maximum selected records; default 100; all roots must fit |
+| `stage` / `--paper` | Induced restriction to one paper's recorded support membership, including its associated records |
+| `expected_manifest_sha256` / `--expect-manifest` | Pin the whole edition, including paper-mapping changes |
+
+The query discovers records breadth-first in deterministic order. It then
+returns **every selected-family relation between those records**, not merely
+the tree used to find them. Cross-links, cycles, self-links and distinct kinds
+between the same endpoints survive. `witnesses` records one shortest traversal
+forest: each parent gives a record, family and relation ID. Follow these parents
+to explain why an item appears; inspect the relation's unchanged `from` and `to`
+to interpret it. This navigation is not a proof or an inferred impact analysis.
+
+`frontier` identifies each eligible step leaving the selection, its original
+relation and excluded endpoint. Reasons are `outside_paper`, `depth_limit`
+or `record_limit`, in that priority order. A paper restriction never pulls an
+outside subject into its support merely because shared evidence names it.
+Depth and record limits set `coverage.query_truncated`; a paper boundary is
+reported separately. Exhausting stored relations within the chosen scope
+does not establish complete source extraction or mathematical independence.
+
+`records` contains selected records. `supplementary_records` separately supplies
+relation owners and frontier endpoints so every returned link can be inspected.
+Those records neither extend traversal nor consume its selection budget:
+`max_records` is **not** a response-byte or total-context limit. The five record
+tables and original evidence statuses are unchanged. `record_usage` exposes
+cross-paper locations for selected records even when traversal is restricted
+to one paper; those locations add no paper-to-paper proof edge.
+
+The response has `corpus_query_version: "0.1.0"`, its exact `snapshot`, canonical
+query and edition-bound `cache_key`. Directory and ZIP inputs produce the same
+result. This extends the captured corpus; it creates no stored graph copy,
+database or server. The distinction between a traversal tree and an induced
+subgraph follows the inspected [NetworkX traversal implementation](https://github.com/networkx/networkx/blob/9d866a5f447d9fe1c989b31f90c520dc2813ee26/networkx/algorithms/traversal/breadth_first_search.py)
+and [subgraph operations](https://github.com/networkx/networkx/blob/9d866a5f447d9fe1c989b31f90c520dc2813ee26/networkx/classes/function.py).
+No NetworkX runtime or upstream code is included.
 
 ## View one paper as a graph
 
@@ -409,16 +489,53 @@ with a selected subject can also name outside subjects; this does not add
 those other subjects as prerequisites. Source-supplied terminal controls
 are escaped in the text presentation.
 
-`query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage and section selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. An explicitly empty list selects nothing, while an omitted selector adds no filter.
+`query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, byte_ranges=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage, section and byte-range selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. Empty passage, section or node lists select nothing; an empty byte-range list is invalid. An omitted selector adds no filter.
 
-Paper view and query format `0.3.0` adds `paper.document_parts`, a complete
+Paper view `0.3.0` adds `paper.document_parts`, a complete
 ordered partition of the captured Markdown. It retains the `0.2.0` explicit
 `paper_scope` and mapping-bound support-subgraph `ref`, and the `0.1.1` navigation correction for bare-CR and mixed
 line endings: CRLF counts once, and bare CR or LF each count once. YAML front
 matter is excluded for all three endings. Exact bytes, byte spans and hashes
 are preserved; LF and CRLF paper behavior is unchanged. The paper-query cache
 namespace includes this version, so old derived navigation is not reused.
-The graph-view and eight-file bundle formats remain `0.1.0`.
+Paper query `0.4.0` adds exact byte-range selection below. The graph-view and
+eight-file bundle formats remain `0.1.0`; no stored schema changes.
+
+### Resolve a text selection into its recorded support
+
+An application can select bytes of a captured paper without guessing a node ID:
+
+```python
+opened = query_papers(Path("build/qaoa-sk-authored"),
+    stage="short", passages=["main-result"])
+view = opened["papers"][0]["view"]
+span = next(p for p in view["paper"]["passages"] if p["selected"])["content_span"]
+selection = query_papers(Path("build/qaoa-sk-authored"), stage="short",
+    byte_ranges=[(span["start_byte"], span["end_byte"])],
+    expected_manifest_sha256=opened["snapshot"]["manifest_sha256"])
+```
+
+The CLI accepts repeated `--byte-range START END` with `--paper` and
+`--expect-manifest`. Coordinates are zero-based UTF-8 byte offsets in the exact
+Markdown, with a nonempty half-open interval `[START, END)`. They are not PDF
+coordinates, browser UTF-16 offsets or Python character indexes. Both endpoints
+must lie on character boundaries within the captured document. The manifest pin
+is mandatory for positional requests; a valid successor edition still fails it.
+No formal-source locator is silently converted into a byte coordinate.
+
+Ranges select whole mapped passages whose content has a non-whitespace overlap.
+The result records each `byte_overlaps` interval and whether the whole passage
+extends beyond the requested ranges. It retains the complete passage mapping
+and support, not a claim that the selected words alone carry every listed
+assumption. Overlapping or adjacent requested ranges form a union; other
+selectors still intersect it. Marker-only, whitespace-only and unmapped-text
+selections produce no fabricated correspondence. Unmapped prose remains visible
+in the returned paper view. Rendering adapters must establish their own exact
+connection to these captured bytes before using this operation.
+
+This explicit coordinate convention is informed by [SCIP's range and position
+encoding contract](https://github.com/scip-code/scip/blob/d556dd3c24b3c1787e0b62cd31f25188300e3098/scip.proto).
+No SCIP indexer, protobuf model or source-resolution service is required.
 
 ### Reconstruct the recorded manuscript
 

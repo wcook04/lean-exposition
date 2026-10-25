@@ -184,3 +184,19 @@ bytes and passage selection qualify paper subgraphs. Manifest hashes pin the
 whole edition. These indexes are derived on demand and add no persisted graph,
 server, frontend or formal acceptance claim. See the
 [consumer contract](bundle-consumers.md#view-the-whole-recorded-corpus).
+
+`query_corpus` uses this same captured pool for bounded, typed neighbourhoods
+rooted at any record class. Traversal selects records; the induced relation set
+keeps all eligible links between them. Deterministic witness parents explain
+selection without replacing those links. Incoming traversal retains the stored
+direction. A paper filter uses recorded support membership and cannot silently
+expand through an outside evidence subject. Explicit frontier reasons distinguish
+the paper boundary, depth cutoff and selected-record budget. Supplementary link
+owners and boundary endpoints are separate from the selected graph; the record
+budget is not a total response-size guarantee.
+
+Paper query `0.4.0` also resolves half-open UTF-8 byte ranges against an explicitly
+pinned edition. It selects whole mapped passages on non-whitespace content
+overlap and preserves their complete requirements. It does not infer mappings
+for unannotated prose or translate PDF, browser or formal-source coordinates.
+These are read-only query contracts, not new graph evidence or persisted formats.

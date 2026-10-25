@@ -21,7 +21,8 @@ For the purpose of the project and a first worked reading, start with the
   Comparator checks.
 - [Prove2Me](prove2me.md): read public theorem metadata and preserve its limits.
 - [Bundle consumers](bundle-consumers.md): assemble authored papers, inspect a
-  bundle, query each paper's passage graph or read it from another application.
+  bundle, navigate from any record, resolve exact paper selections or read the
+  shared graph from another application.
 - [Contracts and architecture](contracts.md): understand the module boundaries,
   evidence graph and file formats.
 - [Architectural companion](../papers/architecture/README.md): a paper explaining
