@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 from lean_exposition.cli import main
@@ -19,6 +20,22 @@ class CliTests(unittest.TestCase):
         with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
             code = main([str(a) for a in args])
         return code, output.getvalue(), errors.getvalue()
+
+    def test_serve_document_paths_require_a_complete_unambiguous_stage_map(self):
+        paths = {"long": "proof/record.md", "short": "expert/paper.md", "expository": "reader/intro.md"}
+        arguments = [value for stage, path in paths.items() for value in ("--document-path", stage, path)]
+        with patch("lean_exposition.web.serve", return_value={"stopped": True}) as serve:
+            code, _, errors = self.call("serve", "unused-bundle", *arguments)
+            self.assertEqual(code, 0, errors)
+            self.assertEqual(serve.call_args.kwargs["document_paths"], paths)
+        for bad in (arguments[:3], [*arguments, *arguments[:3]],
+                    ["--document-path", "unknown", "elsewhere.md", *arguments[3:]]):
+            with self.subTest(arguments=bad), patch("lean_exposition.web.serve") as serve:
+                code, output, errors = self.call("serve", "unused-bundle", *bad)
+                self.assertEqual(code, 1)
+                self.assertEqual(output, "")
+                self.assertIn("exactly once", json.loads(errors)["error"])
+                serve.assert_not_called()
 
     def test_offline_selection_scaffold_check_export(self):
         with tempfile.TemporaryDirectory() as tmp:

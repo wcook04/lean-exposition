@@ -77,6 +77,8 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--host", default="127.0.0.1")
     cmd.add_argument("--port", type=int, default=8000)
     cmd.add_argument("--allow-origin", help="One exact frontend HTTP(S) origin for CORS")
+    cmd.add_argument("--document-path", nargs=2, action="append", metavar=("STAGE", "PATH"),
+                     help="Declare a portable authoring path for each of long, short and expository; repeat for all three")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -114,7 +116,14 @@ def parser() -> argparse.ArgumentParser:
 def run(args):
     if args.command == "serve":
         from .web import serve
-        return serve(args.bundle, host=args.host, port=args.port, allow_origin=args.allow_origin)
+        document_paths = None
+        if args.document_path is not None:
+            stages = [stage for stage, _ in args.document_path]
+            if len(stages) != len(set(stages)) or set(stages) != set(STAGES):
+                raise ContractError("document paths require each of long, short and expository exactly once")
+            document_paths = dict(args.document_path)
+        return serve(args.bundle, host=args.host, port=args.port, allow_origin=args.allow_origin,
+                     document_paths=document_paths)
     if args.command == "validate":
         return validate_graph(read_json(args.graph))
     if args.command == "inspect":

@@ -68,6 +68,7 @@
     "tests/test_reading_contract.py",
     "tests/test_reading_views.py",
     "tests/test_web_reading.py",
+    "tests/test_web_companions.py",
     "scripts/benchmark_web.py"
   ],
   "readme_map": [

@@ -819,22 +819,29 @@ complete command for the three maintained authored drafts.
 
 ### Paper links after assembly
 
-Read each manuscript from its exported location, `papers/STAGE.md`, when checking
-links. A checkout-relative link such as `../long/reasoning-record.md` can work in
-the source tree and fail in the bundle. Assembly preserves that text; successful
-hash validation does not establish that its hyperlinks resolve.
+The bundle is an archival capture, not a relocated reading edition. A
+checkout-relative link such as `../long/reasoning-record.md` can work in the
+source tree and fail when interpreted beside the flattened `papers/STAGE.md`.
+Assembly preserves that text; successful hash validation does not establish
+that its hyperlinks resolve from a new location.
 
 For documents authored together in the bundle layout, a sibling link such as
 `long.md#gap-elimination` can point to an explicit anchor in `papers/long.md`.
-When source documents use a different layout, use an exact companion title and
-section reference in the prose, and keep checkout navigation in their README.
+When source documents use a different layout, preserve working source links
+and supply the original logical path-to-stage map to the reading consumer.
+The [web companion resolver](web-api.md#resolve-captured-companion-links)
+accepts this map as explicit hosting configuration and returns pinned captured
+destinations without changing source bytes. The map is not inferred from the
+archive. Check each destination and fragment in the actual delivered reading
+view; a resolved document identity alone does not verify a rendered anchor.
 Use pinned public URLs for cited sources that are outside the bundle. Supporting
 scripts and bibliographies outside the eight files need explicit companion
 locators; a relative link does not include them in the export.
 
-Make these editorial changes before updating document and passage hashes. The
-assembler does not rewrite links or rebind reviewed passages. Check both the
-source reader path and the exported reader path after changes.
+The assembler does not rewrite links or rebind reviewed passages. If a separate
+reading rendition rewrites links, retain the original archival bytes and check
+that rendition independently. Do not edit reviewed prose merely to mimic the
+archive's storage layout.
 
 ## Extension boundary
 

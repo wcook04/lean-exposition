@@ -18,6 +18,13 @@ mathematical traversal and correspondence remain in `consumer.py`. No second
 stored graph or renderer-specific layout is introduced. The [web API guide](web-api.md)
 owns routes, limits, deployment and client responsibilities.
 
+Optional web `document_paths` configuration records a portable authoring
+namespace for the three captured papers. The transport resolves relative
+companion hrefs only against this explicit map and exposes its own digest,
+separate from the manifest. It never infers source paths, rewrites stored prose
+or opens arbitrary files. Document resolution does not verify rendered
+fragment anchors. The bundle format and mathematical mappings are unchanged.
+
 `consumer.py::ConsumerSession` prepares private edition indexes once and returns
 detached projections for concurrent readers. It shares the standalone consumer
 algorithms and retains their default result contracts. Compact paper queries

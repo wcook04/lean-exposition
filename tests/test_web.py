@@ -475,7 +475,10 @@ class WebTests(unittest.TestCase):
 
     def test_serve_cli_starts_a_real_captured_edition(self):
         process = subprocess.Popen(
-            [sys.executable, "-m", "lean_exposition.cli", "serve", str(self.root), "--port", "0"],
+            [sys.executable, "-m", "lean_exposition.cli", "serve", str(self.root), "--port", "0",
+             "--document-path", "long", "proof/record.md",
+             "--document-path", "short", "expert/paper.md",
+             "--document-path", "expository", "reader/intro.md"],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
         )
         startup = queue.Queue()
@@ -494,6 +497,14 @@ class WebTests(unittest.TestCase):
                 result = json.loads(response.read())
                 self.assertEqual(result["snapshot"]["manifest_sha256"], self.manifest)
                 self.assertEqual(result["data"]["record_counts"], self.corpus["coverage"]["record_counts"])
+                connection.request("GET", location.path + "/papers/resolve-link?" + urlencode({
+                    "paper": "short", "href": "../proof/record.md#proof", "manifest": self.manifest}))
+                response = connection.getresponse()
+                self.assertEqual(response.status, 200)
+                result = json.loads(response.read())["data"]
+                self.assertEqual(result["status"], "resolved")
+                self.assertEqual(result["target"]["stage"], "long")
+                self.assertEqual(result["fragment"], "proof")
             finally:
                 connection.close()
         finally:

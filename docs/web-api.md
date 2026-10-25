@@ -104,6 +104,7 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/papers/long/parts` | Paged document parts, including unmapped text, in original order |
 | `/papers/query` | Paper correspondence by stage, passage, section, text selection or node; optional matches-only representation |
 | `/papers/reading` | Explicit passage treatments, authored reading routes and separately labelled shared-claim alternatives |
+| `/papers/resolve-link` | Resolve a source-relative companion href using explicitly configured authoring paths |
 | `/compare?left=long&right=expository` | Paged union of two paper support sets, with shared/exclusive membership and direct passage mappings |
 | `/search?q=curvature` | Paged literal-token search across records, heading titles and mapped passage text |
 | `/corpus` | Complete existing corpus projection for a client that wants one capture |
@@ -200,6 +201,57 @@ unreachability: inspect the original neighborhood frontier, query bounds and
 paper restriction. A witness is one recorded route, not logical sufficiency.
 
 ## Resolve a text selection
+
+### Resolve captured companion links
+
+The native bundle preserves exact manuscript bytes under `papers/{stage}.md`.
+Their original relative links may refer to a different directory layout. Supply
+that layout explicitly when serving a reading edition:
+
+```sh
+lean-exposition serve build/qaoa-sk-authored \
+  --document-path long long/reasoning-record.md \
+  --document-path short short/paper.md \
+  --document-path expository expository/main.md
+```
+
+The equivalent Python option is
+`create_app(bundle, document_paths={"long": "long/reasoning-record.md", "short": "short/paper.md", "expository": "expository/main.md"})`.
+These are logical portable paths in a shared authoring namespace, not local
+filesystem paths. Supply every stage exactly once with distinct normalized
+relative POSIX paths. Absolute paths, parent components, backslashes, control
+characters, query strings and fragments are not valid configuration values.
+No files are opened through this map. The mapping is copied at construction;
+changing the caller's dictionary cannot change the captured application.
+
+Send `paper=short` and the original link value as `href` to
+`/papers/resolve-link`, using `URLSearchParams` or equivalent encoding. For
+example, `href=../long/reasoning-record.md#gap-elimination` resolves against
+the configured short-paper base and matches the configured long-paper target.
+The response reports the original href, `status`, `reason`, decoded `fragment`
+and, when resolved, a `target` with stage, captured Markdown identity and pinned
+`paper_href`, `document_href` and `structure_href`. Relative path normalization
+does not authorize file access: only an exact declared target can resolve.
+
+Discovery's `companion_resolution` object exposes the configured logical map,
+its `config_sha256`, `configured` state and `resolver_version: 0.1.0`. Resolution
+results retain this configuration identity. It is separate from the bundle's
+manifest hash: the same captured papers can be hosted with different declared
+authoring layouts. The map supplies a navigation interpretation, not new
+mathematical evidence or a change to the eight-file bundle contract.
+
+Without configuration, fragment-only links can resolve to the selected paper;
+other relative destinations remain explicitly unresolved. Unknown companions
+also remain unresolved. The resolver does not guess stages from filenames or
+matching anchors, fetch external URLs, allow arbitrary file routes, or silently
+discard local query strings. External and unsupported schemes are classified
+without providing an executable navigation URL.
+
+Resolution establishes the document identity only. The returned fragment is
+unverified; renderer-specific heading IDs and explicit HTML anchors still need
+to exist in the rendered document. A client must also sanitize Markdown and
+link schemes. This route supplies the captured destination without rewriting
+source bytes or claiming that a fragment points to a particular proof.
 
 ### Follow an explanation, a derivation or an answer
 
@@ -363,10 +415,9 @@ must escape labels, sanitise rendered Markdown and validate link schemes before
 navigation. Exact Markdown preserves authored relative links; the frontend
 must resolve supported bundle links deliberately rather than exposing a
 filesystem. The bundle does not record the original authoring-directory layout.
-Use the API's pinned reading and paper-query destinations for mapped navigation;
-rendering arbitrary source-relative Markdown links requires an explicit map
-from those authored paths to captured paper stages. Do not infer a destination
-from a filename or a coincidentally matching anchor. No layout coordinates,
+Use the API's pinned reading and paper-query destinations for mapped navigation,
+or the [configured companion resolver](#resolve-captured-companion-links) for
+ordinary source-relative links. No layout coordinates,
 graph renderer or visual styling is imposed
 by this API. Hash consistency and graph reachability do not certify mathematics.
 

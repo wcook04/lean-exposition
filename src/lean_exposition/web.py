@@ -6,13 +6,15 @@ It never fetches or opens referenced source files or receipts.
 from __future__ import annotations
 
 import json
+import posixpath
 import re
 from bisect import bisect_left, bisect_right
 from collections import Counter, OrderedDict
 from http import HTTPStatus
 from pathlib import Path
 from threading import Lock
-from urllib.parse import parse_qs, urlencode, urlsplit
+from types import MappingProxyType
+from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from wsgiref.simple_server import make_server
 
 from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
@@ -20,6 +22,7 @@ from .consumer import ConsumerSession
 from .contracts import ContractError, digest
 
 API_VERSION = "1.2"
+COMPANION_RESOLVER_VERSION = "0.1.0"
 API_ROOT = "/api/v1"
 TABLES = ("nodes", "edges", "sources", "citations", "evidence")
 FAMILIES = ("declarations", "arguments", "citations", "platform", "provenance")
@@ -33,6 +36,27 @@ def _json_bytes(value):
     """Transport encoding; bundle/source encoding and hashes remain untouched."""
     return json.dumps(value, ensure_ascii=False, sort_keys=True,
                       separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def _unsafe_url_characters(value):
+    return any(ord(c) < 32 or 127 <= ord(c) <= 159 or 0xD800 <= ord(c) <= 0xDFFF
+               for c in value)
+
+
+def _declared_document_paths(value):
+    """Copy logical source names; these names are never filesystem paths to open."""
+    if value is None:
+        return None
+    if type(value) is not dict or set(value) != set(STAGES):
+        raise ContractError("document_paths must map exactly long, short and expository to logical paths")
+    for path in value.values():
+        if (type(path) is not str or not path or _unsafe_url_characters(path)
+                or any(c in path for c in "\\?#") or ":" in path.split("/")[0]
+                or any(part in {"", ".", ".."} for part in path.split("/"))):
+            raise ContractError("document_paths values must be normalized relative POSIX filenames")
+    if len(set(value.values())) != len(STAGES):
+        raise ContractError("document_paths values must be distinct")
+    return MappingProxyType({stage: value[stage] for stage in STAGES})
 
 
 class _ResponseCache:
@@ -88,6 +112,7 @@ ROUTES = {
     "/papers": ("Independently authored reading accounts", ()),
     "/papers/query": ("Passage, section, text selection or node correspondence", ("paper", "passage", "section", "start", "end", "node", "relation", "representation")),
     "/papers/reading": ("Authored reading routes and shared-claim alternatives for a passage or section", ("paper", "passage", "section", "start", "end", "target", "offset", "limit")),
+    "/papers/resolve-link": ("Resolve a declared companion document identity without verifying fragments", ("paper", "href")),
     "/compare": ("Shared and exclusive paper support", ("left", "right", "table", "offset", "limit")),
     "/search": ("Literal search of records, headings and passages", ("q", "table", "paper", "offset", "limit")),
 }
@@ -142,7 +167,7 @@ class Parameters:
 class WebApplication:
     """WSGI callable. Construct a new application to publish a new edition."""
 
-    def __init__(self, bundle: Path | BundleCapture, *, allow_origin=None,
+    def __init__(self, bundle: Path | BundleCapture, *, allow_origin=None, document_paths=None,
                  max_response_bytes=MAX_RESPONSE_BYTES, cache_bytes=DEFAULT_CACHE_BYTES,
                  cache_entries=128):
         if allow_origin is not None:
@@ -160,6 +185,12 @@ class WebApplication:
             raise ContractError("max_response_bytes must be an integer of at least 1024")
         if any(type(value) is not int or value < 0 for value in (cache_bytes, cache_entries)):
             raise ContractError("cache_bytes and cache_entries must be nonnegative integers")
+        self._document_paths = _declared_document_paths(document_paths)
+        self._document_stages = MappingProxyType(
+            {path: stage for stage, path in (self._document_paths or {}).items()})
+        self._companion_config_sha256 = digest(_json_bytes({
+            "resolver_version": COMPANION_RESOLVER_VERSION,
+            "document_paths": dict(self._document_paths) if self._document_paths is not None else None}))
         self._responses = _ResponseCache(cache_bytes, cache_entries)
         self._capture = bundle if isinstance(bundle, BundleCapture) else BundleCapture(bundle)
         self._files = load_bundle(self._capture)
@@ -190,6 +221,76 @@ class WebApplication:
 
     def _href(self, route, **query):
         return API_ROOT + route + "?" + urlencode({"manifest": self.manifest_sha256, **query}, doseq=True)
+
+    def _companion_configuration(self):
+        return {"resolver_version": COMPANION_RESOLVER_VERSION,
+                "configured": self._document_paths is not None,
+                "document_paths": dict(self._document_paths) if self._document_paths is not None else None,
+                "config_sha256": self._companion_config_sha256,
+                "fragment_verification": "not_performed"}
+
+    def _resolve_document_link(self, stage, href):
+        result = {"resolver_version": COMPANION_RESOLVER_VERSION,
+                  "config_sha256": self._companion_config_sha256,
+                  "configured": self._document_paths is not None,
+                  "paper": stage, "href": href, "fragment": None,
+                  "fragment_verified": False, "resolution_scope": "document_identity_only"}
+
+        def outcome(status, reason):
+            return result | {"status": status, "reason": reason}
+
+        # urlsplit strips some controls and leading spaces. Reject them before
+        # parsing so an unsafe spelling cannot acquire a different meaning.
+        if (_unsafe_url_characters(href) or href != href.strip()
+                or re.search(r"%(?![0-9a-fA-F]{2})", href)):
+            return outcome("unsupported", "invalid_href")
+        try:
+            url = urlsplit(href)
+            path = unquote(url.path, encoding="utf-8", errors="strict")
+            fragment = unquote(url.fragment, encoding="utf-8", errors="strict")
+            if _unsafe_url_characters(fragment):
+                return outcome("unsupported", "invalid_fragment")
+            result["fragment"] = fragment if "#" in href else None
+        except (ValueError, UnicodeError):
+            return outcome("unsupported", "invalid_href")
+        if url.scheme or url.netloc or href.startswith("//"):
+            if url.scheme not in {"", "http", "https", "mailto"}:
+                return outcome("unsupported", "unsupported_scheme")
+            if (url.scheme == "mailto" and not url.path) or (
+                    url.scheme != "mailto" and not url.netloc):
+                return outcome("unsupported", "invalid_external_url")
+            return outcome("external", "external_url")
+        # The delimiter matters even for an empty query: resolution must not
+        # silently turn a document-specific query into a plain document link.
+        if "?" in href.split("#", 1)[0]:
+            return outcome("unsupported", "local_query_not_supported")
+        if (_unsafe_url_characters(path) or any(c in path for c in "\\?#")
+                or ":" in path.split("/")[0]):
+            return outcome("unsupported", "unsafe_path")
+        if path.startswith("/"):
+            return outcome("unsupported", "absolute_path_not_supported")
+        if not path:
+            target, reason = stage, "same_document_fragment"
+        elif self._document_paths is None:
+            return outcome("unresolved", "document_paths_not_configured")
+        else:
+            if path.rsplit("/", 1)[-1] in {"", ".", ".."}:
+                return outcome("unresolved", "undeclared_document")
+            destination = posixpath.normpath(posixpath.join(
+                posixpath.dirname(self._document_paths[stage]), path))
+            if destination == ".." or destination.startswith("../"):
+                return outcome("unresolved", "path_outside_declared_namespace")
+            target = self._document_stages.get(destination)
+            if target is None:
+                return outcome("unresolved", "undeclared_document")
+            reason = "declared_document_path"
+        result["target"] = {
+            "stage": target, "path": f"papers/{target}.md",
+            "markdown_ref": self._papers[target]["bundle"]["markdown_ref"],
+            "paper_href": self._href(f"/papers/{target}"),
+            "document_href": self._href(f"/papers/{target}/document"),
+            "structure_href": self._href(f"/papers/{target}/structure")}
+        return outcome("resolved", reason)
 
     def _paper_summary(self, stage):
         view = self._papers[stage]
@@ -345,6 +446,7 @@ class WebApplication:
                                "response_cache_entries": self._responses.max_entries},
                     "representations": {"records": ["full", "summary"], "graph": ["full", "map"],
                                         "paper_query": ["full", "matches"]},
+                    "companion_resolution": self._companion_configuration(),
                     "relation_semantics": self._corpus["relation_semantics"],
                     "semantic_certification": False}
         if route == "/overview":
@@ -359,6 +461,9 @@ class WebApplication:
             return self._corpus
         if route == "/papers":
             return {"items": [self._paper_summary(s) for s in STAGES]}
+        if route == "/papers/resolve-link":
+            return self._resolve_document_link(p.one("paper", required=True, choices=STAGES),
+                                               p.one("href", required=True))
         if route.startswith("/papers/") and route not in {"/papers/query", "/papers/reading"}:
             parts = route.split("/")
             if len(parts) == 4:
@@ -626,11 +731,11 @@ def create_app(bundle: Path | BundleCapture, **options) -> WebApplication:
     return WebApplication(bundle, **options)
 
 
-def serve(bundle: Path, *, host="127.0.0.1", port=8000, allow_origin=None):
+def serve(bundle: Path, *, host="127.0.0.1", port=8000, allow_origin=None, document_paths=None):
     """Local reference server; deploy the WSGI callable with a hosting server."""
     if not isinstance(host, str) or not host or type(port) is not int or not 0 <= port <= 65535:
         raise ContractError("host must be nonempty and port must be in 0..65535")
-    app = create_app(bundle, allow_origin=allow_origin)
+    app = create_app(bundle, allow_origin=allow_origin, document_paths=document_paths)
     with make_server(host, port, app) as server:
         print(json.dumps({"url": f"http://{host}:{server.server_port}{API_ROOT}",
                           "manifest_sha256": app.manifest_sha256}), flush=True)
