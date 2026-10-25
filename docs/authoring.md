@@ -181,10 +181,11 @@ semantic-review record; edges have no free-form rationale field. Do not invent
 fields that the schema rejects.
 
 Ordinary section anchors locate full proofs across documents; `passage:` markers
-bind exact authored text. Cross-document proof destinations belong in the text
-and `rationale`; the artifact schema does not encode such links. Read both ends
-after a revision. Check that substantive claims outside declared passage markers
-have not escaped mapping: the checker cannot discover them by interpreting prose.
+bind exact authored text. Keep proof destinations in the prose and `rationale`.
+Artifact `1.2` can additionally encode reading links between mapped passages,
+as described below. Read both ends after a revision. Check that substantive
+claims outside declared passage markers have not escaped mapping: the checker
+cannot discover them by interpreting prose.
 
 The consumer's ordered `document_parts` view retains passage blocks and every
 surrounding byte. Its [guarded reconstruction](bundle-consumers.md#reconstruct-the-recorded-manuscript)
@@ -198,6 +199,56 @@ When producing LaTeX/PDF with Pandoc, include
 bookmarks as LaTeX destinations; Pandoc otherwise drops the raw HTML while
 retaining links that refer to it. Check the resulting PDF destinations and
 links as well as Markdown links. The filter does not modify the manuscript.
+
+## Describe the role of a passage
+
+Use artifact `schema_version: "1.2"` for optional reading annotations. On a
+passage, `treatments` is a list of objects with `claim_id`, `kinds` and
+`rationale`. The claim must already appear in that passage's `claim_ids`;
+each claim has at most one treatment entry, with a nonempty list of distinct
+kinds drawn from `statement`, `derivation`, `explanation`, `application`,
+`illustration` and `reference`.
+
+Choose roles by reading the passage. For example, a paragraph that directs
+the reader to a density argument is a `reference`; sharing its claim ID with
+a derivation does not make the paragraph itself a derivation. A passage can
+have several roles. Missing annotations remain unspecified. These labels
+record editorial judgement, not accepted proof or reader comprehension.
+
+Mapping-level `reading_links` contain objects with these fields:
+
+```json
+{
+  "from_anchor": "worked-answer",
+  "from_text_sha256": "<exact source passage hash>",
+  "to_stage": "expository",
+  "to_anchor": "exercise",
+  "to_text_sha256": "<exact target passage hash>",
+  "kind": "answers",
+  "rationale": "Works through the endpoint and integral checks asked in the exercise."
+}
+```
+
+The hash placeholders stand for 64 lowercase hexadecimal characters. The
+source anchor belongs to this mapping; the target belongs to the named
+`long`, `short` or `expository` mapping. `expands` points from a fuller account
+to the passage it expands; `illustrates` from an example to the passage it
+illustrates; `answers` from an answer to its question. Links can stay within
+one paper. Duplicate source/target/kind combinations are rejected.
+
+An exercise or example may deliberately have empty `claim_ids`: it can teach
+an operation without meeting the hypotheses of a recorded theorem. A reading
+link does not change that selection. Do not add a claim merely to create a
+navigation route. Neither treatment annotations nor reading links change
+assumptions, proof edges, unresolved obligations or review state.
+
+When either passage changes, review the relationship before updating its
+endpoint hash. The bundle checker rejects stale endpoints, including incoming
+links authored in another paper. Older mappings remain readable without these
+annotations; versions `1.0` and `1.1` reject the new fields. See the
+[reading query](bundle-consumers.md#follow-reading-guidance-between-passages)
+and [website journeys](web-api.md#follow-an-explanation-a-derivation-or-an-answer)
+to inspect what a consumer receives.
 
 ## Keep evidence classes separate
 

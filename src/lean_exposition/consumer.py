@@ -18,6 +18,7 @@ from .contracts import (
 PAPER_VIEW_VERSION = "0.3.1"
 PAPER_QUERY_VERSION = "0.4.1"
 COMPACT_PAPER_QUERY_VERSION = "0.1.0"
+READING_VIEW_VERSION = "0.1.0"
 CORPUS_VIEW_VERSION = "0.1.1"
 CORPUS_QUERY_VERSION = "0.1.0"
 
@@ -356,6 +357,8 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                 "claim_ids": copy.deepcopy(row["claim_ids"]),
                 "citation_ids": copy.deepcopy(row["citation_ids"]),
                 "assumption_ids": copy.deepcopy(row["assumption_ids"]),
+                **({"treatments": copy.deepcopy(row["treatments"])}
+                   if mapping["schema_version"] == "1.2" and "treatments" in row else {}),
             })
         paper_passages.sort(key=lambda row: row["block_span"]["start_byte"])
         unmapped = []
@@ -576,6 +579,10 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
     }
     if session is not None:
         result["paper"] = copy.deepcopy(result["paper"])
+    if mapping["schema_version"] == "1.2":
+        result["reading_view_version"] = READING_VIEW_VERSION
+        if "reading_links" in mapping:
+            result["reading_links"] = copy.deepcopy(mapping["reading_links"])
     return result
 
 
@@ -1228,6 +1235,161 @@ def query_papers(
     return result
 
 
+def _prepare_reading_index(papers: dict, mappings: dict, graph_hash: str) -> dict:
+    """Index only authored passage claims and reading annotations, once per edition."""
+    cards, by_anchor, by_claim, mapping_refs = {}, {}, {}, {}
+    for stage in STAGES:
+        view = papers[stage]
+        sections = {row["ref"]: row for row in view["paper"]["sections"]}
+        for passage in view["paper"]["passages"]:
+            passage_ref = passage["ref"]
+            claim_refs = sorted(_view_ref(graph_hash, "nodes", claim) for claim in passage["claim_ids"])
+            treatments = [dict(copy.deepcopy(row), claim_ref=_view_ref(graph_hash, "nodes", row["claim_id"]))
+                          for row in passage.get("treatments", [])]
+            cards[passage_ref] = {
+                "ref": passage_ref, "stage": stage, "anchor": passage["anchor"],
+                "content_span": copy.deepcopy(passage["content_span"]),
+                "section_ref": passage["section_ref"],
+                "section_title": sections[passage["section_ref"]]["title"] if passage["section_ref"] else None,
+                "claim_refs": claim_refs, "evidence_class": passage["evidence_class"],
+                "treatments": treatments,
+            }
+            by_anchor[stage, passage["anchor"]] = passage_ref
+            mapping_refs[passage_ref] = view["bundle"]["mapping_ref"]
+            for claim_ref in claim_refs:
+                by_claim.setdefault(claim_ref, set()).add(passage_ref)
+    adjacent = {ref: [] for ref in cards}
+    for stage in STAGES:
+        mapping_ref = papers[stage]["bundle"]["mapping_ref"]
+        for index, annotation in enumerate(mappings[stage].get("reading_links", [])):
+            source = by_anchor[stage, annotation["from_anchor"]]
+            target = by_anchor[annotation["to_stage"], annotation["to_anchor"]]
+            link = {**copy.deepcopy(annotation), "id": f"{mapping_ref}/reading_links/{index}",
+                    "from": source, "to": target, "derived": False,
+                    "annotation_basis": "authored_reading_link",
+                    "source_ref": mapping_ref, "source_field": "reading_links", "source_index": index}
+            adjacent[source].append(link)
+            if source != target:
+                adjacent[target].append(link)
+    return {"cards": cards, "by_claim": {key: frozenset(value) for key, value in by_claim.items()},
+            "by_stage": {stage: frozenset(ref for ref, card in cards.items() if card["stage"] == stage)
+                         for stage in STAGES},
+            "adjacent": adjacent, "mapping_refs": mapping_refs}
+
+
+def _shared_reading_link(index: dict, source: str, target: str) -> dict:
+    """Materialize one retained pair; pagination must precede this work."""
+    cards = index["cards"]
+    shared = sorted(set(cards[source]["claim_refs"]).intersection(cards[target]["claim_refs"]))
+    return {
+        "id": "shared-claims:" + digest(encoded({"from": source, "to": target, "claims": shared})),
+        "from": source, "to": target, "kind": "shared_claim",
+        "annotation_basis": "shared_claim_ids", "derived": True,
+        "shared_claim_refs": shared,
+        "source_treatments": [row for row in cards[source]["treatments"] if row["claim_ref"] in shared],
+        "target_treatments": [row for row in cards[target]["treatments"] if row["claim_ref"] in shared],
+        "source_ref": index["mapping_refs"][source],
+        "target_ref": index["mapping_refs"][target], "source_field": "passages.claim_ids",
+    }
+
+
+def query_reading(
+    bundle_path: Path | BundleCapture | ConsumerSession, *, stage: str,
+    passages: list[str] | None = None, section_refs: list[str] | None = None,
+    byte_ranges: list[tuple[int, int]] | None = None, target_stage: str | None = None,
+    expected_manifest_sha256: str | None = None,
+    offset: int = 0, limit: int | None = None,
+) -> dict:
+    """Return authored reading routes and exact shared-claim correspondences.
+
+    Paper selectors and edition checks have the same meaning as query_papers.
+    Authored links incident to either selected endpoint retain their direction;
+    target_stage filters their other endpoint. Shared claims join selected
+    passages to other stages unless target_stage explicitly names a stage.
+    Nothing here traverses prerequisites or infers treatment, equivalence,
+    explanation completeness, mathematical status or importance.
+    An optional page counts all matching links but materializes only that page;
+    cards retain all selected sources and the returned links' endpoints.
+    """
+    if type(offset) is not int or offset < 0:
+        raise ContractError("reading offset must be a nonnegative integer")
+    if limit is not None and (type(limit) is not int or limit <= 0):
+        raise ContractError("reading limit must be a positive integer")
+    if offset and limit is None:
+        raise ContractError("reading offset requires a limit")
+    if not isinstance(stage, str) or stage not in STAGES:
+        raise ContractError("unknown paper stage")
+    if target_stage is not None and (not isinstance(target_stage, str) or target_stage not in STAGES):
+        raise ContractError("unknown reading target stage")
+    session = bundle_path if isinstance(bundle_path, ConsumerSession) else ConsumerSession(bundle_path)
+    selection = query_papers(session, stage=stage, passages=passages, section_refs=section_refs,
+                             byte_ranges=byte_ranges, expected_manifest_sha256=expected_manifest_sha256,
+                             include_views=False)
+    selected = {row["passage_ref"] for row in selection["papers"][0]["matches"]}
+    index, links = session._reading, {}
+    cards = index["cards"]
+    sources = sorted(selected)
+    for source in sources:
+        for link in index["adjacent"][source]:
+            other = link["to"] if source == link["from"] else link["from"]
+            if target_stage is None or cards[other]["stage"] == target_stage:
+                links[link["id"]] = link
+    stop = None if limit is None else offset + limit
+    authored = sorted(links.values(), key=lambda row: (row["from"], row["to"], row["kind"], row["id"]))
+    ordered_links = authored[offset:stop]
+    total = len(authored)
+    candidates_in_stage = (index["by_stage"][target_stage] if target_stage is not None else
+                           frozenset(cards).difference(index["by_stage"][stage]))
+    # The existing ordering places authored links before shared claims, then
+    # shared pairs by source and target ref. Count each source's candidate set;
+    # only sort and materialize groups intersecting the requested page.
+    for source in sources:
+        candidates = set()
+        for claim in cards[source]["claim_refs"]:
+            candidates.update(index["by_claim"][claim])
+        candidates.intersection_update(candidates_in_stage)
+        candidates.discard(source)
+        count = len(candidates)
+        left = max(0, offset - total)
+        right = count if stop is None else min(count, stop - total)
+        if left < right:
+            ordered_links.extend(_shared_reading_link(index, source, target)
+                                 for target in sorted(candidates)[left:right])
+        total += count
+    ordered_links = [{**link, "selection_relation":
+                      "internal" if {link["from"], link["to"]} <= selected else
+                      "outgoing" if link["from"] in selected else "incoming"}
+                     for link in ordered_links]
+    endpoints = selected | {ref for link in ordered_links for ref in (link["from"], link["to"])}
+    def document_order(ref):
+        card = cards[ref]
+        return STAGES.index(card["stage"]), card["content_span"]["start_byte"], ref
+    query = {key: selection["query"][key] for key in ("stage", "passages", "section_refs", "byte_ranges")}
+    query["target_stage"] = target_stage
+    if limit is not None:
+        query.update(offset=offset, limit=limit)
+    snapshot = selection["snapshot"]
+    return copy.deepcopy({
+        "reading_view_version": READING_VIEW_VERSION, "snapshot": snapshot, "query": query,
+        "cache_key": f"reading-v{READING_VIEW_VERSION}:" + digest(encoded({
+            "manifest_sha256": snapshot["manifest_sha256"], "query": query})),
+        "source_passage_refs": sorted(selected, key=document_order),
+        "passage_cards": [cards[ref] for ref in sorted(endpoints, key=document_order)],
+        "links": ordered_links, "semantic_certification": False,
+        **({"pagination": {"offset": offset, "limit": limit, "total": total}} if limit is not None else {}),
+        "coverage": {
+            "query_truncated": limit is not None and (offset > 0 or stop < total),
+            "source_bytes_opened": False, "receipt_bytes_opened": False,
+            "selection_policy": "query_papers whole-passage selection; union within each selector family, intersection between families",
+            "authored_link_policy": "Links incident to selected passages, in their stored direction; target_stage filters the other endpoint",
+            "shared_claim_policy": "Exact claim_ids intersection only; other stages by default, or the explicitly selected target stage",
+            "treatment_policy": "Only explicit authored treatments are returned; a missing treatment is unspecified, including in legacy mappings",
+            "ordering": "Cards and sources follow stage then document byte order; links follow annotation basis, endpoints, kind and identity; no importance ranking",
+            "scope": "Reading guidance and passage correspondence only. Shared claims assert neither equivalence nor complete explanation. Authored derivation, application or illustration treatments do not establish a proof, prerequisite edge, discharged hypothesis or accepted evidence. Further consequences, alternative routes and formal transport obligations retain their recorded scope.",
+        },
+    })
+
+
 def project_graph(
     graph_bytes: bytes | ConsumerSession, view: str, roots: list[str] | None = None, *,
     direction: str = "prerequisites", include_assumptions: bool = False,
@@ -1514,6 +1676,8 @@ class ConsumerSession:
         for identity, evidence in self._tables["evidence"].items():
             for subject in evidence["subject_ids"]:
                 self._provenance_seeds[subject].add(self._graph_refs["evidence"][identity])
+        self._reading = _prepare_reading_index(self._papers, self._mappings,
+                                               self._corpus["snapshot"]["graph_sha256"])
 
     def project_graph(self, view: str, roots: list[str] | None = None, *,
                        direction: str = "prerequisites", include_assumptions: bool = False) -> dict:
@@ -1545,3 +1709,11 @@ class ConsumerSession:
                             byte_ranges=byte_ranges, node_ids=node_ids, relation=relation,
                             expected_manifest_sha256=expected_manifest_sha256,
                             include_views=include_views)
+
+    def query_reading(self, *, stage: str, passages: list[str] | None = None,
+                      section_refs: list[str] | None = None, byte_ranges: list[tuple[int, int]] | None = None,
+                      target_stage: str | None = None, expected_manifest_sha256: str | None = None,
+                      offset: int = 0, limit: int | None = None) -> dict:
+        return query_reading(self, stage=stage, passages=passages, section_refs=section_refs,
+                            byte_ranges=byte_ranges, target_stage=target_stage,
+                            expected_manifest_sha256=expected_manifest_sha256, offset=offset, limit=limit)

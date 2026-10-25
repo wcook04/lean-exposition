@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
@@ -440,7 +440,23 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "The actual compact-mass variation, Fubini bound and one-sided origin calculation are preserved. The added Auffinger–Chen Theorem 2/Corollary 2 citation credits the zero-temperature control antecedent; OpenAI Lemmas 2.1–2.2 remain the stronger compact-strip input actually used."
+      "rationale": "The actual compact-mass variation, Fubini bound and one-sided origin calculation are preserved. The added Auffinger–Chen Theorem 2/Corollary 2 citation credits the zero-temperature control antecedent; OpenAI Lemmas 2.1–2.2 remain the stronger compact-strip input actually used.",
+      "treatments": [
+        {
+          "claim_id": "support.contact",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Derives nonnegative tail cost and its vanishing on the support by feasible atom addition and compact fractional mass removal. The first-variation formula and regularity are cited inputs, and the sign conclusion uses minimality."
+        },
+        {
+          "claim_id": "support.contact_derivatives",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Derives the value and slope conditions from derivatives of the contact function, with a separate right-hand expansion at zero. The origin argument retains contact at zero when zero belongs to the support and the zero-field identity q(0)=0."
+        }
+      ]
     },
     {
       "anchor": "gap-proof",
@@ -494,7 +510,24 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Strict curvature on a positive constant interval; Strict increase on a zero constant interval; No bounded gap between support points; No initial gap when zero is outside the support; A minimizer has no terminal plateau or empty support. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Strict curvature on a positive constant interval; Strict increase on a zero constant interval; No bounded gap between support points; No initial gap when zero is outside the support; A minimizer has no terminal plateau or empty support. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate.",
+      "treatments": [
+        {
+          "claim_id": "support.positive_curvature",
+          "kinds": [
+            "statement",
+            "application"
+          ],
+          "rationale": "States the quantitative curvature estimate for any admissible positive plateau and applies it together with minimiser contact to exclude a bounded gap. The estimate is an imported input here; its nonminimiser scope does not supply contact."
+        },
+        {
+          "claim_id": "support.no_bounded_gap",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Derives the bounded-gap contradiction by integrating the endpoint-chord bound for q prime. Contact and the imported curvature estimate have separate roles; the initial and terminal cases are treated separately in the same passage."
+        }
+      ]
     },
     {
       "anchor": "curvature",
@@ -583,7 +616,16 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "The common spatial identity is derived after smoothness from the displayed Ito moments: q third derivative plus 2 gamma-prime E[a cubed] equals the spatial polynomial. On a plateau the coefficient derivative vanishes; on the smooth minimiser q=t removes q third derivative. The fixed-time transfer of spatial moments remains indispensable and is retained with common strip bounds, rather than transferring time derivatives. No positivity at zero or additional formal coverage is asserted. Full recovery remains at long §§5.1–5.2."
+      "rationale": "The common spatial identity is derived after smoothness from the displayed Ito moments: q third derivative plus 2 gamma-prime E[a cubed] equals the spatial polynomial. On a plateau the coefficient derivative vanishes; on the smooth minimiser q=t removes q third derivative. The fixed-time transfer of spatial moments remains indispensable and is retained with common strip bounds, rather than transferring time derivatives. No positivity at zero or additional formal coverage is asserted. Full recovery remains at long §§5.1–5.2.",
+      "treatments": [
+        {
+          "claim_id": "scalar.smooth_positive_density",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Develops smoothness from the quotient of moments before differentiating, then transfers the quantitative spatial-moment inequality through local constant replacements at a fixed interior time. Compact-strip stability is a cited input; positivity is asserted only for 0<t<1, and the argument does not transfer third time derivatives or add formal acceptance."
+        }
+      ]
     },
     {
       "anchor": "scalar-value",
@@ -653,7 +695,17 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "The new classical paragraph applies the separately mapped EAMS consequence after attainment and strict increase, preserving probability over disorder and algorithm randomness, the real-arithmetic model, and absence of preprocessing/bit-complexity guarantees. The scalar cancellation and conditional-mean rounding retain the unit second-moment premise, extra coordinate, vector error norm and mesh-before-endpoint limit. The rooted-realization claim is restricted to these finite recursive objects; its child-to-parent Gaussian lift and first-chaos projection explain the adjacent index. Long §§6,7,7.4 and 9.1 supply the exact omitted arguments. Positive density is not an algorithmic prerequisite."
+      "rationale": "The new classical paragraph applies the separately mapped EAMS consequence after attainment and strict increase, preserving probability over disorder and algorithm randomness, the real-arithmetic model, and absence of preprocessing/bit-complexity guarantees. The scalar cancellation and conditional-mean rounding retain the unit second-moment premise, extra coordinate, vector error norm and mesh-before-endpoint limit. The rooted-realization claim is restricted to these finite recursive objects; its child-to-parent Gaussian lift and first-chaos projection explain the adjacent index. Long §§6,7,7.4 and 9.1 supply the exact omitted arguments. Positive density is not an algorithmic prerequisite.",
+      "treatments": [
+        {
+          "claim_id": "scalar.manuscript_terminal_value",
+          "kinds": [
+            "derivation",
+            "explanation"
+          ],
+          "rationale": "Explains the terminal-gradient martingale and displays the cancellation that gives the scalar value identity, with endpoint and covariance justifications delegated to the cited source and long record. This use needs the full-support moment identities, not positive density."
+        }
+      ]
     },
     {
       "anchor": "qaoa-boundary",
@@ -740,7 +792,17 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "context",
-      "rationale": "The circuit outlook retains forall accuracy / exists finite deterministic word / size-limit order and independence of size and disorder. It distinguishes fixed-instance depth convergence, approximation into the supported formula class, seeded synthesis, simulation of seed controls by ordinary cost/mixer gates, and only then fixed-word transfer. Long §§9.1–9.6 and source §§2–6 are the main chain; Appendix A is explicitly an alternative input. No rate, efficient angle selection or quantum-advantage claim is added."
+      "rationale": "The circuit outlook retains forall accuracy / exists finite deterministic word / size-limit order and independence of size and disorder. It distinguishes fixed-instance depth convergence, approximation into the supported formula class, seeded synthesis, simulation of seed controls by ordinary cost/mixer gates, and only then fixed-word transfer. Long §§9.1–9.6 and source §§2–6 are the main chain; Appendix A is explicitly an alternative input. No rate, efficient angle selection or quantum-advantage claim is added.",
+      "treatments": [
+        {
+          "claim_id": "qaoa_thermodynamic_first",
+          "kinds": [
+            "statement",
+            "explanation"
+          ],
+          "rationale": "States the accuracy-dependent finite deterministic depth and angles before the size limit, and outlines the additional synthesis, seed-removal and fixed-word transfer steps. The passage routes the complete construction elsewhere and gives no depth rate, finite-size rate or efficient angle-selection guarantee."
+        }
+      ]
     },
     {
       "anchor": "evidence-scope",
@@ -837,5 +899,34 @@
     "25 October 2026 lecture-informed refinement: applied skills/long-to-short/SKILL.md (SHA256 a0e9c126c33100f411fbc0160c31daec2b6da73fbdc80ceb387335f75c3cc749). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions.",
     "25 October 2026 round-six revision: applied long-to-short after source-based adjudication of returns 05–07. Preserved the contact/gap, terminal minorisation, smoothness-before-differentiation and fixed-strip spatial transfer arguments. Added coupled-shape explanation, a common spatial identity, separately versioned literature comparisons, the EAMS classical consequence, rooted-energy purpose and accurate seed-control wording; improved companion navigation. Independently reran the inspected review06 exact rational checker successfully. This is bounded source-assisted agent review and finite algebra, not a human reader study, full analytic acceptance, Lean replay, Comparator acceptance or research-v2 result. All ten passage identities and the draft/needs_revision state are retained; parent will assemble, render and inspect the final multi-paper edition.",
     "25 October 2026 integrated review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons were incorporated into the four local transition skills and docs/authoring.md. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and three scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+  ],
+  "reading_links": [
+    {
+      "from_anchor": "density-consequence",
+      "from_text_sha256": "e226bceb6f61d0468a8a3ebe6c07549aa60fc0f4c810fd72c9994fdb316e9058",
+      "to_stage": "expository",
+      "to_anchor": "density-and-approximation",
+      "to_text_sha256": "26c4571a00fa9dea7bd816c0884dd14720f7e9211d88e94b2b13b2be393cdb9b",
+      "kind": "expands",
+      "rationale": "Develops the smoothness and fixed-time local-replacement arguments that the exposition names as further reading. Both treatments retain interior-only strict positivity and separate this ordinary argument from formal-check status."
+    },
+    {
+      "from_anchor": "scalar-value",
+      "from_text_sha256": "5294a1ed953c643c17da7a58372bfec656e6f589cf740727fa8b48e8b6ca29c4",
+      "to_stage": "expository",
+      "to_anchor": "scalar-identities",
+      "to_text_sha256": "0ffba67c6ba1e26df5e4477fedcddfa09ccba1f066e183b8629510d4a518c430",
+      "kind": "expands",
+      "rationale": "Expands the terminal-gradient and scalar-value pointer with the martingale limit, integral cancellation and source destinations. The short passage also has further topics; this link concerns its scalar-value treatment, not equivalence of the whole passages."
+    },
+    {
+      "from_anchor": "qaoa-boundary",
+      "from_text_sha256": "71a7bf3c2ee39fd1431e94726492a595e5366a5a6071b8c69b6d98f5ecca0d52",
+      "to_stage": "expository",
+      "to_anchor": "qaoa-boundary",
+      "to_text_sha256": "9042f0437916245a50d4a8d8e96d8fb488f031fa423e08ca32eaa63d6d1e0489",
+      "kind": "expands",
+      "rationale": "Adds the theorem quantifiers, order of limits and circuit-stage outline to the exposition reference. It remains an outlook with a destination for the full construction, rather than a complete circuit proof."
+    }
   ]
 }

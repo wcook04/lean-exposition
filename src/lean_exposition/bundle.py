@@ -12,7 +12,7 @@ from importlib.resources import files
 from pathlib import Path
 from types import MappingProxyType
 
-from .contracts import ContractError, decode_json, digest, encoded, local_path, required_citation_ids, validate_artifact, validate_graph, validate_schema, write_json
+from .contracts import ContractError, decode_json, digest, encoded, local_path, require_refs, required_citation_ids, validate_artifact, validate_graph, validate_schema, write_json
 
 STAGES = ("long", "short", "expository")
 BUNDLE_FILES = ("manifest.json", "graph.json") + tuple(
@@ -200,7 +200,7 @@ def _validate_payload(payload: dict[str, bytes]) -> dict:
         raise ContractError("bundle identity differs from graph")
     if manifest["documents"] != [{"stage": s, "mapping": f"papers/{s}.json"} for s in STAGES]:
         raise ContractError("paper stages or mappings differ from contract")
-    states = []
+    states, artifacts = [], {}
     for s in STAGES:
         name = f"papers/{s}.json"
         artifact = _decode_artifact(payload, name, "artifact")
@@ -211,6 +211,21 @@ def _validate_payload(payload: dict[str, bytes]) -> dict:
         except (ContractError, ValueError) as exc:
             raise _artifact_error(name, exc) from exc
         states.append(artifact["state"])
+        artifacts[s] = artifact
+    # Resolve only against the exact mappings in this validated capture. A
+    # separate pass permits links to later stages and forward passage anchors.
+    passages = {stage: {row["anchor"]: row for row in artifact["passages"]}
+                for stage, artifact in artifacts.items()}
+    for stage, artifact in artifacts.items():
+        try:
+            for link in artifact.get("reading_links", []):
+                targets = passages[link["to_stage"]]
+                require_refs([link["to_anchor"]], targets,
+                             f"reading link target in {link['to_stage']}")
+                if link["to_text_sha256"] != targets[link["to_anchor"]]["text_sha256"]:
+                    raise ContractError(f"reading link target passage hash is stale in {link['to_stage']}")
+        except ContractError as exc:
+            raise _artifact_error(f"papers/{stage}.json", exc) from exc
     derived = "scaffold" if set(states) == {"scaffold"} else "authored"
     if manifest["status"] != derived:
         raise ContractError("bundle status differs from paper states")

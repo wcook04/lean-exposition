@@ -111,6 +111,12 @@ in either direction, and shows where the selected view stops. Exact text
 selections can also find mapped passages and their support. The local API
 supplies these operations for readers, agents and a future front end.
 
+The [reading API](docs/web-api.md#follow-an-explanation-a-derivation-or-an-answer)
+also distinguishes an authored derivation, explanation, example or reference.
+It connects fuller accounts, illustrations and exercise answers with explicit
+reading links, keeping those recommendations separate from shared claims and
+proof dependencies. Both endpoint texts are bound to the captured edition.
+
 The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
 cover selecting the material, reconstructing an argument, writing for specialists
 and teaching it to a stated audience. They include methods illustrated by

@@ -657,6 +657,27 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
     required_cites = required_citation_ids(graph, roots)
     if not required_cites <= set(artifact["citation_ids"]):
         raise ContractError("artifact dropped a claim citation")
+    # Reading metadata describes authored treatment and navigation only. It does
+    # not enter mathematical closure or change evidence and review requirements.
+    reading_passages = {passage["anchor"]: passage for passage in artifact["passages"]}
+    reading_keys = set()
+    for link in artifact.get("reading_links", []):
+        require_refs([link["from_anchor"]], reading_passages, "reading link source anchor")
+        if link["from_text_sha256"] != reading_passages[link["from_anchor"]]["text_sha256"]:
+            raise ContractError("reading link source passage hash is stale")
+        if link["to_stage"] == artifact["stage"]:
+            require_refs([link["to_anchor"]], reading_passages, "reading link target anchor")
+            if link["to_text_sha256"] != reading_passages[link["to_anchor"]]["text_sha256"]:
+                raise ContractError("reading link target passage hash is stale")
+        key = (link["from_anchor"], link["to_stage"], link["to_anchor"], link["kind"])
+        if key in reading_keys:
+            raise ContractError("duplicate reading link")
+        reading_keys.add(key)
+    for passage in artifact["passages"]:
+        treatment_claims = [row["claim_id"] for row in passage.get("treatments", [])]
+        if len(treatment_claims) != len(set(treatment_claims)):
+            raise ContractError("duplicate treatment claim in passage")
+        require_refs(treatment_claims, passage["claim_ids"], "passage treatment claim")
     if artifact["state"] == "scaffold":
         if artifact["passages"] or artifact["review_state"] != "not_reviewed":
             raise ContractError("empty scaffold cannot carry authored passages or review")

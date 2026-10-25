@@ -19,7 +19,7 @@ from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
 from .consumer import ConsumerSession
 from .contracts import ContractError, digest
 
-API_VERSION = "1.1"
+API_VERSION = "1.2"
 API_ROOT = "/api/v1"
 TABLES = ("nodes", "edges", "sources", "citations", "evidence")
 FAMILIES = ("declarations", "arguments", "citations", "platform", "provenance")
@@ -87,6 +87,7 @@ ROUTES = {
     "/graph": ("Scoped dependency view, components and condensation", ("view", "node", "scope", "direction", "assumptions", "representation")),
     "/papers": ("Independently authored reading accounts", ()),
     "/papers/query": ("Passage, section, text selection or node correspondence", ("paper", "passage", "section", "start", "end", "node", "relation", "representation")),
+    "/papers/reading": ("Authored reading routes and shared-claim alternatives for a passage or section", ("paper", "passage", "section", "start", "end", "target", "offset", "limit")),
     "/compare": ("Shared and exclusive paper support", ("left", "right", "table", "offset", "limit")),
     "/search": ("Literal search of records, headings and passages", ("q", "table", "paper", "offset", "limit")),
 }
@@ -197,6 +198,7 @@ class WebApplication:
             "sections": len(view["paper"]["sections"]), "passages": len(view["paper"]["passages"]),
             "href": self._href(f"/papers/{stage}"),
             "structure_href": self._href(f"/papers/{stage}/structure"),
+            "reading_href": self._href("/papers/reading", paper=stage),
             "document_href": self._href(f"/papers/{stage}/document"),
             "sections_href": self._href(f"/papers/{stage}/sections"),
             "passages_href": self._href(f"/papers/{stage}/passages"),
@@ -217,6 +219,7 @@ class WebApplication:
                           "unmapped_segments": [{key: value for key, value in row.items() if key != "text"}
                                                 for row in paper["unmapped_segments"]], **links},
                 "correspondence_links": view["correspondence_links"],
+                **{key: view[key] for key in ("reading_view_version", "reading_links") if key in view},
                 "support_record_refs": view["graph"]["record_refs"],
                 "relation_semantics": {kind: view["relation_semantics"][kind] for kind in sorted(kinds)},
                 "resources": {**{key: value for key, value in self._paper_summary(stage).items()
@@ -229,15 +232,30 @@ class WebApplication:
     def _page(self, rows, params, route):
         offset = params.integer("offset", 0, 0, 999999999)
         limit = params.integer("limit", 50, 1, MAX_PAGE_SIZE)
+        return self._page_result(rows[offset:offset + limit], len(rows), offset, limit, params, route)
+
+    def _page_result(self, items, total, offset, limit, params, route):
         query = {key: values for key, values in params.values.items()
                  if key not in {"manifest", "offset", "limit"}}
         next_href = (self._href(route, **query, offset=offset + limit, limit=limit)
-                     if offset + limit < len(rows) else None)
-        return {"items": rows[offset:offset + limit], "total": len(rows),
+                     if offset + limit < total else None)
+        return {"items": items, "total": total,
                 "offset": offset, "limit": limit, "next": next_href}
 
     def _paper_refs(self, stage):
         return self._memberships[stage]
+
+    def _paper_selectors(self, params, *, require_stage=False):
+        start = params.integer("start", None, 0, 999999999)
+        end = params.integer("end", None, 1, 999999999)
+        if (start is None) != (end is None):
+            raise APIError(400, "invalid_range", "Supply both start and end UTF-8 byte offsets.")
+        if start is not None and params.one("manifest") is None:
+            raise APIError(400, "edition_required", "Text selections require an explicit manifest pin.")
+        return {"stage": params.one("paper", required=require_stage, choices=STAGES),
+                "passages": params.many("passage"), "section_refs": params.many("section"),
+                "byte_ranges": [(start, end)] if start is not None else None,
+                "expected_manifest_sha256": self.manifest_sha256}
 
     def _record_summary(self, ref):
         table, row = self._records[ref]
@@ -286,6 +304,7 @@ class WebApplication:
             stage, passage = self._passages[link["passage_ref"]]
             rows.append({**link, "text": passage["text"], "span": passage["content_span"],
                          "paper_href": self._href(f"/papers/{stage}"),
+                         "reading_href": self._href("/papers/reading", paper=stage, passage=passage["anchor"]),
                          "query_href": self._href("/papers/query", paper=stage, passage=passage["anchor"])})
         return rows
 
@@ -340,7 +359,7 @@ class WebApplication:
             return self._corpus
         if route == "/papers":
             return {"items": [self._paper_summary(s) for s in STAGES]}
-        if route.startswith("/papers/") and route != "/papers/query":
+        if route.startswith("/papers/") and route not in {"/papers/query", "/papers/reading"}:
             parts = route.split("/")
             if len(parts) == 4:
                 if parts[3] == "structure":
@@ -459,19 +478,23 @@ class WebApplication:
             return self._map_view(result) if representation == "map" else result
         if route == "/papers/query":
             representation = p.one("representation", "full", choices=("full", "matches"))
-            start = p.integer("start", None, 0, 999999999)
-            end = p.integer("end", None, 1, 999999999)
-            if (start is None) != (end is None):
-                raise APIError(400, "invalid_range", "Supply both start and end UTF-8 byte offsets.")
-            if start is not None and p.one("manifest") is None:
-                raise APIError(400, "edition_required", "Text selections require an explicit manifest pin.")
-            return self._reader.query_papers(stage=p.one("paper", choices=STAGES),
-                                passages=p.many("passage"), section_refs=p.many("section"),
-                                byte_ranges=[(start, end)] if start is not None else None,
+            return self._reader.query_papers(**self._paper_selectors(p),
                                 node_ids=p.many("node"), relation=p.one("relation", "direct",
                                                                     choices=("direct", "prerequisites")),
-                                expected_manifest_sha256=self.manifest_sha256,
                                 include_views=representation == "full")
+        if route == "/papers/reading":
+            offset = p.integer("offset", 0, 0, 999999999)
+            limit = p.integer("limit", 50, 1, MAX_PAGE_SIZE)
+            result = self._reader.query_reading(**self._paper_selectors(p, require_stage=True),
+                                               target_stage=p.one("target", choices=STAGES),
+                                               offset=offset, limit=limit)
+            pagination = result.pop("pagination")
+            page = self._page_result(result.pop("links"), pagination["total"], offset, limit, p, route)
+            result["passage_cards"] = [card | {
+                "query_href": self._href("/papers/query", paper=card["stage"], passage=card["anchor"], representation="matches"),
+                "reading_href": self._href("/papers/reading", paper=card["stage"], passage=card["anchor"])}
+                for card in result["passage_cards"]]
+            return result | page
         if route == "/compare":
             left, right = (p.one(side, required=True, choices=STAGES) for side in ("left", "right"))
             if left == right:

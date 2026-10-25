@@ -65,6 +65,9 @@
     "tests/test_bundle_capture.py",
     "tests/test_consumer_session.py",
     "tests/test_web_performance.py",
+    "tests/test_reading_contract.py",
+    "tests/test_reading_views.py",
+    "tests/test_web_reading.py",
     "scripts/benchmark_web.py"
   ],
   "readme_map": [

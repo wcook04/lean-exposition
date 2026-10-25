@@ -24,7 +24,9 @@ algorithms and retains their default result contracts. Compact paper queries
 have a separate representation version and cache key. The transport owns its
 bounded cache of serialized response bytes, summary cards and map records;
 these omit detail explicitly without changing stored graph relationships or
-the scope of a theorem application.
+the scope of a theorem application. Its prepared reading index resolves explicit
+passage treatments, authored reading links and exact shared-claim alternatives.
+Reading guidance never changes proof traversal, evidence or review status.
 
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
@@ -32,15 +34,18 @@ Graph version `1.0` remains supported; version `1.1` adds the Lean declaration
 kind and safety fields for new extraction. Artifact `1.0` retains its original
 rule that each paper selects exactly the graph's selected goals. Artifact `1.1`
 allows each paper to select its own nonempty set of existing graph nodes. This
-may include a node outside the graph's default focus. Both versions require
+may include a node outside the graph's default focus. Artifact `1.2` retains
+that rule and permits optional passage treatments and hash-bound reading links.
+All versions require
 an authored paper to cover its own selected goals and retain the assumptions,
 citations and unresolved obligations of all its claims and explicit assumptions.
 Unknown fields and unsupported versions fail validation.
 
 The eight-file bundle format remains `0.1.0`, with manifest schema `1.0`.
-Its graph and each paper mapping independently declare schema `1.0` or `1.1`.
+Its graph and each paper mapping independently declare schema `1.0`, `1.1` or `1.2`.
 The independent example reader supports this matrix for transport checks;
-its `full_contract_validation` remains false. Older readers must reject versions
+its `full_contract_validation` remains false: in particular, it does not validate
+treatments or reading-link references and hashes. Older readers must reject versions
 they do not support rather than silently applying the old goal rule.
 
 The raw Lean extraction report has its own version. New runs emit version `2`,
@@ -216,8 +221,9 @@ the eight-file bundle contains neither the source corpus nor external receipt fi
 Relative source paths refer to the original intake or project root; their hashes
 identify those bytes. The bundle does not silently redistribute every cited work.
 
-The versioned bundle can be hosted or attached by a future consumer. The current core
-has no publication call or server. A platform adapter belongs at the intake boundary
+The versioned bundle can be hosted or attached by a consumer. The optional web
+transport serves a captured edition locally; it has no publication call.
+A platform adapter belongs at the intake boundary
 and must preserve platform IDs and the distinction between platform and local evidence.
 An artifact attachment API requires its own documented contract and authorization.
 
@@ -237,7 +243,7 @@ node-root views expose strongly connected components without pretending that all
 relations form a proof DAG. Exact graph bytes qualify record references; mapping
 bytes and passage selection qualify paper subgraphs. Manifest hashes pin the
 whole edition. These indexes are derived on demand and add no persisted graph,
-server, frontend or formal acceptance claim. See the
+frontend or formal acceptance claim. See the
 [consumer contract](bundle-consumers.md#view-the-whole-recorded-corpus).
 
 `query_corpus` uses this same captured pool for bounded, typed neighbourhoods
@@ -259,3 +265,32 @@ The paper query and graph views use application scopes for prerequisite traversa
 The whole-corpus relation pool also retains the original assumption references:
 it is a documentary index, not a flat list of free proof obligations. Do not
 recompute free assumptions by ignoring the application annotations.
+
+## Passage treatments and reading links
+
+Artifact `1.2` adds optional `treatments` to each passage. Each entry names one
+of that passage's existing `claim_ids`, one or more treatment kinds and an
+authored rationale. Kinds are `statement`, `derivation`, `explanation`,
+`application`, `illustration` and `reference`. A claim can have several roles;
+an absent annotation means unspecified. No role is inferred from paper stage,
+evidence class, shared claims or prose. A `derivation` label records the author's
+description of the passage; it does not certify the argument.
+
+Optional mapping-level `reading_links` connect a local `from_anchor` to a
+`to_stage` and `to_anchor`. `expands` points from a fuller treatment to the
+passage it expands; `illustrates` from an example to the passage it illustrates;
+`answers` from an answer to its question. Both endpoints carry the exact
+passage `text_sha256`, and each link has an authored rationale. Local validation
+checks the source; bundle validation resolves the target in the other captured
+mappings, including links to a later stage. Unknown references, stale hashes
+and duplicate links fail. Artifact `1.0` and `1.1` reject these new fields.
+The [authoring contract](authoring.md#describe-the-role-of-a-passage) gives the
+field names and revision procedure.
+
+`consumer.query_reading` is a separate, versioned navigation projection. It
+returns selected passage cards, incident authored links and derived
+`shared_claim` links based solely on intersecting direct `claim_ids`. These
+two bases remain labelled and separate. Reading links can connect passages
+with no mapped claims, such as an exercise and its answer. They neither add
+proof edges nor discharge hypotheses. Mapping-file references retain the
+authorship provenance; the captured manifest pins the complete selection.

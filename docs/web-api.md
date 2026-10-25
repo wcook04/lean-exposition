@@ -52,8 +52,9 @@ sources are the latest upstream versions.
 ## Response and edition contract
 
 JSON success responses have `api_version`, `snapshot` and `data`. API version
-`1.1` retains the `/api/v1` routes and the default full representations, and
-adds opt-in summary, map and matches representations. JSON is compact UTF-8;
+`1.2` retains the `/api/v1` routes, default full representations and opt-in
+summary, map and matches representations, and adds passage reading guidance.
+JSON is compact UTF-8;
 clients must parse fields rather than depend on whitespace or earlier ETags.
 Exact document routes still return the original captured bytes. `snapshot`
 includes the exact manifest and graph hashes, bundle identity and existing
@@ -102,6 +103,7 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/papers/long/passages` | Paged mapped passages with text, spans and authored mapping fields |
 | `/papers/long/parts` | Paged document parts, including unmapped text, in original order |
 | `/papers/query` | Paper correspondence by stage, passage, section, text selection or node; optional matches-only representation |
+| `/papers/reading` | Explicit passage treatments, authored reading routes and separately labelled shared-claim alternatives |
 | `/compare?left=long&right=expository` | Paged union of two paper support sets, with shared/exclusive membership and direct passage mappings |
 | `/search?q=curvature` | Paged literal-token search across records, heading titles and mapped passage text |
 | `/corpus` | Complete existing corpus projection for a client that wants one capture |
@@ -199,6 +201,79 @@ paper restriction. A witness is one recorded route, not logical sufficiency.
 
 ## Resolve a text selection
 
+### Follow an explanation, a derivation or an answer
+
+`/papers/reading` requires `paper=long|short|expository`. Select passages with
+repeated `passage` anchors, `section` refs, or one pinned `start`/`end` byte
+range, using the same selection rules as `/papers/query`. With no selectors,
+it uses all mapped passages in the paper. Optional `target` restricts the
+other endpoint to one reading stage. `offset` and `limit` page the links.
+
+The response supplies `source_passage_refs`, compact `passage_cards` and
+paged link `items`. Cards cover the source selection and this page's link
+endpoints, carrying `stage`, `anchor`, exact content span, containing section,
+direct `claim_refs`, evidence class and authored `treatments`. Each treatment
+names a claim, one or more `kinds` and a rationale. Kinds are `statement`,
+`derivation`, `explanation`, `application`, `illustration` and `reference`.
+An empty treatment list means unspecified; do not infer roles from stage or
+evidence class. `query_href` loads the passage's text and support through the
+compact paper query; `reading_href` makes it the next navigation selection.
+Both retain the edition pin. Cards omit prose and full graph records.
+
+Links preserve two distinct bases:
+
+| Link | Basis and direction |
+| --- | --- |
+| `expands` | Authored fuller treatment → the passage it expands |
+| `illustrates` | Authored example → the passage it illustrates |
+| `answers` | Authored answer → its question |
+| `shared_claim` | Derived selected passage → a passage with intersecting direct claim IDs |
+
+Authored links carry `derived: false`, `annotation_basis: authored_reading_link`,
+both endpoint hashes, rationale and their mapping-file/index provenance.
+Shared-claim links carry `derived: true`, `annotation_basis: shared_claim_ids`,
+the shared claim refs, explicit treatments at both ends and both mapping refs.
+They use other stages by default; an explicit `target` can select the same
+stage. No prerequisites, citation similarity or semantic similarity enter
+this matching rule. Sharing a claim does not mean providing the same argument.
+
+`selection_relation` is `incoming`, `outgoing` or `internal` relative to the
+source selection. Keep the stored `from` and `to`: selecting a question finds
+an incoming answer link, and selecting a summary can find incoming expansions.
+The response's `reading_view_version`, query, coverage and cache key identify
+the projection. `coverage.query_truncated` is true when pagination omits part
+of the link set; the source passage selection remains complete. The HTTP
+`total`, `limit` and `next` describe the page.
+Card order follows stage and source position. Link order is deterministic,
+not a usefulness score. Pagination is applied during link construction, so
+off-page shared-claim pairs do not allocate link bodies or endpoint cards.
+Exact totals still require examining the selected passages' claim memberships;
+pagination does not make that work constant-time. Invalid paging values are
+rejected before this query work.
+
+Three maintained-paper journeys exercise different information:
+
+1. `/papers/reading?paper=expository&passage=density-and-approximation&target=short`
+   starts at a further-reading pointer. Its treatment is `reference`; the
+   `density-consequence` passage carries the short derivation. A shared-claim
+   match and an authored expansion remain separate links. Density is a further
+   consequence, not an extra premise of the scalar or circuit construction.
+2. `/papers/reading?paper=expository&passage=changed-cases` finds the authored
+   answer while both teaching passages retain empty claim selections. The
+   tilted-chord example is not labelled an instance of a theorem whose slope
+   hypotheses it does not satisfy.
+3. `/papers/reading?paper=expository&passage=curvature-transfer&target=long`
+   offers the long calculation. Its treatment rationale distinguishes the
+   analytic identity and certificate from the surrounding support argument.
+
+Attach the manifest pin from `/overview` to these requests. Reading guidance
+is optional artifact `1.2` metadata, checked against both endpoint texts when
+the bundle is captured. Editing either endpoint invalidates its old link
+binding. It does not validate the recommendation, certify a proof, discharge a
+hypothesis or improve a paper's review state. Unknown annotations remain
+unknown. The [authoring guide](authoring.md#describe-the-role-of-a-passage)
+owns how these judgements are recorded and revised.
+
 ### Navigate the document before loading its prose
 
 `/papers/{stage}/structure` returns a `document_structure` representation with
@@ -221,6 +296,9 @@ repeated `ref` values to `resources.records_href` for full record bodies, or one
 `ref` to `resources.record_href` for evidence and aligned passages. All document
 parts remain discoverable, including unmapped text. This intermediate structure
 supports expansion at several levels without choosing a graph renderer or layout.
+For artifact `1.2`, the structure also preserves authored passage treatments
+and mapping-level reading links. `resources.reading_href` leads to the resolved
+reading query; append the same passage or section selectors used for text.
 
 ### Query exact correspondence
 

@@ -326,7 +326,7 @@ graph = reader.project_graph(
 Methods return detached mutable results and do not change the prepared indexes;
 concurrent readers can share a session. Files are not reopened between calls.
 Create a new session to adopt a new edition. The standalone `project_corpus`,
-`project_paper`, `query_corpus` and `query_papers` functions also accept a session
+`project_paper`, `query_corpus`, `query_papers` and `query_reading` functions also accept a session
 in place of a path. `project_graph` accepts a session in place of graph JSON
 bytes. Graph projections reuse validated records and relation indexes while
 preserving the original view, direction and scoped-assumption semantics.
@@ -338,6 +338,58 @@ full paper views. Each paper includes document identity, state, scope and
 whole-document coverage. This opt-in `selected_passages` representation has
 its own version and cache key; full queries remain the default. HTTP clients use
 [`representation=matches`](web-api.md#resolve-a-text-selection).
+
+### Follow reading guidance between passages
+
+The reading projection separates what a passage does from which claims it
+maps to. Reuse the same prepared session and edition pin:
+
+```python
+reading = reader.query_reading(
+    stage="expository", passages=["density-and-approximation"],
+    target_stage="short", expected_manifest_sha256=pin,
+)
+cards = {card["ref"]: card for card in reading["passage_cards"]}
+for link in reading["links"]:
+    print(link["kind"], link["selection_relation"],
+          cards[link["from"]]["anchor"], cards[link["to"]]["anchor"])
+```
+
+`query_reading` accepts one required `stage`, optional passage anchors, exact
+`section_refs`, or `byte_ranges`, plus an optional `target_stage`. Selection
+uses the same union-within/intersection-between rules as `query_papers`;
+byte selections require an explicit manifest pin. With no selectors, it
+selects all mapped passages in that stage.
+
+The `0.1.0` reading view returns `source_passage_refs`, compact `passage_cards`,
+`links`, query/edition identity and coverage. Cards contain exact spans, section
+context, direct claim refs, evidence class and explicit `treatments`, but no
+prose or graph bodies. Fetch the selected text through `query_papers`.
+An empty treatment list means unspecified, including for legacy mappings.
+
+Authored `expands`, `illustrates` and `answers` links retain their direction,
+rationale, endpoint hashes and mapping provenance. `selection_relation` is
+`incoming`, `outgoing` or `internal` relative to the selected passages; an
+incoming link can therefore offer the fuller account of a selected summary.
+`target_stage` filters the other endpoint. Derived `shared_claim` links join
+passages with intersecting direct claim IDs and report those IDs and their
+explicit treatment annotations. They use other stages by default; an explicit
+target may select the same stage. They infer neither equivalent arguments nor
+complete explanations, and never traverse prerequisites.
+
+Cards follow stage and document order; links follow annotation basis, endpoints,
+kind and identity. No importance ranking is supplied. Both endpoints of every
+link are present as cards, even for exercises with no mapped claims. Results
+are detached from the session. Authored guidance and shared-claim matches stay
+distinct from proof edges and review status; `semantic_certification` is false.
+For large selections, pass `offset=0, limit=50`. The result adds `pagination`
+with the exact total, offset and limit, and constructs only the requested
+links and their endpoint cards, plus the complete source selection. Omit both
+options for the full projection. An offset requires a limit. Pagination counts
+candidate refs without building every shared-claim link; it still examines the
+selected passages' claim memberships to establish the total.
+The [web transport](web-api.md#follow-an-explanation-a-derivation-or-an-answer)
+adds link pagination and pinned routes to each card.
 
 ### Shared record pool
 

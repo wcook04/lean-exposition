@@ -63,6 +63,7 @@ def main():
         ("paper-matches", "/papers/query", {**paper_query, "representation": "matches"}),
         ("paper", "/papers/long", {}),
         ("paper-structure", "/papers/long/structure", {}),
+        ("paper-reading", "/papers/reading", {"paper": "expository"}),
         ("global-graph", "/graph", {"scope": "corpus"}),
         ("graph-map", "/graph", {"scope": "corpus", "representation": "map"}),
         ("search", "/search", {"q": "curvature"}),

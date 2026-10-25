@@ -25,9 +25,10 @@ invalid bundles raise `BundleError`, and filesystem failures raise `OSError`.
 
 ## Checks and limits
 
-The reader accepts manifest schema `1.0`, graph and mapping schemas `1.0` or
-`1.1`, and bundle version `0.1.0`. Mapping `1.0` requires the graph-selected
-goals; mapping `1.1` permits its own nonempty selection of existing graph nodes.
+The reader accepts manifest schema `1.0`, graph and mapping schemas `1.0`,
+`1.1` or `1.2`, and bundle version `0.1.0`. Mapping `1.0` requires the
+graph-selected goals; mapping `1.1` and `1.2` permit their own nonempty
+selection of existing graph nodes.
 The reader reports each paper’s selected goals and mapping version. It requires
 the exact eight-file archive, checks the seven manifest hashes against raw
 file bytes, and verifies the graph identity and paper mappings' graph hashes,
@@ -44,7 +45,8 @@ member, 64 MiB total uncompressed data and 65 MiB for the complete ZIP.
 
 `transport_integrity: true` means these byte and metadata checks passed. The
 script does not reproduce the complete graph and artifact validators: it does
-not validate dependency semantics, evidence receipts or passage correspondence.
+not validate dependency semantics, evidence receipts, passage correspondence,
+treatment annotations or reading-link references and endpoint hashes.
 Use the installed `lean-exposition check-bundle` command for full contract
 validation, as described in the [bundle consumer guide](../../docs/bundle-consumers.md).
 The output always sets `full_contract_validation` and `semantic_certification`

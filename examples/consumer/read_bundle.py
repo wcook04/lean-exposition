@@ -3,6 +3,8 @@
 
 This example checks transport integrity and selected metadata bindings. It does
 not implement the complete graph/artifact contract or certify mathematics.
+In particular, authored treatments and reading-link references or passage hashes
+are not validated here; use the package's check-bundle for those contract checks.
 """
 from __future__ import annotations
 
@@ -66,9 +68,9 @@ def json_object(data: bytes, name: str) -> dict:
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise BundleError(f"{name}: malformed UTF-8 JSON") from exc
     require(isinstance(result, dict), f"{name}: expected a JSON object")
-    supported = ({"1.0"} if name == "manifest.json" else
-                 {"1.0", "1.1", "1.2"} if name == "graph.json" else {"1.0", "1.1"})
-    require(result.get("schema_version") in supported, f"{name}: unsupported schema version")
+    supported = {"1.0"} if name == "manifest.json" else {"1.0", "1.1", "1.2"}
+    version = result.get("schema_version")
+    require(isinstance(version, str) and version in supported, f"{name}: unsupported schema version")
     return result
 
 

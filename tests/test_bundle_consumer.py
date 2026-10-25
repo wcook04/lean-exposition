@@ -190,7 +190,26 @@ class BundleConsumerTests(unittest.TestCase):
                 record = json.loads(payload[name])
                 record[field] = "99.0.0"
                 self.rebind(payload, name, encoded(record))
-                self.assert_rejected(self.archive(payload))
+                archive = self.archive(payload)
+                self.assert_rejected(archive)
+                independent = self.standalone(archive)
+                self.assertEqual(independent.returncode, 1)
+                self.assertIn("unsupported", json.loads(independent.stderr)["error"])
+
+    def test_standalone_rejects_nontext_schema_versions_without_tracebacks(self):
+        for name in ("manifest.json", "graph.json", "papers/long.json"):
+            for version in ([], {}):
+                with self.subTest(name=name, version=version):
+                    payload = self.payload.copy()
+                    record = json.loads(payload[name])
+                    record["schema_version"] = version
+                    self.rebind(payload, name, encoded(record))
+                    result = self.standalone(self.archive(payload))
+                    self.assertEqual(result.returncode, 1)
+                    self.assertEqual(result.stdout, "")
+                    self.assertEqual(json.loads(result.stderr),
+                                     {"error": f"{name}: unsupported schema version"})
+                    self.assertNotIn("Traceback", result.stderr)
 
     def test_graph_version_migration_preserves_bundle_and_reader_versions(self):
         payload = self.payload.copy()
@@ -524,6 +543,49 @@ class BundleConsumerTests(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertEqual([row["state"] for row in report["papers"]], ["scaffold"] * 3)
         self.assertEqual([row["review_state"] for row in report["papers"]], ["not_reviewed"] * 3)
+
+    def test_standalone_artifact_version_matrix_keeps_reading_validation_boundary(self):
+        payload = self.payload.copy()
+        for stage, version in zip(bundle.STAGES, ("1.0", "1.1", "1.2")):
+            mapping, content = synthetic_artifact(self.graph)
+            mapping.update(stage=stage, path=f"papers/{stage}.md", schema_version=version)
+            if version == "1.2":
+                passage_hash = mapping["passages"][0]["text_sha256"]
+                mapping["passages"][0]["treatments"] = [{
+                    "claim_id": "goal", "kinds": ["statement", "explanation"],
+                    "rationale": "A synthetic authored treatment, not a reviewed explanation."}]
+                mapping["reading_links"] = [{
+                    "from_anchor": "result", "to_stage": "long", "to_anchor": "result",
+                    "from_text_sha256": passage_hash, "to_text_sha256": passage_hash,
+                    "kind": "expands", "rationale": "Synthetic cross-account reading relation."}]
+            self.rebind(payload, f"papers/{stage}.md", content)
+            self.rebind(payload, f"papers/{stage}.json", encoded(mapping))
+        manifest = json.loads(payload["manifest.json"])
+        manifest["status"] = "authored"
+        payload["manifest.json"] = encoded(manifest)
+        archive = self.archive(payload)
+        self.assertTrue(bundle.check_bundle(archive)["valid"])
+        result = self.standalone(archive)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual([paper["mapping_schema_version"] for paper in report["papers"]],
+                         ["1.0", "1.1", "1.2"])
+        self.assertTrue(report["transport_integrity"])
+        self.assertFalse(report["full_contract_validation"])
+        self.assertFalse(report["semantic_certification"])
+
+        # The independent reader checks the outer hash, not authored link bindings.
+        mapping = json.loads(payload["papers/expository.json"])
+        mapping["reading_links"][0].update(from_text_sha256="0" * 64, to_anchor="missing")
+        self.rebind(payload, "papers/expository.json", encoded(mapping))
+        archive = self.archive(payload)
+        self.assert_rejected(archive)
+        result = self.standalone(archive)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertTrue(report["transport_integrity"])
+        self.assertFalse(report["full_contract_validation"])
+        self.assertFalse(report["semantic_certification"])
 
     def test_standalone_consumer_rejects_unsupported_tampered_and_malformed_inputs(self):
         unsupported = self.payload.copy()

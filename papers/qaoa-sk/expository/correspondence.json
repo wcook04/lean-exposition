@@ -231,7 +231,17 @@
       ],
       "evidence_class": "example",
       "rationale": "An admissible nonminimizing piecewise-linear candidate explains Stieltjes increments and relative support. Constant positive and densely atomic examples distinguish support from pointwise positivity and density. No minimizer conclusion is applied to these candidates.",
-      "text_sha256": "3d0cf6480e64dc4cae3a7602b6f5dc3cdbd3ef85a11602d284b2e4cff7771e46"
+      "text_sha256": "3d0cf6480e64dc4cae3a7602b6f5dc3cdbd3ef85a11602d284b2e4cff7771e46",
+      "treatments": [
+        {
+          "claim_id": "support.stieltjes_measure",
+          "kinds": [
+            "explanation",
+            "illustration"
+          ],
+          "rationale": "Explains the Stieltjes increment measure using an admissible piecewise-linear candidate, a constant positive candidate and a densely atomic example. These examples distinguish support, pointwise positivity and density; they are not asserted to be minimisers."
+        }
+      ]
     },
     {
       "anchor": "value-and-diffusion",
@@ -309,7 +319,30 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "States the same pure, zero-field minimizer hypothesis, relative support domain, and quantified moment conclusions as the selected source; credits prior full support. No density or circuit theorem is part of this formal support statement.",
-      "text_sha256": "45b6f30d9aa8c286da2ab77f84470902b187498be1c2ab514e1091f51da7aef4"
+      "text_sha256": "45b6f30d9aa8c286da2ab77f84470902b187498be1c2ab514e1091f51da7aef4",
+      "treatments": [
+        {
+          "claim_id": "full_support",
+          "kinds": [
+            "statement"
+          ],
+          "rationale": "States the selected support theorem under the pure zero-field covariance convention and an admissible integrable minimiser. Existence of a minimiser and the additional density and circuit conclusions are outside this statement."
+        },
+        {
+          "claim_id": "support.full_relative_support",
+          "kinds": [
+            "statement"
+          ],
+          "rationale": "States full support relative to [0,1) and strict increase under the displayed minimiser hypotheses. The excluded endpoint one and the restriction to pure zero-field SK remain explicit."
+        },
+        {
+          "claim_id": "support.moment_saturation",
+          "kinds": [
+            "statement"
+          ],
+          "rationale": "States both saturated moment identities for every associated diffusion and every 0<=t<1 under the theorem hypotheses. The statement does not make those identities definitions for arbitrary admissible candidates."
+        }
+      ]
     },
     {
       "anchor": "first-variation",
@@ -329,7 +362,17 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Ordinary feasible right derivative from variation.tex:12–79; explains reoptimisation and integrable terminal remainder. Applies to arbitrary admissible coefficients; nonnegativity is conditional on minimality. No equality with the sampled Lean chord type is asserted.",
-      "text_sha256": "0e1a53c07aa99aaee3908f2f544b70cd549e1a2914a431ff26918391315b1a26"
+      "text_sha256": "0e1a53c07aa99aaee3908f2f544b70cd549e1a2914a431ff26918391315b1a26",
+      "treatments": [
+        {
+          "claim_id": "support.first_variation",
+          "kinds": [
+            "statement",
+            "explanation"
+          ],
+          "rationale": "States the admissible one-sided derivative formula and explains the separate penalty and reoptimised-control contributions. Nonnegativity of the derivative requires a minimiser; the cited formula itself applies to admissible coefficients and feasible directions."
+        }
+      ]
     },
     {
       "anchor": "zero-candidate",
@@ -352,7 +395,23 @@
       ],
       "evidence_class": "example",
       "rationale": "The nonminimising zero coefficient is calculated from regularity.tex:45–76 (heat formula), 189–238 (moment identity), Gaussian integration and variation.tex:12–79. All controls tie; q uses the canonical slope feedback. Derives q0=2 asin(t)/pi, q0(1/2)=1/3 and D P(0)[1]=1/4−1/pi<0. No minimiser-only conclusion or finite-approximation convergence claim is selected. Long §7.2 has the same derivation; CHL Theorem 6 supplies the antecedent zero-candidate argument.",
-      "text_sha256": "f4cc11895a8ab50c7327dcb254b9392b764a6cba83ef1fa6798fea4f84aabecb"
+      "text_sha256": "f4cc11895a8ab50c7327dcb254b9392b764a6cba83ef1fa6798fea4f84aabecb",
+      "treatments": [
+        {
+          "claim_id": "support.first_variation",
+          "kinds": [
+            "application"
+          ],
+          "rationale": "Applies the derivative formula to gamma=0 and the feasible constant direction, obtaining a negative cost and hence a nonminimising example. The calculation does not apply a minimiser-only contact or saturation conclusion."
+        },
+        {
+          "claim_id": "support.moment_identity",
+          "kinds": [
+            "application"
+          ],
+          "rationale": "Uses the general moment identity with the explicit heat curvature to calculate q0 prime and q0. The displayed value q0(1/2)=1/3 distinguishes that general identity from the minimiser-only identity q=t."
+        }
+      ]
     },
     {
       "anchor": "contact-and-gap",
@@ -584,7 +643,16 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Cites the separate smooth-density conclusion, including strict positivity only for 0<t<1, and routes its additional argument to Long Reasoning Record §§5.1–5.2. This short outlook supplies neither that proof nor an approximation theorem.",
-      "text_sha256": "26c4571a00fa9dea7bd816c0884dd14720f7e9211d88e94b2b13b2be393cdb9b"
+      "text_sha256": "26c4571a00fa9dea7bd816c0884dd14720f7e9211d88e94b2b13b2be393cdb9b",
+      "treatments": [
+        {
+          "claim_id": "scalar.smooth_positive_density",
+          "kinds": [
+            "reference"
+          ],
+          "rationale": "Reports the additional smooth positive-density conclusion and directs its derivation to the source corollary and long record. This further-reading passage does not supply the smoothness or fixed-time replacement proof."
+        }
+      ]
     },
     {
       "anchor": "scalar-identities",
@@ -632,7 +700,16 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Further-reading pointer to terminal martingale and value in Corollary 7.1 and long §6. Distinguishes first and second curvature moments without displaying another unproved formula.",
-      "text_sha256": "0ffba67c6ba1e26df5e4477fedcddfa09ccba1f066e183b8629510d4a518c430"
+      "text_sha256": "0ffba67c6ba1e26df5e4477fedcddfa09ccba1f066e183b8629510d4a518c430",
+      "treatments": [
+        {
+          "claim_id": "scalar.manuscript_terminal_value",
+          "kinds": [
+            "reference"
+          ],
+          "rationale": "Directs the reader to the terminal-martingale value argument while distinguishing its first curvature moment from the second-moment identity used in the no-gap explanation. The scalar identity is not derived in this passage."
+        }
+      ]
     },
     {
       "anchor": "qaoa-boundary",
@@ -714,7 +791,16 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Reference-only route to the separate eventual-optimality theorem, prior conjecture and long §9. Does not substitute a shortened theorem with lost quantifiers. Full support alone does not supply the construction.",
-      "text_sha256": "9042f0437916245a50d4a8d8e96d8fb488f031fa423e08ca32eaa63d6d1e0489"
+      "text_sha256": "9042f0437916245a50d4a8d8e96d8fb488f031fa423e08ca32eaa63d6d1e0489",
+      "treatments": [
+        {
+          "claim_id": "qaoa_thermodynamic_first",
+          "kinds": [
+            "reference"
+          ],
+          "rationale": "Identifies the separate circuit theorem, its earlier conjecture and the long-record destination. This reference-only passage does not replace the quantified theorem or its additional construction with full support alone."
+        }
+      ]
     },
     {
       "anchor": "overlap-payoff",
@@ -857,7 +943,7 @@
     "25 October 2026 integrated review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 12988aeed2a53004988343b1081bad562a1db4a8149d4109827f472c80dcb74e). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons were incorporated into the four local transition skills and docs/authoring.md. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and three scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
   ],
   "review_state": "needs_revision",
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "selected_goal_ids": [
     "full_support"
   ],
@@ -955,5 +1041,34 @@
     "support.strict_increase",
     "support.terminal_defect",
     "support.zero_curvature"
+  ],
+  "reading_links": [
+    {
+      "from_anchor": "changed-case-answer",
+      "from_text_sha256": "80eae195359fc6bd04764c6607f2f0b2faa5176c7390c71b5f4526d4de367710",
+      "to_stage": "expository",
+      "to_anchor": "changed-cases",
+      "to_text_sha256": "c8fa0cd9292244765bd595d20820b427c0651318bda031d453dd34ca1dfb35e5",
+      "kind": "answers",
+      "rationale": "Answers the tilted-endpoint-chord exercise and contrasts strict with non-strict convexity. This is a standalone calculus example, not an SK moment curve or an instance of the graph lemma requiring both endpoint slopes to be at most one."
+    },
+    {
+      "from_anchor": "correction-example",
+      "from_text_sha256": "5b91d3dd7b9d919ab504f416ed036945ea0df24929a329a78615a5b0f3ead4de",
+      "to_stage": "expository",
+      "to_anchor": "curvature-mechanism",
+      "to_text_sha256": "eb4259c26234150a55965c6fe27335eaabf65da41b495aca17ccedaad6296eca",
+      "kind": "illustrates",
+      "rationale": "The elementary Gaussian correction illustrates changing the visible sign while preserving expectation through a vanishing boundary term. It supplies none of the SK-specific joint shape restrictions, rational certificate or coercive estimate."
+    },
+    {
+      "from_anchor": "zero-candidate",
+      "from_text_sha256": "f4cc11895a8ab50c7327dcb254b9392b764a6cba83ef1fa6798fea4f84aabecb",
+      "to_stage": "expository",
+      "to_anchor": "first-variation",
+      "to_text_sha256": "0e1a53c07aa99aaee3908f2f544b70cd549e1a2914a431ff26918391315b1a26",
+      "kind": "illustrates",
+      "rationale": "Uses the zero coefficient and a feasible constant direction to make the one-sided variation test concrete. Its negative derivative demonstrates failure of minimality and does not instantiate a minimiser-only conclusion."
+    }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
@@ -783,7 +783,24 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to The admissible one-sided first variation; Nonnegative potential vanishing on the support; Endpoint contact and slope bounds, including zero; An exact first-order criterion for the same admissible coefficient. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to The admissible one-sided first variation; Nonnegative potential vanishing on the support; Endpoint contact and slope bounds, including zero; An exact first-order criterion for the same admissible coefficient. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate.",
+      "treatments": [
+        {
+          "claim_id": "support.contact",
+          "kinds": [
+            "derivation",
+            "explanation"
+          ],
+          "rationale": "Derives nonnegative variation potential and contact by admissible mass addition, compact fractional removal and continuity; support contact does not assert contact at arbitrary off-support points."
+        },
+        {
+          "claim_id": "support.contact_derivatives",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Derives interior contact slopes and treats the one-sided origin condition separately from an interior minimum."
+        }
+      ]
     },
     {
       "anchor": "curvature",
@@ -823,7 +840,32 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Backward shape signs and smooth quotient extension; Forward score signs and ratio comparison; Nonnegative certificate variables and zero expected divergence; Exact rational identity with a coercive remainder; The integrated lower bound for smooth profiles; Strict curvature on a positive constant interval; Strict increase on a zero constant interval. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Backward shape signs and smooth quotient extension; Forward score signs and ratio comparison; Nonnegative certificate variables and zero expected divergence; Exact rational identity with a coercive remainder; The integrated lower bound for smooth profiles; Strict curvature on a positive constant interval; Strict increase on a zero constant interval. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate.",
+      "treatments": [
+        {
+          "claim_id": "support.flux_identity",
+          "kinds": [
+            "derivation",
+            "explanation"
+          ],
+          "rationale": "Develops the zero-expectation divergence correction with sign, quotient-extension, tail and boundary controls; positivity is established after integration, not for the uncorrected polynomial pointwise."
+        },
+        {
+          "claim_id": "support.rational_certificate",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Displays the rational identity and complete positive remainder table; algebraic verification is one ingredient alongside the separate analytic signs and vanishing flux."
+        },
+        {
+          "claim_id": "support.positive_curvature",
+          "kinds": [
+            "derivation",
+            "explanation"
+          ],
+          "rationale": "Reconstructs the integrated lower bound, plateau-preserving approximation and strict positivity in the limit for an admissible positive constant interval; minimality is not a premise of this estimate."
+        }
+      ]
     },
     {
       "anchor": "gaps",
@@ -923,7 +965,16 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Further manuscript corollary: smooth positive density. The source locations and local guards are retained in these graph records. Ordinary Corollary6.4, with smoothness on[0,1), strict derivative positivity only on(0,1), and a separately justified shrinking-plateau estimate. No formal promotion."
+      "rationale": "Maps this passage to Further manuscript corollary: smooth positive density. The source locations and local guards are retained in these graph records. Ordinary Corollary6.4, with smoothness on[0,1), strict derivative positivity only on(0,1), and a separately justified shrinking-plateau estimate. No formal promotion.",
+      "treatments": [
+        {
+          "claim_id": "scalar.smooth_positive_density",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Derives the smooth-density part through a continuous quotient and simultaneous polynomial-moment bootstrap. Strict positivity is the separate density-positive passage; full support alone does not establish either conclusion."
+        }
+      ]
     },
     {
       "anchor": "density-positive",
@@ -970,7 +1021,17 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Further manuscript corollary: smooth positive density. The source locations and local guards are retained in these graph records. The fixed-time artificial-plateau transfer concerns spatial derivative moments, not convergence of third time derivatives. Cauchy–Schwarz and the unit second moment give the further ordinary bound gamma prime >= gamma squared / 2000. No endpoint or formal density claim is added."
+      "rationale": "Maps this passage to Further manuscript corollary: smooth positive density. The source locations and local guards are retained in these graph records. The fixed-time artificial-plateau transfer concerns spatial derivative moments, not convergence of third time derivatives. Cauchy–Schwarz and the unit second moment give the further ordinary bound gamma prime >= gamma squared / 2000. No endpoint or formal density claim is added.",
+      "treatments": [
+        {
+          "claim_id": "scalar.smooth_positive_density",
+          "kinds": [
+            "derivation",
+            "application"
+          ],
+          "rationale": "After smoothness, applies the constant-interval estimate to shrinking artificial plateaus and transfers its quantitative margin at a fixed interior time to obtain positive density. This is a further consequence, not a premise of the scalar or circuit route."
+        }
+      ]
     },
     {
       "anchor": "overlap-pairs",
@@ -1073,7 +1134,16 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Terminal martingale and ground-state value formulas; External zero-temperature Parisi formula. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Terminal martingale and ground-state value formulas; External zero-temperature Parisi formula. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate.",
+      "treatments": [
+        {
+          "claim_id": "scalar.manuscript_terminal_value",
+          "kinds": [
+            "derivation"
+          ],
+          "rationale": "Reconstructs the terminal Brownian correlation and value identity from the bounded martingale and attained Parisi formula; its first curvature moment differs from the second moment used in gap exclusion."
+        }
+      ]
     },
     {
       "anchor": "gaussian",
@@ -1926,7 +1996,17 @@
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to QAOA approaches the SK optimum in the thermodynamic-first limit; Primary-route finite ordinary near-optimal word; Classical upper bound and identity-padding monotonicity. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to QAOA approaches the SK optimum in the thermodynamic-first limit; Primary-route finite ordinary near-optimal word; Classical upper bound and identity-padding monotonicity. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate.",
+      "treatments": [
+        {
+          "claim_id": "qaoa_thermodynamic_first",
+          "kinds": [
+            "derivation",
+            "application"
+          ],
+          "rationale": "Assembles the requested-accuracy construction from the stated classical, synthesis, seed-removal and fixed-word transfer inputs, fixing one ordinary word before system size tends to infinity; no quantitative depth or complete formal replay is asserted."
+        }
+      ]
     },
     {
       "anchor": "alternative",
@@ -2472,5 +2552,79 @@
     "25 October 2026 lecture-informed refinement: applied skills/graph-to-long/SKILL.md (SHA256 4bb7e3fe212c4d33583500307aa4c899775539129365f86a565c83184aaa69d6). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions.",
     "25 October 2026 round-six bounded revision: applied skills/graph-to-long/SKILL.md (SHA256 cd6cd7605a9b3c7225dae668367103178e80654846b1a6378544117b76799297). Advisory returns 08–09 and relevant 07/10 were checked against pinned source types and proof bodies before adopting the adaptive Gaussian lower-bound reconstruction, explicit model transport, root-energy decomposition, circuit import/weighted-domain/probe-accuracy contracts, exact all-mesh heat test and three-way depth-one calibration. Preserved support, density, terminal, index, shared-seed, clock and normalization qualifications. Re-read changed mathematical passages and immediate uses; finite heat and n=2,3 statevector diagnostics passed. Bounded source-assisted agent review does not establish a new kernel/Comparator run, complete analytic acceptance or human comprehension. Split formal correspondence while retaining the stable formal anchor; passage claims selected by actual local hypotheses. Draft/needs_revision retained.",
     "25 October 2026 integrated review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 ddcb96769b29b76e29a78875b829bcc51072fb41524c2d78ca22c2a20cf2e439). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons were incorporated into the four local transition skills and docs/authoring.md. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and three scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+  ],
+  "reading_links": [
+    {
+      "from_anchor": "contact",
+      "from_text_sha256": "c5e99e44936f864e8d1b69ae349ecf56d3a847ba993866f55f7b44e8a1d11b71",
+      "to_stage": "expository",
+      "to_anchor": "contact-and-gap",
+      "to_text_sha256": "5be26ff3013a9d9ee0a8f9f1c49e2cdc7522adc03263ff6b5e75af707bde12b0",
+      "kind": "expands",
+      "rationale": "Expands the mass-variation and endpoint-contact part of the exposition; the target also uses a separate curvature input."
+    },
+    {
+      "from_anchor": "curvature",
+      "from_text_sha256": "126aa92cb65c72b79dcc4e9db70f6d1e383ee753eee708c2e924e76fb3a8cf3d",
+      "to_stage": "short",
+      "to_anchor": "curvature",
+      "to_text_sha256": "429ff39436f79fe6ff2f916f850a28b6f9b922f5c1739665b65dee258b962be4",
+      "kind": "expands",
+      "rationale": "Expands the short account into the sign comparisons, exact certificate, integrated inequality and approximation argument."
+    },
+    {
+      "from_anchor": "curvature",
+      "from_text_sha256": "126aa92cb65c72b79dcc4e9db70f6d1e383ee753eee708c2e924e76fb3a8cf3d",
+      "to_stage": "expository",
+      "to_anchor": "curvature-transfer",
+      "to_text_sha256": "1ad4f691575b4083c60fb1cde3f5f53e1f6c35836037c94fb8027d8507256a96",
+      "kind": "expands",
+      "rationale": "Supplies the detailed analytic and algebraic steps behind the exposition's description of the integrated inequality and its transfer."
+    },
+    {
+      "from_anchor": "density",
+      "from_text_sha256": "74211b0b611b23487ca093060440f09d88309425dcd88fe4d8668d8ecc4ffb0e",
+      "to_stage": "short",
+      "to_anchor": "density-consequence",
+      "to_text_sha256": "e226bceb6f61d0468a8a3ebe6c07549aa60fc0f4c810fd72c9994fdb316e9058",
+      "kind": "expands",
+      "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
+    },
+    {
+      "from_anchor": "density-positive",
+      "from_text_sha256": "643e1d55cdc373c676e299f1bb981876ceb2f21781947f4a34315f8458abb6c1",
+      "to_stage": "short",
+      "to_anchor": "density-consequence",
+      "to_text_sha256": "e226bceb6f61d0468a8a3ebe6c07549aa60fc0f4c810fd72c9994fdb316e9058",
+      "kind": "expands",
+      "rationale": "Expands the fixed-time artificial-plateau comparison used for strict positive density, after the separate smoothness bootstrap."
+    },
+    {
+      "from_anchor": "density-positive",
+      "from_text_sha256": "643e1d55cdc373c676e299f1bb981876ceb2f21781947f4a34315f8458abb6c1",
+      "to_stage": "expository",
+      "to_anchor": "density-and-approximation",
+      "to_text_sha256": "26c4571a00fa9dea7bd816c0884dd14720f7e9211d88e94b2b13b2be393cdb9b",
+      "kind": "expands",
+      "rationale": "Develops the strict-positivity argument cited by the further-reading note; it is additional to the no-gap theorem."
+    },
+    {
+      "from_anchor": "value",
+      "from_text_sha256": "c46ae3a7a8121d47f8504b638eff7bc443a55b22afaa2f1ffaea3db43d917381",
+      "to_stage": "short",
+      "to_anchor": "scalar-value",
+      "to_text_sha256": "5294a1ed953c643c17da7a58372bfec656e6f589cf740727fa8b48e8b6ca29c4",
+      "kind": "expands",
+      "rationale": "Develops the terminal value identity described in the short paper; finite Gaussian approximation remains a separate part of the construction."
+    },
+    {
+      "from_anchor": "qaoa-assembly",
+      "from_text_sha256": "e3ed5ff161c86d9ca250631c0d5bb3bda439cd1cf1869f29ac81e9ba866d507e",
+      "to_stage": "short",
+      "to_anchor": "qaoa-boundary",
+      "to_text_sha256": "71a7bf3c2ee39fd1431e94726492a595e5366a5a6071b8c69b6d98f5ecca0d52",
+      "kind": "expands",
+      "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
+    }
   ]
 }

@@ -3,7 +3,7 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "enum": ["1.0", "1.1"]
+      "enum": ["1.0", "1.1", "1.2"]
     },
     "stage": {
       "enum": [
@@ -121,6 +121,34 @@
           "rationale": {
             "type": "string",
             "minLength": 1
+          },
+          "treatments": {
+            "description": "Authored descriptions of how this passage treats its mapped claims; no proof or review status is granted.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "claim_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kinds": {
+                  "type": "array",
+                  "items": {
+                    "enum": ["statement", "derivation", "explanation", "illustration", "reference", "application"]
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": ["claim_id", "kinds", "rationale"],
+              "additionalProperties": false
+            },
+            "uniqueItems": true
           }
         },
         "required": [
@@ -132,6 +160,45 @@
           "evidence_class",
           "rationale"
         ],
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "reading_links": {
+      "description": "Authored navigation between passages in this bundle; these links are not mathematical dependency or certification edges.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_anchor": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          },
+          "to_stage": {
+            "enum": ["long", "short", "expository"]
+          },
+          "to_anchor": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          },
+          "from_text_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "to_text_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "kind": {
+            "description": "expands runs from detailed account to shorter account; illustrates from example to operation; answers from answer to question. These are authored reading relationships.",
+            "enum": ["expands", "illustrates", "answers"]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["from_anchor", "to_stage", "to_anchor", "from_text_sha256", "to_text_sha256", "kind", "rationale"],
         "additionalProperties": false
       },
       "uniqueItems": true
@@ -168,5 +235,20 @@
     "review_state",
     "review_notes"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {"schema_version": {"enum": ["1.0", "1.1"]}}
+      },
+      "then": {
+        "properties": {
+          "reading_links": false,
+          "passages": {
+            "items": {"properties": {"treatments": false}}
+          }
+        }
+      }
+    }
+  ]
 }
