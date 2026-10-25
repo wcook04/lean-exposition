@@ -18,6 +18,14 @@ mathematical traversal and correspondence remain in `consumer.py`. No second
 stored graph or renderer-specific layout is introduced. The [web API guide](web-api.md)
 owns routes, limits, deployment and client responsibilities.
 
+`consumer.py::ConsumerSession` prepares private edition indexes once and returns
+detached projections for concurrent readers. It shares the standalone consumer
+algorithms and retains their default result contracts. Compact paper queries
+have a separate representation version and cache key. The transport owns its
+bounded cache of serialized response bytes, summary cards and map records;
+these omit detail explicitly without changing stored graph relationships or
+the scope of a theorem application.
+
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
 Graph version `1.0` remains supported; version `1.1` adds the Lean declaration

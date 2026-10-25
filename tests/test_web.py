@@ -463,6 +463,15 @@ class WebTests(unittest.TestCase):
         passage = self.data("/api/v1/papers/query", {"paper": "short", "passage": "main-result"}, app=app)
         self.assertEqual(passage["match_count"], 1)
         self.assertEqual(passage["papers"][0]["view"]["bundle"]["publication"], "local_only")
+        structure = self.data("/api/v1/papers/long/structure", app=app)
+        full_paper = consumer.project_paper(root, "long")
+        self.assertEqual(structure["paper"]["section_passage_links"], full_paper["paper"]["section_passage_links"])
+        contact = next(row for row in structure["paper"]["passages"] if row["anchor"] == "contact")
+        overlaps = [link for link in structure["paper"]["section_passage_links"] if link["to"] == contact["ref"]]
+        self.assertGreater(len({link["from"] for link in overlaps}), 1)
+        for link in overlaps:
+            selected = self.data(structure["resources"]["query_href"] + "&" + urlencode({"section": link["from"]}), app=app)
+            self.assertIn("contact", [match["anchor"] for match in selected["papers"][0]["matches"]])
 
     def test_serve_cli_starts_a_real_captured_edition(self):
         process = subprocess.Popen(

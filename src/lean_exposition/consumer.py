@@ -17,6 +17,7 @@ from .contracts import (
 
 PAPER_VIEW_VERSION = "0.3.1"
 PAPER_QUERY_VERSION = "0.4.1"
+COMPACT_PAPER_QUERY_VERSION = "0.1.0"
 CORPUS_VIEW_VERSION = "0.1.1"
 CORPUS_QUERY_VERSION = "0.1.0"
 
@@ -294,7 +295,7 @@ def _paper_sections(content: bytes, paper_ref: str, line_starts: list[int]) -> l
     return headings
 
 
-def project_paper(bundle_path: Path | BundleCapture, stage: str, passages: list[str] | None = None) -> dict:
+def project_paper(bundle_path: Path | BundleCapture | ConsumerSession, stage: str, passages: list[str] | None = None) -> dict:
     """Project one validated paper and its recorded prerequisite subgraph.
 
     This is a read-only view of exact bundle bytes, not another graph authority.
@@ -302,17 +303,20 @@ def project_paper(bundle_path: Path | BundleCapture, stage: str, passages: list[
     """
     if stage not in STAGES:
         raise ContractError("unknown paper stage")
+    if isinstance(bundle_path, ConsumerSession):
+        return bundle_path.project_paper(stage, passages)
     return _project_paper(load_bundle(bundle_path), stage, passages)
 
 
-def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | None = None) -> dict:
+def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | None = None,
+                   *, session: ConsumerSession | None = None) -> dict:
     """Project an already validated capture; callers must not mutate its bytes."""
-    manifest = decode_json(payload["manifest.json"])
+    manifest = session._manifest if session is not None else decode_json(payload["manifest.json"])
     graph_bytes = payload["graph.json"]
-    graph = decode_json(graph_bytes)
+    graph = session._graph if session is not None else decode_json(graph_bytes)
     markdown_name, mapping_name = f"papers/{stage}.md", f"papers/{stage}.json"
     content, mapping_bytes = payload[markdown_name], payload[mapping_name]
-    mapping = decode_json(mapping_bytes)
+    mapping = session._mappings[stage] if session is not None else decode_json(mapping_bytes)
     graph_hash, paper_hash, mapping_hash = map(digest, (graph_bytes, content, mapping_bytes))
     paper_ref = f"sha256:{paper_hash}/{markdown_name}"
     mapping_ref = f"sha256:{mapping_hash}/{mapping_name}"
@@ -324,94 +328,107 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
     if passages is not None and set(passages) - available:
         raise ContractError("unknown paper passage anchor: " + ", ".join(sorted(set(passages) - available)))
     selected = available if passages is None else set(passages)
-    # Markdown recognizes LF, CRLF and bare CR. Keep exact source bytes and count
-    # each line ending once, so navigation agrees with the outline's splitlines.
-    line_starts = [0] + [match.end() for match in re.finditer(rb"\r\n?|\n", content)]
-    sections = _paper_sections(content, paper_ref, line_starts)
-    paper_passages = []
-    for row in mapping["passages"]:
-        anchor = row["anchor"]
-        opening = f"<!-- passage:{anchor} -->".encode("utf-8")
-        closing = f"<!-- /passage:{anchor} -->".encode("utf-8")
-        block_start = content.index(opening)
-        start = block_start + len(opening)
-        end = content.index(closing)
-        block_end = end + len(closing)
-        enclosing = [section for section in sections
-                     if section["span"]["start_byte"] <= block_start
-                     and block_end <= section["span"]["end_byte"]]
-        row_ref = f"{paper_ref}/{mapping_ref}/passages/{quote(anchor, safe='')}"
-        paper_passages.append({
-            "ref": row_ref, "anchor": anchor, "selected": anchor in selected,
-            "text": content[start:end].decode("utf-8"),
-            "content_span": _byte_span(start, end, line_starts),
-            "block_span": _byte_span(block_start, block_end, line_starts),
-            "section_ref": enclosing[-1]["ref"] if enclosing else None,
-            "evidence_class": row["evidence_class"], "rationale": row["rationale"],
-            "claim_ids": copy.deepcopy(row["claim_ids"]),
-            "citation_ids": copy.deepcopy(row["citation_ids"]),
-            "assumption_ids": copy.deepcopy(row["assumption_ids"]),
-        })
-    paper_passages.sort(key=lambda row: row["block_span"]["start_byte"])
-    unmapped = []
-    cursor = 0
-    for item in paper_passages:
-        start, end = item["block_span"]["start_byte"], item["block_span"]["end_byte"]
-        if cursor < start:
+    if session is None:
+        # Markdown recognizes LF, CRLF and bare CR. Keep exact source bytes and count
+        # each line ending once, so navigation agrees with the outline's splitlines.
+        line_starts = [0] + [match.end() for match in re.finditer(rb"\r\n?|\n", content)]
+        sections = _paper_sections(content, paper_ref, line_starts)
+        paper_passages = []
+        for row in mapping["passages"]:
+            anchor = row["anchor"]
+            opening = f"<!-- passage:{anchor} -->".encode("utf-8")
+            closing = f"<!-- /passage:{anchor} -->".encode("utf-8")
+            block_start = content.index(opening)
+            start = block_start + len(opening)
+            end = content.index(closing)
+            block_end = end + len(closing)
+            enclosing = [section for section in sections
+                         if section["span"]["start_byte"] <= block_start
+                         and block_end <= section["span"]["end_byte"]]
+            row_ref = f"{paper_ref}/{mapping_ref}/passages/{quote(anchor, safe='')}"
+            paper_passages.append({
+                "ref": row_ref, "anchor": anchor, "selected": anchor in selected,
+                "text": content[start:end].decode("utf-8"),
+                "content_span": _byte_span(start, end, line_starts),
+                "block_span": _byte_span(block_start, block_end, line_starts),
+                "section_ref": enclosing[-1]["ref"] if enclosing else None,
+                "evidence_class": row["evidence_class"], "rationale": row["rationale"],
+                "claim_ids": copy.deepcopy(row["claim_ids"]),
+                "citation_ids": copy.deepcopy(row["citation_ids"]),
+                "assumption_ids": copy.deepcopy(row["assumption_ids"]),
+            })
+        paper_passages.sort(key=lambda row: row["block_span"]["start_byte"])
+        unmapped = []
+        cursor = 0
+        for item in paper_passages:
+            start, end = item["block_span"]["start_byte"], item["block_span"]["end_byte"]
+            if cursor < start:
+                unmapped.append({"ref": f"{paper_ref}/unmapped/{cursor}",
+                                 "text": content[cursor:start].decode("utf-8"),
+                                 "span": _byte_span(cursor, start, line_starts)})
+            cursor = end
+        if cursor < len(content):
             unmapped.append({"ref": f"{paper_ref}/unmapped/{cursor}",
-                             "text": content[cursor:start].decode("utf-8"),
-                             "span": _byte_span(cursor, start, line_starts)})
-        cursor = end
-    if cursor < len(content):
-        unmapped.append({"ref": f"{paper_ref}/unmapped/{cursor}",
-                         "text": content[cursor:].decode("utf-8"),
-                         "span": _byte_span(cursor, len(content), line_starts)})
-    # Unlike the overlapping outline, these parts partition all original bytes.
-    # Passage blocks include their markers; surrounding prose is never dropped.
-    document_parts = sorted(
-        [{"kind": "mapped_passage", "passage_ref": p["ref"],
-          "span": copy.deepcopy(p["block_span"])} for p in paper_passages] +
-        [{"kind": "unmapped_text", "segment_ref": s["ref"],
-          "span": copy.deepcopy(s["span"])} for s in unmapped],
-        key=lambda part: part["span"]["start_byte"],
-    )
-    for part in document_parts:
-        part["ref"] = f"{paper_ref}/{mapping_ref}/parts/{part['span']['start_byte']}"
-    order = sorted([(s["heading_span"]["start_byte"], s["ref"]) for s in sections] +
-                   [(p["block_span"]["start_byte"], p["ref"]) for p in paper_passages])
-    reading_order = [{"from": left[1], "to": right[1], "kind": "next_in_text",
-                      "semantic_class": "document_order", "derived": True,
-                      "source_ref": paper_ref}
-                     for left, right in zip(order, order[1:])]
-    outline_links = ([{"from": s["parent_ref"], "to": s["ref"], "kind": "subsection",
-                       "semantic_class": "document_outline", "derived": True,
-                       "source_ref": paper_ref}
-                      for s in sections if s["parent_ref"]] +
-                     [{"from": p["section_ref"], "to": p["ref"], "kind": "contains_passage",
-                       "semantic_class": "document_containment", "derived": True,
-                       "source_ref": paper_ref}
-                      for p in paper_passages if p["section_ref"]])
-    section_passage_links = []
-    for passage in paper_passages:
-        content_span = passage["content_span"]
-        for section in sections:
-            section_span = section["span"]
-            start = max(content_span["start_byte"], section_span["start_byte"])
-            end = min(content_span["end_byte"], section_span["end_byte"])
-            if start < end:
-                section_passage_links.append({
-                    "from": section["ref"], "to": passage["ref"],
-                    "kind": "text_overlap", "overlap_span": _byte_span(start, end, line_starts),
-                    "semantic_class": "document_overlap", "derived": True,
-                    "source_ref": paper_ref,
-                })
+                             "text": content[cursor:].decode("utf-8"),
+                             "span": _byte_span(cursor, len(content), line_starts)})
+        # Unlike the overlapping outline, these parts partition all original bytes.
+        # Passage blocks include their markers; surrounding prose is never dropped.
+        document_parts = sorted(
+            [{"kind": "mapped_passage", "passage_ref": p["ref"],
+              "span": copy.deepcopy(p["block_span"])} for p in paper_passages] +
+            [{"kind": "unmapped_text", "segment_ref": s["ref"],
+              "span": copy.deepcopy(s["span"])} for s in unmapped],
+            key=lambda part: part["span"]["start_byte"],
+        )
+        for part in document_parts:
+            part["ref"] = f"{paper_ref}/{mapping_ref}/parts/{part['span']['start_byte']}"
+        order = sorted([(s["heading_span"]["start_byte"], s["ref"]) for s in sections] +
+                       [(p["block_span"]["start_byte"], p["ref"]) for p in paper_passages])
+        reading_order = [{"from": left[1], "to": right[1], "kind": "next_in_text",
+                          "semantic_class": "document_order", "derived": True,
+                          "source_ref": paper_ref}
+                         for left, right in zip(order, order[1:])]
+        outline_links = ([{"from": s["parent_ref"], "to": s["ref"], "kind": "subsection",
+                           "semantic_class": "document_outline", "derived": True,
+                           "source_ref": paper_ref}
+                          for s in sections if s["parent_ref"]] +
+                         [{"from": p["section_ref"], "to": p["ref"], "kind": "contains_passage",
+                           "semantic_class": "document_containment", "derived": True,
+                           "source_ref": paper_ref}
+                          for p in paper_passages if p["section_ref"]])
+        section_passage_links = []
+        for passage in paper_passages:
+            content_span = passage["content_span"]
+            for section in sections:
+                section_span = section["span"]
+                start = max(content_span["start_byte"], section_span["start_byte"])
+                end = min(content_span["end_byte"], section_span["end_byte"])
+                if start < end:
+                    section_passage_links.append({
+                        "from": section["ref"], "to": passage["ref"],
+                        "kind": "text_overlap", "overlap_span": _byte_span(start, end, line_starts),
+                        "semantic_class": "document_overlap", "derived": True,
+                        "source_ref": paper_ref,
+                    })
+
+    else:
+        document = session._papers[stage]["paper"]
+        sections = document["sections"]
+        paper_passages = [{**row, "selected": row["anchor"] in selected}
+                          for row in document["passages"]]
+        unmapped = document["unmapped_segments"]
+        document_parts = document["document_parts"]
+        reading_order = document["reading_order"]
+        outline_links = document["outline_links"]
+        section_passage_links = document["section_passage_links"]
 
     selected_passages = [p for p in paper_passages if p["selected"]]
     claim_ids = {identifier for p in selected_passages for identifier in p["claim_ids"]}
     assumption_ids = {identifier for p in selected_passages for identifier in p["assumption_ids"]}
     node_ids = closure(graph, sorted(claim_ids | assumption_ids))
-    tables = {table: {row["id"]: row for row in graph[table]}
-              for table in ("nodes", "citations", "sources", "evidence")}
+    tables = (session._tables if session is not None else
+              {table: {row["id"]: row for row in graph[table]}
+               for table in ("nodes", "citations", "sources", "evidence")})
     ref = lambda table, identity: _view_ref(graph_hash, table, identity)
     argument_links, chosen_edges = [], []
     for edge in graph["edges"]:
@@ -436,7 +453,8 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                                     "semantic_class": "explicit_assumption_reference",
                                     "owner_ref": source_ref, "source_field": "assumption_ids"})
     if any("application" in edge for edge in graph["edges"]):
-        _, argument_links = _scoped_argument_links(graph, graph_hash, sorted(claim_ids | assumption_ids))
+        _, argument_links = _scoped_argument_links(graph, graph_hash, sorted(claim_ids | assumption_ids),
+            adjacency=session._argument_adjacency if session is not None else None)
     citation_ids = {identifier for p in selected_passages for identifier in p["citation_ids"]}
     citation_ids |= required_citation_ids(graph, sorted(claim_ids | assumption_ids))
     citation_ids |= {c for n in node_ids for c in tables["nodes"][n]["citation_ids"]}
@@ -513,7 +531,7 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
     paper_link_kinds = {link["kind"] for group in (reading_order, outline_links,
                         section_passage_links, correspondence_links, argument_links,
                         provenance_links) for link in group}
-    return {
+    result = {
         "paper_view_version": PAPER_VIEW_VERSION, "stage": stage, "state": mapping["state"],
         "review_state": mapping["review_state"], "semantic_certification": False,
         "paper_scope": {"mapping_schema_version": mapping["schema_version"],
@@ -556,6 +574,10 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                      "heading_syntax": "ATX headings only; Setext and HTML headings are not parsed",
                      "scope": "Mapped passages are correspondences, not sentence-level formal support. Section-passage overlaps are document structure, not claim or proof implications. Unmapped text and passages omitted by the selector remain in the validated paper. Graph records outside the selected prerequisite closure remain in the bundle and are not asserted absent. Argument links combine recorded Lean references, curated support, formalization correspondence and explicit assumptions; their SCCs describe only that mixed recorded reachability. Reading order and platform decomposition are separate."},
     }
+    if session is not None:
+        result["paper"] = copy.deepcopy(result["paper"])
+    return result
+
 
 
 def _query_selector(values, name: str) -> list[str] | None:
@@ -626,13 +648,15 @@ def _witness_tree(adjacency: dict[str, list[dict]], roots: set[str]) -> dict[str
     return paths
 
 
-def _scoped_argument_links(graph, graph_hash, roots, kinds=None, include_assumptions=True):
+def _scoped_argument_links(graph, graph_hash, roots, kinds=None, include_assumptions=True,
+                           *, adjacency=None, link_index=None):
     """Project traversed states without flattening away their premise contexts."""
     states, transitions = argument_contexts(graph, roots, kinds,
                                             include_assumptions=include_assumptions)
-    adjacency = _argument_adjacency(graph, graph_hash)
-    by_key = {(link["from_node_id"], link["to_node_id"], link["kind"]): link
-              for links in adjacency.values() for link in links}
+    adjacency = _argument_adjacency(graph, graph_hash) if adjacency is None else adjacency
+    by_key = (link_index if link_index is not None else
+              {(link["from_node_id"], link["to_node_id"], link["kind"]): link
+               for links in adjacency.values() for link in links})
     links = {}
     for (source, before), (target, after), edge in transitions:
         kind = edge["kind"] if edge else "assumption_ids"
@@ -656,13 +680,13 @@ def _query_witness(target: str, paths: dict[str, tuple], graph_hash: str,
             "semantic_certification": False}
 
 
-def _capture_edition(bundle_path: Path | BundleCapture, expected_manifest_sha256: str | None) -> dict[str, bytes]:
+def _capture_edition(bundle_path: Path | BundleCapture | ConsumerSession, expected_manifest_sha256: str | None) -> dict[str, bytes]:
     """Validate and pin one capture, including mapping-only edition changes."""
     if expected_manifest_sha256 is not None and (
             not isinstance(expected_manifest_sha256, str)
             or re.fullmatch(r"[0-9a-f]{64}", expected_manifest_sha256) is None):
         raise ContractError("expected manifest SHA-256 must be 64 lowercase hexadecimal characters")
-    payload = load_bundle(bundle_path)
+    payload = bundle_path._payload if isinstance(bundle_path, ConsumerSession) else load_bundle(bundle_path)
     if expected_manifest_sha256 is not None and expected_manifest_sha256 != digest(payload["manifest.json"]):
         raise ContractError("bundle manifest SHA-256 differs from the requested edition")
     return payload
@@ -702,9 +726,11 @@ def reconstruct_paper(bundle_path: Path | BundleCapture, stage: str, document_pa
     return result
 
 
-def project_corpus(bundle_path: Path | BundleCapture, *, expected_manifest_sha256: str | None = None) -> dict:
+def project_corpus(bundle_path: Path | BundleCapture | ConsumerSession, *, expected_manifest_sha256: str | None = None) -> dict:
     """Project one complete recorded corpus and its overlapping paper views."""
     payload = _capture_edition(bundle_path, expected_manifest_sha256)
+    if isinstance(bundle_path, ConsumerSession):
+        return copy.deepcopy(bundle_path._corpus)
     manifest = decode_json(payload["manifest.json"])
     graph = decode_json(payload["graph.json"])
     graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
@@ -815,8 +841,22 @@ def project_corpus(bundle_path: Path | BundleCapture, *, expected_manifest_sha25
     }
 
 
+def _corpus_neighbors(pool, links, direction):
+    """Index traversal direction without changing any stored relation endpoint."""
+    adjacency = {ref: [] for ref in pool}
+    for family, link in links:
+        a, b = link["from"], link["to"]
+        if direction in {"outgoing", "both"}:
+            adjacency[a].append((b, family, link))
+        if direction in {"incoming", "both"} and (a != b or direction == "incoming"):
+            adjacency[b].append((a, family, link))
+    for neighbors in adjacency.values():
+        neighbors.sort(key=lambda item: (item[0], item[1], item[2]["id"]))
+    return adjacency
+
+
 def query_corpus(
-    bundle_path: Path | BundleCapture, *, records: list[tuple[str, str]] | None = None,
+    bundle_path: Path | BundleCapture | ConsumerSession, *, records: list[tuple[str, str]] | None = None,
     record_refs: list[str] | None = None, families: list[str] | None = None,
     direction: str = "both", max_depth: int = 1, max_records: int = 100,
     stage: str | None = None, expected_manifest_sha256: str | None = None,
@@ -852,10 +892,15 @@ def query_corpus(
         raise ContractError("max_records must be a positive integer")
     if stage is not None and (not isinstance(stage, str) or stage not in STAGES):
         raise ContractError("unknown paper stage")
-    corpus = project_corpus(bundle_path, expected_manifest_sha256=expected_manifest_sha256)
-    pool = {row["ref"]: (table, row) for table, rows in corpus["records"].items() for row in rows}
-    by_id = {(table, row["record"]["id"]): row["ref"]
-             for table, rows in corpus["records"].items() if table in id_tables for row in rows}
+    session = bundle_path if isinstance(bundle_path, ConsumerSession) else None
+    if session is None:
+        corpus = project_corpus(bundle_path, expected_manifest_sha256=expected_manifest_sha256)
+        pool = {row["ref"]: (table, row) for table, rows in corpus["records"].items() for row in rows}
+        by_id = {(table, row["record"]["id"]): row["ref"]
+                 for table, rows in corpus["records"].items() if table in id_tables for row in rows}
+    else:
+        _capture_edition(session, expected_manifest_sha256)
+        corpus, pool, by_id = session._corpus, session._pool, session._by_id
     require_refs(record_refs, pool, "corpus record reference (exact graph edition required)")
     roots = set(record_refs)
     for selector in records:
@@ -868,23 +913,21 @@ def query_corpus(
     allowed, paper_scope = set(pool), None
     if stage is not None:
         paper = next(p for p in corpus["papers"] if p["stage"] == stage)
-        allowed = {ref for refs in paper["graph"]["record_refs"].values() for ref in refs}
+        allowed = (session._members[stage] if session is not None else
+                   {ref for refs in paper["graph"]["record_refs"].values() for ref in refs})
         if not roots <= allowed:
             raise ContractError("corpus query root lies outside the selected paper's recorded support")
         paper_scope = {"stage": stage, "subgraph_ref": paper["graph"]["ref"],
                        "allowed_record_count": len(allowed),
                        "meaning": "Recorded support membership, including associated records; not complete prose coverage."}
-    links = sorted(((family, link) for family in families
-                    for link in corpus["relations"][family]), key=lambda item: (item[0], item[1]["id"]))
-    adjacency = {ref: [] for ref in pool}
-    for family, link in links:
-        a, b = link["from"], link["to"]
-        if direction in {"outgoing", "both"}:
-            adjacency[a].append((b, family, link))
-        if direction in {"incoming", "both"} and (a != b or direction == "incoming"):
-            adjacency[b].append((a, family, link))
-    for neighbors in adjacency.values():
-        neighbors.sort(key=lambda item: (item[0], item[1], item[2]["id"]))
+    family_set = set(families)
+    if session is None:
+        links = sorted(((family, link) for family in families
+                        for link in corpus["relations"][family]), key=lambda item: (item[0], item[1]["id"]))
+        adjacency = _corpus_neighbors(pool, links, direction)
+    else:
+        links = [(family, link) for family, link in session._links if family in family_set]
+        adjacency = session._neighbors[direction]
     witnesses = {ref: {"record_ref": ref, "root_ref": ref, "distance": 0, "parent": None}
                  for ref in sorted(roots)}
     pending = deque(sorted(roots))
@@ -894,6 +937,8 @@ def query_corpus(
         if witness["distance"] == max_depth:
             continue
         for target, family, link in adjacency[current]:
+            if family not in family_set:
+                continue
             if target not in allowed or target in witnesses or len(witnesses) == max_records:
                 continue
             witnesses[target] = {
@@ -915,6 +960,8 @@ def query_corpus(
             retain_owner(link)
     for current in sorted(selected):
         for target, family, link in adjacency[current]:
+            if family not in family_set:
+                continue
             if target in selected:
                 continue
             reason = ("outside_paper" if target not in allowed else
@@ -947,8 +994,9 @@ def query_corpus(
         "relations": relations, "relation_semantics": copy.deepcopy(corpus["relation_semantics"]),
         "witnesses": [witnesses[ref] for ref in sorted(witnesses)],
         "frontier": frontier, "paper_scope": paper_scope,
-        "record_usage": [copy.deepcopy(row) for row in corpus["record_usage"]
-                         if row["record_ref"] in selected],
+        "record_usage": ([copy.deepcopy(session._usage[ref]) for ref in sorted(selected)]
+                         if session is not None else [copy.deepcopy(row) for row in corpus["record_usage"]
+                                                       if row["record_ref"] in selected]),
         "components": components, "condensation": condensation,
         "coverage": {
             "recorded_extraction_status": corpus["graph"]["recorded_extraction_status"],
@@ -968,11 +1016,12 @@ def query_corpus(
 
 
 def query_papers(
-    bundle_path: Path | BundleCapture, *, stage: str | None = None,
+    bundle_path: Path | BundleCapture | ConsumerSession, *, stage: str | None = None,
     passages: list[str] | None = None, section_refs: list[str] | None = None,
     byte_ranges: list[tuple[int, int]] | None = None,
     node_ids: list[str] | None = None, relation: str = "direct",
     expected_manifest_sha256: str | None = None,
+    include_views: bool = True,
 ) -> dict:
     """Query passage correspondence in one validated bundle capture.
 
@@ -982,7 +1031,13 @@ def query_papers(
     argument relation. Neither search infers an unstored relation or acceptance.
     The result is derived data, with no new persistent authority or bundle member.
     An expected manifest digest pins the request to one exact validated edition.
+    ``include_views=False`` returns selected text, identity and support boundaries
+    without including complete paper views. Prepared sessions also skip the
+    selected support projection. The compact representation has a separate
+    version and cache key; the default result remains unchanged.
     """
+    if type(include_views) is not bool:
+        raise ContractError("include_views must be a boolean")
     if stage is not None and (not isinstance(stage, str) or stage not in STAGES):
         raise ContractError("unknown paper stage")
     passages = _query_selector(passages, "passage")
@@ -1003,9 +1058,10 @@ def query_papers(
             raise ContractError("byte-range selection requires an expected manifest SHA-256")
     if not isinstance(relation, str) or relation not in {"direct", "prerequisites"}:
         raise ContractError("unknown paper query relation")
+    session = bundle_path if isinstance(bundle_path, ConsumerSession) else None
     payload = _capture_edition(bundle_path, expected_manifest_sha256)
-    manifest = decode_json(payload["manifest.json"])
-    graph = decode_json(payload["graph.json"])
+    manifest = session._manifest if session is not None else decode_json(payload["manifest.json"])
+    graph = session._graph if session is not None else decode_json(payload["graph.json"])
     graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
     if byte_ranges is not None:
         content = payload[f"papers/{stage}.md"]
@@ -1014,10 +1070,10 @@ def query_papers(
                 raise ContractError("byte range lies outside the captured paper")
             if any(offset < len(content) and content[offset] & 0xC0 == 0x80 for offset in (start, end)):
                 raise ContractError("byte range must use UTF-8 character boundaries")
-    nodes = {row["id"]: row for row in graph["nodes"]}
+    nodes = session._tables["nodes"] if session is not None else {row["id"]: row for row in graph["nodes"]}
     if node_ids is not None:
         require_refs(node_ids, nodes, "paper query node")
-    adjacency = _argument_adjacency(graph, graph_hash)
+    adjacency = session._argument_adjacency if session is not None else _argument_adjacency(graph, graph_hash)
     query = {"stage": stage, "passages": passages, "section_refs": section_refs,
              "byte_ranges": byte_ranges,
              "node_ids": node_ids, "relation": relation,
@@ -1027,9 +1083,11 @@ def query_papers(
     papers = []
     stages = [stage] if stage is not None else list(STAGES)
     for paper_stage in stages:
-        full = _project_paper(payload, paper_stage)
-        available_passages = {p["anchor"] for p in full["paper"]["passages"]}
-        sections = {s["ref"]: s for s in full["paper"]["sections"]}
+        full = session._papers[paper_stage] if session is not None else _project_paper(payload, paper_stage)
+        available_passages = (session._anchors[paper_stage] if session is not None else
+                              {p["anchor"] for p in full["paper"]["passages"]})
+        sections = (session._sections[paper_stage] if session is not None else
+                    {s["ref"]: s for s in full["paper"]["sections"]})
         if passages is not None:
             require_refs(passages, available_passages, "paper passage anchor")
         if section_refs is not None:
@@ -1038,10 +1096,12 @@ def query_papers(
         for passage in full["paper"]["passages"]:
             if passages is not None and passage["anchor"] not in passages:
                 continue
-            overlaps = [link for link in full["paper"]["section_passage_links"]
+            overlap_candidates = (session._overlaps[paper_stage][passage["ref"]] if session is not None else
+                                  full["paper"]["section_passage_links"])
+            overlaps = [link for link in overlap_candidates
                         if link["to"] == passage["ref"]
                         and section_refs is not None and link["from"] in section_refs
-                        and full["paper"]["text"].encode("utf-8")[
+                        and payload[f"papers/{paper_stage}.md"][
                             link["overlap_span"]["start_byte"]:link["overlap_span"]["end_byte"]
                         ].decode("utf-8").strip()]
             if section_refs is not None and not overlaps:
@@ -1100,8 +1160,8 @@ def query_papers(
                 "witnesses": witnesses,
             })
         selected = [match["anchor"] for match in matches]
-        view = _project_paper(payload, paper_stage, selected)
-        selected_passages = [p for p in view["paper"]["passages"] if p["selected"]]
+        selected_set = set(selected)
+        selected_passages = [p for p in full["paper"]["passages"] if p["anchor"] in selected_set]
         claims = {n for p in selected_passages for n in p["claim_ids"]}
         assumptions = {n for p in selected_passages for n in p["assumption_ids"]}
         paths = _witness_tree(adjacency, claims | assumptions)
@@ -1126,10 +1186,23 @@ def query_papers(
             "witnesses": boundary_witnesses,
             "meaning": "Not mapped as a claim means absent from the selected passages' claim_ids, not absent from their prose. Explicit assumption references and all recorded prerequisites are retained. No sentence-level explanation coverage is inferred.",
         }
-        papers.append({"stage": paper_stage, "matches": matches,
-                       "selected_section_refs": section_refs if section_refs is not None else [],
-                       "support_boundary": boundary, "view": view})
-    return {
+        result_paper = {"stage": paper_stage, "matches": matches,
+                        "selected_section_refs": section_refs if section_refs is not None else [],
+                        "support_boundary": boundary}
+        if include_views:
+            result_paper["view"] = _project_paper(payload, paper_stage, selected, session=session)
+        else:
+            result_paper.update({
+                "document": {"path": full["paper"]["path"], "byte_length": full["paper"]["byte_length"],
+                             "line_count": full["paper"]["line_count"],
+                             **copy.deepcopy({key: full[key] for key in
+                                 ("paper_view_version", "state", "review_state", "paper_scope", "bundle", "coverage")})},
+                "passages": [copy.deepcopy({**passage, "selected": True}) for passage in selected_passages],
+                "correspondence_links": [copy.deepcopy(link) for link in full["correspondence_links"]
+                                         if link["source_anchor"] in selected_set],
+            })
+        papers.append(result_paper)
+    result = {
         "paper_query_version": PAPER_QUERY_VERSION, "query": query,
         "snapshot": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
                      "manifest_sha256": manifest_hash, "graph_sha256": graph_hash},
@@ -1148,16 +1221,22 @@ def query_papers(
         },
         "semantic_certification": False,
     }
+    if not include_views:
+        result["representation"] = "selected_passages"
+        result["representation_version"] = COMPACT_PAPER_QUERY_VERSION
+        result["cache_key"] += f":selected-passages-v{COMPACT_PAPER_QUERY_VERSION}"
+    return result
 
 
 def project_graph(
-    graph_bytes: bytes, view: str, roots: list[str] | None = None, *,
+    graph_bytes: bytes | ConsumerSession, view: str, roots: list[str] | None = None, *,
     direction: str = "prerequisites", include_assumptions: bool = False,
 ) -> dict:
     """Project recorded relations without mutating graph or receipt authority.
 
     Snapshot references bind the exact supplied bytes. Coverage and statuses are
-    reported, never upgraded. This view does not fetch source or receipt files.
+    reported, never upgraded. A prepared ConsumerSession reuses its validated
+    captured graph and indexes. This view does not fetch source or receipt files.
     """
     kinds = {"declarations": LEAN_EDGES, "arguments": {"supports", "formalizes"},
              "citations": {"cites"}, "platform": {"platform_decomposition"},
@@ -1174,13 +1253,18 @@ def project_graph(
         raise ContractError("include_assumptions must be a boolean")
     if include_assumptions and view not in {"declarations", "arguments"}:
         raise ContractError("explicit assumption traversal belongs to declaration or argument views")
-    if not isinstance(graph_bytes, bytes):
+    session = graph_bytes if isinstance(graph_bytes, ConsumerSession) else None
+    if session is None and not isinstance(graph_bytes, bytes):
         raise ContractError("graph view requires exact graph bytes")
-    graph = decode_json(graph_bytes)
-    validate_graph(graph)
-    graph_hash = digest(graph_bytes)
-    tables = {name: {row["id"]: row for row in graph[name]}
-              for name in ("nodes", "sources", "citations", "evidence")}
+    if session is None:
+        graph = decode_json(graph_bytes)
+        validate_graph(graph)
+        graph_hash = digest(graph_bytes)
+        tables = {name: {row["id"]: row for row in graph[name]}
+                  for name in ("nodes", "sources", "citations", "evidence")}
+    else:
+        graph, graph_hash = session._graph, session._corpus["snapshot"]["graph_sha256"]
+        tables = dict(session._tables)
     chosen = graph["selected_goals"] if roots is None else roots
     if (not isinstance(chosen, list) or not chosen
             or any(not isinstance(r, str) or not r for r in chosen)
@@ -1191,12 +1275,16 @@ def project_graph(
         tables["nodes"][r]["kind"] not in {"declaration", "assumption"} for r in chosen
     ):
         raise ContractError("declaration view roots must be declarations or assumptions; choose the formalized declaration explicitly")
-    ref = lambda table, identity: _view_ref(graph_hash, table, identity)
-    edge_rows = {}
-    for edge in graph["edges"]:
-        identity = json.dumps([edge["from"], edge["to"], edge["kind"]],
-                              ensure_ascii=False, separators=(",", ":"))
-        edge_rows[identity] = edge
+    ref = ((lambda table, identity: session._graph_refs[table][identity]) if session is not None else
+           (lambda table, identity: _view_ref(graph_hash, table, identity)))
+    if session is None:
+        edge_rows = {}
+        for edge in graph["edges"]:
+            identity = json.dumps([edge["from"], edge["to"], edge["kind"]],
+                                  ensure_ascii=False, separators=(",", ":"))
+            edge_rows[identity] = edge
+    else:
+        edge_rows = session._graph_edges
     tables["edges"] = edge_rows
     links = []
 
@@ -1212,7 +1300,13 @@ def project_graph(
     if view == "citations":
         seed_node_ids = closure(graph, chosen)
     seeds = {ref("nodes", identity) for identity in seed_node_ids}
-    if view == "provenance":
+    if session is not None:
+        links = list(session._graph_links[view])
+        if view == "provenance":
+            seeds.update(ref for node in chosen for ref in session._provenance_seeds[node])
+        elif include_assumptions:
+            links.extend(session._graph_links["assumptions"])
+    elif view == "provenance":
         for identity, node in tables["nodes"].items():
             if "source_id" in node:
                 field_link("nodes", identity, "source_id", "sources", node["source_id"])
@@ -1252,15 +1346,21 @@ def project_graph(
             for identity, node in tables["nodes"].items():
                 for target in node["assumption_ids"]:
                     field_link("nodes", identity, "assumption_ids", "nodes", target)
-    reached = _view_reach(seeds, links, direction == "consumers")
-    if view == "arguments" and any("application" in edge for edge in graph["edges"]):
+    scoped_arguments = view == "arguments" and (session._has_applications if session is not None else
+                                               any("application" in edge for edge in graph["edges"]))
+    reached = set() if scoped_arguments else _view_reach(seeds, links, direction == "consumers")
+    if scoped_arguments:
+        prepared = ({"adjacency": session._argument_adjacency, "link_index": session._argument_link_index}
+                    if session is not None else {})
         if direction == "prerequisites":
-            node_ids, links = _scoped_argument_links(graph, graph_hash, chosen, kinds[view], include_assumptions)
+            node_ids, links = _scoped_argument_links(graph, graph_hash, chosen, kinds[view], include_assumptions,
+                                                    **prepared)
         else:
             # Invert scoped membership, not the flattened theorem graph.
             node_ids, candidates = set(), {}
             for candidate in tables["nodes"]:
-                reached_ids, scoped = _scoped_argument_links(graph, graph_hash, [candidate], kinds[view], include_assumptions)
+                reached_ids, scoped = _scoped_argument_links(graph, graph_hash, [candidate], kinds[view], include_assumptions,
+                                                             **prepared)
                 if set(chosen) & reached_ids:
                     node_ids.add(candidate)
                     candidates.update((link["id"], link) for link in scoped)
@@ -1303,6 +1403,8 @@ def project_graph(
                     if e["kind"] == "platform_observation"]
     described_kinds = (provenance_kinds if view == "provenance" else
                        kinds[view] | ({"assumption_ids"} if include_assumptions else set()))
+    if session is not None:
+        links = copy.deepcopy(links)
     return {
         "view_version": "0.1.1", "view": view,
         "relation_scope": "recorded_relation_reachability",
@@ -1338,3 +1440,108 @@ def project_graph(
         },
         "semantic_certification": False,
     }
+
+
+class ConsumerSession:
+    """Prepared, read-only navigation of one validated bundle edition.
+
+    Indexes are built once from captured bytes and remain private. Each method
+    returns detached mutable data; concurrent queries never mutate the indexes
+    or retain query-specific state. The original path is not reopened.
+    """
+
+    def __init__(self, bundle_path: Path | BundleCapture):
+        self._capture = bundle_path if isinstance(bundle_path, BundleCapture) else BundleCapture(bundle_path)
+        self._payload = load_bundle(self._capture)
+        self._manifest = decode_json(self._payload["manifest.json"])
+        self._graph = decode_json(self._payload["graph.json"])
+        self._corpus = project_corpus(self._capture)
+        self._tables = {table: {row["id"]: row for row in self._graph[table]}
+                        for table in ("nodes", "sources", "citations", "evidence")}
+        self._pool = {row["ref"]: (table, row) for table, rows in self._corpus["records"].items()
+                      for row in rows}
+        self._by_id = {(table, row["record"]["id"]): row["ref"]
+                       for table, rows in self._corpus["records"].items() if table != "edges" for row in rows}
+        self._usage = {row["record_ref"]: row for row in self._corpus["record_usage"]}
+        self._papers, self._members, self._mappings = {}, {}, {}
+        self._sections, self._anchors, self._overlaps = {}, {}, {}
+        for shared in self._corpus["papers"]:
+            stage = shared["stage"]
+            self._members[stage] = frozenset(ref for refs in shared["graph"]["record_refs"].values()
+                                              for ref in refs)
+            # Restore the standalone view from the shared record pool without
+            # projecting its document or support graph a second time.
+            paper = {key: value for key, value in shared.items() if key != "storage_profile"}
+            paper["graph"] = {key: value for key, value in shared["graph"].items() if key != "record_refs"}
+            paper["graph"]["records"] = {table: [self._pool[ref][1] for ref in refs]
+                                           for table, refs in shared["graph"]["record_refs"].items()}
+            self._papers[stage] = paper
+            self._mappings[stage] = decode_json(self._payload[f"papers/{stage}.json"])
+            self._sections[stage] = {row["ref"]: row for row in paper["paper"]["sections"]}
+            self._anchors[stage] = frozenset(row["anchor"] for row in paper["paper"]["passages"])
+            overlaps = {row["ref"]: [] for row in paper["paper"]["passages"]}
+            for link in paper["paper"]["section_passage_links"]:
+                overlaps[link["to"]].append(link)
+            self._overlaps[stage] = overlaps
+        self._links = sorted(((family, link) for family, links in self._corpus["relations"].items()
+                              for link in links), key=lambda item: (item[0], item[1]["id"]))
+        self._neighbors = {direction: _corpus_neighbors(self._pool, self._links, direction)
+                           for direction in ("incoming", "outgoing", "both")}
+        self._argument_adjacency = _argument_adjacency(self._graph, self._corpus["snapshot"]["graph_sha256"])
+        self._argument_link_index = {(link["from_node_id"], link["to_node_id"], link["kind"]): link
+                                     for links in self._argument_adjacency.values() for link in links}
+        self._graph_edges = {json.dumps([edge["from"], edge["to"], edge["kind"]],
+                                       ensure_ascii=False, separators=(",", ":")): edge
+                             for edge in self._graph["edges"]}
+        self._graph_refs = {table: {identity: _view_ref(self._corpus["snapshot"]["graph_sha256"], table, identity)
+                                    for identity in rows}
+                            for table, rows in {**self._tables, "edges": self._graph_edges}.items()}
+        # The corpus already owns these relation identities. Graph views use
+        # their existing narrower link shape; scoped applications are projected
+        # by the same argument walker at query time.
+        self._graph_links = {family: [{key: value for key, value in link.items() if key != "application"}
+                                       for link in self._corpus["relations"][family] if not link["derived"]]
+                             for family in ("declarations", "arguments", "citations", "platform")}
+        self._graph_links["assumptions"] = [link for link in self._corpus["relations"]["arguments"]
+                                            if link["kind"] == "assumption_ids"]
+        self._graph_links["provenance"] = (self._corpus["relations"]["provenance"] +
+                                           self._graph_links["assumptions"])
+        self._has_applications = any("application" in edge for edge in self._graph["edges"])
+        self._provenance_seeds = {node: set() for node in self._tables["nodes"]}
+        for identity, edge in self._graph_edges.items():
+            for endpoint in (edge["from"], edge["to"]):
+                self._provenance_seeds[endpoint].add(self._graph_refs["edges"][identity])
+        for identity, evidence in self._tables["evidence"].items():
+            for subject in evidence["subject_ids"]:
+                self._provenance_seeds[subject].add(self._graph_refs["evidence"][identity])
+
+    def project_graph(self, view: str, roots: list[str] | None = None, *,
+                       direction: str = "prerequisites", include_assumptions: bool = False) -> dict:
+        return project_graph(self, view, roots, direction=direction, include_assumptions=include_assumptions)
+
+    def project_corpus(self, *, expected_manifest_sha256: str | None = None) -> dict:
+        return project_corpus(self, expected_manifest_sha256=expected_manifest_sha256)
+
+    def project_paper(self, stage: str, passages: list[str] | None = None) -> dict:
+        if not isinstance(stage, str) or stage not in STAGES:
+            raise ContractError("unknown paper stage")
+        if passages is None:
+            return copy.deepcopy(self._papers[stage])
+        return _project_paper(self._payload, stage, passages, session=self)
+
+    def query_corpus(self, *, records: list[tuple[str, str]] | None = None,
+                     record_refs: list[str] | None = None, families: list[str] | None = None,
+                     direction: str = "both", max_depth: int = 1, max_records: int = 100,
+                     stage: str | None = None, expected_manifest_sha256: str | None = None) -> dict:
+        return query_corpus(self, records=records, record_refs=record_refs, families=families,
+                            direction=direction, max_depth=max_depth, max_records=max_records,
+                            stage=stage, expected_manifest_sha256=expected_manifest_sha256)
+
+    def query_papers(self, *, stage: str | None = None, passages: list[str] | None = None,
+                     section_refs: list[str] | None = None, byte_ranges: list[tuple[int, int]] | None = None,
+                     node_ids: list[str] | None = None, relation: str = "direct",
+                     expected_manifest_sha256: str | None = None, include_views: bool = True) -> dict:
+        return query_papers(self, stage=stage, passages=passages, section_refs=section_refs,
+                            byte_ranges=byte_ranges, node_ids=node_ids, relation=relation,
+                            expected_manifest_sha256=expected_manifest_sha256,
+                            include_views=include_views)

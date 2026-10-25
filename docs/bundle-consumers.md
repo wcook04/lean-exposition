@@ -297,6 +297,50 @@ the reported checks or replace mathematical or reader review.
 
 ## View the whole recorded corpus
 
+### Reuse an edition in a long-running reader
+
+`ConsumerSession` captures a validated directory or ZIP (or accepts an existing
+`BundleCapture`) and prepares record, adjacency and paper indexes once:
+
+```python
+from pathlib import Path
+from lean_exposition.consumer import ConsumerSession
+
+reader = ConsumerSession(Path("build/qaoa-sk-authored"))
+corpus = reader.project_corpus()
+pin = corpus["snapshot"]["manifest_sha256"]
+matches = reader.query_papers(
+    node_ids=["support.positive_curvature"], relation="prerequisites",
+    expected_manifest_sha256=pin, include_views=False,
+)
+neighbors = reader.query_corpus(
+    records=[("sources", "support_tex_curvature")],
+    families=["provenance"], direction="incoming", max_depth=1,
+    expected_manifest_sha256=pin,
+)
+graph = reader.project_graph(
+    "arguments", ["support.positive_curvature"], include_assumptions=True,
+)
+```
+
+Methods return detached mutable results and do not change the prepared indexes;
+concurrent readers can share a session. Files are not reopened between calls.
+Create a new session to adopt a new edition. The standalone `project_corpus`,
+`project_paper`, `query_corpus` and `query_papers` functions also accept a session
+in place of a path. `project_graph` accepts a session in place of graph JSON
+bytes. Graph projections reuse validated records and relation indexes while
+preserving the original view, direction and scoped-assumption semantics.
+Existing default outputs remain unchanged.
+
+`query_papers(..., include_views=False)` returns selected passage text and exact
+spans, correspondence links, query witnesses and support boundaries without
+full paper views. Each paper includes document identity, state, scope and
+whole-document coverage. This opt-in `selected_passages` representation has
+its own version and cache key; full queries remain the default. HTTP clients use
+[`representation=matches`](web-api.md#resolve-a-text-selection).
+
+### Shared record pool
+
 The corpus view joins the three paper accounts to one shared record pool:
 
 ```sh

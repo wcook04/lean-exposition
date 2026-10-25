@@ -169,8 +169,9 @@ lean-exposition serve build/qaoa-sk-authored --port 8000
 
 The [web API guide](docs/web-api.md) covers shared graph navigation, aligned
 paper passages, connection witnesses, comparison, search and exact-edition
-text selections. The backend supplies the data; a frontend can choose its own
-graph renderer and reading interface.
+text selections. Summary cards, compact graph maps and matches-only passage
+queries let a frontend load detail as readers select it. The backend supplies
+the data; a frontend can choose its own graph renderer and reading interface.
 
 ## Sources and verification
 
@@ -203,7 +204,7 @@ records preserve those distinctions.
 | [src/lean_exposition/](src/lean_exposition/) | Python CLI, read-only [web backend](src/lean_exposition/web.py), consumer library, packaged schemas and templates |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
-| [scripts/](scripts/) | Repository layout/link checks and the [paper bookmark filter](scripts/paper_anchors.lua) |
+| [scripts/](scripts/) | Repository layout/link checks, the [web benchmark](scripts/benchmark_web.py) and the [paper bookmark filter](scripts/paper_anchors.lua) |
 | [.github/](.github/) | Continuous integration checks |
 
 ## Development and licence
