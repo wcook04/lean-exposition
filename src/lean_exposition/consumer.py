@@ -11,13 +11,13 @@ from urllib.parse import quote
 
 from .bundle import STAGES, load_bundle
 from .contracts import (
-    ARGUMENT_EDGES, LEAN_EDGES, ContractError, closure, decode_json, digest,
+    ARGUMENT_EDGES, LEAN_EDGES, ContractError, argument_contexts, closure, decode_json, digest,
     encoded, require_refs, required_citation_ids, select, validate_graph,
 )
 
-PAPER_VIEW_VERSION = "0.3.0"
-PAPER_QUERY_VERSION = "0.4.0"
-CORPUS_VIEW_VERSION = "0.1.0"
+PAPER_VIEW_VERSION = "0.3.1"
+PAPER_QUERY_VERSION = "0.4.1"
+CORPUS_VIEW_VERSION = "0.1.1"
 CORPUS_QUERY_VERSION = "0.1.0"
 
 
@@ -38,6 +38,7 @@ _RELATION_SEMANTICS = {
     "subject_ids": ("provenance_field_reference", "evidence_to_subject_node", "record_field"),
     "from": ("edge_endpoint_reference", "edge_record_to_its_stored_from_node", "graph_edge_field"),
     "to": ("edge_endpoint_reference", "edge_record_to_its_stored_to_node", "graph_edge_field"),
+    "application_source_id": ("provenance_field_reference", "application_edge_to_source_record", "application_source_span"),
     "next_in_text": ("document_order", "earlier_to_next_section_or_passage_start", "markdown_byte_positions"),
     "subsection": ("document_outline", "parent_section_to_child_section", "markdown_heading_levels"),
     "contains_passage": ("document_containment", "enclosing_section_to_passage_block", "markdown_byte_spans"),
@@ -434,6 +435,8 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                                     "kind": "assumption_ids", "derived": True,
                                     "semantic_class": "explicit_assumption_reference",
                                     "owner_ref": source_ref, "source_field": "assumption_ids"})
+    if any("application" in edge for edge in graph["edges"]):
+        _, argument_links = _scoped_argument_links(graph, graph_hash, sorted(claim_ids | assumption_ids))
     citation_ids = {identifier for p in selected_passages for identifier in p["citation_ids"]}
     citation_ids |= required_citation_ids(graph, sorted(claim_ids | assumption_ids))
     citation_ids |= {c for n in node_ids for c in tables["nodes"][n]["citation_ids"]}
@@ -444,6 +447,8 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                   if "source_id" in tables["nodes"][n]}
     source_ids |= {tables["citations"][c]["source_id"] for c in citation_ids}
     source_ids |= {s for e in evidence_ids for s in tables["evidence"][e]["source_ids"]}
+    source_ids |= {edge["record"]["application"]["source_span"]["source_id"]
+                   for edge in chosen_edges if "application" in edge["record"]}
     records = {table: [{"ref": ref(table, identity), "record": copy.deepcopy(tables[table][identity])}
                        for identity in sorted(identifiers)]
                for table, identifiers in (("nodes", node_ids), ("citations", citation_ids),
@@ -483,6 +488,11 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
         field_links("evidence", identifier, "subject_ids", "nodes",
                     [n for n in evidence["subject_ids"] if n in node_ids])
     for edge in chosen_edges:
+        if "application" in edge["record"]:
+            provenance_links.append({"from": edge["ref"],
+                "to": ref("sources", edge["record"]["application"]["source_span"]["source_id"]),
+                "kind": "application_source_id", "semantic_class": "provenance_field_reference",
+                "derived": True, "owner_ref": edge["ref"], "source_field": "application.source_span.source_id"})
         identity = edge["ref"]
         provenance_links.extend({"from": identity, "to": ref("nodes", edge["record"][field]),
                                  "kind": field, "semantic_class": "edge_endpoint_reference",
@@ -573,6 +583,7 @@ def _argument_adjacency(graph: dict, graph_hash: str) -> dict[str, list[dict]]:
             "from_node_id": edge["from"], "to_node_id": edge["to"],
             "kind": edge["kind"], "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
             "derived": False, "record_ref": edge_ref,
+            **({"application": copy.deepcopy(edge["application"])} if "application" in edge else {}),
         })
     for node in graph["nodes"]:
         for target in node["assumption_ids"]:
@@ -591,28 +602,53 @@ def _argument_adjacency(graph: dict, graph_hash: str) -> dict[str, list[dict]]:
 
 
 def _witness_tree(adjacency: dict[str, list[dict]], roots: set[str]) -> dict[str, tuple]:
-    """Deterministic shortest recorded paths, including cycles without recursion."""
-    paths = {root: (root, None) for root in sorted(roots)}
-    pending = deque(sorted(roots))
+    """Shortest recorded paths in premise contexts; never globally erase a use."""
+    paths = {root: (root, []) for root in sorted(roots)}
+    pending = deque((root, frozenset(), root, []) for root in sorted(roots))
+    visited = {(root, frozenset()) for root in roots}
     while pending:
-        node = pending.popleft()
+        node, discharged, root, prefix = pending.popleft()
         for link in adjacency[node]:
             target = link["to_node_id"]
-            if target not in paths:
-                paths[target] = (paths[node][0], link)
-                pending.append(target)
+            supplied = {p["assumption_id"] for p in link.get("application", {}).get("premise_bindings", [])}
+            scope = discharged | supplied
+            state = (target, frozenset(scope))
+            if target in scope or state in visited:
+                continue
+            visited.add(state)
+            contextual = copy.deepcopy(link)
+            if discharged or scope:
+                contextual["application_scope"] = {"from_discharged": sorted(discharged),
+                                                    "to_discharged": sorted(scope)}
+            path = prefix + [contextual]
+            paths.setdefault(target, (root, path))
+            pending.append((target, frozenset(scope), root, path))
     return paths
+
+
+def _scoped_argument_links(graph, graph_hash, roots, kinds=None, include_assumptions=True):
+    """Project traversed states without flattening away their premise contexts."""
+    states, transitions = argument_contexts(graph, roots, kinds,
+                                            include_assumptions=include_assumptions)
+    adjacency = _argument_adjacency(graph, graph_hash)
+    by_key = {(link["from_node_id"], link["to_node_id"], link["kind"]): link
+              for links in adjacency.values() for link in links}
+    links = {}
+    for (source, before), (target, after), edge in transitions:
+        kind = edge["kind"] if edge else "assumption_ids"
+        link = copy.deepcopy(by_key[(source, target, kind)])
+        if before or after:
+            scope = {"from_discharged": sorted(before), "to_discharged": sorted(after)}
+            link["application_scope"] = scope
+            link["id"] += "/scope/" + digest(encoded(scope))
+        links[link["id"]] = link
+    return {node for node, _ in states}, sorted(links.values(), key=lambda link: link["id"])
 
 
 def _query_witness(target: str, paths: dict[str, tuple], graph_hash: str,
                    root_field: str) -> dict:
-    current, links = target, []
     root = paths[target][0]
-    while paths[current][1] is not None:
-        link = paths[current][1]
-        links.append(copy.deepcopy(link))
-        current = link["from_node_id"]
-    links.reverse()
+    links = copy.deepcopy(paths[target][1] or [])
     return {"root_node_id": root, "root_ref": _view_ref(graph_hash, "nodes", root),
             "root_mapping_field": root_field, "target_node_id": target,
             "target_ref": _view_ref(graph_hash, "nodes", target),
@@ -684,7 +720,7 @@ def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = 
             "id": "field:" + digest(encoded({"from": owner_ref, "to": target_ref, "field": field})),
             "from": owner_ref, "to": target_ref, "kind": field,
             "semantic_class": _RELATION_SEMANTICS[field][0], "derived": True,
-            "owner_ref": owner_ref, "source_field": field,
+            "owner_ref": owner_ref, "source_field": "application.source_span.source_id" if field == "application_source_id" else field,
         })
 
     for edge in graph["edges"]:
@@ -698,11 +734,14 @@ def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = 
         relations[family].append({"id": edge_ref, "from": ref("nodes", edge["from"]),
                                   "to": ref("nodes", edge["to"]), "kind": edge["kind"],
                                   "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
-                                  "derived": False, "record_ref": edge_ref})
+                                  "derived": False, "record_ref": edge_ref,
+                                  **({"application": copy.deepcopy(edge["application"])} if "application" in edge else {})})
         for field in ("from", "to"):
             field_link(edge_ref, field, "nodes", edge[field])
         for evidence_id in edge["evidence_ids"]:
             field_link(edge_ref, "evidence_ids", "evidence", evidence_id)
+        if "application" in edge:
+            field_link(edge_ref, "application_source_id", "sources", edge["application"]["source_span"]["source_id"])
     records["edges"].sort(key=lambda row: row["ref"])
     for row in records["nodes"]:
         node = row["record"]
@@ -768,6 +807,7 @@ def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = 
         "papers": papers, "record_usage": [usage[key] for key in sorted(usage)],
         "coverage": {
             "record_counts": {table: len(rows) for table, rows in records.items()},
+            "application_semantics": "Corpus relations expose stored documentary references, including conditional theorem premises. Use project_graph arguments or query_papers prerequisites for scoped application requirements; do not recompute free assumptions from this flat record pool.",
             "source_bytes_opened": False, "receipt_bytes_opened": False,
             "per_root_dependency_completeness": "unknown",
             "scope": "All records in this captured graph, not all mathematics or merged editions. Paper subgraphs retain recorded argument prerequisites and associated records. Evidence subjects outside a paper remain in the corpus without expanding that paper's argument. Shared membership is not a paper-to-paper proof edge. Direct passages come only from explicit mapping fields; absence does not establish absence from the prose. Paper reading order is separate from mathematical dependency. Node-root traversal and typed witnesses remain available through project_graph and query_papers.",
@@ -912,6 +952,7 @@ def query_corpus(
         "components": components, "condensation": condensation,
         "coverage": {
             "recorded_extraction_status": corpus["graph"]["recorded_extraction_status"],
+            "application_semantics": corpus["coverage"]["application_semantics"],
             "allowed_record_count": len(allowed), "selected_record_count": len(selected),
             "supplementary_record_count": len(supplementary), "frontier_counts": frontier_counts,
             "query_truncated": truncated, "stored_traversal_exhausted": not truncated,
@@ -1121,7 +1162,7 @@ def project_graph(
     kinds = {"declarations": LEAN_EDGES, "arguments": {"supports", "formalizes"},
              "citations": {"cites"}, "platform": {"platform_decomposition"},
              "provenance": set()}
-    provenance_kinds = {"source_id", "source_ids", "evidence_ids", "citation_ids",
+    provenance_kinds = {"source_id", "source_ids", "evidence_ids", "citation_ids", "application_source_id",
                         "assumption_ids", "subject_ids", "from", "to"}
     if not isinstance(view, str) or view not in kinds:
         raise ContractError("unknown graph view")
@@ -1164,7 +1205,8 @@ def project_graph(
         key = digest(encoded({"from": a, "to": b, "field": field}))
         links.append({"id": "field:" + key, "from": a, "to": b,
                       "kind": field, "semantic_class": _RELATION_SEMANTICS[field][0],
-                      "derived": True, "owner_ref": a, "source_field": field})
+                      "derived": True, "owner_ref": a,
+                      "source_field": "application.source_span.source_id" if field == "application_source_id" else field})
 
     seed_node_ids = set(chosen)
     if view == "citations":
@@ -1194,6 +1236,8 @@ def project_graph(
                 field_link("edges", identity, field, "nodes", edge[field])
             for target in edge["evidence_ids"]:
                 field_link("edges", identity, "evidence_ids", "evidence", target)
+            if "application" in edge:
+                field_link("edges", identity, "application_source_id", "sources", edge["application"]["source_span"]["source_id"])
     else:
         for identity, edge in edge_rows.items():
             if edge["kind"] in kinds[view]:
@@ -1209,13 +1253,27 @@ def project_graph(
                 for target in node["assumption_ids"]:
                     field_link("nodes", identity, "assumption_ids", "nodes", target)
     reached = _view_reach(seeds, links, direction == "consumers")
+    if view == "arguments" and any("application" in edge for edge in graph["edges"]):
+        if direction == "prerequisites":
+            node_ids, links = _scoped_argument_links(graph, graph_hash, chosen, kinds[view], include_assumptions)
+        else:
+            # Invert scoped membership, not the flattened theorem graph.
+            node_ids, candidates = set(), {}
+            for candidate in tables["nodes"]:
+                reached_ids, scoped = _scoped_argument_links(graph, graph_hash, [candidate], kinds[view], include_assumptions)
+                if set(chosen) & reached_ids:
+                    node_ids.add(candidate)
+                    candidates.update((link["id"], link) for link in scoped)
+            links = list(candidates.values())
+        reached = {ref("nodes", node) for node in node_ids}
     links = sorted((link for link in links
                     if link["from"] in reached and link["to"] in reached), key=lambda l: l["id"])
     visible = {table: {identity for identity in rows if ref(table, identity) in reached}
                for table, rows in tables.items()}
     link_ids = {link["id"] for link in links}
+    edge_refs = link_ids | {link["record_ref"] for link in links if "record_ref" in link}
     visible["edges"].update(identity for identity, edge in edge_rows.items()
-                            if ref("edges", identity) in link_ids)
+                            if ref("edges", identity) in edge_refs)
     node_ids = visible["nodes"]
     relevant_evidence = set(visible["evidence"])
     relevant_evidence.update(e for n in node_ids for e in tables["nodes"][n]["evidence_ids"])
@@ -1227,6 +1285,8 @@ def project_graph(
                               if "source_id" in tables["nodes"][n])
     visible["sources"].update(tables["citations"][c]["source_id"] for c in visible["citations"])
     visible["sources"].update(s for e in relevant_evidence for s in tables["evidence"][e]["source_ids"])
+    visible["sources"].update(edge_rows[e]["application"]["source_span"]["source_id"]
+                              for e in visible["edges"] if "application" in edge_rows[e])
     visible["evidence"] = set(tables["evidence"])
     records = {table: [{"ref": ref(table, identity), "record": copy.deepcopy(rows[identity]),
                         **({"relevant": identity in relevant_evidence} if table == "evidence" else {})}
@@ -1244,7 +1304,7 @@ def project_graph(
     described_kinds = (provenance_kinds if view == "provenance" else
                        kinds[view] | ({"assumption_ids"} if include_assumptions else set()))
     return {
-        "view_version": "0.1.0", "view": view,
+        "view_version": "0.1.1", "view": view,
         "relation_scope": "recorded_relation_reachability",
         "relation_semantics": _relation_semantics(described_kinds),
         "graph_id": graph["id"], "graph_schema_version": graph["schema_version"],

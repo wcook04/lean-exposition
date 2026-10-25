@@ -15,10 +15,11 @@ After full support gives the moment identities and smoothness, a local
 constant replacement transfers the same inequality to the minimiser
 at a fixed time and forces its density to be positive. Chen previously
 proved full support and smooth nonnegative density. The contribution
-of this account is to explain the quantitative argument, its second
-use and its relation to the separate quantum approximate optimization
-algorithm (QAOA) construction, while identifying
-the analytic estimates imported from the original sources.
+of this account is to explain the quantitative argument and its second
+use, with the imported analytic estimates identified at their uses.
+We also describe the scalar value identity, the direct classical
+optimisation consequence and the input to a separate quantum approximate
+optimization algorithm (QAOA) construction.
 <!-- /passage:abstract -->
 
 <a id="model-and-result"></a>
@@ -142,15 +143,21 @@ at most one. On a positive constant interval a quantitative estimate
 makes $q'$ strictly convex, so its integral is smaller than the
 interval's length. This contradicts the required change in $q$.
 After excluding all gaps, the identity $q'=1$ supplies the equation
-from which the same estimate will force $\gamma'>0$.
+from which the same estimate will force $\gamma'>0$. This second use
+needs the estimate for a local constant replacement that need not
+minimise, without requiring $q''=0$ at the comparison time. Its explicit
+positive margin must also survive the replacement's limit.
 
 The support identities also supply the normalisation used in a proof
 of asymptotic optimality for the quantum approximate optimization
 algorithm (QAOA). Section 5 states that separate theorem and the finite
 Gaussian correlation quantity it uses. The density conclusion is not
-needed for that construction. We assume Itô calculus and martingale
-convergence; the nontrivial PDE and integrated estimates are identified
-at their uses.
+needed for that construction or for the classical consequence stated
+there. We assume Itô calculus and martingale convergence. Omitted
+proofs are linked to *From Parisi full support to deterministic QAOA
+circuits: A long reasoning record*, the <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf">companion edition of
+25 October 2026</span>; original-source citations remain beside
+the imported inputs.
 <!-- /passage:main-result -->
 
 <a id="contact"></a>
@@ -165,8 +172,9 @@ holds almost everywhere in time. The compact-strip approximation
 theorem justifies the following Itô calculations even when $\gamma$
 has jumps (see [OpenAI (2026a), Lemmas 2.1–2.2][FS]). The control method
 has antecedents in [Jagannath and Tobasco (2016)][JT] at positive
-temperature and [Chen, Handschy and Lerman (2018), Proposition 2
-and Theorem 5][CHL] at zero temperature.
+temperature and [Auffinger and Chen (2017), Theorem 2 and
+Corollary 2][AC] at zero temperature; see also [Chen, Handschy and
+Lerman (2018), Proposition 2 and Theorem 5][CHL].
 
 Fix a minimiser. Itô's formula cancels the drift of $u(t,X_t)$:
 $$
@@ -331,17 +339,26 @@ On a step of height $c$, the exponential $e^{c\Phi}$ solves the
 backward heat equation. At positive time, write the diffusion density
 as $f=e^{c\Phi}g$. This substitution turns its Fokker–Planck equation
 into the forward heat equation for $g$. For $s=-\partial_x\log g$,
-the source proves joint shape restrictions: on $x>0$, $r$ and $s$
-are increasing and concave, $w/(2r)+v\leq0$ is nondecreasing,
-and
+the source proves joint shape restrictions: on $x>0$, $r_x>0$ and
+$s_x\geq1/t$, both $r$ and $s$ are concave, and
+$H:=w/(2r)+v\leq0$ is nondecreasing. They also give
 $$
 j:=s_x-(s/r)v=r\,\partial_x(s/r)\geq0.
 $$
 The last inequality couples the backward gradient to the forward
 density; separate monotonicity and concavity do not supply it.
-The ratios extend smoothly through zero because $r,s,w$ are odd
-and $r_x(0)>0$. These are analytic conclusions of [OpenAI (2026a), §3][FS],
-not consequences of the polynomial in (4).
+The comparison is applied to $j/s=s_x/s-v/r$ on $x>0$.
+Its parabolic equation has nonnegative source $2H_x-w-s_{xx}$
+and negative zeroth-order coefficient $(v/r)_x$. On the first step,
+$s=x/t$, so concavity of $r$ gives $j/s=1/x-v/r\geq0$.
+Comparison propagates this sign within a step, and direct cancellation
+in the jump rules gives $j_+=j_-$ between steps. The backward and
+forward restrictions thus preserve the joint sign needed below.
+The quotients $w/r$ and $s/r$ extend smoothly through zero because
+$r,s,w$ are odd
+and $r_x(0)>0$. The comparison's boundary controls and these extensions
+are analytic inputs from [OpenAI (2026a), Lemmas 3.2–3.4][FS],
+reconstructed in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">long §4.3</span>.
 
 The factorisation of the density gives $f_x/f=r-s$. For a suitable
 expression $F$ in the shape quantities, define
@@ -370,9 +387,8 @@ $$
 We use (5) as an imported analytic estimate. The full polynomial and
 its decomposition are in [Lemma 4.1 and Table 1][certificate];
 Proposition 4.2 integrates them using the signs and zero boundary
-flux supplied by Lemma 3.4. The long record, §4.4,
-“How the signs make a correction with zero expectation useful”,
-reproduces those definitions and the complete identity. A pointwise
+flux supplied by Lemma 3.4. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-algebra">Long §4.4, “How the signs make a correction with zero expectation
+useful”</span> reproduces those definitions and the complete identity. A pointwise
 sign assertion for arbitrary $v,w,z$ would be false.
 
 To obtain Lemma 2 for an integrable coefficient, choose positive
@@ -385,7 +401,8 @@ motion converge
 (see [OpenAI (2026a), Lemmas 2.1–2.2 and Proposition 5.1][FS]). Only
 $v,w,z$ remain in (5), so no convergence theorem for the auxiliary
 logarithmic derivative $s$ is needed. Dividing by $c^2$ gives (3); strictness follows from
-$\Phi_{xx}>0$ on the plateau (see [OpenAI (2026a), Lemma 2.3][FS]). The zero plateau has the separate
+$\Phi_{xx}>0$ on the plateau (see [OpenAI (2026a), Lemma 2.3][FS]). The plateau-preserving approximants and their common strip bounds are
+specified in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="plateau-limit">long §4.5</span>. The zero plateau has the separate
 heat identity in Lemma 2. Its strictness uses a positive diffusion
 density and the fact that $\Phi_{xxx}$ cannot vanish identically:
 an even quadratic profile would contradict the one-Lipschitz bound
@@ -402,6 +419,19 @@ hypothetical positive gap of the minimiser. In contrast, (3) is
 quantitative and holds throughout every positive plateau of any
 admissible coefficient. Chen's Appendix C distinguishes earlier
 shared estimates from the parallel crossing proofs.
+
+[Lopatto's later v4, Proposition 5.1 and
+Corollary 5.6][Lopatto-v4] gives a qualitative crossing theorem and
+a decrease-then-increase description on positive plateaux of
+positive-temperature cumulative coefficients, for arbitrary probability measures. The relevant distinction
+here is the zero-temperature quantitative bound and its stability under
+local replacement, not nonminimiser scope alone. A related strict
+spatial-moment inequality has both gap and density uses in [Lopatto's
+external-field paper, Theorem 2.3 and Appendix B][Lopatto-field], under
+different temperature, moment and one-sided coefficient hypotheses.
+These comparisons do not replace the July v3 locators above or supply
+the zero-temperature transfer proved next; <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="prior-work-comparison">long §2.3</span>
+gives the precise comparisons.
 <!-- /passage:curvature -->
 
 <a id="positive-density"></a>
@@ -469,7 +499,7 @@ and Appendix B.6][Chen], using the polynomial-moment method of
 [Auffinger and Chen (2015), Lemma 2 and the proof of Theorem 2(ii)][AC-properties].
 The explicit polynomials and the passage from initially nonsmooth
 coefficients are in [OpenAI (2026a), proof of Corollary 6.4][FS]
-and the long record, §5.1.
+and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">long §5.1</span>.
 
 Now the two differentiated moments are
 $$
@@ -477,15 +507,19 @@ $$
 \qquad
 \frac{d}{dt}\mathbb E a^3=\mathbb E[3ab^2-3\gamma a^4].
 $$
-Differentiating $\mathbb E b^2=2\gamma\mathbb E a^3$ gives
+For a smooth time coefficient, differentiating
+$q''=\mathbb E b^2-2\gamma\mathbb E a^3$ therefore gives
 $$
-2\gamma'\mathbb E a^3
+q^{(3)}+2\gamma'\mathbb E a^3
 =\mathbb E[d^2-12\gamma ab^2+6\gamma^2a^4].          \tag{8}
 $$
-The spatial polynomial from (4) has returned. We need the integrated
-inequality underlying that calculation: applying the conclusion
-$q^{(3)}>0$ directly to the minimiser would be invalid, since $q(t)=t$.
-We transfer the spatial moments at a fixed time instead.
+This identity displays the two uses of the same spatial moment.
+On a plateau, $\gamma'=0$ and $(v,w,z)=c(a,b,d)$ recover (4).
+For the now smooth minimiser, $q=t$, so $q^{(3)}=0$ and the left
+side is $2\gamma'\mathbb E a^3$. We still need a lower bound
+for the right side: the plateau conclusion $q^{(3)}>0$ cannot be
+applied directly to this minimiser. We transfer its underlying
+spatial-moment inequality at a fixed time instead.
 
 Fix $t\in(0,1)$ and $c=\gamma(t)>0$. For
 $0<\delta<\min(t,1-t)$ define
@@ -536,19 +570,33 @@ $\gamma'(t)\geq\gamma(t)^2/2000$ for $0<t<1$.
 We have passed spatial moments, not the time derivatives
 $q_\delta'''$. Indeed the limiting minimiser has $q(t)=t$ and
 $q'''=0$; the coefficient derivative in (8) is exactly what the
-constant-interval formula omits. The long record, §§5.1–5.2,
-retains the smoothness argument and fixed-time transfer.
+constant-interval formula omits. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="positive-density">Long §§5.1–5.2</span> retain the smoothness argument and
+fixed-time transfer, including the common approximation bounds.
 <!-- /passage:density-consequence -->
 
 <a id="value-and-qaoa"></a>
 
-## 5. The scalar consequence and a separate circuit theorem
+## 5. Classical optimisation, scalar value and a circuit outlook
 
 <!-- passage:scalar-value -->
-Set $M_t=u(t,X_t)$, the bounded gradient martingale satisfying
+Full support has a direct classical algorithmic consequence. Together
+with minimiser existence, strict increase supplies Assumption 2 of
+[El Alaoui, Montanari and Sellke, preprint v1][EAMS]. Their Corollary 2.2
+then gives, for every fixed $\varepsilon>0$, a randomised algorithm
+returning a configuration within $\varepsilon n$ of the finite SK
+maximum with probability tending to one over couplings and algorithmic
+randomness. Its cost is $C(\varepsilon)n^2$ real-arithmetic operations
+with the prescribed scalar functions and normalisers available; this
+includes no separate numerical-preprocessing or finite-precision bound.
+[OpenAI (2026a), Corollary 7.3][FS] and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="classical-algorithm-consequence">long §7.4</span>
+check the Gaussian convention and this implication. Density positivity
+is unnecessary.
+
+The same support identities also produce a scalar representation of
+$P_*$. Set $M_t=u(t,X_t)$, the bounded gradient martingale satisfying
 $dM_t=a(t,X_t)\,dB_t$.
 Full support gives $\mathbb E M_t^2=t$ and $\mathbb E a(t,X_t)^2=1$:
-each increment $M_t-M_s$ has variance $t-s$ for $0\leq s<t<1$.
+each increment $M_t-M_s$ has unconditional variance $t-s$ for $0\leq s<t<1$.
 This is the normalisation
 used in the discrete construction below. The first moment of $a$
 instead measures the covariance gained with the driving Brownian motion,
@@ -566,7 +614,7 @@ Multiplying $X_1=B_1+\int_0^1\gamma(t)M_t\,dt$ by $U$ cancels
 that integral because $\mathbb E[UM_t]=t$. The Parisi formula then
 gives (10). The endpoint limits and stochastic-integral covariance
 are proved in [OpenAI (2026a), Corollary 7.1][FS] and the long
-record, §6, “Recovering the value from a martingale”. This argument
+record, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="scalar-value-identities">§6, “Recovering the value from a martingale”</span>. This argument
 uses full support, not the density corollary.
 
 The gradient-martingale and value methods have antecedents in
@@ -589,20 +637,25 @@ $$
  =\int_0^T\mathbb E[a(t,X_t)]\,dt.                 \tag{11}
 $$
 The multipliers $h_j$ are normalised Hessians along the Euler
-approximation to $X$. The extra variable $Z_{N+1}$ rounds its
-terminal gradient to a sign while preserving the conditional mean,
-and hence its correlations with the preceding Gaussian variables.
-With $\Delta=T/N$, the correlations with $g_j$ have leading term
-$\sqrt\Delta$, and the first $N$ correlations with $Z_i$ have leading
-term $\sqrt\Delta$ times the expected Hessian at the preceding Euler
-time. Both vectors have bounded $\ell^2$ norm and their errors tend
-to zero in $\ell^2$, so the errors vanish after pairing. The products
-with $j<N$ in (11) then form a Riemann sum for $\int_0^T\mathbb E a$;
-the remaining $j=N$ term, involving the rounding coordinate, vanishes.
-The mesh limit is taken at fixed $T$; only then does $T\uparrow1$
-give $P_*$.
-The construction and its error estimates are in the long record,
-§7, “A finite Gaussian spin and its adjacent correlations”.
+approximation to $X$. The extra Gaussian rounds the terminal gradient
+to a sign while preserving its conditional mean and all preceding
+correlations. Both correlation vectors have bounded $\ell^2$ norm;
+their $\ell^2$ approximation errors vanish, so pairing preserves the
+limit. The products with $j<N$ give a Riemann sum, while the final
+rounding-coordinate term vanishes. The mesh limit is taken at fixed
+$T$; only then does $T\uparrow1$ give $P_*$.
+The construction and its error estimates are in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-gaussian-approximation">long §7, “A finite
+Gaussian spin and its adjacent correlations”</span>.
+
+The adjacent index in (11) records the energy that the circuit argument
+must preserve. For these finite objects, [OpenAI (2026b), Lemma 3.1][Q]
+constructs a rooted Gaussian representation: each normalised child
+direction $g_j$ produces the next parent coordinate $Z_{j+1}$.
+Projecting $F_N$ onto the linear Gaussian coordinates then expresses
+its rooted energy as exactly the sum in (11). This identifies the
+energy as well as the joint Gaussian law; it is a theorem about this
+recursive construction. The root-shift projection giving the identity
+is reconstructed in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="rooted-energy">long §9.1</span>.
 <!-- /passage:scalar-value -->
 
 <!-- passage:qaoa-boundary -->
@@ -615,19 +668,27 @@ finite depth and deterministic angles, independent of $n$ and the
 couplings $J_{ij}$, whose limiting disorder-averaged expected energy
 per spin is at
 least $P_*-\varepsilon$. The depth and angles may depend on
-$\varepsilon$; $n\to\infty$ is taken with them fixed.
+$\varepsilon$; $n\to\infty$ is taken with them fixed. The earlier
+fixed-instance depth limit in [Farhi, Goldstone and Gutmann, §VI][FGG]
+allows choices depending on the instance and does not supply this common
+finite word before the size limit.
 [Farhi, Goldstone, Gutmann and Zhou (2022)][FGGZ] established the
 fixed-angle thermodynamic limits in this convention. The
 eventual-optimality conclusion was conjectured by
 [Basso, Farhi, Marwaha, Villalonga and Zhou (2022), §7, equation (7.2)][BFMVZ].
 
-The additional circuit argument must realise the correlation value
-in (11). Its recursive construction, gate approximation, removal of
-auxiliary randomness and transfer to finite SK systems are separate
-steps, reconstructed in the long record, §9, “From the scalar formula
-to one ordinary QAOA word”, from [OpenAI (2026b), §§2–6 and Appendix A][Q].
-The selected argument gives no quantitative depth bound, finite-size
-rate or efficient procedure for finding the angles.
+The remaining circuit steps preserve the identified energy to a chosen
+tolerance. Regularisation puts the finite formula in the class used by
+the synthesis theorem, which realises it with temporary Gaussian seed
+controls in addition to cost and mixer gates. A further theorem simulates
+those seed controls using only cost and mixer gates; only then does
+fixed-word transfer identify the thermodynamic SK value. These are
+separate results of [OpenAI (2026b), §§2–6][Q], reconstructed in
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qaoa-construction">long §§9.1–9.6, “From the scalar formula to one ordinary QAOA
+word”</span>. The source's Appendix A supplies an alternative
+positive-temperature input to the same synthesis. The selected argument
+gives no quantitative depth bound, finite-size rate or efficient
+procedure for finding the angles.
 <!-- /passage:qaoa-boundary -->
 
 <a id="evidence-scope"></a>
@@ -645,19 +706,23 @@ asserts the support and moment conclusions conditional on an admissible
 minimiser, and constructs its associated diffusion. A separate
 [scalar formal statement][value-challenge] covers value identities and
 finite Gaussian approximation, with minimiser and diffusion premises
-for those clauses. The two formal models have not been transported
+for those clauses. Its third clause identifies the ground-state and
+Parisi values from a minimiser, constructing the diffusion internally.
+The two formal models have not been transported
 into one another in this record. Neither statement includes the
 positive-density corollary or QAOA convergence. The corresponding
 [full-support][support-lean] and [scalar][value-lean] implementations
 use [Lean][Lean4] and [mathlib][mathlib].
 
-No completed research-target acceptance by Comparator is recorded for
+Comparator checks an implementation against a trusted formal challenge.
+No completed research-target acceptance by that checker is recorded for
 this edition. File-integrity checks and exported theorem specifications
 do not establish acceptance of their implementations. Exact versions,
 build attempts and the correspondence with the mathematical statements
-are retained in the companion source review and the long record,
-§8, “What the formal statements establish”, and §11, “Source checks
-and finite calculation”.
+are retained in *Source review for the QAOA–SK drafts*, edition
+25 October 2026, and the long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="formal-interfaces">§8, “What the formal statements
+establish”</span>, and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">§11, “Source checks and finite
+calculation”</span>.
 <!-- /passage:evidence-scope -->
 
 ## References
@@ -686,7 +751,11 @@ and finite calculation”.
 - Lopatto, P. (2026). *Full replica symmetry breaking in the
   Sherrington–Kirkpatrick model*. [arXiv version 3][Lopatto], revised
   16 July 2026. Propositions 3.6, 7.1 and 9.1; related Cole–Hopf, density
-  and crossing arguments.
+  and crossing arguments. The separate [version 4][Lopatto-v4],
+  Proposition 5.1 and Corollary 5.6, supplies the later comparison.
+- Lopatto, P. (2026). *Parisi measure of the Sherrington–Kirkpatrick
+  model with external field*. [arXiv version 1][Lopatto-field].
+  Theorem 2.3 and Appendix B; related positive-temperature two-use argument.
 - Sherrington, D. and Kirkpatrick, S. (1975). “Solvable Model of a Spin-Glass.”
   *Physical Review Letters* **35**, 1792–1796. [Original model][SK].
 - Jagannath, A. and Tobasco, I. (2016). “A dynamic programming approach
@@ -704,7 +773,8 @@ and finite calculation”.
   [Preprint v2, 2019][Montanari]: §§2–3.
 - El Alaoui, A., Montanari, A. and Sellke, M. (2021). “Optimization of
   mean-field spin glasses.” *Annals of Probability* **49**, 2922–2960.
-  [Preprint v1][EAMS]: §§5–6.
+  [Preprint v1][EAMS]: Remark 2.1 and Theorem 3, p. 7;
+  Assumption 2 and Corollary 2.2, p. 8; §§5–6.
 - Farhi, E., Goldstone, J. and Gutmann, S. (2014). *A Quantum Approximate
   Optimization Algorithm*. [Preprint v1][FGG]. Algorithm definition;
   §VI concerns the fixed-instance depth limit.
@@ -744,3 +814,6 @@ and finite calculation”.
 [BFMVZ]: https://arxiv.org/abs/2110.14206v3
 
 [certificate]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/certificate.tex#L117-L199
+
+[Lopatto-v4]: https://arxiv.org/abs/2607.11756v4
+[Lopatto-field]: https://arxiv.org/abs/2610.00127v1

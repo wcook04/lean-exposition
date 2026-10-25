@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
-  "graph_sha256": "6c3f611f9de7aaca3c17bddbc4e0d589e8d89626cbcb642ba9c2da8553d1b130",
+  "content_sha256": "117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa",
+  "graph_sha256": "d82f27189da59cf23cbc80453aa71b67feb682b9647bd0588237cb287b553d9b",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -73,10 +73,14 @@
     "scalar.shifted_gaussian_limit",
     "scalar.smooth_positive_density",
     "scalar.source_diffusion_exists",
+    "scalar.source_empirical_energy_limit",
+    "scalar.source_finite_adaptive_lower",
     "scalar.source_fixed_strip_application",
+    "scalar.source_gaussian_column_split",
     "scalar.source_ground_state_identity_with_diffusion",
     "scalar.source_ground_state_upper",
     "scalar.source_minimizer_curvature_moment",
+    "scalar.source_predictable_lower",
     "scalar.source_spin_sequence_limit",
     "scalar.source_strip_regularity",
     "scalar.source_strip_value_lower",
@@ -206,6 +210,10 @@
     "scalar-r2-26-cite-smooth-positive-density",
     "scalar-r2-26-cite-terminal-loss",
     "scalar-r2-26-cite-transport-support-model",
+    "scalar.source_empirical_energy_limit_lean_source",
+    "scalar.source_finite_adaptive_lower_lean_source",
+    "scalar.source_gaussian_column_split_lean_source",
+    "scalar.source_predictable_lower_lean_source",
     "scalar_value_comparator",
     "scalar_value_implementation",
     "scalar_value_type",
@@ -326,10 +334,14 @@
     "scalar.shifted_gaussian_limit",
     "scalar.smooth_positive_density",
     "scalar.source_diffusion_exists",
+    "scalar.source_empirical_energy_limit",
+    "scalar.source_finite_adaptive_lower",
     "scalar.source_fixed_strip_application",
+    "scalar.source_gaussian_column_split",
     "scalar.source_ground_state_identity_with_diffusion",
     "scalar.source_ground_state_upper",
     "scalar.source_minimizer_curvature_moment",
+    "scalar.source_predictable_lower",
     "scalar.source_spin_sequence_limit",
     "scalar.source_strip_regularity",
     "scalar.source_strip_value_lower",
@@ -393,11 +405,13 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
@@ -420,6 +434,9 @@
         "scalar-r2-13-cite-strip-value-lower",
         "scalar-r2-13-cite-terminal-parisi-assembly",
         "scalar-r2-26-cite-conditional-fixed-strip",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-formal-contact-input",
         "scalar-r2-26-cite-formal-finite-gaussian-clause",
         "scalar-r2-26-cite-formal-model-transport-open",
@@ -428,11 +445,19 @@
         "scalar-r2-26-cite-lean-gaussian-target",
         "scalar-r2-26-cite-lean-parisi-target",
         "scalar-r2-26-cite-lean-scalar-target",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
         "scalar-r2-26-cite-paper-admissible",
         "scalar-r2-26-cite-paper-minimizer",
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
+        "scalar-r2-26-cite-terminal-loss",
         "scalar-r2-26-cite-transport-support-model",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
         "scalar_value_comparator",
         "scalar_value_implementation",
         "scalar_value_type",
@@ -544,6 +569,10 @@
         "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-transport-support-model",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
         "scalar_value_comparator",
         "scalar_value_implementation",
         "scalar_value_type",
@@ -586,7 +615,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "8097072c148e6e2ca2fdf0b3bc05e2721ceb36b039ea8a57a668ab3bac3795a5",
+      "text_sha256": "c9bf7fbee52c48640e8d64a27067ddef4dbef52cf570062c1452a9bd56cbbe63",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -713,7 +742,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -735,6 +763,8 @@
         "full_support_implementation",
         "full_support_manuscript",
         "full_support_type",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scope_281",
         "support_contact_lean_source",
         "support_contact_source",
@@ -749,7 +779,8 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
       "rationale": "Maps this passage to The admissible one-sided first variation; Nonnegative potential vanishing on the support; Endpoint contact and slope bounds, including zero; An exact first-order criterion for the same admissible coefficient. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
@@ -811,6 +842,8 @@
         "full_support_manuscript",
         "full_support_origin_coercivity",
         "full_support_type",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scope_281",
         "support-r2-13-finite-density-call",
         "support_backward_source",
@@ -839,7 +872,8 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
       "rationale": "Maps this passage to No bounded gap between support points; No initial gap when zero is outside the support; A minimizer has no terminal plateau or empty support; Exhausting the support complement; Full contact gives both moments for every associated diffusion. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
@@ -885,7 +919,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -933,7 +966,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -952,6 +984,8 @@
         "full_support_origin_coercivity",
         "full_support_type",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "support-r2-13-finite-density-call",
         "support_backward_source",
@@ -980,7 +1014,8 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
       "rationale": "Maps this passage to Near-ground configurations at a prescribed overlap. The source locations and local guards are retained in these graph records. Ordinary ACZ Proposition1 consequence, with full support, attainment and Parisi normalization. The common Gaussian offset is explicitly removed. Quantifiers concern one fixed overlap at a time; no efficient construction, typical pair, continuum-simultaneous event or formal acceptance is asserted."
@@ -1034,7 +1069,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -1100,7 +1134,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -1157,7 +1190,6 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
@@ -1200,13 +1232,33 @@
       "rationale": "Maps this passage to Independent Gaussian rounding preserves the conditional mean. The source locations and local guards are retained in these graph records. Exact N=1 nonminimizer calculation illustrates independent conditional-mean-preserving rounding and adjacent Gaussian coefficients. It does not instantiate the minimizer-dependent coefficient-vector convergence theorem; the asymmetric cutoff distinguishes adjacent from same-index products."
     },
     {
+      "anchor": "gaussian-all-mesh-example",
+      "claim_ids": [
+        "scalar.conditional_rounding"
+      ],
+      "citation_ids": [
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-paper-admissible",
+        "support_model_source",
+        "support_regularity_source"
+      ],
+      "assumption_ids": [
+        "scalar.paper_admissible"
+      ],
+      "evidence_class": "example",
+      "rationale": "Exact all-mesh gamma=0 calculation. Admissible but not minimizing, so it does not instantiate scalar coefficient convergence. Gaussian regression and integration by parts derive the formula; heat_check.py rerun passed. Numerical values do not estimate P_*.",
+      "text_sha256": "5f20f02304a670bddab5a6e8f4ac3c6c7cb910064d50903c422697a6fa87186c"
+    },
+    {
       "anchor": "algorithm",
       "text_sha256": "45f0c87c0c42717576c215b473b07208639b883201770042887c18b8ac63605a",
       "claim_ids": [
         "scalar.separate_classical_algorithm"
       ],
       "citation_ids": [
+        "full_support_chord_derivative",
         "full_support_implementation",
+        "full_support_origin_coercivity",
         "scalar-r2-26-cite-eams-algorithm",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
@@ -1214,8 +1266,31 @@
         "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-separate-classical-algorithm",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
         "support_closure_lean_source",
-        "support_closure_source"
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
@@ -1223,61 +1298,21 @@
     },
     {
       "anchor": "formal",
-      "text_sha256": "df9cdd4100711d1e114d1691066b6eedebe6281b62613bcb4818f7ec20c056e8",
       "claim_ids": [
         "full_support",
         "lean.full_support",
-        "scalar_value",
-        "lean.value_consequences",
-        "scalar.formal_scalar_clause",
-        "scalar.formal_finite_gaussian_clause",
-        "scalar.formal_parisi_clause",
-        "scalar.conditional_fixed_strip",
-        "scalar.formal_contact_input",
-        "scalar.formal_model_transport_open",
-        "support.source_finite_density_coercivity",
-        "scalar.source_strip_regularity",
-        "scalar.source_minimizer_curvature_moment",
-        "scalar.source_diffusion_exists",
-        "scalar.source_spin_sequence_limit",
-        "scalar.source_ground_state_upper",
-        "scalar.source_terminal_parisi_assembly",
-        "scalar.source_fixed_strip_application",
-        "scalar.source_strip_value_lower",
-        "scalar.source_ground_state_identity_with_diffusion"
+        "support.source_finite_density_coercivity"
       ],
       "citation_ids": [
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
-        "full_support_manuscript",
         "full_support_origin_coercivity",
         "full_support_type",
-        "scalar-r2-13-cite-diffusion-exists",
-        "scalar-r2-13-cite-fixed-strip-application",
-        "scalar-r2-13-cite-ground-state-identity-with-diffusion",
-        "scalar-r2-13-cite-ground-state-upper",
-        "scalar-r2-13-cite-minimizer-curvature-moment",
-        "scalar-r2-13-cite-spin-sequence-limit",
-        "scalar-r2-13-cite-strip-regularity",
-        "scalar-r2-13-cite-strip-value-lower",
-        "scalar-r2-13-cite-terminal-parisi-assembly",
-        "scalar-r2-26-cite-conditional-fixed-strip",
-        "scalar-r2-26-cite-fixed-strip-input-bounds",
-        "scalar-r2-26-cite-fixed-strip-input-diffusion",
-        "scalar-r2-26-cite-fixed-strip-input-unit-moment",
-        "scalar-r2-26-cite-formal-contact-input",
-        "scalar-r2-26-cite-formal-finite-gaussian-clause",
         "scalar-r2-26-cite-formal-model-transport-open",
-        "scalar-r2-26-cite-formal-parisi-clause",
-        "scalar-r2-26-cite-formal-scalar-clause",
-        "scalar-r2-26-cite-lean-gaussian-target",
-        "scalar-r2-26-cite-lean-parisi-target",
-        "scalar-r2-26-cite-lean-scalar-target",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-transport-support-model",
-        "scalar_value_comparator",
-        "scalar_value_implementation",
-        "scalar_value_type",
         "scope_281",
         "support-r2-13-finite-density-call",
         "support_backward_source",
@@ -1307,6 +1342,56 @@
       ],
       "assumption_ids": [
         "assumptions.full_support_minimizer",
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
+      ],
+      "evidence_class": "context",
+      "rationale": "Support interface and ordinary convexity bridge from sampled chord slopes; preserves half-line coercivity rather than applying an inapplicable generic flux lemma.",
+      "text_sha256": "d5e6657db96f96d22ea1a5ddafadd3dc615c5cb1d1a2794eb61322c1ecf3354d"
+    },
+    {
+      "anchor": "formal-scalar",
+      "claim_ids": [
+        "scalar_value",
+        "lean.value_consequences",
+        "scalar.formal_scalar_clause",
+        "scalar.formal_finite_gaussian_clause",
+        "scalar.formal_parisi_clause",
+        "scalar.conditional_fixed_strip"
+      ],
+      "citation_ids": [
+        "scalar-r2-13-cite-diffusion-exists",
+        "scalar-r2-13-cite-fixed-strip-application",
+        "scalar-r2-13-cite-ground-state-identity-with-diffusion",
+        "scalar-r2-13-cite-ground-state-upper",
+        "scalar-r2-13-cite-minimizer-curvature-moment",
+        "scalar-r2-13-cite-spin-sequence-limit",
+        "scalar-r2-13-cite-strip-regularity",
+        "scalar-r2-13-cite-strip-value-lower",
+        "scalar-r2-13-cite-terminal-parisi-assembly",
+        "scalar-r2-26-cite-conditional-fixed-strip",
+        "scalar-r2-26-cite-fixed-strip-input-bounds",
+        "scalar-r2-26-cite-fixed-strip-input-diffusion",
+        "scalar-r2-26-cite-fixed-strip-input-unit-moment",
+        "scalar-r2-26-cite-formal-contact-input",
+        "scalar-r2-26-cite-formal-finite-gaussian-clause",
+        "scalar-r2-26-cite-formal-model-transport-open",
+        "scalar-r2-26-cite-formal-parisi-clause",
+        "scalar-r2-26-cite-formal-scalar-clause",
+        "scalar-r2-26-cite-lean-gaussian-target",
+        "scalar-r2-26-cite-lean-parisi-target",
+        "scalar-r2-26-cite-lean-scalar-target",
+        "scalar-r2-26-cite-transport-support-model",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
+        "scalar_value_comparator",
+        "scalar_value_implementation",
+        "scalar_value_type",
+        "scope_281"
+      ],
+      "assumption_ids": [
         "assumptions.value_diffusion",
         "assumptions.value_minimizer",
         "scalar.fixed_strip_input_bounds",
@@ -1314,13 +1399,150 @@
         "scalar.fixed_strip_input_unit_moment"
       ],
       "evidence_class": "context",
-      "rationale": "Maps this passage to Full support of zero-temperature SK minimizers; OAI.ZeroTemperatureSK.full_support; Parisi value identities and finite Gaussian approximation; OAI.SKValue.value_consequences; Scalar-value branch with a supplied diffusion; Finite-Gaussian branch at a fixed interior cutoff; Parisi identity branch without a supplied diffusion; Formal fixed-strip implication with analytic hypotheses exposed; The scalar implementation derives its own contact identity; Direct formal composition between the two models remains unwitnessed; Concrete finite-data half-line coercivity application; Concrete strip regularity for every admissible coefficient; Unit curvature moment after the concrete minimizer suppliers; Internally constructed diffusion for every admissible coefficient; Actual convergence of the normalized expected finite-spin maximum; Ground-state upper bound by every admissible Parisi value; Terminal formulas at the Parisi value after concrete suppliers; Fixed-strip mesh limit with every analytic input supplied; Curvature integral bounded by the finite-spin value on each fixed strip; Scalar ground-state identity from the two inequalities. The source locations and local guards are retained in these graph records. Explicit comparison of complete formal statements, quantified assumptions and ordinary analytic models. Cross-namespace transport remains an open correspondence obligation."
+      "rationale": "Exact three scalar endpoint clauses, same witnesses, index dictionary and simultaneous growing-mesh positivity quantifier; no circuit or fresh formal acceptance.",
+      "text_sha256": "7824d33b81ca6a172ed2b3b4c928a0413becd8804d4613fc2461e837e6eefd46"
+    },
+    {
+      "anchor": "formal-contact",
+      "claim_ids": [
+        "scalar.formal_contact_input",
+        "scalar.source_strip_regularity",
+        "scalar.source_minimizer_curvature_moment"
+      ],
+      "citation_ids": [
+        "scalar-r2-13-cite-minimizer-curvature-moment",
+        "scalar-r2-13-cite-strip-regularity",
+        "scalar-r2-26-cite-formal-contact-input",
+        "scalar_value_type"
+      ],
+      "assumption_ids": [
+        "assumptions.value_diffusion",
+        "assumptions.value_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Independent scalar contact proof from positive/zero hump contradictions and analytic suppliers. Distinct from invoking the support endpoint.",
+      "text_sha256": "b28470dd8901a80f772cca771e2ae1cbcb3190c43405e784c202dd649812fddc"
+    },
+    {
+      "anchor": "formal-transport",
+      "claim_ids": [
+        "scalar.formal_model_transport_open"
+      ],
+      "citation_ids": [
+        "scalar-r2-26-cite-formal-model-transport-open",
+        "scalar-r2-26-cite-transport-support-model"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "context",
+      "rationale": "Explicit unproved transport contract: coefficient extensions, Brownian filtration, control/payoff time substitution, all-x value and derivative equality, every-competitor minimality, progressive process versions and common witnesses. No formal composition asserted.",
+      "text_sha256": "568d0bf4fdf19f1df1ba6726bab637dfec089b60b61994a74b02f74e01bde437"
+    },
+    {
+      "anchor": "formal-lower-overview",
+      "claim_ids": [
+        "scalar.source_spin_sequence_limit",
+        "scalar.source_ground_state_upper",
+        "scalar.source_predictable_lower"
+      ],
+      "citation_ids": [
+        "scalar-r2-13-cite-ground-state-upper",
+        "scalar-r2-13-cite-spin-sequence-limit",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Fixed-K predictable orthonormal coefficient inequality without centring or minimizer assumptions; independent finite-spin convergence and upper-comparison prerequisites. Proof in sections 8.5.1–8.5.4.",
+      "text_sha256": "fdca7067ad137e72a7dc5f433d0b5d29bd085ea06724295b24bcdfdbbe73e970"
+    },
+    {
+      "anchor": "gaussian-column-split",
+      "claim_ids": [
+        "scalar.source_gaussian_column_split"
+      ],
+      "citation_ids": [
+        "scalar.source_gaussian_column_split_lean_source"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Reconstructs Q, R and C, equal Gaussian covariance, zero-direction case, expected-maximum recursion and offset bound from GaussianColumn.lean:14–187.",
+      "text_sha256": "0855d943bb6bb67a7542123ddc43df89324de084e1b714d85d0c4111bbfdec14"
+    },
+    {
+      "anchor": "gaussian-adaptive-lower",
+      "claim_ids": [
+        "scalar.source_finite_adaptive_lower"
+      ],
+      "citation_ids": [
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Adaptive iteration; diagonal common-offset normalization; empirical Gram–Schmidt with zero remainders; initial zero direction; n sqrt(n) scaling; row/column transposition. AdaptiveColumns:92–134, QuadraticSK:42–88,175–193, EmpiricalVectors:106–180 and GaussianTranspose:112–140.",
+      "text_sha256": "5efe0e10d30cb9cf11382623c4a55797c1f0d87c8e406d1d44bca539be027db4"
+    },
+    {
+      "anchor": "gaussian-empirical-limit",
+      "claim_ids": [
+        "scalar.source_empirical_energy_limit"
+      ],
+      "citation_ids": [
+        "scalar.source_empirical_energy_limit_lean_source"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Strong laws at fixed K, Gram matrix convergence, Gram–Schmidt approximation, explicit expansion and fresh-coordinate cancellations. GramSchmidtLimit:33–176 and EmpiricalEnergyLimit:21–122.",
+      "text_sha256": "96fe6ce0a726beba623c0f857e66527524456a1bd1865aed594a34edacc3af89"
+    },
+    {
+      "anchor": "gaussian-expectation-limit",
+      "claim_ids": [
+        "scalar.source_predictable_lower",
+        "scalar.source_diffusion_exists",
+        "scalar.source_terminal_parisi_assembly",
+        "scalar.source_fixed_strip_application",
+        "scalar.source_strip_value_lower",
+        "scalar.source_ground_state_identity_with_diffusion"
+      ],
+      "citation_ids": [
+        "scalar-r2-13-cite-diffusion-exists",
+        "scalar-r2-13-cite-fixed-strip-application",
+        "scalar-r2-13-cite-ground-state-identity-with-diffusion",
+        "scalar-r2-13-cite-ground-state-upper",
+        "scalar-r2-13-cite-minimizer-curvature-moment",
+        "scalar-r2-13-cite-spin-sequence-limit",
+        "scalar-r2-13-cite-strip-regularity",
+        "scalar-r2-13-cite-strip-value-lower",
+        "scalar-r2-13-cite-terminal-parisi-assembly",
+        "scalar-r2-26-cite-conditional-fixed-strip",
+        "scalar-r2-26-cite-formal-contact-input",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
+        "scalar_value_type"
+      ],
+      "assumption_ids": [
+        "assumptions.value_diffusion",
+        "assumptions.value_minimizer"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Nonnegative correction has expectation and almost-sure limit 2K; Fatou or clipped dominated convergence passes the expectation bound. LiteralLower specializes before minimizer/contact inputs justify two sequential limits. Source-inspected, not a new replay.",
+      "text_sha256": "643e55d2f05db91f8f04391dc0a1e55a73396a8d2e676d91ed4beb913cbee68e"
     },
     {
       "anchor": "qaoa",
-      "text_sha256": "75334e5e0dbbac078b4ed728d34aa41360cac604763945f3ebd1d9e7354a450a",
+      "text_sha256": "875f38a561b51a904e75641059d93f518b63b1e6e22d5aab0769975a954b8907",
       "claim_ids": [
-        "qaoa_thermodynamic_first"
+        "qaoa_thermodynamic_first",
+        "circuit.gate_calculus",
+        "circuit.helper_contraction",
+        "circuit.seeded_synthesis",
+        "circuit.seed_removal",
+        "circuit.fixed_word_transfer"
       ],
       "citation_ids": [
         "bfmvz2022_tree_transfer",
@@ -1340,31 +1562,68 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
         "circuit-r2-26-cite-weighted-unitary-calculus",
         "fggz2022_fixed_depth",
+        "full_support_chord_derivative",
+        "full_support_implementation",
+        "full_support_origin_coercivity",
         "qaoa_main_theorem",
         "qaoa_manuscript_arguments",
         "qaoa_routes",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
-        "scope_281"
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
+        "scope_281",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
       ],
       "assumption_ids": [
         "assumptions.qaoa_model_and_limits"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to QAOA approaches the SK optimum in the thermodynamic-first limit. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to QAOA approaches the SK optimum in the thermodynamic-first limit. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Round-six revision: Collects exact imported contracts before their applications."
     },
     {
       "anchor": "qaoa-rooted",
-      "text_sha256": "986a5eaad17ed55eb28511a2d733c236b275968428db741d8fda82a3fb76e784",
+      "text_sha256": "26c9aa0cfd791ce72717b903083a8c390d35fe17053cb260fd16e05edf050c62",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -1411,16 +1670,36 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Root shift and classical Gaussian first chaos; Finite-degree edge energy requires occupation control; Exact rooted realization of the scalar coefficient sum. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Root shift and classical Gaussian first chaos; Finite-degree edge energy requires occupation control; Exact rooted realization of the scalar coefficient sum. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Round-six revision: Adds four-term half-tree decomposition and occupation-sector deletion proof."
+    },
+    {
+      "anchor": "qaoa-depth-one",
+      "claim_ids": [
+        "circuit.ordinary_updates",
+        "circuit.energy_transfer",
+        "circuit.fixed_word_transfer"
+      ],
+      "citation_ids": [
+        "bfmvz2022_tree_transfer",
+        "circuit-r2-26-cite-energy-transfer",
+        "circuit-r2-26-cite-fixed-word-transfer",
+        "circuit-r2-26-cite-gaussian-root-calculus",
+        "circuit-r2-26-cite-ordinary-updates",
+        "circuit-r2-26-cite-weighted-unitary-calculus",
+        "fggz2022_fixed_depth"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "example",
+      "rationale": "Explicit p=1 finite SK, positive regular-tree and rooted one-particle calculations calibrate the same energy. FGGZ arXiv:1910.08187v4 equations (62)–(64) inspected directly. n=2,3 statevector/quadrature diagnostics do not validate high-depth synthesis.",
+      "text_sha256": "9a242e66cd4928a3fd51fbdd66a226e22079b789ee556b749f1422934266fc7b"
     },
     {
       "anchor": "qaoa-regularization",
-      "text_sha256": "6430d5ed0e5b3bf786cbffd7e43d585df59d0b92c7085421a58d92ce1707e742",
+      "text_sha256": "8a49230a215177c0462c14c853dacc2801ac382a6a0b9d9d0c43641541e81b2c",
       "claim_ids": [
         "circuit.sign_smoothing",
         "circuit.bounded_trigonometric",
@@ -1486,12 +1765,11 @@
         "support_variation_source"
       ],
       "assumption_ids": [
-        "assumptions.full_support_minimizer",
         "scalar.paper_admissible",
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Finite sign smoothing preserves the rooted value; Bounded odd trigonometric angle approximation; Raw seed reencoding and ancestor exclusion; Conditional bounded synthesis input for a given minimizer; Closed existence of a near-optimal bounded synthesis input; Weighted sums, products and commuting substitution; Ordinary cost and mixer root updates; Smooth exclusion-gate calculus; Additive cut responses retain scalar second order. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Finite sign smoothing preserves the rooted value; Bounded odd trigonometric angle approximation; Raw seed reencoding and ancestor exclusion; Conditional bounded synthesis input for a given minimizer; Closed existence of a near-optimal bounded synthesis input; Weighted sums, products and commuting substitution; Ordinary cost and mixer root updates; Smooth exclusion-gate calculus; Additive cut responses retain scalar second order. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Round-six revision: States weighted operator, adjoint and derivative quantifiers; distinguishes recursive and packet weights."
     },
     {
       "anchor": "qaoa-synthesis",
@@ -1519,7 +1797,7 @@
     },
     {
       "anchor": "qaoa-seed",
-      "text_sha256": "6adc7bad32a16d89e1c03c3f7229b7647852cd148c3b7beefaf47f6adb7cacab",
+      "text_sha256": "329f3652fe2462b607a9bcaca9ef39e8f077867c909bbaa4b45317ef73f39aa7",
       "claim_ids": [
         "circuit.seed_packets",
         "circuit.selective_control",
@@ -1544,7 +1822,7 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Exact small packet and weighted tail estimates; Exact finite selective rotations with zero clocks; Selective pulse errors are o(r) on ordinary tails; The cost–flip–cost–unflip echo retains finite signal; One persistent Gaussian mode and rooted energy induction; Finite visibility choices precede the small-packet limit; Every finite seeded word has a finite ordinary approximation. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Exact small packet and weighted tail estimates; Exact finite selective rotations with zero clocks; Selective pulse errors are o(r) on ordinary tails; The cost–flip–cost–unflip echo retains finite signal; One persistent Gaussian mode and rooted energy induction; Finite visibility choices precede the small-packet limit; Every finite seeded word has a finite ordinary approximation. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Round-six revision: Quantitative probe-prefix modulus gives o(r) after exact zero-clock cancellation; shared seeds and actual-direction echo preserved."
     },
     {
       "anchor": "qaoa-transfer",
@@ -1592,20 +1870,57 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
         "circuit-r2-26-cite-weighted-unitary-calculus",
         "fggz2022_fixed_depth",
+        "full_support_chord_derivative",
+        "full_support_implementation",
+        "full_support_origin_coercivity",
         "qaoa_main_theorem",
         "qaoa_routes",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
-        "scope_281"
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
+        "scope_281",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
       ],
       "assumption_ids": [
         "assumptions.qaoa_model_and_limits"
@@ -1746,20 +2061,57 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
         "circuit-r2-26-cite-weighted-unitary-calculus",
         "fggz2022_fixed_depth",
+        "full_support_chord_derivative",
+        "full_support_implementation",
+        "full_support_origin_coercivity",
         "qaoa_main_theorem",
         "qaoa_routes",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
-        "scope_281"
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
+        "scope_281",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
       ],
       "assumption_ids": [
         "assumptions.qaoa_model_and_limits"
@@ -1796,20 +2148,57 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
         "circuit-r2-26-cite-weighted-unitary-calculus",
         "fggz2022_fixed_depth",
+        "full_support_chord_derivative",
+        "full_support_implementation",
+        "full_support_origin_coercivity",
         "qaoa_main_theorem",
         "qaoa_routes",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
-        "scope_281"
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
+        "scope_281",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
       ],
       "assumption_ids": [
         "assumptions.qaoa_model_and_limits"
@@ -1858,11 +2247,13 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
@@ -1885,6 +2276,9 @@
         "scalar-r2-13-cite-strip-value-lower",
         "scalar-r2-13-cite-terminal-parisi-assembly",
         "scalar-r2-26-cite-conditional-fixed-strip",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-formal-contact-input",
         "scalar-r2-26-cite-formal-finite-gaussian-clause",
         "scalar-r2-26-cite-formal-model-transport-open",
@@ -1893,8 +2287,18 @@
         "scalar-r2-26-cite-lean-gaussian-target",
         "scalar-r2-26-cite-lean-parisi-target",
         "scalar-r2-26-cite-lean-scalar-target",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
         "scalar-r2-26-cite-transport-support-model",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
         "scalar_value_comparator",
         "scalar_value_implementation",
         "scalar_value_type",
@@ -1929,7 +2333,9 @@
         "assumptions.full_support_minimizer",
         "assumptions.qaoa_model_and_limits",
         "assumptions.value_diffusion",
-        "assumptions.value_minimizer"
+        "assumptions.value_minimizer",
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
       ],
       "evidence_class": "open_question",
       "rationale": "Maps this passage to Direct formal composition between the two models remains unwitnessed; Full support of zero-temperature SK minimizers; Parisi value identities and finite Gaussian approximation; QAOA approaches the SK optimum in the thermodynamic-first limit. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
@@ -1962,11 +2368,13 @@
         "circuit-r2-26-cite-ordinary-word-positive",
         "circuit-r2-26-cite-ordinary-word-primary",
         "circuit-r2-26-cite-orthogonal-quadratics",
+        "circuit-r2-26-cite-rooted-realization",
         "circuit-r2-26-cite-seed-packets",
         "circuit-r2-26-cite-seed-removal",
         "circuit-r2-26-cite-seeded-synthesis",
         "circuit-r2-26-cite-selective-accuracy",
         "circuit-r2-26-cite-selective-control",
+        "circuit-r2-26-cite-sign-smoothing",
         "circuit-r2-26-cite-singular-echo",
         "circuit-r2-26-cite-upper-bound-padding",
         "circuit-r2-26-cite-visibility",
@@ -1989,6 +2397,9 @@
         "scalar-r2-13-cite-strip-value-lower",
         "scalar-r2-13-cite-terminal-parisi-assembly",
         "scalar-r2-26-cite-conditional-fixed-strip",
+        "scalar-r2-26-cite-conditional-rounding",
+        "scalar-r2-26-cite-correlation-vector-control",
+        "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-formal-contact-input",
         "scalar-r2-26-cite-formal-finite-gaussian-clause",
         "scalar-r2-26-cite-formal-model-transport-open",
@@ -1997,8 +2408,18 @@
         "scalar-r2-26-cite-lean-gaussian-target",
         "scalar-r2-26-cite-lean-parisi-target",
         "scalar-r2-26-cite-lean-scalar-target",
+        "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
+        "scalar-r2-26-cite-parisi-formula",
+        "scalar-r2-26-cite-shifted-gaussian-limit",
+        "scalar-r2-26-cite-terminal-loss",
         "scalar-r2-26-cite-transport-support-model",
+        "scalar.source_empirical_energy_limit_lean_source",
+        "scalar.source_finite_adaptive_lower_lean_source",
+        "scalar.source_gaussian_column_split_lean_source",
+        "scalar.source_predictable_lower_lean_source",
         "scalar_value_comparator",
         "scalar_value_implementation",
         "scalar_value_type",
@@ -2033,7 +2454,9 @@
         "assumptions.full_support_minimizer",
         "assumptions.qaoa_model_and_limits",
         "assumptions.value_diffusion",
-        "assumptions.value_minimizer"
+        "assumptions.value_minimizer",
+        "scalar.paper_admissible",
+        "scalar.paper_minimizer"
       ],
       "evidence_class": "context",
       "rationale": "Maps this passage to Full support of zero-temperature SK minimizers; OAI.ZeroTemperatureSK.full_support; Parisi value identities and finite Gaussian approximation; OAI.SKValue.value_consequences; QAOA approaches the SK optimum in the thermodynamic-first limit. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
@@ -2046,6 +2469,8 @@
     "Paper scope review (25 October 2026): The authored focus follows the three targets in Section 1: full support, scalar value and the thermodynamic-first circuit statement. Other developed branches remain mapped without becoming additional top-level goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
     "Passage correspondence review (25 October 2026): qaoa-transfer explicitly displays the ordinary cost and mixer root updates; its direct mapping now includes circuit.ordinary_updates and applicable source credit.",
     "25 October 2026 round-four source-aware revision: applied skills/graph-to-long/SKILL.md (SHA256 0ef53764363765a4654b83f5aabc42e92937d6c8e5d1eaf61477cdfb74590941). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically.",
-    "25 October 2026 lecture-informed refinement: applied skills/graph-to-long/SKILL.md (SHA256 4bb7e3fe212c4d33583500307aa4c899775539129365f86a565c83184aaa69d6). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions."
+    "25 October 2026 lecture-informed refinement: applied skills/graph-to-long/SKILL.md (SHA256 4bb7e3fe212c4d33583500307aa4c899775539129365f86a565c83184aaa69d6). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions.",
+    "25 October 2026 round-six bounded revision: applied skills/graph-to-long/SKILL.md (SHA256 cd6cd7605a9b3c7225dae668367103178e80654846b1a6378544117b76799297). Advisory returns 08–09 and relevant 07/10 were checked against pinned source types and proof bodies before adopting the adaptive Gaussian lower-bound reconstruction, explicit model transport, root-energy decomposition, circuit import/weighted-domain/probe-accuracy contracts, exact all-mesh heat test and three-way depth-one calibration. Preserved support, density, terminal, index, shared-seed, clock and normalization qualifications. Re-read changed mathematical passages and immediate uses; finite heat and n=2,3 statevector diagnostics passed. Bounded source-assisted agent review does not establish a new kernel/Comparator run, complete analytic acceptance or human comprehension. Split formal correspondence while retaining the stable formal anchor; passage claims selected by actual local hypotheses. Draft/needs_revision retained.",
+    "25 October 2026 integrated review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 cd6cd7605a9b3c7225dae668367103178e80654846b1a6378544117b76799297). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons were incorporated into the four local transition skills and docs/authoring.md. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and three scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
   ]
 }

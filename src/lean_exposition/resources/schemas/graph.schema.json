@@ -3,7 +3,11 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "enum": ["1.0", "1.1"]
+      "enum": [
+        "1.0",
+        "1.1",
+        "1.2"
+      ]
     },
     "id": {
       "type": "string",
@@ -164,10 +168,22 @@
             "type": "boolean"
           },
           "lean_kind": {
-            "enum": ["axiom", "definition", "theorem", "opaque", "quotient_primitive", "inductive", "constructor", "recursor"]
+            "enum": [
+              "axiom",
+              "definition",
+              "theorem",
+              "opaque",
+              "quotient_primitive",
+              "inductive",
+              "constructor",
+              "recursor"
+            ]
           },
           "is_partial": {
-            "type": ["boolean", "null"]
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "declaration": {
             "type": "string",
@@ -305,6 +321,107 @@
               "minLength": 1
             },
             "uniqueItems": true
+          },
+          "application": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "const": "authored"
+              },
+              "shared_bindings": {
+                "type": "object",
+                "minProperties": 1,
+                "propertyNames": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "premise_bindings": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "assumption_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "supplier_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "binding_names": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true,
+                      "minItems": 1
+                    },
+                    "rationale": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "assumption_id",
+                    "supplier_id",
+                    "binding_names",
+                    "rationale"
+                  ]
+                }
+              },
+              "remaining_assumption_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "source_span": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "start_line": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "end_line": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "start_line",
+                  "end_line"
+                ]
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "status",
+              "shared_bindings",
+              "premise_bindings",
+              "remaining_assumption_ids",
+              "source_span",
+              "rationale"
+            ]
           }
         },
         "required": [

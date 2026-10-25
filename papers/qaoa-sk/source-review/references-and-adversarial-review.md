@@ -147,3 +147,39 @@ they do not refute or repair EAMS's continuum theorem.
 [q-assembly]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/06-assembly.tex#L7-L52
 
 [q-positive-steps]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/07-positive-temperature.tex#L310-L444
+
+## Review-driven revision and method transfer
+
+The 25 October revision draws on ten source-assisted model critiques of the
+previous edition. Their common recommendations were checked against the actual
+mathematical sources, rather than accepted by consensus. The contact argument,
+diffuse-mass removal, origin and terminal cases, fixed-time density transfer,
+and order of limits survived those sampled checks and remain in the papers.
+These critiques were not human-reader studies or fresh formal acceptance.
+
+| Decision | Revision and its boundary |
+| --- | --- |
+| Make the exposition's objects usable | The zero coefficient now gives an explicit heat response, moment curve and descending variation. Its admissibility is separated from minimality; the example does not inherit a minimizer theorem. |
+| Complete the elementary proof before reopening its analytic input | The three geometric gap cases are exhausted before the strict-curvature mechanism is expanded. The later explanation explicitly resets to an arbitrary comparison coefficient. This ordering is a local choice, not a universal paper template. |
+| Show where strictness matters | The calculus diagram has equal endpoint slopes, so the missing area comes from strict convexity. Its curve is an exact teaching example, not an asserted SK moment curve. |
+| Retain the expert paper's distinctive argument | The quantitative estimate's two uses remain central. A compact rooted-energy identification explains the adjacent correlation sum; the complete circuit construction stays in the long record. |
+| Supply the independent scalar lower bound | Long §8.5 now derives Gaussian-column splitting, adaptive selection, empirical orthogonalization and the corrected expectation limit, with separate proof destinations. The finite comparison is not an efficient algorithm or a formal-model transport. |
+| Preserve application ingredients without retaining supplied premises as free | Three authored application records use the same witness at the theorem and supplier. Conditional arguments remain navigable; formal-interface and ordinary-manuscript premises remain distinct. Structural validation does not check the substitution's mathematical truth. |
+| Reconcile recorded checking history | The graph now reaches the retained interruption summary alongside the older plans and failures. The dated observation has an unavailable terminal outcome; it supplies neither rejection nor acceptance. |
+
+The changes refine the existing four [transition skills](../../../skills/README.md)
+and their shared [maintenance loop](../../../docs/authoring.md#use-and-improve-the-transition-skills).
+No external repository or installed home-directory skill is required to follow
+that method. The following transfer checks explain the scope of the new guidance.
+
+| General lesson and owner | Two distinct checks | Case the rule must reject |
+| --- | --- | --- |
+| A theorem application preserves a common witness and the suppliers' own premises; source-to-graph | A constructed diffusion supplies one premise while minimality remains free. Attainment supplies one manuscript minimizer before the separate classical algorithm applies full support. | A supplier that itself assumes the supposedly discharged premise cannot make the result unconditional; the regression fixture retains it. |
+| A detailed account must explain the construction behind its promised endpoint; graph-to-long | The adaptive offset bound is distinct from its empirical expectation limit. The circuit's Gaussian-law matching is distinct from its energy identification. | A helper name, source inventory or checked finite example cannot stand in for either missing argument. |
+| A short account retains the observable used by the next construction; long-to-short | The adjacent correlation sum needs its rooted-energy identity. The spatial moment inequality needs its fixed-time passage before it can force density. | Matching one number, or passing a time derivative without justification, does not supply the required transfer. |
+| A teaching example isolates the hypothesis being taught; record-to-expository | For a nonconstant two-point variable and the function $x^2$, strict Jensen excludes equality. For a strictly increasing derivative, the secant inequalities differ from those of an affine function. | An affine function satisfies weak convexity and permits equality; it cannot illustrate a strict deficit. The SK diagram is a local use of this general choice. |
+
+These are source and author checks of a method's scope, not measured learning
+effects. A fresh reader attempt remains necessary to assess comprehension of
+the revised exposition. Exact editions and passage bindings must be refreshed
+after any subsequent change; the reviews of the previous edition remain history.

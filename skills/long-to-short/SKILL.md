@@ -62,6 +62,10 @@ material as unavailable rather than assuming a link's destination is adequate.
    When shortening a construction to an identification or equivalence, retain
    the map or convention needed by the next calculation. If the argument uses
    only a shared invariant, name that invariant instead of claiming more.
+   Explain why that invariant is the observable needed downstream. Equality of
+   a scalar quantity does not by itself connect an optimization construction to
+   a circuit, algorithm or geometric object. Retain the short identifying formula
+   and route the construction proving its preservation to the long record.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference
@@ -69,6 +73,13 @@ material as unavailable rather than assuming a link's destination is adequate.
    nearby theorem is insufficient. Identify the result obtained at that
    destination and where the reader returns. Test one complete short-to-long
    journey, including a boundary case when the omitted proof has cases.
+   Inspect the delivered PDF as well as the source: a reference should name the
+   companion and section even when its link cannot be followed. Test local links
+   from the actual reading-copy directory after relocation, including the named
+   destination inside each PDF. A source label or existing target file does not
+   establish that destination. Check the portable Markdown bundle separately;
+   its contents and the PDF reading edition can differ. Do not invent a public
+   URL for an unpublished file.
 5. Before cutting a passage, decide where its useful content will remain.
    Preserve the complete long argument; never rebuild it from the shortened
    paper. Independent routes may stay there. Essential assumptions,

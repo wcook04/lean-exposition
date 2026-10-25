@@ -62,6 +62,11 @@ research claim as though explaining it made it established.
    size to expose the difficulty: a case where all values are distinct cannot
    teach why multiplicities matter. Work through the relevant calculation or
    construction, including the checks that make the example admissible.
+   Where useful, carry one candidate through several definitions so the reader
+   can calculate their relationships. Explicitly separate admissibility from
+   optimality and a definition from an identity proved only at an optimum.
+   Reuse the example only while it reveals something; do not force an unhelpful
+   running example through every section.
 3. Move from that example to the general argument. Explain why a construction
    or estimate is needed before introducing its machinery. Keep the hard
    inference visible: write down the last established fact, the next required
@@ -74,6 +79,15 @@ research claim as though explaining it made it established.
    An imported estimate may remain an explicitly stated input: teach what it
    guarantees and how it is used, with a full-proof destination. Do not replace
    it with an intuitive picture that quietly claims to prove the estimate.
+   When an imported estimate closes an elementary argument, consider finishing
+   that argument before opening the estimate's technical proof. List the
+   exhaustive cases and discharge each once. The test is continuity of the
+   reader's local question; prerequisites needed to understand the estimate
+   still come first, and there is no universal rule to postpone analytic detail.
+   After a conclusion changes the context, explicitly reset the objects and
+   hypotheses before explaining a previously imported result. A general
+   comparison coefficient need not have the identities just proved for a
+   minimizer. The reader must know which object each later formula concerns.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
@@ -120,6 +134,10 @@ research claim as though explaining it made it established.
 9. Run `lean-exposition check-bundle DIR`, inspect the delivered document and
    follow each proof and citation destination. If diagrams are added, inspect
    them at the intended viewing size and verify their mathematical conventions.
+   To teach why a strict inequality matters, choose a boundary example in which
+   the weaker inequality would allow equality. A picture already separated by
+   a margin cannot isolate the role of strictness. Change one hypothesis in a
+   second example and check which conclusion or proof step survives.
 
 ## Output contract
 

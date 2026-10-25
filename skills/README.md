@@ -4,6 +4,12 @@ These skills teach decisions that the CLI cannot make. They can be read by a
 human or copied into an agent's supported skill directory. The Python package
 does not load or execute them.
 
+This directory and the linked local guides contain the complete working method.
+No other repository, home-directory skill installation or network service is
+required. Historical examples and writing references explain where choices came
+from; following those external links is optional. If copying a skill, preserve
+its relative links or copy this directory with `docs/` and the selected example.
+
 | Starting point | Task | Skill |
 | --- | --- | --- |
 | Identified source files | Record claims, assumptions and their support | [Source to graph](source-to-graph/SKILL.md) |
@@ -22,6 +28,12 @@ document. Record consequential choices and observed failures in the existing
 review account. The [maintenance loop](../docs/authoring.md#use-and-improve-the-transition-skills)
 explains how a revision can improve these instructions without treating every
 local preference as a general rule.
+
+The long record must make its selected argument recoverable. The expert paper
+must make its contribution and decisive reasoning assessable. The exposition
+must let its intended reader understand and use one meaningful result. These
+are different completion tests, not page-count targets. They share sources and
+claim boundaries, but may have different entry points and stopping points.
 
 The source context includes definitions, proof bodies, Lean and Comparator
 receipts, original arguments and the relevant literature. A graph index or an

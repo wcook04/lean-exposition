@@ -1,8 +1,10 @@
 # Methods from eight Erdős problem corpora
 
-These public Erdős sources provide worked examples for the existing
-[authoring stages](authoring.md). The [contracts](contracts.md) continue to own
-evidence and document bindings.
+These public Erdős sources are historical bootstrap examples for the existing
+[authoring stages](authoring.md). The complete working method lives in this
+repository's [four skills](../skills/README.md); consulting or cloning the
+earlier repository is optional. The [contracts](contracts.md) own evidence and
+document bindings.
 
 The sources below belong to the eight problem corpora in
 [`wcook04/plectis-erdos` at `a0878310`](https://github.com/wcook04/plectis-erdos/tree/a0878310af794d7a0f76cc11f4de3a20c795dc60).

@@ -44,6 +44,12 @@ keep execution status unknown; do not infer a successful check from a file.
 5. For each support relation, explain what the support establishes and what
    remains to connect it to the claim. A nearby theorem with different domains
    or guards does not establish the advertised statement.
+   Distinguish a conditional theorem from its application to a supplied witness.
+   Keep the theorem's proof ingredients reachable and record which supplier
+   discharges each premise for that same witness. Use the supported application
+   contract rather than changing a logical ingredient into a citation to hide
+   a premise. An ordinary-model premise and a formal-interface premise remain
+   different until a source-supported transport identifies them.
 6. Record citations by exact version and passage. Distinguish a theorem used in
    the proof, historical credit, an adapted construction and an explanatory
    comparison. A citation may have more than one role, each stated explicitly.
@@ -53,6 +59,11 @@ keep execution status unknown; do not infer a successful check from a file.
 7. Preserve useful failures with the attempted implication, assumptions,
    counterexample or unsuccessful check, and the precise conclusion it excludes.
    An unrun check is unknown; a failed approach need not refute the goal.
+   Connect later observations to their actual subjects while retaining earlier
+   plans and outcomes. A stopped controller without a recovered terminal result
+   establishes neither proof rejection nor acceptance. Test that the ordinary
+   evidence query reaches the observation; placing a receipt on disk alone does
+   not make it available through the graph.
 8. Run `lean-exposition validate GRAPH`. Inspect errors and repair the owning
    records. Select a goal with
    `lean-exposition select GRAPH --goal NODE --out SELECTED_GRAPH` when the

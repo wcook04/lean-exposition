@@ -54,7 +54,7 @@ class PaperRangeTests(unittest.TestCase):
             root, manifest = fixture(Path(temporary))
             start, end = occurrence("μ-result")
             result = self.query(root, manifest, [(start, end)])
-            self.assertEqual(result["paper_query_version"], "0.4.0")
+            self.assertEqual(result["paper_query_version"], "0.4.1")
             self.assertEqual(result["query"]["byte_ranges"], [[start, end]])
             self.assertTrue(result["query"]["range_policy"])
             self.assertEqual(result["match_count"], 1)

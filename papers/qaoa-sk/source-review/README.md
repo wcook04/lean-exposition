@@ -29,6 +29,11 @@ expert acceptance. The two Comparator configurations permit `propext`,
 `Quot.sound`, and `Classical.choice`, with `enable_nanoda=false`; that policy
 is distinct from an observed axiom audit.
 
+The [latest revision account](references-and-adversarial-review.md#review-driven-revision-and-method-transfer)
+records which criticisms changed the papers, which arguments survived scrutiny,
+and which lessons changed the local authoring methods. Review of an earlier
+edition does not confer acceptance on the revised one.
+
 When using a passage in a draft, retain its exact hypotheses and source
 locator. In particular, full relative support is on `[0,1)`, minimizer
 existence is not part of the full-support conclusion, the two formal APIs

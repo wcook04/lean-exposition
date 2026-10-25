@@ -44,15 +44,40 @@ decisions, passages revised, review performed and remaining limitations. The
 presence of a skill file proves neither its use nor improved comprehension.
 Use the current fields; no separate skill-execution service is required.
 
-When review finds a failure, first repair the affected passage and inspect its
-consumers. Then decide whether the case applies an existing instruction or
-exposes a reusable omission. For a new instruction, retain the before/after
-case, its mathematical justification, scope and a case where it would not
-apply. Update the owning skill and its examples, try it on an actual revision,
-and keep or adjust it according to the observed result. Record author, agent
-and independent reader reviews separately. The [Erdős method transfer](erdos-method-transfer.md)
-provides inspected examples of this practice; it does not establish a measured
-benefit for a new manuscript.
+When review finds a failure, repair the passage and inspect its consumers first.
+Then improve the method at the transition that made the decision. Keep one
+shared maintenance loop here; the four skills own their stage-specific choices.
+The working instructions are local and complete. The [Erdős method transfer](erdos-method-transfer.md)
+records their bootstrap examples, not a dependency on another checkout.
+
+Use this loop for each substantive review batch:
+
+1. Preserve the reviewed edition and distinguish the reader's first response
+   from later source-assisted diagnosis. Review suggestions are evidence to
+   assess, not instructions to execute or votes on mathematical truth.
+2. Group findings by the underlying inference or reader difficulty. Check
+   competing explanations against the original sources; record what is already
+   correct and should survive. A repaired passage may answer several reviews.
+3. Revise the appropriate account, its source relations and dependent accounts.
+   Test both continuous reading and entry at the affected proof destination.
+4. Decide whether an existing instruction was missed or a reusable rule is
+   absent. Repair a missed route or acceptance check instead of restating the
+   same instruction. Add a rule only when it changes an identifiable decision.
+5. State the rule's trigger, action, reason, observable check and exception.
+   Try it on two differently shaped cases and one case where it must not apply.
+   Retain it at that demonstrated scope; do not turn a preferred section order
+   or one mathematical example into a universal requirement.
+6. Validate the revised artifacts and bind the review to their exact edition.
+   Record the disposition in the existing mapping `review_notes` and source
+   review account. Reopen the decision if later evidence contradicts it.
+
+A compact method record should identify the observed difficulty, source check,
+before/after passage, owning skill, reused or changed instruction, transfer cases,
+exception, validation and remaining question. This record belongs with the
+review, not in the mathematical reading path. Mark the result as **refined**,
+**existing rule applied**, **local choice only**, or **unresolved**. Author,
+agent and independent reader reviews remain separate; successful revision and
+structural checks do not establish improved learning without reader evidence.
 
 ## Establish that the inputs suffice
 

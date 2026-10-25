@@ -25,6 +25,34 @@ class PaperRenderingTests(unittest.TestCase):
                     capture_output=True, check=True).stdout
                 for anchor in anchors:
                     self.assertIn("\\phantomsection\\label{" + anchor + "}", result)
+                    self.assertIn("\\hypertarget{" + anchor + "}{}", result)
+
+    def test_local_pdf_named_destination_is_normalized_only_for_latex(self):
+        source = '[Proof](../long/record.pdf#nameddest=proof-step).\n'
+        command = ["pandoc", "-f", "markdown", "-t", "latex", "--lua-filter", str(FILTER)]
+        result = subprocess.check_output(command, input=source, text=True)
+        self.assertIn(r"\href{../long/record.pdf\#proof-step}", result)
+        self.assertNotIn("nameddest=", result)
+        html = ["pandoc", "-f", "markdown", "-t", "html"]
+        self.assertEqual(subprocess.check_output(html, input=source, text=True),
+                         subprocess.check_output(html + ["--lua-filter", str(FILTER)],
+                                                 input=source, text=True))
+
+    def test_companion_annotation_links_only_in_a_pdf_reading_edition(self):
+        source = ('<span class="pdf-companion" data-pdf-target="../long/record.pdf" '
+                  'data-pdf-anchor="proof-step">Long §4, the proof</span>.\n')
+        command = ["pandoc", "-f", "markdown", "-t", "latex", "--lua-filter", str(FILTER)]
+        result = subprocess.check_output(command, input=source, text=True)
+        self.assertIn(r"\href{../long/record.pdf\#proof-step}{Long §4, the proof}", result)
+        html = subprocess.check_output(
+            ["pandoc", "-f", "markdown", "-t", "html", "--lua-filter", str(FILTER)],
+            input=source, text=True)
+        self.assertIn("Long §4, the proof", html)
+        self.assertNotIn("href=", html)
+        portable = "---\nportable-local-links: true\n---\n" + source
+        result = subprocess.check_output(command, input=portable, text=True)
+        self.assertIn("Long §4, the proof", result)
+        self.assertNotIn("record.pdf", result)
 
     def test_html_output_retains_the_existing_anchor(self):
         source = '<a id="proof-step"></a>\n\n## Proof\n\nSee [proof](#proof-step).\n'

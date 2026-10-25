@@ -100,7 +100,7 @@ class CorpusQueryTests(unittest.TestCase):
             citation = record_ref(result, "citations", "support_curvature_source")
             usage = next(row for row in result["record_usage"] if row["record_ref"] == citation)
             self.assertEqual(Counter(row["stage"] for row in usage["direct_passages"]),
-                             Counter(long=17, short=7, expository=8))
+                             Counter(long=22, short=8, expository=10))
             self.assertFalse(result["coverage"]["source_bytes_opened"])
             self.assertFalse(result["coverage"]["receipt_bytes_opened"])
             corpus = consumer.project_corpus(root)

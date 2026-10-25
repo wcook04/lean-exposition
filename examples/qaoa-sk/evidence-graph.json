@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "id": "qaoa-sk-public-intake",
   "title": "Zero-temperature SK full support, scalar value, and the separate QAOA manuscript target",
   "selected_goals": [
@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
-      "revision": "sha256:315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
+      "url": "urn:sha256:117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa",
+      "revision": "sha256:117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94"
+      "sha256": "117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -752,6 +752,62 @@
       "url": "https://arxiv.org/abs/1411.4028v1",
       "revision": "arXiv:1411.4028v1",
       "sha256": "0b8f8649ffa0ae294d74a5d67a2198754283aa397771cc5b8c72161f3d1bb0a3",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "scalar-r6-source-gaussian-column-split",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "6fae3ca82b892e6f40df9c835f9cda05eb9d0a041d7d2c3c448401d379024410"
+    },
+    {
+      "id": "scalar-r6-source-finite-adaptive-lower",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "1a7713c58245bebc5f893086f98ac1ed63c30ce2d821f421e71d4251d9c09515"
+    },
+    {
+      "id": "scalar-r6-source-empirical-energy-limit",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "c7e3201e4bbc01380c13717a1b3836651a360a1c134edc3484b26b3731c6a86a"
+    },
+    {
+      "id": "scalar-r6-source-predictable-lower",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "af3bae1e409791d4fd82491ba0e0675856cc8dfef88f7b7269d741bf6f1c031d"
+    },
+    {
+      "id": "lopatto2026_interval_support_v4",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2607.11756v4",
+      "revision": "arXiv:2607.11756v4",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only"
+    },
+    {
+      "id": "lopatto2026_external_field_v1",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2610.00127v1",
+      "revision": "arXiv:2610.00127v1",
       "license": "NOASSERTION",
       "redistribution": "reference_only"
     }
@@ -1734,7 +1790,7 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
+      "url": "urn:sha256:117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
@@ -1748,7 +1804,7 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
+      "url": "urn:sha256:117639900e7f7fbc85d02603f534f7d9700743cadb43e46ba3a29d866a705baa",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §9.11, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     },
     {
@@ -1757,6 +1813,55 @@
       "url": "https://arxiv.org/abs/1411.4028v1",
       "source_id": "qaoa_original_2014",
       "locator": "Section II, equations (14)–(26): cancellation outside a fixed-depth local observable’s support. Background for the finite-tree explanation, not the dense-SK or large-degree transfer theorem."
+    },
+    {
+      "id": "scalar.source_gaussian_column_split_lean_source",
+      "source_id": "scalar-r6-source-gaussian-column-split",
+      "title": "Splitting one Gaussian column preserves the expected quadratic maximum",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
+      "locator": "GaussianColumn.lean:158–181; OAI.SKValueG.quadraticValue_column; hypotheses and proof inspected"
+    },
+    {
+      "id": "scalar.source_finite_adaptive_lower_lean_source",
+      "source_id": "scalar-r6-source-finite-adaptive-lower",
+      "title": "Finite adaptive Gaussian offsets are bounded by the SK optimum",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean",
+      "locator": "QuadraticSK.lean:74–88; OAI.SKValueG.finite_adaptive_SK_lower; hypotheses and proof inspected"
+    },
+    {
+      "id": "scalar.source_empirical_energy_limit_lean_source",
+      "source_id": "scalar-r6-source-empirical-energy-limit",
+      "title": "The empirical adaptive energy converges to adjacent correlations",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+      "locator": "EmpiricalEnergyLimit.lean:44–122; OAI.SKValueG.empiricalColumnEnergy_ae_tendsto; hypotheses and proof inspected"
+    },
+    {
+      "id": "scalar.source_predictable_lower_lean_source",
+      "source_id": "scalar-r6-source-predictable-lower",
+      "title": "Predictable orthonormal correlations are bounded by the ground-state value",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+      "locator": "ConstantFatou.lean:48–134; OAI.SKValueG.predictable_coefficients_le_groundState; hypotheses and proof inspected"
+    },
+    {
+      "id": "lopatto2026_interval_support_v4",
+      "source_id": "lopatto2026_interval_support_v4",
+      "title": "Full replica symmetry breaking in the Sherrington–Kirkpatrick model",
+      "url": "https://arxiv.org/abs/2607.11756v4",
+      "locator": "Proposition 5.1 and Corollary 5.6; later positive-temperature zero-field edition, distinct from v3 and zero-temperature strict density"
+    },
+    {
+      "id": "lopatto2026_external_field_v1",
+      "source_id": "lopatto2026_external_field_v1",
+      "title": "Parisi measure of the Sherrington–Kirkpatrick model with external field",
+      "url": "https://arxiv.org/abs/2610.00127v1",
+      "locator": "Theorem 2.3 and Appendix B; positive-temperature external-field comparison; retain its one-sided coefficient and equality hypotheses"
+    },
+    {
+      "id": "support_zero_candidate_chl",
+      "source_id": "chl2018_zero_temperature",
+      "title": "Zero-field zero-candidate descent",
+      "url": "https://arxiv.org/abs/1609.04368v4",
+      "locator": "Theorem 6 and its proof, printed pp.13–16, especially equation (24): zero-coefficient heat response and a feasible late-step improvement. The exposition separately derives the origin-atom directional derivative."
     }
   ],
   "nodes": [
@@ -1797,7 +1902,9 @@
         "full_support_solution_build_failure_20261023",
         "full_support_corrected_build_not_run_20261024",
         "full_support_corrected_comparator_not_run_20261024",
-        "current_input_identity_20261024"
+        "current_input_identity_20261024",
+        "corrected_comparator_outcome_unavailable_20261025",
+        "corrected_extraction_outcome_unavailable_20261025"
       ],
       "citation_ids": [
         "scope_281",
@@ -1827,7 +1934,9 @@
         "full_support_solution_build_failure_20261023",
         "full_support_corrected_build_not_run_20261024",
         "full_support_corrected_comparator_not_run_20261024",
-        "current_input_identity_20261024"
+        "current_input_identity_20261024",
+        "corrected_comparator_outcome_unavailable_20261025",
+        "corrected_extraction_outcome_unavailable_20261025"
       ],
       "citation_ids": [
         "full_support_implementation",
@@ -1858,7 +1967,9 @@
         "scalar_value_solution_build_failure_20261024",
         "scalar_value_corrected_build_not_run_20261024",
         "scalar_value_corrected_comparator_not_run_20261024",
-        "current_input_identity_20261024"
+        "current_input_identity_20261024",
+        "corrected_comparator_outcome_unavailable_20261025",
+        "corrected_extraction_outcome_unavailable_20261025"
       ],
       "citation_ids": [
         "scope_281",
@@ -1888,7 +1999,9 @@
         "scalar_value_solution_build_failure_20261024",
         "scalar_value_corrected_build_not_run_20261024",
         "scalar_value_corrected_comparator_not_run_20261024",
-        "current_input_identity_20261024"
+        "current_input_identity_20261024",
+        "corrected_comparator_outcome_unavailable_20261025",
+        "corrected_extraction_outcome_unavailable_20261025"
       ],
       "citation_ids": [
         "scalar_value_implementation",
@@ -2100,7 +2213,7 @@
       "locator": "variation.tex:81–117; lem:contact",
       "statement": "For an admissible minimizer gamma, any Stieltjes measure mu with mu([0,t])=gamma(t), and q for the same controlled diffusion, set G(s)=int_s^1(q(t)-t)dt. Then G(s)>=0 for all s<1 and G(s)=0 on S=supp(mu), support relative to [0,1). Adding an atom yields nonnegativity; removing a fraction of mu restricted to any compact K yields int_K G dmu<=0, and continuity gives vanishing on all of S.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2110,7 +2223,7 @@
         "support_contact_source",
         "support_contact_lean_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Compact mass removal covers atomic, diffuse and singular continuous measures. It needs only local finiteness, not finite total mass. Minimality is a premise of the conditional result, not an independently supplied existence theorem."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Compact mass removal covers atomic, diffuse and singular continuous measures. It needs only local finiteness, not finite total mass. Minimality is a premise of the conditional result, not an independently supplied existence theorem. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.contact_derivatives",
@@ -2121,7 +2234,7 @@
       "locator": "variation.tex:119–127; contact-derivatives",
       "statement": "For an admissible minimizer gamma and G,S,q as in support.contact, G'(s)=s-q(s) and G''(s)=1-q'(s) on compact strips. At every s in S intersect (0,1), q(s)=s and q'(s)<=1. If 0 is in S, then q(0)=0 and G(h)=(1/2)(1-q'(0))h^2+o(h^2), so the right derivative q'(0)<=1.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2132,7 +2245,7 @@
         "support_contact_lean_source",
         "support_diffusion_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. No slope condition at time 1 is available. For an initial gap with 0 outside S, the later argument uses q(0)=0 without assuming contact at 0."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. No slope condition at time 1 is available. For an initial gap with 0 outside S, the later argument uses q(0)=0 without assuming contact at 0. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.step_tails",
@@ -2339,7 +2452,7 @@
       "locator": "variation.tex:130–213 and 215–221; lem:no-terminal-plateau",
       "statement": "For every admissible minimizer gamma, there do not exist 0<=a<1 and finite c>=0 with gamma=c on (a,1). Indeed the terminal defect yields q(t)-t<0 near 1 and hence G(s)<0 for s sufficiently close to 1, contradicting G>=0. In particular support cannot be empty, since that would force gamma=0.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2350,7 +2463,7 @@
         "support_terminal_lean_source",
         "support_closure_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Time 1 is outside the support domain; this route does not assume a contact point or derivative there. Includes c=0 and does not appeal to infinite support as an extra premise."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Time 1 is outside the support domain; this route does not assume a contact point or derivative there. Includes c=0 and does not appeal to infinite support as an extra premise. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.no_bounded_gap",
@@ -2361,7 +2474,7 @@
       "locator": "variation.tex:223–237; bounded-gap contradiction",
       "statement": "For an admissible minimizer gamma and its Stieltjes measure, no support-free interval (a,b) can have endpoints a,b in S with 0<=a<b<1. Constancy of gamma and contact give q(a)=a, q(b)=b and q'(a),q'(b)<=1. If the plateau height is positive, strict convexity gives q'(t) below the endpoint chord and below 1; if zero, strict increase gives q'(t)<q'(b)<=1. Integration contradicts q(b)-q(a)=b-a.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2371,7 +2484,7 @@
         "support_closure_source",
         "support_closure_lean_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Includes a=0 only when 0 lies in the support, using the one-sided slope bound there. All q and gamma occurrences refer to the same diffusion/coefficient. A schematic area illustration is not a prerequisite."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Includes a=0 only when 0 lies in the support, using the one-sided slope bound there. All q and gamma occurrences refer to the same diffusion/coefficient. A schematic area illustration is not a prerequisite. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.no_initial_gap",
@@ -2382,7 +2495,7 @@
       "locator": "variation.tex:239–242; initial-gap case",
       "statement": "For an admissible minimizer gamma, an initial support-complement component [0,b), with 0<b<1 and b in S, is impossible. Since mu([0,b))=0, gamma=0 on [0,b). The zero-interval result gives q'(t)<q'(b)<=1 for 0<t<b, but symmetry gives q(0)=0 and contact at b gives q(b)=b. Integration contradicts these two values.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2393,7 +2506,7 @@
         "support_closure_lean_source",
         "support_contact_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Zero is not assumed to be a support point here. No left endpoint slope/contact condition is imported from the bounded-gap case; only q(0)=0 is used."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Zero is not assumed to be a support point here. No left endpoint slope/contact condition is imported from the bounded-gap case; only q(0)=0 is used. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.full_relative_support",
@@ -2404,7 +2517,7 @@
       "locator": "variation.tex:215–243; proof of thm:full-support",
       "statement": "For an admissible minimizer gamma and every Stieltjes measure mu with the specified cumulative function, S=supp(mu) is relatively closed in [0,1). Every nonempty component of [0,1) minus S is initial, bounded between support points, or terminal; empty support is a terminal-plateau case. Excluding all these cases proves S=[0,1).",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2414,7 +2527,7 @@
         "support_closure_source",
         "support_closure_lean_source"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. This is the support conclusion alone, not smooth absolute continuity, a positive density, existence of a minimizer, scalar value, or circuit convergence. Elementary one-dimensional support topology is retained as a source-level package."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. This is the support conclusion alone, not smooth absolute continuity, a positive density, existence of a minimizer, scalar value, or circuit convergence. Elementary one-dimensional support topology is retained as a source-level package. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "support.strict_increase",
@@ -2444,7 +2557,7 @@
       "locator": "variation.tex:243–246; Main.lean:44–59; Diffusion/Uniqueness.lean:13–63",
       "statement": "For an admissible minimizer gamma, full relative support makes q(t)=t for all 0<t<1 by contact, with q(0)=0 from symmetry. Differentiating using q'(t)=E[Phi_xx(t,X_t)^2] gives E[Phi_xx(t,X_t)^2]=1 for 0<=t<1, including the right derivative at 0. Pathwise uniqueness transfers both identities from the constructed diffusion to every associated diffusion on the same Brownian system.",
       "assumption_ids": [
-        "assumptions.full_support_minimizer"
+        "scalar.paper_minimizer"
       ],
       "evidence_ids": [
         "support_source_bindings_20261024",
@@ -2456,7 +2569,7 @@
         "support_uniqueness_lean_source",
         "full_support_implementation"
       ],
-      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The universal associated-diffusion quantifier is retained; replacing it with an existential witness would weaken the selected target. The identities are below terminal time 1, not a classical derivative assertion at 1."
+      "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The universal associated-diffusion quantifier is retained; replacing it with an existential witness would weaken the selected target. The identities are below terminal time 1, not a classical derivative assertion at 1. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models."
     },
     {
       "id": "scalar.paper_admissible",
@@ -3081,7 +3194,7 @@
         "circuit-r2-26-cite-classical-primary",
         "scalar-r2-26-cite-minimizer-attainment"
       ],
-      "boundary": "Closed witness application: attainment supplies γ, and the universally quantified fixed-minimizer construction is applied to that same γ before any finite choices are frozen. The scoped conditional route is linked by cites so the backend does not falsely retain its free minimizer hypothesis. This manually reviewed binding/application is not mechanically checked."
+      "boundary": "Closed witness application: attainment supplies gamma in the manuscript class U, and the universally quantified fixed-minimizer construction uses that same gamma before any finite choices are frozen. Its annotated support edge exposes the conditional argument while discharging the supplied manuscript admissibility and minimizer premises only within this use. The binding is authored source correspondence, not mechanically checked witness equality or proof acceptance."
     },
     {
       "id": "circuit.masked_controls",
@@ -3780,6 +3893,66 @@
         "authored_bounded_angle_depth_comparison"
       ],
       "boundary": "The displayed finite estimate is quoted from the later arXiv:2609.40309v1 Corollary S3.1; the growing-depth consequence is the authored elementary deduction log log T_p=4p log p+O(p+log p) with epsilon_p=exp(-p^2). For SK, c_2=1/sqrt(2) matches the unordered-pair expectation after an independent mean-zero scalar diagonal offset. This does not show that the earlier near-optimal constructed words share a uniform angle bound, supply angle-selection complexity, or establish a growing-depth measurement tail. It is standalone context, not a prerequisite of the earlier SK QAOA construction or a selected formal endpoint."
+    },
+    {
+      "id": "scalar.source_gaussian_column_split",
+      "kind": "claim",
+      "label": "Splitting one Gaussian column preserves the expected quadratic maximum",
+      "status": "unverified",
+      "source_id": "scalar-r6-source-gaussian-column-split",
+      "locator": "GaussianColumn.lean:158–181; OAI.SKValueG.quadraticValue_column",
+      "statement": "For a finite candidate family w_i, real offsets d_i and a direction v that is zero or unit, quadraticValue(w,d) equals the Gaussian expectation of quadraticValue(columnResidual(v,w), d + the columnVector Gaussian linear process).",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar.source_gaussian_column_split_lean_source"
+      ],
+      "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance."
+    },
+    {
+      "id": "scalar.source_finite_adaptive_lower",
+      "kind": "claim",
+      "label": "Finite adaptive Gaussian offsets are bounded by the SK optimum",
+      "status": "unverified",
+      "source_id": "scalar-r6-source-finite-adaptive-lower",
+      "locator": "QuadraticSK.lean:74–88; OAI.SKValueG.finite_adaptive_SK_lower",
+      "statement": "For n>0, a finite number K of measurable zero-or-unit directions depending on preceding Gaussian columns, and a selected spin with measurable adaptive offset, E[adaptiveOffset]/(n sqrt(n)) is at most groundStateSequence(n).",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar.source_finite_adaptive_lower_lean_source"
+      ],
+      "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance."
+    },
+    {
+      "id": "scalar.source_empirical_energy_limit",
+      "kind": "claim",
+      "label": "The empirical adaptive energy converges to adjacent correlations",
+      "status": "unverified",
+      "source_id": "scalar-r6-source-empirical-energy-limit",
+      "locator": "EmpiricalEnergyLimit.lean:44–122; OAI.SKValueG.empiricalColumnEnergy_ae_tendsto",
+      "statement": "Fix K. Let f_j be measurable functions of coordinates z_0,...,z_j, with finite second moments, unit L2 norms and pairwise orthogonality for j<K. For a measurable sign S and each j<K, empiricalColumnEnergy converges almost surely to E[f_j S] E[S z_(j+1)] under independent Gaussian rows.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar.source_empirical_energy_limit_lean_source"
+      ],
+      "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance."
+    },
+    {
+      "id": "scalar.source_predictable_lower",
+      "kind": "claim",
+      "label": "Predictable orthonormal correlations are bounded by the ground-state value",
+      "status": "unverified",
+      "source_id": "scalar-r6-source-predictable-lower",
+      "locator": "ConstantFatou.lean:48–134; OAI.SKValueG.predictable_coefficients_le_groundState",
+      "statement": "For fixed K, measurable predictable f_j with finite second moments, unit L2 norms and pairwise orthogonality for j<K, and any measurable sign S, the sum over j<K of E[f_j S] E[S z_(j+1)] is at most groundStateValue. No centring or minimizing coefficient is required.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [
+        "scalar.source_predictable_lower_lean_source"
+      ],
+      "boundary": "Source-inspected conditional statement with quantified guards retained in the statement. The source proof is present; no fresh elaboration, dependency extraction, Comparator result or independent semantic acceptance is asserted. The expectation-limit argument adds a nonnegative correction before passing to the limit; signed convergence alone would not suffice."
     }
   ],
   "edges": [
@@ -4622,10 +4795,41 @@
     {
       "from": "scalar.separate_classical_algorithm",
       "to": "support.full_relative_support",
-      "kind": "cites",
+      "kind": "supports",
       "evidence_ids": [
         "R2-26-SR-044"
-      ]
+      ],
+      "application": {
+        "status": "authored",
+        "shared_bindings": {
+          "gamma": "one attained manuscript minimizer gamma_0 in U, kept fixed for full support and the external EAMS theorem"
+        },
+        "premise_bindings": [
+          {
+            "assumption_id": "scalar.paper_minimizer",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "Attainment supplies this same gamma_0 in the manuscript class U, with its admissibility and minimality, before applying the conditional full-support theorem."
+          },
+          {
+            "assumption_id": "scalar.paper_admissible",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "Attainment supplies this same gamma_0 in the manuscript class U, with its admissibility and minimality, before applying the conditional full-support theorem."
+          }
+        ],
+        "remaining_assumption_ids": [],
+        "source_span": {
+          "source_id": "scalar-r2-26-source-algorithm-application",
+          "start_line": 29,
+          "end_line": 34
+        },
+        "rationale": "The algorithm proof applies thm:full-support to a minimizer to obtain the EAMS no-overlap-gap input. Attainment is supplied separately by the manuscript main.tex:94–107 and the existing scalar.minimizer_attainment support. The same attained gamma_0 is used for full support and strict increase. This authored application records the full-support input only, not a proof or formalization of the external algorithm theorem."
+      }
     },
     {
       "from": "scalar.formal_finite_gaussian_clause",
@@ -4822,10 +5026,41 @@
     {
       "from": "circuit.classical_primary",
       "to": "circuit.classical_fixed_minimizer",
-      "kind": "cites",
+      "kind": "supports",
       "evidence_ids": [
         "circuit-r2-26-warrant-021"
-      ]
+      ],
+      "application": {
+        "status": "authored",
+        "shared_bindings": {
+          "gamma": "one minimizer gamma in the manuscript's zero-field pure-SK admissible class U, chosen by attainment and used throughout the fixed-minimizer construction"
+        },
+        "premise_bindings": [
+          {
+            "assumption_id": "scalar.paper_minimizer",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "Attainment supplies one gamma minimizing the same manuscript Parisi functional; all later cutoff, mesh, smoothing, trigonometric and color choices are made for this gamma."
+          },
+          {
+            "assumption_id": "scalar.paper_admissible",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "The attaining gamma is a member of the same class U, so its admissibility is supplied with its minimality. Pure zero-field SK and the specified normalization remain the fixed domain of both statements. No SKSupport-to-SKValue model transport is asserted."
+          }
+        ],
+        "remaining_assumption_ids": [],
+        "source_span": {
+          "source_id": "scalar-r2-26-source-qaoa-scalar",
+          "start_line": 23,
+          "end_line": 41
+        },
+        "rationale": "The manuscript fixes an attained minimizer before constructing the bounded formula (the concluding construction is at lines 553–608). Applying the conditional construction to this common gamma supplies the closed existential input. The application is authored and remains subject to semantic review."
+      }
     },
     {
       "from": "circuit.classical_primary",
@@ -5470,10 +5705,39 @@
     {
       "from": "scalar.formal_parisi_clause",
       "to": "scalar.source_ground_state_identity_with_diffusion",
-      "kind": "cites",
+      "kind": "supports",
       "evidence_ids": [
         "R2-13-SR-027"
-      ]
+      ],
+      "application": {
+        "status": "authored",
+        "shared_bindings": {
+          "W": "the caller's BrownianSpace W",
+          "gamma": "the caller's OrderParameter gamma and IsMinimizer W gamma witness",
+          "X": "diffusionProcess W gamma"
+        },
+        "premise_bindings": [
+          {
+            "assumption_id": "assumptions.value_diffusion",
+            "supplier_id": "scalar.source_diffusion_exists",
+            "binding_names": [
+              "W",
+              "gamma",
+              "X"
+            ],
+            "rationale": "diffusionProcess_isDiffusion W gamma supplies IsDiffusion for the same W and gamma and X = diffusionProcess W gamma used by ground_state_parisi_of_diffusion."
+          }
+        ],
+        "remaining_assumption_ids": [
+          "assumptions.value_minimizer"
+        ],
+        "source_span": {
+          "source_id": "scalar-r2-26-source-formal-targets",
+          "start_line": 21,
+          "end_line": 27
+        },
+        "rationale": "MainConclusions applies the conditional ground-state identity to the constructed diffusion; the minimizer premise stays free. This is an authored source correspondence, not elaborated Lean application data or proof acceptance."
+      }
     },
     {
       "from": "scalar.lean_parisi_target",
@@ -5577,6 +5841,46 @@
       "kind": "supports",
       "evidence_ids": [
         "ordinary_comparison_warrants_20261024"
+      ]
+    },
+    {
+      "from": "scalar.source_finite_adaptive_lower",
+      "to": "scalar.source_gaussian_column_split",
+      "kind": "supports",
+      "evidence_ids": [
+        "scalar_lower_source_correspondence_r6"
+      ]
+    },
+    {
+      "from": "scalar.source_predictable_lower",
+      "to": "scalar.source_finite_adaptive_lower",
+      "kind": "supports",
+      "evidence_ids": [
+        "scalar_lower_source_correspondence_r6"
+      ]
+    },
+    {
+      "from": "scalar.source_predictable_lower",
+      "to": "scalar.source_empirical_energy_limit",
+      "kind": "supports",
+      "evidence_ids": [
+        "scalar_lower_source_correspondence_r6"
+      ]
+    },
+    {
+      "from": "scalar.source_predictable_lower",
+      "to": "scalar.source_spin_sequence_limit",
+      "kind": "supports",
+      "evidence_ids": [
+        "scalar_lower_source_correspondence_r6"
+      ]
+    },
+    {
+      "from": "scalar.source_strip_value_lower",
+      "to": "scalar.source_predictable_lower",
+      "kind": "supports",
+      "evidence_ids": [
+        "scalar_lower_source_correspondence_r6"
       ]
     }
   ],
@@ -6344,7 +6648,7 @@
         "scalar.separate_classical_algorithm",
         "support.full_relative_support"
       ],
-      "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Reference navigation to the conditional full-support theorem used on the locally chosen attained minimizer. The consuming algorithm statement records the scoped source-level application; no supports edge is used because this backend has no witness-binding or hypothesis-discharge semantics and would otherwise expose paper-minimizer as an external assumption of an existential consequence. Sources: scalar-r2-26-source-algorithm-application — algorithm-application.tex:30–34; scalar-r2-26-source-main — main.tex:94–107. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result."
+      "details": "The algorithm proof applies thm:full-support to a minimizer to obtain the EAMS no-overlap-gap input. Attainment is supplied separately by the manuscript main.tex:94–107 and the existing scalar.minimizer_attainment support. The same attained gamma_0 is used for full support and strict increase. This authored application records the full-support input only, not a proof or formalization of the external algorithm theorem."
     },
     {
       "id": "R2-26-SR-045",
@@ -6733,7 +7037,7 @@
         "circuit.classical_primary",
         "circuit.classical_fixed_minimizer"
       ],
-      "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Navigation to the universally quantified construction used after choosing an attained minimizer. This cites edge deliberately keeps that scoped free-minimizer branch out of the generic primary assumption closure; its full premise use is described in the closed application statement. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum and preceding scalar choice, lines 220–254, 553–608. Scope: Scoped construction navigation, not an additional logical prerequisite or automatic hypothesis discharge."
+      "details": "The manuscript fixes an attained minimizer before constructing the bounded formula (the concluding construction is at lines 553–608). Applying the conditional construction to this common gamma supplies the closed existential input. The application is authored and remains subject to semantic review. Supplier and conditional proof ingredients are retained by a scoped application; its binding text is authored, not checked substitution."
     },
     {
       "id": "circuit-r2-26-warrant-022",
@@ -9106,7 +9410,7 @@
         "scalar.formal_parisi_clause",
         "scalar.source_ground_state_identity_with_diffusion"
       ],
-      "details": "MainConclusions:21–27 first applies groundState_eq_parisi_of_contact with minimizer contact, then instantiates X with diffusionProcess W gamma and its proved diffusion property. This edge is citation navigation: a direct supports edge to the auxiliary supplied-diffusion claim would incorrectly make X an external caller premise in the current union-only graph closure. The local witness discharge is recorded here; no discharge inference is attributed to the graph engine. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance."
+      "details": "MainConclusions applies the conditional ground-state identity to the constructed diffusion; the minimizer premise stays free. This is an authored source correspondence, not elaborated Lean application data or proof acceptance. Supplier and conditional proof ingredients are retained by a scoped application; its binding text is authored, not checked substitution."
     },
     {
       "id": "R2-13-SR-028",
@@ -9234,6 +9538,71 @@
         "scalar.parisi_formula"
       ],
       "details": "Read the exact frozen long §9.7.2 and §9.11 and the private original PDF Corollary S3.1 printed pp.46–47. The source and PDF hashes identify the inspected editions. The Gibbs comparison follows from log-sum, entropy, standard Gaussian concentration and counting; the Parisi-formula dependency only identifies the limiting value. For the later estimate, epsilon_p=exp(-p^2) obeys the small-error condition eventually, log R_p=4p log p+O(p), and logarithms of the threshold give log log T_p=4p log p+O(p+log p). No independent replay of the later paper’s cavity proof or formal extraction was performed. Neither comparison receives an incoming SK proof-dependency edge."
+    },
+    {
+      "id": "scalar_lower_source_correspondence_r6",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Independent semantic acceptance outstanding",
+      "source_ids": [
+        "scalar-r6-source-gaussian-column-split",
+        "scalar-r6-source-finite-adaptive-lower",
+        "scalar-r6-source-empirical-energy-limit",
+        "scalar-r6-source-predictable-lower"
+      ],
+      "subject_ids": [
+        "scalar.source_gaussian_column_split",
+        "scalar.source_finite_adaptive_lower",
+        "scalar.source_empirical_energy_limit",
+        "scalar.source_predictable_lower",
+        "scalar.source_strip_value_lower"
+      ],
+      "details": "The local author inspected theorem statements and selected proofs to add these curated relationships. This is not an independent acceptance or a formal extraction. The finite adaptive comparison, empirical limit and nonnegative correction have separate written destinations."
+    },
+    {
+      "id": "corrected_comparator_outcome_unavailable_20261025",
+      "kind": "comparator",
+      "status": "unavailable",
+      "command": [],
+      "tool": "Curated interruption observation; terminal outcome unavailable",
+      "source_ids": [
+        "full_support_proof",
+        "scalar_value_proof",
+        "active_derived_lakefile",
+        "active_derived_lake_lock"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support",
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "receipt_path": "verification/corrected-replay-interruption-20261025.json",
+      "receipt_sha256": "50646da736e4a9a598d41abe466dc65589bd95f67fdc51bf7622bea20fce94dc",
+      "details": "Observed 2026-10-25T17:48:54.713682+00:00 for the corrected-globs-20261024 attempt. The retained controller reconciliation has no terminal research-process result. Full-support challenge build and a live challenge exporter were observed; scalar execution and research-v2 extraction were not observed. Comparator acceptance, rejection, kernel acceptance, extraction completeness and actual axiom inventory remain unknown. unavailable refers to the terminal outcome, not a proof verdict. This dated historical summary is not a process receipt or a claim that no later attempt exists; it preserves earlier not-run plans and build failures."
+    },
+    {
+      "id": "corrected_extraction_outcome_unavailable_20261025",
+      "kind": "extraction",
+      "status": "unavailable",
+      "command": [],
+      "tool": "Curated interruption observation; terminal outcome unavailable",
+      "source_ids": [
+        "full_support_proof",
+        "scalar_value_proof",
+        "active_derived_lakefile",
+        "active_derived_lake_lock"
+      ],
+      "subject_ids": [
+        "full_support",
+        "lean.full_support",
+        "scalar_value",
+        "lean.value_consequences"
+      ],
+      "receipt_path": "verification/corrected-replay-interruption-20261025.json",
+      "receipt_sha256": "50646da736e4a9a598d41abe466dc65589bd95f67fdc51bf7622bea20fce94dc",
+      "details": "Observed 2026-10-25T17:48:54.713682+00:00 for the corrected-globs-20261024 attempt. The retained controller reconciliation has no terminal research-process result. Full-support challenge build and a live challenge exporter were observed; scalar execution and research-v2 extraction were not observed. Comparator acceptance, rejection, kernel acceptance, extraction completeness and actual axiom inventory remain unknown. unavailable refers to the terminal outcome, not a proof verdict. This dated historical summary is not a process receipt or a claim that no later attempt exists; it preserves earlier not-run plans and build failures."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",
@@ -9344,7 +9713,7 @@
     "R2-26-SR-041: scalar.formal_finite_gaussian_clause --supports--> scalar.formal_contact_input. The top-level minimizer branch supplies its contact input with hmin.gradient_moment_contact hX; the lower-level implication alone is insufficient.",
     "R2-26-SR-042: scalar.formal_scalar_clause --supports--> scalar.formal_contact_input. The source scalar_value_target invokes scalar_value_of_contact on the contact identity derived from hmin and hX. No cross-target full_support result is invoked.",
     "R2-26-SR-043: scalar.separate_classical_algorithm --supports--> scalar.minimizer_attainment. The external algorithm assumes existence of a strictly increasing minimizer; conditional full-support alone does not supply existence.",
-    "R2-26-SR-044: scalar.separate_classical_algorithm --cites--> support.full_relative_support. Reference navigation to the conditional full-support theorem used on the locally chosen attained minimizer. The consuming algorithm statement records the scoped source-level application; no supports edge is used because this backend has no witness-binding or hypothesis-discharge semantics and would otherwise expose paper-minimizer as an external assumption of an existential consequence.",
+    "R2-26-SR-044: scalar.separate_classical_algorithm uses support.full_relative_support in an authored scoped application to the same attained manuscript minimizer. The conditional support proof stays reachable. Attainment supplies admissibility and minimality locally; the external EAMS theorem retains its separate source and computation model. No formal-model transport or formal acceptance is asserted.",
     "R2-26-SR-045: scalar.formal_finite_gaussian_clause --cites--> scalar.conditional_fixed_strip. Reference-only source navigation to the lower-level conditional lemma. ContactAssembly obtains strip bounds and the unit curvature moment before applying it. A supports edge would make the current closure import those separately scoped assumptions into the stronger top-level theorem; this cites relation deliberately does not claim automatic hypothesis discharge.",
     "R2-26-SR-046: scalar_value --supports--> scalar.formal_scalar_clause. The existing scalar_value goal is the three-part universally quantified conjunction. This edge exposes one conjunct without changing the statement or status of the aggregate. Select the branch itself for its narrower hypothesis set.",
     "R2-26-SR-047: scalar_value --supports--> scalar.formal_finite_gaussian_clause. The existing scalar_value goal is the three-part universally quantified conjunction. This edge exposes one conjunct without changing the statement or status of the aggregate. Select the branch itself for its narrower hypothesis set.",
@@ -9374,7 +9743,7 @@
     "circuit-r2-26-warrant-018: circuit.classical_fixed_minimizer --supports--> circuit.bounded_trigonometric. The fixed smooth output is converted to a finite bounded angle with L² output error less than ε/12, costing less than ε/6 in energy. Source: scalar-r2-26-source-qaoa-scalar, prop:classical-near-optimum proof, lines 584–590. Manuscript argument ingredient; not a certified implication.",
     "circuit-r2-26-warrant-019: circuit.classical_fixed_minimizer --supports--> circuit.color_exclusion. After the bounded formula and its Lipschitz constants are fixed, reserve distinct helpers, refine colors and make the exclusion error less than ε/6 in norm, hence less than ε/3 in energy. Source: scalar-r2-26-source-qaoa-scalar, prop:classical-near-optimum proof, lines 592–607. Manuscript argument ingredient; not a certified implication.",
     "circuit-r2-26-warrant-020: circuit.classical_primary --supports--> scalar.minimizer_attainment. Attainment supplies one γ in the variational class. Apply the universally quantified conditional construction to that same γ for the requested ε and η_H, and retain the resulting common finite witnesses. No hypothesis is discharged by a graph traversal; this is an explicitly stated source-level witness application. Source: scalar-r2-26-source-qaoa-scalar, lines 3–75, 220–254 and prop:classical-near-optimum, lines 553–608. Closed existential application; the scope and witness binding are stated manually and are not kernel checked.",
-    "circuit-r2-26-warrant-021: circuit.classical_primary --cites--> circuit.classical_fixed_minimizer. Navigation to the universally quantified construction used after choosing an attained minimizer. This cites edge deliberately keeps that scoped free-minimizer branch out of the generic primary assumption closure; its full premise use is described in the closed application statement. Source: scalar-r2-26-source-qaoa-scalar, prop:classical-near-optimum and preceding scalar choice, lines 220–254, 553–608. Scoped construction navigation, not an additional logical prerequisite or automatic hypothesis discharge.",
+    "circuit-r2-26-warrant-021: circuit.classical_primary uses circuit.classical_fixed_minimizer through an authored scoped application. Attainment supplies the same manuscript minimizer and its admissibility before the finite construction choices. The conditional proof ingredients remain traversable; these supplied premises are discharged only within that use. Source: 03-classical-optimization.tex:23–41,553–608. This is source-level witness correspondence, not mechanically checked equality or formal-model transport.",
     "circuit-r2-26-warrant-022: circuit.classical_primary --supports--> circuit.bounded_trigonometric. The closed existence proof applies the generic bounded approximation theorem to its chosen finite scalar output; this universal approximation lemma has no free minimizer hypothesis. Source: scalar-r2-26-source-qaoa-scalar, prop:classical-near-optimum proof, lines 584–590. Manuscript argument ingredient; not a certified implication.",
     "circuit-r2-26-warrant-023: circuit.classical_primary --supports--> circuit.color_exclusion. The closed proof uses the generic exclusion estimate after its chosen finite bounded formula is frozen, with positive helper probabilities and a sufficiently fine finite partition. Source: scalar-r2-26-source-qaoa-scalar, prop:classical-near-optimum proof, lines 592–607. Manuscript argument ingredient; not a certified implication.",
     "circuit-r2-26-warrant-024: circuit.masked_controls --supports--> circuit.gate_calculus. Finite product/commutator approximations of local masked generators are inserted into fixed surrounding exclusion words using precisely the calculus’s jet, adjoint and domination replacement statement. Source: circuit-r2-26-source-synthesis, sec:elementary-masked-controls, lines 113–205. Manuscript argument ingredient; not a certified implication.",
@@ -9425,10 +9794,10 @@
     "circuit-r2-26-warrant-069: circuit.high_girth_maxcut --supports--> circuit.ordinary_word_primary. Choose the common finite near-optimal ordinary tree word first. For its finite depth p, each edge light cone is a tree when girth>2p+1. Source: circuit-r2-26-source-maxcut, lines 3–31. Manuscript argument ingredient; not a certified implication.",
     "circuit-r2-26-warrant-070: circuit.high_girth_maxcut --supports--> circuit.fixed_word_transfer. The transferred normalized tree coefficient tends to at least P_*−η/2; finite large D and the exact MaxCut cost rescaling 2/√D yield the all-graphs high-girth inequality. Source: circuit-r2-26-source-maxcut, lines 15–61; eq:regular-tree-cut. Manuscript argument ingredient; not a certified implication.",
     "All circuit-r2-26 nodes are manuscript claims or explicitly imported assumptions with status unverified. Source reading and exact hashes are recorded separately; no new Lean extraction, comparator result, kernel check, formalizes edge or cross-namespace bridge is asserted.",
-    "The primary closed existential witness node uses attainment and an explicitly reviewed scoped application. The conditional fixed-minimizer construction and independent finite-temperature route are separate query roots. Generic graph closure does not discharge hypotheses, bind witnesses or interpret alternative proofs.",
+    "The primary closed existential witness node uses attainment and an authored scoped application. Argument traversal retains the conditional construction and suppliers while suppressing only premises supplied within that use. Shared bindings are descriptive and are not mechanically checked substitutions. The independent finite-temperature route remains a separate query root.",
     "Packet 26 candidate on frozen repository 721225cee6aa7d7cf644579237e0819765c6abf6. All mathematical source bytes remain at adc7f1241b42e322a6451854ab7e4b4c146bf78a. Existing evidence records are preserved unchanged; all new theorem records remain unverified, except the explicitly open model-transport obligation.",
     "Every new edge carries a source-located authored warrant as semantic_review evidence. Its not_run status refers to independent acceptance, not to the completed source-reading act described in details. These records are visible in existing graph and paper projections.",
-    "Supports records an ingredient used within the scope of its statement; it is not an automatic sequent, AND/OR proof node or witness-unification rule. Closed witness applications name their actual source proof and cite separately scoped conditional routes. Issue a new arguments query at the conditional route to inspect its premises; a citations query does not switch automatically to supports traversal.",
+    "Supports records an ingredient used within the scope of its statement; it is not an automatic sequent, AND/OR proof node or witness-unification rule. Version 1.2 applications name a source span, common bindings, premise suppliers and remaining assumptions. Querying a conditional theorem directly retains its original premises; querying its application retains the theorem with the explicitly authored local premise scope.",
     "Illustrative calculations in the papers retain example passage mappings without theorem support edges. Reading order and equal marginal laws do not establish mathematical dependencies or rooted energy identities.",
     "The authored support, scalar and circuit records share this graph. Support is consumer-to-ingredient and does not certify sufficiency. Finite polynomial calculation, analytic hypotheses, formal correspondence, execution and semantic acceptance remain separate. Alternative circuit routes use citation navigation so their hypotheses are not silently conjoined; scoped witness application is stated explicitly because reachability does not discharge hypotheses.",
     "circuit.one_measurement_near_optimum uses qaoa_thermodynamic_first at epsilon/2 and circuit.fixed_word_concentration for that same fixed word. Equal marginal laws or a mean-energy theorem alone would not supply the quantum second moment. This derived ordinary consequence is separately selectable and is not an extra premise of the QAOA theorem."

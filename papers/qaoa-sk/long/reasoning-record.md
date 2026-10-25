@@ -36,10 +36,19 @@ and variational minimization. Section 9 additionally uses Hilbert-space
 tensor products, symmetric Fock space, unbounded operators and quantum
 control. Its weighted-domain and control estimates are additional analytic
 inputs from the QAOA manuscript; the text gives their precise uses and
-proof destinations. The companion short paper concentrates on the support
-theorem, while the exposition introduces its objects through examples.
+proof destinations. The companion short paper concentrates on full support and the strictly
+positive interior density, while the exposition introduces the support
+argument through examples.
 References to OpenAI (2026a) and OpenAI (2026b) distinguish the two
 manuscripts throughout.
+
+The continuous proof route is §§1–5 through gap exclusion, then
+[the terminal value](#terminal-value), [finite Gaussian correlations](#finite-gaussian-correlations),
+and [the circuit construction](#qaoa-construction) through §9.6. It ends
+with one fixed ordinary word for each requested accuracy. The density
+and overlap consequences in §§5.1–5.3, the formal comparison and independent
+scalar lower bound in §8, and the alternatives in §§9.7–9.11 can be read
+separately. Each retains its proof and exact source destinations below.
 
 <a id="model-and-three-targets"></a>
 
@@ -214,6 +223,8 @@ enters through the variational inequality in §3; the constant-interval
 curvature estimate itself applies to an admissible coefficient without
 assuming it is a minimiser. [OpenAI (2026a), §§1–2][fs-main];
 [OpenAI (2026a), §2][fs-reg]; [OpenAI (2026a), §6][fs-var].
+
+<a id="prior-work-comparison"></a>
 
 ### 2.3 Which prior results play which role
 
@@ -1664,6 +1675,8 @@ real overlap. The separate algorithmic consequence is in §7.4.
 
 <a id="scalar-value-identities"></a>
 
+<a id="terminal-value"></a>
+
 ## 6. Recovering the value from a martingale
 
 <!-- passage:value -->
@@ -1744,6 +1757,8 @@ correction is consistent with the exact terminal identity above.
 <!-- /passage:value -->
 
 <a id="finite-gaussian-approximation"></a>
+
+<a id="finite-gaussian-correlations"></a>
 
 ## 7. A finite Gaussian spin and its adjacent correlations
 
@@ -2109,6 +2124,54 @@ statement, not an exact finite-mesh identity. The displayed coefficients follow 
 numerical quadrature or finite computation is needed for this example.
 <!-- /passage:gaussian-one-step-example -->
 
+<!-- passage:gaussian-all-mesh-example -->
+<a id="heat-all-mesh"></a>
+
+#### 7.3.1 The same test at every mesh size
+
+For the nonminimizing coefficient $\gamma=0$, Euler sampling is exact:
+$Y_j=B_{t_j}$. The curvature moment in §7.2 gives
+$$
+c_j=\sqrt{\pi/2}(1-t_{j-1}^2)^{1/4}.
+$$
+Monotonicity and symmetry of the Gaussian CDF turn the rounded spin into
+$$
+F_N=\operatorname{sgn}(B_T+\sqrt{1-T}\,Z_{N+1})
+\quad\hbox{almost surely}.
+$$
+The argument of this sign is standard normal. Gaussian regression gives
+$B_i=\sqrt{2/\pi}\sqrt\Delta$ for $1\le i\le N$ and
+$B_{N+1}=\sqrt{2/\pi}\sqrt{1-T}$.
+To calculate $A_j$, condition on Brownian motion through $t_j$ and use
+the heat martingale. Gaussian integration by parts then gives
+$$
+\mathbb E[Z_j u_0(t_j,x+\sqrt\Delta Z_j)]
+=\sqrt\Delta\,a_0(t_{j-1},x).
+$$
+Multiplication by $c_ja_0(t_{j-1},B_{t_{j-1}})$ and expectation yield
+$A_j=c_j\sqrt\Delta\,\mathbb E a_0(t_{j-1},B_{t_{j-1}})^2
+=\sqrt\Delta/c_j$. Consequently, for every $N\ge1$,
+$$
+S_{T,N}=\sqrt{\frac2\pi}
+ \left(\Delta\sum_{j=1}^{N-1}\frac1{c_j}
+             +\frac{\sqrt{\Delta(1-T)}}{c_N}\right).
+$$
+The one-step value above is its $N=1$ case. At fixed $T<1$, its limit is
+$$
+\frac2\pi\int_0^T(1-t^2)^{-1/4}\,dt,
+$$
+whereas the unnormalized candidate covariance is $I_0(T)=T\sqrt{2/\pi}$.
+The subsequent $T\uparrow1$ limit is
+$4\Gamma(3/4)/(\sqrt\pi\,\Gamma(1/4))\approx0.76275976$, distinct from
+$\mathcal P(0)=\sqrt{2/\pi}\approx0.79788456$.
+These are values of a nonminimizing test, not numerical determinations
+of $P_*$. Exact Euler simulation, orthonormal predictable increments and
+correct rounding all hold here. The missing identity is
+$\mathbb E a_0(t,B_t)^2=1$; consequently the normalizers do not approach
+one. This calculation extends the heat and rounding derivations of
+§§7.2–7.3 and isolates the role of minimality in the convergence theorem.
+<!-- /passage:gaussian-all-mesh-example -->
+
 <!-- passage:algorithm -->
 <a id="classical-algorithm-consequence"></a>
 
@@ -2205,6 +2268,11 @@ and reflection. A totalized quotient value at zero cannot silently
 satisfy the generic global hypothesis. The precise source spans are in
 the correspondence record.
 
+<!-- /passage:formal -->
+
+<!-- passage:formal-scalar -->
+<a id="formal-scalar-statement"></a>
+
 ### 8.2 The separate scalar statement
 
 The second formal statement has three clauses. Given a minimizer and an
@@ -2240,6 +2308,11 @@ one. The internal terminal-gradient lemma proves $UX_1=|X_1|$
 without requiring $X_1$ to have no atom at zero. That identity is used
 inside the implementation; it is not an extra conjunct of the endpoint. See the [scalar statement][value-type] and its
 complete dictionary.
+
+<!-- /passage:formal-scalar -->
+
+<!-- passage:formal-contact -->
+<a id="formal-scalar-contact"></a>
 
 ### 8.3 A separate route to scalar contact
 
@@ -2304,39 +2377,280 @@ has the further job of excluding gaps in Stieltjes support. These are
 source-level proof reconstructions, not a fresh Lean acceptance or a
 claim that the two formal models have been composed.
 
+<!-- /passage:formal-contact -->
+
+<!-- passage:formal-transport -->
+<a id="formal-model-transport"></a>
+
 ### 8.4 Relating the two statements
 
-To claim a formal composition of the full-support and scalar statements,
-one would have to identify the coefficients on $[0,1)$, Brownian laws
-and filtrations, and associated diffusion laws. One would also have to
-change variables between absolute-time and elapsed-time control integrals
-while preserving admissibility, payoff and supremum. Equality of the
-resulting values would then have to transport derivatives and minimisation,
-with the same minimiser and diffusion witnesses. These translation
-theorems are not supplied by mathematical resemblance alone. The two
-separate implementations and the manuscript's mathematical sequence in
-Sections 3–7 remain meaningful without asserting that formal composition.
+The support and scalar models encode closely related control problems.
+A direct formal application still needs a specified map of their objects.
+The following contract identifies the obligations, rather than asserting
+an equivalence of their complete interfaces.
+
+| Object | Map to be defined and property to be proved |
+| --- | --- |
+| Coefficient | Restrict the scalar real-time coefficient to $[0,1)$; conversely choose an extension compatible with the scalar right-continuity predicate. Prove equality almost everywhere of the coefficients used by each payoff and penalty. The scalar endpoint and exterior values are unconstrained by the shape conditions; two extensions need not be literally equal. |
+| Brownian space | Bundle or unbundle the same sample space, sigma algebra, probability law and Brownian process. Identify the natural filtration and every elapsed-increment filtration; law equality alone does not identify admissible controls on a chosen space. |
+| Control and payoff | Bundle an admissible scalar control as a support control and conversely. With $s=t+r$, prove equality between the absolute integral over $[t,1]$ using $\alpha(s-t)$ and the elapsed integral over $[0,1-t]$ using $\alpha(r)$. Preserve progressive measurability and the pointwise bound $|\alpha|\le1$. |
+| Value and minimizer | Equality of the payoff sets gives equality of their suprema for every $x$ and $0\le t<1$. Only then identify the first and second spatial derivatives and the Parisi penalties. Transport minimality against every admissible competitor, including restriction or extension of that competitor. |
+| Diffusion and moments | Reindex the same process between nonnegative and real time, and stop it at one where required. Transport the integral equation on one full-measure event for all $t\in[0,1]$, path continuity, initial value, gradient and moment integrals. |
+
+The last row has a real version issue. The support predicate asks for a
+globally progressive process; the scalar predicate asks for adaptedness
+of the stopped process and almost-sure continuity on $[0,1]$. Restriction
+of a progressive support process is a plausible route in one direction.
+A converse must supply the required progressive version and its extension,
+then prove that the relevant integrals and moments are unchanged. It is
+not the literal identity of the two predicates. Likewise, equality of
+values for all $x$ is needed before transporting their derivatives;
+agreement at $(0,0)$ is insufficient.
+
+Once those obligations are proved, an application must use the same
+transported minimizer and associated diffusion in all premises. No such
+cross-model transport theorem is supplied here. The manuscript proof in
+§§3–7 and the scalar implementation's independent argument remain
+available without it. These distinctions come from the defining
+[support model][support-model] and [scalar model][value-model], rather
+than from their endpoint names.
+<!-- /passage:formal-transport -->
+
+<!-- passage:formal-lower-overview -->
+<a id="independent-scalar-lower-bound"></a>
 
 ### 8.5 The scalar implementation's own upper and lower bounds
 
-The scalar implementation constructs its regularity constants and contact
-identities internally. Its finite-spin limit follows from superadditivity
-and a uniform upper bound. A finite-profile Gaussian interpolation gives
-the upper bound $P_*\le\mathcal P(\gamma)$ for every admissible
-coefficient. In the other direction, the normalized rounded finite
-Gaussian sum is bounded above by $P_*$; contact and the fixed-strip
-mesh limit give $\int_0^T\mathbb E a\le P_*$. Terminal assembly then
-gives $\mathcal P(\gamma)\le P_*$ at the minimizer, and antisymmetry
-yields equality. Thus its proof route is not simply an invocation of the
-literature's Parisi formula used in §6. The third endpoint clause
-constructs its diffusion before applying this equality. The exact
-suppliers can be read in the pinned
-[upper-bound proof](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean#L117-L142),
-[finite-sum lower bound](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean#L14-L27)
-and [contact assembly][scalar-contact-assembly], with the hypotheses
-explained in §§8.2–8.3. These are source-inspection conclusions, with
-the replay outcome in §11.
-<!-- /passage:formal -->
+The scalar implementation obtains the value equality by two inequalities.
+Its finite-spin limit follows from superadditivity and a uniform upper
+bound. A finite-profile Gaussian comparison supplies
+$P_*\le\mathcal P(\gamma)$ for every admissible coefficient. The reverse
+inequality at a minimizer comes from a more general finite-dimensional
+fact: predictable orthonormal Gaussian functions paired with any spin
+have a shifted correlation sum at most $P_*$. We reconstruct that fact
+below. It supplies the inequality that §7's mesh limit consumes, without
+invoking the literature's Parisi formula used in §6.
+
+Write $e_n=n^{-1}\mathbb E\max_\sigma H_n(\sigma)$, with the Hamiltonian
+of §1. The finite-spin convergence and upper comparison are separate
+inputs to this subsection; their precise suppliers are
+[the superadditive limit][scalar-spin-limit] and
+[the upper comparison][scalar-upper]. The proof below concerns the
+lower comparison, not a finite-disorder algorithm or a circuit.
+
+Fix $K<\infty$, independent standard normals $z_0,\ldots,z_K$,
+and real functions $f_j=f_j(z_0,\ldots,z_j)$ for $0\le j<K$.
+Assume measurability, square integrability and
+$\mathbb E[f_if_j]=\delta_{ij}$. For any measurable
+$S=S(z_0,\ldots,z_K)\in\{-1,1\}$, the conclusion is
+$$
+\sum_{j=0}^{K-1}\mathbb E[f_jS]\,\mathbb E[S z_{j+1}]\le P_*.
+$$
+These assumptions allow nonconstant, dependent $f_j$; even
+$\mathbb E f_j=0$ is unnecessary. Their order of dependence ensures
+$\mathbb E[f_i z_{j+1}]=0$ whenever $i\le j$. The next fresh coordinate,
+rather than centring of $f_i$, is what will remove the projection terms.
+[Scalar implementation, predictable-coefficient theorem][scalar-predictable].
+<!-- /passage:formal-lower-overview -->
+
+<!-- passage:gaussian-column-split -->
+<a id="gaussian-column-split"></a>
+
+#### 8.5.1 Revealing one Gaussian column
+
+For $w\in\mathbb R^n$, put $Q(w)=w\otimes w/\sqrt2$.
+An independent standard Gaussian matrix $G$ gives a centered field
+$\langle Q(w),G\rangle$ with covariance
+$\langle w,w'\rangle^2/2$. Given a unit vector $v$, define
+$$
+R_vw=w-\langle v,w\rangle v,\qquad
+C_v(w)=\langle v,w\rangle R_vw+
+       \frac{\langle v,w\rangle^2}{\sqrt2}v.
+$$
+Write $\alpha=\langle v,w\rangle$, $\beta=\langle v,w'\rangle$
+and $r=\langle R_vw,R_vw'\rangle$. For an independent standard Gaussian
+column $Z$ and matrix $G'$, the covariance of
+$\langle C_v(w),Z\rangle+\langle Q(R_vw),G'\rangle$ is
+$$
+\alpha\beta r+\frac12\alpha^2\beta^2+\frac12r^2
+=\frac12(r+\alpha\beta)^2
+=\frac12\langle w,w'\rangle^2.
+$$
+Thus the new field has the old joint Gaussian law. The same statement
+holds for $v=0$: then $R_v$ is the identity and $C_v=0$.
+Allowing that case will avoid assuming empirical linear independence.
+
+For a finite nonempty family of candidates $w_s$ and offsets $d_s$, define
+$$
+\mathcal V(w,d)=\mathbb E_G\max_s
+  \{\langle Q(w_s),G\rangle+d_s\}.
+$$
+The covariance identity and Fubini give the exact recursion
+$$
+\mathcal V(w,d)=\mathbb E_Z\mathcal V
+ \bigl((R_vw_s)_s,(d_s+\langle C_v(w_s),Z\rangle)_s\bigr).
+$$
+Also $d_s\le\mathcal V(w,d)$ for each $s$, since the residual Gaussian
+term has mean zero. These are the two facts needed for adaptive choices.
+The source derives the equality by Gaussian comparison in both directions
+and proves the required integrability in
+[the one-column decomposition][scalar-column].
+<!-- /passage:gaussian-column-split -->
+
+<!-- passage:gaussian-adaptive-lower -->
+<a id="adaptive-gaussian-lower"></a>
+
+#### 8.5.2 Adaptive directions and a finite-spin inequality
+
+Choose each zero-or-unit direction measurably from columns already
+revealed. Conditional on that history, the current residual candidate
+vectors and offsets are fixed, so the preceding recursion applies.
+Iterating it preserves the initial expected maximum. For any measurable
+choice of a candidate from the final history, its accumulated offset is
+bounded by the remaining conditional expected maximum. Hence
+$$
+\mathbb E\,d_{s(\mathrm{history})}^{\rm final}
+\le\mathcal V(w,0).
+$$
+Contraction of each residual, the finite candidate set and Gaussian
+column moments justify the expectations. Adaptivity does not turn a
+future column into part of the conditioning history.
+[Scalar implementation, adaptive recursion][scalar-adaptive].
+
+Take all spins $w_s\in\{-1,1\}^n$ as candidates. The full quadratic
+matrix has off-diagonal coefficients $(G_{ij}+G_{ji})/\sqrt2$, which
+are independent standard normals, and a centered diagonal contribution
+common to every spin. Thus
+$$
+\mathcal V(\mathrm{spins},0)=\sqrt n\,\mathbb E\max_\sigma H_n(\sigma).
+$$
+Dividing the offset inequality by $n\sqrt n$ gives a bound by $e_n$.
+The implementation proves this normalization through equality of Gaussian
+increment distances in [the finite adaptive SK comparison][scalar-finite-adaptive].
+
+To obtain the desired coefficients, take independent rows
+$z^{(1)},z^{(2)},\ldots$, each with the law of $(z_0,\ldots,z_K)$,
+and put
+$$
+\widehat g_n=n^{-1/2}(g(z^{(1)}),\ldots,g(z^{(n)})).
+$$
+Let $v_{n,j}$ be the normalized Gram–Schmidt vector obtained from
+$\widehat f_{0,n},\ldots,\widehat f_{j,n}$; a zero remainder is
+normalized to zero. Start the adaptive procedure with a zero direction
+to reveal column $z_0$. After seeing columns through $z_j$,
+$v_{n,j}$ is available, and the next column is $z_{j+1}$.
+This explains both the extra column and the shift.
+
+Let $R_{n,j}$ project away $v_{n,0},\ldots,v_{n,j-1}$ and set
+$$
+E_{n,j}=\langle C_{v_{n,j}}(R_{n,j}\widehat S_n),
+                       \widehat z_{j+1,n}\rangle.
+$$
+The raw spin and fresh column are each $\sqrt n$ times their empirical
+versions; $C_v$ is quadratic in its input. Consequently their revealed
+energy is exactly $n\sqrt n E_{n,j}$. Transposing the array between
+independent rows and independent columns preserves its Gaussian law.
+The finite comparison therefore gives, for every $n>0$,
+$$
+\mathbb E\sum_{j<K}E_{n,j}\le e_n.
+$$
+This is an actual choice of the adaptive directions and final rowwise
+spin, not an uninstantiated conditional inequality.
+[Empirical directions and normalization][scalar-empirical-directions];
+[row–column transposition and finite bound][scalar-transpose].
+<!-- /passage:gaussian-adaptive-lower -->
+
+<!-- passage:gaussian-empirical-limit -->
+<a id="empirical-gaussian-limit"></a>
+
+#### 8.5.3 Why orthogonalization preserves the limiting correlations
+
+Keep $K$ fixed while $n\to\infty$. The strong law applies to the
+finitely many needed products, which are integrable by Cauchy–Schwarz.
+The empirical Gram matrix tends to the identity. Inductively in
+Gram–Schmidt, every projection coefficient tends to zero and every
+remaining norm tends to one; hence
+$\|v_{n,j}-\widehat f_{j,n}\|\to0$ almost surely. In particular,
+$$
+\langle v_{n,j},\widehat S_n\rangle\to a_j:=\mathbb E[f_jS],
+\qquad
+\langle\widehat S_n,\widehat z_{j+1,n}\rangle
+   \to b_{j+1}:=\mathbb E[S z_{j+1}],
+$$
+while $\langle v_{n,i},\widehat z_{j+1,n}\rangle\to0$ for $i\le j$.
+The last limit uses precisely the fresh-coordinate cancellation stated
+at the start of §8.5. [Gram–Schmidt limits][scalar-gram-schmidt].
+
+Expand the revealed energy before taking its limit:
+$$
+\begin{aligned}
+E_{n,j}={}&\langle v_{n,j},\widehat S_n\rangle
+ \langle R_{n,j+1}\widehat S_n,\widehat z_{j+1,n}\rangle\\
+&+\frac{\langle v_{n,j},\widehat S_n\rangle^2}{\sqrt2}
+ \langle v_{n,j},\widehat z_{j+1,n}\rangle.
+\end{aligned}
+$$
+All terms introduced by projecting away earlier directions vanish,
+as does the second line. The remaining product tends to $a_jb_{j+1}$.
+Thus $\sum_{j<K}E_{n,j}\to\sum_{j<K}a_jb_{j+1}$ almost surely.
+This establishes the random-variable limit, but an expectation bound
+still requires the next step.
+[Scalar implementation, empirical energy limit][scalar-empirical-limit].
+<!-- /passage:gaussian-empirical-limit -->
+
+<!-- passage:gaussian-expectation-limit -->
+<a id="gaussian-expectation-limit"></a>
+
+#### 8.5.4 Passing the expectation bound and returning to the value
+
+Since $S^2=1$, $\|\widehat S_n\|=1$ for $n>0$, and every residual
+projection contracts. The column formula gives
+$|E_{n,j}|\le1+\|\widehat z_{j+1,n}\|^2$.
+Define
+$$
+c_n=\sum_{j<K}(1+\|\widehat z_{j+1,n}\|^2).
+$$
+Then $\sum_jE_{n,j}+c_n\ge0$, $\mathbb E c_n=2K$ exactly, and
+$c_n\to2K$ almost surely. Fatou's inequality, the finite bound and
+$e_n\to P_*$ imply
+$$
+\sum_{j<K}a_jb_{j+1}+2K
+\le\liminf_n\mathbb E\bigl[\sum_{j<K}E_{n,j}+c_n\bigr]
+\le P_*+2K.
+$$
+Cancelling $2K$ proves the claimed predictable-coefficient inequality.
+The source's constant-limit helper establishes the same nonnegative
+comparison by clipping at the limiting constant and applying dominated
+convergence. It shifts to dimensions $n+1$ to avoid dimension zero.
+It does not apply Fatou directly to the signed energies or presume
+uniform integrability. [Column bound and correction][scalar-empirical-bound];
+[expectation limit and final theorem][scalar-predictable].
+
+For the Euler construction in §7, take $K=N$, relabel its $Z_{j+1}$ as
+$z_j$, and set $f_j=g_{j+1}$. Each normalized increment depends only
+on $z_0,\ldots,z_j$ and the increments are orthonormal when their raw
+second moments are positive. The rounded sign is spin-valued almost
+surely: its tie event is null by the independent last coordinate.
+The scalar implementation uses a measurable Bool spin equal to that
+sign almost surely. It follows that
+$$
+S_{T,N}=\sum_{j=1}^N A_jB_{j+1}\le P_*.
+$$
+This finite inequality assumes admissibility, $0\le T<1$, $N>0$ and
+positive active second moments, but no minimizer or diffusion.
+[Literal scalar specialization][scalar-literal-lower].
+
+At a minimizer, the separate contact and diffusion arguments establish
+the fixed-strip inputs and eventual positivity. First take the mesh
+limit to obtain $I(T)\le P_*$, then let $T\uparrow1$. The scalar
+terminal assembly identifies that last limit with $\mathcal P(\gamma)$;
+together with $P_*\le\mathcal P(\gamma)$ this proves equality.
+The third scalar endpoint constructs its own diffusion before making
+this application. These sources therefore supply an independent route
+to the equality, alongside the imported Parisi formula in §6.
+[Contact assembly][scalar-contact-assembly]. The inspection here does
+not change the research replay outcome in §11.
+<!-- /passage:gaussian-expectation-limit -->
 
 <a id="qaoa-construction"></a>
 
@@ -2421,6 +2735,17 @@ choose the finite gate approximations and remove the seeds. The constants
 in a replacement may depend on the surrounding word and on those positive
 helper probabilities. [§9.6](#qaoa-assembly-detail) collects the error
 allocation before the final $n\to\infty$ limit.
+The principal circuit inputs can be read as four local lemmas. Their
+proofs remain in the cited manuscript; §§9.2–9.5 reconstruct the
+mechanisms and show where each hypothesis enters.
+
+| Input | Fixed hypotheses and output | Next use |
+| --- | --- | --- |
+| Smooth replacement | Fix height, a finite expression and channel list, and the required derivatives. Uniform recursive weighted bounds, convergence of operators and adjoints, and strongly commuting signals with the stated joint exponential bounds permit substitution inside any fixed surrounding word. Constants depend on that fixed family. [Foundations, smooth topology and gate calculus][q-gate-calculus]. | §9.3 replaces classical aggregates by finite gates. |
+| Helper contraction and synthesis | Fix a bounded, finite, type-excluded odd formula, zero on helpers, and positive helper masses. The contraction converges smoothly at every cut and for the specified responses. For each $\eta>0$, finite seeded synthesis gives $\mathcal E(v)\ge\mathcal E(m)-2\eta-2\sqrt{p_H}$. [Synthesis statements][q-synthesis-statement], [helper theorem][q-helper-statement]. | §9.4 receives one fixed seeded word. |
+| Seed removal | Fix that finite seeded word and an energy tolerance. Reuse the same Gaussian at every occurrence on a vertex; packet control and the one-particle comparison produce one finite ordinary word with the required energy error. This is an energy conclusion, not merely convergence of seed marginals. [Seed-removal theorem][q-seed-statement]. | §9.5 can apply the ordinary-word transfer. |
+| Fixed-word transfer | Fix one ordinary word and all angles before either size or degree varies. Its positive tree scaled-edge limit equals its SK expected-energy limit, with the convention conversion in §9.5. [Fixed-word transfer][q-transfer]. | §9.6 closes the thermodynamic-first theorem. |
+
 <!-- /passage:qaoa -->
 
 <!-- passage:qaoa-rooted -->
@@ -2544,8 +2869,18 @@ centred, invariant under rooted permutations of complete child
 subtrees, and supported at a fixed finite radius. Suppose its occupation
 embedding converges strongly to $v$, with a uniformly bounded expected
 top-generation occupation $\langle f_D,\mathsf Nf_D\rangle$. Put
-$M=D+1$ and $R_M=\sqrt{1-\mathsf N/M}$. The source's exact edge
-decomposition is
+$M=D+1$ and $R_M=\sqrt{1-\mathsf N/M}$. To see the decomposition, delete the distinguished edge and project
+onto the vacuum on either resulting half-tree. There are four pairings.
+The vacuum–vacuum pairing is zero by centring. If only one side is
+excited, the other side forces the root and all remaining branches into
+their vacuum; root symmetry gives the term
+$M^{-1/2}\langle\mathsf L^*f_D,R_Mf_D\rangle$ or its conjugate.
+In the pairing where both sides are excited, each projected vector has
+squared norm $M^{-1}\langle f_D,\mathsf Nf_D\rangle$ by symmetry
+among the $M$ branches. Cauchy–Schwarz bounds their pairing by that same
+quantity. Finally, deleting one vacuum child multiplies the $m$-particle
+sector by $\sqrt{\binom{M-1}{m}/\binom{M}{m}}=\sqrt{1-m/M}$,
+which identifies $R_M$. Thus the exact edge decomposition is
 $$
 \langle f_{D,i},f_{D,j}\rangle
  =\frac2{\sqrt M}\operatorname{Re}\langle\mathsf L^*f_D,R_Mf_D\rangle
@@ -2587,6 +2922,84 @@ The three identifications use different information:
 The first two calculations were given above. The third uses the source's
 edge decomposition; the requisite circuit estimates enter in §9.2.
 <!-- /passage:qaoa-rooted -->
+
+<!-- passage:qaoa-depth-one -->
+<a id="depth-one-calibration"></a>
+
+#### 9.1.1 One depth, three descriptions of the energy
+
+A single cost–mixer pair tests the signs and normalizations in this
+change of objects. Use the positive cost $C_{n,J}$ of §9 and
+$U=e^{-i\beta B_n}e^{-i\theta C_{n,J}}$; the symbol $\theta$ here
+is a cost angle, not the Parisi coefficient. Put $c=\cos(2\beta)$
+and $s=\sin(2\beta)$. The Pauli identities are
+$$
+e^{i\beta X}Ze^{-i\beta X}=cZ+sY,\qquad
+e^{i\alpha Z_iZ_j}Y_je^{-i\alpha Z_iZ_j}
+=Y_j\cos(2\alpha)+Z_iX_j\sin(2\alpha).
+$$
+The mixed term $Z_iY_j$ therefore has cost-state expectation
+$$
+\sin(2\theta J_{ij}/\sqrt n)
+\prod_{k\ne i,j}\cos(2\theta J_{jk}/\sqrt n).
+$$
+The other mixed term exchanges $i$ and $j$. The $Z_iZ_j$ term
+has zero expectation. The $Y_iY_j$ term can be nonzero on an individual
+complete graph, but its expectation after the cost gate is independent
+of $J_{ij}$: $Y_iY_j$ commutes with that edge cost. Multiplying by
+$J_{ij}$ and averaging therefore removes it, even in the presence of
+triangles. For a standard Gaussian $J$,
+$$
+\mathbb E\cos(aJ)=e^{-a^2/2},\qquad
+\mathbb E[J\sin(aJ)]=ae^{-a^2/2}.
+$$
+Averaging the mixed terms and summing the $n(n-1)/2$ unordered edges gives
+$$
+\frac1n\mathbb E_J\langle C_{n,J}\rangle
+=\frac{n-1}{n}\,\theta\sin(4\beta)
+  e^{-2\theta^2(n-1)/n}.
+$$
+This agrees with [Farhi et al., equation (62)][fggz]. With energy
+maximization, $\theta=1/2$, $\beta=\pi/8$ gives the limiting value
+$1/(2\sqrt e)$; their minimization example uses $\beta=-\pi/8$
+and the negative value.
+
+For the positive cost $D^{-1/2}\sum_{\{i,j\}}Z_iZ_j$ on the
+$(D+1)$-regular tree, each endpoint has $D$ other neighbours. The same
+calculation now has no common-neighbour contribution and yields
+$$
+\langle Z_oZ_v\rangle
+=\sin(4\beta)\sin(2\theta/\sqrt D)
+                 \cos^D(2\theta/\sqrt D).
+$$
+Multiplying by $\sqrt D/2$ and letting $D\to\infty$ gives
+$\theta e^{-2\theta^2}\sin(4\beta)$, the same limit as finite SK.
+This checks the factor $1/2$ and the degree convention in §9.5.
+
+Finally let $e=Z\mathrm{vac}=|-\rangle\otimes\Omega$ and
+$Q=q(e)$ in the rooted description. Its vacuum law is standard normal.
+The depth-one root operation is $u=e^{-i\beta X}e^{-i\theta ZQ}$.
+Using $Y|+\rangle=-i|-\rangle$, its insertion is
+$$
+v=u^*Zu\,\mathrm{vac}
+=|-\rangle\otimes[c-is\cos(2\theta Q)]\Omega
+ +|+\rangle\otimes s\sin(2\theta Q)\Omega.
+$$
+The root shift retains only the plus-root, one-particle component.
+The first-chaos coefficient of the sine is
+$\mathbb E[G\sin(2\theta G)]=2\theta e^{-2\theta^2}$, so
+$$
+\mathsf L^*v=2\theta s e^{-2\theta^2}e,\qquad
+\operatorname{Re}\langle v,\mathsf Lv\rangle
+=2\theta sc e^{-2\theta^2}
+=\theta e^{-2\theta^2}\sin(4\beta).
+$$
+Here $\operatorname{Re}\langle e,v\rangle=c$ supplies the final factor.
+Thus the observable, not just the Gaussian law, agrees in all three
+representations. The example uses the [ordinary root updates][q-ordinary-updates]
+and [root shift][q-root-energy]. It calibrates one depth; the higher-depth
+occupation and replacement hypotheses remain necessary.
+<!-- /passage:qaoa-depth-one -->
 
 <!-- passage:qaoa-regularization -->
 
@@ -2656,6 +3069,28 @@ weighted bounds gives convergence in each weaker weighted norm by a
 spectral cutoff. This is the topology in which one replaces a gate
 inside a fixed surrounding circuit.
 [OpenAI (2026b), §2, weights and the topology of convergence][q-weights].
+
+More precisely, the imported smooth-convergence contract is: for each
+output power $m$ and parameter multi-index $\alpha$, there are an input
+power $r$, exponent $k$ and constant $C$ such that
+$$
+\|\mathsf W_D^m\partial_x^\alpha F_D(x)\xi\|
+\le C(1+|x|)^k\|\mathsf W_D^r\xi\|,
+\qquad \xi\in\bigcap_{q\ge0}\operatorname{Dom}(\mathsf W_D^q).
+$$
+The bound is uniform in degree $D$ and parameter $x$. The same bound
+and strong convergence on smooth inputs are required for the adjoints
+and all specified parameter derivatives, with compatible limiting
+adjoints. Constants may depend on the fixed expression, height, channel
+list and derivative order. Bounded adjoint derivatives alone do not
+supply their convergence. At bounded local seeds $\mathsf W_0=1$;
+for polynomial Gaussian growth the source uses the vacuum-preserving
+weight $P_0+Q_0(1+|s|)Q_0$, where $P_0$ projects to the local vacuum
+and $Q_0=1-P_0$. These recursive weights control every generation.
+They differ from the top-generation number weight in §9.4's packet
+argument. No uniformity in growing word length, vanishing helper mass
+or the later seed-removal parameter is implicit in this contract.
+[OpenAI (2026b), §2, smooth-family bound][q-weights].
 
 One of the essential inputs retains a term beyond the Gaussian field.
 Let $K_D(x)$ be a smooth unitary family with $K_D(0)=1$, uniformly
@@ -2993,6 +3428,26 @@ $e^{-itSZ}$ applied to $|+\rangle$, with the same standard Gaussian $S$,
 give mean $X$ expectation $\mathbb E\cos(4tS)=e^{-8t^2}$.
 Replacing the second seed by an independent copy gives $e^{-4t^2}$.
 Agreement of marginal seed laws does not preserve a circuit's value.
+
+The error scale needed below follows from the source's quantitative
+probe estimate. For a fixed finite pulse list, separated packet centres
+and bounded designated tail moments, write $\varepsilon_r=o(r)$ for
+the discarded vacuum remainder. At each probe prefix $j$, with current
+insertion $v_{P,r}^{(j)}$ and huge-cost direction $v_r$, the proof gives
+$$
+\max_j|\operatorname{Im}\langle v_{P,r}^{(j)},v_r\rangle|
+ \le C_M(r^2+\varepsilon_r+r^M).
+$$
+Choose a fixed $M>1$. The right side is $o(r)$: within each ordinary
+packet the relevant Hermitian expectation is real, distinct packet
+centres have overlap $O(r^M)$, and terms containing only special
+packets have size $O(r^2)$. The norm remainder is carried by unitarity;
+it receives no unproved occupation bound. The exact zero clocks then
+cancel the first-order displacement on ordinary packets, leaving
+$o(r)$ error there. The prescribed action on a normalized special
+packet has $o(1)$ error, multiplied by its $O(r)$ amplitude.
+These are the unequal accuracy requirements that the next echo uses.
+[OpenAI (2026b), §5, accuracy of selective probes][q-seed-selective].
 
 **The echo amplifies a controlled difference.**
 Consider a forward cost $t/r$, a selective flip of the special
@@ -4236,3 +4691,31 @@ are recorded in the companion source review. This remains a draft after source-b
 [decoupling]: https://arxiv.org/abs/2609.40309v1
 [goh]: https://arxiv.org/abs/2404.06087v6
 [q-maxcut]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/08-regular-maxcut.tex
+
+[support-model]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Model.lean#L12-L88
+
+[value-model]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Model.lean#L33-L118
+
+[scalar-spin-limit]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean#L237-L263
+
+[scalar-upper]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean#L117-L142
+
+[scalar-column]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean#L14-L187
+
+[scalar-adaptive]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/AdaptiveColumns.lean#L13-L134
+
+[scalar-finite-adaptive]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean#L42-L88
+
+[scalar-empirical-directions]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalVectors.lean#L106-L180
+
+[scalar-transpose]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianTranspose.lean#L112-L140
+
+[scalar-gram-schmidt]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GramSchmidtLimit.lean#L33-L176
+
+[scalar-empirical-limit]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean#L21-L122
+
+[scalar-empirical-bound]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalCalculus.lean#L62-L141
+
+[scalar-predictable]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean#L14-L134
+
+[scalar-literal-lower]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean#L14-L27

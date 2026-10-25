@@ -565,7 +565,7 @@ class QaoaPaperConsumerTests(unittest.TestCase):
                 destination = posixpath.normpath(posixpath.join(
                     posixpath.dirname(name), unquote(url.path)
                 )) if url.path else name
-                self.assertIn(destination, payload, f"{name}: missing bundled destination {link}")
+                self.assertIn(destination, set(payload), f"{name}: missing bundled destination {link}")
                 if url.fragment:
                     pattern = r"(?:id|name)=[\"']" + re.escape(unquote(url.fragment)) + r"[\"']"
                     self.assertRegex(payload[destination].decode("utf-8"), pattern,

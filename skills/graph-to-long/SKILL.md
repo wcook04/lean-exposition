@@ -89,9 +89,20 @@ reading order. Keep that first response separate from the assisted reread.
    state the conclusion this section supplies and identify its next use.
    A reader arriving from a shorter paper should be able to enter, recover the
    omitted inference and return. Test that route as well as the sequential read.
+   Check coverage in both directions: from each promised conclusion to its
+   derivation, and from each load-bearing source mechanism to its written
+   destination. An endpoint paragraph does not explain the construction supplying
+   it. Split a large mapped passage at a change of mathematical interface when
+   readers need to enter those arguments separately; do not make one passage
+   for every implementation lemma.
 7. Give computations their mathematical inputs, finite scope and role in the
    argument. Put reproducibility commands, dependency versions and run receipts
    in a verification section rather than interrupting every proof step.
+   Use small calibrations to test signs, normalization and indexing across
+   representations. Separate agreement in a finite example from the theorem
+   transferring the general construction. Before passing signed quantities to
+   an expectation limit, exhibit the actual integrability, domination or
+   nonnegative-correction argument; almost-sure convergence alone is insufficient.
 8. Bind each material claim and explanatory passage to graph IDs and source
    locations in the companion mapping. Include the assumptions and citations
    the passage actually uses. Mark new conjectures and unexplained bridges.

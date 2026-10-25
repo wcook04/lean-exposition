@@ -303,29 +303,105 @@ def extraction_projection_digest(graph: dict, subject_ids: list[str], *,
     return digest(encoded({"nodes": nodes, "edges": edges, "extraction_status": graph["extraction_status"]}))
 
 
-def closure(graph: dict, roots=None, edge_kinds=None) -> set[str]:
-    """Consumer -> prerequisite; only argument closure adds explicit assumptions."""
+def argument_contexts(graph: dict, roots=None, edge_kinds=None, *, include_assumptions=True):
+    """Walk recorded dependencies in local premise scopes, never infer a proof.
+
+    A state is (node ID, discharged premise IDs). Keeping states, rather than
+    globally deleting premises, preserves an independently reached free use.
+    Suppliers are ordinary support edges outside the annotated theorem branch.
+    """
     nodes = indexed(graph["nodes"], "node")
-    pending = list(graph["selected_goals"] if roots is None else roots)
-    require_refs(pending, nodes, "closure root")
+    seeds = list(graph["selected_goals"] if roots is None else roots)
+    require_refs(seeds, nodes, "closure root")
     kinds = ARGUMENT_EDGES if edge_kinds is None else set(edge_kinds)
     require_refs(kinds, EDGE_KINDS, "closure edge kind")
-    neighbors: dict[str, set[str]] = {}
+    neighbors: dict[str, list[dict]] = {}
     for e in graph["edges"]:
         if e["kind"] in kinds:
             require_refs([e["from"], e["to"]], nodes, "closure edge endpoint")
-            neighbors.setdefault(e["from"], set()).add(e["to"])
-    result = set()
+            neighbors.setdefault(e["from"], []).append(e)
+    pending = [(node, frozenset()) for node in seeds]
+    states, transitions = set(), []
     while pending:
-        node = pending.pop()
-        if node in result:
+        state = pending.pop()
+        node, discharged = state
+        if state in states or node in discharged:
             continue
-        result.add(node)
-        pending.extend(neighbors.get(node, ()))
-        if kinds & ARGUMENT_EDGES:
+        states.add(state)
+        steps = []
+        for edge in neighbors.get(node, ()):
+            supplied = {p["assumption_id"] for p in edge.get("application", {}).get("premise_bindings", [])}
+            steps.append((edge["to"], discharged | supplied, edge))
+        if include_assumptions and kinds & ARGUMENT_EDGES:
             require_refs(nodes[node]["assumption_ids"], nodes, "closure assumption")
-            pending.extend(nodes[node]["assumption_ids"])
-    return result
+            steps.extend((target, discharged, None) for target in nodes[node]["assumption_ids"])
+        for target, scope, edge in steps:
+            if target not in scope:
+                successor = (target, frozenset(scope))
+                transitions.append((state, successor, edge))
+                pending.append(successor)
+    return states, transitions
+
+
+def closure(graph: dict, roots=None, edge_kinds=None) -> set[str]:
+    """Consumer -> prerequisite, respecting only explicitly authored applications."""
+    states, _ = argument_contexts(graph, roots, edge_kinds)
+    return {node for node, _ in states}
+
+
+def _validate_applications(graph: dict, nodes: dict, sources: dict) -> None:
+    applications = [edge for edge in graph["edges"] if "application" in edge]
+    if applications and graph["schema_version"] != "1.2":
+        raise ContractError("scoped applications require graph version 1.2")
+    # One application layer only. Ordinary dependency cycles remain supported.
+    plain = {**graph, "edges": [{k: v for k, v in edge.items() if k != "application"}
+                               for edge in graph["edges"]]}
+    for edge in applications:
+        app = edge["application"]
+        if edge["kind"] != "supports":
+            raise ContractError("scoped application must annotate a supports edge")
+        if nodes[edge["from"]]["kind"] not in {"goal", "claim"} or nodes[edge["to"]]["kind"] == "assumption":
+            raise ContractError("scoped application must connect a claim to a conditional result")
+        span = app["source_span"]
+        require_refs([span["source_id"]], sources, "application source")
+        if span["end_line"] < span["start_line"]:
+            raise ContractError("application source span is reversed")
+        premises = [p["assumption_id"] for p in app["premise_bindings"]]
+        if len(set(premises)) != len(premises):
+            raise ContractError("application premise may be supplied only once")
+        theorem_scope = closure(plain, [edge["to"]])
+        theorem_assumptions = {n for n in theorem_scope if nodes[n]["kind"] == "assumption"}
+        require_refs(premises, theorem_assumptions, "application theorem premise")
+        supplied_scope = set()
+        for premise in app["premise_bindings"]:
+            supplier = premise["supplier_id"]
+            require_refs([supplier], nodes, "application supplier")
+            if nodes[supplier]["kind"] == "assumption":
+                raise ContractError("application supplier must record an argument, not another assumption")
+            require_refs(premise["binding_names"], app["shared_bindings"], "shared application binding")
+            if not any(e["from"] == edge["from"] and e["to"] == supplier
+                       and e["kind"] == "supports" and "application" not in e
+                       for e in graph["edges"]):
+                raise ContractError("application supplier needs an ordinary support edge from its consumer")
+            supplied_scope |= closure(plain, [supplier])
+        inputs = theorem_scope | supplied_scope
+        if edge["from"] in inputs:
+            raise ContractError("cyclic scoped application is unsupported")
+        if any(other["from"] in inputs for other in applications):
+            raise ContractError("nested scoped applications are unsupported")
+        # Measure only this use, including supplier premises. The actual consumer
+        # may also have independent inputs, which retain their own assumptions.
+        local = copy.deepcopy(graph)
+        root = "__application_scope__"
+        while root in nodes:
+            root += "_"
+        local["nodes"].append({"id": root, "assumption_ids": []})
+        local["edges"].append({**edge, "from": root})
+        local["edges"].extend({"from": root, "to": p["supplier_id"], "kind": "supports"}
+                              for p in app["premise_bindings"])
+        required = {n for n in closure(local, [root]) if n in nodes and nodes[n]["kind"] == "assumption"}
+        if set(app["remaining_assumption_ids"]) != required:
+            raise ContractError("application remaining assumptions differ from scoped inputs")
 
 
 def required_citation_ids(graph: dict, roots=None) -> set[str]:
@@ -430,8 +506,8 @@ def validate_graph(graph: dict) -> dict:
                 if not isinstance(receipt.get("report_sha256"), str) or re.fullmatch(r"[0-9a-f]{64}", receipt["report_sha256"]) is None:
                     raise ContractError("successful extraction requires its report content hash")
                 profile = receipt.get("projection_profile", "lean-extraction-v1")
-                if profile == "lean-extraction-v2" and graph["schema_version"] != "1.1":
-                    raise ContractError("version 2 extraction requires graph version 1.1")
+                if profile == "lean-extraction-v2" and graph["schema_version"] not in {"1.1", "1.2"}:
+                    raise ContractError("version 2 extraction requires graph version 1.1 or 1.2")
                 if profile == "lean-extraction-v1" and graph["schema_version"] != "1.0":
                     raise ContractError("legacy extraction cannot be reclassified as graph version 1.1")
                 if (type(receipt.get("report_schema_version", 1)) is not int
@@ -531,6 +607,7 @@ def validate_graph(graph: dict) -> dict:
                        and all(node["id"] in evidence[e]["subject_ids"] and node["source_id"] in evidence[e]["source_ids"] for node in endpoints)
                        for e in edge["evidence_ids"]):
                 raise ContractError("platform decomposition needs source-bound platform observation evidence")
+    _validate_applications(graph, nodes, sources)
     selected = closure(graph)
     if graph["extraction_status"] in {"partial", "complete"} and not any(e["kind"] == "extraction" and e["status"] == "passed" for e in evidence.values()):
         raise ContractError("extraction status requires successful extraction evidence")
