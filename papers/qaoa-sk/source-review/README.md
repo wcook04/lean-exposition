@@ -41,7 +41,7 @@ document locations. Repository-relative links in these review inputs assume
 the source checkout. Graph and text hashes alone do not establish that a
 reader of a separate bundle can reach the linked proof or source.
 
-## Reconstruction and retained run history, 24 October 2026
+## Reconstruction and retained run history, 25 October 2026
 
 The [long record](../long/reasoning-record.md) now reconstructs compact-strip
 recovery (§2.4), the complete contact argument (§3), the rational certificate
@@ -71,7 +71,16 @@ configuration has been recorded for either target.
 | --- | --- | --- | --- |
 | Full support, historical pre-repair inputs | Completed | Failed: missing `AbsIncrement.olean` | Not reached |
 | Scalar value, historical pre-repair inputs | Completed | Failed: missing `IntegralPositiveMulGaussian.olean` | Not reached |
-| Either target, maintained corrected subtree-glob inputs | Not run | Not run | Not run |
+| Full support, corrected subtree-glob inputs | Build confirmed; exporter observed live | Unknown | Unknown |
+| Scalar value, corrected subtree-glob inputs | Not observed | Unknown | Unknown |
+
+The [25 October interruption summary](../../../examples/qaoa-sk/verification/corrected-replay-interruption-20261025.json)
+records the later corrected replay separately. Its controller stopped without
+a recovered terminal research result. Comparator and research v2 extraction
+outcomes remain unknown, neither rejected nor accepted. The full reconciliation
+is retained under the summary's source-observation digest. This curated summary
+does not substitute for target process logs, kernel/quotient results or actual
+axiom inventories.
 
 The graph separately identifies the active derived Lake file and lockfile by
 their exact digests. These are input identities, not a replacement for the

@@ -14,17 +14,20 @@ The [source guide](../../../examples/qaoa-sk/README.md#read-the-source-and-the-s
 identifies the two OpenAI manuscripts and distinguishes them from this repository's
 writing and the separate Prove2Me metadata example.
 
-The opening defines a spin configuration as a list of signs, the random
-pair weights as couplings, and the energy being maximised. It then introduces
-the increment measure, support and density before stating the support theorem,
-and explains their role in the later circuit construction. This short research-style
-reconstruction then explains two uses of OpenAI's coercive estimate for an admissible integrable zero-temperature SK minimiser.
-First, variational contact at the endpoints of a support gap conflicts with
-strict curvature inside it. After full support saturates the diffusion
-moments, a fixed-time approximation applies the same estimate to prove
-strictly positive density. The paper explains why that passage transfers
-spatial moments rather than time derivatives. It then derives the scalar
-value identity and states the separate QAOA consequence with its limit order.
+The paper opens with the pure, zero-field SK Hamiltonian and the exact
+covariance convention, then defines the increment measure and the diffusion
+moment used in the first variation. Its focus is two uses of OpenAI's
+quantitative estimate for an admissible integrable zero-temperature SK minimiser.
+Variational contact at the endpoints of a support gap conflicts with strict
+curvature inside it. Once full support fixes the diffusion moments, a local
+constant replacement transfers the same estimate to prove strictly positive
+density. This second passage transfers spatial moments, not time derivatives.
+
+The short paper derives the decisive moment identities and states precisely
+which sign comparisons, rational identity and approximation estimates it imports.
+The scalar value identity and the finite sum of adjacent Gaussian correlations
+explain the subsequent QAOA application. The separate circuit theorem is stated
+with its limit order; its construction remains in the long record.
 
 The intended reader knows elementary stochastic calculus and variational
 arguments. The analytic sign propagation, rational polynomial certificate and
@@ -74,6 +77,7 @@ From the repository root, with Pandoc and Tectonic installed:
 paper_build_dir=$(mktemp -d)
 pandoc papers/qaoa-sk/short/paper.md \
   --from markdown+tex_math_dollars --to latex --standalone \
+  --lua-filter scripts/paper_anchors.lua \
   -V fontsize=11pt -V geometry:margin=1in -M lang=en-GB \
   --output "$paper_build_dir/paper.tex"
 tectonic "$paper_build_dir/paper.tex" --outdir "$paper_build_dir"

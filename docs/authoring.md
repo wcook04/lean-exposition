@@ -56,6 +56,16 @@ benefit for a new manuscript.
 
 ## Establish that the inputs suffice
 
+Read the current account from the beginning before consulting explanations of
+its difficult passages. Record what an unfamiliar reader has actually been
+told at each inference. Define a quantity before using it and explain the job
+it will do; a later definition does not repair the earlier reading experience.
+Then follow each omitted-proof destination into the long record, check its
+local hypotheses and conclusion, and return to the shorter account. This tests
+both sequential reading and entry at a particular proof step. A consequence,
+alternative proof or comparison should not appear to be a prerequisite merely
+because it occupies the next section.
+
 A long reasoning record is a citable derivation with exact statements, proof
 steps, source destinations and checking evidence. Before writing a proof section,
 read the relevant argument and definitions. Declaration metadata and a dependency
@@ -150,6 +160,19 @@ bind exact authored text. Cross-document proof destinations belong in the text
 and `rationale`; the artifact schema does not encode such links. Read both ends
 after a revision. Check that substantive claims outside declared passage markers
 have not escaped mapping: the checker cannot discover them by interpreting prose.
+
+The consumer's ordered `document_parts` view retains passage blocks and every
+surrounding byte. Its [guarded reconstruction](bundle-consumers.md#reconstruct-the-recorded-manuscript)
+can recover the exact captured Markdown, with the existing passage references
+leading to graph correspondence. Markdown remains the prose authority.
+Dependency traversal cannot choose a sufficient exposition order or generate a
+missing proof. A reordered or rewritten account is a new draft for review.
+
+When producing LaTeX/PDF with Pandoc, include
+`--lua-filter scripts/paper_anchors.lua`. It preserves the manuscripts' HTML
+bookmarks as LaTeX destinations; Pandoc otherwise drops the raw HTML while
+retaining links that refer to it. Check the resulting PDF destinations and
+links as well as Markdown links. The filter does not modify the manuscript.
 
 ## Keep evidence classes separate
 

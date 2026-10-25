@@ -1,6 +1,6 @@
 # Sources and implementation choices
 
-Lean Exposition starts with a small exporter over compiled Lean declarations. It records evidence for authors and reviewers; it does not turn proof acceptance into approval of an English claim. Sources were retrieved on 23 October 2026, with scholarly software credits checked on 24 October. [references.json](references.json) records immutable source pins, selected-file hashes, license evidence, and the disposition of each reference.
+Lean Exposition starts with a small exporter over compiled Lean declarations. It records evidence for authors and reviewers; it does not turn proof acceptance into approval of an English claim. Initial sources were retrieved on 23 October 2026, scholarly software credits checked on 24 October, and TheoremGraph added on 25 October. [references.json](references.json) records each source's acquisition date, immutable pins, selected-file hashes, license evidence, and disposition.
 
 The papers credit Lean through de Moura and Ullrich's [2021 system
 description](https://doi.org/10.1007/978-3-030-79876-5_37), and mathlib through
@@ -47,6 +47,25 @@ Compiled dependencies describe the implementation that was inspected. They do no
 [Hattori, Matsuzaki and Fujiwara, INLG 2025](https://aclanthology.org/2025.inlg-main.23/) combine premise explanations, tactic templates, proof-state extraction, and recursive summarization along the proof structure. This is a useful drafting recipe. Their study used 17 textbook proofs and 21 supporting lemmas, with manual step evaluation by the first author; its reported 86% key-point coverage does not establish reliable exposition of arbitrary research mathematics. The [companion implementation](https://github.com/hattori-matsuzakilab/AutoInformalizationWithTemplate/tree/b140d32223f48e06ab210c346d76a9928cf37e09) is retained as a link only because a repository-wide license was not found.
 
 A generated explanation must retain its source links and review status. Human review must check the hypotheses, definitions, quantifiers, conclusion, omitted cases, and whether each prose step follows. Readability review is another judgment. Neither can be inherited from compilation, an axiom report, or a proof checker.
+
+## Formal and informal graph correspondence
+
+[Kurgan et al., TheoremGraph (arXiv:2606.25363v1)](https://arxiv.org/abs/2606.25363v1)
+connect informal statement dependencies with typed dependencies extracted from
+compiled Lean declarations. Its “Formal Graph” section separates signature,
+proof, definition, structural and documentation references. “Bridging the
+Corpora” proposes formal/informal statement matches using generated summaries,
+retrieval and model judgments; its accepted match class includes inexact
+relationships such as special cases and one direction of an implication.
+The limitations section describes the loss of context and limited expert
+calibration. These are useful precedents for inspectable, typed relations,
+without making a retrieved match a proof of equivalence.
+
+This repository's authored passage maps identify which captured text and claims
+are being compared. They retain that correspondence's review boundary rather
+than assigning proof status from matching text. The exact v1 paper and TeX
+source are held in the private annex; the public record retains their hashes
+and reading scope. No claim of novelty follows merely from using a graph.
 
 ## Comparator has a version and platform boundary
 

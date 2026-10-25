@@ -188,7 +188,7 @@ records preserve those distinctions.
 | [src/lean_exposition/](src/lean_exposition/) | Python CLI and library, with packaged schemas and templates |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
-| [scripts/](scripts/) | Repository layout and link checks |
+| [scripts/](scripts/) | Repository layout/link checks and the [paper bookmark filter](scripts/paper_anchors.lua) |
 | [.github/](.github/) | Continuous integration checks |
 
 ## Development and licence

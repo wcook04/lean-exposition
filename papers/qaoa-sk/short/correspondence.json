@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "06d3abd8ce4141e94fe2e4c328e8b2950040e8e0a1619f840dfa3ba5cf11751e",
-  "graph_sha256": "ae2a7828eb44ead05681a1f33c18370f7042988009d5ad2261e4080f781c4b46",
+  "content_sha256": "b350b0e3755503bf8d2b2ca7442ff906002abeb259205d014e7aab36ff4f08a6",
+  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -236,7 +236,7 @@
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "7af3365be210390201aefe05bf1a22bf719214827758a4d9c877160af00ac871",
+      "text_sha256": "305679adebc30e4588d3114cea331d9507d308c5ee39d957cf7ffaae9afbdb00",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -291,7 +291,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "1a98ab7eb5fbe88353205b5001f058c57289344e7b2c557a1770a86effd68087",
+      "text_sha256": "81c4bddca0e9958e1512b8ab381c15b896ef58ba46584b173716f652445ff3fb",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -321,7 +321,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "e26a617d5b4db1b84e5ae266fae2ec9d0d98298d0dfff2847380336218312ec5",
+      "text_sha256": "2d5cad7b46fe86cf739db4083c1c7adaa93dc56285b7c138163a338fd07af356",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -381,7 +381,7 @@
     },
     {
       "anchor": "contact",
-      "text_sha256": "c4cbf43df19c743d95264b59b032924f51a5632283c7115992f262886d2be58d",
+      "text_sha256": "7d8ddd40f53ea10dc3c1065ac5f0e7c7bb903f649c08d443da55eba121819385",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -412,7 +412,7 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "23d905d680cafeeaf26889839138c0954b5b563b01e075c1982d1f4be35a1191",
+      "text_sha256": "74c9428bd626b11d51da820fed4e7cd59bd3bb3b5665c0ca0ba4fda687c87e17",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
@@ -463,7 +463,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "bc491a105f1d7a4ccd23eb38b7fdd807067274526e80506793b554f684a830dd",
+      "text_sha256": "2d815dabe5e696d6c654d48ce318ba031992dbe7a53f0367a97894d7373e0f60",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -501,7 +501,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "57a92525869c0e23eb29668693f74738ce26ab03165009091d0081519edada67",
+      "text_sha256": "981203a82b9dc16307690e05be41d1c84990fe8f8d2c3ac3495ac21659709ec5",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -549,7 +549,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "b2f45280b2455ffbcb82417d66dda59fa882a09e74801fe16568f5c1b9ec2067",
+      "text_sha256": "905fc16136752b9eba82028536a11b0edb650b4ef0366bbbe577f47b6ea218c2",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -612,7 +612,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "9c8648dd7ba934a3b08612204d16ab6df2e1a3921974da19d18087e3d77a3882",
+      "text_sha256": "b3c45f2381b9794ca169179954ffba3b9a9d4daae06a382b7208458ae677b384",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -658,7 +658,7 @@
     },
     {
       "anchor": "evidence-scope",
-      "text_sha256": "083e9b1ea16824b1b6cc09a530bafc77f54955b903b6269e61ab6dc920c8a710",
+      "text_sha256": "6bd1088af4539efc08d904cfe45422eb5b388aa092c66b0994b5e05f8ba6b84f",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -738,6 +738,7 @@
     "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
     "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance.",
     "24 October 2026 focused-scope revision: applied skills/long-to-short/SKILL.md (SHA256 00e8641d4847c48f3e89420a3c72c32a2dd1f22612127d8552c39b3b556bc0bc). Retained the existing focused contribution, hard curvature step and exact full-proof destinations after the preceding sequential revision. This pass checked its relationship to the narrowed exposition; no new theorem or stronger evidence label was introduced.",
-    "Paper scope review (25 October 2026): The authored focus follows the title, abstract, main theorem and density corollary: full support and strictly positive smooth density. Scalar and circuit connections remain mapped in their stated scope. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance."
+    "Paper scope review (25 October 2026): The authored focus follows the title, abstract, main theorem and density corollary: full support and strictly positive smooth density. Scalar and circuit connections remain mapped in their stated scope. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
+    "25 October 2026 round-four source-aware revision: applied skills/long-to-short/SKILL.md (SHA256 9dde3b565cecfd3d96ccbe7a77c48773007a31d90701751bc8cda7bde7dd0ed4). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
   ]
 }

@@ -411,13 +411,50 @@ are escaped in the text presentation.
 
 `query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage and section selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. An explicitly empty list selects nothing, while an omitted selector adds no filter.
 
-Paper view and query format `0.2.0` adds explicit `paper_scope` and a
-mapping-bound support-subgraph `ref`. It retains the `0.1.1` navigation correction for bare-CR and mixed
+Paper view and query format `0.3.0` adds `paper.document_parts`, a complete
+ordered partition of the captured Markdown. It retains the `0.2.0` explicit
+`paper_scope` and mapping-bound support-subgraph `ref`, and the `0.1.1` navigation correction for bare-CR and mixed
 line endings: CRLF counts once, and bare CR or LF each count once. YAML front
 matter is excluded for all three endings. Exact bytes, byte spans and hashes
 are preserved; LF and CRLF paper behavior is unchanged. The paper-query cache
 namespace includes this version, so old derived navigation is not reused.
 The graph-view and eight-file bundle formats remain `0.1.0`.
+
+### Reconstruct the recorded manuscript
+
+`paper.document_parts` covers every source byte exactly once. A `mapped_passage`
+part includes its opening and closing markers and points to the existing
+`passage_ref`. Selected passages join to `correspondence_links` for their
+recorded claims, assumptions and citations. Unselected passages retain their
+IDs in `paper.passages`; select them or request the full paper to obtain their
+correspondence links and graph records. An `unmapped_text` part points to its
+`segment_ref`, preserving surrounding headings, definitions and references.
+The parts use the existing half-open UTF-8 byte spans. They contain no second
+copy of the prose. Section spans may overlap passage spans, so the outline is
+not used as a document partition. Passage selection never removes document parts.
+
+```python
+from pathlib import Path
+from lean_exposition.consumer import project_paper, reconstruct_paper
+
+bundle = Path("build/qaoa-sk-authored")
+view = project_paper(bundle, "long")
+original_markdown = reconstruct_paper(
+    bundle, "long", view["paper"]["document_parts"],
+    expected_manifest_sha256=view["bundle"]["manifest_sha256"],
+)
+assert original_markdown == view["paper"]["text"].encode("utf-8")
+```
+
+`reconstruct_paper` validates one directory or ZIP capture, requires the expected
+manifest digest, and returns bytes without writing files. It rejects omitted,
+duplicated, reordered, modified or stale parts, then checks complete coverage
+and the original Markdown digest. This is an exact reconstruction check, not a
+compiler of a new proof from dependency order. For a previously reviewed edition,
+use the independently retained manifest digest. Editing or rearranging the prose
+creates a new authored draft that needs new mappings and review.
+
+### Select sections and recorded support
 
 Use a section's exact `ref` from the returned outline with `section_refs=[ref]` or `--section REF`. Titles can repeat, and offsets can move after edits. Unknown or stale references fail; the API does not guess a replacement. A section matches every passage with a content-span overlap containing non-whitespace text; a blank line before a heading does not select the next passage. The returned passage keeps its full mapping and prerequisites; `section_overlaps` identifies the exact intersection, and `whole_passage_extends_beyond_selected_sections` exposes a passage crossing the chosen boundary. This prevents a paragraph selection from silently dropping conditions elsewhere in its mapped passage.
 

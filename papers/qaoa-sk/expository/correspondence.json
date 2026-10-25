@@ -9,6 +9,7 @@
   ],
   "citation_ids": [
     "ac2017_ground_state",
+    "acz2020_near_ground_pairs",
     "bfmvz2022_tree_transfer",
     "chen2026_full_support",
     "circuit-r2-26-cite-additive-responses",
@@ -118,6 +119,7 @@
     "support.full_relative_support",
     "support.moment_identity",
     "support.moment_saturation",
+    "support.near_ground_pairs",
     "support.no_bounded_gap",
     "support.no_initial_gap",
     "support.no_terminal_gap",
@@ -126,12 +128,12 @@
     "support.stieltjes_measure",
     "support.zero_curvature"
   ],
-  "content_sha256": "0d20ffe4b18c7eee8741dcbff3a6599d738682ace6fe51f99086df9a218cd78b",
-  "graph_sha256": "ae2a7828eb44ead05681a1f33c18370f7042988009d5ad2261e4080f781c4b46",
+  "content_sha256": "2ba4ea893b25f32de215c1a1481da5eee5d7e1f6a19bc4a6010e9ccbdce7f53a",
+  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
   "passages": [
     {
       "anchor": "opening",
-      "text_sha256": "bd6fbb01a15888cbc7bcefaca3c39a374933c95586d341c9f49e249da96511cf",
+      "text_sha256": "68bd48ac8af405fa8e649606e8a2c507b11dc620762c1c3a507d2e7c683f57e3",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -181,7 +183,7 @@
     },
     {
       "anchor": "spins-and-overlap",
-      "text_sha256": "26866fcb4be92902564dc2a2b1d45c4633ba9664aae4770898b276833507be01",
+      "text_sha256": "39542f2de314d43015a5b403b61410c697573f355731d21e25dfadbbc911c6d8",
       "claim_ids": [
         "scalar.parisi_formula"
       ],
@@ -195,7 +197,7 @@
     },
     {
       "anchor": "order-parameter-example",
-      "text_sha256": "21d44dcdc4b2b9eb075232cfdede67ae971f3112d28923fe0498210abdec848f",
+      "text_sha256": "2d2d77e3f4c59b08f4314392b40dee790530ba18df3e9b65a28516e629ef59e1",
       "claim_ids": [
         "support.stieltjes_measure"
       ],
@@ -210,7 +212,7 @@
     },
     {
       "anchor": "value-and-diffusion",
-      "text_sha256": "7609bb200777b88b45305c9b6cfdbb7c0e4652b57881c44e6dd203d574a5d0f9",
+      "text_sha256": "b88c78a1d667192fb14911ab75e0a060ed32a8404c052f0741a127c67a926ca2",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -234,7 +236,7 @@
     },
     {
       "anchor": "full-support-statement",
-      "text_sha256": "37e0b4cb2b960d085660825b20363a9473baf364ff7f0991c1acce2ec2d07fea",
+      "text_sha256": "45b6f30d9aa8c286da2ab77f84470902b187498be1c2ab514e1091f51da7aef4",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -284,7 +286,7 @@
     },
     {
       "anchor": "contact-and-gap",
-      "text_sha256": "7f0db8489cf17933d15051d19f32eb9bb75fb57a912ee88d8a561266ac0c0ac0",
+      "text_sha256": "20581881efa218ebba3c0bc28962ba92cb25d2a419a00db0b1bc069d442e8229",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -329,7 +331,7 @@
     },
     {
       "anchor": "endpoints",
-      "text_sha256": "d1061eac27b4d13a45001a038e555565f55f3324f9d8a99db8c9505fcf88fd19",
+      "text_sha256": "14654871fb048c57d56e3acfe60670c9b6acc21dcc2ae2c80086b2e2cba0d709",
       "claim_ids": [
         "support.zero_curvature",
         "support.no_initial_gap",
@@ -386,8 +388,53 @@
       "rationale": "A standalone tilted-chord calculus example compares strict and non-strict convexity with endpoint derivative values 1/2 and 3/2. It is not a direct instance of the graph chord lemma, whose two derivatives are each at most one, and is not an SK minimizer. No research theorem is selected as its direct claim. The source citation locates the related chord-area idea only."
     },
     {
+      "anchor": "overlap-payoff",
+      "text_sha256": "9abd26c1519ed17fc3c1de37c5a5a5d020913df2280a19a50e619f59da9a59f3",
+      "claim_ids": [
+        "support.near_ground_pairs"
+      ],
+      "assumption_ids": [
+        "assumptions.full_support_minimizer"
+      ],
+      "citation_ids": [
+        "acz2020_near_ground_pairs",
+        "full_support_chord_derivative",
+        "full_support_origin_coercivity",
+        "full_support_type",
+        "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-parisi-formula",
+        "support-r2-13-finite-density-call",
+        "support_backward_source",
+        "support_certificate_lean_source",
+        "support_certificate_source",
+        "support_closure_lean_source",
+        "support_closure_source",
+        "support_coercivity_source",
+        "support_contact_lean_source",
+        "support_contact_source",
+        "support_curvature_source",
+        "support_diffusion_source",
+        "support_flux_source",
+        "support_forward_source",
+        "support_gap_lean_source",
+        "support_model_lean_source",
+        "support_model_source",
+        "support_regularity_source",
+        "support_stieltjes_lean_source",
+        "support_tails_source",
+        "support_terminal_defect_lean_source",
+        "support_terminal_lean_source",
+        "support_terminal_source",
+        "support_transfer_source",
+        "support_uniqueness_lean_source",
+        "support_variation_source"
+      ],
+      "evidence_class": "source_argument",
+      "rationale": "Cited consequence of full support and the separate near-ground landscape theorem for each fixed target overlap. The passage states the probability, order of choices and existence boundary; it does not assert a typical-pair law, construction or formal acceptance."
+    },
+    {
       "anchor": "density-and-approximation",
-      "text_sha256": "39be3fd41abd5f3de0c6d6aae440f39b9bd5614ca02b4f14f29aa9b1a6c9d4bd",
+      "text_sha256": "26c4571a00fa9dea7bd816c0884dd14720f7e9211d88e94b2b13b2be393cdb9b",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -435,7 +482,7 @@
     },
     {
       "anchor": "scalar-identities",
-      "text_sha256": "3873af7850f232f019f2d74270f6cf0a8f876d44b5a6976d29542049b7eef0a0",
+      "text_sha256": "327ff33a25b3d78bf73f2be7be0255db7d454d5a1f5c74c80e4d0ea6e6614672",
       "claim_ids": [
         "scalar.manuscript_terminal_value"
       ],
@@ -484,7 +531,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "c5e5e80d1779c338b040e1f4c67700700522c3c1b2332ca31913bd192038868d",
+      "text_sha256": "ad4461cce19aac26bc40dee26be8bae379c6bacfcbc1771a4b26c57f06731829",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -529,7 +576,7 @@
     },
     {
       "anchor": "source-record",
-      "text_sha256": "bb8eba8a0e5954ed358a0233815a9dceb81ac6cfed43a6cfa2dfce960908f0c1",
+      "text_sha256": "d0de359929c06f59fd25886f598403e5468b91b057432e2b43b12909d586a6f3",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -605,7 +652,8 @@
     "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
     "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance.",
     "24 October 2026 focused-scope revision: applied skills/record-to-expository/SKILL.md (SHA256 e83efcb7f0cc5bc8aedcbf0fb985d84293c5980aa3ff0f3946676cd40b261912). Selected one result, the no-gap theorem, and reconstructed its reading order using the short statement, long proof, selected Lean interfaces and original manuscripts. Removed extended downstream developments while retaining exact long-record destinations. Agent review covered the complete focused text and source-sensitive proof steps; the tilted-chord caption and scalar corollary locator were corrected. Rendering and final binding are separately recorded; no human reader study or formal acceptance is inferred.",
-    "Paper scope review (25 October 2026): The authored focus is the no-gap result. Density, scalar values and circuits remain mapped as outlooks with their proof destinations, rather than additional exposition goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance."
+    "Paper scope review (25 October 2026): The authored focus is the no-gap result. Density, scalar values and circuits remain mapped as outlooks with their proof destinations, rather than additional exposition goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
+    "25 October 2026 round-four source-aware revision: applied skills/record-to-expository/SKILL.md (SHA256 34327f081de6989a9856bb3ce4d3546b555c9669122160ddf9b024077e454f36). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.1",
@@ -681,6 +729,7 @@
     "support.integrated_coercivity",
     "support.moment_identity",
     "support.moment_saturation",
+    "support.near_ground_pairs",
     "support.no_bounded_gap",
     "support.no_initial_gap",
     "support.no_terminal_gap",

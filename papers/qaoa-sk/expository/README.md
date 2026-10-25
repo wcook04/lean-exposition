@@ -13,9 +13,11 @@ from a measure with full support; the area picture shows the contradiction.
 The paper's task is to make that argument understandable, not to teach every
 result retained in the source corpus.
 
+The ending returns to the spins: a separate landscape theorem and full
+support give near-optimal pairs at each prescribed approximate overlap.
 Density, scalar-value and quantum-algorithm consequences have a brief outlook.
 Their detailed arguments remain in the [long reasoning record](../long/reasoning-record.md):
-§§5.1–5.2 treat density, §6 the scalar value, §7 its finite Gaussian
+§§5.1–5.2 treat density, §5.3 the overlap-pair consequence, §6 the scalar value, §7 its finite Gaussian
 approximation and §9 the circuit construction. Having these sources in a
 review packet does not make them required chapters of the exposition.
 
@@ -34,11 +36,11 @@ analytic proofs, successful research Comparator replay and human reader
 understanding have not been independently assessed here. The mapping's
 review notes describe the actual scope and remaining review.
 
-The gap diagram and paired cumulative/increment plot adapt [Figure 1 of OpenAI's full-support source](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/gap-convexity.tex)
+The gap diagram adapts [Figure 1 of OpenAI's full-support source](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/gap-convexity.tex)
 from the [Apache-2.0-licensed source collection](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/LICENSE).
 The gap diagram relabels the endpoints and uses grayscale shading; its curve
-is schematic. The paired plot shows the exact piecewise-linear candidate
-and its density, so its constant interval can be compared on aligned axes.
+is schematic. The paired plot reuses the source axes and guides to show the exact
+piecewise-linear candidate and its density on aligned axes.
 
 The [long reasoning record](../long/reasoning-record.md) supplies a fuller
 argument, while the [short paper](../short/paper.md) gives a compressed

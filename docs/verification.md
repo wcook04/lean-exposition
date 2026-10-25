@@ -384,7 +384,12 @@ records another successful challenge build/export followed by a solution-build
 failure for missing `IntegralPositiveMulGaussian.olean`. Both invocations used
 the historical pre-repair Lake configuration. Neither reached solution export,
 kernel checking or comparison; no research acceptance or mathematical rejection
-follows. The corrected maintained configuration has not been replayed.
+follows. The later
+[corrected-replay interruption summary](../examples/qaoa-sk/verification/corrected-replay-interruption-20261025.json)
+records a confirmed full-support challenge build and an observed live exporter,
+followed by controller interruption without a recovered terminal research
+result. Comparator and research v2 extraction outcomes remain unknown. An
+incomplete controller audit is not a proof-checker rejection or acceptance.
 
 All 357 files in the original runtime materialization manifest match their
 before-run hashes. That observation concerns the original runtime inventory,

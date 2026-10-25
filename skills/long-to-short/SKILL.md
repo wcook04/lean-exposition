@@ -12,7 +12,8 @@ the mathematics or upgrade its evidence.
 ## Preconditions and inputs
 
 Keep the Lean corpus and its original-source and checking context available
-alongside the long record. For the selected result, inspect the formal
+alongside the long record, including exact Lean and Comparator outcomes and
+the relevant literature editions. For the selected result, inspect the formal
 statements and definitions again; the long record's interpretation is a claim
 to compare, not a substitute for that check. Use the long record for the full
 argument and omitted cases, the literature for credit and position, and actual
@@ -23,6 +24,13 @@ supporting arguments. Compare the closest prior results. Identify the intended
 reader, the principal contribution and the mechanism worth explaining. Fix the
 claim ceiling before editing prose; new mathematical discoveries return to
 research and review first.
+
+Use the closest literature to calibrate the expert reader's needs: what is
+already known, what terminology and conventions they expect, and which step
+deserves space. Distinguish a new theorem from a new proof, reconstruction or
+explanation. A novel presentation cannot take credit for an antecedent result.
+Read an existing short draft in order and retain the first point where its
+promised inference cannot yet be recovered before opening supporting material.
 
 Select claims for their supported contribution and source passages for the
 explanation they supply. Keep the claim's graph identity distinct from those
@@ -48,12 +56,16 @@ material as unavailable rather than assuming a link's destination is adequate.
    Explain the force of a restrictive hypothesis with familiar cases where known.
 3. Put the mechanism early, then allocate detail to the inference that makes
    it work. Introduce definitions when their purpose can be understood. Use
-   notation only when it reduces repeated explanation.
+   notation only when it reduces repeated explanation. Keep the short paper
+   within its chosen mathematical scope; a further application with different
+   hypotheses belongs in a separate argument, even when it motivates this one.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference
    with the required assumptions and translated notation. A working link to a
-   nearby theorem is insufficient.
+   nearby theorem is insufficient. Identify the result obtained at that
+   destination and where the reader returns. Test one complete short-to-long
+   journey, including a boundary case when the omitted proof has cases.
 5. Before cutting a passage, decide where its useful content will remain.
    Preserve the complete long argument; never rebuild it from the shortened
    paper. Independent routes may stay there. Essential assumptions,
@@ -97,6 +109,14 @@ proof step; and one short-paper reference through the full argument it names.
 Check that all three preserve the same statement. Then ask a cold reader to
 explain the mechanism and identify an excluded case where known. Preserve
 specific failed reconstruction attempts as revision evidence.
+
+Also read the entire revised short paper sequentially, without using the long
+record to fill unannounced gaps. A compact proof may legitimately invoke a named
+external theorem; say what it supplies and keep its hypotheses visible. Full
+support of a measure, for example, does not by itself imply a strictly positive
+density. A paper retaining both conclusions must retain the further argument
+or its exact proof destination, and must not transfer formal status from one
+conclusion to the other.
 
 Record the input versions, contribution selected, consequential cuts and their
 destinations under [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).

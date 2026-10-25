@@ -57,22 +57,21 @@ requires the manifest digest and exact source edition, not only a bundle name.
 
 ## Figure provenance and rendering
 
-The six TikZ figures in `paper.md` begin with an inverted reader funnel
-adapted from Will Cook's existing mathematics-map visual. Its widths indicate
-editorial selection, not page length or proof strength; the return arrow
-marks claim-site links to exact evidence. The correspondence and review figures adapt the *three versions with shared support*, *registered
-supports*, *two correspondences* and *refinement* compositions in Will Cook's
+The three TikZ figures in `paper.md` explain a positive-gap argument, the
+writing funnel and the distinct evidence channels. The inverted funnel adapts
+Will Cook's existing mathematics-map visual. Its widths indicate editorial
+selection, not page length or proof strength; its return arrow follows
+claim-site links to exact evidence. The argument and evidence figures adapt
+the shared-support and two-correspondence compositions in Will Cook's
 [active Plectis Erdős systems paper](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
-(figures `fig:hypothesis`, `fig:theorem`, `fig:checks`
-and `fig:refinement`; source licence
+(source licence
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). This
 companion redraws their content for the Lean Exposition contracts; each
 connector names its workflow, mapping, argument or review relation. The
-additional concrete gap-argument figure adapts the same shared-support
-composition to two actual ingredients, under the positive-plateau guard.
+concrete gap-argument figure adapts the shared-support composition to two
+actual ingredients, under the positive-plateau guard.
 Its endpoint slope bounds and strict curvature are shown jointly supplying
-the contradiction. Passage-to-claim connectors use separate orthogonal routes;
-none of these arrows asserts a new Lean dependency.
+the contradiction. None of these arrows asserts a new Lean dependency.
 
 Render with the repository's paper toolchain:
 
@@ -80,6 +79,7 @@ Render with the repository's paper toolchain:
 paper_build_dir=$(mktemp -d)
 pandoc papers/architecture/paper.md \
   --from markdown+raw_tex+tex_math_dollars --to latex --standalone \
+  --lua-filter scripts/paper_anchors.lua \
   -V fontsize=11pt -V geometry:margin=1in -M lang=en-GB \
   --output "$paper_build_dir/paper.tex"
 tectonic "$paper_build_dir/paper.tex" --outdir "$paper_build_dir"

@@ -18,9 +18,11 @@ to recover the argument.
 
 For a formally grounded record, read the selected Lean declarations, their
 definitions and proof dependencies, the original mathematical arguments and
-literature, and the source-bound checking receipts. The graph locates these
-inputs. It does not replace them. Distinguish an unavailable source from one
-read and found insufficient; report the scope of the corpus actually inspected.
+literature, and the source-bound Lean and Comparator checking receipts. Retain
+access to the full selected source corpus while reporting what was actually
+read. Failed, pending and unavailable checks remain those outcomes. The graph
+locates these inputs. It does not replace them. Distinguish an unavailable source
+from one read and found insufficient; report the scope of the corpus actually inspected.
 
 Read the selected goal, its prerequisite closure, exact source statements and
 evidence records. Run `lean-exposition validate GRAPH`. Resolve conflicting
@@ -48,12 +50,21 @@ with recoverable support over a large declaration count. Select its necessary
 proof closure, useful alternative arguments and informative obstructions;
 unrelated corpus material remains available without becoming a chapter.
 
+Read an existing draft from beginning to end before repairing isolated passages.
+At each first-use difficulty, record what the text has established and what the
+next inference needs. Then consult the sources. A later definition or an author's
+explanation may resolve the difficulty for the reviewer without repairing the
+reading order. Keep that first response separate from the assisted reread.
+
 1. State the question and exact current result. Explain the central mechanism
    and name the step that still needs work, if any. Do not let an incomplete
    research route read as a completed proof.
 2. Make two brief maps: the result's relation to nearby literature, and the
    logical dependencies of its argument. Source order and tactic order need
-   not be the best reading order.
+   not be the best reading order. Separate a necessary input, an alternative
+   proof, a later consequence and a comparison. Their position in consecutive
+   sections is not an implication. State the role of a cited result at its use;
+   a source pointer may supply a proof, a hypothesis or only context.
 3. Explain each load-bearing transition through what is already known, what
    the next step requires, and the local argument that connects them. A graph
    edge or the word “therefore” cannot supply a missing inference.
@@ -74,6 +85,10 @@ unrelated corpus material remains available without becoming a chapter.
    Identify the first condition the route violates while retaining the
    hypotheses it does satisfy. Preserve a subsidiary proof for a stated role,
    and point to any stronger argument that supersedes its conclusion.
+   At a substantial proof entry, recall the local objects and hypotheses,
+   state the conclusion this section supplies and identify its next use.
+   A reader arriving from a shorter paper should be able to enter, recover the
+   omitted inference and return. Test that route as well as the sequential read.
 7. Give computations their mathematical inputs, finite scope and role in the
    argument. Put reproducibility commands, dependency versions and run receipts
    in a verification section rather than interrupting every proof step.
@@ -104,6 +119,16 @@ Keep formal proofs, ordinary proofs, finite checks and external inputs distinct.
 Do not mark semantic or reader review as performed merely because a checker
 passed. A generated scaffold stays `scaffold` until someone authors it.
 
+Markdown remains the prose authority. A graph-associated reading view may reuse
+its exact mapped passages, with their original order and surrounding unmapped
+text, but traversing a graph is not a procedure for composing a proof. Preserve
+headings, definitions, references and boundary cases when presenting excerpts.
+The current paper view's `document_parts` provides the complete source-order
+partition. `reconstruct_paper` checks the expected manifest and unchanged parts
+and returns the original Markdown bytes; it cannot accept a new proof order.
+Any reordered synthesis is a new authored account requiring its own review;
+do not store a second editable copy of each paragraph in graph nodes.
+
 ## Checks and example
 
 For the illustrative natural-number claim “if `n = 0`, then `n + 1 = 1`”, the
@@ -121,6 +146,12 @@ assumption's use without consulting the author. Record the exact point where
 reconstruction stops and the review's coverage. A sampled review cannot stand
 for the whole record. Repair the affected claim or explanation, then recheck
 its dependent passages.
+
+For the SK gap argument, an algebraic positivity certificate supplies only one
+input. The record must also locate the analytic signs, boundary flux control,
+approximation and endpoint contact needed to use it. Distinct recorded links
+help locate these obligations; the writer must check the inference joining
+them. A writing skill cannot verify that inference merely by requiring a map.
 
 Use [long-to-short](../long-to-short/SKILL.md) for a research paper, or
 [record-to-expository](../record-to-expository/SKILL.md) for a teaching paper.

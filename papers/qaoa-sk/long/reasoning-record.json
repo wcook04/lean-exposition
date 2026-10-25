@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "427f2fe911f1e20282aa39155aa8d842673650049e8bb3631c4cfa1a12238671",
-  "graph_sha256": "ae2a7828eb44ead05681a1f33c18370f7042988009d5ad2261e4080f781c4b46",
+  "content_sha256": "fd3a934f045f00c838f0441cad7340c9539908d9e84956620f5959639cdef2e7",
+  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -585,7 +585,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "d9ada4c47e0dbab73bf45ed45f47e7f16611a1c3156a2db72aa021f759de4f8f",
+      "text_sha256": "8097072c148e6e2ca2fdf0b3bc05e2721ceb36b039ea8a57a668ab3bac3795a5",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -721,7 +721,7 @@
     },
     {
       "anchor": "contact",
-      "text_sha256": "1fe65d3e76a80ae4a79cc20e61bcf658a9e2628b649d57c650c03fbdc26e712f",
+      "text_sha256": "c5e99e44936f864e8d1b69ae349ecf56d3a847ba993866f55f7b44e8a1d11b71",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -755,7 +755,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "2791dd6563fbc46874bfddd9809e1002492382ad30060c3aa30ee7a9cac50025",
+      "text_sha256": "126aa92cb65c72b79dcc4e9db70f6d1e383ee753eee708c2e924e76fb3a8cf3d",
       "claim_ids": [
         "support.backward_shapes",
         "support.forward_shapes",
@@ -795,7 +795,7 @@
     },
     {
       "anchor": "gaps",
-      "text_sha256": "f29af8f29caef804755b076f445af3146fe257cc3c75a3131acf43d4c0f43a38",
+      "text_sha256": "aff9d8005484da75441057dfe4c904bc255938bffe9dd73585fb49385d27e67e",
       "claim_ids": [
         "support.no_bounded_gap",
         "support.no_initial_gap",
@@ -893,7 +893,7 @@
     },
     {
       "anchor": "density-positive",
-      "text_sha256": "fc27b499ce78f2c19e108e4ef5c212251f083f79e6fe6f22c81575c479721552",
+      "text_sha256": "643e1d55cdc373c676e299f1bb981876ceb2f21781947f4a34315f8458abb6c1",
       "claim_ids": [
         "scalar.smooth_positive_density"
       ],
@@ -1042,7 +1042,7 @@
     },
     {
       "anchor": "gaussian",
-      "text_sha256": "94989af2afb192d42e6718d987d55d8d8ac7187e1c5a2f5ba229be19c49a9b01",
+      "text_sha256": "1f403d55707fba59498ba5404139ea5a1652025bf7af38e6bdf7a6ffc2de28cc",
       "claim_ids": [
         "scalar.euler_normalization",
         "scalar.conditional_rounding",
@@ -1108,7 +1108,7 @@
     },
     {
       "anchor": "gaussian-error-budget",
-      "text_sha256": "17532d3f93c174a1c2adb9e65ec5c1580c0cfd72a28478416c8d443b97513440",
+      "text_sha256": "83b5575f3d38963f519f5088ec3a16195a01af57c8999f29eba824be543fabb6",
       "claim_ids": [
         "scalar.fixed_strip_error_budget",
         "scalar.euler_normalization",
@@ -1182,7 +1182,7 @@
     },
     {
       "anchor": "gaussian-one-step-example",
-      "text_sha256": "9d71f68b2fe93c6f91aa8dbda0f27b0776d5f9947add2318e698a62c0d38b027",
+      "text_sha256": "cb71a8f2c304d7d46f71db4ab0d28882977e9a948f7593de5364b6c303a65f6b",
       "claim_ids": [
         "scalar.conditional_rounding"
       ],
@@ -1200,7 +1200,7 @@
     },
     {
       "anchor": "algorithm",
-      "text_sha256": "b58e4417e8854a4ba7bb655835a4563d8e001913baeba823991ddc773c185b07",
+      "text_sha256": "45f0c87c0c42717576c215b473b07208639b883201770042887c18b8ac63605a",
       "claim_ids": [
         "scalar.separate_classical_algorithm"
       ],
@@ -1317,7 +1317,7 @@
     },
     {
       "anchor": "qaoa",
-      "text_sha256": "a72a3698fb776d87ee5f5de377f54e0f5b3f0f636cd6ad70c796608f8851c672",
+      "text_sha256": "cf448c292be81a15487d5adb1716a4afc4e594a84cccd03103ff8bab76285d68",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -1363,7 +1363,7 @@
     },
     {
       "anchor": "qaoa-rooted",
-      "text_sha256": "486188e5f5dce79545e128b0abd245953fb12bdc7e408a3028ed731c809a868d",
+      "text_sha256": "70d0aa367d6943e58a9460e742af53e18709d012b057c162f6e8a6999f078b28",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -1418,7 +1418,7 @@
     },
     {
       "anchor": "qaoa-regularization",
-      "text_sha256": "74f4fa870b8bc12513c34512dc75deb040e410553e91a18750d52f97c743fe8e",
+      "text_sha256": "6430d5ed0e5b3bf786cbffd7e43d585df59d0b92c7085421a58d92ce1707e742",
       "claim_ids": [
         "circuit.sign_smoothing",
         "circuit.bounded_trigonometric",
@@ -1493,7 +1493,7 @@
     },
     {
       "anchor": "qaoa-synthesis",
-      "text_sha256": "5e595526669ce7c6fd9f3bcd89969bf430534508a9fa03e8b7461d3a3bfe639e",
+      "text_sha256": "2cbc41903cb96db4908ef2d8a179966c779b2f59c0ae145891f6eb47b83d84df",
       "claim_ids": [
         "circuit.masked_controls",
         "circuit.orthogonal_quadratics",
@@ -1517,7 +1517,7 @@
     },
     {
       "anchor": "qaoa-seed",
-      "text_sha256": "98b8ab50985953d78f485fa5d061d6ab29dd9f6ab3a31ac8d7a66839a4b71ae6",
+      "text_sha256": "6adc7bad32a16d89e1c03c3f7229b7647852cd148c3b7beefaf47f6adb7cacab",
       "claim_ids": [
         "circuit.seed_packets",
         "circuit.selective_control",
@@ -1546,7 +1546,7 @@
     },
     {
       "anchor": "qaoa-transfer",
-      "text_sha256": "ba77096cfe828f5fefb37bbbabcea5ff8be61e4e3fc6a5bff868a7a756ae1b83",
+      "text_sha256": "fdc21164263f007b611cd2562609e57ec5fb51a1f7d656ca371c98cbcce258ff",
       "claim_ids": [
         "circuit.fixed_word_transfer",
         "circuit.ordinary_updates"
@@ -1566,7 +1566,7 @@
     },
     {
       "anchor": "qaoa-assembly",
-      "text_sha256": "dd93394361da4a053f3eb939220f1a7204938c630932220fd59caad3379b4d4b",
+      "text_sha256": "e3ed5ff161c86d9ca250631c0d5bb3bda439cd1cf1869f29ac81e9ba866d507e",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.ordinary_word_primary",
@@ -1613,7 +1613,7 @@
     },
     {
       "anchor": "alternative",
-      "text_sha256": "26b86e4c74a2c33f3dbbfe82d204d60bd19ecfa06439db9da1f22bed0b6874e9",
+      "text_sha256": "25e824af0c25030bc3202fc89f63d44bebd682201756ee29b5a07651ac6d2dc6",
       "claim_ids": [
         "circuit.positive_input",
         "circuit.positive_value",
@@ -1641,7 +1641,7 @@
     },
     {
       "anchor": "weighted-tree",
-      "text_sha256": "0b11b2d94e4f7d5f5f1953a895740583ade68491d4bfa32dccf68c84c4fa9d5b",
+      "text_sha256": "37beb7fc2871d6b5ad1eafc6dc795ab5a0934ad82cd93939039f373442467e58",
       "claim_ids": [
         "circuit.weighted_finite_horizon",
         "circuit.positive_finite_step"
@@ -1660,7 +1660,7 @@
     },
     {
       "anchor": "alternative-assembly",
-      "text_sha256": "b1b72403f4b6c0f546687613fc28887b42e599249b3c85afd317e7a2a216af3f",
+      "text_sha256": "5021b346ccbdb8e57bfbfc347c696e4711cd3a7d3473b0c81ab6d32adbf83773",
       "claim_ids": [
         "circuit.classical_strong_limit",
         "circuit.positive_rooted_clipping",
@@ -1707,7 +1707,7 @@
     },
     {
       "anchor": "gibbs-comparison",
-      "text_sha256": "484dfe8bb7022d091cbea47cdba6a817849897e527786d11d3bf33885d2535f4",
+      "text_sha256": "3019542180446dfe1f54757f46135f4fc7d94ec95487304e4dadc298b5f6d603",
       "claim_ids": [
         "scalar.finite_gibbs_comparison"
       ],
@@ -1721,7 +1721,7 @@
     },
     {
       "anchor": "qaoa-quantifiers",
-      "text_sha256": "80a59ab3a27e4b8ba4ad1542de3a8fd728948b6d0cfad3e21a29b43cbe82a995",
+      "text_sha256": "6c2ab181178bee1e7178432029bcc040954ca3c4ade74d5b6e808c0e0034af28",
       "claim_ids": [
         "circuit.fixed_word_concentration",
         "circuit.one_measurement_near_optimum"
@@ -1767,7 +1767,7 @@
     },
     {
       "anchor": "qaoa-depth",
-      "text_sha256": "408fa2ed89c5238b3336edba14568f407c7191a5bd8aeb826d3b3d5b598e71a7",
+      "text_sha256": "0505840e28b45de5e0910f296ef711348a9d6e8883e487dfd70e1d1397b75c0c",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.high_girth_maxcut",
@@ -1817,7 +1817,7 @@
     },
     {
       "anchor": "qaoa-finite-size",
-      "text_sha256": "bfb152b08fd3fc20ad3caee9e12ff2b87688cc644749e506e44743889cbd7993",
+      "text_sha256": "42970a09314f7f450bc42796c933b8981585d330cd3fc6500de597ade282754f",
       "claim_ids": [
         "circuit.later_finite_size_comparison"
       ],
@@ -1934,7 +1934,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "1f24ab28b1638d5c0edfb59d8f2d2bfa77016aa15f6086f1ab08c84bd89cd0da",
+      "text_sha256": "0978be84adcef4519b60378de7db41e9db07f342204e7eb0f19e63b6fe1a883f",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -2042,6 +2042,7 @@
     "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
     "24 October 2026 focused-scope revision: applied skills/graph-to-long/SKILL.md (SHA256 7259e3095b9fdbac55a22fbd04e48529318d2e4b222bb6db7bf8ec21bbefe790). Preserved the full no-gap, density, scalar and circuit destinations while removing the now-obsolete reference to exposition §4.1. This pass checked destination continuity and the selected no-gap correspondence; it is not a new complete audit of the long record.",
     "Paper scope review (25 October 2026): The authored focus follows the three targets in Section 1: full support, scalar value and the thermodynamic-first circuit statement. Other developed branches remain mapped without becoming additional top-level goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
-    "Passage correspondence review (25 October 2026): qaoa-transfer explicitly displays the ordinary cost and mixer root updates; its direct mapping now includes circuit.ordinary_updates and applicable source credit."
+    "Passage correspondence review (25 October 2026): qaoa-transfer explicitly displays the ordinary cost and mixer root updates; its direct mapping now includes circuit.ordinary_updates and applicable source credit.",
+    "25 October 2026 round-four source-aware revision: applied skills/graph-to-long/SKILL.md (SHA256 0ef53764363765a4654b83f5aabc42e92937d6c8e5d1eaf61477cdfb74590941). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
   ]
 }

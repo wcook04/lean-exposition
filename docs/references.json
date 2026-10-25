@@ -892,6 +892,38 @@
       "reading_scope": "Theorem 4 / (3.15), p. 9, and complete short proof, p. 11.",
       "disposition": "reference_only; complete reading copy retained privately",
       "boundary": "Uniform bound over all finite depths and fixed angles after their individual thermodynamic limits, for pure even order at least four; not quadratic SK."
+    },
+    {
+      "id": "theoremgraph-2026",
+      "title": "TheoremGraph: Bridging Formal and Informal Mathematics",
+      "authors": [
+        "Simon Kurgan",
+        "Evan Wang",
+        "Eric Leonen",
+        "Sophie Szeto",
+        "Luke Alexander",
+        "Artemii Remizov",
+        "Jarod Alper",
+        "Giovanni Inchiostro",
+        "Vasily Ilin"
+      ],
+      "year": 2026,
+      "url": "https://arxiv.org/abs/2606.25363v1",
+      "kind": "primary_research_paper",
+      "retrieved_on": "2026-10-25",
+      "selected_files": [
+        {
+          "url": "https://arxiv.org/pdf/2606.25363v1",
+          "sha256": "c3053f07fc0fd2d8137648f0a65fbe02fb3a59e3a1e6e39077893b53e5abc07d"
+        },
+        {
+          "url": "https://arxiv.org/src/2606.25363v1",
+          "sha256": "5af12b136776407dc3450cd09c128cc219d7ffd38fc29d74be9f2d4f854dd567"
+        }
+      ],
+      "reading_scope": "Formal Graph; Bridging the Corpora (motivation, setup, judging); Limitations. Typed formal dependencies and approximate formal/informal statement matching, with the stated coverage and judgment limits.",
+      "disposition": "reference_only; complete reading copy retained privately",
+      "boundary": "Related graph and retrieval work. A judged semantic match is not formal equivalence or a certified passage-to-proof correspondence; no dataset, code or full text copied into this repository."
     }
   ],
   "community_leads": [

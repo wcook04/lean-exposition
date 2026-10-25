@@ -12,6 +12,10 @@ paper identifies the contribution; the long record supplies complete arguments;
 the original evidence fixes what can be claimed. The exposition derives its
 mathematical authority from that argument and evidence, not from easier language.
 
+Keep the Lean and Comparator outcomes and the relevant source literature
+available throughout. They constrain the account; they do not choose its
+teaching order or prove that a reader understands it.
+
 ## Preconditions and inputs
 
 Choose an established result and read its complete argument, source statement,
@@ -32,7 +36,10 @@ consequence in one article. Include a prerequisite, example or proof detail
 when it helps the reader understand that result. Route substantial further
 results to the existing long record and give only the outlook needed to place
 the selected result. Length follows the explanation; do not equate exposition
-with an expanded version of the entire research record.
+with an expanded version of the entire research record. Aim for a short,
+complete route into one meaningful result. If its prerequisites make that
+impossible for the stated reader, narrow the result or state a stronger reader
+prerequisite rather than appending every upstream chapter.
 
 Name the operations and results the reader is assumed to know, not just a
 level such as “graduate”. Separate those from what the exposition must teach.
@@ -64,13 +71,19 @@ research claim as though explaining it made it established.
    why the next choice exists and why the choices reach the stated conclusion.
    A named technique or an analogy does not supply that connection. If the
    complete source argument does not supply it, refer the gap for research review.
+   An imported estimate may remain an explicitly stated input: teach what it
+   guarantees and how it is used, with a full-proof destination. Do not replace
+   it with an intuitive picture that quietly claims to prove the estimate.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
 5. Attach material assertions to the same graph claims, assumptions, evidence
    and citations used by the research record. Mark additional teaching examples
    and verify them. An example illustrating a theorem is not a separate proof
-   of the theorem.
+   of the theorem. Check its map against the example's actual hypotheses as
+   well as its words. A conditional calculation with a nonminimising coefficient
+   cannot select a minimiser-only convergence theorem merely because both use
+   the same construction.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
    the reader what survives, keeping the other conditions explicit. Choose a
    change that requires using the key inference, not repeating its wording.
@@ -91,6 +104,11 @@ research claim as though explaining it made it established.
    Say whether this was author self-review, agent review or an independent
    reader attempt. If no reader took part, leave that check unperformed.
    One successful attempt does not establish improved learning in general.
+   First read the complete exposition in sequence at the declared prerequisite
+   level. Record first-use stalls before looking at a glossary, long proof or
+   answer; then use those sources to diagnose them. Reorder or explain at the
+   point of need. An assisted reader finding the answer later does not establish
+   that the original sequence worked.
 9. Run `lean-exposition check-bundle DIR`, inspect the delivered document and
    follow each proof and citation destination. If diagrams are added, inspect
    them at the intended viewing size and verify their mathematical conventions.

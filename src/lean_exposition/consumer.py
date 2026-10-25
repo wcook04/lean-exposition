@@ -15,8 +15,8 @@ from .contracts import (
     encoded, require_refs, required_citation_ids, select, validate_graph,
 )
 
-PAPER_VIEW_VERSION = "0.2.0"
-PAPER_QUERY_VERSION = "0.2.0"
+PAPER_VIEW_VERSION = "0.3.0"
+PAPER_QUERY_VERSION = "0.3.0"
 CORPUS_VIEW_VERSION = "0.1.0"
 
 
@@ -364,6 +364,17 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
         unmapped.append({"ref": f"{paper_ref}/unmapped/{cursor}",
                          "text": content[cursor:].decode("utf-8"),
                          "span": _byte_span(cursor, len(content), line_starts)})
+    # Unlike the overlapping outline, these parts partition all original bytes.
+    # Passage blocks include their markers; surrounding prose is never dropped.
+    document_parts = sorted(
+        [{"kind": "mapped_passage", "passage_ref": p["ref"],
+          "span": copy.deepcopy(p["block_span"])} for p in paper_passages] +
+        [{"kind": "unmapped_text", "segment_ref": s["ref"],
+          "span": copy.deepcopy(s["span"])} for s in unmapped],
+        key=lambda part: part["span"]["start_byte"],
+    )
+    for part in document_parts:
+        part["ref"] = f"{paper_ref}/{mapping_ref}/parts/{part['span']['start_byte']}"
     order = sorted([(s["heading_span"]["start_byte"], s["ref"]) for s in sections] +
                    [(p["block_span"]["start_byte"], p["ref"]) for p in paper_passages])
     reading_order = [{"from": left[1], "to": right[1], "kind": "next_in_text",
@@ -514,6 +525,7 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                   "byte_length": len(content), "line_count": len(content.splitlines()),
                   "sections": sections, "passages": paper_passages,
                   "unmapped_segments": unmapped,
+                  "document_parts": document_parts,
                   "reading_order": reading_order, "outline_links": outline_links,
                   "section_passage_links": section_passage_links},
         "correspondence_links": correspondence_links,
@@ -617,6 +629,40 @@ def _capture_edition(bundle_path: Path, expected_manifest_sha256: str | None) ->
     if expected_manifest_sha256 is not None and expected_manifest_sha256 != digest(payload["manifest.json"]):
         raise ContractError("bundle manifest SHA-256 differs from the requested edition")
     return payload
+
+
+def reconstruct_paper(bundle_path: Path, stage: str, document_parts: list[dict], *,
+                      expected_manifest_sha256: str) -> bytes:
+    """Reconstruct an unchanged manuscript from its pinned ordered part view.
+
+    Parts are references into captured source bytes, not editable text or a proof
+    ordering. Reordered, modified or stale views fail; no files are written.
+    """
+    if stage not in STAGES:
+        raise ContractError("unknown paper stage")
+    if expected_manifest_sha256 is None:
+        raise ContractError("paper reconstruction requires an expected manifest SHA-256")
+    payload = _capture_edition(bundle_path, expected_manifest_sha256)
+    view = _project_paper(payload, stage)
+    try:
+        matches = (isinstance(document_parts, list)
+                   and encoded(document_parts) == encoded(view["paper"]["document_parts"]))
+    except (TypeError, ValueError):
+        matches = False
+    if not matches:
+        raise ContractError("document parts differ from the pinned paper's complete ordered view")
+    content = payload[f"papers/{stage}.md"]
+    chunks, cursor = [], 0
+    for part in document_parts:
+        start, end = part["span"]["start_byte"], part["span"]["end_byte"]
+        if start != cursor or not start < end <= len(content):
+            raise ContractError("document parts do not partition the captured paper")
+        chunks.append(content[start:end])
+        cursor = end
+    result = b"".join(chunks)
+    if cursor != len(content) or digest(result) != view["bundle"]["markdown_sha256"]:
+        raise ContractError("reconstructed paper differs from the captured Markdown")
+    return result
 
 
 def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = None) -> dict:

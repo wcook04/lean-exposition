@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import contextlib
+import copy
 import io
 import json
 import tempfile
@@ -10,7 +11,7 @@ from pathlib import Path
 
 from lean_exposition import bundle
 from lean_exposition.cli import main
-from lean_exposition.consumer import project_paper
+from lean_exposition.consumer import project_paper, reconstruct_paper
 from lean_exposition.contracts import (
     ContractError, digest, encoded, required_citation_ids, validate_graph, write_json,
 )
@@ -77,6 +78,52 @@ def authored_bundle(root: Path, *, cycle: bool = False, formalization: bool = Fa
 
 
 class PaperViewTests(unittest.TestCase):
+    def test_document_parts_recover_all_unicode_text_and_markers_from_directory_and_zip(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = Path(temporary)
+            root = authored_bundle(parent)
+            archive = parent / "bundle.zip"
+            bundle.export_bundle(root, archive)
+            view = project_paper(root, "short", passages=["result"])
+            parts = view["paper"]["document_parts"]
+            expected = (root / "papers/short.md").read_bytes()
+            self.assertIn("μ".encode(), expected)
+            self.assertEqual([p["kind"] for p in parts],
+                             ["unmapped_text", "mapped_passage", "unmapped_text",
+                              "mapped_passage", "unmapped_text"])
+            self.assertEqual({p["passage_ref"] for p in parts if "passage_ref" in p},
+                             {p["ref"] for p in view["paper"]["passages"]})
+            # Selection changes graph focus, never the document being reconstructed.
+            self.assertEqual(parts, project_paper(root, "short")["paper"]["document_parts"])
+            for path in (root, archive):
+                result = reconstruct_paper(path, "short", parts,
+                    expected_manifest_sha256=view["bundle"]["manifest_sha256"])
+                self.assertEqual(result, expected)
+                self.assertIn(b"<!-- passage:premise -->", result)
+                self.assertIn(b"Outside the mapped passages.", result)
+
+    def test_reconstruction_rejects_missing_reordered_modified_and_foreign_parts(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = authored_bundle(Path(temporary))
+            view = project_paper(root, "short")
+            parts = view["paper"]["document_parts"]
+            changed_span = copy.deepcopy(parts)
+            changed_span[0]["span"]["start_byte"] = False
+            changed_reference = copy.deepcopy(parts)
+            changed_reference[1]["passage_ref"] += "/different-mapping"
+            injected_text = copy.deepcopy(parts)
+            injected_text[0]["text"] = "replacement prose"
+            candidates = [parts[1:], list(reversed(parts)), parts + parts[-1:],
+                          changed_span, changed_reference, injected_text,
+                          project_paper(root, "long")["paper"]["document_parts"], None]
+            for candidate in candidates:
+                with self.subTest(parts=candidate), self.assertRaises(ContractError):
+                    reconstruct_paper(root, "short", candidate,
+                        expected_manifest_sha256=view["bundle"]["manifest_sha256"])
+            for expected in (None, "", "0" * 64):
+                with self.subTest(expected=expected), self.assertRaises(ContractError):
+                    reconstruct_paper(root, "short", parts, expected_manifest_sha256=expected)
+
     def test_mixed_argument_kinds_keep_their_origins_and_document_links_separate(self):
         base = Path(__file__).resolve().parents[1]
         graph = json.loads((base / "examples/minimal/evidence-graph.json").read_bytes())

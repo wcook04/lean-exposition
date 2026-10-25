@@ -1,6 +1,6 @@
 # Long reasoning record: QAOA and the SK value
 
-Read [From Parisi full support to the QAOA question](reasoning-record.md).
+Read [From Parisi full support to deterministic QAOA circuits](reasoning-record.md).
 The draft reconstructs the support-gap contradiction, the scalar martingale
 value identity and its finite Gaussian approximation, then reconstructs the
 additional construction in the QAOA manuscript, its fixed-word sampling
@@ -12,6 +12,15 @@ revision adc7f1241b42e322a6451854ab7e4b4c146bf78a. The
 licences and pinned build metadata. The retained formal targets are
 conditional on an admissible minimizer and do not assert QAOA circuit
 convergence.
+
+## Reading routes
+
+- Support theorem: [dependencies](reasoning-record.md#argument-map), [variation](reasoning-record.md#feasible-variation), [curvature calculation](reasoning-record.md#curvature-algebra), [approximation](reasoning-record.md#plateau-limit), then [all gap cases](reasoning-record.md#gap-elimination).
+- Density: [smoothness](reasoning-record.md#smooth-density-consequence) and [strict positivity](reasoning-record.md#positive-density), after full support.
+- Value and finite construction: [martingale identity](reasoning-record.md#scalar-value-identities), [finite Gaussian function](reasoning-record.md#finite-gaussian-approximation), [error budget](reasoning-record.md#scalar-error-budget), and [one-step example](reasoning-record.md#one-step-example).
+- Circuit theorem: [target and choices](reasoning-record.md#qaoa-construction), [rooted energy](reasoning-record.md#rooted-energy), [helper contraction](reasoning-record.md#helper-contraction), [seed removal](reasoning-record.md#seed-removal), [fixed-word transfer](reasoning-record.md#fixed-word-transfer), and [assembly](reasoning-record.md#qaoa-assembly-detail).
+- Further comparisons: [positive temperature](reasoning-record.md#positive-temperature-route), [sampling](reasoning-record.md#fixed-word-probability), [depth quantifiers](reasoning-record.md#depth-quantifiers), and [finite-size bounds](reasoning-record.md#finite-size-comparison).
+- Evidence: [formal interfaces](reasoning-record.md#formal-interfaces) and [source checks](reasoning-record.md#verification).
 
 ## Reading and evidence
 
