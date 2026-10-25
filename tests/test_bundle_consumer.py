@@ -608,7 +608,11 @@ class BundleConsumerTests(unittest.TestCase):
 class QaoaPaperConsumerTests(unittest.TestCase):
     """Replay the authored public example, without claiming a new formal check."""
 
-    def assert_paper_links_resolve(self, payload):
+    def assert_paper_links_resolve(self, payload, origins):
+        # The archival bundle preserves source bytes; it is not a relocated
+        # Markdown edition. Resolve the declared authoring paths to captured
+        # documents, then check anchors without opening the source checkout.
+        captured_destinations = {origin: name for name, origin in origins.items()}
         # Match the authored link syntax checked by scripts/check_links.py.
         # In particular, mathematical ](...) expressions are not Markdown links.
         for name, content in payload.items():
@@ -625,12 +629,14 @@ class QaoaPaperConsumerTests(unittest.TestCase):
                 if url.scheme or url.netloc:
                     continue
                 destination = posixpath.normpath(posixpath.join(
-                    posixpath.dirname(name), unquote(url.path)
-                )) if url.path else name
-                self.assertIn(destination, set(payload), f"{name}: missing bundled destination {link}")
+                    posixpath.dirname(origins[name]), unquote(url.path)
+                )) if url.path else origins[name]
+                self.assertIn(destination, captured_destinations,
+                              f"{name}: destination is not one of the captured papers: {link}")
+                captured = captured_destinations[destination]
                 if url.fragment:
                     pattern = r"(?:id|name)=[\"']" + re.escape(unquote(url.fragment)) + r"[\"']"
-                    self.assertRegex(payload[destination].decode("utf-8"), pattern,
+                    self.assertRegex(payload[captured].decode("utf-8"), pattern,
                                      f"{name}: missing explicit bundled anchor {link}")
 
     def test_actual_papers_assemble_export_and_read_without_checkout_dependencies(self):
@@ -654,7 +660,10 @@ class QaoaPaperConsumerTests(unittest.TestCase):
             shutil.rmtree(root / "bundle")
             payload = bundle.load_bundle(archive)
             self.assertEqual({name: payload[name] for name in original}, original)
-            self.assert_paper_links_resolve(payload)
+            self.assert_paper_links_resolve(payload, {
+                f"papers/{stage}.md": pair[0].relative_to(papers).as_posix()
+                for stage, pair in pairs.items()
+            })
             reader = root / "read_bundle.py"
             shutil.copyfile(ROOT / "examples/consumer/read_bundle.py", reader)
             process = subprocess.run(
@@ -678,15 +687,22 @@ class QaoaPaperConsumerTests(unittest.TestCase):
                 for key in ("state", "review_state", "review_notes"):
                     self.assertEqual(paper[key], mapping[key])
 
-    def test_export_link_check_detects_old_layout_without_misreading_mathematics(self):
+    def test_link_check_uses_declared_layout_and_exact_anchors_without_misreading_mathematics(self):
         payload = {
             "papers/long.md": b'<a id="gap-elimination"></a>\n',
             "papers/short.md": b"$[a](t,X_t)$\n[Proof](long.md#gap-elimination)\n",
         }
-        self.assert_paper_links_resolve(payload)
+        flat_paths = {name: name for name in payload}
+        self.assert_paper_links_resolve(payload, flat_paths)
         payload["papers/short.md"] = b"[Proof](../long/reasoning-record.md#gap-elimination)\n"
-        with self.assertRaisesRegex(AssertionError, "missing bundled destination"):
-            self.assert_paper_links_resolve(payload)
+        with self.assertRaisesRegex(AssertionError, "not one of the captured papers"):
+            self.assert_paper_links_resolve(payload, flat_paths)
+        source_paths = {"papers/short.md": "short/paper.md",
+                        "papers/long.md": "long/reasoning-record.md"}
+        self.assert_paper_links_resolve(payload, source_paths)
+        payload["papers/long.md"] = b'<a id="different-argument"></a>\n'
+        with self.assertRaisesRegex(AssertionError, "missing explicit bundled anchor"):
+            self.assert_paper_links_resolve(payload, source_paths)
 
 
 if __name__ == "__main__":

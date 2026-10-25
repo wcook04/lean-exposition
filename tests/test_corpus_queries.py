@@ -99,8 +99,18 @@ class CorpusQueryTests(unittest.TestCase):
             self.assertEqual(len(result["selected_record_refs"]), 13)
             citation = record_ref(result, "citations", "support_curvature_source")
             usage = next(row for row in result["record_usage"] if row["record_ref"] == citation)
-            self.assertEqual(Counter(row["stage"] for row in usage["direct_passages"]),
-                             Counter(long=22, short=8, expository=10))
+            # Check exact destinations against captured authored mappings. An
+            # editorial split changes the passage count, not this contract.
+            expected = Counter(
+                (stage, passage["anchor"], "citation_ids")
+                for stage in bundle.STAGES
+                for passage in json.loads((root / f"papers/{stage}.json").read_bytes())["passages"]
+                if "support_curvature_source" in passage["citation_ids"]
+            )
+            self.assertEqual(Counter((row["stage"], row["anchor"], row["mapping_field"])
+                                     for row in usage["direct_passages"]), expected)
+            self.assertEqual({stage for stage, _, _ in expected}, set(bundle.STAGES))
+            self.assertIn(("long", "curvature", "citation_ids"), expected)
             self.assertFalse(result["coverage"]["source_bytes_opened"])
             self.assertFalse(result["coverage"]["receipt_bytes_opened"])
             corpus = consumer.project_corpus(root)

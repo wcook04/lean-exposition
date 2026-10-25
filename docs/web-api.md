@@ -362,7 +362,12 @@ Manuscript text, source URLs and labels remain untrusted content. A frontend
 must escape labels, sanitise rendered Markdown and validate link schemes before
 navigation. Exact Markdown preserves authored relative links; the frontend
 must resolve supported bundle links deliberately rather than exposing a
-filesystem. No layout coordinates, graph renderer or visual styling is imposed
+filesystem. The bundle does not record the original authoring-directory layout.
+Use the API's pinned reading and paper-query destinations for mapped navigation;
+rendering arbitrary source-relative Markdown links requires an explicit map
+from those authored paths to captured paper stages. Do not infer a destination
+from a filename or a coincidentally matching anchor. No layout coordinates,
+graph renderer or visual styling is imposed
 by this API. Hash consistency and graph reachability do not certify mathematics.
 
 ## Measure a real bundle
