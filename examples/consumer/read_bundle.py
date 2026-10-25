@@ -66,7 +66,7 @@ def json_object(data: bytes, name: str) -> dict:
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise BundleError(f"{name}: malformed UTF-8 JSON") from exc
     require(isinstance(result, dict), f"{name}: expected a JSON object")
-    supported = {"1.0", "1.1"} if name == "graph.json" else {"1.0"}
+    supported = {"1.0"} if name == "manifest.json" else {"1.0", "1.1"}
     require(result.get("schema_version") in supported, f"{name}: unsupported schema version")
     return result
 
@@ -178,7 +178,11 @@ def read_bundle(path: Path) -> dict:
                 f"{name}: stage/path binding differs")
         require(paper.get("graph_sha256") == hashes["graph.json"], f"{name}: graph hash binding differs")
         require(paper.get("content_sha256") == hashes[f"papers/{stage}.md"], f"{name}: content hash binding differs")
-        require(paper.get("selected_goal_ids") == goals, f"{name}: selected goals differ")
+        paper_goals = identifiers(paper.get("selected_goal_ids"), f"{name}: selected goals")
+        require(bool(paper_goals) and set(paper_goals) <= set(nodes),
+                f"{name}: selected goal is empty or absent from graph nodes")
+        if paper["schema_version"] == "1.0":
+            require(paper_goals == goals, f"{name}: selected goals differ")
         state = paper.get("state")
         review = paper.get("review_state")
         require(state in ("scaffold", "draft", "reviewed"), f"{name}: unknown paper state")
@@ -187,6 +191,7 @@ def read_bundle(path: Path) -> dict:
         require(isinstance(notes, list) and all(isinstance(note, str) and note for note in notes),
                 f"{name}: invalid review notes")
         papers.append({"stage": stage, "path": paper["path"], "state": state,
+                       "mapping_schema_version": paper["schema_version"], "selected_goal_ids": paper_goals,
                        "review_state": review, "review_notes": notes})
     state = "scaffold" if all(p["state"] == "scaffold" for p in papers) else "authored"
     require(manifest["status"] == state, "bundle status differs from paper states")

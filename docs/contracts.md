@@ -11,15 +11,19 @@ write from the evidence. Runtime code does not load those instructions.
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
 Graph version `1.0` remains supported; version `1.1` adds the Lean declaration
-kind and safety fields for new extraction. Artifact version `1.0` and bundle format `0.1.0`
-are unchanged. Unknown schema
-fields fail validation. A consumer should reject unsupported versions rather than
-silently guessing new semantics.
-The eight-file bundle can therefore contain either a graph `1.0` or graph `1.1`
-while its manifest and paper mappings remain at schema `1.0` and its bundle
-format stays `0.1.0`. The independent example reader accepts that matrix as a
-transport check; its `full_contract_validation` remains false. A previous
-reader with a strict graph `1.0` gate should reject graph `1.1` explicitly.
+kind and safety fields for new extraction. Artifact `1.0` retains its original
+rule that each paper selects exactly the graph's selected goals. Artifact `1.1`
+allows each paper to select its own nonempty set of existing graph nodes. This
+may include a node outside the graph's default focus. Both versions require
+an authored paper to cover its own selected goals and retain the assumptions,
+citations and unresolved obligations of all its claims and explicit assumptions.
+Unknown fields and unsupported versions fail validation.
+
+The eight-file bundle format remains `0.1.0`, with manifest schema `1.0`.
+Its graph and each paper mapping independently declare schema `1.0` or `1.1`.
+The independent example reader supports this matrix for transport checks;
+its `full_contract_validation` remains false. Older readers must reject versions
+they do not support rather than silently applying the old goal rule.
 
 The raw Lean extraction report has its own version. New runs emit version `2`,
 which records `is_unsafe` and `is_partial` for each in-scope declaration. Their
@@ -142,8 +146,11 @@ unresolved obligations, passage correspondence and authoring/review state.
 The [authoring guide](authoring.md) describes how a writer fills those records.
 
 Short and expository papers may focus on a smaller argument, but they retain the
-selected goals and all assumptions, citations and unresolved obligations that affect
-that selection. Passage-level bindings preserve the local dependencies too. Review
+paper-selected goals and all assumptions, citations and unresolved obligations
+that affect their claims. Explicitly mapped assumptions also seed these checks,
+including their own prerequisites and citation requirements. Every authored
+passage must contain non-whitespace text. Passage-level bindings preserve the
+local dependencies too. Review
 notes describe work actually performed; a schema check cannot confer expert acceptance.
 
 A local bundle contains `graph.json`, three Markdown/JSON paper pairs and
@@ -158,3 +165,22 @@ The versioned bundle can be hosted or attached by a future consumer. The current
 has no publication call or server. A platform adapter belongs at the intake boundary
 and must preserve platform IDs and the distinction between platform and local evidence.
 An artifact attachment API requires its own documented contract and authorization.
+
+## Corpus and paper projections
+
+`consumer.project_corpus` derives one complete record pool from one validated
+bundle capture. Paper views refer into that pool; `record_usage` provides the
+reverse lookup. A paper's declared focus, mapped claims, prerequisites and
+associated evidence are different relationships. Shared record membership adds
+no implication between papers. All disconnected and unselected records remain
+in the pool, including outside subjects named by relevant evidence.
+
+Each link retains its kind and origin. Declaration, curated argument, citation,
+platform and provenance relations have separate collections. Document order and
+passage correspondence remain in the paper views. Cycles are permitted; existing
+node-root views expose strongly connected components without pretending that all
+relations form a proof DAG. Exact graph bytes qualify record references; mapping
+bytes and passage selection qualify paper subgraphs. Manifest hashes pin the
+whole edition. These indexes are derived on demand and add no persisted graph,
+server, frontend or formal acceptance claim. See the
+[consumer contract](bundle-consumers.md#view-the-whole-recorded-corpus).

@@ -560,19 +560,24 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
     cites = indexed(graph["citations"], "citation")
     if artifact["graph_sha256"] != graph_hash or artifact["content_sha256"] != digest(content):
         raise ContractError("artifact content or graph hash is stale")
-    if artifact["selected_goal_ids"] != graph["selected_goals"]:
+    goals = artifact["selected_goal_ids"]
+    if artifact["schema_version"] == "1.0" and goals != graph["selected_goals"]:
         raise ContractError("artifact changed selected goals")
+    if not goals:
+        raise ContractError("artifact must select at least one goal")
+    require_refs(goals, nodes, "artifact selected goal")
     for field in ("claim_ids", "assumption_ids", "unresolved_ids"):
         require_refs(artifact[field], nodes, field)
     if any(nodes[n]["kind"] != "assumption" for n in artifact["assumption_ids"]):
         raise ContractError("artifact assumption_ids must identify assumptions")
     require_refs(artifact["citation_ids"], cites, "artifact citation")
-    required = closure(graph, artifact["claim_ids"] + graph["selected_goals"])
+    roots = artifact["claim_ids"] + goals + artifact["assumption_ids"]
+    required = closure(graph, roots)
     assumptions = {n for n in required if nodes[n]["kind"] == "assumption"}
     unresolved = {n for n in required if nodes[n]["status"] in {"open", "unverified", "external", "conditional"}}
     if not assumptions <= set(artifact["assumption_ids"]) or not unresolved <= set(artifact["unresolved_ids"]):
         raise ContractError("artifact omits assumptions or unresolved obligations")
-    required_cites = required_citation_ids(graph, artifact["claim_ids"] + graph["selected_goals"])
+    required_cites = required_citation_ids(graph, roots)
     if not required_cites <= set(artifact["citation_ids"]):
         raise ContractError("artifact dropped a claim citation")
     if artifact["state"] == "scaffold":
@@ -585,7 +590,7 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
             raise ContractError("authored artifact requires claim and passage correspondence")
         if "EMPTY SCAFFOLD" in content.decode():
             raise ContractError("authored state still contains scaffold marker")
-        if not set(graph["selected_goals"]) <= set(artifact["claim_ids"]):
+        if not set(goals) <= set(artifact["claim_ids"]):
             raise ContractError("authored artifact must cover every selected goal")
         anchors = [p["anchor"] for p in artifact["passages"]]
         if len(set(anchors)) != len(anchors):
@@ -602,10 +607,11 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
                 not passage["claim_ids"] or any(nodes[n]["kind"] != "declaration" or nodes[n]["status"] != "kernel_checked" for n in passage["claim_ids"])
             ):
                 raise ContractError("formal_result passage requires kernel-checked declarations")
-            passage_closure = closure(graph, passage["claim_ids"])
+            passage_roots = passage["claim_ids"] + passage["assumption_ids"]
+            passage_closure = closure(graph, passage_roots)
             if not {n for n in passage_closure if nodes[n]["kind"] == "assumption"} <= set(passage["assumption_ids"]):
                 raise ContractError("passage omits an applicable assumption")
-            if not required_citation_ids(graph, passage["claim_ids"]) <= set(passage["citation_ids"]):
+            if not required_citation_ids(graph, passage_roots) <= set(passage["citation_ids"]):
                 raise ContractError("passage omits an applicable citation")
             # A stable explicit marker binds the exact passage bytes, not a fuzzy heading.
             marker = f"<!-- passage:{passage['anchor']} -->"
@@ -616,6 +622,8 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
             stop = text.index(end)
             if stop < start or digest(text[start:stop].encode()) != passage["text_sha256"]:
                 raise ContractError("passage content hash is stale")
+            if not text[start:stop].strip():
+                raise ContractError("authored passage has no text")
             intervals.append((start - len(marker), stop + len(end)))
         intervals.sort()
         if any(a[1] > b[0] for a, b in zip(intervals, intervals[1:])):

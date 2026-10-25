@@ -161,7 +161,9 @@ papers/expository.md
 papers/expository.json
 ```
 
-The manifest and paper mappings use schema `1.0`. The graph may use `1.0` or
+The manifest uses schema `1.0`; paper mappings may use `1.0` or `1.1`.
+Mapping `1.0` requires the graph-selected goals; `1.1` permits independently
+selected paper goals with their own required coverage. The graph may use `1.0` or
 `1.1`; graph `1.1` carries the declaration safety fields bound by version 2
 extraction. Historical `1.0` graphs keep their original evidence and its limits.
 An older consumer that supports graph `1.0` alone must reject `1.1` explicitly.
@@ -225,6 +227,76 @@ document has correspondence records, and a review state reports a distinct revie
 step. A consumer should display those states without upgrading them because ZIP
 or schema validation passed. Full contract validation also does not authenticate
 the reported checks or replace mathematical or reader review.
+
+## View the whole recorded corpus
+
+The corpus view joins the three paper accounts to one shared record pool:
+
+```sh
+lean-exposition inspect-corpus build/qaoa-sk-authored
+```
+
+```python
+from pathlib import Path
+from lean_exposition.consumer import project_corpus, query_papers
+
+view = project_corpus(Path("build/qaoa-sk-authored"))
+pool = {row["ref"]: row["record"]
+        for rows in view["records"].values() for row in rows}
+exposition = next(p for p in view["papers"] if p["stage"] == "expository")
+claims = [pool[ref] for ref in exposition["graph"]["selected_claim_refs"]]
+goal_ref = next(row["ref"] for row in view["records"]["nodes"]
+                if row["record"]["id"] == "full_support")
+uses = next(row for row in view["record_usage"] if row["record_ref"] == goal_ref)
+occurrence = uses["direct_passages"][0]
+passage = query_papers(Path("build/qaoa-sk-authored"),
+    stage=occurrence["stage"], passages=[occurrence["anchor"]],
+    expected_manifest_sha256=view["snapshot"]["manifest_sha256"])
+```
+
+`project_corpus(path, expected_manifest_sha256=None)` and `inspect-corpus` with
+`--expect-manifest SHA256` validate and capture the bundle once. The returned
+`corpus_view_version` is `0.1.0`. A directory and its exported ZIP give the same
+projection. The manifest pin includes mapping-only edits, even when graph and
+paper text bytes have not changed.
+
+| Field | Contract |
+| --- | --- |
+| `snapshot` | Exact manifest and graph hashes, versioned corpus reference and cache key |
+| `records` | Every node, edge, citation, source and evidence record, including disconnected records; each has a graph-qualified `ref` and unchanged `record` |
+| `relations` | Separate declaration, argument, citation, platform and provenance links; each identifies its recorded edge or originating field |
+| `papers` | Long, short and expository projections, with text, sections, passages, reading order and correspondence |
+| `record_usage` | One row per shared record, including unused records; reverse lookup into declared focus, support membership and direct passage mappings |
+| `coverage` | Recorded counts, extraction limits and external-resource access boundaries |
+
+Nested papers declare `storage_profile: corpus_shared_records`: their
+`graph.record_refs` resolves into the single top-level pool instead of repeating
+`graph.records`. Otherwise their fields match standalone paper views. Each
+`paper_scope` identifies the mapping version and selected goals. The support
+subgraph `ref` binds the mapping bytes, paper-view version and selected passage
+anchors; a mapping change cannot reuse an older subgraph identity.
+
+In reverse lookup, `paper_focus` records intent, including an empty scaffold's
+intended result. `paper_memberships` distinguishes `mapped_claim`,
+`mapped_assumption`, `recorded_prerequisite` and `associated_record` roles.
+`direct_passages` comes only from explicit claim, assumption or citation mapping
+fields and retains its exact mapping and passage references. A cited source can
+be reached through provenance links without inventing a direct passage mapping.
+
+Two papers using the same claim share its graph reference. Their passages and
+subgraphs still have separate identities. Shared membership introduces no
+paper-to-paper implication. A relevant evidence record can name another subject
+outside a paper's argument; that subject remains in the corpus without becoming
+a prerequisite of the paper. Unmapped text and scoped-out graph records remain
+visible. An empty correspondence result does not mean absence from the prose.
+
+“Whole corpus” means all records in this captured graph, whose extraction may
+still be partial. It does not mean every Lean declaration or a merge of unrelated
+editions. Use existing typed `project_graph` views for subgraphs rooted at other
+recorded nodes, and `query_papers` for passage discovery and typed witness paths.
+These selectors accept node IDs; other record classes are addressable in the
+pool and through explicit links. No external source or receipt bytes are opened.
+No server, database or frontend is needed, and no proof or review status changes.
 
 ## View one paper as a graph
 
@@ -339,7 +411,8 @@ are escaped in the text presentation.
 
 `query_papers(bundle_path, *, stage=None, passages=None, section_refs=None, node_ids=None, relation="direct", expected_manifest_sha256=None)` uses the same bundle, graph, text and mappings as `project_paper`. It adds no persistent index. Omitting `stage` searches all three stages. Passage and section selectors require one explicit stage. Values within a selector family are alternatives; different supplied selector families are intersected. An explicitly empty list selects nothing, while an omitted selector adds no filter.
 
-Paper view and query format `0.1.1` corrects navigation for bare-CR and mixed
+Paper view and query format `0.2.0` adds explicit `paper_scope` and a
+mapping-bound support-subgraph `ref`. It retains the `0.1.1` navigation correction for bare-CR and mixed
 line endings: CRLF counts once, and bare CR or LF each count once. YAML front
 matter is excluded for all three endings. Exact bytes, byte spans and hashes
 are preserved; LF and CRLF paper behavior is unchanged. The paper-query cache

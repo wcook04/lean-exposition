@@ -101,7 +101,11 @@ Each paper also has a [graph view](docs/bundle-consumers.md#view-one-paper-as-a-
 its sections and passages in reading order, connected to their recorded claims,
 sources and checks. The three papers share the same underlying evidence, so an
 application can move between a passage, its support and another account of the
-same result. The local API supplies these views for a future front end.
+same result. A [whole-corpus view](docs/bundle-consumers.md#view-the-whole-recorded-corpus)
+keeps one shared record pool and lets an application look up which papers and
+passages use each record. Papers can select different goals while retaining
+their necessary assumptions and sources. The local API supplies these views
+for a future front end.
 
 The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
 cover selecting the material, reconstructing an argument, writing for specialists

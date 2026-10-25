@@ -15,8 +15,9 @@ from .contracts import (
     encoded, require_refs, required_citation_ids, select, validate_graph,
 )
 
-PAPER_VIEW_VERSION = "0.1.1"
-PAPER_QUERY_VERSION = "0.1.1"
+PAPER_VIEW_VERSION = "0.2.0"
+PAPER_QUERY_VERSION = "0.2.0"
+CORPUS_VIEW_VERSION = "0.1.0"
 
 
 # Meanings of projected links, not an additional graph schema or edge authority.
@@ -422,7 +423,7 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                                     "semantic_class": "explicit_assumption_reference",
                                     "owner_ref": source_ref, "source_field": "assumption_ids"})
     citation_ids = {identifier for p in selected_passages for identifier in p["citation_ids"]}
-    citation_ids |= required_citation_ids(graph, sorted(claim_ids))
+    citation_ids |= required_citation_ids(graph, sorted(claim_ids | assumption_ids))
     citation_ids |= {c for n in node_ids for c in tables["nodes"][n]["citation_ids"]}
     evidence_ids = {e for n in node_ids for e in tables["nodes"][n]["evidence_ids"]}
     evidence_ids |= {e for edge in chosen_edges for e in edge["record"]["evidence_ids"]}
@@ -493,6 +494,10 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
     return {
         "paper_view_version": PAPER_VIEW_VERSION, "stage": stage, "state": mapping["state"],
         "review_state": mapping["review_state"], "semantic_certification": False,
+        "paper_scope": {"mapping_schema_version": mapping["schema_version"],
+                        "selected_goal_ids": copy.deepcopy(mapping["selected_goal_ids"]),
+                        "selected_goal_refs": [ref("nodes", n) for n in mapping["selected_goal_ids"]],
+                        "meaning": "Authored focus; mentioned claims and retained prerequisites may extend beyond these goals."},
         "relation_semantics": _relation_semantics(paper_link_kinds),
         "bundle": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
                    "publication": manifest["publication"],
@@ -512,7 +517,8 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                   "reading_order": reading_order, "outline_links": outline_links,
                   "section_passage_links": section_passage_links},
         "correspondence_links": correspondence_links,
-        "graph": {"graph_id": graph["id"], "schema_version": graph["schema_version"],
+        "graph": {"ref": f"{mapping_ref}/support/{PAPER_VIEW_VERSION}/{digest(encoded(sorted(selected)))}",
+                  "graph_id": graph["id"], "schema_version": graph["schema_version"],
                   "graph_sha256": graph_hash, "recorded_extraction_status": graph["extraction_status"],
                   "relation_scope": "recorded_argument_relation_reachability",
                   "selected_claim_refs": [ref("nodes", n) for n in sorted(claim_ids)],
@@ -601,6 +607,127 @@ def _query_witness(target: str, paths: dict[str, tuple], graph_hash: str,
             "semantic_certification": False}
 
 
+def _capture_edition(bundle_path: Path, expected_manifest_sha256: str | None) -> dict[str, bytes]:
+    """Validate and pin one capture, including mapping-only edition changes."""
+    if expected_manifest_sha256 is not None and (
+            not isinstance(expected_manifest_sha256, str)
+            or re.fullmatch(r"[0-9a-f]{64}", expected_manifest_sha256) is None):
+        raise ContractError("expected manifest SHA-256 must be 64 lowercase hexadecimal characters")
+    payload = load_bundle(bundle_path)
+    if expected_manifest_sha256 is not None and expected_manifest_sha256 != digest(payload["manifest.json"]):
+        raise ContractError("bundle manifest SHA-256 differs from the requested edition")
+    return payload
+
+
+def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = None) -> dict:
+    """Project one complete recorded corpus and its overlapping paper views."""
+    payload = _capture_edition(bundle_path, expected_manifest_sha256)
+    manifest = decode_json(payload["manifest.json"])
+    graph = decode_json(payload["graph.json"])
+    graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
+    ref = lambda table, identity: _view_ref(graph_hash, table, identity)
+    records = {table: [{"ref": ref(table, row["id"]), "record": copy.deepcopy(row)}
+                       for row in sorted(graph[table], key=lambda row: row["id"])]
+               for table in ("nodes", "citations", "sources", "evidence")}
+    records["edges"] = []
+    relations = {family: [] for family in ("declarations", "arguments", "citations", "platform", "provenance")}
+    def field_link(owner_ref, field, target_table, target, family="provenance"):
+        target_ref = ref(target_table, target)
+        relations[family].append({
+            "id": "field:" + digest(encoded({"from": owner_ref, "to": target_ref, "field": field})),
+            "from": owner_ref, "to": target_ref, "kind": field,
+            "semantic_class": _RELATION_SEMANTICS[field][0], "derived": True,
+            "owner_ref": owner_ref, "source_field": field,
+        })
+
+    for edge in graph["edges"]:
+        identity = json.dumps([edge["from"], edge["to"], edge["kind"]],
+                              ensure_ascii=False, separators=(",", ":"))
+        edge_ref = ref("edges", identity)
+        records["edges"].append({"ref": edge_ref, "record": copy.deepcopy(edge)})
+        family = ("declarations" if edge["kind"] in LEAN_EDGES else
+                  "citations" if edge["kind"] == "cites" else
+                  "platform" if edge["kind"] == "platform_decomposition" else "arguments")
+        relations[family].append({"id": edge_ref, "from": ref("nodes", edge["from"]),
+                                  "to": ref("nodes", edge["to"]), "kind": edge["kind"],
+                                  "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
+                                  "derived": False, "record_ref": edge_ref})
+        for field in ("from", "to"):
+            field_link(edge_ref, field, "nodes", edge[field])
+        for evidence_id in edge["evidence_ids"]:
+            field_link(edge_ref, "evidence_ids", "evidence", evidence_id)
+    records["edges"].sort(key=lambda row: row["ref"])
+    for row in records["nodes"]:
+        node = row["record"]
+        if "source_id" in node:
+            field_link(row["ref"], "source_id", "sources", node["source_id"])
+        for field, table in (("evidence_ids", "evidence"), ("citation_ids", "citations"),
+                              ("assumption_ids", "nodes")):
+            for target in node[field]:
+                field_link(row["ref"], field, table, target,
+                           "arguments" if field == "assumption_ids" else "provenance")
+    for row in records["citations"]:
+        field_link(row["ref"], "source_id", "sources", row["record"]["source_id"])
+    for row in records["evidence"]:
+        for field, table in (("source_ids", "sources"), ("subject_ids", "nodes")):
+            for target in row["record"][field]:
+                field_link(row["ref"], field, table, target)
+    for links in relations.values():
+        links.sort(key=lambda link: link["id"])
+    usage = {row["ref"]: {"record_ref": row["ref"], "paper_focus": [],
+                          "paper_memberships": [], "direct_passages": []}
+             for rows in records.values() for row in rows}
+    papers = []
+    for stage in STAGES:
+        view = _project_paper(payload, stage)
+        view["storage_profile"] = "corpus_shared_records"
+        support = view["graph"]
+        paper_records = support.pop("records")
+        support["record_refs"] = {table: [row["ref"] for row in rows]
+                                  for table, rows in paper_records.items()}
+        for goal_ref in view["paper_scope"]["selected_goal_refs"]:
+            usage[goal_ref]["paper_focus"].append({"stage": stage,
+                                                  "mapping_ref": view["bundle"]["mapping_ref"]})
+        claims, assumptions = set(support["selected_claim_refs"]), set(support["selected_assumption_refs"])
+        for table, refs in support["record_refs"].items():
+            for record_ref in refs:
+                roles = ([role for role, selected in (("mapped_claim", claims), ("mapped_assumption", assumptions))
+                          if record_ref in selected] if table == "nodes" else ["associated_record"])
+                usage[record_ref]["paper_memberships"].append({
+                    "stage": stage, "subgraph_ref": support["ref"],
+                    "roles": roles or ["recorded_prerequisite"],
+                })
+        for link in view["correspondence_links"]:
+            usage[link["to"]]["direct_passages"].append({
+                "stage": stage, "passage_ref": link["from"], "anchor": link["source_anchor"],
+                "mapping_ref": link["source_ref"], "mapping_field": link["source_field"],
+            })
+        papers.append(view)
+    kinds = {link["kind"] for links in relations.values() for link in links}
+    kinds.update(kind for paper in papers for kind in paper["relation_semantics"])
+    return {
+        "corpus_view_version": CORPUS_VIEW_VERSION, "semantic_certification": False,
+        "snapshot": {"bundle_id": manifest["bundle_id"], "bundle_version": manifest["bundle_version"],
+                     "manifest_sha256": manifest_hash, "graph_sha256": graph_hash,
+                     "ref": f"sha256:{manifest_hash}/corpus/{CORPUS_VIEW_VERSION}",
+                     "cache_key": digest(encoded({"manifest_sha256": manifest_hash,
+                                                  "corpus_view_version": CORPUS_VIEW_VERSION,
+                                                  "paper_view_version": PAPER_VIEW_VERSION}))},
+        "graph": {"id": graph["id"], "schema_version": graph["schema_version"],
+                  "title": graph["title"], "scope": graph["scope"], "notes": copy.deepcopy(graph["notes"]),
+                  "selected_goal_ids": copy.deepcopy(graph["selected_goals"]),
+                  "recorded_extraction_status": graph["extraction_status"]},
+        "relation_semantics": _relation_semantics(kinds), "records": records, "relations": relations,
+        "papers": papers, "record_usage": [usage[key] for key in sorted(usage)],
+        "coverage": {
+            "record_counts": {table: len(rows) for table, rows in records.items()},
+            "source_bytes_opened": False, "receipt_bytes_opened": False,
+            "per_root_dependency_completeness": "unknown",
+            "scope": "All records in this captured graph, not all mathematics or merged editions. Paper subgraphs retain recorded argument prerequisites and associated records. Evidence subjects outside a paper remain in the corpus without expanding that paper's argument. Shared membership is not a paper-to-paper proof edge. Direct passages come only from explicit mapping fields; absence does not establish absence from the prose. Paper reading order is separate from mathematical dependency. Node-root traversal and typed witnesses remain available through project_graph and query_papers.",
+        },
+    }
+
+
 def query_papers(
     bundle_path: Path, *, stage: str | None = None,
     passages: list[str] | None = None, section_refs: list[str] | None = None,
@@ -625,16 +752,10 @@ def query_papers(
         raise ContractError("passage and section selectors require one paper stage")
     if not isinstance(relation, str) or relation not in {"direct", "prerequisites"}:
         raise ContractError("unknown paper query relation")
-    if expected_manifest_sha256 is not None and (
-            not isinstance(expected_manifest_sha256, str)
-            or re.fullmatch(r"[0-9a-f]{64}", expected_manifest_sha256) is None):
-        raise ContractError("expected manifest SHA-256 must be 64 lowercase hexadecimal characters")
-    payload = load_bundle(bundle_path)
+    payload = _capture_edition(bundle_path, expected_manifest_sha256)
     manifest = decode_json(payload["manifest.json"])
     graph = decode_json(payload["graph.json"])
     graph_hash, manifest_hash = digest(payload["graph.json"]), digest(payload["manifest.json"])
-    if expected_manifest_sha256 is not None and expected_manifest_sha256 != manifest_hash:
-        raise ContractError("bundle manifest SHA-256 differs from the requested edition")
     nodes = {row["id"]: row for row in graph["nodes"]}
     if node_ids is not None:
         require_refs(node_ids, nodes, "paper query node")

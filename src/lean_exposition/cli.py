@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .bundle import STAGES, check_bundle, export_bundle, scaffold
 from .contracts import ContractError, read_json, select, validate_graph, write_json
-from .consumer import inspect_bundle, inspect_graph, project_graph, project_paper, query_papers
+from .consumer import inspect_bundle, inspect_graph, project_corpus, project_graph, project_paper, query_papers
 from .extraction import to_graph
 from .intake import audit_sources, fetch
 from .prove2me import intake_prove2me
@@ -43,6 +43,9 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("bundle", type=Path)
     cmd.add_argument("--paper", choices=STAGES, help="Project one paper and its graph correspondence")
     cmd.add_argument("--passage", action="append", help="Select a passage anchor (repeatable; requires --paper)")
+    cmd = commands.add_parser("inspect-corpus", help="Read the full recorded corpus and shared paper subgraphs")
+    cmd.add_argument("bundle", type=Path)
+    cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256 (64 lowercase hex characters)")
     cmd = commands.add_parser("query-papers", help="Query source-bound paper, section and passage correspondence")
     cmd.add_argument("bundle", type=Path)
     cmd.add_argument("--paper", choices=STAGES, help="Limit to one paper; omitted means all three")
@@ -104,6 +107,8 @@ def run(args):
         if args.paper is not None:
             return project_paper(args.bundle, args.paper, args.passage)
         return inspect_bundle(args.bundle)
+    if args.command == "inspect-corpus":
+        return project_corpus(args.bundle, expected_manifest_sha256=args.expect_manifest)
     if args.command == "assemble":
         from .bundle import assemble_bundle
         return assemble_bundle(args.graph, {s: tuple(getattr(args, s))

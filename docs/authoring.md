@@ -71,6 +71,13 @@ unresolved conclusion.
 
 ## Preserve correspondence
 
+Choose each paper's goals deliberately. Mapping schema `1.1` lets the long
+record, short paper and exposition select different existing graph nodes as
+their focus. A passing mention or future application need not become a selected
+goal. Keep its actual passage correspondence and applicable conditions anyway.
+Legacy `1.0` mappings retain the graph-wide goal rule. The complete graph remains
+available in either case; selecting less for a paper never deletes source evidence.
+
 For every material claim, keep its exact statement, object domain, hypotheses,
 quantifier order and conclusion recoverable. Record the graph claim ID and the
 assumptions, evidence and citations it uses. The same identity can occur in
@@ -82,6 +89,11 @@ Keep two relationships distinct:
   finite computation or external input that establishes its stated scope.
 - A passage's sources: the exact text locations and evidence used for that
   explanation, with a reason for the connection.
+
+When a graph cites an authored companion, bind its actual current bytes in the
+source checksum, revision and citation URL, then rebind every affected paper
+mapping to the new graph hash. Changing a companion without refreshing these
+self-citations leaves a stale edition even when the bundle hashes agree.
 
 Matching hashes establish agreement with recorded bytes. They do not establish
 that a source entails a sentence. A nonempty rationale must still be judged.

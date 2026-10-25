@@ -25,7 +25,10 @@ invalid bundles raise `BundleError`, and filesystem failures raise `OSError`.
 
 ## Checks and limits
 
-The reader accepts schema version `1.0` and bundle version `0.1.0`. It requires
+The reader accepts manifest schema `1.0`, graph and mapping schemas `1.0` or
+`1.1`, and bundle version `0.1.0`. Mapping `1.0` requires the graph-selected
+goals; mapping `1.1` permits its own nonempty selection of existing graph nodes.
+The reader reports each paper’s selected goals and mapping version. It requires
 the exact eight-file archive, checks the seven manifest hashes against raw
 file bytes, and verifies the graph identity and paper mappings' graph hashes,
 document hashes, selected goals, stage paths and aggregate authoring state.

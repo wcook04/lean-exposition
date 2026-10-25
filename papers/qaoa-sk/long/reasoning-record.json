@@ -1,12 +1,14 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
   "content_sha256": "427f2fe911f1e20282aa39155aa8d842673650049e8bb3631c4cfa1a12238671",
-  "graph_sha256": "64e42c272f3ed9f0a87a94b7481a51ae211284cf4425d325f5f2c5f7d89f05da",
+  "graph_sha256": "ae2a7828eb44ead05681a1f33c18370f7042988009d5ad2261e4080f781c4b46",
   "selected_goal_ids": [
-    "full_support"
+    "full_support",
+    "scalar_value",
+    "qaoa_thermodynamic_first"
   ],
   "claim_ids": [
     "circuit.additive_responses",
@@ -1546,16 +1548,21 @@
       "anchor": "qaoa-transfer",
       "text_sha256": "ba77096cfe828f5fefb37bbbabcea5ff8be61e4e3fc6a5bff868a7a756ae1b83",
       "claim_ids": [
-        "circuit.fixed_word_transfer"
+        "circuit.fixed_word_transfer",
+        "circuit.ordinary_updates"
       ],
       "citation_ids": [
         "bfmvz2022_tree_transfer",
+        "circuit-r2-26-cite-energy-transfer",
         "circuit-r2-26-cite-fixed-word-transfer",
+        "circuit-r2-26-cite-gaussian-root-calculus",
+        "circuit-r2-26-cite-ordinary-updates",
+        "circuit-r2-26-cite-weighted-unitary-calculus",
         "fggz2022_fixed_depth"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to Fixed ordinary tree word transfers to fixed-angle SK. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Maps this passage to Fixed ordinary tree word transfers to fixed-angle SK. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Also maps the displayed ordinary cost and mixer updates, their smooth weighted convergence and stated fixed-word scope to circuit.ordinary_updates."
     },
     {
       "anchor": "qaoa-assembly",
@@ -2033,6 +2040,8 @@
   "review_state": "needs_revision",
   "review_notes": [
     "24 October 2026: synthesized the fifteen further reviews against the current successor and pinned originals. Passage selections were reviewed for their actual local statements, with nonminimizer and toy examples separated from conditional research theorems. A further adversarial editorial pass repaired early purpose, source locators, first-use notation and the finite-Gaussian-to-circuit explanation. Exact algebra and bounded AI source review do not establish complete independent mathematical acceptance, successful research Comparator replay or human comprehension. This changed edition remains a draft for review; no earlier acceptance is transferred.",
-    "24 October 2026 focused-scope revision: applied skills/graph-to-long/SKILL.md (SHA256 7259e3095b9fdbac55a22fbd04e48529318d2e4b222bb6db7bf8ec21bbefe790). Preserved the full no-gap, density, scalar and circuit destinations while removing the now-obsolete reference to exposition §4.1. This pass checked destination continuity and the selected no-gap correspondence; it is not a new complete audit of the long record."
+    "24 October 2026 focused-scope revision: applied skills/graph-to-long/SKILL.md (SHA256 7259e3095b9fdbac55a22fbd04e48529318d2e4b222bb6db7bf8ec21bbefe790). Preserved the full no-gap, density, scalar and circuit destinations while removing the now-obsolete reference to exposition §4.1. This pass checked destination continuity and the selected no-gap correspondence; it is not a new complete audit of the long record.",
+    "Paper scope review (25 October 2026): The authored focus follows the three targets in Section 1: full support, scalar value and the thermodynamic-first circuit statement. Other developed branches remain mapped without becoming additional top-level goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
+    "Passage correspondence review (25 October 2026): qaoa-transfer explicitly displays the ordinary cost and mixer root updates; its direct mapping now includes circuit.ordinary_updates and applicable source credit."
   ]
 }
