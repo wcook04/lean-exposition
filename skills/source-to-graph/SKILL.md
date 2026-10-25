@@ -50,6 +50,12 @@ keep execution status unknown; do not infer a successful check from a file.
    contract rather than changing a logical ingredient into a citation to hide
    a premise. An ordinary-model premise and a formal-interface premise remain
    different until a source-supported transport identifies them.
+   Compare entry through an assembled endpoint with entry through its explanatory
+   passage. Directly selecting a conditional helper and its premises can make
+   supplied obligations appear free again. Select the endpoint for endpoint
+   prose; give the generic helper its own passage when its conditions are being
+   explained. Test both journeys against the actual caller hypotheses. A
+   deliberately conditional statement must still retain its unsupplied premises.
 6. Record citations by exact version and passage. Distinguish a theorem used in
    the proof, historical credit, an adapted construction and an explanatory
    comparison. A citation may have more than one role, each stated explicitly.

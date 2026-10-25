@@ -54,6 +54,23 @@ class PaperRenderingTests(unittest.TestCase):
         self.assertIn("Long §4, the proof", result)
         self.assertNotIn("record.pdf", result)
 
+    def test_companion_markdown_link_keeps_its_destination_in_html(self):
+        source = ('<span class="pdf-companion" data-pdf-target="../long/record.pdf" '
+                  'data-pdf-anchor="proof-step">'
+                  '[Long §4, the proof](../long/record.md#proof-step)</span>.\n')
+        base = ["pandoc", "-f", "markdown", "--lua-filter", str(FILTER)]
+        html = subprocess.check_output(base + ["-t", "html"], input=source, text=True)
+        self.assertIn('href="../long/record.md#proof-step"', html)
+        result = subprocess.check_output(base + ["-t", "latex"], input=source, text=True)
+        self.assertIn(r"\href{../long/record.pdf\#proof-step}{Long §4, the proof}", result)
+        self.assertEqual(result.count(r"\href"), 1)
+        self.assertNotIn("record.md", result)
+        portable = "---\nportable-local-links: true\n---\n" + source
+        result = subprocess.check_output(base + ["-t", "latex"], input=portable, text=True)
+        self.assertIn("Long §4, the proof", result)
+        self.assertNotIn("record.pdf", result)
+        self.assertNotIn("record.md", result)
+
     def test_html_output_retains_the_existing_anchor(self):
         source = '<a id="proof-step"></a>\n\n## Proof\n\nSee [proof](#proof-step).\n'
         command = ["pandoc", "-f", "markdown", "-t", "html"]

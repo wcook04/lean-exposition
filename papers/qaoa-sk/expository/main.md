@@ -18,33 +18,35 @@ the limiting maximum through a nondecreasing function, the **order
 parameter**. We explain why a minimising order parameter cannot be
 constant on any interval below one: its increment measure has no gaps.
 
-The proof ends with calculus. Minimality fixes the values and bounds
-the slopes of an auxiliary curve at the ends of a hypothetical gap.
-Strict curvature then leaves too little area under its derivative to
-connect those values. Endpoint cases need separate arguments. A separate
-landscape theorem then brings us back to the spins: nearly optimal
-configurations can occur at every prescribed approximate overlap.
+The proof compares two consequences of a hypothetical gap. Minimality
+fixes the values and bounds the slopes of an auxiliary curve at its
+endpoints. An analytic estimate makes the derivative strictly convex
+between them, leaving too little area to connect the required values.
+Initial and terminal gaps need separate arguments. We then return to
+the spins: a theorem about their energy landscape gives nearly optimal
+configurations at every prescribed approximate overlap.
 
 We follow the quantitative proof in [OpenAI (2026a)][support-manuscript];
 [Hong-Bin Chen (2026), Theorem 1.3][chen-support] had already proved
-full support by a different method. With calculus, probability measures
-and expectation, the reader can reconstruct the contact and area
-arguments from the stated analytic inputs. Section 3.3 explains the
-stochastic moment identity; Section 6 explains the operation behind
-strict curvature. These explanations can be read separately from the
-no-gap proof. The full analytic proofs remain in the sources.
+full support by a different method. The estimate used here makes the
+final contradiction a direct comparison of areas. We assume calculus,
+integration against measures and expectation. With that background,
+the reader can reconstruct the no-gap argument from the analytic
+inputs stated at their uses. The stochastic calculation in Section 3.3
+and the explanation of strict curvature in Section 7 are optional;
+the full analytic proofs remain in the cited sources.
 <!-- /passage:opening -->
 
 <!-- passage:spins-and-overlap -->
 ## 1. The finite optimisation problem
 
-At each of $n$ positions we choose a sign $\sigma_i\in\{-1,1\}$,
+At each of $n$ positions, or **sites**, we choose a sign $\sigma_i\in\{-1,1\}$,
 called a **spin**. A configuration is the vector
 $\sigma=(\sigma_1,\ldots,\sigma_n)$.
 For each unordered pair choose an independent standard Gaussian
 $J_{ij}$, a normal random variable with mean zero and variance one.
 These coefficients, or **couplings**, are drawn once and then held
-fixed while we maximise
+fixed while we maximise the energy, or **Hamiltonian**,
 
 $$
 H_n(\sigma)=\frac1{\sqrt n}\sum_{1\le i<j\le n}J_{ij}\sigma_i\sigma_j.
@@ -78,12 +80,19 @@ define their **overlap**
 $R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$, their average agreement
 with a disagreement counted as $-1$. If they disagree at $k$ positions,
 then $R=1-2k/n$. For example, $(+,+,+,+)$ and $(+,+,+,-)$ have
-overlap $1/2$; two disagreements would give zero. The overlap also
-determines how their random scores are correlated: for fixed
-$\sigma,\tau$, independence of the couplings gives
+overlap $1/2$; two disagreements would give zero. We will ask whether
+two nearly optimal configurations can differ on roughly one quarter
+of their sites, and more generally at any prescribed fraction up to
+one half.
+
+Overlap is also the quantity that determines the energy covariance.
+For fixed $\sigma,\tau$, put $v_i=\sigma_i\tau_i$. Independence
+of the couplings and $v_i^2=1$ give
 
 $$
 \mathbb E[H_n(\sigma)H_n(\tau)]
+=\frac1n\sum_{i<j}v_iv_j
+=\frac{(\sum_i v_i)^2-n}{2n}
 =\frac n2 R(\sigma,\tau)^2-\frac12.
 $$
 
@@ -114,8 +123,8 @@ $$
 \mu_\gamma((a,b])=\gamma(b)-\gamma(a).
 $$
 
-The first equation includes an atom of mass $\gamma(0)$ at zero; an
-atom is positive mass concentrated at one point. The measure is finite
+The first equation allows mass $\gamma(0)$ at zero. Positive mass
+concentrated at one point is called an **atom**. The measure is finite
 on every $[0,T]$ with $T<1$, although its total mass may be infinite.
 It is not required to be a probability measure. A unit of mass at $s$ contributes to $\gamma(t)$ at every $t\ge s$.
 Integrating that contribution over $t$ gives
@@ -128,10 +137,11 @@ $$
 
 The **support** consists of points every neighbourhood of which has
 positive measure. Neighbourhoods are taken within $[0,1)$: the endpoint
-one is not part of the domain. Full support therefore means that no
-interval of scales is missing from the increments. This is equivalent
-to strict increase of $\gamma$: every subinterval must contain positive
-increments, not merely mass at one of its endpoints.
+one is not part of the domain. Full support therefore means that every
+nonempty relative open interval has positive mass. It is equivalent to
+strict increase of $\gamma$. Indeed, full support gives
+$\mu_\gamma((a,b])>0$ whenever $a<b$; conversely, strict increase
+gives positive mass on a smaller interval inside every neighbourhood.
 
 For example, the admissible candidate
 
@@ -221,17 +231,17 @@ density conclusion.
 ### 3.1 An auxiliary optimisation
 
 To assign a value to $\gamma$, we first solve a one-dimensional control
-problem: bias a noisy path to earn a large final reward, paying for the
-response along the way. Varying $\gamma$ will then reveal where a
+problem: bias a noisy path so that its final position is large in
+absolute value, while paying a running cost for the bias. Varying $\gamma$ will then reveal where a
 minimiser can have mass. Here the overlap scale $t$ plays the role of
 time; the path is auxiliary, not a motion of the spins.
 
 The auxiliary noise is Brownian motion $B$: a continuous random path starting at zero, with
 independent centred Gaussian increments, where $B_s-B_t$ has variance $s-t$.
-Choose a response $\alpha_s\in[-1,1]$ using only increments observed
-between the starting time $t$ and the present time $s$. We require a
-measurable, nonanticipating rule, formally a **progressively measurable
-control**. It cannot anticipate future noise.
+Choose a **control** $\alpha_s\in[-1,1]$: at each time $s$, this
+rule chooses a response using only the Brownian increments observed
+since the starting time $t$. The rule must be measurable and must not
+use future noise; the formal requirement is progressive measurability.
 For a starting position $x$, set
 
 $$
@@ -241,12 +251,13 @@ $$
 \right].
 $$
 
-Inside the absolute value, $x$ is the starting position, $B_1-B_t$ the
-accumulated noise, and the integral the accumulated response. The second
-term charges for that response. The final reward is a one-spin optimisation,
-$|x|=\max_{\sigma\in\{-1,1\}}x\sigma$. Here expectation is over
-Brownian paths with $\gamma$ fixed.
-The candidate's value is
+The function $\Phi_\gamma(t,x)$ gives the best expected reward,
+less the running cost, when we start at time $t$ in state $x$.
+Inside the absolute value, noise and control change that state before
+the final reward is paid. The reward is a one-spin optimisation,
+$|x|=\max_{\sigma\in\{-1,1\}}x\sigma$. Expectation here averages
+over Brownian paths, with $\gamma$ fixed. The **Parisi functional**
+assigns the candidate its value:
 
 $$
 \mathcal P(\gamma)=\Phi_\gamma(0,0)
@@ -286,33 +297,42 @@ $$
 
 Write $u=\partial_x\Phi_\gamma$ for its spatial slope and
 $a=\partial_{xx}\Phi_\gamma$ for its spatial curvature. The source
-proves convexity and $|u|\le1$, hence $a\ge0$. The reason to use the
-slope as a response is visible by completing a square. At slope $u$,
-the local benefit minus cost of response $\alpha$ is
+proves convexity and $|u|\le1$, hence $a\ge0$. The equation expresses
+a recursive choice: choose a response for a short first step, then
+use the best continuation from the state reached. At a continuity
+point of $\gamma$, this gives the formal first-order relation
 
 $$
-\gamma\alpha u-\frac12\gamma\alpha^2
-=\frac12\gamma u^2-\frac12\gamma(\alpha-u)^2.
+\Phi_\gamma(t,x)
+=\sup_{|v|\le1}\left\{
+\mathbb E\Phi_\gamma(t+h,x+\gamma(t)vh+\sqrt hZ)
+-\tfrac12\gamma(t)v^2h\right\}+o(h).
 $$
 
-The allowed response $\alpha=u$ maximises this expression because
-$\gamma\ge0$. To see the PDE's other terms, consider a short time
-step of length $h$ at a continuity point of $\gamma$. A fixed response
-$v$ shifts the state by $\gamma(t)vh+\sqrt hZ$ and costs
-$\gamma(t)v^2h/2$. Taylor-expanding the optimised future value, using
-$\mathbb EZ=0$ and $\mathbb EZ^2=1$, gives the formal short-step equation
+Subtract the present value, divide by $h$, and Taylor-expand.
+The identities $\mathbb EZ=0$ and $\mathbb EZ^2=1$ give
 
 $$
 0=\Phi_t+\tfrac12\Phi_{xx}
   +\sup_{|v|\le1}\gamma(t)(v\Phi_x-v^2/2).
 $$
 
-The square completion gives the stated backward PDE. This explains the
-calculation; the source justifies the control representation and its
-extension to nonsmooth coefficients. This viewpoint follows the method of
-[Jagannath–Tobasco (2016)][jt-control]. The zero-temperature terminal
-data and estimates used here require the additional results in
-[OpenAI (2026a), §2][support-regularity].
+At slope $u$, completing a square shows which response to choose:
+
+$$
+\gamma vu-\tfrac12\gamma v^2
+=\tfrac12\gamma u^2-\tfrac12\gamma(v-u)^2.
+$$
+
+Since $\gamma\ge0$ and $|u|\le1$, $v=u$ attains the supremum,
+yielding the stated PDE. This calculation explains the equation;
+justifying the recursion and the Taylor expansion requires the
+control representation and regularity results. See
+[Auffinger–Chen, Theorem 2][auffinger-chen] for the zero-temperature
+control formula and [Jagannath–Tobasco, Lemma 18][jt-control] for the
+control method with finite-temperature terminal data. The extension
+to the coefficients used here is in
+[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity].
 
 Under the slope response the position follows
 
@@ -320,9 +340,10 @@ $$
 X_t=B_t+\int_0^t\gamma(s)u(s,X_s)\,ds,\qquad X_0=0.
 $$
 
-This random path is the **associated diffusion**. An atom of mass $c$
-at scale $s$ gives $\gamma(t)=c\mathbf1_{[s,1)}(t)$: it switches on
-both the drift and the running charge from that scale onward. It does
+This random path is the **associated diffusion**. The response is a
+**feedback control**: at each time it uses the slope at the current
+state $X_t$. An atom of mass $c$ at scale $s$ gives $\gamma(t)=c\mathbf1_{[s,1)}(t)$: it switches on
+both the drift and the running cost from that scale onward. It does
 not make $X$ jump, because the accumulated drift is a time integral.
 The path's average squared slope response defines the deterministic curve
 
@@ -337,9 +358,19 @@ excluding gaps then extends that equality everywhere.
 
 ### 3.3 How the squared response grows
 
-The needed identity is $q'(t)=\mathbb E[a(t,X_t)^2]$: spatial curvature
-controls growth of the squared response. The following calculation
-explains it; the no-gap proof can also be read using the cited identity.
+For any admissible candidate, the facts needed below are
+
+$$
+q\in C^1([0,1)),\qquad q(0)=0,\qquad 0\le q(t)\le1,
+\qquad q'(t)=\mathbb E[a(t,X_t)^2].
+$$
+
+Thus spatial curvature controls growth of the squared response.
+Derivatives at zero are from the right, and $q'$ is continuous even
+across jumps of $\gamma$. These facts do not assert $q=t$ for a general
+candidate. They follow from [OpenAI (2026a), Lemmas 2.1–2.2][support-regularity];
+readers who use them as inputs can continue to Section 4.
+The following calculation explains the moment identity.
 
 Itô's rule is the chain rule for Brownian paths. Along
 $dX_t=b_t\,dt+dB_t$, the coefficient of $dt$ (the **drift**)
@@ -360,22 +391,20 @@ value. Zero field gives symmetry and $M_0=u(0,0)=0$. Applying Itô's rule once m
 to $M_t^2$ gives
 
 $$
-q(0)=0,\qquad
-q(t)=\int_0^t\mathbb E[a(s,X_s)^2]\,ds,\qquad
-q'(t)=\mathbb E[a(t,X_t)^2].
+d(M_t^2)=2M_ta(t,X_t)\,dB_t+a(t,X_t)^2\,dt.
 $$
 
 The noise term has mean zero because its coefficient is nonanticipating
-and bounded on each strip ending before one; its squared increment
-contributes $a^2\,dt$.
-Derivatives at zero are from the right. Also $0\le q\le1$.
+and bounded on each strip ending before one. Taking expectations and
+integrating yields $q(t)=\int_0^t\mathbb E[a(s,X_s)^2]\,ds$,
+which gives the asserted derivative. Since $\mathbb EM_t=0$,
+$q(t)$ is also the variance of the slope response.
 
-These calculations use [OpenAI (2026a), Lemmas 2.1–2.2][support-regularity].
 For each fixed $T<1$, the required spatial derivatives are bounded on
 $[0,T]\times\mathbb R$, and step-coefficient and smooth-terminal
 approximations justify the identities. The bounds depend on the coefficient
-and strip. The PDE holds almost everywhere in time; $q$ and $q'$ are
-continuous even across jumps. These are not bounds up to time one.
+and strip. The PDE holds almost everywhere in time. These are not
+bounds up to time one.
 <!-- /passage:value-and-diffusion -->
 
 <!-- passage:full-support-statement -->
@@ -392,8 +421,9 @@ $$
 \mathbb E[a(t,X_t)^2]=1.
 $$
 
-The measure and diffusion exist uniquely by the preceding construction
-and the cited regularity results. The theorem requires a minimiser,
+The cumulative function determines its measure uniquely; for a fixed
+Brownian motion the associated diffusion is unique by the cited
+regularity results. The theorem requires a minimiser,
 not merely an admissible candidate. Zero field supplies $q(0)=0$;
 $\xi''=1$ enters the curvature estimate. The statement does not cover
 nonzero field or general mixed-spin covariance functions.
@@ -419,6 +449,7 @@ D\mathcal P(\gamma)[\eta]
 =\frac12\int_0^1\eta(t)(q(t)-t)\,dt.
 $$
 
+Here $q$ belongs to the unperturbed candidate $\gamma$.
 The term $-t/2$ comes from the explicit penalty in $\mathcal P$;
 $q(t)/2$ is the sensitivity of the reoptimised control value. The latter
 is the analytic content of the formula, not differentiation with a fixed
@@ -430,7 +461,7 @@ Propositions 2–4][chl-optimality].
 
 <!-- passage:zero-candidate -->
 **A candidate that fails the test.** Return to $\gamma=0$. Every control
-then gives the same value, since both its drift and its charge vanish.
+then gives the same value, since both its drift and its cost vanish.
 The slope response is still well defined. With $F_{\mathrm G}$ the
 standard normal distribution function, the heat formula gives
 
@@ -441,8 +472,10 @@ u_0(t,x)=2F_{\mathrm G}\!\left(\frac{x}{\sqrt{1-t}}\right)-1,
 a_0(t,x)=\sqrt{\frac2{\pi(1-t)}}e^{-x^2/(2(1-t))}.
 $$
 
-Here $u_0$, not an arbitrarily chosen optimal control, defines $q_0$.
-Using $\mathbb E e^{-B_t^2/(1-t)}=\sqrt{(1-t)/(1+t)}$ in the
+The formula for $u_0$ is the expected sign of $x+\sqrt{1-t}Z$:
+it subtracts the probability of a negative final state from that of
+a positive one. Here $u_0$, not an arbitrarily chosen optimal control,
+defines $q_0$. Using $\mathbb E e^{-B_t^2/(1-t)}=\sqrt{(1-t)/(1+t)}$ in the
 moment identity and then integrating from zero yields
 
 $$
@@ -450,7 +483,9 @@ q_0'(t)=\frac2{\pi\sqrt{1-t^2}},\qquad
 q_0(t)=\frac2\pi\arcsin t.
 $$
 
-Thus $q_0(1/2)=1/3$: equality $q=t$ is not a definition.
+At the fixed state zero, symmetry gives $u_0(1/2,0)=0$.
+But $q_0$ averages the square at the random state $B_{1/2}$, and
+$q_0(1/2)=1/3$. Equality $q=t$ is not a definition.
 The constant direction $\eta=1$ is admissible and adds an atom at zero.
 Its cost is
 
@@ -468,7 +503,8 @@ hypothesis; see also [Chen–Handschy–Lerman, proof of Theorem 6][chl-optimali
 <!-- passage:contact-and-gap -->
 
 Adding a small atom at scale $s$ raises the cumulative function at
-*every* later scale. It is always allowed, and its direction is
+*every* later scale. It is always allowed: the total mass is not
+fixed, so no compensating removal is required. Its direction is
 $\eta(t)=\mathbf1_{[s,1)}(t)$. Thus
 
 $$
@@ -486,8 +522,18 @@ We can also remove a fraction of existing mass on $K=[0,T]$, $T<1$.
 The perturbed measure $(1-\varepsilon\mathbf1_K)\mu_\gamma$
 is nonnegative for $0\le\varepsilon\le1$; its cumulative function is
 $\gamma(t)-\varepsilon\mu_\gamma(K\cap[0,t])$. Thus the direction
-$\eta_K(t)=-\mu_\gamma(K\cap[0,t])$ is admissible. Local finiteness and
-$|q(t)-t|\le1$ allow us to interchange the integrals, giving
+$\eta_K(t)=-\mu_\gamma(K\cap[0,t])$ is admissible.
+For Figure 1, take $K=[0,1/3]$. Then $\eta_K(t)=-\min(t,1/3)$:
+the perturbed curve has slopes $1-\varepsilon$, $0$, $1$ on its
+three pieces, and plateau height $(1-\varepsilon)/3$. It remains
+nonnegative and nondecreasing for $0\le\varepsilon\le1$.
+This example verifies admissibility; it does not assume that the
+pictured candidate minimises the functional.
+
+Return now to a minimiser. Local finiteness makes $\eta_K$ bounded.
+As in the weighted-mass calculation in Section 2, interchanging the
+integrals converts a cumulative change into a cost per unit of mass;
+$|q(t)-t|\le1$ justifies the interchange. We obtain
 
 $$
 0\le D\mathcal P(\gamma)[\eta_K]
@@ -499,9 +545,9 @@ support point, continuity would make it positive throughout a
 neighbourhood of positive measure, contradicting this equality for a
 large enough $T<1$. Therefore $G=0$ on the support. This equality is
 called **contact**: the nonnegative function touches zero there.
-Removing a fraction of mass on an interval, rather than just removing
-atoms, makes the argument valid for measures whose mass is spread
-continuously as well.
+Removing a fraction of existing mass makes the argument valid for
+continuous measures too: subtracting an atom where none exists would
+not be an admissible change.
 
 ### 5.2 Contact gives endpoint conditions
 
@@ -547,7 +593,7 @@ q'''(t)\ge\frac{c^2}{1000}\mathbb E[a(t,X_t)^4]>0
 \qquad(r<t<s).
 $$
 
-Section 6 explains how this sign is obtained after expectation.
+Section 7 explains how this sign is obtained after expectation.
 The final inequality uses $a(t,x)>0$, proved by Gaussian smoothing
 on the constant interval ([OpenAI (2026a), Lemma 2.3][support-regularity]);
 convexity of $\Phi$ alone would only give $a\ge0$.
@@ -610,9 +656,13 @@ to be both equal to and strictly less than $1/3$.
 **Initial gap with zero outside the support.** If $[0,s)$ is missing
 and $s<1$ is the first support point, then $\gamma=0$ on this interval.
 The positive-curvature bound vanishes. Instead the heat equation gives
-$q''(t)=\mathbb E[\Phi_{xxx}(t,X_t)^2]>0$ there, so $q'$ is
-strictly increasing. Here $X_t=B_t$, which has a positive density for
-$0<t<s$. Also
+$q''(t)=\mathbb E[\Phi_{xxx}(t,X_t)^2]>0$ for $0<t<s$, so $q'$ is
+strictly increasing. The strict inequality is only at positive times:
+at zero, symmetry gives $\Phi_{xxx}(0,0)=0$.
+Here $X_t=B_t$, but the heat equation evolves backward from
+$\Phi_\gamma(s,\cdot)$, which still depends on the later coefficient.
+The explicit arcsine formula for the globally zero candidate therefore
+does not apply. For $0<t<s$, $B_t$ has a positive density, and
 $\Phi_{xxx}(t,\cdot)$ cannot vanish identically: then the even
 function $\Phi(t,\cdot)$ would be quadratic. Bounded slopes would
 make it constant. But the zero control and Jensen's inequality give
@@ -623,7 +673,9 @@ little area. The case with zero in the support was already included
 in Section 5.3, using its atom and the one-sided slope bound.
 
 **Terminal gaps.** Figure 2 requires contact at both ends. It cannot
-handle a gap reaching one, which lies outside the domain. Instead
+handle a gap reaching one, which lies outside the domain. Even the
+zero candidate has $q_0(t)\to1$ while $q_0'(t)\to\infty$; convergence
+of the value supplies no endpoint slope bound. Instead
 [OpenAI (2026a), Lemma 6.3][support-variation] proves the following
 terminal estimate: if $\gamma=c$ on $(r,1)$ for a finite $c\ge0$, then
 for some $C>0$ and all sufficiently late $t$,
@@ -640,13 +692,13 @@ with a density bounded below uniformly for late $t$. The elapsed time
 from the fixed earlier time stays positive; this is not an estimate
 obtained by extending compact-strip derivative bounds to one.
 
-Now put $h=1-t$. On this constant terminal interval, $u(t,x)$ is a
-weighted average of the final signs $+1$ and $-1$. The remaining
-Brownian noise has standard deviation $\sqrt h$, so in the window
-$|x|\le\sqrt h$ both signs retain uniformly positive probabilities.
-Their weighted average stays away from $-1$ and $1$, giving
-$1-u(t,x)^2\ge\kappa>0$. If $m>0$ is the density lower bound there,
-then
+The second source bound is $1-u(t,x)^2\ge\kappa>0$ throughout
+$|x|\le\sqrt h$, where $h=1-t$ and $t$ is sufficiently late.
+On a constant terminal interval, the heat formula writes $u$ as a
+positively weighted average of the final signs $+1$ and $-1$.
+The source bounds both weights away from zero in this window, whose
+width matches the remaining noise scale $\sqrt h$. If $m>0$ is
+the density lower bound there, these two estimates give
 
 $$
 1-q(t)\ge\int_{-\sqrt h}^{\sqrt h}\kappa m\,dx
@@ -676,8 +728,40 @@ $q(t)=t$ for every interior time, and symmetry includes zero.
 Differentiating gives $\mathbb E[a(t,X_t)^2]=1$, completing the theorem.
 <!-- /passage:endpoints -->
 
+<!-- passage:overlap-payoff -->
+## 6. Return to the spins
+
+We can now return to the arrangement of nearly optimal spin choices.
+A separate theorem
+of [Auffinger–Chen–Zeng, Proposition 1, equation (5)][acz] applies at
+each point in the minimiser's support. Combining it with full support:
+for every fixed overlap $r\in[0,1)$ and tolerances $\varepsilon,\eta>0$,
+with probability over the couplings tending to one exponentially fast
+as $n\to\infty$, there exist configurations $\sigma,\tau$ with
+
+$$
+|R(\sigma,\tau)-r|<\varepsilon,
+\qquad H_n(\sigma)/n,\ H_n(\tau)/n\ge P_*-\eta.
+$$
+
+If $k$ sites differ, $k/n=(1-R)/2$. The overlap tolerance therefore gives
+
+$$
+\left|\frac{k}{n}-\frac{1-r}{2}\right|<\frac\varepsilon2.
+$$
+
+At target overlap $1/2$, two nearly optimal choices can differ on
+approximately one quarter of the sites; at target zero, on half.
+The pair may depend on the chosen target and the couplings. This is
+existence for each fixed target, not a statement about
+typically sampled pairs or a procedure for finding them. The companion
+*Long Reasoning Record*,
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="near-ground-overlaps">[§9.3, “Near-ground configurations at a prescribed overlap”](../long/reasoning-record.md#near-ground-overlaps)</span>,
+gives the probability bound and the covariance adjustment.
+<!-- /passage:overlap-payoff -->
+
 <!-- passage:changed-cases -->
-### 5.5 A changed-case check
+### A check on the area argument
 
 **Question.** Suppose a differentiable function $f$ on $[2,5]$ has
 $f(2)=2$, $f(5)=5$, $f'(2)=1/2$ and $f'(5)=3/2$. If $f'$ is
@@ -685,16 +769,26 @@ strictly convex, can these data hold? What changes if strict convexity
 is weakened to convexity? The endpoint chord is now tilted, so a
 pointwise comparison with the constant one is unavailable.
 
-Try the comparison before reading the answer after Section 6.
+Try the comparison before reading the answer below.
 <!-- /passage:changed-cases -->
 
-<!-- passage:curvature-mechanism -->
-## 6. Where the strict-curvature input comes from
+<!-- passage:changed-case-answer -->
+**Answer.** A strictly convex $f'$ lies below its endpoint chord.
+That chord has mean height $(1/2+3/2)/2=1$, hence integral three.
+Therefore $f(5)-f(2)=\int_2^5f'(t)\,dt<3$, contradicting the
+prescribed values. With non-strict convexity the data are possible:
+$f(t)=2+(t-2)/2+(t-2)^2/6$ has affine derivative and satisfies all
+four endpoint values. The argument needs a strict loss of area; the
+common endpoint upper bound of one in Figure 2 is convenient, not essential. This is a
+calculus example, not a candidate SK moment function.
+<!-- /passage:changed-case-answer -->
 
-The gap cases are now complete from the stated inputs. The difficult
-input was strict curvature on a positive constant interval. This
-section explains how its expectation acquires a sign; the full analytic
-proof remains in the cited sources. For this section, take any admissible
+<!-- passage:curvature-mechanism -->
+## 7. Where the strict-curvature input comes from
+
+The proof in Section 5 used strict curvature on a positive constant
+interval. This section explains how that expectation acquires a sign;
+the full analytic proof remains in the cited sources. For this section, take any admissible
 coefficient with $\gamma=c>0$ on an open interval, without assuming
 minimality. Set $b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$ there.
 Differentiating the PDE and applying Itô's rule gives
@@ -740,12 +834,27 @@ expectation; it supplies none of the SK-specific sign estimates.
 
 <!-- passage:curvature-transfer -->
 
-The source chooses corrections of this form from the spatial derivatives
-and density factors. Its rational identity rewrites the corrected
-expression as nonnegative terms with a remainder at least
-$c^2a^4/1000$ after rescaling. The sign bounds and vanishing boundary
-products justify that use of the identity. The positivity is therefore
-*after expectation*; the raw displayed polynomial can be negative.
+At the step-coefficient, smooth-terminal stage, write
+$R_c=d^2-12cab^2+6c^2a^4$. The source constructs a correction
+$C$ from the spatial derivatives and the density factors, with
+
+$$
+\mathbb E[C(t,X_t)]=0,\qquad
+R_c(t,x)+C(t,x)\ge\frac{c^2}{1000}a(t,x)^4.
+$$
+
+A rational polynomial identity gives the second inequality by writing
+the remainder as a sum of nonnegative terms. The density bounds and vanishing boundary
+products justify the first. Consequently
+
+$$
+q'''(t)=\mathbb E[R_c(t,X_t)]
+=\mathbb E[(R_c+C)(t,X_t)]
+\ge\frac{c^2}{1000}\mathbb E[a(t,X_t)^4].
+$$
+
+This is how the correction produces a useful lower bound for the
+expectation even though $R_c$ can be negative at particular states.
 
 To reach an arbitrary admissible coefficient, fix a time inside the
 plateau and approximate in $L^1$ by step coefficients, keeping the same
@@ -762,33 +871,22 @@ The auxiliary logarithmic derivatives need not converge: they have
 already been removed by integration.
 
 The analytic details are [OpenAI (2026a), §§3–5][support-manuscript]
-and the companion *Long Reasoning Record*, §§4.4–4.5, “How the signs
-make a correction with zero expectation useful” and “Passing the
-integrated inequality to an integrable coefficient”.
+and the companion *Long Reasoning Record*,
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-algebra">[§4.4, “How the signs make a correction with zero expectation useful”](../long/reasoning-record.md#curvature-algebra)</span>,
+and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="plateau-limit">[§4.5, “A fixed-time inequality and its plateau application”](../long/reasoning-record.md#plateau-limit)</span>.
 <!-- /passage:curvature-transfer -->
-
-<!-- passage:changed-case-answer -->
-**Answer.** A strictly convex $f'$ lies below its endpoint chord.
-That chord has mean height $(1/2+3/2)/2=1$, hence integral three.
-Therefore $f(5)-f(2)=\int_2^5f'(t)\,dt<3$, contradicting the
-prescribed values. With non-strict convexity the data are possible:
-$f(t)=2+(t-2)/2+(t-2)^2/6$ has affine derivative and satisfies all
-four endpoint values. The argument needs a strict loss of area; the
-common endpoint upper bound of one in Figure 2 is convenient, not essential. This is a
-calculus example, not a candidate SK moment function.
-<!-- /passage:changed-case-answer -->
 
 ### Further reading
 
 <!-- passage:density-and-approximation -->
 Full support alone does not give a density. Additional differentiation
-of the saturated identities $q=t$ and $\mathbb E[a^2]=1$, followed by a
-second use of its underlying integrated estimate on locally constant
+of the identities $q=t$ and $\mathbb E[a^2]=1$, followed by
+another use of the integrated curvature estimate on locally constant
 comparison coefficients, proves that $\gamma$
 is smooth, $\gamma(0)=0$, and
 $\mu_\gamma=\gamma'(t)\,dt$ with $\gamma'(t)>0$ for $0<t<1$
 ([OpenAI (2026a), Corollary 6.4][support-density]). The *Long Reasoning
-Record*, §§5.1–5.2, supplies this additional argument; Chen's earlier
+Record*, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="positive-density">[§§9.1–9.2](../long/reasoning-record.md#positive-density)</span>, supplies this additional argument; Chen's earlier
 theorem had already given smooth nonnegative density and full support.
 <!-- /passage:density-and-approximation -->
 
@@ -797,7 +895,7 @@ Further martingale arguments recover the ground-state value from the
 terminal slope response. They use the first curvature moment
 $\mathbb E[a]$, distinct from the second moment $\mathbb E[a^2]=1$
 used here. See [OpenAI (2026a), Corollary 7.1][support-consequences]
-and the *Long Reasoning Record*, §6.
+and the *Long Reasoning Record*, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="scalar-value-identities">[§6](../long/reasoning-record.md#scalar-value-identities)</span>.
 <!-- /passage:scalar-identities -->
 
 <!-- passage:qaoa-boundary -->
@@ -805,40 +903,9 @@ The separate circuit theorem in [OpenAI (2026b)][qaoa-manuscript]
 resolves the eventual-optimality conjecture for the Quantum Approximate
 Optimization Algorithm (QAOA) in
 [Basso–Farhi–Marwaha–Villalonga–Zhou, §7, equation (7.2)][bfmvz].
-The *Long Reasoning Record*, §9, develops its circuit construction and
+The *Long Reasoning Record*, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qaoa-construction">[§8](../long/reasoning-record.md#qaoa-construction)</span>, develops its circuit construction and
 the order of limits. It requires additional arguments beyond full support.
 <!-- /passage:qaoa-boundary -->
-
-<!-- passage:overlap-payoff -->
-## 7. Return to the spins
-
-We can now return to the arrangement of nearly optimal spin choices.
-A separate theorem
-of [Auffinger–Chen–Zeng, Proposition 1, equation (5)][acz] applies at
-each point in the minimiser's support. Combining it with full support:
-for every fixed overlap $r\in[0,1)$ and tolerances $\varepsilon,\eta>0$,
-with probability tending to one exponentially fast as $n\to\infty$,
-there exist configurations $\sigma,\tau$ with
-
-$$
-|R(\sigma,\tau)-r|<\varepsilon,
-\qquad H_n(\sigma)/n,\ H_n(\tau)/n\ge P_*-\eta.
-$$
-
-If $k$ sites differ, $k/n=(1-R)/2$. The overlap tolerance therefore gives
-
-$$
-\left|\frac{k}{n}-\frac{1-r}{2}\right|<\frac\varepsilon2.
-$$
-
-At target overlap $1/2$, two nearly optimal choices can differ on
-approximately one quarter of the sites; at target zero, on half.
-The pair may depend on the chosen target and the couplings. This is
-existence for each fixed target, not a statement about
-typically sampled pairs or a procedure for finding them. The companion
-*Long Reasoning Record*, §5.3, “Near-ground configurations at a prescribed
-overlap”, gives the probability bound and the covariance adjustment.
-<!-- /passage:overlap-payoff -->
 
 <!-- passage:source-record -->
 ## Sources and scope of verification
@@ -850,12 +917,13 @@ concern a minimiser's support and moment identities. They assume a
 minimiser; they do not prove the external Parisi formula or attainment.
 The separate scalar [implementation][value-proof] and [statement][value-interface]
 concern the value identity and finite Gaussian approximation. Neither
-selected statement covers positive density or the complete QAOA circuit theorem.
+selected statement covers positive density, the external near-ground
+overlap theorem used in Section 6, or the complete QAOA circuit theorem.
 The implementations use [Lean 4 (de Moura–Ullrich, 2021)](https://doi.org/10.1007/978-3-030-79876-5_37)
 and [mathlib (The mathlib Community, 2020)](https://doi.org/10.1145/3372885.3373824).
 
 Comparator acceptance and research-v2 extraction remain unknown; see the
-*Long Reasoning Record*, §11. Kernel checking establishes a declared statement
+*Long Reasoning Record*, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">[§13](../long/reasoning-record.md#verification)</span>. Kernel checking establishes a declared statement
 under its definitions and axioms. Its correspondence with the analytic theorem,
 independent proof review and reader comprehension are separate questions.
 The links below select the editions used.

@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:97fd8fb8546d5288d307f810f4dc411a6410c8f9d93c8f98aa5038ff17928804",
-      "revision": "sha256:97fd8fb8546d5288d307f810f4dc411a6410c8f9d93c8f98aa5038ff17928804",
+      "url": "urn:sha256:d78d6fca27b4c360f899a9b2c13772abcbb6a15531728601b85e48a875cf0083",
+      "revision": "sha256:d78d6fca27b4c360f899a9b2c13772abcbb6a15531728601b85e48a875cf0083",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "97fd8fb8546d5288d307f810f4dc411a6410c8f9d93c8f98aa5038ff17928804"
+      "sha256": "d78d6fca27b4c360f899a9b2c13772abcbb6a15531728601b85e48a875cf0083"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -810,6 +810,35 @@
       "revision": "arXiv:2610.00127v1",
       "license": "NOASSERTION",
       "redistribution": "reference_only"
+    },
+    {
+      "id": "support_source_sample_jets",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKSupport/Density/SampleJets.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "13bbff4ede05b8df154357438ed43051c273d41e64a0cc251b2921ed331816c3"
+    },
+    {
+      "id": "support_source_coercive_moments",
+      "kind": "file",
+      "path": "upstream/lean/OAI/Probability/SKSupport/Density/CoerciveMoments.lean",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/CoerciveMoments.lean",
+      "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+      "license": "Apache-2.0",
+      "redistribution": "vendored",
+      "sha256": "0cb4e487e07adb9dbd66674f350a229d4fe8ae1532283427b30b11f9bd6fe4d6"
+    },
+    {
+      "id": "sellke2021_external_field",
+      "kind": "literature",
+      "url": "https://arxiv.org/abs/2105.03506v4",
+      "revision": "arXiv:2105.03506v4 (6 October 2021)",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "f774906b5273e81afc2dd92f551eae16a522150476135ec0b437277edbd0b328"
     }
   ],
   "citations": [
@@ -1790,8 +1819,8 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:97fd8fb8546d5288d307f810f4dc411a6410c8f9d93c8f98aa5038ff17928804",
-      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
+      "url": "urn:sha256:d78d6fca27b4c360f899a9b2c13772abcbb6a15531728601b85e48a875cf0083",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
       "id": "qaoa_finite_size_corollary",
@@ -1804,8 +1833,8 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:97fd8fb8546d5288d307f810f4dc411a6410c8f9d93c8f98aa5038ff17928804",
-      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.11, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
+      "url": "urn:sha256:d78d6fca27b4c360f899a9b2c13772abcbb6a15531728601b85e48a875cf0083",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §11.5, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     },
     {
       "id": "qaoa_original_2014",
@@ -1862,6 +1891,27 @@
       "title": "Zero-field zero-candidate descent",
       "url": "https://arxiv.org/abs/1609.04368v4",
       "locator": "Theorem 6 and its proof, printed pp.13–16, especially equation (24): zero-coefficient heat response and a feasible late-step improvement. The exposition separately derives the origin-atom directional derivative."
+    },
+    {
+      "id": "support_fixed_time_source",
+      "source_id": "support_source_sample_jets",
+      "locator": "SampleJets.lean:29–33,78–88,90–143; actualJet, sample_coercivity and actual_coercivity",
+      "title": "Fixed-time spatial coercivity for the SKSupport canonical diffusion",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean"
+    },
+    {
+      "id": "support_fixed_time_polynomials",
+      "source_id": "support_source_coercive_moments",
+      "locator": "CoerciveMoments.lean:15–17; coerciveJetPolynomial and quarticJetPolynomial",
+      "title": "Scaled spatial-jet polynomial definitions",
+      "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/CoerciveMoments.lean"
+    },
+    {
+      "id": "scalar_value_finite_cutoff_antecedent",
+      "source_id": "sellke2021_external_field",
+      "title": "Mark Sellke, Optimizing Mean Field Spin Glasses with External Field",
+      "url": "https://arxiv.org/abs/2105.03506v4",
+      "locator": "Printed p.17, Proposition 3.10 (credited there to AMS21, Lemma 6.13) and Lemma 3.11, equations (3.39)–(3.40): finite-cutoff cancellation for Phi−x Phi_x"
     }
   ],
   "nodes": [
@@ -2682,7 +2732,7 @@
       "citation_ids": [
         "scalar-r2-26-cite-smooth-positive-density"
       ],
-      "boundary": "Additional moment-bootstrap and fixed-time flattening argument. Not part of FullSupportConclusion and not needed by the QAOA scalar construction; do not place it in that prerequisite closure. The numerical lower bound is an ordinary deduction in long §5.2, not an extra clause of the selected formal endpoint; it depends on the same minimizer and moment normalization."
+      "boundary": "Additional moment-bootstrap and fixed-time flattening argument. Not part of FullSupportConclusion and not needed by the QAOA scalar construction; do not place it in that prerequisite closure. The numerical lower bound is an ordinary deduction in long §9.2, not an extra clause of the selected formal endpoint; it depends on the same minimizer and moment normalization."
     },
     {
       "id": "scalar.manuscript_terminal_value",
@@ -2697,7 +2747,8 @@
       ],
       "evidence_ids": [],
       "citation_ids": [
-        "scalar-r2-26-cite-manuscript-terminal-value"
+        "scalar-r2-26-cite-manuscript-terminal-value",
+        "scalar_value_finite_cutoff_antecedent"
       ],
       "boundary": "The terminal formula subtracts the full integral, whereas P(gamma) subtracts half. The proof uses U₁X₁=|X₁| and does not require P(X₁=0)=0 or a pointwise sign assertion at zero."
     },
@@ -3812,7 +3863,7 @@
       "label": "Corrected weighted finite-tree estimate with explicit hypotheses",
       "status": "unverified",
       "source_id": "circuit-r2-26-source-positive",
-      "locator": "07-positive-temperature.tex:211–450; EAMS arXiv:2111.06813v2 Proposition 2.1 and Lemmas 3.2–3.4,4.2–4.3; long §9.7",
+      "locator": "07-positive-temperature.tex:211–450; EAMS arXiv:2111.06813v2 Proposition 2.1 and Lemmas 3.2–3.4,4.2–4.3; long §11.1",
       "statement": "In the specified EAMS one-step-lag recursion on a k-regular tree, k>=2, fix delta>0 and finite L>=1 with L*delta<1. Use iid Gaussian labels and the common node/cavity initial state sqrt(delta)*g_i. At the finitely many mesh times, assume |a_k|<=K>=1, spatial Lipschitz constants La,Lb for a_k,b_k uniform in k, identical normalized a_k for node/cavity updates, and E[(A_(i->j)^r)^2]=1. Then |k*E[z_o^L*z_v^L]-2*sqrt(k-1)*delta*sum_(r=1)^(L-1) E[B_o^r]|<=C(K,La,Lb,delta,L), independently of k. The sum is empty when L=1.",
       "assumption_ids": [],
       "citation_ids": [
@@ -3864,7 +3915,7 @@
       "label": "Finite Gibbs values and exact Gibbs samples",
       "status": "unverified",
       "source_id": "authored_long_comparisons_20261024",
-      "locator": "papers/qaoa-sk/long/reasoning-record.md §9.7.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution.",
+      "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution.",
       "statement": "For the pure zero-field SK Hamiltonian and beta>0, let L_n=max_sigma H_n(sigma)/n, F_n,beta=(n beta)^(-1)log sum_sigma exp(beta H_n(sigma)), and U_n,beta be the exact Gibbs mean energy per spin. For each instance, 0<=F_n,beta-L_n<=log(2)/beta and 0<=L_n-U_n,beta<=log(2)/beta. For n>=2 and s>0, P_J(|L_n-E L_n|>s)<=2 exp(-n^2 s^2/(n-1)). For an exact Gibbs draw Sigma, P(H_n(Sigma)/n<=L_n-s | J)<=min(1,exp(n(log(2)-beta s))). Since E L_n tends to P_*, both value expectations tend to P_* along every joint n→infinity,beta→infinity; an exact Gibbs draw tends to P_* in the joint disorder-and-sampling probability.",
       "assumption_ids": [],
       "evidence_ids": [
@@ -3882,7 +3933,7 @@
       "label": "A later finite-size estimate for a bounded-angle class",
       "status": "unverified",
       "source_id": "qaoa_finite_size_2026",
-      "locator": "Corollary S3.1, printed pp.46–47, equations (S3.1)–(S3.4), with cost-angle convention (S3.7). Statement inspected; full cavity proof not independently checked. Authored consequence: long §9.11.",
+      "locator": "Corollary S3.1, printed pp.46–47, equations (S3.1)–(S3.4), with cost-angle convention (S3.7). Statement inspected; full cavity proof not independently checked. Authored consequence: long §11.5.",
       "statement": "For the source ordered-tuple Gaussian finite-degree mixture xi(t)=sum_q c_q^2 t^q, a depth p>=1 word with every cost angle bounded in absolute value by Gamma>0, and x>0 with xi(2),xi′(1),xi′′(33)<=x and Gamma^2 p^2 x>=1, set B_p=256p^4(2e Gamma^2 p^2 x)^p, E_p=70 Gamma^2 p^2 x+p log(2), R_p=(2E_p/log(2))^(2p). For 0<epsilon<=4 Gamma p x min(exp(-1/2),2^(-(8p^2+3)/100)), the disorder-averaged energy error |nu_n-nu_infinity| is at most epsilon whenever n>=T_p=max{2^(8p^2+3) B_p (2^(deg(xi)+4) Gamma^2 p^2 x^2/epsilon^2)^R_p [2 log_2(4 Gamma p x/epsilon)+deg(xi)]^2,16 Gamma p x/epsilon}. No mixer-angle bound is imposed. Consequently, for fixed mixture,Gamma,x, deterministic words with p(n)→infinity, one common cost-angle bound Gamma, and p(n)log p(n)=o(log log n) satisfy |nu_n(W_n)-nu_infinity(W_n)|<=exp(-p(n)^2) eventually.",
       "assumption_ids": [],
       "evidence_ids": [
@@ -3953,6 +4004,27 @@
         "scalar.source_predictable_lower_lean_source"
       ],
       "boundary": "Source-inspected conditional statement with quantified guards retained in the statement. The source proof is present; no fresh elaboration, dependency extraction, Comparator result or independent semantic acceptance is asserted. The expectation-limit argument adds a nonnegative correction before passing to the limit; signed convergence alone would not suffice."
+    },
+    {
+      "id": "support.fixed_time_spatial_coercivity",
+      "kind": "claim",
+      "label": "Spatial coercivity at a positive continuity time",
+      "status": "unverified",
+      "source_id": "authored_long_comparisons_20261024",
+      "locator": "Long record, fixed-time-coercivity: fixed-time estimate and shrinking-plateau argument; corresponding source SampleJets.lean:135–143",
+      "statement": "For every admissible manuscript coefficient gamma in U, every 0<t<1 at which gamma is continuous, and c=gamma(t)>0, let a=Phi_xx(t,X_t), b=Phi_xxx(t,X_t), d=Phi_xxxx(t,X_t) along its controlled diffusion. Then E[d^2-12*c*a*b^2+6*c^2*a^4] >= (c^2/1000)*E[a^4]. No minimizer or constant-neighborhood premise is required.",
+      "assumption_ids": [],
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ],
+      "citation_ids": [
+        "support_fixed_time_source",
+        "support_fixed_time_polynomials",
+        "support_regularity_source",
+        "support_diffusion_source",
+        "scalar-r2-26-cite-smooth-positive-density"
+      ],
+      "boundary": "Authored fixed-time consequence of smooth finite-step coercivity and compact-strip spatial-moment convergence. The ordinary proof flattens gamma locally; the inspected SKSupport source instead uses sampled jets along its canonical diffusion. actual_coercivity takes t:Time with 0<t and ContinuousAt gamma.val t and proves the scaled c^4/c^2 polynomial inequality. Its type does not require c>0; positivity is needed here to divide by c^2. This source correspondence does not identify the SKSupport and SKValue models, pass third time derivatives through a shrinking-plateau limit, or establish the smooth-density corollary as an exported formal conclusion. No fresh Lean build, elaborated dependency extraction, Comparator result or independent semantic acceptance is recorded."
     }
   ],
   "edges": [
@@ -3962,7 +4034,38 @@
       "kind": "supports",
       "evidence_ids": [
         "near_ground_pair_warrants_20261024"
-      ]
+      ],
+      "application": {
+        "status": "authored",
+        "shared_bindings": {
+          "gamma": "one attained minimizer gamma_0 in the manuscript pure zero-field SK class U, used for full support and the support-point premise of the ACZ landscape theorem"
+        },
+        "premise_bindings": [
+          {
+            "assumption_id": "scalar.paper_minimizer",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "Attainment supplies gamma_0 minimizing the same manuscript Parisi functional. Full support is applied to this gamma_0; the landscape theorem then uses the Stieltjes support of that same minimizer."
+          },
+          {
+            "assumption_id": "scalar.paper_admissible",
+            "supplier_id": "scalar.minimizer_attainment",
+            "binding_names": [
+              "gamma"
+            ],
+            "rationale": "The attained gamma_0 belongs to the same class U, so its admissibility accompanies its minimality. Pure zero-field SK and xi(t)=t^2/2 remain the fixed model; the common Gaussian covariance adjustment is retained in the landscape argument."
+          }
+        ],
+        "remaining_assumption_ids": [],
+        "source_span": {
+          "source_id": "authored_long_comparisons_20261024",
+          "start_line": 3170,
+          "end_line": 3229
+        },
+        "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in long section 2.3); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted."
+      }
     },
     {
       "from": "support.near_ground_pairs",
@@ -5882,6 +5985,54 @@
       "evidence_ids": [
         "scalar_lower_source_correspondence_r6"
       ]
+    },
+    {
+      "from": "support.fixed_time_spatial_coercivity",
+      "to": "support.integrated_coercivity",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
+    },
+    {
+      "from": "support.fixed_time_spatial_coercivity",
+      "to": "support.regularity",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
+    },
+    {
+      "from": "support.fixed_time_spatial_coercivity",
+      "to": "support.diffusion",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
+    },
+    {
+      "from": "support.positive_curvature",
+      "to": "support.fixed_time_spatial_coercivity",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
+    },
+    {
+      "from": "scalar.constant_curvature",
+      "to": "support.fixed_time_spatial_coercivity",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
+    },
+    {
+      "from": "scalar.smooth_positive_density",
+      "to": "support.fixed_time_spatial_coercivity",
+      "kind": "supports",
+      "evidence_ids": [
+        "fixed_time_spatial_warrant_20261025"
+      ]
     }
   ],
   "evidence": [
@@ -5894,7 +6045,9 @@
       "source_ids": [
         "acz2020_infinite_support",
         "ac2017_ground_state",
-        "support_tex_variation"
+        "support_tex_variation",
+        "support_tex_main",
+        "authored_long_comparisons_20261024"
       ],
       "subject_ids": [
         "support.near_ground_pairs",
@@ -5902,7 +6055,7 @@
         "scalar.parisi_formula",
         "scalar.minimizer_attainment"
       ],
-      "details": "The full-support edge places every fixed r in [0,1) in the minimizing Stieltjes support required by ACZ Proposition1. The attainment edge permits choosing that minimizer. The Parisi-formula edge identifies its value with the same pure-SK ground-state limit. ACZ's constrained-pair result and concentration supply the pair; the common N(0,1/2) covariance correction preserves expected maxima and costs at most 2 exp(-eta^2 n^2/4) when removed at tolerance eta/2. These are curated mathematical warrants, not extracted Lean edges or independent proof acceptance."
+      "details": "The authored application on the full-support edge uses one attained manuscript minimizer gamma_0. The attainment supplier discharges that use's admissibility and minimality premises; full support then places every fixed r in [0,1) in the same gamma_0's Stieltjes support required by ACZ Proposition 1. The conditional full-support theorem retains its premises when selected directly. The Parisi-formula edge identifies its value with the same pure-SK ground-state limit. ACZ's constrained-pair result and concentration supply the pair; the common N(0,1/2) covariance correction preserves expected maxima and costs at most 2 exp(-eta^2 n^2/4) when removed at tolerance eta/2. These are curated mathematical warrants, not extracted Lean edges or independent proof acceptance."
     },
     {
       "id": "source_bytes_verified",
@@ -8790,7 +8943,7 @@
         "circuit.one_measurement_near_optimum",
         "qaoa_thermodynamic_first"
       ],
-      "details": "FGGZ §4 equations (13)–(14) give joint disorder/measurement first and second moments at a fixed word; equations (17)–(22) explain concentration. Choose the QAOA word at epsilon/2 accuracy before n and J. Markov applied to (Y_n-v_W)^2 bounds near-optimum failure by 4 epsilon^(-2) E[(Y_n-v_W)^2] -> 0. This uses a quantum second moment, not merely the square of the conditional mean. No rate, efficient angle search, uniform variable-depth theorem, every-instance guarantee or Lean result is asserted. Local source read: docs/annex/farhi-et-al-2022-qaoa-infinite-size.pdf, printed pages4–5; derived argument papers/qaoa-sk/long/reasoning-record.md §9.8."
+      "details": "FGGZ §4 equations (13)–(14) give joint disorder/measurement first and second moments at a fixed word; equations (17)–(22) explain concentration. Choose the QAOA word at epsilon/2 accuracy before n and J. Markov applied to (Y_n-v_W)^2 bounds near-optimum failure by 4 epsilon^(-2) E[(Y_n-v_W)^2] -> 0. This uses a quantum second moment, not merely the square of the conditional mean. No rate, efficient angle search, uniform variable-depth theorem, every-instance guarantee or Lean result is asserted. Local source read: docs/annex/farhi-et-al-2022-qaoa-infinite-size.pdf, printed pages4–5; derived argument papers/qaoa-sk/long/reasoning-record.md §11.2."
     },
     {
       "id": "scalar_value_solution_build_failure_20261024",
@@ -9504,7 +9657,7 @@
         "circuit.weighted_finite_horizon",
         "circuit.even_p_spin_obstruction"
       ],
-      "details": "Long §5.2 divides the positive-density bound using unit second moment and moment Cauchy–Schwarz. Long §7.1 bounds coupled Euler and martingale residuals by fixed-strip O(sqrt(delta)), retains shifted endpoint and terminal errors, and does not assert uniformity at one. Long §9.7 reconstructs a degree-uniform finite-horizon estimate from conditional variance recursion, node/cavity coupling and the exact edge decomposition, with spatial Lipschitz coefficients and actual common Gaussian initialization. Long §9.10 cites the independently inspected Basso–Gamarnik–Mei–Zhou fixed-depth theorem and proof. These are ordinary manuscript deductions or cited results; no graph status, Lean endpoint or Comparator acceptance is promoted."
+      "details": "Long §9.2 divides the positive-density bound using unit second moment and moment Cauchy–Schwarz. Long §7.1 bounds coupled Euler and martingale residuals by fixed-strip O(sqrt(delta)), retains shifted endpoint and terminal errors, and does not assert uniformity at one. Long §11.1 reconstructs a degree-uniform finite-horizon estimate from conditional variance recursion, node/cavity coupling and the exact edge decomposition, with spatial Lipschitz coefficients and actual common Gaussian initialization. Long §11.4 cites the independently inspected Basso–Gamarnik–Mei–Zhou fixed-depth theorem and proof. These are ordinary manuscript deductions or cited results; no graph status, Lean endpoint or Comparator acceptance is promoted."
     },
     {
       "id": "endpoint_chord_area_warrant_20261024",
@@ -9537,7 +9690,7 @@
         "circuit.later_finite_size_comparison",
         "scalar.parisi_formula"
       ],
-      "details": "Read the exact frozen long §9.7.2 and §9.11 and the private original PDF Corollary S3.1 printed pp.46–47. The source and PDF hashes identify the inspected editions. The Gibbs comparison follows from log-sum, entropy, standard Gaussian concentration and counting; the Parisi-formula dependency only identifies the limiting value. For the later estimate, epsilon_p=exp(-p^2) obeys the small-error condition eventually, log R_p=4p log p+O(p), and logarithms of the threshold give log log T_p=4p log p+O(p+log p). No independent replay of the later paper’s cavity proof or formal extraction was performed. Neither comparison receives an incoming SK proof-dependency edge."
+      "details": "Read the exact frozen long §11.1.2 and §11.5 and the private original PDF Corollary S3.1 printed pp.46–47. The source and PDF hashes identify the inspected editions. The Gibbs comparison follows from log-sum, entropy, standard Gaussian concentration and counting; the Parisi-formula dependency only identifies the limiting value. For the later estimate, epsilon_p=exp(-p^2) obeys the small-error condition eventually, log R_p=4p log p+O(p), and logarithms of the threshold give log log T_p=4p log p+O(p+log p). No independent replay of the later paper’s cavity proof or formal extraction was performed. Neither comparison receives an incoming SK proof-dependency edge."
     },
     {
       "id": "scalar_lower_source_correspondence_r6",
@@ -9603,6 +9756,30 @@
       "receipt_path": "verification/corrected-replay-interruption-20261025.json",
       "receipt_sha256": "50646da736e4a9a598d41abe466dc65589bd95f67fdc51bf7622bea20fce94dc",
       "details": "Observed 2026-10-25T17:48:54.713682+00:00 for the corrected-globs-20261024 attempt. The retained controller reconciliation has no terminal research-process result. Full-support challenge build and a live challenge exporter were observed; scalar execution and research-v2 extraction were not observed. Comparator acceptance, rejection, kernel acceptance, extraction completeness and actual axiom inventory remain unknown. unavailable refers to the terminal outcome, not a proof verdict. This dated historical summary is not a process receipt or a claim that no later attempt exists; it preserves earlier not-run plans and build failures."
+    },
+    {
+      "id": "fixed_time_spatial_warrant_20261025",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Authored source comparison; independent semantic acceptance not run",
+      "source_ids": [
+        "authored_long_comparisons_20261024",
+        "support_source_sample_jets",
+        "support_source_coercive_moments",
+        "support_tex_regularity",
+        "scalar-r2-26-source-order-parameter-regularity"
+      ],
+      "subject_ids": [
+        "support.fixed_time_spatial_coercivity",
+        "support.integrated_coercivity",
+        "support.regularity",
+        "support.diffusion",
+        "support.positive_curvature",
+        "scalar.constant_curvature",
+        "scalar.smooth_positive_density"
+      ],
+      "details": "The long-record reconstruction extracts the spatial inequality used in order-parameter-regularity.tex:116–150: replace the coefficient by c at one shrinking neighborhood, preserve monotonicity, choose a fixed compact strip and common L1 bound, and pass derivatives through order four evaluated along coupled paths. Minimality supplies none of this transfer; it is used in the density consumer to establish smoothness, c>0 and moment saturation. On a positive plateau the third-time-derivative identity supplies the curvature consumer. Separately, SampleJets.lean:135–143 gives the scaled inequality for the SKSupport canonical diffusion at a positive continuity time; lines 90–133 supply its two dominated-convergence limits and CoerciveMoments.lean:15–17 fixes the powers of c. Division by c^2 for c>0 produces the normalized common expression. These are source-located mathematical warrants, not extracted dependency edges, a checked cross-model transport, or formal acceptance."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",
@@ -9800,6 +9977,7 @@
     "Supports records an ingredient used within the scope of its statement; it is not an automatic sequent, AND/OR proof node or witness-unification rule. Version 1.2 applications name a source span, common bindings, premise suppliers and remaining assumptions. Querying a conditional theorem directly retains its original premises; querying its application retains the theorem with the explicitly authored local premise scope.",
     "Illustrative calculations in the papers retain example passage mappings without theorem support edges. Reading order and equal marginal laws do not establish mathematical dependencies or rooted energy identities.",
     "The authored support, scalar and circuit records share this graph. Support is consumer-to-ingredient and does not certify sufficiency. Finite polynomial calculation, analytic hypotheses, formal correspondence, execution and semantic acceptance remain separate. Alternative circuit routes use citation navigation so their hypotheses are not silently conjoined; scoped witness application is stated explicitly because reachability does not discharge hypotheses.",
-    "circuit.one_measurement_near_optimum uses qaoa_thermodynamic_first at epsilon/2 and circuit.fixed_word_concentration for that same fixed word. Equal marginal laws or a mean-energy theorem alone would not supply the quantum second moment. This derived ordinary consequence is separately selectable and is not an extra premise of the QAOA theorem."
+    "circuit.one_measurement_near_optimum uses qaoa_thermodynamic_first at epsilon/2 and circuit.fixed_word_concentration for that same fixed word. Equal marginal laws or a mean-energy theorem alone would not supply the quantum second moment. This derived ordinary consequence is separately selectable and is not an extra premise of the QAOA theorem.",
+    "scalar_value_finite_cutoff_antecedent: direct antecedent and credit for the finite-cutoff scalar value calculation. Sellke, arXiv:2105.03506v4, printed p.17, Proposition 3.10 supplies the Ito identities for E Phi and E[X Phi_x], explicitly crediting AMS21 Lemma 6.13; Lemma 3.11 combines them using Psi=Phi−x Phi_x. The manuscript terminal-value claim still needs its own minimizer moment identities, terminal limit and normalization. This citation does not import Sellke's later Hessian-tail identity or identify his external-field model with either selected Lean namespace."
   ]
 }

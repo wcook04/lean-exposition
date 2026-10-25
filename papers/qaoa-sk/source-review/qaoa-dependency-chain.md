@@ -414,7 +414,7 @@ The construction's hardest transitions are therefore concrete: scalar coefficien
 
 ## Consequences and quantifiers reconstructed on 24 October 2026
 
-Long §§9.1–9.6 give the operator and energy argument in detail: root-shift
+Long §§8.1–8.6 give the operator and energy argument in detail: root-shift
 first chaos, occupation control of the scaled edge remainder, the unitary
 second-response identity with its nonzero cut baseline, helper compression
 with mixed lower-cut responses, and seed removal using the actual insertion
@@ -425,19 +425,19 @@ vacuum compression or state-norm convergence alone cannot replace these
 statements. Their source owners remain Q/sections/02-foundations.tex,
 04-classical-synthesis.tex and 05-seed-simulation.tex as linked above.
 
-Long §9.8 uses Farhi–Goldstone–Gutmann–Zhou, arXiv:1910.08187v4,
+Long §11.2 uses Farhi–Goldstone–Gutmann–Zhou, arXiv:1910.08187v4,
 equations (13)–(14), to derive $L^2$ concentration of one measurement for
 each fixed word, jointly over disorder and measurement. This ordinary
 consequence combines with the near-optimal word before taking $n\to\infty$;
 it is neither a selected formal endpoint nor a growing-depth concentration
-theorem. Long §9.9 proves the padded existence schedule and distinguishes
-quadratic SK from higher-spin overlap-gap results. Long §9.10 preserves the
+theorem. Long §11.3 proves the padded existence schedule and distinguishes
+quadratic SK from higher-spin overlap-gap results. Long §11.4 preserves the
 source's separate high-girth lower bound and random-regular optimality limits.
 
-Long §9.7 includes the exact fixed-temperature change of variables from
+Long §11.1 includes the exact fixed-temperature change of variables from
 Lopatto's PDE and the uniform entropy estimate. The scalar free-energy
 values therefore permit a joint size–temperature limit, while the circuit
-construction still fixes its word first. Long §9.11 quotes the later
+construction still fixes its word first. Long §11.5 quotes the later
 arXiv:2609.40309v1 Corollary S3.1 with every parameter restriction and derives
 its sufficient bounded-angle regime $p\log p=o(\log\log n)$. This source
 postdates the QAOA manuscript's displayed date; it is context, not an input
@@ -460,30 +460,30 @@ arguments; it is not an independent audit of every cited external proof.
 
 - [Boulebnane et al., arXiv:2505.07929v2, Theorem 2 (informal), equations
   (10)–(11), p. 3](https://arxiv.org/abs/2505.07929v2), supplies the earlier
-  fixed-depth spin–boson representation. Long §9.1 now credits it before
+  fixed-depth spin–boson representation. Long §8.1 now credits it before
   explaining the further occupation, insertion and surrounding-circuit
   estimates. The source's attribution is in its [§2, lines 47–63](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/02-foundations.tex#L47-L63).
 - [Jones and Knill, arXiv:quant-ph/9905008v1, §II, p. 2](https://arxiv.org/abs/quant-ph/9905008v1),
-  explains orthogonal-sign refocusing. Its role in long §9.3 is isolation
+  explains orthogonal-sign refocusing. Its role in long §8.3 is isolation
   of commuting Ising subcosts, as credited in the source's
   [§4, lines 184–205](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/04-classical-synthesis.tex#L184-L205).
   It does not supply the subsequent helper-contraction estimates.
 - [Li and Khaneja, arXiv:quant-ph/0510012v1, §II, Examples 1–2,
   pp. 2–3](https://arxiv.org/abs/quant-ph/0510012v1), supplies the Lie-bracket
   and polynomial-approximation antecedent, with its parameter-sign
-  restrictions. Long §9.4 distinguishes this method from the source's
+  restrictions. Long §8.4 distinguishes this method from the source's
   [finite-family exact zero-clock lemma and subsequent accuracy argument](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/05-seed-simulation.tex#L272-L343).
 - [Talagrand, Theorem 1.1, pp. 222–223](https://doi.org/10.4007/annals.2006.163.221),
-  supplies the positive-temperature Parisi formula in long §9.7.
+  supplies the positive-temperature Parisi formula in long §11.1.
   Hypotheses (1.3)–(1.5) admit the fixed-temperature covariance error
   $\beta_0^2/(2n)$; partition sum (1.14) is unnormalized. This input
   is separate from the zero-temperature variational formula and attainment.
 - [Farhi, Goldstone and Gutmann, arXiv:1411.4028v1, §VI,
   pp. 10–11](https://arxiv.org/abs/1411.4028v1), gives the adiabatic/Trotter
-  explanation of fixed-instance convergence. Long §9 places this credit
+  explanation of fixed-instance convergence. Long §8 places this credit
   beside the different size-independent-word quantifier.
 
-Long §5.3 applies [Auffinger–Chen–Zeng, arXiv:1703.06872v2,
+Long §9.3 applies [Auffinger–Chen–Zeng, arXiv:1703.06872v2,
 Proposition 1, equation (5), p. 5, proof pp. 15–16](https://arxiv.org/abs/1703.06872v2)
 at every fixed overlap in the full-support measure. Its common-Gaussian
 covariance completion and Gaussian tail calculation were checked directly.
@@ -506,4 +506,4 @@ after challenge build and export. The missing imported object is
 `Gaussian/IntegralPositiveMulGaussian`. The corrected build configuration
 has not been replayed, and no solution export, kernel acceptance or
 comparison acceptance is established by this event. This chronology is
-also stated in long §11.
+also stated in long §13.

@@ -51,12 +51,19 @@ lean-exposition inspect-bundle build/qaoa-sk-authored.zip
 Assembly preserves the exact source graph, Markdown and mapping bytes. The bundle
 contains eight files: a manifest, the graph and three Markdown/mapping pairs.
 PDFs, bibliographies and calculation scripts remain companions in this checkout.
-Manuscript citations use public source URLs. Companion references retain their
-descriptive titles and sections as ordinary text in the portable Markdown.
-The PDF renderer turns explicitly marked companion spans into links within
-the reading edition's directory layout; the eight-file bundle does not carry
-those PDFs. The existing `scripts/paper_anchors.lua` filter owns this distinction
-and emits stable PDF destinations for the manuscripts' HTML bookmarks.
+Manuscript citations use public source URLs. Companion references link to the
+other manuscript in the checkout; the PDF renderer selects the corresponding
+PDF destination. Preserve the `expository/`, `short/` and `long/` directories
+when distributing a human reading edition, with each source and PDF together.
+The existing `scripts/paper_anchors.lua` filter preserves the manuscripts'
+bookmarks and chooses the appropriate companion destination.
+
+The eight-file bundle is an exact archival capture, with flattened paper names;
+it carries neither the PDFs nor the checkout's directory layout. Its raw
+Markdown retains source-relative references and is not a relocated reading
+edition. A consuming reading view must resolve companion references against
+the captured paper identities and anchors without modifying the stored bytes.
+Test that derived view separately from source and PDF navigation.
 
 The [consumer guide](../docs/bundle-consumers.md) explains how other applications
 can inspect this directory or ZIP without treating structural validation as a

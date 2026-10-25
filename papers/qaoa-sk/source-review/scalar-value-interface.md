@@ -239,7 +239,7 @@ Every link below is fixed to the OpenAI commit stated at the start. Paths are re
 
 ## Additional source-level reconstruction
 
-Long §8.3 reconstructs the scalar tree's independent proof of moment contact:
+Long §10.1 reconstructs the scalar tree's independent proof of moment contact:
 `Variation/ContactIntegral.lean` forces a constant coefficient on each positive
 component of $G$; `Coercivity/GapBoundary.lean` uses convexity of $q'-1$ for a
 positive constant; `Coercivity/ZeroGapHump.lean` uses convexity of $q-t$ for a
@@ -247,7 +247,7 @@ zero constant. The right endpoint may be one, where $q(t)-t\le1-t$ replaces
 contact. `Variation/ContactAssembly.lean` then assembles the scalar identities.
 This route does not import the separate support endpoint.
 
-Long §8.2 spells out the eventual-normalizer order
+Long §12.2 spells out the eventual-normalizer order
 $\exists N_0\,\forall N\ge N_0\,\forall j<N$ at each fixed $0<T<1$.
 It also separates the Euler coordinates $0,\ldots,N-1$ from the final
 rounding coordinate $N$. The product identity $UX_1=|X_1|$ places no

@@ -84,6 +84,13 @@ research claim as though explaining it made it established.
    exhaustive cases and discharge each once. The test is continuity of the
    reader's local question; prerequisites needed to understand the estimate
    still come first, and there is no universal rule to postpone analytic detail.
+   Make an optional reading route usable at its departure point. State the
+   definitions and imported conclusions needed after the jump, and give the
+   exact destination. Test that route using only the promised prerequisites;
+   calling a section optional does not make its later notation available.
+   Once the selected result is proved, consider returning to the opening
+   question before developing further machinery or consequences. Keep an
+   intervening lemma when the promised payoff actually depends on it.
    After a conclusion changes the context, explicitly reset the objects and
    hypotheses before explaining a previously imported result. A general
    comparison coefficient need not have the identities just proved for a

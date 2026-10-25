@@ -114,8 +114,8 @@ they do not refute or repair EAMS's continuum theorem.
    interchange with finite-size optimization or an arbitrary prescribed angle family
    at `p = p(n)`. A nonconstructive schedule of near-optimal words can
    nevertheless be padded to any prescribed integer depth allowance
-   tending to infinity; long §9.9 proves this separately. The construction
-   supplies no effective angle-search or finite-size rate. Long §9.11
+   tending to infinity; long §11.3 proves this separately. The construction
+   supplies no effective angle-search or accuracy-only finite-size rate. Long §11.5
    records a later source theorem for bounded-cost-angle families. [Q/sections/01-introduction.tex:95–133][q-main] and
    [Q/sections/06-assembly.tex:7–52][q-assembly] state the quantifiers and
    schedule. The positive-temperature route instead first fixes a finite
@@ -163,7 +163,7 @@ These critiques were not human-reader studies or fresh formal acceptance.
 | Complete the elementary proof before reopening its analytic input | The three geometric gap cases are exhausted before the strict-curvature mechanism is expanded. The later explanation explicitly resets to an arbitrary comparison coefficient. This ordering is a local choice, not a universal paper template. |
 | Show where strictness matters | The calculus diagram has equal endpoint slopes, so the missing area comes from strict convexity. Its curve is an exact teaching example, not an asserted SK moment curve. |
 | Retain the expert paper's distinctive argument | The quantitative estimate's two uses remain central. A compact rooted-energy identification explains the adjacent correlation sum; the complete circuit construction stays in the long record. |
-| Supply the independent scalar lower bound | Long §8.5 now derives Gaussian-column splitting, adaptive selection, empirical orthogonalization and the corrected expectation limit, with separate proof destinations. The finite comparison is not an efficient algorithm or a formal-model transport. |
+| Supply the independent scalar lower bound | Long §10.2 now derives Gaussian-column splitting, adaptive selection, empirical orthogonalization and the corrected expectation limit, with separate proof destinations. The finite comparison is not an efficient algorithm or a formal-model transport. |
 | Preserve application ingredients without retaining supplied premises as free | Three authored application records use the same witness at the theorem and supplier. Conditional arguments remain navigable; formal-interface and ordinary-manuscript premises remain distinct. Structural validation does not check the substitution's mathematical truth. |
 | Reconcile recorded checking history | The graph now reaches the retained interruption summary alongside the older plans and failures. The dated observation has an unavailable terminal outcome; it supplies neither rejection nor acceptance. |
 
@@ -190,3 +190,72 @@ destinations and passage identifiers. Three compact mathematical tables remain:
 feasible measure changes, the rational coefficients and the gap cases. The
 authoring guide now distinguishes a useful tabular comparison from paragraphs
 compressed into columns; the latter failed at the actual reading size.
+
+### Further chronological and source review, 25 October 2026
+
+Ten further advisory returns examined edition `c0b43c1`. Four source-assisted
+agent workstreams checked their proposals against the papers, retained originals
+and formal definitions. A separate sequential reading scrutinised the revised
+short accounts; neither that reading nor the earlier returns were blind or
+human-reader studies.
+
+Returns 01–04 supported the contact-and-area proof and its separate endpoint
+cases. The exposition preserves both figures and the proof, states the inputs
+needed before an optional stochastic calculation, explains the short-step
+control comparison, and demonstrates continuous-mass removal on its existing
+candidate. The initial zero-gap strict inequality now explicitly requires
+positive time. The finite-spin consequence completes the opening question
+before the optional analytic explanation. Additional proposed figures and a
+longer prerequisite course were declined because existing examples supply
+their jobs once the connections are explicit.
+
+Returns 05–07 informed expert register, selection and credit. One spatial
+expectation is now visible in both applications, with the fixed-time statement
+made precise in the long record. The derivative correction's purpose precedes
+its auxiliary quantities; an actual smooth model delimits pointwise positivity.
+Local citations credit Chen's terminal estimate and classical consequence, and
+Sellke's exact v4 finite-cutoff cancellation. The circuit target precedes its
+finite construction, and the coefficient pairing identifies the energy
+observable. The full synthesis remains in the long record.
+
+Return 08 prompted a continuous route through support, terminal value, finite
+Gaussian correlations and the ordinary circuit word. Independent contact and
+Gaussian-comparison proofs now have their own mathematical section, separate
+from formal-interface discussion. Seed initialization and the formula class
+are defined before their estimates. The [heat-family lower bound](../long/reasoning-record.md#heat-lower-bound)
+combines the exact example with the general predictable-correlation comparison;
+it carries no novelty or formal-acceptance claim.
+
+Returns 09–10 exposed correspondence and scope defects. The scalar endpoint
+passage no longer reseeds a conditional helper's internally supplied premises;
+its three clauses retain their actual caller hypotheses. The landscape
+consequence records full support applied to the same attained minimizer.
+Native scope queries distinguish these applications from the conditional
+theorems selected alone. Ordinary Markdown companion links and PDF destinations
+are checked separately; a captured archival bundle retains source bytes and
+needs a consuming view to resolve relocated references.
+
+Two mathematical scope refinements survived a separate source check. A finite
+net gives a simultaneous overlap consequence at fixed positive tolerances,
+without asserting exact continuum overlaps or shrinking-tolerance rates.
+The [finite-size comparison](../long/reasoning-record.md#finite-size-comparison)
+applies to each chosen finite word, with a threshold depending on that word;
+no common angle bound is needed for this fixed-accuracy use. A uniform
+growing-depth conclusion still requires uniform bounds. The record no longer
+excludes the weaker valid combination.
+
+The local method now tests statement and passage entry against the same caller
+hypotheses, distinguishes fixed witnesses from varying families in negative
+scope claims, and makes optional routes usable at their departure points.
+The finite overlap net and fixed-word threshold exercise the quantifier rule;
+a uniform rate is its counterexample. The stochastic calculation and deferred
+analytic estimate exercise the route rule; a lemma needed by the next inference
+cannot be postponed. Expert prose is calibrated against actual nearby source
+passages, with audience-dependent choices rather than copied wording.
+
+The inspected exact rational checker again gives zero polynomial residual,
+22 positive remainder coefficients, the margin above $1/1000$, and the stated
+Itô product identities. These finite checks do not validate the analytic
+hypotheses. Draft review states and formal-check outcomes are retained;
+source-assisted reading and exact bindings do not establish complete proof
+acceptance or measured reader comprehension.

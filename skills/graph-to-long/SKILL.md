@@ -86,6 +86,12 @@ reading order. Keep that first response separate from the assisted reread.
    interchange of operations. Expose a missing justification as an obligation.
    Likewise, an infimum formula does not supply an attaining minimizer. Before
    choosing one, identify the existence argument and its exact source location.
+   Check negative scope claims as carefully as positive conclusions. A finite
+   bound for each chosen witness need not be uniform over a family of witnesses.
+   Before saying two results cannot be combined, write the order of choices and
+   allowed parameter dependence: the fixed-witness consequence may hold while a
+   uniform rate remains unavailable. Conversely, a family-wide conclusion cannot
+   inherit a uniform bound from separate finite bounds without an argument.
 6. Keep complete derivations and subsidiary cases at named destinations.
    Preserve a failed route when it explains an obstruction or the necessity
    of an assumption. Record what failed and what that failure leaves possible.

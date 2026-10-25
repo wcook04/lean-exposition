@@ -234,8 +234,8 @@ are uniformly bounded on a fixed strip; the value itself grows with $|x|$.
 The source owner is P/regularity.tex:107–186.
 
 Long §3 gives the forward first-variation formula, its convex converse,
-compact-measure removal, the right-hand argument at zero and the quantitative
-terminal plateau contradiction. Long §4 includes every coefficient of the
+compact-measure removal and the right-hand argument at zero. The terminal
+plateau contradiction is in §5. Long §4 includes every coefficient of the
 certificate, all five squares, all 22 positive remainder coefficients, and
 the density signs, jump rules and zero-flux justification needed before
 integration. The exact finite check remains distinct from those analytic
@@ -244,7 +244,7 @@ identity and the weaker conditional-crossing deduction; curvature is applied
 inside the constant interval, with only continuous endpoint values of $q'$.
 
 The smooth-density conclusion is an additional ordinary result from
-P/order-parameter-regularity.tex, Corollary 6.4, proved in long §5.1:
+P/order-parameter-regularity.tex, Corollary 6.4, proved in long §§9.1–9.2:
 $\gamma\in C^\infty([0,1))$, $\gamma(0)=0$, and
 $\mu_\gamma(dt)=\gamma'(t)dt$, with $\gamma'(t)>0$ for $0<t<1$.
 It uses saturated consistency and the artificial shrinking-plateau comparison;

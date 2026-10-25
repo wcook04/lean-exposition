@@ -39,7 +39,12 @@ function Pandoc(doc)
     if anchor then
       target = target .. "#" .. anchor
     end
-    return pandoc.Link(span.content, target)
+    -- Keep the ordinary Markdown destination in HTML, but replace it without
+    -- nesting links when producing the matching PDF reading edition.
+    local label = pandoc.Span(span.content):walk({Link = function(link)
+      return link.content
+    end}).content
+    return pandoc.Link(label, target)
   end, Link = function(link)
     local target = link.target
     if target:match("^#") or target:match("^https?://") or target:match("^mailto:") then

@@ -50,9 +50,10 @@ reader of a separate bundle can reach the linked proof or source.
 
 The [long record](../long/reasoning-record.md) now reconstructs compact-strip
 recovery (§2.4), the complete contact argument (§3), the rational certificate
-and analytic transfer (§4), every support-gap case and the smooth positive
-density consequence (§5), scalar finite-accuracy choices (§7), the independent
-scalar formal route (§8), and the circuit construction (§9). These are
+and analytic transfer (§4), every support-gap case (§5), scalar finite-accuracy
+choices (§7), and the circuit construction (§8). The density and landscape
+consequences are in §9, the independent scalar comparison in §10, and the exact
+formal interfaces in §12. These are
 source-based mathematical reconstructions, not an independent proof acceptance.
 
 The [23 October partial-observation receipt](../../../examples/qaoa-sk/verification/full-support-build-failure-20261023.json)

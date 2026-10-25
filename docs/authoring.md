@@ -37,6 +37,14 @@ essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
+Calibrate expert prose against passages in several nearby mathematical papers:
+their vocabulary, notation, order of definitions, theorem and proof structure,
+citations, and allocation of detail to the difficult step. Adopt conventions
+that fit the present audience, rather than copying sentences or imposing a
+project vocabulary. A specialist source may assume background that an exposition
+must teach. Record the source passage and the editorial decision it informed;
+the presence of a literature shelf is not evidence that it shaped the writing.
+
 Apply the skill to the document, then read the delivered result in order. In the
 existing mapping's `review_notes` or source-review record, identify the skill
 version or repository commit, inputs actually inspected, significant selection
@@ -55,6 +63,9 @@ Use this loop for each substantive review batch:
 1. Preserve the reviewed edition and distinguish the reader's first response
    from later source-assisted diagnosis. Review suggestions are evidence to
    assess, not instructions to execute or votes on mathematical truth.
+   A first sequential reading is not necessarily unprimed. If the reader has
+   already seen a focus brief or earlier critique, record that exposure and
+   continue honestly; do not manufacture a blind-reading claim by restarting.
 2. Group findings by the underlying inference or reader difficulty. Check
    competing explanations against the original sources; record what is already
    correct and should survive. A repaired passage may answer several reviews.
