@@ -331,4 +331,4 @@ predicate allows zero as the cutoff, whereas the finite-Gaussian target
 requires a strictly positive cutoff. These local requirements identify the
 providers that a complete dependency audit would check; they are not extra
 undischarged hypotheses on the selected endpoint. The long record's §§4, 5
-and 8 preserve this distinction.
+and 12 preserve this distinction.

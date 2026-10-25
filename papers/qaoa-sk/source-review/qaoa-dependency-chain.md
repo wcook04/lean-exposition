@@ -47,7 +47,7 @@ above \(P_*-\varepsilon\) with joint probability tending to one.
 This is an additional ordinary consequence, not a clause of the main
 source theorem or selected formal interfaces. The two variance terms,
 typical-instance meaning and nonconstructive padded diagonal are proved
-in the [long record, §§9.8–9.9](../long/reasoning-record.md).
+in the [long record, §§11.2–11.3](../long/reasoning-record.md#fixed-word-probability).
 
 The tree degree \(D+1\) is a separate auxiliary parameter. For a **fixed ordinary word** \(W\), Proposition `prop:tree-transfer` imports the identity
 \[
