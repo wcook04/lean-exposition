@@ -53,6 +53,27 @@ Offline execution means dependencies and the selected toolchain are already
 installed. A bundle reader can inspect its captured files offline without the
 original source or receipt paths; that does not rerun Lean or certify the paper.
 
+## Documentation and rendering boundaries
+
+[AGENTS.md](../AGENTS.md) routes an agent's work;
+[CONTRIBUTING.md](../CONTRIBUTING.md) owns setup and validation;
+[the consumer guide](bundle-consumers.md) owns runnable navigation and API details.
+[The architectural companion](../papers/architecture/paper.md) explains the
+human reading relationships. Keep commands, schemas and run histories in these
+technical owners rather than duplicating them in the companion.
+
+The graph stores shared records; paper mappings bind each account to them.
+Corpus and paper projections are derived views, not additional stored sources
+of truth. Markdown owns authored prose; neither graph traversal nor a template
+generates its reasoning. Optional writing skills guide authors and agents but
+are not imported by the runtime or required for installation.
+
+The companion PDF is a reading rendition outside the bundle. Its optional
+`portable-local-links` rendering policy removes local file actions while
+retaining descriptive reference text, internal links and public URLs.
+It changes no graph, mapping or bundle contract. See the
+[reading-copy link policy](bundle-consumers.md#distribute-reading-copies-with-working-links).
+
 ## Graph
 
 A graph names selected goals and retains source, citation, node, typed-edge and
@@ -82,6 +103,22 @@ certifies an argument.
 Citation requirements follow a separate reference closure through `cites` edges.
 This retains attribution without importing a cited work's assumptions as logical
 prerequisites of the selected result.
+
+Graph `1.2` can annotate a `supports` edge with one authored theorem application.
+The edge still points from conclusion to conditional theorem. Its `application`
+records shared parameter/witness bindings, premise-to-supplier bindings, remaining
+free assumptions, a source span and a rationale. Each supplier also needs an
+ordinary support edge from the conclusion. The conditional proof stays reachable;
+only its supplied premise occurrences are discharged in this application.
+An independent use of that premise, or a supplier that still requires it, remains
+free. Queries retain the bindings; they do not check their mathematical meaning.
+
+The format supports one application layer. Nested applications and cycles through
+an application consumer are rejected; ordinary dependency cycles still work.
+Bindings have status `authored`, never `kernel_checked`. Reference and scope checks
+cannot establish witness equality, source-span truth or logical sufficiency.
+Graphs `1.0` and `1.1` remain supported without application annotations. Directly
+selecting a conditional theorem still exposes its own free assumptions.
 
 `select` changes the selected IDs while preserving the whole graph. That keeps failed
 checks and adjacent unresolved claims inspectable. It does not convert the platform's
@@ -195,8 +232,12 @@ the paper boundary, depth cutoff and selected-record budget. Supplementary link
 owners and boundary endpoints are separate from the selected graph; the record
 budget is not a total response-size guarantee.
 
-Paper query `0.4.0` also resolves half-open UTF-8 byte ranges against an explicitly
+Paper query `0.4.1` also resolves half-open UTF-8 byte ranges against an explicitly
 pinned edition. It selects whole mapped passages on non-whitespace content
 overlap and preserves their complete requirements. It does not infer mappings
 for unannotated prose or translate PDF, browser or formal-source coordinates.
 These are read-only query contracts, not new graph evidence or persisted formats.
+The paper query and graph views use application scopes for prerequisite traversal.
+The whole-corpus relation pool also retains the original assumption references:
+it is a documentary index, not a flat list of free proof obligations. Do not
+recompute free assumptions by ignoring the application annotations.

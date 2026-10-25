@@ -8,13 +8,33 @@ The [independent example](../examples/consumer/README.md) reads an exported ZIP
 with Python's standard library. The installed package additionally validates the
 graph and passage contracts.
 
+## Choose the entry for your question
+
+Install the package using [development setup](../CONTRIBUTING.md#setup), then
+run commands from the checkout root. The examples below use fresh output paths
+under `build/`; for large work, substitute a scratch directory outside the
+checkout. Existing bundle/export destinations are not overwritten.
+
+| Starting point | Operation | What it returns |
+| --- | --- | --- |
+| An existing graph and selected goal | `inspect GRAPH` (optionally `--view`) | Claims and evidence, or one typed graph view |
+| A paper or passage | `inspect-bundle BUNDLE --paper STAGE`; `query-papers` for selectors | Authored reading order, text, passage mappings and recorded support |
+| A claim used by several papers | `query-papers BUNDLE --node ID` | Direct mapped occurrences; `--relation prerequisites` also follows recorded support |
+| A source, citation, evidence record or claim | `query-corpus BUNDLE --record TABLE ID` | A bounded neighbourhood, typed relations, witnesses and explicit frontier |
+| Everything recorded in one edition | `inspect-corpus BUNDLE` | The shared record pool, paper views and cross-paper usage |
+
+A bundle may be a directory or exported ZIP. Human-readable query summaries use
+`--format text`; omit it for complete JSON. A recorded source locator identifies
+an external destination, not bytes opened by the query. Formal references,
+curated arguments, citations, platform relations and provenance retain their
+different meanings. The sections below own their exact options and contracts.
+
 ## Start with the authored support theorem
 
-From the repository root, install the package and assemble the supplied papers
-into a fresh directory:
+From the installed environment at the repository root, assemble the supplied
+papers into a fresh directory:
 
 ```sh
-python -m pip install -e .
 lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
   --long papers/qaoa-sk/long/reasoning-record.md papers/qaoa-sk/long/reasoning-record.json \
   --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
@@ -49,8 +69,27 @@ The prerequisite query returns a typed witness path. A passage can use
 curvature without explaining its proof. Directory and exported ZIP queries
 have the same semantics. Keep the displayed manifest digest with a review
 request, and pass it using `--expect-manifest` when reopening that edition.
-The [architectural companion](../papers/architecture/paper.md) follows this
-route through the mathematical argument and its checking records.
+The [architectural companion](../papers/architecture/paper.md) explains why
+this journey is useful, without requiring command-line knowledge.
+
+To begin with the original curvature source, follow incoming provenance links,
+then open the long explanation:
+
+```sh
+lean-exposition query-corpus build/qaoa-sk-authored \
+  --record sources support_tex_curvature --family provenance \
+  --direction incoming --max-depth 1 --max-records 40 --format text
+lean-exposition inspect-bundle build/qaoa-sk-authored \
+  --paper long --passage curvature
+```
+
+The neighbourhood includes the recorded curvature claim, citations and checking
+records. Direct passage mappings distinguish the long derivation, the short gap
+proof and the exposition's contact-and-area explanation. An incoming query
+finds records referring to the source while preserving their stored directions.
+Read the named source and argument to judge their use; the query itself only
+retrieves the recorded relationships. The full [neighbourhood contract](#start-at-any-record-and-follow-its-neighbourhood)
+explains paper restrictions, selected-record budgets, induced links and frontiers.
 
 ## Select a graph or start new documents
 
@@ -134,7 +173,7 @@ their original consumer-to-prerequisite orientation in the output. It is availab
 for declaration, argument and platform views. This can help find affected passages,
 but a partial graph cannot establish a complete change-impact analysis.
 
-View format `0.1.0` binds record handles to the exact graph bytes. Cycles are
+View format `0.1.1` binds record handles to the exact graph bytes. Cycles are
 retained as strongly connected components; the component graph is acyclic without
 pretending the original relations are. The view preserves statuses and reports
 its completeness limits. It is a read-only projection, not a replacement graph,
@@ -192,6 +231,30 @@ eight files; unrelated directory files are not exported.
 Exported ZIPs use stored entries, a fixed timestamp and fixed Unix file metadata.
 Identical captured bytes produce identical exports without depending on a
 compression-library version. Existing destinations are not overwritten.
+
+## Distribute reading copies with working links
+
+The eight-file bundle does not contain rendered PDFs or their original source
+corpus. A paper view's text coordinates refer to the captured Markdown, not to
+PDF annotations. A PDF is a separate rendition with its own link destinations;
+its successful compilation does not validate those destinations.
+
+The [architectural companion](../papers/architecture/README.md#figures-and-reading-copy-links)
+is a standalone reading copy. Its Markdown retains local links. When rendering
+LaTeX, `portable-local-links: true` asks `scripts/paper_anchors.lua` to preserve
+local reference text without creating file-launch actions. Public HTTP(S) links,
+mail links and internal fragments remain links. The policy is opt-in, so other
+papers keep their existing behaviour. Write local link labels as recognisable
+paper and section names; a bare “here” is unusable after conversion.
+
+A packet can instead provide rendition-specific links or a reading index, but
+must check them from the **delivered location**. Relative paths that resolve
+beside a manuscript can fail when its PDF is copied into another directory.
+Inspect annotations in the exported PDF: each internal destination must resolve,
+each intentionally local target must exist relative to that copy, and public
+references must remain public URLs. Check fragments and viewer behaviour
+separately from file existence. Never fix relocation with an author's absolute
+filesystem path, and never invent a public URL for unpublished material.
 
 ## Python interface
 
@@ -256,7 +319,7 @@ passage = query_papers(Path("build/qaoa-sk-authored"),
 
 `project_corpus(path, expected_manifest_sha256=None)` and `inspect-corpus` with
 `--expect-manifest SHA256` validate and capture the bundle once. The returned
-`corpus_view_version` is `0.1.0`. A directory and its exported ZIP give the same
+`corpus_view_version` is `0.1.1`. A directory and its exported ZIP give the same
 projection. The manifest pin includes mapping-only edits, even when graph and
 paper text bytes have not changed.
 
@@ -309,11 +372,10 @@ lean-exposition query-corpus build/qaoa-sk-authored \
   --family provenance --direction incoming --max-depth 1 --format text
 ```
 
-In the supplied QAOA/SK edition, the selected source has twelve incoming
-references: two claims, two citations and eight evidence records. Together
-with the source these make thirteen selected records. The citation
-`support_curvature_source` has 32 directly mapped passages across the three
-papers. A source reference is an association, not evidence that every associated
+The selected source has incoming references from claims, citations and
+evidence records. The citation `support_curvature_source` has direct passage
+mappings across the three papers; use the current response for its edition
+and exact counts. A source reference is an association, not evidence that every associated
 claim has been proved. Open a returned passage with `query-papers --paper STAGE
 --passage ANCHOR`, retaining the returned manifest digest with `--expect-manifest`.
 
@@ -498,8 +560,20 @@ line endings: CRLF counts once, and bare CR or LF each count once. YAML front
 matter is excluded for all three endings. Exact bytes, byte spans and hashes
 are preserved; LF and CRLF paper behavior is unchanged. The paper-query cache
 namespace includes this version, so old derived navigation is not reused.
-Paper query `0.4.0` adds exact byte-range selection below. The graph-view and
-eight-file bundle formats remain `0.1.0`; no stored schema changes.
+Paper query `0.4.1` retains exact byte-range selection below and preserves scoped
+application paths. Paper view `0.3.1` and graph view `0.1.1` expose those authored
+bindings; the eight-file bundle remains `0.1.0`. Graph `1.2` adds the application
+annotation while graphs `1.0` and `1.1` remain accepted.
+
+An application-annotated support edge keeps its conditional theorem and premise
+suppliers visible while discharging supplied premises only within that use.
+The same premise can remain free along an independent path. Inspect the recorded
+shared bindings, source span and remaining assumptions at the edge; do not treat
+their structural validation as a proof of substitution. The raw corpus retains
+all documentary assumption references, including supplied premises. Use the
+scoped argument/paper query for free-requirement questions, rather than deriving
+them from a flat corpus neighbourhood. The supported one-layer boundary and
+validation rules are in the [graph contract](contracts.md#graph).
 
 ### Resolve a text selection into its recorded support
 

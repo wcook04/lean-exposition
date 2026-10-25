@@ -2,6 +2,9 @@
 
 For the purpose of the project and a first worked reading, start with the
 [project introduction](../README.md) and [papers guide](../papers/README.md).
+The [architectural companion](../papers/architecture/README.md) explains why
+the accounts share a graph and how a reader moves between them. Agents use
+[AGENTS.md](../AGENTS.md); it links the setup, source owners and checks.
 
 ## Write and review
 
@@ -25,9 +28,10 @@ For the purpose of the project and a first worked reading, start with the
   shared graph from another application.
 - [Contracts and architecture](contracts.md): understand the module boundaries,
   evidence graph and file formats.
-- [Architectural companion](../papers/architecture/README.md): a paper explaining
-  the source-to-reader workflow, its diagrams and its limits.
-- [Contributing](../CONTRIBUTING.md): set up development and run repository checks.
+- [Reading-copy links](bundle-consumers.md#distribute-reading-copies-with-working-links):
+  preserve usable references when PDFs leave their manuscript directories.
+- [Contributing](../CONTRIBUTING.md): set up development, run repository checks
+  and repeat the installed navigation journey in a fresh clone.
 
 ## Follow the research
 

@@ -80,8 +80,9 @@ recorded check status. See the [papers guide](papers/README.md) to assemble the
 three drafts into one portable bundle.
 
 The separate [architectural companion](papers/architecture/README.md) ·
-[PDF](papers/architecture/paper.pdf) explains how the sources, papers and checks
-fit together and what another application can inspect.
+[PDF](papers/architecture/paper.pdf) explains why the three accounts exist, how their shared graph supports
+different reading routes, and how to follow a short claim to its assumptions,
+detailed argument and original or formal sources.
 
 ### YouTube walkthrough — coming soon
 
@@ -196,7 +197,8 @@ records preserve those distinctions.
 
 ## Development and licence
 
-The [contribution guide](CONTRIBUTING.md) covers setup and validation; the
+Agents start at [AGENTS.md](AGENTS.md), which routes setup, writing, queries and
+validation to their owners. The [contribution guide](CONTRIBUTING.md) covers setup and validation; the
 [architecture and contracts](docs/contracts.md) describe the software's boundaries.
 Run `python scripts/check_layout.py`, `python scripts/check_links.py` and
 `python -m unittest discover -s tests -v` after a change. Use

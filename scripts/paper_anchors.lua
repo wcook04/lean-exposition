@@ -18,3 +18,19 @@ function RawInline(inline)
     end
   end
 end
+
+-- A standalone PDF cannot promise that neighbouring repository files travel
+-- with it. Opt in per manuscript: keep descriptive local-link text, while
+-- preserving internal destinations and public URLs. HTML/Markdown are unchanged.
+function Pandoc(doc)
+  if FORMAT ~= "latex" or doc.meta["portable-local-links"] ~= true then
+    return doc
+  end
+  return doc:walk({Link = function(link)
+    local target = link.target
+    if target:match("^#") or target:match("^https?://") or target:match("^mailto:") then
+      return link
+    end
+    return link.content
+  end})
+end

@@ -6,6 +6,20 @@ Use the task table to open the relevant source before editing. Read the
 [contracts and architecture](docs/contracts.md) for changes to runtime behaviour,
 evidence or file formats.
 
+## Start here
+
+Work from this repository's root. Confirm the current branch, revision and dirty
+paths before editing; preserve other work. Follow [development setup](CONTRIBUTING.md#setup)
+to install the CLI in a virtual environment, then run the offline minimal
+example there. No agent-skill installation is required to use the package.
+
+For the maintained mathematical papers, follow the [authored-bundle journey](docs/bundle-consumers.md#start-with-the-authored-support-theorem).
+It assembles existing writing, opens a theorem, distinguishes direct mappings
+from prerequisite use, and follows a source back to its paper passages. Start
+there before inventing a new graph or duplicating an index. Use `--help` on the
+installed command when changing options. [Query choice](docs/bundle-consumers.md#choose-the-entry-for-your-question)
+separates paper, graph, corpus and record-level operations.
+
 ## Route the task
 
 | Task | Read and work here | Verify with |
@@ -19,6 +33,7 @@ evidence or file formats.
 | Package or consume authored papers | [Consumer guide](docs/bundle-consumers.md), [bundle](src/lean_exposition/bundle.py), [consumer](src/lean_exposition/consumer.py) | Bundle, consumer and adversarial tests; independent reader under [examples/consumer/](examples/consumer/) |
 | Navigate source, claim or paper neighbourhoods | [Record query](docs/bundle-consumers.md#start-at-any-record-and-follow-its-neighbourhood), [consumer](src/lean_exposition/consumer.py); `query-corpus` and `query-papers` | Corpus-query and paper-range tests; preserve stored directions, exact editions and explicit query boundaries |
 | Change a command | [CLI](src/lean_exposition/cli.py) and its owning module above | CLI tests and the documented command |
+| Revise the architectural companion | [Companion source](papers/architecture/paper.md), [render and link policy](papers/architecture/README.md#render-and-inspect); keep commands in the technical guides | Render and inspect every PDF page; check relocated PDF links and rendering tests |
 | Improve human documentation or repository layout | [Folder map](README.md#repository-map), [documentation guide](docs/README.md), [layout policy](docs/repository_layout.json) | Link and layout checks; run changed examples and inspect rendered prose |
 
 The [skill index](skills/README.md) describes when each writing method applies.
@@ -59,6 +74,7 @@ lean-exposition inspect examples/minimal/evidence-graph.json
 ```
 
 Run the affected integration or authored-bundle commands from the guides above.
+For an installation or entry-route change, run the [fresh-clone smoke test](CONTRIBUTING.md#check-a-fresh-clone) and exercise the documented query journey.
 Source intake changes also require `audit-sources`; Lean changes require the
 pinned toolchain and an actual run. Keep generated bundles and scratch work out
 of maintained source paths.

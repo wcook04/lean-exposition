@@ -1,409 +1,356 @@
 ---
-title: "From a Lean source to a reviewable explanation"
+title: "One argument, several ways to read it"
 subtitle: "An architectural companion to Lean Exposition"
-date: "25 October 2026 · revised draft, not independently reviewed"
+date: "25 October 2026"
+portable-local-links: true
 header-includes:
   - |
     \usepackage{tikz}
     \usepackage{float}
     \usetikzlibrary{arrows.meta,positioning,fit}
-    \tikzset{archbox/.style={draw=black!45,fill=white,inner sep=6pt,align=left,font=\small},
+    \tikzset{archbox/.style={draw=black!45,fill=white,inner sep=7pt,align=center,font=\small},
       archrecord/.style={archbox,draw=blue!60,fill=blue!3},
       archview/.style={archbox,dashed},
-      archgate/.style={archbox,draw=blue!70,fill=blue!6,line width=.8pt},
       archflow/.style={-{Stealth[length=2mm]},draw=black!65,rounded corners=3pt},
-      archlink/.style={draw=blue!55,line width=.6pt},
-      archnote/.style={font=\small,align=left,inner sep=0pt}}
+      archnote/.style={font=\small,align=center,inner sep=2pt,fill=white}}
 ---
 
-**Draft scope.** This companion describes the local file and query contracts.
-Its worked trace demonstrates recorded correspondence, not mathematical
-certification or an observed improvement in reader understanding.
+A mathematician reading a short proof may want to stop at its main idea, check
+one difficult estimate, or learn the subject from the beginning. Those are
+different requests. A proof assistant can check a precisely stated theorem,
+but its successful check does not choose an explanation for any of these
+readers. Nor does a readable explanation, by itself, show how faithfully it
+represents the checked statement.
 
-## 1. What a reader needs to recover
+Lean Exposition connects three written accounts of selected mathematics to a
+shared record of claims, assumptions, sources and checks. Each account has its
+own purpose and reading order. Their connections let a reader leave an
+explanation at the point of doubt, recover the relevant detail, and return
+without losing track of which statement was being discussed. This companion
+explains that arrangement and the choices behind it. The mathematical papers
+supply the arguments themselves.
 
-A reader reaches the sentence “the gap cannot occur.” They need to know which
-hypotheses apply, where the strict inequality is proved, what the formal
-statement covers, and which edition they are reviewing. A Lean proof can still
-compile after an author changes the answer to any of these questions in prose.
-Source links help; the remaining task is to compare the particular claim,
-argument and checking record rather than infer support from a shared title.
+## 1. Why write more than one account?
 
-Lean Exposition makes the author's proposed correspondence inspectable. One
-local graph records claims, typed relations, source editions and checks. Three
-authored mathematical accounts have separate passage maps into that graph.
-The command-line and Python consumers expose those records together with the
-exact text. Authors and reviewers still have to judge whether the proposed
-correspondence is right. The tools neither write the argument nor discharge
-its mathematical obligations.
+The starting material may include an original research paper, a formal
+development in the Lean proof assistant, and earlier literature. These sources
+answer different questions.
+The research paper explains a mathematical argument in the author's chosen
+language. The Lean development gives precise definitions and formal proofs.
+Earlier literature establishes what was known, where an input came from and
+which conclusions require additional results. Reading one does not necessarily
+recover the content of the others.
 
-The example is full support in the zero-temperature Sherrington–Kirkpatrick
-(SK) model, which maximises random pair interactions over signs. Its Parisi
-formula expresses the limiting optimum as a minimum over nonnegative,
-nondecreasing, right-continuous, integrable functions
-$\gamma:[0,1)\to[0,\infty)$. Their Stieltjes measures satisfy
-$\mu_\gamma([0,t])=\gamma(t)$; an atom at zero is allowed and no probability
-normalisation is imposed. The statement to follow is:
+An author first reconstructs the selected argument in a **long reasoning
+record**. This is where a reader should be able to find the derivation behind
+an estimate, the treatment of an endpoint, or the reason two formulations
+correspond. Its length follows the argument that needs recovering. It can
+retain a failed approach when the failure explains why a hypothesis matters.
+It also identifies steps that have not been justified.
 
-**For the pure SK model at zero external field, every admissible minimiser
-has $\operatorname{supp}_{[0,1)}\mu_\gamma=[0,1)$.** Every nonempty relatively
-open interval therefore receives positive mass. Minimiser existence is an
-imported theorem, separate from this conditional conclusion.
+A **short research paper** then selects a contribution worth presenting as a
+connected argument. It gives the statement, its position in the literature
+and the decisive proof, with precise destinations for substantial details it
+omits. The selection may leave whole further results in the long record.
+Those omissions should make the paper more focused without making its claims
+stronger.
 
-The explanation crosses a formal statement, ordinary analytic estimates and
-further consequences. OpenAI supplies the two source manuscripts and selected
-Lean development; the mathematical results and antecedents retain their
-literature credit. Our work here is the reconstructed accounts, their passage
-correspondence and the local consumer. Positive density, a scalar value formula
-and circuit convergence for the quantum approximate optimization algorithm
-(QAOA) each need further arguments; they cannot inherit
-verification from the words “full support.”
+An **expository paper** makes a different selection. It teaches a result to
+readers with stated prerequisites, introducing objects through examples and
+explaining why each construction is needed. It may spend more time on a
+definition than the specialist paper, while covering fewer consequences.
+Its author keeps the original sources and detailed record available; the
+exposition need not be produced by repeatedly shortening the short paper.
 
-## 2. Follow the gap argument
+The supplied example concerns the Sherrington–Kirkpatrick (SK) model, a random
+optimisation problem on interacting spins. Its exposition begins with a
+two-spin calculation and explains why an optimal function used to express the
+model's value cannot stay flat on an interval. The short paper presents this
+no-gap theorem and related consequences for a reader familiar with
+stochastic calculus. The long record reconstructs the analytic steps and
+continues into the separate argument about the Quantum Approximate
+Optimization Algorithm (QAOA). A reader interested in the no-gap mechanism
+does not have to read the circuit construction first.
 
-For an admissible minimiser, let
-$q(t)=\mathbb E[\Phi_x(t,X_t)^2]$, the second moment of the value function's
-spatial gradient along its diffusion. Suppose a bounded support gap
-$(\ell,r)$ has positive constant coefficient. Contact gives
-$q(r)-q(\ell)=r-\ell$ and $q'(\ell),q'(r)\le1$. A separate analytic estimate
-gives $q'''>0$. Thus $q'$ is strictly convex, lies below one inside the gap,
-and has integral smaller than $r-\ell$: a contradiction. Zero coefficients
-and initial or terminal gaps require separate arguments.
+These are entrances for different purposes. The writing process gives authors
+more context than any one reader is asked to absorb.
 
-\begin{figure}[htbp]\centering
+## 2. What the shared graph remembers
+
+Maintaining three accounts creates a practical problem. If a hypothesis is
+corrected in the detailed argument, which shorter passages need attention?
+If a reader doubts an estimate, where is it explained, and which source is
+being invoked? A bibliography alone cannot answer these questions at the
+level of a particular passage.
+
+The project records selected claims and their relationships in a graph. A
+claim has a stated scope and associated assumptions. It can point to an
+ingredient used in its argument, an original source, or a formal statement
+with which the author proposes a correspondence. Sources retain their editions;
+checking records say what was checked and with what outcome. This is a curated,
+partial account of the available mathematics. It does not pretend to contain
+every declaration or every dependency in the underlying Lean development.
+
+Each written paper has a **passage map**: annotations connecting selected
+passages to the claims, assumptions and citations they discuss. Thus two
+papers can refer to the same claim while explaining it differently. Their
+prose remains independently readable, and text without a recorded mapping
+remains visible as such.
+
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
-\node[archrecord,text width=8.6cm,minimum height=1.25cm,align=center] (gap) at (0,0)
- {\textbf{The positive-gap contradiction}\\An admissible minimiser, a positive constant interval, and both endpoints in the support};
-\node[archbox,text width=4.1cm,minimum height=1.65cm,align=center] (contact) at (-3.8,-3.5)
- {\textbf{Endpoint contact}\\$q(r)-q(\ell)=r-\ell$\\$q'(\ell),q'(r)\le1$};
-\node[archbox,text width=4.1cm,minimum height=1.65cm,align=center] (curvature) at (3.8,-3.5)
- {\textbf{Strict curvature}\\$q'''>0$ makes $q'$ strictly convex on the positive plateau.};
-\draw[archflow] (-1,-.73)--(-1,-1.8)--(-3.8,-1.8)--(contact.north);
-\draw[archflow] (1,-.73)--(1,-1.8)--(3.8,-1.8)--(curvature.north);
-\node[archnote,anchor=south,align=center] at (-3.1,-1.65) {uses the endpoint identities};
-\node[archnote,anchor=south,align=center] at (3.1,-1.65) {uses the strict estimate};
-\node[archnote,text width=11.5cm,align=center] at (0,-5.05)
- {Together: the endpoint slope bounds and strict convexity give $q'<1$,\\contradicting the required integral $r-\ell$.};
+\node[archview,text width=3.6cm,minimum height=1.8cm] (long) at (-4.7,0)
+  {\textbf{Long record}\\Recover the derivation\\and its separate cases};
+\node[archview,text width=3.6cm,minimum height=1.8cm] (short) at (0,0)
+  {\textbf{Short paper}\\Read the result\\and decisive proof};
+\node[archview,text width=3.6cm,minimum height=1.8cm] (expo) at (4.7,0)
+  {\textbf{Exposition}\\Learn the objects\\and the proof idea};
+\node[archrecord,text width=13.1cm,minimum height=1.6cm] (corpus) at (0,-3.4)
+  {\textbf{Shared record of the mathematics}\\Claims and assumptions, supporting arguments, source editions and checks};
+\draw[archflow] (long.south)--node[archnote,text width=3.5cm]{maps its passages\\to recorded support}(-4.7,-2.6);
+\draw[archflow] (short.south)--node[archnote,text width=3.5cm]{maps its passages\\to recorded support}(0,-2.6);
+\draw[archflow] (expo.south)--node[archnote,text width=3.5cm]{maps its passages\\to recorded support}(4.7,-2.6);
 \end{tikzpicture}
-\caption{A selected argument view. Arrows point from the contradiction to the ingredients it uses. This is the positive-coefficient bounded-gap branch only; zero coefficients and initial and terminal gaps have separate arguments. The figure adapts the shared-support composition in the Plectis Erdős systems paper. Its relations are curated from the original proof, not extracted Lean dependencies.}
+\caption{Why three papers need only one shared record. Each paper chooses its own reading order and connects its passages to relevant parts of the same corpus. The arrows denote authored correspondence, not automatic generation or proof. A paper can select fewer results while retaining the assumptions and sources its claims need.}
 \end{figure}
 
-The [consumer guide](../../docs/bundle-consumers.md#start-with-the-authored-support-theorem)
-gives the assembly command for the supplied papers. With the result in
-`build/qaoa-sk-authored`, ask which short-paper passage uses curvature:
+An arrow needs a meaning. Here an argument arrow points from a claim to an
+ingredient it uses: following it asks what supports the claim. Following the
+same relation backwards asks what recorded arguments use that ingredient.
+The direction of the stored relationship stays the same. Several ingredients
+may be needed together; an arrow to one of them does not say that it alone
+proves the conclusion.
 
-```sh
-lean-exposition query-papers build/qaoa-sk-authored \
-  --paper short --passage main-result \
-  --node support.positive_curvature --relation prerequisites
-```
+Other relationships answer other questions. A citation credits or refers to
+a source. A correspondence with a formal statement asks the reader to compare
+two formulations. A recorded Lean dependency says that a constant occurs in
+a declaration's formal type or proof, or in its structural references. A
+checking record identifies the source or claim it concerns. These relations
+must remain distinguishable: a source can be historically relevant without
+being a premise, and a proposed correspondence can require a mathematical
+argument of its own.
 
-A local run against the revised authored bundle returned the following values (selected fields; JSON nesting omitted):
+The order of paragraphs is another relationship again. An exposition may
+give an example before stating the general theorem; a specialist paper may
+state the theorem first. Neither order changes the theorem's prerequisites.
+A paper's reading route therefore consists of its authored sequence together
+with the support selected for its passages. The graph helps readers inspect
+that selection; it does not choose a sufficient proof or a good teaching order.
 
-```text
-anchor: main-result
-evidence_class: source_argument
-root_node_id: support.full_relative_support
-target_node_id: support.positive_curvature
-review_state: needs_revision
-semantic_certification: false
-```
+## 3. Follow one claim back to its argument
 
-Its passage correspondence and returned witness links give this exact route:
+The SK model asks which choices of signs maximise a random sum of pair
+interactions. The Parisi formula expresses its limiting optimum through a
+minimisation over functions called order parameters. In the pure model at
+zero external field, an admissible order parameter is a nonnegative,
+nondecreasing, right-continuous, integrable function
+$\gamma:[0,1)\to[0,\infty)$. Its associated measure records the increments
+of $\gamma$. A flat interval is a gap in those increments, even if the
+function's value there is positive.
 
-```text
-short / main-result
-  --maps_claim--> support.full_relative_support
-  --supports--> support.no_bounded_gap
-  --supports--> support.positive_curvature
-```
+The result at issue says that an admissible minimiser has no such gap: its
+measure has full support relative to $[0,1)$. The endpoint one is excluded.
+Existence of a minimiser comes from a separate theorem of
+[Auffinger and Chen](https://arxiv.org/abs/1606.05335v2).
+[Hong-Bin Chen](https://arxiv.org/abs/2607.18032v1) had already established
+full support by another method. The worked accounts reconstruct the
+quantitative argument in [OpenAI's full-support manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex).
+Their contribution here is the explanation and its correspondence to sources.
 
-The view retains `assumptions.full_support_minimizer`, including admissibility
-and minimality on a Brownian system. The curvature node is `unverified`;
-its associated source-byte check is `passed`, while the recorded semantic
-review is `not_run`. Its locator is `curvature.tex:9–52; prop:gap-curvature`.
-These are distinct returned records, not a single theorem-verification badge.
-The captured manifest SHA-256 is:
+Consider just one case: a bounded gap $(\ell,r)$ between support points,
+with $0<\ell<r<1$, on which $\gamma$ has a positive constant value.
+To test whether $\gamma$ could minimise, the proof constructs a differentiable
+curve $q$ measuring the average squared response in an auxiliary optimisation
+problem. The mathematical papers explain that construction. Here we take two
+properties as inputs and follow how they exclude the gap.
 
-```text
-9e18e224a20e4a57663497a44735399058c38c1d03adf33d20beff1b1d3514e9
-```
+Minimality gives **contact** at the endpoints. In the notation of the papers,
+this supplies
+$$
+q(\ell)=\ell,\qquad q(r)=r,\qquad q'(\ell),q'(r)\leq1.
+$$
+The change in $q$ across the interval must therefore be $r-\ell$.
+Separately, a strict-curvature estimate on a positive constant interval
+makes $q'$ strictly convex. Since $q'$ is continuous at the endpoints, its
+interior values lie strictly below their joining chord, which is at most one.
+Consequently
+$$
+q(r)-q(\ell)=\int_\ell^r q'(t)\,dt<r-\ell.
+$$
+The two requirements contradict each other. Neither endpoint contact nor
+strict curvature alone gives this contradiction.
 
-A successor assembly has a new identity; keep the requested digest with the
-review and use `--expect-manifest` to reject a different edition. The query
-reads embedded records, not the external source or receipt files.
-
-
-Here `maps_claim` is an assertion in a passage map; `supports` is an authored
-claim-to-ingredient relation. The curvature source locator leads to
-[OpenAI's `prop:gap-curvature`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/curvature.tex#L9-L52).
-The long record's [“Strict curvature on a constant interval”](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate)
-reconstructs the signs, integrated coercivity and approximation behind that
-estimate. Read it to recover the strict inequality under its plateau hypotheses,
-then return to the [short paper's gap argument](../qaoa-sk/short/paper.md#gap-elimination):
-contact supplies the endpoint data used with that inequality.
-[“Excluding terminal, interior and initial gaps”](../qaoa-sk/long/reasoning-record.md#gap-elimination)
-supplies the other cases. Finding the curvature passage does not explain its
-proof, and a rational positivity certificate alone does not justify the
-analytic estimate.
-
-The formal route is separate: `full_support` is recorded as
-`formalizes` → `lean.full_support`. The selected
-[challenge](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean#L81-L92)
-and [implementation](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Main.lean#L35-L59)
-assert measure and diffusion existence, full relative support, strict increase
-and two moment identities, conditional on a supplied admissible minimiser.
-They do not assert minimiser existence, positive density or circuit convergence.
-No formalisation edge from the curvature claim is invented by this walkthrough.
-
-Correspondence can itself require an argument. The long record's
-[formal-interface discussion](../qaoa-sk/long/reasoning-record.md#formal-interfaces)
-distinguishes a formal limit along a prescribed sequence of step sizes from
-the manuscript's ordinary right derivative, which covers all positive step
-sizes tending to zero. It supplies the intervening convexity argument. That
-mathematical bridge must be read and assessed; following a `formalizes` edge
-cannot perform it.
-
-Omitting `--relation prerequisites` instead asks whether curvature is **directly
-mapped** in this passage. The theorem passage has no such direct match; its
-recorded support reaches curvature. A passage can use an ingredient without
-explaining it. Prerequisite
-queries follow recorded Lean references, curated support, formalisation
-correspondence and explicit assumptions, retaining each kind in the witness
-path. Citations, platform decomposition and document order do not enter that
-traversal. Reachability does not certify that the ingredients suffice.
-
-The long record's **“An exact one-step calculation”** is a useful negative test.
-It uses $\gamma=0$, which is admissible but not a minimiser. Its map selects
-conditional rounding, not the minimiser-dependent asymptotic construction.
-The calculation and a valid hash cannot supply the missing minimality premise.
-This is a judgment about the map's meaning, not a defect traversal can repair.
-
-## 3. Write three accounts from the same sources
-
-\begin{figure}[H]\centering
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
-\path[draw=blue!65,fill=blue!5,line width=.7pt] (-5.55,0)--(5.55,0)--(5.05,-1.45)--(-5.05,-1.45)--cycle;
-\node[archnote,align=center,text width=9.3cm] at (0,-.725)
-  {\textbf{Pinned mathematical context}\\Lean, Comparator records, proofs and literature};
-\path[draw=black!55,fill=black!2,line width=.7pt] (-4.6,-2.55)--(4.6,-2.55)--(4.08,-4.0)--(-4.08,-4.0)--cycle;
-\node[archnote,align=center,text width=7.7cm] at (0,-3.275)
-  {\textbf{Long reasoning record}\\Contact, curvature and all gap cases};
-\path[draw=black!55,fill=white,line width=.7pt] (-3.65,-5.1)--(3.65,-5.1)--(3.13,-6.55)--(-3.13,-6.55)--cycle;
-\node[archnote,align=center,text width=5.95cm] at (0,-5.825)
-  {\textbf{Focused short paper}\\Contribution, proof and credit};
-\path[draw=blue!65,fill=blue!5,line width=.7pt] (-2.7,-7.65)--(2.7,-7.65)--(2.18,-9.1)--(-2.18,-9.1)--cycle;
-\node[archnote,align=center,text width=4.15cm] at (0,-8.375)
-  {\textbf{Short exposition}\\Prerequisites and the gap picture};
-\draw[archflow] (0,-1.46)--node[archnote,fill=white,inner sep=2pt,right]{reconstruct the\\complete argument}(0,-2.54);
-\draw[archflow] (0,-4.01)--node[archnote,fill=white,inner sep=2pt,right]{select contribution\\and decisive proof}(0,-5.09);
-\draw[archflow] (0,-6.56)--node[archnote,fill=white,inner sep=2pt,right]{teach the\\selected result}(0,-7.64);
-\draw[archflow,dashed] (-2.44,-8.375)--(-6.05,-8.375)--(-6.05,-.725)--(-5.3,-.725);
-\node[archnote,fill=white,align=center,text width=1.7cm] at (-6.05,-4.55) {claim-site links return to exact sources};
+\node[archrecord,text width=11.7cm,minimum height=1.3cm] (gap) at (0,0)
+  {\textbf{A bounded positive gap is impossible}\\The required change in $q$ is $r-\ell$; the integral of $q'$ is smaller.};
+\node[archbox,text width=5.25cm,minimum height=1.8cm] (contact) at (-3.55,-3.0)
+  {\textbf{Endpoint contact}\\$q(r)-q(\ell)=r-\ell$\\$q'(\ell),q'(r)\leq1$};
+\node[archbox,text width=5.25cm,minimum height=1.8cm] (curvature) at (3.55,-3.0)
+  {\textbf{Strict curvature}\\$q'''(t)>0$ inside the interval,\\so $q'$ is strictly convex.};
+\node[archview,text width=5.25cm,minimum height=1.15cm] (minimum) at (-3.55,-5.8)
+  {Minimality and support endpoints};
+\node[archview,text width=5.25cm,minimum height=1.15cm] (plateau) at (3.55,-5.8)
+  {A positive constant interval\\and the analytic regularity};
+\draw[archflow] (-3.55,-.65)--node[archnote]{uses endpoint data}(contact.north);
+\draw[archflow] (3.55,-.65)--node[archnote]{uses the strict estimate}(curvature.north);
+\draw[archflow] (contact.south)--node[archnote]{requires}(minimum.north);
+\draw[archflow] (curvature.south)--node[archnote]{requires}(plateau.north);
 \end{tikzpicture}
-\caption{Three writing tasks, adapted from Will Cook's existing mathematics-map visual. Widths indicate editorial selection, not page counts or proof strength. Solid arrows name authored transitions; the dashed arrow follows source correspondence. Each writer retains all earlier inputs. Neither route certifies mathematical meaning.}
+\caption{Which ingredients does the contradiction use? Arrows point from a conclusion to its inputs. Both branches are needed in the stated SK setting. Minimality supplies contact; the curvature estimate itself applies without minimality. This is one branch of the ordinary argument, not an extracted Lean proof graph. Zero coefficients and initial or terminal gaps require separate treatment.}
 \end{figure}
 
-The [three writing skills](../../skills/README.md) guide people and agents;
-they are not runtime stages. The long writer reads the selected Lean definitions
-and proofs, original arguments, literature and Lean/Comparator records to
-reconstruct a complete selected argument. The expert-paper writer retains all
-those inputs and the long account, then selects the contribution and decisive
-proof. The exposition writer also reads the short paper and chooses one
-meaningful result to teach at stated prerequisites. Inputs accumulate; neither
-later paper has to cover every earlier result.
+Now suppose a reader accepts the final integral comparison but wants to know
+why the curvature is strict. The [short paper, section “Minimality gives
+contact; curvature excludes gaps”](../qaoa-sk/short/paper.md#contact) identifies
+the estimate at its use. The [long record, section “Strict curvature on a
+constant interval”](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate)
+reconstructs the analytic proof, including the integrated inequality and the
+passage from simpler coefficients to the stated class. It leads in turn to
+[Proposition 5.1 of the original manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/curvature.tex#L9-L52).
+Having checked that destination, the reader returns to the short proof and
+uses the estimate together with contact.
 
-| Entry | What that account adds |
-| --- | --- |
-| [Long record, “Strict curvature on a constant interval”](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate), passage `curvature` | The analytic derivation, boundary control and passage to an integrable coefficient |
-| [Short paper's gap proof](../qaoa-sk/short/paper.md#gap-elimination), passage `gap-proof` | The decisive contradiction and distinct gap cases |
-| [Exposition, “Why a flat interval cannot minimise”](../qaoa-sk/expository/main.md#5-why-a-flat-interval-cannot-minimise), passage `contact-and-gap` | The contact and area argument at its declared reader prerequisites |
+A reader who does not yet understand a gap can instead enter the
+[exposition, section “What a gap means”](../qaoa-sk/expository/main.md#2-what-a-gap-means).
+Its example separates a positive cumulative value from vanishing increments.
+The later section “Why a flat interval cannot minimise” develops the contact
+and area argument. This route teaches the objects that the specialist route
+assumes. The graph can locate both passages because they discuss shared
+claims; reading them supplies the different explanations.
 
-Their maps retain the setting and assumptions of each selected claim. Curvature
-itself does not require minimality; contact and the no-gap conclusion do.
-Matching the same graph edition must not flatten those differences. Authors
-follow omitted proofs to their exact conclusion, then return to the shorter
-account. Each draft is also read in sequence: a later definition cannot repair
-an earlier unexplained step for the first-time reader.
+## 4. What survives a shorter account
 
-A graph can index the long record's existing passages. It cannot determine a
-sufficient proof order or supply missing prose. Markdown is the prose authority;
-maps identify its exact passages. The paper view's `document_parts` partitions
-all source bytes into mapped passage blocks and surrounding unmapped text.
-`reconstruct_paper` requires the expected manifest and those unchanged parts,
-then returns the original Markdown bytes, preserving markers, definitions,
-headings and references. It rejects changed, omitted or reordered parts. This
-recovers an authored record; a rewritten argument needs fresh editorial judgment.
+Shortening the example cannot change “an admissible minimiser” into “an
+admissible function”. Constant functions are allowed candidates, and the
+curvature estimate does not say they minimise the functional. Without
+minimality, the endpoint contact used in the contradiction is missing.
+The short account must retain that premise where it states and uses the
+no-gap conclusion.
 
-## 4. What the backend returns
+It must also preserve the result's extent. Full support says that every
+nonempty relatively open interval receives mass. It does not alone assert
+a density, let alone a strictly positive density. The stronger density
+conclusion in the source has a further argument. Likewise, the broader QAOA
+claim requires approximation and circuit arguments beyond full support.
+Different accounts may stop at different conclusions, provided each makes
+its own stopping point clear.
 
-The reader can start from a paper, a mathematical claim or a source they want
-to trace. The backend uses the same captured records for each route:
+The passage maps help enforce this discipline. For the claims an author
+selects, the checks require the recorded assumptions, citations and unresolved
+obligations to remain attached. They can catch a missing reference or changed
+text. They cannot detect every misleading sentence, determine whether an
+assumption has been explained well, or decide whether a cited argument is
+adequate. Those are questions for mathematical and editorial review.
 
-| Reader task | Existing Python entry and CLI |
-| --- | --- |
-| Inspect every captured graph record and all three papers | `project_corpus` / `inspect-corpus` |
-| Follow one kind of relation from selected nodes | `project_graph` / `inspect --view` |
-| Find what refers to a source, citation, evidence record or node | `query_corpus` / `query-corpus` |
-| Open a paper or passage and its recorded support | `project_paper` / `inspect-bundle --paper`; `query_papers` / `query-papers` also selects sections and finds cross-paper occurrences |
+Attribution survives the same selection. The no-gap theorem retains credit
+for the earlier support result and for the quantitative proof being explained.
+A reference may supply a theorem, an adapted construction or historical
+context. Recording that role avoids treating every citation as a logical
+dependency while still letting the reader recover the relevant source.
 
-The [API contract](../../docs/bundle-consumers.md#view-the-whole-recorded-corpus)
-specifies signatures and versions. The corpus retains disconnected records and
-separates paper focus, support membership and direct passage correspondence.
-To ask where the curvature source enters the accounts, follow the references
-pointing into that source:
+## 5. Explanation, formal evidence and navigation
 
-```sh
-lean-exposition query-corpus build/qaoa-sk-authored \
-  --record sources support_tex_curvature --family provenance \
-  --direction incoming --max-depth 1 --max-records 40 --format text
-```
+A reader may next ask whether the no-gap conclusion has a formal counterpart.
+The project records a correspondence with a selected Lean statement. That
+statement assumes an admissible minimiser on a Brownian system and supplies
+full support, strict increase and associated moment identities. It does not
+assert minimiser existence or QAOA circuit convergence. Its
+[original formal statement](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean#L81-L92)
+is a destination for comparison, rather than a formal certificate for every
+sentence of the exposition.
 
-On the edition identified in Section 2, this selects the source, two claim
-nodes, two citations and eight evidence records. The claims include
-`support.positive_curvature`; the citation `support_curvature_source` has
-direct mappings to the long record's `curvature`, the short paper's `gap-proof`
-and the exposition's `contact-and-gap`, among other passages. These are distinct
-authored uses of the source. Inspect the long passage and its recorded support:
+Even a close correspondence may need explanation. The [long record's section
+“The support statement and the derivative bridge”](../qaoa-sk/long/reasoning-record.md#formal-interfaces)
+compares a formal limit along prescribed step sizes with the ordinary
+right derivative used in the manuscript. A convexity argument connects them.
+Following a link finds that argument; it does not perform it.
 
-```sh
-lean-exposition inspect-bundle build/qaoa-sk-authored \
-  --paper long --passage curvature
-```
+The design therefore preserves three distinct activities. The written account
+explains why a conclusion follows. Formal checking tests a precise statement
+and proof in a specified environment. Navigation helps a reader find the
+account, formal statement and records of the checks. None can stand in for
+the other two.
 
-The neighbourhood query can follow incoming, outgoing or both directions in
-selected declaration, argument, citation, platform or provenance families.
-Browsing backwards leaves the stored arrows unchanged: a citation still points
-to its source, and a claim to its ingredient. The returned subgraph retains
-every selected-family link between reached records, including cross-links,
-parallel kinds and cycles. Separate witnesses record one deterministic shortest
-route to each reached record; they do not replace that subgraph with a tree.
+Checking outcomes also retain their scope. Identifying unchanged source
+bytes, building a Lean project, comparing it with a separately stated challenge,
+and reviewing its mathematical interpretation answer different questions.
+For the retained SK research example, the corrected formal comparison and
+dependency extraction have no recovered final outcome. Their results remain
+unknown, and this companion establishes no new formal acceptance. Earlier unsuccessful runs remain observations of
+those runs, rather than counterexamples to the theorem.
 
-Depth, record budget and optional paper membership define the view's boundary.
-Excluded neighbours carry `depth_limit`, `record_limit` or `outside_paper`
-reasons. Supplementary records identify boundary endpoints and the records
-owning links; they do not extend traversal or count against the selected-record
-budget. A paper restriction follows its recorded support membership, not every
-mention in its prose. An empty continuation means no further stored relation
-under these choices, not mathematical independence or complete source coverage.
+Reviews concern particular editions. If an author changes a hypothesis or
+maps the same paragraph to a different formal statement, the correspondence
+has changed even when much of the prose has not. The project keeps the text,
+map and sources identifiable together so a review can be understood in its
+original context. A revised edition needs review of the affected claim.
 
-A paper subgraph retains selected claims and assumptions, recorded prerequisites
-and associated source/evidence records. Document links separately record heading
-structure, passage overlap and reading order. Whole passages remain available
-when a section cuts across them; unmapped text stays visible. Locations are
-half-open **UTF-8 Markdown byte spans**, with line positions. A
-`query-papers --byte-range` selection requires the paper and expected manifest
-digest. It finds mapped content overlapping the selected bytes and returns
-the whole passage's requirements with the exact overlap. Whitespace, markers
-and unmapped text create no correspondence. These positions are not PDF
-highlight boxes, browser character offsets or formal source coordinates.
-A rendered edition needs its own identity and tested source mapping.
+## 6. What a reader or author can use today
 
-A graph's `supports` arrow runs from claim to ingredient; `formalizes` runs
-from informal claim to formal declaration; `cites` identifies a reference.
-Lean type, value and structural references, platform decomposition and
-field-derived provenance retain their separate kinds. Strongly connected
-components summarise reachability in the chosen relation set: a reference
-cycle may be harmless, while circular proof justification still needs
-examination. “Whole” means the whole captured graph, not all Lean declarations
-or a complete mathematical dependency audit.
+Today the repository provides the written drafts, their source maps and local
+tools for inspecting them. A reader can begin with a paper passage and find
+its recorded assumptions and support, look for other accounts of the same
+claim, or begin with a source and find its recorded uses. The tools can follow
+selected kinds of relationship forwards or backwards. They retain the links
+among the records found, rather than replacing a shared argument by a single
+chain.
 
-These local read-only projections require no second graph or prose database
-and do not open the external source or receipt bytes.
-A visual reader is not part of the delivered implementation; the API results
-themselves are the demonstrated inspection surface.
+Each query has a boundary. It may be restricted to one paper or stop after
+a chosen amount of exploration. The returned boundary distinguishes such
+limits from the absence of another recorded connection. Because the corpus
+is partial, finding no connection cannot establish mathematical independence
+or a complete account of a source.
 
-## 5. Checks, revisions and review
+The papers and their maps can also be packaged together for inspection in
+another application. That package contains the captured writing and records;
+some original sources remain external. Source references identify what should
+be consulted, but cannot guarantee that an unavailable source will later be
+retrievable. The current tools provide local queries and a programming
+interface. An interactive reading website is a possible consumer of these
+operations, not an interface already delivered by this project.
 
-\begin{figure}[htbp]\centering
-\begin{tikzpicture}
-\node[archrecord,text width=3.35cm,minimum height=2.0cm,align=center] (formal) at (-4.25,0)
-  {\textbf{Lean and Comparator}\\Type check and separate challenge, each with its own run status};
-\node[archview,text width=3.35cm,minimum height=2.0cm,align=center] (mapping) at (0,0)
-  {\textbf{Passage map}\\Exact text, graph edition, mapped claims and review state};
-\node[archview,text width=3.35cm,minimum height=2.0cm,align=center] (platform) at (4.25,0)
-  {\textbf{Public platform}\\Theorem status and decomposition; read-only context};
-\node[archgate,text width=11.8cm,minimum height=1.25cm,align=center] (review) at (0,-4.3)
-  {\textbf{Requires mathematical interpretation}\\A reviewer compares hypotheses, analytic steps, scope and credit. These records supply evidence, not a verdict.};
-\draw[archflow] (formal.south)--node[archnote,fill=white,inner sep=2pt,right]{Lean/Comparator status}(-4.25,-3.65);
-\draw[archflow] (mapping.south)--node[archnote,fill=white,inner sep=2pt,right]{mapped claims and text}(0,-3.65);
-\draw[archflow] (platform.south)--node[archnote,fill=white,inner sep=2pt,right]{public status context}(4.25,-3.65);
-\end{tikzpicture}
-\caption{Three distinct records can inform a later human review. Their arrows specify what each channel supplies; none certifies mathematical interpretation or says review has occurred. Adapted from the two-correspondence figure in the Plectis Erdős systems paper.}
-\end{figure}
+For authors, the cycle begins with reading sources, selecting a result and
+recording its support. Reconstruction supplies the long account; editorial
+selection and teaching supply the other accounts. Review then asks two
+separate questions: does the writing faithfully represent the mathematics,
+and can the intended reader follow it? A useful reader task for this example
+is to explain why contact and curvature conflict, then say which step fails
+without minimality. Finding the right source is helpful, but does not by
+itself answer that task. The drafts have received source-based agent review;
+independent human acceptance and evidence of improved comprehension remain
+to be obtained.
 
-A source hash identifies bytes. Extraction records references visible in a
-particular Lean environment, with hidden-body and scope limits. A build checks
-specified source in that environment; Comparator adds a separately stated
-challenge and axiom policy. Public platform metadata records another service's
-observation. None establishes that English matches the sources or that a reader
-understands it.
+## 7. Why keep this much structure?
 
-For the QAOA/SK evidence reconciled on 25 October 2026, source-byte checks passed,
-but the corrected replay was interrupted without a recovered terminal verdict.
-Its Comparator and research extraction outcomes remain unknown. Historical
-attempts exported the challenges and then failed during solution builds because
-compiled imports were missing. This snapshot cannot be cited as successful
-Comparator acceptance; it also supplies no mathematical counterexample. A new
-configuration or later replay needs its own source-bound result. The
-[verification guide](../../docs/verification.md) retains the details;
-Lean's [versioned validation guide](https://lean-lang.org/doc/reference/4.35.0/ValidatingProofs/)
-explains general trust boundaries. Its later interface does not establish a run
-for the source's Lean 4.34.1 environment.
+Ordinary papers with careful references remain useful. The additional work
+here is maintaining explicit relationships across several accounts, so that
+a reader or an author can find a claim's assumptions, locate a missing
+derivation and identify recorded passages affected by a correction. The
+structure earns its place only if these journeys are useful. It also costs
+time: maps need authoring, changes need reconciliation, and correspondence
+still needs mathematical judgment.
 
-Suppose a paragraph stays unchanged while its map is revised from an unverified
-analytic argument to a selected formal statement. The words are identical, but
-the claimed correspondence has changed. Its mapping and manifest hashes change;
-a review of the earlier edition does not accept the new one. A changed source
-or hypothesis likewise needs reassessment, even when a claim's name is retained.
+The arrangement builds on existing practices. In particular,
+[leanblueprint](https://github.com/PatrickMassot/leanblueprint/tree/56e066d30fb7b608a63f4241fee80982d7eae3ef)
+already connects informal statements with formal declarations and their
+dependencies. Lean Exposition's emphasis is the maintained relationship
+between several authored accounts, their selected passages and the distinct
+evidence behind them. It makes no claim to have invented informal-to-formal
+links or demonstrated a comparative learning benefit.
 
-A review account identifies reviewer role, exact edition and claim, question,
-sources actually inspected, decision and limits. Preserve the original response,
-the author's disposition and any later confirmation separately. The current
-drafts have no independent human acceptance. A proposed trial asks a newcomer
-to recover the gap's hypotheses, analytic source, formal scope and unresolved
-review status from one frozen edition. Separately ask them to explain how the
-endpoint data and strict curvature contradict the required integral. Locating
-an ingredient and recovering its use are different outcomes. That trial has
-not been performed here.
+One shared corpus avoids maintaining a separate version of each claim for
+every paper. Separate annotations allow each account to read as a paper, while
+the repository's guides carry the operating instructions. Readers can therefore
+understand the design before deciding whether to use the software. The intended
+result is a shorter route from
+“I do not understand this step” to the argument that resolves it, with its
+assumptions and credit still attached.
 
-## 6. Why use separate texts and maps?
-
-The exchange format has eight files: a manifest, a graph and three
-Markdown/mapping pairs. The manifest binds the other seven files; each mapping
-binds its paper and passages to the graph edition and recorded review state.
-Separate maps keep ordinary Markdown readable while correspondence metadata
-can be revised explicitly. Eight is an implementation choice, not a lower bound:
-embedded annotations or one container with separately addressable accounts
-could preserve many of the same invariants.
-
-| Alternative or antecedent | Relationship to this design |
-| --- | --- |
-| Paper with source links | Supplies readable prose and citations. The extra contract here exposes typed recorded paths and mapping-only revisions to local queries. No comparative efficiency result is claimed. |
-| [leanblueprint](https://github.com/PatrickMassot/leanblueprint/tree/56e066d30fb7b608a63f4241fee80982d7eae3ef) | Authors already link informal statements to Lean declarations and specify dependencies. This bundle selects a three-account passage contract; it does not originate prose-to-formal links. |
-| [TheoremGraph v1](https://arxiv.org/abs/2606.25363v1), “Formal Graph,” “Bridging The Corpora” and “Limitations” | Extracts typed declaration dependencies and proposes statement matches using embeddings and an LLM judge. Its match category includes specialisations and one-way implications. Here passage maps are authored assertions; neither mechanism proves semantic equivalence. |
-| [Prove2Me v2](https://arxiv.org/abs/2608.28433v2), §§3–5 | Chen, Marwaha, Lu, Yuen and Peng distinguish immutable statements, proof submissions, explanations, decomposition and human audit. Its case studies do not evaluate this local bundle. |
-
-The [pinned source study](../../docs/literature.md) also records LeanArchitect's
-collector, doc-gen4's index and Verso Blueprint's source/presentation boundaries.
-The extractor adapts Comparator structural traversal with its Apache-2.0 notice.
-The scholarly foundations are de Moura and Ullrich's
-[Lean 4 paper](https://doi.org/10.1007/978-3-030-79876-5_37) and
-[The mathlib Community](https://doi.org/10.1145/3372885.3373824).
-These are specific design and software credits, not claims that related systems
-lack an unassessed feature.
-
-The cost is manual correspondence work and review across three texts.
-Portability means offline inspection of embedded text, graph and records.
-External Lean sources, manuscripts and receipt files are not included; locators
-and hashes do not guarantee later retrieval. If those bytes are unavailable,
-that source check remains unavailable. The optional Prove2Me adapter reads
-public metadata; it does not submit a paper or obtain its review.
-
-**Figure sources.** The funnel adapts Will Cook's mathematics-map visual.
-The support and evidence figures reuse the shared-support and two-correspondence
-compositions in his
+**Figure credit.** The diagrams adapt the shared-support and parallel-record
+compositions previously used in this companion, derived from Will Cook's
 [*A Repository-Based System for Research and Publication*](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
-([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
-The [authoring guide](../../docs/authoring.md#method-sources-and-redistribution)
-locates the public writing methods adapted for the three transitions.
+([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). Their subjects,
+labels and reading order have been revised for this account.

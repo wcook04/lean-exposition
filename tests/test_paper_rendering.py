@@ -34,6 +34,34 @@ class PaperRenderingTests(unittest.TestCase):
                                            input=source, text=True)
         self.assertEqual(filtered, plain)
 
+    def test_portable_pdf_keeps_reference_text_without_local_launches(self):
+        source = """---
+portable-local-links: true
+---
+[Long record, curvature section](../long/record.md#curvature).
+[Original proof](https://example.org/proof#lemma).
+[This section](#local-section).
+[Absolute file](/tmp/paper.pdf). [File URL](file:///tmp/paper.pdf).
+
+## Local section
+"""
+        command = ["pandoc", "-f", "markdown", "-t", "latex", "--lua-filter", str(FILTER)]
+        result = subprocess.check_output(command, input=source, text=True)
+        self.assertIn("Long record, curvature section", result)
+        for target in ("../long/record.md", "/tmp/paper.pdf", "file://"):
+            self.assertNotIn(target, result)
+        self.assertIn("https://example.org/proof", result)
+        self.assertIn("\\hyperref[local-section]", result)
+
+        # The policy is opt-in and must not alter the other papers or HTML.
+        ordinary = source.replace("portable-local-links: true", "portable-local-links: false")
+        result = subprocess.check_output(command, input=ordinary, text=True)
+        self.assertIn("../long/record.md", result)
+        html = ["pandoc", "-f", "markdown", "-t", "html"]
+        self.assertEqual(subprocess.check_output(html, input=source, text=True),
+                         subprocess.check_output(html + ["--lua-filter", str(FILTER)],
+                                                 input=source, text=True))
+
 
 if __name__ == "__main__":
     unittest.main()
