@@ -33,6 +33,7 @@ separates paper, graph, corpus and record-level operations.
 | Package or consume authored papers | [Consumer guide](docs/bundle-consumers.md), [bundle](src/lean_exposition/bundle.py), [consumer](src/lean_exposition/consumer.py) | Bundle, consumer and adversarial tests; independent reader under [examples/consumer/](examples/consumer/) |
 | Navigate source, claim or paper neighbourhoods | [Record query](docs/bundle-consumers.md#start-at-any-record-and-follow-its-neighbourhood), [consumer](src/lean_exposition/consumer.py); `query-corpus` and `query-papers` | Corpus-query and paper-range tests; preserve stored directions, exact editions and explicit query boundaries |
 | Change a command | [CLI](src/lean_exposition/cli.py) and its owning module above | CLI tests and the documented command |
+| Serve the graph and papers to a website | [Web API](docs/web-api.md), [transport](src/lean_exposition/web.py), existing consumer and bundle owners | HTTP, capture and consumer tests; installed `serve` and an actual HTTP request |
 | Revise the architectural companion | [Companion source](papers/architecture/paper.md), [render and link policy](papers/architecture/README.md#render-and-inspect); keep commands in the technical guides | Render and inspect every PDF page; check relocated PDF links and rendering tests |
 | Improve human documentation or repository layout | [Folder map](README.md#repository-map), [documentation guide](docs/README.md), [layout policy](docs/repository_layout.json) | Link and layout checks; run changed examples and inspect rendered prose |
 

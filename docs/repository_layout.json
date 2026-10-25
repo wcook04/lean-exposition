@@ -58,7 +58,11 @@
     "src/lean_exposition/resources/templates/expository.md",
     "src/lean_exposition/resources/templates/long.md",
     "src/lean_exposition/resources/templates/short.md",
-    "tests/test_layout.py"
+    "tests/test_layout.py",
+    "docs/web-api.md",
+    "src/lean_exposition/web.py",
+    "tests/test_web.py",
+    "tests/test_bundle_capture.py"
   ],
   "readme_map": [
     ".github/",

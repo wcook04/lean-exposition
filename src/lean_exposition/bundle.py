@@ -6,8 +6,11 @@ import os
 import stat
 import zipfile
 import zlib
+from collections.abc import Mapping
+from dataclasses import dataclass, field
 from importlib.resources import files
 from pathlib import Path
+from types import MappingProxyType
 
 from .contracts import ContractError, decode_json, digest, encoded, local_path, required_citation_ids, validate_artifact, validate_graph, validate_schema, write_json
 
@@ -18,6 +21,26 @@ BUNDLE_FILES = ("manifest.json", "graph.json") + tuple(
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 MAX_BUNDLE_BYTES = 64 * 1024 * 1024
 MAX_ARCHIVE_BYTES = MAX_BUNDLE_BYTES + 1024 * 1024
+
+
+@dataclass(frozen=True, init=False, slots=True)
+class BundleCapture:
+    """One validated, immutable edition captured from a directory or ZIP.
+
+    Construction accepts a filesystem path, never caller-supplied payloads.
+    All bytes and the validation result belong to this capture; later changes
+    to the input cannot change the edition seen by a consumer.
+    """
+
+    files: Mapping[str, bytes] = field(repr=False)
+    _summary_bytes: bytes = field(repr=False)
+
+    def __init__(self, path: Path):
+        if hasattr(self, "files"):
+            raise AttributeError("a bundle capture cannot be reinitialized")
+        payload, summary = _validated_capture(Path(path))
+        object.__setattr__(self, "files", MappingProxyType(payload))
+        object.__setattr__(self, "_summary_bytes", encoded(summary))
 
 
 def _manifest(bundle_id: str, payload: dict[str, bytes], states: list[str]) -> dict:
@@ -194,7 +217,9 @@ def _validate_payload(payload: dict[str, bytes]) -> dict:
     return {"valid": True, "bundle_id": graph["id"], "paper_states": states, "graph": summary}
 
 
-def _validated_capture(path: Path) -> tuple[dict[str, bytes], dict]:
+def _validated_capture(path: Path | BundleCapture) -> tuple[dict[str, bytes], dict]:
+    if isinstance(path, BundleCapture):
+        return dict(path.files), decode_json(path._summary_bytes)
     path = Path(path)
     if path.is_symlink():
         raise ContractError("bundle input must not be a symlink")
@@ -202,16 +227,18 @@ def _validated_capture(path: Path) -> tuple[dict[str, bytes], dict]:
     return payload, _validate_payload(payload)
 
 
-def load_bundle(path: Path) -> dict[str, bytes]:
+def load_bundle(path: Path | BundleCapture) -> dict[str, bytes]:
     """Read and validate a directory or ZIP, returning the exact captured files.
 
     Only the eight v0.1.0 contract files are returned. External sources and receipts
     are never fetched or read. ZIP members are checked without extracting them.
+    An existing BundleCapture returns a fresh mapping of its immutable bytes,
+    without reopening or revalidating the original filesystem input.
     """
     return _validated_capture(path)[0]
 
 
-def check_bundle(root: Path) -> dict:
+def check_bundle(root: Path | BundleCapture) -> dict:
     """Validate a directory or ZIP and return the existing graph/paper summary."""
     return _validated_capture(root)[1]
 
@@ -255,7 +282,7 @@ def assemble_bundle(
     return manifest
 
 
-def export_bundle(root: Path, out: Path) -> dict:
+def export_bundle(root: Path | BundleCapture, out: Path) -> dict:
     if out.exists() or out.is_symlink():
         raise ContractError("export destination already exists")
     payload, result = _validated_capture(root)

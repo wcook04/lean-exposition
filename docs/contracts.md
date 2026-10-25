@@ -8,6 +8,16 @@ read-only graph and paper views from those validated records. The optional `prov
 adapter reads public platform metadata into that same graph. Agent skills describe how to
 write from the evidence. Runtime code does not load those instructions.
 
+`web.py` transports these consumer views through a read-only WSGI API. It uses
+`bundle.py::BundleCapture` to validate and freeze one directory or ZIP edition
+at application construction. Existing consumers accept that capture wherever
+they accept a bundle path. `load_bundle(capture)` returns a fresh dictionary
+of immutable bytes; no query reopens the original filesystem. HTTP discovery,
+pagination, literal search and paper-overlap views belong to the transport;
+mathematical traversal and correspondence remain in `consumer.py`. No second
+stored graph or renderer-specific layout is introduced. The [web API guide](web-api.md)
+owns routes, limits, deployment and client responsibilities.
+
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
 Graph version `1.0` remains supported; version `1.1` adds the Lean declaration

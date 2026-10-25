@@ -8,6 +8,10 @@ The [independent example](../examples/consumer/README.md) reads an exported ZIP
 with Python's standard library. The installed package additionally validates the
 graph and passage contracts.
 
+For a website or HTTP client, the [web API](web-api.md) serves these same
+consumer views from one captured edition, with search, pagination and exact
+record/paper links. Direct library use and offline bundle reading remain available.
+
 ## Choose the entry for your question
 
 Install the package using [development setup](../CONTRIBUTING.md#setup), then

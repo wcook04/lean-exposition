@@ -9,7 +9,7 @@ from collections import deque
 from pathlib import Path
 from urllib.parse import quote
 
-from .bundle import STAGES, load_bundle
+from .bundle import STAGES, BundleCapture, load_bundle
 from .contracts import (
     ARGUMENT_EDGES, LEAN_EDGES, ContractError, argument_contexts, closure, decode_json, digest,
     encoded, require_refs, required_citation_ids, select, validate_graph,
@@ -119,7 +119,7 @@ def inspect_graph(graph: dict, goals: list[str] | None = None) -> dict:
     return result
 
 
-def inspect_bundle(path: Path) -> dict:
+def inspect_bundle(path: Path | BundleCapture) -> dict:
     """Inspect one validated capture without extracting ZIP members or reading sources."""
     payload = load_bundle(path)
     manifest = decode_json(payload["manifest.json"])
@@ -294,7 +294,7 @@ def _paper_sections(content: bytes, paper_ref: str, line_starts: list[int]) -> l
     return headings
 
 
-def project_paper(bundle_path: Path, stage: str, passages: list[str] | None = None) -> dict:
+def project_paper(bundle_path: Path | BundleCapture, stage: str, passages: list[str] | None = None) -> dict:
     """Project one validated paper and its recorded prerequisite subgraph.
 
     This is a read-only view of exact bundle bytes, not another graph authority.
@@ -656,7 +656,7 @@ def _query_witness(target: str, paths: dict[str, tuple], graph_hash: str,
             "semantic_certification": False}
 
 
-def _capture_edition(bundle_path: Path, expected_manifest_sha256: str | None) -> dict[str, bytes]:
+def _capture_edition(bundle_path: Path | BundleCapture, expected_manifest_sha256: str | None) -> dict[str, bytes]:
     """Validate and pin one capture, including mapping-only edition changes."""
     if expected_manifest_sha256 is not None and (
             not isinstance(expected_manifest_sha256, str)
@@ -668,7 +668,7 @@ def _capture_edition(bundle_path: Path, expected_manifest_sha256: str | None) ->
     return payload
 
 
-def reconstruct_paper(bundle_path: Path, stage: str, document_parts: list[dict], *,
+def reconstruct_paper(bundle_path: Path | BundleCapture, stage: str, document_parts: list[dict], *,
                       expected_manifest_sha256: str) -> bytes:
     """Reconstruct an unchanged manuscript from its pinned ordered part view.
 
@@ -702,7 +702,7 @@ def reconstruct_paper(bundle_path: Path, stage: str, document_parts: list[dict],
     return result
 
 
-def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = None) -> dict:
+def project_corpus(bundle_path: Path | BundleCapture, *, expected_manifest_sha256: str | None = None) -> dict:
     """Project one complete recorded corpus and its overlapping paper views."""
     payload = _capture_edition(bundle_path, expected_manifest_sha256)
     manifest = decode_json(payload["manifest.json"])
@@ -816,7 +816,7 @@ def project_corpus(bundle_path: Path, *, expected_manifest_sha256: str | None = 
 
 
 def query_corpus(
-    bundle_path: Path, *, records: list[tuple[str, str]] | None = None,
+    bundle_path: Path | BundleCapture, *, records: list[tuple[str, str]] | None = None,
     record_refs: list[str] | None = None, families: list[str] | None = None,
     direction: str = "both", max_depth: int = 1, max_records: int = 100,
     stage: str | None = None, expected_manifest_sha256: str | None = None,
@@ -968,7 +968,7 @@ def query_corpus(
 
 
 def query_papers(
-    bundle_path: Path, *, stage: str | None = None,
+    bundle_path: Path | BundleCapture, *, stage: str | None = None,
     passages: list[str] | None = None, section_refs: list[str] | None = None,
     byte_ranges: list[tuple[int, int]] | None = None,
     node_ids: list[str] | None = None, relation: str = "direct",

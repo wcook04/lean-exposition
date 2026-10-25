@@ -28,6 +28,8 @@ the accounts share a graph and how a reader moves between them. Agents use
   shared graph from another application.
 - [Contracts and architecture](contracts.md): understand the module boundaries,
   evidence graph and file formats.
+- [Web API](web-api.md): serve a captured edition for graph navigation, paper
+  reading, comparison, connection witnesses and search.
 - [Reading-copy links](bundle-consumers.md#distribute-reading-copies-with-working-links):
   preserve usable references when PDFs leave their manuscript directories.
 - [Contributing](../CONTRIBUTING.md): set up development, run repository checks

@@ -161,6 +161,17 @@ instead, follow the [assembly commands](papers/README.md#assemble-the-authored-b
 The [consumer guide](docs/bundle-consumers.md) explains how another application
 can read a bundle without depending on this CLI.
 
+To serve an assembled bundle to a website or another application:
+
+```sh
+lean-exposition serve build/qaoa-sk-authored --port 8000
+```
+
+The [web API guide](docs/web-api.md) covers shared graph navigation, aligned
+paper passages, connection witnesses, comparison, search and exact-edition
+text selections. The backend supplies the data; a frontend can choose its own
+graph renderer and reading interface.
+
 ## Sources and verification
 
 The [examples guide](examples/README.md) covers three starting points:
@@ -189,7 +200,7 @@ records preserve those distinctions.
 | [examples/](examples/) · [example guide](examples/README.md) | The small Lean proof, pinned QAOA / SK corpus, Prove2Me intake and independent bundle reader |
 | [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
 | [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |
-| [src/lean_exposition/](src/lean_exposition/) | Python CLI and library, with packaged schemas and templates |
+| [src/lean_exposition/](src/lean_exposition/) | Python CLI, read-only [web backend](src/lean_exposition/web.py), consumer library, packaged schemas and templates |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
 | [scripts/](scripts/) | Repository layout/link checks and the [paper bookmark filter](scripts/paper_anchors.lua) |

@@ -72,6 +72,11 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--paper", choices=STAGES, help="Restrict traversal to this paper's recorded support membership")
     cmd.add_argument("--expect-manifest", help="Require this exact manifest SHA-256")
     cmd.add_argument("--format", choices=("json", "text"), default="json")
+    cmd = commands.add_parser("serve", help="Serve one captured bundle through the read-only web API")
+    cmd.add_argument("bundle", type=Path)
+    cmd.add_argument("--host", default="127.0.0.1")
+    cmd.add_argument("--port", type=int, default=8000)
+    cmd.add_argument("--allow-origin", help="One exact frontend HTTP(S) origin for CORS")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -107,6 +112,9 @@ def parser() -> argparse.ArgumentParser:
 
 
 def run(args):
+    if args.command == "serve":
+        from .web import serve
+        return serve(args.bundle, host=args.host, port=args.port, allow_origin=args.allow_origin)
     if args.command == "validate":
         return validate_graph(read_json(args.graph))
     if args.command == "inspect":
