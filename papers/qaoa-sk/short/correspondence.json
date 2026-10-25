@@ -4,7 +4,7 @@
   "state": "draft",
   "path": "papers/short.md",
   "content_sha256": "bd74d0ebe81f2162de050e7778569e155d3d90876a947682e8a669a1f911b6ce",
-  "graph_sha256": "d82f27189da59cf23cbc80453aa71b67feb682b9647bd0588237cb287b553d9b",
+  "graph_sha256": "d55589c25c400d231086c7303cd1cd7bef7e9a502c85867ee79e900ac9bbc400",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"

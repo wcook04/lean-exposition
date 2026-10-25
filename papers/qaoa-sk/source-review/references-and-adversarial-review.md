@@ -183,3 +183,10 @@ These are source and author checks of a method's scope, not measured learning
 effects. A fresh reader attempt remains necessary to assess comprehension of
 the revised exposition. Exact editions and passage bindings must be refreshed
 after any subsequent change; the reviews of the previous edition remain history.
+
+A subsequent layout review replaced eight prose-heavy tables in the long
+record with full-width explanations, preserving their hypotheses, proof
+destinations and passage identifiers. Three compact mathematical tables remain:
+feasible measure changes, the rational coefficients and the gap cases. The
+authoring guide now distinguishes a useful tabular comparison from paragraphs
+compressed into columns; the latter failed at the actual reading size.

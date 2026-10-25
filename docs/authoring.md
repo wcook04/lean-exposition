@@ -345,6 +345,14 @@ reviewed. An author's cold reread is useful but differs from an independent
 reader test. A successful compile checks the production process; inspect the
 delivered pages, formulas, bibliography and reference destinations separately.
 
+Judge tables by the comparison they enable. Compact numerical data and short
+case distinctions can benefit from rows and columns. Multi-sentence arguments
+usually need full-width paragraphs or local lemma statements. If one column
+becomes a tall strip of prose beside mostly empty cells, change the form and
+inspect the replacement at reading size. Do not preserve a poor layout by
+shrinking the text. Check other instances of the same treatment after a reader
+rejects one of them.
+
 Use the [bounded reader-review procedure](reader-review.md) to freeze one edition,
 retain the reader's first response and distinguish later assistance. No schema or
 hash check can establish that a previous acceptance applies to revised prose.

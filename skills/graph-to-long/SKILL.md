@@ -14,6 +14,13 @@ derivations, source references and identified checks. Give substantive results
 and unresolved steps stable destinations. Its length follows the detail needed
 to recover the argument.
 
+Use tables for comparisons a reader needs to make across compact entries,
+such as coefficients or a short case split. A hypothesis, construction or
+argument needing several sentences belongs in full-width prose, with a named
+paragraph or lemma where useful. Inspect the most text-heavy material at the
+delivered reading size: tall narrow text columns and largely empty neighbours
+are a reason to change the form, not shrink the type.
+
 ## Preconditions and inputs
 
 For a formally grounded record, read the selected Lean declarations, their

@@ -175,14 +175,34 @@ These destinations separate premises of the support proof from its
 consequences. They locate the detailed arguments behind the short paper's
 support and density theorem.
 
-| Step | Premise used at this step | Detailed destination |
-| --- | --- | --- |
-| Define $X,q$ and compute $q'=\mathbb E a^2$ | Any admissible $\gamma$; compact-strip estimates | [§2.4](#strip-estimates), [§3.1](#gradient-moment) |
-| Obtain $G\ge0$, $G=0$ on support and contact slopes | Minimality; admissible mass addition and compact mass removal | [§3.2](#feasible-variation), [§3.3](#measure-contact), [§3.4](#contact-slopes) |
-| Prove strict curvature on a positive plateau | Admissibility and a constant $c>0$, without minimality | [§4.3](#shape-comparisons), [§4.4](#curvature-algebra), [§4.5](#plateau-limit) |
-| Exclude every support gap | Contact plus the appropriate positive, zero or terminal argument | [Terminal gap](#terminal-gap), [bounded gaps](#bounded-gaps), [initial gaps](#initial-gaps) |
-| Obtain a smooth density, positive for $t>0$ | Full support first; then differentiated moments and a local comparison | [§5.1](#smooth-density-consequence), [§5.2](#positive-density) |
-| Pass to value and circuits | The same minimizer and diffusion; then additional circuit theorems | [§6](#scalar-value-identities), [§7](#finite-gaussian-approximation), [§9](#qaoa-construction) |
+**The diffusion and moment identity.** For any admissible $\gamma$, the
+compact-strip estimates justify defining $X,q$ and computing
+$q'=\mathbb E a^2$; see [§2.4](#strip-estimates) and
+[§3.1](#gradient-moment).
+
+**Variational contact.** Minimality, admissible mass addition and compact
+mass removal give $G\ge0$, its vanishing on support and the contact slopes.
+The steps are in [§3.2](#feasible-variation), [§3.3](#measure-contact)
+and [§3.4](#contact-slopes).
+
+**Strict curvature.** Admissibility and a positive constant $c$ on an
+interval suffice; minimality is not needed. The shape comparisons,
+algebra and limiting argument are in [§4.3](#shape-comparisons),
+[§4.4](#curvature-algebra) and [§4.5](#plateau-limit).
+
+**Exclusion of gaps.** Combine contact with the appropriate positive,
+zero or terminal argument. The cases have separate destinations:
+[terminal](#terminal-gap), [bounded](#bounded-gaps) and
+[initial](#initial-gaps) gaps.
+
+**Positive density.** Full support comes first. Differentiated moments
+then give [smoothness in §5.1](#smooth-density-consequence), and a local
+comparison gives [strict positivity in §5.2](#positive-density).
+
+**Value and circuits.** Retain the same minimizer and diffusion through
+[the value identity in §6](#scalar-value-identities) and
+[the finite Gaussian construction in §7](#finite-gaussian-approximation).
+[The circuit argument in §9](#qaoa-construction) requires additional theorems.
 
 ### 2.2 The regularity available before the proof starts
 
@@ -200,14 +220,20 @@ $$
 It controls approach to $|x|$ without differentiating that cusp. The strip
 estimates justify the interior calculations and finite meshes; the terminal
 bound and integrability justify the later endpoint limits. The two roles
-must remain separate. The estimates used at each boundary are:
+must remain separate. Their uses depend on the region and limit.
 
-| Region or limit | Available control | Use below |
-| --- | --- | --- |
-| Fixed $[0,T]$, $T<1$ | Bounded spatial derivatives; locally absolutely continuous time dependence | Itô identities and Euler coupling |
-| Across a jump of $\gamma$ | Continuous spatial derivative moments; time equations almost everywhere | Contact slopes and endpoint chord comparison |
-| Inside a constant interval | Classical time differentiation | The strict-curvature calculation |
-| $T\uparrow1$ | The displayed value bound, integrable coefficient tails and martingale convergence | First variation and terminal value; no differentiated estimate at the cusp |
+On a fixed $[0,T]$ with $T<1$, bounded spatial derivatives and locally
+absolutely continuous time dependence justify the Itô identities and Euler
+coupling. Across a jump of $\gamma$, the spatial derivative moments remain
+continuous and the time equations hold almost everywhere; this is enough
+for contact slopes and the endpoint chord comparison. Inside a constant
+interval, classical time differentiation permits the strict-curvature
+calculation.
+
+As $T\uparrow1$, the controls change: the displayed value bound,
+integrable coefficient tails and martingale convergence justify first
+variation and terminal value. No differentiated estimate at the terminal
+cusp is used.
 
 These are [OpenAI (2026a), Lemma 2.1 and its diffusion consequences][fs-reg];
 [§2.4](#strip-estimates) reconstructs their uniformity.
@@ -460,13 +486,27 @@ objects. The following account fixes those objects before the indicated
 limit. A single admissible minimiser and its associated diffusion are
 retained throughout the scalar construction.
 
-| Step | Objects held fixed | Approximation and its control |
-| --- | --- | --- |
-| Compact-strip regularity | Derivative order $k\ge1$, $T<1$, and a common coefficient $L^1$ bound | Coefficients converge in $L^1$ within the mass bound; spatial derivatives converge uniformly on the strip. |
-| Shape inequalities on a plateau | Plateau height $c>0$ and a closed interior neighbourhood | Choose step coefficients equal to $c$ there and smooth terminal values with $M_m\ge\|\gamma_m\|_\infty$, $M_m\to\infty$. Coefficient and terminal approximations may be chosen as one compatible sequence. |
-| First variation | $\gamma$, a feasible $\eta\in L^1$, and initially $\epsilon>0$ | Remove the terminal cutoff, then let $\epsilon\downarrow0$. The terminal remainder divided by $\epsilon$ is bounded by an $L^1$ tail of $\eta$. |
-| Terminal value | The chosen minimiser and diffusion | Use bounded-martingale convergence and integrability of $\gamma$ as $t\uparrow1$; no terminal derivative bound is needed. |
-| Finite Gaussian coefficients | $\gamma,X$ and $T<1$ | Refine $N$ using fixed-strip bounds; then control the remaining value tail by $1-T$. |
+**Compact-strip regularity.** Fix a derivative order $k\ge1$, a cutoff
+$T<1$ and a common coefficient $L^1$ bound. Coefficients converge in $L^1$
+within that bound; spatial derivatives converge uniformly on the strip.
+
+**Shape inequalities on a plateau.** Fix the height $c>0$ and a closed
+interior neighbourhood. Choose step coefficients equal to $c$ there and
+smooth terminal values with $M_m\ge\|\gamma_m\|_\infty$ and
+$M_m\to\infty$. The coefficient and terminal approximations may be
+chosen as one compatible sequence.
+
+**First variation.** Fix $\gamma$, a feasible $\eta\in L^1$ and initially
+$\epsilon>0$. Remove the terminal cutoff before letting
+$\epsilon\downarrow0$. The terminal remainder divided by $\epsilon$ is
+bounded by an $L^1$ tail of $\eta$.
+
+**Terminal value.** Keep the chosen minimiser and diffusion fixed. Bounded
+martingale convergence and integrability of $\gamma$ justify
+$t\uparrow1$; no terminal derivative bound is needed.
+
+**Finite Gaussian coefficients.** Fix $\gamma,X$ and $T<1$. Refine $N$
+using the fixed-strip bounds, then control the remaining value tail by $1-T$.
 
 For the plateau transfer, tail estimates for a fixed approximant may depend
 on that approximant. The passage to the limit uses the integrated
@@ -2389,15 +2429,35 @@ A direct formal application still needs a specified map of their objects.
 The following contract identifies the obligations, rather than asserting
 an equivalence of their complete interfaces.
 
-| Object | Map to be defined and property to be proved |
-| --- | --- |
-| Coefficient | Restrict the scalar real-time coefficient to $[0,1)$; conversely choose an extension compatible with the scalar right-continuity predicate. Prove equality almost everywhere of the coefficients used by each payoff and penalty. The scalar endpoint and exterior values are unconstrained by the shape conditions; two extensions need not be literally equal. |
-| Brownian space | Bundle or unbundle the same sample space, sigma algebra, probability law and Brownian process. Identify the natural filtration and every elapsed-increment filtration; law equality alone does not identify admissible controls on a chosen space. |
-| Control and payoff | Bundle an admissible scalar control as a support control and conversely. With $s=t+r$, prove equality between the absolute integral over $[t,1]$ using $\alpha(s-t)$ and the elapsed integral over $[0,1-t]$ using $\alpha(r)$. Preserve progressive measurability and the pointwise bound $|\alpha|\le1$. |
-| Value and minimizer | Equality of the payoff sets gives equality of their suprema for every $x$ and $0\le t<1$. Only then identify the first and second spatial derivatives and the Parisi penalties. Transport minimality against every admissible competitor, including restriction or extension of that competitor. |
-| Diffusion and moments | Reindex the same process between nonnegative and real time, and stop it at one where required. Transport the integral equation on one full-measure event for all $t\in[0,1]$, path continuity, initial value, gradient and moment integrals. |
+**Coefficients.** Restrict the scalar real-time coefficient to $[0,1)$;
+conversely, choose an extension compatible with the scalar right-continuity
+predicate. Prove equality almost everywhere of the coefficients used by each
+payoff and penalty. The scalar endpoint and exterior values are unconstrained
+by the shape conditions, so two extensions need not be literally equal.
 
-The last row has a real version issue. The support predicate asks for a
+**Brownian space.** Bundle or unbundle the same sample space, sigma algebra,
+probability law and Brownian process. Identify the natural filtration and
+every elapsed-increment filtration. Equality in law alone does not identify
+admissible controls on a chosen space.
+
+**Controls and payoffs.** Bundle an admissible scalar control as a support
+control and conversely. With $s=t+r$, prove equality between the absolute
+integral over $[t,1]$ using $\alpha(s-t)$ and the elapsed integral over
+$[0,1-t]$ using $\alpha(r)$. Preserve progressive measurability and the
+pointwise bound $|\alpha|\le1$.
+
+**Value and minimizer.** Equality of the payoff sets gives equality of their
+suprema for every $x$ and $0\le t<1$. Only then identify the first and second
+spatial derivatives and the Parisi penalties. Transport minimality against
+every admissible competitor, including restriction or extension of that
+competitor.
+
+**Diffusion and moments.** Reindex the same process between nonnegative and
+real time, and stop it at one where required. Transport the integral equation
+on one full-measure event for all $t\in[0,1]$, path continuity, initial value,
+gradient and moment integrals.
+
+The diffusion comparison has a real version issue. The support predicate asks for a
 globally progressive process; the scalar predicate asks for adaptedness
 of the stopped process and almost-sure continuity on $[0,1]$. Restriction
 of a progressive support process is a plausible route in one direction.
@@ -2739,12 +2799,37 @@ The principal circuit inputs can be read as four local lemmas. Their
 proofs remain in the cited manuscript; §§9.2–9.5 reconstruct the
 mechanisms and show where each hypothesis enters.
 
-| Input | Fixed hypotheses and output | Next use |
-| --- | --- | --- |
-| Smooth replacement | Fix height, a finite expression and channel list, and the required derivatives. Uniform recursive weighted bounds, convergence of operators and adjoints, and strongly commuting signals with the stated joint exponential bounds permit substitution inside any fixed surrounding word. Constants depend on that fixed family. [Foundations, smooth topology and gate calculus][q-gate-calculus]. | §9.3 replaces classical aggregates by finite gates. |
-| Helper contraction and synthesis | Fix a bounded, finite, type-excluded odd formula, zero on helpers, and positive helper masses. The contraction converges smoothly at every cut and for the specified responses. For each $\eta>0$, finite seeded synthesis gives $\mathcal E(v)\ge\mathcal E(m)-2\eta-2\sqrt{p_H}$. [Synthesis statements][q-synthesis-statement], [helper theorem][q-helper-statement]. | §9.4 receives one fixed seeded word. |
-| Seed removal | Fix that finite seeded word and an energy tolerance. Reuse the same Gaussian at every occurrence on a vertex; packet control and the one-particle comparison produce one finite ordinary word with the required energy error. This is an energy conclusion, not merely convergence of seed marginals. [Seed-removal theorem][q-seed-statement]. | §9.5 can apply the ordinary-word transfer. |
-| Fixed-word transfer | Fix one ordinary word and all angles before either size or degree varies. Its positive tree scaled-edge limit equals its SK expected-energy limit, with the convention conversion in §9.5. [Fixed-word transfer][q-transfer]. | §9.6 closes the thermodynamic-first theorem. |
+**Smooth replacement.** Fix the height, a finite expression and channel
+list, and the required derivatives. Uniform recursive weighted bounds,
+convergence of operators and adjoints, and strongly commuting signals with
+the stated joint exponential bounds permit substitution inside any fixed
+surrounding word. Constants depend on that fixed family. This is the input
+used in §9.3 to replace classical aggregates by finite gates; see
+[the foundations, smooth topology and gate calculus][q-gate-calculus].
+
+**Helper contraction and synthesis.** Fix a bounded, finite, type-excluded
+odd formula, zero on helpers, and positive helper masses. The contraction
+converges smoothly at every cut and for the specified responses. For each
+$\eta>0$, finite seeded synthesis gives
+$$
+\mathcal E(v)\ge\mathcal E(m)-2\eta-2\sqrt{p_H}.
+$$
+Section 9.4 receives this one fixed seeded word. The source inputs are the
+[synthesis statements][q-synthesis-statement] and
+[helper theorem][q-helper-statement].
+
+**Seed removal.** Fix that finite seeded word and an energy tolerance.
+Reuse the same Gaussian at every occurrence on a vertex. Packet control and
+the one-particle comparison then produce one finite ordinary word with the
+required energy error. The [seed-removal theorem][q-seed-statement] supplies
+an energy conclusion, not merely convergence of seed marginals. It makes the
+ordinary-word transfer in §9.5 applicable.
+
+**Fixed-word transfer.** Fix one ordinary word and all its angles before
+either size or degree varies. Its positive tree scaled-edge limit equals
+its SK expected-energy limit, with the convention conversion in §9.5.
+This [fixed-word transfer][q-transfer] closes the thermodynamic-first
+theorem in §9.6.
 
 <!-- /passage:qaoa -->
 
@@ -2913,11 +2998,16 @@ its exact finite-degree decomposition][q-root-energy].
 
 The three identifications use different information:
 
-| Passage between objects | Quantity preserved | Required justification |
-| --- | --- | --- |
-| Finite Gaussian formula to rooted classical sector | The joint Gaussian law and the same $F_N$ | Covariance, conditional centring and independence of the receiving-root seed |
-| Rooted $F_N$ to its energy | $\mathcal E(F_N)=S_{T,N}$ | Root-vacuum, first-chaos projection |
-| Finite-degree circuit insertion to its limit $v$ | Scaled edge expectation tends to $\mathcal E(v)$ | Root invariance, fixed radius, strong convergence and uniform occupation control |
+First, passing from the finite Gaussian formula to the rooted classical
+sector preserves the joint Gaussian law and the same $F_N$. This uses
+covariance, conditional centring and independence of the receiving-root seed.
+
+Second, the root-vacuum and first-chaos projection identify the energy itself:
+$\mathcal E(F_N)=S_{T,N}$.
+
+Third, for a finite-degree circuit insertion tending to $v$, root invariance,
+fixed radius, strong convergence and uniform occupation control imply that
+the scaled edge expectation tends to $\mathcal E(v)$.
 
 The first two calculations were given above. The third uses the source's
 edge decomposition; the requisite circuit estimates enter in §9.2.
@@ -4054,14 +4144,33 @@ Both routes produce a bounded finite classical calculation whose rooted
 energy is close to $P_*$. They reach that common input by different
 theorems and different finite approximations.
 
-| Question | Zero-temperature route | Positive-temperature route |
-| --- | --- | --- |
-| Which variational object is fixed? | An attained minimizer $\gamma\in\mathcal U$ for terminal value $|x|$. | A fixed finite $\beta_0>1$ and its Parisi probability measure, with terminal value $\beta_0^{-1}\log(2\cosh\beta_0x)$. |
-| What fills the overlap interval? | Full relative Stieltjes support on $[0,1)$ from the zero-temperature source. | Lopatto's interval-support result on $[0,q_{\beta_0}]$. |
-| What is the scalar loss before discretization? | At most $1-T$, with $T<1$. | At most $(1/4+\log2)/\beta_0+(q_{\beta_0}-T)$, with $T<q_{\beta_0}$. |
-| How is finite energy identified? | The explicit Gaussian coefficient sum is identified with $\operatorname{Re}\langle F_N,\mathsf L F_N\rangle$ by a first-chaos projection. | A finite-degree message and edge calculation is followed by a rooted norm/occupation argument. |
-| Which approximation order matters? | Fix $T$ before refining the scalar mesh; choose a finite mesh before regularization and synthesis. | Fix $\beta_0,T,\delta,L$ for the message degree limit; then refine $\delta$ at fixed $\beta_0,T$. |
-| What is shared after this point? | The bounded approximation, exclusions, seeded synthesis, seed removal and fixed-word transfer. | The same quantum construction, with its classical input supplied independently. |
+**Variational input and support.** The zero-temperature route fixes an
+attained minimizer $\gamma\in\mathcal U$ with terminal value $|x|$ and
+uses full relative Stieltjes support on $[0,1)$. The positive-temperature
+route fixes a finite $\beta_0>1$ and its Parisi probability measure, with
+terminal value $\beta_0^{-1}\log(2\cosh\beta_0x)$; it uses Lopatto's
+interval-support result on $[0,q_{\beta_0}]$.
+
+**Scalar error.** Before discretization, the zero-temperature loss is at
+most $1-T$ for $T<1$. The positive-temperature loss is at most
+$$
+(1/4+\log2)/\beta_0+(q_{\beta_0}-T),\qquad T<q_{\beta_0}.
+$$
+
+**Finite energy.** In the zero-temperature route, a first-chaos projection
+identifies the explicit Gaussian coefficient sum with
+$\operatorname{Re}\langle F_N,\mathsf L F_N\rangle$. The alternative
+route first calculates finite-degree messages and edge energy, then uses
+a rooted norm and occupation argument.
+
+**Order of approximation.** At zero temperature, fix $T$ before refining
+the scalar mesh, and choose a finite mesh before regularization and synthesis.
+At positive temperature, fix $\beta_0,T,\delta,L$ for the message degree
+limit, then refine $\delta$ at fixed $\beta_0,T$.
+
+Both routes then use the same bounded approximation, exclusions, seeded
+synthesis, seed removal and fixed-word transfer. The quantum construction
+is shared; its classical input has been supplied independently.
 
 Here the displayed positive-temperature estimate is exactly the one
 derived above, rather than an assertion of convergence of zero-temperature
@@ -4206,13 +4315,20 @@ collapsed state is a different experiment.
 The complete witness is a finite ordered word, including every real
 angle. Its existence for each error tolerance asserts uniformity in
 system size and disorder that fixed-instance convergence does not provide.
-The two forms should be read literally:
+The quantifiers should be read literally.
 
-| Assertion | What may depend on the instance or size? |
-| --- | --- |
-| The source theorem: for every $\varepsilon>0$, there is one finite $W_\varepsilon$ with $\lim_{n\to\infty}\mathbb E E_n(W_\varepsilon)\ge P_*-\varepsilon$ | The cost operator uses $J,n$; the word and its angles do not. |
-| Fixed-instance QAOA convergence | The chosen depth and angles may depend on the fixed finite cost matrix and the accuracy. |
-| A prescribed family of nonzero angles with $p=p(n)\to\infty$ | Its performance needs further estimates; a depth allowance alone can be met by the padded existence construction below. |
+The source theorem says that for every $\varepsilon>0$, there is one
+finite word $W_\varepsilon$ such that
+$$
+\lim_{n\to\infty}\mathbb E E_n(W_\varepsilon)\ge P_*-\varepsilon.
+$$
+The cost operator uses $J,n$, but this word and its angles do not.
+
+In fixed-instance QAOA convergence, by contrast, the chosen depth and
+angles may depend on the fixed finite cost matrix and the requested accuracy.
+The performance of a prescribed family of nonzero angles with
+$p=p(n)\to\infty$ needs further estimates. A depth allowance alone can
+be met by the padded existence construction below.
 
 The distinction already occurs for the elementary array
 $a_{n,p}=p/(n+p)$. For each fixed $n$, its limit as $p\to\infty$
