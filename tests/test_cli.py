@@ -95,6 +95,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(len(result['evidence']), len(original['evidence']))
         self.assertTrue(any(n['selected'] for n in result['nodes'] if n['id'] == 'scalar_value'))
 
+    def test_source_review_binds_current_graph_and_original_source_bytes(self):
+        import hashlib
+        review = json.loads((ROOT / 'papers/qaoa-sk/source-review/correspondence.json').read_text())
+        self.assertEqual(review['graph_sha256'], hashlib.sha256(GRAPH.read_bytes()).hexdigest())
+        for name, source in review['sources'].items():
+            with self.subTest(source=name):
+                self.assertEqual(source['sha256'], hashlib.sha256((ROOT / source['path']).read_bytes()).hexdigest())
+
     def test_public_graph_source_anchors_match_bytes(self):
         import hashlib
         graph = json.loads(GRAPH.read_text())

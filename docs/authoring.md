@@ -92,7 +92,7 @@ Keep two relationships distinct:
 
 When a graph cites an authored companion, bind its actual current bytes in the
 source checksum, revision and citation URL, then rebind every affected paper
-mapping to the new graph hash. Changing a companion without refreshing these
+mapping and source-review index to the new graph hash. Changing a companion without refreshing these
 self-citations leaves a stale edition even when the bundle hashes agree.
 
 Matching hashes establish agreement with recorded bytes. They do not establish
