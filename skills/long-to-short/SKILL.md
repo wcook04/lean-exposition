@@ -59,6 +59,9 @@ material as unavailable rather than assuming a link's destination is adequate.
    notation only when it reduces repeated explanation. Keep the short paper
    within its chosen mathematical scope; a further application with different
    hypotheses belongs in a separate argument, even when it motivates this one.
+   When shortening a construction to an identification or equivalence, retain
+   the map or convention needed by the next calculation. If the argument uses
+   only a shared invariant, name that invariant instead of claiming more.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference

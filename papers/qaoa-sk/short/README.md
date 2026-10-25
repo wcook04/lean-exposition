@@ -26,7 +26,10 @@ density. This second passage transfers spatial moments, not time derivatives.
 The short paper derives the decisive moment identities and states precisely
 which sign comparisons, rational identity and approximation estimates it imports.
 The scalar value identity and the finite sum of adjacent Gaussian correlations
-explain the subsequent QAOA application. The separate circuit theorem is stated
+explain the subsequent QAOA application. The second gradient moment supplies
+increment variances, while covariance with the driving Brownian motion gives
+the value; the finite construction preserves these roles. The separate circuit
+theorem is stated
 with its limit order; its construction remains in the long record.
 
 The intended reader knows elementary stochastic calculus and variational

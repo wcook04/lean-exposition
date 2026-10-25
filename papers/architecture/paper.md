@@ -126,7 +126,7 @@ These are distinct returned records, not a single theorem-verification badge.
 The captured manifest SHA-256 is:
 
 ```text
-556e35d23361cecd78b001c705e4e2b0a239592018f874f03a19b041ecc0d0ee
+9e18e224a20e4a57663497a44735399058c38c1d03adf33d20beff1b1d3514e9
 ```
 
 A successor assembly has a new identity; keep the requested digest with the
@@ -137,10 +137,15 @@ reads embedded records, not the external source or receipt files.
 Here `maps_claim` is an assertion in a passage map; `supports` is an authored
 claim-to-ingredient relation. The curvature source locator leads to
 [OpenAI's `prop:gap-curvature`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/curvature.tex#L9-L52).
-The long record's **“Strict curvature on a constant interval”** reconstructs
-the signs, integrated coercivity and approximation behind that estimate;
-**“Excluding terminal, interior and initial gaps”** supplies the other cases.
-A rational positivity certificate alone does not justify the analytic estimate.
+The long record's [“Strict curvature on a constant interval”](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate)
+reconstructs the signs, integrated coercivity and approximation behind that
+estimate. Read it to recover the strict inequality under its plateau hypotheses,
+then return to the [short paper's gap argument](../qaoa-sk/short/paper.md#gap-elimination):
+contact supplies the endpoint data used with that inequality.
+[“Excluding terminal, interior and initial gaps”](../qaoa-sk/long/reasoning-record.md#gap-elimination)
+supplies the other cases. Finding the curvature passage does not explain its
+proof, and a rational positivity certificate alone does not justify the
+analytic estimate.
 
 The formal route is separate: `full_support` is recorded as
 `formalizes` → `lean.full_support`. The selected
@@ -150,6 +155,14 @@ assert measure and diffusion existence, full relative support, strict increase
 and two moment identities, conditional on a supplied admissible minimiser.
 They do not assert minimiser existence, positive density or circuit convergence.
 No formalisation edge from the curvature claim is invented by this walkthrough.
+
+Correspondence can itself require an argument. The long record's
+[formal-interface discussion](../qaoa-sk/long/reasoning-record.md#formal-interfaces)
+distinguishes a formal limit along a prescribed sequence of step sizes from
+the manuscript's ordinary right derivative, which covers all positive step
+sizes tending to zero. It supplies the intervening convexity argument. That
+mathematical bridge must be read and assessed; following a `formalizes` edge
+cannot perform it.
 
 Omitting `--relation prerequisites` instead asks whether curvature is **directly
 mapped** in this passage. The theorem passage has no such direct match; its
@@ -202,9 +215,9 @@ later paper has to cover every earlier result.
 
 | Entry | What that account adds |
 | --- | --- |
-| Long record, “Strict curvature on a constant interval,” passage `curvature` | The analytic derivation, boundary control and passage to an integrable coefficient |
-| Short paper, “Minimality gives contact; curvature excludes gaps,” passage `gap-proof` | The decisive contradiction and distinct gap cases |
-| Exposition, “Why a flat interval cannot minimise,” passage `contact-and-gap` | The contact and area argument at its declared reader prerequisites |
+| [Long record, “Strict curvature on a constant interval”](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate), passage `curvature` | The analytic derivation, boundary control and passage to an integrable coefficient |
+| [Short paper's gap proof](../qaoa-sk/short/paper.md#gap-elimination), passage `gap-proof` | The decisive contradiction and distinct gap cases |
+| [Exposition, “Why a flat interval cannot minimise”](../qaoa-sk/expository/main.md#5-why-a-flat-interval-cannot-minimise), passage `contact-and-gap` | The contact and area argument at its declared reader prerequisites |
 
 Their maps retain the setting and assumptions of each selected claim. Curvature
 itself does not require minimality; contact and the no-gap conclusion do.
@@ -309,7 +322,10 @@ sources actually inspected, decision and limits. Preserve the original response,
 the author's disposition and any later confirmation separately. The current
 drafts have no independent human acceptance. A proposed trial asks a newcomer
 to recover the gap's hypotheses, analytic source, formal scope and unresolved
-review status from one frozen edition. That trial has not been performed here.
+review status from one frozen edition. Separately ask them to explain how the
+endpoint data and strict curvature contradict the required integral. Locating
+an ingredient and recovering its use are different outcomes. That trial has
+not been performed here.
 
 ## 6. Why use separate texts and maps?
 

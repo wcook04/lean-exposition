@@ -52,3 +52,10 @@ The public [Erdős method transfer](../../../docs/erdos-method-transfer.md)
 identifies the exposition examples that informed the reader order,
 proof warrants and changed-case checks. Those writing methods are not
 evidence for the SK theorem.
+
+The finite-model explanations also draw on introductory lectures by
+[Dmitry Panchenko at IAS](https://www.youtube.com/watch?v=1xZ6AAew3Y4)
+and [Chandan Dasgupta at ICTS](https://www.youtube.com/watch?v=oBj_-AX6hUE),
+read through their full available caption transcripts. Their teaching
+of overlap, fixed couplings and frustration informed the presentation;
+the paper's mathematical claims follow its cited research sources.

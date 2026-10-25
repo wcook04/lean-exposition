@@ -77,6 +77,10 @@ research claim as though explaining it made it established.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
+   Inspect hidden conventions when they affect the statement or next operation:
+   the domain, topology, normalisation or identification may carry real content.
+   Explain that content at its use; unfolding every implementation definition
+   can obscure it. Distinguish a definition from a theorem relating two objects.
 5. Attach material assertions to the same graph claims, assumptions, evidence
    and citations used by the research record. Mark additional teaching examples
    and verify them. An example illustrating a theorem is not a separate proof
@@ -109,6 +113,10 @@ research claim as though explaining it made it established.
    answer; then use those sources to diagnose them. Reorder or explain at the
    point of need. An assisted reader finding the answer later does not establish
    that the original sequence worked.
+   Match the repair to the difficulty: an unfamiliar object needs its relevant
+   definition; an unexplained reduction needs the reason it suffices; an omitted
+   calculation needs its derivation. Keep the same local goal visible while
+   supplying that detail, then return to the interrupted argument.
 9. Run `lean-exposition check-bundle DIR`, inspect the delivered document and
    follow each proof and citation destination. If diagrams are added, inspect
    them at the intended viewing size and verify their mathematical conventions.
@@ -162,3 +170,8 @@ that a reader has understood a particular paper.
 The [Erdős method transfer](../../docs/erdos-method-transfer.md) gives inspected
 cases behind these instructions, including changed parameters and restrictive
 hypotheses. A case whose hypothesis fails need not refute the conclusion.
+
+Patrick Massot's [formal-to-informal discussion](https://www.youtube.com/watch?v=dmR_D7SRdck&t=2287s)
+(2024, 38:07–41:28) distinguishes hidden definitions from further proof detail,
+including the reason a reduction suffices. It informs the point-of-use checks
+above; it does not establish their teaching benefit for this reader.

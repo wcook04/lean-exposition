@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "fd3a934f045f00c838f0441cad7340c9539908d9e84956620f5959639cdef2e7",
-  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
+  "content_sha256": "315e6696ef4f97164552fc9443e7c54c5e8764529a00df37d8d49f7fd34dff94",
+  "graph_sha256": "6c3f611f9de7aaca3c17bddbc4e0d589e8d89626cbcb642ba9c2da8553d1b130",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -169,6 +169,7 @@
     "qaoa_finite_size_corollary",
     "qaoa_main_theorem",
     "qaoa_manuscript_arguments",
+    "qaoa_original_2014",
     "qaoa_routes",
     "scalar-r2-13-cite-diffusion-exists",
     "scalar-r2-13-cite-fixed-strip-application",
@@ -1317,7 +1318,7 @@
     },
     {
       "anchor": "qaoa",
-      "text_sha256": "cf448c292be81a15487d5adb1716a4afc4e594a84cccd03103ff8bab76285d68",
+      "text_sha256": "75334e5e0dbbac078b4ed728d34aa41360cac604763945f3ebd1d9e7354a450a",
       "claim_ids": [
         "qaoa_thermodynamic_first"
       ],
@@ -1363,7 +1364,7 @@
     },
     {
       "anchor": "qaoa-rooted",
-      "text_sha256": "70d0aa367d6943e58a9460e742af53e18709d012b057c162f6e8a6999f078b28",
+      "text_sha256": "986a5eaad17ed55eb28511a2d733c236b275968428db741d8fda82a3fb76e784",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -1377,6 +1378,7 @@
         "full_support_implementation",
         "full_support_origin_coercivity",
         "full_support_type",
+        "qaoa_original_2014",
         "scalar-r2-26-cite-conditional-rounding",
         "scalar-r2-26-cite-correlation-vector-control",
         "scalar-r2-26-cite-euler-normalization",
@@ -1546,7 +1548,7 @@
     },
     {
       "anchor": "qaoa-transfer",
-      "text_sha256": "fdc21164263f007b611cd2562609e57ec5fb51a1f7d656ca371c98cbcce258ff",
+      "text_sha256": "37c81ce3e6766e251543e10a30edb82107324597c5e668684304c54890c7d65b",
       "claim_ids": [
         "circuit.fixed_word_transfer",
         "circuit.ordinary_updates"
@@ -2043,6 +2045,7 @@
     "24 October 2026 focused-scope revision: applied skills/graph-to-long/SKILL.md (SHA256 7259e3095b9fdbac55a22fbd04e48529318d2e4b222bb6db7bf8ec21bbefe790). Preserved the full no-gap, density, scalar and circuit destinations while removing the now-obsolete reference to exposition §4.1. This pass checked destination continuity and the selected no-gap correspondence; it is not a new complete audit of the long record.",
     "Paper scope review (25 October 2026): The authored focus follows the three targets in Section 1: full support, scalar value and the thermodynamic-first circuit statement. Other developed branches remain mapped without becoming additional top-level goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
     "Passage correspondence review (25 October 2026): qaoa-transfer explicitly displays the ordinary cost and mixer root updates; its direct mapping now includes circuit.ordinary_updates and applicable source credit.",
-    "25 October 2026 round-four source-aware revision: applied skills/graph-to-long/SKILL.md (SHA256 0ef53764363765a4654b83f5aabc42e92937d6c8e5d1eaf61477cdfb74590941). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
+    "25 October 2026 round-four source-aware revision: applied skills/graph-to-long/SKILL.md (SHA256 0ef53764363765a4654b83f5aabc42e92937d6c8e5d1eaf61477cdfb74590941). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically.",
+    "25 October 2026 lecture-informed refinement: applied skills/graph-to-long/SKILL.md (SHA256 4bb7e3fe212c4d33583500307aa4c899775539129365f86a565c83184aaa69d6). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions."
   ]
 }

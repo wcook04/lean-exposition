@@ -128,12 +128,12 @@
     "support.stieltjes_measure",
     "support.zero_curvature"
   ],
-  "content_sha256": "2ba4ea893b25f32de215c1a1481da5eee5d7e1f6a19bc4a6010e9ccbdce7f53a",
-  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
+  "content_sha256": "9322ed7dc11be837fc929825623fa4b8f060c11f0badcab20868dade6d8d3427",
+  "graph_sha256": "6c3f611f9de7aaca3c17bddbc4e0d589e8d89626cbcb642ba9c2da8553d1b130",
   "passages": [
     {
       "anchor": "opening",
-      "text_sha256": "68bd48ac8af405fa8e649606e8a2c507b11dc620762c1c3a507d2e7c683f57e3",
+      "text_sha256": "5f792b444c4f694c6fd8090cb54c14bd15a1d6a80c00114f793e6fef5c7274e8",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -183,7 +183,7 @@
     },
     {
       "anchor": "spins-and-overlap",
-      "text_sha256": "39542f2de314d43015a5b403b61410c697573f355731d21e25dfadbbc911c6d8",
+      "text_sha256": "96d841614178f4c9937301d4d12e275aa0a163141808bda2fc461c8550158dec",
       "claim_ids": [
         "scalar.parisi_formula"
       ],
@@ -197,7 +197,7 @@
     },
     {
       "anchor": "order-parameter-example",
-      "text_sha256": "2d2d77e3f4c59b08f4314392b40dee790530ba18df3e9b65a28516e629ef59e1",
+      "text_sha256": "8204ac6b2113a61401c7147d153cb30397f4a4903efd8c62abae317f70a87c73",
       "claim_ids": [
         "support.stieltjes_measure"
       ],
@@ -212,7 +212,7 @@
     },
     {
       "anchor": "value-and-diffusion",
-      "text_sha256": "b88c78a1d667192fb14911ab75e0a060ed32a8404c052f0741a127c67a926ca2",
+      "text_sha256": "99333f13dcc320056ab158165e7fce5147f77d3dd76391b5d6d41a390100af4c",
       "claim_ids": [
         "support.regularity",
         "support.diffusion",
@@ -286,7 +286,7 @@
     },
     {
       "anchor": "contact-and-gap",
-      "text_sha256": "20581881efa218ebba3c0bc28962ba92cb25d2a419a00db0b1bc069d442e8229",
+      "text_sha256": "2f85558a07c265a0b70f9ec022b87bd832cac48a23cd3e18badd525d00a74959",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -331,7 +331,7 @@
     },
     {
       "anchor": "endpoints",
-      "text_sha256": "14654871fb048c57d56e3acfe60670c9b6acc21dcc2ae2c80086b2e2cba0d709",
+      "text_sha256": "db178d9daff92b2d3760def38ede7cb78892264bcd75464ef1f3a8105a6d61cd",
       "claim_ids": [
         "support.zero_curvature",
         "support.no_initial_gap",
@@ -389,7 +389,7 @@
     },
     {
       "anchor": "overlap-payoff",
-      "text_sha256": "9abd26c1519ed17fc3c1de37c5a5a5d020913df2280a19a50e619f59da9a59f3",
+      "text_sha256": "4f82cc96d37530c954e295e31254fdf016f5173ad1592333e5720885d65250f1",
       "claim_ids": [
         "support.near_ground_pairs"
       ],
@@ -576,7 +576,7 @@
     },
     {
       "anchor": "source-record",
-      "text_sha256": "d0de359929c06f59fd25886f598403e5468b91b057432e2b43b12909d586a6f3",
+      "text_sha256": "b8317df4df6e605b7f1c989742224d1cdc07524be995a3f5407715cacf72a9bd",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -653,7 +653,8 @@
     "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance.",
     "24 October 2026 focused-scope revision: applied skills/record-to-expository/SKILL.md (SHA256 e83efcb7f0cc5bc8aedcbf0fb985d84293c5980aa3ff0f3946676cd40b261912). Selected one result, the no-gap theorem, and reconstructed its reading order using the short statement, long proof, selected Lean interfaces and original manuscripts. Removed extended downstream developments while retaining exact long-record destinations. Agent review covered the complete focused text and source-sensitive proof steps; the tilted-chord caption and scalar corollary locator were corrected. Rendering and final binding are separately recorded; no human reader study or formal acceptance is inferred.",
     "Paper scope review (25 October 2026): The authored focus is the no-gap result. Density, scalar values and circuits remain mapped as outlooks with their proof destinations, rather than additional exposition goals. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
-    "25 October 2026 round-four source-aware revision: applied skills/record-to-expository/SKILL.md (SHA256 34327f081de6989a9856bb3ce4d3546b555c9669122160ddf9b024077e454f36). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
+    "25 October 2026 round-four source-aware revision: applied skills/record-to-expository/SKILL.md (SHA256 34327f081de6989a9856bb3ce4d3546b555c9669122160ddf9b024077e454f36). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically.",
+    "25 October 2026 lecture-informed refinement: applied skills/record-to-expository/SKILL.md (SHA256 f0c3545e7ac03e0cf13d8bb715e4730fe96ae94a6712efecf3dc8b335e68c32f). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.1",

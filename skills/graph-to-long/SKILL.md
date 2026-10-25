@@ -98,6 +98,11 @@ reading order. Keep that first response separate from the assisted reread.
    For formal support, compare the exact Lean type and relevant definitions
    with the prose statement. Explain the object correspondence and any ordinary
    argument needed to join formal ingredients; cite the applicable receipts.
+   Distinguish unfolding a definition, choosing a convention and proving a
+   correspondence. When an identification uses a map, specify the map and the
+   property it preserves that the next step needs. Existence of an isomorphism
+   alone does not specify the map used by a later calculation. If only an invariant
+   is needed, state that weaker fact; do not promise interchangeable objects.
 9. Run `lean-exposition check-bundle DIR`. Review the argument separately,
    then inspect the delivered Markdown or rendered paper and its references.
 
@@ -152,6 +157,15 @@ input. The record must also locate the analytic signs, boundary flux control,
 approximation and endpoint contact needed to use it. Distinct recorded links
 help locate these obligations; the writer must check the inference joining
 them. A writing skill cannot verify that inference merely by requiring a map.
+
+The SK record's [formal-interface discussion](../../papers/qaoa-sk/long/reasoning-record.md#formal-interfaces)
+illustrates another correspondence check: a sampled-chord limit and an ordinary
+right derivative are different statements, and a convexity argument bridges
+them. Preserve that argument rather than describing the difference as notation.
+Kevin Buzzard's
+[discussion of mathematical equality](https://www.youtube.com/watch?v=MPaJP5DI574&t=1089s)
+(2024, 18:09–20:35) provides a related warning: the identification needed for
+a calculation can require more information than a shared invariant does.
 
 Use [long-to-short](../long-to-short/SKILL.md) for a research paper, or
 [record-to-expository](../record-to-expository/SKILL.md) for a teaching paper.

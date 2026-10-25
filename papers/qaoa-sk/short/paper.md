@@ -46,9 +46,11 @@ quantitative bound twice, first to exclude constant intervals and then,
 after an approximation, to prove pointwise positivity.
 
 For two configurations, their overlap is
-$R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$. We use the covariance
-convention $\xi(t)=t^2/2$, so $\xi''=1$. The finite Hamiltonian has
-covariance $nR^2/2-1/2$; adding one independent centred Gaussian of
+$R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$. It determines the
+energy covariance: $\mathbb E[H_n(\sigma)H_n(\tau)]=nR^2/2-1/2$.
+Thus the Gaussian law of the energies is encoded by the overlaps.
+We use the covariance convention $\xi(t)=t^2/2$, so $\xi''=1$;
+adding one independent centred Gaussian of
 variance $1/2$ to every configuration's energy gives covariance
 $n\xi(R)$ and leaves the expected maximum unchanged. This is the
 normalisation of the ground-state Parisi formula of
@@ -69,7 +71,8 @@ to one. The support consists of points whose every neighbourhood
 in $[0,1)$ has positive mass. A support gap is a relatively open interval of positive length
 with zero mass, on which $\gamma$ is constant. When the measure has
 a density $\rho$, its mass on an interval is the integral of $\rho$
-there. All support statements are relative to $[0,1)$.
+there. All support statements concern this zero-temperature Stieltjes measure
+and are relative to $[0,1)$.
 
 The Parisi functional $\mathcal P(\gamma)$ is defined using an
 auxiliary value function $\Phi_\gamma(t,x)$, where $x\in\mathbb R$
@@ -83,8 +86,10 @@ $$
 \qquad
 \mathcal P(\gamma)=\Phi_\gamma(0,0)-\tfrac12\int_0^1t\gamma(t)\,dt.
 $$
-For an integrable coefficient, the solution is interpreted by
-approximation from bounded monotone coefficients. The exact control
+The terminal value $|x|=\max\{x,-x\}$ is the
+zero-temperature value of one spin in a field $x$. For an integrable
+coefficient, the PDE solution is interpreted by approximation from
+bounded monotone coefficients. The exact control
 definition and stability theorem are [OpenAI (2026a), §1 and
 Lemmas 2.1–2.2][FS]. To turn minimality of $\mathcal P$ into a
 condition on $\gamma$, we use a random process whose gradient moment
@@ -322,9 +327,10 @@ finite-step coefficient $\gamma_{\rm step}$: a function constant
 on each interval of a finite partition. Replace the terminal value
 $|x|$ by the smooth approximation $M^{-1}\log(2\cosh Mx)$, with
 $M\geq\|\gamma_{\rm step}\|_\infty$.
-At a positive time on a step of height $c$, let $f$ be the probability
-density of $X_t$. It factors as $f=e^{c\Phi}g$,
-where $g$ solves the forward heat equation. For $s=-\partial_x\log g$,
+On a step of height $c$, the exponential $e^{c\Phi}$ solves the
+backward heat equation. At positive time, write the diffusion density
+as $f=e^{c\Phi}g$. This substitution turns its Fokker–Planck equation
+into the forward heat equation for $g$. For $s=-\partial_x\log g$,
 the source proves joint shape restrictions: on $x>0$, $r$ and $s$
 are increasing and concave, $w/(2r)+v\leq0$ is nondecreasing,
 and
@@ -539,16 +545,21 @@ retains the smoothness argument and fixed-time transfer.
 ## 5. The scalar consequence and a separate circuit theorem
 
 <!-- passage:scalar-value -->
-Full support gives the two identities used in the algorithmic
-construction. The second moment $\mathbb E a^2=1$ normalises the
-stochastic increments, while the first moment recovers the value:
+Set $M_t=u(t,X_t)$, the bounded gradient martingale satisfying
+$dM_t=a(t,X_t)\,dB_t$.
+Full support gives $\mathbb E M_t^2=t$ and $\mathbb E a(t,X_t)^2=1$:
+each increment $M_t-M_s$ has variance $t-s$ for $0\leq s<t<1$.
+This is the normalisation
+used in the discrete construction below. The first moment of $a$
+instead measures the covariance gained with the driving Brownian motion,
+and recovers the value:
 $$
 P_*=\mathbb E[UB_1]
    =\int_0^1\mathbb E[a(t,X_t)]\,dt.                \tag{10}
 $$
-Here $U$ is the almost-sure and $L^2$ limit of the bounded martingale
-$M_t=u(t,X_t)$. Since $\mathbb E M_t^2=t$, its limit satisfies
-$U^2=1$ almost surely. To see the cancellation behind (10), the
+Here $U$ is the almost-sure and $L^2$ limit of $M_t$. Boundedness gives
+$|U|\leq1$, while $\mathbb E M_t^2\to1$ gives $\mathbb E U^2=1$;
+therefore $U^2=1$ almost surely. To see the cancellation behind (10), the
 terminal PDE estimate gives $UX_1=|X_1|$, while Itô's formula gives
 $\mathcal P(\gamma)=\mathbb E|X_1|-\int_0^1t\gamma(t)\,dt$.
 Multiplying $X_1=B_1+\int_0^1\gamma(t)M_t\,dt$ by $U$ cancels
@@ -581,8 +592,15 @@ The multipliers $h_j$ are normalised Hessians along the Euler
 approximation to $X$. The extra variable $Z_{N+1}$ rounds its
 terminal gradient to a sign while preserving the conditional mean,
 and hence its correlations with the preceding Gaussian variables.
-This explains the two coefficient families in (11). The mesh limit
-is taken at fixed $T$; only then does $T\uparrow1$ give $P_*$.
+With $\Delta=T/N$, the correlations with $g_j$ have leading term
+$\sqrt\Delta$, and the first $N$ correlations with $Z_i$ have leading
+term $\sqrt\Delta$ times the expected Hessian at the preceding Euler
+time. Both vectors have bounded $\ell^2$ norm and their errors tend
+to zero in $\ell^2$, so the errors vanish after pairing. The products
+with $j<N$ in (11) then form a Riemann sum for $\int_0^T\mathbb E a$;
+the remaining $j=N$ term, involving the rounding coordinate, vanishes.
+The mesh limit is taken at fixed $T$; only then does $T\uparrow1$
+give $P_*$.
 The construction and its error estimates are in the long record,
 §7, “A finite Gaussian spin and its adjacent correlations”.
 <!-- /passage:scalar-value -->

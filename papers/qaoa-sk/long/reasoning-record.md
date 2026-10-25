@@ -2352,8 +2352,22 @@ Then $X|\pm\rangle=\pm|\pm\rangle$ and $Z|+\rangle=|-\rangle$. The cost and mixe
 $$
 C_{n,J}=n^{-1/2}\sum_{i<j}J_{ij}Z_iZ_j,\qquad B_n=\sum_iX_i.
 $$
-The cost is diagonal in the spin basis with eigenvalues $H_n(\sigma)$.
-A depth-$p$ state is
+The two evolutions act differently:
+$$
+e^{-i\theta C_{n,J}}|\sigma\rangle
+ =e^{-i\theta H_n(\sigma)}|\sigma\rangle,
+\qquad
+e^{-i\beta B_n}=\prod_{i=1}^n(\cos\beta\,I-i\sin\beta\,X_i).
+$$
+The cost evolution changes phases while preserving spin-basis probabilities;
+the mixer combines amplitudes of different spin configurations. Cost evolution
+alone leaves the initial uniform probabilities unchanged, and a mixer applied
+first only multiplies $|+\rangle^{\otimes n}$ by $e^{-in\beta}$.
+Alternating them lets the cost-dependent phases change subsequent measurement
+probabilities. [Farhi, Goldstone, Gutmann and Zhou (2022), §2,
+equations (1)–(6)](https://arxiv.org/abs/1910.08187v4).
+
+A depth-$p$ state, with $p$ counting cost–mixer pairs, is
 $$
 |\psi_{n,p,J}(\boldsymbol\gamma,\boldsymbol\beta)\rangle
 =e^{-i\beta_pB_n}e^{-i\gamma_pC_{n,J}}\cdots
@@ -2429,6 +2443,21 @@ space where its shifted correlation sum becomes an energy observable.
 We will identify that sum with a rooted quadratic form, then relate the
 same form to the scaled edge energy of a fixed circuit; §9.5 supplies
 the final transfer to SK.
+
+For an ordinary depth-$p$ word, this tree calculation uses only finitely
+many spins. Conjugate $Z_iZ_j$ backwards through the circuit. A mixer
+rotates the spins already in its support without enlarging that support.
+In a cost layer all edge factors commute, so factors disjoint from the
+current support commute past the other factors and cancel. The remaining
+factors enlarge support by at most one graph step. After $p$ pairs, the
+edge expectation therefore depends only on its radius-$p$ backward
+light cone. On the $(D+1)$-regular tree this contains at most
+$2\sum_{r=0}^pD^r$ vertices; the spins outside factor out of the
+product-state expectation. Thus fixed depth gives fixed tree height,
+although the number of children grows with $D$. This locality explains the finite tree
+calculation; the equality with dense SK is the separate transfer theorem
+in §9.5. [Farhi, Goldstone and Gutmann (2014), §II,
+equations (14)–(26)](https://arxiv.org/abs/1411.4028v1).
 
 On a rooted tree, factor a circuit as $U=(\bigotimes_jU_j)u$,
 where each $U_j$ contains operations wholly in child subtree $j$.
@@ -3070,7 +3099,8 @@ After all these choices there is one finite ordinary word $W$, fixed
 independently of degree, size and disorder. On the $(D+1)$-regular
 tree use
 $C_D=D^{-1/2}\sum_{\{i,j\}\in E}Z_iZ_j$, counting each edge once.
-The source applies the fixed-word transfer theorem
+The edge expectation is defined on the finite light cone described in
+§9.1. The source applies the fixed-word transfer theorem
 $$
 v_W=\lim_{D\to\infty}\frac{\sqrt D}{2}
  \langle+|W_D^*Z_iZ_jW_D|+\rangle.

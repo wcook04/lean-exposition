@@ -13,10 +13,10 @@ Expository draft, 25 October 2026
 
 <!-- passage:opening -->
 The Sherrington–Kirkpatrick (SK) model asks us to choose signs that
-maximise a random sum of pair interactions. Its limiting value is
-represented by minimising a functional of a nondecreasing function,
-the **order parameter**. We explain why a minimiser cannot be constant
-on any interval below one: its increment measure has no gaps.
+maximise a random sum of pair interactions. The Parisi formula expresses
+the limiting maximum through a nondecreasing function, the **order
+parameter**. We explain why a minimising order parameter cannot be
+constant on any interval below one: its increment measure has no gaps.
 
 The proof ends with calculus. Minimality fixes the values and bounds
 the slopes of an auxiliary curve at the ends of a hypothetical gap.
@@ -49,8 +49,9 @@ $$
 A positive coupling rewards equal signs; a negative one rewards opposite
 signs. For example, positive couplings on pairs $12$ and $23$ favour
 $\sigma_1=\sigma_2=\sigma_3$, which conflicts with a negative coupling
-on pair $13$. The factor $n^{-1/2}$ is part of the model and must be retained when
-comparing limiting values.
+on pair $13$. This inability to maximise every pair's contribution
+simultaneously is called **frustration**. The factor $n^{-1/2}$ fixes
+the model's scale.
 
 For two spins, $H_2(\sigma)=J_{12}\sigma_1\sigma_2/\sqrt2$.
 Choosing equal or opposite signs according to the sign of $J_{12}$ gives
@@ -62,25 +63,28 @@ P_*:=\lim_{n\to\infty}\frac1n\mathbb E\max_\sigma H_n(\sigma),
 $$
 
 where expectation averages over the couplings after taking the maximum.
-We use the maximisation convention throughout. **Zero temperature**,
-or **ground-state value**, refers here to this extremal problem,
-rather than an average that gives positive weight to nonmaximising
-configurations. The model is **pure** because every term contains
+**Zero temperature**, or **ground-state value**, refers here to this
+maximisation problem. The model is **pure** because every term contains
 exactly two spins, and has **zero external field** because there is
 no additional term $h\sum_i\sigma_i$.
 
-For two configurations define their overlap
+The maximum is one question; the arrangement of nearly optimal choices
+is another. To compare two configurations for the *same couplings*,
+define their **overlap**
 $R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$, their average agreement
 with a disagreement counted as $-1$. If they disagree at $k$ positions,
-then $R=1-2k/n$. Independence gives
+then $R=1-2k/n$. For example, $(+,+,+,+)$ and $(+,+,+,-)$ have
+overlap $1/2$; two disagreements would give zero. The overlap also
+determines how their random scores are correlated: for fixed
+$\sigma,\tau$, independence of the couplings gives
 
 $$
 \mathbb E[H_n(\sigma)H_n(\tau)]
 =\frac n2 R(\sigma,\tau)^2-\frac12.
 $$
 
-Dividing by $n$ leaves the limiting covariance function
-$\xi(t)=t^2/2$, which fixes the normalisation below. For exact covariance
+Dividing by $n$ gives the limiting covariance
+$\xi(t)=t^2/2$. For exact covariance
 $n\xi(R)$, add the same independent centred Gaussian of variance $1/2$
 to every energy; this leaves the expected maximum unchanged. Reversing
 one configuration's signs preserves its energy and reverses its
@@ -93,10 +97,10 @@ scales $t$; it is an external input, stated in Section 3.
 
 An admissible **order parameter** is a function
 $\gamma:[0,1)\to[0,\infty)$ that is nondecreasing, right-continuous
-and integrable. Its argument $t$ indexes those overlap scales. The function is an
-auxiliary optimisation variable, not a probability distribution of
-overlaps sampled from a finite system. The associated **Stieltjes
-measure** $\mu_\gamma$ records cumulative increments:
+and integrable. It assigns a cumulative weight to each overlap scale $t$;
+these weights will enter the variational formula. They are not probabilities
+of overlaps sampled from a finite system. The associated **Stieltjes
+measure** $\mu_\gamma$ records where the weight increases:
 
 $$
 \mu_\gamma([0,t])=\gamma(t),\qquad
@@ -198,8 +202,7 @@ A constant candidate $\gamma(t)=c>0$ makes the distinction sharper:
 its measure is $c\delta_0$, supported only at zero. Positivity of the
 function is not the conclusion we seek. Nor does full support alone
 assert a density: a measure with summable positive masses at a dense countable
-set has full support. We will prove the support claim before mentioning
-the source's stronger density conclusion.
+set has full support. Section 7 returns to the stronger density conclusion.
 <!-- /passage:order-parameter-example -->
 
 <!-- passage:value-and-diffusion -->
@@ -207,11 +210,11 @@ the source's stronger density conclusion.
 
 ### 3.1 An auxiliary optimisation
 
-The Parisi theorem represents $P_*$ as the minimum of a functional,
-a number assigned to each candidate $\gamma$. Its definition uses an
-auxiliary one-dimensional optimisation. We need this representation
-because its response to small changes detects where the minimiser has mass.
-The paths below are auxiliary variables, not motions of spins.
+To assign a value to $\gamma$, we first solve a one-dimensional control
+problem: bias a noisy path to earn a large final reward, paying for the
+response along the way. Varying $\gamma$ will then reveal where a
+minimiser can have mass. Here the overlap scale $t$ plays the role of
+time; the path is auxiliary, not a motion of the spins.
 
 The auxiliary noise is Brownian motion $B$: a continuous random path starting at zero, with
 independent centred Gaussian increments, where $B_s-B_t$ has variance $s-t$.
@@ -227,10 +230,11 @@ $$
 \right].
 $$
 
-The first term rewards final absolute position and the second charges
-for responding. The terminal reward is itself a one-spin optimisation,
+Inside the absolute value, $x$ is the starting position, $B_1-B_t$ the
+accumulated noise, and the integral the accumulated response. The second
+term charges for that response. The final reward is a one-spin optimisation,
 $|x|=\max_{\sigma\in\{-1,1\}}x\sigma$. Here expectation is over
-Brownian paths with $\gamma$ fixed, not over the finite couplings.
+Brownian paths with $\gamma$ fixed.
 The candidate's value is
 
 $$
@@ -238,16 +242,16 @@ $$
 -\frac12\int_0^1t\gamma(t)\,dt.
 $$
 
-The inner supremum chooses a response for a fixed coefficient; the
-outer problem chooses the coefficient to minimise $\mathcal P$.
+The inner supremum chooses a response for fixed $\gamma$; the outer
+problem minimises $\mathcal P$ over $\gamma$.
 The ground-state Parisi formula and attainment give
 
 $$
 P_*=\min_{\gamma\text{ admissible}}\mathcal P(\gamma).
 $$
 
-Thus every candidate supplies an upper bound on the limiting maximum,
-and minimisation searches for the sharpest bound. The variational equality and
+Every candidate therefore supplies an upper bound; minimisation finds
+the sharpest one. The variational equality and
 attainment come from [Auffinger–Chen (2017), Theorem 1 and the proof of
 Lemma 3][auffinger-chen]; Gaussian concentration also gives the
 expected-value form used here. The no-gap theorem assumes a minimiser and
@@ -256,9 +260,11 @@ $\gamma=0$ gives $\Phi_0(t,x)=\mathbb E|x+\sqrt{1-t}Z|$ and
 $\mathcal P(0)=\sqrt{2/\pi}$ for a standard Gaussian $Z$.
 Evaluating this candidate alone does not establish minimality.
 
-### 3.2 Slope, curvature and a random path
+### 3.2 The best response and the path it generates
 
-The control value satisfies the backward partial differential equation
+At $t=1$ there is no noise or response left to accumulate, so the value
+is $|x|$. At earlier times it includes the best remaining response.
+Its partial differential equation (PDE) runs backward from that final value:
 
 $$
 \partial_t\Phi_\gamma
@@ -292,20 +298,19 @@ $$
 X_t=B_t+\int_0^t\gamma(s)u(s,X_s)\,ds,\qquad X_0=0.
 $$
 
-This is the **associated diffusion**: noise plus the accumulated
-response. We need it to define the deterministic function
+This random path is the **associated diffusion**. Its average squared
+response defines the deterministic curve
 
 $$
 q(t):=\mathbb E[u(t,X_t)^2].
 $$
 
-This curve records the average squared response. The first variation
-will show that $\tfrac12(q(t)-t)$ is the first-order cost density
-for changes in $\gamma$. Adding mass at a scale raises $\gamma$ at every later
-scale, so its cost is a tail integral of $q(t)-t$. Optimality will first give
-$q(t)=t$ on the support; excluding gaps will extend equality everywhere.
+The first variation will show that $\tfrac12(q(t)-t)$ is the
+first-order cost density for changes in $\gamma$. This makes $q$
+useful: optimality first forces $q(t)=t$ where the minimiser has mass;
+excluding gaps then extends that equality everywhere.
 
-### 3.3 The moment identity
+### 3.3 How the squared response grows
 
 The needed identity is $q'(t)=\mathbb E[a(t,X_t)^2]$: spatial curvature
 controls growth of the squared response. The following calculation
@@ -434,8 +439,8 @@ continuously as well.
 
 ### 5.2 Contact gives endpoint conditions
 
-We now differentiate contact of $G$ with zero to obtain contact of
-$q$ with time. An interior support point $s$ is a minimum of $G$. Since
+We need information about $q$ at the ends of a possible gap. An interior
+support point $s$ is a minimum of $G$. Since
 $G'(s)=s-q(s)$ and $G''(s)=1-q'(s)$, ordinary calculus gives
 
 $$
@@ -445,8 +450,7 @@ $$
 At zero, if it belongs to the support, contact and symmetry give
 $G(0)=q(0)=0$. The expansion
 $G(h)=\tfrac12(1-q'(0))h^2+o(h^2)$ and nonnegativity imply
-$q'(0)\le1$. This is a one-sided argument, and includes an atom at
-zero. We have obtained precisely the endpoint data needed below.
+$q'(0)\le1$. This one-sided argument includes an atom at zero.
 
 ### 5.3 Strict curvature creates an impossible integral
 
@@ -457,6 +461,9 @@ and contact imposes
 $$
 q(r)=r,\quad q(s)=s,\quad q'(r)\le1,\quad q'(s)\le1.
 $$
+
+The first two conditions require the average of $q'$ across the gap
+to be one. For $c>0$, the next input will force it below one throughout.
 
 **Strict-curvature input ([OpenAI (2026a), Proposition 5.1][support-curvature]).**
 For any admissible coefficient equal to $c>0$ on an open interval,
@@ -515,13 +522,11 @@ $q'<\text{endpoint chord}\le1$. The curve is schematic. Adapted from
 \href{https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/gap-convexity.tex}{Figure 1 of OpenAI (2026a)}, OpenAI/math (Apache 2.0).}
 \end{figure}
 
-Integration now gives $q(s)-q(r)<s-r$, whereas contact requires
-$q(s)-q(r)=s-r$. The gap is impossible. For the candidate in Section 2,
+Integration gives $q(s)-q(r)<s-r$, contradicting contact. For the candidate in Section 2,
 a minimising plateau on $(1/3,2/3)$ would require the same increment
 to be both equal to and strictly less than $1/3$.
 
-The strict sign is the difficult part of the proof. It is not a
-consequence of convexity of $\Phi_\gamma$ alone. Set
+The strict sign is the difficult part of the proof. Set
 $b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$ on a constant interval.
 Differentiating the PDE and applying Itô's rule gives
 
@@ -610,9 +615,11 @@ with a density bounded below uniformly for late $t$. The elapsed time
 from the fixed earlier time stays positive; this is not an estimate
 obtained by extending compact-strip derivative bounds to one.
 
-Now put $h=1-t$. The remaining Brownian noise has standard deviation
-$\sqrt h$. In the window $|x|\le\sqrt h$, the smoothed terminal sign
-retains both signs with uniformly positive probabilities, giving
+Now put $h=1-t$. On this constant terminal interval, $u(t,x)$ is a
+weighted average of the final signs $+1$ and $-1$. The remaining
+Brownian noise has standard deviation $\sqrt h$, so in the window
+$|x|\le\sqrt h$ both signs retain uniformly positive probabilities.
+Their weighted average stays away from $-1$ and $1$, giving
 $1-u(t,x)^2\ge\kappa>0$. If $m>0$ is the density lower bound there,
 then
 
@@ -666,7 +673,8 @@ calculus example, not a candidate SK moment function.
 ## 7. What full support says beyond the proof
 
 <!-- passage:overlap-payoff -->
-The result also has a meaning for the original spins. A separate theorem
+We can now return to the arrangement of nearly optimal spin choices.
+A separate theorem
 of [Auffinger–Chen–Zeng, Proposition 1, equation (5)][acz] applies at
 each point in the minimiser's support. Combining it with full support:
 for every fixed overlap $r\in[0,1)$ and tolerances $\varepsilon,\eta>0$,
@@ -745,8 +753,7 @@ Reasoning Record*, §11, records the checks and their outcomes. This
 exposition claims neither an independent audit of the entire analytic
 proof nor a human reader study.
 
-The following sources are used in the text; links select the editions
-read for the stated results.
+Links below select the editions used.
 
 - **OpenAI (2026a).** *Full support of the zero-temperature
   Sherrington–Kirkpatrick order parameter*, 27 September 2026.

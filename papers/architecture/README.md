@@ -14,6 +14,21 @@ and [graph contract](../../docs/contracts.md) specify the machine-readable
 details. The [read-only Prove2Me adapter](../../docs/prove2me.md) describes the
 external metadata boundary.
 
+Choose the reading task before opening a graph:
+
+- For the mathematical result and decisive proof, start with the
+  [short paper](../qaoa-sk/short/paper.md#model-and-result).
+- To recover the strict-curvature input, enter the
+  [long derivation](../qaoa-sk/long/reasoning-record.md#curvature-and-gap-certificate),
+  then return to the [gap proof](../qaoa-sk/short/paper.md#gap-elimination)
+  and identify where that input combines with endpoint contact.
+- For the objects and the area argument, read the
+  [exposition](../qaoa-sk/expository/main.md) in order at its stated prerequisites.
+
+The queries below answer where the recorded claims occur and what support is
+linked to them. Reading the linked argument answers how those ingredients are
+used. Keep those two tasks separate when reporting a review.
+
 ## Try the route locally
 
 Install the repository as instructed in its [top-level README](../../README.md),
@@ -38,7 +53,7 @@ remain external to the eight-file bundle.
 To begin at the short paper's support theorem rather than a graph ID, run:
 
 ```sh
-lean-exposition inspect-bundle BUNDLE_DIRECTORY --paper short --passage main-result
+lean-exposition inspect-bundle build/qaoa-sk-authored --paper short --passage main-result
 ```
 
 The paper view returns its outline and mapped text in reading order, exact

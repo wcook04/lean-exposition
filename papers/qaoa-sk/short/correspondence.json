@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "b350b0e3755503bf8d2b2ca7442ff906002abeb259205d014e7aab36ff4f08a6",
-  "graph_sha256": "1c8b98cd7afa779446e4b9bb1a0d7c2338d79677bc637a97669bc736208cf665",
+  "content_sha256": "1d8e78edebac4aba87d9d7080afe01cf468a0868c034f5c49f566f7e453f01ee",
+  "graph_sha256": "6c3f611f9de7aaca3c17bddbc4e0d589e8d89626cbcb642ba9c2da8553d1b130",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -291,7 +291,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "81c4bddca0e9958e1512b8ab381c15b896ef58ba46584b173716f652445ff3fb",
+      "text_sha256": "2bbb64cd25b91b08f661de55b27bd01bc398904f8aed7e2bf9de4b96e8fecf3e",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -463,7 +463,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "2d815dabe5e696d6c654d48ce318ba031992dbe7a53f0367a97894d7373e0f60",
+      "text_sha256": "ce34dfc6460be72f1b89bdf13b0c54cdeab7d649fc192cda35ef2be78af08673",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -549,7 +549,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "905fc16136752b9eba82028536a11b0edb650b4ef0366bbbe577f47b6ea218c2",
+      "text_sha256": "84c6665a7af91d0d31070e8a8d9ebda785b2d89d89fb8d7bbb2029c7eeebd074",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -739,6 +739,7 @@
     "24 October 2026: a further sequential agent review revised first-use terminology, concrete operations and transitions at the stated prerequisite level, cutting repeated announcements. Source claims, assumptions, passage selections and verification scope are retained. Root reviewed the changed wording against the argument and checked the rendered document; this is editorial agent review, not an independent human comprehension study or new formal acceptance.",
     "24 October 2026 focused-scope revision: applied skills/long-to-short/SKILL.md (SHA256 00e8641d4847c48f3e89420a3c72c32a2dd1f22612127d8552c39b3b556bc0bc). Retained the existing focused contribution, hard curvature step and exact full-proof destinations after the preceding sequential revision. This pass checked its relationship to the narrowed exposition; no new theorem or stronger evidence label was introduced.",
     "Paper scope review (25 October 2026): The authored focus follows the title, abstract, main theorem and density corollary: full support and strictly positive smooth density. Scalar and circuit connections remain mapped in their stated scope. This changes the mapping scope only; it does not change mathematical claims, source checks or review acceptance.",
-    "25 October 2026 round-four source-aware revision: applied skills/long-to-short/SKILL.md (SHA256 9dde3b565cecfd3d96ccbe7a77c48773007a31d90701751bc8cda7bde7dd0ed4). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically."
+    "25 October 2026 round-four source-aware revision: applied skills/long-to-short/SKILL.md (SHA256 9dde3b565cecfd3d96ccbe7a77c48773007a31d90701751bc8cda7bde7dd0ed4). Advisory critiques were adjudicated against the current manuscript and original sources. Revised first-use explanations, local proof transitions, endpoint and limiting arguments, credit and routes to full derivations. The explicit near-ground-overlap outlook is separately mapped in the exposition. Source-aware agent review and byte-consistent assembly do not establish independent mathematical acceptance, a human reader study or successful research Comparator replay. This successor remains a draft; previous reviews do not transfer automatically.",
+    "25 October 2026 lecture-informed refinement: applied skills/long-to-short/SKILL.md (SHA256 a0e9c126c33100f411fbc0160c31daec2b6da73fbdc80ceb387335f75c3cc749). Primary lecture transcripts were read for teaching structure and compared with the existing critique dispositions and original mathematical sources. Clarified object roles, optimisation choices, proof transitions and correspondence while preserving mathematical hypotheses and evidence status. Lecture consultation is pedagogical evidence, not theorem verification. Full transcript provenance and specific transfer decisions are retained in the internal research annex. This source-aware agent pass and byte-consistent assembly do not establish human reader comprehension, independent mathematical acceptance or successful research Comparator replay. Previous review notes describe earlier source editions."
   ]
 }
