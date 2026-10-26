@@ -221,3 +221,12 @@ Patrick Massot's [formal-to-informal discussion](https://www.youtube.com/watch?v
 (2024, 38:07–41:28) distinguishes hidden definitions from further proof detail,
 including the reason a reduction suffices. It informs the point-of-use checks
 above; it does not establish their teaching benefit for this reader.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+Start from the first operation or inference the intended reader could not yet
+perform. Repair its point of use, then try the explanation with a changed case.
+Separate the local choice of example from the reusable teaching decision;
+test the latter outside this problem and for an audience where it should not
+apply. Record author checks separately from actual reader responses.

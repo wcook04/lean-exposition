@@ -213,3 +213,12 @@ Retain the selected inputs, decisions and observed reconstruction failures in
 the existing review record, following [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
 The [Erdős method transfer](../../docs/erdos-method-transfer.md) supplies worked
 cases of argument selection, complete construction and informative failures.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+Trace a reconstruction failure to its missing inference or representation
+change, repair the long destination, and inspect shorter accounts that use it.
+Keep a mathematical discovery separate from the writing lesson it suggests.
+Record which instruction was applied or refined and what transfer cases support
+that decision; preserve any still-unproved step as an obligation.

@@ -98,6 +98,14 @@ actual checks. An author reporting a fix is distinct from a reader confirming it
 If an earlier acceptance no longer describes the changed content, reopen that
 review. Preserve its original edition, question and actual coverage.
 
+Close the authoring pass with the
+[review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills).
+Locate the decision that caused the difficulty, then distinguish an existing
+rule that was missed, a missing reusable instruction and a choice specific to
+this paper. A new instruction needs transfer cases and an exception before it
+enters the responsible transition skill. Keep the original reader observation
+separate from this author's diagnosis and from a later confirmation of the fix.
+
 No person has completed a session merely because these instructions or an answer
 key exist. Report an actual attempt only from the retained response and assistance
 record. Preparing the materials does not deliver a review request.

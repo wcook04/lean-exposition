@@ -1,7 +1,7 @@
 ---
 title: "One argument, several ways to read it"
 subtitle: "An architectural companion to Lean Exposition"
-date: "25 October 2026"
+date: "26 October 2026"
 portable-local-links: true
 header-includes:
   - |
@@ -315,18 +315,64 @@ recorded claims, and move between the three accounts. The website displays
 the same source and checking records; it does not supply additional proof
 or turn an authored correspondence into a verified one.
 
-For authors, the cycle begins with reading sources, selecting a result and
-recording its support. Reconstruction supplies the long account; editorial
-selection and teaching supply the other accounts. Review then asks two
-separate questions: does the writing faithfully represent the mathematics,
-and can the intended reader follow it? A useful reader task for this example
+Review asks two separate questions: does the writing faithfully represent the
+mathematics, and can the intended reader follow it? A useful reader task for this example
 is to explain why contact and curvature conflict, then say which step fails
 without minimality. Finding the right source is helpful, but does not by
 itself answer that task. The drafts have received source-based agent review;
 independent human acceptance and evidence of improved comprehension remain
 to be obtained.
 
-## 7. Why keep this much structure?
+## 7. How the writing methods improve
+
+The writing process is organised into four **authoring transitions**. An author
+first records the sources and their mathematical support, then reconstructs the
+selected argument, selects the expert account and develops an exposition for a
+stated reader. Each transition has a **transition skill**: a written method
+describing the material to inspect, decisions to make and questions to check.
+These methods guide an author or an assistant. They are not programs that
+generate a proof or certify an explanation.
+
+The inputs accumulate through the funnel; the scope of each paper is chosen
+afresh. An exposition can therefore teach one result using the full argument
+without inheriting every topic or the expert paper's order. A correction can
+also travel back: a question from an elementary reader may expose a missing
+assumption in the detailed argument. The claim must then be repaired wherever
+it is used, rather than only in the passage where the difficulty was noticed.
+
+Review improves two different things. First, it can repair the present account.
+Second, it can reveal a lesson worth retaining in the method for another
+problem. The **review-and-refinement loop** keeps those outcomes distinct.
+An author preserves the reviewed edition, tests the criticism against the
+sources, revises the affected passages and checks their uses in the other
+accounts. The author then asks whether the failure came from missing guidance,
+guidance that was not followed, or a choice particular to this paper. Only the
+first needs a new instruction; the second needs its existing instruction to
+reach the decision, and the third may remain a local choice.
+
+For example, the SK exposition uses a finite calculation with accumulated
+weights to prepare an integral and later returns to the same accounting in
+the contact argument. The transferable lesson is not that every exposition
+needs those weights. It is to let the reader perform an unfamiliar operation
+before relying on it in a proof, then use the example again when its purpose
+becomes clear. A specialist who already knows the operation may need no such
+preparation. Before retaining a lesson as general guidance, the author tests
+it on differently shaped problems and a case where it should not apply.
+Missing mathematical support returns to research, however clear the examples
+become.
+
+<!-- pdf-page-break -->
+
+The accepted lesson belongs in the transition skill that owns the decision,
+or in the shared authoring guide when several stages need it. The record of
+what happened stays with the reviewed edition. This lets the next author use
+the method without reading every earlier review, while preserving the evidence
+behind a change. The complete working instructions are kept in this repository;
+their historical exemplars are optional reading. Checks can establish that
+text and references still agree with their recorded editions. They cannot
+establish that an author applied a skill well or that a reader learned more.
+
+## 8. Why keep this much structure?
 
 Ordinary papers with careful references remain useful. The additional work
 here is maintaining explicit relationships across several accounts, so that

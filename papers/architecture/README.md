@@ -8,6 +8,10 @@ how a shared record connects the papers without dictating their reading order,
 then follows the SK no-gap argument from a short proof to its missing analytic
 detail and original source. It distinguishes explanation, formal evidence and
 navigation, and describes the useful scope and cost of the present system.
+Section 7 explains the four authoring transitions and how the review-and-refinement
+loop carries a tested lesson into the method for another problem. The
+[shared procedure](../../docs/authoring.md#use-and-improve-the-transition-skills)
+and [transition skills](../../skills/README.md) contain the operational steps.
 
 The companion adds a reading guide to the architecture. It does not replace the
 [exposition](../qaoa-sk/expository/main.md), [specialist paper](../qaoa-sk/short/paper.md)

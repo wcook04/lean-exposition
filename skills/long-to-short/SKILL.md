@@ -147,3 +147,12 @@ Record the input versions, contribution selected, consequential cuts and their
 destinations under [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
 The [Erdős method transfer](../../docs/erdos-method-transfer.md) illustrates
 selection by mathematical purpose and preservation of the decisive inference.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+If selection hid an assumption, mechanism or proof destination, repair the
+short account and read the complete round trip to its support. Record why the
+material was retained, relocated or cut. Generalise the decision criterion
+only after testing it on different results; this paper's preferred length or
+section order is not a rule for every expert audience.

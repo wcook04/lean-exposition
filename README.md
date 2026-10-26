@@ -118,9 +118,14 @@ reading links, keeping those recommendations separate from shared claims and
 proof dependencies. Both endpoint texts are bound to the captured edition.
 
 The [authoring guide](docs/authoring.md) and [writing methods](skills/README.md)
-cover selecting the material, reconstructing an argument, writing for specialists
-and teaching it to a stated audience. They include methods illustrated by
-[eight Erdős problem corpora](docs/erdos-method-transfer.md).
+call these steps **authoring transitions**: record the sources, reconstruct the
+argument, select the expert paper and teach a result to a stated audience.
+Four local transition skills guide those decisions. Their
+[review-and-refinement loop](docs/authoring.md#use-and-improve-the-transition-skills)
+turns a checked revision into a bounded lesson for the next problem: repair the
+paper, test what generalises, and improve the responsible skill. The complete
+working method lives here; the [Erdős examples](docs/erdos-method-transfer.md)
+record its bootstrap rather than a dependency on another repository.
 
 The software is a local Python command-line tool. It collects exact source
 versions, extracts dependencies from Lean projects, checks the graph and packages
