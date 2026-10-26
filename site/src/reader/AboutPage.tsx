@@ -20,7 +20,7 @@ import "./about.css";
 
 const RECORD_MEANINGS: { table: string; noun: string; meaning: string }[] = [
   { table: "nodes", noun: "records", meaning: "claims, assumptions, main results and Lean declarations" },
-  { table: "edges", noun: "links", meaning: "each saying that one record is used in the argument for another" },
+  { table: "edges", noun: "links", meaning: "each saying that one record is used in the argument for another, that a Lean declaration corresponds to a result, or that one record cites another" },
   { table: "citations", noun: "citations", meaning: "links from a record to a place in a source" },
   { table: "sources", noun: "sources", meaning: "papers and files, identified by address and, for files, by a hash of their bytes" },
   { table: "evidence", noun: "check records", meaning: "checks, including those planned but not run" },
@@ -109,7 +109,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <p className="about__lede">
           Some records have <a href={routeHref({ view: "checks" })}>checks</a> attached, for example whether a cited file still
           has its recorded hash, or whether a Lean project compiles. Each check has a recorded outcome: passed, failed,
-          unavailable or not run.{mostNotRun ? " Most checks in this edition have not been run." : ""}
+          unavailable or not run.{mostNotRun ? " Most checks on this site have not been run." : ""}
         </p>
       </header>
 
@@ -188,10 +188,10 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__serves" id="edition" aria-labelledby="serves">
         <h2 id="serves">The edition you are reading</h2>
         <p>
-          Everything on this site comes from one captured edition: a fixed set of files holding the records and the three
-          accounts, served by a read-only server. The site sends the edition’s identifier with every request. If the server
-          starts serving a different edition while you read, the site says so and asks you to reload, so the two editions
-          are never mixed on one page.
+          Everything on this site comes from one captured edition, which is a fixed set of files holding the records and the
+          three accounts, served by a read-only server. The site sends the edition’s identifier with every request. If the
+          server starts serving a different edition while you read, a notice at the top of the page asks you to reload, so
+          the two editions are never mixed on one page.
         </p>
         <dl className="facts">
           <div>

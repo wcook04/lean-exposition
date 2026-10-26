@@ -253,7 +253,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (!body) return false;
       const hit = resolveAnchor(doc, anchor);
       if (!hit) {
-        setNotice(`The ${PAPER_NAMES[stage].short.toLowerCase()} in this edition has no passage “${anchor}”, so the page opens at the start of the paper.`);
+        setNotice(`The ${PAPER_NAMES[stage].short.toLowerCase()} has no passage “${anchor}”, so the page opens at the start of the paper.`);
         return false;
       }
       setNotice(null);
@@ -921,7 +921,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <Modal title="Sections" placement={phone ? "sheet" : "side-start"} className="modal--sections" onClose={() => setSectionsOpen(false)}>
           <p className="modal__account">
             {names.short}
-            {status && <span className="faint"> · {status}</span>}
+            {status && <span className="faint">. {status}</span>}
           </p>
           <Sections
             {...sectionsProps}

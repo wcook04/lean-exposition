@@ -35,12 +35,14 @@ html[data-view="home"] {
   text-wrap: balance;
 }
 
+/* The theorem in words, in the serif of the mathematics. */
 .front .front__lede {
-  max-width: 31em;
+  max-width: 30em;
   margin: 20px 0 0;
-  font-size: 1.1875rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
   line-height: 1.5;
-  color: var(--ink-2);
+  color: var(--ink);
   text-wrap: pretty;
 }
 
@@ -82,6 +84,112 @@ html[data-view="home"] {
 .front__secondary:hover {
   border-color: var(--ink-3);
   background: color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+/* What the site holds, one step quieter than the mathematical lede above it. */
+.front .front__site {
+  max-width: 31em;
+  margin: 14px 0 0;
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* ---- The mathematics in plain words: prose beside one of the exposition's figures. ---- */
+
+.front__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: 56px;
+  align-items: start;
+}
+
+/* The second pair puts its figure first, so the two bands do not repeat one shape. */
+.front__pair--flip {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.front__pair--flip .front__fig {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.front__prose {
+  max-width: 36em;
+}
+
+/* Mathematical prose is set in the serif, like the papers and their formulas. */
+.front__prose p {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.front__prose p:last-child {
+  margin-bottom: 0;
+}
+
+.front__display {
+  margin: 4px 0 18px;
+  font-size: 1.2rem;
+  color: var(--ink);
+  text-align: center;
+  overflow-x: auto;
+}
+
+.front__fig {
+  margin: 0;
+  padding-top: 6px;
+}
+
+.front__fig .fig {
+  margin: 0 auto;
+}
+
+.front__fig figcaption {
+  max-width: 34em;
+  margin: 14px auto 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* What follows: one row per consequence, each with its own heading. */
+.follows {
+  display: grid;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.follows li {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) minmax(0, 40em);
+  gap: 8px 40px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.follows h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.follows p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
 }
 
 /* The statement on a quiet plate, set larger than on the map. */
@@ -127,6 +235,10 @@ html[data-view="home"] {
   line-height: 1.55;
   color: var(--ink-2);
   text-wrap: pretty;
+}
+
+.front__text + .front__text {
+  margin-top: 12px;
 }
 
 .front__subhead {
@@ -461,6 +573,18 @@ html[data-view="home"] {
   }
   .front__figure {
     margin-top: 28px;
+  }
+  .front__pair,
+  .front__pair--flip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .front__pair--flip .front__fig {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .follows li {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

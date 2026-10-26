@@ -217,7 +217,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
                   onClick={() => (depth < MAX_DEPTH ? toggle(key) : focusBranch(rowPath))}
                 >
                   <Chevron open={expanded} />
-                  Inputs · <span className="num">{n}</span>
+                  <span className="num">{n}</span> {n === 1 ? "input" : "inputs"}
                 </button>
               ) : (
                 <span className="orow__leaf">{node.kind === "assumption" ? "Assumed" : "No recorded inputs"}</span>

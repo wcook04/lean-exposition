@@ -34,7 +34,7 @@ const ROW_H = 26;
 const ROW_GAP = 8;
 const OPEN_KEY = "lx-dock-open";
 const KIND_WORDS: Record<string, string> = {
-  expands: "a fuller treatment",
+  expands: "a fuller explanation",
   illustrates: "an example",
   answers: "an answer",
   shared_claim: "a passage linked to the same record",

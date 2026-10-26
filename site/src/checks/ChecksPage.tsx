@@ -66,7 +66,7 @@ export function outcomeParts(counts: Record<string, number>): { status: string; 
  */
 export function rowNote(kind: string, counts: Record<string, number>): string | null {
   const total = Object.values(counts).reduce((s, n) => s + n, 0);
-  if (!total || counts.passed) return kind === "source_hash" && counts.passed ? "These checks compare the bytes of the named files only." : null;
+  if (!total || counts.passed) return kind === "source_hash" && counts.passed ? "These checks compare each named file’s hash with its recorded hash and examine nothing else." : null;
   if (kind === "comparator") return "No successful Comparator result is recorded.";
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
@@ -80,13 +80,13 @@ export function editionNote(cards: readonly EvidenceCard[]): string {
   const reviewed = reviews.filter((c) => c.status === "passed").length;
   const lead =
     notRun * 2 > total
-      ? `Most recorded checks in this edition have not been run (${notRun} of ${total}).`
-      : `${notRun} of the ${total} recorded checks in this edition have not been run.`;
+      ? `Most recorded checks on this site have not been run (${notRun} of ${total}).`
+      : `${notRun} of the ${total} recorded checks on this site have not been run.`;
   const review =
     reviewed === 0
-      ? "In a correspondence review, a reviewer compares a recorded statement or explanation with its source. No correspondence review is recorded as passed, so no warrant (the recorded explanation of why one record is used for another) has been independently reviewed."
-      : `In a correspondence review, a reviewer compares a recorded statement or explanation with its source. ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the records do not say the reviewer was independent.`;
-  return `${lead} ${review} Each outcome is what a check record says happened to that one check. An outcome is not a judgement on whether the mathematics is correct.`;
+      ? "In a correspondence review, a reviewer compares a recorded statement or explanation with its source. No correspondence review is recorded as passed, so no recorded explanation of why one record is used for another has been independently reviewed."
+      : `In a correspondence review, a reviewer compares a recorded statement or explanation with its source. ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`;
+  return `${lead} ${review} Each outcome is the result written in one check record, for that check alone. An outcome is not a judgement on whether the mathematics is correct.`;
 }
 
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
@@ -118,28 +118,28 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         </h1>
         <p className="checks__lede">
           A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a
-          Lean project compiles. For each kind of check, the table says what that kind examines and counts the outcomes written
-          in its check records: passed, failed, unavailable or not run.
+          Lean project compiles. For each kind of check, the table lists what that kind examines and how many of its check
+          records give each outcome (passed, failed, unavailable or not run).
         </p>
         <p className="checks__edition">{editionNote(cards)}</p>
       </header>
 
       {target.type === "unknown" && (
         <p className="checks__notice" role="status">
-          No record in this edition has the identifier <code className="lean">{target.id}</code>. All the checks in the edition are listed below.
+          No record on this site has the identifier <code className="lean">{target.id}</code>. All the checks are listed below.
         </p>
       )}
 
       {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
 
       <section className="checks__band" aria-labelledby="by-kind">
-        <h2 id="by-kind">{subject ? "All checks in this edition, by kind" : "All checks, by kind"}</h2>
+        <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "All checks, by kind"}</h2>
         <p className="checks__intro">
           There are {recordsWord(cards.length)} in all. The button in a row’s Details column lists that row’s records, each
           with what was run or planned, which statements it concerns, and its outcome.
         </p>
         <CheckTable
-          caption="All recorded checks in this edition, by kind"
+          caption="All recorded checks on this site, by kind"
           rows={groups.map((g) => ({ group: g, examined: null }))}
           target={target.type === "evidence" ? target : null}
           paged
@@ -150,7 +150,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
       <section className="checks__band" aria-labelledby="formal">
         <h2 id="formal">Formal statements in Lean</h2>
         <p className="checks__intro">
-          This edition contains {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`}. A
+          The records include {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`}. A
           Lean declaration is a statement written in Lean, a language in which a computer can check proofs. Each declaration
           below is listed with the claims recorded as corresponding to it.
         </p>
@@ -309,12 +309,12 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
           {group.title}
         </th>
         <td className="checkrow__examined" data-label="What it examined">
-          {group.question || <span className="faint">The check records do not say.</span>}
+          {group.question || <span className="faint">Not stated in the check records.</span>}
           {row.examined && <span className="checkrow__subjects">{row.examined}</span>}
         </td>
         <td className="checkrow__outcome" data-label="Recorded outcome">
           {total === 0 ? (
-            <span className="faint">This edition has no check records of this kind.</span>
+            <span className="faint">There are no check records of this kind.</span>
           ) : (
             <ul className="checkrow__counts">
               {outcomeParts(group.counts).map(({ status, n }) => (
@@ -355,7 +355,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
                   )}
                   {ordered.undated.length > 0 && (
                     <>
-                      {ordered.dated.length > 0 && <p className="ledger__break">Check records that give no date, in the order the edition lists them</p>}
+                      {ordered.dated.length > 0 && <p className="ledger__break">Check records with no date, in their stored order</p>}
                       <ol className="ledger">
                         {ordered.undated.map((r) => (
                           <EvidenceRow key={r.card.id} card={r.card} record={r.record} selected={target?.id === r.card.id} />
@@ -503,14 +503,14 @@ function EvidenceRow({
       <div className="ev__body">
         <p className="ev__tool">
           {showKind && <span className="ev__kind">{kindTitle}. </span>}
-          {record ? record.tool ?? "The record names no tool." : <span className="faint">Loading the record…</span>}
+          {record ? record.tool ?? "No tool is named in the record." : <span className="faint">Loading the record…</span>}
         </p>
         {record && (
           <>
             <p className="ev__meta">
-              {date && <span className="ev__date">The record gives the date {date.text}. </span>}
+              {date && <span className="ev__date">The date given in the record is {date.text}. </span>}
               {subjects.length === 0 ? (
-                "The record names no statement that it concerns."
+                "No statement is named as the subject of this check."
               ) : (
                 <>
                   It concerns{" "}

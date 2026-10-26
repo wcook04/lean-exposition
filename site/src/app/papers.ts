@@ -8,16 +8,16 @@ export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: st
   expository: {
     short: "Exposition",
     job: "Explains the objects and the idea of the proof, starting from a calculation with two spins.",
-    reader: "Written for readers who know calculus, integration against a measure and expectation.",
+    reader: "Written for readers who know algebra and calculus; probability and measures are introduced through calculations.",
   },
   short: {
     short: "Short paper",
-    job: "States the result, relates it to earlier work and proves it.",
+    job: "States the result, relates it to earlier work and gives the proof, citing the curvature estimate it rests on.",
     reader: "Written for readers who know Itô calculus and martingale convergence.",
   },
   long: {
     short: "Long record",
-    job: "Reconstructs each derivation and assumption, names the source of each step, and continues to the QAOA circuits.",
+    job: "Reconstructs the derivations, names the source of each step and of each imported estimate, and continues to the QAOA circuits.",
     reader: "Written so that a reader can start at any step they want to examine.",
   },
 };

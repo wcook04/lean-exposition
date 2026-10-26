@@ -93,7 +93,7 @@ describe("naming places", () => {
     const claim = [...graph.nodes.values()].find((n) => n.kind === "claim")!.id;
     const assumption = [...graph.nodes.values()].find((n) => n.kind === "assumption")!.id;
     expect(recordTally([claim], graph)).toBe("1 claim");
-    expect(recordTally([claim, claim, assumption, assumption], graph)).toBe("2 claims · 2 assumptions");
+    expect(recordTally([claim, claim, assumption, assumption], graph)).toBe("2 claims and 2 assumptions");
     expect(recordTally([assumption], graph)).toBe("1 assumption");
   });
 });

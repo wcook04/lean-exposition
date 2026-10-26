@@ -37,8 +37,8 @@ describe("step wording", () => {
   });
 
   it("never calls a review independent unless that is what is not run", () => {
-    expect(warrantStatus("not_run")).toBe("Recorded explanation · independent review not run");
-    expect(warrantStatus("passed")).toBe("Recorded explanation · review record: passed");
+    expect(warrantStatus("not_run")).toBe("An explanation is recorded, but no independent review of it has been run");
+    expect(warrantStatus("passed")).toBe("An explanation is recorded, and a review of it is recorded as passed");
     expect(warrantStatus("passed")).not.toMatch(/independently reviewed/);
   });
 

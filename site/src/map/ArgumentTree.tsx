@@ -2507,7 +2507,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const role = lens ? lensRole(node, lens) : "all";
           const peeked = peekFaded.has(lid);
           const tab = lid === roving && !peeked ? 0 : -1;
-          const source = isRoot && !compact && node.origin.place ? `${node.origin.label} · ${node.origin.place}` : (node.origin.place ?? node.origin.label);
+          const source = isRoot && !compact && node.origin.place ? `${node.origin.label}, ${node.origin.place}` : (node.origin.place ?? node.origin.label);
           const sourceTitle = `${node.origin.label}${node.origin.locator ? `: ${node.origin.locator}` : ""}`;
           const usedBy = built.shared.get(id) ?? 0;
           return (
@@ -2561,7 +2561,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                   aria-label={`Open ${node.label}`}
                 >
                   <span className={`card__title${node.kind === "declaration" ? " lean" : ""}`}>{node.kind === "declaration" ? <LeanName name={node.label} /> : node.label}</span>
-                  {node.status === "open" && <span className="card__status"> · open</span>}
+                  {node.status === "open" && <span className="card__status"> (unresolved)</span>}
                 </button>
                 {tags.length > 0 && (
                   <div className="card__tags">
@@ -2608,8 +2608,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                         <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true">
                           <path d="M2.5 3.5 L5 6.2 L7.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        Inputs · {uses.length}
-                        {outside > 0 && <span className="card__outside"> · {outside} outside</span>}
+                        {uses.length} {uses.length === 1 ? "input" : "inputs"}
+                        {outside > 0 && <span className="card__outside">, {outside} outside</span>}
                       </button>
                     ) : !isRoot && !clone && !tags.length ? (
                       <span className="card__none">{outside > 0 ? `${outside} ${outside === 1 ? "input" : "inputs"} outside this account` : "No recorded inputs"}</span>

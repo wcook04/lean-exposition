@@ -57,7 +57,7 @@ export function KeyRow({ id, origins, hidden }: { id: string; origins: OriginFam
         </li>
         <li>
           <span className="keyrow__clone" aria-hidden="true" />
-          Drawn under each result that uses it
+          A record drawn again under each result that uses it
         </li>
         <li className="keyrow__more">
           <a href={routeHref({ view: "about", anchor: "about-key" })}>How the map is drawn</a>

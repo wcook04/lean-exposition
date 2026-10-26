@@ -58,7 +58,7 @@ export function SimplifiedMap({ graph, hidden, onChoose }: { graph: ArgGraph; hi
               <section key={kind} className="sim__group">
                 <h3 className="sim__head">
                   <span className={`rel-sample rel-sample--${kind}`} aria-hidden="true" />
-                  {relationName(kind)} · {rows.length}
+                  {relationName(kind)} ({rows.length})
                 </h3>
                 <ul className="sim__list">
                   {rows.map((e) => (
