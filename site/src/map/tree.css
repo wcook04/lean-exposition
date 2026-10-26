@@ -1284,3 +1284,73 @@
   font-size: 12px;
   cursor: default;
 }
+
+/* ---- Following a passage (the map beside the paper) ---------------------------------
+   The records linked to the passage being read carry an amber ring on their own
+   border: a "lit" state, distinct from the selection's outline set off the card.
+   Lines between two of them light in their type colours; everything else rests. */
+
+.card.is-passage {
+  border-color: var(--lit-line);
+  box-shadow: 0 0 0 1px var(--lit-line), var(--card-shadow-lift);
+  transition:
+    border-color var(--t-state) var(--ease-out),
+    box-shadow var(--t-state) var(--ease-out);
+}
+
+.card--assumption.is-passage {
+  border-style: dashed;
+}
+
+.card.is-passage.is-selected {
+  box-shadow: 0 0 0 1px var(--lit-line), var(--card-shadow-lift), 0 0 32px -6px var(--lit-glow);
+}
+
+.tree[data-rep="mark"] .card.is-passage {
+  outline: calc(2px / var(--k)) solid var(--lit-line);
+  outline-offset: calc(2px / var(--k));
+}
+
+.tag.is-passage {
+  outline: 1.5px solid var(--lit-line);
+  outline-offset: 1px;
+}
+
+.links-passage > g,
+.heads-passage .head--lit {
+  animation: passage-in var(--t-state) var(--ease-out) both;
+}
+
+@keyframes passage-in {
+  from {
+    opacity: 0;
+  }
+}
+
+:root[data-theme="dark"] .links-passage .link--lit {
+  filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-supports-lit) 55%, transparent));
+}
+:root[data-theme="dark"] .links-passage .link--lit.link--assumes {
+  filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-assumes-lit) 55%, transparent));
+}
+:root[data-theme="dark"] .links-passage .link--lit.link--formalizes {
+  filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-formalizes-lit) 55%, transparent));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .links-passage .link--lit {
+    filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-supports-lit) 55%, transparent));
+  }
+  :root:not([data-theme="light"]) .links-passage .link--lit.link--assumes {
+    filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-assumes-lit) 55%, transparent));
+  }
+  :root:not([data-theme="light"]) .links-passage .link--lit.link--formalizes {
+    filter: drop-shadow(0 0 calc(3px / var(--k)) color-mix(in oklab, var(--rel-formalizes-lit) 55%, transparent));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links-passage > g,
+  .heads-passage .head--lit {
+    animation: none;
+  }
+}
