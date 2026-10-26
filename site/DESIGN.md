@@ -207,14 +207,19 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   line saying what the site holds; the one filled button ("Read the exposition") and
   "Open the argument map"; beside them the first sentence of Theorem 1 as the short
   paper typesets it, labelled as its first part.
-- **Then, in order:** the problem (signs, Gaussian weights, the ground-state value,
-  Parisi's formula, overlaps and what a gap is, beside the exposition's gap figure);
-  how the proof rules out a gap (contact, strict curvature and the missing area,
-  beside the exposition's area figure, with the hard step named and attributed);
-  what follows (the spins, the classical algorithm, the QAOA circuit); the three
-  accounts with their strips; the argument map; and what has been checked, stated
-  literally (Lean statements exist, Comparator has not finished, what the exact
-  calculation covers, and that no independent mathematical review has been done).
+- **Then, in order:** what OpenAI's release asked and proved, as three plain questions,
+  each answered with who proved it, where each account explains it, and its argument on
+  the map; the technical explanation behind one disclosure (the problem beside the
+  exposition's gap figure, how the proof rules out a gap beside its area figure, and
+  what follows); the layers from OpenAI's release (family 281, its manuscripts and Lean
+  source) through the argument map, the long record, the short paper and the exposition
+  to a video in preparation, drawn as a stepped funnel whose narrowing shows their order
+  and not their length, each layer linked to read here or as a PDF with its real page
+  count, followed by Plectis Atlas's family page and the public repository; the argument
+  map's drawing and key; and what has been checked, stated literally.
+- The page reads whole with the disclosure closed. The PDFs are served from the
+  repository's own renders under `pdf/`, with page counts read from the files at build
+  time (`vite.config.ts`).
 - A fact true of all three accounts is said once, not on every row. Every number
   taken from the edition is computed.
 
