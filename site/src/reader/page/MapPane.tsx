@@ -89,9 +89,9 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
       return;
     }
     treeRef.current?.focusIds(records, { exclusive: true });
-    // Refocus when the passage, the main result, following or the room changes.
+    // Refocus when the passage, the main result or following changes (the map re-centres itself when its room changes).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recordsKey, goal, following, fadeTo, overlayOpen]);
+  }, [recordsKey, goal, following, fadeTo]);
 
   useEffect(() => {
     if (!fadeTo) return;

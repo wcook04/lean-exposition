@@ -389,23 +389,25 @@ export function MapPage({ route }: { route: MapRoute }) {
               <button type="button" className="map-tool" onClick={collapse} disabled={display !== "map"}>
                 Collapse branches
               </button>
+              <button type="button" className="map-tool" onClick={() => treeRef.current?.expandAll()} disabled={display !== "map"}>
+                Show all branches
+              </button>
               <button type="button" className="map-tool" onClick={() => treeRef.current?.fitAll()} disabled={display !== "map"}>
                 Show overview
               </button>
             </>
           )}
-          <MoreMenu
-            items={[
-              ...(narrow || phone
-                ? [
-                    { label: "Collapse branches", run: collapse },
-                    { label: "Show overview", run: () => treeRef.current?.fitAll() },
-                  ]
-                : []),
-              { label: "Expand every branch", run: () => treeRef.current?.expandAll() },
-            ]}
-            disabled={display !== "map"}
-          />
+          {/* The bar's own tools fold into "More" at narrower widths. */}
+          {(narrow || phone) && (
+            <MoreMenu
+              items={[
+                { label: "Collapse branches", run: collapse },
+                { label: "Show all branches", run: () => treeRef.current?.expandAll() },
+                { label: "Show overview", run: () => treeRef.current?.fitAll() },
+              ]}
+              disabled={display !== "map"}
+            />
+          )}
           <MapKey origins={graph.origins} />
         </div>
       </div>

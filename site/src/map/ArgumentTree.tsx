@@ -32,7 +32,7 @@ import { transitiveReduction } from "./engine/skeleton";
 import { consumerOf, edgeKeyOf, layoutScope, recordOf, splitSharedLeaves } from "./engine/occurrences";
 import { layoutBounds, layoutTree } from "./engine/layout";
 import { arrowHead, polygonPath, roundedPath, route, type Plan, type Pt, type Routed } from "./engine/router";
-import { fitBounds, frameBox, lerpView, revealBox, type Bounds, type View, type Viewport } from "./engine/camera";
+import { fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
 import { COMPACT_FLOOR, MAX_K, MIN_K, STEPS_FLOOR, STEPS_K, repFor, type MapMode, type Rep } from "./canvas/representation";
@@ -128,8 +128,8 @@ export interface TreeProps {
 
 const STORE = "lx-tree-expanded:";
 
-/** Following a passage never frames below this scale: cards keep their titles at reading size. */
-const FOCUS_FLOOR = 0.85;
+/** Following a passage frames down to this scale; below 0.8 cards show their titles at a constant 13px. */
+const FOCUS_FLOOR = 0.5;
 
 /** World widths. Narrow enough that a goal's first row usually reads at k = 1 on a laptop. */
 function widthOf(node: ArgNode, isRoot: boolean, compact: boolean, rootW: number): number {
@@ -180,7 +180,16 @@ interface Motion {
   to: Map<string, CardState>;
   dummyFrom: Map<string, number>;
   entering: Set<string>;
-  view?: { from: View; to: View };
+  /** The camera's leg: its own start and length on the same clock, so a relayout never cuts it short. */
+  view?: CameraLeg;
+}
+
+interface CameraLeg {
+  from: View;
+  to: View;
+  start: number;
+  dur: number;
+  at(t: number): View;
 }
 
 interface Built {
@@ -612,12 +621,15 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       lastRouted.current = routed;
       writePaths(routed, all, e);
       // Camera on the same clock.
+      let cameraMoving = false;
       if (m?.view) {
-        const vp = viewport();
-        applyView(raw >= 1 ? m.view.to : lerpView(m.view.from, m.view.to, e, vp));
+        const v = m.view;
+        const t = v.dur > 0 ? Math.min(1, Math.max(0, (now - v.start) / v.dur)) : 1;
+        applyView(t >= 1 ? v.to : v.at(easeMove(t)));
+        cameraMoving = t < 1;
       }
       placeLabels();
-      if (m && raw < 1) raf.current = requestAnimationFrame(draw);
+      if (m && (raw < 1 || cameraMoving)) raf.current = requestAnimationFrame(draw);
       else if (m) {
         motion.current = null;
         raf.current = 0;
@@ -712,6 +724,14 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   const viewport = (): Viewport => ({ width: sizeRef.current.width, height: sizeRef.current.height, insets: insetsRef.current });
 
+  /** A camera leg along the smooth-zoom path (van Wijk and Nuij), eased in and out. */
+  const leg = (from: View, to: View, start: number, dur: number): CameraLeg => {
+    const path = zoomPath(from, to, viewport());
+    return { from, to, start, dur, at: path.at };
+  };
+  /** The time a move along that path takes, by its length. */
+  const travelFor = (from: View, to: View) => travelMs(zoomPath(from, to, viewport()).length);
+
   /** Where the camera is heading (or is). Reveals are judged against this, so they never fight a move in flight. */
   const targetView = (): View => cameraOnly.current?.to ?? motion.current?.view?.to ?? viewRef.current;
 
@@ -728,18 +748,18 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       }
       const now = performance.now();
       if (m && m.dur > 0 && now - m.start < 34) {
-        m.view = { from: viewRef.current, to };
+        m.view = leg(viewRef.current, to, m.start, m.dur);
         cameraOnly.current = null;
         return;
       }
       if (m) m.view = undefined;
-      cameraOnly.current = { start: now, from: viewRef.current, to, dur };
+      cameraOnly.current = leg(viewRef.current, to, now, dur);
       if (!cameraRaf.current) cameraRaf.current = requestAnimationFrame(cameraTick);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [applyView],
   );
-  const cameraOnly = useRef<{ start: number; from: View; to: View; dur: number } | null>(null);
+  const cameraOnly = useRef<CameraLeg | null>(null);
   const cameraRaf = useRef(0);
   const cameraTick = (now: number) => {
     const c = cameraOnly.current;
@@ -748,7 +768,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       return;
     }
     const raw = Math.min(1, (now - c.start) / c.dur);
-    applyView(raw >= 1 ? c.to : lerpView(c.from, c.to, easeMove(raw), viewport()));
+    applyView(raw >= 1 ? c.to : c.at(easeMove(raw)));
     if (raw < 1) cameraRaf.current = requestAnimationFrame(cameraTick);
     else {
       cameraOnly.current = null;
@@ -796,6 +816,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   // Start a motion whenever the layout changes.
   const pendingCamera = useRef<null | ((l: Layout) => View | null)>(null);
+  /** The pending camera is a focus on a passage's records (it takes the distance-scaled duration). */
+  const pendingFocus = useRef(false);
   useLayoutEffect(() => {
     const now = performance.now();
     const prev = committed.current;
@@ -877,22 +899,28 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const animate = sameScene && !reducedRef.current && !restoreRef.current && framedRef.current && !enteringRef.current;
     const before = motion.current;
     cancelAnimationFrame(raf.current);
-    motion.current = { start: now, dur: animate ? MOVE_MS : 0, from, to, dummyFrom, entering };
+    // The camera's target comes from the final layout: a focus waits out a provisional pass (sizes still guessed).
     let camera: View | null = null;
-    if (pendingCamera.current && ready && !restoreRef.current) {
+    const focusing = pendingFocus.current;
+    if (pendingCamera.current && ready && !restoreRef.current && !(focusing && built.provisional)) {
       camera = pendingCamera.current(layout);
-      if (!built.provisional) pendingCamera.current = null;
+      if (!built.provisional) {
+        pendingCamera.current = null;
+        pendingFocus.current = false;
+      }
     }
+    // Following the text, cards, lines and camera share one duration that grows with the camera's travel.
+    const dur = !animate ? 0 : focusing && camera ? travelFor(viewRef.current, camera) : MOVE_MS;
+    motion.current = { start: now, dur, from, to, dummyFrom, entering };
     if (camera) {
       // One camera move at a time: this one starts from wherever the last one had got to.
       cameraOnly.current = null;
-      motion.current.view = { from: viewRef.current, to: camera };
+      motion.current.view = animate ? leg(viewRef.current, camera, now, dur) : leg(camera, camera, now, 0);
     }
-    // A camera move that joined the previous (provisional) pass carries over.
-    else if (before?.view && now - before.start < 60) motion.current.view = { from: before.view.from, to: before.view.to };
-    if (animate) setMoving(true);
+    // A camera move still in flight keeps its own clock across a relayout (a card measured late, say).
+    else if (before?.view && now - before.view.start < before.view.dur) motion.current.view = before.view;
+    if (animate || motion.current.view) setMoving(true);
     draw(now);
-    if (animate) raf.current = requestAnimationFrame(draw);
     renderedRef.current = new Set([...layout.boxes.keys(), ...exiting]);
     if (!built.provisional) {
       committed.current = built;
@@ -1098,41 +1126,46 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   );
 
   /**
-   * Following a passage: its records and the cards that use them, at a scale
-   * from FOCUS_FLOOR to 1. When they cannot all fit, the first record in
-   * reading order and its consumers; the edge chips count the rest.
+   * Following a passage: every one of its drawn records, centred in the visible
+   * canvas with a margin, at the largest scale up to 1 that fits them, down to
+   * FOCUS_FLOOR (below 0.8 cards read as titles). The cards that use them join
+   * the frame only when they still fit at that scale. Only a set that cannot
+   * fit even at the floor is centred there, with the edge chips counting the rest.
    */
   const focusReq = useRef<string[] | null>(null);
+  /** The camera is the focus's until the reader moves it: resizes and inspectors re-centre it. */
+  const focusHeld = useRef(false);
   const focusFrame = useCallback(
     (ids: readonly string[]) =>
       (l: Layout): View | null => {
         const skeleton = builtRef.current.skeleton;
         const pad = 28;
-        const groups: Bounds[][] = [];
+        const grow = (r: Rect): Bounds => ({ x0: r.x - pad, y0: r.y - pad, x1: r.x + r.w + pad, y1: r.y + r.h + pad });
+        const lit: { lid: string; box: Bounds }[] = [];
+        const tags: string[] = [];
         for (const id of ids) {
-          const tag = graph.nodes.get(id)?.kind === "assumption";
-          // An assumption is drawn as tags on the records that assume it: the highest of those stands for it
-          // (every tag lights; framing them all would pull the camera across the whole map).
-          const holders = tag ? [...l.boxes.keys()].filter((lid) => usesOf(graph, recordOf(lid), within).some((e) => e.kind === "assumes" && e.to === id)) : [];
-          holders.sort((a, b) => l.boxes.get(a)!.y - l.boxes.get(b)!.y || l.boxes.get(a)!.x - l.boxes.get(b)!.x);
-          const cards = tag ? holders.slice(0, 1) : [pick(l, id)].filter((lid): lid is string => !!lid);
-          if (!cards.length) continue;
-          const own = cards.map((lid) => l.boxes.get(lid)!);
-          const group: Bounds[] = own.map((r) => ({ x0: r.x - pad, y0: r.y - pad, x1: r.x + r.w + pad, y1: r.y + r.h + pad }));
-          if (!tag) {
-            const t = own[0];
-            for (const e of skeleton) {
-              if (e.to !== cards[0]) continue;
-              const c = l.boxes.get(e.from);
-              if (!c) continue;
-              // The goal's plate is tall: of it, only the foot where the line arrives.
-              if (e.from === goal) group.push({ x0: Math.max(c.x, t.x - 60), x1: Math.min(c.x + c.w, t.x + t.w + 60), y0: c.y + c.h - 72, y1: c.y + c.h + pad });
-              else group.push({ x0: c.x - pad, y0: c.y - pad, x1: c.x + c.w + pad, y1: c.y + c.h + pad });
-            }
+          if (graph.nodes.get(id)?.kind === "assumption") tags.push(id);
+          else {
+            const lid = pick(l, id);
+            if (lid) lit.push({ lid, box: grow(l.boxes.get(lid)!) });
           }
-          groups.push(group);
         }
-        if (!groups.length) return null;
+        // An assumption is drawn as tags on the records that assume it (every tag lights):
+        // the holder nearest the other lit cards stands for it, else the highest one.
+        const centre = lit.length
+          ? { x: lit.reduce((a, c) => a + (c.box.x0 + c.box.x1) / 2, 0) / lit.length, y: lit.reduce((a, c) => a + (c.box.y0 + c.box.y1) / 2, 0) / lit.length }
+          : null;
+        for (const id of tags) {
+          const holders = [...l.boxes.keys()].filter((lid) => usesOf(graph, recordOf(lid), within).some((e) => e.kind === "assumes" && e.to === id));
+          if (!holders.length) continue;
+          const score = (lid: string) => {
+            const r = l.boxes.get(lid)!;
+            return centre ? Math.hypot(r.x + r.w / 2 - centre.x, r.y + r.h / 2 - centre.y) : r.y * 10 + r.x;
+          };
+          holders.sort((a, b) => score(a) - score(b));
+          if (!lit.some((c) => c.lid === holders[0])) lit.push({ lid: holders[0], box: grow(l.boxes.get(holders[0])!) });
+        }
+        if (!lit.length) return null;
         const union = (list: Bounds[]): Bounds => ({
           x0: Math.min(...list.map((b) => b.x0)),
           y0: Math.min(...list.map((b) => b.y0)),
@@ -1140,12 +1173,27 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           y1: Math.max(...list.map((b) => b.y1)),
         });
         const vp = viewport();
-        const availW = vp.width - vp.insets.left - vp.insets.right;
-        const availH = vp.height - vp.insets.top - vp.insets.bottom;
-        const all = union(groups.flat());
-        const fit = Math.min(availW / Math.max(1, all.x1 - all.x0), availH / Math.max(1, all.y1 - all.y0));
-        if (fit >= FOCUS_FLOOR) return fitBounds(all, vp, { min: FOCUS_FLOOR, max: STEPS_K });
-        return frameBox(union(groups[0]), vp, { min: FOCUS_FLOOR, max: STEPS_K, anchor: groups[0][0] });
+        const availW = Math.max(60, vp.width - vp.insets.left - vp.insets.right);
+        const availH = Math.max(60, vp.height - vp.insets.top - vp.insets.bottom);
+        const fitOf = (b: Bounds) => Math.min(availW / Math.max(1, b.x1 - b.x0), availH / Math.max(1, b.y1 - b.y0));
+        const core = union(lit.map((c) => c.box));
+        const k = Math.max(FOCUS_FLOOR, Math.min(STEPS_K, fitOf(core)));
+        // The cards that use them, if they still fit at that scale (of the goal's tall plate, only its foot).
+        const ids0 = new Set(lit.map((c) => c.lid));
+        const users: Bounds[] = [];
+        for (const e of skeleton) {
+          if (!ids0.has(e.to) || ids0.has(e.from)) continue;
+          const c = l.boxes.get(e.from);
+          if (!c) continue;
+          const t = l.boxes.get(e.to)!;
+          users.push(e.from === goal ? { x0: Math.max(c.x, t.x - 60), x1: Math.min(c.x + c.w, t.x + t.w + 60), y0: c.y + c.h - 72, y1: c.y + c.h + pad } : grow(c));
+        }
+        const withUsers = users.length ? union([core, ...users]) : core;
+        const box = users.length && fitOf(withUsers) >= k - 1e-6 ? withUsers : core;
+        // Centred in the visible canvas (fitBounds centres whatever fits; at the floor, the box's centre).
+        const x = vp.insets.left + availW / 2 - ((box.x0 + box.x1) / 2) * k;
+        const y = vp.insets.top + availH / 2 - ((box.y0 + box.y1) / 2) * k;
+        return { x, y, k };
       },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [graph, goal, within],
@@ -1232,6 +1280,14 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     [goalReach, revealFn, moveCamera, derived, echo, graph, goal, within, expanded],
   );
 
+  /** A focus move on its own: along the smooth-zoom path, timed by its length; nothing when already there. */
+  const focusCamera = (v: View | null) => {
+    if (!v) return;
+    const cur = targetView();
+    if (Math.abs(v.k - cur.k) < 0.002 && Math.abs(v.x - cur.x) < 1.5 && Math.abs(v.y - cur.y) < 1.5) return;
+    moveCamera(v, true, travelFor(viewRef.current, v));
+  };
+
   const doFocusIds = useCallback(
     (ids: readonly string[], options: { exclusive?: boolean } = {}): boolean => {
       const list = ids.filter((id) => goalReach.has(id));
@@ -1241,6 +1297,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         return true;
       }
       focusReq.current = list;
+      focusHeld.current = true;
       pinRef.current = null;
       userMoved.current = true;
       userMovedSinceAsk.current = true;
@@ -1251,12 +1308,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const same = next.size === cur.size && [...next].every((id) => cur.has(id));
       if (same && framedRef.current && !builtRef.current.provisional) {
         pendingCamera.current = null;
-        const v = frame(builtRef.current.layout);
-        if (v) moveCamera(v);
+        pendingFocus.current = false;
+        focusCamera(frame(builtRef.current.layout));
         return true;
       }
-      // Framed with the layout that draws them: cards, lines and camera move as one.
+      // Framed from the layout that draws them: cards, lines and camera move as one.
       pendingCamera.current = frame;
+      pendingFocus.current = true;
       if (!same) setExpanded(next);
       return true;
     },
@@ -1380,6 +1438,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         if (event.sourceEvent) {
           userMoved.current = true;
           userMovedSinceAsk.current = true;
+          focusHeld.current = false;
           onUserMoveRef.current?.();
           if (motion.current) motion.current.view = undefined;
           cameraOnly.current = null;
@@ -1427,6 +1486,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       userMovedSinceAsk.current = true;
       pendingCamera.current = null;
       cameraOnly.current = null;
+      focusHeld.current = false;
       onUserMoveRef.current?.();
       window.clearTimeout(wheelEnd);
       wheelEnd = window.setTimeout(scheduleSettle, 160);
@@ -1494,6 +1554,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, goal, rootH, rootW, paneH, insets.bottom, insets.top, firstRowKey, holdOver, built.provisional]);
+
+  // A held focus re-centres when the canvas is resized or an inspector opens or closes over it.
+  useEffect(() => {
+    if (!focusHeld.current || !focusReq.current || !framedRef.current || pendingCamera.current || builtRef.current.provisional) return;
+    focusCamera(focusFrame(focusReq.current)(builtRef.current.layout));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paneW, paneH, insets.top, insets.right, insets.bottom, insets.left]);
 
   // The entrance: first visit per session, never under reduced motion, never moving the camera.
   const [entering, setEntering] = useState(false);
@@ -1624,6 +1691,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     (id: string, lid: string = id) => {
       if (id === goal || inputsOf(id).length === 0) return;
       userMoved.current = true;
+      focusHeld.current = false;
       onUserMoveRef.current?.();
       pinRef.current = lid;
       const opening = !expanded.has(id);
@@ -1925,6 +1993,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const ids = chips.ids[side];
     if (!ids.length) return;
     userMovedSinceAsk.current = true;
+    focusHeld.current = false;
     onUserMoveRef.current?.();
     moveCamera(panToward(side, ids, builtRef.current.layout.boxes, viewRef.current, viewport()), true, CAMERA_MS);
   };
@@ -2202,7 +2271,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               </div>
               <div className="card__compact" aria-hidden="true">
                 <span className="src-sq" />
-                <span className="card__ctitle">{node.label}</span>
+                {isRoot && <span className="card__cmain">Main result</span>}
+                <span className={`card__ctitle${node.kind === "declaration" ? " lean" : ""}`}>{node.kind === "declaration" ? <LeanName name={node.label} /> : node.label}</span>
               </div>
               {tags.length > 0 && (
                 <span className="card__notches" aria-hidden="true">

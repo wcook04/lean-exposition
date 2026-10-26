@@ -576,40 +576,76 @@
 
 /* ---- Representations: card, compact, mark -------------------------------------------- */
 
+/* Compact form: a tidy tile. The title sits in the middle of the card's footprint at a
+   constant 13px on screen, whole words only, up to four lines; the source square keeps
+   the top-left corner. */
 .card__compact {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: flex-start;
-  gap: calc(6px / var(--k));
-  padding: calc(8px / var(--k)) calc(9px / var(--k));
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(5px / var(--k));
+  padding: calc(10px / var(--k)) calc(14px / var(--k));
+  text-align: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms var(--ease-out);
 }
 
 .card__compact .src-sq {
-  margin-top: calc(4px / var(--k));
+  position: absolute;
+  left: calc(8px / var(--k));
+  top: calc(8px / var(--k));
   width: calc(8px / var(--k));
   height: calc(8px / var(--k));
 }
 
 .card__ctitle {
+  max-width: 100%;
   font-family: var(--font-sans);
   font-size: calc(13px / var(--k));
-  line-height: 1.2;
+  line-height: 1.22;
   color: var(--ink);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  overflow-wrap: break-word;
-  hyphens: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+  text-wrap: balance;
+}
+
+/* A Lean name is not a word: it may break after its dots and underscores (LeanName). */
+.card__ctitle.lean {
+  font-family: var(--font-mono);
+  font-size: calc(12px / var(--k));
+  overflow-wrap: anywhere;
+}
+
+/* The goal's plate: "MAIN RESULT" and its title, centred, at a constant 18px on screen. */
+.card__cmain {
+  display: none;
+  font-family: var(--font-sans);
+  font-size: calc(11px / var(--k));
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.card--root .card__cmain {
+  display: block;
 }
 
 .card--root .card__ctitle {
   font-family: var(--font-serif);
-  font-size: calc(17px / var(--k));
+  font-size: calc(18px / var(--k));
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  max-width: calc(560px / var(--k));
 }
 
 .tree[data-rep="compact"] .card__full,
