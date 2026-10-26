@@ -174,7 +174,7 @@ html[data-view="home"] {
   border-top: 1px solid var(--rule);
 }
 
-.follows h3 {
+.follows h4 {
   margin: 0;
   font-family: var(--font-serif);
   font-size: 1.25rem;
@@ -217,7 +217,8 @@ html[data-view="home"] {
   border-top: 1px solid var(--rule);
 }
 
-.front__band h2 {
+.front__band h2,
+.front__bandtitle {
   margin: 0 0 12px;
   font-family: var(--font-serif);
   font-size: 1.75rem;
@@ -241,14 +242,6 @@ html[data-view="home"] {
   margin-top: 12px;
 }
 
-.front__subhead {
-  margin: 40px 0 8px;
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--ink);
-}
-
 .front__more {
   margin: 16px 0 0;
 }
@@ -264,67 +257,10 @@ html[data-view="home"] {
   text-decoration-color: currentColor;
 }
 
-/* ---- The three accounts: rows in one grammar, not cards. ---- */
-
-.accounts {
-  margin: 28px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.account {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 12px 56px;
-  padding: 22px 0;
-  border-top: 1px solid var(--rule);
-}
-
-.account__name {
-  margin: 0 0 6px;
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-weight: 500;
-  line-height: 1.25;
-}
-
-.account__job {
-  max-width: 36em;
-  margin: 0;
-  font-size: var(--fs-base);
-  line-height: 1.5;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
-.account__facts {
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  padding-top: 6px;
-}
-
-.account__meta {
-  margin: 0;
-  font-size: var(--fs-sm);
-  line-height: 1.45;
-  color: var(--ink-2);
-}
-
-.account__strip {
-  padding: 4px 0;
-}
-
 .account__bars {
   display: block;
   width: 100%;
   height: 12px;
-}
-
-.account__count {
-  margin: 0;
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
 }
 
 /* ---- The argument map: the real drawing at the mark scale, and its key. ----
@@ -336,9 +272,8 @@ html[data-view="home"] {
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   grid-template-areas:
     "head fig"
-    "key fig"
-    "results fig";
-  grid-template-rows: auto auto 1fr;
+    "key fig";
+  grid-template-rows: auto 1fr;
   column-gap: 56px;
   align-items: start;
 }
@@ -350,10 +285,6 @@ html[data-view="home"] {
 .mapband .front__key {
   grid-area: key;
   margin-top: 28px;
-}
-
-.mapband__results {
-  grid-area: results;
 }
 
 .front__figure {
@@ -483,36 +414,6 @@ html[data-view="home"] {
   overflow: visible;
 }
 
-.results {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.results li {
-  display: grid;
-  gap: 2px;
-  padding: 12px 0;
-  border-top: 1px solid var(--rule);
-}
-
-.results li:last-child {
-  border-bottom: 1px solid var(--rule);
-}
-
-.results a {
-  justify-self: start;
-  font-family: var(--font-serif);
-  font-size: 1.125rem;
-  line-height: 1.35;
-}
-
-.results__where {
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
 /* ---- Checks and footer ---- */
 
 .front__counts {
@@ -534,14 +435,6 @@ html[data-view="home"] {
   color: var(--fail);
 }
 
-.results__lead {
-  max-width: 36em;
-  margin: 0 0 12px;
-  font-size: var(--fs-base);
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
 .front__foot {
   display: flex;
   flex-wrap: wrap;
@@ -553,6 +446,238 @@ html[data-view="home"] {
 
 .front .front__foot a {
   color: var(--ink-2);
+}
+
+/* ---- What was asked and proved: three rows, each question beside its answer. ---- */
+
+.asked {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: asked;
+}
+
+.asked > li {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 10px 48px;
+  padding: 24px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: asked;
+}
+
+.asked__q {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.3125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.asked__q::before {
+  content: counter(asked);
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.asked__a p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.front .asked__a .asked__where {
+  margin-top: 10px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* ---- The technical explanation: one disclosure; the page reads whole without it. ---- */
+
+/* The rule above the summary separates it from the questions; the next band's rule closes it. */
+.tech {
+  border-top: 1px solid var(--rule);
+}
+
+.tech > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  padding: 18px 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.tech > summary::-webkit-details-marker {
+  display: none;
+}
+
+.tech > summary::before {
+  content: "";
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  margin-right: 2px;
+  border-right: 2px solid var(--ink-2);
+  border-bottom: 2px solid var(--ink-2);
+  transform: rotate(-45deg);
+  transition: transform var(--t-state) var(--ease-out);
+}
+
+.tech[open] > summary::before {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.tech > summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-s);
+}
+
+.tech__label {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.tech > summary:hover .tech__label {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.tech__hint {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.tech__body > .front__band:first-child {
+  padding-top: 24px;
+  border-top: 0;
+}
+
+/* ---- From OpenAI's release to the exposition: a stepped funnel. The narrowing shows
+   the order of the layers, not their length; each layer prints its real size. ---- */
+
+.funnel {
+  --inset: 3.2%;
+  display: grid;
+  gap: 8px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.funnel__layer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px 32px;
+  width: calc(100% - 2 * var(--step, 0) * var(--inset));
+  margin: 0 auto;
+  padding: 16px 22px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+}
+
+.funnel__name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.funnel__what {
+  max-width: 46em;
+  margin: 4px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.funnel__strip {
+  margin-top: 10px;
+}
+
+.funnel__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 18px;
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+.funnel__links a {
+  white-space: nowrap;
+}
+
+/* The video is not made yet: an empty dashed frame, its name the only words inside. */
+.funnel__layer--video {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  padding: 22px;
+  background: transparent;
+  border: 1px dashed var(--rule-strong);
+}
+
+.funnel__video {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  color: var(--ink-2);
+}
+
+.elsewhere {
+  display: grid;
+  gap: 8px;
+  max-width: 48em;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* A link that leaves the site: the arrow is drawn in the padding of a word joiner, so it
+   stays on the link's last word and the underline does not run under it. */
+.front a.front__out::after {
+  content: "\2060";
+  margin-left: 0.1em;
+  padding-left: 0.62em;
+  background-color: var(--ink-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+}
+
+@media (forced-colors: active) {
+  .front a.front__out::after {
+    content: "\2060\2197";
+    padding-left: 0;
+    -webkit-mask: none;
+    mask: none;
+  }
 }
 
 /* ---- Narrower windows: stack the hero and each row in reading order. ---- */
@@ -568,7 +693,7 @@ html[data-view="home"] {
   }
   .mapband {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "head" "fig" "key" "results";
+    grid-template-areas: "head" "fig" "key";
     grid-template-rows: none;
   }
   .front__figure {
@@ -586,14 +711,25 @@ html[data-view="home"] {
   .follows li {
     grid-template-columns: minmax(0, 1fr);
   }
-}
-
-@media (max-width: 50em) {
-  .account {
+  .asked > li {
     grid-template-columns: minmax(0, 1fr);
   }
-  .account__facts {
-    padding-top: 0;
+  .funnel {
+    --inset: 1.6%;
+  }
+}
+
+@media (max-width: 43.75em) {
+  /* On a phone every layer takes the full width; the order stays. */
+  .funnel {
+    --inset: 0%;
+  }
+  .funnel__layer {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px 16px;
+  }
+  .funnel__links {
+    justify-content: flex-start;
   }
 }
 
@@ -616,10 +752,19 @@ html[data-view="home"] {
   .front__band {
     padding: 40px 0;
   }
-  .front__band h2 {
+  .front__band h2,
+  .front__bandtitle {
     font-size: 1.5rem;
   }
   .front__figure {
     padding: 12px;
   }
+}
+
+/* Inline formulas in running prose at the reading pages' size, so they sit with the serif
+   text around them; figure labels and display formulas keep their own sizes. */
+.front__prose p .katex,
+.asked__a p .katex,
+.follows p .katex {
+  font-size: 1.05em;
 }
