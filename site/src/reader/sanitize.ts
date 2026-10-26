@@ -2,9 +2,10 @@
 //
 // Only the elements and attributes the manuscripts need survive. `style` is
 // kept only as table-cell alignment; hrefs are restricted to in-document
-// fragments, the reader's own `/read/` routes, http(s) and mailto.
+// fragments, the reader's own routes under its deployment prefix, http(s) and mailto.
 
 import createDOMPurify, { type DOMPurify } from "dompurify";
+import { readerHref } from "./links";
 
 const ALLOWED_TAGS = [
   "h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "em", "strong", "code", "pre",
@@ -15,7 +16,7 @@ const ALLOWED_TAGS = [
 const ALLOWED_ATTR = ["href", "id", "class", "title", "target", "rel", "style", "start", "aria-hidden"];
 
 const ALIGN = /^\s*text-align\s*:\s*(left|right|center)\s*;?\s*$/i;
-const SAFE_HREF = /^(#|\/read\/|https?:\/\/|mailto:)/i;
+const SAFE_HREF = /^(#|https?:\/\/|mailto:)/i;
 
 let instance: DOMPurify | null = null;
 
@@ -28,7 +29,8 @@ function purifier(): DOMPurify {
     if (data.attrName === "style") {
       data.keepAttr = (tag === "td" || tag === "th") && ALIGN.test(data.attrValue);
     } else if (data.attrName === "href") {
-      data.keepAttr = tag === "a" && SAFE_HREF.test(data.attrValue.trim());
+      const href = data.attrValue.trim();
+      data.keepAttr = tag === "a" && (SAFE_HREF.test(href) || href.startsWith(readerHref("")));
     } else if (data.attrName === "target") {
       data.keepAttr = tag === "a" && data.attrValue === "_blank";
     }

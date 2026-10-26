@@ -139,6 +139,16 @@ they need no server. After you reassemble the bundle, recapture them with
 `node scripts/capture-fixtures.mjs http://127.0.0.1:8000`. Check visual changes
 in a browser at desktop and phone widths, in both colour schemes.
 
+After a paper or reader change, exercise a companion link in the built site under
+its deployed base path. Confirm that the opened view contains the intended
+argument, not just its heading, and that returning restores the reading position.
+Also open the link normally or copy its address: an in-app click handler can hide
+an invalid public URL. Check the actual paper sources for print-only layout
+commands leaking into the reader, while preserving mathematical notation and
+literal code examples. Anchor existence, matching file hashes and successful
+rendering are necessary checks; they do not establish that a reader can recover
+the promised explanation.
+
 ## Where the code lives
 
 | Folder | What it does |

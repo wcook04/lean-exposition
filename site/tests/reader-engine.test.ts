@@ -120,6 +120,7 @@ describe("rendering the papers", () => {
         expect(text.includes("\\begin{"), where).toBe(false);
         expect(text.includes("\\caption"), where).toBe(false);
         expect(text.includes("\\label"), where).toBe(false);
+        expect(/\\[A-Za-z]+/.test(text), where).toBe(false);
         expect(/\]\[[^\]\s][^\]]*\]/.test(text), where).toBe(false);
         expect(part.html.includes("<!-- passage"), where).toBe(false);
         expect(part.html.includes("<!--"), where).toBe(false);
@@ -129,6 +130,23 @@ describe("rendering the papers", () => {
         expect(/Axes and dotted guides|upstream\/preprints|usepackage|tikzpicture/.test(text), where).toBe(false);
       }
     }
+  });
+
+  it("omits the exposition's print spacing while preserving prose and literal code", () => {
+    const source = new TextDecoder().decode(documentFixture("expository"));
+    const request = "\\Needspace{9\\baselineskip}";
+    expect(source).toContain(request);
+    const doc = prepareDocument({
+      stage: "expository",
+      bytes: new TextEncoder().encode([
+        "Before.", request, "After.", `\`${request}\``, `\`\`\`tex\n${request}\n\`\`\``, `    ${request}`,
+      ].join("\n\n")),
+      documentPath: DOCUMENT_PATHS.expository,
+      documentPaths: DOCUMENT_PATHS,
+    });
+    const el = dom(doc.renderAll().map((p) => p.html).join(""));
+    expect([...el.querySelectorAll("p")].filter((p) => !p.querySelector("code")).map((p) => p.textContent)).toEqual(["Before.", "After."]);
+    expect([...el.querySelectorAll("code")].map((c) => c.textContent?.trim())).toEqual([request, request, request]);
   });
 
   it("resolves every in-document and companion fragment", () => {

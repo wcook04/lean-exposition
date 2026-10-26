@@ -4,6 +4,7 @@
 
 import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
+import { readerHref } from "../links";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -342,7 +343,7 @@ export function withoutIds(html: string): string {
     .replace(/<a\b[^>]*>/gi, (tag) => {
       const stage = /\sdata-in="([a-z]+)"/.exec(tag)?.[1];
       if (!stage || !STAGES.has(stage)) return tag;
-      return tag.replace(/\shref="#([^"]*)"/, (_m, fragment: string) => ` href="/read/${stage}#${fragment}" data-fragment="${fragment}"`);
+      return tag.replace(/\shref="#([^"]*)"/, (_m, fragment: string) => ` href="${readerHref(stage)}#${fragment}" data-fragment="${fragment}"`);
     });
 }
 
