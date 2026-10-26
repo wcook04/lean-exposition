@@ -191,3 +191,26 @@ export function chooseGoal(records: readonly string[], candidates: readonly Goal
   if (!chosen || chosen.score === 0) return current ?? candidates[0]?.id ?? null;
   return chosen.id;
 }
+
+/** Every record below `id`, recursively to the records with no recorded inputs (assumptions included), within the drawn scope. */
+export function lineageOf(graph: ArgGraph, id: string, within?: Within): Set<string> {
+  const seen = new Set<string>();
+  const queue = [id];
+  while (queue.length) {
+    const at = queue.shift()!;
+    for (const e of usesOf(graph, at, within)) {
+      if (e.to === id || seen.has(e.to)) continue;
+      seen.add(e.to);
+      queue.push(e.to);
+    }
+  }
+  return seen;
+}
+
+/** What is unfolded while `id`'s lineage is previewed: what is open now, plus `id` and every record in its lineage that has inputs. */
+export function peekExpansion(graph: ArgGraph, id: string, expanded: ReadonlySet<string>, within?: Within): Set<string> {
+  const open = new Set(expanded);
+  for (const x of [id, ...lineageOf(graph, id, within)])
+    if (graph.nodes.get(x)?.kind !== "assumption" && usesOf(graph, x, within).some((e) => e.kind !== "assumes")) open.add(x);
+  return open;
+}

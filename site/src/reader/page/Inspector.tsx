@@ -124,7 +124,7 @@ function PassageView({
         </p>
         {anchor && (
           <button type="button" className="inspector__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
-            Linked passages…
+            Linked passages
           </button>
         )}
       </div>

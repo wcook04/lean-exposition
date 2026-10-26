@@ -129,10 +129,11 @@ in a browser at desktop and phone widths, in both colour schemes.
 | Folder | What it does |
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
+| `src/home/` | The front page at "/": what the site holds, the main result's statement, the three accounts with their strips, the argument drawn by the map's engine, and the recorded checks |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
-| `src/map/` | The map page and its state (`MapPage`, `scene.ts`), the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
+| `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |
-| `src/ribbons/` | The three account strips, folded into a bar under the map until opened |
+| `src/ribbons/` | The three account strips (`StripMarks`, shared with the front page), folded into a bar under the map until opened |
 | `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
 | `src/figures/` | Interactive versions of the papers' figures |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |

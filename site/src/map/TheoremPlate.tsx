@@ -74,7 +74,10 @@ function goalPassage(doc: Doc, goal: string): { stage: Stage; anchor: string; se
   return { stage: paper.stage, anchor: passage.anchor, section: sectionTitleOf(paper, passage.anchor), index: partOfPassage(prepared, passage.anchor), statement };
 }
 
-function useStatement(goal: string): { html: string; source: StatementSource; section: string | null; readIn: { stage: Stage; anchor: string; section: string | null }[] } | null {
+function useStatement(
+  goal: string,
+  first = false,
+): { html: string; partial: boolean; source: StatementSource; section: string | null; readIn: { stage: Stage; anchor: string; section: string | null }[] } | null {
   const exposition = useDocument("expository");
   const short = useDocument("short");
   const long = useDocument("long");
@@ -83,15 +86,18 @@ function useStatement(goal: string): { html: string; source: StatementSource; se
     for (const doc of [exposition, short, long]) {
       const at = goalPassage(doc, goal);
       if (!at || !at.statement || at.index < 0 || doc.status !== "ready") continue;
+      const excerpt = excerptStatement(doc.value.doc.render(at.index).html, first);
       return {
-        html: excerptStatement(doc.value.doc.render(at.index).html),
+        ...excerpt,
         source: { stage: at.stage, anchor: at.anchor },
         section: at.section,
         readIn,
       };
     }
-    return readIn.length ? { html: "", source: { stage: readIn[0].stage, anchor: readIn[0].anchor }, section: readIn[0].section, readIn } : null;
-  }, [exposition, short, long, goal]);
+    return readIn.length
+      ? { html: "", partial: false, source: { stage: readIn[0].stage, anchor: readIn[0].anchor }, section: readIn[0].section, readIn }
+      : null;
+  }, [exposition, short, long, goal, first]);
 }
 
 /** "§4 The full-support theorem" -> "§4"; a title without a number stays whole. */
@@ -101,15 +107,20 @@ function sectionMark(title: string | null): string {
   return match ? `§${match[1]}` : "";
 }
 
-/** The plate under the goal's title: the statement as an account states it, its Lean counterpart, the checks line and where to read it. */
-export function TheoremBody({ goal }: { goal: string }) {
+/**
+ * The plate under the goal's title: the statement as an account states it, its Lean counterpart, the checks line and where to read it.
+ * The front page shows the statement and its source line alone (`lean` and `foot` off),
+ * and only the theorem's first sentence (`first`): its continuation refers to objects
+ * defined earlier in the paper, which the front page does not show.
+ */
+export function TheoremBody({ goal, lean = true, foot = true, first = false }: { goal: string; lean?: boolean; foot?: boolean; first?: boolean }) {
   const edition = useEdition();
   const node = edition.graph.nodes.get(goal);
   const formal = edition.graph.edges.find((e) => e.from === goal && e.kind === "formalizes")?.to;
-  const formalNode = formal ? edition.graph.nodes.get(formal) : undefined;
+  const formalNode = formal && lean ? edition.graph.nodes.get(formal) : undefined;
   const formalRecord = useRecord(formalNode?.ref ?? null);
   const goalRecord = useRecord(node?.ref ?? null);
-  const statement = useStatement(goal);
+  const statement = useStatement(goal, first);
   const statementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = statementRef.current;
@@ -155,7 +166,8 @@ export function TheoremBody({ goal }: { goal: string }) {
           {statement?.html && (
             <p className="plate__source">
               <a href={routeHref({ view: "read", stage: statement.source.stage, anchor: statement.source.anchor })}>
-                Statement from the {PAPER_NAMES[statement.source.stage].short.toLowerCase()}
+                {statement.partial ? "First part of the statement, from the" : "Statement from the"}{" "}
+                {PAPER_NAMES[statement.source.stage].short.toLowerCase()}
                 {statement.section ? `, ${sectionLabel(statement.section)}` : ""}
               </a>
             </p>
@@ -171,6 +183,7 @@ export function TheoremBody({ goal }: { goal: string }) {
           </div>
         )}
       </div>
+      {foot && (
       <div className="plate__foot">
         <span className="plate__checks">{checks.line}</span>
         {checks.total > 0 && (
@@ -190,27 +203,47 @@ export function TheoremBody({ goal }: { goal: string }) {
           </span>
         )}
       </div>
+      )}
     </div>
   );
 }
 
 /** The theorem itself: a run-in statement and its displays, else the opening paragraph and its displays. */
-function excerptStatement(html: string): string {
+/**
+ * The statement's paragraphs: the theorem's lead paragraph, its displays, and up to
+ * two following "For …" paragraphs that continue it. With `first`, only the lead
+ * paragraph and its displays; `partial` says a continuation was left out.
+ */
+function excerptStatement(html: string, first = false): { html: string; partial: boolean } {
   const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
   const root = doc.body.firstElementChild as HTMLElement;
   const lead =
     root.querySelector('p.run-in[data-run-in="theorem"], p.run-in[data-run-in="proposition"], p.run-in[data-run-in="corollary"]') ??
     root.querySelector("p.run-in") ??
     root.querySelector("p");
-  if (!lead) return html;
+  if (!lead) return { html, partial: false };
+  // A theorem written as one paragraph ("…, then $$…$$ For the solution … $$…$$")
+  // ends its first sentence at its first display: cut there.
+  if (first) {
+    const display = [...lead.children].find((c) => c.classList.contains("math-display"));
+    let dropped = false;
+    for (let n = display?.nextSibling ?? null; n; ) {
+      const after: ChildNode | null = n.nextSibling;
+      if ((n.textContent ?? "").trim()) dropped = true;
+      n.remove();
+      n = after;
+    }
+    if (dropped) return { html: lead.outerHTML, partial: true };
+  }
   const kept: Element[] = [lead];
   let next = lead.nextElementSibling;
   const isDisplay = (el: Element | null) => !!el && el.classList.contains("math-display");
-  while (next && (isDisplay(next) || (next.tagName === "P" && kept.length < 3 && /^For\b/.test(next.textContent ?? "")))) {
+  const continues = (el: Element) => el.tagName === "P" && kept.length < 3 && /^For\b/.test(el.textContent ?? "");
+  while (next && (isDisplay(next) || (!first && continues(next)))) {
     kept.push(next);
     next = next.nextElementSibling;
   }
-  return kept.map((el) => el.outerHTML).join("");
+  return { html: kept.map((el) => el.outerHTML).join(""), partial: !!next && first && continues(next) };
 }
 
 export function useMainGoal(): string {

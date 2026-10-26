@@ -37,5 +37,7 @@ describe("page title after navigation", () => {
       await act(async () => root!.render(<PageTitle route={route} />));
       expect(document.title).toBe(`${title} · Lean Exposition`);
     }
+    await act(async () => root!.render(<PageTitle route={{ view: "home" }} />));
+    expect(document.title).toBe("Why the SK order parameter has no gaps");
   });
 });

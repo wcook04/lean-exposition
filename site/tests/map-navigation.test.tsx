@@ -17,7 +17,7 @@ vi.mock("../src/panels/accountStore", () => ({ chooseAccount: vi.fn() }));
 vi.mock("../src/panels/presence", () => ({ usePresence: (value: string | undefined) => ({ value, leaving: false }) }));
 vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: () => null }));
 vi.mock("../src/panels/EdgePanel", () => ({ EdgePanel: () => null }));
-vi.mock("../src/map/MapKey", () => ({ MapKey: () => null, SourceSwatches: () => null }));
+vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, SourceSwatches: () => null }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
   mainGoal: () => "full_support",
@@ -85,7 +85,8 @@ function click(label: string) {
 describe("map scope changes with a selected step", () => {
   it("starts another goal without carrying a step from the previous argument", () => {
     open({ view: "map", goal: "full_support", edge: edgeKey, lens: "long" });
-    click("Value identities");
+    act(() => container.querySelector<HTMLButtonElement>(".goal-menu__button")!.click());
+    act(() => container.querySelector<HTMLButtonElement>('[role="menuitemradio"][data-goal="scalar_value"]')!.click());
     expect(calls.navigate).toHaveBeenLastCalledWith(
       { view: "map", goal: "scalar_value", lens: "long", node: undefined, edge: undefined, trace: undefined },
       { replace: false },

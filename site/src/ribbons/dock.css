@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: var(--dock-h);
+  min-height: var(--dock-h);
   padding: 8px 22px 12px;
   background: color-mix(in oklab, var(--ground) 65%, var(--surface));
   border-top: 1px solid var(--rule);
@@ -12,6 +12,7 @@
 
 /* Collapsed: one bar, the three strips in miniature. The whole bar opens the dock. */
 .dock--collapsed {
+  min-height: 0;
   height: var(--dock-bar-h);
   padding: 0;
 }
@@ -92,6 +93,10 @@
   overflow: visible;
 }
 
+.strip__track {
+  fill: color-mix(in oklab, var(--ink) 22%, transparent);
+}
+
 .dockbar__seg {
   fill: color-mix(in oklab, var(--cat, var(--src-0)) 70%, var(--ground));
 }
@@ -120,11 +125,12 @@
   white-space: nowrap;
 }
 
+/* The hint wraps under a narrow width; the dock grows to fit it and the canvas gives way. */
 .dock__head {
   display: flex;
   align-items: baseline;
   gap: 14px;
-  height: 24px;
+  min-height: 24px;
   margin-bottom: 8px;
 }
 
@@ -135,12 +141,12 @@
 }
 
 .dock__hint {
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
+  flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--ink-2);
+  text-wrap: pretty;
 }
 
 .dock__toggle {

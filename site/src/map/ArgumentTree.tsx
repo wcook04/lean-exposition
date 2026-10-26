@@ -27,7 +27,7 @@ import type { Stage } from "../api/types";
 import { closure, lensRole, type ArgEdge, type ArgGraph, type ArgNode } from "../model/graph";
 import type { Trace } from "../app/router";
 import { kindName } from "./labels";
-import { expandTo, neededExpansion, pathFromGoal, reach, routeTo, scopedGraph, usesOf, visibleEdges, visibleSet } from "./treeModel";
+import { expandTo, lineageOf, neededExpansion, pathFromGoal, peekExpansion, reach, routeTo, scopedGraph, usesOf, visibleEdges, visibleSet } from "./treeModel";
 import { transitiveReduction } from "./engine/skeleton";
 import { consumerOf, edgeKeyOf, layoutScope, recordOf, splitSharedLeaves } from "./engine/occurrences";
 import { layoutBounds, layoutTree } from "./engine/layout";
@@ -35,7 +35,7 @@ import { arrowHead, polygonPath, roundedPath, route, type Plan, type Pt, type Ro
 import { fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
-import { COMPACT_FLOOR, MAX_K, MIN_K, STEPS_FLOOR, STEPS_K, repFor, type MapMode, type Rep } from "./canvas/representation";
+import { COMPACT_FLOOR, LEAN_BREAK, MAX_K, MIN_K, REF_PX, STEPS_FLOOR, STEPS_K, fitTitle, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
 import type { MapScene } from "./canvas/scene";
 import { useReducedMotion } from "./canvas/useReducedMotion";
 import { SIDES, beyond, chipAt, chipText, freeSpot, panToward, sameBeyond, screenRects, type Beyond, type Side } from "./canvas/chips";
@@ -130,6 +130,22 @@ const STORE = "lx-tree-expanded:";
 
 /** Following a passage frames down to this scale; below 0.8 cards show their titles at a constant 13px. */
 const FOCUS_FLOOR = 0.5;
+/** Leaving cards and lines are gone this soon into a move, before they can cross another card. */
+const EXIT_MS = 120;
+/** Arriving cards fade in at their final places over the move's last part (from this fraction on). */
+const ARRIVE_AT = 0.55;
+/** A peek's records that are not opened are drawn at this strength. */
+const PEEK_OPACITY = 0.5;
+/** How long the pointer rests on a card before its lineage is drawn, and how long after leaving it folds back. */
+const PEEK_IN_MS = 300;
+/** Still resting this long (from the first rest), the camera widens to show the whole lineage. */
+const PEEK_ZOOM_MS = 900;
+/** The widest a peek zooms out. */
+const PEEK_MIN_K = 0.5;
+/** A preview from the dock or inspector opens its records after resting this long, and puts the map back this long after it ends. */
+const REVEAL_IN_MS = 180;
+const REVEAL_OUT_MS = 250;
+const PEEK_OUT_MS = 200;
 
 /** World widths. Narrow enough that a goal's first row usually reads at k = 1 on a laptop. */
 function widthOf(node: ArgNode, isRoot: boolean, compact: boolean, rootW: number): number {
@@ -209,6 +225,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const goal = props.goal && fullGraph.nodes.has(props.goal) ? props.goal : (fullGraph.regions[0]?.goal ?? fullGraph.goals[0]);
   const graph = useMemo(() => scopedGraph(fullGraph, goal), [fullGraph, goal]);
   const metrics = compact ? METRICS_COMPACT : METRICS;
+  const goalRef = useRef(goal);
+  goalRef.current = goal;
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const wrapRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -239,7 +257,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const onUserMoveRef = useRef(props.onUserMove);
   onUserMoveRef.current = props.onUserMove;
   const persist = props.persist ?? true;
-  const litIds = props.litIds && props.litIds.size ? props.litIds : null;
+  /** A transient reveal (map page): the records a pointed passage mark or inspector row names, opened and framed. */
+  const [revealed, setRevealed] = useState<string[] | null>(null);
+  const litIds = useMemo(() => {
+    const own = props.litIds && props.litIds.size ? props.litIds : null;
+    if (!revealed?.length) return own;
+    return new Set([...(own ?? []), ...revealed]);
+  }, [props.litIds, revealed]);
 
   // ---- Mode -------------------------------------------------------------------------
 
@@ -283,7 +307,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     setExpanded(readStore(storeKey));
   }, [storeKey]);
   useEffect(() => {
-    if (derived || !persist) return;
+    // A reveal is transient: what is remembered is what the reader opened.
+    if (derived || !persist || revealHome.current) return;
     try {
       sessionStorage.setItem(storeKey, JSON.stringify([...expandedState]));
     } catch {
@@ -344,8 +369,20 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     });
   }, [derived, selected, traced, trace, edgeObj, graph, goal, goalReach, within]);
 
-  const visible = useMemo(() => visibleSet(graph, goal, expanded, within), [graph, goal, expanded, within]);
-  const shownEdges = useMemo(() => visibleEdges(graph, goal, visible, expanded, within), [graph, goal, visible, expanded, within]);
+  // ---- The peek: a card's whole lineage, drawn faded while the pointer rests on it ----
+
+  const [peek, setPeek] = useState<{ lid: string; id: string } | null>(null);
+  const peekRef = useRef(peek);
+  peekRef.current = peek;
+  const peekLineage = useMemo(() => (peek ? lineageOf(graph, peek.id, within) : null), [peek, graph, within]);
+  const peekLineageRef = useRef(peekLineage);
+  peekLineageRef.current = peekLineage;
+  /** What is drawn: what is unfolded, plus a peeked lineage. */
+  const drawnOpen = useMemo(() => (peek && !derived ? peekExpansion(graph, peek.id, expanded, within) : expanded), [peek, derived, graph, expanded, within]);
+  const baseVisible = useMemo(() => (drawnOpen === expanded ? null : visibleSet(graph, goal, expanded, within)), [drawnOpen, expanded, graph, goal, within]);
+
+  const visible = useMemo(() => visibleSet(graph, goal, drawnOpen, within), [graph, goal, drawnOpen, within]);
+  const shownEdges = useMemo(() => visibleEdges(graph, goal, visible, drawnOpen, within), [graph, goal, visible, drawnOpen, within]);
   const skel = useMemo(() => transitiveReduction(visible, shownEdges), [visible, shownEdges]);
 
   // ---- Sizes and layout -------------------------------------------------------------
@@ -387,6 +424,19 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph, goal, visible, skel, heights, compact, metrics, rootW]);
   const layout = built.layout;
+  /** Cards a peek adds (not opened): drawn at half strength, never focusable. A clone is the peek's when its consumer is. */
+  const peekFaded = useMemo(() => {
+    const out = new Set<string>();
+    if (!baseVisible) return out;
+    for (const lid of layout.boxes.keys()) if (!baseVisible.has(recordOf(lid))) out.add(lid);
+    for (const lid of layout.boxes.keys()) {
+      const c = consumerOf(lid);
+      if (lid !== recordOf(lid) && c && out.has(c)) out.add(lid);
+    }
+    return out;
+  }, [baseVisible, layout]);
+  const peekFadedRef = useRef(peekFaded);
+  peekFadedRef.current = peekFaded;
   /** For each assumption, the drawn cards that carry it as a tag. */
   const tagHolders = useMemo(() => {
     const m = new Map<string, string[]>();
@@ -501,6 +551,51 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     }
   }, []);
 
+  /**
+   * Compact form: each tile's title at the largest size that fits it whole (13px down to 11px on
+   * screen), and the lines the tile holds at that size. Words are measured once per card with a
+   * canvas at a reference size and wrapped arithmetically, so nothing is laid out per frame; the
+   * size and line limit are written only when either changes.
+   */
+  const fitOf = useRef(new Map<string, string>());
+  const measured = useRef(new Map<string, { label: string; t: MeasuredTitle }>());
+  const applyLines = useCallback(() => {
+    const k = viewRef.current.k;
+    const boxes = builtRef.current.layout.boxes;
+    for (const [lid, el] of cardEls.current) {
+      const box = boxes.get(lid) ?? shown.current.get(lid)?.rect;
+      if (!box) continue;
+      const kind: TitleKind = lid === goalRef.current ? "root" : el.dataset.kind === "declaration" ? "lean" : "card";
+      const title = el.querySelector<HTMLElement>(".card__ctitle");
+      if (!title) continue;
+      const label = title.textContent ?? "";
+      let m = measured.current.get(lid);
+      if (!m || m.label !== label) {
+        m = { label, t: measureTitle(title, label, kind === "lean") };
+        measured.current.set(lid, m);
+      }
+      const fit = fitTitle(m.t, box.w, box.h, k, kind);
+      const key = `${fit.size}|${fit.lines}`;
+      if (fitOf.current.get(lid) === key) continue;
+      fitOf.current.set(lid, key);
+      el.style.setProperty("--title", `${fit.size}px`);
+      el.style.setProperty("--lines", String(fit.lines));
+    }
+  }, []);
+  // Measurements made before the web fonts arrived are redone once they have.
+  useEffect(() => {
+    const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+    if (!fonts?.addEventListener) return;
+    const redo = () => {
+      measured.current.clear();
+      fitOf.current.clear();
+      applyLines();
+    };
+    fonts.addEventListener("loadingdone", redo);
+    void fonts.ready?.then(redo);
+    return () => fonts.removeEventListener("loadingdone", redo);
+  }, [applyLines]);
+
   // Edge chips: counted from the layout against the current view, re-rendered only when counts change.
   const [chips, setChips] = useState<{ ids: Beyond; at: Record<Side, number | null>; notes: { x: number; top: boolean } | null }>({
     ids: { left: [], right: [], up: [], down: [] },
@@ -588,26 +683,35 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const m = motion.current;
       const raw = m && m.dur > 0 ? Math.min(1, Math.max(0, (now - m.start) / m.dur)) : 1;
       const e = easeMove(raw);
+      // A staged move, so two maps never show through each other: leaving cards fade
+      // where they are within EXIT_MS; staying cards and the camera move together;
+      // arriving cards fade in at their final places over the last part of the move.
+      const fadeOut = m && m.dur > 0 ? Math.min(1, Math.max(0, (now - m.start) / EXIT_MS)) : 1;
+      const fadeIn = m && m.dur > 0 ? easeMove(Math.min(1, Math.max(0, (raw - ARRIVE_AT) / (1 - ARRIVE_AT)))) : 1;
       // Cards.
       const boxes = new Map<string, Rect>();
       const all = new Map<string, Rect>();
+      const faded = peekFadedRef.current;
       const states = m ? m.to : new Map([...b.layout.boxes].map(([id, rect]) => [id, { rect, op: 1, sc: 1 }]));
       for (const [id, to] of states) {
         const from = m?.from.get(id) ?? to;
+        const leaving = !!m && to.op === 0;
+        const arriving = !!m && m.entering.has(id);
         const s: CardState = {
-          rect: { x: lerp(from.rect.x, to.rect.x, e), y: lerp(from.rect.y, to.rect.y, e), w: to.rect.w, h: to.rect.h },
-          op: lerp(from.op, to.op, e),
-          sc: lerp(from.sc, to.sc, e),
+          rect: leaving ? from.rect : { x: lerp(from.rect.x, to.rect.x, e), y: lerp(from.rect.y, to.rect.y, e), w: to.rect.w, h: to.rect.h },
+          op: leaving ? from.op * (1 - fadeOut) : arriving ? lerp(from.op, to.op, fadeIn) : lerp(from.op, to.op, e),
+          sc: 1,
         };
         shown.current.set(id, s);
         all.set(id, s.rect);
         if (b.layout.boxes.has(id)) boxes.set(id, s.rect);
         const el = cardEls.current.get(id);
         if (el) {
-          el.style.transform = `translate(${s.rect.x}px, ${s.rect.y}px)${s.sc !== 1 ? ` scale(${s.sc})` : ""}`;
-          el.style.opacity = s.op < 1 ? String(s.op) : "";
-          // Entering cards grow out from behind the card that opened them.
-          el.style.zIndex = m && raw < 1 && (m.entering.has(id) || s.op < 1) ? "0" : "";
+          el.style.transform = `translate(${s.rect.x}px, ${s.rect.y}px)`;
+          // A peek's records not yet opened are drawn at half strength.
+          const op = s.op * (faded.has(id) ? PEEK_OPACITY : 1);
+          el.style.opacity = op < 1 ? String(op) : "";
+          el.style.zIndex = m && raw < 1 && (arriving || leaving) ? "0" : "";
         }
       }
       const dummyX = (key: string) => {
@@ -619,7 +723,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       };
       const routed = route(b.plan, { boxes, dummyX, ignoreRows: m && raw < 1 ? m.entering : undefined });
       lastRouted.current = routed;
-      writePaths(routed, all, e);
+      writePaths(routed, all, fadeIn, fadeOut);
       // Camera on the same clock.
       let cameraMoving = false;
       if (m?.view) {
@@ -642,7 +746,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     [],
   );
 
-  function writePaths(routed: Routed, all: Map<string, Rect>, e: number) {
+  function writePaths(routed: Routed, all: Map<string, Rect>, e: number, gone = e) {
     const els = pathEls.current;
     const r = metrics.radius;
     const b = builtRef.current;
@@ -664,6 +768,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       set(els, `lit:${pe.key}`, d);
       set(els, `litcase:${pe.key}`, d);
       set(els, `plit:${pe.key}`, d);
+      set(els, `klit:${pe.key}`, d);
+      set(els, `klitcase:${pe.key}`, d);
       set(els, `plitcase:${pe.key}`, d);
       set(els, `mask:${pe.key}`, d);
       set(els, `sel:${pe.key}`, d);
@@ -675,6 +781,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           set(els, `ahead:${pe.key}`, hd, isFresh ? e : 1);
           set(els, `lithead:${pe.key}`, hd);
           set(els, `plithead:${pe.key}`, hd);
+          set(els, `klithead:${pe.key}`, hd);
           set(els, `selhead:${pe.key}`, hd);
           set(els, `ovhead:${pe.key}`, hd);
         }
@@ -711,7 +818,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         { x: px, y: p.y + p.h },
       ];
       el.setAttribute("d", roundedPath(pts, r));
-      el.style.opacity = String(1 - e);
+      el.style.opacity = String(1 - gone);
     }
   }
 
@@ -725,7 +832,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const viewport = (): Viewport => ({ width: sizeRef.current.width, height: sizeRef.current.height, insets: insetsRef.current });
 
   /** A camera leg along the smooth-zoom path (van Wijk and Nuij), eased in and out. */
-  const leg = (from: View, to: View, start: number, dur: number): CameraLeg => {
+  const leg = (from: View, to: View, start: number, dur: number, linear = false): CameraLeg => {
+    // A straight pan (holding a card still while the layout moves under it) follows the cards' own curve exactly.
+    if (linear) return { from, to, start, dur, at: (t) => ({ x: lerp(from.x, to.x, t), y: lerp(from.y, to.y, t), k: lerp(from.k, to.k, t) }) };
     const path = zoomPath(from, to, viewport());
     return { from, to, start, dur, at: path.at };
   };
@@ -816,6 +925,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   // Start a motion whenever the layout changes.
   const pendingCamera = useRef<null | ((l: Layout) => View | null)>(null);
+  /** The card a peek is opened or folded from: held still on screen through the move. */
+  const anchorLid = useRef<string | null>(null);
+  /** Where a folding peek returns the camera. */
+  const peekReturn = useRef<View | null>(null);
   /** The pending camera is a focus on a passage's records (it takes the distance-scaled duration). */
   const pendingFocus = useRef(false);
   useLayoutEffect(() => {
@@ -825,25 +938,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const from = new Map<string, CardState>();
     const to = new Map<string, CardState>();
     const entering = new Set<string>();
-    const opener = (lid: string): string | null => {
-      if (built.pin && shown.current.has(built.pin)) return built.pin;
-      const c = consumerOf(lid);
-      if (c && shown.current.has(c)) return c;
-      const id = recordOf(lid);
-      // The nearest card above it that was already on screen.
-      const seen = new Set([id]);
-      const queue = [id];
-      while (queue.length) {
-        const at = queue.shift()!;
-        for (const e of graph.in.get(at) ?? []) {
-          if (seen.has(e.from)) continue;
-          seen.add(e.from);
-          if (shown.current.has(e.from) && !exitingRef.current.has(e.from)) return e.from;
-          queue.push(e.from);
-        }
-      }
-      return shown.current.has(goal) ? goal : null;
-    };
     for (const [id, rect] of layout.boxes) {
       to.set(id, { rect, op: 1, sc: 1 });
       const cur = sameScene ? shown.current.get(id) : undefined;
@@ -851,32 +945,17 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         from.set(id, cur);
         if (motion.current?.entering.has(id) && cur.op < 1) entering.add(id);
       } else if (sameScene) {
-        // New cards grow out of the card that opened them: in place, from behind it.
-        const o = opener(id);
-        const or = o ? shown.current.get(o)?.rect : undefined;
+        // New cards arrive at their final places, fading in once the others have made room.
         entering.add(id);
-        if (or) {
-          const cx = or.x + or.w / 2;
-          const cy = or.y + or.h / 2;
-          // Start just below the opener, a short way toward the final place.
-          const sx = lerp(cx - rect.w / 2, rect.x, 0.35);
-          const sy = lerp(cy - rect.h / 2, rect.y, 0.35);
-          from.set(id, { rect: { x: sx, y: sy, w: rect.w, h: rect.h }, op: 0, sc: 0.96 });
-        } else from.set(id, { rect, op: 0, sc: 0.96 });
+        from.set(id, { rect, op: 0, sc: 1 });
       } else from.set(id, { rect, op: 1, sc: 1 });
     }
     for (const id of exiting) {
       const cur = shown.current.get(id);
       if (!cur) continue;
-      // Into the parent's new rectangle.
-      let target: Rect | undefined;
-      if (built.pin && layout.boxes.has(built.pin)) target = layout.boxes.get(built.pin);
-      const c = consumerOf(id);
-      if (!target && c && layout.boxes.has(c)) target = layout.boxes.get(c);
-      if (!target) for (const e of graph.in.get(recordOf(id)) ?? []) if (layout.boxes.has(e.from)) target = layout.boxes.get(e.from);
-      target ??= layout.boxes.get(goal)!;
+      // Leaving cards fade where they are (EXIT_MS), before the others move across their place.
       from.set(id, cur);
-      to.set(id, { rect: { x: lerp(cur.rect.x, target.x + target.w / 2 - cur.rect.w / 2, 0.65), y: lerp(cur.rect.y, target.y + target.h / 2 - cur.rect.h / 2, 0.65), w: cur.rect.w, h: cur.rect.h }, op: 0, sc: 0.96 });
+      to.set(id, { rect: cur.rect, op: 0, sc: 1 });
     }
     for (const id of [...shown.current.keys()]) if (!to.has(id)) shown.current.delete(id);
     const dummyFrom = new Map<string, number>();
@@ -912,10 +991,26 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     // Following the text, cards, lines and camera share one duration that grows with the camera's travel.
     const dur = !animate ? 0 : focusing && camera ? travelFor(viewRef.current, camera) : MOVE_MS;
     motion.current = { start: now, dur, from, to, dummyFrom, entering };
+    // A peek opens or folds: the card under the pointer stays where it is on screen, the camera taking up its shift.
+    let hold = false;
+    const anchor = anchorLid.current;
+    anchorLid.current = null;
+    const home = peekReturn.current;
+    peekReturn.current = null;
+    if (!camera && home && ready && framedRef.current) camera = home;
+    else if (!camera && anchor && ready && framedRef.current) {
+      const was = shown.current.get(anchor)?.rect;
+      const will = layout.boxes.get(anchor);
+      if (was && will && (Math.abs(will.x - was.x) > 0.5 || Math.abs(will.y - was.y) > 0.5)) {
+        const v = viewRef.current;
+        camera = { k: v.k, x: v.x - (will.x - was.x) * v.k, y: v.y - (will.y - was.y) * v.k };
+        hold = true;
+      }
+    }
     if (camera) {
       // One camera move at a time: this one starts from wherever the last one had got to.
       cameraOnly.current = null;
-      motion.current.view = animate ? leg(viewRef.current, camera, now, dur) : leg(camera, camera, now, 0);
+      motion.current.view = animate ? leg(viewRef.current, camera, now, dur, hold) : leg(camera, camera, now, 0);
     }
     // A camera move still in flight keeps its own clock across a relayout (a card measured late, say).
     else if (before?.view && now - before.view.start < before.view.dur) motion.current.view = before.view;
@@ -951,10 +1046,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   // Redraw paths after any render (new overlay elements need their geometry now).
   useLayoutEffect(() => {
+    applyLines();
     if (!motion.current && lastRouted.current) {
       const all = new Map<string, Rect>();
       for (const [id, s] of shown.current) all.set(id, s.rect);
-      writePaths(lastRouted.current, all, 1);
+      writePaths(lastRouted.current, all, 1, 1);
     }
     placeLabels();
   });
@@ -1296,6 +1392,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         doRevealIds(list);
         return true;
       }
+      clearPeek();
       focusReq.current = list;
       focusHeld.current = true;
       pinRef.current = null;
@@ -1320,6 +1417,65 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [goalReach, derived, focusFrame, graph, goal, within, moveCamera],
+  );
+
+  // ---- Reveal: a preview opens what it names, and puts the map back afterwards ----------
+  // On the map page, pointing at a passage mark (or an inspector row) for REVEAL_IN_MS opens the
+  // routes to its records and frames them in one move; another mark retargets in one move; when
+  // the preview ends, after REVEAL_OUT_MS, the unfolding and camera from before come back, unless
+  // the reader moved the map or opened something in between.
+  const revealHome = useRef<{ expanded: Set<string>; view: View } | null>(null);
+  const revealIn = useRef(0);
+  const revealOut = useRef(0);
+  const previewKey = !compact && props.previewIds?.size ? [...props.previewIds].filter((id) => goalReach.has(id)).sort().join("|") : "";
+  useEffect(() => {
+    window.clearTimeout(revealIn.current);
+    if (compact || derived) return;
+    if (previewKey) {
+      window.clearTimeout(revealOut.current);
+      const ids = previewKey.split("|");
+      revealIn.current = window.setTimeout(() => {
+        clearPeek();
+        if (!revealHome.current) revealHome.current = { expanded: new Set(expandedRef.current), view: targetView() };
+        const home = revealHome.current;
+        const next = new Set([...home.expanded, ...neededExpansion(graph, goal, ids, within)]);
+        userMoved.current = true;
+        userMovedSinceAsk.current = true;
+        setRevealed(ids);
+        const frame = focusFrame(ids);
+        const cur = expandedRef.current;
+        const same = next.size === cur.size && [...next].every((id) => cur.has(id));
+        if (same && framedRef.current && !builtRef.current.provisional) focusCamera(frame(builtRef.current.layout));
+        else {
+          pendingCamera.current = frame;
+          pendingFocus.current = true;
+          setExpanded(next);
+        }
+      }, reducedRef.current ? 0 : REVEAL_IN_MS);
+    } else if (revealHome.current || revealed) {
+      revealOut.current = window.setTimeout(() => {
+        const home = revealHome.current;
+        revealHome.current = null;
+        setRevealed(null);
+        if (!home) return;
+        const cur = expandedRef.current;
+        const same = home.expanded.size === cur.size && [...home.expanded].every((id) => cur.has(id));
+        if (same) focusCamera(home.view);
+        else {
+          pendingCamera.current = () => home.view;
+          pendingFocus.current = true;
+          setExpanded(home.expanded);
+        }
+      }, reducedRef.current ? 0 : REVEAL_OUT_MS);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [previewKey]);
+  useEffect(
+    () => () => {
+      window.clearTimeout(revealIn.current);
+      window.clearTimeout(revealOut.current);
+    },
+    [],
   );
 
   useImperativeHandle(
@@ -1439,6 +1595,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           userMoved.current = true;
           userMovedSinceAsk.current = true;
           focusHeld.current = false;
+          peekHome.current = null;
+          revealHome.current = null;
           onUserMoveRef.current?.();
           if (motion.current) motion.current.view = undefined;
           cameraOnly.current = null;
@@ -1451,13 +1609,18 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         // The dot grid lives in world space: it moves and scales with the map.
         wrap.style.backgroundPosition = `${t.x}px ${t.y}px`;
         wrap.style.backgroundSize = `${22 * t.k}px ${22 * t.k}px`;
-        const r = repFor(t.k);
+        // While the camera travels on its own, the representation is the one it lands in: a move
+        // that zooms out on the way never flips cards to tiles and back (two images crossfading).
+        const now = performance.now();
+        const flight = cameraOnly.current ?? motion.current?.view;
+        const r = repFor(flight && now < flight.start + flight.dur ? flight.to.k : t.k);
         if (r !== repRef.current) {
           repRef.current = r;
           wrap.dataset.rep = r;
           setRep(r);
         }
         placeLabels();
+        applyLines();
         refreshChips();
       })
       .on("end", (event: { sourceEvent?: Event | null }) => {
@@ -1487,6 +1650,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       pendingCamera.current = null;
       cameraOnly.current = null;
       focusHeld.current = false;
+      peekHome.current = null;
+      revealHome.current = null;
       onUserMoveRef.current?.();
       window.clearTimeout(wheelEnd);
       wheelEnd = window.setTimeout(scheduleSettle, 160);
@@ -1692,6 +1857,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (id === goal || inputsOf(id).length === 0) return;
       userMoved.current = true;
       focusHeld.current = false;
+      peekHome.current = null;
+      revealHome.current = null;
       onUserMoveRef.current?.();
       pinRef.current = lid;
       const opening = !expanded.has(id);
@@ -1785,6 +1952,165 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       onTrace(id);
     }
   };
+
+  // The peek: resting on a card for PEEK_IN_MS (not while dragging or while the map moves) draws its whole
+  // lineage; leaving it and every card of that lineage for PEEK_OUT_MS folds it back.
+  const peekIn = useRef(0);
+  const peekOut = useRef(0);
+  const pressed = useRef(false);
+  const hoverLid = useRef<string | null>(null);
+  /** Where the camera was when the peek began; it goes back there when the peek ends, unless the reader moved the map. */
+  const peekHome = useRef<View | null>(null);
+  const peekZoom = useRef(0);
+  const peekWanted = useRef<string | null>(null);
+  const pointerPos = useRef<{ x: number; y: number } | null>(null);
+  const showPeek = (next: { lid: string; id: string } | null) => {
+    window.clearTimeout(peekIn.current);
+    window.clearTimeout(peekOut.current);
+    window.clearTimeout(peekZoom.current);
+    const cur = peekRef.current;
+    if ((cur?.lid ?? null) === (next?.lid ?? null)) return;
+    if (!cur && next) peekHome.current = targetView();
+    if (cur && !next && peekHome.current) {
+      // Folding back: the camera returns to where it was, with the cards.
+      peekReturn.current = peekHome.current;
+      peekHome.current = null;
+      anchorLid.current = null;
+    } else anchorLid.current = next?.lid ?? cur?.lid ?? null;
+    peekWanted.current = next?.lid ?? null;
+    if (next) schedulePeekZoom();
+    // Not a camera request of the page's: nothing re-frames after it (the start view included).
+    userMovedSinceAsk.current = true;
+    userMoved.current = true;
+    setPeek(next);
+  };
+  function clearPeek() {
+    peekWanted.current = null;
+    window.clearTimeout(peekIn.current);
+    window.clearTimeout(peekOut.current);
+    window.clearTimeout(peekZoom.current);
+    anchorLid.current = null;
+    peekHome.current = null;
+    if (peekRef.current) setPeek(null);
+  }
+  const inPeek = (lid: string) => {
+    const p = peekRef.current;
+    const id = recordOf(lid);
+    return !!p && (id === p.id || !!peekLineageRef.current?.has(id));
+  };
+  const peekEnter = (lid: string, event: React.PointerEvent) => {
+    if (derived || event.pointerType === "touch" || event.buttons || pressed.current) return;
+    hoverLid.current = lid;
+    window.clearTimeout(peekOut.current);
+    if (inPeek(lid)) return;
+    window.clearTimeout(peekIn.current);
+    const attempt = () => {
+      if (hoverLid.current !== lid) return;
+      if (motion.current || cameraOnly.current || pressed.current) {
+        peekIn.current = window.setTimeout(attempt, 120);
+        return;
+      }
+      const id = recordOf(lid);
+      const lineage = lineageOf(graph, id, within);
+      showPeek(lineage.size && id !== goal ? { lid, id } : null);
+    };
+    peekIn.current = window.setTimeout(attempt, PEEK_IN_MS);
+  };
+  const peekLeave = (lid: string) => {
+    if (hoverLid.current === lid) hoverLid.current = null;
+    window.clearTimeout(peekIn.current);
+    if (!peekRef.current) return;
+    window.clearTimeout(peekOut.current);
+    peekOut.current = window.setTimeout(() => showPeek(null), PEEK_OUT_MS);
+  };
+  /** A click while a peek shows keeps that lineage open. */
+  const commitPeek = (lid: string): boolean => {
+    const p = peekRef.current;
+    if (!p || derived || !(recordOf(lid) === p.id || peekFadedRef.current.has(lid))) return false;
+    window.clearTimeout(peekIn.current);
+    window.clearTimeout(peekOut.current);
+    window.clearTimeout(peekZoom.current);
+    anchorLid.current = null;
+    peekHome.current = null;
+    peekWanted.current = null;
+    setExpanded((prev) => peekExpansion(graph, p.id, prev, within));
+    setPeek(null);
+    return true;
+  };
+  useEffect(() => {
+    const wrap = wrapRef.current!;
+    const down = () => (pressed.current = true);
+    const up = () => (pressed.current = false);
+    wrap.addEventListener("pointerdown", down, true);
+    window.addEventListener("pointerup", up, true);
+    window.addEventListener("pointercancel", up, true);
+    return () => {
+      wrap.removeEventListener("pointerdown", down, true);
+      window.removeEventListener("pointerup", up, true);
+      window.removeEventListener("pointercancel", up, true);
+      window.clearTimeout(peekIn.current);
+      window.clearTimeout(peekOut.current);
+    };
+  }, []);
+
+  // The peek's second stage: still resting PEEK_ZOOM_MS after the first rest, with part of the lineage
+  // outside the canvas, the camera zooms out about the pointer (the card under it stays put) just far
+  // enough to show the whole lineage, never below PEEK_MIN_K. Never while the map is already moving.
+  function schedulePeekZoom() {
+    window.clearTimeout(peekZoom.current);
+    const zoom = () => {
+      const p = peekRef.current;
+      const at = hoverLid.current;
+      // The peek asked for has not been drawn yet: wait for it.
+      if (peekWanted.current && p?.lid !== peekWanted.current) {
+        peekZoom.current = window.setTimeout(zoom, 30);
+        return;
+      }
+      if (!p || !at || !inPeek(at)) return;
+      if (motion.current || cameraOnly.current || pressed.current || builtRef.current.provisional) {
+        peekZoom.current = window.setTimeout(zoom, 100);
+        return;
+      }
+      const l = builtRef.current.layout;
+      const family = (lid: string) => recordOf(lid) === p.id || !!peekLineageRef.current?.has(recordOf(lid));
+      const v = viewRef.current;
+      const vp = viewport();
+      const pin = l.boxes.get(at);
+      const pt = pointerPos.current ?? (pin ? { x: (pin.x + pin.w / 2) * v.k + v.x, y: (pin.y + pin.h / 2) * v.k + v.y } : null);
+      if (!pt) return;
+      const to = peekZoomView(l, family, v, vp, pt);
+      if (!to) return;
+      const from = { ...v };
+      const ratio = to.k / from.k;
+      const dur = Math.round(450 + 250 * Math.min(1, Math.abs(Math.log2(ratio)) / 1.2));
+      // About a fixed point: the pointer stays on the same card all the way.
+      const at2 = (t: number): View => {
+        const k = from.k * Math.pow(ratio, t);
+        return { k, x: pt.x - ((pt.x - from.x) / from.k) * k, y: pt.y - ((pt.y - from.y) / from.k) * k };
+      };
+      if (reducedRef.current) {
+        applyView(to);
+        return;
+      }
+      cameraOnly.current = { from, to, start: performance.now(), dur, at: at2 };
+      if (!cameraRaf.current) cameraRaf.current = requestAnimationFrame(cameraTick);
+    };
+    peekZoom.current = window.setTimeout(zoom, reducedRef.current ? 0 : PEEK_ZOOM_MS - PEEK_IN_MS);
+  }
+  useEffect(() => {
+    const wrap = wrapRef.current!;
+    const move = (event: PointerEvent) => {
+      const r = wrap.getBoundingClientRect();
+      pointerPos.current = { x: event.clientX - r.left, y: event.clientY - r.top };
+    };
+    const out = () => (pointerPos.current = null);
+    wrap.addEventListener("pointermove", move);
+    wrap.addEventListener("pointerleave", out);
+    return () => {
+      wrap.removeEventListener("pointermove", move);
+      wrap.removeEventListener("pointerleave", out);
+    };
+  }, []);
 
   const setHovered = (lid: string | null) => {
     setHover(lid);
@@ -1898,6 +2224,24 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     return new Set(built.skeleton.filter((e) => traced.has(recordOf(e.from)) && traced.has(recordOf(e.to))).map((e) => e.key));
   }, [traced, built]);
 
+  /** A peek: lines among the lineage's records already drawn light in their type colours; lines to records it adds are faded. */
+  const peekKeys = useMemo(() => {
+    const lit = new Set<string>();
+    const faded = new Set<string>();
+    if (!peek || !peekLineage) return { lit, faded };
+    const family = (lid: string) => recordOf(lid) === peek.id || peekLineage.has(recordOf(lid));
+    for (const e of built.skeleton) {
+      if (peekFaded.has(e.from) || peekFaded.has(e.to)) faded.add(e.key);
+      else if (family(e.from) && family(e.to)) lit.add(e.key);
+    }
+    return { lit, faded };
+  }, [peek, peekLineage, peekFaded, built]);
+  /** A bus is faded when every line in it is; its new part (busf) when any of its new lines is. */
+  const busFaded = (parent: string, fresh: boolean) => {
+    const keys = built.skeleton.filter((e) => e.from === parent && e.kind === "supports" && (!fresh || ghostsAndFresh.fresh.has(e.key)));
+    return keys.length > 0 && (peekFaded.has(parent) || (fresh ? keys.some((e) => peekKeys.faded.has(e.key)) : keys.every((e) => peekKeys.faded.has(e.key))));
+  };
+
   /** Lines between two records of the passage being read. */
   const passageKeys = useMemo(() => {
     if (!litIds) return new Set<string>();
@@ -1928,11 +2272,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   const echoOn = compact && (echo?.size ?? 0) > 0;
   const previewOn = !!preview && preview.size > 0;
-  const previewFolded = useMemo(
-    () => (preview ? [...preview].filter((id) => goalReach.has(id) && !hasRec(layout, id) && !tagHolders.has(id)) : []),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [preview, goalReach, layout],
-  );
+  /** Previewed records this main result's argument cannot draw (the reveal opens every other one). */
+  const previewOutside = useMemo(() => (preview ? [...preview].filter((id) => fullGraph.nodes.has(id) && !goalReach.has(id)) : []), [preview, goalReach, fullGraph]);
 
   const cardClass = (lid: string, node: ArgNode, leaf: boolean): string => {
     const id = recordOf(lid);
@@ -1951,6 +2292,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (echoOn) parts.push(echo!.has(id) ? "is-echo" : within ? "" : "is-quiet");
     if (previewOn && preview!.has(id)) parts.push("is-preview");
     if (litIds?.has(id)) parts.push("is-passage");
+    if (peekFaded.has(lid)) parts.push("is-peeked");
     if (exitShown.has(lid)) parts.push("is-exiting");
     return parts.filter(Boolean).join(" ");
   };
@@ -1980,7 +2322,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   // Screen-space labels: in compact and mark form, the goal, the selection and the record under the pointer or focus.
   const labelled = useMemo(() => {
-    if (rep === "card") return [] as string[];
+    // Only marks carry no text of their own; tiles and cards are never labelled twice.
+    if (rep !== "mark") return [] as string[];
     const ids: string[] = [];
     // In compact form the plate keeps its own title, so the goal is labelled only as a mark.
     for (const id of [rep === "mark" ? goal : null, selected ? pick(layout, selected) : null, hover, focusId]) if (id && layout.boxes.has(id) && !ids.includes(id)) ids.push(id);
@@ -1994,6 +2337,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (!ids.length) return;
     userMovedSinceAsk.current = true;
     focusHeld.current = false;
+    peekHome.current = null;
+    revealHome.current = null;
     onUserMoveRef.current?.();
     moveCamera(panToward(side, ids, builtRef.current.layout.boxes, viewRef.current, viewport()), true, CAMERA_MS);
   };
@@ -2039,16 +2384,18 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           )}
           <g className="links" mask={entering && enterMask ? `url(#${uid}-enter)` : undefined}>
             {[...built.plan.buses.keys()].map((parent) => (
-              <g key={parent}>
+              <g key={parent} className={busFaded(parent, false) ? "is-peeked" : undefined}>
                 <path ref={pathRef(`buscase:${parent}`)} className="casing" />
                 <path ref={pathRef(`bus:${parent}`)} className="link link--supports" />
-                <path ref={pathRef(`busf:${parent}`)} className="link link--supports" />
+                <g className={busFaded(parent, true) ? "is-peeked" : undefined}>
+                  <path ref={pathRef(`busf:${parent}`)} className="link link--supports" />
+                </g>
               </g>
             ))}
             {[...built.plan.edges.values()]
               .filter((pe) => !pe.bus)
               .map((pe) => (
-                <g key={pe.key}>
+                <g key={pe.key} className={peekKeys.faded.has(pe.key) ? "is-peeked" : undefined}>
                   <path ref={pathRef(`case:${pe.key}`)} className="casing" />
                   <path ref={pathRef(`edge:${pe.key}`)} className={`link link--${pe.kind}`} />
                 </g>
@@ -2088,6 +2435,16 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 <path ref={pathRef(`lit:${k}`)} className={`link link--${kindOf(k)} link--lit`} />
               </g>
             ))}
+          </g>
+          <g className="links-peek">
+            {[...peekKeys.lit]
+              .filter((k) => built.plan.edges.has(k))
+              .map((k) => (
+                <g key={k}>
+                  <path ref={pathRef(`klitcase:${k}`)} className="casing casing--lit" />
+                  <path ref={pathRef(`klit:${k}`)} className={`link link--${kindOf(k)} link--lit`} />
+                </g>
+              ))}
           </g>
           <g className="links-passage">
             {[...passageKeys]
@@ -2148,7 +2505,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const open = expanded.has(id);
           const leaf = uses.length === 0;
           const role = lens ? lensRole(node, lens) : "all";
-          const tab = lid === roving ? 0 : -1;
+          const peeked = peekFaded.has(lid);
+          const tab = lid === roving && !peeked ? 0 : -1;
           const source = isRoot && !compact && node.origin.place ? `${node.origin.label} · ${node.origin.place}` : (node.origin.place ?? node.origin.label);
           const sourceTitle = `${node.origin.label}${node.origin.locator ? `: ${node.origin.locator}` : ""}`;
           const usedBy = built.shared.get(id) ?? 0;
@@ -2164,18 +2522,28 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               className={cardClass(lid, node, leaf)}
               style={{ width: clone ? (compact ? 184 : 176) : widthOf(node, isRoot, compact, rootW), ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
+              aria-hidden={peeked || undefined}
               aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} records that use it` : ""}`}
               title={clone ? node.label : undefined}
               onClick={(event) => {
                 if ((event.target as Element).closest?.(".card__inputs, .card__usedby, .tag, a, .card__body")) return;
                 if (repRef.current === "mark") openMark(id, lid);
                 else if (event.detail >= 2) toggle(id, lid);
-                else onSelect(id);
+                else {
+                  commitPeek(lid);
+                  onSelect(id);
+                }
               }}
               onKeyDown={(event) => onCardKey(lid, event)}
               onFocus={() => setFocusId(lid)}
-              onPointerEnter={() => setHovered(lid)}
-              onPointerLeave={() => setHovered(null)}
+              onPointerEnter={(event) => {
+                setHovered(lid);
+                peekEnter(lid, event);
+              }}
+              onPointerLeave={() => {
+                setHovered(null);
+                peekLeave(lid);
+              }}
             >
               <div className="card__full">
                 <p className="card__head">
@@ -2272,7 +2640,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               <div className="card__compact" aria-hidden="true">
                 <span className="src-sq" />
                 {isRoot && <span className="card__cmain">Main result</span>}
-                <span className={`card__ctitle${node.kind === "declaration" ? " lean" : ""}`}>{node.kind === "declaration" ? <LeanName name={node.label} /> : node.label}</span>
+                <span className={`card__ctitle${node.kind === "declaration" ? " lean" : ""}`}>{node.kind === "declaration" ? <LeanName name={node.label} camel /> : node.label}</span>
               </div>
               {tags.length > 0 && (
                 <span className="card__notches" aria-hidden="true">
@@ -2287,12 +2655,16 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         <svg className="tree__heads" width={1} height={1} aria-hidden="true">
           <g className="heads">
             {[...built.plan.buses.keys()].map((parent) => (
-              <path key={parent} ref={pathRef(`head:${parent}`)} className="head head--supports" />
+              <g key={parent} className={busFaded(parent, false) ? "is-peeked" : undefined}>
+                <path ref={pathRef(`head:${parent}`)} className="head head--supports" />
+              </g>
             ))}
             {[...built.plan.edges.values()]
               .filter((pe) => !pe.bus && pe.arrow)
               .map((pe) => (
-                <path key={pe.key} ref={pathRef(`ahead:${pe.key}`)} className={`head head--${pe.kind}`} />
+                <g key={pe.key} className={peekKeys.faded.has(pe.key) ? "is-peeked" : undefined}>
+                  <path ref={pathRef(`ahead:${pe.key}`)} className={`head head--${pe.kind}`} />
+                </g>
               ))}
             {[...built.plan.edges.values()]
               .filter((pe) => pe.bus && edgeByKey.get(edgeKeyOf(pe.key))?.application)
@@ -2316,6 +2688,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 const at = t.from === "start" ? t.delay + t.dur - 40 : t.delay;
                 return <path key={k} ref={pathRef(`lithead:${k}`)} className={`head head--${kindOf(k)} head--lit`} style={{ ["--d" as string]: `${Math.max(0, at)}ms` }} />;
               })}
+          </g>
+          <g className="heads-peek">
+            {[...peekKeys.lit]
+              .filter((k) => built.plan.edges.get(k)?.arrow)
+              .map((k) => (
+                <path key={k} ref={pathRef(`klithead:${k}`)} className={`head head--${kindOf(k)} head--lit`} />
+              ))}
           </g>
           <g className="heads-passage">
             {[...passageKeys]
@@ -2351,19 +2730,16 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
             </button>
           ) : null,
         )}
-      {!compact && (previewFolded.length > 0 || hiddenEdges.length > 0) && (
+      {!compact && (previewOutside.length > 0 || hiddenEdges.length > 0) && (
         <div
           ref={notesRef}
           className={`tree__ui tree__notes${chips.notes?.top ? " tree__notes--top" : ""}`}
           style={chips.notes?.top ? { left: chips.notes.x, top: insets.top } : { left: chips.notes?.x ?? insets.left, bottom: insets.bottom }}
           onClick={(event) => event.stopPropagation()}
         >
-          {previewFolded.length > 0 && (
+          {previewOutside.length > 0 && (
             <p className="tree__note" role="status">
-              {previewFolded.length === 1 ? "1 linked record is in a collapsed branch" : `${previewFolded.length} linked records are in collapsed branches`}
-              <button type="button" className="tree__note-action" onClick={() => doRevealIds(previewFolded)}>
-                {previewFolded.length === 1 ? "Show it" : "Show them"}
-              </button>
+              {previewOutside.length === 1 ? "1 linked record is not in the argument for this main result" : `${previewOutside.length} linked records are not in the argument for this main result`}
             </p>
           )}
           <SimplifiedMap graph={fullGraph} hidden={hiddenEdges} onChoose={(key) => (onEdgeSelect ? onEdgeSelect(key) : onSelect(edgeByKey.get(key)?.from ?? null))} />
@@ -2387,10 +2763,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
 const uniqueCount = (lids: readonly string[]) => new Set(lids.map(recordOf)).size;
 
-/** A tag shows a short title; the full one is its accessible name and tooltip. */
+/** A tag shows the assumption's short name (the part before a colon); the full title is its accessible name and tooltip. */
 function shortTitle(label: string): string {
-  const t = label.split(/[:;]/)[0].trim();
-  return t.length > 40 ? `${t.slice(0, 38).replace(/\s+\S*$/, "")}…` : t;
+  return label.split(/[:;]/)[0].trim();
 }
 
 /** Short titles on one card, unless two would read the same: then the full titles (clipped by width). */
@@ -2416,9 +2791,12 @@ export { pathFromGoal };
 // Kept for callers that draw a single arrowhead elsewhere.
 export { arrowHead };
 
-/** A Lean name may break after its dots and underscores, never mid-word; copying it stays exact. */
-function LeanName({ name }: { name: string }) {
-  const parts = name.split(/(?<=[._])/);
+/**
+ * A Lean name breaks after its dots and underscores, and, in a compact tile (`camel`),
+ * also between camel-case words (LEAN_BREAK), never mid-word; copying it stays exact.
+ */
+function LeanName({ name, camel = false }: { name: string; camel?: boolean }) {
+  const parts = name.split(camel ? LEAN_BREAK : /(?<=[._])/);
   return (
     <>
       {parts.map((part, i) => (
@@ -2429,4 +2807,69 @@ function LeanName({ name }: { name: string }) {
       ))}
     </>
   );
+}
+
+/** One canvas for measuring titles; null where there is none (tests). */
+let measureCtx: CanvasRenderingContext2D | null | undefined;
+function measureContext(): CanvasRenderingContext2D | null {
+  if (measureCtx !== undefined) return measureCtx;
+  measureCtx = null;
+  if (typeof navigator !== "undefined" && /jsdom/i.test(navigator.userAgent)) return measureCtx;
+  try {
+    measureCtx = document.createElement("canvas").getContext("2d");
+  } catch {
+    measureCtx = null;
+  }
+  return measureCtx;
+}
+
+/** A tile title's break pieces, measured at REF_PX in the title's own font, with a small allowance for the browser's rounding. */
+function measureTitle(el: HTMLElement, label: string, lean: boolean): MeasuredTitle {
+  const ctx = measureContext();
+  const cs = getComputedStyle(el);
+  const allow = 1.04;
+  const width = (text: string) => {
+    if (!ctx) return text.length * REF_PX * (lean ? 0.6 : 0.52);
+    ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${REF_PX}px ${cs.fontFamily}`;
+    return ctx.measureText(text).width * allow;
+  };
+  const space = width(" ");
+  return { pieces: titlePieces(label, lean).map((p, i) => ({ w: width(p.text), gap: i > 0 && p.space ? space : 0 })) };
+}
+
+/**
+ * The peek's zoom: the largest scale up to the current one, and no lower than
+ * PEEK_MIN_K, at which every card of the lineage lies inside the canvas when
+ * zooming about the screen point `pt`. Null when they are already inside.
+ */
+export function peekZoomView(l: Layout, family: (lid: string) => boolean, v: View, vp: Viewport, pt: { x: number; y: number }): View | null {
+  const L = vp.insets.left;
+  const R = vp.width - vp.insets.right;
+  const T = vp.insets.top;
+  const B = vp.height - vp.insets.bottom;
+  let r = 1;
+  let outside = false;
+  const limit = (edge: number, s: number, bound: number) => {
+    // Screen coordinate s moves to pt + (s - pt) r; keep it on the inner side of bound.
+    const d = s - edge;
+    if ((bound - edge) * d > 0 && Math.abs(d) > Math.abs(bound - edge) + 0.5) {
+      outside = true;
+      r = Math.min(r, (bound - edge) / d);
+    }
+  };
+  for (const [lid, b] of l.boxes) {
+    if (!family(lid)) continue;
+    const x0 = b.x * v.k + v.x;
+    const x1 = (b.x + b.w) * v.k + v.x;
+    const y0 = b.y * v.k + v.y;
+    const y1 = (b.y + b.h) * v.k + v.y;
+    limit(pt.x, x0, L);
+    limit(pt.x, x1, R);
+    limit(pt.y, y0, T);
+    limit(pt.y, y1, B);
+  }
+  if (!outside) return null;
+  const k = Math.max(PEEK_MIN_K, Math.min(v.k, v.k * r));
+  if (k >= v.k - 1e-3) return null;
+  return { k, x: pt.x - ((pt.x - v.x) / v.k) * k, y: pt.y - ((pt.y - v.y) / v.k) * k };
 }

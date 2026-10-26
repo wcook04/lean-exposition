@@ -1,11 +1,12 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { describeError, EditionProvider, useEdition, useEditionChanged, useEditionRetry } from "./data";
-import { useLinkInterception, useRoute, type Route } from "./router";
+import { routeHref, useLinkInterception, useRoute, type Route } from "./router";
 import { TopBar } from "./TopBar";
 import { PageTitle } from "./PageTitle";
 import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
 import { MapPage } from "../map/MapPage";
 
+const FrontPage = lazy(() => import("../home/FrontPage").then((m) => ({ default: m.FrontPage })));
 const ReaderPage = lazy(() => import("../reader/ReaderPage").then((m) => ({ default: m.ReaderPage })));
 const ChecksPage = lazy(() => import("../checks/ChecksPage").then((m) => ({ default: m.ChecksPage })));
 const AboutPage = lazy(() => import("../reader/AboutPage").then((m) => ({ default: m.AboutPage })));
@@ -69,6 +70,8 @@ export function App() {
 
 function Page({ route }: { route: Route }) {
   switch (route.view) {
+    case "home":
+      return <FrontPage />;
     case "map":
       return <MapGate route={route} />;
     case "read":
@@ -84,7 +87,8 @@ function Page({ route }: { route: Route }) {
         <div className="page-message">
           <h1>No page at this address</h1>
           <p>
-            <a href="/">Open the argument map</a> or use search to find a result, a section or a passage.
+            Go to the <a href={routeHref({ view: "home" })}>front page</a> or the <a href={routeHref({ view: "map" })}>argument map</a>,
+            or use search to find a result, a section or a passage.
           </p>
         </div>
       );

@@ -7,6 +7,7 @@ import type { Stage } from "../api/types";
 export type Trace = "rests" | "uses";
 
 export type Route =
+  | { view: "home" }
   | {
       view: "map";
       node?: string;
@@ -63,6 +64,11 @@ export function parseRoute(url: URL): Route {
   path = path.replace(/\/+$/, "") || "/";
   const q = url.searchParams;
   const hash = fragmentOf(url);
+  // The front page lives at "/". The map moved to "/map"; a link to "/" that
+  // carries any map parameter was made when the map lived there, so it still
+  // opens the map.
+  const MAP_PARAMS = ["g", "n", "t", "lens", "e"];
+  if (path === "/" && !MAP_PARAMS.some((name) => q.has(name))) return { view: "home" };
   if (path === "/" || path === "/map") {
     const trace = q.get("t");
     const lens = q.get("lens");
@@ -127,6 +133,8 @@ class Query {
 export function routeHref(route: Route): string {
   const q = new Query();
   switch (route.view) {
+    case "home":
+      return `${BASE}/`;
     case "map": {
       if (route.goal) q.set("g", route.goal);
       if (route.node) q.set("n", route.node);
@@ -134,7 +142,7 @@ export function routeHref(route: Route): string {
       if (route.lens) q.set("lens", route.lens);
       if (route.edge) q.set("e", edgeParam(route.edge));
       const s = q.toString();
-      return `${BASE}/${s ? `?${s}` : ""}`;
+      return `${BASE}/map${s ? `?${s}` : ""}`;
     }
     case "read": {
       if (route.node) q.set("n", route.node);

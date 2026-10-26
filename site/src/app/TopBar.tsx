@@ -1,4 +1,4 @@
-// The site's frame: three jobs (Argument · Read · Checks), About as a quieter
+// The site's frame: three jobs (Argument map, Read, Checks), About as a quieter
 // link, search and the scheme. Read is a menu button listing the three
 // accounts with the job each one does. On phones the same items sit behind
 // one menu button so the bar never clips.
@@ -59,7 +59,7 @@ export function TopBar({ route, onSearch }: Props) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <a className="wordmark" href={routeHref({ view: "map" })} aria-label="Lean Exposition, open the argument map">
+      <a className="wordmark" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
         <svg viewBox="0 0 32 32" aria-hidden="true" className="wordmark__mark">
           <path d="M4 27 L4 5 M4 27 L28 27" fill="none" strokeWidth="2" strokeLinecap="round" />
           <path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" strokeWidth="2.6" strokeLinecap="round" />
@@ -69,7 +69,7 @@ export function TopBar({ route, onSearch }: Props) {
       </a>
       <nav className="topnav" aria-label="Main">
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-          Argument
+          Argument map
         </a>
         <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} />
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
@@ -276,7 +276,7 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
           <ul className="phonemenu__list">
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-                Argument
+                Argument map
               </a>
             </li>
             <li>

@@ -16,6 +16,7 @@ import { navigate, routeHref } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { sectionLabel } from "../map/TheoremPlate";
 import { useReadings, type Strip, type StripPassage, type Thread } from "./useReadings";
+import { StripMarks } from "./StripMarks";
 import "./dock.css";
 
 interface Props {
@@ -182,18 +183,7 @@ export function ReadingsDock({ lens, selected, step, onLens, onPreview }: Props)
               return (
                 <span key={stage} className="dockbar__strip">
                   <span className="dockbar__name">{PAPER_NAMES[stage].short}</span>
-                  <svg className="dockbar__bars" viewBox="0 0 1000 5" preserveAspectRatio="none">
-                    {strip?.passages.map((p) => (
-                      <rect
-                        key={p.key}
-                        x={(p.start / strip.length) * 1000}
-                        width={Math.max(2, ((p.end - p.start) / strip.length) * 1000 - 3)}
-                        height={5}
-                        data-slot={p.slot}
-                        className={`dockbar__seg${lit.has(p.key) ? " dockbar__seg--lit" : ""}${p.claims.length ? "" : " dockbar__seg--example"}`}
-                      />
-                    ))}
-                  </svg>
+                  <StripMarks strip={strip} lit={lit} />
                 </span>
               );
             })}

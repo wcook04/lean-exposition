@@ -164,11 +164,21 @@ html:has(.reader) {
   color: var(--rule-strong);
 }
 
+/* The current passage wraps onto a second line before anything is cut. */
 .crumbs .crumbs__here {
   flex: 0 1 auto;
   min-width: 0;
+  display: flex;
+  align-items: baseline;
+  white-space: normal;
+}
+
+.crumbs .crumbs__here a {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-wrap: pretty;
 }
 
 .crumbs a {
@@ -227,13 +237,13 @@ html:has(.reader) {
 }
 
 @media (max-width: 700px) {
+  /* A long place name wraps inside the button instead of being cut. */
   .reader-strip__return {
-    max-width: 52vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-    line-height: 28px;
+    max-width: 56vw;
+    padding-block: 4px;
+    line-height: 1.25;
+    text-align: left;
+    white-space: normal;
   }
   .reader-strip__return svg {
     display: none;
@@ -702,9 +712,7 @@ html:has(.reader) {
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink-3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: right;
 }
 
 .record-row__title {

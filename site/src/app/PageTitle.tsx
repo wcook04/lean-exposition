@@ -4,11 +4,17 @@ import { useEdition } from "./data";
 import { PAPER_NAMES } from "./papers";
 import type { Route } from "./router";
 
+/** The edition's title, as the front page and index.html give it. */
+export const EDITION_TITLE = "Why the SK order parameter has no gaps";
+
 export function PageTitle({ route }: { route: Route }) {
   const { graph } = useEdition();
   const label = "node" in route && route.node ? graph.nodes.get(route.node)?.label : undefined;
   let title: string;
   switch (route.view) {
+    case "home":
+      title = EDITION_TITLE;
+      break;
     case "map":
       title = route.edge ? "Argument step" : label ?? "Argument map";
       break;
@@ -29,7 +35,8 @@ export function PageTitle({ route }: { route: Route }) {
       break;
   }
   useLayoutEffect(() => {
-    document.title = `${title} · Lean Exposition`;
-  }, [title]);
+    // The front page carries the edition's own title, as a search result or a tab names it.
+    document.title = route.view === "home" ? title : `${title} · Lean Exposition`;
+  }, [title, route.view]);
   return null;
 }

@@ -471,15 +471,21 @@ function EvidenceRow({
   const detailsRef = useRef<HTMLParagraphElement>(null);
   const rowRef = useScrollTarget<HTMLLIElement>(!!selected && !!record);
 
+  // The details are clamped only when that hides two lines or more: hiding one line behind
+  // a button saves no room. scrollHeight is the whole text's height, clamped or not.
+  const clampLines = compact ? 2 : 3;
   useLayoutEffect(() => {
     const el = detailsRef.current;
     if (!el || expanded) return;
-    const measure = () => setClipped(el.scrollHeight > el.clientHeight + 1);
+    const measure = () => {
+      const line = parseFloat(getComputedStyle(el).lineHeight) || 20;
+      setClipped(Math.round(el.scrollHeight / line) >= clampLines + 2);
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [record, expanded]);
+  }, [record, expanded, clampLines]);
 
   const date = statedDate(record?.details);
   const subjects = record?.subject_ids ?? [];
@@ -528,7 +534,7 @@ function EvidenceRow({
               )}
             </p>
             {record.details && (
-              <p ref={detailsRef} className={`ev__details${expanded ? "" : compact ? " is-clamped is-short" : " is-clamped"}`}>
+              <p ref={detailsRef} className={`ev__details${expanded || !clipped ? "" : compact ? " is-clamped is-short" : " is-clamped"}`}>
                 {record.details}
               </p>
             )}

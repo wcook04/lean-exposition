@@ -35,7 +35,7 @@ vi.mock("../src/panels/EdgePanel", () => ({
     return null;
   },
 }));
-vi.mock("../src/map/MapKey", () => ({ MapKey: () => null, SourceSwatches: () => null }));
+vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, SourceSwatches: () => null }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
   mainGoal: () => "full_support",
