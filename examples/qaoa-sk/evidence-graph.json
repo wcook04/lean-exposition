@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f",
-      "revision": "sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f",
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7",
+      "revision": "sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "sha256": "b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -1819,7 +1819,7 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f",
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
@@ -1833,7 +1833,7 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f",
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.5, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     },
     {
@@ -1918,63 +1918,63 @@
       "source_id": "authored_long_comparisons_20261024",
       "title": "A terminal convex-chord obstruction",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_support_zero_candidate_descent",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The zero coefficient is not minimizing",
       "locator": "Long reasoning record #zero-coefficient-example",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_support_full_relative_support_curvature",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Full support by contact and local curvature",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_scalar_minimizer_coefficient_budget",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Integral and pointwise bounds for a minimizer",
       "locator": "Long reasoning record #coefficient-budget",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_support_fixed_time_spatial_coercivity_at_jumps",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Spatial coercivity at a coefficient jump",
       "locator": "Long reasoning record #fixed-time-jump-extension",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_scalar_finite_maximum_concentration",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Concentration of the finite SK maximum",
       "locator": "Long record §11.1.2, passage gibbs-comparison, Gaussian Lipschitz bound and concentration estimate",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_circuit_sampled_finite_instance_optimum",
       "source_id": "authored_long_comparisons_20261024",
       "title": "One measured configuration approaches its instance maximum",
       "locator": "Long reasoning record #sampled-finite-instance",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_scaling_contact",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Contact by admissible global scaling",
       "locator": "Long reasoning record #global-scaling-contact",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     },
     {
       "id": "authored_r8_unshifted_gaussian",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The unshifted scalar comparison",
       "locator": "Long record #unshifted-scalar-comparison",
-      "url": "urn:sha256:06243f0685627f45bef2a7a30a0afca9a56a43bfab8d293b022910897ddce59f"
+      "url": "urn:sha256:b036fabc43f34dd178bdd0c14db3f03af5afd3a4f5d3c40ea130479cef1b04c7"
     }
   ],
   "nodes": [
@@ -4276,8 +4276,8 @@
         "remaining_assumption_ids": [],
         "source_span": {
           "source_id": "authored_long_comparisons_20261024",
-          "start_line": 3308,
-          "end_line": 3367
+          "start_line": 3306,
+          "end_line": 3365
         },
         "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in long section 2.3); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted."
       }

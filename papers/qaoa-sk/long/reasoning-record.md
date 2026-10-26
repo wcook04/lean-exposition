@@ -1447,9 +1447,7 @@ otherwise the coefficient is zero and symmetry supplies $q(0)=0$.
 
 <a id="terminal-gap"></a>
 
-**Why a terminal plateau violates the variational inequality.**
-
-Suppose that $\gamma=c$ on $(a,1)$, where $0\le a<1$ and
+**Why a terminal plateau violates the variational inequality.** Suppose that $\gamma=c$ on $(a,1)$, where $0\le a<1$ and
 $c\ge0$ is finite. The endpoint $1$ is outside the support domain, so
 there is no contact condition there to complete an endpoint-chord
 argument. Instead we will prove
