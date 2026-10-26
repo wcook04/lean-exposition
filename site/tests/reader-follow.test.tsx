@@ -178,3 +178,57 @@ describe("MapPane", async () => {
     for (const id of lit) expect(records).toContain(id);
   });
 });
+
+describe("framing a passage", async () => {
+  const { ArgumentTree } = await import("../src/map/ArgumentTree");
+  type Handle = import("../src/map/ArgumentTree").MapViewHandle;
+  const W = 820;
+  const H = 900;
+  const pane = { top: 20, right: 20, bottom: 20, left: 20 };
+
+  it("puts every lit record wholly inside the visible canvas", async () => {
+    // A sized canvas, measured cards and reduced motion, so the framing lands at once.
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        constructor(private cb: (entries: unknown[]) => void) {}
+        observe(el: HTMLElement) {
+          if (el.classList.contains("tree")) this.cb([{ contentRect: { width: W, height: H }, target: el }]);
+        }
+        disconnect() {}
+      },
+    );
+    vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }));
+    const height = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetHeight");
+    Object.defineProperty(HTMLElement.prototype, "offsetHeight", { configurable: true, get() { return this.dataset?.card ? (this.dataset.card === goal ? 300 : 120) : 0; } });
+    try {
+      const expository = structureFixture("expository");
+      for (const anchor of ["value-and-diffusion", "contact-and-gap", "endpoints", "curvature-transfer"]) {
+        const records = passageRecords(passageOf(expository, anchor)).filter((id) => reach(scoped, goal).has(id) && graph.nodes.get(id)!.kind !== "assumption");
+        if (!records.length) continue;
+        const ref = createRef<Handle>();
+        act(() => root.render(<ArgumentTree key={anchor} ref={ref} graph={graph} goal={goal} insets={pane} persist={false} litIds={new Set(records)} onSelect={() => {}} onTrace={() => {}} />));
+        act(() => void ref.current!.focusIds(records, { exclusive: true }));
+        await act(() => new Promise((r) => setTimeout(r, 1300)));
+        const world = container.querySelector<HTMLElement>(".tree__world")!.style.transform;
+        const [, tx, ty, k] = world.match(/translate\(([-\d.]+)px, ([-\d.]+)px\) scale\(([-\d.]+)\)/)!.map(Number);
+        expect(k).toBeGreaterThanOrEqual(0.5 - 1e-6);
+        expect(k).toBeLessThanOrEqual(1 + 1e-6);
+        const lit = [...container.querySelectorAll<HTMLElement>(".card.is-passage")];
+        expect(lit.length).toBeGreaterThan(0);
+        for (const el of lit) {
+          const [, x, y] = el.style.transform.match(/translate\(([-\d.]+)px, ([-\d.]+)px\)/)!.map(Number);
+          const w = parseFloat(el.style.width);
+          const h = el.dataset.card === goal ? 300 : 120;
+          const box = { x0: x * k + tx, y0: y * k + ty, x1: (x + w) * k + tx, y1: (y + h) * k + ty };
+          expect(box.x0, `${anchor} ${el.dataset.card}`).toBeGreaterThanOrEqual(pane.left - 0.5);
+          expect(box.y0, `${anchor} ${el.dataset.card}`).toBeGreaterThanOrEqual(pane.top - 0.5);
+          expect(box.x1, `${anchor} ${el.dataset.card}`).toBeLessThanOrEqual(W - pane.right + 0.5);
+          expect(box.y1, `${anchor} ${el.dataset.card}`).toBeLessThanOrEqual(H - pane.bottom + 0.5);
+        }
+      }
+    } finally {
+      if (height) Object.defineProperty(HTMLElement.prototype, "offsetHeight", height);
+    }
+  });
+});

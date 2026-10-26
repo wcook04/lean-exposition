@@ -128,3 +128,65 @@ export function boxInView(b: Bounds, vp: Viewport, view: View, slack = 0.5): boo
     b.y1 * view.k + view.y <= vp.height - insets.bottom + slack
   );
 }
+
+/**
+ * Smooth zooming between two views: the camera path of van Wijk and Nuij,
+ * "Smooth and efficient zooming and panning" (IEEE InfoVis 2003), which zooms
+ * out on a long pan and back in, so the eye never loses its place. The same
+ * interpolation as d3-interpolate's interpolateZoom (ISC licence,
+ * https://github.com/d3/d3-interpolate/blob/main/src/zoom.js), written here
+ * for this engine's views. Views are taken about the viewport's centre.
+ * `length` is the path's length S in the paper's units (0 when nothing moves).
+ */
+export function zoomPath(a: View, b: View, vp: Viewport): { at(t: number): View; length: number } {
+  const rho = Math.SQRT2;
+  const rho2 = 2;
+  const rho4 = 4;
+  const cx = vp.width / 2;
+  const cy = vp.height / 2;
+  const W = Math.max(1, vp.width);
+  // [centre x, centre y, width in world units]
+  const ux0 = (cx - a.x) / a.k;
+  const uy0 = (cy - a.y) / a.k;
+  const w0 = W / a.k;
+  const ux1 = (cx - b.x) / b.k;
+  const uy1 = (cy - b.y) / b.k;
+  const w1 = W / b.k;
+  const dx = ux1 - ux0;
+  const dy = uy1 - uy0;
+  const d2 = dx * dx + dy * dy;
+  const toView = (ux: number, uy: number, w: number): View => {
+    const k = W / w;
+    return { k, x: cx - ux * k, y: cy - uy * k };
+  };
+  if (d2 < 1e-6) {
+    // Zoom only.
+    const S = Math.log(w1 / w0) / rho;
+    return {
+      length: Math.abs(S),
+      at: (t) => (t >= 1 ? b : toView(ux0 + t * dx, uy0 + t * dy, w0 * Math.exp(rho * t * S))),
+    };
+  }
+  const d1 = Math.sqrt(d2);
+  const b0 = (w1 * w1 - w0 * w0 + rho4 * d2) / (2 * w0 * rho2 * d1);
+  const b1 = (w1 * w1 - w0 * w0 - rho4 * d2) / (2 * w1 * rho2 * d1);
+  const r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0);
+  const r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
+  const S = (r1 - r0) / rho;
+  const coshr0 = Math.cosh(r0);
+  const sinhr0 = Math.sinh(r0);
+  return {
+    length: S,
+    at: (t) => {
+      if (t >= 1) return b;
+      const s = t * S;
+      const u = (w0 / (rho2 * d1)) * (coshr0 * Math.tanh(rho * s + r0) - sinhr0);
+      return toView(ux0 + u * dx, uy0 + u * dy, (w0 * coshr0) / Math.cosh(rho * s + r0));
+    },
+  };
+}
+
+/** How long a camera travel takes: about 450ms for a short move, up to 900ms for a long one. */
+export function travelMs(length: number): number {
+  return Math.round(Math.min(900, Math.max(450, 450 + 300 * length)));
+}
