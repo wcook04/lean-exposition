@@ -25,14 +25,14 @@ describe("check outcomes stay distinct", () => {
 
   it("heads each kind with its outcomes kept apart", () => {
     const full = outcomeCounts(recordsOf("lean.full_support"));
-    expect(kindHeadline("comparator", full.get("comparator")!)).toBe("No successful Comparator result is recorded · 1 failed · 2 unavailable · 2 not run");
-    expect(kindHeadline("source_hash", full.get("source_hash")!)).toBe("Source identity · 2 passed");
-    expect(kindHeadline("lean_build", full.get("lean_build")!)).toBe("No Lean build run is recorded · 2 not run");
-    expect(kindHeadline("extraction", full.get("extraction")!)).toBe("No successful dependency extraction result is recorded · 1 unavailable · 1 not run");
+    expect(kindHeadline("comparator", full.get("comparator")!)).toBe("No successful Comparator result is recorded (1 failed, 2 unavailable and 2 not run)");
+    expect(kindHeadline("source_hash", full.get("source_hash")!)).toBe("Source file hashes (2 passed)");
+    expect(kindHeadline("lean_build", full.get("lean_build")!)).toBe("No Lean build run is recorded (2 not run)");
+    expect(kindHeadline("extraction", full.get("extraction")!)).toBe("No successful dependency extraction result is recorded (1 unavailable and 1 not run)");
     const value = outcomeCounts(recordsOf("lean.value_consequences"));
-    expect(kindHeadline("comparator", value.get("comparator")!)).toBe("No successful Comparator result is recorded · 1 failed · 1 unavailable · 2 not run");
+    expect(kindHeadline("comparator", value.get("comparator")!)).toBe("No successful Comparator result is recorded (1 failed, 1 unavailable and 2 not run)");
     expect(kindHeadline("comparator", {})).toBe("No Comparator records");
-    expect(kindHeadline("lean_build", { passed: 1, failed: 1 })).toBe("Lean build · 1 passed · 1 failed");
+    expect(kindHeadline("lean_build", { passed: 1, failed: 1 })).toBe("Lean build (1 passed and 1 failed)");
   });
 
   it("never says a run is missing when a failed or unavailable run is recorded, and never says independent", () => {
@@ -55,7 +55,7 @@ describe("check outcomes stay distinct", () => {
       expect(comparator.tone).toBe("failed");
       expect(comparator.outcome).toMatch(/^none passed: 1 failed, \d unavailable and 2 not run$/);
       expect(comparator.outcome).not.toMatch(/no completed/);
-      expect(comparator.headline).toMatch(/^No successful Comparator result is recorded · 1 failed/);
+      expect(comparator.headline).toMatch(/^No successful Comparator result is recorded \(1 failed/);
       expect(rows.find((r) => r.kind === "extraction")!.outcome).toBe("none passed: 1 unavailable and 1 not run");
       expect(rows.find((r) => r.kind === "extraction")!.tone).toBe("open");
       expect(rows.find((r) => r.kind === "lean_build")!.outcome).toBe("not run (2)");

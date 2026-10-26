@@ -178,7 +178,7 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
             <p className="caps plate__label">In Lean</p>
             <LeanSignature source={leanStatement ?? formalNode.label} />
             <p className="plate__leanstatus">
-              Recorded Lean correspondence{correspondence?.warrant?.status ? ` · review ${correspondence.warrant.status.replace(/_/g, " ")}` : ""}
+              Recorded as the Lean statement of this result.{correspondence?.warrant?.status ? ` ${reviewSentence(correspondence.warrant.status)}` : ""}
             </p>
           </div>
         )}
@@ -266,4 +266,13 @@ function LeanSignature({ source }: { source: string }) {
       )}
     </code>
   );
+}
+
+/** One sentence on the review of a recorded Lean correspondence; a passed record is never called independent. */
+function reviewSentence(status: string): string {
+  if (status === "passed") return "A review of that match is recorded as passed.";
+  if (status === "failed") return "A review of that match is recorded as failed.";
+  if (status === "unavailable") return "A review of that match was attempted but gave no outcome.";
+  if (status === "not_run") return "No review of that match has been run.";
+  return `Review of that match: ${status.replace(/_/g, " ")}.`;
 }

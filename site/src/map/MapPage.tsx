@@ -371,7 +371,9 @@ export function MapPage({ route }: { route: MapRoute }) {
   const crumbs = useMemo(() => (shownNode ? pathFromGoal(graph, goal, shownNode, within) : null), [graph, goal, shownNode, within]);
 
   const argumentSize = scopedReach.size;
-  const scopeLine = `${route.lens ? `Records the ${accountWord(route.lens).toLowerCase()} uses` : "All accounts"} · ${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument`;
+  const scopeLine = route.lens
+    ? `${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument, counting only those the ${accountWord(route.lens).toLowerCase()} uses`
+    : `${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument`;
 
 
   const chooseView = (v: View) => {
@@ -413,8 +415,7 @@ export function MapPage({ route }: { route: MapRoute }) {
           <p className="map-note" role="status">
             {stepNotDrawn ? (
               <>
-                <span>This step is not drawn in the argument for this main result</span>
-                <span aria-hidden="true"> · </span>
+                <span>This step is not drawn in the argument for this main result.</span>{" "}
                 <button
                   type="button"
                   className="linklike"
@@ -427,11 +428,10 @@ export function MapPage({ route }: { route: MapRoute }) {
             ) : (
               <>
                 <span>
-                  This {edgeObj ? "step" : "record"} is not among the records the {accountWord(route.lens!)} uses
-                </span>
-                <span aria-hidden="true"> · </span>
+                  This {edgeObj ? "step" : "record"} is not among the records the {accountWord(route.lens!).toLowerCase()} uses.
+                </span>{" "}
                 <button type="button" className="linklike" onClick={() => changeLens(undefined)}>
-                  Show the records used by all accounts
+                  Show all records
                 </button>
               </>
             )}

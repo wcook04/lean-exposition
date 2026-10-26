@@ -44,7 +44,7 @@ export function Chooser({ here, structures, graph, placement, beside, onChoose, 
           <span className="destination__title">{title ? sectionLabel(title) : `The passage “${d.anchor.replace(/-/g, " ")}”`}</span>
           <span className="destination__account">
             {PAPER_NAMES[d.stage].short}
-            {d.rationale && <span className="destination__why"> · {d.rationale}</span>}
+            {d.rationale && <span className="destination__why">. {d.rationale}</span>}
           </span>
         </a>
       </li>

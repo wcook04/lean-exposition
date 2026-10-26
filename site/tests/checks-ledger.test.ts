@@ -27,7 +27,7 @@ describe("check grouping", () => {
     expect(countsInWords({ not_run: 4, failed: 2, unavailable: 2 })).toBe("2 failed, 2 unavailable and 4 not run");
     expect(countsInWords({ passed: 3 })).toBe("3 passed");
     const source = standingSentence({ kind: "source_hash", title: "Source files", counts: { passed: 3 } });
-    expect(source).toMatch(/byte-for-byte/);
+    expect(source).toMatch(/SHA-256 hash and length/);
     expect(source).toMatch(/do not examine whether the mathematics/);
     for (const kind of ["source_hash", "lean_build", "comparator", "extraction", "semantic_review", "platform"])
       for (const counts of [{}, { passed: 2 }, { not_run: 3 }, { failed: 1, passed: 1 }] as Record<string, number>[])

@@ -132,7 +132,7 @@ export function accountStateLine(state: AccountState): string {
     case "used":
       return "No passage is linked directly to this record. These passages are linked to results that use it.";
     case "outside":
-      return "No passage in this account is linked to this record, and the recorded argument for the account's main results does not use it.";
+      return "No passage in this account is linked to this record, and the recorded argument for the account’s main results does not use it.";
   }
 }
 
@@ -158,11 +158,11 @@ export function treatmentWords(
 
 /** The status of a record in a few words, for the identity row. */
 export function statusWords(status: string, kind: string): string {
-  if (kind === "declaration" && status === "unverified") return "Lean declaration · not a completed proof check";
+  if (kind === "declaration" && status === "unverified") return "No completed Lean proof check is recorded for this declaration.";
   const words: Record<string, string> = {
-    unverified: "Unverified record",
-    open: "Open record",
-    kernel_checked: "Checked by the Lean kernel",
+    unverified: "Not independently checked",
+    open: "Unresolved",
+    kernel_checked: "Accepted by the Lean kernel",
     conditional: "Conditional on its stated assumptions",
     external: "Imported from an external source",
     axiom: "An axiom",
@@ -251,10 +251,10 @@ export function stepVerb(kind: string): string {
  * not say who reviewed it, so it is never called independent.
  */
 export function warrantStatus(status: string): string {
-  if (status === "passed") return "Recorded explanation · review record: passed";
-  if (status === "failed") return "Recorded explanation · review record: failed";
-  if (status === "unavailable") return "Recorded explanation · review outcome unavailable";
-  return "Recorded explanation · independent review not run";
+  if (status === "passed") return "An explanation is recorded, and a review of it is recorded as passed";
+  if (status === "failed") return "An explanation is recorded, and a review of it is recorded as failed";
+  if (status === "unavailable") return "An explanation is recorded; a review of it was attempted but gave no outcome";
+  return "An explanation is recorded, but no independent review of it has been run";
 }
 
 /**
@@ -275,7 +275,7 @@ export interface SourceSpan {
 }
 
 export interface ApplicationView {
-  /** "Authored application · not a checked substitution" */
+  /** "No program has checked this authored application of the theorem" */
   status: string;
   shared: { name: string; value: string }[];
   premises: { premise: string; names: string[]; rationale: string; supplier: string }[];
@@ -324,10 +324,10 @@ function sourceSpan(raw: unknown): SourceSpan | null {
   return { sourceId, startLine: n(o.startLine ?? o.start_line), endLine: n(o.endLine ?? o.end_line) };
 }
 
-/** "authored" → "Authored application"; the status is the record's, never upgraded. */
+/** "authored" → "… this authored application …"; the status is the record's, never upgraded. */
 function applicationStatus(status: string | null | undefined): string {
   const word = status ? status.replace(/_/g, " ") : "authored";
-  return `${word[0].toUpperCase()}${word.slice(1)} application · not a checked substitution`;
+  return `No program has checked this ${word} application of the theorem`;
 }
 
 /**

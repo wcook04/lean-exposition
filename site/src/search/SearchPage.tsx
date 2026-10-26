@@ -127,8 +127,8 @@ export function SearchPage({ route }: { route: SearchRoute }) {
                 {total} matching {nounFor(type, total)}
                 {win.pages > 1 && (
                   <span className="search-results__range num">
-                    {" "}
-                    · {win.from}–{win.to}
+                    {", "}
+                    showing {win.from}–{win.to}
                   </span>
                 )}
               </h2>
@@ -213,7 +213,7 @@ function Result({ item }: { item: SearchItem }) {
       const target = await destination(item, graph);
       setOpening(false);
       if (!target) {
-        setFailed("This result has no page to open in this edition.");
+        setFailed("This result has no page to open on this site.");
         return;
       }
       if (/^https?:\/\//.test(target)) window.open(target, "_blank", "noopener,noreferrer");

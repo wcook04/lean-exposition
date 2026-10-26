@@ -197,17 +197,26 @@ Records that have inputs of their own are never copied.
 "/" is for someone arriving for the first time. The map is at "/map"; "/" with map
 parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
 
-- **First screen.** The edition title, one sentence saying what the site holds, the
-  one filled button ("Read the exposition") and "Open the argument map"; beside them
-  the main result's statement on a plate, as the papers typeset it. The statement
-  is the page's picture.
-- **Then, in order:** the three accounts (what each is for and for whom, its
-  section count, and its strip of linked passages drawn over the paper's full
-  length); the argument map (how to read the drawing, the real argument laid out by
-  the map's engine on the canvas ground, its key, and the main results with the
-  accounts that state each); the recorded checks, counted from the edition.
+- **The page teaches the result before the site.** Its mathematical prose is a
+  distillation of the three papers, not a description of the software: every claim,
+  hypothesis and attribution on it is one the papers state (see the comment at the top
+  of `src/home/FrontPage.tsx`), and mathematical prose is set in the serif.
+- **First screen.** The edition title; the theorem in words (order parameters are
+  the nondecreasing functions Parisi's formula minimises over, and a minimiser
+  increases across every interval in [0, 1) with a positive derivative); one quieter
+  line saying what the site holds; the one filled button ("Read the exposition") and
+  "Open the argument map"; beside them the first sentence of Theorem 1 as the short
+  paper typesets it, labelled as its first part.
+- **Then, in order:** the problem (signs, Gaussian weights, the ground-state value,
+  Parisi's formula, overlaps and what a gap is, beside the exposition's gap figure);
+  how the proof rules out a gap (contact, strict curvature and the missing area,
+  beside the exposition's area figure, with the hard step named and attributed);
+  what follows (the spins, the classical algorithm, the QAOA circuit); the three
+  accounts with their strips; the argument map; and what has been checked, stated
+  literally (Lean statements exist, Comparator has not finished, what the exact
+  calculation covers, and that no independent mathematical review has been done).
 - A fact true of all three accounts is said once, not on every row. Every number
-  is computed from the edition.
+  taken from the edition is computed.
 
 ## Inspector
 

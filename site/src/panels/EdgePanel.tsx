@@ -78,7 +78,7 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
             <span className="caps">Step</span>
             <CloseButton onClose={onClose} />
           </div>
-          <p className="panel__state">This step is not recorded in this edition.</p>
+          <p className="panel__state">No recorded step matches this link.</p>
         </header>
       </aside>
     );

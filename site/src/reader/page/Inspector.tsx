@@ -120,7 +120,7 @@ function PassageView({
       <div className="inspector__where">
         <p className="inspector__place">
           {account}
-          {title ? ` · ${sectionLabel(title)}` : ""}
+          {title ? `, ${sectionLabel(title)}` : ""}
         </p>
         {anchor && (
           <button type="button" className="inspector__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
@@ -131,6 +131,7 @@ function PassageView({
       {anchor && ids.length > 0 && (
         <>
           <h3 className="inspector__label">Records linked to this whole passage</h3>
+          <p className="inspector__note">A record is one claim, assumption, main result or Lean declaration in the argument that the argument map draws.</p>
           <ul className="records">
             {ids.map((id) => (
               <li key={id}>
@@ -164,7 +165,7 @@ function RecordRow({ id, graph, selected, onSelect }: { id: string; graph: ArgGr
     return (
       <div className="record-row record-row--missing">
         <span className="record-row__title">{id}</span>
-        <span className="record-row__note">This identifier is not a record in this edition.</span>
+        <span className="record-row__note">No record on this site has this identifier.</span>
       </div>
     );
   }

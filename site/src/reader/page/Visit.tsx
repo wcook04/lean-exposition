@@ -154,7 +154,7 @@ function PassageColumn({
         <h2 className="visit__title">{view && !view.missing && view.title ? sectionLabel(view.title) : account}</h2>
         <p className="visit__meta">
           {account}
-          {view && !view.missing && view.status ? ` · ${view.status}` : ""}
+          {view && !view.missing && view.status ? `. ${view.status}` : ""}
         </p>
       </header>
       <div className="visit__scroll" ref={scrollRef} tabIndex={-1} onClick={onClick}>
@@ -162,7 +162,7 @@ function PassageColumn({
         {loaded.status === "loading" && <p className="visit__message faint">Loading the {account.toLowerCase()}…</p>}
         {view?.missing && (
           <p className="visit__message">
-            The {account.toLowerCase()} has no passage or section called “{place.anchor}” in this edition.
+            The {account.toLowerCase()} has no passage or section called “{place.anchor}”.
           </p>
         )}
         {view && !view.missing && <div ref={bodyRef} className="visit__text prose" dangerouslySetInnerHTML={{ __html: view.html }} />}

@@ -87,6 +87,6 @@ describe("preview never commits", () => {
     expect(card.getAttribute("role")).toBe("group");
     expect(card.querySelector(".card__open")!.tagName).toBe("BUTTON");
     expect(card.querySelector(".card__inputs")!.getAttribute("tabindex")).not.toBeNull();
-    expect(card.querySelector(".card__inputs")!.textContent).toMatch(/Inputs · \d+/);
+    expect(card.querySelector(".card__inputs")!.textContent).toMatch(/^\d+ inputs?/);
   });
 });

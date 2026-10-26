@@ -8,7 +8,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { routeHref, type Trace } from "../app/router";
-import { kindHeadline } from "../checks/summary";
+import { kindLead } from "../checks/summary";
 import { statedDate } from "../checks/summary";
 import { closure, type ArgEdge } from "../model/graph";
 import { transitiveReduction } from "../map/engine/skeleton";
@@ -137,7 +137,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             <span className="src-sq" aria-hidden="true" />
             <span className="panel__src-name">
               {origin.label}
-              {origin.place && ` · ${origin.place}`}
+              {origin.place && `, ${origin.place}`}
             </span>
           </span>
           <span className={`panel__status panel__status--${node.status}`}>{statusWords(node.status, "record")}</span>
@@ -169,7 +169,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         <div className="panel__content" key={`b:${nodeId}`}>
           {failed === "missing" ? (
             <p className="panel__error" role="alert">
-              This record could not be found in this edition.
+              This site has no record with this identifier.
             </p>
           ) : null}
           <Pane id="explanation" title="Passages">
@@ -246,7 +246,9 @@ function Route({
   return (
     <div className="panel__route">
       <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
-        One recorded route from <strong>{goalName}</strong> · {steps} {steps === 1 ? "step" : "steps"}
+        <span>
+          One recorded route from <strong>{goalName}</strong>, in {steps} {steps === 1 ? "step" : "steps"}
+        </span>
         <span className="panel__route-chev" aria-hidden="true" />
       </button>
       {open && (
@@ -411,7 +413,7 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={restsOn.size <= 1}
         >
-          Everything it uses · <span className="num">{restsOn.size - 1}</span>
+          All records it uses (<span className="num">{restsOn.size - 1}</span>)
         </button>
         <button
           type="button"
@@ -422,16 +424,16 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={feeds.size <= 1}
         >
-          Everything that uses it · <span className="num">{feeds.size - 1}</span>
+          All records that use it (<span className="num">{feeds.size - 1}</span>)
         </button>
       </div>
       <p className="panel__note">
-        These buttons highlight on the map every record reached through recorded links, directly or through other records.
+        Each button highlights on the map every record reached through recorded links, directly or through other records.
       </p>
       {(cites.to.length > 0 || cites.from.length > 0) && (
         <div className="panel__cites">
           <p className="panel__group">
-            Citations <span className="faint">· for navigation, not part of the argument</span>
+            Citations <span className="faint">(links for navigation, not part of the argument)</span>
           </p>
           <CiteList title="Cites" ids={cites.to} onSelect={onSelect} onEcho={onEcho} />
           <CiteList title="Cited by" ids={cites.from} onSelect={onSelect} onEcho={onEcho} />
@@ -465,7 +467,7 @@ function Relations({
   return (
     <div className="panel__rels">
       <p className="panel__group">
-        {title} · <span className="num">{edges.length}</span>
+        {title} (<span className="num">{edges.length}</span>)
       </p>
       {edges.length === 0 ? (
         <p className="panel__note">{empty}</p>
@@ -548,7 +550,7 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
         <span className="src-sq" aria-hidden="true" />
         <span>
           {origin.label}
-          {origin.place && <span className="muted"> · {origin.place}</span>}
+          {origin.place && <span className="muted">, {origin.place}</span>}
         </span>
       </p>
       {origin.locator && <p className="prov__locator">{origin.locator}</p>}
@@ -608,7 +610,7 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
                   ) : (
                     label
                   )}
-                  {c.locator && <span className="faint"> · {c.locator}</span>}
+                  {c.locator && <span className="faint">, {c.locator}</span>}
                 </li>
               );
             })}
@@ -621,7 +623,7 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
 
 const CHECK_ORDER = ["source_hash", "lean_build", "comparator", "extraction", "semantic_review", "platform"];
 const CHECK_TITLES: Record<string, string> = {
-  source_hash: "Source identity",
+  source_hash: "Source file hashes",
   lean_build: "Lean build",
   comparator: "Comparator",
   extraction: "Dependency extraction",
@@ -663,7 +665,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
         <ul className="checks__rows">
           {rows.map((row) => {
             const passedReview = row.kind === "semantic_review" && (row.counts.passed ?? 0) > 0;
-            const lead = passedReview ? "Review record: passed" : kindHeadline(row.kind, row.counts).split(" · ")[0];
+            const lead = passedReview ? "Review record: passed" : kindLead(row.kind, row.counts);
             const title = CHECK_TITLES[row.kind] ?? row.kind.replace(/_/g, " ");
             const isOpen = open === row.kind;
             const histId = `hist-${nodeId.replace(/[^\w-]/g, "_")}-${row.kind}`;
@@ -674,7 +676,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
                   <span className="checks__outcomes">
                     {outcomeParts(row.counts).map((p, i) => (
                       <span key={p.status}>
-                        {i > 0 && <span className="faint"> · </span>}
+                        {i > 0 && <span className="faint">, </span>}
                         <span className={`outcome outcome--${p.status}`}>
                           {p.n} {p.word}
                         </span>

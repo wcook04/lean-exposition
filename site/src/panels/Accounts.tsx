@@ -209,12 +209,12 @@ function Direct({
 
   return (
     <div className="acct__direct">
-      <StateLine state={{ kind: "direct", count: passages.length }} text={`${lead ? `${lead} · ` : ""}${accountStateLine({ kind: "direct", count: passages.length })}`}>
+      <StateLine state={{ kind: "direct", count: passages.length }} text={`${lead ? `${lead}. ` : ""}${accountStateLine({ kind: "direct", count: passages.length })}`}>
         {passages.length === 1 && (
           <>
-            {" · "}
+            {", "}
             <span className="acct__name">{chosen.name}</span>
-            {chosen.does.length > 0 && <span className="acct__does"> {chosen.does.join(", ")}</span>}
+            {chosen.does.length > 0 && <span className="acct__does"> ({chosen.does.join(", ")})</span>}
           </>
         )}
       </StateLine>
@@ -393,7 +393,7 @@ function SourceDestination({ nodeId }: { nodeId: string }) {
   const origin = graph.nodes.get(nodeId)!.origin;
   if (origin.family === "none") return null;
   const url = webUrl(origin.url);
-  const name = `${origin.label}${origin.place ? ` · ${origin.place}` : ""}`;
+  const name = `${origin.label}${origin.place ? `, ${origin.place}` : ""}`;
   return (
     <p className="acct__source" data-slot={origin.slot}>
       <span className="src-sq" aria-hidden="true" />

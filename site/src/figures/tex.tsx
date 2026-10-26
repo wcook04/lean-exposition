@@ -20,11 +20,28 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 }
 
-/** Text with inline `$...$` mathematics, as in the TikZ node source. */
+/**
+ * Text with inline `$...$` mathematics, as in the TikZ node source. Punctuation
+ * right after a formula stays on the formula's line, as in the papers' prose.
+ */
 export function richHtml(source: string): string {
   const parts = source.split("$");
   if (parts.length % 2 === 0) throw new Error(`Unbalanced $ in figure label: ${source}`);
-  return parts.map((part, i) => (i % 2 === 1 ? texHtml(part) : escapeHtml(part))).join("");
+  let out = "";
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) {
+      out += escapeHtml(parts[i]);
+      continue;
+    }
+    const glued = /^[.,;:!?)\]’”]+/.exec(parts[i + 1] ?? "");
+    if (!glued) {
+      out += texHtml(parts[i]);
+      continue;
+    }
+    out += `<span style="white-space:nowrap">${texHtml(parts[i])}${escapeHtml(glued[0])}</span>`;
+    parts[i + 1] = parts[i + 1].slice(glued[0].length);
+  }
+  return out;
 }
 
 export function Rich({ src, className }: { src: string; className?: string }) {

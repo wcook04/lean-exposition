@@ -177,12 +177,12 @@ export function sameTopic(structures: Structures, here: { stage: Stage; anchor: 
   return out;
 }
 
-/** "2 claims · 2 assumptions", "1 claim", counted by each record's kind. */
+/** "2 claims and 2 assumptions", "1 claim", counted by each record's kind. */
 export function recordTally(ids: string[], graph: { nodes: Map<string, { kind: string }> }): string {
   const assumptions = ids.filter((id) => graph.nodes.get(id)?.kind === "assumption").length;
   const claims = ids.length - assumptions;
   const one = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
-  return [claims ? one(claims, "claim") : "", assumptions ? one(assumptions, "assumption") : ""].filter(Boolean).join(" · ");
+  return [claims ? one(claims, "claim") : "", assumptions ? one(assumptions, "assumption") : ""].filter(Boolean).join(" and ");
 }
 
 /** The mapped passages among the parts a selection touches. */

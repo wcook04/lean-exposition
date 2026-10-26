@@ -145,7 +145,7 @@ describe("selection", () => {
     open({ view: "map", node: id, lens: stage });
     expect(calls.treeProps.selected).toBe(id);
     const note = container.querySelector(".map-note");
-    expect(note?.textContent).toContain(`This record is not among the records the ${names[stage]} uses`);
+    expect(note?.textContent).toContain(`This record is not among the records the ${names[stage].toLowerCase()} uses`);
     // The inspector's route never passes through records outside the account.
     const path = (calls.panelProps.path as string[] | null) ?? [];
     expect(path.slice(0, -1).every((x) => graph.nodes.get(x)!.papers[stage])).toBe(true);

@@ -307,7 +307,7 @@ export function describeError(error: unknown): { title: string; detail: string }
         title: "The server is serving a different edition",
         detail: "An edition is one fixed set of records and papers, and the server has switched to another one. Reload this page to read it.",
       };
-    if (error.status === 404) return { title: "The server has no such item in this edition", detail: error.message };
+    if (error.status === 404) return { title: "This site has no such item", detail: error.message };
     return { title: `The server returned an error (HTTP status ${error.status})`, detail: error.message };
   }
   return { title: "The page stopped with an error", detail: error instanceof Error ? error.message : String(error) };

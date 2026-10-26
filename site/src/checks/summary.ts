@@ -32,7 +32,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   platform: {
     title: "Platform label",
-    question: "What an outside platform reports about a statement. This is that platform's label, not a proof check run for this edition.",
+    question: "What an outside platform reports about a statement. This is that platform’s label, not a proof check run for these records.",
   },
 };
 
@@ -122,7 +122,7 @@ export function outcomeCounts(records: readonly OutcomeRecord[]): Map<string, Re
 
 /** Names for a kind in a headline: what a passed record of that kind shows. */
 const HEADLINE_NAMES: Record<string, string> = {
-  source_hash: "Source identity",
+  source_hash: "Source file hashes",
   lean_build: "Lean build",
   comparator: "Comparator",
   extraction: "Dependency extraction",
@@ -145,20 +145,28 @@ function outcomeParts(counts: Record<string, number>): string[] {
 }
 
 /**
- * One line for a kind of check, every outcome kept apart:
- * "No successful Comparator result is recorded · 1 failed · 2 unavailable · 2 not run",
- * "No Lean build run is recorded · 2 not run", "Source identity · 2 passed".
- * It never calls a pass independent and never says a run is missing when a
- * failed or unavailable run is recorded.
+ * The lead of a kind's line: its name when something passed, otherwise what
+ * is missing. It never says a run is missing when a failed or unavailable run
+ * is recorded.
  */
-export function kindHeadline(kind: string, counts: Record<string, number>): string {
+export function kindLead(kind: string, counts: Record<string, number>): string {
   const name = headlineName(kind);
-  const parts = outcomeParts(counts);
-  if (parts.length === 0) return `No ${inSentence(name)} records`;
+  if (outcomeParts(counts).length === 0) return `No ${inSentence(name)} records`;
   const passed = counts.passed ?? 0;
   const recordedRun = passed + (counts.failed ?? 0) + (counts.unavailable ?? 0);
-  const lead = passed ? name : recordedRun ? `No successful ${inSentence(name)} result is recorded` : `No ${inSentence(name)} run is recorded`;
-  return [lead, ...parts].join(" · ");
+  return passed ? name : recordedRun ? `No successful ${inSentence(name)} result is recorded` : `No ${inSentence(name)} run is recorded`;
+}
+
+/**
+ * One line for a kind of check, every outcome kept apart:
+ * "No successful Comparator result is recorded (1 failed, 2 unavailable and 2 not run)",
+ * "No Lean build run is recorded (2 not run)", "Source file hashes (2 passed)".
+ * It never calls a pass independent.
+ */
+export function kindHeadline(kind: string, counts: Record<string, number>): string {
+  const lead = kindLead(kind, counts);
+  if (outcomeParts(counts).length === 0) return lead;
+  return `${lead} (${countsInWords(counts)})`;
 }
 
 /** "View 12 check records" style count, and the line the theorem plate shows. */
@@ -216,7 +224,7 @@ export const OUTCOME_NAMES: Record<string, string> = {
 /** What each outcome means, in plain words, for the page's key. */
 export const OUTCOME_MEANINGS: { status: string; meaning: string }[] = [
   { status: "passed", meaning: "The checking program ran and reported success on the inputs it examined." },
-  { status: "failed", meaning: "A run is recorded and it ended in failure. The check record says where it stopped." },
+  { status: "failed", meaning: "A run is recorded and it ended in failure. Where it stopped is written in the check record." },
   { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the checking program never started." },
   { status: "not_run", meaning: "The check is described and planned, but no run of it is recorded." },
 ];
@@ -355,13 +363,13 @@ export function standingSentence(group: Pick<KindGroup, "kind" | "title" | "coun
   const passed = group.counts.passed ?? 0;
   const notRun = group.counts.not_run ?? 0;
   const name = KIND_NOUNS[group.kind] ?? `${group.title.toLowerCase()} records`;
-  if (total === 0) return `No ${name} are part of this edition.`;
+  if (total === 0) return `No ${name} are recorded.`;
   if (group.kind === "comparator" && passed === 0)
-    return `No successful Comparator result is recorded for this edition. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
+    return `No successful Comparator result is recorded. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
   if (passed === total) {
     const lead = total === 1 ? `The one ${singular(name)} passed.` : `All ${total} ${name} passed.`;
     if (group.kind === "source_hash")
-      return `${lead} Each one found that a named file is byte-for-byte identical to the file recorded. These checks do not examine whether the mathematics in the files is correct.`;
+      return `${lead} In each, the SHA-256 hash and length of a named file matched the values recorded for it, so the file has the recorded bytes. These checks do not examine whether the mathematics in the files is correct.`;
     return lead;
   }
   if (passed === 0 && notRun === total)
