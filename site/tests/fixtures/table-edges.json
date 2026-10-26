@@ -1614,6 +1614,38 @@
  },
  {
   "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "from": "support.empty_support_chord_obstruction",
+  "kind": "supports",
+  "to": "support.contact"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "from": "support.empty_support_chord_obstruction",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "from": "support.empty_support_chord_obstruction",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "from": "support.empty_support_chord_obstruction",
+  "kind": "supports",
+  "to": "support.zero_curvature"
+ },
+ {
+  "evidence_ids": [
    "support_source_bindings_20261024",
    "support_graph_semantic_review_pending",
    "R2-25-E005"
@@ -1798,6 +1830,14 @@
  },
  {
   "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.empty_support_chord_obstruction"
+ },
+ {
+  "evidence_ids": [
    "ordinary_deductions_review_20261026"
   ],
   "from": "support.full_relative_support_curvature",
@@ -1843,14 +1883,6 @@
   "from": "support.full_relative_support_curvature",
   "kind": "supports",
   "to": "support.terminal_chord_barrier"
- },
- {
-  "evidence_ids": [
-   "ordinary_deductions_review_20261026"
-  ],
-  "from": "support.full_relative_support_curvature",
-  "kind": "supports",
-  "to": "support.zero_candidate_descent"
  },
  {
   "evidence_ids": [
@@ -1984,15 +2016,15 @@
      "supplier_id": "scalar.minimizer_attainment"
     }
    ],
-   "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in long section 2.3); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted.",
+   "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in the long record at #minimizer-attainment); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted.",
    "remaining_assumption_ids": [],
    "shared_bindings": {
     "gamma": "one attained minimizer gamma_0 in the manuscript pure zero-field SK class U, used for full support and the support-point premise of the ACZ landscape theorem"
    },
    "source_span": {
-    "end_line": 3506,
+    "end_line": 3761,
     "source_id": "authored_long_comparisons_20261024",
-    "start_line": 3447
+    "start_line": 3686
    },
    "status": "authored"
   },

@@ -12,6 +12,7 @@ import { AccountsFigure } from "../src/figures/AccountsFigure";
 import { AreaFigure, AreaModelView, modelMean, PAPER_MODEL } from "../src/figures/AreaFigure";
 import { GapFigure } from "../src/figures/GapFigure";
 import { GapIngredientsFigure } from "../src/figures/GapIngredientsFigure";
+import { ReadingJourneyFigure } from "../src/figures/ReadingJourneyFigure";
 import { figureForKey } from "../src/figures/registry";
 
 const site = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -21,7 +22,8 @@ const FIGURES: { name: string; Component: ComponentType; math: number }[] = [
   { name: "gap", Component: GapFigure, math: 15 },
   { name: "area", Component: () => <AreaFigure explorable={false} />, math: 9 },
   { name: "accounts", Component: AccountsFigure, math: 0 },
-  { name: "ingredients", Component: GapIngredientsFigure, math: 7 },
+  { name: "ingredients", Component: GapIngredientsFigure, math: 9 },
+  { name: "journey", Component: ReadingJourneyFigure, math: 0 },
 ];
 
 const EXPLORE_STATES = [
@@ -88,11 +90,30 @@ describe("redrawn paper figures", () => {
     host.remove();
   });
 
-  it("registry: matches the four real captions and rejects others", () => {
+  it("journey: distinguishes two expansions, two direct maps and the citation chain", () => {
+    const el = document.createElement("div");
+    el.innerHTML = renderToStaticMarkup(<ReadingJourneyFigure />);
+    const relations = (kind: string) => [...el.querySelectorAll<HTMLElement>(`[data-relation="${kind}"]`)]
+      .map((edge) => [edge.dataset.from, edge.dataset.to]);
+    expect(relations("expands")).toEqual([
+      ["long:curvature", "short:curvature"],
+      ["long:fixed-time-coercivity", "short:curvature"],
+    ]);
+    expect(relations("maps")).toEqual([
+      ["short:curvature", "support.positive_curvature"],
+      ["long:fixed-time-coercivity", "support.positive_curvature"],
+    ]);
+    expect(relations("citation_ids")).toEqual([["support.positive_curvature", "support_curvature_source"]]);
+    expect(relations("source_id")).toEqual([["support_curvature_source", "support_tex_curvature"]]);
+    expect(el.querySelectorAll(".arch-flow--up.arch-flow--dashed")).toHaveLength(2);
+    expect(el.querySelectorAll(".arch-flow--dotted")).toHaveLength(2);
+  });
+
+  it("registry: matches every real figure and stable architecture label, and rejects others", () => {
     const qaoa = captions("papers/qaoa-sk/expository/main.md");
     const arch = captions("papers/architecture/paper.md");
     expect(qaoa).toHaveLength(2);
-    expect(arch).toHaveLength(2);
+    expect(arch.length).toBeGreaterThanOrEqual(2);
     const [gap, area] = qaoa;
     expect(gap.label).toBe("fig:support-increments");
     expect(figureForKey(gap.label!, gap.caption)).toBe(GapFigure);
@@ -100,6 +121,12 @@ describe("redrawn paper figures", () => {
     expect(figureForKey("fig-0123456789", area.caption)).toBe(AreaFigure);
     expect(figureForKey("fig-abcdef0123", arch[0].caption)).toBe(AccountsFigure);
     expect(figureForKey("fig-abcdef0123", arch[1].caption)).toBe(GapIngredientsFigure);
+    for (const figure of [...qaoa, ...arch]) {
+      expect(figureForKey(figure.label ?? "fig-abcdef0123", figure.caption), figure.caption).not.toBeNull();
+    }
+    expect(figureForKey("fig:shared-claim", "")).toBe(AccountsFigure);
+    expect(figureForKey("fig:joint-inputs", "")).toBe(GapIngredientsFigure);
+    expect(figureForKey("fig:excursion-return", "")).toBe(ReadingJourneyFigure);
     expect(figureForKey("fig-ffffffffff", "A table of unrelated values.")).toBeNull();
     expect(figureForKey("fig:unknown", "")).toBeNull();
   });

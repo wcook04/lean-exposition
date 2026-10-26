@@ -364,3 +364,169 @@ review is not an unassisted or human-reader study. The local methods now
 retain exact imported interfaces, compare proof routes by hypotheses and
 quantitative conclusions, and use changed examples to distinguish quantities
 hidden by an initial symmetry.
+
+### Reuse, changed cases and proof destinations, 26 October 2026
+
+Ten R10 returns reviewed edition `21b1f9e`. Their criticisms were grouped by
+the affected inference and checked against the papers and original sources.
+Several proposed repairs were already present: finite weights returned in
+the contact proof, diffuse removal was admissible, the tilted-chord question
+had a separate answer, and the finite circuit observable retained its adjacent
+index. Those passages were preserved. The present revision is a selected
+mathematical and editorial synthesis, not a new independent acceptance of the
+analytic imports.
+
+The exposition distinguishes a known coefficient schedule from unknown future
+noise, then follows deterministic value, feedback, random state and averaging
+in that order. The local gain is explained before completing its square.
+At the proof's entrance, the announced minimizer identities are explicitly
+conclusions still to establish. Counting mass over the region $s\le t$ makes
+the finite-sum-to-integral step visible without replacing its absolute
+integrability argument. A changed endpoint slope now makes the area data
+possible, so the exercise tests the boundary of the contradiction. The final
+spin question uses sign reversal and retains the order of quantifiers.
+
+The [empty-support proof](../long/reasoning-record.md#empty-support-chord)
+now uses the preceding strict convexity of $q$, $q(0)=0$ and $q\le1$.
+Two finite-chord comparisons give $q(t)<t$, contradicting feasible atom
+addition. This makes the explicit arcsine evaluation supplementary to the
+main route. The expert paper also uses the qualitative terminal proof while
+giving a precise destination for the stronger square-root boundary estimate.
+Both original quantitative arguments remain in the long record.
+
+The expert revision explains the weighted-divergence correction and compares
+the earlier coefficient classes after rescaling, rather than relying on their
+different names. The circuit consequence identifies its admissible finite
+input and its preserved energy. The long record gives the
+[absolute finite-observable error](../long/reasoning-record.md#finite-formula-energy-error)
+before the near-optimality choices. A reader entering the certificate from
+the exposition now meets the local rescaling and quotient dictionary before
+its first use. Exact finite maximizers are distinguished from asymptotic
+near-ground pairs by the
+[Gaussian variance calculation](../long/reasoning-record.md#exact-finite-maximizers).
+
+Longer control examples, additional figures and a wholesale circuit survey
+were not adopted: the existing examples and a precise imported proposition
+serve the selected papers more economically. Seventeen returned mathematical
+calculation programs passed on disposable copies. Those exact algebra and
+finite numerical checks do not validate every analytic or circuit theorem.
+The graph records the newly used ordinary deductions separately; its earlier
+evidence and formal declarations are unchanged. Comparator and research-v2
+extraction outcomes remain unknown.
+
+The authoring transitions retain the general decisions exercised here:
+restore the roles and available facts when a proof changes setting; distinguish
+following an operation from selecting it independently; test changed conditions
+that alter the conclusion; and make a finite calibration distinguish the
+competing interpretations it is meant to check. Existing instructions were
+applied where sufficient. Transfer examples and exceptions belong in the
+local methods, while this account records their use on the reviewed edition.
+Model review and successful structural checks are not observations of human
+learning.
+
+### Independent audits and evidence boundaries, 26 October 2026
+
+Subsequent agent audits compared all four accounts with their retained sources
+and exercised the graph and bundle interfaces independently. The exposition
+now specifies Brownian noise before identifying a future increment as Gaussian.
+The short and long accounts state the joint Gaussian law for fixed child-space
+vectors before using zero covariance to conclude independence. The source
+comparison avoids an ordering claim where the retained dates conflict.
+Conventional attribution to a paper's listed author was reviewed and retained.
+
+Two distinct cases exercise the general authoring lesson. A symmetric two-point
+variable and a Gaussian can have equal variance and different laws. Likewise,
+if an independent symmetric sign multiplies a standard Gaussian, the resulting
+pair has Gaussian marginals and zero covariance but equal absolute values.
+The respective missing hypotheses are the Brownian increment model and a joint
+Gaussian law. The exception is a claim only about a second moment: identifying
+the entire law is then unnecessary. These cases and their scope inform the
+[shared method](../../../docs/authoring.md#use-and-improve-the-transition-skills)
+and the source-to-graph and graph-to-long transitions.
+
+The graph audits distinguish supplying an ordinary quantified premise from
+removing an axiom or proof hole used by a retained Lean proof. Documentary
+credit for a supplied premise also survives its removal as a free obligation.
+The current passage mappings now include those premise citations. Historical
+captures retain their earlier reading rules and expose differences from the
+current authoring requirements through inspection. These are correspondence
+and validation changes, not new mathematical theorems.
+
+The architecture companion retains its two semantic diagrams and clarifies
+what a passage map can establish. Its website description and figure-source
+notices now agree with the maintained sources. A proposed additional control
+calculation remains supplementary: its availability alone did not justify
+lengthening the existing reading route.
+
+The software checks use synthetic positive and negative fixtures. They test
+receipt consistency, scoped obligations, historical reading and new assembly;
+they do not authenticate arbitrary local JSON or supply a native Lean or
+Comparator result. This editorial revision does not change the graph's
+recorded formal outcomes or claim measured human comprehension.
+
+### R11 synthesis and subsequent Support observation, 26 October 2026
+
+Ten R11 returns reviewed edition `ef46d0e72787c1dc283733b10b433d112f97ac64`.
+Recommendations were compared with the corrected Terra edition and original
+sources. Initial reading difficulties remain distinct from source-assisted
+resolutions. These are agent reviews, not observations of human learning.
+
+R11-01–03 prompted local exposition changes: attribute the auxiliary-noise
+rule, identify the spatial derivative in the optional calculation, and
+separate terminal crossing from the contradiction with the exact cap
+$q\le1$. The polynomial $t-3t^2/4+t^3$ tests why boundedness is insufficient;
+it is a reduced calculus countermodel, not an SK moment curve. The
+changed-future question preserves the earlier Brownian state while requiring
+the value slope to be recomputed. All four gap arguments remain; the stronger
+proposed comparison between changed slopes was unnecessary.
+
+R11-04–06 clarified the expert paper's two aims, its imported matrix-dependent
+IAMP step, and fixed-word finite-size control versus an accuracy-only rate.
+The existing asymmetric heat example now has a first-use link. The synthesis
+preserves the absolute energy estimate, bounded transmitted functions,
+ordinary-word transfer, and quantum second moment needed for concentration.
+Additional shape and weak-derivative examples were checked but did not justify
+lengthening the short paper.
+
+R11-07 prompted reconstruction improvements. The long record states the
+joint-exponential weighted bounds and propagates the seed approximation on
+bounded smooth moving inputs, including adjoints. The general insertion error
+is $O(r)$; only the more accurate echo difference is divided by $r$. The finite
+calibration precedes the Fock construction. A dyadic adapted approximation
+supplies an ordinary progressive version on the common continuity event;
+formal coefficient, control, value and minimizer transports remain obligations.
+These additions explain imported interfaces, not established theorem errors.
+
+R11-08–10 shaped the architecture companion's concrete journeys, fair
+same-source comparison and stopping rule for a small stable note. The documented
+empty-support repair illustrates a corrected reading route: two finite chords
+close the main proof, while the sound exact-variation calculation and stronger
+terminal estimate remain available. Graph relations locate support; hashes
+and fresh mappings cannot establish entailment or renew semantic acceptance.
+
+The later [Support observation](../../../examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json)
+records a source-bound local Lake build and scoped v2 extraction of the
+conditional full-support root. It is a redacted observation of retained
+artifacts, not authenticated execution provenance or a complete extraction
+projection for the curated graph. Comparator and scalar Value remain pending.
+These observations do not rewrite dated unknown outcomes above or turn ordinary
+deductions into formal transport theorems.
+
+One narrow method refinement was justified: a reused approximation must retain
+the invariant input class and uniform bounds needed next. The seed induction
+requires this. Independently, on $\ell^2$, coordinate projections satisfy
+$P_jx\to0$ for fixed $x$, but $P_jU^je_0=e_j$ along the shift iteration.
+A single fixed-input application needs no stronger uniformity. Existing
+guidance already covers discriminating examples, correspondence scope and
+mathematical versus reading repairs.
+
+Applied local inputs were the transition skills at Terra checkpoint
+`52982d77dd62fb7e009938208df6c9b7c9454768`; SHA-256 identities are:
+
+| Local method | Applied input | Refined output |
+|---|---|---|
+| `source-to-graph` | `4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136` | unchanged |
+| `graph-to-long` | `dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87` | `819bf48c70b0840272b81a331a9de63a346491382d6b588805de4ef469032959` |
+| `long-to-short` | `503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8` | unchanged |
+| `record-to-expository` | `f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a` | unchanged |
+| `docs/authoring.md` | at the same checkpoint | `e925155e37e47d9cd93b8f786a50e67af0e43e5c1f7f902fc5267edb45399b6d` |

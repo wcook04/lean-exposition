@@ -112,7 +112,8 @@ their necessary assumptions and sources. A [record-neighbourhood query](docs/bun
 starts from a source, citation, evidence record or claim, follows typed links
 in either direction, and shows where the selected view stops. Exact text
 selections can also find mapped passages and their support. The local API
-supplies these operations for readers, agents and a future front end.
+supplies these operations for readers, agents and frontends, including the
+repository's reading website.
 
 The [reading API](docs/web-api.md#follow-an-explanation-a-derivation-or-an-answer)
 also distinguishes an authored derivation, explanation, example or reference.

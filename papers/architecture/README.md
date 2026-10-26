@@ -8,8 +8,10 @@ how a shared record connects the papers without dictating their reading order,
 then follows the SK no-gap argument from a short proof to its missing analytic
 detail and original source. It distinguishes explanation, formal evidence and
 navigation, and describes the useful scope and cost of the present system.
-Section 7 explains the four authoring transitions and how the review-and-refinement
-loop carries a tested lesson into the method for another problem. The
+Section 6 follows a recorded correction: a two-chord proof makes a main
+reading route independent of an optional calculation, while preserving the
+stronger material elsewhere. It separates this local repair from a claim
+that an authoring method improved learning. The
 [shared procedure](../../docs/authoring.md#use-and-improve-the-transition-skills)
 and [transition skills](../../skills/README.md) contain the operational steps.
 
@@ -31,16 +33,40 @@ without installing the software.
 
 ## Figures and reading-copy links
 
-The two figures answer different questions: why three papers share one corpus,
-and which two ingredients a particular contradiction uses. They adapt the
-parallel-record and shared-support TikZ compositions in `paper.md` at local
-commit `4246d4e`, whose source is Will Cook's
+The three figures have separate jobs: identify a claim shared by selected
+passages, expose the joint inputs to a contradiction, and distinguish the two
+fuller explanations of one estimate. They adapt the parallel-record and local
+selection compositions (figures 2 and 3) in `paper.md` at local commit `fde01ef`,
+and the shared-support composition (figure 1) at `4246d4e`. These draw on
+Will Cook's
 [*A Repository-Based System for Research and Publication*](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
-([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). The first replaces
-the linear funnel with three accounts mapped to shared support. The second
-retains the two-input argument and makes their different hypotheses explicit.
-The evidence-channel figure has been replaced by prose, where its distinctions
-can be explained without another overview. Every connector states its relation.
+([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). The revisions use
+current passage identities, keep the branch-specific hypotheses, and add the
+two authored expansion links with their citation route. Figure 3 adapts the
+native TikZ excursion study of 26 October 2026, with shorter labels and
+orthogonal connectors; it retains that study's intentional absence of a direct
+claim mapping from the finite-step explanation. The paper retains its existing
+Pandoc/TikZ renderer and typography.
+
+| Figure and label | Source relationships shown |
+| --- | --- |
+| 1, `fig:shared-claim` | Long `gaps`, short `main-result` and exposition `full-support-statement` directly map `support.full_relative_support_curvature`. This ordinary claim is distinct from the formal-interface goal `full_support`. |
+| 2, `fig:joint-inputs` | The bounded positive-gap contradiction uses contact and strict curvature for the same moment curve. The joint-use label is an explanatory annotation, not an extracted logical record. |
+| 3, `fig:excursion-return` | Long `curvature` and `fixed-time-coercivity` each `expand` short `curvature`. Only the latter long passage and the short passage directly map `support.positive_curvature`; its `citation_ids` names `support_curvature_source`, whose `source_id` is `support_tex_curvature`. |
+
+The third figure's source is original Proposition 5.1, `curvature.tex` lines
+9–52, at OpenAI/math revision `adc7f1241b42e322a6451854ab7e4b4c146bf78a`.
+Its arrows retain stored directions: readers travel against an expansion
+arrow to visit the fuller treatment. Source-field references are not proof
+dependencies. The wider `fixed-time-coercivity` passage also treats zero
+coefficients; the displayed §4.5 destination selects its positive-plateau use.
+
+The former funnel, generic evidence channels and review-state diagram remain
+outside this edition. Their useful distinctions are expressed in the
+independent account roles, scoped evidence and concrete repair. They add no
+missing relationship to the selected journeys. The reading website renders
+these figures through [its figure registry](../../site/src/figures/registry.ts);
+caption or semantic changes must be carried into those existing components.
 
 The Markdown links to local papers and guides. The standalone PDF keeps those
 references as descriptive paper-and-section text, with clickable public source

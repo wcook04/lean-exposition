@@ -47,9 +47,14 @@ material as unavailable rather than assuming a link's destination is adequate.
    and what the result enables or clarifies. Counts of lemmas or declarations
    cannot choose the contribution.
    Compare plausible focal results before choosing. Retain a secondary result
-   when it advances the same argument or explains its use. For each substantial
-   cut, identify the full-proof destination; do not give every available result
-   equal space merely because it has a formal declaration.
+   when it advances the selected explanation or its promised use. If a downstream
+   application introduces another mathematical setting, choose between a precise
+   imported consequence and a second explanatory objective. Ask what the reader
+   must now be able to calculate; a chain of implications alone does not require
+   teaching every construction. Keep the new construction central when it is the
+   contribution. For each substantial cut, identify the full-proof destination;
+   do not give every available result equal space merely because it has a formal
+   declaration.
 2. Draft the title, abstract and main theorem against the exact same statement.
    Retain the domain, every essential hypothesis, quantifier order, dependence
    of witnesses on parameters and direction of implication.

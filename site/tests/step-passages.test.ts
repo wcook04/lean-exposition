@@ -42,7 +42,11 @@ describe("step reading from recorded endpoint mappings", () => {
   });
 
   it("returns no consumer fallback when only the prerequisite is mapped", () => {
-    const result = stepPassages(alignedFor("support.near_ground_pairs"), alignedFor("support.full_relative_support"));
+    const consumer = alignedFor("circuit.one_measurement_near_optimum");
+    const prerequisite = alignedFor("qaoa_thermodynamic_first");
+    expect(consumer.filter((p) => p.stage === "short")).toEqual([]);
+    expect(prerequisite.some((p) => p.stage === "short")).toBe(true);
+    const result = stepPassages(consumer, prerequisite);
     expect(result.grouped.get("short")).toEqual([]);
     expect(result.basis.get("short")).toBe("none");
   });
@@ -53,7 +57,7 @@ describe("step reading from recorded endpoint mappings", () => {
     expect(result.basis.get("long")).toBe("consumer");
   });
 
-  it("recovers all 62 account fallbacks suppressed by cross-account matching in this edition", () => {
+  it("recovers every account fallback suppressed by cross-account matching in this edition", () => {
     const graph = graphFixture();
     let recovered = 0;
     for (const edge of graph.edges.filter((e) => e.kind === "supports" || e.kind === "formalizes")) {
@@ -71,6 +75,6 @@ describe("step reading from recorded endpoint mappings", () => {
         expect(result.grouped.get(stage)).toEqual(own);
       }
     }
-    expect(recovered).toBe(62);
+    expect(recovered).toBe(68);
   });
 });

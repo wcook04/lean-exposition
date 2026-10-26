@@ -14,8 +14,8 @@ const recordsOf = (id: string) => graph.nodes.get(id)!.evidenceIds!.map((e) => c
 describe("check outcomes stay distinct", () => {
   it("counts every outcome per kind for the main Lean statement", () => {
     expect(Object.fromEntries(outcomeCounts(recordsOf("lean.full_support")))).toEqual({
-      source_hash: { passed: 2 },
-      lean_build: { not_run: 2 },
+      source_hash: { passed: 3 },
+      lean_build: { not_run: 2, passed: 1 },
       comparator: { not_run: 2, unavailable: 2, failed: 1 },
       extraction: { not_run: 1, unavailable: 1 },
       semantic_review: { not_run: 1 },
@@ -26,9 +26,9 @@ describe("check outcomes stay distinct", () => {
   it("heads each kind with its outcomes kept apart", () => {
     const full = outcomeCounts(recordsOf("lean.full_support"));
     expect(kindHeadline("comparator", full.get("comparator")!)).toBe("No successful Comparator result is recorded (1 failed, 2 unavailable and 2 not run)");
-    expect(kindHeadline("source_hash", full.get("source_hash")!)).toBe("Source file hashes (2 passed)");
-    expect(kindHeadline("lean_build", full.get("lean_build")!)).toBe("No Lean build run is recorded (2 not run)");
-    expect(kindHeadline("extraction", full.get("extraction")!)).toBe("No successful dependency extraction result is recorded (1 unavailable and 1 not run)");
+    expect(kindHeadline("source_hash", full.get("source_hash")!)).toBe("Source file hashes (3 passed)");
+    expect(kindHeadline("lean_build", full.get("lean_build")!)).toBe("Lean build (1 passed and 2 not run)");
+    expect(kindHeadline("extraction", full.get("extraction")!)).toBe("No successful extraction projection is recorded for this graph (1 unavailable and 1 not run)");
     const value = outcomeCounts(recordsOf("lean.value_consequences"));
     expect(kindHeadline("comparator", value.get("comparator")!)).toBe("No successful Comparator result is recorded (1 failed, 1 unavailable and 2 not run)");
     expect(kindHeadline("comparator", {})).toBe("No Comparator records");
@@ -58,8 +58,11 @@ describe("check outcomes stay distinct", () => {
       expect(comparator.headline).toMatch(/^No successful Comparator result is recorded \(1 failed/);
       expect(rows.find((r) => r.kind === "extraction")!.outcome).toBe("none passed: 1 unavailable and 1 not run");
       expect(rows.find((r) => r.kind === "extraction")!.tone).toBe("open");
-      expect(rows.find((r) => r.kind === "lean_build")!.outcome).toBe("not run (2)");
-      expect(rows.find((r) => r.kind === "source_hash")!.outcome).toBe("passed (2)");
+      // The new Support build belongs to the exact Lean declaration. It does
+      // not turn the other records' planned checks into completed runs.
+      const built = id === "lean.full_support";
+      expect(rows.find((r) => r.kind === "lean_build")!.outcome).toBe(built ? "1 passed; 2 not run" : "not run (2)");
+      expect(rows.find((r) => r.kind === "source_hash")!.outcome).toBe(built ? "passed (3)" : "passed (2)");
       expect(rows.find((r) => r.kind === "source_hash")!.tone).toBe("passed");
     }
     // A pass next to a failure is not shown as a pass.
@@ -70,7 +73,7 @@ describe("check outcomes stay distinct", () => {
   });
 
   it("gives the theorem plate one short line and the number of check records", () => {
-    expect(goalCheckLine(edition, "lean.full_support")).toEqual({ line: "No successful Comparator result recorded", total: 12 });
+    expect(goalCheckLine(edition, "lean.full_support")).toEqual({ line: "No successful Comparator result recorded", total: 14 });
     expect(goalCheckLine(edition, "full_support")).toEqual({ line: "No successful Comparator result recorded", total: 12 });
     expect(goalCheckLine(edition, "lean.value_consequences")).toEqual({ line: "No successful Comparator result recorded", total: 11 });
     const qaoa = goalCheckLine(edition, "qaoa_thermodynamic_first");

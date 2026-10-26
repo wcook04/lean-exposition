@@ -3,13 +3,15 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import type { GraphMap, Overview, SummaryCard } from "../src/api/types";
+import type { EvidenceRecord, GraphMap, Overview, SummaryCard } from "../src/api/types";
+import { closure, type ArgGraph } from "../src/model/graph";
 import { fixture, tableFixture } from "./fixtures";
 
 const snapshot = { bundle_id: "b", bundle_version: "1", cache_key: "c", graph_sha256: "g", manifest_sha256: "abc123", ref: "r" };
 const held: (() => void)[] = [];
 const releaseEvidence = () => held.splice(0).forEach((release) => release());
 const asked: string[] = [];
+let evidenceRows: EvidenceRecord[] | undefined;
 
 function pageOf<T>(rows: T[], offset: number, limit: number) {
   return { items: rows.slice(offset, offset + limit).map((record) => ({ record })), total: rows.length };
@@ -35,7 +37,7 @@ vi.mock("../src/api/client", () => {
       const limit = Number(params.limit ?? 200);
       if (params.representation === "summary") return wrap({ items: fixture<SummaryCard[]>("node-summaries.json") });
       const table = String(params.table);
-      const rows = tableFixture(table as "nodes");
+      const rows: unknown[] = table === "evidence" && evidenceRows ? evidenceRows : tableFixture(table as "nodes");
       if (table === "evidence") return new Promise((resolve) => held.push(() => resolve({ snapshot, data: pageOf(rows, offset, limit) })));
       return wrap(pageOf(rows, offset, limit));
     },
@@ -49,6 +51,9 @@ let host: HTMLDivElement | undefined;
 afterEach(async () => {
   if (root) await act(async () => root!.unmount());
   host?.remove();
+  releaseEvidence();
+  asked.length = 0;
+  evidenceRows = undefined;
 });
 
 describe("loading contract", () => {
@@ -86,5 +91,49 @@ describe("loading contract", () => {
     expect(last.context).toBe("ready");
     expect(last.graph).toBe(seen[0].graph);
     expect(last.warrants).toBeGreaterThan(0);
+  });
+
+  it.each([
+    { kind: "extraction", status: "passed", retained: true },
+    { kind: "extraction", status: "not_run", retained: false },
+    { kind: "extraction", status: "failed", retained: false },
+    { kind: "source_hash", status: "passed", retained: false },
+  ])("hydrates $kind/$status scope when an older compact map omits subjects", async ({ kind, status, retained }) => {
+    (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+    const subject = "support.full_relative_support";
+    const premise = "scalar.paper_minimizer";
+    evidenceRows = [...tableFixture("evidence"), {
+      id: "synthetic-late-scope", kind, status, subject_ids: [subject],
+      source_ids: [], command: [], tool: "Synthetic fixture", details: "No actual Lean run.",
+    }];
+    const seen: { context: string; graph: ArgGraph; retained: boolean; extracted: boolean }[] = [];
+    function Probe() {
+      const edition = useEdition();
+      seen.push({ context: edition.context, graph: edition.graph,
+        retained: closure(edition.graph, "support.near_ground_pairs", "prerequisites").has(premise),
+        extracted: edition.graph.nodes.get(subject)!.passedExtraction });
+      return null;
+    }
+    host = document.createElement("div");
+    document.body.append(host);
+    root = createRoot(host);
+    await act(async () => root!.render(<EditionProvider fallback={() => <p>booting</p>}><Probe /></EditionProvider>));
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 20)));
+    expect(seen.at(-1)?.context).toBe("loading");
+    expect(seen.at(-1)?.retained).toBe(false);
+    expect(seen.at(-1)?.extracted).toBe(false);
+    const nodeBefore = seen[0].graph.nodes.get(subject);
+    for (let i = 0; i < 3; i++) {
+      await act(async () => {
+        releaseEvidence();
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      });
+    }
+    const last = seen.at(-1)!;
+    expect(last.context).toBe("ready");
+    expect(last.graph).toBe(seen[0].graph);
+    expect(last.graph.nodes.get(subject)).toBe(nodeBefore);
+    expect(last.extracted).toBe(retained);
+    expect(last.retained).toBe(retained);
   });
 });

@@ -40,6 +40,8 @@ Mount the application at the origin root, preserving `/api/v1`. Put TLS,
 authentication if needed, request concurrency/timeouts and rate limits in the
 hosting server. The package adds no hosting dependency or account requirement.
 CORS accepts one explicitly configured origin; it is not access control.
+For that origin, a preflight permits an explicitly supplied `If-None-Match`
+request header, so a browser client can revalidate its own saved ETag.
 Serving does not rewrite the bundle's `publication: local_only` metadata or
 publish it to an external service. Choose a bundle intended for that audience.
 
@@ -79,6 +81,20 @@ Unknown paths return **404**; unknown, empty, malformed or duplicate scalar
 parameters return **400**. Lists use repeated query keys, with distinct values
 and at most 32 selections per key. Queries are limited to 8,192 bytes and 128
 fields. A longer query returns **414**.
+
+The same bounds apply to generated links. If a paged selection fits in the
+request but its pinned continuation would not, the request returns **414**
+(`generated_query_too_long`) instead of a broken `next` URL. The check reserves
+space for every remaining page, including larger offsets. Narrow the query to
+page that selection. Selections requiring offsets above 999,999,999 return
+**400** (`pagination_out_of_range`).
+
+An unusually long record, passage or section identifier can make an optional
+detail or navigation link too long even in a valid captured edition. In that
+case the link field is `null` and its sibling `<field>_unavailable_reason`
+explains the limit. The edition still loads, the identifier remains exact, and
+full record bodies remain available in paged `/records` or `/corpus` responses,
+subject to the response-size limit.
 
 ## Choose a resource
 
@@ -157,7 +173,10 @@ For a small first load and expansion on selection:
 Summary cards contain `ref`, `table`, `label`, available `id`/`kind`/`status`, a
 pinned detail `href`, and per-paper membership roles and direct passage counts.
 Graph map cards omit the repeated paper memberships and URLs; their table is
-the enclosing `records` key. A map's pinned `records_href` accepts repeated
+the enclosing `records` key. Node cards retain an available Lean declaration
+identity, and extraction cards retain their subject IDs. These fields let a
+compact client preserve formal axiom and proof-hole occurrences when following
+an authored theorem application. A map's pinned `records_href` accepts repeated
 `ref` parameters to fetch exact bodies. All links, selected record refs, cycle
 components, application bindings, assumptions and query scope are preserved.
 The full representation is still available by omitting `representation`.
@@ -311,9 +330,9 @@ Three maintained-paper journeys exercise different information:
    match and an authored expansion remain separate links. Density is a further
    consequence, not an extra premise of the scalar or circuit construction.
 2. `/papers/reading?paper=expository&passage=changed-cases` finds the authored
-   answer while both teaching passages retain empty claim selections. The
-   tilted-chord example is not labelled an instance of a theorem whose slope
-   hypotheses it does not satisfy.
+   answer. The question has no claim selection; the answer selects the
+   terminal-gap argument it reconstructs. The tilted-chord example is not
+   labelled an instance of a theorem whose slope hypotheses it does not satisfy.
 3. `/papers/reading?paper=expository&passage=curvature-transfer&target=long`
    offers the long calculation. Its treatment rationale distinguishes the
    analytic identity and certificate from the surrounding support argument.

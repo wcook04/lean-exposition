@@ -1,5 +1,5 @@
 {
- "graph_sha256": "c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97",
+ "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
  "selected_goals": [
   "full_support"
  ],
@@ -7504,6 +7504,21 @@
     "scalar.finite_maximum_concentration→scalar.parisi_formula→supports"
    ]
   },
+  "scalar.finite_maximum_unique_modulo_flip": {
+   "closure": [
+    "scalar.finite_maximum_unique_modulo_flip"
+   ],
+   "flat": [
+    "scalar.finite_maximum_unique_modulo_flip"
+   ],
+   "states": [
+    [
+     "scalar.finite_maximum_unique_modulo_flip",
+     []
+    ]
+   ],
+   "live": []
+  },
   "scalar.fixed_strip_error_budget": {
    "closure": [
     "scalar.conditional_rounding",
@@ -11958,6 +11973,95 @@
     "support.diffusion→support.regularity→supports"
    ]
   },
+  "support.empty_support_chord_obstruction": {
+   "closure": [
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "support.contact",
+    "support.diffusion",
+    "support.empty_support_chord_obstruction",
+    "support.first_variation",
+    "support.moment_identity",
+    "support.regularity",
+    "support.stieltjes_measure",
+    "support.zero_curvature"
+   ],
+   "flat": [
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "support.contact",
+    "support.diffusion",
+    "support.empty_support_chord_obstruction",
+    "support.first_variation",
+    "support.moment_identity",
+    "support.regularity",
+    "support.stieltjes_measure",
+    "support.zero_curvature"
+   ],
+   "states": [
+    [
+     "scalar.paper_admissible",
+     []
+    ],
+    [
+     "scalar.paper_minimizer",
+     []
+    ],
+    [
+     "support.contact",
+     []
+    ],
+    [
+     "support.diffusion",
+     []
+    ],
+    [
+     "support.empty_support_chord_obstruction",
+     []
+    ],
+    [
+     "support.first_variation",
+     []
+    ],
+    [
+     "support.moment_identity",
+     []
+    ],
+    [
+     "support.regularity",
+     []
+    ],
+    [
+     "support.stieltjes_measure",
+     []
+    ],
+    [
+     "support.zero_curvature",
+     []
+    ]
+   ],
+   "live": [
+    "scalar.paper_minimizer→scalar.paper_admissible→assumes",
+    "support.contact→scalar.paper_minimizer→assumes",
+    "support.contact→support.first_variation→supports",
+    "support.contact→support.moment_identity→supports",
+    "support.contact→support.stieltjes_measure→supports",
+    "support.diffusion→support.regularity→supports",
+    "support.empty_support_chord_obstruction→scalar.paper_minimizer→assumes",
+    "support.empty_support_chord_obstruction→support.contact→supports",
+    "support.empty_support_chord_obstruction→support.moment_identity→supports",
+    "support.empty_support_chord_obstruction→support.stieltjes_measure→supports",
+    "support.empty_support_chord_obstruction→support.zero_curvature→supports",
+    "support.first_variation→support.diffusion→supports",
+    "support.first_variation→support.moment_identity→supports",
+    "support.first_variation→support.regularity→supports",
+    "support.moment_identity→support.diffusion→supports",
+    "support.moment_identity→support.regularity→supports",
+    "support.zero_curvature→support.diffusion→supports",
+    "support.zero_curvature→support.moment_identity→supports",
+    "support.zero_curvature→support.regularity→supports"
+   ]
+  },
   "support.endpoint_chord_area": {
    "closure": [
     "support.endpoint_chord_area"
@@ -12504,6 +12608,7 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.endpoint_chord_area",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
@@ -12521,7 +12626,6 @@
     "support.step_tails",
     "support.stieltjes_measure",
     "support.terminal_chord_barrier",
-    "support.zero_candidate_descent",
     "support.zero_curvature"
    ],
    "flat": [
@@ -12531,6 +12635,7 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.endpoint_chord_area",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
@@ -12548,7 +12653,6 @@
     "support.step_tails",
     "support.stieltjes_measure",
     "support.terminal_chord_barrier",
-    "support.zero_candidate_descent",
     "support.zero_curvature"
    ],
    "states": [
@@ -12574,6 +12678,10 @@
     ],
     [
      "support.diffusion",
+     []
+    ],
+    [
+     "support.empty_support_chord_obstruction",
      []
     ],
     [
@@ -12645,10 +12753,6 @@
      []
     ],
     [
-     "support.zero_candidate_descent",
-     []
-    ],
-    [
      "support.zero_curvature",
      []
     ]
@@ -12664,6 +12768,11 @@
     "support.contact→support.moment_identity→supports",
     "support.contact→support.stieltjes_measure→supports",
     "support.diffusion→support.regularity→supports",
+    "support.empty_support_chord_obstruction→scalar.paper_minimizer→assumes",
+    "support.empty_support_chord_obstruction→support.contact→supports",
+    "support.empty_support_chord_obstruction→support.moment_identity→supports",
+    "support.empty_support_chord_obstruction→support.stieltjes_measure→supports",
+    "support.empty_support_chord_obstruction→support.zero_curvature→supports",
     "support.first_variation→support.diffusion→supports",
     "support.first_variation→support.moment_identity→supports",
     "support.first_variation→support.regularity→supports",
@@ -12678,13 +12787,13 @@
     "support.full_relative_support_curvature→scalar.paper_minimizer→assumes",
     "support.full_relative_support_curvature→support.contact_derivatives→supports",
     "support.full_relative_support_curvature→support.contact→supports",
+    "support.full_relative_support_curvature→support.empty_support_chord_obstruction→supports",
     "support.full_relative_support_curvature→support.moment_identity→supports",
     "support.full_relative_support_curvature→support.no_bounded_gap→supports",
     "support.full_relative_support_curvature→support.no_initial_gap→supports",
     "support.full_relative_support_curvature→support.positive_curvature→supports",
     "support.full_relative_support_curvature→support.stieltjes_measure→supports",
     "support.full_relative_support_curvature→support.terminal_chord_barrier→supports",
-    "support.full_relative_support_curvature→support.zero_candidate_descent→supports",
     "support.full_relative_support_curvature→support.zero_curvature→supports",
     "support.integrated_coercivity→support.flux_identity→supports",
     "support.integrated_coercivity→support.rational_certificate→supports",
@@ -12708,11 +12817,6 @@
     "support.positive_curvature→support.fixed_time_spatial_coercivity→supports",
     "support.positive_curvature→support.integrated_coercivity→supports",
     "support.positive_curvature→support.plateau_transfer→supports",
-    "support.zero_candidate_descent→scalar.paper_admissible→assumes",
-    "support.zero_candidate_descent→support.diffusion→supports",
-    "support.zero_candidate_descent→support.first_variation→supports",
-    "support.zero_candidate_descent→support.moment_identity→supports",
-    "support.zero_candidate_descent→support.regularity→supports",
     "support.zero_curvature→support.diffusion→supports",
     "support.zero_curvature→support.moment_identity→supports",
     "support.zero_curvature→support.regularity→supports"

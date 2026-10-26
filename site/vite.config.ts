@@ -1,16 +1,44 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { copyFileSync, createReadStream, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 
-// The three accounts' PDFs, as the repository renders them. The front page links
-// each one with its page count, so the counts are read from the files at build time.
-const PAPER_PDFS: Record<string, { file: string; name: string }> = {
-  long: { file: "../papers/qaoa-sk/long/reasoning-record.pdf", name: "long-record.pdf" },
-  short: { file: "../papers/qaoa-sk/short/paper.pdf", name: "short-paper.pdf" },
-  expository: { file: "../papers/qaoa-sk/expository/main.pdf", name: "exposition.pdf" },
+// The three accounts and architectural companion, as the repository renders them.
+// Download links use page counts read from the same files at build time.
+const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = {
+  long: { file: "../papers/qaoa-sk/long/reasoning-record.pdf", name: "long-record.pdf", alias: "long/reasoning-record.pdf" },
+  short: { file: "../papers/qaoa-sk/short/paper.pdf", name: "short-paper.pdf", alias: "short/paper.pdf" },
+  expository: { file: "../papers/qaoa-sk/expository/main.pdf", name: "exposition.pdf", alias: "expository/main.pdf" },
+  architecture: { file: "../papers/architecture/paper.pdf", name: "architecture.pdf" },
 };
+
+// One intentionally published observation. Keep this an explicit file list;
+// verification directories also contain artifacts that the website does not use.
+const PUBLIC_OBSERVATIONS = [{
+  file: "../examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json",
+  name: "full-support-build-extraction-observation-20261026.json",
+}];
+
+function publicObservations(): Plugin {
+  return {
+    name: "public-observations",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const name = req.url?.match(/\/verification\/([^/?]+\.json)(?:\?.*)?$/)?.[1];
+        const observation = PUBLIC_OBSERVATIONS.find((item) => item.name === name);
+        if (!observation) return next();
+        res.setHeader("Content-Type", "application/json");
+        createReadStream(resolve(observation.file)).pipe(res);
+      });
+    },
+    closeBundle() {
+      const out = resolve("dist", "verification");
+      mkdirSync(out, { recursive: true });
+      for (const item of PUBLIC_OBSERVATIONS) copyFileSync(resolve(item.file), resolve(out, item.name));
+    },
+  };
+}
 
 /** Pages in a PDF: page objects in the file and in its compressed object streams. */
 export function pdfPageCount(buf: Buffer): number {
@@ -46,17 +74,25 @@ function paperPdfs(): Plugin {
     },
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const name = req.url?.match(/\/pdf\/([a-z-]+\.pdf)(?:\?.*)?$/)?.[1];
-        const pdf = Object.values(PAPER_PDFS).find((p) => p.name === name);
+        const path = req.url?.split("?", 1)[0];
+        const pdf = Object.values(PAPER_PDFS).find((p) =>
+          path?.endsWith(`/pdf/${p.name}`) || (p.alias && path?.endsWith(`/${p.alias}`)));
         if (!pdf) return next();
         res.setHeader("Content-Type", "application/pdf");
         createReadStream(resolve(pdf.file)).pipe(res);
       });
     },
     closeBundle() {
-      const out = resolve("dist", "pdf");
-      mkdirSync(out, { recursive: true });
-      for (const p of Object.values(PAPER_PDFS)) copyFileSync(resolve(p.file), resolve(out, p.name));
+      const out = resolve("dist");
+      for (const p of Object.values(PAPER_PDFS)) {
+        // The aliases retain the papers' relative cross-PDF targets without
+        // modifying their bytes or changing the site's existing download URLs.
+        for (const publicPath of [`pdf/${p.name}`, ...(p.alias ? [p.alias] : [])]) {
+          const destination = resolve(out, publicPath);
+          mkdirSync(dirname(destination), { recursive: true });
+          copyFileSync(resolve(p.file), destination);
+        }
+      }
     },
   };
 }
@@ -72,7 +108,9 @@ Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
 increases across every interval in [0, 1). It has three written accounts of
 the proof (an exposition, a short paper and a long record), each readable on
 the site or as a PDF in \`pdf/\`, an argument map of the records the proof
-uses, and the checks recorded for them.
+uses, and the checks recorded for them. The architectural companion explains
+why these accounts share one record; read it on the About page or in
+\`pdf/architecture.pdf\`.
 
 The mathematics comes from OpenAI's mathematics release, family 281:
 https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
@@ -92,7 +130,7 @@ export default defineConfig(({ mode }) => {
   const proxy = { "/api": { target: api, changeOrigin: false } };
   return {
     base: env.VITE_BASE_PATH ?? "/",
-    plugins: [react(), paperPdfs(), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(), publicObservations(), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       closeBundle() {
         const out = resolve("dist");

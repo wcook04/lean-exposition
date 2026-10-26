@@ -29,11 +29,11 @@
 // with a wider angle.
 
 import { spacedWithin } from "./pav";
-import type { Layout, Metrics, Rect } from "./types";
+import type { EngineEdge, Layout, Metrics, Rect } from "./types";
 
 export interface PlanEdge {
   key: string;
-  kind: "supports" | "assumes" | "formalizes";
+  kind: EngineEdge["kind"];
   from: string;
   to: string;
   /** Joins the consumer's fan-in bus. */

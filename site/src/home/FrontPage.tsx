@@ -283,10 +283,10 @@ export function FrontPage() {
         </h2>
         <p className="front__text">
           OpenAI’s repository has two statements written in Lean, each with a Lean proof: one of the full-support theorem, which
-          assumes a minimiser, and one of the value identities and their finite Gaussian approximation. Comparator, a program
-          that checks a Lean proof against a separately written statement, has not finished on either. One run stopped while
-          building both proofs, and a later run on the full-support statement stopped without a result, so whether Comparator
-          accepts them is unknown.
+          assumes a minimiser, and one of the value identities and their finite Gaussian approximation. On 26 October 2026,
+          the full-support implementation built successfully and its conditional root and scoped dependencies were extracted.
+          Dependencies outside that scope remain boundaries. Comparator checks a proof against a separately written statement;
+          its acceptance and the scalar-target results remain pending. Earlier failed and interrupted runs remain in the record.
         </p>
         <p className="front__text">
           An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind

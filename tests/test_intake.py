@@ -38,7 +38,7 @@ class IntakeTests(unittest.TestCase):
 
     def setUp(self):
         guard = patch(
-            "lean_exposition.intake.urllib.request.urlopen",
+            "lean_exposition.intake._open",
             side_effect=AssertionError("intake tests must not access the network"),
         )
         self.urlopen = guard.start()

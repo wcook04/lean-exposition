@@ -8,7 +8,8 @@ import "./figures.css";
 const LABEL =
   "A dependency diagram. The conclusion 'A bounded positive gap is impossible' uses endpoint data from Endpoint contact " +
   "and the strict estimate from Strict curvature. Endpoint contact requires minimality and support endpoints; " +
-  "strict curvature requires a positive constant interval and the analytic regularity.";
+  "strict curvature requires admissibility, a positive constant interval and the analytic regularity. " +
+  "Both inputs concern the same moment curve q on the same closed interval.";
 
 export function GapIngredientsFigure() {
   return (
@@ -20,6 +21,8 @@ export function GapIngredientsFigure() {
           lines={["The required change in $q$ is $r-\\ell$; the integral of $q'$ is smaller."]}
         />
       </div>
+      <Flow note={["Both inputs concern the same", "$q$ on $[\\ell,r]$."]} arrow={false} />
+      <div className="arch-junction" aria-hidden="true" />
       <div className="arch-row arch-row--2">
         <div className="arch-col">
           <Flow note={["uses endpoint data"]} />
@@ -35,7 +38,7 @@ export function GapIngredientsFigure() {
             lines={["$q'''(t)>0$ inside the interval,", "so $q'$ is strictly convex."]}
           />
           <Flow note={["requires"]} />
-          <Box kind="view" lines={["A positive constant interval", "and the analytic regularity"]} />
+          <Box kind="view" lines={["Admissibility; a positive constant", "interval; analytic regularity"]} />
         </div>
       </div>
     </div>

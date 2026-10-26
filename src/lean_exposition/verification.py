@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 from importlib import resources
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -222,6 +223,16 @@ def _run_bound(
 ) -> dict[str, Any]:
     """Retain a no-run or executed receipt even if a source snapshot fails."""
     try:
+        finite_timeout = math.isfinite(timeout)
+    except (TypeError, ValueError, OverflowError):
+        finite_timeout = False
+    if not finite_timeout:
+        return {"status": "failed", "process_status": "not_run",
+                "command": [str(token) for token in command], "returncode": None,
+                "stdout": "", "stderr": "",
+                "source_hashes": {}, "source_changed": None,
+                "failure_stage": "input_validation", "failure_reason": "invalid_timeout"}
+    try:
         before = _source_hashes(project)
     except OSError as exc:
         return {"status": "failed", "process_status": "not_run", "command": list(command),
@@ -269,6 +280,23 @@ def _extractor_template() -> str:
     return resources.files("lean_exposition").joinpath(
         "resources/lean/Extract.lean"
     ).read_text(encoding="utf-8")
+
+
+def _decode_extraction_stdout(stdout: str) -> dict[str, Any]:
+    """Read one protocol report while allowing surrounding diagnostic lines."""
+    marker = "LEAN_EXPOSITION_JSON:"
+    # The wire protocol uses LF-delimited lines. Other Unicode line-separator
+    # characters may occur unescaped inside a valid JSON string.
+    lines = [line[len(marker):] for line in stdout.split("\n") if line.startswith(marker)]
+    if len(lines) != 1:
+        raise ContractError("Lean did not emit exactly one extraction report")
+    try:
+        report = decode_json(lines[0].encode("utf-8"))
+    except (ValueError, RecursionError) as exc:
+        raise ContractError("Lean emitted invalid extraction JSON") from exc
+    if not isinstance(report, dict):
+        raise ContractError("Lean extraction report must be an object")
+    return report
 
 
 def extractor_source(
@@ -327,15 +355,12 @@ def extract_dependencies(
 
     if receipt.get("stdout_utf8_valid") is False:
         raise invalid_report("Lean emitted invalid extraction JSON: stdout is not UTF-8")
-    marker = "LEAN_EXPOSITION_JSON:"
-    lines = [line[len(marker):] for line in receipt["stdout"].splitlines()
-             if line.startswith(marker)]
-    if len(lines) != 1:
-        raise invalid_report("Lean did not emit exactly one extraction report")
     try:
-        report = decode_json(lines[0].encode("utf-8"))
-    except (ContractError, json.JSONDecodeError, UnicodeError) as exc:
-        raise invalid_report("Lean emitted invalid extraction JSON") from exc
+        report = _decode_extraction_stdout(receipt["stdout"])
+    except ContractError as exc:
+        raise invalid_report(str(exc)) from exc
+    if "receipt" in report:
+        raise invalid_report("Lean extraction report contains a reserved receipt field")
     try:
         validate_extraction_report(report)
     except ContractError as exc:
@@ -346,11 +371,13 @@ def extract_dependencies(
         raise invalid_report("Lean emitted an unexpected extraction report")
     if report["roots"] != list(roots) or report["module_prefixes"] != list(prefixes):
         raise invalid_report("Lean report roots or module prefixes differ from the request")
+    if len(report["declarations"]) > max_declarations:
+        raise invalid_report("Lean report exceeds the requested declaration limit")
     try:
         canonical = json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
         receipt["report_sha256"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
         receipt["report_schema_version"] = report["schema_version"]
-    except UnicodeEncodeError as exc:
+    except (ValueError, RecursionError) as exc:
         raise invalid_report("Lean extraction report is not canonical UTF-8 JSON") from exc
     report["receipt"] = receipt
     return report
@@ -506,7 +533,6 @@ def verify_comparator(
     receipt["launch_executable_changed"] = launch_changed
     if config_changed:
         receipt["status"] = "failed"
-        receipt["source_changed"] = True
         receipt["failure_stage"] = "receipt_binding"
         receipt["failure_reason"] = "config_changed_during_run"
     elif receipt["status"] == "passed" and scope["status"] != "observed":

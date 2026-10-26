@@ -13,6 +13,7 @@ import hashlib
 import io
 import json
 import math
+import os
 from pathlib import Path
 import re
 import stat
@@ -45,9 +46,16 @@ def sha256(data: bytes) -> str:
 
 
 def json_object(data: bytes, name: str) -> dict:
+    def scalar(value):
+        try:
+            value.encode("utf-8")
+        except UnicodeEncodeError as exc:
+            raise BundleError("JSON contains an unpaired Unicode surrogate") from exc
+
     def pairs(items):
         result = {}
         for key, value in items:
+            scalar(key)
             require(key not in result, f"{name}: duplicate JSON key {key!r}")
             result[key] = value
         return result
@@ -67,6 +75,16 @@ def json_object(data: bytes, name: str) -> dict:
         raise
     except (UnicodeError, ValueError, RecursionError) as exc:
         raise BundleError(f"{name}: malformed UTF-8 JSON") from exc
+    pending = [result]
+    while pending:
+        value = pending.pop()
+        if isinstance(value, str):
+            scalar(value)
+        elif isinstance(value, dict):
+            pending.extend(value.keys())
+            pending.extend(value.values())
+        elif isinstance(value, list):
+            pending.extend(value)
     require(isinstance(result, dict), f"{name}: expected a JSON object")
     supported = {"1.0"} if name == "manifest.json" else {"1.0", "1.1", "1.2"}
     version = result.get("schema_version")
@@ -96,8 +114,21 @@ def records(value, label: str) -> list[dict]:
 
 def capture(path: Path) -> tuple[dict[str, bytes], str]:
     """Capture bounded bytes; never extract members or follow paths in the ZIP."""
-    with path.open("rb") as stream:
-        archive_bytes = stream.read(MAX_ARCHIVE_BYTES + 1)
+    before = path.lstat()
+    require(stat.S_ISREG(before.st_mode), "archive is not a regular file")
+    flags = (os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+             | getattr(os, "O_NONBLOCK", 0) | getattr(os, "O_BINARY", 0))
+    descriptor = os.open(path, flags)
+    try:
+        opened = os.fstat(descriptor)
+        require(stat.S_ISREG(opened.st_mode), "archive is not a regular file")
+        require((before.st_dev, before.st_ino) == (opened.st_dev, opened.st_ino),
+                "archive changed while opening")
+        require(opened.st_size <= MAX_ARCHIVE_BYTES, "archive exceeds 65 MiB limit")
+        with os.fdopen(descriptor, "rb", closefd=False) as stream:
+            archive_bytes = stream.read(MAX_ARCHIVE_BYTES + 1)
+    finally:
+        os.close(descriptor)
     require(len(archive_bytes) <= MAX_ARCHIVE_BYTES, "archive exceeds 65 MiB limit")
     try:
         with zipfile.ZipFile(io.BytesIO(archive_bytes)) as archive:

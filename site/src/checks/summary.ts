@@ -154,6 +154,9 @@ export function kindLead(kind: string, counts: Record<string, number>): string {
   if (outcomeParts(counts).length === 0) return `No ${inSentence(name)} records`;
   const passed = counts.passed ?? 0;
   const recordedRun = passed + (counts.failed ?? 0) + (counts.unavailable ?? 0);
+  if (kind === "extraction" && !passed) {
+    return recordedRun ? "No successful extraction projection is recorded for this graph" : "No extraction projection run is recorded for this graph";
+  }
   return passed ? name : recordedRun ? `No successful ${inSentence(name)} result is recorded` : `No ${inSentence(name)} run is recorded`;
 }
 

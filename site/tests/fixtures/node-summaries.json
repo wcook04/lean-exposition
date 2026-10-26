@@ -1,6 +1,6 @@
 [
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fassumptions.full_support_minimizer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fassumptions.full_support_minimizer",
   "id": "assumptions.full_support_minimizer",
   "kind": "assumption",
   "label": "Full-support interface: Brownian system and admissible minimizer",
@@ -27,12 +27,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/assumptions.full_support_minimizer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/assumptions.full_support_minimizer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fassumptions.qaoa_model_and_limits",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fassumptions.qaoa_model_and_limits",
   "id": "assumptions.qaoa_model_and_limits",
   "kind": "assumption",
   "label": "Gaussian zero-field model and ordered limits",
@@ -59,12 +59,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/assumptions.qaoa_model_and_limits",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/assumptions.qaoa_model_and_limits",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fassumptions.value_diffusion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fassumptions.value_diffusion",
   "id": "assumptions.value_diffusion",
   "kind": "assumption",
   "label": "Scalar-value interface: associated diffusion for its first two clauses",
@@ -91,12 +91,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/assumptions.value_diffusion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/assumptions.value_diffusion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fassumptions.value_minimizer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fassumptions.value_minimizer",
   "id": "assumptions.value_minimizer",
   "kind": "assumption",
   "label": "Scalar-value interface: Brownian space and admissible minimizer",
@@ -123,12 +123,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/assumptions.value_minimizer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/assumptions.value_minimizer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.additive_responses",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.additive_responses",
   "id": "circuit.additive_responses",
   "kind": "claim",
   "label": "Additive cut responses retain scalar second order",
@@ -155,12 +155,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.additive_responses",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.additive_responses",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.bounded_trigonometric",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.bounded_trigonometric",
   "id": "circuit.bounded_trigonometric",
   "kind": "claim",
   "label": "Bounded odd trigonometric angle approximation",
@@ -187,12 +187,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.bounded_trigonometric",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.bounded_trigonometric",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.classical_fixed_minimizer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.classical_fixed_minimizer",
   "id": "circuit.classical_fixed_minimizer",
   "kind": "goal",
   "label": "Conditional bounded synthesis input for a given minimizer",
@@ -219,12 +219,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.classical_fixed_minimizer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.classical_fixed_minimizer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.classical_positive",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.classical_positive",
   "id": "circuit.classical_positive",
   "kind": "goal",
   "label": "Alternative finite-temperature bounded synthesis input",
@@ -237,12 +237,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.classical_positive",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.classical_positive",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.classical_primary",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.classical_primary",
   "id": "circuit.classical_primary",
   "kind": "goal",
   "label": "Closed existence of a near-optimal bounded synthesis input",
@@ -269,12 +269,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.classical_primary",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.classical_primary",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.classical_strong_limit",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.classical_strong_limit",
   "id": "circuit.classical_strong_limit",
   "kind": "claim",
   "label": "Smooth local formulas converge strongly with occupation bounds",
@@ -287,12 +287,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.classical_strong_limit",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.classical_strong_limit",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.color_exclusion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.color_exclusion",
   "id": "circuit.color_exclusion",
   "kind": "claim",
   "label": "Raw seed reencoding and ancestor exclusion",
@@ -319,12 +319,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.color_exclusion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.color_exclusion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.energy_transfer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.energy_transfer",
   "id": "circuit.energy_transfer",
   "kind": "claim",
   "label": "Finite-degree edge energy requires occupation control",
@@ -351,12 +351,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.energy_transfer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.energy_transfer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.even_p_spin_obstruction",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.even_p_spin_obstruction",
   "id": "circuit.even_p_spin_obstruction",
   "kind": "claim",
   "label": "A separate thermodynamic-first ceiling for even higher-spin models",
@@ -369,12 +369,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.even_p_spin_obstruction",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.even_p_spin_obstruction",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.external_mode_energy",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.external_mode_energy",
   "id": "circuit.external_mode_energy",
   "kind": "claim",
   "label": "One persistent Gaussian mode and rooted energy induction",
@@ -401,12 +401,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.external_mode_energy",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.external_mode_energy",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.finite_formula_word_approximation",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.finite_formula_word_approximation",
   "id": "circuit.finite_formula_word_approximation",
   "kind": "claim",
   "label": "Approximation of fixed Gaussian data by one ordinary word",
@@ -426,12 +426,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.finite_formula_word_approximation",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.finite_formula_word_approximation",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.fixed_word_concentration",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.fixed_word_concentration",
   "id": "circuit.fixed_word_concentration",
   "kind": "claim",
   "label": "Fixed-word SK QAOA first and second measurement moments",
@@ -451,12 +451,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.fixed_word_concentration",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.fixed_word_concentration",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.fixed_word_transfer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.fixed_word_transfer",
   "id": "circuit.fixed_word_transfer",
   "kind": "claim",
   "label": "Fixed ordinary tree word transfers to fixed-angle SK",
@@ -483,12 +483,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.fixed_word_transfer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.fixed_word_transfer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.gate_calculus",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.gate_calculus",
   "id": "circuit.gate_calculus",
   "kind": "claim",
   "label": "Smooth exclusion-gate calculus",
@@ -515,12 +515,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.gate_calculus",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.gate_calculus",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.gaussian_root_calculus",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.gaussian_root_calculus",
   "id": "circuit.gaussian_root_calculus",
   "kind": "claim",
   "label": "Root shift and classical Gaussian first chaos",
@@ -547,12 +547,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.gaussian_root_calculus",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.gaussian_root_calculus",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.helper_contraction",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.helper_contraction",
   "id": "circuit.helper_contraction",
   "kind": "claim",
   "label": "Pinned helpers implement propagation through contraction",
@@ -579,12 +579,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.helper_contraction",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.helper_contraction",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.high_girth_maxcut",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.high_girth_maxcut",
   "id": "circuit.high_girth_maxcut",
   "kind": "goal",
   "label": "Fixed normalized angles on all sufficiently high-girth regular graphs",
@@ -597,12 +597,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.high_girth_maxcut",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.high_girth_maxcut",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.later_finite_size_comparison",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.later_finite_size_comparison",
   "id": "circuit.later_finite_size_comparison",
   "kind": "claim",
   "label": "A later finite-size estimate for a bounded-angle class",
@@ -615,12 +615,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.later_finite_size_comparison",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.later_finite_size_comparison",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.masked_controls",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.masked_controls",
   "id": "circuit.masked_controls",
   "kind": "claim",
   "label": "Finite compilation of masked local controls",
@@ -647,12 +647,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.masked_controls",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.masked_controls",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.one_measurement_near_optimum",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.one_measurement_near_optimum",
   "id": "circuit.one_measurement_near_optimum",
   "kind": "claim",
   "label": "One measured sample approaches the SK optimum with high joint probability",
@@ -672,12 +672,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.one_measurement_near_optimum",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.one_measurement_near_optimum",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.ordinary_updates",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.ordinary_updates",
   "id": "circuit.ordinary_updates",
   "kind": "claim",
   "label": "Ordinary cost and mixer root updates",
@@ -704,12 +704,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.ordinary_updates",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.ordinary_updates",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.ordinary_word_positive",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.ordinary_word_positive",
   "id": "circuit.ordinary_word_positive",
   "kind": "goal",
   "label": "Alternative-route finite ordinary near-optimal word",
@@ -722,12 +722,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.ordinary_word_positive",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.ordinary_word_positive",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.ordinary_word_primary",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.ordinary_word_primary",
   "id": "circuit.ordinary_word_primary",
   "kind": "goal",
   "label": "Primary-route finite ordinary near-optimal word",
@@ -754,12 +754,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.ordinary_word_primary",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.ordinary_word_primary",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.orthogonal_quadratics",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.orthogonal_quadratics",
   "id": "circuit.orthogonal_quadratics",
   "kind": "claim",
   "label": "Orthogonal mask quadratics have small exponentials",
@@ -786,12 +786,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.orthogonal_quadratics",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.orthogonal_quadratics",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.positive_finite_step",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.positive_finite_step",
   "id": "circuit.positive_finite_step",
   "kind": "claim",
   "label": "EAMS finite-step law and corrected edge identity",
@@ -804,12 +804,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.positive_finite_step",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.positive_finite_step",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.positive_input",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.positive_input",
   "id": "circuit.positive_input",
   "kind": "assumption",
   "label": "Independent finite-temperature input family",
@@ -823,12 +823,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.positive_input",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.positive_input",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.positive_mesh",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.positive_mesh",
   "id": "circuit.positive_mesh",
   "kind": "claim",
   "label": "Fixed-temperature normalized mesh converges strongly",
@@ -841,12 +841,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.positive_mesh",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.positive_mesh",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.positive_rooted_clipping",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.positive_rooted_clipping",
   "id": "circuit.positive_rooted_clipping",
   "kind": "claim",
   "label": "Positive-temperature rooted output and clipping",
@@ -859,12 +859,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.positive_rooted_clipping",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.positive_rooted_clipping",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.positive_value",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.positive_value",
   "id": "circuit.positive_value",
   "kind": "claim",
   "label": "Finite-temperature scalar approximation to P_*",
@@ -877,12 +877,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.positive_value",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.positive_value",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.rooted_realization",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.rooted_realization",
   "id": "circuit.rooted_realization",
   "kind": "claim",
   "label": "Exact rooted realization of the scalar coefficient sum",
@@ -909,12 +909,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.rooted_realization",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.rooted_realization",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.sampled_finite_instance_optimum",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.sampled_finite_instance_optimum",
   "id": "circuit.sampled_finite_instance_optimum",
   "kind": "claim",
   "label": "One measured configuration approaches its instance maximum",
@@ -934,12 +934,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.sampled_finite_instance_optimum",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.sampled_finite_instance_optimum",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.seed_packets",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.seed_packets",
   "id": "circuit.seed_packets",
   "kind": "claim",
   "label": "Exact small packet and weighted tail estimates",
@@ -966,12 +966,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.seed_packets",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.seed_packets",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.seed_removal",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.seed_removal",
   "id": "circuit.seed_removal",
   "kind": "claim",
   "label": "Every finite seeded word has a finite ordinary approximation",
@@ -998,12 +998,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.seed_removal",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.seed_removal",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.seeded_synthesis",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.seeded_synthesis",
   "id": "circuit.seeded_synthesis",
   "kind": "claim",
   "label": "Seeded synthesis with explicit helper loss",
@@ -1030,12 +1030,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.seeded_synthesis",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.seeded_synthesis",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.selective_accuracy",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.selective_accuracy",
   "id": "circuit.selective_accuracy",
   "kind": "claim",
   "label": "Selective pulse errors are o(r) on ordinary tails",
@@ -1062,12 +1062,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.selective_accuracy",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.selective_accuracy",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.selective_control",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.selective_control",
   "id": "circuit.selective_control",
   "kind": "claim",
   "label": "Exact finite selective rotations with zero clocks",
@@ -1094,12 +1094,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.selective_control",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.selective_control",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.sign_smoothing",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.sign_smoothing",
   "id": "circuit.sign_smoothing",
   "kind": "claim",
   "label": "Finite sign smoothing preserves the rooted value",
@@ -1126,12 +1126,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.sign_smoothing",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.sign_smoothing",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.singular_echo",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.singular_echo",
   "id": "circuit.singular_echo",
   "kind": "claim",
   "label": "The cost–flip–cost–unflip echo retains finite signal",
@@ -1158,12 +1158,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.singular_echo",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.singular_echo",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.upper_bound_padding",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.upper_bound_padding",
   "id": "circuit.upper_bound_padding",
   "kind": "claim",
   "label": "Classical upper bound and identity-padding monotonicity",
@@ -1190,12 +1190,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.upper_bound_padding",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.upper_bound_padding",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.visibility",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.visibility",
   "id": "circuit.visibility",
   "kind": "claim",
   "label": "Finite visibility choices precede the small-packet limit",
@@ -1222,12 +1222,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.visibility",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.visibility",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.weighted_finite_horizon",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.weighted_finite_horizon",
   "id": "circuit.weighted_finite_horizon",
   "kind": "claim",
   "label": "Corrected weighted finite-tree estimate with explicit hypotheses",
@@ -1240,12 +1240,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.weighted_finite_horizon",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.weighted_finite_horizon",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fcircuit.weighted_unitary_calculus",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fcircuit.weighted_unitary_calculus",
   "id": "circuit.weighted_unitary_calculus",
   "kind": "claim",
   "label": "Weighted sums, products and commuting substitution",
@@ -1272,12 +1272,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/circuit.weighted_unitary_calculus",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/circuit.weighted_unitary_calculus",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Ffull_support",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Ffull_support",
   "id": "full_support",
   "kind": "goal",
   "label": "Full support of zero-temperature SK minimizers",
@@ -1304,12 +1304,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/full_support",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/full_support",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Flean.full_support",
+  "formal_result_assurance": {
+   "assurance_state": "not_kernel_checked",
+   "current_extraction_evidence_ids": [],
+   "formal_result_eligible": false,
+   "node_id": "lean.full_support",
+   "recorded_status": "unverified",
+   "safety_classification": "not_kernel_checked",
+   "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance.",
+   "v2_extraction_evidence_ids": []
+  },
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Flean.full_support",
   "id": "lean.full_support",
   "kind": "declaration",
   "label": "OAI.ZeroTemperatureSK.full_support",
@@ -1336,12 +1346,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/lean.full_support",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/lean.full_support",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Flean.value_consequences",
+  "formal_result_assurance": {
+   "assurance_state": "not_kernel_checked",
+   "current_extraction_evidence_ids": [],
+   "formal_result_eligible": false,
+   "node_id": "lean.value_consequences",
+   "recorded_status": "unverified",
+   "safety_classification": "not_kernel_checked",
+   "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance.",
+   "v2_extraction_evidence_ids": []
+  },
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Flean.value_consequences",
   "id": "lean.value_consequences",
   "kind": "declaration",
   "label": "OAI.SKValue.value_consequences",
@@ -1368,12 +1388,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/lean.value_consequences",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/lean.value_consequences",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fqaoa_thermodynamic_first",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fqaoa_thermodynamic_first",
   "id": "qaoa_thermodynamic_first",
   "kind": "goal",
   "label": "QAOA approaches the SK optimum in the thermodynamic-first limit",
@@ -1400,22 +1420,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/qaoa_thermodynamic_first",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/qaoa_thermodynamic_first",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.conditional_fixed_strip",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.conditional_fixed_strip",
   "id": "scalar.conditional_fixed_strip",
   "kind": "claim",
   "label": "Formal fixed-strip implication with analytic hypotheses exposed",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.conditional_fixed_strip",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.conditional_fixed_strip",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.conditional_rounding",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.conditional_rounding",
   "id": "scalar.conditional_rounding",
   "kind": "claim",
   "label": "Independent Gaussian rounding preserves the conditional mean",
@@ -1442,22 +1462,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.conditional_rounding",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.conditional_rounding",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.constant_curvature",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.constant_curvature",
   "id": "scalar.constant_curvature",
   "kind": "claim",
   "label": "Separate positive and zero constant-interval inequalities",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.constant_curvature",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.constant_curvature",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.correlation_vector_control",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.correlation_vector_control",
   "id": "scalar.correlation_vector_control",
   "kind": "claim",
   "label": "Dimension-independent control of both coefficient vectors",
@@ -1484,12 +1504,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.correlation_vector_control",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.correlation_vector_control",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.euler_normalization",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.euler_normalization",
   "id": "scalar.euler_normalization",
   "kind": "claim",
   "label": "Fixed-strip Euler convergence and normalized directions",
@@ -1516,12 +1536,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.euler_normalization",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.euler_normalization",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.finite_gibbs_comparison",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.finite_gibbs_comparison",
   "id": "scalar.finite_gibbs_comparison",
   "kind": "claim",
   "label": "Finite Gibbs values and exact Gibbs samples",
@@ -1534,12 +1554,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.finite_gibbs_comparison",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.finite_gibbs_comparison",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.finite_maximum_concentration",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.finite_maximum_concentration",
   "id": "scalar.finite_maximum_concentration",
   "kind": "claim",
   "label": "Concentration of the finite SK maximum",
@@ -1559,12 +1579,37 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.finite_maximum_concentration",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.finite_maximum_concentration",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.fixed_strip_error_budget",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.finite_maximum_unique_modulo_flip",
+  "id": "scalar.finite_maximum_unique_modulo_flip",
+  "kind": "claim",
+  "label": "Finite Gaussian maximizers are unique up to reversal",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.finite_maximum_unique_modulo_flip",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.fixed_strip_error_budget",
   "id": "scalar.fixed_strip_error_budget",
   "kind": "claim",
   "label": "Fixed-strip scalar accuracy with its cutoff dependence exposed",
@@ -1577,42 +1622,42 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.fixed_strip_error_budget",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.fixed_strip_error_budget",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.fixed_strip_input_bounds",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.fixed_strip_input_bounds",
   "id": "scalar.fixed_strip_input_bounds",
   "kind": "assumption",
   "label": "Fixed-strip lemma: analytic strip-bound premises",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.fixed_strip_input_bounds",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.fixed_strip_input_bounds",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.fixed_strip_input_diffusion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.fixed_strip_input_diffusion",
   "id": "scalar.fixed_strip_input_diffusion",
   "kind": "assumption",
   "label": "Fixed-strip lemma: model, diffusion and cutoff premises",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.fixed_strip_input_diffusion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.fixed_strip_input_diffusion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.fixed_strip_input_unit_moment",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.fixed_strip_input_unit_moment",
   "id": "scalar.fixed_strip_input_unit_moment",
   "kind": "assumption",
   "label": "Fixed-strip lemma: unit curvature-moment premise",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.fixed_strip_input_unit_moment",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.fixed_strip_input_unit_moment",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.formal_contact_input",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.formal_contact_input",
   "id": "scalar.formal_contact_input",
   "kind": "claim",
   "label": "The scalar implementation derives its own contact identity",
@@ -1639,12 +1684,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.formal_contact_input",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.formal_contact_input",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.formal_finite_gaussian_clause",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.formal_finite_gaussian_clause",
   "id": "scalar.formal_finite_gaussian_clause",
   "kind": "claim",
   "label": "Finite-Gaussian branch at a fixed interior cutoff",
@@ -1671,12 +1716,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.formal_finite_gaussian_clause",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.formal_finite_gaussian_clause",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.formal_model_transport_open",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.formal_model_transport_open",
   "id": "scalar.formal_model_transport_open",
   "kind": "claim",
   "label": "Direct formal composition between the two models remains unwitnessed",
@@ -1696,12 +1741,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.formal_model_transport_open",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.formal_model_transport_open",
   "status": "open",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.formal_parisi_clause",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.formal_parisi_clause",
   "id": "scalar.formal_parisi_clause",
   "kind": "claim",
   "label": "Parisi identity branch without a supplied diffusion",
@@ -1728,12 +1773,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.formal_parisi_clause",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.formal_parisi_clause",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.formal_scalar_clause",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.formal_scalar_clause",
   "id": "scalar.formal_scalar_clause",
   "kind": "claim",
   "label": "Scalar-value branch with a supplied diffusion",
@@ -1760,22 +1805,32 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.formal_scalar_clause",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.formal_scalar_clause",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.integrated_coercivity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.integrated_coercivity",
   "id": "scalar.integrated_coercivity",
   "kind": "claim",
   "label": "Conditional analytic coercivity from the identity",
   "papers": [],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.integrated_coercivity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.integrated_coercivity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.lean_gaussian_target",
+  "formal_result_assurance": {
+   "assurance_state": "not_kernel_checked",
+   "current_extraction_evidence_ids": [],
+   "formal_result_eligible": false,
+   "node_id": "scalar.lean_gaussian_target",
+   "recorded_status": "unverified",
+   "safety_classification": "not_kernel_checked",
+   "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance.",
+   "v2_extraction_evidence_ids": []
+  },
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.lean_gaussian_target",
   "id": "scalar.lean_gaussian_target",
   "kind": "declaration",
   "label": "OAI.SKValue.finite_gaussian_target",
@@ -1802,12 +1857,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.lean_gaussian_target",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.lean_gaussian_target",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.lean_parisi_target",
+  "formal_result_assurance": {
+   "assurance_state": "not_kernel_checked",
+   "current_extraction_evidence_ids": [],
+   "formal_result_eligible": false,
+   "node_id": "scalar.lean_parisi_target",
+   "recorded_status": "unverified",
+   "safety_classification": "not_kernel_checked",
+   "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance.",
+   "v2_extraction_evidence_ids": []
+  },
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.lean_parisi_target",
   "id": "scalar.lean_parisi_target",
   "kind": "declaration",
   "label": "OAI.SKValue.ground_state_parisi_target",
@@ -1834,12 +1899,22 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.lean_parisi_target",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.lean_parisi_target",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.lean_scalar_target",
+  "formal_result_assurance": {
+   "assurance_state": "not_kernel_checked",
+   "current_extraction_evidence_ids": [],
+   "formal_result_eligible": false,
+   "node_id": "scalar.lean_scalar_target",
+   "recorded_status": "unverified",
+   "safety_classification": "not_kernel_checked",
+   "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance.",
+   "v2_extraction_evidence_ids": []
+  },
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.lean_scalar_target",
   "id": "scalar.lean_scalar_target",
   "kind": "declaration",
   "label": "OAI.SKValue.scalar_value_target",
@@ -1866,12 +1941,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.lean_scalar_target",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.lean_scalar_target",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.manuscript_terminal_value",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.manuscript_terminal_value",
   "id": "scalar.manuscript_terminal_value",
   "kind": "claim",
   "label": "Terminal martingale and ground-state value formulas",
@@ -1898,12 +1973,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.manuscript_terminal_value",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.manuscript_terminal_value",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.minimizer_attainment",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.minimizer_attainment",
   "id": "scalar.minimizer_attainment",
   "kind": "claim",
   "label": "External attainment of the variational infimum",
@@ -1930,12 +2005,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.minimizer_attainment",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.minimizer_attainment",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.minimizer_coefficient_budget",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.minimizer_coefficient_budget",
   "id": "scalar.minimizer_coefficient_budget",
   "kind": "claim",
   "label": "Integral and pointwise bounds for a minimizer",
@@ -1948,12 +2023,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.minimizer_coefficient_budget",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.minimizer_coefficient_budget",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.minimizer_total_coefficient_mass",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.minimizer_total_coefficient_mass",
   "id": "scalar.minimizer_total_coefficient_mass",
   "kind": "claim",
   "label": "Terminal coefficient normalization in zero field",
@@ -1966,12 +2041,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.minimizer_total_coefficient_mass",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.minimizer_total_coefficient_mass",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.paper_admissible",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.paper_admissible",
   "id": "scalar.paper_admissible",
   "kind": "assumption",
   "label": "Manuscript admissible coefficient and normalization",
@@ -1998,12 +2073,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.paper_admissible",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.paper_admissible",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.paper_minimizer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.paper_minimizer",
   "id": "scalar.paper_minimizer",
   "kind": "assumption",
   "label": "Manuscript minimizer hypothesis",
@@ -2030,12 +2105,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.paper_minimizer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.paper_minimizer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.parisi_formula",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.parisi_formula",
   "id": "scalar.parisi_formula",
   "kind": "claim",
   "label": "External zero-temperature Parisi formula",
@@ -2062,12 +2137,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.parisi_formula",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.parisi_formula",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.separate_classical_algorithm",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.separate_classical_algorithm",
   "id": "scalar.separate_classical_algorithm",
   "kind": "claim",
   "label": "Separate finite-disorder optimization consequence",
@@ -2087,12 +2162,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.separate_classical_algorithm",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.separate_classical_algorithm",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.shifted_gaussian_limit",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.shifted_gaussian_limit",
   "id": "scalar.shifted_gaussian_limit",
   "kind": "claim",
   "label": "Shifted finite Gaussian coefficient limit",
@@ -2119,12 +2194,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.shifted_gaussian_limit",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.shifted_gaussian_limit",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.smooth_positive_density",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.smooth_positive_density",
   "id": "scalar.smooth_positive_density",
   "kind": "claim",
   "label": "Further manuscript corollary: smooth positive density",
@@ -2151,12 +2226,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.smooth_positive_density",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.smooth_positive_density",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_diffusion_exists",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_diffusion_exists",
   "id": "scalar.source_diffusion_exists",
   "kind": "claim",
   "label": "Internally constructed diffusion for every admissible coefficient",
@@ -2183,12 +2258,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_diffusion_exists",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_diffusion_exists",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_empirical_energy_limit",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_empirical_energy_limit",
   "id": "scalar.source_empirical_energy_limit",
   "kind": "claim",
   "label": "The empirical adaptive energy converges to adjacent correlations",
@@ -2215,12 +2290,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_empirical_energy_limit",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_empirical_energy_limit",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_finite_adaptive_lower",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_finite_adaptive_lower",
   "id": "scalar.source_finite_adaptive_lower",
   "kind": "claim",
   "label": "Finite adaptive Gaussian offsets are bounded by the SK optimum",
@@ -2247,18 +2322,18 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_finite_adaptive_lower",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_finite_adaptive_lower",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_fixed_strip_application",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_fixed_strip_application",
   "id": "scalar.source_fixed_strip_application",
   "kind": "claim",
   "label": "Fixed-strip mesh limit with every analytic input supplied",
   "papers": [
    {
-    "direct_passage_count": 1,
+    "direct_passage_count": 2,
     "roles": [
      "mapped_claim"
     ],
@@ -2279,12 +2354,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_fixed_strip_application",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_fixed_strip_application",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_gaussian_column_split",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_gaussian_column_split",
   "id": "scalar.source_gaussian_column_split",
   "kind": "claim",
   "label": "Splitting one Gaussian column preserves the expected quadratic maximum",
@@ -2311,12 +2386,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_gaussian_column_split",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_gaussian_column_split",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_ground_state_identity_with_diffusion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_ground_state_identity_with_diffusion",
   "id": "scalar.source_ground_state_identity_with_diffusion",
   "kind": "claim",
   "label": "Scalar ground-state identity from the two inequalities",
@@ -2343,12 +2418,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_ground_state_identity_with_diffusion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_ground_state_identity_with_diffusion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_ground_state_upper",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_ground_state_upper",
   "id": "scalar.source_ground_state_upper",
   "kind": "claim",
   "label": "Ground-state upper bound by every admissible Parisi value",
@@ -2375,12 +2450,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_ground_state_upper",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_ground_state_upper",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_minimizer_curvature_moment",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_minimizer_curvature_moment",
   "id": "scalar.source_minimizer_curvature_moment",
   "kind": "claim",
   "label": "Unit curvature moment after the concrete minimizer suppliers",
@@ -2407,12 +2482,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_minimizer_curvature_moment",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_minimizer_curvature_moment",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_predictable_lower",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_predictable_lower",
   "id": "scalar.source_predictable_lower",
   "kind": "claim",
   "label": "Predictable orthonormal correlations are bounded by the ground-state value",
@@ -2439,12 +2514,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_predictable_lower",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_predictable_lower",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_spin_sequence_limit",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_spin_sequence_limit",
   "id": "scalar.source_spin_sequence_limit",
   "kind": "claim",
   "label": "Actual convergence of the normalized expected finite-spin maximum",
@@ -2471,12 +2546,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_spin_sequence_limit",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_spin_sequence_limit",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_strip_regularity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_strip_regularity",
   "id": "scalar.source_strip_regularity",
   "kind": "claim",
   "label": "Concrete strip regularity for every admissible coefficient",
@@ -2503,12 +2578,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_strip_regularity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_strip_regularity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_strip_value_lower",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_strip_value_lower",
   "id": "scalar.source_strip_value_lower",
   "kind": "claim",
   "label": "Curvature integral bounded by the finite-spin value on each fixed strip",
@@ -2535,12 +2610,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_strip_value_lower",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_strip_value_lower",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.source_terminal_parisi_assembly",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.source_terminal_parisi_assembly",
   "id": "scalar.source_terminal_parisi_assembly",
   "kind": "claim",
   "label": "Terminal formulas at the Parisi value after concrete suppliers",
@@ -2567,12 +2642,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.source_terminal_parisi_assembly",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.source_terminal_parisi_assembly",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.terminal_loss",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.terminal_loss",
   "id": "scalar.terminal_loss",
   "kind": "claim",
   "label": "Explicit scalar terminal error bound",
@@ -2599,12 +2674,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.terminal_loss",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.terminal_loss",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar.unshifted_gaussian_limit",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar.unshifted_gaussian_limit",
   "id": "scalar.unshifted_gaussian_limit",
   "kind": "claim",
   "label": "Unshifted and adjacent sums have the same continuum limit",
@@ -2624,12 +2699,12 @@
     "stage": "short"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.unshifted_gaussian_limit",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar.unshifted_gaussian_limit",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fscalar_value",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fscalar_value",
   "id": "scalar_value",
   "kind": "goal",
   "label": "Parisi value identities and finite Gaussian approximation",
@@ -2656,12 +2731,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar_value",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/scalar_value",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.backward_shapes",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.backward_shapes",
   "id": "support.backward_shapes",
   "kind": "claim",
   "label": "Backward shape signs and smooth quotient extension",
@@ -2688,12 +2763,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.backward_shapes",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.backward_shapes",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.contact",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.contact",
   "id": "support.contact",
   "kind": "claim",
   "label": "Nonnegative potential vanishing on the support",
@@ -2720,12 +2795,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.contact",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.contact",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.contact_derivatives",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.contact_derivatives",
   "id": "support.contact_derivatives",
   "kind": "claim",
   "label": "Endpoint contact and slope bounds, including zero",
@@ -2752,12 +2827,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.contact_derivatives",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.contact_derivatives",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.diffusion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.diffusion",
   "id": "support.diffusion",
   "kind": "claim",
   "label": "Existence, coupling and uniqueness of the controlled diffusion",
@@ -2784,20 +2859,52 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.diffusion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.diffusion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.endpoint_chord_area",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.empty_support_chord_obstruction",
+  "id": "support.empty_support_chord_obstruction",
+  "kind": "claim",
+  "label": "Empty support excluded by a finite chord",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.empty_support_chord_obstruction",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.endpoint_chord_area",
   "id": "support.endpoint_chord_area",
   "kind": "claim",
   "label": "The integrated endpoint-chord inequality",
   "papers": [
    {
-    "direct_passage_count": 0,
+    "direct_passage_count": 1,
     "roles": [
-     "recorded_prerequisite"
+     "mapped_claim"
     ],
     "stage": "long"
    },
@@ -2816,12 +2923,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.endpoint_chord_area",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.endpoint_chord_area",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.first_variation",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.first_variation",
   "id": "support.first_variation",
   "kind": "claim",
   "label": "The admissible one-sided first variation",
@@ -2848,12 +2955,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.first_variation",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.first_variation",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.fixed_time_spatial_coercivity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.fixed_time_spatial_coercivity",
   "id": "support.fixed_time_spatial_coercivity",
   "kind": "claim",
   "label": "Spatial coercivity at a positive continuity time",
@@ -2880,12 +2987,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.fixed_time_spatial_coercivity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.fixed_time_spatial_coercivity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.fixed_time_spatial_coercivity_at_jumps",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.fixed_time_spatial_coercivity_at_jumps",
   "id": "support.fixed_time_spatial_coercivity_at_jumps",
   "kind": "claim",
   "label": "Spatial coercivity at a coefficient jump",
@@ -2898,12 +3005,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.fixed_time_spatial_coercivity_at_jumps",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.fixed_time_spatial_coercivity_at_jumps",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.flux_identity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.flux_identity",
   "id": "support.flux_identity",
   "kind": "claim",
   "label": "Nonnegative certificate variables and zero expected divergence",
@@ -2930,12 +3037,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.flux_identity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.flux_identity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.forward_shapes",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.forward_shapes",
   "id": "support.forward_shapes",
   "kind": "claim",
   "label": "Forward score signs and ratio comparison",
@@ -2962,18 +3069,50 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.forward_shapes",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.forward_shapes",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.full_relative_support",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.full_relative_support",
   "id": "support.full_relative_support",
   "kind": "claim",
   "label": "Exhausting the support complement",
   "papers": [
    {
     "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.full_relative_support",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.full_relative_support_curvature",
+  "id": "support.full_relative_support_curvature",
+  "kind": "claim",
+  "label": "Full support by contact and local curvature",
+  "papers": [
+   {
+    "direct_passage_count": 1,
     "roles": [
      "mapped_claim"
     ],
@@ -2987,31 +3126,6 @@
     "stage": "short"
    },
    {
-    "direct_passage_count": 0,
-    "roles": [
-     "recorded_prerequisite"
-    ],
-    "stage": "expository"
-   }
-  ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.full_relative_support",
-  "status": "unverified",
-  "table": "nodes"
- },
- {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.full_relative_support_curvature",
-  "id": "support.full_relative_support_curvature",
-  "kind": "claim",
-  "label": "Full support by contact and local curvature",
-  "papers": [
-   {
-    "direct_passage_count": 1,
-    "roles": [
-     "mapped_claim"
-    ],
-    "stage": "long"
-   },
-   {
     "direct_passage_count": 3,
     "roles": [
      "mapped_claim"
@@ -3019,12 +3133,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.full_relative_support_curvature",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.full_relative_support_curvature",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.integrated_coercivity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.integrated_coercivity",
   "id": "support.integrated_coercivity",
   "kind": "claim",
   "label": "The integrated lower bound for smooth profiles",
@@ -3051,12 +3165,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.integrated_coercivity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.integrated_coercivity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.moment_identity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.moment_identity",
   "id": "support.moment_identity",
   "kind": "claim",
   "label": "Gradient martingale and the derivative of its second moment",
@@ -3083,12 +3197,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.moment_identity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.moment_identity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.moment_saturation",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.moment_saturation",
   "id": "support.moment_saturation",
   "kind": "claim",
   "label": "Full contact gives both moments for every associated diffusion",
@@ -3115,12 +3229,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.moment_saturation",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.moment_saturation",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.near_ground_pairs",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.near_ground_pairs",
   "id": "support.near_ground_pairs",
   "kind": "claim",
   "label": "Near-ground configurations at a prescribed overlap",
@@ -3133,6 +3247,13 @@
     "stage": "long"
    },
    {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
     "direct_passage_count": 2,
     "roles": [
      "mapped_claim"
@@ -3140,12 +3261,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.near_ground_pairs",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.near_ground_pairs",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.no_bounded_gap",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.no_bounded_gap",
   "id": "support.no_bounded_gap",
   "kind": "claim",
   "label": "No bounded gap between support points",
@@ -3172,12 +3293,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.no_bounded_gap",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.no_bounded_gap",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.no_initial_gap",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.no_initial_gap",
   "id": "support.no_initial_gap",
   "kind": "claim",
   "label": "No initial gap when zero is outside the support",
@@ -3204,12 +3325,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.no_initial_gap",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.no_initial_gap",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.no_terminal_gap",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.no_terminal_gap",
   "id": "support.no_terminal_gap",
   "kind": "claim",
   "label": "A minimizer has no terminal plateau or empty support",
@@ -3222,9 +3343,9 @@
     "stage": "long"
    },
    {
-    "direct_passage_count": 1,
+    "direct_passage_count": 0,
     "roles": [
-     "mapped_claim"
+     "recorded_prerequisite"
     ],
     "stage": "short"
    },
@@ -3236,12 +3357,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.no_terminal_gap",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.no_terminal_gap",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.optimality_criterion",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.optimality_criterion",
   "id": "support.optimality_criterion",
   "kind": "claim",
   "label": "An exact first-order criterion for the same admissible coefficient",
@@ -3254,12 +3375,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.optimality_criterion",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.optimality_criterion",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.plateau_transfer",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.plateau_transfer",
   "id": "support.plateau_transfer",
   "kind": "claim",
   "label": "Plateau-preserving approximation and curvature identity",
@@ -3286,12 +3407,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.plateau_transfer",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.plateau_transfer",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.positive_curvature",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.positive_curvature",
   "id": "support.positive_curvature",
   "kind": "claim",
   "label": "Strict curvature on a positive constant interval",
@@ -3318,12 +3439,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.positive_curvature",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.positive_curvature",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.rational_certificate",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.rational_certificate",
   "id": "support.rational_certificate",
   "kind": "claim",
   "label": "Exact rational identity with a coercive remainder",
@@ -3350,12 +3471,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.rational_certificate",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.rational_certificate",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.raw_curvature_negative_absolute_terminal",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.raw_curvature_negative_absolute_terminal",
   "id": "support.raw_curvature_negative_absolute_terminal",
   "kind": "claim",
   "label": "Negative raw curvature with absolute-value terminal data",
@@ -3368,12 +3489,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.raw_curvature_negative_absolute_terminal",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.raw_curvature_negative_absolute_terminal",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.regularity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.regularity",
   "id": "support.regularity",
   "kind": "claim",
   "label": "Compact-strip regularity and approximation",
@@ -3400,12 +3521,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.regularity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.regularity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.source_finite_density_coercivity",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.source_finite_density_coercivity",
   "id": "support.source_finite_density_coercivity",
   "kind": "claim",
   "label": "Concrete finite-data half-line coercivity application",
@@ -3418,12 +3539,12 @@
     "stage": "long"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.source_finite_density_coercivity",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.source_finite_density_coercivity",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.step_tails",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.step_tails",
   "id": "support.step_tails",
   "kind": "claim",
   "label": "Finite-step density transform and differentiated tails",
@@ -3450,12 +3571,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.step_tails",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.step_tails",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.stieltjes_measure",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.stieltjes_measure",
   "id": "support.stieltjes_measure",
   "kind": "claim",
   "label": "Stieltjes measure with the correct initial mass",
@@ -3482,20 +3603,20 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.stieltjes_measure",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.stieltjes_measure",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.strict_increase",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.strict_increase",
   "id": "support.strict_increase",
   "kind": "claim",
   "label": "Full relative support forces strict increase",
   "papers": [
    {
-    "direct_passage_count": 0,
+    "direct_passage_count": 1,
     "roles": [
-     "recorded_prerequisite"
+     "mapped_claim"
     ],
     "stage": "long"
    },
@@ -3514,12 +3635,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.strict_increase",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.strict_increase",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.terminal_chord_barrier",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.terminal_chord_barrier",
   "id": "support.terminal_chord_barrier",
   "kind": "claim",
   "label": "A terminal convex-chord obstruction",
@@ -3532,6 +3653,13 @@
     "stage": "long"
    },
    {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
     "direct_passage_count": 2,
     "roles": [
      "mapped_claim"
@@ -3539,20 +3667,20 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.terminal_chord_barrier",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.terminal_chord_barrier",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.terminal_defect",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.terminal_defect",
   "id": "support.terminal_defect",
   "kind": "claim",
   "label": "Square-root terminal deficit on a finite plateau",
   "papers": [
    {
-    "direct_passage_count": 0,
+    "direct_passage_count": 1,
     "roles": [
-     "recorded_prerequisite"
+     "mapped_claim"
     ],
     "stage": "long"
    },
@@ -3571,12 +3699,12 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.terminal_defect",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.terminal_defect",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.zero_candidate_descent",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.zero_candidate_descent",
   "id": "support.zero_candidate_descent",
   "kind": "claim",
   "label": "The zero coefficient is not minimizing",
@@ -3589,19 +3717,19 @@
     "stage": "long"
    },
    {
-    "direct_passage_count": 2,
+    "direct_passage_count": 1,
     "roles": [
      "mapped_claim"
     ],
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.zero_candidate_descent",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.zero_candidate_descent",
   "status": "unverified",
   "table": "nodes"
  },
  {
-  "href": "/api/v1/record?manifest=79bf16ac8ab3a2adf5741ab97b2e4bd813e1c0a1940efbbdf9e35523f00de8bb&ref=sha256%3Ac941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97%2Fnodes%2Fsupport.zero_curvature",
+  "href": "/api/v1/record?manifest=41f03ec0a8b1d30d68310120008da72a73f8c3f4cc88d65acbde651f5ad06a20&ref=sha256%3A9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5%2Fnodes%2Fsupport.zero_curvature",
   "id": "support.zero_curvature",
   "kind": "claim",
   "label": "Strict increase on a zero constant interval",
@@ -3628,7 +3756,7 @@
     "stage": "expository"
    }
   ],
-  "ref": "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/support.zero_curvature",
+  "ref": "sha256:9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5/nodes/support.zero_curvature",
   "status": "unverified",
   "table": "nodes"
  }

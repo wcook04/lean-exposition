@@ -18,13 +18,15 @@ want to explore it:
   the other accounts that are linked to the same records.
 - **The checks.** For each kind of check, what it tests and the outcome of each
   recorded run: passed, failed, unavailable or not run.
+- **The architectural companion.** The About page includes the paper on why
+  several accounts share one record, with a link to its standalone PDF.
 
 Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
 rules (type, colour, the map's drawing conventions, motion and wording) are in
 [DESIGN.md](DESIGN.md).
 
-Everything shown comes from the read-only [web API](../docs/web-api.md). The site
-adds layout and wording, not facts. It pins the edition it opened, and if the
+The argument map, the three accounts and the recorded checks come from the
+read-only [web API](../docs/web-api.md). The site pins the edition it opened, and if the
 server starts serving a different edition it says so and asks you to reload.
 
 ## Build the GitHub Pages edition
@@ -55,6 +57,19 @@ The bundle's draft, review and publication metadata remain visible.
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and
 `site/dist/` are generated output and stay out of the source repository.
+The build also copies the four maintained PDFs into `pdf/`: `long-record.pdf`,
+`short-paper.pdf`, `exposition.pdf` and `architecture.pdf`. These are the rendered
+files already in `papers/`; render and inspect them before publishing a new edition.
+The three mathematical PDFs are also copied unchanged to
+`long/reasoning-record.pdf`, `short/paper.pdf` and `expository/main.pdf`. These
+aliases preserve their relative links to one another, including links opened
+from the existing `pdf/` downloads.
+The companion's Markdown is embedded from `papers/architecture/paper.md` at build
+time rather than included as a fourth account in the captured bundle.
+The build also publishes the explicitly listed Support build and extraction
+observation at `verification/full-support-build-extraction-observation-20261026.json`.
+The Checks page links to it. `publicObservations()` in `vite.config.ts` owns this
+one-file list and serves the same JSON during local development.
 
 The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
 `main`, checks the static search against the server, and pushes only `site/dist/`
@@ -135,7 +150,7 @@ in a browser at desktop and phone widths, in both colour schemes.
 | `src/panels/` | The inspector that opens when you select a record or a step |
 | `src/ribbons/` | The three account strips (`StripMarks`, shared with the front page), folded into a bar under the map until opened |
 | `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
-| `src/figures/` | Interactive versions of the papers' figures |
+| `src/figures/` | Redrawn paper figures: the mathematical plots and the companion's shared claim, joint inputs and reading journey; the missing-area plot has an optional Explore mode |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
 | `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md) |
 
@@ -160,7 +175,8 @@ in a browser at desktop and phone widths, in both colour schemes.
 
 ## Limitations
 
-- The site reads one edition from a running server; it has no offline copy.
+- The published site contains one captured edition. Local development can read
+  an edition from the Python server; neither mode provides an edition archive.
 - A text selection is matched to whole passages, and the reader says so.
 - Passages are linked to records, not to individual steps. A passage linked to
   both records of a step is related reading, not a located proof of that step.
