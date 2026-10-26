@@ -19,8 +19,11 @@ from wsgiref.validate import validator
 
 from lean_exposition import bundle, consumer, web
 from lean_exposition.contracts import ContractError, digest
+from lean_exposition.extraction import to_graph
+from test_application_obligations import extracted_application
+from test_core_review import extraction_fixture, rebind
 from test_corpus_views import bind, corpus_bundle
-from test_scoped_applications import application_bundle
+from test_scoped_applications import application_bundle, application_graph
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -202,6 +205,86 @@ class WebTests(unittest.TestCase):
             self.assertEqual(self.data("/api/v1/graph", {"view": view, "scope": "corpus"}),
                              consumer.project_graph(self.payload["graph.json"], view, roots))
         self.assertTrue(any(c["cyclic"] for c in self.data("/api/v1/graph")["components"]))
+
+    def test_compact_map_retains_formal_obligation_identity_and_extraction_scope(self):
+        for axiom in ("Classical.choice", "sorryAx"):
+            with self.subTest(axiom=axiom):
+                project = self.parent / axiom
+                project.mkdir()
+                graph = extracted_application(project, axiom)
+                graph["evidence"].append({
+                    "id": "unknown-extraction", "kind": "extraction", "status": "not_run",
+                    "subject_ids": ["consumer"], "source_ids": [], "command": [],
+                    "tool": "synthetic fixture", "details": "No extraction was run for this subject.",
+                })
+                root = project / "bundle"
+                bundle.scaffold(graph, root)
+                app = web.create_app(root)
+                query = {"view": "arguments", "node": "consumer", "assumptions": "true"}
+                full = self.data("/api/v1/graph", query, app=app)
+                compact = self.data("/api/v1/graph", {**query, "representation": "map"}, app=app)
+                self.assertEqual(compact["links"], full["links"])
+                nodes = {row["id"]: row for row in compact["records"]["nodes"]}
+                self.assertIn(axiom, nodes)
+                for row in full["records"]["nodes"]:
+                    record = row["record"]
+                    self.assertEqual(nodes[record["id"]].get("declaration"), record.get("declaration"))
+                    self.assertNotIn("statement", nodes[record["id"]])
+                evidence = {row["id"]: row for row in compact["records"]["evidence"]}
+                for row in full["records"]["evidence"]:
+                    record = row["record"]
+                    card = evidence[record["id"]]
+                    self.assertEqual(card["status"], record["status"])
+                    if record["kind"] == "extraction":
+                        self.assertEqual(card["subject_ids"], record["subject_ids"])
+                    else:
+                        self.assertNotIn("subject_ids", card)
+                    self.assertNotIn("receipt", card)
+                self.assertEqual(evidence["extract"]["subject_ids"], ["result"])
+                self.assertEqual(evidence["unknown-extraction"]["status"], "not_run")
+                self.assertEqual(evidence["unknown-extraction"]["subject_ids"], ["consumer"])
+
+    def test_compact_map_keeps_renamed_hole_identity_without_extraction(self):
+        graph = application_graph()
+        assumption = next(row for row in graph["nodes"] if row["id"] == "assumption")
+        assumption.update(id="renamed-sorry", declaration="sorryAx", status="open")
+        graph["nodes"][1]["assumption_ids"] = ["renamed-sorry"]
+        graph["edges"][0]["application"]["premise_bindings"][0]["assumption_id"] = "renamed-sorry"
+        root = self.parent / "renamed-hole"
+        bundle.scaffold(graph, root)
+        app = web.create_app(root)
+        query = {"view": "arguments", "node": "goal", "assumptions": "true"}
+        full = self.data("/api/v1/graph", query, app=app)
+        compact = self.data("/api/v1/graph", {**query, "representation": "map"}, app=app)
+        self.assertEqual(compact["links"], full["links"])
+        hole = next(row for row in compact["records"]["nodes"] if row["id"] == "renamed-sorry")
+        self.assertEqual(hole["declaration"], "sorryAx")
+        self.assertEqual(hole["status"], "open")
+        self.assertFalse(any(row["kind"] == "extraction" for row in compact["records"]["evidence"]))
+
+    def test_compact_and_full_maps_preserve_exact_lean_dependency_kinds(self):
+        project = self.parent / "typed-lean-dependencies"
+        project.mkdir()
+        report, build = extraction_fixture(project)
+        for field in ("type_dependencies", "value_dependencies", "structural_dependencies"):
+            report["declarations"][0][field] = ["Classical.choice"]
+        report["declarations"][0]["axioms"] = ["Classical.choice"]
+        report["external_dependencies"] = [{"name": "Classical.choice", "kind": "axiom", "module": "Init"}]
+        rebind(report)
+        graph = to_graph(report, project, build)
+        root = project / "bundle"
+        bundle.scaffold(graph, root)
+        app = web.create_app(root)
+        query = {"view": "declarations", "node": "result", "assumptions": "true"}
+        full = self.data("/api/v1/graph", query, app=app)
+        compact = self.data("/api/v1/graph", {**query, "representation": "map"}, app=app)
+        self.assertEqual(compact["links"], full["links"])
+        typed = [link for link in compact["links"] if link["kind"].startswith("lean_")]
+        self.assertEqual({link["kind"] for link in typed},
+                         {"lean_type_dependency", "lean_value_dependency", "lean_structural_dependency"})
+        self.assertTrue(all(link["semantic_class"] == "lean_syntactic_dependency" for link in typed))
+        arguments = self.data("/api/v1/graph", {**query, "view": "arguments", "representation": "map"}, app=app)
+        self.assertFalse(any(link["kind"].startswith("lean_") for link in arguments["links"]))
 
     def test_connection_witness_uses_stored_direction_and_exposes_cutoffs(self):
         source, target = self.ref("sources", "public"), self.ref("nodes", "goal")

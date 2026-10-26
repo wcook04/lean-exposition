@@ -1,4 +1,4 @@
-// Shared parts for the two architecture-paper diagrams, translating the
+// Shared parts for the architecture-paper diagrams, translating the
 // paper's TikZ styles: archbox (hairline frame), archrecord (the shared
 // record, blue frame and faint blue fill), archview (dashed frame),
 // archflow (Stealth arrow, black!65) and archnote (label on a ground patch).
@@ -28,9 +28,14 @@ export function Box({ kind, title, lines }: { kind: BoxKind; title?: string; lin
  * clear band (lines never cross it), then the shaft and a Stealth head that
  * meets the target frame perpendicularly.
  */
-export function Flow({ note }: { note: string[] }) {
+export function Flow({ note, direction = "down", line = "solid", arrow = true }: {
+  note: string[];
+  direction?: "down" | "up";
+  line?: "solid" | "dashed" | "dotted";
+  arrow?: boolean;
+}) {
   return (
-    <div className="arch-flow">
+    <div className={`arch-flow arch-flow--${direction} arch-flow--${line}`}>
       <span className="arch-flow__stem" />
       <span className="arch-flow__note">
         {note.map((line) => (
@@ -38,9 +43,11 @@ export function Flow({ note }: { note: string[] }) {
         ))}
       </span>
       <span className="arch-flow__shaft" />
-      <svg className="arch-flow__head" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
-        <path d="M0 0 L5 2.2 L10 0 L5 10 Z" />
-      </svg>
+      {arrow && (
+        <svg className="arch-flow__head" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+          <path d="M0 0 L5 2.2 L10 0 L5 10 Z" />
+        </svg>
+      )}
     </div>
   );
 }

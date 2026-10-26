@@ -39,6 +39,9 @@ const RELATION_NAME: Record<LinkKind, string> = {
   supports: "Recorded support",
   assumes: "Explicit assumption",
   formalizes: "Recorded Lean correspondence",
+  lean_type_dependency: "Lean type dependency",
+  lean_value_dependency: "Lean proof or value dependency",
+  lean_structural_dependency: "Lean structural dependency",
 };
 
 export function Inspector(props: Props) {

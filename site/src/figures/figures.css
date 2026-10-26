@@ -141,7 +141,7 @@
 
 .arch {
   font-family: var(--font-sans);
-  font-size: clamp(12px, 2.3cqi, 14.5px);
+  font-size: clamp(13px, 2.3cqi, 14.5px);
   line-height: 1.32;
   text-align: center;
 }
@@ -258,7 +258,7 @@
   flex-direction: column;
   padding: 0.3em 0.2em;
   color: var(--ink-2);
-  font-size: 0.95em;
+  font-size: 1em;
 }
 
 .arch-flow__head {
@@ -267,6 +267,72 @@
   height: 9px;
   fill: currentColor;
   margin-top: -1px;
+}
+
+.arch-flow--up {
+  flex-direction: column-reverse;
+}
+
+.arch-flow--up .arch-flow__head {
+  transform: rotate(180deg);
+  margin-top: 0;
+  margin-bottom: -1px;
+}
+
+.arch-flow--dashed .arch-flow__stem,
+.arch-flow--dashed .arch-flow__shaft,
+.arch-flow--dotted .arch-flow__stem,
+.arch-flow--dotted .arch-flow__shaft {
+  width: 0;
+  background: none;
+  border-left: 1px dashed currentColor;
+}
+
+.arch-flow--dotted .arch-flow__stem,
+.arch-flow--dotted .arch-flow__shaft {
+  border-left-style: dotted;
+}
+
+/* Join the two existing ingredient columns at their centres. */
+.arch-junction {
+  width: calc(50% + clamp(5px, 3.5cqi, 20px));
+  margin-inline: auto;
+  border-top: 1px solid var(--ink-2);
+}
+
+/* The companion's two-expansion composition retains an open middle corridor
+   for the short passage's direct claim mapping. No line leaves the analytic
+   treatment towards the final claim. Labels remain text at reading size. */
+.arch-journey__short,
+.arch-journey__source {
+  width: 80%;
+  margin-inline: auto;
+}
+
+.arch-journey__branches {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4em minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+}
+
+.arch-journey__expand-analytic { grid-area: 1 / 1; }
+.arch-journey__expand-limit { grid-area: 1 / 3; }
+.arch-journey__analytic { grid-area: 2 / 1; }
+.arch-journey__limit { grid-area: 2 / 3; }
+.arch-journey__direct { grid-area: 1 / 2 / 4 / 3; }
+.arch-journey__limit-map { grid-area: 3 / 3; }
+
+.arch-journey__branches .arch-flow {
+  height: 100%;
+  min-height: 4.8em;
+}
+
+.arch-journey__direct .arch-flow__stem {
+  height: 1.4em;
+}
+
+.arch-journey__branches .arch-box {
+  height: 100%;
 }
 
 .arch-row--3 .arch-flow {

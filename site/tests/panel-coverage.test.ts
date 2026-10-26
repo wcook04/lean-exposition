@@ -10,15 +10,15 @@ const goals = (stage: Stage) => papers.find((p) => p.stage === stage)!.paper_sco
 describe("account coverage", () => {
   it("counts the long record's own, relied-on and left-out records", () => {
     const c = coverageOf(graph, "long");
-    expect([c.own.length, c.relied.length, c.out.length]).toEqual([120, 3, 6]);
-    expect(c.relied.sort()).toEqual(["support.endpoint_chord_area", "support.strict_increase", "support.terminal_defect"]);
+    expect([c.own.length, c.relied.length, c.out.length]).toEqual([125, 0, 6]);
+    expect(c.own).toEqual(expect.arrayContaining(["support.endpoint_chord_area", "support.strict_increase", "support.terminal_defect"]));
   });
 
   it("counts the short paper and the exposition", () => {
     const s = coverageOf(graph, "short");
     const e = coverageOf(graph, "expository");
-    expect([s.own.length, s.relied.length]).toEqual([49, 50]);
-    expect([e.own.length, e.relied.length]).toEqual([35, 60]);
+    expect([s.own.length, s.relied.length]).toEqual([51, 52]);
+    expect([e.own.length, e.relied.length]).toEqual([37, 60]);
   });
 
   it("finds that no result the long record proves uses the records it leaves out", () => {

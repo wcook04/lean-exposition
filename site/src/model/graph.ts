@@ -19,7 +19,10 @@ import type {
   TheoremApplication,
 } from "../api/types";
 
-export type LinkKind = "supports" | "formalizes" | "assumes";
+export type LinkKind = "supports" | "formalizes" | "assumes"
+  | "lean_type_dependency" | "lean_value_dependency" | "lean_structural_dependency";
+
+const LEAN_KINDS: readonly LinkKind[] = ["lean_type_dependency", "lean_value_dependency", "lean_structural_dependency"];
 
 /** Where a record's statement comes from, by the source it names. */
 export interface Origin {
@@ -37,6 +40,10 @@ export interface ArgNode {
   kind: NodeKind;
   label: string;
   status: string;
+  /** Exact declaration identity from the node record, never inferred from its label. */
+  declaration?: string;
+  /** The node is a subject of a recorded extraction whose status is passed. */
+  passedExtraction: boolean;
   region: string;
   origin: Origin;
   /** Per-paper membership: absent when the paper's support set omits the node. */
@@ -169,6 +176,9 @@ const KIND_OF_LINK: Record<string, LinkKind> = {
   supports: "supports",
   formalizes: "formalizes",
   assumption_ids: "assumes",
+  lean_type_dependency: "lean_type_dependency",
+  lean_value_dependency: "lean_value_dependency",
+  lean_structural_dependency: "lean_structural_dependency",
 };
 
 export function linkKind(link: MapLink): LinkKind | null {
@@ -191,9 +201,17 @@ export function buildGraph(
 ): ArgGraph {
   const roles = new Map<string, PaperRole[]>();
   for (const card of summaries) if (card.id) roles.set(card.id, card.papers ?? []);
+  const recordsById = new Map(records.map((record) => [record.id, record]));
+  // Compact cards retain these subjects; full evidence is authoritative when
+  // loaded. Node evidence citations alone do not establish extraction scope.
+  const evidenceById = new Map([...map.records.evidence, ...stored.evidence].map((record) => [record.id, record]));
+  const extractedSubjects = new Set([...evidenceById.values()]
+    .filter((record) => record.kind === "extraction" && record.status === "passed")
+    .flatMap((record) => record.subject_ids ?? []));
 
   const nodes = new Map<string, ArgNode>();
   for (const card of map.records.nodes) {
+    const record = recordsById.get(card.id);
     const papers: ArgNode["papers"] = {};
     for (const role of roles.get(card.id) ?? []) {
       papers[role.stage] = { roles: role.roles, direct: role.direct_passage_count };
@@ -204,6 +222,8 @@ export function buildGraph(
       kind: normalizeKind(card.kind),
       label: card.label,
       status: card.status,
+      declaration: record?.declaration ?? card.declaration,
+      passedExtraction: extractedSubjects.has(card.id),
       region: "",
       origin: NONE_ORIGIN,
       papers,
@@ -437,12 +457,12 @@ function attachWarrants(graph: ArgGraph, edges: EdgeRecord[], evidence: Evidence
 // application of a conditional theorem supplies some of its premises for that
 // use only. Traversal therefore walks states (node, discharged premises):
 // following an edge adds the premises its application supplies; a node's own
-// assumptions are followed with the current discharged set; a target already
-// discharged in the current state is not entered. Keeping states, rather than
-// deleting premises globally, preserves a free use of the same premise that is
-// reached independently.
+// assumptions are followed with the current discharged set. Retained Lean
+// axiom dependencies and proof holes restore their own ID on that path: an
+// authored binding cannot change a Lean proof term. Keeping states, rather
+// than deleting premises globally, also preserves an independent free use.
 
-const ALL_KINDS: readonly LinkKind[] = ["supports", "formalizes", "assumes"];
+const ALL_KINDS: readonly LinkKind[] = ["supports", "formalizes", "assumes", ...LEAN_KINDS];
 
 /** One reachable context: a node and the premises discharged on the way to it. */
 export interface ArgumentContext {
@@ -466,7 +486,7 @@ export interface ArgumentContexts {
 }
 
 export interface ContextOptions {
-  /** Relation kinds to follow; "assumes" follows nodes' own assumptions. Default: all three. */
+  /** Relation kinds to follow; "assumes" follows nodes' own assumptions. Default: all argument relations. */
   kinds?: readonly LinkKind[];
 }
 
@@ -474,8 +494,8 @@ const contextKey = (node: string, discharged: readonly string[]) => `${node}\u00
 
 /**
  * Every (node, discharged premises) context reachable from `roots` along
- * prerequisites, with the transitions between them, exactly as the backend's
- * `argument_contexts` computes them.
+ * prerequisites, with the transitions between them, using the backend's
+ * `argument_contexts` rule within the relation scope supplied by the API.
  */
 export function argumentContexts(graph: ArgGraph, roots: string | readonly string[], options: ContextOptions = {}): ArgumentContexts {
   const kinds = options.kinds ?? ALL_KINDS;
@@ -491,8 +511,17 @@ export function argumentContexts(graph: ArgGraph, roots: string | readonly strin
     for (const edge of graph.out.get(state.node) ?? []) {
       if (!kinds.includes(edge.kind)) continue;
       const supplied = suppliedPremises(edge);
-      const scope = supplied.length ? [...new Set([...state.discharged, ...supplied])].sort() : state.discharged;
-      if (scope.includes(edge.to)) continue;
+      let scope = supplied.length ? [...new Set([...state.discharged, ...supplied])].sort() : state.discharged;
+      if (scope.includes(edge.to)) {
+        const target = graph.nodes.get(edge.to)!;
+        const isHole = target.id === "sorryAx" || target.declaration === "sorryAx";
+        const isLeanDependency = target.kind === "assumption" && (
+          (edge.kind === "assumes" && graph.nodes.get(state.node)!.passedExtraction)
+          || LEAN_KINDS.includes(edge.kind)
+        );
+        if (!isHole && !isLeanDependency) continue;
+        scope = scope.filter((id) => id !== edge.to);
+      }
       const next = { key: contextKey(edge.to, scope), node: edge.to, discharged: scope };
       transitions.push({ from: state.key, to: next.key, edge });
       pending.push(next);
@@ -537,8 +566,9 @@ function plainClosure(graph: ArgGraph, start: readonly string[], direction: "pre
  * The records an argument rests on (`prerequisites`), or the records whose
  * argument contains `start` (`consumers`). Both respect application scopes:
  * a premise supplied by a recorded application is not part of the consumer's
- * argument unless it is also reached by an independent, free use. The
- * prerequisites equal the backend's `closure` for the same root.
+ * argument unless it is also reached by an independent free use or retained
+ * as a formal obligation. The prerequisites match the backend's `closure`
+ * for the same root and recorded relation scope.
  */
 export function closure(
   graph: ArgGraph,

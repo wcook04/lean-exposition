@@ -403,9 +403,15 @@ class WebApplication:
         # Preserve selected records, typed links, application bindings and scope;
         # replace only record bodies. Scope and detail URLs are shared rather
         # than repeated for every record in a graph with hundreds of records.
+        # Declaration identities and extraction subjects let compact clients
+        # retain formal obligations in the same occurrence-specific scopes.
         return {**view, "representation": "map", "records": {
             table: [{**{key: value for key, value in self._summaries[row["ref"]].items()
                         if key in {"ref", "id", "label", "kind", "status", "formal_result_assurance"}},
+                     **({"declaration": row["record"]["declaration"]}
+                        if table == "nodes" and "declaration" in row["record"] else {}),
+                     **({"subject_ids": list(row["record"]["subject_ids"])}
+                        if table == "evidence" and row["record"]["kind"] == "extraction" else {}),
                      **({"relevant": row["relevant"]} if "relevant" in row else {})} for row in rows]
             for table, rows in view["records"].items()},
             "records_href": self._href("/records"),

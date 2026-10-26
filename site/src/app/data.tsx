@@ -103,12 +103,18 @@ function coreGraph(core: Core, stored?: Stored): ArgGraph {
 }
 
 /**
- * Attach warrants, applications and citation links to an existing graph,
+ * Attach warrants, applications, extraction scope and citation links to an existing graph,
  * keeping its identity (and every edge object's identity), so layouts and
  * memos keyed on the graph survive the late arrival of the evidence table.
  */
 function enrich(graph: ArgGraph, core: Core, stored: Stored): void {
   const full = coreGraph(core, stored);
+  for (const [id, node] of graph.nodes) {
+    const source = full.nodes.get(id);
+    if (!source) continue;
+    node.declaration = source.declaration;
+    node.passedExtraction = source.passedExtraction;
+  }
   const byKey = new Map(full.edges.map((e) => [e.key, e]));
   for (const edge of graph.edges) {
     const source = byKey.get(edge.key);

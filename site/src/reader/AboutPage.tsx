@@ -6,6 +6,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import source from "../../../papers/architecture/paper.md?raw";
+import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { Route } from "../app/router";
 import { routeHref } from "../app/router";
 import { useEdition } from "../app/data";
@@ -188,10 +189,10 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__serves" id="edition" aria-labelledby="serves">
         <h2 id="serves">The edition you are reading</h2>
         <p>
-          Everything on this site comes from one captured edition, which is a fixed set of files holding the records and the
-          three accounts, served by a read-only server. The site sends the edition’s identifier with every request. If the
-          server starts serving a different edition while you read, a notice at the top of the page asks you to reload, so
-          the two editions are never mixed on one page.
+          The records and the three accounts belong to one captured edition, a fixed set of files identified below. The
+          published website includes that capture. When run against the local read-only server, the site pins requests to
+          the same edition and asks you to reload if the server changes it. The architectural companion and downloadable
+          PDFs are copied separately from the same source checkout when the website is built.
         </p>
         <dl className="facts">
           <div>
@@ -249,15 +250,20 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h2 id="companion-title" className="visually-hidden">
           The architectural companion
         </h2>
-        <button
-          type="button"
-          className="control about__open"
-          aria-expanded={companion}
-          aria-controls={COMPANION}
-          onClick={() => setCompanion((open) => !open)}
-        >
-          {companion ? "Close the architectural companion" : "Read the architectural companion"}
-        </button>
+        <div className="about__copies">
+          <button
+            type="button"
+            className="control about__open"
+            aria-expanded={companion}
+            aria-controls={COMPANION}
+            onClick={() => setCompanion((open) => !open)}
+          >
+            {companion ? "Close the architectural companion" : "Read the architectural companion"}
+          </button>
+          <a className="control" href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`}>
+            Companion PDF <span className="num">({PAPER_PDFS.architecture.pages} pages)</span>
+          </a>
+        </div>
         <p className="about__open-note">
           A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
           records, and on how those records and links are made.

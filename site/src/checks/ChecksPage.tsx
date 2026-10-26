@@ -95,6 +95,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
   const groups = useMemo(() => groupByKind(cards), [cards]);
   const target = useMemo(() => resolveTarget(route.node, graph, cards), [route.node, graph, cards]);
   const subject = target.type === "node" ? graph.nodes.get(target.id)! : null;
+  const supportObservation = cards.some((card) => card.id === "full_support_v2_receipt_binding_20261026");
 
   const declarations = useMemo(() => {
     const ids = graph.order.filter((id) => graph.nodes.get(id)!.kind === "declaration");
@@ -122,6 +123,15 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
           records give each outcome (passed, failed, unavailable or not run).
         </p>
         <p className="checks__edition">{editionNote(cards)}</p>
+        {supportObservation && (
+          <p className="checks__edition">
+            A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
+              Support observation from 26 October 2026
+            </a> records a completed build and scoped dependency extraction. That extracted graph remains partial and has
+            not been incorporated into this edition’s curated graph. Its retained receipt is listed under source-file checks;
+            it does not change the extraction outcomes below or establish Comparator acceptance.
+          </p>
+        )}
       </header>
 
       {target.type === "unknown" && (

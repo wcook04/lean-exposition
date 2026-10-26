@@ -221,11 +221,14 @@ describe("rendering the papers", () => {
   it("extracts figures with stable keys and typeset captions", () => {
     for (const name of ["expository", "architecture"]) {
       const figures = docs[name].parts.flatMap((p) => p.figures);
-      expect(figures.length, name).toBe(2);
+      const sourceBytes = name === "architecture" ? architectureBytes : documentFixture("expository");
+      const authoredCount = new TextDecoder().decode(sourceBytes).match(/\\begin\{figure\}/g)?.length ?? 0;
+      expect(authoredCount, name).toBeGreaterThan(0);
+      expect(figures.length, name).toBe(authoredCount);
       const html = rendered[name].map((r) => r.html).join("");
       const el = dom(html);
       const figs = el.querySelectorAll("figure.paper-figure");
-      expect(figs.length).toBe(2);
+      expect(figs.length).toBe(authoredCount);
       figs.forEach((f, i) => {
         const key = figures[i].key;
         expect(f.getAttribute("data-figure")).toBe(key);

@@ -1,22 +1,23 @@
-// "Why three papers need only one shared record" (architecture paper, Section 2).
+// Figure fig:shared-claim (architecture paper, Section 2), retaining the
+// existing three-account composition with its actual selected passage maps.
 // Adapted from its TikZ block: three dashed archview boxes at x = -4.7, 0, 4.7,
 // each with an archflow arrow down to one archrecord box spanning the row.
 // The arrows denote authored correspondence, so they carry the same note.
 import { Box, Flow } from "./arch";
 import "./figures.css";
 
-const NOTE = ["maps its passages", "to recorded support"];
+const NOTE = ["maps this passage", "to the claim"];
 
 const PAPERS: { title: string; lines: string[] }[] = [
-  { title: "Long record", lines: ["Recover the derivation", "and its separate cases"] },
-  { title: "Short paper", lines: ["Read the result", "and decisive proof"] },
-  { title: "Exposition", lines: ["Learn the objects", "and the proof idea"] },
+  { title: "Long record, §5", lines: ["The separate gap cases"] },
+  { title: "Short paper, §1", lines: ["Theorem 1 and its scope"] },
+  { title: "Exposition, §4", lines: ["The prepared theorem"] },
 ];
 
 const LABEL =
-  "Three paper boxes, Long record, Short paper and Exposition, each with an arrow labelled " +
-  "'maps its passages to recorded support' pointing down to a single box, the Shared record of the mathematics: " +
-  "claims and assumptions, supporting arguments, source editions and checks.";
+  "The separate gap cases in long record section 5, Theorem 1 in short paper section 1, and the prepared theorem " +
+  "in exposition section 4 each map to the same ordinary claim: no gaps for an admissible SK minimiser. " +
+  "These authored passage mappings do not assert equivalent passages or automatic generation.";
 
 export function AccountsFigure() {
   return (
@@ -31,8 +32,8 @@ export function AccountsFigure() {
       </div>
       <Box
         kind="record"
-        title="Shared record of the mathematics"
-        lines={["Claims and assumptions, supporting arguments, source editions and checks"]}
+        title="One selected claim in the shared record"
+        lines={["No gaps for an admissible SK minimiser"]}
       />
     </div>
   );

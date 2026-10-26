@@ -90,6 +90,8 @@ export interface MapNodeCard {
   label: string;
   ref: string;
   status: string;
+  /** Exact Lean declaration identity when recorded; needed to retain proof holes. */
+  declaration?: string;
 }
 
 /** One premise of a conditional theorem that a recorded application supplies. */
@@ -170,7 +172,16 @@ export interface GraphMap {
     nodes: MapNodeCard[];
     edges: { kind: string; label: string; ref: string }[];
     citations: { id: string; label: string; ref: string }[];
-    evidence: { id: string; kind: string; label: string; ref: string; status: string; relevant: boolean }[];
+    evidence: {
+      id: string;
+      kind: string;
+      label: string;
+      ref: string;
+      status: string;
+      relevant: boolean;
+      /** Extraction cards retain their subjects so compact traversal keeps formal obligations. */
+      subject_ids?: string[];
+    }[];
     sources: { id: string; kind: string; label: string; ref: string }[];
   };
   links: MapLink[];

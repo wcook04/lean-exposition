@@ -393,7 +393,7 @@
   "id": "circuit.one_measurement_near_optimum",
   "kind": "claim",
   "label": "One measured sample approaches the SK optimum with high joint probability",
-  "locator": "Derived in the long reasoning record section 9.8, What is averaged, and a fixed-word probability consequence; premise locations are QAOA Theorem thm:main and FGGZ section 4 equations (13)-(14).",
+  "locator": "Derived in the long reasoning record, What is averaged, and a fixed-word probability consequence (#fixed-word-probability); premise locations are QAOA Theorem thm:main and FGGZ section 4 equations (13)–(14).",
   "statement": "For every epsilon>0 there exist a finite depth p and fixed deterministic real angles, independent of n and the Gaussian disorder, such that Pr_{J,sigma}[H_n(sigma)/n >= P_star-epsilon] tends to 1 as n tends to infinity; sigma is one computational-basis measurement of the corresponding QAOA state.",
   "status": "unverified"
  },
@@ -806,7 +806,9 @@
    "full_support_corrected_comparator_not_run_20261024",
    "current_input_identity_20261024",
    "corrected_comparator_outcome_unavailable_20261025",
-   "corrected_extraction_outcome_unavailable_20261025"
+   "corrected_extraction_outcome_unavailable_20261025",
+   "full_support_native_build_passed_20261026",
+   "full_support_v2_receipt_binding_20261026"
   ],
   "id": "lean.full_support",
   "kind": "declaration",
@@ -994,6 +996,23 @@
   "locator": "Long record §11.1.2, passage gibbs-comparison, Gaussian Lipschitz bound and concentration estimate",
   "source_id": "authored_long_comparisons_20261024",
   "statement": "For n>=2, M_n=max_sigma H_n(sigma)/n is sqrt((n-1)/(2n^2))-Lipschitz in the independent standard Gaussian SK couplings. Gaussian concentration gives Pr(|M_n-E M_n|>a)<=2 exp(-n^2 a^2/(n-1)); E M_n tends to P_star, hence M_n tends to P_star in probability. No effective mean-bias rate is supplied. The concentration bound is for every a>0.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Elementary finite-model deduction. It distinguishes exact maximizers at fixed size from near-ground pairs and supplies no rate, algorithm, formal replay or independent acceptance.",
+  "citation_ids": [
+   "authored_r10_finite_maximizer_uniqueness"
+  ],
+  "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "id": "scalar.finite_maximum_unique_modulo_flip",
+  "kind": "claim",
+  "label": "Finite Gaussian maximizers are unique up to reversal",
+  "locator": "Long reasoning record #exact-finite-maximizers",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For every fixed positive integer n, the pure zero-field SK Hamiltonian with independent standard Gaussian pair couplings has almost surely exactly one maximizing pair {sigma,-sigma}. Configurations not related by global reversal differ in at least one pair product, so their energy difference is a nondegenerate Gaussian; a finite union excludes all such ties. This does not exclude nearly maximizing configurations at other overlaps in the large-n limit.",
   "status": "unverified"
  },
  {
@@ -1758,6 +1777,25 @@
   "status": "unverified"
  },
  {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary source-assisted deduction from retained analytic inputs. This does not supply an extracted Lean declaration, formal-model transport, Comparator acceptance or independent mathematical certification.",
+  "citation_ids": [
+   "authored_r10_empty_support_chord"
+  ],
+  "evidence_ids": [
+   "ordinary_r10_proof_route_review_20261026"
+  ],
+  "id": "support.empty_support_chord_obstruction",
+  "kind": "claim",
+  "label": "Empty support excluded by a finite chord",
+  "locator": "Long reasoning record #empty-support-chord",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For an admissible pure zero-field SK minimizer, empty Stieltjes support would give gamma=0. The zero-interval identity makes q strictly convex, while q(0)=0 and q<=1. For 0<t<s<1, q(t)<=t*q(s)/s<=t/s; letting s tend to one gives q(t)<=t. A second strict finite chord gives q(t)<t, hence G(0)=integral_0^1(q(t)-t)dt<0, contrary to feasible atom addition. No terminal value or derivative is assumed and no arcsine evaluation is needed.",
+  "status": "unverified"
+ },
+ {
   "assumption_ids": [],
   "boundary": "An ordinary one-dimensional calculus lemma with its own quantified hypotheses. It applies to toy curves as well as diffusion moments and carries no minimizer, PDE or stochastic premise. Strict convexity gives q′(t) below its endpoint chord for r<t<s; the chord is at most one, and continuity makes the integrated deficit strictly positive. The source uses this step inside a conditional full-support argument. This node does not assert a newly extracted Lean declaration or independently accepted formal check.",
   "citation_ids": [
@@ -1903,17 +1941,19 @@
   ],
   "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
   "citation_ids": [
-   "authored_r8_support_full_relative_support_curvature"
+   "authored_r8_support_full_relative_support_curvature",
+   "authored_r10_empty_support_chord"
   ],
   "evidence_ids": [
-   "ordinary_deductions_review_20261026"
+   "ordinary_deductions_review_20261026",
+   "ordinary_r10_proof_route_review_20261026"
   ],
   "id": "support.full_relative_support_curvature",
   "kind": "claim",
   "label": "Full support by contact and local curvature",
   "locator": "Long reasoning record #qualitative-terminal-gap",
   "source_id": "authored_long_comparisons_20261024",
-  "statement": "For an admissible pure zero-field SK minimizer, its Stieltjes support is [0,1). Zero-candidate descent excludes empty support; contact and positive-plateau curvature exclude bounded gaps; zero-plateau curvature excludes an initial gap. At a last support point r, the terminal chord obstruction gives q(t)<t and G(r)<0, contradicting atom addition. Consequently q(t)=t and E[Phi_xx(t,X_t)^2]=1 for 0<=t<1. This alternate proof does not use the quantitative terminal defect estimate.",
+  "statement": "For an admissible pure zero-field SK minimizer, its Stieltjes support is [0,1). A finite-chord comparison using q(0)=0, q<=1 and strict zero-interval convexity excludes empty support; contact and positive-plateau curvature exclude bounded gaps; zero-plateau curvature excludes an initial gap. At a last support point r, the terminal chord obstruction gives q(t)<t and G(r)<0, contradicting atom addition. Consequently q(t)=t and E[Phi_xx(t,X_t)^2]=1 for 0<=t<1. This alternate proof does not use the quantitative terminal defect estimate.",
   "status": "unverified"
  },
  {
@@ -1992,7 +2032,7 @@
   "id": "support.near_ground_pairs",
   "kind": "claim",
   "label": "Near-ground configurations at a prescribed overlap",
-  "locator": "Proposition 1, equation (5), p.5; proof pp.15–16; pure-SK specialization reconstructed in the long record §5.3",
+  "locator": "Proposition 1, equation (5), p.5; proof pp.15–16; pure-SK specialization reconstructed in the long record, Near-ground configurations at a prescribed overlap (#near-ground-overlaps).",
   "source_id": "acz2020_infinite_support",
   "statement": "For pure zero-field Gaussian SK H_n=n^(-1/2) sum_{i<j} J_ij sigma_i sigma_j, every fixed r in [0,1) and epsilon,eta>0 admit K=K(r,epsilon,eta)>0 independent of n, such that with disorder probability at least 1-K exp(-n/K) there exist sigma,tau with |R(sigma,tau)-r|<epsilon and both H_n(sigma)/n,H_n(tau)/n >= P_*-eta, for all n>=1.",
   "status": "unverified"
