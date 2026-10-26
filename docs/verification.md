@@ -388,8 +388,18 @@ follows. The later
 [corrected-replay interruption summary](../examples/qaoa-sk/verification/corrected-replay-interruption-20261025.json)
 records a confirmed full-support challenge build and an observed live exporter,
 followed by controller interruption without a recovered terminal research
-result. Comparator and research v2 extraction outcomes remain unknown. An
-incomplete controller audit is not a proof-checker rejection or acceptance.
+result. At that date, Comparator and research v2 extraction outcomes were
+unknown. An incomplete controller audit is not a proof-checker rejection or
+acceptance.
+
+The later [Support build and extraction observation](../examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json),
+dated 26 October, records a successful source-bound local Lake build and v2
+extraction of the single conditional full-support root. The in-prefix traversal
+completed; external dependencies leave the extracted graph partial. The public
+observation retains original artifact identities and explicitly identified
+redactions and path aliases. It is not authenticated execution provenance or
+an extracted projection of the curated paper graph. Comparator acceptance and
+the scalar-target outcomes remain pending.
 
 All 357 files in the original runtime materialization manifest match their
 before-run hashes. That observation concerns the original runtime inventory,

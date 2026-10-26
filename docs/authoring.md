@@ -224,6 +224,14 @@ about the general object. Perform this audit in the review account; put only
 the needed reminder or derivation in the reading path. Check the repaired
 passage from its actual entry point, without borrowing later conclusions.
 
+In an iterated construction, compare the estimate's input class with the state
+presented at its next use. Intermediate states may vary with the approximation
+parameter, so convergence on each fixed input can be insufficient. Preserve the
+invariant class and uniform bounds needed for that substitution, including any
+adjoint or weighted-norm control used by the next step; see
+[the long-record procedure](../skills/graph-to-long/SKILL.md#procedure).
+A single application to a fixed input may need only the weaker estimate.
+
 Before deriving a law or independence, identify the model and any joint or
 dependence assumptions used. A finite set of matching numerical summaries does
 not by itself identify a law. Test a proposed counterexample against every

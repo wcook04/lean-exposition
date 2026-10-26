@@ -154,8 +154,8 @@
     "support.zero_candidate_descent",
     "support.zero_curvature"
   ],
-  "content_sha256": "6ef55c7e96523a4d0d7757d7d17afd69b9b199189b6efbc2167c1a0e54ab05e4",
-  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
+  "content_sha256": "93145ef5687bb57439b6b2cb17b3f040069f7144f8a92e8bed7d3d18237af961",
+  "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
   "passages": [
     {
       "anchor": "opening",
@@ -242,7 +242,7 @@
       ],
       "evidence_class": "example",
       "rationale": "An admissible nonminimizing piecewise-linear candidate explains Stieltjes increments and relative support. Constant positive and densely atomic examples distinguish support from pointwise positivity and density. No minimizer conclusion is applied to these candidates.",
-      "text_sha256": "e25cf71e42eba0568f8586b6b8c26cfc266de5b6ae92fe689b5cc3f72ea68830",
+      "text_sha256": "c7460e68207cc87a353780b9de6ffc8daa77c7e9a2ab20a9220d63b456d4b2c2",
       "treatments": [
         {
           "claim_id": "support.stieltjes_measure",
@@ -276,7 +276,7 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Probability-density averaging, value response and controlled state arrive in sequence. Fixed-control convexity and Lipschitz bounds are derived; a forward step explains feedback, and unequal-time variances distinguish state from remaining noise. Analytic moment facts remain explicit imports.",
-      "text_sha256": "8ff9561e7fad399a6f1f9d9f5fc8544e8bf9b88185fd5d636cd26f50e526cefa"
+      "text_sha256": "70739219f3bbf6f7f37cb0944429d2351a363169422b556907ccfddd9f26fab0"
     },
     {
       "anchor": "full-support-statement",
@@ -470,7 +470,7 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Initial, empty-support and terminal cases remain separate. The initial argument compares an increasing slope with equal-height endpoints; the terminal proof rearranges convex chords and reaches a contradiction at finite time, without a derivative at one.",
-      "text_sha256": "5d1294edb6a4bd0713f05689cce3028d94f3da5e1434fd42d36af4035e6c55ca"
+      "text_sha256": "6e4bbdebb9d805b6086836080e63c9d694241a68b1444447d1037734fcc2265e"
     },
     {
       "anchor": "changed-cases",
@@ -481,7 +481,7 @@
       "claim_ids": [],
       "evidence_class": "example",
       "rationale": "Tilted-chord and finite-time terminal questions before the spin payoff, with answers in section 7.4. Authored tasks, not observed unassisted reader success.",
-      "text_sha256": "9d36c75c61d346616f19a1ed59b1380c1992fecc2e7719d70bd2238ed98b27d1"
+      "text_sha256": "2d4adc43759449907a227cb326077d90717684a4b59c69d37fc6a744defbd156"
     },
     {
       "anchor": "overlap-payoff",
@@ -620,7 +620,7 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Relocated explanation resets to any admissible coefficient constant and positive on an interval, without minimality. Explains the signed spatial moment polynomial and zero-expectation integration-by-parts correction. Distinguishes spatial probability density from Stieltjes measure on overlap scale. Analytic signs and boundary estimates remain sourced inputs.",
-      "text_sha256": "5e8b525eb4c9071e1e9a35c824abf8965135ba8becfda2c07f045496f26ada2a"
+      "text_sha256": "b46d5f46b0a092287a510e5bbbbb207fc257530c20732179623270ad41a837a0"
     },
     {
       "anchor": "correction-example",
@@ -682,7 +682,7 @@
       ],
       "evidence_class": "example",
       "rationale": "Answers on finite admissibility, unequal-time Gaussian response, tilted chords and terminal gaps retain their respective hypotheses. The calculus countermodel is not an SK minimizer; no human comprehension result is asserted.",
-      "text_sha256": "039a2d7e0a4af4b9b35cbd35da9d5e2aca4629ea157a28ca17b5ba11e40ebe47"
+      "text_sha256": "6c2f23732b8c5be8a5e4dd66b686b426f59c3f4a96431a96c5dbd21cb9063048"
     },
     {
       "anchor": "density-and-approximation",
@@ -732,7 +732,7 @@
         "scalar.smooth_positive_density"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Cites the separate smooth-density conclusion, including strict positivity only for 0<t<1, and routes its additional argument to Long Reasoning Record §§5.1–5.2. This short outlook supplies neither that proof nor an approximation theorem.",
+      "rationale": "Cites the separate smooth-density conclusion, including strict positivity only for 0<t<1, and routes its additional argument to Long Reasoning Record §§9.1–9.2. This short outlook supplies neither that proof nor an approximation theorem.",
       "text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977",
       "treatments": [
         {
@@ -989,7 +989,7 @@
       ],
       "evidence_class": "context",
       "rationale": "Separates conditional formal support/moments, scalar value/finite-Gaussian scope, and the external overlap, density and circuit results. Comparator/research-v2 remain unknown, with evidence routed to long §11. No new formal replay, independent analytic acceptance or human comprehension study is claimed.",
-      "text_sha256": "e545904e397efed3cbbfa00474576f3fa92a84dd597c879375ea50f4540f048d"
+      "text_sha256": "f5d10d47f1c12e5f489e02d447a31dcfcb25d1873dca43715b80123e95b18c7a"
     }
   ],
   "path": "papers/expository.md",
@@ -1007,7 +1007,8 @@
     "26 October 2026 R8 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 1416f1236affa7451984f9d0b3a64f6204202e2ea5beda0c2f9df2dbd6ed13c0). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 14bd4d766102048f9a61324a2cdcb6d94c869e597820f9cd06d92443ca2f5737). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R10 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 independent Terra audit: Applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Moved the Brownian law before its first use and checked the zero-coefficient quarter-time answer; a longer feasible-control calculation remains supplementary. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
+    "26 October 2026 independent Terra audit: Applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Moved the Brownian law before its first use and checked the zero-coefficient quarter-time answer; a longer feasible-control calculation remains supplementary. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained.",
+    "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Revised the changed-future control exercise and its answer, added terminal-proof stage cues, and checked the exact-cap countermodel in the coefficient-shape exercise. The density outlook retains its separate derivation destination. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.2",
@@ -1118,10 +1119,10 @@
   "reading_links": [
     {
       "from_anchor": "changed-case-answer",
-      "from_text_sha256": "039a2d7e0a4af4b9b35cbd35da9d5e2aca4629ea157a28ca17b5ba11e40ebe47",
+      "from_text_sha256": "6c2f23732b8c5be8a5e4dd66b686b426f59c3f4a96431a96c5dbd21cb9063048",
       "to_stage": "expository",
       "to_anchor": "changed-cases",
-      "to_text_sha256": "9d36c75c61d346616f19a1ed59b1380c1992fecc2e7719d70bd2238ed98b27d1",
+      "to_text_sha256": "2d4adc43759449907a227cb326077d90717684a4b59c69d37fc6a744defbd156",
       "kind": "answers",
       "rationale": "Answers the tilted-endpoint-chord exercise and contrasts strict with non-strict convexity. This is a standalone calculus example, not an SK moment curve or an instance of the graph lemma requiring both endpoint slopes to be at most one."
     },
@@ -1130,7 +1131,7 @@
       "from_text_sha256": "5b91d3dd7b9d919ab504f416ed036945ea0df24929a329a78615a5b0f3ead4de",
       "to_stage": "expository",
       "to_anchor": "curvature-mechanism",
-      "to_text_sha256": "5e8b525eb4c9071e1e9a35c824abf8965135ba8becfda2c07f045496f26ada2a",
+      "to_text_sha256": "b46d5f46b0a092287a510e5bbbbb207fc257530c20732179623270ad41a837a0",
       "kind": "illustrates",
       "rationale": "The elementary Gaussian correction illustrates changing the visible sign while preserving expectation through a vanishing boundary term. It supplies none of the SK-specific joint shape restrictions, rational certificate or coercive estimate."
     },

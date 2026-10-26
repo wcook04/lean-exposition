@@ -463,3 +463,70 @@ receipt consistency, scoped obligations, historical reading and new assembly;
 they do not authenticate arbitrary local JSON or supply a native Lean or
 Comparator result. This editorial revision does not change the graph's
 recorded formal outcomes or claim measured human comprehension.
+
+### R11 synthesis and subsequent Support observation, 26 October 2026
+
+Ten R11 returns reviewed edition `ef46d0e72787c1dc283733b10b433d112f97ac64`.
+Recommendations were compared with the corrected Terra edition and original
+sources. Initial reading difficulties remain distinct from source-assisted
+resolutions. These are agent reviews, not observations of human learning.
+
+R11-01–03 prompted local exposition changes: attribute the auxiliary-noise
+rule, identify the spatial derivative in the optional calculation, and
+separate terminal crossing from the contradiction with the exact cap
+$q\le1$. The polynomial $t-3t^2/4+t^3$ tests why boundedness is insufficient;
+it is a reduced calculus countermodel, not an SK moment curve. The
+changed-future question preserves the earlier Brownian state while requiring
+the value slope to be recomputed. All four gap arguments remain; the stronger
+proposed comparison between changed slopes was unnecessary.
+
+R11-04–06 clarified the expert paper's two aims, its imported matrix-dependent
+IAMP step, and fixed-word finite-size control versus an accuracy-only rate.
+The existing asymmetric heat example now has a first-use link. The synthesis
+preserves the absolute energy estimate, bounded transmitted functions,
+ordinary-word transfer, and quantum second moment needed for concentration.
+Additional shape and weak-derivative examples were checked but did not justify
+lengthening the short paper.
+
+R11-07 prompted reconstruction improvements. The long record states the
+joint-exponential weighted bounds and propagates the seed approximation on
+bounded smooth moving inputs, including adjoints. The general insertion error
+is $O(r)$; only the more accurate echo difference is divided by $r$. The finite
+calibration precedes the Fock construction. A dyadic adapted approximation
+supplies an ordinary progressive version on the common continuity event;
+formal coefficient, control, value and minimizer transports remain obligations.
+These additions explain imported interfaces, not established theorem errors.
+
+R11-08–10 shaped the architecture companion's concrete journeys, fair
+same-source comparison and stopping rule for a small stable note. The documented
+empty-support repair illustrates a corrected reading route: two finite chords
+close the main proof, while the sound exact-variation calculation and stronger
+terminal estimate remain available. Graph relations locate support; hashes
+and fresh mappings cannot establish entailment or renew semantic acceptance.
+
+The later [Support observation](../../../examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json)
+records a source-bound local Lake build and scoped v2 extraction of the
+conditional full-support root. It is a redacted observation of retained
+artifacts, not authenticated execution provenance or a complete extraction
+projection for the curated graph. Comparator and scalar Value remain pending.
+These observations do not rewrite dated unknown outcomes above or turn ordinary
+deductions into formal transport theorems.
+
+One narrow method refinement was justified: a reused approximation must retain
+the invariant input class and uniform bounds needed next. The seed induction
+requires this. Independently, on $\ell^2$, coordinate projections satisfy
+$P_jx\to0$ for fixed $x$, but $P_jU^je_0=e_j$ along the shift iteration.
+A single fixed-input application needs no stronger uniformity. Existing
+guidance already covers discriminating examples, correspondence scope and
+mathematical versus reading repairs.
+
+Applied local inputs were the transition skills at Terra checkpoint
+`52982d77dd62fb7e009938208df6c9b7c9454768`; SHA-256 identities are:
+
+| Local method | Applied input | Refined output |
+|---|---|---|
+| `source-to-graph` | `4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136` | unchanged |
+| `graph-to-long` | `dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87` | `819bf48c70b0840272b81a331a9de63a346491382d6b588805de4ef469032959` |
+| `long-to-short` | `503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8` | unchanged |
+| `record-to-expository` | `f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a` | unchanged |
+| `docs/authoring.md` | at the same checkpoint | `e925155e37e47d9cd93b8f786a50e67af0e43e5c1f7f902fc5267edb45399b6d` |

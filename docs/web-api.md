@@ -173,7 +173,10 @@ For a small first load and expansion on selection:
 Summary cards contain `ref`, `table`, `label`, available `id`/`kind`/`status`, a
 pinned detail `href`, and per-paper membership roles and direct passage counts.
 Graph map cards omit the repeated paper memberships and URLs; their table is
-the enclosing `records` key. A map's pinned `records_href` accepts repeated
+the enclosing `records` key. Node cards retain an available Lean declaration
+identity, and extraction cards retain their subject IDs. These fields let a
+compact client preserve formal axiom and proof-hole occurrences when following
+an authored theorem application. A map's pinned `records_href` accepts repeated
 `ref` parameters to fetch exact bodies. All links, selected record refs, cycle
 components, application bindings, assumptions and query scope are preserved.
 The full representation is still available by omitting `representation`.
@@ -327,9 +330,9 @@ Three maintained-paper journeys exercise different information:
    match and an authored expansion remain separate links. Density is a further
    consequence, not an extra premise of the scalar or circuit construction.
 2. `/papers/reading?paper=expository&passage=changed-cases` finds the authored
-   answer while both teaching passages retain empty claim selections. The
-   tilted-chord example is not labelled an instance of a theorem whose slope
-   hypotheses it does not satisfy.
+   answer. The question has no claim selection; the answer selects the
+   terminal-gap argument it reconstructs. The tilted-chord example is not
+   labelled an instance of a theorem whose slope hypotheses it does not satisfy.
 3. `/papers/reading?paper=expository&passage=curvature-transfer&target=long`
    offers the long calculation. Its treatment rationale distinguishes the
    analytic identity and certificate from the surrounding support argument.

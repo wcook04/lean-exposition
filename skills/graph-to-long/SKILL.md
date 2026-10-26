@@ -128,6 +128,12 @@ reading order. Keep that first response separate from the assisted reread.
    agreement forced by symmetry or a shared limit cannot select between them.
    For an approximation, name the actual residual and its error norm, and
    check that it controls the later operation, including any growing sum.
+   When the approximation is reused, check it on the family of inputs generated
+   by preceding stages. State the invariant class and uniform bound that permit
+   the substitution, including adjoints or weighted norms where the next step
+   uses them. Convergence on each fixed input, or on the initial state alone,
+   does not supply this moving-input estimate. A single application to a fixed
+   input need not establish that stronger uniformity.
    A finite calibration does not supply the general transfer or limit theorem.
    Before passing signed quantities to an expectation limit, exhibit the
    actual integrability, domination or
