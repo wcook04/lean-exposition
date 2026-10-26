@@ -1,6 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { PaperStructure, Stage } from "../src/api/types";
 import { prepareDocument, type PreparedDocument } from "../src/reader/engine";
+import { sanitizeHtml } from "../src/reader/sanitize";
 import {
   authoredRoutes,
   chainOf,
@@ -37,6 +38,8 @@ const structures: Structures = {
   short: structureFixture("short"),
   long: structureFixture("long"),
 };
+
+afterEach(() => vi.unstubAllEnvs());
 
 const docs = new Map<Stage, PreparedDocument>();
 function doc(stage: Stage): PreparedDocument {
@@ -200,6 +203,39 @@ describe("anchors", () => {
     expect(resolveBeside(long, structures.long!, "curvature")).toMatchObject({ passage: "curvature" });
   });
 
+  it("opens the near-ground section's substantive passage from its preceding bookmark", () => {
+    const long = doc("long");
+    const hit = resolveBeside(long, structures.long!, "near-ground-overlaps")!;
+    expect(hit.passage).toBe("overlap-pairs");
+    expect(sectionTitleIn(structures.long!, hit.passage!)).toBe("9.3 Near-ground configurations at a prescribed overlap");
+    // This is the same prepared part and copy transformation the Visit pane renders.
+    const body = document.createElement("div");
+    body.innerHTML = withoutIds(long.render(hit.part).html);
+    const text = body.textContent!.replace(/\s+/g, " ");
+    expect(text).toContain("Choose one minimizer supplied by the attained Parisi formula");
+    expect(text).toContain("The pointwise result also gives a simultaneous statement");
+    expect(text).toContain("neither exact arbitrary real overlaps at finite");
+    expect(text).not.toContain("The scalar Gaussian construction is not itself an algorithm");
+    expect(body.querySelectorAll("p").length).toBeGreaterThan(1);
+    expect(body.querySelectorAll(".katex-display").length).toBeGreaterThan(1);
+    expect(resolveBeside(long, structures.long!, "exact-finite-maximizers")).toMatchObject({
+      passage: "overlap-pairs", fragment: "exact-finite-maximizers",
+    });
+  });
+
+  it("associates only a directly preceding bookmark with a heading without duplicating its ID", () => {
+    for (const between of ["", "This bookmark names prose before the section.\n\n"]) {
+      const prepared = prepareDocument({
+        stage: "long", bytes: new TextEncoder().encode(`<a id="bookmark"></a>\n\n${between}## Section\n\nSection body.\n`),
+        documentPath: PATHS.long, documentPaths: PATHS,
+      });
+      expect(prepared.parts[0].headings[0].aliases.includes("bookmark")).toBe(between === "");
+      const body = document.createElement("div");
+      body.innerHTML = prepared.render(0).html;
+      expect(body.querySelectorAll('[id="bookmark"]').length).toBe(1);
+    }
+  });
+
   it("opens companion links without fragments at a real passage in every account", () => {
     for (const stage of ["long", "short", "expository"] as Stage[]) {
       const anchor = companionAnchor(structures[stage], "");
@@ -221,6 +257,35 @@ describe("anchors", () => {
     const anchor = firstPassageFor(structures.long, [claim]);
     expect(structures.long!.paper.passages.find((p) => p.anchor === anchor)!.claim_ids).toContain(claim);
     expect(firstPassageFor(structures.long, [])).toBeNull();
+  });
+});
+
+describe("native links under a deployment prefix", () => {
+  it.each(["/", "/lean-exposition-site/"])("keeps companion and copied fragment hrefs usable under %s", (base) => {
+    vi.stubEnv("BASE_URL", base);
+    const prepared = prepareDocument({
+      stage: "expository",
+      bytes: new TextEncoder().encode("[§9.3 Near-ground configurations](../long/reasoning-record.md#near-ground-overlaps)"),
+      documentPath: PATHS.expository, documentPaths: PATHS,
+    });
+    const body = document.createElement("div");
+    body.innerHTML = prepared.render(0).html;
+    const companion = body.querySelector<HTMLAnchorElement>("a[data-companion]")!;
+    const expected = `${base}read/long#near-ground-overlaps`;
+    expect(companion.getAttribute("href")).toBe(expected);
+    expect(new URL(companion.getAttribute("href")!, "https://example.org").pathname).toBe(`${base}read/long`);
+    expect(companion.dataset.fragment).toBe("near-ground-overlaps");
+    body.innerHTML = withoutIds('<a href="#near-ground-overlaps" data-in="long">§9.3</a>');
+    expect(body.querySelector("a")!.getAttribute("href")).toBe(expected);
+    expect(body.querySelector("a")!.getAttribute("data-fragment")).toBe("near-ground-overlaps");
+    body.innerHTML = sanitizeHtml([
+      `<a href="${expected}">reader</a>`, '<a href="/elsewhere/read/long">outside</a>',
+      '<a href="javascript:alert(1)">unsafe</a>', '<a href="https://example.org">external</a>',
+      '<a href="#near-ground-overlaps">fragment</a>',
+    ].join(""));
+    expect([...body.querySelectorAll("a[href]")].map((a) => a.getAttribute("href"))).toEqual([
+      expected, "https://example.org", "#near-ground-overlaps",
+    ]);
   });
 });
 

@@ -73,6 +73,18 @@ interface RenderEnv extends Env {
 }
 
 const md = new MarkdownIt({ html: true, linkify: false, typographer: true });
+// A print-only space request has no web content. Match only a whole line;
+// Markdown's code rules run first, so literal examples remain untouched.
+md.block.ruler.before("paragraph", "print_spacing", (state, startLine, _endLine, silent) => {
+  if (state.sCount[startLine] - state.blkIndent >= 4) return false;
+  const line = state.src.slice(state.bMarks[startLine] + state.tShift[startLine], state.eMarks[startLine]);
+  const command = /^\\Needspace[ \t]*(?=\{)/.exec(line);
+  if (!command) return false;
+  const argument = braceGroup(line, command[0].length);
+  if (!argument || line.slice(argument.end).trim()) return false;
+  if (!silent) state.line = startLine + 1;
+  return true;
+}, { alt: ["paragraph"] });
 // Pandoc's `smart` extension converts quotes, dashes and ellipses but not
 // (c), (r), (tm) or +-. Keep markdown-it's smartquotes, replace the rest.
 md.disable("replacements");
@@ -536,7 +548,17 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       const gh = githubSlug(title);
       if (gh !== id && registry.claimAlias(gh, index)) aliases.push(gh);
       t.meta = { ...(t.meta ?? {}), aliases };
-      part.headings.push({ id, level: Number(t.tag.slice(1)), title, aliases });
+      // A bookmark-only paragraph immediately before a heading names that
+      // section too. Keep the existing bookmark in place; only its association
+      // is added here, so comparison panes can find the section's passage.
+      const before = st.tokens[i - 1]?.type === "paragraph_close"
+        && st.tokens[i - 2]?.type === "inline" && st.tokens[i - 3]?.type === "paragraph_open"
+        ? st.tokens[i - 2].content : "";
+      const bookmark = /<a id="([^"]+)" class="anchor" aria-hidden="true"><\/a>/g;
+      const explicit = before.replace(bookmark, "").trim() === ""
+        ? [...before.matchAll(bookmark)].map((match) => match[1]).filter((anchor) => registry.partOf(anchor) === index)
+        : [];
+      part.headings.push({ id, level: Number(t.tag.slice(1)), title, aliases: [...aliases, ...explicit] });
       part.anchors.push(id, ...aliases);
     }
   });

@@ -44,6 +44,12 @@ function dirOf(path: string): string {
   return i < 0 ? "" : path.slice(0, i + 1);
 }
 
+/** A native reader link, including the configured deployment prefix. */
+export function readerHref(stage: string, fragment = ""): string {
+  const base = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
+  return `${base}/read/${encodeURIComponent(stage)}` + (fragment ? `#${encodeURIComponent(fragment)}` : "");
+}
+
 export function classifyHref(
   href: string,
   documentPath: string,
@@ -71,7 +77,7 @@ export function classifyHref(
   if (joined === null) return { kind: "unresolved", original: raw, reason: "outside-root" };
   for (const [stage, declared] of Object.entries(documentPaths)) {
     if (declared === joined) {
-      const target = `/read/${encodeURIComponent(stage)}` + (fragment ? `#${encodeURIComponent(fragment)}` : "");
+      const target = readerHref(stage, fragment);
       return { kind: "companion", stage, fragment, href: target };
     }
   }
