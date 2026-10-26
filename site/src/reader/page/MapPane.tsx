@@ -1,14 +1,16 @@
-// The argument map beside the paper, on wide screens. It follows what the
-// reader is reading: as a passage settles under the reading line, the map
-// opens exactly the branches that draw that passage's records from the main
-// result, folds the rest, frames them and outlines them in amber. The reader
-// stays in charge: panning, zooming or unfolding pauses following, and
-// choosing a card scrolls the text to the first passage linked to it.
+// The argument map beside the paper, on wide screens. It opens with every branch
+// drawn: records this paper discusses at full strength, the rest faded. It follows
+// what the reader is reading: as a passage settles under the reading line, the map
+// frames that passage's records and outlines them in amber. The reader stays in
+// charge: panning, zooming or unfolding pauses following, and choosing a card
+// scrolls the text to the first passage linked to it, or, for a record this paper
+// does not discuss, says which paper does.
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
+import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
@@ -75,6 +77,12 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
   const recordsKey = records.join("|");
   const drawable = useMemo(() => records.filter((id) => reachOf(goal).has(id)), [records, reachOf, goal]);
   const litIds = useMemo(() => (drawable.length ? new Set(drawable) : null), [drawable]);
+  // The records this paper links a passage to: everything else on the map is drawn faded.
+  const coverage = useMemo(() => {
+    const ids = new Set<string>();
+    for (const p of structures[stage]?.paper.passages ?? []) for (const id of [...p.claim_ids, ...p.assumption_ids]) ids.add(id);
+    return ids;
+  }, [structures, stage]);
   const overlayOpen = !!overlay;
   const insets: Insets = useMemo(() => ({ top: 20, left: 20, bottom: 20, right: overlayOpen ? INSPECTOR_W + 20 : 20 }), [overlayOpen]);
 
@@ -88,7 +96,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
       setFadeTo(want);
       return;
     }
-    treeRef.current?.focusIds(records, { exclusive: true });
+    treeRef.current?.focusIds(records);
     // Refocus when the passage, the main result or following changes (the map re-centres itself when its room changes).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recordsKey, goal, following, fadeTo]);
@@ -104,6 +112,21 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
     );
     return () => window.clearTimeout(t);
   }, [fadeTo, reduced]);
+
+  // Every branch is drawn from the start, so following only frames; it never folds.
+  const recordsRef = useRef(records);
+  recordsRef.current = records;
+  useEffect(() => {
+    const open = window.setTimeout(() => treeRef.current?.expandAll(), 0);
+    // Then frame the passage being read, once the whole map is laid out.
+    const frame = window.setTimeout(() => {
+      if (followingRef.current && recordsRef.current.length) treeRef.current?.focusIds(recordsRef.current);
+    }, 80);
+    return () => {
+      window.clearTimeout(open);
+      window.clearTimeout(frame);
+    };
+  }, [goal]);
 
   const onUserMove = useCallback(() => {
     if (!followingRef.current) return;
@@ -133,6 +156,12 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
 
   const mapHref = routeHref({ view: "map", goal, node: drawable[0] });
   const noticeLabel = notice ? (graph.nodes.get(notice)?.label ?? notice) : "";
+  // Where a record this paper does not discuss is read instead.
+  const elsewhere = notice
+    ? STAGE_ORDER.filter((s) => s !== stage)
+        .map((s) => ({ stage: s, anchor: firstPassageFor(structures[s], [notice]) }))
+        .filter((r): r is { stage: Stage; anchor: string } => !!r.anchor)
+    : [];
 
   return (
     <section className="map-pane" aria-label="Argument map beside the text" inert={inert ? true : undefined}>
@@ -162,10 +191,26 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
         </button>
       </header>
       <div className="map-pane__body">
+      <p className="map-pane__legend">
+        <span className="map-pane__swatch map-pane__swatch--lit" aria-hidden="true" />
+        In the passage you are reading
+        <span className="map-pane__swatch map-pane__swatch--faded" aria-hidden="true" />
+        Not discussed in the {PAPER_NAMES[stage].short.toLowerCase()}
+      </p>
       {notice && (
         <p className="map-pane__notice" role="status">
-          <span>No passage in this paper is linked to {noticeLabel}.</span>
-          <a href={routeHref({ view: "map", goal, node: notice })}>Open in the full map</a>
+          <span>
+            <strong>{noticeLabel}</strong>: this paper does not discuss it.
+          </span>
+          {elsewhere.map((r) => (
+            <a key={r.stage} href={routeHref({ view: "read", stage: r.stage, anchor: r.anchor })}>
+              Read it in the {PAPER_NAMES[r.stage].short.toLowerCase()}
+            </a>
+          ))}
+          <a href={routeHref({ view: "map", goal, node: notice })}>Open it in the full map</a>
+          <button type="button" className="map-pane__dismiss" aria-label="Dismiss" onClick={() => setNotice(null)}>
+            ×
+          </button>
         </p>
       )}
       <div className={`map-pane__canvas${fadeTo ? " is-fading" : ""}`}>
@@ -178,6 +223,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
           persist={false}
           mode="steps"
           litIds={litIds}
+          coverage={coverage}
           rootContent={<TheoremBody goal={goal} />}
           rootExcerpt={<StatementExcerpt goal={goal} />}
           onSelect={onSelect}

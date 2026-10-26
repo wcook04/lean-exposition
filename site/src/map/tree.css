@@ -1413,6 +1413,18 @@
   outline-offset: 1px;
 }
 
+/* Beside a paper: a record that paper never discusses is drawn faded, so the records it does
+   discuss stand out; it still opens, and says which paper discusses it. */
+.card.is-elsewhere:not(.is-selected):not(.is-hover) {
+  /* A filter, since the engine writes each card's opacity itself. */
+  filter: saturate(0.3) opacity(0.45);
+}
+
+.card.is-elsewhere .card__title,
+.card.is-elsewhere .card__ctitle {
+  font-style: italic;
+}
+
 .links-passage > g,
 .heads-passage .head--lit {
   animation: passage-in var(--t-state) var(--ease-out) both;

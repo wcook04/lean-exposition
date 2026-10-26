@@ -150,22 +150,34 @@ describe("MapPane", async () => {
   }
   const toggle = () => container.querySelector<HTMLButtonElement>(".map-pane__follow")!;
 
-  it("follows each passage, pauses when the reader moves the map, and refocuses when turned back on", () => {
-    const opened = () => [...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!).sort();
-    const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))].sort();
+  it("follows each passage without folding, pauses when the reader moves the map, and refocuses when turned back on", () => {
+    const opened = () => new Set([...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!));
+    const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))];
+    const holds = (anchor: string) => needed(anchor).every((id) => opened().has(id));
     show("contact-and-gap");
     expect(toggle().getAttribute("aria-pressed")).toBe("true");
-    expect(opened()).toEqual(needed("contact-and-gap"));
+    expect(holds("contact-and-gap")).toBe(true);
     // A wheel over the map is the reader taking control.
     act(() => void container.querySelector(".map-pane .tree")!.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
     expect(toggle().getAttribute("aria-pressed")).toBe("false");
     expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
-    // Paused: the next passage does not move the map.
+    // Paused: the next passage changes nothing on the map.
+    const before = opened();
     show("endpoints");
-    expect(opened()).toEqual(needed("contact-and-gap"));
+    expect(opened()).toEqual(before);
     act(() => toggle().click());
     expect(toggle().getAttribute("aria-pressed")).toBe("true");
-    expect(opened()).toEqual(needed("endpoints"));
+    // Following again opens what the passage needs and keeps what was open.
+    expect(holds("endpoints")).toBe(true);
+    for (const id of before) expect(opened().has(id)).toBe(true);
+  });
+
+  it("fades records the paper does not discuss, and names the paper that does when one is chosen", () => {
+    show("contact-and-gap");
+    const covered = new Set(structures.expository.paper.passages.flatMap((p) => [...p.claim_ids, ...p.assumption_ids]));
+    const cards = [...container.querySelectorAll<HTMLElement>(".card:not(.card--root)")];
+    expect(cards.length).toBeGreaterThan(0);
+    for (const el of cards) expect(el.classList.contains("is-elsewhere")).toBe(!covered.has(el.dataset.record!));
   });
 
   it("says when a passage has no linked record", () => {
