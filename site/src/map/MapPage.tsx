@@ -15,7 +15,7 @@ import { PAPER_NAMES, statedIn } from "../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "./ArgumentTree";
 import { ArgumentOutline } from "./ArgumentOutline";
 import { pathFromGoal, reach, scopedGraph, usesOf } from "./treeModel";
-import { TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
+import { StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
 import { RecordPanel } from "../panels/RecordPanel";
 import { EdgePanel } from "../panels/EdgePanel";
 import { usePresence } from "../panels/presence";
@@ -479,6 +479,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             insets={insets}
             intro={intro}
             rootContent={<TheoremBody goal={goal} />}
+            rootExcerpt={<StatementExcerpt goal={goal} />}
             onSelect={(id) => select(id, id ?? undefined)}
             onTrace={(id) => {
               if (route.node === id && route.trace === "rests") go({ trace: "uses" });

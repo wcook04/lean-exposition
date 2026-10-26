@@ -9,9 +9,11 @@ holds the rules every page follows. The values live in
 
 ## Principles
 
-1. **Reading size is fixed.** Text a reader must read never renders below 13px on
-   screen, and a record's title never below 14px. When there is more than fits,
+1. **Reading size is fixed.** Prose a reader must read never renders below 13px on
+   screen, and a card's title never below 14px. When there is more than fits,
    change the representation (a mark, a count, a list), never shrink the prose.
+   The titles on the map's zoomed-out tiles are labels: they shrink to 10px
+   before they are cut, and a tile with room for its title never stands empty.
 2. **One channel per meaning.** Each visual variable answers one question:
 
    | Question | Channel |
@@ -76,13 +78,23 @@ changes representation with the screen scale `k`:
 | Scale | Representation | Shows |
 | --- | --- | --- |
 | `k ≥ 0.8` | **Card** | Kind word, source square and name, title, inputs control, account mark |
-| `0.5 ≤ k < 0.8` | **Compact** | Title only, at a constant 13px on screen, source square |
-| `k < 0.5` | **Mark** | A tile in its source colour, no text |
+| `0.5 ≤ k < 0.8` | **Compact** | Title, up to 13px on screen, source square; the goal's plate also gives the theorem's first sentence |
+| `k < 0.5` | **Mark** | A tile in its source colour, with its title whenever the tile can hold it at 10px or more |
 
 In compact form each tile shows its title, centred, in as many lines as the
-tile's height on screen holds. In mark form the goal, the selected record and
-the hovered record carry labels drawn at screen size, so the reader always
-knows where they are.
+tile's height on screen holds. The goal's plate sets its title at up to 24px,
+breaking between words only, and below it the theorem's first sentence, 360px
+wide at 13px, whenever both fit: the plate never stands empty. A mark keeps its
+title for as long as its own size on screen allows, so the plate keeps its title
+long after the small tiles lose theirs; a title too long for a mark is cut after
+a whole word, and only while at least half of it stays. The goal, the selected
+record and the hovered record carry labels drawn at screen size when their marks
+are too small to name them, so the reader always knows where they are.
+
+**Navigation.** Scrolling up or down, with a wheel or two fingers on a trackpad,
+zooms about the pointer, as a pinch does; a sideways swipe pans; dragging pans
+from anywhere on the map, cards included. A press that moves less than 5px is a
+click. In the map beside the paper, scrolling moves along the route instead.
 **Steps** is the reading mode: it opens at `k = 1` and keeps the opened record
 in view. **Overview** fits the whole goal and uses marks. Opening a mark returns
 to Steps around it. When Steps cannot fit every input of the opened record,
@@ -147,29 +159,32 @@ Records that have inputs of their own are never copied.
 - Selected: a 2px amber outline outside the border. The title does not move.
 - Records outside the current lit route recede: their borders and fills fade
   toward the ground; their text keeps its contrast.
-- **Text is cut short only when it cannot fit.** A compact tile first sets its title smaller, down
-  to 11px on screen (a Lean name to 10px, breaking only after its dots and
+- **Text is cut short only when it cannot fit.** A tile first sets its title smaller, down
+  to 10px on screen (a Lean name to 9.5px, breaking only after its dots and
   underscores, or in a tile also between the words of a camel-case name), before
   it shortens it. A box that has room shows the
   whole text; a box that grows with its content never shortens it. An ellipsis
   appears only when the text needs more room than the box can give at that
-  moment, and the full text is then one hover or focus away. Cards, tags and
-  source names grow with their text; a compact tile shows as many lines as its
-  height on screen holds.
+  moment, always after a whole word, and the full text is then one hover or
+  focus away. Cards, tags and source names grow with their text; a tile shows as
+  many lines as its height on screen holds. Whether a tile has room is judged
+  from its own size on screen, never from the zoom level alone.
 - **Resting the pointer on a card draws its whole lineage.** After about 300ms
   on a card (not while dragging and not while the map is moving), every record
   below it, down to the records with no recorded inputs, is drawn: records
   already on the map keep their places and the lines among them light in their
   type colours; records not yet drawn are placed where opening their branches
   would put them, at half strength, without a shadow, and cannot take keyboard
-  focus. The card under the pointer stays where it is on screen. The lineage
-  stays drawn while the pointer is on that card or on any card of the lineage,
-  and folds back about 200ms after it leaves them. Clicking the card, or a card
-  drawn at half strength, keeps the lineage open and selects the clicked record.
-  Keyboard focus and touch do not draw a lineage. If the pointer is still resting
-  at 900ms and part of the lineage lies outside the canvas, the camera zooms out
-  about the pointer until the lineage fits (no lower than k = 0.5) and returns
-  when the lineage folds.
+  focus. The card under the pointer stays where it is on screen, and the camera
+  does not otherwise move. The lineage stays drawn while the pointer is on that
+  card or on any card of the lineage, and folds back about 200ms after it leaves
+  them. Keyboard focus and touch do not draw a lineage.
+- **Clicking a card opens its whole lineage and frames it.** The card is
+  selected, everything below it unfolds at full strength, and the camera zooms
+  out or in and pans until the card and all of its lineage fill the canvas the
+  inspector leaves. Clicking another card opens its lineage the same way. A click
+  on the empty map, or closing the selection, puts back the unfolding and camera
+  from before the first card was opened. The inputs control still opens one level.
 
 ### The map header
 
@@ -251,8 +266,8 @@ to whatever opened it.
 | Inspector, popover, sheet | Fade and at most 8px travel; content present at once | `--t-reveal` 180ms |
 | Account or treatment switch | Crossfade of the changed text only | `--t-state` 160ms |
 | Unfold or fold | Staged so that two maps never show through each other: leaving records and lines fade where they are within 120ms; the records that stay and the camera move together; arriving records fade in at their final places over the last part of the move | `--t-unfold` 360ms |
-| Drawing or folding a card's lineage (pointer resting on it) | As an unfold or fold, with the card under the pointer held still on screen; added records end at half strength | `--t-unfold` 360ms |
-| Widening for a lineage (pointer still resting at 900ms, part of the lineage outside the canvas) | The camera zooms out about the pointer, only as far as the lineage needs and not below k = 0.5; it returns when the lineage folds, unless the reader moved the map | 450–700ms |
+| Drawing or folding a card's lineage (pointer resting on it) | As an unfold or fold, with the card under the pointer held still on screen; added records end at half strength. The camera does not move | `--t-unfold` 360ms |
+| Opening a card (a click) | Its whole lineage unfolds at full strength, and the camera frames the card with all of it in the canvas the inspector leaves, zooming out or in as far as that needs; a click on the empty map, or closing the selection, puts back the unfolding and camera from before the first card was opened | As an unfold or fold, with the camera on a smooth-zoom path |
 | Pointing at a passage mark or an inspector row on the map page (after 180ms) | Opens the routes to that passage's records and frames them with the passage outline; another mark moves straight to its records; 250ms after the pointer leaves, the unfolding and camera from before come back, unless the reader moved the map or opened something | As an unfold or fold |
 | Following a passage (map beside the paper) | As an unfold or fold, with the camera on a smooth-zoom path whose time grows with its travel | 450–900ms |
 | Camera correction | Only as far as needed; never after an unrelated reflow | `--t-camera` 320ms |

@@ -23,6 +23,7 @@ vi.mock("../src/map/MapKey", () => ({
 }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },
