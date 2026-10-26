@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
           copyFileSync(resolve(out, "index.html"), resolve(out, route, "index.html"));
         }
         copyFileSync(resolve(out, "index.html"), resolve(out, "404.html"));
+        copyFileSync(resolve("../LICENSE"), resolve(out, "LICENSE.txt"));
+        copyFileSync(resolve("../NOTICE"), resolve(out, "NOTICE.txt"));
+        copyFileSync(resolve("THIRD_PARTY_NOTICES.md"), resolve(out, "THIRD_PARTY_NOTICES.md"));
         writeFileSync(resolve(out, ".nojekyll"), "");
       },
     }] : [])],
