@@ -2613,7 +2613,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               title={clone ? node.label : undefined}
               onClick={(event) => {
                 if ((event.target as Element).closest?.(".card__inputs, .card__usedby, .tag, a, .card__body")) return;
-                if (repRef.current === "mark") openMark(id, lid);
+                // A mark with nothing below it opens at reading size; any other card opens its lineage.
+                const below = !compact && id !== goal && lineageOf(graph, id, within).size > 0;
+                if (repRef.current === "mark" && !below) openMark(id, lid);
                 else {
                   if (compact) commitPeek(lid);
                   else openLineage(lid);

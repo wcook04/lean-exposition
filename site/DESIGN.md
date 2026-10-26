@@ -96,8 +96,8 @@ zooms about the pointer, as a pinch does; a sideways swipe pans; dragging pans
 from anywhere on the map, cards included. A press that moves less than 5px is a
 click. In the map beside the paper, scrolling moves along the route instead.
 **Steps** is the reading mode: it opens at `k = 1` and keeps the opened record
-in view. **Overview** fits the whole goal and uses marks. Opening a mark returns
-to Steps around it. When Steps cannot fit every input of the opened record,
+in view. **Overview** fits the whole goal and uses marks. Clicking a mark opens
+its lineage like any card; a mark with nothing below it returns to Steps around it. When Steps cannot fit every input of the opened record,
 chips at the canvas edge say how many records lie beyond it in each direction,
 and clicking one brings them in.
 
