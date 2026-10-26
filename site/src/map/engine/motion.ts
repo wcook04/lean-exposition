@@ -1,9 +1,13 @@
 // One clock for every moving part of the map: cards, connectors and camera
-// share a duration and the --ease-move curve, cubic-bezier(0.65, 0, 0.35, 1).
+// share a duration (--t-unfold) and the --ease-move curve,
+// cubic-bezier(0.45, 0, 0.2, 1). A camera correction on its own uses --t-camera.
 
 import type { Rect } from "./types";
 
-export const MOVE_MS = 480;
+export const MOVE_MS = 360;
+export const CAMERA_MS = 320;
+/** A whole route lights within this budget (--t-trace). */
+export const TRACE_MS = 520;
 
 /** A CSS cubic-bezier timing function as a function of progress. */
 export function cubicBezier(x1: number, y1: number, x2: number, y2: number): (t: number) => number {
@@ -41,7 +45,7 @@ export function cubicBezier(x1: number, y1: number, x2: number, y2: number): (t:
   };
 }
 
-export const easeMove = cubicBezier(0.65, 0, 0.35, 1);
+export const easeMove = cubicBezier(0.45, 0, 0.2, 1);
 export const easeOut = cubicBezier(0.16, 1, 0.3, 1);
 
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;

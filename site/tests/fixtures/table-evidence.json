@@ -1,0 +1,3798 @@
+[
+ {
+  "command": [],
+  "details": "GradientSquareIntegral:84–90 takes hreg and hmom; ContactAssembly:65–66 supplies sourceStripRegularity W gamma and uses the same hX. All W,gamma,X are unchanged. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-13-source-regularity",
+   "scalar-r2-13-source-curvature-moment",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_minimizer_curvature_moment",
+   "scalar.source_strip_regularity"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:20 supplies hmin.gradient_moment_contact hX. The curvature helper consumes this same all-interior-time contact identity. Both claims retain minimizer and diffusion premises. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-002",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-minimizer-contact",
+   "scalar-r2-13-source-curvature-moment",
+   "scalar-r2-26-source-formal-targets"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_minimizer_curvature_moment",
+   "scalar.formal_contact_input"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "WeakGuerra:129–142 explicitly passes expectedMaximum_le_parisi through groundStateSequence_tendsto. Neither result introduces a minimizer or diffusion premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-003",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-13-source-guerra-upper",
+   "scalar-r2-13-source-spin-limit"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_ground_state_upper",
+   "scalar.source_spin_sequence_limit"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "IntegralPrimitiveTerminal:38 takes hreg; ContactAssembly:40–42 supplies sourceStripRegularity W gamma. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-004",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-13-source-terminal-assembly",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_terminal_parisi_assembly",
+   "scalar.source_strip_regularity"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "IntegralPrimitiveTerminal:39 takes hmom; MainConclusions:13–23 supplies minimizer contact to the assembly, preserving the same model data. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-005",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-13-source-terminal-assembly",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-26-source-minimizer-contact"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_terminal_parisi_assembly",
+   "scalar.formal_contact_input"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "IntegralPrimitiveTerminal:40 takes hamom; ContactAssembly:42,55,70 derives it by hX.curvature_unit_moment_of_contact hreg hmom. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-006",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-13-source-terminal-assembly",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-curvature-moment"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_terminal_parisi_assembly",
+   "scalar.source_minimizer_curvature_moment"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:65,67 unpacks Kv,Lv,K,L,D,Lu,La and the proof fields from sourceStripRegularity W gamma at T. Lines68–69 pass the resulting GradientStrip and actual bounds into the fixed-strip theorem. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-007",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-regularity",
+   "scalar-r2-26-source-fixed-strip"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_fixed_strip_application",
+   "scalar.source_strip_regularity"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:66 derives hamom and line69 restricts its all-Ico-0-1 conclusion to Icc 0 T using T<1. No unit-moment premise is added to the caller. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-008",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-curvature-moment",
+   "scalar-r2-26-source-fixed-strip"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_fixed_strip_application",
+   "scalar.source_minimizer_curvature_moment"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Navigate to the generic fixed-strip implication and its explicitly scoped analytic premises. This is a cites edge because supports would incorrectly union those supplied local premises into the stronger minimizer branch; the two preceding support warrants record their concrete supply. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-009",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-26-source-fixed-strip"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_fixed_strip_application",
+   "scalar.conditional_fixed_strip"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:29–34 takes eventual positivity and the fixed-T mesh limit. normalizer_pos_iff:15–19 converts positivity to raw-moment positivity; eventually N>0 supplies the remaining grid premise of LiteralLower:14–27. RoundingSpin:63–120 constructs Boolean rounding and normalized orthonormal predictable columns; ConstantFatou:48–134 uses their empirical limit and actual finite-spin comparison. GaussianTranspose:119–140 supplies predictableDirection K n f and rowSpin K n F with measurability/unitOrZero and iid_gaussian_columns_law. The generic lower comparison is not assumed by the target; deeper interpolation lemmas are outside this reading audit. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-010",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-literal-lower",
+   "scalar-r2-13-source-rounding-spin",
+   "scalar-r2-13-source-constant-fatou",
+   "scalar-r2-13-source-empirical-limit",
+   "scalar-r2-13-source-gaussian-transpose"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_strip_value_lower",
+   "scalar.source_fixed_strip_application"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:44–47 uses the cutoff limit from terminal assembly and the inequality at every eventual 0<T<1 to obtain parisi W gamma≤groundStateValue. The order is first N→∞ on a fixed strip, then T→1−. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-011",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_ground_state_identity_with_diffusion",
+   "scalar.source_strip_value_lower"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:41–42 receives the endpoint Tendsto at parisi W gamma from parisi_value_assembly. This is the endpoint used for the lower half of the two-inequality proof, before substituting the ground-state value. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-012",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-terminal-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_ground_state_identity_with_diffusion",
+   "scalar.source_terminal_parisi_assembly"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:43 combines the general groundStateValue_le_parisi upper bound with the reverse bound using le_antisymm. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-013",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-guerra-upper"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_ground_state_identity_with_diffusion",
+   "scalar.source_ground_state_upper"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:13–15 invokes scalar_value_of_contact; ContactAssembly:56 inserts SKValueG.groundStateSequence_tendsto as the first conjunct of ScalarValueConclusion. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-014",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-spin-limit"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_scalar_clause",
+   "scalar.source_spin_sequence_limit"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:54–59 inserts the terminal martingale, almost-sure and L² assertions, and rewrites its three Parisi formulas after value identification. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-015",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-terminal-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_scalar_clause",
+   "scalar.source_terminal_parisi_assembly"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:57–59 explicitly rewrites each value formula via hX.groundState_eq_parisi_of_contact hmom. The same minimizer supplies hmom at MainConclusions:15. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-016",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_scalar_clause",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:13–15 invokes scalar_value_of_contact; ContactAssembly:56 inserts SKValueG.groundStateSequence_tendsto as the first conjunct of ScalarValueConclusion. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-017",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-spin-limit"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_scalar_target",
+   "scalar.source_spin_sequence_limit"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:54–59 inserts the terminal martingale, almost-sure and L² assertions, and rewrites its three Parisi formulas after value identification. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-018",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-terminal-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_scalar_target",
+   "scalar.source_terminal_parisi_assembly"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:57–59 explicitly rewrites each value formula via hX.groundState_eq_parisi_of_contact hmom. The same minimizer supplies hmom at MainConclusions:15. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-019",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_scalar_target",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:17–20 invokes finite_gaussian_of_contact, whose first two returned conjuncts at ContactAssembly:71 are exactly the supplied fixed-strip hp,hl. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-020",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.source_fixed_strip_application"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:70 obtains hend from parisi_value_assembly, giving the cutoff limit; line72 rewrites its endpoint to groundStateValue. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-021",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-terminal-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.source_terminal_parisi_assembly"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:72 rewrites the Parisi endpoint using the internally proved groundState_eq_parisi_of_contact. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-022",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:17–20 invokes finite_gaussian_of_contact, whose first two returned conjuncts at ContactAssembly:71 are exactly the supplied fixed-strip hp,hl. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-023",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_gaussian_target",
+   "scalar.source_fixed_strip_application"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:70 obtains hend from parisi_value_assembly, giving the cutoff limit; line72 rewrites its endpoint to groundStateValue. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-terminal-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_gaussian_target",
+   "scalar.source_terminal_parisi_assembly"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "ContactAssembly:72 rewrites the Parisi endpoint using the internally proved groundState_eq_parisi_of_contact. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-025",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_gaussian_target",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:25–27 inserts diffusionProcess_isDiffusion W gamma into the minimizer theorem. The supplied X is locally constructed for the same W,gamma. This support node has no minimizer or external diffusion assumption, so the branch retains only its own IsMinimizer premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-026",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-13-source-diffusion-existence"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_parisi_clause",
+   "scalar.source_diffusion_exists"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions applies the conditional ground-state identity to the constructed diffusion; the minimizer premise stays free. This is an authored source correspondence, not elaborated Lean application data or proof acceptance. Supplier and conditional proof ingredients are retained by a scoped application; its binding text is authored, not checked substitution.",
+  "id": "R2-13-SR-027",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-diffusion-existence"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_parisi_clause",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:25–27 inserts diffusionProcess_isDiffusion W gamma into the minimizer theorem. The supplied X is locally constructed for the same W,gamma. This support node has no minimizer or external diffusion assumption, so the branch retains only its own IsMinimizer premise. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-028",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-13-source-diffusion-existence"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_parisi_target",
+   "scalar.source_diffusion_exists"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "MainConclusions:21–27 first applies groundState_eq_parisi_of_contact with minimizer contact, then instantiates X with diffusionProcess W gamma and its proved diffusion property. This edge is citation navigation: a direct supports edge to the auxiliary supplied-diffusion claim would incorrectly make X an external caller premise in the current union-only graph closure. The local witness discharge is recorded here; no discharge inference is attributed to the graph engine. Source reading supports this curated relation; it is not an elaborated Lean dependency, a kernel receipt, or independent semantic acceptance.",
+  "id": "R2-13-SR-029",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-13-source-diffusion-existence"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.lean_parisi_target",
+   "scalar.source_ground_state_identity_with_diffusion"
+  ],
+  "tool": "Authored source-located warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Citation navigation distinguishes the manuscript's smoothly extended variables from the totalized Lean quotients. FiniteDensity:124–166 constructs the shape/score/ratio/Lipschitz/derivative hypotheses; line167 calls GaussianLogDensity.gaussian_shape_coercivity. GaussianLogDensity:135–160 removes the positive-half-line flux and reflects. Certificate:168 instead assumes hB at every real x. BackwardShape gives r(0)=0, v(0)>0, hence totalized certB(0)=0 violates hB under the raw substitution. The ordinary tanh witness has raw b(0)-2v(0)=-2, while its smooth extension gives zero. No supports/formalizes edge is added between the two differently represented statements; no runtime extraction is claimed.",
+  "id": "R2-13-SUP-001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support-r2-13-finite-density",
+   "full_support_gaussian_log_density",
+   "support_lean_certificate"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.integrated_coercivity",
+   "support.source_finite_density_coercivity"
+  ],
+  "tool": "Authored source-located correspondence; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The spatial derivative bounds make gamma*Phi_x Lipschitz on each compact strip, and |Phi_x|<=1 bounds the drift by the integrable gamma. The same stability bounds give common-driver Gronwall convergence and uniqueness. Source: regularity.tex:214–237; Diffusion/Uniqueness.lean:13–63. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.diffusion",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Evenness supplies the zero initial gradient; compact-strip derivative convergence and boundedness justify the approximated Ito formula and its limit. Source: regularity.tex:228–237. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E002",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_identity",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The stochastic integral is evaluated along the existing associated diffusion, and approximation uses the same Brownian driver. Its isometry gives q'=E Phi_xx^2. Source: regularity.tex:189–238. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E003",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_identity",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Subtracting the two PDEs uses their compact-strip approximations; uniform gradient convergence and |u|<=1 justify the averaged-drift limit and L1 dominated convergence. Source: variation.tex:26–79. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E004",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.first_variation",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The averaged-gradient auxiliary diffusion converges to the controlled diffusion of the unperturbed gamma, fixing the q appearing in the directional formula. Source: variation.tex:35–76. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E005",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.first_variation",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The q used by the variation is the bounded continuous second moment of the same gamma diffusion; its bound permits integration against arbitrary integrable eta. Source: variation.tex:68–78. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E006",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.first_variation",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Apply the one-sided formula to an added atom and to minus the cumulative finite restricted measure. Minimality gives the required two opposite integral inequalities. Source: variation.tex:102–117. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E007",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.contact",
+   "support.first_variation"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The cumulative convention identifies atom addition and compact mass removal with admissible order-parameter directions; local finiteness is the Fubini bound, including any initial atom. Source: variation.tex:103–117. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E008",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.contact",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Bounded q makes G finite and continuous and justifies compact-mass Fubini; continuity extends almost-everywhere vanishing to the relative support. Source: variation.tex:109–120. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E009",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.contact",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "G>=0 and G=0 on support make every interior support point a local minimum, and G(0)=0 is used only if zero belongs to support. Source: variation.tex:119–127. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E010",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.contact_derivatives",
+   "support.contact"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "C1 regularity of q yields G'=s-q and G''=1-q'; q(0)=0 supplies the one-sided second-order expansion at zero. Source: variation.tex:119–127. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E011",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.contact_derivatives",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Differentiated tails control lateral errors in the maximum-principle exhaustion and make the comparison bounds independent of truncation; finite-step heat data fix initial and jump signs. Source: signs.tex:205–278. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E012",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.backward_shapes",
+   "support.step_tails"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The backward signs supply nonnegative jump increments for s_x, nonpositive ones for s_xx, and the nonnegative source 2H_x-w-s_xx in the ratio comparison. Source: signs.tex:311–362; signs.tex:378–390. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E013",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.forward_shapes",
+   "support.backward_shapes"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The density transform supplies the score PDE and first-step score x/t; differentiated tails close the spatial comparison at infinity and the jump rule identifies j invariance. Source: signs.tex:35–56; signs.tex:299–394. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E014",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.forward_shapes",
+   "support.step_tails"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "v>0, common odd signs, H<=0 and H_x>=0 give nonnegative R,v,B,S and the smooth zero extensions; these are actual certificate hypotheses. Source: signs.tex:435–446. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E015",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.flux_identity",
+   "support.backward_shapes"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The score signs give K>=0, j>=0 and L>=0; the quotient extension avoids an unaccounted singularity at zero. Source: signs.tex:435–454. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E016",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.flux_identity",
+   "support.forward_shapes"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The Gaussian density tail dominates every polynomial expression and forces r*f*F to vanish at both infinities, so the integral of the derivative is zero. Source: signs.tex:456–472. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E017",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.flux_identity",
+   "support.step_tails"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Insert the exact identity, retain its positive v^4 coefficient, and discard the remaining nonnegative weighted squares and monomials only after the signs have been supplied. Source: certificate.tex:117–192. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E018",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_certificate"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.integrated_coercivity",
+   "support.rational_certificate"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The analytic signs make the retained polynomial terms nonnegative; absolute integrability and zero boundary flux remove W(F2) from the expectation. R*b^2=w^2 restores the curvature integrand. Source: certificate.tex:166–199. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E019",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_certificate",
+   "support_tex_signs"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.integrated_coercivity",
+   "support.flux_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "L1-convergent plateau-preserving approximants have uniformly convergent derivatives on a fixed compact strip; higher derivative bounds control evaluating them along nearby paths. Source: regularity.tex:263–286. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E020",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.plateau_transfer",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The common Brownian coupling gives convergence of the paths used in the polynomial moments, with the original gamma diffusion as the limit. Source: regularity.tex:264–273. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E021",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.plateau_transfer",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "q'=c^(-2)E[v^2] is differentiated on the smooth constant interval by Ito twice, identifying the resulting expression as c^2*q'''. Source: regularity.tex:288–296. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E022",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.plateau_transfer",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Apply the smooth-data inequality to each positive monotone approximant that is exactly c near the fixed time. This supplies the uniform positive-coefficient lower bound before passing to the limit. Source: curvature.tex:23–38. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E023",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_curvature",
+   "support_tex_certificate"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.positive_curvature",
+   "support.integrated_coercivity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Pass only the derivative moments through order four to the gamma diffusion, divide by c^2>0, and use the separate strict positivity of Phi_xx to make the fourth moment positive. Source: curvature.tex:39–50. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_curvature",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.positive_curvature",
+   "support.plateau_transfer"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "On a zero interval the heat formula permits the Ito differentiation; convexity, evenness, the Lipschitz bound and the bounded distance from |x| exclude an identically zero third spatial derivative. Source: regularity.tex:298–308. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E025",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.zero_curvature",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "A Gaussian transition from an earlier interior time makes the law have full spatial support, upgrading a nonzero continuous squared derivative to a strictly positive expectation. Source: regularity.tex:302–307. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E026",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.zero_curvature",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Differentiating q'=E[Phi_xx^2] under the zero-coefficient heat evolution gives q''=E[Phi_xxx^2], without dividing by c. Source: regularity.tex:298–301. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E027",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.zero_curvature",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The constant-coefficient heat formula and terminal |x| cusp identify a gradient separated from both signs in the shrinking spatial window. Source: variation.tex:154–169; variation.tex:187–203; regularity.tex:47–65. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E028",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.terminal_defect",
+   "support.regularity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The existing law at a positive plateau time has some compact set of positive mass; its tilted heat transition gives a uniform lower density bound at late times. Source: variation.tex:150–185. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E029",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.terminal_defect",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The moment is q=E[u^2]; integrating the pointwise gradient defect against the transition density gives the stated 1-q lower bound. Source: variation.tex:187–207. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E030",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.terminal_defect",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "For late t, C*sqrt(1-t)>1-t, so q(t)-t<0 throughout a terminal interval; integrating that strict sign gives G(s)<0. Source: variation.tex:209–212. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E031",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_terminal_gap",
+   "support.terminal_defect"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Minimality gave G>=0 on every point below one, contradicting the negative tail integral from the boundary layer. No contact at time one is invoked. Source: variation.tex:209–212. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E032",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_terminal_gap",
+   "support.contact"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "If support were empty the locally finite Stieltjes measure would be zero, hence gamma=0; this is included in the excluded finite terminal plateau. Source: variation.tex:215–221. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E033",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_terminal_gap",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "A support-free open interval has zero Stieltjes increment, so monotonicity makes gamma constant there. This identifies the height to which the two analytic cases apply. Source: variation.tex:216–226; Support/Closure.lean:31–45. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E034",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_bounded_gap",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Both endpoints belong to support, supplying q(a)=a, q(b)=b and endpoint derivative bounds; the one-sided version is used when a=0 belongs to support. Source: variation.tex:223–226. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E035",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_bounded_gap",
+   "support.contact_derivatives"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "For a positive height, strict convexity and continuity up to the endpoints put q' below its chord, hence strictly below one throughout the interval. Source: variation.tex:226–234. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E036",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_curvature"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_bounded_gap",
+   "support.positive_curvature"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "For height zero, strict increase puts q'(t) below the right endpoint derivative, which is at most one. This is a separate branch of the case split. Source: variation.tex:235–237. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E037",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_bounded_gap",
+   "support.zero_curvature"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "C1 regularity and the identity of q' justify integrating the strict derivative deficit and comparing it with q(b)-q(a). Source: variation.tex:230–237. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E038",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_bounded_gap",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "No support in [0,b) means no initial atom and no later mass there; the cumulative convention forces gamma=0, excluding a positive initial height. Source: variation.tex:239–240. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E039",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_initial_gap",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Strict increase on each interior subinterval and continuity at b give q'(t)<q'(b) for 0<t<b. Source: variation.tex:240–242. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E040",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_initial_gap",
+   "support.zero_curvature"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Only the right endpoint b belongs to support, so its contact value and derivative bound are used; no support assertion about zero is imported. Source: variation.tex:239–242. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E041",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_initial_gap",
+   "support.contact_derivatives"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Symmetry supplies q(0)=0 independently of contact, and C1 regularity justifies the integral contradiction with q(b)=b. Source: variation.tex:241–242. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E042",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.no_initial_gap",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Relative closedness of support makes its open complement a union of the listed one-dimensional interval types. The same cumulative convention applies to every admitted Stieltjes measure. Source: variation.tex:215–221. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E043",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.full_relative_support",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This excludes terminal components and empty support; otherwise the bounded/initial argument alone would leave a component ending at 1 untreated. Source: variation.tex:219–221. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E044",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.full_relative_support",
+   "support.no_terminal_gap"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This excludes each complementary component with both endpoints below one in support, including one starting at a support point zero. Source: variation.tex:223–237. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E045",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.full_relative_support",
+   "support.no_bounded_gap"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This excludes the remaining initial component whose left endpoint zero is outside support, completing the exhaustive case split. Source: variation.tex:239–243. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E046",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.full_relative_support",
+   "support.no_initial_gap"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "For a minimizer, full support supplies positive mass in every nonempty open subinterval, which is the hypothesis of the stated cumulative-measure implication. Source: variation.tex:247–249. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E047",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.strict_increase",
+   "support.full_relative_support"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The exact convention gives gamma(b)-gamma(a)=mu((a,b]); since (a,b) is contained in (a,b], the difference is positive. Source: variation.tex:247–249; Support/Closure.lean:47–67. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E048",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.strict_increase",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "All positive times become support points, so the local contact identities can be applied everywhere below one. Source: variation.tex:243–246. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E049",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_saturation",
+   "support.full_relative_support"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Contact supplies q(t)=t on every positive support point; its role is distinct from the derivative-of-q identity. Source: variation.tex:243–246. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E050",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_saturation",
+   "support.contact_derivatives"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "q(0)=0 supplies the initial value and the right derivative there; differentiating q=t with q'=E Phi_xx^2 yields the second identity. Source: variation.tex:243–246; Support/Closure.lean:462–482. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E051",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_saturation",
+   "support.moment_identity"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Pathwise uniqueness identifies any associated diffusion with the constructed one on the same Brownian system; equality almost surely preserves both expectations, retaining the universal quantifier. Source: Diffusion/Uniqueness.lean:13–63; Main.lean:44–59. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E052",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.moment_saturation",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This supplies the existential Stieltjes-measure conjunct with its exact initial-mass convention. Later support reasoning is for every measure satisfying that convention. Source: Model.lean:81–88; Main.lean:37–40. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E053",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.stieltjes_measure"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This supplies the existential associated-diffusion conjunct for the given Brownian system and coefficient; uniqueness is also retained for the universal moment clause. Source: Model.lean:81–88; Main.lean:39–59. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E054",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.diffusion"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This is precisely the all-Stieltjes-measures full-relative-support component of the selected conclusion under the minimizer premise. Source: Model.lean:81–88; Main.lean:19–40. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E055",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.full_relative_support"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This supplies strict increase on [0,1), without asserting differentiability, smooth density or an endpoint at time 1. Source: Model.lean:84–85; Main.lean:41–43. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E056",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.strict_increase"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "This supplies both moment identities for every associated diffusion and every time below one, including the right derivative at zero. Source: Model.lean:86–88; Main.lean:44–59. Source passages are recorded on both endpoint nodes and their citations; this authored relationship is not an extracted Lean edge or an accepted proof.",
+  "id": "R2-25-E057",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.moment_saturation"
+  ],
+  "tool": "Authored relation warrant; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The selected formal goal and manuscript theorem concern full support, but the source representations and exact statements need a correspondence review. This citation makes the manuscript argument discoverable without asserting an unproved formal or mathematical transport. Sources: full_support_statement — ComparatorChallenges/SKFullSupport.lean:81–92; FullSupportConclusion and full_support; scalar-r2-26-source-main — build/main.tex:119–152; thm:full-support and consistency statement; scalar-r2-26-source-variation — variation.tex:215–249; proof of thm:full-support. Scope: Citation navigation only; no proof-dependency or statement-equivalence claim.",
+  "id": "R2-26-NAV-001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_statement",
+   "support_tex_main",
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.full_relative_support"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. This navigation link records the separate obligation that would arise if the two retained formal developments were composed. Their different coefficient, Brownian-system and control representations are visible in the two Model files. It adds no premise to the support theorem. Sources: scalar-r2-26-source-support-model — SKSupport/Model.lean:12–75; BrownianSystem, coefficient, control and diffusion definitions; scalar-r2-26-source-value-model — SKValue/Model.lean:33–89; BrownianSpace, coefficient, control and diffusion definitions. Scope: Citation navigation only; no proof-dependency or statement-equivalence claim.",
+  "id": "R2-26-NAV-002",
+  "kind": "semantic_review",
+  "source_ids": [
+   "full_support_proof",
+   "support_lean_model",
+   "scalar-r2-26-source-value-model"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "lean.full_support",
+   "scalar.formal_model_transport_open"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The scalar proof derives its own moment contact. A reader considering use of the separate full-support declaration is directed to the unimplemented model transport obligation; the scalar theorem itself does not depend on that transport. Sources: scalar-r2-26-source-support-model — SKSupport/Model.lean:12–75; BrownianSystem, coefficient, control and diffusion definitions; scalar-r2-26-source-value-model — SKValue/Model.lean:33–89; BrownianSpace, coefficient, control and diffusion definitions; scalar-r2-26-source-minimizer-contact — Variation/MinimizerContact.lean:75–82; IsMinimizer.gradient_moment_contact. Scope: Citation navigation only; no proof-dependency or statement-equivalence claim.",
+  "id": "R2-26-NAV-003",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-minimizer-contact",
+   "support_lean_model",
+   "scalar-r2-26-source-value-model",
+   "scalar_value_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "lean.value_consequences",
+   "scalar.formal_model_transport_open"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The displayed source declaration has precisely the branch hypothesis pattern and named conclusion recorded in this claim. This is a curated static correspondence; it is not proof acceptance or an extracted expression edge. Sources: scalar-r2-26-source-formal-targets — GroundState/MainConclusions.lean:13–15. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_scalar_clause",
+   "scalar.lean_scalar_target"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The displayed source declaration has precisely the branch hypothesis pattern and named conclusion recorded in this claim. This is a curated static correspondence; it is not proof acceptance or an extracted expression edge. Sources: scalar-r2-26-source-formal-targets — GroundState/MainConclusions.lean:17–20. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-002",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.lean_gaussian_target"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The displayed source declaration has precisely the branch hypothesis pattern and named conclusion recorded in this claim. This is a curated static correspondence; it is not proof acceptance or an extracted expression edge. Sources: scalar-r2-26-source-formal-targets — GroundState/MainConclusions.lean:25–27. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-003",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_parisi_clause",
+   "scalar.lean_parisi_target"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Integrate the exact rational decomposition; nonnegative coefficients/signs retain a positive v⁴ term. Algebra alone does not discharge the density hypotheses in the consuming conditional statement. Sources: scalar-r2-26-source-certificate — certificate.tex:166–199. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-009",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_certificate"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.integrated_coercivity",
+   "support.rational_certificate"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. On a fixed positive plateau, finite-step approximants retaining c satisfy the proved finite-step instance; the limiting expectation gives the positive q‴ bound. Sources: scalar-r2-26-source-curvature — curvature.tex:22–52. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-012",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_certificate",
+   "support_tex_curvature"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.constant_curvature",
+   "support.integrated_coercivity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Uniform derivative bounds/convergence on a fixed strip and coupled diffusion convergence transfer the integrated inequality. Density-score convergence is deliberately not required. Sources: scalar-r2-26-source-curvature — curvature.tex:26–45. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-013",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_curvature",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.constant_curvature",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The Ito identities for the gradient and its derivatives identify the limiting curvature expression with c²q‴. For c=0, heat evolution yields q″=E Phi_xxx²>0 separately. Sources: scalar-r2-26-source-regularity — regularity.tex:240–308. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-014",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_curvature",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.constant_curvature",
+   "support.moment_identity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Saturated curvature moment yields gamma=E Phi_xxx²/(2 E Phi_xx³); the denominator is positive. Polynomial-moment differentiation then bootstraps regularity. Sources: scalar-r2-26-source-order-parameter-regularity — order-parameter-regularity.tex:35–101. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-023",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_main",
+   "scalar-r2-26-source-order-parameter-regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.smooth_positive_density",
+   "support.moment_saturation"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. All moments and derivative identities are justified on compact strips; right continuity promotes almost-everywhere gamma equality to pointwise equality. Sources: scalar-r2-26-source-order-parameter-regularity — order-parameter-regularity.tex:35–101. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-order-parameter-regularity",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.smooth_positive_density",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. A separate fixed-time flattening approximation transports the actual finite-step coercivity instance to a smooth minimizer and bounds gamma′ from below for t>0. It is a downstream use, not a premise of QAOA scalar input. Sources: scalar-r2-26-source-order-parameter-regularity — order-parameter-regularity.tex:103–152. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-025",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_certificate",
+   "scalar-r2-26-source-order-parameter-regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.smooth_positive_density",
+   "support.integrated_coercivity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The bounded gradient martingale has second moment tending to one, so its terminal limit has square one. The same identities turn Ito and martingale products into the three value formulas. Sources: scalar-r2-26-source-consequences — consequences.tex:30–73. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-026",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.manuscript_terminal_value",
+   "support.moment_saturation"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Gradient martingality supplies terminal convergence and the covariance identity, while the constructed diffusion gives X₁=B₁+∫gamma u. Sources: scalar-r2-26-source-consequences — consequences.tex:30–73. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-027",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.manuscript_terminal_value",
+   "support.moment_identity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Uniform terminal control-value error and convexity give U₁X₁=|X₁| without excluding X₁=0; integrable drift permits terminal limits. Sources: scalar-r2-26-source-consequences — consequences.tex:38–63. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-028",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.manuscript_terminal_value",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The external variational identity identifies P(gamma) for a given minimizer with the SK ground-state constant. Existence of a minimizer is not needed for this conditional inference. Sources: scalar-r2-26-source-main — main.tex:88–107; scalar-r2-26-source-consequences — consequences.tex:48–61. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-029",
+  "kind": "semantic_review",
+  "source_ids": [
+   "ac2017_ground_state",
+   "scalar-r2-26-source-consequences",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.manuscript_terminal_value",
+   "scalar.parisi_formula"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. At fixed T and a slightly larger strip, bounded spatial derivatives and almost-everywhere PDE derivatives give the time-space Lipschitz estimates. Monotone gamma controls mesh drift error. Sources: scalar-r2-26-source-consequences — consequences.tex:124–147. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-030",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.euler_normalization",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The continuum curvature second moment equals one. Euler convergence then makes every active normalizer approach one uniformly and eventually strictly positive. Sources: scalar-r2-26-source-consequences — consequences.tex:148–152. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-031",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.euler_normalization",
+   "support.moment_saturation"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The gradient bound |u|≤1 allows uniform independent threshold rounding to have conditional expectation u. Independence is expressly supplied by the N+1st Gaussian coordinate. Sources: scalar-r2-26-source-consequences — consequences.tex:162–170. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-032",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.conditional_rounding",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The normalized directions are orthonormal and M_N approximates the gradient in L². Bessel controls the whole coefficient vector as dimension grows. Sources: scalar-r2-26-source-consequences — consequences.tex:148–178. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-033",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.correlation_vector_control",
+   "scalar.euler_normalization"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Conditional-mean preservation equates correlations of F_N with those of the unrounded gradient against functions of the first N Gaussians. Sources: scalar-r2-26-source-consequences — consequences.tex:162–178. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-034",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.correlation_vector_control",
+   "scalar.conditional_rounding"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Cauchy–Schwarz controls the shifted bulk product with bounded ell² vectors, while A_N=o(1) and |B_{N+1}|≤1 remove the final rounding-coordinate term. Sources: scalar-r2-26-source-consequences — consequences.tex:179–196. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-035",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.shifted_gaussian_limit",
+   "scalar.correlation_vector_control"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Uniform normalizer convergence and fixed-strip Euler convergence turn the remaining shifted sum into a Riemann sum for ∫₀ᵀE a. Sources: scalar-r2-26-source-consequences — consequences.tex:179–196. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-036",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.shifted_gaussian_limit",
+   "scalar.euler_normalization"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. After the fixed-T mesh limit, the separate terminal value representation gives the T↑1 limit. No interchange or diagonal rate follows. Sources: scalar-r2-26-source-consequences — consequences.tex:191–196. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-037",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.shifted_gaussian_limit",
+   "scalar.manuscript_terminal_value"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. By Cauchy–Schwarz E a≤sqrt(E a²)=1 for every t<1. Sources: scalar-r2-26-source-qaoa-scalar — 03-classical-optimization.tex:56–72. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-038",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_main",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.terminal_loss",
+   "support.moment_saturation"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Convexity gives a≥0, establishing the lower side of the terminal loss bound. Sources: scalar-r2-26-source-qaoa-scalar — 03-classical-optimization.tex:61–72. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-039",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.terminal_loss",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Subtract the curvature integral up to T from P_*=∫₀¹E a and integrate 0≤E a≤1 on [T,1). Sources: scalar-r2-26-source-qaoa-scalar — 03-classical-optimization.tex:56–72. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-040",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.terminal_loss",
+   "scalar.manuscript_terminal_value"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The top-level minimizer branch supplies its contact input with hmin.gradient_moment_contact hX; the lower-level implication alone is insufficient. Sources: scalar-r2-26-source-formal-targets — GroundState/MainConclusions.lean:17–20; scalar-r2-26-source-contact-assembly — Variation/ContactAssembly.lean:61–72. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-041",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-minimizer-contact"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.formal_contact_input"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The source scalar_value_target invokes scalar_value_of_contact on the contact identity derived from hmin and hX. No cross-target full_support result is invoked. Sources: scalar-r2-26-source-formal-targets — GroundState/MainConclusions.lean:13–15; scalar-r2-26-source-contact-assembly — Variation/ContactAssembly.lean:49–59. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-042",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-26-source-formal-targets",
+   "scalar-r2-26-source-minimizer-contact"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_scalar_clause",
+   "scalar.formal_contact_input"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The external algorithm assumes existence of a strictly increasing minimizer; conditional full-support alone does not supply existence. Sources: scalar-r2-26-source-main — main.tex:94–107; scalar-r2-26-source-algorithm-application — algorithm-application.tex:30–34. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-043",
+  "kind": "semantic_review",
+  "source_ids": [
+   "ac2017_ground_state",
+   "scalar-r2-26-source-algorithm-application",
+   "support_tex_main"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.separate_classical_algorithm",
+   "scalar.minimizer_attainment"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "The algorithm proof applies thm:full-support to a minimizer to obtain the EAMS no-overlap-gap input. Attainment is supplied separately by the manuscript main.tex:94–107 and the existing scalar.minimizer_attainment support. The same attained gamma_0 is used for full support and strict increase. This authored application records the full-support input only, not a proof or formalization of the external algorithm theorem.",
+  "id": "R2-26-SR-044",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-algorithm-application",
+   "support_tex_main",
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.separate_classical_algorithm",
+   "support.full_relative_support"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Reference-only source navigation to the lower-level conditional lemma. ContactAssembly obtains strip bounds and the unit curvature moment before applying it. A supports edge would make the current closure import those separately scoped assumptions into the stronger top-level theorem; this cites relation deliberately does not claim automatic hypothesis discharge. Sources: scalar-r2-26-source-contact-assembly — Variation/ContactAssembly.lean:61–72; scalar-r2-26-source-fixed-strip — Processes/FiniteGaussianFixedStrip.lean:29–49. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-045",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-contact-assembly",
+   "scalar-r2-26-source-fixed-strip",
+   "scalar-r2-26-source-formal-targets"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.formal_finite_gaussian_clause",
+   "scalar.conditional_fixed_strip"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The existing scalar_value goal is the three-part universally quantified conjunction. This edge exposes one conjunct without changing the statement or status of the aggregate. Select the branch itself for its narrower hypothesis set. Sources: scalar_value_statement — ComparatorChallenges/SKValue.lean:163–170. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-046",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar_value_statement"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "scalar.formal_scalar_clause"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The existing scalar_value goal is the three-part universally quantified conjunction. This edge exposes one conjunct without changing the statement or status of the aggregate. Select the branch itself for its narrower hypothesis set. Sources: scalar_value_statement — ComparatorChallenges/SKValue.lean:163–170. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-047",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar_value_statement"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "scalar.formal_finite_gaussian_clause"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The existing scalar_value goal is the three-part universally quantified conjunction. This edge exposes one conjunct without changing the statement or status of the aggregate. Select the branch itself for its narrower hypothesis set. Sources: scalar_value_statement — ComparatorChallenges/SKValue.lean:163–170. Scope: Proposed curated relation based on source reading; not an extracted Lean dependency or proof-acceptance result.",
+  "id": "R2-26-SR-048",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-formal-targets",
+   "scalar_value_statement"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "scalar.formal_parisi_clause"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The edge-decomposition proof identifies the single-vacuum-deletion terms with L and uses its norm-one continuity estimate; occupation controls the separate two-active-child remainder. Sources: circuit-r2-26-source-foundations — prop:energy proof, lines 210–267. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-001",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.energy_transfer",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The ordinary cost is a product over children of small commuting edge unitaries; the centered product limit and weighted Weyl estimates yield the stated insertion-dependent root update and its adjoint/jet control. Sources: circuit-r2-26-source-foundations — lem:ordinary-updates proof, lines 742–782. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-002",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_updates",
+   "circuit.weighted_unitary_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. After the ordinary root insertions converge, the smooth word estimates supply the occupation hypothesis needed to turn those insertions into the scaled edge value E(v_Z). Sources: circuit-r2-26-source-foundations — lem:ordinary-updates, lines 723–782, and prop:energy. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-003",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_updates",
+   "circuit.energy_transfer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. At each finite exclusion depth, conditional child centered sums and products are evaluated using the weighted unitary limit, and the resulting commuting control coefficients are handled by joint Fourier substitution with adjoint bounds. Sources: circuit-r2-26-source-foundations — thm:gate-calculus proof, lines 1052–1316. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-004",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.gate_calculus",
+   "circuit.weighted_unitary_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The calculus controls insertion norm limits and top-child occupation, precisely the two hypotheses used when converting its fixed-word insertions into scaled edge energy. Sources: circuit-r2-26-source-foundations — thm:gate-calculus and proof, lines 1017–1316. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-005",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.gate_calculus",
+   "circuit.energy_transfer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Diagonal excluded cut Hamiltonians are differentiated inside the common gate calculus; its weighted control justifies the first-response fields, scalar second response and local replacement step. Sources: circuit-r2-26-source-foundations — cor:additive-response proof, lines 1377–1444. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-006",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.additive_responses",
+   "circuit.gate_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The rooted recursion uses exactly the supplied Euler Y_j and c_j. Eventual positivity permits choosing the finite mesh; predictable normalized g_j then have unit norm, which is required for orthonormal child directions. Sources: scalar-r2-26-source-qaoa-scalar — lem:gaussian-rooted-realization, lines 133–181. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-007",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.rooted_realization",
+   "scalar.euler_normalization"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The rooted F_N uses the same final independent Gaussian-to-uniform coordinate and sign convention. This supplies the common bounded output and its zero conditional bias properties, rather than a separately optimized scalar random variable. Sources: scalar-r2-26-source-qaoa-scalar — eq:scalar-rounding and lem:gaussian-rooted-realization, lines 96–218. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-008",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.rooted_realization",
+   "scalar.conditional_rounding"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The exact A_j and B_j definitions are reused when pairing F_N with g_j and its first-chaos projection. The index shift B_{j+1} is forced by Z_{j+1}=G(g_j); A₀=0 removes the root-seed term. Sources: scalar-r2-26-source-qaoa-scalar — eq:scalar-coefficients and eq:scalar-rooted-energy, lines 101–218. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-009",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.rooted_realization",
+   "scalar.correlation_vector_control"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The Gaussian isometry realizes the recursively orthonormal g_j as independent fields and the L* first-chaos identity computes E(F_N) as the coefficient sum. Sources: scalar-r2-26-source-qaoa-scalar — lem:gaussian-rooted-realization proof, lines 145–218. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-010",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.rooted_realization",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The smoothed tanh(kH_N) is formed in the same rooted space as F_N, whose energy has already been identified exactly; L² continuity then preserves that value. Sources: scalar-r2-26-source-qaoa-scalar — lines 220–254. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-011",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.sign_smoothing",
+   "circuit.rooted_realization"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. At fixed T the shifted scalar coefficient limit permits a finite N whose realized energy is as close as required to the curvature integral before k is chosen. Sources: scalar-r2-26-source-qaoa-scalar — eq:scalar-coefficient-limit and lines 220–254. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-012",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.sign_smoothing",
+   "scalar.shifted_gaussian_limit"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The cutoff T is chosen using the stated terminal loss from the curvature integral to P_*; mesh and sign errors are then chosen in that order. Sources: scalar-r2-26-source-qaoa-scalar — eq:scalar-terminal-loss and lines 220–254. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-013",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.sign_smoothing",
+   "scalar.terminal_loss"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. On the fixed compact time strip, regularity gives smooth polynomial-growth local Euler/rounding maps and controls the smooth finite descendant calculation; no uniform terminal-strip constant is needed. Sources: scalar-r2-26-source-qaoa-scalar — lines 28–75, 220–254. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-014",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.sign_smoothing",
+   "support.regularity"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Output-to-leaf approximation controls input errors by the Gaussian isometry and converts the final L² error to an energy error using the root-shift continuity bound. Sources: scalar-r2-26-source-qaoa-scalar — lem:classical-trigonometric-density proof, lines 280–337. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-015",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.bounded_trigonometric",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The raw-seed pullback is an isometry intertwining L; at each exclusion step the Gaussian isometry and disjoint-mask norm squares give the C(α+p_H) loss. Sources: scalar-r2-26-source-qaoa-scalar — eq:raw-seed-reencoding and lem:classical-color-exclusion proof, lines 392–551. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-016",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.color_exclusion",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. For this same supplied minimizer, take the fixed finite smooth output with error ε/3 before any bounded-column or color approximation. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum proof, lines 583–590. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-017",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_fixed_minimizer",
+   "circuit.sign_smoothing"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The fixed smooth output is converted to a finite bounded angle with L² output error less than ε/12, costing less than ε/6 in energy. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum proof, lines 584–590. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-018",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_fixed_minimizer",
+   "circuit.bounded_trigonometric"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. After the bounded formula and its Lipschitz constants are fixed, reserve distinct helpers, refine colors and make the exclusion error less than ε/6 in norm, hence less than ε/3 in energy. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum proof, lines 592–607. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-019",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_fixed_minimizer",
+   "circuit.color_exclusion"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Attainment supplies one γ in the variational class. Apply the universally quantified conditional construction to that same γ for the requested ε and η_H, and retain the resulting common finite witnesses. No hypothesis is discharged by a graph traversal; this is an explicitly stated source-level witness application. Sources: scalar-r2-26-source-qaoa-scalar — lines 3–75, 220–254 and prop:classical-near-optimum, lines 553–608. Scope: Closed existential application; the scope and witness binding are stated manually and are not kernel checked.",
+  "id": "circuit-r2-26-warrant-020",
+  "kind": "semantic_review",
+  "source_ids": [
+   "ac2017_ground_state",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_primary",
+   "scalar.minimizer_attainment"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "The manuscript fixes an attained minimizer before constructing the bounded formula (the concluding construction is at lines 553–608). Applying the conditional construction to this common gamma supplies the closed existential input. The application is authored and remains subject to semantic review. Supplier and conditional proof ingredients are retained by a scoped application; its binding text is authored, not checked substitution.",
+  "id": "circuit-r2-26-warrant-021",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_primary",
+   "circuit.classical_fixed_minimizer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The closed existence proof applies the generic bounded approximation theorem to its chosen finite scalar output; this universal approximation lemma has no free minimizer hypothesis. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum proof, lines 584–590. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-022",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_primary",
+   "circuit.bounded_trigonometric"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The closed proof uses the generic exclusion estimate after its chosen finite bounded formula is frozen, with positive helper probabilities and a sufficiently fine finite partition. Sources: scalar-r2-26-source-qaoa-scalar — prop:classical-near-optimum proof, lines 592–607. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-023",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_primary",
+   "circuit.color_exclusion"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Finite product/commutator approximations of local masked generators are inserted into fixed surrounding exclusion words using precisely the calculus’s jet, adjoint and domination replacement statement. Sources: circuit-r2-26-source-synthesis — sec:elementary-masked-controls, lines 113–205. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.masked_controls",
+   "circuit.gate_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The weighted Weyl and number estimates provide the common domains and differentiated exponential bounds for fixed fields and orthogonal quadratic kernels; the proof separately controls exponentials. Sources: circuit-r2-26-source-synthesis — lem:fixed-field-exponentials and lem:orthogonal-quadratics, lines 357–492. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-025",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.orthogonal_quadratics",
+   "circuit.weighted_unitary_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Distinct-sender helper terms form disjoint-mask centered quadratics with ρ²=Σp_l²≤p_J max p_l, and their controlled exponential convergence makes these terms vanish as the sender partition is refined. Sources: circuit-r2-26-source-synthesis — lines 640–674, 836–959. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-026",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.helper_contraction",
+   "circuit.orthogonal_quadratics"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. At lower cuts, the proof recursively keeps the Gaussian first responses and scalar second responses for the fixed finite channel family, avoiding an invalid independence claim or an omitted phase. Sources: circuit-r2-26-source-synthesis — eq:physical-lower-cut-identity through eq:limiting-additive-response, lines 679–854. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-027",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.helper_contraction",
+   "circuit.additive_responses"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The helper replacement is made inside the fixed surrounding word and compressed helper space, with the same mask-conditioned weighted and adjoint bounds required by local replacement. Sources: circuit-r2-26-source-synthesis — prop:helper-contraction and proof, lines 327–344, 494–959. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-028",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.helper_contraction",
+   "circuit.gate_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Each bounded formula propagation is approximated with a fresh helper type at its rank after the outer operation and its accuracy have been fixed. This implements the finite excluded Gaussian aggregations. Sources: circuit-r2-26-source-synthesis — compilation proof, lines 1012–1086. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-029",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seeded_synthesis",
+   "circuit.helper_contraction"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. After finite helper approximations and commutators are selected, the finite masked trigonometric operations are compiled into the elementary seed/cost/mixer gates. Sources: circuit-r2-26-source-synthesis — lines 1012–1086. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-030",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seeded_synthesis",
+   "circuit.masked_controls"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The classical-rotation spin decomposition identifies the ideal energy with E(m); the norm-one root shift then bounds the nonhelper insertion error and the helper mass by 2η+2√p_H. Sources: circuit-r2-26-source-synthesis — lines 41–111, 1088–1119. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-031",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seeded_synthesis",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. All nested finite replacements and the helper-mask conditional norm bound are justified in one fixed calculus word, after the successive approximation parameters are chosen. Sources: circuit-r2-26-source-synthesis — thm:classical-synthesis proof, lines 1012–1119. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-032",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seeded_synthesis",
+   "circuit.gate_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The exact initialization split and the probe displacement formulas are computed using the rooted ordinary mixer/cost updates at fixed r; the subsequent r→0 analysis is performed on their already-defined limiting tree maps. Sources: circuit-r2-26-source-seed — lines 160–270. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-033",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seed_packets",
+   "circuit.ordinary_updates"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Weighted Weyl estimates control bounded packet tails and repeated commutation proves separated-center overlap decay; they are not applied as uniform estimates to the full large displacement. Sources: circuit-r2-26-source-seed — lem:seed-packet-estimates proof, lines 88–158. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-034",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seed_packets",
+   "circuit.weighted_unitary_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The exact finite limiting rotation with separately zero clock sums is the target pulse word whose ordinary-packet errors cancel to o(r). Sources: circuit-r2-26-source-seed — lem:seed-selective-accuracy proof, lines 351–503. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-035",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.selective_accuracy",
+   "circuit.selective_control"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Separated packet centers, controlled tails and the exact special amplitude r yield the probe-phase estimates and control interactions between ordinary and special packets. Sources: circuit-r2-26-source-seed — lem:seed-selective-accuracy and lem:seed-low-insertions, lines 351–606. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-036",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.selective_accuracy",
+   "circuit.seed_packets"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Selective flips must have net o(r) ordinary-tail error and o(1) normalized-special error to make the true insertion change −2r w_r+o(r) survive division by r. Sources: circuit-r2-26-source-seed — lem:seed-one-echo proof, lines 638–733. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-037",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.singular_echo",
+   "circuit.selective_accuracy"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The two actual cost updates are combined by the Weyl identity before taking the small-r limit, yielding the finite difference displacement and special-center transport. Sources: circuit-r2-26-source-seed — eq:seed-exact-echo-cancellation, lines 675–733. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-038",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.singular_echo",
+   "circuit.ordinary_updates"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Each finite seeded gate is replaced by its echo using t=σ/2; induction transports the same external Gaussian direction through the entire finite history. Sources: circuit-r2-26-source-seed — lem:seed-gram-induction, lines 789–868. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-039",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.external_mode_energy",
+   "circuit.singular_echo"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The extra finite spin–Weyl-sum L-pairing formula, together with external/endogenous orthogonality, identifies rooted energy rather than only reproducing marginal seed laws. Sources: circuit-r2-26-source-seed — eq:seed-energy-weyl-sum and proof, lines 821–868. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-040",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.external_mode_energy",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The common nonzero visibility test derives from the fixed-b initialized special and address directions; their bounded-tail separation gives the huge transverse weak-limit estimate. Sources: circuit-r2-26-source-seed — lem:seed-huge-transverse and visibility proof, lines 875–974. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-041",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.visibility",
+   "circuit.seed_packets"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Once the finite analytic nonvanishing conditions are arranged, the visible limiting projection lists meet the hypotheses for exact finite selective controls; the lists are then fixed before r. Sources: circuit-r2-26-source-seed — lines 902–974. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-042",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.visibility",
+   "circuit.selective_control"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. For the finite target word, the Gram induction and its separate L-energy calculation pass every seed gate to the same persistent external Gaussian mode and identify the limiting seeded energy. Sources: circuit-r2-26-source-seed — thm:seed-simulation proof, lines 976–1006. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-043",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seed_removal",
+   "circuit.external_mode_energy"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. A sufficiently small common angle perturbation preserves the target energy and makes the finite list construction nondegenerate without choosing controls circularly from their own limit. Sources: circuit-r2-26-source-seed — lines 902–1006. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-044",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seed_removal",
+   "circuit.visibility"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Choose b first so the fixed initialized rooted value approaches the desired seeded input, then choose r after every finite pulse list to make packet and echo errors sufficiently small. Sources: circuit-r2-26-source-seed — lines 976–1006. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-045",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.seed_removal",
+   "circuit.seed_packets"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The assembly chooses the closed classical witness with error ε/4 and helper bound (ε/8)², retaining that one finite output and its positive helper masks for synthesis. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 7–17. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-046",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_primary",
+   "circuit.classical_primary"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Apply synthesis to that selected classical output with η=ε/8. The explicit 2η+2√p_H loss leaves seeded energy above P_*−3ε/4. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 17–22. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-047",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_primary",
+   "circuit.seeded_synthesis"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Apply seed removal to the one selected finite seeded word with error less than ε/4; its resulting ordinary word is fixed before transfer. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 23–28. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-048",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_primary",
+   "circuit.seed_removal"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. For each requested ε, the primary construction supplies one finite ordinary witness independent of D,n,J. This existential witness, rather than a changing depth schedule, is the object transferred. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 7–34. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-049",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "qaoa_thermodynamic_first",
+   "circuit.ordinary_word_primary"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Once every circuit choice is frozen, apply the fixed ordinary-word identity to equate its limiting tree energy and its fixed-parameter SK thermodynamic energy. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 27–33. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-050",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-foundations",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "qaoa_thermodynamic_first",
+   "circuit.fixed_word_transfer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Near-optimal fixed witnesses give the lower approximation; the classical upper bound and zero-angle padding give the monotone limit lim_p Q_p=P_*. Sources: circuit-r2-26-source-assembly — proof of thm:main, lines 31–34. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-051",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "qaoa_thermodynamic_first",
+   "circuit.upper_bound_padding"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Differentiate the contact identity through dm=a dW to obtain E a²=1, use the finite-temperature terminal relation for 1−q, and combine the Parisi/free-energy bounds for the stated scalar loss. Sources: circuit-r2-26-source-positive — lem:positive-temperature-bound proof, lines 147–209. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-052",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_value",
+   "circuit.positive_input"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The finite-step recursion uses precisely the bounded smooth m,a and contact-based continuum normalization from the selected fixed finite β₀ and cutoff T. Sources: circuit-r2-26-source-positive — lines 211–450. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-053",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_finite_step",
+   "circuit.positive_input"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The fixed-temperature regularity and contact identity supply Euler strong-error estimates and keep all continuum denominators bounded away from zero at sufficiently fine mesh. Sources: circuit-r2-26-source-positive — lem:eams-positive-continuum proof, lines 479–532. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-054",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_mesh",
+   "circuit.positive_input"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The scalar coupling and shifted Riemann estimate are for the same limiting Euler variables and exact-normalization definitions produced by the finite-step calculation, with r=1,…,L−1. Sources: circuit-r2-26-source-positive — eq:value-riemann-bound and proof, lines 463–532. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-055",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_mesh",
+   "circuit.positive_finite_step"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The norm limit is the recursive Gaussian field realization in the common pointed space, established using child characteristic vectors and symmetric-power approximation. Sources: circuit-r2-26-source-positive — lem:classical-strong-limit proof, lines 568–625. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-056",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_strong_limit",
+   "circuit.gaussian_root_calculus"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The one-child replacement/Efron–Stein argument supplies the uniform occupation bound in addition to norm convergence, permitting prop:energy to identify the scaled edge value. Sources: circuit-r2-26-source-positive — lem:classical-strong-limit proof, lines 626–678. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-057",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_strong_limit",
+   "circuit.energy_transfer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The exact finite-degree recursion, convergent constants and corrected edge value are the data to which the smooth strong-limit theorem is applied. Sources: circuit-r2-26-source-positive — lines 680–698. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-058",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_rooted_clipping",
+   "circuit.positive_finite_step"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. This step supplies both norm realization and the missing energy identification; scalar distributional convergence alone would not identify the rooted objective. Sources: circuit-r2-26-source-positive — lines 680–698. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-059",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_rooted_clipping",
+   "circuit.classical_strong_limit"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The coupling to the bounded terminal m(T,X_T) bounds the clipping L² loss by C√δ after the rooted energy has already been identified. Sources: circuit-r2-26-source-positive — lines 699–737. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-060",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_rooted_clipping",
+   "circuit.positive_mesh"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Choose finite β₀ and T first to make the scalar value loss small, then choose δ to absorb mesh and clipping errors. Sources: circuit-r2-26-source-positive — lines 699–737. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-061",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.positive_rooted_clipping",
+   "circuit.positive_value"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The clipped smooth finite positive-temperature output provides the near-optimal centered bounded source calculation for the alternative construction. Sources: circuit-r2-26-source-positive — prop:classical-near-optimum-positive-temperature proof, lines 765–788. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-062",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_positive",
+   "circuit.positive_rooted_clipping"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The same generic bounded-angle approximation is applied to the finite clipped positive-temperature calculation; no zero-temperature minimizer enters this invocation. Sources: circuit-r2-26-source-positive — prop:classical-near-optimum-positive-temperature proof, lines 765–788. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-063",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_positive",
+   "circuit.bounded_trigonometric"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. After the finite bounded formula is fixed, choose positive helper probabilities and color refinement to impose current/ancestor/helper exclusions with arbitrarily small rooted loss. Sources: circuit-r2-26-source-positive — prop:classical-near-optimum-positive-temperature proof, lines 765–788. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-064",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-positive",
+   "scalar-r2-26-source-qaoa-scalar"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.classical_positive",
+   "circuit.color_exclusion"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Select the alternative bounded formula with ε/4 error and helper bound (ε/8)² before applying the common compiler. Sources: circuit-r2-26-source-assembly — rem:order-of-choices, lines 46–53; 07-positive-temperature.tex:739–788. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-065",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-positive"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_positive",
+   "circuit.classical_positive"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The alternative proposition has exactly the bounded excluded input form required by the common synthesis theorem; the same η=ε/8 error allocation applies. Sources: circuit-r2-26-source-assembly — proof of thm:main and rem:order-of-choices, lines 7–22, 46–53. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-066",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-synthesis"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_positive",
+   "circuit.seeded_synthesis"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Seed removal concerns any fixed finite seeded word, including the one from the alternative formula, so it supplies the same ordinary ε/4 approximation. Sources: circuit-r2-26-source-assembly — proof of thm:main and rem:order-of-choices, lines 23–34, 46–53. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-067",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-seed"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.ordinary_word_positive",
+   "circuit.seed_removal"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The manuscript describes this as an independent initial scalar route followed by the same compiler and fixed-word transfer. The navigation link does not conjoin the finite-temperature input with the primary minimizer route. Sources: circuit-r2-26-source-assembly — rem:order-of-choices, lines 46–53. Scope: Alternative-route navigation only; not a second required supports premise.",
+  "id": "circuit-r2-26-warrant-068",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "qaoa_thermodynamic_first",
+   "circuit.ordinary_word_positive"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. Choose the common finite near-optimal ordinary tree word first. For its finite depth p, each edge light cone is a tree when girth>2p+1. Sources: circuit-r2-26-source-maxcut — lines 3–31. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-069",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-assembly",
+   "circuit-r2-26-source-maxcut"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.high_girth_maxcut",
+   "circuit.ordinary_word_primary"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "Authored source comparison completed for this candidate; independent semantic acceptance remains not_run. The transferred normalized tree coefficient tends to at least P_*−η/2; finite large D and the exact MaxCut cost rescaling 2/√D yield the all-graphs high-girth inequality. Sources: circuit-r2-26-source-maxcut — lines 15–61; eq:regular-tree-cut. Scope: Manuscript argument ingredient; not a certified implication.",
+  "id": "circuit-r2-26-warrant-070",
+  "kind": "semantic_review",
+  "source_ids": [
+   "circuit-r2-26-source-foundations",
+   "circuit-r2-26-source-maxcut"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.high_girth_maxcut",
+   "circuit.fixed_word_transfer"
+  ],
+  "tool": "Source-located authored warrant; independent semantic review pending"
+ },
+ {
+  "command": [],
+  "details": "FGGZ §4 equations (13)–(14) give joint disorder/measurement first and second moments at a fixed word; equations (17)–(22) explain concentration. Choose the QAOA word at epsilon/2 accuracy before n and J. Markov applied to (Y_n-v_W)^2 bounds near-optimum failure by 4 epsilon^(-2) E[(Y_n-v_W)^2] -> 0. This uses a quantum second moment, not merely the square of the conditional mean. No rate, efficient angle search, uniform variable-depth theorem, every-instance guarantee or Lean result is asserted. Local source read: docs/annex/farhi-et-al-2022-qaoa-infinite-size.pdf, printed pages4–5; derived argument papers/qaoa-sk/long/reasoning-record.md §11.2.",
+  "id": "concentration_source_warrant_pending",
+  "kind": "semantic_review",
+  "source_ids": [
+   "fggz2022_fixed_depth",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "circuit.fixed_word_concentration",
+   "circuit.one_measurement_near_optimum",
+   "qaoa_thermodynamic_first"
+  ],
+  "tool": "Authored consequence and inspected source; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Observed 2026-10-25T17:48:54.713682+00:00 for the corrected-globs-20261024 attempt. The retained controller reconciliation has no terminal research-process result. Full-support challenge build and a live challenge exporter were observed; scalar execution and research-v2 extraction were not observed. Comparator acceptance, rejection, kernel acceptance, extraction completeness and actual axiom inventory remain unknown. unavailable refers to the terminal outcome, not a proof verdict. This dated historical summary is not a process receipt or a claim that no later attempt exists; it preserves earlier not-run plans and build failures.",
+  "id": "corrected_comparator_outcome_unavailable_20261025",
+  "kind": "comparator",
+  "receipt_path": "verification/corrected-replay-interruption-20261025.json",
+  "receipt_sha256": "50646da736e4a9a598d41abe466dc65589bd95f67fdc51bf7622bea20fce94dc",
+  "source_ids": [
+   "full_support_proof",
+   "scalar_value_proof",
+   "active_derived_lakefile",
+   "active_derived_lake_lock"
+  ],
+  "status": "unavailable",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Curated interruption observation; terminal outcome unavailable"
+ },
+ {
+  "command": [],
+  "details": "Observed 2026-10-25T17:48:54.713682+00:00 for the corrected-globs-20261024 attempt. The retained controller reconciliation has no terminal research-process result. Full-support challenge build and a live challenge exporter were observed; scalar execution and research-v2 extraction were not observed. Comparator acceptance, rejection, kernel acceptance, extraction completeness and actual axiom inventory remain unknown. unavailable refers to the terminal outcome, not a proof verdict. This dated historical summary is not a process receipt or a claim that no later attempt exists; it preserves earlier not-run plans and build failures.",
+  "id": "corrected_extraction_outcome_unavailable_20261025",
+  "kind": "extraction",
+  "receipt_path": "verification/corrected-replay-interruption-20261025.json",
+  "receipt_sha256": "50646da736e4a9a598d41abe466dc65589bd95f67fdc51bf7622bea20fce94dc",
+  "source_ids": [
+   "full_support_proof",
+   "scalar_value_proof",
+   "active_derived_lakefile",
+   "active_derived_lake_lock"
+  ],
+  "status": "unavailable",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Curated interruption observation; terminal outcome unavailable"
+ },
+ {
+  "command": [
+   "python",
+   "-m",
+   "lean_exposition.cli",
+   "audit-sources",
+   "examples/qaoa-sk/source-lock.json",
+   "--root",
+   "examples/qaoa-sk"
+  ],
+  "details": "Local assimilation audit of the maintained source-lock inputs at base 450c8947971dbad9be943b8705ea96f822240961: all 387 upstream files and two derived files matched. The active Lake file uses repaired subtree globs. This establishes byte consistency only, not dependency checkout integrity, build, extraction, kernel checking, Comparator acceptance or mathematical correspondence. Historical observations remain.",
+  "id": "current_input_identity_20261024",
+  "kind": "source_hash",
+  "source_ids": [
+   "active_derived_lakefile",
+   "active_derived_lake_lock",
+   "lean_toolchain",
+   "full_support_statement",
+   "full_support_config",
+   "full_support_proof",
+   "scalar_value_statement",
+   "scalar_value_config",
+   "scalar_value_proof",
+   "mathlib_lake_lock"
+  ],
+  "status": "passed",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "lean-exposition audit-sources; Python SHA-256"
+ },
+ {
+  "command": [],
+  "details": "The retained variation.tex bounded-gap proof explicitly compares q′ with the endpoint chord and integrates. Here that elementary step is stated separately with only the local calculus hypotheses. For an interior t, strict convexity gives q′(t)<((s-t)q′(r)+(t-r)q′(s))/(s-r)<=1. The continuous positive deficit has strictly positive integral. The new supports edge is used in the positive-height branch of the bounded-gap proof; the existing zero-height branch remains justified by strict increase. Neither branch is removed or claimed formally replayed.",
+  "id": "endpoint_chord_area_warrant_20261024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_variation"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.endpoint_chord_area",
+   "support.no_bounded_gap"
+  ],
+  "tool": "Retained proof inspection; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "The long-record reconstruction extracts the spatial inequality used in order-parameter-regularity.tex:116–150: replace the coefficient by c at one shrinking neighborhood, preserve monotonicity, choose a fixed compact strip and common L1 bound, and pass derivatives through order four evaluated along coupled paths. Minimality supplies none of this transfer; it is used in the density consumer to establish smoothness, c>0 and moment saturation. On a positive plateau the third-time-derivative identity supplies the curvature consumer. Separately, SampleJets.lean:135–143 gives the scaled inequality for the SKSupport canonical diffusion at a positive continuity time; lines 90–133 supply its two dominated-convergence limits and CoerciveMoments.lean:15–17 fixes the powers of c. Division by c^2 for c>0 produces the normalized common expression. These are source-located mathematical warrants, not extracted dependency edges, a checked cross-model transport, or formal acceptance.",
+  "id": "fixed_time_spatial_warrant_20261025",
+  "kind": "semantic_review",
+  "source_ids": [
+   "authored_long_comparisons_20261024",
+   "support_source_sample_jets",
+   "support_source_coercive_moments",
+   "support_tex_regularity",
+   "scalar-r2-26-source-order-parameter-regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.fixed_time_spatial_coercivity",
+   "support.integrated_coercivity",
+   "support.regularity",
+   "support.diffusion",
+   "support.positive_curvature",
+   "scalar.constant_curvature",
+   "scalar.smooth_positive_density"
+  ],
+  "tool": "Authored source comparison; independent semantic acceptance not run"
+ },
+ {
+  "command": [
+   "lake",
+   "env",
+   "comparator",
+   "ComparatorChallenges/SKFullSupport.json"
+  ],
+  "details": "No Comparator replay was run. The upstream config selects OAI.ZeroTemperatureSK.full_support, permits propext/Quot.sound/Classical.choice, and disables nanoda. A challenge file containing sorry is an admitted interface, not a verification receipt.",
+  "id": "full_support_comparator_not_run",
+  "kind": "comparator",
+  "source_ids": [
+   "full_support_config",
+   "full_support_statement",
+   "full_support_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support"
+  ],
+  "tool": "Comparator"
+ },
+ {
+  "command": [
+   "comparator",
+   "ComparatorChallenges/SKFullSupport.json"
+  ],
+  "details": "Observed 2026-10-23T17:03:01.081472+00:00. The executable was absent; no checker process started and no build or statement comparison ran. The null return code denotes unavailable startup, not rejection of a theorem. The earlier not_run records describe the original intake plans. This record binds only the two named full-support subjects, although the receipt inventories a larger source tree.",
+  "id": "full_support_comparator_unavailable_20261023",
+  "kind": "comparator",
+  "receipt_path": "verification/comparator-unavailable.json",
+  "receipt_sha256": "608016004ab9efb7f53758088f79bfa02f85e710fdc0b1c6c1b2d00f1f98fe23",
+  "source_ids": [
+   "full_support_config",
+   "full_support_statement",
+   "full_support_proof"
+  ],
+  "status": "unavailable",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support"
+  ],
+  "tool": "Standalone Comparator; unavailable before checker startup"
+ },
+ {
+  "command": [
+   "lake",
+   "build",
+   "OAI.Probability.SKSupport.Main"
+  ],
+  "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical full-support invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay.",
+  "id": "full_support_corrected_build_not_run_20261024",
+  "kind": "lean_build",
+  "source_ids": [
+   "active_derived_lakefile",
+   "active_derived_lake_lock",
+   "lean_toolchain",
+   "full_support_statement",
+   "full_support_config",
+   "full_support_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support"
+  ],
+  "tool": "Lake / Lean 4.34.1"
+ },
+ {
+  "command": [
+   "lake",
+   "env",
+   "comparator",
+   "ComparatorChallenges/SKFullSupport.json"
+  ],
+  "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical full-support invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay.",
+  "id": "full_support_corrected_comparator_not_run_20261024",
+  "kind": "comparator",
+  "source_ids": [
+   "active_derived_lakefile",
+   "active_derived_lake_lock",
+   "lean_toolchain",
+   "full_support_statement",
+   "full_support_config",
+   "full_support_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support"
+  ],
+  "tool": "Standalone Comparator for Lean 4.34.1"
+ },
+ {
+  "command": [
+   "systemd-run",
+   "--user",
+   "--quiet",
+   "--collect",
+   "--wait",
+   "--pipe",
+   "--property=RestrictAddressFamilies=~AF_UNIX",
+   "--working-directory=/work/corpus/qaoa-sk/upstream/lean",
+   "-E",
+   "PATH=/work/toolchains/lean-4.34.1-linux_aarch64/bin:/work/bin:/usr/bin:/bin",
+   "-E",
+   "COMPARATOR_LANDRUN=/work/bin/landrun",
+   "-E",
+   "COMPARATOR_LEAN4EXPORT=/work/sources/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+   "--",
+   "lake",
+   "env",
+   "/work/sources/comparator/.lake/build/bin/comparator",
+   "ComparatorChallenges/SKFullSupport.json"
+  ],
+  "details": "Historical partial observation of the pre-repair build configuration. Not a complete research-run receipt, not a mathematical rejection, and not a replay of the current corrected configuration. No current-tree source-completeness assertion is made. Challenge built/exported, implementation build failed because an imported AbsIncrement object was missing. Preserve the older startup-unavailable event and all theorem statuses.",
+  "id": "full_support_solution_build_failure_20261023",
+  "kind": "comparator",
+  "receipt_path": "verification/full-support-build-failure-20261023.json",
+  "receipt_sha256": "b761e5040e8cfcfd1b10ae8d84f9e6c2dcfa1ccd4aa105b64668dadb3181d18a",
+  "source_ids": [
+   "full_support_statement",
+   "full_support_proof"
+  ],
+  "status": "failed",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support"
+  ],
+  "tool": "Standalone Comparator on Lean 4.34.1; stopped before comparison"
+ },
+ {
+  "command": [
+   "lake",
+   "build"
+  ],
+  "details": "No Lean compilation or axiom audit has been run for this intake. The proposed command runs from upstream/lean using the derived minimal configuration whose bytes are locked separately. The retained original OpenAI lakefile is provenance data, not the active configuration.",
+  "id": "lean_build_not_run",
+  "kind": "lean_build",
+  "source_ids": [
+   "full_support_proof",
+   "scalar_value_proof",
+   "lean_toolchain",
+   "upstream_lake_lock",
+   "mathlib_lake_lock"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Lake / Lean 4.34.1"
+ },
+ {
+  "command": [],
+  "details": "No elaborated Lean type/value dependency extraction was run. The earlier static file-import closure scan does not produce declaration-level dependency edges; this graph asserts none.",
+  "id": "lean_dependencies_not_run",
+  "kind": "extraction",
+  "source_ids": [
+   "full_support_proof",
+   "scalar_value_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Lean expression dependency extraction"
+ },
+ {
+  "command": [],
+  "details": "The goal-to-declaration mappings are manually curated from the upstream scope and Comparator configurations. No independent paper-to-formal-statement equivalence review has been completed.",
+  "id": "manuscript_alignment_not_run",
+  "kind": "semantic_review",
+  "source_ids": [
+   "family_scope",
+   "full_support_statement",
+   "scalar_value_statement",
+   "qaoa_introduction"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences",
+   "qaoa_thermodynamic_first"
+  ],
+  "tool": "Independent mathematical correspondence review"
+ },
+ {
+  "command": [],
+  "details": "The authored application on the full-support edge uses one attained manuscript minimizer gamma_0. The attainment supplier discharges that use's admissibility and minimality premises; full support then places every fixed r in [0,1) in the same gamma_0's Stieltjes support required by ACZ Proposition 1. The conditional full-support theorem retains its premises when selected directly. The Parisi-formula edge identifies its value with the same pure-SK ground-state limit. ACZ's constrained-pair result and concentration supply the pair; the common N(0,1/2) covariance correction preserves expected maxima and costs at most 2 exp(-eta^2 n^2/4) when removed at tolerance eta/2. These are curated mathematical warrants, not extracted Lean edges or independent proof acceptance.",
+  "id": "near_ground_pair_warrants_20261024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "acz2020_infinite_support",
+   "ac2017_ground_state",
+   "support_tex_variation",
+   "support_tex_main",
+   "authored_long_comparisons_20261024"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.near_ground_pairs",
+   "support.full_relative_support",
+   "scalar.parisi_formula",
+   "scalar.minimizer_attainment"
+  ],
+  "tool": "Authored source comparison; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Read the exact frozen long §11.1.2 and §11.5 and the private original PDF Corollary S3.1 printed pp.46–47. The source and PDF hashes identify the inspected editions. The Gibbs comparison follows from log-sum, entropy, standard Gaussian concentration and counting; the Parisi-formula dependency only identifies the limiting value. For the later estimate, epsilon_p=exp(-p^2) obeys the small-error condition eventually, log R_p=4p log p+O(p), and logarithms of the threshold give log log T_p=4p log p+O(p+log p). No independent replay of the later paper’s cavity proof or formal extraction was performed. Neither comparison receives an incoming SK proof-dependency edge.",
+  "id": "ordinary_comparison_warrants_20261024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "authored_long_comparisons_20261024",
+   "qaoa_finite_size_2026",
+   "ac2017_ground_state"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.finite_gibbs_comparison",
+   "circuit.later_finite_size_comparison",
+   "scalar.parisi_formula"
+  ],
+  "tool": "Authored deductions and primary statement inspected; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "26 October 2026 R8 assimilation checked the source feasible-L1 first variation, local plateau curvature, compact-strip spatial convergence, fixed-word joint second moments and Gaussian Lipschitz bound. Written proofs retain hypotheses and separate ordinary extensions from unchanged formal declarations. This is source comparison and mathematical reasoning, not terminal formal replay or independent acceptance.",
+  "id": "ordinary_deductions_review_20261026",
+  "kind": "semantic_review",
+  "source_ids": [
+   "authored_long_comparisons_20261024",
+   "support_tex_variation",
+   "support_tex_curvature",
+   "support_tex_regularity",
+   "fggz2022_fixed_depth"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.terminal_chord_barrier",
+   "support.zero_candidate_descent",
+   "support.full_relative_support_curvature",
+   "scalar.minimizer_coefficient_budget",
+   "support.fixed_time_spatial_coercivity_at_jumps",
+   "scalar.finite_maximum_concentration",
+   "circuit.sampled_finite_instance_optimum",
+   "support.contact",
+   "scalar.unshifted_gaussian_limit"
+  ],
+  "tool": "Source-assisted ordinary deductions; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "R9 assimilation checked endpoint spatial decay, Tanaka and Skorokhod comparison, unit second moment, weighted Gronwall and monotone quadrature, the absolute-terminal counterexample, and feasible-direction chord reparametrization. Sellke v4 is distinguished from v6. Existing formal evidence is unchanged; source-assisted reasoning does not certify complete proofs or reader comprehension.",
+  "id": "ordinary_deductions_review_20261026_r9",
+  "kind": "semantic_review",
+  "source_ids": [
+   "authored_long_comparisons_20261024",
+   "support_tex_signs",
+   "support_tex_regularity",
+   "sellke2021_external_field",
+   "sellke2023_external_field_v6",
+   "chl2018_zero_temperature",
+   "boulebnane2026_spin_boson_v2"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.minimizer_total_coefficient_mass",
+   "support.raw_curvature_negative_absolute_terminal",
+   "scalar.minimizer_coefficient_budget",
+   "scalar.fixed_strip_error_budget",
+   "support.first_variation",
+   "circuit.finite_formula_word_approximation"
+  ],
+  "tool": "Source-assisted ordinary deductions; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Long §9.2 divides the positive-density bound using unit second moment and moment Cauchy–Schwarz. Long §7.1 bounds coupled Euler and martingale residuals by fixed-strip O(sqrt(delta)), retains shifted endpoint and terminal errors, and does not assert uniformity at one. Long §11.1 reconstructs a degree-uniform finite-horizon estimate from conditional variance recursion, node/cavity coupling and the exact edge decomposition, with spatial Lipschitz coefficients and actual common Gaussian initialization. Long §11.4 cites the independently inspected Basso–Gamarnik–Mei–Zhou fixed-depth theorem and proof. These are ordinary manuscript deductions or cited results; no graph status, Lean endpoint or Comparator acceptance is promoted.",
+  "id": "ordinary_reconstruction_bounds_20261024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r2-26-source-order-parameter-regularity",
+   "scalar-r2-26-source-consequences",
+   "scalar-r2-26-source-qaoa-scalar",
+   "support_tex_regularity",
+   "circuit-r2-26-source-positive",
+   "eams2023_finite_step",
+   "bgmz2022_even_spin"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.smooth_positive_density",
+   "scalar.fixed_strip_error_budget",
+   "circuit.weighted_finite_horizon",
+   "circuit.even_p_spin_obstruction"
+  ],
+  "tool": "Ordinary source reconstruction; independent semantic acceptance not run"
+ },
+ {
+  "command": [],
+  "details": "Only the public theorem statement, assumptions, scope limits, and stated proof routes were inspected. The complete QAOA proof and its imported theorems have not been independently verified; no Lean circuit-convergence declaration is asserted.",
+  "id": "qaoa_manuscript_review_not_run",
+  "kind": "semantic_review",
+  "source_ids": [
+   "qaoa_introduction",
+   "qaoa_manuscript"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "qaoa_thermodynamic_first",
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "tool": "Independent complete manuscript proof review"
+ },
+ {
+  "command": [],
+  "details": "The local author inspected theorem statements and selected proofs to add these curated relationships. This is not an independent acceptance or a formal extraction. The finite adaptive comparison, empirical limit and nonnegative correction have separate written destinations.",
+  "id": "scalar_lower_source_correspondence_r6",
+  "kind": "semantic_review",
+  "source_ids": [
+   "scalar-r6-source-gaussian-column-split",
+   "scalar-r6-source-finite-adaptive-lower",
+   "scalar-r6-source-empirical-energy-limit",
+   "scalar-r6-source-predictable-lower"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar.source_gaussian_column_split",
+   "scalar.source_finite_adaptive_lower",
+   "scalar.source_empirical_energy_limit",
+   "scalar.source_predictable_lower",
+   "scalar.source_strip_value_lower"
+  ],
+  "tool": "Independent semantic acceptance outstanding"
+ },
+ {
+  "command": [
+   "lake",
+   "env",
+   "comparator",
+   "ComparatorChallenges/SKValue.json"
+  ],
+  "details": "No Comparator replay was run. The upstream config selects OAI.SKValue.value_consequences with the same three permitted axioms and enable_nanoda=false.",
+  "id": "scalar_value_comparator_not_run",
+  "kind": "comparator",
+  "source_ids": [
+   "scalar_value_config",
+   "scalar_value_statement",
+   "scalar_value_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Comparator"
+ },
+ {
+  "command": [
+   "lake",
+   "build",
+   "OAI.Probability.SKValue.Main"
+  ],
+  "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical scalar-value invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay.",
+  "id": "scalar_value_corrected_build_not_run_20261024",
+  "kind": "lean_build",
+  "source_ids": [
+   "active_derived_lakefile",
+   "active_derived_lake_lock",
+   "lean_toolchain",
+   "scalar_value_statement",
+   "scalar_value_config",
+   "scalar_value_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Lake / Lean 4.34.1"
+ },
+ {
+  "command": [
+   "lake",
+   "env",
+   "comparator",
+   "ComparatorChallenges/SKValue.json"
+  ],
+  "details": "Unperformed command for the corrected derived configuration retained at 450c8947971dbad9be943b8705ea96f822240961. The historical scalar-value invocation built and exported its challenge, then failed during solution build under the earlier configuration. It did not reach solution export, kernel checking or comparison. The corrected inputs have not been replayed; this plan does not replace the failed event or predict a successful replay.",
+  "id": "scalar_value_corrected_comparator_not_run_20261024",
+  "kind": "comparator",
+  "source_ids": [
+   "active_derived_lakefile",
+   "active_derived_lake_lock",
+   "lean_toolchain",
+   "scalar_value_statement",
+   "scalar_value_config",
+   "scalar_value_proof"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Standalone Comparator for Lean 4.34.1"
+ },
+ {
+  "command": [
+   "systemd-run",
+   "--user",
+   "--quiet",
+   "--collect",
+   "--wait",
+   "--pipe",
+   "--property=RestrictAddressFamilies=~AF_UNIX",
+   "--working-directory=/work/corpus/qaoa-sk/upstream/lean",
+   "-E",
+   "PATH=/work/toolchains/lean-4.34.1-linux_aarch64/bin:/work/bin:/usr/bin:/bin",
+   "-E",
+   "COMPARATOR_LANDRUN=/work/bin/landrun",
+   "-E",
+   "COMPARATOR_LEAN4EXPORT=/work/sources/comparator/.lake/packages/lean4export/.lake/build/bin/lean4export",
+   "--",
+   "lake",
+   "env",
+   "/work/sources/comparator/.lake/build/bin/comparator",
+   "ComparatorChallenges/SKValue.json"
+  ],
+  "details": "Historical outcome of the original pre-repair build configuration. The original two-target driver is terminal; this scalar invocation stopped because IntegralPositiveMulGaussian.olean was missing. No solution export, kernel acceptance, comparison acceptance or mathematical rejection was observed. The corrected maintained Lake configuration has not been replayed. All 357 original materialized source hashes match their before-run hashes; no current-tree completeness or post-run dependency cleanliness claim is made. Preserve all older events and theorem statuses.",
+  "id": "scalar_value_solution_build_failure_20261024",
+  "kind": "comparator",
+  "receipt_path": "verification/scalar-value-build-failure-20261024.json",
+  "receipt_sha256": "defbc67198194bae2549967032b22f930512c28c56224429ceed2548bb59a20c",
+  "source_ids": [
+   "scalar_value_statement",
+   "scalar_value_config",
+   "scalar_value_proof"
+  ],
+  "status": "failed",
+  "subject_ids": [
+   "scalar_value",
+   "lean.value_consequences"
+  ],
+  "tool": "Standalone Comparator on Lean 4.34.1; stopped during solution build before comparison"
+ },
+ {
+  "command": [
+   "python3",
+   "-c",
+   "import hashlib,json,pathlib,urllib.request; root=pathlib.Path('.'); lock=json.loads((root/'source-lock.json').read_text()); g=json.loads((root/'evidence-graph.json').read_text()); rows=lock['files']+lock['derived_files']; assert all(len((root/r['path']).read_bytes())==r['bytes'] and hashlib.sha256((root/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in rows); assert all('content' not in r or r['content'].encode('utf-8')==(root/r['path']).read_bytes() for r in lock['derived_files']); bound=[s for s in g['sources'] if 'sha256' in s]; assert all(hashlib.sha256((root/s['path']).read_bytes() if 'path' in s else urllib.request.urlopen(s['url'],timeout=30).read()).hexdigest()==s['sha256'] for s in bound); print('source hashes verified:',len(rows),'locked files;',len(bound),'graph source anchors')"
+  ],
+  "details": "Verified all 387 public files and two derived configurations against source-lock.json, including inline derived contents, plus every hash-bound graph source anchor. The two exact public manuscript trees, PDFs, and the QAOA introduction are retained byte-for-byte under the root Apache-2.0 licence. Byte identity is not mathematical verification.",
+  "id": "source_bytes_verified",
+  "kind": "source_hash",
+  "source_ids": [
+   "family_scope",
+   "full_support_statement",
+   "full_support_config",
+   "full_support_proof",
+   "scalar_value_statement",
+   "scalar_value_config",
+   "scalar_value_proof",
+   "lean_toolchain",
+   "upstream_lakefile",
+   "upstream_lake_lock",
+   "openai_license",
+   "mathlib_license",
+   "mathlib_lake_lock",
+   "qaoa_introduction",
+   "qaoa_manuscript",
+   "full_support_manuscript"
+  ],
+  "status": "passed",
+  "subject_ids": [
+   "full_support",
+   "lean.full_support",
+   "scalar_value",
+   "lean.value_consequences",
+   "qaoa_thermodynamic_first",
+   "assumptions.full_support_minimizer",
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion",
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "tool": "Python hashlib SHA-256"
+ },
+ {
+  "command": [],
+  "details": "The new claims and relations are source-located authoring proposals. Their statements, hypotheses and warrants were reconstructed from the supplied original support manuscript and selected Lean source. Independent mathematical approval, complete analytic reconstruction, formal equivalence review, Lean execution and human reader acceptance remain unperformed. Source lookup and structural validation do not settle these obligations.",
+  "id": "support_graph_semantic_review_pending",
+  "kind": "semantic_review",
+  "source_ids": [
+   "support_tex_main",
+   "support_tex_regularity",
+   "support_tex_variation",
+   "support_tex_signs",
+   "support_tex_certificate",
+   "support_tex_curvature",
+   "support_lean_model",
+   "support_lean_gap_curvature",
+   "support_lean_contact",
+   "support_lean_no_terminal",
+   "support_lean_closure",
+   "support_lean_certificate",
+   "support_lean_uniqueness"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "full_support",
+   "support.stieltjes_measure",
+   "support.regularity",
+   "support.diffusion",
+   "support.moment_identity",
+   "support.first_variation",
+   "support.contact",
+   "support.contact_derivatives",
+   "support.step_tails",
+   "support.backward_shapes",
+   "support.forward_shapes",
+   "support.flux_identity",
+   "support.rational_certificate",
+   "support.integrated_coercivity",
+   "support.plateau_transfer",
+   "support.positive_curvature",
+   "support.zero_curvature",
+   "support.terminal_defect",
+   "support.no_terminal_gap",
+   "support.no_bounded_gap",
+   "support.no_initial_gap",
+   "support.full_relative_support",
+   "support.strict_increase",
+   "support.moment_saturation"
+  ],
+  "tool": "Independent Type A review of curated support relations and source correspondence"
+ },
+ {
+  "command": [],
+  "details": "For another admissible beta with Stieltjes measure nu, first variation and weighted Fubini give 2D+P(gamma)[beta-gamma]=integral G dnu-integral G dmu. The bound 0<=q<=1 gives |G(s)|<=1-s; integral (1-s)dmu=integral gamma<infinity, and similarly for nu. Nonnegativity and vanishing on support make the difference nonnegative. Convexity follows by fixing a common admissible control in the control formula, using convexity of the terminal absolute value and linearity of both penalties, then taking the supremum. CHL Proposition 4 identifies this chord criterion with minimality. Conversely, atom addition and compact mass removal prove contact. No support.contact prerequisite is used, since that conditional node would import minimality into the iff. Primary PDF passages and the current long §3.5 were inspected; no formal replay or independent acceptance is asserted.",
+  "id": "support_optimality_warrant_20261024",
+  "kind": "semantic_review",
+  "source_ids": [
+   "chl2018_zero_temperature",
+   "chen2026_full_support",
+   "support_tex_variation",
+   "support_tex_main",
+   "support_tex_regularity"
+  ],
+  "status": "not_run",
+  "subject_ids": [
+   "support.optimality_criterion",
+   "support.first_variation",
+   "support.stieltjes_measure",
+   "support.moment_identity"
+  ],
+  "tool": "Ordinary derivation and primary-source reading; independent semantic acceptance not run"
+ },
+ {
+  "command": [
+   "python",
+   "agent_outputs/support_graph/build_support_graph.py"
+  ],
+  "details": "Observed 24 October 2026: every newly referenced existing TeX/Lean file was read locally; its SHA-256 and byte length matched its entry in the unchanged frozen source-lock.json. No new acquisition, Lean process, proof replay or semantic acceptance is represented. The graph authoring script is retained in this review return for reproducibility.",
+  "id": "support_source_bindings_20261024",
+  "kind": "source_hash",
+  "source_ids": [
+   "support_tex_main",
+   "support_tex_regularity",
+   "support_tex_variation",
+   "support_tex_signs",
+   "support_tex_certificate",
+   "support_tex_curvature",
+   "support_lean_model",
+   "support_lean_gap_curvature",
+   "support_lean_contact",
+   "support_lean_no_terminal",
+   "support_lean_closure",
+   "support_lean_certificate",
+   "support_lean_uniqueness"
+  ],
+  "status": "passed",
+  "subject_ids": [
+   "support.stieltjes_measure",
+   "support.regularity",
+   "support.diffusion",
+   "support.moment_identity",
+   "support.first_variation",
+   "support.contact",
+   "support.contact_derivatives",
+   "support.step_tails",
+   "support.backward_shapes",
+   "support.forward_shapes",
+   "support.flux_identity",
+   "support.rational_certificate",
+   "support.integrated_coercivity",
+   "support.plateau_transfer",
+   "support.positive_curvature",
+   "support.zero_curvature",
+   "support.terminal_defect",
+   "support.no_terminal_gap",
+   "support.no_bounded_gap",
+   "support.no_initial_gap",
+   "support.full_relative_support",
+   "support.strict_increase",
+   "support.moment_saturation"
+  ],
+  "tool": "Python hashlib SHA-256 and exact frozen source-lock lookup"
+ }
+]

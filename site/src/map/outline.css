@@ -1,0 +1,357 @@
+/* The argument as a list. Native scrolling, reading-size titles, 44px targets on
+   touch. Rows indent 16px per level for three levels, then the list refocuses. */
+
+.outline {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 24px 28px calc(48px + var(--sheet-inset, 0px));
+  background: var(--ground);
+}
+
+.outline > * {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.outline__goal {
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px 18px;
+  background: var(--raised);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+}
+
+.outline__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.outline__src {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.outline__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 1.5rem + 0.4vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.outline__scope {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.outline__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.outline__explore {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 18px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-m);
+  background: var(--ink);
+  color: var(--ground);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.outline__explore:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.outline__inspect-goal {
+  min-height: var(--target);
+}
+
+.outline__statement {
+  margin-top: 4px;
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+}
+
+.outline__statement > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  font-size: var(--fs-ui);
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.outline__statement > summary::-webkit-details-marker {
+  display: none;
+}
+
+.outline__statement > summary::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--t-state) var(--ease-out);
+}
+
+.outline__statement[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+.outline__statement-body {
+  padding-top: 8px;
+  overflow-x: auto;
+}
+
+.outline__statement-body .theorem--two {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.outline__statement-body .theorem__formal {
+  padding-left: 0;
+  padding-top: 12px;
+  border-left: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* One recorded route from the goal down to the branch whose inputs are listed. */
+.outline__route {
+  margin-top: 20px;
+}
+
+.outline__route-title {
+  margin: 0 0 6px;
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
+
+.outline__route ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.outline__route li + li::before {
+  content: "›";
+  margin: 0 8px;
+  color: var(--ink-3);
+}
+
+.outline__route li[aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.outline__route .linklike {
+  min-height: 32px;
+}
+
+.outline__inputs {
+  margin-top: 28px;
+}
+
+.outline__inputs-head {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  color: var(--ink);
+  scroll-margin-top: 16px;
+}
+
+.outline__inputs-head:focus {
+  outline: none;
+}
+
+.outline__inputs-head:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.outline__inputs-note {
+  margin: 8px 0 0;
+}
+
+.outline__empty {
+  margin: 12px 0 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.outline__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.outline__list .outline__list {
+  margin-left: 16px;
+  padding-left: 0;
+  border-left: 1px solid var(--rule);
+}
+
+.orow {
+  border-top: 1px solid var(--rule);
+  scroll-margin-bottom: calc(16px + var(--sheet-inset, 0px));
+}
+
+.outline__list .outline__list .orow:first-child {
+  border-top: 0;
+}
+
+.orow__body {
+  display: grid;
+  gap: 6px;
+  padding: 14px 4px 14px 12px;
+  border-radius: var(--radius-s);
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.orow__body.is-selected {
+  background: var(--lit-wash);
+  box-shadow: inset 3px 0 0 var(--lit);
+}
+
+.orow__rel {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  margin: -4px 0 0 -6px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.orow__rel:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.orow__rel.is-selected {
+  color: var(--ink);
+  background: var(--lit-wash);
+  box-shadow: inset 0 0 0 1px var(--lit);
+}
+
+.orow__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-read);
+  line-height: 1.35;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.orow__title.lean {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+}
+
+.orow__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 2px;
+}
+
+.orow__inputs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--raised);
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  cursor: pointer;
+}
+
+.orow__inputs:hover {
+  border-color: var(--ink-3);
+}
+
+.orow__inputs[aria-expanded="true"] {
+  background: color-mix(in oklab, var(--ink) 6%, var(--raised));
+}
+
+.orow__leaf {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.orow__also {
+  min-height: 36px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.orow__inspect {
+  min-height: 36px;
+}
+
+.orow__body--assumption {
+  /* Assumptions alone carry a dashed edge. */
+  box-shadow: inset 2px 0 0 transparent;
+  border-left: 1.5px dashed var(--rule-strong);
+}
+
+@media (max-width: 700px) {
+  .outline {
+    padding: 16px 16px calc(40px + var(--sheet-inset, 0px));
+  }
+  .outline__goal {
+    padding: 16px;
+  }
+  .orow__inputs,
+  .orow__inspect,
+  .orow__also,
+  .orow__rel {
+    min-height: var(--target);
+  }
+  .orow__body {
+    padding: 12px 0 14px 10px;
+  }
+}

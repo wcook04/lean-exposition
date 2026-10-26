@@ -10,7 +10,7 @@
 // horizontal run that shrinks to nothing becomes a straight line smoothly.
 //
 // Arrows follow the blueprint convention: a connector runs from a
-// prerequisite up into the result it helps prove. All `supports` connectors
+// prerequisite up into the result whose argument uses it. All `supports` connectors
 // into one result join a single bus in the gap below it: each rises from its
 // own port, turns onto the bus's track and the bus rises as one stem into the
 // result, ending in one arrowhead. `assumes` and `formalizes` connectors run
@@ -66,9 +66,17 @@ export interface Plan {
   /** Card ids per rank. */
   rows: string[][];
   trackCount: number[];
+  /** Gaps whose lane preferences formed a cycle, so one preference had to give way. */
+  brokenChannels: number[];
 }
 
 const EPS = 0.75;
+/** Two parallel runs of different lines closer than this read as one line. */
+const NEAR = 4;
+/** A sideways step shorter than this reads as a jog, not a route. */
+const JOG = 24;
+/** How close to a card's corner a straight connection may meet it. */
+const SNAP_INSET = 6;
 
 interface Obj {
   id: string;
@@ -77,6 +85,10 @@ interface Obj {
   l: number;
   r: number;
   track: number;
+  /** The consumer this run turns up into, when it is the run's last gap. */
+  parent?: string;
+  /** An assumption or Lean correspondence entering its consumer (not a support bus). */
+  aux?: boolean;
 }
 
 function median(xs: number[]): number {
@@ -135,9 +147,12 @@ export function plan(layout: Layout): Plan {
   }
   const upX = (pe: PlanEdge) => (pe.chain.length ? dx(pe.chain[pe.chain.length - 1]) : botX.get(pe.bus ? `bus:${pe.from}` : pe.key)!);
   const downX = (pe: PlanEdge) => (pe.chain.length ? dx(pe.chain[0]) : topX.get(pe.key)!);
-  const resolve = (card: string, keys: string[], desired: (k: string) => number, into: Map<string, number>) => {
+  const resolve = (card: string, keys: string[], desired: (k: string) => number, into: Map<string, number>, auxFirst = false) => {
     const box = boxes.get(card)!;
     const list = keys.map((k) => ({ k, x: desired(k) })).sort((a, b) => a.x - b.x || (a.k < b.k ? -1 : 1));
+    // Into a consumer, each assumption and Lean correspondence has its own port
+    // left of the support bus's, ordered like their cards.
+    if (auxFirst) list.sort((a, b) => Number(a.k.startsWith("bus:")) - Number(b.k.startsWith("bus:")));
     const xs = spacedWithin(
       list.map((p) => p.x),
       m.portSp,
@@ -152,14 +167,24 @@ export function plan(layout: Layout): Plan {
         card,
         keys,
         (k) => {
-          if (k.startsWith("bus:")) return median(buses.get(card)!.edges.map((ek) => downX(edges.get(ek)!)));
+          if (k.startsWith("bus:")) {
+            // The stem rises straight from one of its inputs (the one nearest the middle), so no input meets it with a short sideways step.
+            const all = buses.get(card)!.edges.map((ek) => downX(edges.get(ek)!));
+            const box = boxes.get(card)!;
+            const inside = all.filter((x) => x >= box.x + m.inset && x <= box.x + box.w - m.inset);
+            const mid = median(all);
+            const xs = inside.length ? inside : all;
+            return xs.reduce((b, x) => (Math.abs(x - mid) < Math.abs(b - mid) - 0.01 ? x : b), xs[0]);
+          }
           return downX(edges.get(k)!);
         },
         botX,
+        true,
       );
     }
     for (const [card, keys] of tops) resolve(card, keys, (k) => upX(edges.get(k)!), topX);
   }
+  const setPorts = () => {
   for (const pe of edges.values()) {
     const child = boxes.get(pe.to)!;
     const parent = boxes.get(pe.from)!;
@@ -170,6 +195,56 @@ export function plan(layout: Layout): Plan {
     const parent = boxes.get(b.parent)!;
     b.stem = (botX.get(`bus:${b.parent}`)! - parent.x) / parent.w;
   }
+  };
+  setPorts();
+
+  // ---- Straight where nearly straight ----------------------------------------------
+  // A connection whose two ends lie less than JOG apart would make a short sideways
+  // step. Where both cards (with a slimmer inset) and their other ports allow it, the
+  // two ends meet at one x instead.
+  const canPlace = (map: Map<string, number>, key: string, card: string, x: number): boolean => {
+    const box = boxes.get(card)!;
+    if (x < box.x + SNAP_INSET - 0.01 || x > box.x + box.w - SNAP_INSET + 0.01) return false;
+    const cur = map.get(key)!;
+    for (const k of (map === topX ? tops.get(card) : bottoms.get(card)) ?? []) {
+      if (k === key) continue;
+      const o = map.get(k)!;
+      if (Math.abs(o - x) < m.portSp - 0.01 || (o - cur) * (o - x) < 0) return false;
+    }
+    return true;
+  };
+  for (const pe of edges.values()) {
+    const lowKey = pe.key;
+    const highKey = pe.bus ? `bus:${pe.from}` : pe.key;
+    const low = topX.get(lowKey)!;
+    if (pe.chain.length) {
+      // Into the prerequisite from its column; out of the consumer into its column.
+      const first = dx(pe.chain[pe.chain.length - 1]);
+      if (Math.abs(low - first) > 0.5 && Math.abs(low - first) < JOG && canPlace(topX, lowKey, pe.to, first)) topX.set(lowKey, first);
+      const top = dx(pe.chain[0]);
+      const high = botX.get(highKey)!;
+      if (!pe.bus && Math.abs(high - top) > 0.5 && Math.abs(high - top) < JOG && canPlace(botX, highKey, pe.from, top)) botX.set(highKey, top);
+      continue;
+    }
+    const high = botX.get(highKey)!;
+    const d = Math.abs(low - high);
+    if (d < 0.5 || d >= JOG) continue;
+    if (canPlace(topX, lowKey, pe.to, high)) topX.set(lowKey, high);
+    else if (canPlace(botX, highKey, pe.from, low)) botX.set(highKey, low);
+    else {
+      // Both move to one x where the two cards overlap.
+      const c = boxes.get(pe.to)!;
+      const p = boxes.get(pe.from)!;
+      const lo = Math.max(c.x, p.x) + SNAP_INSET;
+      const hi = Math.min(c.x + c.w, p.x + p.w) - SNAP_INSET;
+      const x = Math.max(lo, Math.min(hi, (low + high) / 2));
+      if (lo <= hi && canPlace(topX, lowKey, pe.to, x) && canPlace(botX, highKey, pe.from, x)) {
+        topX.set(lowKey, x);
+        botX.set(highKey, x);
+      }
+    }
+  }
+  setPorts();
 
   // ---- Tracks ------------------------------------------------------------------------
   const depth = layout.layers.length;
@@ -185,14 +260,14 @@ export function plan(layout: Layout): Plan {
       if (atParent && pe.bus) {
         let o = busObj.get(pe.from);
         if (!o) {
-          o = { id: `bus:${pe.from}`, top: [xt], bottom: [], l: xt, r: xt, track: -1 };
+          o = { id: `bus:${pe.from}`, top: [xt], bottom: [], l: xt, r: xt, track: -1, parent: pe.from };
           busObj.set(pe.from, o);
         }
         o.bottom.push(xb);
         o.l = Math.min(o.l, xb);
         o.r = Math.max(o.r, xb);
       } else if (Math.abs(xt - xb) > EPS) {
-        const o: Obj = { id: `${pe.key}@${g}`, top: [xt], bottom: [xb], l: Math.min(xt, xb), r: Math.max(xt, xb), track: -1 };
+        const o: Obj = { id: `${pe.key}@${g}`, top: [xt], bottom: [xb], l: Math.min(xt, xb), r: Math.max(xt, xb), track: -1, parent: atParent ? pe.from : undefined, aux: atParent && !pe.bus };
         pieceObj.set(o.id, o);
         perGap[g].push(o);
       }
@@ -202,6 +277,7 @@ export function plan(layout: Layout): Plan {
   for (const [parent, o] of busObj) if (o.r - o.l > EPS) perGap[rank.get(parent)!].push(o);
 
   const trackCount = new Array(depth).fill(0);
+  const brokenChannels: number[] = [];
   const pad = m.radius + 2;
   const inside = (x: number, o: Obj) => x > o.l + EPS && x < o.r - EPS;
   const cost = (a: Obj, b: Obj) => {
@@ -209,34 +285,58 @@ export function plan(layout: Layout): Plan {
     let c = 0;
     for (const x of a.bottom) if (inside(x, b)) c++;
     for (const x of b.top) if (inside(x, a)) c++;
+    // And between the two tracks a's lower leg and b's upper leg both run
+    // vertically: at (nearly) the same x they would lie on top of each other.
+    for (const x of a.bottom) for (const y of b.top) if (Math.abs(x - y) < NEAR) c += 1000;
     return c;
+  };
+  /** A hard order within one consumer: its auxiliary lanes above its support bus, left port highest. */
+  const fixed = (a: Obj, b: Obj): number => {
+    if (!a.parent || a.parent !== b.parent || (!a.aux && !b.aux)) return 0;
+    if (a.aux && !b.aux) return -1;
+    if (!a.aux && b.aux) return 1;
+    return a.top[0] - b.top[0];
   };
   perGap.forEach((objs, g) => {
     if (!objs.length) return;
     const n = objs.length;
     const overlap = (a: Obj, b: Obj) => a.l - pad < b.r + pad && b.l - pad < a.r + pad;
-    const before: Set<number>[] = objs.map(() => new Set());
+    // C[i][j]: what it costs to put i's track above j's. A greedy linear
+    // ordering: repeatedly take the object whose placement above all the
+    // remaining ones costs least (hard orders within a consumer cost most).
+    const HARD = 1e6;
+    const C: number[][] = objs.map(() => new Array<number>(n).fill(0));
     for (let i = 0; i < n; i++)
       for (let j = i + 1; j < n; j++) {
+        const hard = fixed(objs[i], objs[j]);
+        if (hard < 0) C[j][i] = HARD;
+        else if (hard > 0) C[i][j] = HARD;
         if (!overlap(objs[i], objs[j])) continue;
-        const ij = cost(objs[i], objs[j]);
-        const ji = cost(objs[j], objs[i]);
-        if (ij < ji) before[j].add(i);
-        else if (ji < ij) before[i].add(j);
+        C[i][j] += cost(objs[i], objs[j]);
+        C[j][i] += cost(objs[j], objs[i]);
       }
     const placed: number[] = [];
     const done = new Set<number>();
     while (placed.length < n) {
       let pick = -1;
+      let best = Infinity;
       for (let i = 0; i < n; i++) {
         if (done.has(i)) continue;
-        const ready = [...before[i]].every((j) => done.has(j));
-        if (ready && (pick < 0 || objs[i].l < objs[pick].l)) pick = i;
+        let c = 0;
+        for (let j = 0; j < n; j++) if (j !== i && !done.has(j)) c += C[i][j];
+        if (c < best - 1e-9 || (Math.abs(c - best) < 1e-9 && objs[i].l < objs[pick].l)) {
+          best = c;
+          pick = i;
+        }
       }
-      if (pick < 0) for (let i = 0; i < n; i++) if (!done.has(i) && (pick < 0 || objs[i].l < objs[pick].l)) pick = i;
       done.add(pick);
       placed.push(pick);
     }
+    // A preference placed against its cheaper direction means the preferences formed a cycle here.
+    const rankOf = new Map(placed.map((i, r) => [i, r]));
+    let broken = false;
+    for (let i = 0; i < n && !broken; i++) for (let j = 0; j < n; j++) if (C[i][j] > C[j][i] && C[i][j] < HARD && rankOf.get(i)! < rankOf.get(j)!) broken = true;
+    if (broken) brokenChannels.push(g);
     const order: Obj[] = [];
     for (const i of placed) {
       const o = objs[i];
@@ -258,8 +358,81 @@ export function plan(layout: Layout): Plan {
     }
   }
 
+  // ---- Keep verticals apart -------------------------------------------------------
+  // Two different lines whose vertical legs share a stretch of a gap must not
+  // run within NEAR of each other. Tracks already order the legs they can; a
+  // leg that runs the whole gap (a straight drop, a stem beside a taller
+  // neighbour) cannot be fixed by tracks, so the port at one end moves aside.
+  interface Leg {
+    line: string;
+    x: number;
+    /** -1: from the upper row down to track t; 1: from track t down to the lower row; 0: the whole gap. */
+    part: -1 | 0 | 1;
+    t: number;
+    port: { map: Map<string, number>; key: string; card: string } | null;
+  }
+  const legsOf = (): Leg[][] => {
+    const out: Leg[][] = Array.from({ length: Math.max(0, depth - 1) }, () => []);
+    for (const pe of edges.values()) {
+      const line = pe.bus ? `bus:${pe.from}` : pe.key;
+      let xb = topX.get(pe.key)!;
+      for (let g = pe.rankTo - 1; g >= pe.rankFrom; g--) {
+        const atParent = g === pe.rankFrom;
+        const pk = pe.bus ? `bus:${pe.from}` : pe.key;
+        const xt = atParent ? botX.get(pk)! : dx(pe.chain[g - pe.rankFrom - 1]);
+        const t = pe.tracks[g - pe.rankFrom] ?? 0;
+        const low = g === pe.rankTo - 1 ? { map: topX, key: pe.key, card: pe.to } : null;
+        const high = atParent ? { map: botX, key: pk, card: pe.from } : null;
+        if (Math.abs(xt - xb) <= EPS) out[g].push({ line, x: xb, part: 0, t, port: low ?? high });
+        else {
+          out[g].push({ line, x: xb, part: 1, t, port: low });
+          out[g].push({ line, x: xt, part: -1, t, port: high });
+        }
+        xb = xt;
+      }
+    }
+    return out;
+  };
+  const share = (a: Leg, b: Leg) => {
+    if (a.part === 0 || b.part === 0 || a.part === b.part) return true;
+    const lower = a.part === 1 ? a : b;
+    const upper = a.part === 1 ? b : a;
+    return lower.t < upper.t;
+  };
+  const tryMove = (port: NonNullable<Leg["port"]>, away: number, from: number): boolean => {
+    const box = boxes.get(port.card)!;
+    const siblings = (port.map === topX ? tops.get(port.card) : bottoms.get(port.card)) ?? [];
+    const cur = port.map.get(port.key)!;
+    const target = from + Math.sign(away || 1) * (NEAR + 0.5);
+    if (target < box.x + m.inset - 0.01 || target > box.x + box.w - m.inset + 0.01) return false;
+    for (const k of siblings) {
+      if (k === port.key) continue;
+      const x = port.map.get(k)!;
+      if (Math.abs(x - target) < m.portSp - 0.01) return false;
+      // Never pass a neighbour: the order of ports is the order of their lines.
+      if ((x - cur) * (x - target) < 0) return false;
+    }
+    port.map.set(port.key, target);
+    return true;
+  };
+  for (let pass = 0; pass < 6; pass++) {
+    let moved = false;
+    for (const legs of legsOf()) {
+      for (let i = 0; i < legs.length && !moved; i++)
+        for (let j = i + 1; j < legs.length && !moved; j++) {
+          const a = legs[i];
+          const b = legs[j];
+          if (a.line === b.line || Math.abs(a.x - b.x) >= NEAR || !share(a, b)) continue;
+          moved = (!!a.port && tryMove(a.port, a.x - b.x, b.x)) || (!!b.port && tryMove(b.port, b.x - a.x, a.x));
+        }
+      if (moved) break;
+    }
+    if (!moved) break;
+  }
+  setPorts();
+
   const rows: string[][] = layout.layers.map((layer) => layer.filter((id) => !id.startsWith("§")));
-  return { metrics: m, edges, buses, rank, rows, trackCount };
+  return { metrics: m, edges, buses, rank, rows, trackCount, brokenChannels };
 }
 
 // ---- Per frame ------------------------------------------------------------------------

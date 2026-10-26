@@ -19,7 +19,24 @@ export type Route =
   | { view: "read"; stage: Stage; anchor?: string; node?: string; beside?: { stage: Stage; anchor: string } }
   | { view: "checks"; node?: string }
   | { view: "about"; anchor?: string }
+  | {
+      view: "search";
+      /** The exact words typed, as given. */
+      q: string;
+      /** Which kind of result to list; absent means the first kind with matches. */
+      type?: SearchType;
+      /** 1-based page of results within that kind. */
+      page?: number;
+    }
   | { view: "missing"; path: string };
+
+/** The kinds of result search lists, each one table of the edition. */
+export const SEARCH_TYPES = ["records", "sections", "passages", "citations", "sources", "checks"] as const;
+export type SearchType = (typeof SEARCH_TYPES)[number];
+
+function isSearchType(value: string | null): value is SearchType {
+  return !!value && (SEARCH_TYPES as readonly string[]).includes(value);
+}
 
 const STAGE_SET = new Set(["long", "short", "expository"]);
 const BASE = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
@@ -28,12 +45,24 @@ function isStage(value: string | null | undefined): value is Stage {
   return !!value && STAGE_SET.has(value);
 }
 
+function fragmentOf(url: URL): string | undefined {
+  const raw = url.hash.replace(/^#/, "");
+  if (!raw) return undefined;
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    // A malformed fragment should reach the reader's missing-anchor notice,
+    // rather than preventing the whole application from opening.
+    return raw;
+  }
+}
+
 export function parseRoute(url: URL): Route {
   let path = url.pathname;
   if (BASE && path.startsWith(BASE)) path = path.slice(BASE.length) || "/";
   path = path.replace(/\/+$/, "") || "/";
   const q = url.searchParams;
-  const hash = decodeURIComponent(url.hash.replace(/^#/, "")) || undefined;
+  const hash = fragmentOf(url);
   if (path === "/" || path === "/map") {
     const trace = q.get("t");
     const lens = q.get("lens");
@@ -60,6 +89,16 @@ export function parseRoute(url: URL): Route {
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
   if (path === "/about") return { view: "about", anchor: hash };
+  if (path === "/search") {
+    const type = q.get("type");
+    const page = Number(q.get("p"));
+    return {
+      view: "search",
+      q: q.get("q") ?? "",
+      type: isSearchType(type) ? type : undefined,
+      page: Number.isInteger(page) && page > 1 ? page : undefined,
+    };
+  }
   return { view: "missing", path };
 }
 
@@ -108,6 +147,12 @@ export function routeHref(route: Route): string {
       return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
     case "about":
       return `${BASE}/about${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
+    case "search": {
+      q.set("q", route.q);
+      if (route.type) q.set("type", route.type);
+      if (route.page && route.page > 1) q.set("p", String(route.page));
+      return `${BASE}/search?${q}`;
+    }
     case "missing":
       return route.path;
   }

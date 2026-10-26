@@ -1,5 +1,5 @@
-// The goal's own card: the theorem as a paper states it, its Lean
-// counterpart and what has been checked, and where to read it.
+// The goal's plate: the theorem as an account states it, its Lean
+// counterpart, one line about its recorded checks, and where to read it.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Stage } from "../api/types";
@@ -7,7 +7,7 @@ import { useEdition, useRecord, type Edition } from "../app/data";
 import { routeHref } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { partOfPassage, sectionTitleOf, useDocument } from "../reader/documents";
-import { checkSummary } from "../checks/summary";
+import { goalCheckLine } from "../checks/summary";
 import { mountFigures } from "../reader/mount";
 
 /** The result every account selects: the site's main theorem. */
@@ -42,29 +42,64 @@ interface StatementSource {
   anchor: string;
 }
 
-function useStatement(goal: string): { html: string; source: StatementSource; section: string | null } | null {
-  const exposition = useDocument("expository");
-  const short = useDocument("short");
-  return useMemo(() => {
-    for (const doc of [exposition, short]) {
-      if (doc.status !== "ready") continue;
-      const { paper, doc: prepared } = doc.value;
-      const passage = paper.structure.paper.passages.find((p) =>
-        (p.treatments ?? []).some((t) => t.claim_id === goal && t.kinds.includes("statement")),
-      );
-      if (!passage) continue;
-      const index = partOfPassage(prepared, passage.anchor);
-      if (index < 0) continue;
-      return {
-        html: excerptStatement(prepared.render(index).html),
-        source: { stage: paper.stage, anchor: passage.anchor },
-        section: sectionTitleOf(paper, passage.anchor),
-      };
-    }
-    return null;
-  }, [exposition, short, goal]);
+type Doc = ReturnType<typeof useDocument>;
+
+/** A theorem-like run-in lead ("Theorem 1 (…).") opens one of the passage's paragraphs. */
+const THEOREM_LEAD = /data-run-in="(theorem|proposition|corollary|lemma)"/;
+
+/**
+ * The passage where an account treats the goal: its authored statement, else its
+ * first authored treatment, else a passage mapped directly to the goal, preferring
+ * one that states a theorem in so many words.
+ */
+function goalPassage(doc: Doc, goal: string): { stage: Stage; anchor: string; section: string | null; index: number; statement: boolean } | null {
+  if (doc.status !== "ready") return null;
+  const { paper, doc: prepared } = doc.value;
+  const passages = paper.structure.paper.passages;
+  const stated = passages.find((p) => (p.treatments ?? []).some((t) => t.claim_id === goal && t.kinds.includes("statement")));
+  let passage = stated ?? passages.find((p) => (p.treatments ?? []).some((t) => t.claim_id === goal));
+  let statement = !!stated;
+  if (!passage) {
+    const mapped = passages.filter((p) => p.claim_ids.includes(goal));
+    const theorem = mapped.find((p) => {
+      const index = partOfPassage(prepared, p.anchor);
+      return index >= 0 && THEOREM_LEAD.test(prepared.render(index).html);
+    });
+    passage = theorem ?? mapped[0];
+    statement = !!theorem;
+  }
+  if (!passage) return null;
+  return { stage: paper.stage, anchor: passage.anchor, section: sectionTitleOf(paper, passage.anchor), index: partOfPassage(prepared, passage.anchor), statement };
 }
 
+function useStatement(goal: string): { html: string; source: StatementSource; section: string | null; readIn: { stage: Stage; anchor: string; section: string | null }[] } | null {
+  const exposition = useDocument("expository");
+  const short = useDocument("short");
+  const long = useDocument("long");
+  return useMemo(() => {
+    const readIn = [exposition, short, long].map((d) => goalPassage(d, goal)).filter((p): p is NonNullable<typeof p> => !!p);
+    for (const doc of [exposition, short, long]) {
+      const at = goalPassage(doc, goal);
+      if (!at || !at.statement || at.index < 0 || doc.status !== "ready") continue;
+      return {
+        html: excerptStatement(doc.value.doc.render(at.index).html),
+        source: { stage: at.stage, anchor: at.anchor },
+        section: at.section,
+        readIn,
+      };
+    }
+    return readIn.length ? { html: "", source: { stage: readIn[0].stage, anchor: readIn[0].anchor }, section: readIn[0].section, readIn } : null;
+  }, [exposition, short, long, goal]);
+}
+
+/** "§4 The full-support theorem" -> "§4"; a title without a number stays whole. */
+function sectionMark(title: string | null): string {
+  if (!title) return "";
+  const match = title.match(/^(\d+(?:\.\d+)*)\.?\s/);
+  return match ? `§${match[1]}` : "";
+}
+
+/** The plate under the goal's title: the statement as an account states it, its Lean counterpart, the checks line and where to read it. */
 export function TheoremBody({ goal }: { goal: string }) {
   const edition = useEdition();
   const node = edition.graph.nodes.get(goal);
@@ -77,7 +112,7 @@ export function TheoremBody({ goal }: { goal: string }) {
   useEffect(() => {
     if (statementRef.current) return mountFigures(statementRef.current);
   }, [statement]);
-  // A long statement is clamped with a soft fade; its source link below stays in view.
+  // A long statement is clamped with a soft fade; the source link below stays in view.
   const clampRef = useRef<HTMLDivElement>(null);
   const [clamped, setClamped] = useState(false);
   useEffect(() => {
@@ -91,79 +126,77 @@ export function TheoremBody({ goal }: { goal: string }) {
     return () => observer.disconnect();
   }, [statement]);
 
-  const checks = formalRecord.status === "ready" ? checkSummary(edition, formalRecord.value.record.evidence_ids ?? []) : null;
+  const checkNode = formalNode?.id ?? goal;
+  const checks = goalCheckLine(edition, checkNode, formalRecord.status === "ready" && formalNode ? (formalRecord.value.record.evidence_ids ?? undefined) : undefined);
   const leanStatement = formalRecord.status === "ready" ? (formalRecord.value.record.statement as string | undefined) : undefined;
+  const correspondence = formalNode ? edition.graph.edges.find((e) => e.from === goal && e.to === formalNode.id && e.kind === "formalizes") : undefined;
 
   return (
-    <div className={`theorem${formalNode ? " theorem--two" : ""}`}>
-      <div className="theorem__main">
-      {statement ? (
-        <>
-          <div ref={clampRef} className={`theorem__clamp${clamped ? " is-clamped" : ""}`}>
-            <div ref={statementRef} className="prose prose--theorem" dangerouslySetInnerHTML={{ __html: statement.html }} />
-          </div>
-          <p className="theorem__source">
-            <a href={routeHref({ view: "read", stage: statement.source.stage, anchor: statement.source.anchor })}>
-              As the {PAPER_NAMES[statement.source.stage].short.toLowerCase()} states it
-              {statement.section ? `, ${sectionLabel(statement.section)}` : ""}
-            </a>
-          </p>
-        </>
-      ) : goalRecord.status === "ready" && goalRecord.value.record.statement ? (
-        <p className="theorem__recorded">{String(goalRecord.value.record.statement)}</p>
-      ) : null}
-      </div>
-
-      {formalNode && (
-        <div className="theorem__formal">
-          <p className="theorem__lean-line">
-            <span className="theorem__label">In Lean</span>
-            <code className="lean theorem__lean">{leanStatement ?? formalNode.label}</code>
-          </p>
-          {checks && (
-            <p className="theorem__checks">
-              {checksSentence(checks)}{" "}
-              <a href={routeHref({ view: "checks", node: formalNode.id })}>What each check examined</a>
+    <div className={`plate${formalNode ? " plate--two" : ""}`}>
+      <div className="plate__body">
+        <div className="plate__main">
+          {statement?.html ? (
+            <div ref={clampRef} className={`plate__clamp${clamped ? " is-clamped" : ""}`}>
+              <div ref={statementRef} className="prose plate__statement" dangerouslySetInnerHTML={{ __html: statement.html }} />
+            </div>
+          ) : goalRecord.status === "ready" && goalRecord.value.record.statement ? (
+            <p className="plate__recorded">{String(goalRecord.value.record.statement)}</p>
+          ) : null}
+          {statement?.html && (
+            <p className="plate__source">
+              <a href={routeHref({ view: "read", stage: statement.source.stage, anchor: statement.source.anchor })}>
+                Statement from the {PAPER_NAMES[statement.source.stage].short.toLowerCase()}
+                {statement.section ? `, ${sectionLabel(statement.section)}` : ""}
+              </a>
             </p>
           )}
         </div>
-      )}
+        {formalNode && (
+          <div className="plate__lean">
+            <p className="caps plate__label">In Lean</p>
+            <code className="lean plate__code">{leanStatement ?? formalNode.label}</code>
+            <p className="plate__leanstatus">
+              Recorded Lean correspondence{correspondence?.warrant?.status ? ` · review ${correspondence.warrant.status.replace(/_/g, " ")}` : ""}
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="plate__foot">
+        <span className="plate__checks">{checks.line}</span>
+        {checks.total > 0 && (
+          <a href={routeHref({ view: "checks", node: checkNode })}>
+            {checks.total === 1 ? "Show the check record" : `Show the ${checks.total} check records`}
+          </a>
+        )}
+        <span className="plate__sep" />
+        {statement && statement.readIn.length > 0 && (
+          <span className="plate__readin">
+            <span className="plate__readlabel">Read the result in</span>
+            {statement.readIn.map((r) => (
+              <a key={r.stage} href={routeHref({ view: "read", stage: r.stage, anchor: r.anchor })}>
+                {PAPER_NAMES[r.stage].short} {sectionMark(r.section)}
+              </a>
+            ))}
+          </span>
+        )}
+      </div>
     </div>
   );
-}
-
-/** One sentence for the checks: what passed, and which kinds have no completed run. */
-const CHECK_PHRASES: Record<string, string> = {
-  lean_build: "Lean build",
-  comparator: "Comparator run",
-  extraction: "dependency extraction",
-  semantic_review: "correspondence review",
-  platform: "platform check",
-};
-
-export function checksSentence(rows: { kind: string; title: string; counts: Record<string, number> }[]): string {
-  const passed = rows
-    .filter((r) => (r.counts.passed ?? 0) > 0)
-    .map((r) => (r.kind === "source_hash" ? "the cited files match their recorded hashes" : `the ${CHECK_PHRASES[r.kind] ?? r.title} passed`));
-  const open = rows.filter((r) => !(r.counts.passed ?? 0)).map((r) => CHECK_PHRASES[r.kind] ?? r.title);
-  const join = (xs: string[], word: string) => (xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} ${word} ${xs[xs.length - 1]}`);
-  const parts: string[] = [];
-  if (passed.length) parts.push(join(passed, "and"));
-  if (open.length) parts.push(`no completed ${join(open, "or")} is recorded`);
-  const sentence = parts.join("; ");
-  return sentence ? sentence.charAt(0).toUpperCase() + sentence.slice(1) + "." : "";
 }
 
 /** The theorem itself: a run-in statement and its displays, else the opening paragraph and its displays. */
 function excerptStatement(html: string): string {
   const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
   const root = doc.body.firstElementChild as HTMLElement;
-  const lead = root.querySelector("p.run-in") ?? root.querySelector("p");
+  const lead =
+    root.querySelector('p.run-in[data-run-in="theorem"], p.run-in[data-run-in="proposition"], p.run-in[data-run-in="corollary"]') ??
+    root.querySelector("p.run-in") ??
+    root.querySelector("p");
   if (!lead) return html;
   const kept: Element[] = [lead];
   let next = lead.nextElementSibling;
   const isDisplay = (el: Element | null) => !!el && el.classList.contains("math-display");
-  while (next && (isDisplay(next) || (next.tagName === "P" && kept.length < 3 && /^For every/.test(next.textContent ?? "")))) {
+  while (next && (isDisplay(next) || (next.tagName === "P" && kept.length < 3 && /^For\b/.test(next.textContent ?? "")))) {
     kept.push(next);
     next = next.nextElementSibling;
   }

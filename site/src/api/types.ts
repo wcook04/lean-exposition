@@ -92,9 +92,57 @@ export interface MapNodeCard {
   status: string;
 }
 
+/** One premise of a conditional theorem that a recorded application supplies. */
+export interface PremiseBinding {
+  /** The theorem's assumption record that this use discharges. */
+  assumption_id: string;
+  /** Names of the shared objects the supplied premise speaks about. */
+  binding_names: string[];
+  rationale: string;
+  /** The record that supplies the premise for this use. */
+  supplier_id: string;
+}
+
+/** Lines of a source file, inclusive, where an application is made. */
+export interface ApplicationSourceSpan {
+  source_id: string;
+  start_line: number;
+  end_line: number;
+}
+
+/**
+ * An authored application of a conditional theorem, stored on a `supports`
+ * edge (graph 1.2). The edge still points from the conclusion to the theorem;
+ * only the bound premises are discharged for this use.
+ */
+export interface TheoremApplication {
+  premise_bindings: PremiseBinding[];
+  rationale: string;
+  /** The theorem's premises this use still requires, as validated by the backend. */
+  remaining_assumption_ids: string[];
+  /** Objects held fixed throughout the use: name to authored description. */
+  shared_bindings: Record<string, string>;
+  source_span: ApplicationSourceSpan;
+  /** Always "authored": reference checks never establish the binding's meaning. */
+  status: string;
+}
+
+/** The premises already discharged at each end of one scoped map link. */
+export interface ApplicationScope {
+  from_discharged: string[];
+  to_discharged: string[];
+}
+
+/**
+ * A relation as the `/graph` map serves it. A stored edge appears once plainly
+ * and once more (`…/scope/<digest>`) for each distinct application context it
+ * is reached in; a node's assumption reference appears with `owner_ref` and
+ * `source_field` instead of `record_ref`.
+ */
 export interface MapLink {
   id: string;
-  record_ref: string;
+  /** The stored edge; absent for assumption references, which name their owner. */
+  record_ref?: string;
   kind: string; // supports | formalizes | assumption_ids
   semantic_class: string;
   from: string;
@@ -102,6 +150,14 @@ export interface MapLink {
   from_node_id: string;
   to_node_id: string;
   derived: boolean;
+  /** For an assumption reference: the node record that lists it. */
+  owner_ref?: string;
+  /** For an assumption reference: the node field it comes from ("assumption_ids"). */
+  source_field?: string;
+  /** Present on the edge that records a theorem application. */
+  application?: TheoremApplication;
+  /** Present on a link reached inside an application's scope. */
+  application_scope?: ApplicationScope;
 }
 
 export interface GraphMap {
@@ -367,14 +423,7 @@ export interface EdgeRecord {
   kind: string; // supports | formalizes | cites
   evidence_ids: string[];
   /** An applied conditional theorem: which of its premises this use supplies. */
-  application?: {
-    premise_bindings?: { assumption_id: string; binding_names?: string[]; rationale?: string; supplier_id: string }[];
-    rationale?: string;
-    remaining_assumption_ids?: string[];
-    shared_bindings?: unknown;
-    source_span?: unknown;
-    status?: string;
-  };
+  application?: Partial<TheoremApplication>;
 }
 
 export interface EvidenceRecord {

@@ -54,7 +54,7 @@ describe("redrawn paper figures", () => {
 
   it("area: the default view is the paper's picture and offers Explore", () => {
     const html = renderToStaticMarkup(<AreaFigure />);
-    expect(html).toContain("Explore this picture");
+    expect(html).toContain("Change the values in this picture");
     expect(html).toContain('aria-expanded="false"');
     expect(html).toContain("endpoint chord");
   });
@@ -82,8 +82,8 @@ describe("redrawn paper figures", () => {
     const inputs = [...host.querySelectorAll<HTMLInputElement>('input[type="range"]')];
     expect(inputs).toHaveLength(3);
     for (const input of inputs) expect(host.querySelector(`label[for="${input.id}"]`)).not.toBeNull();
-    expect(host.textContent).toContain("calculus model, not an SK moment curve".replace(/^c/, "C"));
-    expect(host.textContent).toContain("shortfall 0.167");
+    expect(host.textContent).toContain("a calculus model, not an SK moment curve");
+    expect(host.textContent).toContain("shortfall is 0.167");
     await act(async () => root.unmount());
     host.remove();
   });

@@ -51,6 +51,27 @@
   color: var(--ink-2);
 }
 
+/* Said once for the whole edition: how much was run, and what review means. */
+.checks__edition {
+  margin-top: var(--space-4);
+  max-width: 40rem;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--rule-strong);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink);
+}
+
+.checks__head .caps {
+  margin-bottom: var(--space-2);
+}
+
+.checks__head h1 .lean {
+  font-size: 0.8em;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
 .checks__error {
   color: var(--fail);
   font-size: var(--fs-ui);
@@ -61,11 +82,11 @@
 }
 
 /* Arrival: a thin accent rule in the gutter, never a filled panel. */
-.is-selected {
+.checks .is-selected {
   position: relative;
 }
 
-.is-selected::before {
+.checks .is-selected::before {
   content: "";
   position: absolute;
   left: calc(-1 * var(--space-4));
@@ -76,36 +97,8 @@
   background: var(--lit);
 }
 
-.node-checks.is-selected::before {
+.checks .node-checks.is-selected::before {
   top: var(--space-1);
-}
-
-/* ------------------------------------------------------------ where things stand */
-
-.standing {
-  list-style: none;
-  margin: var(--space-4) 0 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-3);
-}
-
-.standing li {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: var(--space-4);
-  align-items: baseline;
-}
-
-.standing__kind {
-  font-weight: 600;
-  color: var(--ink);
-  font-size: var(--fs-ui);
-}
-
-.standing__text {
-  color: var(--ink);
-  max-width: 36rem;
 }
 
 /* ---------------------------------------------------------- formal statements */
@@ -212,38 +205,6 @@
 }
 
 /* ------------------------------------------------------------ kinds of check */
-
-.kind {
-  padding: var(--space-6) 0 var(--space-2);
-}
-
-.kind + .kind {
-  border-top: 1px solid var(--rule);
-  margin-top: var(--space-4);
-}
-
-.kind__title {
-  font-family: var(--font-serif);
-  font-size: var(--fs-h3);
-  line-height: var(--lh-tight);
-}
-
-.kind__question {
-  margin-top: var(--space-2);
-  max-width: 38rem;
-  color: var(--ink);
-}
-
-.kind__counts {
-  margin-top: var(--space-1);
-  color: var(--ink-2);
-  font-size: var(--fs-ui);
-  font-variant-numeric: tabular-nums;
-}
-
-.kind__toggle {
-  margin-top: var(--space-3);
-}
 
 .chevron {
   transition: transform var(--t-state) var(--ease-out);
@@ -452,10 +413,9 @@
   .checks {
     padding: var(--space-6) var(--space-4) var(--space-7);
   }
-  .is-selected::before {
+  .checks .is-selected::before {
     left: calc(-1 * var(--space-3));
   }
-  .standing li,
   .outcomes__row,
   .ev {
     grid-template-columns: minmax(0, 1fr);
@@ -473,4 +433,191 @@
 
 .ev--compact {
   padding: var(--space-3) 0;
+}
+
+/* ------------------------------------------------------------ rows per kind
+   Check / What it examined / Recorded outcome / Details. A row's history
+   opens beneath it across the full width. */
+
+.checktable {
+  width: 100%;
+  margin-top: var(--space-4);
+  border-collapse: collapse;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+}
+
+.checktable thead th {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  color: var(--ink-2);
+}
+
+.checktable thead th:nth-child(1) {
+  width: 22%;
+}
+
+.checktable thead th:nth-child(3) {
+  width: 24%;
+}
+
+.checktable thead th:last-child {
+  width: 1%;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+.checkrow > tr:first-child > * {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+.checkrow > tr:first-child > :last-child {
+  padding-right: 0;
+}
+
+.checkrow + .checkrow > tr:first-child > * {
+  border-top: 1px solid var(--rule);
+}
+
+.checkrow__kind {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.checkrow__examined {
+  color: var(--ink-2);
+}
+
+.checkrow__subjects {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.checkrow__counts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.checkrow__counts .outcome {
+  font-weight: 500;
+}
+
+.checkrow__counts .outcome--failed {
+  font-weight: 600;
+}
+
+.checkrow__note {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+
+.checkrow__toggle {
+  white-space: nowrap;
+}
+
+.checkrow__history > td {
+  padding: 0 0 var(--space-4) var(--space-4);
+  border-left: 2px solid var(--rule);
+}
+
+.checkrow__history[hidden] {
+  display: none;
+}
+
+.checkrow__history .ledger {
+  margin-top: 0;
+}
+
+.outcome-key {
+  margin-top: var(--space-5);
+  font-size: var(--fs-ui);
+}
+
+.outcome-key summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  width: max-content;
+}
+
+.outcome-key summary:hover {
+  color: var(--ink);
+}
+
+.subject h2 .lean {
+  font-size: 0.8em;
+}
+
+.subject .checks__intro a.lean {
+  color: var(--formal);
+}
+
+/* Phones: each kind becomes a block; the column names become small labels. */
+@media (max-width: 700px) {
+  .checktable thead {
+    display: none;
+  }
+  .checktable,
+  .checkrow,
+  .checkrow > tr,
+  .checkrow > tr > * {
+    display: block;
+    width: auto;
+  }
+  .checkrow > tr:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-4) 0;
+  }
+  .checkrow + .checkrow > tr:first-child {
+    border-top: 1px solid var(--rule);
+  }
+  .checkrow > tr:first-child > *,
+  .checkrow + .checkrow > tr:first-child > * {
+    padding: 0;
+    border-top: 0;
+  }
+  .checkrow__kind {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .checkrow__details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .checkrow__examined,
+  .checkrow__outcome {
+    grid-column: 1 / -1;
+  }
+  .checkrow__examined::before,
+  .checkrow__outcome::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .checkrow__details::before {
+    content: none;
+  }
+  .checkrow__history[hidden] {
+    display: none;
+  }
+  .checkrow__history > td {
+    padding: 0 0 var(--space-4) var(--space-3);
+  }
 }

@@ -1,22 +1,25 @@
 import { describe, expect, it } from "vitest";
-import type { PaperStructure, ReadingItem, Stage } from "../src/api/types";
+import type { PaperStructure, Stage } from "../src/api/types";
 import { prepareDocument, type PreparedDocument } from "../src/reader/engine";
 import {
   authoredRoutes,
-  describeRecords,
+  chainOf,
+  companionAnchor,
   estimateHeight,
   firstPassageFor,
   idleOrder,
   outlineOf,
   parsePassageRef,
+  passagesBetween,
   placeName,
+  recordTally,
+  relationWord,
   resolveAnchor,
   resolveBeside,
-  routeLead,
-  routeTarget,
+  sameTopic,
+  sectionNumber,
   sectionTitleIn,
   selectionSpan,
-  sharedPlaces,
   statusWords,
   withoutIds,
   type Structures,
@@ -69,7 +72,7 @@ describe("naming places", () => {
   it("names a passage by the heading a reader lands on, with the account when it is another", () => {
     const title = sectionTitleIn(structures.long, "curvature");
     expect(title).toMatch(/^4\.1 /);
-    expect(placeName(structures, "expository", "long", "curvature")).toBe(`Long record §4.1 ${title!.replace(/^4\.1 /, "")}`);
+    expect(placeName(structures, "expository", "long", "curvature")).toBe(`Long record, §4.1 ${title!.replace(/^4\.1 /, "")}`);
     expect(placeName(structures, "long", "long", "curvature")).toMatch(/^§4\.1 /);
   });
 
@@ -81,16 +84,17 @@ describe("naming places", () => {
   });
 
   it("puts the edition status in words", () => {
-    expect(statusWords("draft", "needs_revision")).toBe("Draft; review needs revision.");
+    expect(statusWords("draft", "needs_revision")).toBe("Draft. Review recorded as needing revision.");
     expect(statusWords(undefined, undefined)).toBe("");
   });
 
-  it("counts claims and assumptions by kind", () => {
+  it("tallies a passage's records by kind for its control", () => {
     const graph = graphFixture();
     const claim = [...graph.nodes.values()].find((n) => n.kind === "claim")!.id;
     const assumption = [...graph.nodes.values()].find((n) => n.kind === "assumption")!.id;
-    expect(describeRecords([claim], graph)).toBe("claim");
-    expect(describeRecords([claim, claim, assumption], graph)).toBe("2 claims and 1 assumption");
+    expect(recordTally([claim], graph)).toBe("1 claim");
+    expect(recordTally([claim, claim, assumption, assumption], graph)).toBe("2 claims · 2 assumptions");
+    expect(recordTally([assumption], graph)).toBe("1 assumption");
   });
 });
 
@@ -107,30 +111,71 @@ describe("routes between accounts", () => {
     expect(routes.every((r) => r.rationale.length > 0)).toBe(true);
   });
 
-  it("words each route from the reader's side", () => {
-    const here = { stage: "expository" as Stage, anchor: "curvature-transfer" };
-    const [incoming] = authoredRoutes(structures, "expository", "curvature-transfer");
-    expect(routeLead(incoming, here, structures)).toBe("A fuller treatment");
-    const answer = authoredRoutes(structures, "expository", "changed-cases").find((r) => r.kind === "answers")!;
-    expect(routeLead(answer, { stage: "expository", anchor: "changed-cases" }, structures)).toBe("Answered below");
-    expect(routeTarget(answer, { stage: "expository", anchor: "changed-cases" }, structures)).toBe("see the answer");
-    const question = authoredRoutes(structures, "expository", "changed-case-answer")[0];
-    expect(routeTarget(question, { stage: "expository", anchor: "changed-case-answer" }, structures)).toBe("the question above");
+  it("words each relation from the reader's side, in its recorded direction", () => {
+    // `expands` is stored from the fuller treatment to the shorter one.
+    expect(relationWord({ kind: "expands", relation: "incoming" })).toBe("Expanded by");
+    expect(relationWord({ kind: "expands", relation: "outgoing" })).toBe("Expands");
+    expect(relationWord({ kind: "illustrates", relation: "outgoing" })).toBe("Illustrates");
+    expect(relationWord({ kind: "illustrates", relation: "incoming" })).toBe("Illustrated by");
+    expect(relationWord({ kind: "answers", relation: "incoming" })).toBe("Answered by");
     const example = authoredRoutes(structures, "expository", "zero-candidate")[0];
-    expect(routeLead(example, { stage: "expository", anchor: "zero-candidate" }, structures)).toBe("This is an example of");
+    expect(relationWord(example)).toBe("Illustrates");
+  });
+});
+
+describe("same topic in…", () => {
+  const here = { stage: "short" as Stage, anchor: "density-consequence" };
+
+  it("offers the long record's fuller treatments of short §4, not its overview", () => {
+    const groups = sameTopic(structures, here);
+    const long = groups.find((g) => g.stage === "long")!;
+    expect(long.authored.map((d) => `${d.relation}:${d.anchor}`).sort()).toEqual(["Expanded by:density", "Expanded by:fixed-time-coercivity"]);
+    expect(long.authored.every((d) => d.rationale.length > 0)).toBe(true);
+    // Positivity is found through the claim both passages map, and the claim is named.
+    const viaDensity = long.shared.find((s) => s.places.some((p) => p.anchor === "density-positive"))!;
+    expect(viaDensity.record).toBe("scalar.smooth_positive_density");
+    // The overview maps the same claim, but a more specific passage comes first and no authored link names it.
+    const anchors = long.shared.flatMap((s) => s.places.map((p) => p.anchor));
+    expect(anchors.indexOf("density-positive")).toBeLessThan(anchors.indexOf("overview"));
+    expect(long.authored.some((d) => d.anchor === "overview")).toBe(false);
+    // The exposition is expanded by this passage: the direction is kept.
+    const expo = groups.find((g) => g.stage === "expository")!;
+    expect(expo.authored.map((d) => `${d.relation}:${d.anchor}`)).toEqual(["Expands:density-and-approximation"]);
+    // An authored destination is not repeated as a shared one.
+    expect(expo.shared.flatMap((s) => s.places).some((p) => p.anchor === "density-and-approximation")).toBe(false);
   });
 
-  it("keeps derived shared-claim passages apart from authored ones and deduplicates them", () => {
-    const self = structures.expository!.paper.passages.find((p) => p.anchor === "curvature-transfer")!.ref;
-    const other = (stage: Stage, anchor: string) => structures[stage]!.paper.passages.find((p) => p.anchor === anchor)!.ref;
-    const items: ReadingItem[] = [
-      { kind: "expands", derived: false, annotation_basis: "", from: other("long", "curvature"), to: self, selection_relation: "incoming" },
-      { kind: "shared_claim", derived: true, annotation_basis: "", from: self, to: other("long", "curvature"), selection_relation: "outgoing", shared_claim_refs: ["a"] },
-      { kind: "shared_claim", derived: true, annotation_basis: "", from: self, to: other("short", "curvature"), selection_relation: "outgoing", shared_claim_refs: ["a", "b"] },
-      { kind: "shared_claim", derived: true, annotation_basis: "", from: other("short", "curvature"), to: self, selection_relation: "incoming", shared_claim_refs: ["a"] },
-    ];
-    const places = sharedPlaces(items, { stage: "expository", anchor: "curvature-transfer" }, new Set(["long:curvature"]));
-    expect(places).toEqual([{ stage: "short", anchor: "curvature", shared: 2 }]);
+  it("names the record that produced each shared match", () => {
+    for (const g of sameTopic(structures, here)) {
+      for (const s of g.shared) {
+        for (const p of s.places) expect(structures[p.stage]!.paper.passages.find((x) => x.anchor === p.anchor)!.claim_ids).toContain(s.record);
+      }
+    }
+  });
+
+  it("keeps a genuine no-match", () => {
+    const groups = sameTopic(structures, { stage: "long", anchor: "qaoa-depth-one" });
+    const expo = groups.find((g) => g.stage === "expository")!;
+    expect(expo.ready).toBe(true);
+    expect(expo.authored).toEqual([]);
+    expect(expo.shared).toEqual([]);
+  });
+
+  it("says when an account's structure has not arrived", () => {
+    const groups = sameTopic({ short: structures.short }, here);
+    expect(groups.find((g) => g.stage === "long")).toMatchObject({ ready: false, authored: [], shared: [] });
+  });
+
+  it("lists authored links inside the same account after the other accounts", () => {
+    const synthetic: Structures = {
+      expository: {
+        ...structures.expository!,
+        reading_links: [{ from_anchor: "b", to_stage: "expository", to_anchor: "a", kind: "answers", rationale: "Answers it.", from_text_sha256: "", to_text_sha256: "" }],
+      },
+    };
+    const groups = sameTopic(synthetic, { stage: "expository", anchor: "a" });
+    expect(groups[groups.length - 1]).toMatchObject({ stage: "expository", authored: [{ anchor: "b", relation: "Answered by", rationale: "Answers it." }] });
+    expect(sameTopic(synthetic, { stage: "expository", anchor: "b" }).at(-1)!.authored[0]).toMatchObject({ anchor: "a", relation: "Answers" });
   });
 });
 
@@ -155,6 +200,22 @@ describe("anchors", () => {
     expect(resolveBeside(long, structures.long!, "curvature")).toMatchObject({ passage: "curvature" });
   });
 
+  it("opens companion links without fragments at a real passage in every account", () => {
+    for (const stage of ["long", "short", "expository"] as Stage[]) {
+      const anchor = companionAnchor(structures[stage], "");
+      expect(resolveBeside(doc(stage), structures[stage]!, anchor)).toMatchObject({ passage: anchor });
+      expect(companionAnchor(structures[stage], undefined)).toBe(anchor);
+    }
+  });
+
+  it("retains explicit companion fragments, including missing ones", () => {
+    const anchor = companionAnchor(structures.long, "curvature-algebra");
+    expect(resolveBeside(doc("long"), structures.long!, anchor)).toMatchObject({ fragment: "curvature-algebra" });
+    const missing = companionAnchor(structures.long, "no-such-place");
+    expect(missing).toBe("no-such-place");
+    expect(resolveBeside(doc("long"), structures.long!, missing)).toBeNull();
+  });
+
   it("finds the first passage in another account discussing a claim", () => {
     const claim = structures.expository!.paper.passages.find((p) => p.anchor === "curvature-transfer")!.claim_ids[0];
     const anchor = firstPassageFor(structures.long, [claim]);
@@ -164,12 +225,20 @@ describe("anchors", () => {
 });
 
 describe("outline", () => {
-  it("lists sections of levels 2 and 3 without the subtitle", () => {
+  it("lists sections of levels 2 to 4 without the subtitle", () => {
     const outline = outlineOf(doc("expository"));
     expect(outline[0].title).toBe("1. The finite optimisation problem");
-    expect(outline.every((e) => e.level === 2 || e.level === 3)).toBe(true);
+    expect(outline.every((e) => e.level >= 2 && e.level <= 4)).toBe(true);
     expect(outline.some((e) => e.title.startsWith("A variational argument"))).toBe(false);
     expect(outlineOf(doc("long")).some((e) => e.title === "A long reasoning record")).toBe(false);
+  });
+
+  it("reaches long §8.1.1 and names its parents as a document breadcrumb", () => {
+    const outline = outlineOf(doc("long"));
+    const deep = outline.find((e) => e.level === 4 && /^8\.1\.1\b/.test(e.title))!;
+    expect(deep).toBeTruthy();
+    expect(chainOf(outline, deep.id).map((e) => sectionNumber(e.title))).toEqual(["§8", "§8.1", "§8.1.1"]);
+    expect(chainOf(outline, null)).toEqual([]);
   });
 });
 
@@ -190,6 +259,23 @@ describe("rendering helpers", () => {
   it("takes the byte span of the whole parts a selection touches", () => {
     const parts = doc("expository").parts;
     expect(selectionSpan(parts, 7, 5)).toEqual({ start: parts[5].span.start, end: parts[7].span.end });
+  });
+
+  it("counts the mapped passages a selection touches", () => {
+    const parts = doc("short").parts;
+    const i = parts.findIndex((p) => p.kind === "passage");
+    expect(passagesBetween(parts, i, i)).toBe(1);
+    expect(passagesBetween(parts, 0, parts.length - 1)).toBe(parts.filter((p) => p.kind === "passage").length);
+  });
+
+  it("makes a copy's own fragment links open the reader in their account", () => {
+    const long = doc("long");
+    const index = long.parts.findIndex((p) => /href="#/.test(long.render(p.index).html));
+    const primary = long.render(index).html;
+    expect(primary).toMatch(/<a href="#[^"]+" data-in="long"/);
+    const copy = withoutIds(primary);
+    expect(copy).not.toMatch(/href="#/);
+    expect(copy).toMatch(/href="\/read\/long#[^"]+" data-fragment="[^"]+"/);
   });
 
   it("strips fragment ids from a second copy of a part", () => {

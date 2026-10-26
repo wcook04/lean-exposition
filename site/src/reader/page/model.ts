@@ -2,7 +2,7 @@
 // reading position are named and found. Nothing here touches the DOM or the
 // network, so the rules are tested directly against the captured fixtures.
 
-import type { PaperStructure, ReadingItem, Stage, StructurePassage } from "../../api/types";
+import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
@@ -54,19 +54,19 @@ export function sectionTitleIn(structure: PaperStructure | undefined, anchor: st
 /** "Long record §4.4 How the signs…" for another account; "§4.4 How the signs…" within this one. */
 export function placeName(structures: Structures, here: Stage, stage: Stage, anchor: string): string {
   const title = sectionTitleIn(structures[stage], anchor);
-  const where = title ? sectionLabel(title) : `the passage “${anchor.replace(/-/g, " ")}”`;
-  return stage === here ? where : `${PAPER_NAMES[stage].short} ${where}`;
+  // A passage outside any numbered section is named from its anchor: "abstract" -> "Abstract".
+  const plain = anchor.replace(/-/g, " ");
+  const where = title ? sectionLabel(title) : plain.charAt(0).toUpperCase() + plain.slice(1);
+  return stage === here ? where : `${PAPER_NAMES[stage].short}, ${where}`;
 }
 
 /** "Draft; review needs revision." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
-  if (state) parts.push(words(state).replace(/^./, (c) => c.toUpperCase()));
-  if (review) parts.push(`review ${words(review)}`);
-  if (!parts.length) return "";
-  const sentence = parts.join("; ");
-  return sentence.replace(/^./, (c) => c.toUpperCase()) + ".";
+  if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
+  if (review) parts.push(`Review recorded as ${review === "needs_revision" ? "needing revision" : words(review)}.`);
+  return parts.join(" ");
 }
 
 // ------------------------------------------------------------------ routes
@@ -105,51 +105,91 @@ export function authoredRoutes(structures: Structures, stage: Stage, anchor: str
   return out.sort((a, b) => (a.relation === b.relation ? 0 : a.relation === "incoming" ? -1 : 1));
 }
 
-/** The words that introduce a route, read from the passage the reader is on. */
-export function routeLead(route: Route, here: { stage: Stage; anchor: string }, structures: Structures): string {
-  if (route.relation === "outgoing") {
-    if (route.kind === "expands") return "This expands";
-    if (route.kind === "illustrates") return "This is an example of";
-    if (route.kind === "answers") return "This answers";
-    return "This links to";
+/** How the passage being read stands to a route's destination, worded from the reader's side. */
+export function relationWord(route: Pick<Route, "kind" | "relation">): string {
+  const incoming = route.relation === "incoming";
+  switch (route.kind) {
+    case "expands":
+      // Stored from the fuller treatment to the shorter one.
+      return incoming ? "Expanded by" : "Expands";
+    case "illustrates":
+      return incoming ? "Illustrated by" : "Illustrates";
+    case "answers":
+      return incoming ? "Answered by" : "Answers";
+    default:
+      return incoming ? "Linked from" : "Links to";
   }
-  if (route.kind === "expands") return "A fuller treatment";
-  if (route.kind === "illustrates") return "An example of this";
-  if (route.kind === "answers") {
-    if (route.stage !== here.stage) return `Answered in the ${PAPER_NAMES[route.stage].short.toLowerCase()}`;
-    const order = structures[here.stage]?.paper.passages ?? [];
-    const at = (a: string) => order.find((p) => p.anchor === a)?.block_span.start_byte ?? 0;
-    return at(route.anchor) > at(here.anchor) ? "Answered below" : "Answered above";
-  }
-  return "Linked from";
 }
 
-export interface SharedPlace {
+export interface Destination {
   stage: Stage;
   anchor: string;
-  shared: number;
+  /** "Expanded by", "Answers", …; null for a passage found through a shared record. */
+  relation: string | null;
+  rationale: string;
+}
+
+export interface AccountDestinations {
+  stage: Stage;
+  /** False while that account's structure has not arrived. */
+  ready: boolean;
+  authored: Destination[];
+  /** Passages mapping one of this passage's claims, grouped by the claim that produced the match. */
+  shared: { record: string; places: Destination[] }[];
 }
 
 /**
- * Passages found by a shared claim (derived links), grouped by account in
- * reading order, without the passage itself or any authored destination.
+ * Where the same topic is treated, for the "Passages linked to this one" chooser: for each
+ * other account, the authored reading links touching this passage with their
+ * direction, then passages that map one of its claims (named by that claim),
+ * the most specific first. The reader's own account follows when the authors
+ * linked a passage in it. Nothing is inferred beyond the two recorded kinds.
  */
-export function sharedPlaces(items: ReadingItem[], here: { stage: Stage; anchor: string }, exclude: Set<string>): SharedPlace[] {
-  const found = new Map<string, SharedPlace>();
-  for (const item of items) {
-    if (!item.derived) continue;
-    for (const ref of [item.from, item.to]) {
-      const p = parsePassageRef(ref);
-      if (!p || (p.stage === here.stage && p.anchor === here.anchor)) continue;
-      const key = `${p.stage}:${p.anchor}`;
-      if (exclude.has(key)) continue;
-      const prior = found.get(key);
-      const shared = item.shared_claim_refs?.length ?? 0;
-      if (!prior || prior.shared < shared) found.set(key, { ...p, shared });
+export function sameTopic(structures: Structures, here: { stage: Stage; anchor: string }): AccountDestinations[] {
+  const routes = authoredRoutes(structures, here.stage, here.anchor);
+  const claims = passageOf(structures[here.stage], here.anchor)?.claim_ids ?? [];
+  const taken = new Set([`${here.stage}:${here.anchor}`, ...routes.map((r) => `${r.stage}:${r.anchor}`)]);
+  const stages = [...STAGE_ORDER.filter((s) => s !== here.stage), here.stage];
+  const out: AccountDestinations[] = [];
+  for (const stage of stages) {
+    const structure = structures[stage];
+    const authored = routes
+      .filter((r) => r.stage === stage)
+      .map((r) => ({ stage, anchor: r.anchor, relation: relationWord(r), rationale: r.rationale }));
+    const shared: AccountDestinations["shared"] = [];
+    if (stage !== here.stage && structure) {
+      const passages = [...structure.paper.passages].sort(
+        (a, b) =>
+          a.claim_ids.length + a.assumption_ids.length - (b.claim_ids.length + b.assumption_ids.length) ||
+          a.block_span.start_byte - b.block_span.start_byte,
+      );
+      for (const record of claims) {
+        const places = passages
+          .filter((p) => p.claim_ids.includes(record) && !taken.has(`${stage}:${p.anchor}`))
+          .map((p) => ({ stage, anchor: p.anchor, relation: null, rationale: "" }));
+        places.forEach((p) => taken.add(`${stage}:${p.anchor}`));
+        if (places.length) shared.push({ record, places });
+      }
     }
+    if (stage === here.stage && !authored.length) continue;
+    out.push({ stage, ready: !!structure, authored, shared });
   }
-  const rank = (s: Stage) => (s === here.stage ? -1 : STAGE_ORDER.indexOf(s));
-  return [...found.values()].sort((a, b) => rank(a.stage) - rank(b.stage) || b.shared - a.shared);
+  return out;
+}
+
+/** "2 claims · 2 assumptions", "1 claim", counted by each record's kind. */
+export function recordTally(ids: string[], graph: { nodes: Map<string, { kind: string }> }): string {
+  const assumptions = ids.filter((id) => graph.nodes.get(id)?.kind === "assumption").length;
+  const claims = ids.length - assumptions;
+  const one = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  return [claims ? one(claims, "claim") : "", assumptions ? one(assumptions, "assumption") : ""].filter(Boolean).join(" · ");
+}
+
+/** The mapped passages among the parts a selection touches. */
+export function passagesBetween(parts: PreparedPart[], a: number, b: number): number {
+  let n = 0;
+  for (let i = Math.min(a, b); i <= Math.max(a, b); i++) if (parts[i]?.kind === "passage") n++;
+  return n;
 }
 
 // --------------------------------------------------------------- anchors
@@ -192,6 +232,11 @@ export function resolveBeside(
   return { part: at, fragment: anchor };
 }
 
+/** A companion link without a fragment opens that account's first mapped passage. */
+export function companionAnchor(structure: PaperStructure | undefined, fragment: string | undefined): string {
+  return fragment || structure?.paper.passages[0]?.anchor || "";
+}
+
 /** The first passage in an account that discusses any of these records, preferring the first. */
 export function firstPassageFor(structure: PaperStructure | undefined, ids: string[]): string | null {
   if (!structure || !ids.length) return null;
@@ -210,23 +255,46 @@ export interface OutlineEntry {
   title: string;
   level: number;
   part: number;
+  /** The id of the entry this one sits under, or null for a top-level section. */
+  parent: string | null;
 }
 
 /**
- * Sections of level 2 and 3 as the reader sees them, with their fragment
- * ids. A level-2 heading set directly under the title (the subtitle) is part
- * of the title block, not a section.
+ * Sections of levels 2 to 4 as the reader sees them, with their fragment ids
+ * and the section each sits under. A level-2 heading set directly under the
+ * title (the subtitle) is part of the title block, not a section. Level-4
+ * entries are listed so a deep subsection (long §8.1.1) can be reached; the
+ * outline shows them only inside the active branch.
  */
 export function outlineOf(doc: PreparedDocument): OutlineEntry[] {
   const all = doc.parts.flatMap((part) => part.headings.map((h) => ({ ...h, part: part.index })));
   const out: OutlineEntry[] = [];
+  const stack: OutlineEntry[] = [];
   all.forEach((h, i) => {
-    if (h.level < 2 || h.level > 3) return;
+    if (h.level < 2 || h.level > 4) return;
     const prev = all[i - 1];
     if (prev && prev.level === 1 && h.level === 2 && prev.part === h.part && !/^\d/.test(h.title)) return;
-    out.push({ id: h.id, title: h.title, level: h.level, part: h.part });
+    while (stack.length && stack[stack.length - 1].level >= h.level) stack.pop();
+    const entry = { id: h.id, title: h.title, level: h.level, part: h.part, parent: stack[stack.length - 1]?.id ?? null };
+    out.push(entry);
+    stack.push(entry);
   });
   return out;
+}
+
+/** The entries from the top-level section down to `id`: a document breadcrumb, not a history. */
+export function chainOf(entries: OutlineEntry[], id: string | null): OutlineEntry[] {
+  if (!id) return [];
+  const byId = new Map(entries.map((e) => [e.id, e]));
+  const chain: OutlineEntry[] = [];
+  for (let e = byId.get(id); e; e = e.parent ? byId.get(e.parent) : undefined) chain.unshift(e);
+  return chain;
+}
+
+/** "8.1.1 Bounds" -> "§8.1.1"; an unnumbered heading keeps its words. */
+export function sectionNumber(title: string): string {
+  const match = title.match(/^(\d+(?:\.\d+)*)\.?\s/);
+  return match ? `§${match[1]}` : title;
 }
 
 // ------------------------------------------------------------- rendering
@@ -262,22 +330,20 @@ export function selectionSpan(parts: PreparedPart[], a: number, b: number): { st
   return { start: parts[lo].span.start, end: parts[hi].span.end };
 }
 
-/** HTML for a second copy of a part: fragment ids become data attributes, so no id repeats on the page. */
+/**
+ * HTML for a second copy of a part: fragment ids become data attributes, so
+ * no id repeats on the page, and a link to a fragment of its own account
+ * (`#strip-estimates`) opens that place in the reader, wherever the copy is
+ * shown, instead of being resolved against the page around it.
+ */
 export function withoutIds(html: string): string {
-  return html.replace(/(<[a-z][^>]*?)\sid="/gi, '$1 data-id="');
-}
-
-/** The majority region of a passage's records, for its margin rule. */
-export function majorityRegion(ids: string[], regionOf: (id: string) => string | undefined): string | null {
-  const counts = new Map<string, number>();
-  for (const id of ids) {
-    const r = regionOf(id);
-    if (r) counts.set(r, (counts.get(r) ?? 0) + 1);
-  }
-  let best: string | null = null;
-  let n = 0;
-  for (const [r, c] of counts) if (c > n) [best, n] = [r, c];
-  return best;
+  return html
+    .replace(/(<[a-z][^>]*?)\sid="/gi, '$1 data-id="')
+    .replace(/<a\b[^>]*>/gi, (tag) => {
+      const stage = /\sdata-in="([a-z]+)"/.exec(tag)?.[1];
+      if (!stage || !STAGES.has(stage)) return tag;
+      return tag.replace(/\shref="#([^"]*)"/, (_m, fragment: string) => ` href="/read/${stage}#${fragment}" data-fragment="${fragment}"`);
+    });
 }
 
 /** "3 claims", "1 claim and 1 assumption", for counts a reader can check against the chips. */
@@ -288,27 +354,4 @@ export function recordCount(claims: number, assumptions: number): string {
   return one(claims, "claim");
 }
 
-/** "claim", "3 claims", "2 claims and 1 assumption", counted by each record's kind. */
-export function describeRecords(ids: string[], graph: { nodes: Map<string, { kind: string }> }): string {
-  const assumptions = ids.filter((id) => graph.nodes.get(id)?.kind === "assumption").length;
-  const claims = ids.length - assumptions;
-  if (claims === 1 && !assumptions) return "claim";
-  if (assumptions === 1 && !claims) return "assumption";
-  return recordCount(claims, assumptions);
-}
 
-/**
- * The words a route's link shows. Another section is named by its heading;
- * a passage in the same section is named by where it is, so a question and
- * its answer never point at the heading both sit under.
- */
-export function routeTarget(route: Route, here: { stage: Stage; anchor: string }, structures: Structures): string {
-  const sameSection =
-    route.stage === here.stage && sectionTitleIn(structures[here.stage], route.anchor) === sectionTitleIn(structures[here.stage], here.anchor);
-  if (!sameSection) return placeName(structures, here.stage, route.stage, route.anchor);
-  const order = structures[here.stage]?.paper.passages ?? [];
-  const at = (a: string) => order.find((p) => p.anchor === a)?.block_span.start_byte ?? 0;
-  const where = at(route.anchor) > at(here.anchor) ? "below" : "above";
-  if (route.kind === "answers") return route.relation === "incoming" ? "see the answer" : `the question ${where}`;
-  return `the passage ${where}`;
-}

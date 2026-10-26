@@ -10,12 +10,12 @@
     "qaoa_thermodynamic_first"
    ],
    "selected_goal_refs": [
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support",
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar_value",
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/qaoa_thermodynamic_first"
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/full_support",
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar_value",
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/qaoa_thermodynamic_first"
    ]
   },
-  "passages": 48,
+  "passages": 50,
   "sections": 64
  },
  {
@@ -28,8 +28,8 @@
     "scalar.smooth_positive_density"
    ],
    "selected_goal_refs": [
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support",
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.smooth_positive_density"
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/full_support",
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/scalar.smooth_positive_density"
    ]
   },
   "passages": 10,
@@ -44,10 +44,10 @@
     "full_support"
    ],
    "selected_goal_refs": [
-    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support"
+    "sha256:c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97/nodes/full_support"
    ]
   },
-  "passages": 19,
-  "sections": 19
+  "passages": 20,
+  "sections": 23
  }
 ]

@@ -1,4 +1,4 @@
-// The title flight: when a card on the map is chosen, its title travels from
+// The title flight: when a visible card on the map is clicked, its title travels from
 // the card into the panel's heading, so the reader sees which card the panel
 // now describes. A FLIP ghost of the panel title starts over the card title
 // (scaled to its size) and settles into place; the real heading is revealed
@@ -77,11 +77,18 @@ export function sourceFor(id: string, allowLive: boolean): { rect: DOMRect; font
   return onScreen(live.rect) ? live : null;
 }
 
-const FLIGHT_MS = 420;
+const FLIGHT_MS = 240;
+/** A reselection sooner than this after the last flight lands at once. */
+const RAPID_MS = 600;
+let lastFlight = -Infinity;
 
 /** Fly a ghost of `target` from `from` into place. Returns a cancel function. */
 export function flyTitle(target: HTMLElement, from: { rect: DOMRect; fontSize: number }): () => void {
   if (prefersReducedMotion() || typeof target.animate !== "function") return () => undefined;
+  const now = performance.now();
+  const rapid = now - lastFlight < RAPID_MS;
+  lastFlight = now;
+  if (rapid) return () => undefined;
   const to = target.getBoundingClientRect();
   if (!onScreen(to)) return () => undefined;
   const style = getComputedStyle(target);
@@ -106,7 +113,9 @@ export function flyTitle(target: HTMLElement, from: { rect: DOMRect; fontSize: n
     zIndex: "60",
   });
   document.body.appendChild(ghost);
-  target.style.visibility = "hidden";
+  // Opacity, not visibility: the real heading stays in the accessibility tree
+  // and keeps the focus it was given while the ghost travels.
+  target.style.opacity = "0";
 
   const ease = getComputedStyle(document.documentElement).getPropertyValue("--ease-move").trim() || "ease-in-out";
   const animation = ghost.animate(
@@ -120,7 +129,7 @@ export function flyTitle(target: HTMLElement, from: { rect: DOMRect; fontSize: n
   const finish = () => {
     if (done) return;
     done = true;
-    target.style.visibility = "";
+    target.style.opacity = "";
     ghost.remove();
   };
   animation.onfinish = finish;

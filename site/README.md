@@ -3,16 +3,21 @@
 The website shows one captured edition of the worked example as a reader would
 want to explore it:
 
-- **The map.** The main result sits at the top with its recorded argument beneath
-  it. Unfold any result into what it uses. Colour shows where each step comes
-  from, and each arrow runs from a result to the one it helps prove. An arrow
-  carries the recorded warrant for that step.
-- **The papers.** The exposition, the short paper and the long reasoning record,
-  each with the claims of the passage you are reading beside the text and routes
-  to where the other accounts treat the same mathematics.
-- **The checks.** What each recorded check examined and what it found.
+- **The argument map.** The main result is at the top, with the records its
+  recorded argument uses beneath it. Selecting "Inputs" on a card draws the
+  records that card uses. A line runs from a record to the result that uses it,
+  and each line opens the recorded explanation of that step. Assumptions are
+  drawn as tags on the results that assume them. On a phone the same argument is
+  an outline you scroll.
+- **The papers.** The exposition, the short paper and the long reasoning record.
+  Beside any passage you can list the records linked to it and open passages in
+  the other accounts that are linked to the same records.
+- **The checks.** For each kind of check, what it tests and the outcome of each
+  recorded run: passed, failed, unavailable or not run.
 
-Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>.
+Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
+rules (type, colour, the map's drawing conventions, motion and wording) are in
+[DESIGN.md](DESIGN.md).
 
 Everything shown comes from the read-only [web API](../docs/web-api.md). The site
 adds layout and wording, not facts. It pins the edition it opened, and if the
@@ -84,32 +89,40 @@ in a browser at desktop and phone widths, in both colour schemes.
 | Folder | What it does |
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
-| `src/model/` | The argument graph built from the API: records, typed edges with their warrants, sources and the papers' selections |
-| `src/map/` | The map page, the unfolding argument tree and its layout and connector engine |
-| `src/panels/` | The record panel that opens when you select a result or a step |
-| `src/ribbons/` | The three account strips docked under the map |
-| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links and the reading page |
+| `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
+| `src/map/` | The map page and its state (`MapPage`, `scene.ts`), the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
+| `src/panels/` | The inspector that opens when you select a record or a step |
+| `src/ribbons/` | The three account strips, folded into a bar under the map until opened |
+| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
 | `src/figures/` | Interactive versions of the papers' figures |
-| `src/checks/`, `src/search/` | The checks page and the search palette |
-| `src/styles/` | Design tokens and base styles |
+| `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
+| `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md) |
 
 ## Conventions
 
 - **Edges.** Stored edges run from a consumer to its prerequisite, as everywhere
-  in this repository. The map draws arrows the other way, from a result to the
-  one it helps prove, as Lean blueprint dependency graphs do.
-- **What the map draws.** It draws the shortest skeleton of the visible records.
-  A direct use that a longer visible route already implies is not drawn, but it
-  is still listed in the record panel.
+  in this repository. The map draws arrows the other way, from a record to the
+  result that uses it, as Lean blueprint dependency graphs do.
+- **What the map draws.** A support link is not drawn when another drawn route
+  of support links already joins the same two records; the map says how many
+  links it leaves out and lists them, and the inspector lists every direct link.
+  Assumption and Lean links are always drawn. A record with no recorded inputs
+  that several results use is drawn under each of them.
+- **Readable at every scale.** Steps keeps card titles at reading size. When you
+  zoom out, cards become titles and then tiles in their source colour.
 - **Colour.** The three source colours were checked together for colour-vision
-  deficiency in both colour schemes. Amber is kept for selection and traces.
-  Every colour is accompanied by a text label.
-- **Motion.** All motion follows the reader's reduced-motion setting.
+  deficiency in both colour schemes. Each relation type has its own line colour
+  and pattern. Amber is kept for selection and traces. Every colour is
+  accompanied by a text label.
+- **Motion.** All motion follows the reader's reduced-motion setting, which the
+  site reads again whenever it changes.
 
 ## Limitations
 
 - The site reads one edition from a running server; it has no offline copy.
 - A text selection is matched to whole passages, and the reader says so.
+- Passages are linked to records, not to individual steps. A passage linked to
+  both records of a step is related reading, not a located proof of that step.
 - Each warrant is an authored account of a step taken from the sources. The
   edition records no independent review of these warrants, and the site reports
   their status as recorded.

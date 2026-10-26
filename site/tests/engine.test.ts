@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { graphFixture } from "./fixtures";
 import { reach, usesOf, visibleEdges, visibleSet, routeTo } from "../src/map/treeModel";
 import { transitiveReduction } from "../src/map/engine/skeleton";
+import { layoutScope, recordOf, splitSharedLeaves } from "../src/map/engine/occurrences";
 import { layoutTree } from "../src/map/engine/layout";
 import { route, roundedPath, samplePolyline, type Plan, type Routed } from "../src/map/engine/router";
 import { isotonic, spacedWithin } from "../src/map/engine/pav";
@@ -17,9 +18,15 @@ function scene(goal: string, expanded: Set<string>, prev?: Layout | null, pin?: 
   const visible = visibleSet(graph, goal, expanded);
   const edges = visibleEdges(graph, goal, visible, expanded);
   const sk = transitiveReduction(visible, edges);
-  const size = (id: string) => (id === goal ? { w: 940, h: 250 } : { w: graph.nodes.get(id)!.kind === "declaration" ? 264 : 244, h: 84 + (id.length % 3) * 17 });
-  const { layout, plan } = layoutTree({ root: goal, nodes: [...visible], edges: sk.edges, size, metrics: METRICS, prev, pin });
-  return { visible, edges, sk, layout, plan };
+  // What the map lays out: assumptions as tags (no lines), shared leaves as clones.
+  const scope = layoutScope(goal, visible, sk.edges, (id) => graph.nodes.get(id)!.kind === "assumption");
+  const split = splitSharedLeaves(goal, scope.nodes, scope.edges);
+  const size = (lid: string) => {
+    const id = recordOf(lid);
+    return id === goal ? { w: 800, h: 250 } : { w: graph.nodes.get(id)!.kind === "declaration" ? 196 : 176, h: 96 + (id.length % 3) * 17 };
+  };
+  const { layout, plan } = layoutTree({ root: goal, nodes: split.nodes, edges: split.edges, size, metrics: METRICS, prev, pin });
+  return { visible, edges, sk, scope, layout, plan };
 }
 
 const allOpen = (goal: string) => new Set([...reach(graph, goal)].filter((id) => id !== goal && usesOf(graph, id).length));
@@ -44,9 +51,18 @@ describe("transitive reduction", () => {
     const sk = transitiveReduction(["a", "c"], [e("a", "b"), e("b", "c"), e("a", "c")]);
     expect(sk.edges.map((x) => x.key)).toEqual([e("a", "c").key]);
   });
-  it("implies across edge kinds", () => {
+  it("never hides an assumption or a Lean correspondence, whatever other route exists", () => {
     const sk = transitiveReduction(["a", "b", "c"], [e("a", "b", "formalizes"), e("b", "c", "assumes"), e("a", "c", "assumes")]);
-    expect(sk.implied.has(e("a", "c", "assumes").key)).toBe(true);
+    expect(sk.implied.size).toBe(0);
+    const sk2 = transitiveReduction(["a", "b", "c"], [e("a", "b"), e("b", "c"), e("a", "c", "formalizes")]);
+    expect(sk2.implied.size).toBe(0);
+  });
+  it("hides a support only when a support-only path joins its ends", () => {
+    // a -> b is an assumption, b -> c support: the direct support a -> c stays.
+    const mixed = transitiveReduction(["a", "b", "c"], [e("a", "b", "assumes"), e("b", "c"), e("a", "c")]);
+    expect(mixed.implied.size).toBe(0);
+    const pure = transitiveReduction(["a", "b", "c"], [e("a", "b"), e("b", "c"), e("a", "c")]);
+    expect([...pure.implied]).toEqual([e("a", "c").key]);
   });
 });
 
@@ -80,16 +96,16 @@ describe("helpers", () => {
 });
 
 describe.each(GOALS)("layout of %s, fully unfolded", (goal) => {
-  const { layout, plan, sk, edges } = scene(goal, allOpen(goal));
+  const { layout, plan, sk, edges, scope } = scene(goal, allOpen(goal));
 
   it("puts the root alone at the top and runs every drawn edge from a deeper rank up to a shallower one", () => {
     expect(layout.layers[0]).toEqual([goal]);
-    for (const edge of sk.edges) expect(layout.rank.get(edge.to)!).toBeGreaterThan(layout.rank.get(edge.from)!);
+    for (const edge of layout.edges) expect(layout.rank.get(edge.to)!).toBeGreaterThan(layout.rank.get(edge.from)!);
   });
 
   it("draws only the reduction", () => {
     expect(sk.edges.length + sk.implied.size).toBe(edges.length);
-    expect(layout.edges.length).toBe(sk.edges.length);
+    expect(layout.edges.length).toBe(scope.edges.length);
   });
 
   it("leaves no overlaps within a rank, and keeps long-edge columns clear of cards", () => {
@@ -103,7 +119,7 @@ describe.each(GOALS)("layout of %s, fully unfolded", (goal) => {
   });
 
   it("records its crossings (for the report)", () => {
-    console.log(`[engine] ${goal}: ${layout.boxes.size} cards, ${sk.edges.length} drawn of ${edges.length} edges, weighted crossings ${layout.seedCrossings} seeded -> ${layout.crossings}`);
+    console.log(`[engine] ${goal}: ${layout.boxes.size} cards, ${layout.edges.length} lines for ${sk.edges.length} drawn relations of ${edges.length}, weighted crossings ${layout.seedCrossings} seeded -> ${layout.crossings}`);
     expect(layout.crossings).toBeLessThanOrEqual(layout.seedCrossings);
   });
 
@@ -113,11 +129,11 @@ describe.each(GOALS)("layout of %s, fully unfolded", (goal) => {
   });
 
   it("lays out within 10 ms and routes a frame within 1 ms", () => {
-    const visible = visibleSet(graph, goal, allOpen(goal));
-    const size = (id: string) => (id === goal ? { w: 940, h: 250 } : { w: 244, h: 92 });
+    const size = (id: string) => (id === goal ? { w: 800, h: 250 } : { w: 176, h: 100 });
+    const nodes = [...layout.boxes.keys()];
     const reps = 20;
     let t = performance.now();
-    for (let i = 0; i < reps; i++) layoutTree({ root: goal, nodes: [...visible], edges: sk.edges, size, metrics: METRICS, prev: layout, pin: null });
+    for (let i = 0; i < reps; i++) layoutTree({ root: goal, nodes, edges: layout.edges, size, metrics: METRICS, prev: layout, pin: null });
     const layoutMs = (performance.now() - t) / reps;
     t = performance.now();
     const f = frame(layout);

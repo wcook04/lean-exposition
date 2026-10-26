@@ -70,7 +70,7 @@ async function request(url: string, init?: RequestInit): Promise<Response> {
   try {
     response = await fetch(absolute(url), { headers: { Accept: "application/json" }, ...init });
   } catch (cause) {
-    throw new ApiError(0, "network", "The reading server could not be reached.", url);
+    throw new ApiError(0, "network", "The site could not connect to the server that holds the records.", url);
   }
   if (!response.ok) {
     let code = `http_${response.status}`;

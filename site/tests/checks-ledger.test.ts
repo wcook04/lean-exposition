@@ -20,7 +20,7 @@ describe("check grouping", () => {
     const groups = groupByKind(cards);
     expect(groups.reduce((s, g) => s + g.cards.length, 0)).toBe(cards.length);
     const comparator = groups.find((g) => g.kind === "comparator")!;
-    if (comparator.cards.length > 0 && !comparator.counts.passed) expect(standingSentence(comparator)).toMatch(/^No completed Comparator acceptance is recorded/);
+    if (comparator.cards.length > 0 && !comparator.counts.passed) expect(standingSentence(comparator)).toMatch(/^No successful Comparator result is recorded/);
   });
 
   it("words counts and standing without claiming verification", () => {
@@ -28,7 +28,7 @@ describe("check grouping", () => {
     expect(countsInWords({ passed: 3 })).toBe("3 passed");
     const source = standingSentence({ kind: "source_hash", title: "Source files", counts: { passed: 3 } });
     expect(source).toMatch(/byte-for-byte/);
-    expect(source).toMatch(/nothing about whether the mathematics/);
+    expect(source).toMatch(/do not examine whether the mathematics/);
     for (const kind of ["source_hash", "lean_build", "comparator", "extraction", "semantic_review", "platform"])
       for (const counts of [{}, { passed: 2 }, { not_run: 3 }, { failed: 1, passed: 1 }] as Record<string, number>[])
         expect(standingSentence({ kind, title: kind, counts })).not.toMatch(/verified/i);

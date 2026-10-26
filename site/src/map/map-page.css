@@ -1,5 +1,6 @@
+/* Map bar on top; below it the argument (canvas or outline) with the dock under
+   it, and, while something is inspected, the inspector as a full-height column. */
 .map-page {
-  --dock-h: 152px;
   flex: 1;
   min-height: 0;
   display: grid;
@@ -8,18 +9,26 @@
   overflow: hidden;
 }
 
-.map-page__canvas {
+.map-page__main {
   position: relative;
   grid-column: 1;
   grid-row: 2;
   min-height: 0;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-page__main > .tree,
+.map-page__main > :not(.map-note) {
+  flex: 1;
+  min-height: 0;
 }
 
 .map-page > .panel {
   position: relative;
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 2 / 4;
   top: auto;
   right: auto;
   bottom: auto;
@@ -29,72 +38,281 @@
 
 .map-page > .dock {
   position: relative;
-  grid-column: 1 / -1;
+  grid-column: 1;
   grid-row: 3;
   left: auto;
   right: auto;
   bottom: auto;
+  min-width: 0;
 }
 
-/* The bar above the argument: which goal, a one-line key, the fold controls. */
+/* A slim note over the canvas when the selection is not drawn as asked. */
+.map-note {
+  position: absolute;
+  z-index: 8;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 6px;
+  margin: 0;
+  padding: 7px 16px;
+  white-space: nowrap;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sheet);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  animation: map-note-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-note .linklike {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@keyframes map-note-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -4px);
+  }
+}
+
+/* The bar above the argument: goal, account, view, tools. Never scaled with the map. */
 
 .map-bar {
   grid-column: 1 / -1;
   grid-row: 1;
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 10px 20px;
-  background: var(--ground);
+  gap: 28px;
+  min-height: var(--bar-h);
+  padding: 0 22px;
+  background: color-mix(in oklab, var(--ground) 70%, var(--surface));
   border-bottom: 1px solid var(--rule);
+  min-width: 0;
 }
 
-.goal-switch {
-  display: inline-flex;
-  flex: none;
-  padding: 3px;
-  gap: 2px;
-  background: var(--sunk);
-  border-radius: var(--radius-l);
-}
-
-.goal-switch__item {
-  display: grid;
-  gap: 1px;
-  padding: 5px 14px 6px;
-  border: 0;
-  border-radius: calc(var(--radius-l) - 3px);
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color var(--t-press) var(--ease-out);
-}
-
-.goal-switch__item:hover {
-  background: color-mix(in oklab, var(--ink) 6%, transparent);
-}
-
-.goal-switch__item[aria-checked="true"] {
-  background: var(--surface);
-  box-shadow: 0 1px 2px color-mix(in oklab, var(--ink) 18%, transparent), 0 0 0 1px var(--rule);
-}
-
-.goal-switch__name {
-  font-family: var(--font-serif);
-  font-size: 0.98rem;
-  line-height: 1.2;
-  color: var(--ink-2);
-  white-space: nowrap;
-}
-
-.goal-switch__note {
+.map-bar__label {
   font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
   color: var(--ink-3);
   white-space: nowrap;
 }
 
-.goal-switch__item[aria-checked="true"] .goal-switch__name {
+.goal-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.goal-switch__items {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.goal-switch__item,
+.map-views button {
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+
+.goal-switch__item:hover,
+.map-views button:hover {
   color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.goal-switch__item[aria-checked="true"] {
+  background: var(--raised);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 0 0 1px var(--rule-strong), 0 1px 2px rgb(0 0 0 / 0.06);
+}
+
+.map-views {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--sunk);
+  flex: none;
+}
+
+.map-views button {
+  height: 28px;
+}
+
+.map-views button[aria-pressed="true"] {
+  background: var(--raised);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+/* Records used by: a picker that opens the account switch. */
+.acct-picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.acct-picker__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 7px;
+  background: var(--raised);
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.acct-picker__button:hover {
+  border-color: var(--ink-3);
+}
+
+.acct-picker__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-bar__tools {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.map-tool,
+.map-keypop > .control {
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.map-tool:hover,
+.map-keypop > .control:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.map-tool:disabled {
+  color: var(--ink-3);
+  cursor: default;
+  background: none;
+}
+
+.map-tool[aria-expanded="true"],
+.map-keypop > .control[aria-expanded="true"] {
+  background: color-mix(in oklab, var(--ink) 7%, transparent);
+  color: var(--ink);
+}
+
+.map-more {
+  position: relative;
+}
+
+.map-more__list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-more__item {
+  display: block;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-more__item:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+/* Phones: native selects for goal and account, at touch size. */
+.map-bar__selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.map-bar__field {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.map-bar__field select {
+  width: 100%;
+  min-width: 0;
+  height: var(--target);
+  padding: 0 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-base);
 }
 
 .map-key {
@@ -227,138 +445,6 @@
   color: var(--ink-2);
 }
 
-.map-bar__tools {
-  display: flex;
-  flex: none;
-  gap: 6px;
-}
-
-/* The theorem inside the goal's card. */
-
-.theorem {
-  display: grid;
-  gap: 14px;
-}
-
-.theorem--two {
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 28px;
-  align-items: start;
-}
-
-.theorem__main {
-  display: grid;
-  gap: 12px;
-}
-
-.prose.prose--theorem {
-  max-width: none;
-  font-size: 1.0625rem;
-  line-height: 1.55;
-}
-
-.prose--theorem p + p,
-.prose--theorem p + .math-display,
-.prose--theorem .math-display + p {
-  margin-top: 0.45em;
-}
-
-.prose--theorem .math-display {
-  margin: 0.55em 0;
-}
-
-.theorem__source {
-  margin-top: -6px;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.theorem__recorded {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ink);
-  overflow-wrap: anywhere;
-}
-
-.theorem__formal {
-  display: grid;
-  gap: 8px;
-  padding-left: 24px;
-  border-left: 1px solid var(--rule);
-}
-
-.theorem__lean-line {
-  display: grid;
-  gap: 4px;
-}
-
-.theorem__label {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--ink-2);
-  margin-bottom: 6px;
-}
-
-.theorem__lean {
-  display: block;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: var(--formal);
-  overflow-wrap: anywhere;
-}
-
-.theorem__checks {
-  margin: 0;
-  font-size: var(--fs-sm);
-  line-height: 1.45;
-  color: var(--ink-2);
-}
-
-.theorem__more {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: var(--fs-sm);
-}
-
-.theorem__read ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 6px;
-}
-
-.theorem__read a {
-  display: grid;
-  align-content: start;
-  gap: 2px;
-  height: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
-  text-decoration: none;
-  transition: border-color var(--t-press) var(--ease-out), background-color var(--t-press) var(--ease-out);
-}
-
-.theorem__read a:hover {
-  border-color: var(--ink-3);
-  background: color-mix(in oklab, var(--ink) 3%, transparent);
-}
-
-.theorem__read-name {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  color: var(--ink);
-}
-
-.theorem__read-job {
-  font-size: var(--fs-xs);
-  line-height: 1.35;
-  color: var(--ink-2);
-}
-
 /* Check rows, shared with the record panel. */
 
 .check {
@@ -416,34 +502,18 @@
   }
 }
 
-@media (max-width: 1100px) {
-  .goal-switch__note {
-    display: none;
+@media (max-width: 1359px) {
+  .map-bar {
+    gap: 18px;
+    padding: 0 16px;
+  }
+  .goal-switch__item,
+  .map-views button {
+    padding: 0 9px;
   }
 }
 
 @media (max-width: 900px) {
-  .map-page {
-    --dock-h: 0px;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .map-bar {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px 12px;
-  }
-  .goal-switch {
-    overflow-x: auto;
-    max-width: 100%;
-  }
-  .map-key {
-    flex-basis: 100%;
-    order: 3;
-  }
-  .map-key__sources {
-    gap: 2px 12px;
-    font-size: var(--fs-xs);
-  }
   /* The panel becomes a bottom sheet; its heights come from panel.css. */
   .map-page > .panel {
     position: fixed;
@@ -454,10 +524,58 @@
     right: 0;
     bottom: 0;
     width: auto;
-    height: var(--sheet-drag, 45dvh);
+    /* Peek: as tall as its title and two actions, never more than half the screen. */
+    height: var(--sheet-drag, auto);
+    max-height: 55dvh;
   }
   .map-page > .panel[data-sheet="full"] {
     height: var(--sheet-drag, calc(100dvh - var(--topbar-h) - 8px));
+    max-height: none;
+  }
+  .map-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* The key opens within the viewport, not off its left edge. */
+  .map-keypop__panel {
+    position: fixed;
+    top: auto;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    margin-top: 8px;
+    max-height: 70dvh;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .map-bar {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .map-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 16px 10px;
+  }
+  .map-views {
+    flex: 1;
+  }
+  .map-views button {
+    flex: 1;
+    height: 40px;
+    padding: 0 6px;
+  }
+  .map-bar__tools {
+    gap: 0;
+  }
+  .map-tool,
+  .map-keypop > .control {
+    height: var(--target);
   }
 }
 

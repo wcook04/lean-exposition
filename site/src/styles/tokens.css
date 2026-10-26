@@ -1,28 +1,36 @@
-/* Design tokens. Values were chosen in OKLCH and checked for WCAG contrast
-   against the ground in both schemes (see DESIGN.md). Night is the day theme
-   with the lights off: the same hues, lightness inverted. */
+/* Design tokens. DESIGN.md explains each group and the rules for using it.
+   Colours were chosen in OKLCH and checked for WCAG contrast against the
+   ground in both schemes. Night is the day theme with the lights off: the
+   same hues, lightness inverted. */
 
 :root {
   color-scheme: light;
 
+  /* Three voices: mathematics and titles, controls, Lean. */
   --font-serif: "STIX Two Text", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-sans: "Source Sans 3 Variable", "Source Sans 3", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --fs-xs: 0.75rem;
-  --fs-sm: 0.8125rem;
-  --fs-ui: 0.875rem;
-  --fs-base: 1rem;
-  --fs-read: 1.125rem;
+  /* Type scale. Nothing a reader must read renders below --fs-sm on screen. */
+  --fs-micro: 0.6875rem; /* 11px: small-caps kind words, never sentences */
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-sm: 0.8125rem; /* 13px: metadata */
+  --fs-ui: 0.875rem; /* 14px: controls */
+  --fs-base: 1rem; /* 16px */
+  --fs-card: 1.0625rem; /* 17px: a record's title on a card */
+  --fs-read: 1.125rem; /* 18px: paper prose */
   --fs-h4: 1.0625rem;
-  --fs-h3: 1.25rem;
-  --fs-h2: 1.5rem;
-  --fs-h1: 2.125rem;
+  --fs-h3: 1.25rem; /* 20px */
+  --fs-h2: 1.5rem; /* 24px */
+  --fs-title: 1.625rem; /* 26px: the inspector's title */
+  --fs-h1: 2.125rem; /* 34px */
+  --fs-plate: clamp(1.75rem, 1.3rem + 1.1vw, 2.25rem); /* the goal's title */
   --fs-display: clamp(2rem, 1.35rem + 1.9vw, 3rem);
-  --lh-tight: 1.18;
-  --lh-snug: 1.38;
+  --lh-tight: 1.16;
+  --lh-snug: 1.32;
   --lh-ui: 1.45;
   --lh-read: 1.62;
+  --tracking-caps: 0.075em;
   --measure: 40rem;
 
   --space-1: 4px;
@@ -35,33 +43,79 @@
   --space-8: 72px;
 
   --radius-s: 4px;
+  --radius-card: 7px;
   --radius-m: 8px;
   --radius-l: 12px;
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Motion: each change says where something came from, then stops. */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-move: cubic-bezier(0.45, 0, 0.2, 1);
   --ease-exit: cubic-bezier(0.3, 0, 1, 1);
-  --t-press: 120ms;
-  --t-state: 180ms;
-  --t-panel: 240ms;
-  --t-camera: 560ms;
+  --t-press: 120ms; /* press and hover feedback */
+  --t-hover: 120ms;
+  --t-state: 160ms; /* colour or label changes; account switches */
+  --t-reveal: 180ms; /* a panel, popover or sheet appears */
+  --t-panel: 200ms;
+  --t-camera: 320ms; /* camera travel that accompanies a change */
+  --t-unfold: 360ms; /* the map adds or removes records */
+  --t-trace: 520ms; /* lighting a route, start to finish */
 
+  /* Layout. */
   --topbar-h: 56px;
-  --panel-w: 432px;
+  --bar-h: 52px;
+  --panel-w: clamp(440px, 34vw, 560px);
+  --dock-h: 152px;
+  --dock-bar-h: 44px;
+  --target: 44px; /* primary touch targets */
+  --reader-measure: 42.5rem; /* 680px */
+  --reader-outline: 208px;
+  --reader-inspector: 336px;
+  --reader-gap: 32px;
 
   /* Day: cool paper and ink. */
   --ground: #f2f5f7;
   --surface: #fafbfd;
+  --raised: #ffffff;
   --sunk: #e9ecf0;
   --rule: #d5dade;
   --rule-strong: #b9bec4;
   --ink: #181f28;
   --ink-2: #474e57;
   --ink-3: #666c74;
+
+  /* Amber is the reader's lamp: what you are attending to. Nothing else uses it. */
   --lit: #ac5b00;
   --lit-wash: #fae4c7;
   --lit-line: #c9761a;
+  --lit-glow: rgb(201 118 26 / 0);
+  --focus-ring: 2px solid var(--lit);
+
+  /* A recorded failed outcome, and only that. */
   --fail: #a04034;
+
+  /* Connectors. Each relation type has its own colour, at rest and lit, and its
+     own pattern; every rest colour keeps at least 3:1 against the ground.
+     A lit support route is amber (attention); lit assumptions and Lean
+     correspondences keep their own hue, brightened. */
+  --rel-supports: #7c858f;
+  --rel-supports-lit: #b8650c;
+  --rel-assumes: #8a6cc8;
+  --rel-assumes-lit: #6d3fd4;
+  --rel-formalizes: #3f8aa0;
+  --rel-formalizes-lit: #0b6f86;
+  --edge-rest: var(--rel-supports);
+  --edge-strong: #47505b;
+  --edge-lit: var(--rel-supports-lit);
+  --edge-casing: var(--ground);
+  --edge-w: 1.5px;
+  --edge-w-lit: 2.25px;
+
+  /* Cards on the map. */
+  --card: var(--raised);
+  --card-border: #c9ced4;
+  --card-shadow: 0 1px 0 rgb(24 31 40 / 0.03), 0 2px 6px -2px rgb(24 31 40 / 0.08);
+  --card-shadow-lift: 0 1px 0 rgb(24 31 40 / 0.04), 0 10px 24px -10px rgb(24 31 40 / 0.22);
+  --grid-dot: rgb(24 31 40 / 0.085);
 
   /* Regions of the argument: marks, then territories. */
   --region-support: #396791;
@@ -72,12 +126,16 @@
   --field-circuit: #f1e5ef;
   --formal: #46496d;
 
-  /* Where a step comes from: validated colour-blind safe as a set, both schemes. */
+  /* Where a step comes from: validated colour-blind safe as a set, both schemes.
+     A small named square at reading size; the fill of a record's mark in overview. */
   --src-1: #2a78d6;
   --src-2: #e87ba4;
   --src-3: #008300;
+  --src-0: #8a929b;
+  --mark-mix: 64%;
 
   --shadow-sheet: 0 1px 0 rgb(24 31 40 / 0.04), 0 8px 28px -12px rgb(24 31 40 / 0.22);
+  --shadow-panel: -1px 0 0 var(--rule), -18px 0 40px -28px rgb(24 31 40 / 0.28);
   --scrim: rgb(242 245 247 / 0.86);
 }
 
@@ -85,6 +143,7 @@
   color-scheme: dark;
   --ground: #0e1319;
   --surface: #161c24;
+  --raised: #1b222b;
   --sunk: #090e13;
   --rule: #282e36;
   --rule-strong: #3c434c;
@@ -94,7 +153,19 @@
   --lit: #fab250;
   --lit-wash: #3d290e;
   --lit-line: #f3a43a;
+  --lit-glow: rgb(243 164 58 / 0.28);
   --fail: #ea8470;
+  --rel-supports: #6a7581;
+  --rel-supports-lit: #f3a43a;
+  --rel-assumes: #7d68b8;
+  --rel-assumes-lit: #b49bff;
+  --rel-formalizes: #3f8698;
+  --rel-formalizes-lit: #55c7df;
+  --edge-strong: #a7b0ba;
+  --card-border: #343c46;
+  --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
+  --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
+  --grid-dot: rgb(226 231 235 / 0.06);
   --region-support: #80b0de;
   --region-scalar: #79bba4;
   --region-circuit: #ca98c5;
@@ -105,7 +176,10 @@
   --src-1: #3987e5;
   --src-2: #d55181;
   --src-3: #008300;
+  --src-0: #6b737c;
+  --mark-mix: 60%;
   --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.3), 0 12px 32px -14px rgb(0 0 0 / 0.7);
+  --shadow-panel: -1px 0 0 var(--rule), -24px 0 48px -30px rgb(0 0 0 / 0.8);
   --scrim: rgb(14 19 25 / 0.86);
 }
 
@@ -114,6 +188,7 @@
     color-scheme: dark;
     --ground: #0e1319;
     --surface: #161c24;
+    --raised: #1b222b;
     --sunk: #090e13;
     --rule: #282e36;
     --rule-strong: #3c434c;
@@ -123,7 +198,19 @@
     --lit: #fab250;
     --lit-wash: #3d290e;
     --lit-line: #f3a43a;
+    --lit-glow: rgb(243 164 58 / 0.28);
     --fail: #ea8470;
+    --rel-supports: #6a7581;
+    --rel-supports-lit: #f3a43a;
+    --rel-assumes: #7d68b8;
+    --rel-assumes-lit: #b49bff;
+    --rel-formalizes: #3f8698;
+    --rel-formalizes-lit: #55c7df;
+    --edge-strong: #a7b0ba;
+    --card-border: #343c46;
+    --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
+    --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
+    --grid-dot: rgb(226 231 235 / 0.06);
     --region-support: #80b0de;
     --region-scalar: #79bba4;
     --region-circuit: #ca98c5;
@@ -134,7 +221,10 @@
     --src-1: #3987e5;
     --src-2: #d55181;
     --src-3: #008300;
+    --src-0: #6b737c;
+    --mark-mix: 60%;
     --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.3), 0 12px 32px -14px rgb(0 0 0 / 0.7);
+    --shadow-panel: -1px 0 0 var(--rule), -24px 0 48px -30px rgb(0 0 0 / 0.8);
     --scrim: rgb(14 19 25 / 0.86);
   }
 }

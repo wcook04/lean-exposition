@@ -1,15 +1,114 @@
-// On a phone the panel is a bottom sheet with two resting heights: a peek
-// that leaves the map visible above it, and full. The handle drags between
-// them and, as a button, toggles them.
+// On a phone the panel is a bottom sheet with two modes. Peek is not modal:
+// the map stays usable above it, and two buttons say what reading it offers.
+// Full is a labelled modal dialog: the rest of the page is inert, Tab and
+// Shift+Tab stay inside, the title takes focus on entry, and Escape returns
+// to peek with focus on the button that opened it. The grip may be dragged,
+// but every change is also a visible button (DESIGN.md § Accessibility).
 
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type RefObject } from "react";
 
 export type SheetState = "peek" | "full";
 
-export function useSheet() {
+const PHONE = "(max-width: 900px)";
+
+/** True while the viewport uses the sheet layout; read live. */
+export function usePhone(): boolean {
+  const [phone, setPhone] = useState(() => typeof window !== "undefined" && !!window.matchMedia?.(PHONE).matches);
+  useEffect(() => {
+    const query = window.matchMedia?.(PHONE);
+    if (!query) return;
+    const on = () => setPhone(query.matches);
+    on();
+    query.addEventListener("change", on);
+    return () => query.removeEventListener("change", on);
+  }, []);
+  return phone;
+}
+
+const FOCUSABLE = 'a[href], button:not([disabled]), select:not([disabled]), input:not([disabled]), textarea, summary, [tabindex]:not([tabindex="-1"])';
+
+/** Make everything outside `el` inert, level by level up to the body. Returns the undo. */
+function inertOutside(el: HTMLElement): () => void {
+  const changed: HTMLElement[] = [];
+  let node: HTMLElement | null = el;
+  while (node && node !== document.body) {
+    const parent: HTMLElement | null = node.parentElement;
+    if (!parent) break;
+    for (const sibling of Array.from(parent.children)) {
+      if (sibling === node || !(sibling instanceof HTMLElement) || sibling.inert || sibling.tagName === "SCRIPT") continue;
+      sibling.inert = true;
+      changed.push(sibling);
+    }
+    node = parent;
+  }
+  return () => changed.forEach((s) => (s.inert = false));
+}
+
+export function useSheet({
+  panel,
+  title,
+  enabled = true,
+}: {
+  panel?: RefObject<HTMLElement | null>;
+  title?: RefObject<HTMLElement | null>;
+  enabled?: boolean;
+} = {}) {
+  const phone = usePhone() && enabled;
   const [state, setState] = useState<SheetState>("peek");
   const [drag, setDrag] = useState<number | null>(null); // live height in px while dragging
   const start = useRef<{ y: number; h: number; moved: boolean } | null>(null);
+  const readRef = useRef<HTMLButtonElement>(null);
+  const pendingSection = useRef<string | null>(null);
+  const modal = phone && state === "full";
+
+  // Full mode: inert background, title focus (or the requested section).
+  useEffect(() => {
+    if (!modal) return;
+    const el = panel?.current;
+    const undo = el ? inertOutside(el) : () => undefined;
+    const section = pendingSection.current;
+    pendingSection.current = null;
+    const target = section ? el?.querySelector<HTMLElement>(`[data-section="${section}"]`) : null;
+    if (target) {
+      target.scrollIntoView({ block: "start" });
+      target.querySelector<HTMLElement>("h3")?.focus({ preventScroll: true });
+    } else title?.current?.focus({ preventScroll: true });
+    return undo;
+  }, [modal, panel, title]);
+
+  const open = (section?: string) => {
+    pendingSection.current = section ?? null;
+    setState("full");
+  };
+  const toPeek = () => {
+    setState("peek");
+    requestAnimationFrame(() => readRef.current?.focus());
+  };
+
+  /** Keyboard containment and Escape for the panel element. */
+  const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (!modal) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      toPeek();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const el = event.currentTarget;
+    const items = Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE)).filter((x) => !x.closest("[hidden]") && x.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    if (event.shiftKey && (active === first || !el.contains(active) || active === title?.current)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   const onPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
     const sheet = event.currentTarget.closest<HTMLElement>(".panel");
@@ -29,19 +128,21 @@ export function useSheet() {
     start.current = null;
     if (!s) return;
     if (!s.moved) {
-      setState((v) => (v === "peek" ? "full" : "peek"));
+      if (state === "peek") open();
+      else toPeek();
     } else {
       const dy = event.clientY - s.y;
-      setState(dy < -40 ? "full" : dy > 40 ? "peek" : state);
+      if (dy < -40) open();
+      else if (dy > 40) toPeek();
     }
     setDrag(null);
   };
 
-  const handle = (
+  const handle = phone ? (
     <button
       type="button"
       className="panel__handle"
-      aria-label={state === "peek" ? "Expand the panel" : "Shrink the panel"}
+      aria-label={state === "peek" ? "Expand this panel" : "Shrink this panel to show the map"}
       aria-expanded={state === "full"}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -52,13 +153,21 @@ export function useSheet() {
       }}
       onClick={(event) => {
         // Pointer handlers decide; keyboard activation (detail 0) toggles here.
-        if (event.detail === 0) setState((v) => (v === "peek" ? "full" : "peek"));
+        if (event.detail === 0) (state === "peek" ? open() : toPeek());
       }}
     >
       <span className="panel__grip" aria-hidden="true" />
     </button>
-  );
+  ) : null;
 
   const style = drag !== null ? { ["--sheet-drag" as string]: `${drag}px` } : undefined;
-  return { state, dragging: drag !== null, handle, style };
+  /** Attributes for the panel element: dialog semantics only in full mode on a phone. */
+  const attrs = {
+    "data-sheet": phone ? state : undefined,
+    role: modal ? "dialog" : undefined,
+    "aria-modal": modal ? true : undefined,
+    "data-modal-open": modal ? "" : undefined,
+    onKeyDown,
+  } as const;
+  return { phone, state: phone ? state : ("full" as SheetState), modal, dragging: drag !== null, handle, style, attrs, open, toPeek, readRef };
 }

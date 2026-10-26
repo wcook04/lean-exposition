@@ -24,6 +24,7 @@ export interface StripPassage {
   end: number;
   claims: string[]; // node ids
   region: string | null; // majority region of its claims
+  slot: 0 | 1 | 2 | 3; // majority source colour slot of its claims (0: neutral or none)
   treatments: string[];
   section: string | null;
 }
@@ -83,7 +84,7 @@ export function useReadings(): { status: "loading" } | { status: "ready"; value:
             (((summary?.coverage as unknown as { marker_bytes?: number })?.marker_bytes) ?? 0);
           const own = reading.passage_cards.filter((c: PassageCard) => c.stage === stage);
           const passages = own
-            .map((card) => toPassage(card, sections, edition.graph.regionOf))
+            .map((card) => toPassage(card, sections, edition.graph.regionOf, (id) => edition.graph.nodes.get(id)?.origin.slot ?? 0))
             .sort((a, b) => a.start - b.start);
           passages.forEach((p) => byKey.set(p.key, p));
           strips.push({ stage, length: Math.max(length, passages.at(-1)?.end ?? 1), passages, sections });
@@ -120,14 +121,18 @@ export function useReadings(): { status: "loading" } | { status: "ready"; value:
   return state;
 }
 
-function toPassage(card: PassageCard, sections: Section[], regionOf: Map<string, string>): StripPassage {
+function toPassage(card: PassageCard, sections: Section[], regionOf: Map<string, string>, slotOf: (id: string) => 0 | 1 | 2 | 3): StripPassage {
   const claims = card.claim_refs.map(nodeIdOfRef);
   const votes = new Map<string, number>();
+  const slots = new Map<0 | 1 | 2 | 3, number>();
   for (const id of claims) {
     const r = regionOf.get(id);
     if (r) votes.set(r, (votes.get(r) ?? 0) + 1);
+    const s = slotOf(id);
+    slots.set(s, (slots.get(s) ?? 0) + 1);
   }
   const region = [...votes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const slot = [...slots.entries()].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0]?.[0] ?? 0;
   const section = sections.find((s) => s.ref === card.section_ref)?.title ?? null;
   return {
     key: `${card.stage}:${card.anchor}`,
@@ -137,6 +142,7 @@ function toPassage(card: PassageCard, sections: Section[], regionOf: Map<string,
     end: card.content_span.end_byte,
     claims,
     region,
+    slot,
     treatments: [...new Set((card.treatments ?? []).flatMap((t) => t.kinds))],
     section,
   };

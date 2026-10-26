@@ -195,6 +195,108 @@ button {
   --field: var(--field-circuit);
 }
 
+/* Shared vocabulary. One visual channel per meaning; DESIGN.md has the rules. */
+
+/* A record's kind, in words: CLAIM, ASSUMPTION, LEAN DECLARATION, MAIN RESULT. */
+.caps {
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--ink-3);
+}
+
+/* Where a record comes from: a small square in its source colour, always beside the source's name. */
+.src-sq {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  border-radius: 2px;
+  background: var(--cat, var(--src-0));
+  flex: none;
+}
+[data-slot="1"] {
+  --cat: var(--src-1);
+}
+[data-slot="2"] {
+  --cat: var(--src-2);
+}
+[data-slot="3"] {
+  --cat: var(--src-3);
+}
+
+/* How an account treats a record: a shape and a word, never colour alone.
+   own: a passage of its own · relied: used without a passage · outside: not in its selection. */
+.cov-mark {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ink-2);
+}
+.cov-mark--relied {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink-2);
+}
+.cov-mark--outside {
+  border-radius: 1px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--ink-3);
+  background-image: linear-gradient(var(--ink-3), var(--ink-3));
+  background-size: 60% 1.5px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* A relation's line pattern, for keys and lists. Same patterns as the map. */
+.rel-sample {
+  display: inline-block;
+  width: 26px;
+  height: 0;
+  flex: none;
+  vertical-align: middle;
+  border-top: 2px solid var(--rel-supports);
+}
+.rel-sample--assumes {
+  border-top-style: dotted;
+  border-top-width: 2.5px;
+  border-top-color: var(--rel-assumes);
+}
+.rel-sample--formalizes {
+  border-top-style: dashed;
+  border-top-color: var(--rel-formalizes);
+}
+.rel-sample--lit {
+  border-top-color: var(--rel-supports-lit);
+}
+.rel-sample--lit.rel-sample--assumes {
+  border-top-color: var(--rel-assumes-lit);
+}
+.rel-sample--lit.rel-sample--formalizes {
+  border-top-color: var(--rel-formalizes-lit);
+}
+
+/* A recorded outcome, in its own words. Only a recorded failure is coloured. */
+.outcome {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.outcome--failed {
+  color: var(--fail);
+  font-weight: 600;
+}
+.outcome--passed {
+  color: var(--ink);
+  font-weight: 600;
+}
+.outcome--unavailable,
+.outcome--not_run {
+  color: var(--ink-2);
+}
+
 .muted {
   color: var(--ink-2);
 }

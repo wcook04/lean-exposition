@@ -1,8 +1,10 @@
-// The ledger of every recorded check in the edition. Checks are grouped by
-// the question each kind answers, never merged across kinds, and a run that
-// did not happen or did not finish is shown with the record's own words.
+// The ledger of every recorded check in the edition, as rows per kind of
+// check: Check / What it examined / Recorded outcome / Details. Each kind
+// answers a different question, so outcomes are never merged across kinds,
+// and passed, failed, unavailable and not run always stay distinct. Only a
+// recorded failure is coloured; there is no percentage and no success badge.
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Route } from "../app/router";
 import { routeHref } from "../app/router";
 import { describeError, useEdition, useRecord } from "../app/data";
@@ -10,13 +12,12 @@ import type { ArgGraph } from "../model/graph";
 import { useEvidence, type EvidenceRecord } from "./evidence";
 import {
   CHECK_KINDS,
-  countsInWords,
   groupByKind,
   inStatedTimeOrder,
   OUTCOME_MEANINGS,
   OUTCOME_NAMES,
   recordsWord,
-  standingSentence,
+  STATUS_WORDS,
   statedDate,
   type EvidenceCard,
   type KindGroup,
@@ -26,11 +27,11 @@ import "./checks.css";
 const PAGE = 25;
 /** Kinds with more records than this are shown in pages of PAGE. */
 const PAGED_OVER = 40;
+const STATUS_ORDER = ["failed", "unavailable", "not_run", "passed"];
 
 type Target =
   | { type: "none" }
-  | { type: "formal"; id: string; via?: string }
-  | { type: "node"; id: string }
+  | { type: "node"; id: string; formal?: string }
   | { type: "evidence"; id: string; kind: string; index: number }
   | { type: "unknown"; id: string };
 
@@ -38,10 +39,8 @@ function resolveTarget(n: string | undefined, graph: ArgGraph, cards: EvidenceCa
   if (!n) return { type: "none" };
   const node = graph.nodes.get(n);
   if (node) {
-    if (node.kind === "declaration") return { type: "formal", id: n };
-    const formal = (graph.out.get(n) ?? []).find((e) => e.kind === "formalizes");
-    if (formal) return { type: "formal", id: formal.to, via: n };
-    return { type: "node", id: n };
+    const formal = node.kind === "declaration" ? undefined : (graph.out.get(n) ?? []).find((e) => e.kind === "formalizes")?.to;
+    return { type: "node", id: n, formal };
   }
   const card = cards.find((c) => c.id === n);
   if (card) {
@@ -51,11 +50,51 @@ function resolveTarget(n: string | undefined, graph: ArgGraph, cards: EvidenceCa
   return { type: "unknown", id: n };
 }
 
+/** Outcome counts in a fixed order, failures first so they are never last in a list. */
+export function outcomeParts(counts: Record<string, number>): { status: string; n: number }[] {
+  const known = STATUS_ORDER.filter((s) => counts[s]).map((status) => ({ status, n: counts[status] }));
+  const other = Object.keys(counts)
+    .filter((s) => !STATUS_ORDER.includes(s) && counts[s])
+    .sort()
+    .map((status) => ({ status, n: counts[status] }));
+  return [...known, ...other];
+}
+
+/**
+ * One plain sentence a row adds under its counts, or null. It only restates
+ * the counts: a kind with records and no pass has no successful result.
+ */
+export function rowNote(kind: string, counts: Record<string, number>): string | null {
+  const total = Object.values(counts).reduce((s, n) => s + n, 0);
+  if (!total || counts.passed) return kind === "source_hash" && counts.passed ? "These checks compare the bytes of the named files only." : null;
+  if (kind === "comparator") return "No successful Comparator result is recorded.";
+  if (counts.failed || counts.unavailable) return "No successful run is recorded.";
+  return null;
+}
+
+/** The edition-level note, said once: how many checks ran and what review means here. */
+export function editionNote(cards: readonly EvidenceCard[]): string {
+  const total = cards.length;
+  const notRun = cards.filter((c) => c.status === "not_run").length;
+  const reviews = cards.filter((c) => c.kind === "semantic_review");
+  const reviewed = reviews.filter((c) => c.status === "passed").length;
+  const lead =
+    notRun * 2 > total
+      ? `Most recorded checks in this edition have not been run (${notRun} of ${total}).`
+      : `${notRun} of the ${total} recorded checks in this edition have not been run.`;
+  const review =
+    reviewed === 0
+      ? "In a correspondence review, a reviewer compares a recorded statement or explanation with its source. No correspondence review is recorded as passed, so no warrant (the recorded explanation of why one record is used for another) has been independently reviewed."
+      : `In a correspondence review, a reviewer compares a recorded statement or explanation with its source. ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the records do not say the reviewer was independent.`;
+  return `${lead} ${review} Each outcome is what a check record says happened to that one check. An outcome is not a judgement on whether the mathematics is correct.`;
+}
+
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
   const { graph, map } = useEdition();
   const cards = map.records.evidence as EvidenceCard[];
   const groups = useMemo(() => groupByKind(cards), [cards]);
   const target = useMemo(() => resolveTarget(route.node, graph, cards), [route.node, graph, cards]);
+  const subject = target.type === "node" ? graph.nodes.get(target.id)! : null;
 
   const declarations = useMemo(() => {
     const ids = graph.order.filter((id) => graph.nodes.get(id)!.kind === "declaration");
@@ -64,122 +103,318 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
     return [...ids.filter(formalizesGoal), ...ids.filter((id) => !formalizesGoal(id))];
   }, [graph]);
 
-  useEffect(() => {
-    document.title = "Recorded checks";
-  }, []);
-
   return (
     <div className="checks">
       <header className="checks__head">
-        <h1>Recorded checks</h1>
+        <p className="caps">Checks</p>
+        <h1>
+          {subject ? (
+            <>
+              Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
+            </>
+          ) : (
+            "Recorded checks"
+          )}
+        </h1>
         <p className="checks__lede">
-          Every check recorded in this edition, grouped by the question each kind of check answers. A check that was
-          planned but not run, or that did not finish, is listed as such: it is not a verdict on the mathematics.
+          A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a
+          Lean project compiles. For each kind of check, the table says what that kind examines and counts the outcomes written
+          in its check records: passed, failed, unavailable or not run.
         </p>
+        <p className="checks__edition">{editionNote(cards)}</p>
       </header>
 
-      {target.type === "node" && <NodeChecks id={target.id} />}
       {target.type === "unknown" && (
         <p className="checks__notice" role="status">
-          Nothing in this edition is called <code className="lean">{target.id}</code>. The full ledger follows.
+          No record in this edition has the identifier <code className="lean">{target.id}</code>. All the checks in the edition are listed below.
         </p>
       )}
 
-      <section className="checks__band" aria-labelledby="standing">
-        <h2 id="standing">Where things stand</h2>
-        <ul className="standing">
-          {groups.map((g) => (
-            <li key={g.kind}>
-              <a href={`#kind-${g.kind}`} className="standing__kind">
-                {g.title}
-              </a>
-              <span className="standing__text">{standingSentence(g)}</span>
-            </li>
-          ))}
-        </ul>
+      {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
+
+      <section className="checks__band" aria-labelledby="by-kind">
+        <h2 id="by-kind">{subject ? "All checks in this edition, by kind" : "All checks, by kind"}</h2>
+        <p className="checks__intro">
+          There are {recordsWord(cards.length)} in all. The button in a row’s Details column lists that row’s records, each
+          with what was run or planned, which statements it concerns, and its outcome.
+        </p>
+        <CheckTable
+          caption="All recorded checks in this edition, by kind"
+          rows={groups.map((g) => ({ group: g, examined: null }))}
+          target={target.type === "evidence" ? target : null}
+          paged
+        />
+        <OutcomeKey />
       </section>
 
       <section className="checks__band" aria-labelledby="formal">
-        <h2 id="formal">Formal statements</h2>
+        <h2 id="formal">Formal statements in Lean</h2>
         <p className="checks__intro">
-          The edition records {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`}. Each is
-          the formal statement of a claim in the shared record. Below each statement are the checks recorded for it,
-          earliest first where the record gives a date.
+          This edition contains {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`}. A
+          Lean declaration is a statement written in Lean, a language in which a computer can check proofs. Each declaration
+          below is listed with the claims recorded as corresponding to it.
         </p>
         {declarations.map((id) => (
-          <FormalStatement key={id} id={id} selected={target.type === "formal" && target.id === id} via={target.type === "formal" && target.id === id ? target.via : undefined} />
-        ))}
-      </section>
-
-      <section className="checks__band" aria-labelledby="by-kind">
-        <h2 id="by-kind">Every check, by kind</h2>
-        <p className="checks__intro">
-          {recordsWord(cards.length)} in all. Each record is one check of one kind: what was run or planned, on which
-          statements, and what happened. An outcome means:
-        </p>
-        <dl className="outcomes">
-          {OUTCOME_MEANINGS.map((o) => (
-            <div key={o.status} className="outcomes__row">
-              <dt>
-                <Outcome status={o.status} />
-              </dt>
-              <dd>{o.meaning}</dd>
-            </div>
-          ))}
-        </dl>
-        {groups.map((g) => (
-          <KindSection key={g.kind} group={g} target={target.type === "evidence" && target.kind === g.kind ? target : null} />
+          <FormalStatement
+            key={id}
+            id={id}
+            selected={target.type === "node" && (target.id === id || target.formal === id)}
+          />
         ))}
       </section>
     </div>
   );
 }
 
-// ----------------------------------------------------------- formal statements
+function OutcomeKey() {
+  return (
+    <details className="outcome-key">
+      <summary>What each outcome means</summary>
+      <dl className="outcomes">
+        {OUTCOME_MEANINGS.map((o) => (
+          <div key={o.status} className="outcomes__row">
+            <dt>
+              <Outcome status={o.status} />
+            </dt>
+            <dd>{o.meaning}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  );
+}
 
-function FormalStatement({ id, selected, via }: { id: string; selected: boolean; via?: string }) {
+// ------------------------------------------------------- the selected subject
+
+function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
   const { graph, map } = useEdition();
   const node = graph.nodes.get(id)!;
   const detail = useRecord(node.ref);
   const record = detail.status === "ready" ? detail.value.record : null;
-  const claims = (graph.in.get(id) ?? []).filter((e) => e.kind === "formalizes").map((e) => e.from);
-  const evidenceIds = (record?.evidence_ids as string[] | undefined) ?? [];
   const cards = useMemo(() => {
     const byId = new Map((map.records.evidence as EvidenceCard[]).map((c) => [c.id, c]));
-    return evidenceIds.map((e) => byId.get(e)).filter((c): c is EvidenceCard => !!c);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return ((record?.evidence_ids as string[] | undefined) ?? []).map((e) => byId.get(e)).filter((c): c is EvidenceCard => !!c);
   }, [record, map]);
-  const evidence = useEvidence(record ? cards.map((c) => c.ref) : null);
-  const ref = useScrollTarget<HTMLElement>(selected && detail.status === "ready");
-
-  const ordered = useMemo(() => {
-    if (evidence.status !== "ready") return null;
-    const rows = cards.map((card) => ({ card, record: evidence.records.get(card.ref)!, details: evidence.records.get(card.ref)?.details }));
-    return inStatedTimeOrder(rows);
-  }, [evidence, cards]);
+  const groups = useMemo(() => groupByKind(cards).filter((g) => g.cards.length > 0), [cards]);
+  // No scroll on arrival: the rows follow the heading and the edition note, which must be read first.
+  const formalNode = formal ? graph.nodes.get(formal) : null;
 
   return (
-    <article ref={ref} id={id} className={`formal${selected ? " is-selected" : ""}`} aria-labelledby={`formal-${id}`}>
+    <section className="checks__band subject is-selected" aria-labelledby="subject-checks">
+      <h2 id="subject-checks">Checks attached to this {node.kind === "declaration" ? "Lean declaration" : node.kind === "goal" ? "result" : node.kind}</h2>
+      <p className="checks__intro">
+        {detail.status === "loading" && "Loading the record…"}
+        {detail.status === "error" && <span className="checks__error">{describeError(detail.error).title}.</span>}
+        {record && cards.length === 0 && (
+          <>
+            No check is recorded for this {node.kind === "assumption" ? "assumption" : "record"} itself. The record’s status is{" "}
+            {node.status === "unverified"
+              ? "unverified, which means it was stated from the sources and has not been independently checked"
+              : node.status.replace(/_/g, " ")}
+            .{" "}
+          </>
+        )}
+        {record && cards.length > 0 && <>The counts below refer only to the {recordsWord(cards.length)} attached to it. </>}
+        {formalNode && (
+          <>
+            Its formal statement in Lean is <a className="lean" href={`#${formal}`}>{formalNode.label}</a>.{" "}
+          </>
+        )}
+        <a href={routeHref({ view: "map", node: id })}>Open it on the argument map</a>
+      </p>
+      {groups.length > 0 && (
+        <CheckTable
+          caption={`Checks attached to ${node.label}, by kind`}
+          rows={groups.map((g) => ({ group: g, examined: null, subjectView: true }))}
+          target={null}
+        />
+      )}
+    </section>
+  );
+}
+
+// ------------------------------------------------------------- the table
+
+interface Row {
+  group: KindGroup;
+  /** A line under the kind's question; null for none. */
+  examined: string | null;
+  /** Rows for one subject open their history when it holds a recorded failure. */
+  subjectView?: boolean;
+}
+
+function CheckTable({
+  caption,
+  rows,
+  target,
+  paged,
+}: {
+  caption: string;
+  rows: Row[];
+  target: Extract<Target, { type: "evidence" }> | null;
+  paged?: boolean;
+}) {
+  return (
+    <table className="checktable">
+      <caption className="visually-hidden">{caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Check</th>
+          <th scope="col">What it examined</th>
+          <th scope="col">Recorded outcome</th>
+          <th scope="col">Details</th>
+        </tr>
+      </thead>
+      {rows.map((row) => (
+        <KindRow
+          key={row.group.kind}
+          row={row}
+          target={target && target.kind === row.group.kind ? target : null}
+          paged={!!paged}
+        />
+      ))}
+    </table>
+  );
+}
+
+function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extract<Target, { type: "evidence" }> | null; paged: boolean }) {
+  const { group } = row;
+  const uid = useId();
+  const total = group.cards.length;
+  const paged = allowPaging && total > PAGED_OVER;
+  // A recorded failure is never hidden behind a click on a subject's own rows.
+  const [open, setOpen] = useState(!!target || (!!row.subjectView && !!group.counts.failed));
+  const [shown, setShown] = useState(paged ? PAGE : total);
+  useEffect(() => {
+    if (!target) return;
+    setOpen(true);
+    if (paged) setShown((s) => Math.max(s, Math.ceil((target.index + 1) / PAGE) * PAGE));
+  }, [target, paged]);
+
+  const visible = open ? group.cards.slice(0, shown) : [];
+  // Only records a reader opens are requested; earlier pages stay cached.
+  const evidence = useEvidence(open ? visible.map((c) => c.ref) : null);
+  const ordered = useMemo(() => {
+    if (evidence.status !== "ready") return null;
+    return inStatedTimeOrder(visible.map((card) => ({ card, details: evidence.records.get(card.ref)?.details, record: evidence.records.get(card.ref) })));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [evidence, shown, open]);
+  const historyId = `${uid}-history`;
+  const note = rowNote(group.kind, group.counts);
+
+  return (
+    <tbody id={`kind-${group.kind}`} className={`checkrow${group.counts.failed ? " checkrow--failed" : ""}`}>
+      <tr>
+        <th scope="row" className="checkrow__kind">
+          {group.title}
+        </th>
+        <td className="checkrow__examined" data-label="What it examined">
+          {group.question || <span className="faint">The check records do not say.</span>}
+          {row.examined && <span className="checkrow__subjects">{row.examined}</span>}
+        </td>
+        <td className="checkrow__outcome" data-label="Recorded outcome">
+          {total === 0 ? (
+            <span className="faint">This edition has no check records of this kind.</span>
+          ) : (
+            <ul className="checkrow__counts">
+              {outcomeParts(group.counts).map(({ status, n }) => (
+                <li key={status}>
+                  <Outcome status={status} count={n} />
+                </li>
+              ))}
+            </ul>
+          )}
+          {note && <span className="checkrow__note">{note}</span>}
+        </td>
+        <td className="checkrow__details" data-label="Details">
+          {total > 0 && (
+            <button type="button" className="control checkrow__toggle" aria-expanded={open} aria-controls={historyId} onClick={() => setOpen((o) => !o)}>
+              <Chevron open={open} />
+              {open ? "Hide" : total === 1 ? "Show the record" : `Show all ${total}`}
+              <span className="visually-hidden">
+                {open ? ` the ${group.title} records` : total === 1 ? ` of ${group.title}` : ` ${group.title} records`}
+              </span>
+            </button>
+          )}
+        </td>
+      </tr>
+      <tr className="checkrow__history" id={historyId} hidden={!open}>
+        <td colSpan={4}>
+          {open && (
+            <>
+              {evidence.status === "error" && <p className="checks__error">{describeError(evidence.error).title}.</p>}
+              {evidence.status !== "ready" && evidence.status !== "error" && <p className="faint">Loading the check records…</p>}
+              {ordered && (
+                <>
+                  {ordered.dated.length > 0 && (
+                    <ol className="ledger">
+                      {ordered.dated.map(({ record: r }) => (
+                        <EvidenceRow key={r.card.id} card={r.card} record={r.record} selected={target?.id === r.card.id} />
+                      ))}
+                    </ol>
+                  )}
+                  {ordered.undated.length > 0 && (
+                    <>
+                      {ordered.dated.length > 0 && <p className="ledger__break">Check records that give no date, in the order the edition lists them</p>}
+                      <ol className="ledger">
+                        {ordered.undated.map((r) => (
+                          <EvidenceRow key={r.card.id} card={r.card} record={r.record} selected={target?.id === r.card.id} />
+                        ))}
+                      </ol>
+                    </>
+                  )}
+                </>
+              )}
+              {paged && (
+                <p className="kind__more">
+                  <span className="faint num">
+                    {Math.min(shown, total)} of {total} shown
+                  </span>
+                  {shown < total && (
+                    <button type="button" className="control" onClick={() => setShown((s) => s + PAGE)}>
+                      Show {Math.min(PAGE, total - shown)} more
+                    </button>
+                  )}
+                </p>
+              )}
+            </>
+          )}
+        </td>
+      </tr>
+    </tbody>
+  );
+}
+
+// ----------------------------------------------------------- formal statements
+
+function FormalStatement({ id, selected }: { id: string; selected: boolean }) {
+  const { graph } = useEdition();
+  const node = graph.nodes.get(id)!;
+  const detail = useRecord(node.ref);
+  const record = detail.status === "ready" ? detail.value.record : null;
+  const claims = (graph.in.get(id) ?? []).filter((e) => e.kind === "formalizes").map((e) => e.from);
+  const count = ((record?.evidence_ids as string[] | undefined) ?? []).length;
+
+  return (
+    <article id={id} className={`formal${selected ? " is-selected" : ""}`} aria-labelledby={`formal-${id}`}>
       <h3 id={`formal-${id}`} className="formal__name lean" translate="no">
         {node.label}
       </h3>
       <p className="formal__of">
         {claims.length === 0 ? (
-          "No claim in the record names it as its formal statement."
+          "No claim is recorded as corresponding to this declaration."
         ) : (
           <>
-            Formal statement of{" "}
+            Recorded as the formal statement of{" "}
             {claims.map((c, i) => (
               <span key={c}>
                 {i > 0 && (i === claims.length - 1 ? " and " : ", ")}
-                <a href={routeHref({ view: "map", node: c })} className={via === c ? "is-from" : undefined}>
-                  {graph.nodes.get(c)?.label ?? c}
-                </a>
+                <a href={routeHref({ view: "map", node: c })}>{graph.nodes.get(c)?.label ?? c}</a>
               </span>
             ))}
             .{" "}
             <a href={routeHref({ view: "map", node: id })} className="formal__map">
-              Show it on the map
+              Show it on the argument map
             </a>
           </>
         )}
@@ -195,153 +430,21 @@ function FormalStatement({ id, selected, via }: { id: string; selected: boolean;
       )}
       {record?.boundary && (
         <p className="formal__scope">
-          <span className="formal__label">Scope recorded with it.</span> {String(record.boundary)}
+          <span className="formal__label">Recorded scope.</span> {String(record.boundary)}
         </p>
       )}
       {record && (
-        <div className="formal__checks">
-          <h4 className="formal__label">
-            {cards.length === 0 ? "No check is recorded for this declaration on its own." : `Checks recorded for it: ${recordsWord(cards.length)}; ${countsInWords(countOf(cards))}`}
-          </h4>
-          {cards.length > 0 && evidence.status === "loading" && <p className="faint">Loading the records…</p>}
-          {evidence.status === "error" && <p className="checks__error">{describeError(evidence.error).title}.</p>}
-          {ordered && (
-            <>
-              {ordered.dated.length > 0 && (
-                <ol className="ledger">
-                  {ordered.dated.map(({ record: row }) => (
-                    <EvidenceRow key={row.card.id} card={row.card} record={row.record} showKind compact />
-                  ))}
-                </ol>
-              )}
-              {ordered.undated.length > 0 && (
-                <>
-                  {ordered.dated.length > 0 && <p className="ledger__break">Records that state no date, in the order the record lists them</p>}
-                  <ol className="ledger">
-                    {ordered.undated.map((row) => (
-                      <EvidenceRow key={row.card.id} card={row.card} record={row.record} showKind compact />
-                    ))}
-                  </ol>
-                </>
-              )}
-            </>
+        <p className="formal__checks">
+          {count === 0 ? (
+            "No check is recorded for this declaration on its own."
+          ) : selected ? (
+            <>Its {recordsWord(count)} are listed at the top of this page.</>
+          ) : (
+            <a href={routeHref({ view: "checks", node: id })}>Show its {recordsWord(count)}, by kind</a>
           )}
-        </div>
+        </p>
       )}
     </article>
-  );
-}
-
-function countOf(cards: EvidenceCard[]): Record<string, number> {
-  const counts: Record<string, number> = {};
-  for (const c of cards) counts[c.status] = (counts[c.status] ?? 0) + 1;
-  return counts;
-}
-
-// --------------------------------------------- a node that is not a declaration
-
-function NodeChecks({ id }: { id: string }) {
-  const { graph, map } = useEdition();
-  const node = graph.nodes.get(id)!;
-  const detail = useRecord(node.ref);
-  const record = detail.status === "ready" ? detail.value.record : null;
-  const cards = useMemo(() => {
-    const byId = new Map((map.records.evidence as EvidenceCard[]).map((c) => [c.id, c]));
-    return ((record?.evidence_ids as string[] | undefined) ?? []).map((e) => byId.get(e)).filter((c): c is EvidenceCard => !!c);
-  }, [record, map]);
-  const evidence = useEvidence(record ? cards.map((c) => c.ref) : null);
-  const ref = useScrollTarget<HTMLElement>(detail.status === "ready");
-  return (
-    <section ref={ref} className="checks__band node-checks is-selected" aria-labelledby="node-checks">
-      <h2 id="node-checks">
-        Checks recorded for <span className={node.kind === "declaration" ? "lean" : undefined}>{node.label}</span>
-      </h2>
-      {detail.status === "loading" && <p className="faint">Loading…</p>}
-      {record && cards.length === 0 && (
-        <p className="checks__intro">
-          No check is recorded for this {node.kind === "assumption" ? "assumption" : "claim"} itself. Its status in the record:{" "}
-          {node.status === "unverified" ? "stated from the sources, not independently checked" : node.status.replace(/_/g, " ")}.{" "}
-          <a href={routeHref({ view: "map", node: id })}>Return to it on the map</a>
-        </p>
-      )}
-      {cards.length > 0 && (
-        <p className="checks__intro">
-          {recordsWord(cards.length)}: {countsInWords(countOf(cards))}. <a href={routeHref({ view: "map", node: id })}>Return to it on the map</a>
-        </p>
-      )}
-      {evidence.status === "ready" && cards.length > 0 && (
-        <ol className="ledger">
-          {cards.map((card) => (
-            <EvidenceRow key={card.id} card={card} record={evidence.records.get(card.ref)} showKind />
-          ))}
-        </ol>
-      )}
-    </section>
-  );
-}
-
-// ------------------------------------------------------------- kinds of check
-
-function KindSection({ group, target }: { group: KindGroup; target: Extract<Target, { type: "evidence" }> | null }) {
-  const paged = group.cards.length > PAGED_OVER;
-  const [open, setOpen] = useState(!!target);
-  const [shown, setShown] = useState(paged ? PAGE : group.cards.length);
-  useEffect(() => {
-    if (!target) return;
-    setOpen(true);
-    if (paged) setShown((s) => Math.max(s, Math.ceil((target.index + 1) / PAGE) * PAGE));
-  }, [target, paged]);
-
-  const visible = open ? group.cards.slice(0, shown) : [];
-  // Only the newest page is requested; earlier pages are already cached.
-  const evidence = useEvidence(open ? visible.map((c) => c.ref) : null);
-  const total = group.cards.length;
-  const info = CHECK_KINDS[group.kind];
-  const listId = `kind-${group.kind}-records`;
-
-  return (
-    <section id={`kind-${group.kind}`} className="kind" aria-labelledby={`kind-${group.kind}-title`}>
-      <h3 id={`kind-${group.kind}-title`} className="kind__title">
-        {group.title}
-      </h3>
-      {info?.question && <p className="kind__question">{info.question}</p>}
-      <p className="kind__counts">
-        {total === 0 ? "No records of this kind in this edition." : `${recordsWord(total)}: ${countsInWords(group.counts)}.`}
-      </p>
-      {total > 0 && (
-        <button type="button" className="control kind__toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
-          <Chevron open={open} />
-          {open ? "Hide the records" : paged ? `Show the first ${PAGE} of ${total} records` : total === 1 ? "Show the record" : `Show the ${total} records`}
-        </button>
-      )}
-      {open && (
-        <div id={listId}>
-          {evidence.status === "error" && <p className="checks__error">{describeError(evidence.error).title}.</p>}
-          <ol className="ledger">
-            {visible.map((card) => (
-              <EvidenceRow
-                key={card.id}
-                card={card}
-                record={evidence.status === "ready" ? evidence.records.get(card.ref) : undefined}
-                selected={target?.id === card.id}
-              />
-            ))}
-          </ol>
-          {paged && (
-            <p className="kind__more">
-              <span className="faint num">
-                {Math.min(shown, total)} of {total} shown
-              </span>
-              {shown < total && (
-                <button type="button" className="control" onClick={() => setShown((s) => s + PAGE)}>
-                  Show {Math.min(PAGE, total - shown)} more
-                </button>
-              )}
-            </p>
-          )}
-        </div>
-      )}
-    </section>
   );
 }
 
@@ -362,7 +465,8 @@ function EvidenceRow({
   compact?: boolean;
 }) {
   const { graph } = useEdition();
-  const [expanded, setExpanded] = useState(false);
+  // A recorded failure shows its whole record: date, inputs and where it stopped.
+  const [expanded, setExpanded] = useState(card.status === "failed");
   const [clipped, setClipped] = useState(false);
   const detailsRef = useRef<HTMLParagraphElement>(null);
   const rowRef = useScrollTarget<HTMLLIElement>(!!selected && !!record);
@@ -393,17 +497,17 @@ function EvidenceRow({
       <div className="ev__body">
         <p className="ev__tool">
           {showKind && <span className="ev__kind">{kindTitle}. </span>}
-          {record ? record.tool ?? "No tool is named." : <span className="faint">Loading the record…</span>}
+          {record ? record.tool ?? "The record names no tool." : <span className="faint">Loading the record…</span>}
         </p>
         {record && (
           <>
             <p className="ev__meta">
-              {date && <span className="ev__date">Date given in the record: {date.text}. </span>}
+              {date && <span className="ev__date">The record gives the date {date.text}. </span>}
               {subjects.length === 0 ? (
-                "It names no statement."
+                "The record names no statement that it concerns."
               ) : (
                 <>
-                  Concerns{" "}
+                  It concerns{" "}
                   {visibleSubjects.map((s, i) => {
                     const n = graph.nodes.get(s);
                     return (
@@ -438,7 +542,7 @@ function EvidenceRow({
             )}
             {expanded && record.source_ids && record.source_ids.length > 0 && (
               <p className="ev__extra ev__sources">
-                <span className="ev__label">Sources it names. </span>
+                <span className="ev__label">Sources named in the record. </span>
                 {record.source_ids.map((s, i) => (
                   <span key={s}>
                     {i > 0 && ", "}
@@ -451,11 +555,12 @@ function EvidenceRow({
             )}
             {record.receipt_path && (!compact || expanded) && (
               <p className="ev__receipt">
-                Receipt file <code className="lean" translate="no">{record.receipt_path}</code>, kept in the repository and not served by this site.
+                The output saved for this check is in the repository file{" "}
+                <code className="lean" translate="no">{record.receipt_path}</code>, which this site does not serve.
                 {expanded && record.receipt_sha256 && (
                   <>
                     {" "}
-                    Its SHA-256 is <code className="lean ev__hash">{record.receipt_sha256}</code>.
+                    The SHA-256 hash of that file is <code className="lean ev__hash">{record.receipt_sha256}</code>.
                   </>
                 )}
               </p>
@@ -479,11 +584,17 @@ function EvidenceRow({
   );
 }
 
-function Outcome({ status }: { status: string }) {
+function Outcome({ status, count }: { status: string; count?: number }) {
   return (
     <span className={`outcome outcome--${status}`}>
       <span className="outcome__mark" aria-hidden="true" />
-      {OUTCOME_NAMES[status] ?? status.replace(/_/g, " ")}
+      {count === undefined ? (
+        OUTCOME_NAMES[status] ?? status.replace(/_/g, " ")
+      ) : (
+        <>
+          <span className="num">{count}</span> {STATUS_WORDS[status] ?? status.replace(/_/g, " ")}
+        </>
+      )}
     </span>
   );
 }

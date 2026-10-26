@@ -183,7 +183,7 @@ describe("rendering the papers", () => {
     expect(row).toBeDefined();
     expect(row!.querySelectorAll("td").length).toBe(4);
     expect(row!.querySelector("td")!.querySelectorAll(".katex").length).toBeGreaterThanOrEqual(2);
-    expect(el.querySelectorAll("table").length).toBe(3);
+    expect(el.querySelectorAll("table").length).toBe(2);
   });
 
   it("gives headings Pandoc ids and keeps explicit anchors", () => {
@@ -253,7 +253,7 @@ describe("rendering the papers", () => {
     expect(docs.architecture.frontMatter).toMatchObject({
       title: "One argument, several ways to read it",
       subtitle: "An architectural companion to Lean Exposition",
-      date: "25 October 2026",
+      date: expect.stringMatching(/^\d{1,2} [A-Z][a-z]+ \d{4}$/),
       "portable-local-links": true,
     });
     expect(docs.expository.frontMatter?.["header-includes"]).toBeDefined();

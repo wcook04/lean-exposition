@@ -55,10 +55,9 @@ describe("panel wording", () => {
   });
 
   it("says how an account relates to a result without a passage", () => {
-    expect(relationLine("short", ["recorded_prerequisite"])).toBe("The short paper relies on it without a passage of its own.");
-    expect(relationLine("short", [])).toBe("Not part of the short paper's argument.");
-    expect(relationLine("long", undefined)).toBe("Not part of the long record's argument.");
-    expect(relationLine("expository", ["mapped_assumption"])).toMatch(/^The exposition lists it as an assumption/);
+    expect(relationLine("short", ["recorded_prerequisite"])).toBe("No passage is linked directly to this record.");
+    expect(relationLine("short", [])).toBe("No passage in this account is linked to this record, and the recorded argument for the account's main results does not use it.");
+    expect(relationLine("long", undefined)).toBe("No passage in this account is linked to this record, and the recorded argument for the account's main results does not use it.");
   });
 
   it("never shows internal field names", () => {

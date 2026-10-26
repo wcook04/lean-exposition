@@ -38,6 +38,8 @@ export interface LayoutInput {
 
 export const ANCHOR = 0.03;
 export const PIN = 500;
+/** Extra space between a consumer's auxiliary inputs (assumptions, Lean correspondences) and its supports. */
+export const AUX_GAP = 28;
 
 const isDummyKey = (id: string) => id.startsWith("§");
 
@@ -104,6 +106,13 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
     for (let i = 0; i + 1 < path.length; i++) link(path[i], path[i + 1]);
   }
 
+  // Auxiliary inputs: cards reached only by assumption or Lean-correspondence edges.
+  // Among a consumer's new inputs they are seeded first, so they read as their own group.
+  const viaSupport = new Set<string>();
+  const viaAux = new Set<string>();
+  for (const e of edges) (e.kind === "supports" ? viaSupport : viaAux).add(e.to);
+  const isAux = (id: string) => viaAux.has(id) && !viaSupport.has(id);
+
   // Seed positions: the previous layout where known, else from neighbours above.
   const prevX = new Map<string, number>();
   if (prev) {
@@ -144,7 +153,7 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
       if (prevX.has(id)) seedX.set(id, prevX.get(id)!);
       else fresh.push(id);
     }
-    fresh.sort((a, b) => (dfs.get(a) ?? 0) - (dfs.get(b) ?? 0));
+    fresh.sort((a, b) => Number(isAux(b)) - Number(isAux(a)) || (dfs.get(a) ?? 0) - (dfs.get(b) ?? 0));
     // New members: under the mean of their neighbours above, spread by sibling order.
     const byParent = new Map<string, string[]>();
     for (const id of fresh) {
@@ -183,6 +192,11 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
     const xs = layer.map((id) => seedX.get(id)!).sort((a, b) => a - b);
     layer.forEach((id, i) => start.set(id, xs[i]));
   }
+  const shareParent = (a: string, b: string) => {
+    const above = new Set((up.get(a) ?? []).map((n) => n.id));
+    return (up.get(b) ?? []).some((n) => above.has(n.id));
+  };
+  const extraGap = (left: string, right: string) => (isAux(left) && !isDummyKey(right) && !isAux(right) && shareParent(left, right) ? AUX_GAP * (metrics.sepCard / 28) : 0);
   const xs = assignX({
     layers: ordered.layers,
     width,
@@ -191,9 +205,45 @@ export function layoutTree(input: LayoutInput): { layout: Layout; plan: Plan } {
     bends,
     sepCard: metrics.sepCard,
     sepDummy: metrics.sepDummy,
+    extraGap,
     start,
     anchors,
   });
+
+  // Long edges run as one straight vertical where their layers allow it (a
+  // Brandes–Köpf style alignment of each dummy chain): the quadratic objective
+  // leaves small sideways steps between dummies, which read as needless jogs.
+  {
+    const at = new Map<string, { layer: number; i: number }>();
+    ordered.layers.forEach((layer, li) => layer.forEach((id, i) => at.set(id, { layer: li, i })));
+    const sep = (a: string, b: string) => (width(a) + width(b)) / 2 + (isDummyKey(a) || isDummyKey(b) ? metrics.sepDummy : metrics.sepCard) + extraGap(a, b);
+    const fits = (id: string, x: number) => {
+      const { layer, i } = at.get(id)!;
+      const row = ordered.layers[layer];
+      const left = row[i - 1];
+      const right = row[i + 1];
+      if (left !== undefined && x - xs.get(left)! < sep(left, id) - 0.01) return false;
+      if (right !== undefined && xs.get(right)! - x < sep(id, right) - 0.01) return false;
+      return true;
+    };
+    for (let pass = 0; pass < 2; pass++)
+      for (const [key, chain] of chains) {
+        if (!chain.length) continue;
+        const e = edges.find((x) => x.key === key)!;
+        const xsNow = chain.map((d) => xs.get(d)!);
+        if (Math.max(...xsNow) - Math.min(...xsNow) < 0.5 && Math.abs(xsNow[xsNow.length - 1] - xs.get(e.to)!) < 0.5) continue;
+        // Prefer straight into the prerequisite, then into the consumer, then any of its own columns.
+        const candidates = [xs.get(e.to)!, xs.get(e.from)!, ...xsNow];
+        let best: number | null = null;
+        let cost = Infinity;
+        for (const x of candidates) {
+          if (!chain.every((d) => fits(d, x))) continue;
+          const c = chain.reduce((sum, d) => sum + Math.abs(xs.get(d)! - x), 0) + (x === candidates[0] ? 0 : 0.5);
+          if (c < cost) [cost, best] = [c, x];
+        }
+        if (best !== null) for (const d of chain) xs.set(d, best);
+      }
+  }
 
   // Rigid shift: the pinned card (else the root) stays where it was.
   const keep = pin && prev?.boxes.has(pin) && rank.has(pin) ? pin : prev?.boxes.has(root) ? root : null;

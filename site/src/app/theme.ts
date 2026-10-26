@@ -1,6 +1,8 @@
 // Day and night schemes. A stored choice is kept only when it differs from
 // the system's, so choosing the system's own scheme follows the system again.
 
+import { useSyncExternalStore } from "react";
+
 export type Scheme = "light" | "dark";
 const KEY = "lx-theme";
 
@@ -47,4 +49,20 @@ export function onSchemeChange(listener: () => void): () => void {
 
 export function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+const REDUCE = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(listener: () => void): () => void {
+  const media = window.matchMedia(REDUCE);
+  media.addEventListener("change", listener);
+  return () => media.removeEventListener("change", listener);
+}
+
+/**
+ * Whether the reader asks for reduced motion, read live: a component using
+ * this re-renders when the system setting changes mid-visit.
+ */
+export function useReducedMotion(): boolean {
+  return useSyncExternalStore(subscribeReducedMotion, prefersReducedMotion, () => false);
 }

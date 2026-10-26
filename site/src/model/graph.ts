@@ -16,6 +16,7 @@ import type {
   SourceRecord,
   Stage,
   SummaryCard,
+  TheoremApplication,
 } from "../api/types";
 
 export type LinkKind = "supports" | "formalizes" | "assumes";
@@ -40,6 +41,8 @@ export interface ArgNode {
   origin: Origin;
   /** Per-paper membership: absent when the paper's support set omits the node. */
   papers: Partial<Record<Stage, { roles: string[]; direct: number }>>;
+  /** The evidence (check) records the node's own record cites; absent when node records were not loaded. */
+  evidenceIds?: string[];
 }
 
 export interface ArgEdge {
@@ -53,7 +56,10 @@ export interface ArgEdge {
   semanticClass: string;
   /** The recorded warrant: how the prerequisite is used in this step. */
   warrant?: Warrant;
-  /** For an applied conditional theorem: the premises this use supplies. */
+  /**
+   * For an applied conditional theorem: the premises this use supplies.
+   * Traversal discharges them for this use only (see argumentContexts).
+   */
   application?: EdgeApplication;
 }
 
@@ -68,14 +74,52 @@ export interface Warrant {
   scope: string | null;
   status: string; // the warrant's own review status, e.g. not_run
   tool: string;
-  /** True when the evidence covers several steps rather than this one alone. */
+  /** True when the same evidence record is cited by more than one stored relation. */
   shared: boolean;
+  /** How many stored relations cite this evidence record (1 when it is this step's alone). */
+  sharedWith: number;
+  /** The evidence record's full details text, exactly as recorded. */
+  details: string;
 }
 
+/** A recorded theorem application, kept whole on the edge that makes it. */
 export interface EdgeApplication {
   rationale: string | null;
   bindings: { assumption: string; names: string[]; rationale: string; supplier: string }[];
+  /** The theorem's premises this use still requires. */
   remaining: string[];
+  /** Objects held fixed throughout the use: name → authored description. */
+  shared: Record<string, string>;
+  /** The binding's recorded status ("authored"); never a check result. */
+  status: string | null;
+  /** Where in the sources the application is made. */
+  sourceSpan: { sourceId: string; startLine: number; endLine: number } | null;
+  /** The application exactly as served. */
+  record: Partial<TheoremApplication>;
+}
+
+/** Shape a served application for the site; drops nothing (the raw record is kept). */
+export function edgeApplication(app: Partial<TheoremApplication>): EdgeApplication {
+  const span = app.source_span;
+  return {
+    rationale: app.rationale ?? null,
+    bindings: (app.premise_bindings ?? []).map((b) => ({
+      assumption: b.assumption_id,
+      names: b.binding_names ?? [],
+      rationale: b.rationale ?? "",
+      supplier: b.supplier_id,
+    })),
+    remaining: app.remaining_assumption_ids ?? [],
+    shared: { ...(app.shared_bindings ?? {}) },
+    status: app.status ?? null,
+    sourceSpan: span ? { sourceId: span.source_id, startLine: span.start_line, endLine: span.end_line } : null,
+    record: app,
+  };
+}
+
+/** The premises an edge's application supplies (discharges) for its use; empty for a plain edge. */
+export function suppliedPremises(edge: ArgEdge): string[] {
+  return edge.application?.bindings.map((b) => b.assumption) ?? [];
 }
 
 /** A citation link between records: navigation only, not a dependency. */
@@ -181,7 +225,8 @@ export function buildGraph(
       semanticClass: link.semantic_class,
     };
     edge.linkIds.push(link.id);
-    if (link.id.includes("/scope/")) edge.scoped = true;
+    if (link.application_scope || link.id.includes("/scope/")) edge.scoped = true;
+    if (link.application?.premise_bindings?.length && kind === "supports") edge.application = edgeApplication(link.application);
     grouped.set(key, edge);
   }
   const edges = [...grouped.values()];
@@ -277,6 +322,7 @@ function assignOrigins(graph: ArgGraph, records: NodeRecord[], sources: SourceRe
   const counts = new Map<string, { label: string; count: number }>();
   for (const id of graph.order) {
     const record = byId.get(id);
+    if (record?.evidence_ids) graph.nodes.get(id)!.evidenceIds = [...record.evidence_ids];
     const origin = classify(record, record?.source_id ? sourceById.get(record.source_id) : undefined);
     raw.set(id, origin);
     const c = counts.get(origin.family) ?? { label: origin.label, count: 0 };
@@ -308,7 +354,8 @@ function assignOrigins(graph: ArgGraph, records: NodeRecord[], sources: SourceRe
 
 // Warrants: each stored edge names evidence records, and the review record
 // whose subjects are the edge's two endpoints says how the step is made.
-// Evidence that covers a group of steps is kept, marked as shared.
+// Whether a warrant is shared is decided by identity: how many stored
+// relations cite the same evidence record, not how many subjects it names.
 
 const REVIEW_PREAMBLE = /^Authored source comparison completed for this candidate; independent semantic acceptance remains not_run\.\s*/;
 
@@ -330,29 +377,46 @@ export function warrantParts(details: string): { text: string; sources: string |
   return { text: rest, sources, scope };
 }
 
-function warrantFor(evidenceIds: string[], from: string, to: string, evidence: Map<string, EvidenceRecord>): Warrant | undefined {
+function warrantFor(
+  evidenceIds: string[],
+  from: string,
+  to: string,
+  evidence: Map<string, EvidenceRecord>,
+  citedBy: Map<string, number>,
+): Warrant | undefined {
   const reviews = evidenceIds.map((id) => evidence.get(id)).filter((e): e is EvidenceRecord => !!e && e.kind === "semantic_review");
   const own = reviews
     .filter((e) => e.subject_ids.includes(from) && e.subject_ids.includes(to))
     .sort((a, b) => a.subject_ids.length - b.subject_ids.length)[0];
   const chosen = own ?? reviews[0];
   if (!chosen) return undefined;
+  const sharedWith = citedBy.get(chosen.id) ?? 1;
   return {
     evidenceId: chosen.id,
     ...warrantParts(chosen.details),
     status: chosen.status,
     tool: chosen.tool,
-    shared: !own || own.subject_ids.length > 3,
+    shared: sharedWith > 1,
+    sharedWith,
+    details: chosen.details,
   };
+}
+
+/** How many stored relations cite each evidence record (each relation counted once). */
+export function evidenceCitations(edges: readonly EdgeRecord[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const record of edges) for (const id of new Set(record.evidence_ids)) counts.set(id, (counts.get(id) ?? 0) + 1);
+  return counts;
 }
 
 function attachWarrants(graph: ArgGraph, edges: EdgeRecord[], evidence: EvidenceRecord[]): void {
   if (!edges.length) return;
   const byId = new Map(evidence.map((e) => [e.id, e]));
+  const citedBy = evidenceCitations(edges);
   const stored = new Map<string, EdgeRecord>();
   for (const record of edges) {
     if (record.kind === "cites") {
-      graph.cites.push({ from: record.from, to: record.to, warrant: warrantFor(record.evidence_ids, record.from, record.to, byId) });
+      graph.cites.push({ from: record.from, to: record.to, warrant: warrantFor(record.evidence_ids, record.from, record.to, byId, citedBy) });
       continue;
     }
     stored.set(`${record.from}→${record.to}→${record.kind}`, record);
@@ -360,32 +424,100 @@ function attachWarrants(graph: ArgGraph, edges: EdgeRecord[], evidence: Evidence
   for (const edge of graph.edges) {
     const record = stored.get(`${edge.from}→${edge.to}→${edge.kind}`);
     if (!record) continue;
-    edge.warrant = warrantFor(record.evidence_ids, edge.from, edge.to, byId);
+    edge.warrant = warrantFor(record.evidence_ids, edge.from, edge.to, byId, citedBy);
+    // The stored record and the map link carry the same application; the
+    // stored one is authoritative when both are present.
     const app = record.application;
-    if (app?.premise_bindings?.length) {
-      edge.application = {
-        rationale: app.rationale ?? null,
-        bindings: app.premise_bindings.map((b) => ({
-          assumption: b.assumption_id,
-          names: b.binding_names ?? [],
-          rationale: b.rationale ?? "",
-          supplier: b.supplier_id,
-        })),
-        remaining: app.remaining_assumption_ids ?? [],
-      };
-    }
+    if (app?.premise_bindings?.length && edge.kind === "supports") edge.application = edgeApplication(app);
   }
 }
 
-/** Everything reachable from `start` along stored or reversed links. */
-export function closure(
-  graph: ArgGraph,
-  start: string,
-  direction: "prerequisites" | "consumers",
-  kinds: readonly LinkKind[] = ["supports", "formalizes", "assumes"],
-): Set<string> {
-  const seen = new Set<string>([start]);
-  const queue = [start];
+// ------------------------------------------------- scoped argument traversal
+// Mirrors the backend's `argument_contexts` (contracts.py). A recorded
+// application of a conditional theorem supplies some of its premises for that
+// use only. Traversal therefore walks states (node, discharged premises):
+// following an edge adds the premises its application supplies; a node's own
+// assumptions are followed with the current discharged set; a target already
+// discharged in the current state is not entered. Keeping states, rather than
+// deleting premises globally, preserves a free use of the same premise that is
+// reached independently.
+
+const ALL_KINDS: readonly LinkKind[] = ["supports", "formalizes", "assumes"];
+
+/** One reachable context: a node and the premises discharged on the way to it. */
+export interface ArgumentContext {
+  key: string;
+  node: string;
+  /** Sorted premise ids discharged in this context. */
+  discharged: string[];
+}
+
+/** One followed relation between two contexts (keys of `ArgumentContexts.states`). */
+export interface ContextTransition {
+  from: string;
+  to: string;
+  edge: ArgEdge;
+}
+
+/** The reachable contexts from a set of roots, and the relations followed between them. */
+export interface ArgumentContexts {
+  states: Map<string, ArgumentContext>;
+  transitions: ContextTransition[];
+}
+
+export interface ContextOptions {
+  /** Relation kinds to follow; "assumes" follows nodes' own assumptions. Default: all three. */
+  kinds?: readonly LinkKind[];
+}
+
+const contextKey = (node: string, discharged: readonly string[]) => `${node}\u0000${discharged.join("\u0000")}`;
+
+/**
+ * Every (node, discharged premises) context reachable from `roots` along
+ * prerequisites, with the transitions between them, exactly as the backend's
+ * `argument_contexts` computes them.
+ */
+export function argumentContexts(graph: ArgGraph, roots: string | readonly string[], options: ContextOptions = {}): ArgumentContexts {
+  const kinds = options.kinds ?? ALL_KINDS;
+  const states = new Map<string, ArgumentContext>();
+  const transitions: ContextTransition[] = [];
+  const pending: ArgumentContext[] = (typeof roots === "string" ? [roots] : [...roots])
+    .filter((id) => graph.nodes.has(id))
+    .map((node) => ({ key: contextKey(node, []), node, discharged: [] }));
+  while (pending.length) {
+    const state = pending.pop()!;
+    if (states.has(state.key) || state.discharged.includes(state.node)) continue;
+    states.set(state.key, state);
+    for (const edge of graph.out.get(state.node) ?? []) {
+      if (!kinds.includes(edge.kind)) continue;
+      const supplied = suppliedPremises(edge);
+      const scope = supplied.length ? [...new Set([...state.discharged, ...supplied])].sort() : state.discharged;
+      if (scope.includes(edge.to)) continue;
+      const next = { key: contextKey(edge.to, scope), node: edge.to, discharged: scope };
+      transitions.push({ from: state.key, to: next.key, edge });
+      pending.push(next);
+    }
+  }
+  return { states, transitions };
+}
+
+/**
+ * What the argument for `roots` consists of once application scopes are
+ * respected: the reachable records, and the keys of the edges that are live
+ * (followed) in at least one reachable context. The map draws exactly these.
+ */
+export function argumentProjection(graph: ArgGraph, roots: string | readonly string[], options: ContextOptions = {}): { nodes: Set<string>; edges: Set<string> } {
+  const { states, transitions } = argumentContexts(graph, roots, options);
+  return {
+    nodes: new Set([...states.values()].map((s) => s.node)),
+    edges: new Set(transitions.map((t) => t.edge.key)),
+  };
+}
+
+/** Everything reachable from `start` along stored or reversed links, ignoring application scopes. */
+function plainClosure(graph: ArgGraph, start: readonly string[], direction: "prerequisites" | "consumers", kinds: readonly LinkKind[]): Set<string> {
+  const seen = new Set<string>(start.filter((id) => graph.nodes.has(id)));
+  const queue = [...seen];
   const adjacency = direction === "prerequisites" ? graph.out : graph.in;
   while (queue.length) {
     const id = queue.shift()!;
@@ -399,6 +531,37 @@ export function closure(
     }
   }
   return seen;
+}
+
+/**
+ * The records an argument rests on (`prerequisites`), or the records whose
+ * argument contains `start` (`consumers`). Both respect application scopes:
+ * a premise supplied by a recorded application is not part of the consumer's
+ * argument unless it is also reached by an independent, free use. The
+ * prerequisites equal the backend's `closure` for the same root.
+ */
+export function closure(
+  graph: ArgGraph,
+  start: string | readonly string[],
+  direction: "prerequisites" | "consumers",
+  kinds: readonly LinkKind[] = ALL_KINDS,
+): Set<string> {
+  const starts = typeof start === "string" ? [start] : [...start];
+  if (direction === "prerequisites") return argumentProjection(graph, starts, { kinds }).nodes;
+  // A consumer must be an unscoped ancestor; keep those whose scoped argument
+  // actually contains a start record.
+  const candidates = plainClosure(graph, starts, "consumers", kinds);
+  if (!graph.edges.some((e) => e.application)) return candidates;
+  const out = new Set<string>();
+  for (const id of candidates) {
+    if (starts.includes(id)) {
+      out.add(id);
+      continue;
+    }
+    const reached = argumentProjection(graph, id, { kinds }).nodes;
+    if (starts.some((s) => reached.has(s))) out.add(id);
+  }
+  return out;
 }
 
 /** Edges whose endpoints both lie in `members`. */

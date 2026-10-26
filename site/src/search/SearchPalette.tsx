@@ -2,20 +2,17 @@
 // passages. The server matches the exact words typed (case-folded, every
 // word required); results are grouped by what they open, not ranked by
 // meaning. Follows the WAI-ARIA combobox pattern with a grouped listbox.
+// The palette shows the first few of each kind; a truncated group ends in
+// "See all N matching …", which opens the full results page for the query.
 
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import "katex/dist/katex.min.css";
 import { query } from "../api/client";
-import type { Page, RecordDetail, SearchItem, Stage } from "../api/types";
-import { describeError, useEdition, useRecord } from "../app/data";
-import { navigate, routeHref } from "../app/router";
+import type { Page, SearchItem } from "../api/types";
+import { describeError, useEdition } from "../app/data";
+import { navigate, routeHref, type SearchType } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
-import { kindName } from "../map/labels";
-import { CHECK_KINDS, OUTCOME_NAMES } from "../checks/summary";
-import { loadDocument, sectionTitleOf, useDocument } from "../reader/documents";
-import { renderTex } from "../reader/math";
-import { get } from "../api/client";
-import { prepareExcerpt, type PreparedExcerpt } from "./excerpt";
+import { destination, nounFor, ResultBody, SEARCH_HELP, typeOfTable } from "./results";
 import "./search.css";
 
 const DEBOUNCE = 180;
@@ -33,9 +30,16 @@ const TABLES: { table: string; limit: number }[] = [
 
 type GroupId = "start" | "map" | "sections" | "passages" | "other";
 
+const GROUP_TABLES: Record<Exclude<GroupId, "start">, string[]> = {
+  map: ["nodes"],
+  sections: ["sections"],
+  passages: ["passages"],
+  other: ["citations", "sources", "evidence"],
+};
+
 const GROUP_TITLES: Record<GroupId, string> = {
   start: "Places to start",
-  map: "Results on the map",
+  map: "Records on the argument map",
   sections: "Sections",
   passages: "Passages",
   other: "Citations, sources and check records",
@@ -50,6 +54,8 @@ interface Option {
   meta?: string;
   lean?: boolean;
   href?: string;
+  /** A "See all N matching …" row at the end of a truncated group. */
+  more?: boolean;
 }
 
 interface Results {
@@ -58,41 +64,6 @@ interface Results {
 }
 
 type Phase = { status: "idle" } | { status: "loading" } | { status: "ready" } | { status: "error"; message: string };
-
-const FIELD_NAMES: Record<string, string> = {
-  statement: "Statement",
-  boundary: "Scope",
-  locator: "Where in the source",
-  id: "Identifier",
-  declaration: "Lean name",
-  title: "Title",
-  details: "Record",
-  tool: "Tool",
-  url: "Address",
-  path: "File",
-  kind: "Kind",
-  rationale: "Reason",
-  citation_ids: "Citations",
-  subject_ids: "Concerns",
-  source_ids: "Sources",
-  source_id: "Source",
-  evidence_ids: "Checks",
-  assumption_ids: "Assumptions",
-  note: "Note",
-};
-
-function stageOf(item: SearchItem): Stage | null {
-  const fromPapers = (item.papers as string[] | undefined)?.[0];
-  const fromHref = /[?&]paper=([a-z]+)/.exec(item.href ?? "")?.[1];
-  const value = fromHref ?? fromPapers;
-  return value === "long" || value === "short" || value === "expository" ? value : null;
-}
-
-function idFromRef(ref: string, table: string): string {
-  const marker = `/${table}/`;
-  const at = ref.lastIndexOf(marker);
-  return at >= 0 ? ref.slice(at + marker.length) : ref;
-}
 
 export function SearchPalette({ onClose }: { onClose: () => void }) {
   const edition = useEdition();
@@ -161,7 +132,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
     const long = overview.papers.find((p) => p.stage === "long");
     const main = (long?.paper_scope.selected_goal_ids ?? graph.goals).find((g) => graph.nodes.has(g));
     if (main) {
-      out.push({ key: "start:main", group: "start", title: graph.nodes.get(main)!.label, meta: "The main result, on the argument map", href: routeHref({ view: "map", node: main }) });
+      out.push({ key: "start:main", group: "start", title: graph.nodes.get(main)!.label, meta: "Opens the main result on the argument map", href: routeHref({ view: "map", node: main }) });
     }
     for (const stage of STAGE_ORDER) {
       out.push({ key: `start:${stage}`, group: "start", title: PAPER_NAMES[stage].short, meta: PAPER_NAMES[stage].job, href: routeHref({ view: "read", stage }) });
@@ -173,7 +144,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         group: "start",
         title: graph.nodes.get(e.to)!.label,
         lean: true,
-        meta: `Lean statement of ${graph.nodes.get(e.from)!.label}, with its recorded checks`,
+        meta: `The Lean statement recorded as corresponding to ${graph.nodes.get(e.from)!.label}, with its check records`,
         href: routeHref({ view: "checks", node: e.to }),
       });
     }
@@ -183,15 +154,28 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   const options = useMemo<Option[]>(() => {
     if (!results) return text.trim() ? [] : starts;
     const out: Option[] = [];
-    const add = (table: string, group: GroupId) => {
-      for (const item of results.byTable.get(table)?.items ?? []) out.push({ key: `${table}:${item.ref}`, group, item });
-    };
-    add("nodes", "map");
-    add("sections", "sections");
-    add("passages", "passages");
-    add("citations", "other");
-    add("sources", "other");
-    add("evidence", "other");
+    for (const [group, tables] of Object.entries(GROUP_TABLES) as [Exclude<GroupId, "start">, string[]][]) {
+      let shown = 0;
+      let total = 0;
+      let first: SearchType | null = null;
+      for (const table of tables) {
+        const page = results.byTable.get(table);
+        for (const item of page?.items ?? []) out.push({ key: `${table}:${item.ref}`, group, item });
+        shown += page?.items.length ?? 0;
+        total += page?.total ?? 0;
+        if (!first && page?.total) first = typeOfTable(table);
+      }
+      if (total > shown && first) {
+        const noun = tables.length === 1 ? nounFor(first, total) : "citations, sources and check records";
+        out.push({
+          key: `more:${group}`,
+          group,
+          more: true,
+          title: `See all ${total} matching ${noun}`,
+          href: routeHref({ view: "search", q: results.q, type: first }),
+        });
+      }
+    }
     return out;
   }, [results, starts, text]);
 
@@ -257,7 +241,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
       return;
     }
     if (event.key === "Tab") {
-      const focusables = [...(dialogRef.current?.querySelectorAll<HTMLElement>("input, button") ?? [])];
+      const focusables = [...(dialogRef.current?.querySelectorAll<HTMLElement>("input, button, a[href]") ?? [])];
       if (focusables.length === 0) return;
       const index = focusables.indexOf(document.activeElement as HTMLElement);
       const next = event.shiftKey ? (index <= 0 ? focusables.length - 1 : index - 1) : index === focusables.length - 1 ? 0 : index + 1;
@@ -292,13 +276,22 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   else if (results && options.length === 0)
     status = (
       <>
-        Nothing in this edition contains every one of these words: <q>{results.q}</q>. Try fewer words, or a different
-        spelling of one.
+        No record, section heading or linked passage contains all of the words <q>{results.q}</q>. Search covers only
+        records, section headings and passages linked to records, so other text in the papers is not searched. Try fewer
+        words, or another spelling.
       </>
     );
   else if (results) {
     const total = [...results.byTable.values()].reduce((s, p) => s + p.total, 0);
-    status = `${total} ${total === 1 ? "match" : "matches"} in all. ${phase.status === "loading" ? "Updating…" : ""}`;
+    status = (
+      <>
+        {total} {total === 1 ? "match" : "matches"} in all.{" "}
+        <a href={routeHref({ view: "search", q: results.q })} onClick={() => onClose()}>
+          List every result
+        </a>
+        {phase.status === "loading" ? " Updating…" : ""}
+      </>
+    );
   }
 
   let index = -1;
@@ -314,7 +307,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         onKeyDown={onKeyDown}
       >
         <h2 id={`${uid}-title`} className="visually-hidden">
-          Search this edition
+          Search records and passages
         </h2>
         <div className="palette__field">
           <svg className="palette__icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
@@ -331,8 +324,8 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
             aria-activedescendant={options.length > 0 ? optionId(activeIndex) : undefined}
             aria-autocomplete="list"
             aria-describedby={`${uid}-hint`}
-            aria-label="Search words"
-            placeholder="Search for words"
+            aria-label="Search records and passages"
+            placeholder="Words to find"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -341,7 +334,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
             maxLength={MAX_CHARS + 40}
             onChange={(e) => setText(e.target.value)}
           />
-          <button type="button" className="palette__close" onClick={onClose}>
+          <button type="button" className="palette__close" aria-label="Close search" onClick={onClose}>
             <span className="kbd palette__esc" aria-hidden="true">
               Esc
             </span>
@@ -349,8 +342,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <p id={`${uid}-hint`} className="palette__hint">
-          Finds the exact words you type, all of them, in records, headings and mapped passages. It does not search for
-          meanings or related terms.
+          {SEARCH_HELP}
         </p>
 
         <div ref={listRef} id={`${uid}-listbox`} role="listbox" aria-label="Results" className="palette__list">
@@ -375,12 +367,17 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
                       id={optionId(i)}
                       role="option"
                       aria-selected={i === activeIndex}
-                      className={`palette__option${i === activeIndex ? " is-active" : ""}`}
+                      className={`palette__option${option.more ? " palette__more" : ""}${i === activeIndex ? " is-active" : ""}`}
                       onMouseMove={() => i !== activeIndex && setActive(i)}
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => void open(option)}
                     >
-                      {option.item ? (
+                      {option.more ? (
+                        <span className="palette__more-text">
+                          {option.title}
+                          <span aria-hidden="true"> →</span>
+                        </span>
+                      ) : option.item ? (
                         <ResultBody item={option.item} opening={opening === option.key} />
                       ) : (
                         <>
@@ -410,196 +407,3 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   );
 }
 
-// ---------------------------------------------------------------- one result
-
-function ResultBody({ item, opening }: { item: SearchItem; opening: boolean }) {
-  const excerpt = useMemo(() => prepareExcerpt(item), [item]);
-  switch (item.table) {
-    case "nodes":
-      return <NodeResult item={item} excerpt={excerpt} opening={opening} />;
-    case "sections":
-      return <SectionResult item={item} excerpt={excerpt} opening={opening} />;
-    case "passages":
-      return <PassageResult item={item} excerpt={excerpt} opening={opening} />;
-    default:
-      return <RecordResult item={item} excerpt={excerpt} opening={opening} />;
-  }
-}
-
-function NodeResult({ item, excerpt, opening }: { item: SearchItem; excerpt: PreparedExcerpt | null; opening: boolean }) {
-  const { graph } = useEdition();
-  const id = idFromRef(item.ref, "nodes");
-  const node = graph.nodes.get(id);
-  const label = node?.label ?? item.label ?? id;
-  const inLabel = excerpt?.field === "label";
-  return (
-    <>
-      <span className={`palette__title${node?.kind === "declaration" ? " lean" : ""}`} data-region={node?.region}>
-        {node && <span className="region-dot" aria-hidden="true" />}
-        {inLabel && excerpt ? <Excerpt excerpt={{ ...excerpt, cutStart: false, cutEnd: false }} /> : label}
-      </span>
-      <span className="palette__meta">
-        {node ? kindName(node.kind) : "Record"}
-        {node && graph.regions.find((r) => r.id === node.region) && <> in {graph.regions.find((r) => r.id === node.region)!.title}</>}
-        {opening && <span className="palette__opening"> Opening…</span>}
-      </span>
-      {excerpt && !inLabel && <ExcerptLine excerpt={excerpt} />}
-    </>
-  );
-}
-
-function SectionResult({ item, excerpt, opening }: { item: SearchItem; excerpt: PreparedExcerpt | null; opening: boolean }) {
-  const stage = stageOf(item);
-  return (
-    <>
-      <span className="palette__title palette__title--serif">{excerpt ? <Excerpt excerpt={excerpt} /> : sectionLabel(item.label ?? "")}</span>
-      <span className="palette__meta">
-        Heading in the {stage ? PAPER_NAMES[stage].short.toLowerCase() : "papers"}
-        {opening && <span className="palette__opening"> Opening…</span>}
-      </span>
-    </>
-  );
-}
-
-function PassageResult({ item, excerpt, opening }: { item: SearchItem; excerpt: PreparedExcerpt | null; opening: boolean }) {
-  const stage = stageOf(item);
-  const doc = useDocument(stage);
-  const anchor = item.label ?? idFromRef(item.ref, "passages");
-  const section = doc.status === "ready" ? sectionTitleOf(doc.value.paper, anchor) : null;
-  return (
-    <>
-      <span className="palette__title palette__title--serif">{section ? sectionLabel(section) : humanAnchor(anchor)}</span>
-      <span className="palette__meta">
-        Passage in the {stage ? PAPER_NAMES[stage].short.toLowerCase() : "papers"}
-        {opening && <span className="palette__opening"> Opening…</span>}
-      </span>
-      {excerpt && <ExcerptLine excerpt={excerpt} />}
-    </>
-  );
-}
-
-function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: PreparedExcerpt | null; opening: boolean }) {
-  const { graph } = useEdition();
-  const detail = useRecord(item.ref);
-  const record = detail.status === "ready" ? detail.value.record : null;
-  let title = item.label ?? idFromRef(item.ref, item.table);
-  let meta = "";
-  if (item.table === "citations") {
-    title = (record?.title as string | undefined) ?? title;
-    const owner = detail.status === "ready" ? ownerNode(detail.value, graph) : null;
-    const ownerLabel = owner ? graph.nodes.get(owner)!.label : null;
-    meta = !ownerLabel ? "Citation" : ownerLabel === title ? "Citation for the record of the same name" : `Citation for ${ownerLabel}`;
-  } else if (item.table === "sources") {
-    const path = record?.path as string | undefined;
-    title = path ? path.slice(path.lastIndexOf("/") + 1) : title;
-    meta = `Source ${record?.kind === "file" ? "file" : "publication"}`;
-  } else if (item.table === "evidence") {
-    title = (record?.tool as string | undefined) ?? title;
-    const kind = CHECK_KINDS[String(record?.kind ?? "")]?.title;
-    const status = OUTCOME_NAMES[String(record?.status ?? "")];
-    meta = ["Check record", kind, status?.toLowerCase()].filter(Boolean).join(", ");
-  } else if (item.table === "edges") {
-    meta = "Recorded relation";
-  }
-  return (
-    <>
-      <span className="palette__title">{title}</span>
-      <span className="palette__meta">
-        {meta}
-        {opening && <span className="palette__opening"> Opening…</span>}
-      </span>
-      {excerpt && <ExcerptLine excerpt={excerpt} />}
-    </>
-  );
-}
-
-/** "5.3 Strict curvature" as "§5.3 Strict curvature", as the record panel names sections. */
-function sectionLabel(title: string): string {
-  const match = title.match(/^(\d+(?:\.\d+)*)\.?\s+(.*)$/);
-  return match ? `§${match[1]} ${match[2]}` : title;
-}
-
-function humanAnchor(anchor: string): string {
-  const words = anchor.replace(/[-_]+/g, " ").trim();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
-function ExcerptLine({ excerpt }: { excerpt: PreparedExcerpt }) {
-  const field = excerpt.field && excerpt.field !== "label" ? FIELD_NAMES[excerpt.field] ?? humanAnchor(excerpt.field) : null;
-  return (
-    <span className="palette__excerpt">
-      {field && <span className="palette__field-name">{field}: </span>}
-      <Excerpt excerpt={excerpt} />
-    </span>
-  );
-}
-
-function Excerpt({ excerpt }: { excerpt: PreparedExcerpt }) {
-  return (
-    <>
-      {excerpt.cutStart && "…"}
-      {excerpt.segments.map((s, i) => {
-        if (s.kind === "math") {
-          const html = renderTex(s.tex, false).html;
-          const inner = <span className="palette__math" dangerouslySetInnerHTML={{ __html: html }} />;
-          return s.mark ? <mark key={i}>{inner}</mark> : <span key={i}>{inner}</span>;
-        }
-        return s.mark ? <mark key={i}>{s.text}</mark> : <span key={i}>{s.text}</span>;
-      })}
-      {excerpt.cutEnd && "…"}
-    </>
-  );
-}
-
-// ------------------------------------------------------------- destinations
-
-function ownerNode(detail: RecordDetail, graph: ReturnType<typeof useEdition>["graph"]): string | null {
-  for (const relation of detail.relations) {
-    if (relation.to !== detail.ref) continue;
-    if (!relation.from.includes("/nodes/")) continue;
-    const id = idFromRef(relation.from, "nodes");
-    if (graph.nodes.has(id)) return id;
-  }
-  return null;
-}
-
-/** Where a result opens. Records on the map open the map; others their nearest reading place. */
-async function destination(item: SearchItem, graph: ReturnType<typeof useEdition>["graph"]): Promise<string | null> {
-  const stage = stageOf(item);
-  switch (item.table) {
-    case "nodes":
-      return routeHref({ view: "map", node: idFromRef(item.ref, "nodes") });
-    case "passages": {
-      const anchor = item.label ?? idFromRef(item.ref, "passages");
-      return stage ? routeHref({ view: "read", stage, anchor }) : null;
-    }
-    case "sections": {
-      if (!stage) return null;
-      const { doc } = await loadDocument(stage);
-      const start = (item.span as { start_byte?: number } | undefined)?.start_byte ?? -1;
-      const title = (item.label ?? "").replace(/\s+/g, " ").trim();
-      const part = doc.parts.find((p) => p.span.start <= start && start < p.span.end);
-      const same = (h: { title: string }) => h.title.replace(/\s+/g, " ").trim() === title;
-      const heading = part?.headings.find(same) ?? doc.parts.flatMap((p) => p.headings).find(same);
-      return routeHref({ view: "read", stage, anchor: heading?.id });
-    }
-    case "evidence":
-      return routeHref({ view: "checks", node: idFromRef(item.ref, "evidence") });
-    case "edges": {
-      const detail = (await get<RecordDetail>("/record", { ref: item.ref })).data;
-      const from = detail.record.from as string | undefined;
-      return from && graph.nodes.has(from) ? routeHref({ view: "map", node: from }) : null;
-    }
-    default: {
-      const detail = (await get<RecordDetail>("/record", { ref: item.ref })).data;
-      const owner = ownerNode(detail, graph);
-      if (owner) return routeHref({ view: "map", node: owner });
-      const check = detail.relations.find((r) => r.to === detail.ref && r.from.includes("/evidence/"));
-      if (check) return routeHref({ view: "checks", node: idFromRef(check.from, "evidence") });
-      const passage = detail.usage?.direct_passages?.[0];
-      if (passage) return routeHref({ view: "read", stage: passage.stage, anchor: passage.anchor });
-      const url = detail.record.url as string | undefined;
-      return url && /^https?:\/\//.test(url) ? url : null;
-    }
-  }
-}

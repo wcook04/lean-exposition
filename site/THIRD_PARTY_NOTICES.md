@@ -13,6 +13,15 @@ follows the list.
 | [markmap](https://github.com/markmap/markmap) | Copyright (c) 2020 Gerald | `camera.ts`: minimal pan to keep a node visible (`packages/markmap-view/src/view.ts`); the enter-from-opener and exit-into-parent choreography in `ArgumentTree.tsx` follows the same file |
 | [msagljs](https://github.com/microsoft/msagljs) | Copyright (c) Microsoft Corporation | `router.ts`: arrowhead triangle (`modules/renderer-svg/src/svgCreator.ts`); the order-then-assign split for tracks follows `modules/core/src/routing/nudging/` without copying code |
 
+Two further conventions are followed without copying any code. In `router.ts`,
+the lanes in each gap between rows are ordered by comparing, for each pair of
+lines, how many crossings each order would cause, as the orthogonal edge router
+of the [Eclipse Layout Kernel](https://github.com/eclipse/elk)'s layered
+algorithm does. In `engine/occurrences.ts`, a shared record with no inputs of
+its own is drawn beside each result that uses it, as the clone marker of the
+[Systems Biology Graphical Notation](https://sbgn.github.io/) does for shared
+molecules.
+
 ## MIT licence
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -65,6 +65,8 @@ export interface PrepareInput {
 // ---------------------------------------------------------------- markdown-it
 
 interface RenderEnv extends Env {
+  /** The account a fragment link belongs to, so a copy shown elsewhere can resolve it. */
+  stage: string;
   documentPath: string;
   documentPaths: Record<string, string>;
   linkClose: string[];
@@ -108,6 +110,7 @@ md.core.ruler.push("run_in", (state) => {
 });
 
 const esc = md.utils.escapeHtml;
+const PAPER_STAGES = new Set(["long", "short", "expository"]);
 
 md.renderer.rules.link_open = (tokens, idx, _opts, envAny) => {
   const env = envAny as unknown as RenderEnv;
@@ -117,9 +120,11 @@ md.renderer.rules.link_open = (tokens, idx, _opts, envAny) => {
   const titleAttr = title ? ` title="${esc(String(title))}"` : "";
   const target = classifyHref(href, env.documentPath, env.documentPaths);
   switch (target.kind) {
-    case "fragment":
+    case "fragment": {
       env.linkClose.push("</a>");
-      return `<a href="${esc(target.href)}"${titleAttr}>`;
+      const own = PAPER_STAGES.has(env.stage) ? ` data-in="${esc(env.stage)}"` : "";
+      return `<a href="${esc(target.href)}"${own}${titleAttr}>`;
+    }
     case "external":
       env.linkClose.push("</a>");
       return `<a href="${esc(target.href)}" class="ext" data-external="" target="_blank" rel="noopener noreferrer"${titleAttr}>`;
@@ -545,6 +550,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     if (st.rendered) return st.rendered;
     const env: RenderEnv = {
       references,
+      stage: input.stage,
       documentPath: input.documentPath,
       documentPaths: input.documentPaths,
       linkClose: [],

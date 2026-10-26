@@ -26,6 +26,8 @@ export interface CoordInput {
   bends: readonly [string, string, string][];
   sepCard: number;
   sepDummy: number;
+  /** Extra separation between two neighbouring members, beyond the gap their kinds need. */
+  extraGap?(left: string, right: string): number;
   /** Starting positions (centres). */
   start: Map<string, number>;
   /** Anchor targets and strengths: lambda (x - x0)^2. */
@@ -107,7 +109,7 @@ export function assignX(input: CoordInput): Map<string, number> {
     layer.slice(1).map((id, k) => {
       const prev = layer[k];
       const gap = input.isDummy(prev) || input.isDummy(id) ? input.sepDummy : input.sepCard;
-      return (input.width(prev) + input.width(id)) / 2 + gap;
+      return (input.width(prev) + input.width(id)) / 2 + gap + (input.extraGap?.(prev, id) ?? 0);
     }),
   );
   const layerIdx = input.layers.map((layer) => layer.map((id) => index.get(id)!));

@@ -1,23 +1,26 @@
-// The drawn skeleton: the transitive reduction of the visible subgraph. An
-// edge u -> w is left out when another visible path from u reaches w, because
-// that longer path already says u rests on w. The graph is acyclic.
+// The drawn skeleton: a support-only simplification of the visible subgraph.
+// A `supports` edge u -> w is left out when another visible path of
+// `supports` edges from u reaches w, because that longer chain of recorded
+// support already says u rests on w. Assumptions (`assumes`) and Lean
+// correspondences (`formalizes`) are never left out: a route through other
+// kinds does not say what they say. The graph is acyclic.
 
 import type { EngineEdge } from "./types";
 
 export interface Skeleton {
   edges: EngineEdge[];
-  /** Keys of visible edges that a longer visible path implies. */
+  /** Keys of visible `supports` edges that a longer visible support-only path implies. */
   implied: Set<string>;
 }
 
 export function transitiveReduction(nodes: Iterable<string>, edges: readonly EngineEdge[]): Skeleton {
   const ids = new Set(nodes);
+  const live = edges.filter((e) => e.from !== e.to && ids.has(e.from) && ids.has(e.to));
   const out = new Map<string, EngineEdge[]>();
   for (const id of ids) out.set(id, []);
-  const live = edges.filter((e) => e.from !== e.to && ids.has(e.from) && ids.has(e.to));
-  for (const e of live) out.get(e.from)!.push(e);
+  for (const e of live) if (e.kind === "supports") out.get(e.from)!.push(e);
 
-  // Descendants of each node (excluding itself), memoised in post-order.
+  // Descendants along support edges only (excluding the node itself), memoised in post-order.
   const below = new Map<string, Set<string>>();
   const visit = (id: string): Set<string> => {
     const known = below.get(id);
@@ -36,13 +39,14 @@ export function transitiveReduction(nodes: Iterable<string>, edges: readonly Eng
   const kept: EngineEdge[] = [];
   for (const e of live) {
     let longer = false;
-    for (const other of out.get(e.from)!) {
-      if (other.to !== e.to && below.get(other.to)!.has(e.to)) {
-        longer = true;
-        break;
+    if (e.kind === "supports") {
+      for (const other of out.get(e.from)!) {
+        if (other.to !== e.to && below.get(other.to)!.has(e.to)) {
+          longer = true;
+          break;
+        }
       }
     }
-    // Two kinds of edge between the same pair: keep each, they are distinct relations.
     if (longer) implied.add(e.key);
     else kept.push(e);
   }

@@ -1,24 +1,29 @@
-// Where the reader is in the paper: the sections of levels 2 and 3 with the
-// current one marked, and a switch to the other accounts that keeps the
-// claim the reader is on. Wide screens set it as a sticky column; narrower
-// ones open the same list from a menu that names the current section.
+// Where the reader is in the paper: the account, then its sections with the
+// current one marked. Levels 2 and 3 are always listed; a level-4 subsection
+// (long §8.1.1) appears inside the branch being read, so deep places stay
+// reachable without listing every heading at once. Wide screens set it as a
+// sticky column; narrower ones open the same list from a "Sections" control.
+// Choosing another account is the top bar's job: it opens an account from
+// its start, and "Same topic in…" goes from a passage to its treatments.
 
-import { useEffect, useId, useRef, useState } from "react";
-import type { Stage } from "../../api/types";
-import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
-import type { OutlineEntry } from "./model";
+import { chainOf, type OutlineEntry } from "./model";
 
 interface Props {
-  stage: Stage;
   entries: OutlineEntry[];
   current: string | null;
-  switchHref(stage: Stage): string;
-  keeping: string | null;
   onJump(id: string): void;
 }
 
-export function OutlineColumn(props: Props) {
+export interface AccountHead {
+  name: string;
+  job: string;
+  reader: string;
+  status: string;
+}
+
+export function OutlineColumn(props: Props & { head: AccountHead }) {
   const listRef = useRef<HTMLOListElement>(null);
   // Keep the current entry in view inside the column, without moving the page.
   useEffect(() => {
@@ -30,45 +35,29 @@ export function OutlineColumn(props: Props) {
       list.scrollTop = Math.max(0, top - list.clientHeight / 3);
     }
   }, [props.current]);
+  const { head } = props;
   return (
-    <nav className="outline" aria-label="This paper">
-      <AccountSwitch {...props} />
+    <nav className="outline" aria-label="Sections of this paper">
+      <div className="outline__account">
+        <p className="caps">{head.name}</p>
+        <p className="outline__job">{head.job}</p>
+        <p className="outline__reader">
+          {head.reader}
+          {head.status && <> {head.status}</>}
+        </p>
+      </div>
       <Sections {...props} listRef={listRef} />
     </nav>
   );
 }
 
-function AccountSwitch({ stage, switchHref, keeping }: Props) {
-  return (
-    <div className="accounts">
-      <ul className="accounts__list" aria-label="Accounts of the result">
-        {STAGE_ORDER.map((s) => (
-          <li key={s}>
-            <a
-              className="accounts__item"
-              href={switchHref(s)}
-              aria-current={s === stage ? "page" : undefined}
-              aria-describedby={s !== stage && keeping ? "accounts-keeping" : undefined}
-            >
-              {PAPER_NAMES[s].short}
-            </a>
-          </li>
-        ))}
-      </ul>
-      {keeping && (
-        <p id="accounts-keeping" className="accounts__keeping">
-          The others open where they discuss {keeping}.
-        </p>
-      )}
-    </div>
-  );
-}
-
-function Sections({ entries, current, onJump, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+export function Sections({ entries, current, onJump, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+  const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
+  const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
   return (
     <ol className="outline__list" ref={listRef}>
-      {entries.map((entry) => (
-        <li key={entry.id} className={`outline__item outline__item--l${entry.level}`}>
+      {shown.map((entry) => (
+        <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
           <a
             href={`#${encodeURIComponent(entry.id)}`}
             aria-current={entry.id === current ? "location" : undefined}
@@ -86,12 +75,11 @@ function Sections({ entries, current, onJump, listRef }: Props & { listRef?: Rea
   );
 }
 
-/** The same outline behind a button that names the current section. */
-export function OutlineMenu(props: Props & { placement: "pane" | "bar" }) {
+/** The sections behind a "Sections" control: a non-modal popover beside the paper. */
+export function SectionsPopover(props: Props) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
-  const currentEntry = props.entries.find((e) => e.id === props.current);
   useEffect(() => {
     if (!open) return;
     const onDown = (event: PointerEvent) => {
@@ -102,39 +90,29 @@ export function OutlineMenu(props: Props & { placement: "pane" | "bar" }) {
         event.preventDefault();
         event.stopPropagation();
         setOpen(false);
-        rootRef.current?.querySelector<HTMLButtonElement>(".outline-menu__toggle")?.focus();
+        rootRef.current?.querySelector<HTMLButtonElement>(".sections-toggle")?.focus();
       }
     };
     document.addEventListener("pointerdown", onDown);
     window.addEventListener("keydown", onKey, true);
+    // Scroll the list itself, never the page behind it.
+    const list = rootRef.current?.querySelector<HTMLElement>(".sections-popover .outline__list");
+    const item = list?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (list && item) list.scrollTop = Math.max(0, item.offsetTop - list.offsetTop - list.clientHeight / 3);
     return () => {
       document.removeEventListener("pointerdown", onDown);
       window.removeEventListener("keydown", onKey, true);
     };
   }, [open]);
-  useEffect(() => {
-    if (!open) return;
-    // Scroll the list itself, never the page behind it.
-    const list = rootRef.current?.querySelector<HTMLElement>(".outline-menu__sheet .outline__list");
-    const item = list?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (list && item) list.scrollTop = Math.max(0, item.offsetTop - list.offsetTop - list.clientHeight / 3);
-  }, [open]);
   return (
-    <div className={`outline-menu outline-menu--${props.placement}`} ref={rootRef}>
-      <button
-        type="button"
-        className="outline-menu__toggle"
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={() => setOpen((v) => !v)}
-      >
+    <div className="sections" ref={rootRef}>
+      <button type="button" className="sections-toggle" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
           <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
         </svg>
-        <span className="outline-menu__current">{currentEntry ? sectionLabel(currentEntry.title) : "Contents"}</span>
+        Sections
       </button>
-      <div id={id} className="outline-menu__sheet" hidden={!open}>
-        <AccountSwitch {...props} />
+      <div id={id} className="sections-popover" hidden={!open}>
         <Sections
           {...props}
           onJump={(target) => {

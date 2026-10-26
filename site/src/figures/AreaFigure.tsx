@@ -188,20 +188,20 @@ export function AreaFigure({ explorable = true, initialOpen = false }: { explora
           aria-controls={panelId}
           onClick={() => setOpen((o) => !o)}
         >
-          {open ? "Back to the paper’s picture" : "Explore this picture"}
+          {open ? "Show the paper’s picture" : "Change the values in this picture"}
         </button>
       </div>
       {open && (
         <div className="fig-explore" id={panelId}>
           <p className="fig-explore__note">
-            <Rich src="Calculus model, not an SK moment curve: $q'(t)=\text{chord}(t)-k\cdot 4x(1-x)$ with $x=(t-r)/(s-r)$." />
+            <Rich src="This is a calculus model, not an SK moment curve. It uses $q'(t)=\text{chord}(t)-k\cdot 4x(1-x)$ with $x=(t-r)/(s-r)$." />
           </p>
           <Slider label="Endpoint slope $q'(r)$" value={model.a} min={0} max={1} onChange={(a) => set({ a })} />
           <Slider label="Endpoint slope $q'(s)$" value={model.b} min={0} max={1} onChange={(b) => set({ b })} />
           <Slider label="Strictness $k$" value={model.k} min={0} max={0.5} onChange={(k) => set({ k })} />
           <p className="fig-explore__readout" aria-live="polite">
-            <Rich src={`Mean of $q'$ on $(r,s)$: ${fmt(mean)}. Contact requires $1$; shortfall ${fmt(shortfall)}.`} />
-            {shortfall < 0.0005 && " With no strictness and both slopes at 1, nothing is lost: strict curvature is what removes area."}
+            <Rich src={`The mean of $q'$ on $(r,s)$ is ${fmt(mean)}. Contact requires a mean of $1$, so the shortfall is ${fmt(shortfall)}.`} />
+            {shortfall < 0.0005 && " With strictness 0 and both slopes at 1 the shortfall is 0. With both slopes at 1, only the strict curvature makes the mean fall below 1."}
           </p>
           <button type="button" className="control" onClick={() => setModel(PAPER_MODEL)}>
             Reset to the paper’s values

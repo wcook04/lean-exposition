@@ -1,16 +1,19 @@
-// One step of the argument: how a prerequisite is used for the result that
-// rests on it, as the recorded warrant says, where the sources make the step,
-// which premises an applied theorem has supplied, and where the accounts make
-// the step. The panel adds wording, not facts.
+// One step of the argument: which relation it is, in words, between which two
+// records; for an applied theorem, what this use holds fixed, which premise
+// each recorded supplier provides and what is still assumed; then the
+// recorded explanation and the related passages in each account. The panel
+// adds wording, not facts.
 
-import { useEffect, useLayoutEffect, useMemo, useRef, type CSSProperties } from "react";
-import type { AlignedPassage, Stage } from "../api/types";
-import { useEdition, useRecord } from "../app/data";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import type { Stage } from "../api/types";
+import { useEdition } from "../app/data";
 import { routeHref } from "../app/router";
 import { Accounts } from "./Accounts";
-import { Section, type EchoHandler } from "./RecordPanel";
-import { accountName, groupPassages, stepVerb, warrantStatus } from "./model";
+import type { EchoHandler } from "./RecordPanel";
+import { NO_REMAINING, applicationView, relationName, stepBasisLabel, stepPassages, stepVerb, warrantStatus } from "./model";
+import { CloseButton, Jumps, Pane, type PaneSpec } from "./parts";
 import { useSheet } from "./sheet";
+import { useRecordDetail } from "./stored";
 import "./panel.css";
 
 interface Props {
@@ -20,14 +23,17 @@ interface Props {
   onEcho?: EchoHandler;
   passageHref?: (stage: Stage, anchor: string) => string;
   leaving?: boolean;
+  /** Mark the panel's root element, e.g. for the page to restore focus or measure it. */
+  panelRef?: React.Ref<HTMLElement>;
 }
 
-export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, leaving }: Props) {
+export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, leaving, panelRef }: Props) {
   const { graph } = useEdition();
   const edge = graph.edges.find((e) => e.key === edgeKey);
-  const sheet = useSheet();
+  const rootRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const sheet = useSheet({ panel: rootRef, title: headingRef });
 
   useLayoutEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
@@ -43,147 +49,243 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
 
   const consumer = edge ? graph.nodes.get(edge.from) : undefined;
   const prerequisite = edge ? graph.nodes.get(edge.to) : undefined;
-  const a = useRecord(consumer?.ref ?? null);
-  const b = useRecord(prerequisite?.ref ?? null);
+  const a = useRecordDetail(consumer?.ref ?? null);
+  const b = useRecordDetail(prerequisite?.ref ?? null);
 
   const step = useMemo(() => {
-    if (a.status !== "ready" || b.status !== "ready") return null;
-    const theirs = new Set((b.value.aligned_passages ?? []).map((p) => `${p.stage}:${p.anchor}`));
-    const shared: AlignedPassage[] = (a.value.aligned_passages ?? []).filter((p) => theirs.has(`${p.stage}:${p.anchor}`));
-    const fallback = shared.length === 0;
-    return { grouped: groupPassages(fallback ? (a.value.aligned_passages ?? []) : shared), fallback };
-  }, [a, b]);
+    if (a.state.status !== "ready" || b.state.status !== "ready") return null;
+    return stepPassages(a.state.value.aligned_passages ?? [], b.state.value.aligned_passages ?? []);
+  }, [a.state, b.state]);
+  const request = a.state.status === "error" || b.state.status === "error" ? "error" : step ? "ready" : "loading";
 
   const memberships = useMemo(() => {
     const m: Partial<Record<Stage, string[]>> = {};
-    if (a.status === "ready") for (const p of a.value.usage.paper_memberships) m[p.stage] = p.roles;
+    if (a.state.status === "ready") for (const p of a.state.value.usage.paper_memberships) m[p.stage] = p.roles;
     return m;
-  }, [a]);
+  }, [a.state]);
+
+  const setRoot = (el: HTMLElement | null) => {
+    rootRef.current = el;
+    if (typeof panelRef === "function") panelRef(el);
+    else if (panelRef) (panelRef as React.MutableRefObject<HTMLElement | null>).current = el;
+  };
 
   if (!edge || !consumer || !prerequisite) {
     return (
-      <aside className="panel" aria-label="Step">
+      <aside className="panel" aria-label="Step" ref={setRoot}>
         <header className="panel__head">
-          <p className="panel__status">This step is not recorded in this edition.</p>
-          <button type="button" className="control control--plain panel__close" aria-label="Close" onClick={onClose}>
-            ×
-          </button>
+          <div className="panel__id">
+            <span className="caps">Step</span>
+            <CloseButton onClose={onClose} />
+          </div>
+          <p className="panel__state">This step is not recorded in this edition.</p>
         </header>
       </aside>
     );
   }
 
   const w = edge.warrant;
+  const app = edge.application ? applicationView(edge.application, edge.application.record) : null;
   const href = passageHref ?? ((stage: Stage, anchor: string) => routeHref({ view: "read", stage, anchor, node: consumer.id }));
-  let n = 0;
-  const rise = (): CSSProperties => ({ ["--i" as string]: Math.min(n++, 5) });
-  const chip = (id: string) => {
+  const label = (id: string) => graph.nodes.get(id)?.label ?? id;
+  const peek = sheet.phone && sheet.state === "peek";
+  const panes: PaneSpec[] = [
+    ...(app ? [{ id: "use", title: "How it is applied" }] : []),
+    { id: "explanation", title: "Explanation" },
+    { id: "passages", title: "Related passages" },
+  ];
+
+  const link = (id: string) => {
     const node = graph.nodes.get(id)!;
     return (
       <button
         type="button"
-        className="step-chip"
+        className={`step__end${node.kind === "declaration" ? " lean" : ""}`}
         data-slot={node.origin.slot}
         onClick={() => onSelect(id)}
         onPointerEnter={() => onEcho?.(new Set([id]))}
         onPointerLeave={() => onEcho?.(new Set([edge.from, edge.to]))}
       >
-        <span className="swatch" aria-hidden="true" />
-        <span className={node.kind === "declaration" ? "lean" : undefined}>{node.label}</span>
+        {node.label}
       </button>
     );
   };
 
   return (
     <aside
+      ref={setRoot}
       className={`panel panel--step${leaving ? " panel--leaving" : ""}${sheet.dragging ? " panel--dragging" : ""}`}
       aria-labelledby="step-title"
-      data-sheet={sheet.state}
       style={sheet.style}
+      {...sheet.attrs}
     >
       {sheet.handle}
-      <header className="panel__head" key={`h:${edgeKey}`}>
-        <div className="panel__chips panel__rise">
-          <span className="chip chip--kind">One step of the argument</span>
+      <header className="panel__head">
+        <div className="panel__id">
+          <span className={`rel-sample rel-sample--${edge.kind}`} aria-hidden="true" />
+          <span className="caps panel__rel">{relationName(edge.kind)}</span>
+          <CloseButton onClose={onClose} />
         </div>
-        <button type="button" className="control control--plain panel__close" aria-label="Close" onClick={onClose}>
-          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-            <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </button>
+        {sheet.modal && (
+          <button type="button" className="panel__back" onClick={sheet.toPeek}>
+            <span aria-hidden="true">↓ </span>Show the map
+          </button>
+        )}
         <h2 id="step-title" ref={headingRef} tabIndex={-1} className="step__title">
-          {chip(edge.to)}
-          <span className="step__verb">{stepVerb(edge.kind)}</span>
-          {chip(edge.from)}
+          {link(edge.from)} <span className="step__verb">{stepVerb(edge.kind)}</span> {link(edge.to)}
         </h2>
-        {w && <p className="panel__status panel__rise">{warrantStatus(w.status, w.tool)}</p>}
+        <p className="panel__status">{w ? warrantStatus(w.status) : "No recorded explanation for this step"}</p>
+        {peek && (
+          <div className="panel__peek">
+            <button ref={sheet.readRef} type="button" className="panel__action panel__action--primary" onClick={() => sheet.open()}>
+              Read the step
+            </button>
+            <button type="button" className="panel__action" onClick={() => sheet.open("passages")}>
+              Related passages
+            </button>
+          </div>
+        )}
       </header>
 
-      <div className="panel__body" ref={bodyRef}>
+      <div className="panel__body" ref={bodyRef} hidden={peek || undefined}>
+        <Jumps panes={panes} root={rootRef} resetKey={edgeKey} />
         <div className="panel__content" key={`b:${edgeKey}`}>
-          <Section title="How it is used" style={rise()}>
-            {w ? <p className="panel__statement step__warrant">{w.text}</p> : <p className="muted">No account of this step is recorded.</p>}
-            {w?.shared && <p className="panel__note">This account is shared with neighbouring steps; it is not written for this step alone.</p>}
-          </Section>
-
-          {w?.sources && (
-            <Section title="Where in the sources" style={rise()}>
-              <p className="step__sources">{w.sources}</p>
-              {w.scope && <p className="panel__note">{w.scope}</p>}
-            </Section>
-          )}
-          {!w?.sources && w?.scope && (
-            <Section title="Scope" style={rise()}>
-              <p className="panel__note">{w.scope}</p>
-            </Section>
-          )}
-
-          {edge.application && (
-            <Section title="Premises this use supplies" style={rise()}>
-              {edge.application.rationale && <p className="panel__note">{edge.application.rationale}</p>}
-              <ul className="step__bindings">
-                {edge.application.bindings.map((bnd) => (
-                  <li key={`${bnd.assumption}:${bnd.supplier}`}>
-                    <p>
-                      Supplies <strong>{graph.nodes.get(bnd.assumption)?.label ?? bnd.assumption}</strong>
-                      {bnd.names.length > 0 && <code className="lean"> ({bnd.names.join(", ")})</code>}
-                      {bnd.rationale ? `: ${bnd.rationale}` : ""}
-                    </p>
-                    {graph.nodes.has(bnd.supplier) && <p className="step__from">from {chip(bnd.supplier)}</p>}
-                  </li>
-                ))}
-              </ul>
-              {edge.application.remaining.length > 0 && (
-                <p className="panel__note">
-                  Still assumed: {edge.application.remaining.map((id) => graph.nodes.get(id)?.label ?? id).join("; ")}.
-                </p>
+          {app && (
+            <Pane id="use" title="How the theorem is applied in this step">
+              <p className="panel__note step__app-status">{app.status}</p>
+              {app.shared.length > 0 && (
+                <div className="step__block">
+                  <p className="panel__group">Objects that stay the same throughout this application</p>
+                  <dl className="step__shared">
+                    {app.shared.map((s) => (
+                      <div key={s.name}>
+                        <dt>
+                          <code className="lean">{s.name}</code>
+                        </dt>
+                        <dd>{s.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
               )}
-            </Section>
+              <table className="step__premises">
+                <thead>
+                  <tr>
+                    <th scope="col">Hypothesis of the applied theorem</th>
+                    <th scope="col">Recorded as supplied by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {app.premises.map((p) => (
+                    <tr key={`${p.premise}:${p.supplier}`}>
+                      <td>
+                        {graph.nodes.has(p.premise) ? (
+                          <button type="button" className="step__cell" onClick={() => onSelect(p.premise)}>
+                            {label(p.premise)}
+                          </button>
+                        ) : (
+                          label(p.premise)
+                        )}
+                        {p.names.length > 0 && <code className="lean step__names">{p.names.join(", ")}</code>}
+                      </td>
+                      <td>
+                        {graph.nodes.has(p.supplier) ? (
+                          <button type="button" className="step__cell" onClick={() => onSelect(p.supplier)}>
+                            {label(p.supplier)}
+                          </button>
+                        ) : (
+                          label(p.supplier)
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="step__block">
+                <p className="panel__group">Hypotheses still assumed after this application</p>
+                {app.remaining.length === 0 ? (
+                  <p className="panel__note">{NO_REMAINING}.</p>
+                ) : (
+                  <ul className="step__remaining">
+                    {app.remaining.map((id) => (
+                      <li key={id}>
+                        <span className="rel-sample rel-sample--assumes" aria-hidden="true" />
+                        {graph.nodes.has(id) ? (
+                          <button type="button" className="step__cell" onClick={() => onSelect(id)}>
+                            {label(id)}
+                          </button>
+                        ) : (
+                          label(id)
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {(app.rationale || app.premises.some((p) => p.rationale)) && (
+                <details className="panel__more-scope">
+                  <summary>Recorded reasons for each hypothesis</summary>
+                  {app.rationale && <p>{app.rationale}</p>}
+                  {app.premises
+                    .filter((p) => p.rationale)
+                    .map((p) => (
+                      <p key={`${p.premise}:r`}>
+                        <strong>{label(p.premise)}.</strong> {p.rationale}
+                      </p>
+                    ))}
+                  {app.span && (
+                    <p className="faint">
+                      Recorded place in the source: {app.span.sourceId}
+                      {app.span.startLine !== null && `, lines ${app.span.startLine}–${app.span.endLine ?? app.span.startLine}`}
+                    </p>
+                  )}
+                </details>
+              )}
+            </Pane>
           )}
 
-          <Section title="Where the accounts make this step" style={rise()}>
+          <Pane id="explanation" title="Recorded explanation">
+            {w ? <p className="panel__statement step__warrant">{w.text}</p> : <p className="panel__note">No separate explanation is recorded for this step.</p>}
+            {w?.sources && (
+              <p className="panel__scope">
+                <span className="panel__scope-lead">Sources</span> {w.sources}
+              </p>
+            )}
+            {w?.scope && (
+              <p className="panel__scope">
+                <span className="panel__scope-lead">Scope</span> {w.scope}
+              </p>
+            )}
+            {w && w.sharedWith > 1 && <p className="panel__note">The same recorded explanation is attached to {w.sharedWith} links, so it was not written for this step alone.</p>}
+          </Pane>
+
+          <Pane id="passages" title="Related passages">
             <Accounts
               nodeId={consumer.id}
               grouped={step?.grouped ?? null}
               memberships={memberships}
+              status={request}
+              onRetry={() => {
+                if (a.state.status === "error") a.retry();
+                if (b.state.status === "error") b.retry();
+              }}
               href={href}
-              note={step?.fallback ? `No passage discusses both; these are the passages for ${consumer.label}.` : undefined}
-              empty={(stage) =>
-                step?.fallback
-                  ? `${capital(accountName(stage))} has no passage for ${consumer.label}.`
-                  : `${capital(accountName(stage))} has no passage that discusses both.`
+              label={(stage) => stepBasisLabel(step?.basis.get(stage))}
+              note={(stage) =>
+                step?.basis.get(stage) === "both"
+                  ? "Each passage here is linked to both records. That alone does not show that the passage contains this step of the argument."
+                  : step?.basis.get(stage) === "consumer"
+                    ? `No passage in this account is linked to both records. The passages here are linked to “${consumer.label}” but not to “${prerequisite.label}”.`
+                    : undefined
               }
+              empty={() => `No passage in this account is linked to “${consumer.label}”.`}
             />
-          </Section>
+          </Pane>
         </div>
       </div>
       <p className="visually-hidden" aria-live="polite">
-        {leaving ? "" : `Selected step: ${prerequisite.label} ${stepVerb(edge.kind)} ${consumer.label}.`}
+        {leaving ? "" : `Selected step: ${consumer.label} ${stepVerb(edge.kind)} ${prerequisite.label}.`}
       </p>
     </aside>
   );
-}
-
-function capital(s: string): string {
-  return s[0].toUpperCase() + s.slice(1);
 }

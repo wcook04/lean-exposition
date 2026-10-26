@@ -7,18 +7,18 @@ import type { Stage } from "../api/types";
 export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: string }> = {
   expository: {
     short: "Exposition",
-    job: "Learn the objects and the idea of the proof, starting from a two-spin calculation.",
-    reader: "Assumes calculus, integration against measures and expectation.",
+    job: "Explains the objects and the idea of the proof, starting from a calculation with two spins.",
+    reader: "Written for readers who know calculus, integration against a measure and expectation.",
   },
   short: {
     short: "Short paper",
-    job: "The result, its place in the literature and the decisive proof.",
-    reader: "Assumes Itô calculus and martingale convergence.",
+    job: "States the result, relates it to earlier work and proves it.",
+    reader: "Written for readers who know Itô calculus and martingale convergence.",
   },
   long: {
     short: "Long record",
-    job: "Derivations, assumptions and source destinations, continuing to the QAOA circuits.",
-    reader: "Enter at the step you want to check.",
+    job: "Reconstructs each derivation and assumption, names the source of each step, and continues to the QAOA circuits.",
+    reader: "Written so that a reader can start at any step they want to examine.",
   },
 };
 

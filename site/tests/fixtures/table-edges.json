@@ -1,0 +1,2336 @@
+[
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-006"
+  ],
+  "from": "circuit.additive_responses",
+  "kind": "supports",
+  "to": "circuit.gate_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-015"
+  ],
+  "from": "circuit.bounded_trigonometric",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-018"
+  ],
+  "from": "circuit.classical_fixed_minimizer",
+  "kind": "supports",
+  "to": "circuit.bounded_trigonometric"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-019"
+  ],
+  "from": "circuit.classical_fixed_minimizer",
+  "kind": "supports",
+  "to": "circuit.color_exclusion"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-017"
+  ],
+  "from": "circuit.classical_fixed_minimizer",
+  "kind": "supports",
+  "to": "circuit.sign_smoothing"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-063"
+  ],
+  "from": "circuit.classical_positive",
+  "kind": "supports",
+  "to": "circuit.bounded_trigonometric"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-064"
+  ],
+  "from": "circuit.classical_positive",
+  "kind": "supports",
+  "to": "circuit.color_exclusion"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-062"
+  ],
+  "from": "circuit.classical_positive",
+  "kind": "supports",
+  "to": "circuit.positive_rooted_clipping"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-022"
+  ],
+  "from": "circuit.classical_primary",
+  "kind": "supports",
+  "to": "circuit.bounded_trigonometric"
+ },
+ {
+  "application": {
+   "premise_bindings": [
+    {
+     "assumption_id": "scalar.paper_minimizer",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "Attainment supplies one gamma minimizing the same manuscript Parisi functional; all later cutoff, mesh, smoothing, trigonometric and color choices are made for this gamma.",
+     "supplier_id": "scalar.minimizer_attainment"
+    },
+    {
+     "assumption_id": "scalar.paper_admissible",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "The attaining gamma is a member of the same class U, so its admissibility is supplied with its minimality. Pure zero-field SK and the specified normalization remain the fixed domain of both statements. No SKSupport-to-SKValue model transport is asserted.",
+     "supplier_id": "scalar.minimizer_attainment"
+    }
+   ],
+   "rationale": "The manuscript fixes an attained minimizer before constructing the bounded formula (the concluding construction is at lines 553–608). Applying the conditional construction to this common gamma supplies the closed existential input. The application is authored and remains subject to semantic review.",
+   "remaining_assumption_ids": [],
+   "shared_bindings": {
+    "gamma": "one minimizer gamma in the manuscript's zero-field pure-SK admissible class U, chosen by attainment and used throughout the fixed-minimizer construction"
+   },
+   "source_span": {
+    "end_line": 41,
+    "source_id": "scalar-r2-26-source-qaoa-scalar",
+    "start_line": 23
+   },
+   "status": "authored"
+  },
+  "evidence_ids": [
+   "circuit-r2-26-warrant-021"
+  ],
+  "from": "circuit.classical_primary",
+  "kind": "supports",
+  "to": "circuit.classical_fixed_minimizer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-023"
+  ],
+  "from": "circuit.classical_primary",
+  "kind": "supports",
+  "to": "circuit.color_exclusion"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-020"
+  ],
+  "from": "circuit.classical_primary",
+  "kind": "supports",
+  "to": "scalar.minimizer_attainment"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-057"
+  ],
+  "from": "circuit.classical_strong_limit",
+  "kind": "supports",
+  "to": "circuit.energy_transfer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-056"
+  ],
+  "from": "circuit.classical_strong_limit",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-016"
+  ],
+  "from": "circuit.color_exclusion",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-001"
+  ],
+  "from": "circuit.energy_transfer",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-040"
+  ],
+  "from": "circuit.external_mode_energy",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-039"
+  ],
+  "from": "circuit.external_mode_energy",
+  "kind": "supports",
+  "to": "circuit.singular_echo"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "circuit.finite_formula_word_approximation",
+  "kind": "supports",
+  "to": "circuit.fixed_word_transfer"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "circuit.finite_formula_word_approximation",
+  "kind": "supports",
+  "to": "circuit.rooted_realization"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "circuit.finite_formula_word_approximation",
+  "kind": "supports",
+  "to": "circuit.seed_removal"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "circuit.finite_formula_word_approximation",
+  "kind": "supports",
+  "to": "circuit.seeded_synthesis"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "circuit.finite_formula_word_approximation",
+  "kind": "supports",
+  "to": "circuit.sign_smoothing"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-005"
+  ],
+  "from": "circuit.gate_calculus",
+  "kind": "supports",
+  "to": "circuit.energy_transfer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-004"
+  ],
+  "from": "circuit.gate_calculus",
+  "kind": "supports",
+  "to": "circuit.weighted_unitary_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-027"
+  ],
+  "from": "circuit.helper_contraction",
+  "kind": "supports",
+  "to": "circuit.additive_responses"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-028"
+  ],
+  "from": "circuit.helper_contraction",
+  "kind": "supports",
+  "to": "circuit.gate_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-026"
+  ],
+  "from": "circuit.helper_contraction",
+  "kind": "supports",
+  "to": "circuit.orthogonal_quadratics"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-070"
+  ],
+  "from": "circuit.high_girth_maxcut",
+  "kind": "supports",
+  "to": "circuit.fixed_word_transfer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-069"
+  ],
+  "from": "circuit.high_girth_maxcut",
+  "kind": "supports",
+  "to": "circuit.ordinary_word_primary"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-024"
+  ],
+  "from": "circuit.masked_controls",
+  "kind": "supports",
+  "to": "circuit.gate_calculus"
+ },
+ {
+  "evidence_ids": [
+   "concentration_source_warrant_pending"
+  ],
+  "from": "circuit.one_measurement_near_optimum",
+  "kind": "supports",
+  "to": "circuit.fixed_word_concentration"
+ },
+ {
+  "evidence_ids": [
+   "concentration_source_warrant_pending"
+  ],
+  "from": "circuit.one_measurement_near_optimum",
+  "kind": "supports",
+  "to": "qaoa_thermodynamic_first"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-003"
+  ],
+  "from": "circuit.ordinary_updates",
+  "kind": "supports",
+  "to": "circuit.energy_transfer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-002"
+  ],
+  "from": "circuit.ordinary_updates",
+  "kind": "supports",
+  "to": "circuit.weighted_unitary_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-065"
+  ],
+  "from": "circuit.ordinary_word_positive",
+  "kind": "supports",
+  "to": "circuit.classical_positive"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-067"
+  ],
+  "from": "circuit.ordinary_word_positive",
+  "kind": "supports",
+  "to": "circuit.seed_removal"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-066"
+  ],
+  "from": "circuit.ordinary_word_positive",
+  "kind": "supports",
+  "to": "circuit.seeded_synthesis"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-046"
+  ],
+  "from": "circuit.ordinary_word_primary",
+  "kind": "supports",
+  "to": "circuit.classical_primary"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-048"
+  ],
+  "from": "circuit.ordinary_word_primary",
+  "kind": "supports",
+  "to": "circuit.seed_removal"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-047"
+  ],
+  "from": "circuit.ordinary_word_primary",
+  "kind": "supports",
+  "to": "circuit.seeded_synthesis"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-025"
+  ],
+  "from": "circuit.orthogonal_quadratics",
+  "kind": "supports",
+  "to": "circuit.weighted_unitary_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-053"
+  ],
+  "from": "circuit.positive_finite_step",
+  "kind": "supports",
+  "to": "circuit.positive_input"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "from": "circuit.positive_finite_step",
+  "kind": "cites",
+  "to": "circuit.weighted_finite_horizon"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-055"
+  ],
+  "from": "circuit.positive_mesh",
+  "kind": "supports",
+  "to": "circuit.positive_finite_step"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-054"
+  ],
+  "from": "circuit.positive_mesh",
+  "kind": "supports",
+  "to": "circuit.positive_input"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-059"
+  ],
+  "from": "circuit.positive_rooted_clipping",
+  "kind": "supports",
+  "to": "circuit.classical_strong_limit"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-058"
+  ],
+  "from": "circuit.positive_rooted_clipping",
+  "kind": "supports",
+  "to": "circuit.positive_finite_step"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-060"
+  ],
+  "from": "circuit.positive_rooted_clipping",
+  "kind": "supports",
+  "to": "circuit.positive_mesh"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-061"
+  ],
+  "from": "circuit.positive_rooted_clipping",
+  "kind": "supports",
+  "to": "circuit.positive_value"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-052"
+  ],
+  "from": "circuit.positive_value",
+  "kind": "supports",
+  "to": "circuit.positive_input"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-010"
+  ],
+  "from": "circuit.rooted_realization",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-008"
+  ],
+  "from": "circuit.rooted_realization",
+  "kind": "supports",
+  "to": "scalar.conditional_rounding"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-009"
+  ],
+  "from": "circuit.rooted_realization",
+  "kind": "supports",
+  "to": "scalar.correlation_vector_control"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-007"
+  ],
+  "from": "circuit.rooted_realization",
+  "kind": "supports",
+  "to": "scalar.euler_normalization"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "circuit.sampled_finite_instance_optimum",
+  "kind": "supports",
+  "to": "circuit.fixed_word_concentration"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "circuit.sampled_finite_instance_optimum",
+  "kind": "supports",
+  "to": "circuit.one_measurement_near_optimum"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "circuit.sampled_finite_instance_optimum",
+  "kind": "supports",
+  "to": "scalar.finite_maximum_concentration"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-033"
+  ],
+  "from": "circuit.seed_packets",
+  "kind": "supports",
+  "to": "circuit.ordinary_updates"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-034"
+  ],
+  "from": "circuit.seed_packets",
+  "kind": "supports",
+  "to": "circuit.weighted_unitary_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-043"
+  ],
+  "from": "circuit.seed_removal",
+  "kind": "supports",
+  "to": "circuit.external_mode_energy"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-045"
+  ],
+  "from": "circuit.seed_removal",
+  "kind": "supports",
+  "to": "circuit.seed_packets"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-044"
+  ],
+  "from": "circuit.seed_removal",
+  "kind": "supports",
+  "to": "circuit.visibility"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-032"
+  ],
+  "from": "circuit.seeded_synthesis",
+  "kind": "supports",
+  "to": "circuit.gate_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-031"
+  ],
+  "from": "circuit.seeded_synthesis",
+  "kind": "supports",
+  "to": "circuit.gaussian_root_calculus"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-029"
+  ],
+  "from": "circuit.seeded_synthesis",
+  "kind": "supports",
+  "to": "circuit.helper_contraction"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-030"
+  ],
+  "from": "circuit.seeded_synthesis",
+  "kind": "supports",
+  "to": "circuit.masked_controls"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-036"
+  ],
+  "from": "circuit.selective_accuracy",
+  "kind": "supports",
+  "to": "circuit.seed_packets"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-035"
+  ],
+  "from": "circuit.selective_accuracy",
+  "kind": "supports",
+  "to": "circuit.selective_control"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-011"
+  ],
+  "from": "circuit.sign_smoothing",
+  "kind": "supports",
+  "to": "circuit.rooted_realization"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-012"
+  ],
+  "from": "circuit.sign_smoothing",
+  "kind": "supports",
+  "to": "scalar.shifted_gaussian_limit"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-013"
+  ],
+  "from": "circuit.sign_smoothing",
+  "kind": "supports",
+  "to": "scalar.terminal_loss"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-014"
+  ],
+  "from": "circuit.sign_smoothing",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-038"
+  ],
+  "from": "circuit.singular_echo",
+  "kind": "supports",
+  "to": "circuit.ordinary_updates"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-037"
+  ],
+  "from": "circuit.singular_echo",
+  "kind": "supports",
+  "to": "circuit.selective_accuracy"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-041"
+  ],
+  "from": "circuit.visibility",
+  "kind": "supports",
+  "to": "circuit.seed_packets"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-042"
+  ],
+  "from": "circuit.visibility",
+  "kind": "supports",
+  "to": "circuit.selective_control"
+ },
+ {
+  "evidence_ids": [
+   "source_bytes_verified",
+   "manuscript_alignment_not_run"
+  ],
+  "from": "full_support",
+  "kind": "formalizes",
+  "to": "lean.full_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E054"
+  ],
+  "from": "full_support",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-NAV-001"
+  ],
+  "from": "full_support",
+  "kind": "cites",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E055"
+  ],
+  "from": "full_support",
+  "kind": "supports",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E057"
+  ],
+  "from": "full_support",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E053"
+  ],
+  "from": "full_support",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E056"
+  ],
+  "from": "full_support",
+  "kind": "supports",
+  "to": "support.strict_increase"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-NAV-002"
+  ],
+  "from": "lean.full_support",
+  "kind": "cites",
+  "to": "scalar.formal_model_transport_open"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-NAV-003"
+  ],
+  "from": "lean.value_consequences",
+  "kind": "cites",
+  "to": "scalar.formal_model_transport_open"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-050"
+  ],
+  "from": "qaoa_thermodynamic_first",
+  "kind": "supports",
+  "to": "circuit.fixed_word_transfer"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-068"
+  ],
+  "from": "qaoa_thermodynamic_first",
+  "kind": "cites",
+  "to": "circuit.ordinary_word_positive"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-049"
+  ],
+  "from": "qaoa_thermodynamic_first",
+  "kind": "supports",
+  "to": "circuit.ordinary_word_primary"
+ },
+ {
+  "evidence_ids": [
+   "circuit-r2-26-warrant-051"
+  ],
+  "from": "qaoa_thermodynamic_first",
+  "kind": "supports",
+  "to": "circuit.upper_bound_padding"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-032"
+  ],
+  "from": "scalar.conditional_rounding",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "scalar.constant_curvature",
+  "kind": "supports",
+  "to": "support.fixed_time_spatial_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-012"
+  ],
+  "from": "scalar.constant_curvature",
+  "kind": "supports",
+  "to": "support.integrated_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-014"
+  ],
+  "from": "scalar.constant_curvature",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-013"
+  ],
+  "from": "scalar.constant_curvature",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-034"
+  ],
+  "from": "scalar.correlation_vector_control",
+  "kind": "supports",
+  "to": "scalar.conditional_rounding"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-033"
+  ],
+  "from": "scalar.correlation_vector_control",
+  "kind": "supports",
+  "to": "scalar.euler_normalization"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-031"
+  ],
+  "from": "scalar.euler_normalization",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-030"
+  ],
+  "from": "scalar.euler_normalization",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_comparison_warrants_20261024"
+  ],
+  "from": "scalar.finite_gibbs_comparison",
+  "kind": "supports",
+  "to": "scalar.parisi_formula"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.finite_maximum_concentration",
+  "kind": "supports",
+  "to": "scalar.parisi_formula"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "from": "scalar.fixed_strip_error_budget",
+  "kind": "supports",
+  "to": "scalar.correlation_vector_control"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "from": "scalar.fixed_strip_error_budget",
+  "kind": "supports",
+  "to": "scalar.euler_normalization"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.fixed_strip_error_budget",
+  "kind": "supports",
+  "to": "scalar.minimizer_coefficient_budget"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "from": "scalar.fixed_strip_error_budget",
+  "kind": "supports",
+  "to": "scalar.terminal_loss"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "from": "scalar.fixed_strip_error_budget",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-045"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "cites",
+  "to": "scalar.conditional_fixed_strip"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-041"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "supports",
+  "to": "scalar.formal_contact_input"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-002"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "formalizes",
+  "to": "scalar.lean_gaussian_target"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-020"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "supports",
+  "to": "scalar.source_fixed_strip_application"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-022"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-021"
+  ],
+  "from": "scalar.formal_finite_gaussian_clause",
+  "kind": "supports",
+  "to": "scalar.source_terminal_parisi_assembly"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-003"
+  ],
+  "from": "scalar.formal_parisi_clause",
+  "kind": "formalizes",
+  "to": "scalar.lean_parisi_target"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-026"
+  ],
+  "from": "scalar.formal_parisi_clause",
+  "kind": "supports",
+  "to": "scalar.source_diffusion_exists"
+ },
+ {
+  "application": {
+   "premise_bindings": [
+    {
+     "assumption_id": "assumptions.value_diffusion",
+     "binding_names": [
+      "W",
+      "gamma",
+      "X"
+     ],
+     "rationale": "diffusionProcess_isDiffusion W gamma supplies IsDiffusion for the same W and gamma and X = diffusionProcess W gamma used by ground_state_parisi_of_diffusion.",
+     "supplier_id": "scalar.source_diffusion_exists"
+    }
+   ],
+   "rationale": "MainConclusions applies the conditional ground-state identity to the constructed diffusion; the minimizer premise stays free. This is an authored source correspondence, not elaborated Lean application data or proof acceptance.",
+   "remaining_assumption_ids": [
+    "assumptions.value_minimizer"
+   ],
+   "shared_bindings": {
+    "W": "the caller's BrownianSpace W",
+    "X": "diffusionProcess W gamma",
+    "gamma": "the caller's OrderParameter gamma and IsMinimizer W gamma witness"
+   },
+   "source_span": {
+    "end_line": 27,
+    "source_id": "scalar-r2-26-source-formal-targets",
+    "start_line": 21
+   },
+   "status": "authored"
+  },
+  "evidence_ids": [
+   "R2-13-SR-027"
+  ],
+  "from": "scalar.formal_parisi_clause",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-042"
+  ],
+  "from": "scalar.formal_scalar_clause",
+  "kind": "supports",
+  "to": "scalar.formal_contact_input"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-001"
+  ],
+  "from": "scalar.formal_scalar_clause",
+  "kind": "formalizes",
+  "to": "scalar.lean_scalar_target"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-016"
+  ],
+  "from": "scalar.formal_scalar_clause",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-014"
+  ],
+  "from": "scalar.formal_scalar_clause",
+  "kind": "supports",
+  "to": "scalar.source_spin_sequence_limit"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-015"
+  ],
+  "from": "scalar.formal_scalar_clause",
+  "kind": "supports",
+  "to": "scalar.source_terminal_parisi_assembly"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-009"
+  ],
+  "from": "scalar.integrated_coercivity",
+  "kind": "supports",
+  "to": "support.rational_certificate"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-023"
+  ],
+  "from": "scalar.lean_gaussian_target",
+  "kind": "supports",
+  "to": "scalar.source_fixed_strip_application"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-025"
+  ],
+  "from": "scalar.lean_gaussian_target",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-024"
+  ],
+  "from": "scalar.lean_gaussian_target",
+  "kind": "supports",
+  "to": "scalar.source_terminal_parisi_assembly"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-028"
+  ],
+  "from": "scalar.lean_parisi_target",
+  "kind": "supports",
+  "to": "scalar.source_diffusion_exists"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-029"
+  ],
+  "from": "scalar.lean_parisi_target",
+  "kind": "cites",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-019"
+  ],
+  "from": "scalar.lean_scalar_target",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_identity_with_diffusion"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-017"
+  ],
+  "from": "scalar.lean_scalar_target",
+  "kind": "supports",
+  "to": "scalar.source_spin_sequence_limit"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-018"
+  ],
+  "from": "scalar.lean_scalar_target",
+  "kind": "supports",
+  "to": "scalar.source_terminal_parisi_assembly"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-029"
+  ],
+  "from": "scalar.manuscript_terminal_value",
+  "kind": "supports",
+  "to": "scalar.parisi_formula"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-027"
+  ],
+  "from": "scalar.manuscript_terminal_value",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-026"
+  ],
+  "from": "scalar.manuscript_terminal_value",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-028"
+  ],
+  "from": "scalar.manuscript_terminal_value",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.minimizer_coefficient_budget",
+  "kind": "supports",
+  "to": "scalar.manuscript_terminal_value"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.minimizer_coefficient_budget",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.minimizer_coefficient_budget",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.minimizer_coefficient_budget",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "scalar.manuscript_terminal_value"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "scalar.minimizer_coefficient_budget"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "support.backward_shapes"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "scalar.minimizer_total_coefficient_mass",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-043"
+  ],
+  "from": "scalar.separate_classical_algorithm",
+  "kind": "supports",
+  "to": "scalar.minimizer_attainment"
+ },
+ {
+  "application": {
+   "premise_bindings": [
+    {
+     "assumption_id": "scalar.paper_minimizer",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "Attainment supplies this same gamma_0 in the manuscript class U, with its admissibility and minimality, before applying the conditional full-support theorem.",
+     "supplier_id": "scalar.minimizer_attainment"
+    },
+    {
+     "assumption_id": "scalar.paper_admissible",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "Attainment supplies this same gamma_0 in the manuscript class U, with its admissibility and minimality, before applying the conditional full-support theorem.",
+     "supplier_id": "scalar.minimizer_attainment"
+    }
+   ],
+   "rationale": "The algorithm proof applies thm:full-support to a minimizer to obtain the EAMS no-overlap-gap input. Attainment is supplied separately by the manuscript main.tex:94–107 and the existing scalar.minimizer_attainment support. The same attained gamma_0 is used for full support and strict increase. This authored application records the full-support input only, not a proof or formalization of the external algorithm theorem.",
+   "remaining_assumption_ids": [],
+   "shared_bindings": {
+    "gamma": "one attained manuscript minimizer gamma_0 in U, kept fixed for full support and the external EAMS theorem"
+   },
+   "source_span": {
+    "end_line": 34,
+    "source_id": "scalar-r2-26-source-algorithm-application",
+    "start_line": 29
+   },
+   "status": "authored"
+  },
+  "evidence_ids": [
+   "R2-26-SR-044"
+  ],
+  "from": "scalar.separate_classical_algorithm",
+  "kind": "supports",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-035"
+  ],
+  "from": "scalar.shifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.correlation_vector_control"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-036"
+  ],
+  "from": "scalar.shifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.euler_normalization"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-037"
+  ],
+  "from": "scalar.shifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.manuscript_terminal_value"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "scalar.smooth_positive_density",
+  "kind": "supports",
+  "to": "support.fixed_time_spatial_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-025"
+  ],
+  "from": "scalar.smooth_positive_density",
+  "kind": "supports",
+  "to": "support.integrated_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-023"
+  ],
+  "from": "scalar.smooth_positive_density",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-024"
+  ],
+  "from": "scalar.smooth_positive_density",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "scalar_lower_source_correspondence_r6"
+  ],
+  "from": "scalar.source_finite_adaptive_lower",
+  "kind": "supports",
+  "to": "scalar.source_gaussian_column_split"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-009"
+  ],
+  "from": "scalar.source_fixed_strip_application",
+  "kind": "cites",
+  "to": "scalar.conditional_fixed_strip"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-008"
+  ],
+  "from": "scalar.source_fixed_strip_application",
+  "kind": "supports",
+  "to": "scalar.source_minimizer_curvature_moment"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-007"
+  ],
+  "from": "scalar.source_fixed_strip_application",
+  "kind": "supports",
+  "to": "scalar.source_strip_regularity"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-013"
+  ],
+  "from": "scalar.source_ground_state_identity_with_diffusion",
+  "kind": "supports",
+  "to": "scalar.source_ground_state_upper"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-011"
+  ],
+  "from": "scalar.source_ground_state_identity_with_diffusion",
+  "kind": "supports",
+  "to": "scalar.source_strip_value_lower"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-012"
+  ],
+  "from": "scalar.source_ground_state_identity_with_diffusion",
+  "kind": "supports",
+  "to": "scalar.source_terminal_parisi_assembly"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-003"
+  ],
+  "from": "scalar.source_ground_state_upper",
+  "kind": "supports",
+  "to": "scalar.source_spin_sequence_limit"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-002"
+  ],
+  "from": "scalar.source_minimizer_curvature_moment",
+  "kind": "supports",
+  "to": "scalar.formal_contact_input"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-001"
+  ],
+  "from": "scalar.source_minimizer_curvature_moment",
+  "kind": "supports",
+  "to": "scalar.source_strip_regularity"
+ },
+ {
+  "evidence_ids": [
+   "scalar_lower_source_correspondence_r6"
+  ],
+  "from": "scalar.source_predictable_lower",
+  "kind": "supports",
+  "to": "scalar.source_empirical_energy_limit"
+ },
+ {
+  "evidence_ids": [
+   "scalar_lower_source_correspondence_r6"
+  ],
+  "from": "scalar.source_predictable_lower",
+  "kind": "supports",
+  "to": "scalar.source_finite_adaptive_lower"
+ },
+ {
+  "evidence_ids": [
+   "scalar_lower_source_correspondence_r6"
+  ],
+  "from": "scalar.source_predictable_lower",
+  "kind": "supports",
+  "to": "scalar.source_spin_sequence_limit"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-010"
+  ],
+  "from": "scalar.source_strip_value_lower",
+  "kind": "supports",
+  "to": "scalar.source_fixed_strip_application"
+ },
+ {
+  "evidence_ids": [
+   "scalar_lower_source_correspondence_r6"
+  ],
+  "from": "scalar.source_strip_value_lower",
+  "kind": "supports",
+  "to": "scalar.source_predictable_lower"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-005"
+  ],
+  "from": "scalar.source_terminal_parisi_assembly",
+  "kind": "supports",
+  "to": "scalar.formal_contact_input"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-006"
+  ],
+  "from": "scalar.source_terminal_parisi_assembly",
+  "kind": "supports",
+  "to": "scalar.source_minimizer_curvature_moment"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SR-004"
+  ],
+  "from": "scalar.source_terminal_parisi_assembly",
+  "kind": "supports",
+  "to": "scalar.source_strip_regularity"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-040"
+  ],
+  "from": "scalar.terminal_loss",
+  "kind": "supports",
+  "to": "scalar.manuscript_terminal_value"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-038"
+  ],
+  "from": "scalar.terminal_loss",
+  "kind": "supports",
+  "to": "support.moment_saturation"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-039"
+  ],
+  "from": "scalar.terminal_loss",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.unshifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.correlation_vector_control"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.unshifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.euler_normalization"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "scalar.unshifted_gaussian_limit",
+  "kind": "supports",
+  "to": "scalar.shifted_gaussian_limit"
+ },
+ {
+  "evidence_ids": [
+   "source_bytes_verified",
+   "manuscript_alignment_not_run"
+  ],
+  "from": "scalar_value",
+  "kind": "formalizes",
+  "to": "lean.value_consequences"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-047"
+  ],
+  "from": "scalar_value",
+  "kind": "supports",
+  "to": "scalar.formal_finite_gaussian_clause"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-048"
+  ],
+  "from": "scalar_value",
+  "kind": "supports",
+  "to": "scalar.formal_parisi_clause"
+ },
+ {
+  "evidence_ids": [
+   "R2-26-SR-046"
+  ],
+  "from": "scalar_value",
+  "kind": "supports",
+  "to": "scalar.formal_scalar_clause"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E012"
+  ],
+  "from": "support.backward_shapes",
+  "kind": "supports",
+  "to": "support.step_tails"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E007"
+  ],
+  "from": "support.contact",
+  "kind": "supports",
+  "to": "support.first_variation"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E009"
+  ],
+  "from": "support.contact",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E008"
+  ],
+  "from": "support.contact",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E010"
+  ],
+  "from": "support.contact_derivatives",
+  "kind": "supports",
+  "to": "support.contact"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E011"
+  ],
+  "from": "support.contact_derivatives",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E001"
+  ],
+  "from": "support.diffusion",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E005"
+  ],
+  "from": "support.first_variation",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E006"
+  ],
+  "from": "support.first_variation",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E004"
+  ],
+  "from": "support.first_variation",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "support.fixed_time_spatial_coercivity",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "support.fixed_time_spatial_coercivity",
+  "kind": "supports",
+  "to": "support.integrated_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "support.fixed_time_spatial_coercivity",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.fixed_time_spatial_coercivity_at_jumps",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.fixed_time_spatial_coercivity_at_jumps",
+  "kind": "supports",
+  "to": "support.positive_curvature"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.fixed_time_spatial_coercivity_at_jumps",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E015"
+  ],
+  "from": "support.flux_identity",
+  "kind": "supports",
+  "to": "support.backward_shapes"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E016"
+  ],
+  "from": "support.flux_identity",
+  "kind": "supports",
+  "to": "support.forward_shapes"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E017"
+  ],
+  "from": "support.flux_identity",
+  "kind": "supports",
+  "to": "support.step_tails"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E013"
+  ],
+  "from": "support.forward_shapes",
+  "kind": "supports",
+  "to": "support.backward_shapes"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E014"
+  ],
+  "from": "support.forward_shapes",
+  "kind": "supports",
+  "to": "support.step_tails"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E045"
+  ],
+  "from": "support.full_relative_support",
+  "kind": "supports",
+  "to": "support.no_bounded_gap"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E046"
+  ],
+  "from": "support.full_relative_support",
+  "kind": "supports",
+  "to": "support.no_initial_gap"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E044"
+  ],
+  "from": "support.full_relative_support",
+  "kind": "supports",
+  "to": "support.no_terminal_gap"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E043"
+  ],
+  "from": "support.full_relative_support",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.contact"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.contact_derivatives"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.no_bounded_gap"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.no_initial_gap"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.positive_curvature"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.terminal_chord_barrier"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.zero_candidate_descent"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.full_relative_support_curvature",
+  "kind": "supports",
+  "to": "support.zero_curvature"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E019"
+  ],
+  "from": "support.integrated_coercivity",
+  "kind": "supports",
+  "to": "support.flux_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E018"
+  ],
+  "from": "support.integrated_coercivity",
+  "kind": "supports",
+  "to": "support.rational_certificate"
+ },
+ {
+  "evidence_ids": [
+   "R2-13-SUP-001"
+  ],
+  "from": "support.integrated_coercivity",
+  "kind": "cites",
+  "to": "support.source_finite_density_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E003"
+  ],
+  "from": "support.moment_identity",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E002"
+  ],
+  "from": "support.moment_identity",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E050"
+  ],
+  "from": "support.moment_saturation",
+  "kind": "supports",
+  "to": "support.contact_derivatives"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E052"
+  ],
+  "from": "support.moment_saturation",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E049"
+  ],
+  "from": "support.moment_saturation",
+  "kind": "supports",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E051"
+  ],
+  "from": "support.moment_saturation",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "near_ground_pair_warrants_20261024"
+  ],
+  "from": "support.near_ground_pairs",
+  "kind": "supports",
+  "to": "scalar.minimizer_attainment"
+ },
+ {
+  "evidence_ids": [
+   "near_ground_pair_warrants_20261024"
+  ],
+  "from": "support.near_ground_pairs",
+  "kind": "supports",
+  "to": "scalar.parisi_formula"
+ },
+ {
+  "application": {
+   "premise_bindings": [
+    {
+     "assumption_id": "scalar.paper_minimizer",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "Attainment supplies gamma_0 minimizing the same manuscript Parisi functional. Full support is applied to this gamma_0; the landscape theorem then uses the Stieltjes support of that same minimizer.",
+     "supplier_id": "scalar.minimizer_attainment"
+    },
+    {
+     "assumption_id": "scalar.paper_admissible",
+     "binding_names": [
+      "gamma"
+     ],
+     "rationale": "The attained gamma_0 belongs to the same class U, so its admissibility accompanies its minimality. Pure zero-field SK and xi(t)=t^2/2 remain the fixed model; the common Gaussian covariance adjustment is retained in the landscape argument.",
+     "supplier_id": "scalar.minimizer_attainment"
+    }
+   ],
+   "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in long section 2.3); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted.",
+   "remaining_assumption_ids": [],
+   "shared_bindings": {
+    "gamma": "one attained minimizer gamma_0 in the manuscript pure zero-field SK class U, used for full support and the support-point premise of the ACZ landscape theorem"
+   },
+   "source_span": {
+    "end_line": 3506,
+    "source_id": "authored_long_comparisons_20261024",
+    "start_line": 3447
+   },
+   "status": "authored"
+  },
+  "evidence_ids": [
+   "near_ground_pair_warrants_20261024"
+  ],
+  "from": "support.near_ground_pairs",
+  "kind": "supports",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E035"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.contact_derivatives"
+ },
+ {
+  "evidence_ids": [
+   "endpoint_chord_area_warrant_20261024"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.endpoint_chord_area"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E038"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E036"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.positive_curvature"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E034"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E037"
+  ],
+  "from": "support.no_bounded_gap",
+  "kind": "supports",
+  "to": "support.zero_curvature"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E041"
+  ],
+  "from": "support.no_initial_gap",
+  "kind": "supports",
+  "to": "support.contact_derivatives"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E042"
+  ],
+  "from": "support.no_initial_gap",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E039"
+  ],
+  "from": "support.no_initial_gap",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E040"
+  ],
+  "from": "support.no_initial_gap",
+  "kind": "supports",
+  "to": "support.zero_curvature"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E032"
+  ],
+  "from": "support.no_terminal_gap",
+  "kind": "supports",
+  "to": "support.contact"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E033"
+  ],
+  "from": "support.no_terminal_gap",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E031"
+  ],
+  "from": "support.no_terminal_gap",
+  "kind": "supports",
+  "to": "support.terminal_defect"
+ },
+ {
+  "evidence_ids": [
+   "support_optimality_warrant_20261024"
+  ],
+  "from": "support.optimality_criterion",
+  "kind": "supports",
+  "to": "support.first_variation"
+ },
+ {
+  "evidence_ids": [
+   "support_optimality_warrant_20261024"
+  ],
+  "from": "support.optimality_criterion",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_optimality_warrant_20261024"
+  ],
+  "from": "support.optimality_criterion",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E021"
+  ],
+  "from": "support.plateau_transfer",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E022"
+  ],
+  "from": "support.plateau_transfer",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E020"
+  ],
+  "from": "support.plateau_transfer",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "from": "support.positive_curvature",
+  "kind": "supports",
+  "to": "support.fixed_time_spatial_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E023"
+  ],
+  "from": "support.positive_curvature",
+  "kind": "supports",
+  "to": "support.integrated_coercivity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E024"
+  ],
+  "from": "support.positive_curvature",
+  "kind": "supports",
+  "to": "support.plateau_transfer"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "from": "support.raw_curvature_negative_absolute_terminal",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E047"
+  ],
+  "from": "support.strict_increase",
+  "kind": "supports",
+  "to": "support.full_relative_support"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E048"
+  ],
+  "from": "support.strict_increase",
+  "kind": "supports",
+  "to": "support.stieltjes_measure"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E029"
+  ],
+  "from": "support.terminal_defect",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E030"
+  ],
+  "from": "support.terminal_defect",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E028"
+  ],
+  "from": "support.terminal_defect",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.zero_candidate_descent",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.zero_candidate_descent",
+  "kind": "supports",
+  "to": "support.first_variation"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.zero_candidate_descent",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "from": "support.zero_candidate_descent",
+  "kind": "supports",
+  "to": "support.regularity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E026"
+  ],
+  "from": "support.zero_curvature",
+  "kind": "supports",
+  "to": "support.diffusion"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E027"
+  ],
+  "from": "support.zero_curvature",
+  "kind": "supports",
+  "to": "support.moment_identity"
+ },
+ {
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "R2-25-E025"
+  ],
+  "from": "support.zero_curvature",
+  "kind": "supports",
+  "to": "support.regularity"
+ }
+]

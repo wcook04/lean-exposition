@@ -2,30 +2,17 @@
 // parts near the viewport are rendered, the rest wait as placeholders sized
 // from their byte length and are rendered in idle time. Heights that change
 // above the reading line are compensated, so the line a reader is on never
-// moves. Mapped passages carry a margin rule in their region's ink, their
-// claims in the margin on hover or focus, and their routes to other accounts.
+// moves. A mapped passage carries a slim rule in the margin (amber while it is
+// in the inspector) and, under its heading, two quiet controls: its records
+// ("2 claims · 2 assumptions") and "Same topic in…".
 
 import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
-import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
-import { useReading } from "../../app/data";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
-import {
-  authoredRoutes,
-  estimateHeight,
-  idleOrder,
-  majorityRegion,
-  passageOf,
-  passageRecords,
-  placeName,
-  routeLead,
-  routeTarget,
-  sharedPlaces,
-  type Route,
-  type Structures,
-} from "./model";
+import { authoredRoutes, estimateHeight, idleOrder, passageOf, passageRecords, recordTally, type Structures } from "./model";
 
 export interface Links {
   node(id: string): string;
@@ -47,8 +34,11 @@ interface Props {
   doc: PreparedDocument;
   structures: Structures;
   graph: ArgGraph;
-  links: Links;
   initial: number[];
+  /** The passage open in the inspector, whose margin rule is lit. */
+  inspected: string | null;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
   /** The reading line, in viewport pixels from the top, used for height compensation. */
   topInset: number;
 }
@@ -68,7 +58,7 @@ const cancelIdle = (id: number) => {
 };
 
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
-  const { stage, doc, structures, graph, links, initial, topInset } = props;
+  const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const [near, setNear] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
@@ -275,8 +265,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     };
   }, [doc, add]);
 
-  const regionOf = useCallback((id: string) => graph.nodes.get(id)?.region || graph.regionOf.get(id), [graph]);
-
   return (
     <div className="paper prose" data-stage={stage}>
       {doc.parts.map((part) => (
@@ -289,8 +277,9 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           near={near.has(part.index)}
           structures={structures}
           graph={graph}
-          links={links}
-          regionOf={regionOf}
+          lit={!!part.anchor && part.anchor === inspected}
+          onInspect={onInspect}
+          onSameTopic={onSameTopic}
           register={register}
         />
       ))}
@@ -317,19 +306,21 @@ interface PartProps {
   near: boolean;
   structures: Structures;
   graph: ArgGraph;
-  links: Links;
-  regionOf(id: string): string | undefined;
+  lit: boolean;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, near, structures, graph, links, regionOf, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, structures, graph, lit, onInspect, onSameTopic, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
-  const records = useMemo(() => passageRecords(passage).filter((id) => graph.nodes.has(id)), [passage, graph]);
-  const region = useMemo(() => majorityRegion(records, regionOf), [records, regionOf]);
-  const routes = useMemo(() => (anchor ? authoredRoutes(structures, stage, anchor) : []), [structures, stage, anchor]);
+  const records = useMemo(() => passageRecords(passage), [passage]);
+  const routed = useMemo(() => !!anchor && authoredRoutes(structures, stage, anchor).length > 0, [structures, stage, anchor]);
+  const mapped = !!anchor && records.length > 0;
+  const tools = !!anchor && (mapped || routed);
 
   useLayoutEffect(() => {
     if (!html || !textRef.current) return;
@@ -341,194 +332,199 @@ const Part = memo(function Part({ part, stage, doc, rendered, near, structures, 
     };
   }, [html]);
 
+  // The passage's controls sit under its opening heading (or above its first
+  // line), inside the rendered text, so they read as part of the passage.
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    const text = textRef.current;
+    if (!html || !text || !tools) {
+      setSlot(null);
+      return;
+    }
+    const el = document.createElement("div");
+    el.className = "passage-tools";
+    let first = text.firstElementChild;
+    while (first && first.matches("a.anchor")) first = first.nextElementSibling;
+    if (first && /^H[1-6]$/.test(first.tagName)) first.after(el);
+    else text.insertBefore(el, text.firstChild);
+    setSlot(el);
+    return () => el.remove();
+  }, [html, tools]);
+
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
 
   if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
 
-  const mapped = !!anchor && records.length > 0;
   return (
     <section
       ref={setRef}
       data-part={part.index}
       data-passage={anchor}
-      data-region={mapped ? (region ?? undefined) : undefined}
+      data-lit={lit ? "" : undefined}
       className={`part${mapped ? " part--mapped" : ""}${html ? "" : " part--pending"}`}
-      aria-label={undefined}
     >
-      {mapped && html && <MarginClaims ids={records} graph={graph} links={links} />}
       {html ? (
         <div ref={textRef} className="part__text" dangerouslySetInnerHTML={{ __html: html }} />
       ) : (
-        <div className="part__placeholder" style={{ height: estimateHeight(part) }} aria-hidden="true" />
+        <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
       )}
-      {html && anchor && (routes.length > 0 || mapped) && (
-        <PassageRoutes stage={stage} anchor={anchor} routes={routes} structures={structures} links={links} near={near} mapped={mapped} />
-      )}
+      {slot &&
+        anchor &&
+        createPortal(
+          <PassageTools anchor={anchor} records={records} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
+          slot,
+        )}
     </section>
   );
 });
 
-const MARGIN_MAX = 4;
-
-function MarginClaims({ ids, graph, links }: { ids: string[]; graph: ArgGraph; links: Links }) {
-  const [all, setAll] = useState(false);
-  const shown = all ? ids : ids.slice(0, MARGIN_MAX);
-  return (
-    <div className="part__margin">
-      <div className="margin-claims" role="group" aria-label="Recorded claims this passage discusses">
-        <ul>
-          {shown.map((id) => {
-            const node = graph.nodes.get(id)!;
-            return (
-              <li key={id}>
-                <a className="claim-chip" href={links.node(id)} data-region={node.region}>
-                  <span className="region-dot" aria-hidden="true" />
-                  <span className={node.kind === "declaration" ? "lean" : undefined}>{node.label}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-        {ids.length > MARGIN_MAX && (
-          <button type="button" className="margin-claims__more" aria-expanded={all} onClick={() => setAll((v) => !v)}>
-            {all ? "Fewer" : `and ${ids.length - MARGIN_MAX} more`}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-const SHARED_MAX = 4;
-
-function PassageRoutes({
-  stage,
+function PassageTools({
   anchor,
-  routes,
-  structures,
-  links,
-  near,
-  mapped,
+  records,
+  graph,
+  lit,
+  onInspect,
+  onSameTopic,
 }: {
-  stage: Stage;
   anchor: string;
-  routes: Route[];
-  structures: Structures;
-  links: Links;
-  near: boolean;
-  mapped: boolean;
+  records: string[];
+  graph: ArgGraph;
+  lit: boolean;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
 }) {
-  const here = { stage, anchor };
+  const tally = records.length ? recordTally(records, graph) : null;
   return (
-    <div className="routes">
-      {routes.length > 0 && (
-        <ul className="routes__authored" aria-label="Routes the authors wrote from this passage">
-          {routes.map((route) => (
-            <RouteLine key={`${route.relation}:${route.kind}:${route.stage}:${route.anchor}`} route={route} here={here} structures={structures} links={links} />
-          ))}
-        </ul>
+    <>
+      {tally && (
+        <button
+          type="button"
+          className="passage-tools__records"
+          aria-pressed={lit}
+          aria-label={`${tally} linked to this passage. Show them`}
+          onClick={(event) => onInspect(anchor, event.currentTarget)}
+        >
+          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <rect x="1.5" y="2" width="9" height="2" rx="1" fill="currentColor" />
+            <rect x="1.5" y="5.5" width="9" height="2" rx="1" fill="currentColor" opacity="0.7" />
+            <rect x="1.5" y="9" width="6" height="2" rx="1" fill="currentColor" opacity="0.45" />
+          </svg>
+          {tally}
+        </button>
       )}
-      {mapped && near && <SharedLine here={here} routes={routes} structures={structures} links={links} />}
-    </div>
+      <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
+        Linked passages…
+      </button>
+    </>
   );
 }
 
-function RouteLine({ route, here, structures, links }: { route: Route; here: { stage: Stage; anchor: string }; structures: Structures; links: Links }) {
-  const [open, setOpen] = useState(false);
-  const id = `why-${here.stage}-${here.anchor}-${route.relation}-${route.stage}-${route.anchor}`;
-  return (
-    <li className="route">
-      <span className="route__lead">{routeLead(route, here, structures)}:</span>{" "}
-      <a className="route__link" href={links.beside(route.stage, route.anchor)} data-beside="">
-        {routeTarget(route, here, structures)}
-      </a>
-      {route.rationale && (
-        <>
-          {" "}
-          <button type="button" className="route__why" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
-            Why
-          </button>
-          <p id={id} className="route__rationale" hidden={!open}>
-            {route.rationale}
-          </p>
-        </>
-      )}
-    </li>
-  );
-}
-
-function SharedLine({ here, routes, structures, links }: { here: { stage: Stage; anchor: string }; routes: Route[]; structures: Structures; links: Links }) {
-  const reading = useReading(here.stage, here.anchor);
-  const [all, setAll] = useState(false);
-  const places = useMemo(() => {
-    if (reading.status !== "ready") return [];
-    const exclude = new Set(routes.map((r) => `${r.stage}:${r.anchor}`));
-    return sharedPlaces(reading.value.items, here, exclude);
-  }, [reading, routes, here]);
-  if (!places.length) return null;
-  const shown = all ? places : places.slice(0, SHARED_MAX);
-  const groups = STAGE_ORDER.map((s) => ({ stage: s, places: shown.filter((p) => p.stage === s) })).filter((g) => g.places.length);
-  if (groups.length && shown.some((p) => p.stage === here.stage)) {
-    groups.sort((a, b) => (a.stage === here.stage ? -1 : b.stage === here.stage ? 1 : 0));
-  }
-  return (
-    <p className="routes__shared">
-      <span className="routes__shared-lead" title="Found because these passages map a claim this one maps. A shared claim is not the same argument.">
-        Also discussing the same claims:
-      </span>{" "}
-      {groups.map((g, gi) => (
-        <span key={g.stage} className="routes__group">
-          <span className="routes__account">{g.stage === here.stage ? "In this account" : PAPER_NAMES[g.stage].short}</span>{" "}
-          {g.places.map((p, i) => (
-            <span key={p.anchor}>
-              <a href={links.beside(p.stage, p.anchor)} data-beside="">
-                {placeName(structures, p.stage, p.stage, p.anchor)}
-              </a>
-              {i < g.places.length - 1 ? ", " : ""}
-            </span>
-          ))}
-          {gi < groups.length - 1 ? "; " : ""}
-        </span>
-      ))}
-      {places.length > SHARED_MAX && (
-        <>
-          {" "}
-          <button type="button" className="routes__more" aria-expanded={all} onClick={() => setAll((v) => !v)}>
-            {all ? "fewer" : `and ${places.length - SHARED_MAX} more`}
-          </button>
-        </>
-      )}
-    </p>
-  );
-}
-
-/** Mark display maths wider than its box, so its edge can say it scrolls. */
+/**
+ * A display formula wider than its box scrolls inside it, natively, and keeps
+ * its focus ring and MathML. Nothing is faded: the last condition is part of
+ * the statement. Under an overflowing display a quiet row says it scrolls
+ * ("Scroll formula →", "←" at the end, "↔" between) and offers "Expand",
+ * a labelled dialog with the formula at full width.
+ */
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
-  const mark = () => {
-    for (const box of boxes) {
-      const wide = box.scrollWidth > box.clientWidth + 1;
-      box.dataset.overflow = String(wide);
-      box.dataset.scrolledEnd = String(box.scrollLeft + box.clientWidth >= box.scrollWidth - 2);
-      if (wide && !box.hasAttribute("tabindex")) {
-        box.tabIndex = 0;
-        box.setAttribute("role", "group");
-        box.setAttribute("aria-label", "Formula, scrolls sideways");
-      }
+  const cues = new Map<HTMLElement, HTMLElement>();
+  const update = (box: HTMLElement) => {
+    const wide = box.scrollWidth > box.clientWidth + 1;
+    box.dataset.overflow = String(wide);
+    const atStart = box.scrollLeft <= 1;
+    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
+    box.dataset.scrolledEnd = String(atEnd);
+    let cue = cues.get(box);
+    if (wide && !cue) {
+      cue = makeCue(box);
+      cues.set(box, cue);
+      box.after(cue);
+    }
+    if (wide && !box.hasAttribute("tabindex")) {
+      box.tabIndex = 0;
+      box.setAttribute("role", "group");
+      box.setAttribute("aria-label", "Formula wider than the column, scroll sideways to read it");
+    }
+    if (!cue) return;
+    cue.hidden = !wide;
+    const where = atStart ? "start" : atEnd ? "end" : "between";
+    if (cue.dataset.at !== where) {
+      cue.dataset.at = where;
+      const scroll = cue.querySelector<HTMLButtonElement>(".math-cue__scroll")!;
+      scroll.textContent = where === "start" ? "Scroll formula →" : where === "end" ? "← Scroll formula" : "Scroll formula ↔";
+      scroll.setAttribute("aria-label", where === "end" ? "Scroll the formula back to its start" : "Scroll the formula to its end");
     }
   };
-  const onScroll = (event: Event) => {
-    const box = event.currentTarget as HTMLElement;
-    box.dataset.scrolledEnd = String(box.scrollLeft + box.clientWidth >= box.scrollWidth - 2);
-  };
+  const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
   boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
-  const observer = new ResizeObserver(mark);
+  const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
   boxes.forEach((b) => observer.observe(b));
-  mark();
+  boxes.forEach(update);
   return () => {
     observer.disconnect();
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
+    cues.forEach((cue) => cue.remove());
   };
+}
+
+function makeCue(box: HTMLElement): HTMLElement {
+  const cue = document.createElement("span");
+  cue.className = "math-cue";
+  const scroll = document.createElement("button");
+  scroll.type = "button";
+  scroll.className = "math-cue__scroll";
+  scroll.addEventListener("click", () => {
+    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    box.scrollTo({ left: atEnd ? 0 : box.scrollWidth, behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
+  });
+  const expand = document.createElement("button");
+  expand.type = "button";
+  expand.className = "math-cue__expand";
+  expand.textContent = "Expand";
+  expand.setAttribute("aria-haspopup", "dialog");
+  expand.addEventListener("click", () => expandFormula(box, expand));
+  cue.append(scroll, expand);
+  return cue;
+}
+
+/** The formula alone, at full width, in a labelled modal dialog. */
+function expandFormula(box: HTMLElement, opener: HTMLElement): void {
+  const dialog = document.createElement("dialog");
+  dialog.className = "modal modal--centre modal--formula";
+  const id = `formula-${Math.random().toString(36).slice(2, 8)}`;
+  dialog.setAttribute("aria-labelledby", id);
+  dialog.dataset.modalOpen = "";
+  const inner = document.createElement("div");
+  inner.className = "modal__box";
+  inner.innerHTML = `<header class="modal__bar"><h2 id="${id}" class="modal__title" tabindex="-1">Formula</h2><button type="button" class="modal__close" aria-label="Close the formula"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></header>`;
+  const body = document.createElement("div");
+  body.className = "modal__body prose formula-full";
+  const copy = box.cloneNode(true) as HTMLElement;
+  copy.removeAttribute("tabindex");
+  copy.removeAttribute("role");
+  copy.removeAttribute("aria-label");
+  copy.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  copy.className = "math-display";
+  body.append(copy);
+  inner.append(body);
+  dialog.append(inner);
+  // Inside the page's theme and type, next to the formula's own styles.
+  (box.closest(".reader, .panel, .pane") ?? document.body).append(dialog);
+  const close = () => {
+    dialog.close();
+    dialog.remove();
+    if (opener.isConnected) opener.focus({ preventScroll: true });
+  };
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    close();
+  });
+  dialog.addEventListener("click", (event) => event.target === dialog && close());
+  inner.querySelector<HTMLButtonElement>(".modal__close")!.addEventListener("click", close);
+  dialog.showModal();
+  inner.querySelector<HTMLElement>(".modal__title")!.focus({ preventScroll: true });
 }
 
 /**

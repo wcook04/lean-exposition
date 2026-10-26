@@ -3,8 +3,12 @@
 //
 //   node scripts/capture-fixtures.mjs [http://127.0.0.1:8000]
 //
-// The fixtures keep only the fields the site reads, so layout and reader tests
-// run without a server. Recapture after reassembling the bundle.
+// The fixtures keep the fields the site reads, so layout and reader tests run
+// without a server. Map links keep every semantic field the API serves
+// (theorem applications, their scope, owner and source field): only the
+// presentation-only parts of the response are trimmed. The full node, edge,
+// evidence and source tables are captured too, so warrant and check tests run
+// on real records. Recapture after reassembling the bundle.
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -35,16 +39,26 @@ const write = (name, value) => writeFile(path.join(out, name), JSON.stringify(va
 await write("graph-map.json", {
   manifest_sha256: manifest,
   selected_goals: graph.selected_goals,
-  records: { nodes: graph.records.nodes, edges: [], citations: [], evidence: [], sources: [] },
-  links: graph.links.map((l) => ({
-    id: l.id, record_ref: l.record_ref, kind: l.kind, semantic_class: l.semantic_class,
-    from: l.from, to: l.to, from_node_id: l.from_node_id, to_node_id: l.to_node_id, derived: l.derived,
-  })),
+  records: { nodes: graph.records.nodes, edges: [], citations: [], evidence: graph.records.evidence, sources: [] },
+  // Links exactly as served: dropping `application` or `application_scope`
+  // would put supplied premises back into the argument.
+  links: graph.links,
   components: graph.components.map((c) => ({ id: c.id, cyclic: c.cyclic, members: c.members })),
   coverage: { boundaries: graph.coverage.boundaries, claim: graph.coverage.claim, empty_result_meaning: graph.coverage.empty_result_meaning, query_truncated: graph.coverage.query_truncated },
   records_href: graph.records_href,
 });
 await write("node-summaries.json", summaries.items);
+
+// Full tables, following the API's pages (at most 200 records each).
+async function table(name) {
+  const out = [];
+  for (let offset = 0; ; offset += 200) {
+    const page = (await (await get("/records", pinned({ table: name, limit: 200, offset }))).json()).data;
+    out.push(...page.items.map((i) => i.record));
+    if (page.items.length < 200 || out.length >= page.total) return out;
+  }
+}
+for (const name of ["nodes", "edges", "evidence", "sources"]) await write(`table-${name}.json`, await table(name));
 await write("papers.json", overview.papers.map((p) => ({ stage: p.stage, paper_scope: p.paper_scope, passages: p.passages, sections: p.sections })));
 
 for (const stage of ["long", "short", "expository"]) {

@@ -12,27 +12,27 @@ export interface CheckKindInfo {
 export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   source_hash: {
     title: "Source files",
-    question: "Are the cited files byte-for-byte the ones recorded? This says nothing about their mathematics.",
+    question: "Whether each cited file still has exactly the bytes recorded for it, compared by hash. This check does not examine the mathematics in the files.",
   },
   lean_build: {
     title: "Lean build",
-    question: "Does the Lean project compile with the pinned toolchain?",
+    question: "Whether the Lean project compiles with the Lean version recorded for it.",
   },
   comparator: {
     title: "Comparator",
-    question: "Does the Lean proof establish the separately stated challenge, using only the permitted axioms?",
+    question: "Whether Comparator, a program that compares a Lean proof with a separately written statement of the theorem, accepts the proof as proving that statement using only the permitted axioms.",
   },
   extraction: {
     title: "Dependency extraction",
-    question: "Which declarations does the elaborated Lean proof actually use?",
+    question: "Which Lean declarations the proof uses, as listed by Lean after it has processed the proof.",
   },
   semantic_review: {
     title: "Correspondence review",
-    question: "Does the recorded statement faithfully say what the paper or source says?",
+    question: "Whether a reviewer found that a recorded statement says the same thing as the paper or source it was taken from.",
   },
   platform: {
     title: "Platform label",
-    question: "What does an external platform report? This is not a local proof check.",
+    question: "What an outside platform reports about a statement. This is that platform's label, not a proof check run for this edition.",
   },
 };
 
@@ -46,8 +46,11 @@ export const STATUS_WORDS: Record<string, string> = {
 export interface CheckRow {
   kind: string;
   title: string;
+  /** "passed" only when something passed and nothing failed or was unavailable. */
   tone: "passed" | "failed" | "open";
   outcome: string;
+  /** The kind's one-line headline (see kindHeadline). */
+  headline: string;
   counts: Record<string, number>;
   ids: string[];
 }
@@ -67,25 +70,132 @@ export function checkSummary(edition: Edition, evidenceIds: readonly string[]): 
   const kinds = [...byKind.keys()].sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99);
   return kinds.map((kind) => {
     const { counts, ids } = byKind.get(kind)!;
-    return { kind, title: CHECK_KINDS[kind]?.title ?? kind.replace(/_/g, " "), ...describe(counts), counts, ids };
+    return { kind, title: CHECK_KINDS[kind]?.title ?? kind.replace(/_/g, " "), ...describe(counts), headline: kindHeadline(kind, counts), counts, ids };
   });
 }
 
+// Each outcome is named separately: a failed run and an unavailable one are
+// recorded events, not the absence of a run, and neither is merged with "not run".
 function describe(counts: Record<string, number>): { tone: CheckRow["tone"]; outcome: string } {
   const passed = counts.passed ?? 0;
   const failed = counts.failed ?? 0;
   const unavailable = counts.unavailable ?? 0;
   const notRun = counts.not_run ?? 0;
-  const parts: string[] = [];
-  if (failed) parts.push(`${failed} failed`);
-  if (unavailable) parts.push(`${unavailable} unavailable`);
-  if (notRun) parts.push(`${notRun} not run`);
-  if (passed && !failed && !unavailable) {
-    return { tone: "passed", outcome: notRun ? `passed (${passed}); ${notRun} not run` : passed > 1 ? `passed (${passed})` : "passed" };
+  const others = countsInWords(withoutPassed(counts));
+  const tone: CheckRow["tone"] = failed ? "failed" : passed && !unavailable ? "passed" : "open";
+  if (passed && !failed && !unavailable && !notRun && others === "none") return { tone, outcome: passed > 1 ? `passed (${passed})` : "passed" };
+  if (passed) return { tone, outcome: `${passed} passed; ${others}` };
+  if (failed || unavailable) return { tone, outcome: `none passed: ${others}` };
+  if (notRun && others === `${notRun} not run`) return { tone, outcome: notRun > 1 ? `not run (${notRun})` : "not run" };
+  return { tone, outcome: others };
+}
+
+function withoutPassed(counts: Record<string, number>): Record<string, number> {
+  const { passed: _passed, ...rest } = counts;
+  return rest;
+}
+
+// --------------------------------------------------------- outcome summaries
+
+/** Records of any shape that name their check kind and outcome. */
+export interface OutcomeRecord {
+  kind: string;
+  status: string;
+}
+
+/**
+ * Outcome counts per kind of check, kinds in the page's order (unknown kinds
+ * last, alphabetically). Every status is counted under its own name; nothing
+ * is merged.
+ */
+export function outcomeCounts(records: readonly OutcomeRecord[]): Map<string, Record<string, number>> {
+  const by = new Map<string, Record<string, number>>();
+  for (const r of records) {
+    const counts = by.get(r.kind) ?? {};
+    counts[r.status] = (counts[r.status] ?? 0) + 1;
+    by.set(r.kind, counts);
   }
-  if (passed) return { tone: "passed", outcome: `${passed} passed; ${parts.join(", ")}` };
-  if (failed || unavailable) return { tone: failed ? "failed" : "open", outcome: `no completed run (${parts.join(", ")})` };
-  return { tone: "open", outcome: "not run" };
+  const known: string[] = [...CHECK_ORDER];
+  const kinds = [...known.filter((k) => by.has(k)), ...[...by.keys()].filter((k) => !known.includes(k)).sort()];
+  return new Map(kinds.map((k) => [k, by.get(k)!]));
+}
+
+/** Names for a kind in a headline: what a passed record of that kind shows. */
+const HEADLINE_NAMES: Record<string, string> = {
+  source_hash: "Source identity",
+  lean_build: "Lean build",
+  comparator: "Comparator",
+  extraction: "Dependency extraction",
+  semantic_review: "Correspondence review",
+  platform: "Platform label",
+};
+
+function headlineName(kind: string): string {
+  return HEADLINE_NAMES[kind] ?? CHECK_KINDS[kind]?.title ?? kind.replace(/_/g, " ");
+}
+
+/** The name inside a sentence: lower case, except the names Comparator and Lean. */
+function inSentence(name: string): string {
+  return /^(Comparator|Lean)\b/.test(name) ? name : name.charAt(0).toLowerCase() + name.slice(1);
+}
+
+function outcomeParts(counts: Record<string, number>): string[] {
+  const keys = [...STATUS_ORDER.filter((s) => counts[s]), ...Object.keys(counts).filter((s) => !STATUS_ORDER.includes(s) && counts[s]).sort()];
+  return keys.map((s) => `${counts[s]} ${STATUS_WORDS[s] ?? s.replace(/_/g, " ")}`);
+}
+
+/**
+ * One line for a kind of check, every outcome kept apart:
+ * "No successful Comparator result is recorded · 1 failed · 2 unavailable · 2 not run",
+ * "No Lean build run is recorded · 2 not run", "Source identity · 2 passed".
+ * It never calls a pass independent and never says a run is missing when a
+ * failed or unavailable run is recorded.
+ */
+export function kindHeadline(kind: string, counts: Record<string, number>): string {
+  const name = headlineName(kind);
+  const parts = outcomeParts(counts);
+  if (parts.length === 0) return `No ${inSentence(name)} records`;
+  const passed = counts.passed ?? 0;
+  const recordedRun = passed + (counts.failed ?? 0) + (counts.unavailable ?? 0);
+  const lead = passed ? name : recordedRun ? `No successful ${inSentence(name)} result is recorded` : `No ${inSentence(name)} run is recorded`;
+  return [lead, ...parts].join(" · ");
+}
+
+/** "View 12 check records" style count, and the line the theorem plate shows. */
+export interface GoalCheckLine {
+  line: string;
+  total: number;
+}
+
+// The kinds that bear on a Lean statement, most informative first: Comparator
+// is the check that the proof establishes the stated challenge.
+const PLATE_ORDER = ["comparator", "lean_build", "extraction", "semantic_review", "platform", "source_hash"];
+
+/**
+ * The most informative short line about a record's checks, for the theorem
+ * plate, with the number of check records attached. `evidenceIds` defaults to
+ * the ids on the node's own record (ArgNode.evidenceIds).
+ * E.g. { line: "No Comparator acceptance recorded", total: 12 }.
+ */
+export function goalCheckLine(edition: Edition, nodeId: string, evidenceIds?: readonly string[]): GoalCheckLine {
+  const ids = evidenceIds ?? edition.graph.nodes.get(nodeId)?.evidenceIds ?? [];
+  const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
+  const records = ids.map((id) => cards.get(id)).filter((c): c is NonNullable<typeof c> => !!c);
+  const total = records.length;
+  if (total === 0) return { line: "No check records", total };
+  const by = outcomeCounts(records);
+  const kind = PLATE_ORDER.find((k) => by.has(k)) ?? [...by.keys()][0];
+  const counts = by.get(kind)!;
+  const passed = counts.passed ?? 0;
+  if (kind === "comparator") return { line: passed ? `Comparator passed (${passed} of ${recordsWord(sum(counts))})` : "No successful Comparator result recorded", total };
+  if (kind === "source_hash") return { line: passed === sum(counts) ? "Source files match their recorded hashes" : kindHeadline(kind, counts), total };
+  if (passed) return { line: `${headlineName(kind)} passed (${passed} of ${recordsWord(sum(counts))})`, total };
+  const recordedRun = (counts.failed ?? 0) + (counts.unavailable ?? 0);
+  return { line: recordedRun ? `No successful ${inSentence(headlineName(kind))} result recorded` : `No ${inSentence(headlineName(kind))} run recorded`, total };
+}
+
+function sum(counts: Record<string, number>): number {
+  return Object.values(counts).reduce((s, n) => s + n, 0);
 }
 
 // ------------------------------------------------------------ the ledger
@@ -105,10 +215,10 @@ export const OUTCOME_NAMES: Record<string, string> = {
 
 /** What each outcome means, in plain words, for the page's key. */
 export const OUTCOME_MEANINGS: { status: string; meaning: string }[] = [
-  { status: "passed", meaning: "the program ran and reported success for the inputs it examined." },
-  { status: "failed", meaning: "a run was recorded and it ended in failure. The record says where it stopped." },
-  { status: "unavailable", meaning: "a run was attempted but no outcome was obtained, for example because the checker never started." },
-  { status: "not_run", meaning: "the check is described and planned, but no run of it is recorded." },
+  { status: "passed", meaning: "The checking program ran and reported success on the inputs it examined." },
+  { status: "failed", meaning: "A run is recorded and it ended in failure. The check record says where it stopped." },
+  { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the checking program never started." },
+  { status: "not_run", meaning: "The check is described and planned, but no run of it is recorded." },
 ];
 
 export interface EvidenceCard {
@@ -165,9 +275,9 @@ export function countsInWords(counts: Record<string, number>): string {
   return `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
 }
 
-/** "1 record" or "8 records". */
+/** "1 check record" or "8 check records". */
 export function recordsWord(n: number): string {
-  return `${n} ${n === 1 ? "record" : "records"}`;
+  return `${n} ${n === 1 ? "check record" : "check records"}`;
 }
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -247,15 +357,15 @@ export function standingSentence(group: Pick<KindGroup, "kind" | "title" | "coun
   const name = KIND_NOUNS[group.kind] ?? `${group.title.toLowerCase()} records`;
   if (total === 0) return `No ${name} are part of this edition.`;
   if (group.kind === "comparator" && passed === 0)
-    return `No completed Comparator acceptance is recorded for this edition. Its ${recordsWord(total)}: ${countsInWords(group.counts)}.`;
+    return `No successful Comparator result is recorded for this edition. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
   if (passed === total) {
     const lead = total === 1 ? `The one ${singular(name)} passed.` : `All ${total} ${name} passed.`;
     if (group.kind === "source_hash")
-      return `${lead} They show that the named files are byte-for-byte the recorded ones; they say nothing about whether the mathematics in them is correct.`;
+      return `${lead} Each one found that a named file is byte-for-byte identical to the file recorded. These checks do not examine whether the mathematics in the files is correct.`;
     return lead;
   }
   if (passed === 0 && notRun === total)
     return total === 1 ? `The one ${singular(name)} has not been run.` : `None of the ${total} ${name} has been run.`;
-  if (passed === 0) return `No ${KIND_RUN[group.kind] ?? group.title.toLowerCase()} run has passed. Its ${recordsWord(total)}: ${countsInWords(group.counts)}.`;
-  return `${passed} of ${recordsWord(total)} passed. All of them: ${countsInWords(group.counts)}.`;
+  if (passed === 0) return `No ${KIND_RUN[group.kind] ?? group.title.toLowerCase()} run has passed. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
+  return `${passed} of ${recordsWord(total)} passed. The outcomes of all ${total} are ${countsInWords(group.counts)}.`;
 }
