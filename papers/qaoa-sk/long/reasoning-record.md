@@ -259,6 +259,13 @@ assuming it is a minimiser. [OpenAI (2026a), §§1–2][fs-main];
 
 The imported ground-state formula supplies two facts with different uses. Auffinger and Chen's Theorem 1 identifies the ground-state limit with an infimum over $\mathcal U$. To choose a coefficient attaining that infimum, one must also use their construction in the proof of Lemma 3. In the cited arXiv v2, the theorem is on p. 3, the compactness construction is on pp. 7–9, and the lower-bound proof is on pp. 11–12.
 
+The support proof is conditional on a minimizer. From that hypothesis,
+continue directly with [the compact-strip estimates in §2.4](#strip-estimates).
+The construction below explains how attainment supplies the minimizer later
+used in the value and circuit arguments.
+
+<a id="minimizer-attainment"></a>
+
 Here is the part of that construction which supplies the witness. Let $\alpha_\beta$ be a positive-temperature Parisi distribution function. The source bounds $\beta\alpha_\beta(t)$ uniformly on each interval ending before one. Helly selection and a diagonal subsequence produce a nonnegative, nondecreasing right-continuous limit $\gamma_0$. In the SK normalization, the source's weighted integral bound also controls $\int_0^1\beta\alpha_\beta(t)\,dt$. For every nonnegative nondecreasing $h$, splitting at $1/2$ gives $\int_0^1 h(t)\,dt\le4\int_0^1t h(t)\,dt$: the first half is bounded by $h(1/2)/2$, and on the second half $t\ge1/2$. Fatou's lemma then gives $\gamma_0\in\mathcal U$.
 
 Mass can concentrate at time one during this limit, so compact convergence alone does not identify the limiting control problem. Write the limiting measure of the time coefficients as
@@ -779,6 +786,11 @@ $S$. Terminal, interior and initial gaps remain to be excluded.
 
 <a id="global-scaling-contact"></a>
 
+The contact data needed for the gap proof are already available. Readers
+following that proof can continue to [the curvature argument in §4](#curvature-and-gap-certificate).
+This subsection gives an alternative contact proof and the converse
+optimality criterion.
+
 There is also a global alternative to compact mass removal. Atom addition
 still gives $G\ge0$. Now replace $\mu$ by $(1-\varepsilon)\mu$,
 or equivalently $\gamma$ by $(1-\varepsilon)\gamma$, for
@@ -1239,7 +1251,7 @@ passes the resulting expectation inequality to the original coefficient.
 The polynomial check verifies the third step. Set
 
 $$
-(A,C,k,T_0,g_0,h)=
+(A,C,k,T_0,g_0,h_0)=
 \left(\frac1{13},\frac{53}{24},\frac{19}{16},\frac{73}{48},
       \frac{2331}{10000},\frac{87}{2500}\right),
 $$
@@ -1252,12 +1264,12 @@ $$
 Define
 
 $$
-Q=Avb+Cv^2+kKv-2kRb+T_0Rv,\qquad T_1=v(g_0R+hj),
+Q=Avb+Cv^2+kKv-2kRb+T_0Rv,\qquad T_1=v(g_0R+h_0j),
 $$
 $$
 \begin{aligned}
 F_2={}&(Av-2kR)b^2
- +b\bigl(2Cv^2+2kKv+(g_0+2T_0)Rv+hjv\bigr)\\
+ +b\bigl(2Cv^2+2kKv+(g_0+2T_0)Rv+h_0jv\bigr)\\
  &+x_0v^2j+yv^3+mKv^2+n_0Rv^2.
 \end{aligned}
 $$
@@ -1266,7 +1278,7 @@ The choice is motivated by the terms containing $z$. In fact,
 $$
 \begin{aligned}
 \partial_bF_2
- &=2(Av-2kR)b+2Cv^2+2kKv+(g_0+2T_0)Rv+hjv\\
+ &=2(Av-2kR)b+2Cv^2+2kKv+(g_0+2T_0)Rv+h_0jv\\
  &=2Q+T_1,\\
 {}[z]\mathcal W(F_2)&=-\partial_bF_2=-(2Q+T_1).
 \end{aligned}
@@ -1277,7 +1289,7 @@ $S_1T_1$ contribute $2Q+T_1$, so these terms cancel exactly.
 Therefore subtracting
 $(z+Q)^2+S_1T_1+\mathcal W(F_2)$ from the curvature expression
 cancels every term involving $z$. The other favourable derivative is
-$\partial_jF_2=x_0v^2+hbv\ge0$: the $-L$ in $\mathcal Dj$
+$\partial_jF_2=x_0v^2+h_0bv\ge0$: the $-L$ in $\mathcal Dj$
 leaves a nonnegative correction.
 
 Put
@@ -1302,7 +1314,7 @@ Exact expansion, with $b=B+2v$, gives
 $$
 z^2-12Rvb^2+6v^4
  =(z+Q)^2+S_1T_1+\sum_{i=0}^4p_iP_i
-   +\mathcal W(F_2)+L(x_0v^2+hbv)+P_{\rm rem}.
+   +\mathcal W(F_2)+L(x_0v^2+h_0bv)+P_{\rm rem}.
 $$
 
 For completeness, the entire remainder is specified by this table;
@@ -1323,7 +1335,7 @@ every unlisted coefficient is zero.
 | $v^3B$ | $633799/621075000$ | $v^2B^2$ | $10657/1690000$ |
 
 All square prefactors $Rj,RB,Kv,vB,1$ are nonnegative, as are
-$S_1T_1$, $L(x_0v^2+hbv)$ and every remainder monomial. Integration
+$S_1T_1$, $L(x_0v^2+h_0bv)$ and every remainder monomial. Integration
 removes only $\mathcal W(F_2)$, giving
 
 $$
@@ -1512,8 +1524,8 @@ this source, with the stated model and regularity assumptions. An
 abstract polynomial or flux lemma assumes those analytic hypotheses;
 the finite-step comparisons and the transfer argument discharge them.
 Inspection of the corresponding Lean sources records that construction,
-while a source-bound build, Comparator replay and transitive axiom audit
-remain separate verification tasks, as explained in §§12 and 13.
+while compilation, scoped dependency extraction and Comparator replay
+remain distinct checks, with their observed outcomes reported in §13.
 <!-- /passage:fixed-time-coercivity -->
 
 <a id="gap-elimination"></a>
@@ -1645,6 +1657,10 @@ The terminal-plateau conclusion was already recorded in
 [Auffinger, Chen and Zeng (2020), Remark 7][acz]; the estimates above
 supply the quantitative argument needed here.
 
+The terminal gap is now excluded. The support proof resumes with
+[the remaining finite components](#finite-gap-cases); the next argument
+gives a shorter route to the same exclusion, without its quantitative bound.
+
 <a id="qualitative-terminal-gap"></a>
 
 **A shorter qualitative exclusion.** The existing curvature input also
@@ -1697,6 +1713,8 @@ $0\le q\le1$, integration gives $G(r)<0$, contradicting atom addition.
 This is an ordinary consequence of the previously stated inputs. The
 quantitative proof above is retained for its stronger estimate (5.1).
 
+<a id="finite-gap-cases"></a>
+
 **The remaining gaps have a finite right contact point.**
 
 The support is relatively closed in $[0,1)$. Its complement is a union
@@ -1729,8 +1747,11 @@ $$
 Integrating contradicts $q(b)-q(a)=b-a$. Equivalently, the mean value
 theorem applied to (5.4) requires an interior point with $q'=1$,
 whereas (5.5) excludes every such point. The endpoint derivatives need
-only be at most one; equality has not been assumed. With $h=q'$ and
-$C_{a,b}$ its endpoint chord, the contradiction is the exact area identity
+only be at most one; equality has not been assumed.
+
+<a id="endpoint-chord-area"></a>
+
+With $h=q'$ and $C_{a,b}$ its endpoint chord, the contradiction is the exact area identity
 $$
 (b-a)-\int_a^b h
 =(b-a)\left(1-\frac{h(a)+h(b)}2\right)
@@ -1778,8 +1799,11 @@ gradient-martingale identity gives
 $$
 \mathbb E a(t,X_t)^2=q'(t)=1,\qquad 0\le t<1,
 $$
-with the right derivative at zero. Finally, every nonempty open
-subinterval $(a,b)$ receives positive mass. Therefore
+with the right derivative at zero.
+
+<a id="strict-increase"></a>
+
+Finally, every nonempty open subinterval $(a,b)$ receives positive mass. Therefore
 $$
 \gamma(b)-\gamma(a)=\mu_\gamma((a,b])>0
 \qquad(0\le a<b<1).
@@ -2447,6 +2471,63 @@ theorem in §8.6.
 
 <!-- /passage:qaoa -->
 
+<!-- passage:qaoa-depth-one-pauli -->
+<a id="depth-one-calibration"></a>
+
+**One cost–mixer pair.**
+A single cost–mixer pair fixes the energy normalization before we
+introduce the rooted representation. Use the positive cost $C_{n,J}$ of §8 and
+$U=e^{-i\beta B_n}e^{-i\theta C_{n,J}}$; the symbol $\theta$ here
+is a cost angle, not the Parisi coefficient. Put $c=\cos(2\beta)$
+and $s=\sin(2\beta)$. The Pauli identities are
+$$
+e^{i\beta X}Ze^{-i\beta X}=cZ+sY,\qquad
+e^{i\alpha Z_iZ_j}Y_je^{-i\alpha Z_iZ_j}
+=Y_j\cos(2\alpha)+Z_iX_j\sin(2\alpha).
+$$
+The mixed term $Z_iY_j$ therefore has cost-state expectation
+$$
+\sin(2\theta J_{ij}/\sqrt n)
+\prod_{k\ne i,j}\cos(2\theta J_{jk}/\sqrt n).
+$$
+The other mixed term exchanges $i$ and $j$. The $Z_iZ_j$ term
+has zero expectation. The $Y_iY_j$ term can be nonzero on an individual
+complete graph, but its expectation after the cost gate is independent
+of $J_{ij}$: $Y_iY_j$ commutes with that edge cost. Multiplying by
+$J_{ij}$ and averaging therefore removes it, even in the presence of
+triangles. For a standard Gaussian $J$,
+$$
+\mathbb E\cos(aJ)=e^{-a^2/2},\qquad
+\mathbb E[J\sin(aJ)]=ae^{-a^2/2}.
+$$
+Averaging the mixed terms and summing the $n(n-1)/2$ unordered edges gives
+$$
+\frac1n\mathbb E_J\langle C_{n,J}\rangle
+=\frac{n-1}{n}\,\theta\sin(4\beta)
+  e^{-2\theta^2(n-1)/n}.
+$$
+This agrees with [Farhi et al., equation (62)][fggz]. With energy
+maximization, $\theta=1/2$, $\beta=\pi/8$ gives the limiting value
+$1/(2\sqrt e)$; their minimization example uses $\beta=-\pi/8$
+and the negative value.
+
+For the positive cost $D^{-1/2}\sum_{\{i,j\}}Z_iZ_j$ on the
+$(D+1)$-regular tree, each endpoint has $D$ other neighbours. The same
+calculation now has no common-neighbour contribution and yields
+$$
+\langle Z_oZ_v\rangle
+=\sin(4\beta)\sin(2\theta/\sqrt D)
+                 \cos^D(2\theta/\sqrt D).
+$$
+Multiplying by $\sqrt D/2$ and letting $D\to\infty$ gives
+$\theta e^{-2\theta^2}\sin(4\beta)$, the same limit as finite SK.
+This checks the factor $1/2$ and the degree convention in §8.5.
+
+The value just obtained will be recovered once more from the
+[rooted insertion in §8.1.1](#depth-one-rooted). That calculation explains
+which part of the limiting state carries the energy.
+<!-- /passage:qaoa-depth-one-pauli -->
+
 <!-- passage:qaoa-rooted -->
 
 <a id="rooted-energy"></a>
@@ -2631,59 +2712,18 @@ edge decomposition; the requisite circuit estimates enter in §8.2.
 <!-- /passage:qaoa-rooted -->
 
 <!-- passage:qaoa-depth-one -->
-<a id="depth-one-calibration"></a>
+<a id="depth-one-rooted"></a>
 
-#### 8.1.1 One depth, three descriptions of the energy
+#### 8.1.1 The same energy in the rooted representation
 
-A single cost–mixer pair tests the signs and normalizations in this
-change of objects. Use the positive cost $C_{n,J}$ of §8 and
-$U=e^{-i\beta B_n}e^{-i\theta C_{n,J}}$; the symbol $\theta$ here
-is a cost angle, not the Parisi coefficient. Put $c=\cos(2\beta)$
-and $s=\sin(2\beta)$. The Pauli identities are
-$$
-e^{i\beta X}Ze^{-i\beta X}=cZ+sY,\qquad
-e^{i\alpha Z_iZ_j}Y_je^{-i\alpha Z_iZ_j}
-=Y_j\cos(2\alpha)+Z_iX_j\sin(2\alpha).
-$$
-The mixed term $Z_iY_j$ therefore has cost-state expectation
-$$
-\sin(2\theta J_{ij}/\sqrt n)
-\prod_{k\ne i,j}\cos(2\theta J_{jk}/\sqrt n).
-$$
-The other mixed term exchanges $i$ and $j$. The $Z_iZ_j$ term
-has zero expectation. The $Y_iY_j$ term can be nonzero on an individual
-complete graph, but its expectation after the cost gate is independent
-of $J_{ij}$: $Y_iY_j$ commutes with that edge cost. Multiplying by
-$J_{ij}$ and averaging therefore removes it, even in the presence of
-triangles. For a standard Gaussian $J$,
-$$
-\mathbb E\cos(aJ)=e^{-a^2/2},\qquad
-\mathbb E[J\sin(aJ)]=ae^{-a^2/2}.
-$$
-Averaging the mixed terms and summing the $n(n-1)/2$ unordered edges gives
-$$
-\frac1n\mathbb E_J\langle C_{n,J}\rangle
-=\frac{n-1}{n}\,\theta\sin(4\beta)
-  e^{-2\theta^2(n-1)/n}.
-$$
-This agrees with [Farhi et al., equation (62)][fggz]. With energy
-maximization, $\theta=1/2$, $\beta=\pi/8$ gives the limiting value
-$1/(2\sqrt e)$; their minimization example uses $\beta=-\pi/8$
-and the negative value.
-
-For the positive cost $D^{-1/2}\sum_{\{i,j\}}Z_iZ_j$ on the
-$(D+1)$-regular tree, each endpoint has $D$ other neighbours. The same
-calculation now has no common-neighbour contribution and yields
-$$
-\langle Z_oZ_v\rangle
-=\sin(4\beta)\sin(2\theta/\sqrt D)
-                 \cos^D(2\theta/\sqrt D).
-$$
-Multiplying by $\sqrt D/2$ and letting $D\to\infty$ gives
-$\theta e^{-2\theta^2}\sin(4\beta)$, the same limit as finite SK.
-This checks the factor $1/2$ and the degree convention in §8.5.
-
-Finally let $e=Z\mathrm{vac}=|-\rangle\otimes\Omega$ and
+We return to the value $\theta e^{-2\theta^2}\sin(4\beta)$ obtained
+in [the finite-SK and tree calculation](#depth-one-calibration).
+Retain its cost angle $\theta$, mixer angle $\beta$,
+$c=\cos(2\beta)$ and $s=\sin(2\beta)$.
+Here $\Omega$ is the Fock vacuum, $\mathrm{vac}=|+\rangle\otimes\Omega$,
+and $q(e)=a^*(e)+a(e)$. The root shift $\mathsf L$ defined in §8.1
+creates one child excitation and puts the receiving root in its vacuum.
+Let $e=Z\mathrm{vac}=|-\rangle\otimes\Omega$ and
 $Q=q(e)$ in the rooted description. Its vacuum law is standard normal.
 The depth-one root operation is $u=e^{-i\beta X}e^{-i\theta ZQ}$.
 Using $Y|+\rangle=-i|-\rangle$, its insertion is
@@ -2851,15 +2891,38 @@ why the term is necessary; the source's weighted product lemma supplies
 the general convergence and domain bounds.
 [OpenAI (2026b), §2, “Products of small unitaries”][q-unitary].
 
-Commuting substitution is justified through a joint spectral calculus
-and Fourier estimates. It requires the physical control algebra, the
-self-adjoint signal operators and receiving seed to strongly commute,
-with joint exponential and weighted derivative bounds as stated in the
-source. This is stronger than a formal commutator identity on one domain. It does not require a nonsingular
-covariance matrix or an inverse Gram matrix. Exclusions establish that
-commuting algebra before a preceding circuit is conjugated through it;
-conjugation preserves commutation even when the signals share
-descendants. [OpenAI (2026b), §2, “Smooth commuting substitution”][q-substitution].
+The smooth-substitution lemma makes the required joint control explicit.
+For a fixed finite list of strongly commuting self-adjoint signals
+$S_D=(S_{D,1},\ldots,S_{D,b})$, their polynomials must converge smoothly,
+and their joint exponentials must converge strongly on smooth inputs and
+satisfy, for every output weight $m$,
+$$
+\|\mathsf W_D^m e^{it\cdot S_D}\xi\|
+ \le C_m(1+|t|)^{k_m}\|\mathsf W_D^{r_m}\xi\|,
+$$
+uniformly in $D$ and $t\in\mathbb R^b$. The coefficient family $F_D(x)$
+and its adjoint obey the smooth bounds above and converge with all their
+jets on compact parameter sets. Each coefficient must commute with the
+signals' spectral projections; for unbounded coefficients this means
+commutation in the closed-operator sense. Seed-dependent substitution also
+requires strong commutation with the receiving seed multiplication algebra.
+These hypotheses permit the joint spectral and Fourier calculation of
+$F_D(S_D)$, including its derivatives and adjoints. A formal commutator
+identity on a single domain would not supply them. No nonsingular covariance
+matrix or inverse Gram matrix is required.
+[OpenAI (2026b), Lemma 2.10, “Smooth commuting substitution”][q-substitution].
+
+For the formula fixed here, its finite expression tree supplies the finite
+channel list. Exclusion supplies the commuting physical control algebra;
+normalized-sum limits and the preceding product estimates supply the signal
+limits and weighted bounds. Conjugation by the already fixed preceding
+circuit preserves strong commutation, including when signals share
+descendants. The gate-calculus theorem applies these facts inductively to
+the formula and its adjoints, at each cut and inside the fixed surrounding
+sequence. It is this theorem, with these constructed inputs, that licenses
+the later replacements. Its conditional root-seed bounds also give the
+masked-column estimates used in §8.3.
+[OpenAI (2026b), Theorem 2.12][q-gate-calculus].
 
 The exact cut recursion records the effect of such shared lower
 calculations. Let $y$ be the incoming boundary data, $V(y)$ the root
@@ -3212,6 +3275,49 @@ $o(r)$ error there. The prescribed action on a normalized special
 packet has $o(1)$ error, multiplied by its $O(r)$ amplitude.
 These are the unequal accuracy requirements that the next echo uses.
 [OpenAI (2026b), §5, accuracy of selective probes][q-seed-selective].
+
+**The estimates must hold on the next input.**
+The repeated echo uses more than the initial special norm in (8.1).
+Let $\mathsf N$ count particles in the top child Fock space. Call a family
+$(\eta_r)$ bounded smooth when
+$\sup_r\|(1+\mathsf N)^k\eta_r\|<\infty$ for every fixed $k$.
+At each stage between simulated gates, the source propagates a linear
+ordinary/special decomposition on every such family, with
+$$
+\begin{aligned}
+ u_r\eta_r&=\Psi_{O,r}(\eta_r)+\Psi_{S,r}(\eta_r),\\
+ \|\Psi_{S,r}(\eta_r)\|&=r\|\eta_r\|,\\
+ \Psi_{O,r}(\eta_r)&=\zeta_r A_r\eta_r+o(r).
+\end{aligned}
+$$
+Here $|\zeta_r|=1$, and the low unitary $A_r$ and its adjoint preserve
+all these seminorms uniformly. A separate part of the induction transports
+the special insertion:
+$$
+ u_r^*Z\psi_{S,r}/r=w_r+o(1),
+$$
+with the negative sign between a selective flip and its undoing.
+The norm remainders remain separate from the designated smooth tails;
+no occupation estimate is imposed on them.
+
+This forward estimate gives the insertion approximation used at the next
+gate. For $P=Y,Z$, the vector
+$\widehat v_{P,r}=A_r^*PA_r\mathrm{vac}$ is itself a bounded smooth
+family. Since $A_r\widehat v_{P,r}=PA_r\mathrm{vac}$, unitarity gives
+$$
+\begin{aligned}
+\|u_r^*Pu_r\mathrm{vac}-\widehat v_{P,r}\|
+&=\|Pu_r\mathrm{vac}-u_r\widehat v_{P,r}\|\\
+&\le\|P(u_r-\zeta_r A_r)\mathrm{vac}\|\\
+&\quad+\|(u_r-\zeta_r A_r)\widehat v_{P,r}\|=O(r).
+\end{aligned}
+$$
+The second term explains why an estimate on the vacuum alone would not
+suffice: its input changes with $r$. The scalar phase cancels in this
+comparison. This $O(r)$ estimate supplies smooth approximants for actual
+insertions; it is not divided by $r$. The singular echo instead uses the
+more accurate difference derived next.
+[OpenAI (2026b), §5, packet invariant and insertion-approximation lemma][q-seed-echo].
 
 **The echo amplifies a controlled difference.**
 Consider a forward cost $t/r$, a selective flip of the special
@@ -5187,15 +5293,30 @@ real time, and stop it at one where required. Transport the integral equation
 on one full-measure event for all $t\in[0,1]$, path continuity, initial value,
 gradient and moment integrals.
 
-The diffusion comparison has a real version issue. The support predicate asks for a
-globally progressive process; the scalar predicate asks for adaptedness
-of the stopped process and almost-sure continuity on $[0,1]$. Restriction
-of a progressive support process is a plausible route in one direction.
-A converse must supply the required progressive version and its extension,
-then prove that the relevant integrals and moments are unchanged. It is
-not the literal identity of the two predicates. Likewise, equality of
-values for all $x$ is needed before transporting their derivatives;
-agreement at $(0,0)$ is insufficient.
+The diffusion comparison has a version issue. The support predicate asks
+for a globally progressive process; the scalar predicate asks for
+adaptedness of the stopped process and almost-sure continuity on $[0,1]$.
+There is a concrete ordinary construction of the needed progressive version.
+For $t\ge0$ and $k=0,1,\ldots$, put
+$$
+ X_t^{(k)}=X_{\min(2^{-k}\lfloor2^k t\rfloor,1)}.
+$$
+Each left-step process is progressive: on every bounded time interval,
+its value on a step is measurable at that step's left endpoint. Define
+$\bar X_t$ as the pointwise limit where the sequence converges, and zero
+elsewhere. The convergence set and this limit are progressively measurable.
+On the single event where $X$ is continuous on $[0,1]$, the equality
+$\bar X_t=X_{\min(t,1)}$ holds for every $t\ge0$. Thus stopping and
+reindexing preserve paths, time integrals and moments on that event; no
+completion of the natural filtration is needed merely to construct this
+version. The initial value follows from the scalar equation at zero and
+$B_0=0$ on their common full-measure event.
+
+This settles the version construction at the ordinary mathematical level.
+Its implementation in the two formal predicates, and the coefficient,
+filtration and value identifications listed above, remain separate
+obligations. In particular, equality of values for every $x$ is needed
+before transporting their derivatives; agreement at $(0,0)$ is insufficient.
 
 Once those obligations are proved, an application must use the same
 transported minimizer and associated diffusion in all premises. No such
@@ -5284,20 +5405,31 @@ Both failures concern the original build configuration. A subsequent
 repair to the derived configuration was recorded. In the subsequent
 corrected replay, the full-support challenge built and its exporter was
 observed running. Reconciliation on 25 October found that the controller
-had stopped without a recovered terminal research result. Comparator
-and research extraction outcomes therefore remain unknown, neither
+had stopped without a recovered terminal research result. At that date,
+Comparator and research extraction outcomes were unknown, neither
 rejected nor accepted. The [interruption receipt](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/examples/qaoa-sk/verification/corrected-replay-interruption-20261025.json)
 retains this observation separately from the original build failures.
 
-The later observation is additional run history, not a replacement for
-the earlier event or a mathematical rejection of the theorem. Neither
-research target has a successful source-bound comparison and transitive
-axiom audit established here. Permitted axioms and checker settings
-describe configuration; source names and tool-fixture receipts cannot
-supply the missing target result. The full-support receipt remains a
-historical partial observation; the scalar receipt is a terminal failure
-of its original invocation. Neither is a replay of the subsequently
-repaired source configuration.
+A subsequent [source-bound observation of 26 October 2026](https://wcook04.github.io/lean-exposition-site/verification/full-support-build-extraction-observation-20261026.json)
+records a successful local Lake build of the Support implementation and
+v2 extraction of the single conditional full-support root. Its selected
+traversal contains 1,674 declarations. The root reports no sorry, unsafe
+or partial flag, and its recorded transitive axiom names are
+`propext`, `Classical.choice` and `Quot.sound`. The selected in-scope
+traversal completed, but dependencies outside it remain unresolved
+boundaries; the extracted graph is partial. This does not establish
+minimiser existence, positive density, the scalar target or QAOA convergence.
+
+The portable observation identifies the original receipts by their hashes
+and retains the source inventory, root and extraction limits. Its
+internal-consistency checks are not authenticated execution provenance.
+The curated paper graph records the build and documentary extraction
+observation separately; it is not the extracted declaration graph.
+Comparator acceptance, standalone kernel replay and the scalar-target
+results remain pending. The earlier failed and interrupted invocations
+remain dated history, rather than evidence of a later rejection or
+acceptance. Permitted axioms and checker settings describe the requested
+comparison; they cannot supply its missing result.
 
 This editorial revision does not establish a new formal result.
 The [source review through 26 October 2026](https://github.com/wcook04/lean-exposition/blob/ef46d0e72787c1dc283733b10b433d112f97ac64/papers/qaoa-sk/source-review/references-and-adversarial-review.md)

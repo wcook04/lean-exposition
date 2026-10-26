@@ -301,6 +301,8 @@ density conclusion.
 
 <a id="question-1"></a>
 
+\Needspace{6\baselineskip}
+
 **Question 1: allowed changes.** Return to the two weights
 $2\delta_{1/4}+\delta_{3/4}$. For $0<\varepsilon<1$, which changes
 leave an admissible cumulative function: adding $\varepsilon$ mass at
@@ -325,7 +327,9 @@ The variational problem assigns each $\gamma$ a value by a one-dimensional
 auxiliary optimisation. Its final reward at state $x$ is $|x|$: this is
 the best one-spin score $\max_{\sigma\in\{-1,1\}}x\sigma$.
 First take $\gamma=0$, when only noise changes the state. The
-normalisation $\xi(t)=t^2/2$ gives $\xi''=1$, and the auxiliary noise
+imported control representation uses noise with variance rate $\xi''$
+([Auffinger–Chen, Theorem 2][auffinger-chen]). Our
+normalisation $\xi(t)=t^2/2$ gives rate one, so the noise
 is **Brownian motion** $B$: a continuous random path starting at zero.
 Its increments over disjoint time intervals are independent; over an
 interval of length $h$, an increment has the law of the centred
@@ -533,10 +537,14 @@ $\mathcal P(0)$; a discrepancy at one time does not suffice.
 
 <a id="question-2"></a>
 
-**Question 2: change the time.** Still take $\gamma=0$ everywhere,
+**Question 2: change the time and the future.** Still take $\gamma=0$ everywhere,
 but now set $t=1/4$. What variance has the state accumulated, and
 what variance remains in its future reward? Write the Gaussian integral
-for $q_0(1/4)$ without evaluating it. [Answer 2](#answer-2).
+for $q_0(1/4)$ without evaluating it.
+
+Now take $\gamma=0$ before $1/2$ and $\gamma=1$ afterward.
+Does that same integral still compute $q(1/4)$? Identify what remains
+unchanged and what must be recomputed. [Answer 2](#answer-2).
 
 The analytic facts needed in the proof are
 
@@ -907,11 +915,11 @@ Its left endpoint $r<1$ is supported, and its constant height is
 positive, by the same mass argument as in Section 5.3. We have
 $q(r)=r$ and $q'(r)\le1$, and $q'$ is strictly convex on $(r,1)$.
 There is no contact condition at one. We use the bound $q\le1$
-instead. We will show that $q$ stays below the diagonal throughout
-the gap, which makes the tail cost $G(r)$ negative. If it reached
-the diagonal, the area comparison would force its slope above one;
-convexity would preserve enough of that excess to violate $q\le1$.
+instead, recalling that $q=\mathbb E[u^2]$ and $|u|\le1$.
+We will show that $q$ stays below the diagonal throughout the gap,
+making the tail cost $G(r)$ negative. The proof has two steps.
 
+**Reaching the diagonal forces a slope above one.**
 Put $h(t)=q'(t)-1$, so $h(r)\le0$. If $q(t)\ge t$ at some
 $r<t<1$, strict integration below the chord on the finite interval
 $[r,t]$ would give
@@ -922,7 +930,10 @@ $$
 \le\frac{t-r}{2}h(t).
 $$
 
-Hence $h(t)>0$. To control a later slope, use the same chord rule
+Hence $h(t)>0$.
+
+**The excess slope persists and violates the bound.**
+To control a later slope, use the same chord rule
 on the larger interval $[r,s]$, where $t<s<1$. At its interior
 point $t$ this gives
 
@@ -979,10 +990,14 @@ $2$. Are these data compatible with strict convexity of $f'$?
 
 <a id="question-4"></a>
 
-**Question 4: the missing right endpoint.** In the terminal proof,
-why does a point with $q(t)\ge t$ force $h(t)>0$? Which inequality
-keeps the later slopes above one, and where does the bound $q\le1$
-enter? Explain the two stages without assigning any value to $q'(1)$.
+**Question 4: the missing right endpoint.** Put the proof aside and
+explain why a terminal plateau cannot minimise. Identify what replaces
+the missing right contact point and why the contradiction occurs before
+time one. Then check whether the exact bound $q\le1$ could be replaced
+by mere boundedness: test the calculus function
+$q(t)=t-3t^2/4+t^3$ on $[0,1)$ against the remaining contact and
+curvature conditions at $r=0$. This test concerns the calculus argument;
+the polynomial is not asserted to arise from an SK coefficient.
 
 [Answers 3](#answer-3) and [4](#answer-4).
 <!-- /passage:changed-cases -->
@@ -1178,8 +1193,10 @@ bounds up to time one.
 ### 7.3 Where the strict-curvature input comes from
 
 The proof in Section 5 used strict curvature on a positive constant
-interval. This calculation explains how that expectation acquires a sign;
-the full analytic proof remains in the cited sources. Take any admissible
+interval. We now explain how a correction with expectation zero makes
+the estimate usable once the required density bounds and algebraic
+identity are supplied. The sources construct the correction and prove
+those bounds. Take any admissible
 coefficient with $\gamma=c>0$ on an open interval, without assuming
 minimality. Set $b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$ there.
 Differentiating the PDE and applying Itô's rule gives
@@ -1206,7 +1223,8 @@ are given in [OpenAI (2026a), §3][support-signs].
 
 \Needspace{8\baselineskip}
 
-The operation can be written directly for the positive density $f_t$.
+The operation can be written directly for the positive density $f_t$;
+here $f_t'$ means differentiation in the state variable $x$, with $t$ fixed.
 For a smooth function $F$ with integrable terms and vanishing boundary
 product $Ff_t$,
 
@@ -1311,6 +1329,14 @@ The two variances agree at half time, but not here. For nonzero $z$,
 the magnitude of the response is now smaller, so $q_0(1/4)<1/3$.
 The arcsine formula in Section 7.1 also gives this comparison.
 
+Changing the coefficient after $1/2$ leaves $X_{1/4}=B_{1/4}$:
+its drift has been zero up to that time. The remaining Brownian noise
+still has variance $3/4$, but the value now includes future control
+terms. Its slope must be recomputed before averaging the square against
+the unchanged state law. Thus the displayed integral using $u_0$ is
+no longer justified. Knowing the future coefficient schedule does not
+reveal future random noise.
+
 <a id="answer-3"></a>
 
 **[Question 3](#question-3).** A strictly convex $f'$ lies below its endpoint chord.
@@ -1336,7 +1362,7 @@ cannot supply enough area.
 
 <a id="answer-4"></a>
 
-**[Question 4](#question-4).** Since $q(r)=r$, reaching or passing the diagonal at
+**[Question 4](#question-4).** Set $h=q'-1$. Since $q(r)=r$, reaching or passing the diagonal at
 $t$ means $\int_r^t h\ge0$. Strict convexity places $h$ below its
 endpoint chord, so that integral is less than
 $(t-r)(h(r)+h(t))/2$. With $h(r)\le0$, this forces $h(t)>0$.
@@ -1345,6 +1371,13 @@ at least $h(t)$. Integrating gives
 $q(s)\ge t+(s-t)(1+h(t))>1$ for a suitable $s<1$, violating the
 bound. If $q$ never reaches the diagonal, then $G(r)<0$ instead.
 Thus both possibilities contradict the conditions on a minimiser.
+
+For the proposed polynomial, $q(0)=0$, $q'(0)=1$, $q'''=6>0$, and
+direct integration gives $G(s)=s^3(1-s)/4\ge0$, with $G(0)=0$.
+Its derivative has minimum $13/16$, so $q$ increases to $5/4$ as
+$t\uparrow1$. It is bounded, but $q(9/10)=2043/2000>1$.
+The other reduced conditions therefore do not replace the exact cap
+supplied by $|u|\le1$.
 
 <a id="answer-5"></a>
 
@@ -1409,7 +1442,9 @@ overlap theorem used in Section 6, or the complete QAOA circuit theorem.
 The implementations use [Lean 4 (de Moura–Ullrich, 2021)](https://doi.org/10.1007/978-3-030-79876-5_37)
 and [mathlib (The mathlib Community, 2020)](https://doi.org/10.1145/3372885.3373824).
 
-Comparator acceptance and research-v2 extraction remain unknown; see the
+The Support implementation built successfully on 26 October 2026, and
+its conditional root and scoped dependencies were extracted. Comparator
+acceptance and the scalar-target results remain pending; see the
 *Long Reasoning Record*, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">[§13](../long/reasoning-record.md#verification)</span>. Kernel checking establishes a declared statement
 under its definitions and axioms. Its correspondence with the analytic theorem,
 independent proof review and reader comprehension are separate questions.

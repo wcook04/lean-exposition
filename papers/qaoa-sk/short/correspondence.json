@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "2654c308bfdc03c4fb5f7af8ab710bc40d835325499549203bc16f48c7393160",
-  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
+  "content_sha256": "267b41919f95376c728c2f90f5c80e4bf7aa13ca3418d4931ff608c908902e54",
+  "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -53,7 +53,8 @@
     "support.regularity",
     "support.stieltjes_measure",
     "support.terminal_chord_barrier",
-    "support.zero_curvature"
+    "support.zero_curvature",
+    "support.near_ground_pairs"
   ],
   "citation_ids": [
     "ac2017_ground_state",
@@ -177,7 +178,8 @@
     "support_terminal_source",
     "support_transfer_source",
     "support_uniqueness_lean_source",
-    "support_variation_source"
+    "support_variation_source",
+    "acz2020_near_ground_pairs"
   ],
   "assumption_ids": [
     "assumptions.full_support_minimizer",
@@ -289,12 +291,13 @@
     "support.strict_increase",
     "support.terminal_chord_barrier",
     "support.terminal_defect",
-    "support.zero_curvature"
+    "support.zero_curvature",
+    "support.near_ground_pairs"
   ],
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "b248167eae553b719c0eb10bf16034f92ca35c755f3b5aaaac09ee8f8c2d2b03",
+      "text_sha256": "16a64b2de2fada9eb888cfa9d9066c8405673f9ae3359f761ea8f677072f0c1f",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -356,7 +359,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "c0dbffecad41bdadbf95c512c9d4a0d4bcc302d3c25a7441ff167d0ff1b12466",
+      "text_sha256": "2fa12ea9247f53d34e2ff2a2f276cff90a317031089f2e283c90ae375aec9166",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -386,16 +389,18 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "256941ae7774efd8d11c3183eab82b85e2225f3cbc0478df601a7a6be26d40cc",
+      "text_sha256": "55927f752c93557d8311aa6a38063bb5f249eca00f5c9ba7f6ff56ba2cff73e2",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
         "support.moment_saturation",
         "scalar.smooth_positive_density",
-        "scalar.minimizer_attainment"
+        "scalar.minimizer_attainment",
+        "support.near_ground_pairs"
       ],
       "citation_ids": [
         "acz2020_infinite_support",
+        "acz2020_near_ground_pairs",
         "authored_r10_empty_support_chord",
         "authored_r8_scaling_contact",
         "authored_r8_support_full_relative_support_curvature",
@@ -411,6 +416,7 @@
         "scalar-r2-26-cite-minimizer-attainment",
         "scalar-r2-26-cite-paper-admissible",
         "scalar-r2-26-cite-paper-minimizer",
+        "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-smooth-positive-density",
         "scalar-r2-26-cite-transport-support-model",
         "scope_281",
@@ -449,7 +455,7 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "The full-support and moment conclusions retain every original hypothesis and time quantifier. The preview identifies why local flattening needs an estimate valid away from minimisers, without a crossing premise and with a surviving positive margin. The named companion edition and its section links route omitted derivations; they do not establish semantic or formal acceptance."
+      "rationale": "The full-support and moment conclusions retain every original hypothesis and time quantifier. The preview identifies why local flattening needs an estimate valid away from minimisers, without a crossing premise and with a surviving positive margin. The named companion edition and its section links route omitted derivations; they do not establish semantic or formal acceptance. The prescribed-overlap consequence invokes ACZ Proposition 1 for one attained full-support minimizer in the stated Gaussian normalization. Attainment supplies that same coefficient and the Parisi formula identifies its value; no additional free minimizer premise, uniform-overlap event or efficient construction is asserted."
     },
     {
       "anchor": "contact",
@@ -585,7 +591,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
+      "text_sha256": "b63424723c2d1d529d60ca11bb97f7a58ed15e5349ad30a6d33839c6720b4757",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -630,7 +636,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
+      "text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -702,7 +708,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
+      "text_sha256": "6fbc0a9676d5750254f3ba2fa6f6098d1de2d61aee83b1eb9844d18ec450f4e5",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -784,7 +790,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
+      "text_sha256": "934241f69a79d4a12d63e89b229ef65d3cb88631f8374c71cbbbeb1290e15dc8",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -898,7 +904,7 @@
             "statement",
             "explanation"
           ],
-          "rationale": "States the accuracy-dependent finite deterministic depth and angles before the size limit, and outlines the additional synthesis, seed-removal and fixed-word transfer steps. The passage routes the complete construction elsewhere and gives no depth rate, finite-size rate or efficient angle-selection guarantee."
+          "rationale": "States the accuracy-dependent finite deterministic depth and angles before the size limit, and outlines the additional synthesis, seed-removal and fixed-word transfer steps. The passage routes the complete construction elsewhere and gives no depth rate or efficient angle-selection guarantee. A separate word-dependent expected-energy estimate is available, but without bounds on the chosen depth and cost angles it supplies no size threshold in optimization accuracy alone and no measurement-concentration rate."
         },
         {
           "claim_id": "scalar.shifted_gaussian_limit",
@@ -919,7 +925,7 @@
     },
     {
       "anchor": "evidence-scope",
-      "text_sha256": "583c6ada799a3f70a5f4c619c11f2a3c122e7c6ecafbc3b279b6c88b15d1c08c",
+      "text_sha256": "263fb8a7e6755fe83b3dffd8c941307a585a6d3bb63219b6b46a4685cc5e62f1",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -1022,12 +1028,13 @@
     "26 October 2026 R8 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 56a78ba57bbd0ed6ff64cbdb89d625aa3e815cfee8875dcd2346ea94a83cb6f6). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 534feb1b0753760508bd21802c94d503e4cb71999415a107bd70bd2b0378fd53). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R10 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 independent Terra audit: Applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Compared the fixed-direction joint Gaussian premise with the long record and the original rooted construction. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
+    "26 October 2026 independent Terra audit: Applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Compared the fixed-direction joint Gaussian premise with the long record and the original rooted construction. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained.",
+    "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Checked the prescribed-overlap consequence and its same-minimizer citation closure; retained the finite-Gaussian and circuit quantifiers, and distinguished a word-dependent expected-energy estimate from a threshold in accuracy alone. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained."
   ],
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
+      "from_text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
       "to_text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977",
@@ -1036,7 +1043,7 @@
     },
     {
       "from_anchor": "scalar-value",
-      "from_text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
+      "from_text_sha256": "6fbc0a9676d5750254f3ba2fa6f6098d1de2d61aee83b1eb9844d18ec450f4e5",
       "to_stage": "expository",
       "to_anchor": "scalar-identities",
       "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae",
@@ -1045,7 +1052,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
+      "from_text_sha256": "934241f69a79d4a12d63e89b229ef65d3cb88631f8374c71cbbbeb1290e15dc8",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",

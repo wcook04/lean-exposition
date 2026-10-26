@@ -16,10 +16,12 @@ smoothness; a local constant replacement transfers the inequality to the minimis
 forces its density to be positive. H.-B. Chen previously proved full support
 and smooth nonnegative density. We isolate the fixed-time spatial moment
 and the positive margin that survives local replacement, while importing its
-shape comparisons and full polynomial identity. We also derive the scalar value identity and
-state the classical optimisation consequence and the additional steps
-leading to asymptotically optimal quantum approximate optimization
-algorithm (QAOA) circuits.
+shape comparisons and full polynomial identity. We also derive the scalar value
+identity and explain its classical optimisation consequence. For the quantum approximate
+optimization algorithm (QAOA), we identify the rooted energy of a finite Gaussian
+observable and the separate circuit theorem that approximates it. A further
+second-moment theorem gives a measured near-optimal configuration on the same
+random instance, with the circuit word fixed before the number of spins grows.
 <!-- /passage:abstract -->
 
 <a id="model-and-result"></a>
@@ -92,7 +94,7 @@ Lemmas 2.1–2.2][FS]. To turn minimality of $\mathcal P$ into a
 condition on $\gamma$, we use a random process whose gradient moment
 measures the first-order cost of changing $\gamma$. Write $u=\Phi_x$ for the spatial gradient
 and $a=\Phi_{xx}$ for its spatial derivative. Let $B$ be standard
-Brownian motion and define the diffusion $X$ and the moment $q$ by
+Brownian motion and define the diffusion $X$ and its self-consistency function $q$ by
 $$
 dX_t=\gamma(t)u(t,X_t)\,dt+dB_t,\qquad X_0=0,
 \qquad q(t)=\mathbb E[u(t,X_t)^2].
@@ -137,6 +139,14 @@ $u(0,0)=0$, and $\xi''=1$ is used in the curvature calculation;
 the theorem here does not extend these hypotheses to nonzero field
 or a general mixed-spin covariance.
 
+Full support has a concrete interpretation in the energy landscape.
+For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
+tending to one there are configurations $\sigma,\tau$ with
+$|R(\sigma,\tau)-\rho|<\delta$ and both energies at least
+$n(P_*-\eta)$. This follows from
+[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ],
+using the Gaussian normalisation above.
+
 Our purpose is to isolate the spatial moment common to the support and
 density arguments, explain why it needs an integrated estimate, and
 identify what survives the local-replacement limit. The conclusions
@@ -147,18 +157,19 @@ at most one. On a positive constant interval a quantitative estimate
 makes $q'$ strictly convex, so its integral is smaller than the
 interval's length. This contradicts the required change in $q$.
 After excluding all gaps, the identity $q'=1$ supplies the equation
-from which the same estimate will force $\gamma'>0$. This second use
-needs the estimate for a local constant replacement that need not
-minimise, without requiring $q''=0$ at the comparison time. Its explicit
-positive margin must also survive the replacement's limit.
+from which the same estimate will force $\gamma'>0$. A qualitative crossing
+criterion already suffices for a bounded gap. The density argument needs more:
+an estimate for a local constant replacement that need not minimise, at a time
+where $q''$ need not vanish, and a positive lower bound that survives the limit.
 
-Section 5 derives the scalar value formula and identifies the finite
-Gaussian observable used by the separate QAOA theorem. These optimisation
-consequences use full support; strict density positivity is a further
-analytic conclusion. The analytic argument assumes Itô calculus and martingale
-convergence. The circuit construction in §5.3 is a separate imported theorem;
-we identify its finite input and the energy it approximates. Omitted
-proofs are linked to *From Parisi full support to deterministic QAOA
+The second aim, in §5, is to follow the support identities to a finite
+Gaussian observable whose rooted energy a QAOA circuit approximates, then
+identify the additional concentration input for a measured configuration.
+These optimisation consequences use full support; strict density positivity
+is a further analytic conclusion. Readers interested in optimisation may
+accept Theorem 1 and continue to §5. Sections 2–4 assume Itô calculus and
+martingale convergence; the circuit construction is a separate imported theorem.
+Omitted proofs are linked to *From Parisi full support to deterministic QAOA
 circuits: A long reasoning record*, the <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf">[companion edition of 26 October 2026](../long/reasoning-record.md)</span>; original-source citations remain beside
 the imported inputs.
 <!-- /passage:main-result -->
@@ -318,8 +329,8 @@ This proves Theorem 1 using the stated analytic inputs.
 ## 3. The integrated estimate
 
 <!-- passage:curvature -->
-The quantity used in both arguments is a spatial moment. Write
-$b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$, and, for $0<t<1$, set
+The quantity used in both arguments is a spatial moment. Recall
+$a=\Phi_{xx}$, write $b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$, and, for $0<t<1$, set
 $$
 \mathcal C_\gamma(t)
 =\mathbb E\bigl[d^2-12\gamma(t)ab^2+6\gamma(t)^2a^4\bigr],
@@ -661,7 +672,7 @@ $q'''=0$; the coefficient derivative in (9) is exactly what the
 constant-interval formula omits. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">[Long §§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence)</span> retain the smoothness argument and
 fixed-time transfer, including the common approximation bounds.
 
-**Relation to earlier estimates.** The backward shape comparisons,
+**Earlier and related estimates.** The backward shape comparisons,
 transformed density and positive-temperature gap-crossing argument
 appear in [Lopatto (2026), v3, Propositions 3.6, 7.1 and 9.1][Lopatto].
 [H.-B. Chen (2026), Proposition 4.2][Chen] proves the zero-temperature
@@ -753,8 +764,8 @@ includes no separate numerical-preprocessing or finite-precision bound.
 [OpenAI (2026a), Corollary 7.3][FS] and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="classical-algorithm-consequence">[long §9.4](../long/reasoning-record.md#classical-algorithm-consequence)</span>
 check the Gaussian convention and operation count. Chen already records
 the classical consequence in [§1, p. 4][Chen].
-In their incremental approximate message-passing construction, the
-noise and drift coefficients are, in our notation,
+Their incremental approximate message-passing iterates use the coupling
+matrix. Their scalar description uses the martingale multiplier and state drift
 $$
 u_{\rm EAMS}(t,x)=a(t,x),\qquad
 v_{\rm EAMS}(t,x)=\gamma(t)u(t,x).
@@ -891,7 +902,7 @@ compatible embeddings preserve them as the recursive depth grows.
 The root shift $\mathsf L$ inserts a child direction into the first
 Gaussian chaos (the linear Gaussian part) with constant receiving-root
 state. Its adjoint projects onto that part and returns the child direction. The
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="depth-one-calibration">[depth-one calculation in long §8.1.1](../long/reasoning-record.md#depth-one-calibration)</span>
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="depth-one-calibration">[one-pair calculation at the start of long §8](../long/reasoning-record.md#depth-one-calibration)</span>
 checks this representation's energy against the finite SK circuit
 before the general construction in §8.1.
 
@@ -915,25 +926,32 @@ have the same scalar limit without identifying this energy.
 The construction and projection are proved in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="rooted-energy">[long §8.1](../long/reasoning-record.md#rooted-energy)</span>.
 
-**Construction underlying Proposition 5.** Smooth approximation of the final sign, followed by
-Lemma 3.2, gives a bounded smooth odd formula with bounded transmitted
-functions; smoothing the sign alone is insufficient. Definition 3.3
-and Lemma 3.4 then partition the seed into classes and exclude
-the receiving seed class, its path-ancestor classes and all reserved
-helper classes from each dependency, preventing return through an
-already traversed branch. The output is zero on helper classes,
-one per positive aggregation depth, whose total probability is small
-but positive during synthesis.
+The shift records the lift from a child direction $g_j$ to the receiving
+coordinate $Z_{j+1}$. A one-step example distinguishes it from the unshifted
+pairing. For the nonminimising heat coefficient $\gamma=0$, take
+$T=4/5$ and $N=1$. Then $g_1=Z_1$ and
+$F_1=\operatorname{sgn}(2Z_1+Z_2)$, so Gaussian regression gives
+$$
+S_{T,1}=\frac4{5\pi},\qquad
+\mathbb E[F_1g_1]\,\mathbb E[F_1Z_1]=\frac8{5\pi}.
+$$
+This tests the finite representation, not the minimiser-dependent limit in
+(11). The calculation is in
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="one-step-example">[long §10.4, “An exact one-step calculation”](../long/reasoning-record.md#one-step-example)</span>.
 
-Theorem 4.1 realises the prepared formula with temporary Gaussian
-controls, reusing the same sitewise seeds throughout the word.
-Theorem 5.1 removes these controls with arbitrarily small energy
-error, and Proposition 2.1 identifies the fixed ordinary word's
-limiting energy with $v(W)$. All these errors are absolute, so the
-argument applies to each fixed $S_{T,N}$, before it is chosen close
-to $P_*$. The output preserved by Proposition 5 is energy;
-the measured-configuration conclusion below uses a further
-concentration theorem. The complete error bound is in
+**Construction underlying Proposition 5.**
+[OpenAI (2026b), §§3–5][Q] smooths the spin and approximates every
+transmitted function by a bounded smooth map, preserving oddness; smoothing
+the final sign alone is insufficient. Its class exclusions prevent return
+through a traversed branch and reserve helper classes on which the output is
+zero, with positive probabilities fixed during synthesis. The resulting finite
+formula is approximated in energy using
+temporary Gaussian controls, with the same sitewise seeds throughout the word.
+Removing those controls produces an ordinary word, whose limiting energy is
+$v(W)$ by the fixed-word transfer. The approximation errors are absolute and
+can be chosen successively for each fixed $S_{T,N}$, before it is chosen close
+to $P_*$. The preserved quantity is energy; the measured-configuration
+conclusion below uses a further concentration theorem. The complete error bound is in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-formula-energy-error">[long §8.6, finite-formula energy approximation](../long/reasoning-record.md#finite-formula-energy-error)</span>,
 with the constructions and their hypotheses in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qaoa-construction">[long §§8.1–8.6](../long/reasoning-record.md#qaoa-construction)</span>.
@@ -948,8 +966,13 @@ second term is below $\varepsilon/3$, and finally use Proposition 5
 with $\eta<\varepsilon/3$. These finite choices give
 $v(W)>P_*-\varepsilon$ before $n$ tends to infinity. The source's
 Appendix A supplies an alternative positive-temperature input to the
-same synthesis. The selected construction supplies no quantitative
-depth bound, finite-size rate or efficient procedure for finding angles.
+same synthesis. This construction supplies no bounds on depth or cost-angle
+magnitudes in terms of accuracy, and no efficient procedure for finding angles.
+A separate estimate for the expected energy of a specified word is described
+in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-size-comparison">[long §11.5](../long/reasoning-record.md#finite-size-comparison)</span>.
+Its threshold depends on the word's depth and cost angles. Without bounds on
+those parameters it gives no threshold in optimisation accuracy alone; it
+also supplies no rate for measurement concentration.
 
 **Corollary 6 (a measured configuration on the same instance).**
 For every $\varepsilon>0$ there is a finite ordinary QAOA word
@@ -993,7 +1016,7 @@ This AI-assisted article reconstructs the cited analytic arguments.
 The integrated estimate (5), its shape hypotheses and compact-strip
 approximation are substantial imported inputs.
 
-The [full-support formal statement][support-challenge]
+OpenAI's retained [full-support formal statement][support-challenge]
 asserts the support and moment conclusions conditional on an admissible
 minimiser, and constructs its associated diffusion. A separate
 [scalar formal statement][value-challenge] covers value identities and
@@ -1006,8 +1029,11 @@ positive-density corollary or QAOA convergence. Their
 [full-support][support-lean] and [scalar][value-lean] implementations
 use [Lean][Lean4] and [mathlib][mathlib].
 
-Acceptance by Comparator and extraction of the selected formal
-statements remain unknown. Source inspection alone establishes neither.
+A source-bound local build of the Support implementation completed on
+26 October 2026, and dependency extraction recorded its conditional
+full-support root. Dependencies outside the selected extraction scope
+remain boundaries. Comparator acceptance and the scalar-target results
+remain pending.
 Exact versions, checking outcomes and correspondence are retained in the
 long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="formal-interfaces">[§12, “What the formal statements establish”](../long/reasoning-record.md#formal-interfaces)</span> and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">[§13, “Source checks and finite calculation”](../long/reasoning-record.md#verification)</span>.
 <!-- /passage:evidence-scope -->
@@ -1023,7 +1049,7 @@ long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-rec
 - Auffinger, A., Chen, W.-K. and Zeng, Q. (2020). “The SK model is
   infinite step replica symmetry breaking at zero temperature.”
   *Communications on Pure and Applied Mathematics* **73**, 921–943.
-  [Preprint v2][ACZ]: Theorem 1 and Remark 7.
+  [arXiv:1703.06872v2][ACZ]: Theorem 1, Proposition 1 and Remark 7.
 - Basso, J., Farhi, E., Marwaha, K., Villalonga, B. and Zhou, L. (2022).
   “The Quantum Approximate Optimization Algorithm at High Depth for
   MaxCut on Large-Girth Regular Graphs and the Sherrington–Kirkpatrick
@@ -1034,7 +1060,7 @@ long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-rec
   Optimization Algorithm*. [Preprint v2][spin-boson]: Theorem 2
   (informal) and equations (10)–(11).
 - Chen, H.-B. (2026). *FRSB in the SK spin glass: convergence to
-  full-interval support at zero temperature*. [Version 1][Chen],
+  full-interval support at zero temperature*. [arXiv:2607.18032v1][Chen],
   20 July 2026. §1, p. 4; Theorem 1.3; Propositions 4.2, 4.5 and 4.6;
   Appendices B.6 and C.
 - Chen, W.-K., Handschy, M. and Lerman, G. (2018). “On the energy
@@ -1046,27 +1072,27 @@ long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-rec
   [System description][Lean4].
 - El Alaoui, A., Montanari, A. and Sellke, M. (2021). “Optimization of
   mean-field spin glasses.” *Annals of Probability* **49**, 2922–2960.
-  [Preprint v1][EAMS]: Theorem 2, p. 6; Remark 2.1 and Theorem 3, p. 7;
+  [arXiv:2001.00904v1][EAMS]: Theorem 2, p. 6; Remark 2.1 and Theorem 3, p. 7;
   Assumption 2 and Corollary 2.2, p. 8; §§5–6.
 - Farhi, E., Goldstone, J. and Gutmann, S. (2014). *A Quantum Approximate
   Optimization Algorithm*. [Preprint v1][FGG]. Algorithm definition;
   §VI concerns the fixed-instance depth limit.
 - Farhi, E., Goldstone, J., Gutmann, S. and Zhou, L. (2022). “The Quantum
   Approximate Optimization Algorithm and the Sherrington–Kirkpatrick
-  Model at Infinite Size.” *Quantum* **6**, 759. [Preprint v4][FGGZ].
+  Model at Infinite Size.” *Quantum* **6**, 759. [arXiv:1910.08187v4][FGGZ].
 - Jagannath, A. and Tobasco, I. (2016). “A dynamic programming approach
   to the Parisi functional.” *Proceedings of the AMS* **144**, 3135–3150.
   [Preprint v4][JT]. Positive-temperature control methods.
 - Lopatto, P. (2026). *Full replica symmetry breaking in the
-  Sherrington–Kirkpatrick model*. [arXiv version 3][Lopatto], revised
+  Sherrington–Kirkpatrick model*. [arXiv:2607.11756v3][Lopatto], revised
   16 July 2026. Propositions 3.6, 7.1 and 9.1; related Cole–Hopf, density
   and crossing arguments.
 - Lopatto, P. (2026). *Full replica symmetry breaking in the
-  Sherrington–Kirkpatrick model*. [arXiv version 4][Lopatto-v4], revised
+  Sherrington–Kirkpatrick model*. [arXiv:2607.11756v4][Lopatto-v4], revised
   5 October 2026. Proposition 5.1 and Corollary 5.6; qualitative
   crossing for arbitrary probability measures.
 - Lopatto, P. (2026). *Parisi measure of the Sherrington–Kirkpatrick
-  model with external field*. [arXiv version 1][Lopatto-field].
+  model with external field*. [arXiv:2610.00127v1][Lopatto-field].
   Theorem 2.3 and Appendix B; related positive-temperature two-use argument.
 - The mathlib Community (2020). “The Lean Mathematical Library.”
   *Certified Programs and Proofs (CPP '20)*. [Library description][mathlib].

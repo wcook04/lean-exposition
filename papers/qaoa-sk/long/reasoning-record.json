@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
-  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
+  "content_sha256": "c4249feffa26e48c24c5690f73e0de4886e40504c8c5c0e6dcb22ec94ea334da",
+  "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -126,7 +126,10 @@
     "support.stieltjes_measure",
     "support.terminal_chord_barrier",
     "support.zero_candidate_descent",
-    "support.zero_curvature"
+    "support.zero_curvature",
+    "support.endpoint_chord_area",
+    "support.strict_increase",
+    "support.terminal_defect"
   ],
   "citation_ids": [
     "ac2015_unique_minimizer",
@@ -666,7 +669,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "8742773b2d50847d9ee6fecca04872b0c26bc49c89fab4086c55edc00a479b7e",
+      "text_sha256": "9c70a1da26f114082f1b94e3ab9985b2b7d6a8df116850b8de27e51306597598",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -810,7 +813,7 @@
     },
     {
       "anchor": "contact",
-      "text_sha256": "321c7f6471edb2c0650cf7e690f668d25a7340ca70207d3194e944e845669936",
+      "text_sha256": "e26073657de6de29bfa1970842a34923572826706e3f652c32e6b809b95441bb",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -865,7 +868,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
+      "text_sha256": "ad8a18255373d7cc8956a24cdd559625d59fd8747c367ee8361ca909ddc47ef8",
       "claim_ids": [
         "support.backward_shapes",
         "support.forward_shapes",
@@ -922,7 +925,7 @@
     },
     {
       "anchor": "fixed-time-coercivity",
-      "text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
+      "text_sha256": "a7eff723d0f38a2f713cf34a4f75a51e8ddbddac127ceaa694adf96bb7753db8",
       "claim_ids": [
         "support.fixed_time_spatial_coercivity",
         "support.positive_curvature",
@@ -990,7 +993,7 @@
     },
     {
       "anchor": "gaps",
-      "text_sha256": "0af2551c658a8151f3a370f39da0ff3804d4295d853f4054050f0f486f95cb77",
+      "text_sha256": "6d7183bfac4540ff4755046c5f71614ae4728043612a6bd5979c0463621cc47e",
       "claim_ids": [
         "support.no_bounded_gap",
         "support.no_initial_gap",
@@ -999,7 +1002,10 @@
         "support.moment_saturation",
         "support.terminal_chord_barrier",
         "support.full_relative_support_curvature",
-        "support.empty_support_chord_obstruction"
+        "support.empty_support_chord_obstruction",
+        "support.terminal_defect",
+        "support.endpoint_chord_area",
+        "support.strict_increase"
       ],
       "citation_ids": [
         "authored_r10_empty_support_chord",
@@ -1051,7 +1057,7 @@
         "scalar.paper_minimizer"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Maps this passage to No bounded gap between support points; No initial gap when zero is outside the support; A minimizer has no terminal plateau or empty support; Exhausting the support complement; Full contact gives both moments for every associated diffusion. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate."
+      "rationale": "Reconstructs the support-complement cases, including the square-root terminal deficit, the integrated endpoint-chord inequality, exclusion of empty support and the full-support conclusion. The final Stieltjes argument gives strict increase, and full contact supplies both moment identities. The conditional minimizer hypotheses, local plateau guards and source roles remain explicit; these are ordinary source arguments, not new formal acceptance."
     },
     {
       "anchor": "value",
@@ -1414,6 +1420,21 @@
       "rationale": "Maps this passage to QAOA approaches the SK optimum in the thermodynamic-first limit. The source locations and local guards are retained in these graph records. The source argument is reconstructed at its stated scope; hypotheses, source citation roles and formal status remain separate. Round-six revision: Collects exact imported contracts before their applications."
     },
     {
+      "anchor": "qaoa-depth-one-pauli",
+      "claim_ids": [
+        "circuit.fixed_word_transfer"
+      ],
+      "citation_ids": [
+        "bfmvz2022_tree_transfer",
+        "circuit-r2-26-cite-fixed-word-transfer",
+        "fggz2022_fixed_depth"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "example",
+      "rationale": "For one fixed cost–mixer pair, direct Pauli and Gaussian calculations identify the finite-SK expected energy and positive-tree scaled edge limit; both give theta exp(-2 theta^2) sin(4 beta). FGGZ equation (62) supplies the finite-SK comparison. This calibrates the transfer normalization at p=1, not its general proof; rooted updates are treated in the separate qaoa-depth-one passage.",
+      "text_sha256": "b69ba43ebf147e05e86d6ad4b168d43291d608b4fc95f25496659e0897fc198f"
+    },
+    {
       "anchor": "qaoa-rooted",
       "text_sha256": "686894c447a411db55c21ed454683acb3f050e5594a5420741e2dccc3aea48ad",
       "claim_ids": [
@@ -1477,26 +1498,22 @@
       "anchor": "qaoa-depth-one",
       "claim_ids": [
         "circuit.ordinary_updates",
-        "circuit.energy_transfer",
-        "circuit.fixed_word_transfer"
+        "circuit.energy_transfer"
       ],
       "citation_ids": [
-        "bfmvz2022_tree_transfer",
         "circuit-r2-26-cite-energy-transfer",
-        "circuit-r2-26-cite-fixed-word-transfer",
         "circuit-r2-26-cite-gaussian-root-calculus",
         "circuit-r2-26-cite-ordinary-updates",
-        "circuit-r2-26-cite-weighted-unitary-calculus",
-        "fggz2022_fixed_depth"
+        "circuit-r2-26-cite-weighted-unitary-calculus"
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "Explicit p=1 finite SK, positive regular-tree and rooted one-particle calculations calibrate the same energy. FGGZ arXiv:1910.08187v4 equations (62)–(64) inspected directly. n=2,3 statevector/quadrature diagnostics do not validate high-depth synthesis.",
-      "text_sha256": "793f3d934e7d4b5c435f6d7d685667d7e6aeb58ad46da6ef0aaa4223ba51ef2a"
+      "rationale": "For one fixed cost–mixer pair, the rooted update gives u and its insertion v; projecting onto the plus-root first chaos computes L* v and recovers the same energy as the earlier Pauli calculation. This illustrates ordinary root updates and the root-energy pairing at p=1. It does not prove the general weighted limit or dispense with the occupation hypothesis of energy transfer.",
+      "text_sha256": "88f9a7de66cd145146d079f47c923fe3aa2adc8d3f9c1dd6103724af03e0ed9f"
     },
     {
       "anchor": "qaoa-regularization",
-      "text_sha256": "1a2b561536974e6e738fd9811ce6561fa44ad61360fa5086d31bc954b4e40c23",
+      "text_sha256": "16d5063550337f96138ff8b88ee93f507c9fde38f60b52ff5d384e35bb2e0a55",
       "claim_ids": [
         "circuit.sign_smoothing",
         "circuit.bounded_trigonometric",
@@ -1600,7 +1617,7 @@
     },
     {
       "anchor": "qaoa-seed",
-      "text_sha256": "e37a0ec21059e1047835a43e24b631632c327d6fee5c1dba503e46201c4c69d6",
+      "text_sha256": "33c7ced5fa401a837be6ad788eb69abe691d2f536a957753eca3ddc1e600c921",
       "claim_ids": [
         "circuit.seed_packets",
         "circuit.selective_control",
@@ -2646,7 +2663,8 @@
         "scalar.formal_scalar_clause",
         "scalar.formal_finite_gaussian_clause",
         "scalar.lean_scalar_target",
-        "scalar.lean_gaussian_target"
+        "scalar.lean_gaussian_target",
+        "scalar.source_fixed_strip_application"
       ],
       "citation_ids": [
         "scalar-r2-13-cite-diffusion-exists",
@@ -2680,7 +2698,7 @@
         "assumptions.value_minimizer"
       ],
       "evidence_class": "context",
-      "rationale": "Directly maps the first two assembled scalar declarations and their actual caller premises: the same minimizer and associated diffusion, with fixed 0<T<1 for the Gaussian clause. The implementation supplies strip bounds and the unit curvature moment internally. The generic fixed-strip helper and its local premises are not direct roots of this endpoint passage.",
+      "rationale": "Directly maps the first two assembled scalar declarations and their actual caller premises: the same minimizer and associated diffusion, with fixed 0<T<1 for the Gaussian clause. The concrete fixed-strip application records how strip regularity and the unit curvature moment are supplied internally for those objects. Its context role adds no generic-helper premise and asserts no native acceptance.",
       "text_sha256": "91b0d805016f6c66536c5859aca78f9461392e8a7d650f67937a8115256e6090"
     },
     {
@@ -2727,8 +2745,8 @@
       ],
       "assumption_ids": [],
       "evidence_class": "context",
-      "rationale": "Explicit unproved transport contract: coefficient extensions, Brownian filtration, control/payoff time substitution, all-x value and derivative equality, every-competitor minimality, progressive process versions and common witnesses. No formal composition asserted.",
-      "text_sha256": "7409a9ec3a40b7159decfcdb1d121e2a5c3ca17883195951792e9b9f85eb002b"
+      "rationale": "States the still-open formal transport obligations for coefficient extensions, Brownian filtrations, control/payoff time substitution, all-x value and derivative equality, every-competitor minimality and common witnesses. The dyadic left-step construction supplies an ordinary progressive version of the stopped scalar diffusion on one common continuity event. It proves neither predicate equality nor the remaining cross-model identifications, and no formal composition is asserted.",
+      "text_sha256": "db0d6c089ae49448044306ad1e056039fe2eb9d937f848aeeef156f82d18d0b7"
     },
     {
       "anchor": "obligations",
@@ -2858,7 +2876,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "c00a5afc325911433f02cf358f32dc66492047ce3fb04fd99f63131963657b29",
+      "text_sha256": "06994c320882e8dfa317f570b56f1f913748a56a1255cc80f587848af34e2283",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -2999,12 +3017,13 @@
     "26 October 2026 R8 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 8b8d55a5ee58d0c309f8ae0b0e97a95be27dd286b199a6d1bf0d61f487c4dc9b). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 017ac5f8582a8434375d609c3081580d33ae3cc2ec1870ad09f769d9ac95eab7). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R10 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 e779c0a6f282d578aeb254a1aca53517e44065244459972a3d930a9d94197176). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 independent Terra audit: Applied local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Checked the joint Gaussian law for fixed child-space directions against the source, retained neutral chronology and corrected the prior-review locator. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
+    "26 October 2026 independent Terra audit: Applied local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Checked the joint Gaussian law for fixed child-space directions against the source, retained neutral chronology and corrected the prior-review locator. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained.",
+    "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Reconstructed the moving-input seed-removal invariant and weighted substitution input, split the one-pair calibration from its rooted return, and supplied the ordinary progressive-version construction while retaining the remaining formal transport obligations. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The final bounded review also applied the refined skills/graph-to-long/SKILL.md (SHA256 819bf48c70b0840272b81a331a9de63a346491382d6b588805de4ef469032959); its moving-input rule does not replace the original proof source. The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained."
   ],
   "reading_links": [
     {
       "from_anchor": "contact",
-      "from_text_sha256": "321c7f6471edb2c0650cf7e690f668d25a7340ca70207d3194e944e845669936",
+      "from_text_sha256": "e26073657de6de29bfa1970842a34923572826706e3f652c32e6b809b95441bb",
       "to_stage": "expository",
       "to_anchor": "contact-and-gap",
       "to_text_sha256": "9d210a8aa1803cc21a62795da03ba1d1d62a9af1dd61d10a4d00a6761b093c54",
@@ -3013,16 +3032,16 @@
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
+      "from_text_sha256": "ad8a18255373d7cc8956a24cdd559625d59fd8747c367ee8361ca909ddc47ef8",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
+      "to_text_sha256": "b63424723c2d1d529d60ca11bb97f7a58ed15e5349ad30a6d33839c6720b4757",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
+      "from_text_sha256": "ad8a18255373d7cc8956a24cdd559625d59fd8747c367ee8361ca909ddc47ef8",
       "to_stage": "expository",
       "to_anchor": "curvature-transfer",
       "to_text_sha256": "10bbf8df4377210eb04b99421edab30dbd91c35af15e8882aa1bdcee5f7ac3ce",
@@ -3034,16 +3053,16 @@
       "from_text_sha256": "173dd66553afd9cad2eed29daddcf9499ea0b87a4b972ac93c103569042dd7a5",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
+      "to_text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
     {
       "from_anchor": "fixed-time-coercivity",
-      "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
+      "from_text_sha256": "a7eff723d0f38a2f713cf34a4f75a51e8ddbddac127ceaa694adf96bb7753db8",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
+      "to_text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },
@@ -3061,7 +3080,7 @@
       "from_text_sha256": "f395b6cc25d95af1ee94a132e6071b02a0d7cf321eaa6e35de2aee5f74c61834",
       "to_stage": "short",
       "to_anchor": "scalar-value",
-      "to_text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
+      "to_text_sha256": "6fbc0a9676d5750254f3ba2fa6f6098d1de2d61aee83b1eb9844d18ec450f4e5",
       "kind": "expands",
       "rationale": "Develops the terminal value identity described in the short paper; finite Gaussian approximation remains a separate part of the construction."
     },
@@ -3070,22 +3089,22 @@
       "from_text_sha256": "f818a5acea07e6c37f638659c49ea5de84afafd1ef144b47e4b0ebdd1f32ff69",
       "to_stage": "short",
       "to_anchor": "qaoa-boundary",
-      "to_text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
+      "to_text_sha256": "934241f69a79d4a12d63e89b229ef65d3cb88631f8374c71cbbbeb1290e15dc8",
       "kind": "expands",
       "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
     },
     {
       "from_anchor": "fixed-time-coercivity",
-      "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
+      "from_text_sha256": "a7eff723d0f38a2f713cf34a4f75a51e8ddbddac127ceaa694adf96bb7753db8",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
+      "to_text_sha256": "b63424723c2d1d529d60ca11bb97f7a58ed15e5349ad30a6d33839c6720b4757",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },
     {
       "from_anchor": "fixed-time-coercivity",
-      "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
+      "from_text_sha256": "a7eff723d0f38a2f713cf34a4f75a51e8ddbddac127ceaa694adf96bb7753db8",
       "to_stage": "expository",
       "to_anchor": "curvature-transfer",
       "to_text_sha256": "10bbf8df4377210eb04b99421edab30dbd91c35af15e8882aa1bdcee5f7ac3ce",
