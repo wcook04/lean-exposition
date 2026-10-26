@@ -448,6 +448,11 @@ html[data-view="home"] {
   color: var(--ink-2);
 }
 
+.front__byline {
+  margin-left: auto;
+  color: var(--ink-3);
+}
+
 /* ---- What was asked and proved: three rows, each question beside its answer. ---- */
 
 .asked {
@@ -646,6 +651,19 @@ html[data-view="home"] {
   color: var(--ink-2);
 }
 
+.funnel__videonote {
+  max-width: 40em;
+  margin: 6px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+.front .funnel__videonote a {
+  color: var(--ink);
+}
+
 .elsewhere {
   display: grid;
   gap: 8px;
@@ -656,28 +674,6 @@ html[data-view="home"] {
   font-size: var(--fs-sm);
   line-height: 1.5;
   color: var(--ink-2);
-}
-
-/* A link that leaves the site: the arrow is drawn in the padding of a word joiner, so it
-   stays on the link's last word and the underline does not run under it. */
-.front a.front__out::after {
-  content: "\2060";
-  margin-left: 0.1em;
-  padding-left: 0.62em;
-  background-color: var(--ink-3);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-    no-repeat 100% 0.12em / 0.62em 0.62em;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-    no-repeat 100% 0.12em / 0.62em 0.62em;
-}
-
-@media (forced-colors: active) {
-  .front a.front__out::after {
-    content: "\2060\2197";
-    padding-left: 0;
-    -webkit-mask: none;
-    mask: none;
-  }
 }
 
 /* ---- Narrower windows: stack the hero and each row in reading order. ---- */

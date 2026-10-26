@@ -228,10 +228,17 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   exposition's gap figure, how the proof rules out a gap beside its area figure, and
   what follows); the layers from OpenAI's release (family 281, its manuscripts and Lean
   source) through the argument map, the long record, the short paper and the exposition
-  to a video in preparation, drawn as a stepped funnel whose narrowing shows their order
-  and not their length, each layer linked to read here or as a PDF with its real page
-  count, followed by Plectis Atlas's family page and the public repository; the argument
-  map's drawing and key; and what has been checked, stated literally.
+  to a walkthrough video not yet recorded (planned, like Will Cook's walkthrough of Erdős
+  problem #257), drawn as a stepped funnel whose narrowing shows their order and not
+  their length, each layer linked to read here or as a PDF with its real page count,
+  followed by Plectis Atlas's family page, the source repository and who made the site;
+  the argument map's drawing and key; and what has been checked, stated literally. The
+  footer names Will Cook and Plectis.
+- **Who made the site.** The About page ends with it: Will Cook, Plectis and the two
+  projects closest to this one (the maths map and Plectis Atlas), the videos most
+  related to this result, his channel, repositories and contact page, and last the
+  introduction video. Names, titles and addresses come from his own pages
+  (`src/app/author.ts`); a video that does not exist yet is called planned, never linked.
 - The page reads whole with the disclosure closed. The PDFs are served from the
   repository's own renders under `pdf/`, with page counts read from the files at build
   time (`vite.config.ts`).

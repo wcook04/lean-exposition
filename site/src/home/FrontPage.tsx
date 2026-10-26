@@ -3,16 +3,17 @@
 // with where each result is explained here; the technical explanation behind one
 // disclosure (the problem, how the proof rules out a gap with the exposition's two
 // figures, and what follows); the layers from OpenAI's release down to the
-// exposition and the video in preparation, each linked; the argument drawn by the
-// map's own engine; and what has been checked. The mathematical prose follows the
-// papers' own statements and attributions (audited against them, claim by claim).
-// Every number taken from the edition or the PDFs is computed.
+// exposition and the walkthrough video still to be recorded, each linked, and who made
+// the site; the argument drawn by the map's own engine; and what has been checked. The
+// mathematical prose follows the papers' own statements and attributions (audited
+// against them, claim by claim). Every number taken from the edition or the PDFs is computed.
 
-import type { ReactNode } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { routeHref } from "../app/router";
+import { AUTHOR, LINKS, VIDEOS } from "../app/author";
+import { Out } from "../app/Out";
 import { EDITION_TITLE } from "../app/PageTitle";
 import { PAPER_NAMES } from "../app/papers";
 import { TheoremBody, mainGoal } from "../map/TheoremPlate";
@@ -37,19 +38,9 @@ const FAMILY_SCOPE = `${RELEASE}/lean/docs/281.md`;
 const SUPPORT_PDF = `${RELEASE}/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf`;
 const QAOA_PDF = `${RELEASE}/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf`;
 const LEAN_SOURCE = `${RELEASE_TREE}/lean/OAI/Probability`;
-const ATLAS_FAMILY = "https://wcook04.github.io/plectis-atlas/families/281.html";
 const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
 const pdfHref = (stage: Stage) => `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
-
-/** A link that leaves the site, marked with an arrow that stays on its last word. */
-function Out({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <a className="front__out" href={href} target="_blank" rel="noopener noreferrer">
-      {children}
-    </a>
-  );
-}
 
 export function FrontPage() {
   const edition = useEdition();
@@ -226,18 +217,29 @@ export function FrontPage() {
             );
           })}
           <li className="funnel__layer funnel__layer--video" style={{ ["--step" as string]: 5 }}>
-            <p className="funnel__video">Video, in preparation</p>
+            <p className="funnel__video">Walkthrough video, not yet recorded</p>
+            <p className="funnel__videonote">
+              {AUTHOR}, who made this site, plans a walkthrough of this result like his{" "}
+              <Out href={VIDEOS.erdos257.url}>{VIDEOS.erdos257.minutes}-minute walkthrough of Erdős problem #257</Out>.
+            </p>
           </li>
         </ol>
         <SourceSwatches origins={graph.origins} className="front__sources front__sources--inline" />
         <ul className="elsewhere">
           <li>
-            <Out href={ATLAS_FAMILY}>Plectis Atlas, family 281</Out> is an independent website with a page for this family: OpenAI’s
-            two papers, their theorems beside the Lean statements, and what outside groups report about them.
+            <Out href={LINKS.atlasFamily}>Plectis Atlas, family 281</Out> is this family’s page on Plectis Atlas, another of{" "}
+            {AUTHOR}’s websites: OpenAI’s two papers, their theorems beside the Lean statements, and what outside groups report
+            about them.
           </li>
           <li>
             <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
             instructions for running the tools and building this website.
+          </li>
+          <li>
+            <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, as part of{" "}
+            <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help
+            people follow what AI produces. How this site fits with his other projects, with links to his videos, is on the
+            About page.
           </li>
         </ul>
       </section>
@@ -307,6 +309,9 @@ export function FrontPage() {
       <footer className="front__foot">
         <a href={routeHref({ view: "about" })}>About this site</a>
         <a href={routeHref({ view: "about", anchor: "edition" })}>Edition and citation</a>
+        <span className="front__byline">
+          Made by <a href={routeHref({ view: "about", anchor: "made-by" })}>{AUTHOR}</a>, part of <Out href={LINKS.plectis}>Plectis</Out>
+        </span>
       </footer>
     </div>
   );
