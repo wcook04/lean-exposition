@@ -124,6 +124,8 @@ export interface TreeProps {
    * their type colours. Never unfolds or moves anything by itself.
    */
   litIds?: ReadonlySet<string> | null;
+  /** Records the paper beside the map discusses; every other record is drawn faded (is-elsewhere). */
+  coverage?: ReadonlySet<string> | null;
   /** Remember unfolded branches for the session (default). Off for a map that follows something else. */
   persist?: boolean;
   /** The reader moved the map themselves: a pan, a zoom, an unfold or an edge chip. */
@@ -2378,6 +2380,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (echoOn) parts.push(echo!.has(id) ? "is-echo" : within ? "" : "is-quiet");
     if (previewOn && preview!.has(id)) parts.push("is-preview");
     if (litIds?.has(id)) parts.push("is-passage");
+    if (props.coverage && id !== goal && !props.coverage.has(id)) parts.push("is-elsewhere");
     if (peekFaded.has(lid)) parts.push("is-peeked");
     if (exitShown.has(lid)) parts.push("is-exiting");
     return parts.filter(Boolean).join(" ");

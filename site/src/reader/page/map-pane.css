@@ -150,12 +150,12 @@
   background: var(--sunk);
 }
 
+/* In the flow above the canvas, so the canvas's own notes and chips never cover it. */
 .map-pane__notice {
-  position: absolute;
+  position: relative;
   z-index: 3;
-  top: var(--space-3);
-  left: var(--space-4);
-  max-width: min(560px, calc(100% - 2 * var(--space-4)));
+  margin: var(--space-3) var(--space-4) 0;
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 2px var(--space-3);
@@ -272,4 +272,53 @@
     opacity: 1;
     background: var(--lit);
   }
+}
+
+.map-pane__dismiss {
+  margin-left: auto;
+  padding: 0 var(--space-1);
+  border: 0;
+  background: none;
+  font-size: 1.1em;
+  line-height: 1;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.map-pane__dismiss:hover {
+  color: var(--ink);
+}
+
+/* What amber and faded mean on this map. */
+.map-pane__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: var(--space-2) var(--space-4) 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
+
+.map-pane__swatch {
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid var(--card-border);
+  background: var(--raised);
+}
+
+.map-pane__swatch + .map-pane__swatch,
+.map-pane__legend .map-pane__swatch--faded {
+  margin-left: 10px;
+}
+
+.map-pane__swatch--lit {
+  border-color: var(--lit-line);
+  box-shadow: 0 0 0 1px var(--lit-line);
+}
+
+.map-pane__swatch--faded {
+  filter: saturate(0.3) opacity(0.45);
 }
