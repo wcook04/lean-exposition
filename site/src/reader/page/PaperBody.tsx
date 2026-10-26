@@ -1,0 +1,540 @@
+// The paper itself, part by part. Every prepared part is its own element;
+// parts near the viewport are rendered, the rest wait as placeholders sized
+// from their byte length and are rendered in idle time. Heights that change
+// above the reading line are compensated, so the line a reader is on never
+// moves. A mapped passage carries a slim rule in the margin (amber while it is
+// in the inspector) and, under its heading, two quiet controls: its records
+// ("2 claims · 2 assumptions") and "Same topic in…".
+
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import type { Stage } from "../../api/types";
+import type { ArgGraph } from "../../model/graph";
+import type { PreparedDocument, PreparedPart } from "../engine";
+import { mountFigures } from "../mount";
+import { authoredRoutes, estimateHeight, idleOrder, passageOf, passageRecords, recordTally, type Structures } from "./model";
+
+export interface Links {
+  node(id: string): string;
+  beside(stage: Stage, anchor: string): string;
+}
+
+export interface BodyHandle {
+  /** Render these parts (and wait until they are laid out). */
+  ensure(parts: number[]): Promise<void>;
+  partElement(index: number): HTMLElement | null;
+  /** Take the current reading position as the one to hold (after a scripted scroll). */
+  reanchor(force?: boolean): void;
+  /** Hold this element where it is now (the target of a jump). */
+  hold(el: Element): void;
+}
+
+interface Props {
+  stage: Stage;
+  doc: PreparedDocument;
+  structures: Structures;
+  graph: ArgGraph;
+  initial: number[];
+  /** The passage open in the inspector, whose margin rule is lit. */
+  inspected: string | null;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
+  /** The reading line, in viewport pixels from the top, used for height compensation. */
+  topInset: number;
+}
+
+const NEAR_MARGIN = "1500px 0px";
+const IDLE_DELAY_MS = 1200;
+
+type Idle = (cb: (deadline: { timeRemaining(): number }) => void) => number;
+const requestIdle: Idle =
+  typeof window !== "undefined" && "requestIdleCallback" in window
+    ? (cb) => (window as unknown as { requestIdleCallback: Idle }).requestIdleCallback(cb)
+    : (cb) => window.setTimeout(() => cb({ timeRemaining: () => 12 }), 120);
+const cancelIdle = (id: number) => {
+  const w = window as unknown as { cancelIdleCallback?: (id: number) => void; clearTimeout(id: number): void };
+  if (w.cancelIdleCallback) w.cancelIdleCallback(id);
+  else w.clearTimeout(id);
+};
+
+export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
+  const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
+  const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
+  const [near, setNear] = useState<ReadonlySet<number>>(() => new Set(initial));
+  const elements = useRef(new Map<number, HTMLElement>());
+  const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
+  const renderedRef = useRef(rendered);
+  renderedRef.current = rendered;
+  const topRef = useRef(topInset);
+  topRef.current = topInset;
+
+  const add = useCallback((parts: number[], also?: "near") => {
+    const fresh = parts.filter((i) => i >= 0 && i < doc.parts.length);
+    setRendered((prev) => {
+      if (fresh.every((i) => prev.has(i))) return prev;
+      const next = new Set(prev);
+      fresh.forEach((i) => next.add(i));
+      return next;
+    });
+    if (also)
+      setNear((prev) => {
+        if (fresh.every((i) => prev.has(i))) return prev;
+        const next = new Set(prev);
+        fresh.forEach((i) => next.add(i));
+        return next;
+      });
+  }, [doc]);
+
+  // Scroll anchoring, done here so every browser behaves alike: the first
+  // part starting inside the window (or the one straddling its top) keeps its
+  // place when anything above it changes height (a part rendered, a figure
+  // mounted, a route line arriving), so the text under the reader's eyes
+  // never moves.
+  const anchor = useRef<{ el: Element; top: number } | null>(null);
+  // A jump's target stays the anchor until the reader scrolls by hand.
+  const pinned = useRef(false);
+  // The size of each part as the resize observer last reported it.
+  const sizes = useRef(new Map<Element, number>());
+  const reanchor = useCallback((force?: boolean) => {
+    const line = topRef.current;
+    if (force) {
+      elements.current.forEach((el) => sizes.current.set(el, el.getBoundingClientRect().height));
+    } else {
+      // A part has changed size and the observer has not yet heard it: keep
+      // the anchor as it was, so the observer can move the page by the change.
+      for (const [el, size] of sizes.current) if (Math.abs(el.getBoundingClientRect().height - size) > 0.5) return;
+    }
+    if (window.scrollY <= 0) {
+      anchor.current = null;
+      return;
+    }
+    const sorted = [...elements.current.entries()].sort((a, b) => a[0] - b[0]);
+    // Binary search for the first part whose bottom is below the line.
+    let lo = 0;
+    let hi = sorted.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (sorted[mid][1].getBoundingClientRect().bottom <= line) lo = mid + 1;
+      else hi = mid;
+    }
+    let held: Element | null = null;
+    for (let i = lo; i < sorted.length && !held; i++) {
+      const part = sorted[i][1];
+      const r = part.getBoundingClientRect();
+      if (r.height === 0) continue;
+      held = part;
+      if (r.top >= line - 1) break;
+      // The part straddles the line: hold the block the reader's eyes are on.
+      // Its routes or end padding may be all that crosses it; then the
+      // reader's eyes are on the next part.
+      const text = part.querySelector(":scope > .part__text");
+      if (text) {
+        held = null;
+        for (const child of Array.from(text.children)) {
+          if (child.getBoundingClientRect().bottom > line) {
+            held = child;
+            break;
+          }
+        }
+      }
+    }
+    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top } : null;
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      ensure: (parts) =>
+        new Promise<void>((resolve) => {
+          const wanted = parts.filter((i) => i >= 0 && i < doc.parts.length);
+          if (wanted.every((i) => renderedRef.current.has(i))) {
+            requestAnimationFrame(() => resolve());
+            return;
+          }
+          waiters.current.push({ parts: wanted, resolve });
+          add(wanted, "near");
+        }),
+      partElement: (index) => elements.current.get(index) ?? null,
+      reanchor,
+      hold: (el) => {
+        reanchor(true);
+        anchor.current = { el, top: el.getBoundingClientRect().top };
+        pinned.current = true;
+      },
+    }),
+    [add, doc, reanchor],
+  );
+
+  // Resolve waiters once their parts are in the DOM and laid out.
+  useLayoutEffect(() => {
+    const ready = waiters.current.filter((w) => w.parts.every((i) => rendered.has(i)));
+    if (!ready.length) return;
+    waiters.current = waiters.current.filter((w) => !ready.includes(w));
+    requestAnimationFrame(() => ready.forEach((w) => w.resolve()));
+  }, [rendered]);
+
+  // Parts within ~1500px of the viewport are rendered and kept.
+  const nearObserver = useRef<IntersectionObserver | null>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const hits = entries.filter((e) => e.isIntersecting).map((e) => Number((e.target as HTMLElement).dataset.part));
+        if (hits.length) add(hits, "near");
+      },
+      { rootMargin: NEAR_MARGIN },
+    );
+    nearObserver.current = observer;
+    elements.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [add]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!pinned.current) reanchor();
+    };
+    const release = () => (pinned.current = false);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    for (const type of ["wheel", "touchstart", "keydown", "pointerdown"]) window.addEventListener(type, release, { passive: true, capture: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      for (const type of ["wheel", "touchstart", "keydown", "pointerdown"]) window.removeEventListener(type, release, { capture: true });
+    };
+  }, [reanchor]);
+
+  const resizeObserver = useRef<ResizeObserver | null>(null);
+  useEffect(() => {
+    // Parts keep their margins inside (display: flow-root), so any change in
+    // the room a part takes is a size change this observer hears.
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) sizes.current.set(entry.target, entry.target.getBoundingClientRect().height);
+      const held = anchor.current;
+      if (held && held.el.isConnected) {
+        const delta = held.el.getBoundingClientRect().top - held.top;
+        if (Math.abs(delta) >= 0.5) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
+      }
+      if (pinned.current && held?.el.isConnected) {
+        elements.current.forEach((el) => sizes.current.set(el, el.getBoundingClientRect().height));
+        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top };
+      } else reanchor(true);
+    });
+    resizeObserver.current = observer;
+    elements.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [reanchor]);
+
+  const register = useCallback((index: number, el: HTMLElement | null) => {
+    const map = elements.current;
+    const prior = map.get(index);
+    if (prior && prior !== el) {
+      nearObserver.current?.unobserve(prior);
+      resizeObserver.current?.unobserve(prior);
+      sizes.current.delete(prior);
+    }
+    if (el) {
+      map.set(index, el);
+      nearObserver.current?.observe(el);
+      resizeObserver.current?.observe(el);
+    } else map.delete(index);
+  }, []);
+
+  // Idle time renders the rest, nearest the reader first. The costly step
+  // (typesetting) runs inside the idle callback; React only inserts the HTML.
+  useEffect(() => {
+    let handle = 0;
+    let stopped = false;
+    const step = (deadline: { timeRemaining(): number }) => {
+      if (stopped) return;
+      const current = renderedRef.current;
+      const centre = nearestPart(elements.current, topRef.current);
+      const todo = idleOrder(doc.parts.length, centre).filter((i) => !current.has(i));
+      if (!todo.length) return;
+      const batch: number[] = [];
+      while (todo.length && (batch.length === 0 || deadline.timeRemaining() > 10) && batch.length < 3) {
+        const i = todo.shift()!;
+        doc.render(i);
+        batch.push(i);
+      }
+      add(batch);
+      handle = requestIdle(step);
+    };
+    const timer = window.setTimeout(() => (handle = requestIdle(step)), IDLE_DELAY_MS);
+    return () => {
+      stopped = true;
+      window.clearTimeout(timer);
+      cancelIdle(handle);
+    };
+  }, [doc, add]);
+
+  return (
+    <div className="paper prose" data-stage={stage}>
+      {doc.parts.map((part) => (
+        <Part
+          key={part.index}
+          part={part}
+          stage={stage}
+          doc={doc}
+          rendered={rendered.has(part.index)}
+          near={near.has(part.index)}
+          structures={structures}
+          graph={graph}
+          lit={!!part.anchor && part.anchor === inspected}
+          onInspect={onInspect}
+          onSameTopic={onSameTopic}
+          register={register}
+        />
+      ))}
+    </div>
+  );
+});
+
+function nearestPart(elements: Map<number, HTMLElement>, line: number): number {
+  let best = 0;
+  let bestDistance = Infinity;
+  elements.forEach((el, index) => {
+    const r = el.getBoundingClientRect();
+    const d = r.top <= line && r.bottom >= line ? 0 : Math.min(Math.abs(r.top - line), Math.abs(r.bottom - line));
+    if (d < bestDistance) [best, bestDistance] = [index, d];
+  });
+  return best;
+}
+
+interface PartProps {
+  part: PreparedPart;
+  stage: Stage;
+  doc: PreparedDocument;
+  rendered: boolean;
+  near: boolean;
+  structures: Structures;
+  graph: ArgGraph;
+  lit: boolean;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
+  register(index: number, el: HTMLElement | null): void;
+}
+
+const Part = memo(function Part({ part, stage, doc, rendered, structures, graph, lit, onInspect, onSameTopic, register }: PartProps) {
+  const textRef = useRef<HTMLDivElement>(null);
+  const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
+  const anchor = part.kind === "passage" ? part.anchor : undefined;
+  const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
+  const records = useMemo(() => passageRecords(passage), [passage]);
+  const routed = useMemo(() => !!anchor && authoredRoutes(structures, stage, anchor).length > 0, [structures, stage, anchor]);
+  const mapped = !!anchor && records.length > 0;
+  const tools = !!anchor && (mapped || routed);
+
+  useLayoutEffect(() => {
+    if (!html || !textRef.current) return;
+    const unmount = mountFigures(freshSlots(textRef.current));
+    const unmark = markWideMaths(textRef.current);
+    return () => {
+      unmount();
+      unmark();
+    };
+  }, [html]);
+
+  // The passage's controls sit under its opening heading (or above its first
+  // line), inside the rendered text, so they read as part of the passage.
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    const text = textRef.current;
+    if (!html || !text || !tools) {
+      setSlot(null);
+      return;
+    }
+    const el = document.createElement("div");
+    el.className = "passage-tools";
+    let first = text.firstElementChild;
+    while (first && first.matches("a.anchor")) first = first.nextElementSibling;
+    if (first && /^H[1-6]$/.test(first.tagName)) first.after(el);
+    else text.insertBefore(el, text.firstChild);
+    setSlot(el);
+    return () => el.remove();
+  }, [html, tools]);
+
+  const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
+
+  if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
+
+  return (
+    <section
+      ref={setRef}
+      data-part={part.index}
+      data-passage={anchor}
+      data-lit={lit ? "" : undefined}
+      className={`part${mapped ? " part--mapped" : ""}${html ? "" : " part--pending"}`}
+    >
+      {html ? (
+        <div ref={textRef} className="part__text" dangerouslySetInnerHTML={{ __html: html }} />
+      ) : (
+        <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
+      )}
+      {slot &&
+        anchor &&
+        createPortal(
+          <PassageTools anchor={anchor} records={records} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
+          slot,
+        )}
+    </section>
+  );
+});
+
+function PassageTools({
+  anchor,
+  records,
+  graph,
+  lit,
+  onInspect,
+  onSameTopic,
+}: {
+  anchor: string;
+  records: string[];
+  graph: ArgGraph;
+  lit: boolean;
+  onInspect(anchor: string, opener: HTMLElement): void;
+  onSameTopic(anchor: string, opener: HTMLElement): void;
+}) {
+  const tally = records.length ? recordTally(records, graph) : null;
+  return (
+    <>
+      {tally && (
+        <button
+          type="button"
+          className="passage-tools__records"
+          aria-pressed={lit}
+          aria-label={`${tally} linked to this passage. Show them`}
+          onClick={(event) => onInspect(anchor, event.currentTarget)}
+        >
+          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <rect x="1.5" y="2" width="9" height="2" rx="1" fill="currentColor" />
+            <rect x="1.5" y="5.5" width="9" height="2" rx="1" fill="currentColor" opacity="0.7" />
+            <rect x="1.5" y="9" width="6" height="2" rx="1" fill="currentColor" opacity="0.45" />
+          </svg>
+          {tally}
+        </button>
+      )}
+      <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
+        Linked passages…
+      </button>
+    </>
+  );
+}
+
+/**
+ * A display formula wider than its box scrolls inside it, natively, and keeps
+ * its focus ring and MathML. Nothing is faded: the last condition is part of
+ * the statement. Under an overflowing display a quiet row says it scrolls
+ * ("Scroll formula →", "←" at the end, "↔" between) and offers "Expand",
+ * a labelled dialog with the formula at full width.
+ */
+export function markWideMaths(root: HTMLElement): () => void {
+  const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
+  const cues = new Map<HTMLElement, HTMLElement>();
+  const update = (box: HTMLElement) => {
+    const wide = box.scrollWidth > box.clientWidth + 1;
+    box.dataset.overflow = String(wide);
+    const atStart = box.scrollLeft <= 1;
+    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
+    box.dataset.scrolledEnd = String(atEnd);
+    let cue = cues.get(box);
+    if (wide && !cue) {
+      cue = makeCue(box);
+      cues.set(box, cue);
+      box.after(cue);
+    }
+    if (wide && !box.hasAttribute("tabindex")) {
+      box.tabIndex = 0;
+      box.setAttribute("role", "group");
+      box.setAttribute("aria-label", "Formula wider than the column, scroll sideways to read it");
+    }
+    if (!cue) return;
+    cue.hidden = !wide;
+    const where = atStart ? "start" : atEnd ? "end" : "between";
+    if (cue.dataset.at !== where) {
+      cue.dataset.at = where;
+      const scroll = cue.querySelector<HTMLButtonElement>(".math-cue__scroll")!;
+      scroll.textContent = where === "start" ? "Scroll formula →" : where === "end" ? "← Scroll formula" : "Scroll formula ↔";
+      scroll.setAttribute("aria-label", where === "end" ? "Scroll the formula back to its start" : "Scroll the formula to its end");
+    }
+  };
+  const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
+  boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
+  const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
+  boxes.forEach((b) => observer.observe(b));
+  boxes.forEach(update);
+  return () => {
+    observer.disconnect();
+    boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
+    cues.forEach((cue) => cue.remove());
+  };
+}
+
+function makeCue(box: HTMLElement): HTMLElement {
+  const cue = document.createElement("span");
+  cue.className = "math-cue";
+  const scroll = document.createElement("button");
+  scroll.type = "button";
+  scroll.className = "math-cue__scroll";
+  scroll.addEventListener("click", () => {
+    const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    box.scrollTo({ left: atEnd ? 0 : box.scrollWidth, behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
+  });
+  const expand = document.createElement("button");
+  expand.type = "button";
+  expand.className = "math-cue__expand";
+  expand.textContent = "Expand";
+  expand.setAttribute("aria-haspopup", "dialog");
+  expand.addEventListener("click", () => expandFormula(box, expand));
+  cue.append(scroll, expand);
+  return cue;
+}
+
+/** The formula alone, at full width, in a labelled modal dialog. */
+function expandFormula(box: HTMLElement, opener: HTMLElement): void {
+  const dialog = document.createElement("dialog");
+  dialog.className = "modal modal--centre modal--formula";
+  const id = `formula-${Math.random().toString(36).slice(2, 8)}`;
+  dialog.setAttribute("aria-labelledby", id);
+  dialog.dataset.modalOpen = "";
+  const inner = document.createElement("div");
+  inner.className = "modal__box";
+  inner.innerHTML = `<header class="modal__bar"><h2 id="${id}" class="modal__title" tabindex="-1">Formula</h2><button type="button" class="modal__close" aria-label="Close the formula"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></header>`;
+  const body = document.createElement("div");
+  body.className = "modal__body prose formula-full";
+  const copy = box.cloneNode(true) as HTMLElement;
+  copy.removeAttribute("tabindex");
+  copy.removeAttribute("role");
+  copy.removeAttribute("aria-label");
+  copy.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  copy.className = "math-display";
+  body.append(copy);
+  inner.append(body);
+  dialog.append(inner);
+  // Inside the page's theme and type, next to the formula's own styles.
+  (box.closest(".reader, .panel, .pane") ?? document.body).append(dialog);
+  const close = () => {
+    dialog.close();
+    dialog.remove();
+    if (opener.isConnected) opener.focus({ preventScroll: true });
+  };
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    close();
+  });
+  dialog.addEventListener("click", (event) => event.target === dialog && close());
+  inner.querySelector<HTMLButtonElement>(".modal__close")!.addEventListener("click", close);
+  dialog.showModal();
+  inner.querySelector<HTMLElement>(".modal__title")!.focus({ preventScroll: true });
+}
+
+/**
+ * Give every figure slot not currently mounted a fresh element: a root being
+ * unmounted after a tick (strict mode runs effects twice) still owns the old one.
+ */
+export function freshSlots(root: HTMLElement): HTMLElement {
+  root.querySelectorAll<HTMLElement>("[data-figure-slot]").forEach((slot) => {
+    if (slot.dataset.mounted) return;
+    slot.replaceWith(slot.cloneNode(false));
+  });
+  return root;
+}

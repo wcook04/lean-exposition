@@ -1,0 +1,2328 @@
+[
+ {
+  "assumption_ids": [],
+  "boundary": "These are the premises of the universally quantified target, not independently supplied existence results.",
+  "citation_ids": [
+   "full_support_type"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "manuscript_alignment_not_run"
+  ],
+  "id": "assumptions.full_support_minimizer",
+  "kind": "assumption",
+  "label": "Full-support interface: Brownian system and admissible minimizer",
+  "locator": "OrderParameter, BrownianSystem, IsMinimizer",
+  "source_id": "full_support_statement",
+  "statement": "A measurable sample space, W : BrownianSystem Ω, gamma : OrderParameter, and hmin : IsMinimizer W gamma. OrderParameter packages nonnegativity, monotonicity, right continuity, and integrability on [0,1).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "This is the setting of the manuscript theorem; it is not a finite-instance algorithmic runtime guarantee.",
+  "citation_ids": [
+   "qaoa_main_theorem"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "qaoa_manuscript_review_not_run"
+  ],
+  "id": "assumptions.qaoa_model_and_limits",
+  "kind": "assumption",
+  "label": "Gaussian zero-field model and ordered limits",
+  "locator": "Model and quantifiers, lines 74–119",
+  "source_id": "qaoa_introduction",
+  "statement": "Independent standard Gaussian couplings, the pure zero-field SK cost Hamiltonian normalized by n^(-1/2), the transverse-field mixer, and deterministic finite-depth angles held fixed while n tends to infinity; circuit depth increases afterward.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The diffusion premise belongs to the first two conjuncts of value_consequences. Its final ground-state/Parisi equality has only the minimizer premise.",
+  "citation_ids": [
+   "scalar_value_type"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "manuscript_alignment_not_run"
+  ],
+  "id": "assumptions.value_diffusion",
+  "kind": "assumption",
+  "label": "Scalar-value interface: associated diffusion for its first two clauses",
+  "locator": "IsDiffusion; theorem value_consequences",
+  "source_id": "scalar_value_statement",
+  "statement": "X : ℝ → W.Ω → ℝ satisfies IsDiffusion W gamma X; the finite Gaussian clause additionally assumes 0<T and T<1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "This records the minimizer premise of the formal interface; it does not assert that a minimizer exists.",
+  "citation_ids": [
+   "scalar_value_type"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "manuscript_alignment_not_run"
+  ],
+  "id": "assumptions.value_minimizer",
+  "kind": "assumption",
+  "label": "Scalar-value interface: Brownian space and admissible minimizer",
+  "locator": "OrderParameter, BrownianSpace, IsMinimizer",
+  "source_id": "scalar_value_statement",
+  "statement": "W : BrownianSpace, gamma : OrderParameter, and IsMinimizer W gamma, with the admissibility fields and Parisi functional defined in ComparatorChallenges.SKValue.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The extensive uncut Hamiltonian need not have an operator limit. Smallness of a generator on a core alone is not the needed exponential or domain statement.",
+  "citation_ids": [
+   "circuit-r2-26-cite-additive-responses"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.additive_responses",
+  "kind": "claim",
+  "label": "Additive cut responses retain scalar second order",
+  "locator": "02-foundations.tex:1318–1449; cor:additive-response, eq:additive-response-parity, eq:additive-cut-response, eq:small-generator-error",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For finite diagonal common-axis excluded Hamiltonians satisfying the explicit cut parity H(−a)=P H(a)P and polynomial time/input jet bounds, the cut difference has a first Gaussian-field response and a scalar second response. Replacements with small generator errors require, separately, smooth uniformity of their exponential families and lower responses.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The proof first fixes outer Lipschitz constants, then inner errors, using seed truncation, the regularized inverse sine, cutoffs and Fourier approximation. Approximation is in the rooted L² norm, not merely in marginal distribution.",
+  "citation_ids": [
+   "circuit-r2-26-cite-bounded-trigonometric"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.bounded_trigonometric",
+  "kind": "claim",
+  "label": "Bounded odd trigonometric angle approximation",
+  "locator": "03-classical-optimization.tex:256–337; lem:classical-trigonometric-density, eq:angle-density",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "For any fixed finite descendant calculation with odd smooth local maps of polynomial derivative growth, and any η>0, the clipped output m*=clip(z) admits a finite bounded odd angle θ such that ‖sin(2θ)−m*‖<η. All sent columns can be bounded and odd; all pointwise maps can be finite real trigonometric sums with bounded derivatives.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "This query root keeps the fixed-minimizer hypothesis in scope and exposes the complete conditional scalar-to-rooted construction. It is not a declaration that a minimizer exists.",
+  "citation_ids": [
+   "circuit-r2-26-cite-classical-fixed-minimizer"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.classical_fixed_minimizer",
+  "kind": "goal",
+  "label": "Conditional bounded synthesis input for a given minimizer",
+  "locator": "03-classical-optimization.tex:220–254, 553–608; eq:scalar-near-optimal-smooth and prop:classical-near-optimum",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "For every supplied admissible zero-temperature minimizer γ, every ε>0 and η_H>0, the same γ may be used to choose finite T,N,k, a bounded trigonometric formula and finite colors with one positive-probability helper type per propagation depth, total 0<p_H<η_H. The resulting m_col=Σ_c1_{C=c}sin(2θ_c) is centered, bounded by one, zero on helper roots, obeys all current/ancestor/helper exclusions and has E(m_col)≥P_*−ε. All choices are independent of D,n,J.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "This is an alternative to the primary zero-temperature construction. It is a separate query root and is not an additional prerequisite of the primary route. It uses the same later bounded approximation, exclusion, synthesis and seed-removal machinery.",
+  "citation_ids": [
+   "circuit-r2-26-cite-classical-positive"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.classical_positive",
+  "kind": "goal",
+  "label": "Alternative finite-temperature bounded synthesis input",
+  "locator": "07-positive-temperature.tex:739–788; prop:classical-near-optimum-positive-temperature",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "Under the independent finite-temperature input family, for every ε>0 and η_H>0 there is a finite bounded odd trigonometric exclusion formula with centered output m_col, |m_col|≤1, E(m_col)≥P_*−ε, and 0<p_H<η_H. One positive helper type is reserved per depth, every propagation excludes current/ancestor/helper colors, and all finite data are independent of D,n,J.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Closed witness application: attainment supplies gamma in the manuscript class U, and the universally quantified fixed-minimizer construction uses that same gamma before any finite choices are frozen. Its annotated support edge exposes the conditional argument while discharging the supplied manuscript admissibility and minimizer premises only within this use. The binding is authored source correspondence, not mechanically checked witness equality or proof acceptance.",
+  "citation_ids": [
+   "circuit-r2-26-cite-classical-primary",
+   "scalar-r2-26-cite-minimizer-attainment"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.classical_primary",
+  "kind": "goal",
+  "label": "Closed existence of a near-optimal bounded synthesis input",
+  "locator": "03-classical-optimization.tex:3–75, 220–254, 553–608; prop:classical-near-optimum; 06-assembly.tex:7–17 and rem:order-of-choices",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "For every ε>0 and η_H>0 there exists a zero-temperature minimizer γ and one common finite set of cutoff, scalar-mesh, smoothing, trigonometric and color/helper choices producing a centered m_col with |m_col|≤1, E(m_col)≥P_*−ε and 0<p_H<η_H. Its bounded odd angle/column formulas have the prescribed exclusions and bounded continuous derivatives conditional on labels. Every coefficient, depth, law and function is fixed independently of D,n,J.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Characteristic-function or marginal CLT convergence is only one part of the argument; symmetric-power norm convergence and the occupation estimate are separately supplied. The raw nonsmooth sign output is outside this lemma until smoothed.",
+  "citation_ids": [
+   "circuit-r2-26-cite-classical-strong-limit"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.classical_strong_limit",
+  "kind": "claim",
+  "label": "Smooth local formulas converge strongly with occupation bounds",
+  "locator": "07-positive-temperature.tex:534–678; lem:classical-strong-limit, eq:classical-energy-transfer",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "For a fixed smooth finite descendant calculation with polynomially bounded derivatives, leaves with all moments, centered finite-degree child columns and convergent finite coefficients, the embedded output converges in norm to its recursive Gaussian realization. A one-child replacement estimate of order 1/D and Efron–Stein give uniform first child occupation. For centered equivariant outputs, the root-shift energy therefore equals the scaled edge limit.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Disjoint mask orthogonality and the Gaussian isometry control the loss. Shared descendant branches are not assumed independent. Uniform derivative bounds refer to the original grouped coordinates.",
+  "citation_ids": [
+   "circuit-r2-26-cite-color-exclusion"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.color_exclusion",
+  "kind": "claim",
+  "label": "Raw seed reencoding and ancestor exclusion",
+  "locator": "03-classical-optimization.tex:339–551; def:exclusion-formulas, eq:raw-seed-reencoding, lem:classical-color-exclusion",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "A single raw standard Gaussian is measurably recoded into an even finite color and an independent odd Gaussian seed; the induced rooted isometry intertwines L. For a fixed bounded odd smooth formula with bounded first derivatives, excluding current color, all path-ancestor colors and all helpers gives ‖f_col−f‖²≤C(α+p_H), where α is the largest nonhelper color probability and C depends on the fixed uncolored formula, not the number of colors. The output vanishes on helpers.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Both norm convergence and the occupation bound are hypotheses. Strong convergence or one-point distributional convergence by itself does not permit multiplying an edge correlation by √D.",
+  "citation_ids": [
+   "circuit-r2-26-cite-energy-transfer"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.energy_transfer",
+  "kind": "claim",
+  "label": "Finite-degree edge energy requires occupation control",
+  "locator": "02-foundations.tex:191–267; prop:energy, eq:exact-edge-decomposition",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For centered root-permutation-invariant finite-radius columns f_D at a fixed height, assume their embedded vectors converge strongly to v and sup_D⟨f_D,N_child f_D⟩<∞. Then lim_{D→∞}(√D/2)⟨f_D at i,f_D at j⟩=Re⟨v,Lv⟩ for a tree edge ij. The child–child remainder is bounded by ⟨f_D,N_child f_D⟩/(D+1).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "External ordinary theorem used to delimit the quadratic SK result. The exclusion q>=4 is essential; this is not an obstruction for q=2. No interchange of depth and system size is required for this thermodynamic-first ceiling. This comparison is outside the primary SK QAOA prerequisite closure and has no selected formal endpoint.",
+  "citation_ids": [
+   "bgmz2022_even_spin_obstruction"
+  ],
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "id": "circuit.even_p_spin_obstruction",
+  "kind": "claim",
+  "label": "A separate thermodynamic-first ceiling for even higher-spin models",
+  "locator": "arXiv:2204.10306v2 Theorem 4, equation (3.15), and proof §4.2",
+  "source_id": "bgmz2022_even_spin",
+  "statement": "For each pure even interaction order q>=4, in the source normalization, every finite depth p and every fixed angle vector satisfy v_p^(q)(theta,beta)<=eta_OGP(G_q)<eta_OPT(G_q). The same ceiling bounds the supremum over all finite p and angles of their individual thermodynamic limits.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Equality of seed marginals or ordinary Gram convergence does not alone prove rooted energy convergence. The displayed L-pairing calculation is a separate ingredient.",
+  "citation_ids": [
+   "circuit-r2-26-cite-external-mode-energy"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.external_mode_energy",
+  "kind": "claim",
+  "label": "One persistent Gaussian mode and rooted energy induction",
+  "locator": "05-seed-simulation.tex:749–874; lem:seed-gram-induction, eq:seed-vacuum-weyl-gram, eq:seed-energy-weyl-sum",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "The finite-word Gram induction adjoins formal orthogonal external modes ℓ,w to the endogenous rooted space. Echo parameter t=σ/2 realizes a requested seed angle σ through q(w), reusing the same mode at every seed gate and independent modes across vertices. The manuscript also evaluates ⟨h,Lh⟩ for finite spin–Weyl sums h and uses orthogonality of external and endogenous directions to pass the rooted energy, not only the vector Gram entries.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer",
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "Ordinary source consequence for the specified Gaussian data, not arbitrary L2 functions, a finite-size circuit identity, efficient angle selection or a selected Lean endpoint. Eligibility and seed-dependence restrictions remain essential.",
+  "citation_ids": [
+   "authored_r9_finite_formula_word",
+   "boulebnane2026_spin_boson_v2"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "circuit.finite_formula_word_approximation",
+  "kind": "claim",
+  "label": "Approximation of fixed Gaussian data by one ordinary word",
+  "locator": "Long reasoning record #qaoa-construction; expert Proposition 5",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For fixed cutoff T and mesh N in the scalar construction with finite positive normalizers, and every eta>0, a finite ordinary deterministic QAOA word W independent of n and disorder satisfies |v(W)-S_(T,N)|<eta. This follows from rooted realization, eligible bounded approximation, seeded synthesis, seed removal and fixed-word transfer.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "External ordinary theorem input, source-interface checked only; not a new Lean declaration or independently replayed proof. The word is fixed before n tends to infinity. The second moment is the quantum second moment averaged over disorder, not only the squared conditional energy expectation. No uniform rate over depth or angles is asserted.",
+  "citation_ids": [
+   "fggz2022_fixed_depth"
+  ],
+  "evidence_ids": [
+   "concentration_source_warrant_pending"
+  ],
+  "id": "circuit.fixed_word_concentration",
+  "kind": "claim",
+  "label": "Fixed-word SK QAOA first and second measurement moments",
+  "locator": "Farhi-Goldstone-Gutmann-Zhou, arXiv:1910.08187v4, section 4 theorem, equations (13)-(14).",
+  "source_id": "fggz2022_fixed_depth",
+  "statement": "For every fixed finite depth p and fixed real angle vectors gamma and beta, with standard Gaussian SK couplings and the usual plus-state QAOA circuit, let Y_n=H_n(sigma)/n for a computational-basis outcome sigma. Over the joint law of disorder and measurement, E[Y_n] tends to v_p(gamma,beta) and E[Y_n^2] tends to v_p(gamma,beta)^2 as n tends to infinity.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "BFMVZ Theorem 1 is a fixed-depth, fixed-angle identity. It does not transfer raw seeded, masked or controlled words, give a joint n,p,D limit, or certify the construction preceding seed removal.",
+  "citation_ids": [
+   "circuit-r2-26-cite-fixed-word-transfer",
+   "bfmvz2022_tree_transfer",
+   "fggz2022_fixed_depth"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.fixed_word_transfer",
+  "kind": "claim",
+  "label": "Fixed ordinary tree word transfers to fixed-angle SK",
+  "locator": "02-foundations.tex:3–45; prop:tree-transfer; BFMVZ arXiv:2110.14206v3, §2.1–2.2, equations (2.3),(2.6),(6.1)–(6.3), Theorem 1 and §6 proof",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For every fixed finite ordinary cost/mixer word W, the Gaussian SK thermodynamic limiting expected energy per spin equals lim_{D→∞}(√D/2)⟨Z_iZ_j⟩_W for an edge of the (D+1)-regular tree with cost D^(−1/2)Σ_{ij}Z_iZ_j. The manuscript converts the BFMVZ negative tree-cost convention by conjugating X on one tree bipartition, which flips cost and edge correlation while preserving mixer and plus state.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Measurable seed masks are permitted through bounded subsequences with Gaussian almost-everywhere convergence. Grouped finite control coordinates are essential; no dimension-free assertion is made for all flattened color coordinates.",
+  "citation_ids": [
+   "circuit-r2-26-cite-gate-calculus"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.gate_calculus",
+  "kind": "claim",
+  "label": "Smooth exclusion-gate calculus",
+  "locator": "02-foundations.tex:952–1316; def:exclusion-gate, thm:gate-calculus, eq:masked-column-bound",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For a fixed finite exclusion-gate expression, every transmitted column is centered by parity; receiver, path-ancestor and control-target masks are disjoint as prescribed; controls lie in one commuting algebra and a target may contribute its seed but not its spin. Root maps, adjoints and insertions converge in the weighted topology and obey occupation estimates. Finite local replacements with common parameter expressions, convergent jets and adjoint jets, and uniform polynomial bounds converge inside each fixed surrounding word. A root-mask column has weighted norm at most C√p.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The receiving root seed is independent of these child fields. The first-chaos identity is an identity in the shared rooted space; a marginal Gaussian law alone does not identify E(v). This is a manuscript construction, not a Lean declaration.",
+  "citation_ids": [
+   "circuit-r2-26-cite-gaussian-root-calculus"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.gaussian_root_calculus",
+  "kind": "claim",
+  "label": "Root shift and classical Gaussian first chaos",
+  "locator": "02-foundations.tex:151–365; eq:root-shift, prop:energy (continuity), subsec:classical-gaussian-sector, eq:classical-first-chaos",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "On the recursive pointed Fock space, L is an isometry on centered child vectors and vanishes on the vacuum. E(v)=Re⟨v,Lv⟩ and |E(v)−E(w)|≤(‖v‖+‖w‖)‖v−w‖. For real centered directions f, G(f)=q(f) is a commuting Gaussian field, E[G(f)G(g)]=⟨f,g⟩ and ‖G(f)−G(g)‖=‖f−g‖. For orthonormal e_j and an L² function F of their child fields, L*F=Σ_j E[F G(e_j)]e_j.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "First fix the finite input channels and surrounding word. Helper pinning concerns all helper descendants, not only the receiver root. Individual approximating commutator factors need not preserve that subspace. Lower first responses and scalar second responses must be retained; covariance between channels cannot be discarded.",
+  "citation_ids": [
+   "circuit-r2-26-cite-helper-contraction"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.helper_contraction",
+  "kind": "claim",
+  "label": "Pinned helpers implement propagation through contraction",
+  "locator": "04-classical-synthesis.tex:207–959; prop:helper-contraction, eq:helper-pinning-projection, eq:diagonal-helper-paths, eq:limiting-additive-response",
+  "source_id": "circuit-r2-26-source-synthesis",
+  "statement": "Fix a finite surrounding gate-calculus word avoiding an unused positive-probability helper mask K. For disjoint receiver I and sender J with excluded seed-only bounded odd transmitted f, refine J into J_l and use the I–J_l–K–J_l commutator paths with the 1/p_K factor. On the recursively compressed space pinning X=1 at every helper descendant, finitely many such propagations converge simultaneously as max_l p_l→0. Backtracking terms supply the wanted propagation; distinct-sender terms vanish by orthogonal mask bounds. Root maps and adjoints converge conditionally modulo harmless root-seed phases; off-helper insertions converge.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The usual MaxCut cost angles depend on D through 2/√D. The light-cone bipartition sign conversion does not assume the whole graph is bipartite. This gives no fixed-degree or arbitrary-graph optimality.",
+  "citation_ids": [
+   "circuit-r2-26-cite-high-girth-maxcut"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.high_girth_maxcut",
+  "kind": "goal",
+  "label": "Fixed normalized angles on all sufficiently high-girth regular graphs",
+  "locator": "08-regular-maxcut.tex:1–61; eq:regular-tree-cut; 01-introduction.tex:219–232, cor:regular-maxcut",
+  "source_id": "circuit-r2-26-source-maxcut",
+  "statement": "For every η>0 there exist finite p, normalized angles γ,β and D₀ such that for all D≥D₀ and every finite simple unweighted (D+1)-regular graph of girth>2p+1, expected QAOA cut fraction at conventional angles (2γ/√D,β) is at least 1/2+(P_*−η)/√D. The normalized word is common to all such D and graphs.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The displayed finite estimate is quoted from the later arXiv:2609.40309v1 Corollary S3.1; the growing-depth consequence is the authored elementary deduction log log T_p=4p log p+O(p+log p) with epsilon_p=exp(-p^2). For SK, c_2=1/sqrt(2) matches the unordered-pair expectation after an independent mean-zero scalar diagonal offset. This does not show that the earlier near-optimal constructed words share a uniform angle bound, supply angle-selection complexity, or establish a growing-depth measurement tail. It is standalone context, not a prerequisite of the earlier SK QAOA construction or a selected formal endpoint.",
+  "citation_ids": [
+   "qaoa_finite_size_corollary",
+   "authored_bounded_angle_depth_comparison"
+  ],
+  "evidence_ids": [
+   "ordinary_comparison_warrants_20261024"
+  ],
+  "id": "circuit.later_finite_size_comparison",
+  "kind": "claim",
+  "label": "A later finite-size estimate for a bounded-angle class",
+  "locator": "Corollary S3.1, printed pp.46–47, equations (S3.1)–(S3.4), with cost-angle convention (S3.7). Statement inspected; full cavity proof not independently checked. Authored consequence: long §11.5.",
+  "source_id": "qaoa_finite_size_2026",
+  "statement": "For the source ordered-tuple Gaussian finite-degree mixture xi(t)=sum_q c_q^2 t^q, a depth p>=1 word with every cost angle bounded in absolute value by Gamma>0, and x>0 with xi(2),xi′(1),xi′′(33)<=x and Gamma^2 p^2 x>=1, set B_p=256p^4(2e Gamma^2 p^2 x)^p, E_p=70 Gamma^2 p^2 x+p log(2), R_p=(2E_p/log(2))^(2p). For 0<epsilon<=4 Gamma p x min(exp(-1/2),2^(-(8p^2+3)/100)), the disorder-averaged energy error |nu_n-nu_infinity| is at most epsilon whenever n>=T_p=max{2^(8p^2+3) B_p (2^(deg(xi)+4) Gamma^2 p^2 x^2/epsilon^2)^R_p [2 log_2(4 Gamma p x/epsilon)+deg(xi)]^2,16 Gamma p x/epsilon}. No mixer-angle bound is imposed. Consequently, for fixed mixture,Gamma,x, deterministic words with p(n)→infinity, one common cost-angle bound Gamma, and p(n)log p(n)=o(log log n) satisfy |nu_n(W_n)-nu_infinity(W_n)|<=exp(-p(n)^2) eventually.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "This is finite approximation of selected local rooted operations. It is not a uniform global operator-norm Trotter estimate on an extensive Hamiltonian, and no error may be multiplied by a growing vertex count.",
+  "citation_ids": [
+   "circuit-r2-26-cite-masked-controls"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.masked_controls",
+  "kind": "claim",
+  "label": "Finite compilation of masked local controls",
+  "locator": "04-classical-synthesis.tex:113–205, 962–1010; sec:elementary-masked-controls, eq:parity-trigonometric-synthesis",
+  "source_id": "circuit-r2-26-source-synthesis",
+  "statement": "For each fixed finite excluded calculation, even X and odd Y/Z seed functions are approximated by finitely many elementary seed and mixer gates; finite sign averaging isolates the desired disjoint-mask costs. Finite product and group-commutator formulas converge with all required local jets and adjoint jets and polynomial weighted domination in a fixed surrounding calculation.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "Ordinary derived consequence of the cited thermodynamic-first QAOA theorem and the fixed-word moment theorem. No formalizes edge or kernel acceptance. This is a joint-disorder-and-measurement asymptotic statement, not a guarantee on every instance, a finite-size rate, a uniform p(n) claim, or an efficient angle-selection algorithm.",
+  "citation_ids": [
+   "qaoa_main_theorem",
+   "fggz2022_fixed_depth"
+  ],
+  "evidence_ids": [
+   "concentration_source_warrant_pending"
+  ],
+  "id": "circuit.one_measurement_near_optimum",
+  "kind": "claim",
+  "label": "One measured sample approaches the SK optimum with high joint probability",
+  "locator": "Derived in the long reasoning record section 9.8, What is averaged, and a fixed-word probability consequence; premise locations are QAOA Theorem thm:main and FGGZ section 4 equations (13)-(14).",
+  "statement": "For every epsilon>0 there exist a finite depth p and fixed deterministic real angles, independent of n and the Gaussian disorder, such that Pr_{J,sigma}[H_n(sigma)/n >= P_star-epsilon] tends to 1 as n tends to infinity; sigma is one computational-basis measurement of the corresponding QAOA state.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The finite word and all angles are held fixed before D→∞. Rotated axes and a seed gate exp(−it Zs) have the corresponding rooted formulas; this calculation alone is not a transfer theorem for seeded words.",
+  "citation_ids": [
+   "circuit-r2-26-cite-ordinary-updates"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.ordinary_updates",
+  "kind": "claim",
+  "label": "Ordinary cost and mixer root updates",
+  "locator": "02-foundations.tex:703–782; lem:ordinary-updates, eq:ordinary-root-updates",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For a fixed finite ordinary cost/mixer word, the embedded root maps and adjoints have smooth weighted limits. A mixer updates u to exp(−iβX)u; a cost updates u to exp(−it Z q(v_Z))u, where v_Z=u*ZuΩ is the preceding child insertion. The cost leaves that insertion unchanged. The fixed-word tree value is E(v_Z).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "The only initial choices changed are finite β₀, cutoff T<q and a finite message-passing mesh. This route is navigable from the main goal by cites, not conjoined with the primary route by supports.",
+  "citation_ids": [
+   "circuit-r2-26-cite-ordinary-word-positive"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.ordinary_word_positive",
+  "kind": "goal",
+  "label": "Alternative-route finite ordinary near-optimal word",
+  "locator": "06-assembly.tex:7–34, 36–53; rem:order-of-choices; 07-positive-temperature.tex:739–788",
+  "source_id": "circuit-r2-26-source-assembly",
+  "statement": "Under the independent finite-temperature input family, for every ε>0 the positive-temperature bounded synthesis input, the common seeded synthesis theorem and the common seed-removal theorem yield one finite ordinary word W with E(W)>P_*−ε, using the same ε/4, η=ε/8 and η_H=(ε/8)² error allocation.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "This is an existence statement for one common finite word. Cost gates, mixers, identity padding and combining adjacent equal gate types convert it to the standard alternating QAOA convention. The tree-to-SK step is still a separate theorem.",
+  "citation_ids": [
+   "circuit-r2-26-cite-ordinary-word-primary"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.ordinary_word_primary",
+  "kind": "goal",
+  "label": "Primary-route finite ordinary near-optimal word",
+  "locator": "06-assembly.tex:1–34; proof of thm:main",
+  "source_id": "circuit-r2-26-source-assembly",
+  "statement": "For every ε>0, a finite ordinary cost/mixer word W, with deterministic real angles independent of D,n,J, has rooted energy greater than P_*−ε. Choose the classical input with error ε/4 and η_H=(ε/8)²; choose synthesis η=ε/8, so its two losses sum to less than ε/2; then remove the seed with error less than ε/4.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The exponential statement has its own domain and weighted Gronwall argument. It is not inferred solely from a small Hilbert–Schmidt kernel or small generator.",
+  "citation_ids": [
+   "circuit-r2-26-cite-orthogonal-quadratics"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.orthogonal_quadratics",
+  "kind": "claim",
+  "label": "Orthogonal mask quadratics have small exponentials",
+  "locator": "04-classical-synthesis.tex:357–492; lem:fixed-field-exponentials, lem:orthogonal-quadratics",
+  "source_id": "circuit-r2-26-source-synthesis",
+  "statement": "For disjoint-mask real commuting columns d_l,e_l with weighted norms at most C_a√p_l, the centered quadratic Q=Σ_l(q(d_l)q(e_l)−⟨d_l,e_l⟩) is O_sm(ρ), ρ=(Σ_l p_l²)^(1/2). The groups exp(±itQ) separately satisfy smooth weighted bounds independent of the number of parts for bounded t and converge to identity as ρ→0. Fixed-dimensional smooth field exponentials require weighted column bounds but no inverse Gram matrix.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "Finite-degree successive messages are not independent. The exact EAMS Proposition 2.1 supplies the edge calculation; the QAOA source explicitly repairs the missing 1/k in EAMS display (2.21) and the shifted finite-sum endpoints in (4.5)/(4.18). The finite-step theorem is used separately from EAMS’s global optimization theorem.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-finite-step",
+   "eams2023_finite_step"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.positive_finite_step",
+  "kind": "claim",
+  "label": "EAMS finite-step law and corrected edge identity",
+  "locator": "07-positive-temperature.tex:211–450; lem:eams-finite-step, eq:eams-finite-normalization, eq:eams-corrected-value; EAMS arXiv:2111.06813v2 §§2–4.1",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "Fix finite β₀,T,δ and L=floor(T/δ). The one-step-lag cavity recursion uses exact finite-degree normalizers c_{D,r}; node updates use the same normalizers. As D→∞, these constants converge, finite collections of cavity innovations converge jointly to independent standard Gaussians with all fixed moments, and z_L converges to Z_δ with E Z_δ²=Lδ. The scaled edge value equals in the limit δΣ_{r=1}^{L−1}c_{δ,r} E a(t_r,X_r^δ), with an empty sum when L=1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "This is the alternative branch’s explicitly imported external input family. It does not use the zero-temperature full-support theorem. The ordered-Gaussian normalization and mean-zero diagonal correction are fixed before applying the external result. The Lopatto theorem is source-reported here, not independently proved.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-input",
+   "lopatto2026_interval_support"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.positive_input",
+  "kind": "assumption",
+  "label": "Independent finite-temperature input family",
+  "locator": "07-positive-temperature.tex:3–129; eq:positive-parisi-pde, eq:positive-parisi-value, eq:positive-parisi-diffusion",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "For every fixed β₀>1, import the finite-temperature Parisi formula and a minimizing Parisi measure μ_{β₀} with support [0,q_{β₀}], q_{β₀}<1, from the stated interval-support result. With γ=β₀μ([0,t]), terminal β₀^(−1)log(2cosh(β₀x)), m=Φ_x and a=Φ_xx, import the bounded-strip regularity, diffusion and contact identity E[m(t,X_t)²]=t for 0≤t≤q_{β₀}, and dm=a dW.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "Constants may depend on the fixed β₀ and T. The coupling compares scalar variables and must be combined with the separate rooted strong-limit lemma to identify energy.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-mesh",
+   "eams2021_mean_field_optimization"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.positive_mesh",
+  "kind": "claim",
+  "label": "Fixed-temperature normalized mesh converges strongly",
+  "locator": "07-positive-temperature.tex:452–532; lem:eams-positive-continuum, eq:euler-normalization-bound, eq:martingale-euler-bound, eq:value-riemann-bound",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "At fixed finite β₀ and 0<T<q, the normalized Euler coupling has max_r E|X_r^δ−X_{t_r}|²≤Cδ, max_r|c_{δ,r}−1|≤C√δ, E|Z_δ−m(T,X_T)|²≤Cδ, and its corrected shifted energy sum differs from ∫₀ᵀE a by at most C√δ. Here L=floor(T/δ).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "Scalar clipping uses the matching law only after the energy of z_δ has been identified by strong rooted convergence and occupation control. All choices remain finite.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-rooted-clipping"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.positive_rooted_clipping",
+  "kind": "claim",
+  "label": "Positive-temperature rooted output and clipping",
+  "locator": "07-positive-temperature.tex:680–737; eq:classical-eams-vector, eq:clipped-classical-vector",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "For each fixed finite discretization, apply the smooth strong-limit lemma to the EAMS recursion to obtain a rooted z_δ with the scalar law Z_δ and rooted energy equal to its corrected edge sum. Since |m(T,X_T)|≤1, the scalar coupling yields ‖z_δ−clip(z_δ)‖≤C√δ, and root-shift continuity controls the energy loss. β₀, T and then δ are chosen to make the clipped rooted output arbitrarily near P_*.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "circuit.positive_input"
+  ],
+  "boundary": "This bound uses the finite-temperature Parisi identity, contact, the terminal sech² relation and log-sum bounds. It is independent of a zero-temperature minimizer or support conclusion.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-value"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.positive_value",
+  "kind": "claim",
+  "label": "Finite-temperature scalar approximation to P_*",
+  "locator": "07-positive-temperature.tex:131–209; lem:positive-temperature-bound, eq:parisi-normalization-and-endpoint",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "For the imported finite-temperature family, E[a(t,X_t)²]=1 on [0,q] and 1−q≤1/β₀. For each 0<T<q, ∫₀ᵀE a(t,X_t)dt≥P_*−(1/4+log 2)/β₀−(q−T). Thus β₀ is first chosen sufficiently large and finite, then T<q sufficiently close to q.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "This realizes both the finite scalar joint law and its shifted energy pairing. It does not assert strong finite-degree convergence for the unsmoothed sign formula. Intermediate transmitted columns need not be bounded.",
+  "citation_ids": [
+   "circuit-r2-26-cite-rooted-realization"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.rooted_realization",
+  "kind": "claim",
+  "label": "Exact rooted realization of the scalar coefficient sum",
+  "locator": "03-classical-optimization.tex:78–218; lem:gaussian-rooted-realization, eq:scalar-rooted-energy",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "Fix the same minimizer, 0<T<1 and sufficiently large finite N so the scalar normalizers exist. Set g₀=S and recursively Z_{j+1}=G(g_j), using the same Euler Y_j, c_j and g_j=c_j a(t_{j−1},Y_{j−1})Z_j. Predictability, centering and normalization make g₀,…,g_N orthonormal, hence the Z_j have exactly the independent standard Gaussian law used in F_N. For A_j=E[F_Ng_j] (A₀=0) and B_j=E[F_NZ_j], L*F_N=Σ_{j=0}^N B_{j+1}g_j and E(F_N)=Σ_{j=0}^N A_jB_{j+1}.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_circuit_sampled_finite_instance_optimum"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "circuit.sampled_finite_instance_optimum",
+  "kind": "claim",
+  "label": "One measured configuration approaches its instance maximum",
+  "locator": "Long reasoning record #sampled-finite-instance",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For each epsilon>0 there is one finite deterministic cost/mixer word W, independent of n and disorder J, such that Pr_{J,Sigma}[H_n,J(Sigma)>=max_sigma H_n,J(sigma)-epsilon*n] tends to one. Sigma is one computational-basis measurement from W. The union bound combines measured-energy and maximum concentration for the same disorder without independence. No every-instance guarantee, effective threshold, variable-depth theorem or efficient angle selection is supplied.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The full displaced packets may have occupation of order r^(−2); only their tails have uniform weighted bounds. No uniform whole-packet occupation bound is imported from the finite-word degree limit.",
+  "citation_ids": [
+   "circuit-r2-26-cite-seed-packets"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.seed_packets",
+  "kind": "claim",
+  "label": "Exact small packet and weighted tail estimates",
+  "locator": "05-seed-simulation.tex:42–270; lem:seed-packet-estimates, eq:seed-initial-split, eq:seed-exact-special-norm, lem:seed-high-directions",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "Fix small b>0 before r→0. The finite ordinary initialization (cost b/r, mixer arcsin r, inverse cost, mixer π/4) splits exactly into an ordinary component and a special component of norm r. Its high directions ℓ_r,w_r are centered unit vectors, asymptotically orthogonal, and escape every fixed number sector. For bounded number-smooth tails, separated Weyl centers have overlap O(r^M) for every fixed M, while bounded displacements preserve the weighted tail estimates.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Some ordinary angles are of order 1/r and can be very large, but are finite before any degree or system-size limit. The theorem gives no bound on word length, angle size or an efficient search procedure.",
+  "citation_ids": [
+   "circuit-r2-26-cite-seed-removal"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.seed_removal",
+  "kind": "claim",
+  "label": "Every finite seeded word has a finite ordinary approximation",
+  "locator": "05-seed-simulation.tex:3–40, 976–1006; thm:seed-simulation and its concluding proof",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "For every fixed finite cost/mixer/seed word and every ε>0 there exists a finite ordinary cost/mixer word whose limiting rooted energy differs by less than ε. First choose b for initialization error, then a generic seeded-angle perturbation, finite selective lists and sufficiently small positive r; all resulting real angles are fixed independently of D,n,J.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The same vertex seed is reused in every seed gate. Compilation proceeds outer rank to inner rank: pointwise approximants, sender partitions, finite commutators, then lower ranks; raw-seed masks are compiled last. No uniformity as helper probabilities vanish or circuit length grows is claimed.",
+  "citation_ids": [
+   "circuit-r2-26-cite-seeded-synthesis"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.seeded_synthesis",
+  "kind": "claim",
+  "label": "Seeded synthesis with explicit helper loss",
+  "locator": "04-classical-synthesis.tex:3–111, 1012–1119; thm:classical-synthesis, eq:synthesis-energy",
+  "source_id": "circuit-r2-26-source-synthesis",
+  "statement": "For every fixed finite bounded smooth odd seed-only exclusion formula with one unused positive-probability helper type per rank, and every η>0, a finite seeded circuit has insertion v with ‖1_{H^c}(v−v_cl)‖<η and |E(v)−E(m)|≤2η+2√p_H. Here m=Σ_c1_c sin(2θ_c), the ideal classical rotation has its stated spin decomposition, and all circuit angles are independent of D,n,J.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "One must prove the net o(r) cancellation. Replacing a moving insertion by an O(r)-accurate approximation and subsequently multiplying that error by 1/r is not valid.",
+  "citation_ids": [
+   "circuit-r2-26-cite-selective-accuracy"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.selective_accuracy",
+  "kind": "claim",
+  "label": "Selective pulse errors are o(r) on ordinary tails",
+  "locator": "05-seed-simulation.tex:351–503, 539–606; lem:seed-selective-accuracy, lem:seed-low-insertions, eq:seed-probe-direction-change",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "Under the finite-packet invariant with discarded remainder o(r), zero-clock selective pulse lists have net error o(r) on ordinary packets and their spin-inserted tails, and error o(1) on normalized special packets, uniformly over bounded tail families. The actual insertion entering each probe changes by O(r) and its geometric phase is tracked throughout the list.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The word is finite after the projection list is fixed. This is exact finite-list ensemble control of limiting packet data, not a uniform control statement over a continuum of unknown centers.",
+  "citation_ids": [
+   "circuit-r2-26-cite-selective-control"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.selective_control",
+  "kind": "claim",
+  "label": "Exact finite selective rotations with zero clocks",
+  "locator": "05-seed-simulation.tex:272–349; lem:seed-ensemble-control, eq:seed-zero-clocks",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "For a finite list of nonzero packet projection pairs in R², select two transverse axes avoiding zero projections and unwanted coincidences up to sign. Polynomial interpolation and finite-dimensional Lie-group reachability give a finite exact pulse word applying the required common X rotation on the selected packets, with each transverse axis having total signed probe time zero.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "The order is terminal cutoff, finite scalar mesh, then finite smoothing. The statement has no joint-limit or uniform-in-terminal-time rate and still allows unbounded intermediate columns.",
+  "citation_ids": [
+   "circuit-r2-26-cite-sign-smoothing"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.sign_smoothing",
+  "kind": "claim",
+  "label": "Finite sign smoothing preserves the rooted value",
+  "locator": "03-classical-optimization.tex:220–254; eq:energy-l2-continuity, eq:scalar-near-optimal-smooth",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "For a given minimizer, choose T<1 and then a sufficiently fine finite mesh N. At that fixed T,N, replace F_N=sgn(H_N) by tanh(kH_N). The independent final uniform-rounding coordinate gives P(H_N=0)=0, so this converges in L² as k→∞. For every error>0, finite T,N,k give a centered finite descendant output z with |z|≤1 and E(z)≥P_*−error; local maps are odd and smooth with polynomially bounded derivatives.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The displacement limit uses the o(r) error and the actual insertion change. Norm remainders are transported through unitaries; an unbounded observable is not applied to an uncontrolled norm remainder.",
+  "citation_ids": [
+   "circuit-r2-26-cite-singular-echo"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.singular_echo",
+  "kind": "claim",
+  "label": "The cost–flip–cost–unflip echo retains finite signal",
+  "locator": "05-seed-simulation.tex:608–747; lem:seed-one-echo, eq:seed-flip-change, eq:seed-exact-echo-cancellation",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "For fixed t≠0, a huge cost t/r, a selective −iX flip, the opposite cost and the inverse flip produce v′−v=−2r w_r+o(r). Combining the two actual huge costs before approximation gives the finite Weyl displacement (t/r)(v′−v)=−2t w_r+o(1), modulo a spin-independent phase, and updates each special center by D↦D−t(v+v′).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "No maximizer of the noncompact angle supremum is required; no exact optimality at finite depth is inferred.",
+  "citation_ids": [
+   "circuit-r2-26-cite-upper-bound-padding"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.upper_bound_padding",
+  "kind": "claim",
+  "label": "Classical upper bound and identity-padding monotonicity",
+  "locator": "01-introduction.tex:74–154; eq:qaoa-value, thm:main, upper-bound and padding paragraphs",
+  "source_id": "qaoa_introduction",
+  "statement": "For every n and QAOA state, computational-basis measurement bounds its cost expectation by the classical maximum. Taking the fixed-parameter expected energy limit gives Q_p≤P_*. Inserting zero-angle identity layers gives Q_{p+1}≥Q_p. Therefore arbitrarily accurate finite ordinary witnesses imply lim_{p→∞}Q_p=P_*.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The construction must not choose a list from its own as-yet-unproved small-r limit. The perturbation preserves the target energy by continuity; it supplies finite nonvanishing conditions, not a uniform numerical lower bound over all words.",
+  "citation_ids": [
+   "circuit-r2-26-cite-visibility"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.visibility",
+  "kind": "claim",
+  "label": "Finite visibility choices precede the small-packet limit",
+  "locator": "05-seed-simulation.tex:875–974; lem:seed-huge-transverse and eq:seed-formal-visibility",
+  "source_id": "circuit-r2-26-source-seed",
+  "statement": "Huge transverse insertions are weakly zero against bounded tail families. Each of the finitely many required visibility functions is analytic in the seeded word angles and has a common nonzero test value at zero angles, 4bz exp(−8b²). A small generic perturbation avoids all required zeros and zero echo times. Finite selective lists are then chosen successively using earlier limiting data, before r is chosen.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Conditional ordinary reconstruction for the specified finite recursion, not a new formal theorem. The coefficient expectation uses the vertex law; its normalization uses the cavity law. Fixed-horizon and spatial-Lipschitz hypotheses are essential. The generic temporal-sign counterexample concerns auxiliary Theorem 4.1 as printed, not specialized positive-Parisi Proposition 4.7 or EAMS Theorem 1.7. No horizon-, temperature- or terminal-cutoff-uniform constant is claimed.",
+  "citation_ids": [
+   "circuit-r2-26-cite-positive-finite-step",
+   "eams2023_finite_step"
+  ],
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "id": "circuit.weighted_finite_horizon",
+  "kind": "claim",
+  "label": "Corrected weighted finite-tree estimate with explicit hypotheses",
+  "locator": "07-positive-temperature.tex:211–450; EAMS arXiv:2111.06813v2 Proposition 2.1 and Lemmas 3.2–3.4,4.2–4.3; long §11.1",
+  "source_id": "circuit-r2-26-source-positive",
+  "statement": "In the specified EAMS one-step-lag recursion on a k-regular tree, k>=2, fix delta>0 and finite L>=1 with L*delta<1. Use iid Gaussian labels and the common node/cavity initial state sqrt(delta)*g_i. At the finitely many mesh times, assume |a_k|<=K>=1, spatial Lipschitz constants La,Lb for a_k,b_k uniform in k, identical normalized a_k for node/cavity updates, and E[(A_(i->j)^r)^2]=1. Then |k*E[z_o^L*z_v^L]-2*sqrt(k-1)*delta*sum_(r=1)^(L-1) E[B_o^r]|<=C(K,La,Lb,delta,L), independently of k. The sum is empty when L=1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Uniformity concerns a fixed finite calculation, bounded parameter sets and specified weighted norms. It does not imply global operator-norm convergence, a nondegenerate covariance assumption, or uniformity in growing word length.",
+  "citation_ids": [
+   "circuit-r2-26-cite-weighted-unitary-calculus"
+  ],
+  "evidence_ids": [],
+  "id": "circuit.weighted_unitary_calculus",
+  "kind": "claim",
+  "label": "Weighted sums, products and commuting substitution",
+  "locator": "02-foundations.tex:367–950; lem:weyl-bounds, lem:centered-sums, lem:unitary-clt, lem:commuting-substitution",
+  "source_id": "circuit-r2-26-source-foundations",
+  "statement": "For fixed finite recursively weighted smooth families, with corresponding adjoint jets controlled, centered normalized sums and products of small unitaries admit the stated rooted limits. The product limit retains the imaginary scalar second-derivative correction. Jointly strongly commuting controls may be substituted when joint exponentials and coefficient/adjoint jets have polynomial weighted bounds; Fourier tails are controlled before removing the cutoff.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.full_support_minimizer"
+  ],
+  "boundary": "Pure zero-field SK with covariance normalization xi(t)=t^2/2. Conditional on the supplied order parameter being an admissible integrable minimizer; no separate assertion that a minimizer exists. FullSupportConclusion includes Stieltjes-measure and diffusion existence, full relative support, strict increase, and the two selected diffusion moment identities. It does not assert QAOA circuit-energy convergence.",
+  "citation_ids": [
+   "scope_281",
+   "full_support_type",
+   "full_support_comparator"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "lean_build_not_run",
+   "lean_dependencies_not_run",
+   "manuscript_alignment_not_run",
+   "full_support_comparator_not_run",
+   "full_support_comparator_unavailable_20261023",
+   "full_support_solution_build_failure_20261023",
+   "full_support_corrected_build_not_run_20261024",
+   "full_support_corrected_comparator_not_run_20261024",
+   "current_input_identity_20261024",
+   "corrected_comparator_outcome_unavailable_20261025",
+   "corrected_extraction_outcome_unavailable_20261025"
+  ],
+  "id": "full_support",
+  "kind": "goal",
+  "label": "Full support of zero-temperature SK minimizers",
+  "locator": "FullSupportConclusion and theorem full_support",
+  "source_id": "full_support_statement",
+  "statement": "For any BrownianSystem W and admissible OrderParameter gamma, IsMinimizer W gamma implies FullSupportConclusion W gamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.full_support_minimizer"
+  ],
+  "boundary": "Pure zero-field SK with covariance normalization xi(t)=t^2/2. Conditional on the supplied order parameter being an admissible integrable minimizer; no separate assertion that a minimizer exists. FullSupportConclusion includes Stieltjes-measure and diffusion existence, full relative support, strict increase, and the two selected diffusion moment identities. It does not assert QAOA circuit-energy convergence.",
+  "citation_ids": [
+   "full_support_implementation",
+   "full_support_type",
+   "full_support_comparator"
+  ],
+  "declaration": "OAI.ZeroTemperatureSK.full_support",
+  "evidence_ids": [
+   "source_bytes_verified",
+   "lean_build_not_run",
+   "lean_dependencies_not_run",
+   "manuscript_alignment_not_run",
+   "full_support_comparator_not_run",
+   "full_support_comparator_unavailable_20261023",
+   "full_support_solution_build_failure_20261023",
+   "full_support_corrected_build_not_run_20261024",
+   "full_support_corrected_comparator_not_run_20261024",
+   "current_input_identity_20261024",
+   "corrected_comparator_outcome_unavailable_20261025",
+   "corrected_extraction_outcome_unavailable_20261025"
+  ],
+  "id": "lean.full_support",
+  "kind": "declaration",
+  "label": "OAI.ZeroTemperatureSK.full_support",
+  "locator": "theorem full_support, line 35",
+  "source_id": "full_support_proof",
+  "statement": "theorem full_support (W : BrownianSystem Ω) (γ : OrderParameter) (hmin : IsMinimizer W γ) : FullSupportConclusion W γ",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The first two conjuncts are conditional on IsMinimizer and IsDiffusion; the final Parisi-value equality needs IsMinimizer. These are scalar ground-state value and finite Gaussian approximation statements. They do not assert QAOA circuit-energy convergence or an efficient angle-selection algorithm.",
+  "citation_ids": [
+   "scalar_value_implementation",
+   "scalar_value_type",
+   "scalar_value_comparator"
+  ],
+  "declaration": "OAI.SKValue.value_consequences",
+  "evidence_ids": [
+   "source_bytes_verified",
+   "lean_build_not_run",
+   "lean_dependencies_not_run",
+   "manuscript_alignment_not_run",
+   "scalar_value_comparator_not_run",
+   "scalar_value_solution_build_failure_20261024",
+   "scalar_value_corrected_build_not_run_20261024",
+   "scalar_value_corrected_comparator_not_run_20261024",
+   "current_input_identity_20261024",
+   "corrected_comparator_outcome_unavailable_20261025",
+   "corrected_extraction_outcome_unavailable_20261025"
+  ],
+  "id": "lean.value_consequences",
+  "kind": "declaration",
+  "label": "OAI.SKValue.value_consequences",
+  "locator": "theorem value_consequences, line 16",
+  "source_id": "scalar_value_proof",
+  "statement": "OAI.SKValue.value_consequences is the three-part universally quantified conjunction specified by ComparatorChallenges.SKValue, implemented from scalar_value_target, finite_gaussian_target, and ground_state_parisi_target.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "Manuscript-level claim with system size tending to infinity first and circuit depth then increasing; finite deterministic angles depend on the desired accuracy and are independent of system size and disorder. No quantitative finite-size estimate, depth bound, or efficient angle-selection procedure is claimed. The whole manuscript argument has not been independently reviewed here and has no retained Lean circuit-convergence target.",
+  "citation_ids": [
+   "qaoa_main_theorem",
+   "qaoa_routes",
+   "scope_281"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "qaoa_manuscript_review_not_run",
+   "manuscript_alignment_not_run"
+  ],
+  "id": "qaoa_thermodynamic_first",
+  "kind": "goal",
+  "label": "QAOA approaches the SK optimum in the thermodynamic-first limit",
+  "locator": "Theorem thm:main, lines 111–119",
+  "source_id": "qaoa_introduction",
+  "statement": "For the Gaussian zero-field SK model, lim_{p→∞} Q_p = P_star, where Q_p is the supremum over deterministic p-layer angles of the limiting expected energy per spin as n→∞. Equivalently, for each epsilon>0, some finite p and deterministic angles, independent of n and the disorder, attain at least P_star-epsilon in that limiting expectation.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.fixed_strip_input_diffusion",
+   "scalar.fixed_strip_input_bounds",
+   "scalar.fixed_strip_input_unit_moment"
+  ],
+  "boundary": "The analytic bounds and moment identity are hypotheses of this lower-level implication. They are supplied within ContactAssembly for the top-level minimizer theorem; adding this source relation does not assert those inputs unconditionally.",
+  "citation_ids": [
+   "scalar-r2-26-cite-conditional-fixed-strip"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.conditional_fixed_strip",
+  "kind": "claim",
+  "label": "Formal fixed-strip implication with analytic hypotheses exposed",
+  "locator": "Processes/FiniteGaussianFixedStrip.lean:29–49; IsDiffusion.finite_gaussian_fixed_strip",
+  "source_id": "scalar-r2-26-source-fixed-strip",
+  "statement": "In the SKValue model, for hX:IsDiffusion W gamma X and fixed 0<T<1, assuming GradientStrip T gamma.coeff (gradient W gamma) K L, nonnegative D,Lu,La, a uniform curvature bound D on [0,T]×R, time-space Lipschitz bounds Lu,La for gradient and curvature, and E curvature(t,X_t)²=1 for every t∈[0,T], the lemma proves eventual active-index normalizer positivity and the fixed-T shifted mesh limit.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_admissible"
+  ],
+  "boundary": "This is a conditional expectation identity, not a claim that F_N equals the terminal gradient pointwise. Independence and the bound |u|≤1 are essential.",
+  "citation_ids": [
+   "scalar-r2-26-cite-conditional-rounding"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.conditional_rounding",
+  "kind": "claim",
+  "label": "Independent Gaussian rounding preserves the conditional mean",
+  "locator": "consequences.tex:107–115,162–170; rounding paragraph",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "For fixed 0<T<1,N with finite positive normalizers, define F_N=sgn(u(T,Y_N)+2 Φ_G(Z_{N+1})−1), with Z_{N+1} independent of the first N coordinates and |u|≤1. Then E[F_N|Z₁,…,Z_N]=u(T,Y_N). Its zero set has probability zero, so the value assigned by sign at zero is immaterial.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_admissible"
+  ],
+  "boundary": "Minimality is not used. Approximation transfers only bounded derivative moments on a fixed compact strip; no convergence of density scores or their ratios is claimed. The c=0 proof is separate, never division by c.",
+  "citation_ids": [
+   "scalar-r2-26-cite-constant-curvature"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.constant_curvature",
+  "kind": "claim",
+  "label": "Separate positive and zero constant-interval inequalities",
+  "locator": "curvature.tex:9–52; prop:gap-curvature; regularity.tex:240–308",
+  "source_id": "support_tex_curvature",
+  "statement": "For gamma∈U constant c on an open interval I⊂(0,1), q(t)=E Phi_x(t,X_t)². If c>0 then q‴(t)≥(1000 c²)^(−1) E[(c Phi_xx(t,X_t))⁴]>0 for every t∈I, so q′ is strictly convex. If c=0 then q′ is strictly increasing, by q″=E Phi_xxx²>0.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Control is in growing-dimensional ell², not only coordinatewise. The rounding-coordinate boundary term A_N B_{N+1} is retained until shown to vanish.",
+  "citation_ids": [
+   "scalar-r2-26-cite-correlation-vector-control"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.correlation_vector_control",
+  "kind": "claim",
+  "label": "Dimension-independent control of both coefficient vectors",
+  "locator": "consequences.tex:153–188; Bessel and shifted-product paragraphs",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "At fixed T<1 define A_j=E[F_N g_j] (1≤j≤N), A₀=0, and B_i=E[F_N Z_i] (1≤i≤N+1). Then (A_j)=(sqrt(Δ)/c_j)+o_{ell²}(1) and (B_i)_{i≤N}=(sqrt(Δ)E a(t_{i−1},Y_{i−1}))+o_{ell²}(1), as N→∞. Both vectors have bounded ell² norm; A_N=o(1) and |B_{N+1}|≤1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "T is fixed first. Normalizers are eventually positive uniformly over active indices, not asserted positive for all meshes. The g_j have no sqrt(Δ) factor; that factor enters M_N=∑sqrt(Δ)g_j/c_j.",
+  "citation_ids": [
+   "scalar-r2-26-cite-euler-normalization"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.euler_normalization",
+  "kind": "claim",
+  "label": "Fixed-strip Euler convergence and normalized directions",
+  "locator": "consequences.tex:92–106,124–161; eq:euler, eq:normalized-increment, eq:euler-convergence",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "Fix a minimizer and 0<T<1. For N≥1 set Δ=T/N, t_j=jΔ, Y₀=0 and Y_j=Y_{j−1}+sqrt(Δ)Z_j+Δ gamma(t_{j−1})u(t_{j−1},Y_{j−1}) for independent standard normals. Then E max_{j≤N}|Y_j−X_{t_j}|²→0. Eventually all c_j=(E a(t_{j−1},Y_{j−1})²)^(−1/2) are positive and finite, max_{j≤N}|c_j−1|→0, and g_j=c_j a(t_{j−1},Y_{j−1})Z_j form an L²-orthonormal family.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Ordinary derivation in this authored edition, not an attribution of the whole synthesis to a cited external paper. The log-sum and entropy identities give the deterministic bounds; Gaussian concentration uses Lipschitz constant sqrt((n-1)/(2n^2)); counting configurations gives the conditional tail. Exact Gibbs sampling is a distributional premise, not an efficient sampling algorithm. The Born law and QAOA angle construction are distinct. No Lean or Comparator coverage and no complete formal dependency audit are asserted.",
+  "citation_ids": [
+   "authored_gibbs_comparison",
+   "scalar-r2-26-cite-parisi-formula"
+  ],
+  "evidence_ids": [
+   "ordinary_comparison_warrants_20261024"
+  ],
+  "id": "scalar.finite_gibbs_comparison",
+  "kind": "claim",
+  "label": "Finite Gibbs values and exact Gibbs samples",
+  "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution.",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For the pure zero-field SK Hamiltonian and beta>0, let L_n=max_sigma H_n(sigma)/n, F_n,beta=(n beta)^(-1)log sum_sigma exp(beta H_n(sigma)), and U_n,beta be the exact Gibbs mean energy per spin. For each instance, 0<=F_n,beta-L_n<=log(2)/beta and 0<=L_n-U_n,beta<=log(2)/beta. For n>=2 and s>0, P_J(|L_n-E L_n|>s)<=2 exp(-n^2 s^2/(n-1)). For an exact Gibbs draw Sigma, P(H_n(Sigma)/n<=L_n-s | J)<=min(1,exp(n(log(2)-beta s))). Since E L_n tends to P_*, both value expectations tend to P_* along every joint n→infinity,beta→infinity; an exact Gibbs draw tends to P_* in the joint disorder-and-sampling probability.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.qaoa_model_and_limits"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_scalar_finite_maximum_concentration"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "scalar.finite_maximum_concentration",
+  "kind": "claim",
+  "label": "Concentration of the finite SK maximum",
+  "locator": "Long record §11.1.2, passage gibbs-comparison, Gaussian Lipschitz bound and concentration estimate",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For n>=2, M_n=max_sigma H_n(sigma)/n is sqrt((n-1)/(2n^2))-Lipschitz in the independent standard Gaussian SK couplings. Gaussian concentration gives Pr(|M_n-E M_n|>a)<=2 exp(-n^2 a^2/(n-1)); E M_n tends to P_star, hence M_n tends to P_star in probability. No effective mean-bias rate is supplied. The concentration bound is for every a>0.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary deduction from fixed-strip spatial and temporal bounds, maximal coupled Euler estimates, Bessel control and the terminal tail. Monotone gamma may have jumps; the proof uses its total variation, not its derivative. Constants need not remain bounded as T approaches one, and no effective numerical minimizer bounds or arbitrary prescribed diagonal rate are asserted. This rate is not a selected Lean conclusion.",
+  "citation_ids": [
+   "scalar-r2-26-cite-euler-normalization",
+   "scalar-r2-26-cite-correlation-vector-control",
+   "scalar-r2-26-cite-terminal-loss",
+   "support_regularity_source"
+  ],
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024",
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "scalar.fixed_strip_error_budget",
+  "kind": "claim",
+  "label": "Fixed-strip scalar accuracy with its cutoff dependence exposed",
+  "locator": "consequences.tex:124–196; long reasoning record §7.1, ordinary quantitative deduction",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "For each fixed admissible minimizer gamma and cutoff 0<T<1, finite constants C_(gamma,T), N0_(gamma,T) give |S_(T,N)-P_star|<=(1-T)m(T)+C_(gamma,T)sqrt(T/N) for N>=N0, where m(T)=E Phi_xx(T,X_T). The adjacent sum retains the rounding coordinate. Monotone quadrature costs at most Delta and weighted Gronwall uses exp(K_T integral_0^T gamma)<=exp(K_T).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Explicit analytic hypotheses of this lower-level lemma. Top-level minimizer theorems derive them internally; reference navigation must not make them new external assumptions of those stronger theorems.",
+  "citation_ids": [
+   "scalar-r2-26-cite-fixed-strip-input-bounds"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.fixed_strip_input_bounds",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: analytic strip-bound premises",
+  "locator": "Processes/FiniteGaussianFixedStrip.lean:31–37",
+  "source_id": "scalar-r2-26-source-fixed-strip",
+  "statement": "For some real K,L,D,Lu,La, assume GradientStrip T gamma.coeff (gradient W gamma) K L, 0≤D,0≤Lu,0≤La, |curvature W gamma t x|≤D for all t∈[0,T],x, and the stated joint time-space Lipschitz inequalities with constants Lu,La on [0,T]×R.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Locally scoped quantified premises of conditional-fixed-strip; not a globally supplied diffusion or cutoff witness.",
+  "citation_ids": [
+   "scalar-r2-26-cite-fixed-strip-input-diffusion"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.fixed_strip_input_diffusion",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: model, diffusion and cutoff premises",
+  "locator": "Processes/FiniteGaussianFixedStrip.lean:29–31",
+  "source_id": "scalar-r2-26-source-fixed-strip",
+  "statement": "For this conditional lemma, fix W:BrownianSpace, gamma:OrderParameter, X:R→W.Omega→R and T with IsDiffusion W gamma X and 0<T<1. No minimizer is assumed by this lemma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "An assumed analytic input at this conditional lemma, not a consequence of the normalizer definition. ContactAssembly derives it from gradient contact and source strip regularity.",
+  "citation_ids": [
+   "scalar-r2-26-cite-fixed-strip-input-unit-moment"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.fixed_strip_input_unit_moment",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: unit curvature-moment premise",
+  "locator": "Processes/FiniteGaussianFixedStrip.lean:38",
+  "source_id": "scalar-r2-26-source-fixed-strip",
+  "statement": "Assume E[(curvature W gamma t (X t))²]=1 for every t∈[0,T].",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The source proof derives this inside SKValue. It does not import or invoke OAI.ZeroTemperatureSK.full_support. Static inspection only; no new status upgrade.",
+  "citation_ids": [
+   "scalar-r2-26-cite-formal-contact-input"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.formal_contact_input",
+  "kind": "claim",
+  "label": "The scalar implementation derives its own contact identity",
+  "locator": "Variation/MinimizerContact.lean:13–82, especially 75–82",
+  "source_id": "scalar-r2-26-source-minimizer-contact",
+  "statement": "For the SKValue model, IsMinimizer W gamma and IsDiffusion W gamma X imply ∀t∈[0,1), E gradient(W,gamma,t,X_t)²=t, via IsMinimizer.gradient_moment_contact.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded.",
+  "citation_ids": [
+   "scalar-r2-26-cite-formal-finite-gaussian-clause"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.formal_finite_gaussian_clause",
+  "kind": "claim",
+  "label": "Finite-Gaussian branch at a fixed interior cutoff",
+  "locator": "GroundState/MainConclusions.lean:17–20; finite_gaussian_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W,gamma,X and T:R with 0<T<1, IsMinimizer W gamma and IsDiffusion W gamma X imply FiniteGaussianConclusion W gamma X T: eventual active-index normalizer positivity, the mesh limit to the curvature integral up to T, and endpoint convergence of that integral to groundStateValue.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "A formal correspondence obligation only when direct cross-model composition is claimed. It is not a missing premise in the manuscript proof and not evidence that either source theorem is false.",
+  "citation_ids": [
+   "scalar-r2-26-cite-formal-model-transport-open",
+   "scalar-r2-26-cite-transport-support-model"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.formal_model_transport_open",
+  "kind": "claim",
+  "label": "Direct formal composition between the two models remains unwitnessed",
+  "locator": "SKValue/Model.lean:33–89 compared with SKSupport/Model.lean:12–75",
+  "source_id": "scalar-r2-26-source-value-model",
+  "statement": "To compose the separate SKSupport and SKValue targets as Lean declarations, construct and prove a transport preserving the coefficient representation, Brownian-system fields, elapsed-time control integrals, control supremum, derivatives, Parisi functional, minimizer predicate and diffusion predicate. No such cross-target theorem is supplied or checked by this proposed graph.",
+  "status": "open"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded. This branch must be selectable without importing an external diffusion premise.",
+  "citation_ids": [
+   "scalar-r2-26-cite-formal-parisi-clause"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.formal_parisi_clause",
+  "kind": "claim",
+  "label": "Parisi identity branch without a supplied diffusion",
+  "locator": "GroundState/MainConclusions.lean:21–27; ground_state_parisi_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W:BrownianSpace and gamma:OrderParameter, IsMinimizer W gamma implies groundStateValue=parisi W gamma. No X or IsDiffusion hypothesis is supplied by the caller; the proof uses diffusionProcess_isDiffusion W gamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded.",
+  "citation_ids": [
+   "scalar-r2-26-cite-formal-scalar-clause"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.formal_scalar_clause",
+  "kind": "claim",
+  "label": "Scalar-value branch with a supplied diffusion",
+  "locator": "GroundState/MainConclusions.lean:13–15; scalar_value_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–118.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "A conditional integrated inequality. The raw integrand can be negative pointwise even if v>0. Actual PDE/density data must satisfy all hypotheses before applying it.",
+  "citation_ids": [
+   "scalar-r2-26-cite-integrated-coercivity"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.integrated_coercivity",
+  "kind": "claim",
+  "label": "Conditional analytic coercivity from the identity",
+  "locator": "certificate.tex:166–199; cert:coercivity",
+  "source_id": "support_tex_certificate",
+  "statement": "For related r,v,w,z,s and auxiliary variables satisfying the stated derivative rules, nonnegative signs, smooth quotient extensions, a probability density f with f_x/f=r−s, integrability of every term and rfF₂→0 at both infinities, E_f[z²−12vw²+6v⁴]≥(1661507/1521000000)E_f[v⁴]≥(1/1000)E_f[v⁴].",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded.",
+  "citation_ids": [
+   "scalar-r2-26-cite-lean-gaussian-target"
+  ],
+  "declaration": "OAI.SKValue.finite_gaussian_target",
+  "evidence_ids": [],
+  "id": "scalar.lean_gaussian_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.finite_gaussian_target",
+  "locator": "GroundState/MainConclusions.lean:17–20; finite_gaussian_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W,gamma,X and T:R with 0<T<1, IsMinimizer W gamma and IsDiffusion W gamma X imply FiniteGaussianConclusion W gamma X T: eventual active-index normalizer positivity, the mesh limit to the curvature integral up to T, and endpoint convergence of that integral to groundStateValue.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded.",
+  "citation_ids": [
+   "scalar-r2-26-cite-lean-parisi-target"
+  ],
+  "declaration": "OAI.SKValue.ground_state_parisi_target",
+  "evidence_ids": [],
+  "id": "scalar.lean_parisi_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.ground_state_parisi_target",
+  "locator": "GroundState/MainConclusions.lean:25–27; ground_state_parisi_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W:BrownianSpace and gamma:OrderParameter, IsMinimizer W gamma implies groundStateValue=parisi W gamma. No X or IsDiffusion hypothesis is supplied by the caller; the proof uses diffusionProcess_isDiffusion W gamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The exact SKValue model uses a coefficient on all reals with its stated interval fields, BrownianSpace and its natural filtration. Source inspected; no kernel replay, Comparator acceptance or elaborated dependency extraction is recorded.",
+  "citation_ids": [
+   "scalar-r2-26-cite-lean-scalar-target"
+  ],
+  "declaration": "OAI.SKValue.scalar_value_target",
+  "evidence_ids": [],
+  "id": "scalar.lean_scalar_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.scalar_value_target",
+  "locator": "GroundState/MainConclusions.lean:13–15; scalar_value_target",
+  "source_id": "scalar-r2-26-source-formal-targets",
+  "statement": "For every W:BrownianSpace, gamma:OrderParameter and X:R→W.Omega→R, IsMinimizer W gamma and IsDiffusion W gamma X imply ScalarValueConclusion W gamma X, whose full conjunction is Model.lean:106–118.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "The terminal formula subtracts the full integral, whereas P(gamma) subtracts half. The proof uses U₁X₁=|X₁| and does not require P(X₁=0)=0 or a pointwise sign assertion at zero.",
+  "citation_ids": [
+   "scalar-r2-26-cite-manuscript-terminal-value",
+   "scalar_value_finite_cutoff_antecedent"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.manuscript_terminal_value",
+  "kind": "claim",
+  "label": "Terminal martingale and ground-state value formulas",
+  "locator": "consequences.tex:14–73; cor:value, eq:value-identities",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "For an admissible minimizer and its diffusion, the bounded gradient martingale converges almost surely and in L² to U₁, with U₁²=1 almost surely. With P_* in the stated SK normalization, P_*=E|X₁|−∫₀¹t gamma(t)dt=E[U₁B₁]=∫₀¹E a(t,X_t)dt; the last integral is finite.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "The exhibiting lower-bound proof supplies attainment, although Theorem 1 displays an infimum. Use when choosing a minimizer; do not add as a premise of a conditional theorem about every given minimizer.",
+  "citation_ids": [
+   "scalar-r2-26-cite-minimizer-attainment"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.minimizer_attainment",
+  "kind": "claim",
+  "label": "External attainment of the variational infimum",
+  "locator": "arXiv:1606.05335v2, pp.9–12, Lemmas 2–3, especially the last inequalities in the proof of Lemma 3",
+  "source_id": "ac2017_ground_state",
+  "statement": "For the same zero-temperature variational class, there exists gamma₀∈U with P(gamma₀)=inf_{gamma∈U}P(gamma).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_scalar_minimizer_coefficient_budget"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026",
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "scalar.minimizer_coefficient_budget",
+  "kind": "claim",
+  "label": "Integral and pointwise bounds for a minimizer",
+  "locator": "Long reasoning record #coefficient-budget",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For an admissible pure zero-field SK minimizer and its diffusion, m(t)=E[Phi_xx(t,X_t)]=1-integral_0^t gamma, integral_0^1 gamma<=1 and 0<=gamma(t)<=m(t)/(1-t)<=1/(1-t). Also I(T)=T-integral_0^T(T-s)gamma(s)ds and P_star=1-integral_0^1(1-s)gamma(s)ds. These budget inequalities alone give neither equality integral gamma=1 nor effective mesh constants; a separate endpoint argument supplies the equality.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary source-assisted analytic deduction; no new Lean declaration, formal replay or independent acceptance. No effective endpoint rate or normalization of Stieltjes mass is asserted. The nonminimizing counterexample concerns pointwise positivity only.",
+  "citation_ids": [
+   "authored_r9_scalar_minimizer_total_coefficient_mass",
+   "scalar_hessian_tail_v4",
+   "scalar_hessian_tail_v6"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "scalar.minimizer_total_coefficient_mass",
+  "kind": "claim",
+  "label": "Terminal coefficient normalization in zero field",
+  "locator": "Long reasoning record #coefficient-total-mass",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For the admissible pure zero-field SK minimizer and its diffusion, m(t)=E Phi_xx(t,X_t) tends to zero as t tends to one; integral_0^1 gamma(s)ds=1, m(t)=integral_t^1 gamma(s)ds and P_star=integral_0^1 s gamma(s)ds. Hence P_star-I(T)=integral_T^1(s-T)gamma(s)ds <= (1-T)m(T)=o(1-T). The normalized measure is gamma(s)ds, not the Stieltjes increment measure dgamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Parameter domain of the manuscript lemmas, not an assertion of minimizer existence. Stieltjes mass may be infinite in total; no smooth density is assumed.",
+  "citation_ids": [
+   "scalar-r2-26-cite-paper-admissible"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.paper_admissible",
+  "kind": "assumption",
+  "label": "Manuscript admissible coefficient and normalization",
+  "locator": "main.tex:53–87,149–152; eq:model-control, eq:model-pde, eq:model-functional",
+  "source_id": "support_tex_main",
+  "statement": "Pure zero-field SK, xi(t)=t^2/2; gamma:[0,1)→[0,∞) is nondecreasing, right-continuous and Lebesgue integrable. Phi is the stated bounded progressively measurable control value with terminal |x|. P(gamma)=Phi(0,0)−(1/2)∫₀¹t gamma(t)dt.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_admissible"
+  ],
+  "boundary": "Global minimality is a hypothesis. This node does not assert that any gamma realizes it and is not identified with either Lean namespace by a proof edge.",
+  "citation_ids": [
+   "scalar-r2-26-cite-paper-minimizer"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.paper_minimizer",
+  "kind": "assumption",
+  "label": "Manuscript minimizer hypothesis",
+  "locator": "main.tex:119–131; thm:full-support",
+  "source_id": "support_tex_main",
+  "statement": "Given gamma in the preceding admissible class, assume P(gamma)≤P(eta) for every eta in that class, with the same Brownian control-value interpretation.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "External mathematical input to the manuscript value identification. The headline theorem is about the almost-sure limit; expectation identification also uses Gaussian concentration/uniform integrability as described in the support manuscript footnote. It is not a retained Lean-replay result.",
+  "citation_ids": [
+   "scalar-r2-26-cite-parisi-formula"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.parisi_formula",
+  "kind": "claim",
+  "label": "External zero-temperature Parisi formula",
+  "locator": "arXiv:1606.05335v2, pp.1–3, Theorem 1; normalization checked against support main.tex:88–107",
+  "source_id": "ac2017_ground_state",
+  "statement": "For the pure zero-field Gaussian SK Hamiltonian H_n=n^(−1/2)∑_{i<j}J_ij sigma_i sigma_j, the limiting expected maximum per spin P_* equals inf_{gamma∈U}P(gamma). The unordered-pair covariance differs from n xi(R) by −1/2; adding a common independent N(0,1/2) offset preserves expected maxima.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "A distinct consequence using the external algorithm theorem and attained minimizer. It is not the source of the QAOA rooted Gaussian energy identity and does not imply efficient angle selection or finite-precision/preprocessing complexity.",
+  "citation_ids": [
+   "scalar-r2-26-cite-separate-classical-algorithm",
+   "scalar-r2-26-cite-eams-algorithm"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.separate_classical_algorithm",
+  "kind": "claim",
+  "label": "Separate finite-disorder optimization consequence",
+  "locator": "algorithm-application.tex:1–59; cor:algorithm",
+  "source_id": "scalar-r2-26-source-algorithm-application",
+  "statement": "For every fixed epsilon>0, choose an attained minimizer gamma₀ using Auffinger–Chen. Apply the conditional full-support theorem to this witness to obtain strict increase, and then EAMS arXiv:2001.00904v1 Assumption 2, Theorem 3 and Corollary 2.2. This gives a randomized finite-spin output within epsilon n of max H_n with probability tending to one over both Gaussian disorder and algorithmic randomness and at most C(epsilon)n² real-arithmetic operations in the stated oracle/preprocessing model. The chosen minimizer is locally bound in this application, not a caller-supplied premise.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "The sum is shifted: B_{j+1}, including the final rounding coordinate. N is mesh count, distinct from spin-system size n. No circuit, efficient computation, convergence rate, uniform terminal estimate, or prescribed diagonal N(T) is supplied by this proposition.",
+  "citation_ids": [
+   "scalar-r2-26-cite-shifted-gaussian-limit"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.shifted_gaussian_limit",
+  "kind": "claim",
+  "label": "Shifted finite Gaussian coefficient limit",
+  "locator": "consequences.tex:92–196; prop:gaussian, eq:finite-value",
+  "source_id": "scalar-r2-26-source-consequences",
+  "statement": "For each fixed 0<T<1 and an admissible minimizer, with A₀=0 and the normalized Euler/rounding definitions, lim_{N→∞}∑_{j=0}^N A_j B_{j+1}=∫₀ᵀE a(t,X_t)dt. Afterwards T↑1 gives P_*.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Additional moment-bootstrap and fixed-time flattening argument. Not part of FullSupportConclusion and not needed by the QAOA scalar construction; do not place it in that prerequisite closure. The numerical lower bound is an ordinary deduction in long §9.2, not an extra clause of the selected formal endpoint; it depends on the same minimizer and moment normalization.",
+  "citation_ids": [
+   "scalar-r2-26-cite-smooth-positive-density"
+  ],
+  "evidence_ids": [
+   "ordinary_reconstruction_bounds_20261024"
+  ],
+  "id": "scalar.smooth_positive_density",
+  "kind": "claim",
+  "label": "Further manuscript corollary: smooth positive density",
+  "locator": "order-parameter-regularity.tex:15–152; cor:smooth-measure",
+  "source_id": "scalar-r2-26-source-order-parameter-regularity",
+  "statement": "For an admissible minimizer, gamma(0)=0, gamma∈C∞([0,1)), gamma=E Phi_xxx²/(2 E Phi_xx³), and mu(dt)=gamma′(t)dt. For 0<t<1, 2 gamma′ E Phi_xx³≥gamma(t)² E Phi_xx⁴/1000>0. Only gamma′(0)≥0 is asserted at zero. Since E Phi_xx²=1 and Phi_xx>=0, moment Cauchy–Schwarz gives E Phi_xx³<=sqrt(E Phi_xx⁴)<=E Phi_xx⁴. Hence gamma′(t)>=gamma(t)²/2000 for 0<t<1, and mu((r,s])>=(s-r)gamma(r)²/2000 for 0<r<s<1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "No minimizer premise and no minimizer-existence conclusion. The source uses Brownian path continuity and its almost-sure zero initial value. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-diffusion-exists"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_diffusion_exists",
+  "kind": "claim",
+  "label": "Internally constructed diffusion for every admissible coefficient",
+  "locator": "Processes/DiffusionExistence.lean:74–79; diffusionProcess_isDiffusion; exists_diffusion",
+  "source_id": "scalar-r2-13-source-diffusion-existence",
+  "statement": "For every W:BrownianSpace and gamma:OrderParameter, IsDiffusion W gamma (diffusionProcess W gamma), and consequently there exists X with IsDiffusion W gamma X.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance.",
+  "citation_ids": [
+   "scalar.source_empirical_energy_limit_lean_source"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_empirical_energy_limit",
+  "kind": "claim",
+  "label": "The empirical adaptive energy converges to adjacent correlations",
+  "locator": "EmpiricalEnergyLimit.lean:44–122; OAI.SKValueG.empiricalColumnEnergy_ae_tendsto",
+  "source_id": "scalar-r6-source-empirical-energy-limit",
+  "statement": "Fix K. Let f_j be measurable functions of coordinates z_0,...,z_j, with finite second moments, unit L2 norms and pairwise orthogonality for j<K. For a measurable sign S and each j<K, empiricalColumnEnergy converges almost surely to E[f_j S] E[S z_(j+1)] under independent Gaussian rows.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance.",
+  "citation_ids": [
+   "scalar.source_finite_adaptive_lower_lean_source"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_finite_adaptive_lower",
+  "kind": "claim",
+  "label": "Finite adaptive Gaussian offsets are bounded by the SK optimum",
+  "locator": "QuadraticSK.lean:74–88; OAI.SKValueG.finite_adaptive_SK_lower",
+  "source_id": "scalar-r6-source-finite-adaptive-lower",
+  "statement": "For n>0, a finite number K of measurable zero-or-unit directions depending on preceding Gaussian columns, and a selected spin with measurable adaptive offset, E[adaptiveOffset]/(n sqrt(n)) is at most groundStateSequence(n).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The supplier application unpacks constants from sourceStripRegularity and restricts the unit curvature moment to Icc 0 T. It does not take these as new caller premises, assert positivity at every mesh, give a rate, or take a diagonal or uniform terminal limit. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-fixed-strip-application"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_fixed_strip_application",
+  "kind": "claim",
+  "label": "Fixed-strip mesh limit with every analytic input supplied",
+  "locator": "Variation/ContactAssembly.lean:61–69; IsDiffusion.finite_gaussian_of_contact, concrete fixed-strip application",
+  "source_id": "scalar-r2-26-source-contact-assembly",
+  "statement": "For every W,gamma,X with IsMinimizer W gamma and IsDiffusion W gamma X, and every fixed T with 0<T<1, eventually for all N and all j<N the normalizer is positive, and shiftedCoefficientSum W gamma T N tends as N→∞ to ∫₀ᵀE curvature(t,X_t)dt.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Source-inspected statement with quantified guards retained. Authored proof correspondence, not elaborated dependency extraction or a fresh formal acceptance.",
+  "citation_ids": [
+   "scalar.source_gaussian_column_split_lean_source"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_gaussian_column_split",
+  "kind": "claim",
+  "label": "Splitting one Gaussian column preserves the expected quadratic maximum",
+  "locator": "GaussianColumn.lean:158–181; OAI.SKValueG.quadraticValue_column",
+  "source_id": "scalar-r6-source-gaussian-column-split",
+  "statement": "For a finite candidate family w_i, real offsets d_i and a direction v that is zero or unit, quadraticValue(w,d) equals the Gaussian expectation of quadraticValue(columnResidual(v,w), d + the columnVector Gaussian linear process).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The helper itself takes contact. The applied proof takes the strip lower bound to T→1− at the Parisi value, then combines parisi≤groundStateValue with the general groundStateValue≤parisi upper bound. It does not use a cross-target SKSupport transport or an external Parisi-formula assumption. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-ground-state-identity-with-diffusion"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_ground_state_identity_with_diffusion",
+  "kind": "claim",
+  "label": "Scalar ground-state identity from the two inequalities",
+  "locator": "Variation/ContactAssembly.lean:36–47; IsDiffusion.groundState_eq_parisi_of_contact; minimizer-contact application",
+  "source_id": "scalar-r2-26-source-contact-assembly",
+  "statement": "For every W,gamma,X with IsMinimizer W gamma and IsDiffusion W gamma X, groundStateValue = parisi W gamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "No minimizer or diffusion premise. The source passes a finite smooth-profile comparison through smooth coefficient approximation and then the already proved spin-size limit. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-ground-state-upper"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_ground_state_upper",
+  "kind": "claim",
+  "label": "Ground-state upper bound by every admissible Parisi value",
+  "locator": "GroundState/WeakGuerra.lean:117–142; expectedMaximum_le_parisi; groundStateValue_le_parisi",
+  "source_id": "scalar-r2-13-source-guerra-upper",
+  "statement": "For every W:BrownianSpace and gamma:OrderParameter, groundStateValue ≤ parisi W gamma. The preceding finite-spin theorem bounds expectedMaximum n by n * parisi W gamma for every positive n.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The helper itself takes strip regularity and contact as premises. This authored node records their supplied application under the displayed minimizer/diffusion hypotheses; it is not a transcription that erases those helper premises. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-minimizer-curvature-moment"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_minimizer_curvature_moment",
+  "kind": "claim",
+  "label": "Unit curvature moment after the concrete minimizer suppliers",
+  "locator": "Processes/GradientSquareIntegral.lean:84–90; IsDiffusion.curvature_unit_moment_of_contact; application in ContactAssembly.lean:65–69",
+  "source_id": "scalar-r2-13-source-curvature-moment",
+  "statement": "For every W,gamma,X, IsMinimizer W gamma and IsDiffusion W gamma X imply E[(curvature W gamma t (X t))²]=1 for every t in Ico 0 1. This is the source application of the lower helper to sourceStripRegularity W gamma and the same minimizer's gradient_moment_contact.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Source-inspected conditional statement with quantified guards retained in the statement. The source proof is present; no fresh elaboration, dependency extraction, Comparator result or independent semantic acceptance is asserted. The expectation-limit argument adds a nonnegative correction before passing to the limit; signed convergence alone would not suffice.",
+  "citation_ids": [
+   "scalar.source_predictable_lower_lean_source"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_predictable_lower",
+  "kind": "claim",
+  "label": "Predictable orthonormal correlations are bounded by the ground-state value",
+  "locator": "ConstantFatou.lean:48–134; OAI.SKValueG.predictable_coefficients_le_groundState",
+  "source_id": "scalar-r6-source-predictable-lower",
+  "statement": "For fixed K, measurable predictable f_j with finite second moments, unit L2 norms and pairwise orthogonality for j<K, and any measurable sign S, the sum over j<K of E[f_j S] E[S z_(j+1)] is at most groundStateValue. No centring or minimizing coefficient is required.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Proof uses expectedMaximum_superadditive at117–123 and expectedMaximum_upper at210–235. This is convergence of expectations, not an almost-sure finite-system optimum theorem; limUnder by itself would not establish it. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-spin-sequence-limit"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_spin_sequence_limit",
+  "kind": "claim",
+  "label": "Actual convergence of the normalized expected finite-spin maximum",
+  "locator": "GroundState/BlockCoeff.lean:237–263; SKValueG.groundStateSequence_tendsto",
+  "source_id": "scalar-r2-13-source-spin-limit",
+  "statement": "Tendsto groundStateSequence atTop (nhds groundStateValue). The statement has no W, gamma, minimizer, or diffusion argument.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "No minimizer or diffusion premise. The constants are chosen separately for each fixed strip; no uniform terminal bound is asserted. Definition: Control/StripRegularity.lean:28–37. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-strip-regularity"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_strip_regularity",
+  "kind": "claim",
+  "label": "Concrete strip regularity for every admissible coefficient",
+  "locator": "Control/Regularity.lean:22–42; sourceStripRegularity",
+  "source_id": "scalar-r2-13-source-regularity",
+  "statement": "For every W:BrownianSpace and gamma:OrderParameter, SourceStripRegularity W gamma holds: for each T in Ico 0 1 there exist Kv,Lv,K,L,D,Lu,La supplying ValueStrip, GradientStrip, nonnegative D,Lu,La, a uniform curvature bound, and the stated joint time-space Lipschitz bounds for gradient and curvature on Icc 0 T × R.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The helper itself needs gradient contact rather than minimization; the application supplies contact. LiteralLower.lean:14–27 bounds each shifted sum for N>0 and positive raw moments; eventual positivity from the fixed-strip application satisfies these premises. The passage to N→∞ is at fixed T. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-strip-value-lower"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_strip_value_lower",
+  "kind": "claim",
+  "label": "Curvature integral bounded by the finite-spin value on each fixed strip",
+  "locator": "Variation/ContactAssembly.lean:21–34; IsDiffusion.strip_value_le_groundState; minimizer-contact application",
+  "source_id": "scalar-r2-26-source-contact-assembly",
+  "statement": "For every minimizer gamma and supplied diffusion X on W, and every fixed 0<T<1, ∫₀ᵀE curvature(t,X_t)dt ≤ groundStateValue.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "This applied helper identifies the Parisi value before any substitution of groundStateValue. Its own declaration explicitly assumes strip regularity, gradient contact, and the unit curvature moment, supplied by the recorded application. The penalty here is the full integral. Authored correspondence to inspected frozen source; unverified status is retained. No fresh Lean build, elaborated dependency extraction, axiom audit, Comparator acceptance, or independent mathematical acceptance is claimed.",
+  "citation_ids": [
+   "scalar-r2-13-cite-terminal-parisi-assembly"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.source_terminal_parisi_assembly",
+  "kind": "claim",
+  "label": "Terminal formulas at the Parisi value after concrete suppliers",
+  "locator": "Evolution/IntegralPrimitiveTerminal.lean:37–79; IsDiffusion.parisi_value_assembly; application in ContactAssembly.lean:41–42,54–55,70",
+  "source_id": "scalar-r2-13-source-terminal-assembly",
+  "statement": "For every minimizer gamma and supplied diffusion X on W, there exists U with the stopped-gradient martingale, almost-sure |U|≤1, U²=1 and full t→1− gradient convergence, mean-square convergence to U, parisi W gamma = E|X_1|−∫₀¹t gamma(t)dt = E[U B_1] = ∫₀¹E curvature(t,X_t)dt, interval integrability, and cutoff convergence of that integral to parisi W gamma.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Uses a=Phi_xx≥0, E a²=1, and P_*=∫₀¹E a. This quantitative bound is present in the manuscript; the exported FiniteGaussianConclusion promises terminal convergence rather than this inequality.",
+  "citation_ids": [
+   "scalar-r2-26-cite-terminal-loss"
+  ],
+  "evidence_ids": [],
+  "id": "scalar.terminal_loss",
+  "kind": "claim",
+  "label": "Explicit scalar terminal error bound",
+  "locator": "03-classical-optimization.tex:49–75; eq:scalar-consistency-value, eq:scalar-terminal-loss",
+  "source_id": "scalar-r2-26-source-qaoa-scalar",
+  "statement": "For an admissible minimizer and each 0<T<1, 0≤P_*−∫₀ᵀE a(t,X_t)dt≤1−T.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary consequence of the existing vector-error estimates and a left Riemann sum. No finite equality of the two sums or additional formal acceptance is asserted.",
+  "citation_ids": [
+   "authored_r8_unshifted_gaussian"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "scalar.unshifted_gaussian_limit",
+  "kind": "claim",
+  "label": "Unshifted and adjacent sums have the same continuum limit",
+  "locator": "Long record #unshifted-scalar-comparison",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For each fixed cutoff 0<T<1 and the normalized minimizing Gaussian construction, the unshifted sum sum_(j=1)^N A_j B_j tends to I(T)=integral_0^T E[a(t,X_t)]dt as N tends to infinity, just as the adjacent rooted-energy sum does. The same limit does not identify the correct finite energy observable.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "assumptions.value_minimizer",
+   "assumptions.value_diffusion"
+  ],
+  "boundary": "The first two conjuncts are conditional on IsMinimizer and IsDiffusion; the final Parisi-value equality needs IsMinimizer. These are scalar ground-state value and finite Gaussian approximation statements. They do not assert QAOA circuit-energy convergence or an efficient angle-selection algorithm.",
+  "citation_ids": [
+   "scope_281",
+   "scalar_value_type",
+   "scalar_value_comparator"
+  ],
+  "evidence_ids": [
+   "source_bytes_verified",
+   "lean_build_not_run",
+   "lean_dependencies_not_run",
+   "manuscript_alignment_not_run",
+   "scalar_value_comparator_not_run",
+   "scalar_value_solution_build_failure_20261024",
+   "scalar_value_corrected_build_not_run_20261024",
+   "scalar_value_corrected_comparator_not_run_20261024",
+   "current_input_identity_20261024",
+   "corrected_comparator_outcome_unavailable_20261025",
+   "corrected_extraction_outcome_unavailable_20261025"
+  ],
+  "id": "scalar_value",
+  "kind": "goal",
+  "label": "Parisi value identities and finite Gaussian approximation",
+  "locator": "theorem value_consequences",
+  "source_id": "scalar_value_statement",
+  "statement": "The conjunction in OAI.SKValue.value_consequences: scalar value consequences for every minimizer and associated diffusion; finite Gaussian coefficient consequences for 0<T<1; and groundStateValue = parisi W gamma for every minimizer.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Requires the terminal smoothing constraint ci<=M and monotone coefficient jumps. Source-level maximum-principle/radial-lift argument retained as a package, with its boundary controls explicitly supplied by differentiated tails.",
+  "citation_ids": [
+   "support_backward_source",
+   "support_tails_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.backward_shapes",
+  "kind": "claim",
+  "label": "Backward shape signs and smooth quotient extension",
+  "locator": "signs.tex:171–278; shape:backward",
+  "source_id": "support_tex_signs",
+  "statement": "For the fixed positive monotone finite-step smooth-terminal data in support.step_tails, r is odd and v>0. For x>0, w<=0, H=w/(2r)+v<=0 and H_x>=0. The ratio w/r extends smoothly and evenly through x=0, since r(x)=v(0)x+O(x^3), v(0)>0. Backward coefficient rescaling preserves the signs.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Compact mass removal covers atomic, diffuse and singular continuous measures. It needs only local finiteness, not finite total mass. Minimality is a premise of the conditional result, not an independently supplied existence theorem. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models. Global scaling gamma_epsilon=(1-epsilon)gamma is another proof of the same result. Signed Fubini follows from integral gamma|q-t|<=integral gamma<infinity, even for infinite total Stieltjes mass. Both local and global proofs use the same feasible L1 first variation.",
+  "citation_ids": [
+   "support_contact_source",
+   "support_contact_lean_source",
+   "authored_r8_scaling_contact"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "support.contact",
+  "kind": "claim",
+  "label": "Nonnegative potential vanishing on the support",
+  "locator": "variation.tex:81–117; lem:contact",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma, any Stieltjes measure mu with mu([0,t])=gamma(t), and q for the same controlled diffusion, set G(s)=int_s^1(q(t)-t)dt. Then G(s)>=0 for all s<1 and G(s)=0 on S=supp(mu), support relative to [0,1).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. No slope condition at time 1 is available. For an initial gap with 0 outside S, the later argument uses q(0)=0 without assuming contact at 0. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_contact_source",
+   "support_contact_lean_source",
+   "support_diffusion_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.contact_derivatives",
+  "kind": "claim",
+  "label": "Endpoint contact and slope bounds, including zero",
+  "locator": "variation.tex:119–127; contact-derivatives",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma and G,S,q as in support.contact, G'(s)=s-q(s) and G''(s)=1-q'(s) on compact strips. At every s in S intersect (0,1), q(s)=s and q'(s)<=1. If 0 is in S, then q(0)=0 and G(h)=(1/2)(1-q'(0))h^2+o(h^2), so the right derivative q'(0)<=1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Same Brownian system, coefficient and control value throughout; uniqueness permits later transfer of moment identities to any associated diffusion. Pathwise coupling and existence are source-level analytic packages, not an observed build.",
+  "citation_ids": [
+   "support_diffusion_source",
+   "support_uniqueness_lean_source",
+   "support_model_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.diffusion",
+  "kind": "claim",
+  "label": "Existence, coupling and uniqueness of the controlled diffusion",
+  "locator": "regularity.tex:189–238; Diffusion/Uniqueness.lean:13–63",
+  "source_id": "support_tex_regularity",
+  "statement": "For every gamma in U in the stated zero-field normalization and a fixed standard Brownian system, dX_t=gamma(t)Phi_x(t,X_t)dt+dB_t, X_0=0, has a unique strong solution through time 1. Solutions for L1 coefficient and smooth-terminal approximants driven by the same Brownian motion converge uniformly on compact strips below 1. Every associated diffusion in the selected formal model agrees almost surely with the constructed diffusion for every time in [0,1].",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "An ordinary one-dimensional calculus lemma with its own quantified hypotheses. It applies to toy curves as well as diffusion moments and carries no minimizer, PDE or stochastic premise. Strict convexity gives q′(t) below its endpoint chord for r<t<s; the chord is at most one, and continuity makes the integrated deficit strictly positive. The source uses this step inside a conditional full-support argument. This node does not assert a newly extracted Lean declaration or independently accepted formal check.",
+  "citation_ids": [
+   "support_closure_source"
+  ],
+  "evidence_ids": [
+   "endpoint_chord_area_warrant_20261024"
+  ],
+  "id": "support.endpoint_chord_area",
+  "kind": "claim",
+  "label": "The integrated endpoint-chord inequality",
+  "locator": "variation.tex:223–234; calculus step in the bounded-gap proof",
+  "source_id": "support_tex_variation",
+  "statement": "Let r<s and q be continuously differentiable on [r,s]. If q′ is strictly convex on [r,s] and q′(r),q′(s)<=1, then q(s)-q(r)<s-r.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The full real-parameter one-sided derivative is the manuscript statement. The cited Lean declaration records a sampled chord limit and the resulting variational inequality; it is not asserted to have the identical type. A coefficient-convexity/Lipschitz bridge can relate these analytic statements, but no new Lean theorem is claimed.",
+  "citation_ids": [
+   "support_variation_source",
+   "full_support_chord_derivative",
+   "support_optimality_chl"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending",
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "support.first_variation",
+  "kind": "claim",
+  "label": "The admissible one-sided first variation",
+  "locator": "variation.tex:12–79; lem:first-variation",
+  "source_id": "support_tex_variation",
+  "statement": "For gamma in U and eta in L1(0,1) such that gamma+epsilon eta lies in U for every epsilon in [0,epsilon_0] for some epsilon_0>0, D+P(gamma)[eta]=(1/2)int_0^1 eta(t)(q(t)-t)dt, where q is computed from gamma and its controlled diffusion. If gamma minimizes P, this derivative is nonnegative.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Authored fixed-time consequence of smooth finite-step coercivity and compact-strip spatial-moment convergence. The ordinary proof flattens gamma locally; the inspected SKSupport source instead uses sampled jets along its canonical diffusion. actual_coercivity takes t:Time with 0<t and ContinuousAt gamma.val t and proves the scaled c^4/c^2 polynomial inequality. Its type does not require c>0; positivity is needed here to divide by c^2. This source correspondence does not identify the SKSupport and SKValue models, pass third time derivatives through a shrinking-plateau limit, or establish the smooth-density corollary as an exported formal conclusion. No fresh Lean build, elaborated dependency extraction, Comparator result or independent semantic acceptance is recorded.",
+  "citation_ids": [
+   "support_fixed_time_source",
+   "support_fixed_time_polynomials",
+   "support_regularity_source",
+   "support_diffusion_source",
+   "scalar-r2-26-cite-smooth-positive-density"
+  ],
+  "evidence_ids": [
+   "fixed_time_spatial_warrant_20261025"
+  ],
+  "id": "support.fixed_time_spatial_coercivity",
+  "kind": "claim",
+  "label": "Spatial coercivity at a positive continuity time",
+  "locator": "Long record, fixed-time-coercivity: fixed-time estimate and shrinking-plateau argument; corresponding source SampleJets.lean:135–143",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For every admissible manuscript coefficient gamma in U, every 0<t<1 at which gamma is continuous, and c=gamma(t)>0, let a=Phi_xx(t,X_t), b=Phi_xxx(t,X_t), d=Phi_xxxx(t,X_t) along its controlled diffusion. Then E[d^2-12*c*a*b^2+6*c^2*a^4] >= (c^2/1000)*E[a^4]. No minimizer or constant-neighborhood premise is required.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_admissible"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_support_fixed_time_spatial_coercivity_at_jumps"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "support.fixed_time_spatial_coercivity_at_jumps",
+  "kind": "claim",
+  "label": "Spatial coercivity at a coefficient jump",
+  "locator": "Long reasoning record #fixed-time-jump-extension",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For admissible gamma, 0<t<1 and c=gamma(t)>0, E[d^2-12*c*a*b^2+6*c^2*a^4]>=(c^2/1000)E[a^4], with a=Phi_xx,b=Phi_xxx,d=Phi_xxxx along its diffusion at t. Flattening gamma to c on [t-delta,t+delta) has L1 error<=2delta gamma(t+delta0), so local boundedness suffices to pass spatial moments even at jumps. This changes no retained Lean continuity hypothesis and asserts no time derivative at a jump.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The zero-flux conclusion is analytic. It is not implied by a symbolic polynomial identity; both signs and vanishing boundary flux are required. These auxiliary profiles are not asserted to converge for general gamma.",
+  "citation_ids": [
+   "support_flux_source",
+   "support_backward_source",
+   "support_forward_source",
+   "support_tails_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.flux_identity",
+  "kind": "claim",
+  "label": "Nonnegative certificate variables and zero expected divergence",
+  "locator": "signs.tex:396–472; shape:ibp",
+  "source_id": "support_tex_signs",
+  "statement": "At a fixed positive time in a positive step with the preceding smooth profiles, define R=r^2, K=rs, b=-w/r, B=b-2v=-2H, j=s_x-(s/r)v, L=-r*s_xx, S=z+bv-2Rb=2rH_x. These extend evenly and smoothly, and R,K,v,B,j,L,S>=0. For D=r*partial_x and W(F)=D F+(v+R-K)F, the derivative rules in signs.tex give f W(F)=partial_x(r f F). For every polynomial F in R,K,v,b,j the terms are integrable, r f F vanishes at both infinities, and E_f W(F)=0.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The manuscript variable j is not the Lean Wronskian r*s_x-s*r_x=r*j; converting their signs requires r>0 on the positive half-line and the stated extensions. No claim of identical expression or extracted dependency is made.",
+  "citation_ids": [
+   "support_forward_source",
+   "support_backward_source",
+   "support_tails_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.forward_shapes",
+  "kind": "claim",
+  "label": "Forward score signs and ratio comparison",
+  "locator": "signs.tex:289–394; shape:forward",
+  "source_id": "support_tex_signs",
+  "statement": "For the same finite-step profiles and density, at each positive time s=-partial_x log g is odd, s_x>=1/t, s_xx<=0 for x>0, and j=s_x-(s/r)v>=0 on R. The ratio s/r and j extend smoothly at zero, where j=0. The backward shape signs enter the comparison source 2H_x-w-s_xx>=0; j is unchanged at each forward coefficient jump.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. This is the support conclusion alone, not smooth absolute continuity, a positive density, existence of a minimizer, scalar value, or circuit convergence. Elementary one-dimensional support topology is retained as a source-level package. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_closure_source",
+   "support_closure_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.full_relative_support",
+  "kind": "claim",
+  "label": "Exhausting the support complement",
+  "locator": "variation.tex:215–243; proof of thm:full-support",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma and every Stieltjes measure mu with the specified cumulative function, S=supp(mu) is relatively closed in [0,1). Every nonempty component of [0,1) minus S is initial, bounded between support points, or terminal; empty support is a terminal-plateau case. Excluding all these cases proves S=[0,1).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_support_full_relative_support_curvature"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "support.full_relative_support_curvature",
+  "kind": "claim",
+  "label": "Full support by contact and local curvature",
+  "locator": "Long reasoning record #qualitative-terminal-gap",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For an admissible pure zero-field SK minimizer, its Stieltjes support is [0,1). Zero-candidate descent excludes empty support; contact and positive-plateau curvature exclude bounded gaps; zero-plateau curvature excludes an initial gap. At a last support point r, the terminal chord obstruction gives q(t)<t and G(r)<0, contradicting atom addition. Consequently q(t)=t and E[Phi_xx(t,X_t)^2]=1 for 0<=t<1. This alternate proof does not use the quantitative terminal defect estimate.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Not a pointwise inequality for arbitrary v,w,z. The source also states a more general conditional integral proposition; this node is its instantiated smooth finite-step consequence. No minimizer is needed. The concrete Lean finite-data integration uses gaussian_shape_coercivity on the positive half-line, not a raw instantiation of the generic whole-line helper; the accompanying citation relation records the representation difference at zero.",
+  "citation_ids": [
+   "support_coercivity_source",
+   "support_flux_source",
+   "support_certificate_lean_source",
+   "support-r2-13-finite-density-call",
+   "full_support_origin_coercivity"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.integrated_coercivity",
+  "kind": "claim",
+  "label": "The integrated lower bound for smooth profiles",
+  "locator": "certificate.tex:166–199; cert:coercivity",
+  "source_id": "support_tex_certificate",
+  "statement": "For a fixed positive step and positive time of the smooth finite-step problem, with the variables, density, signs, derivative rules, integrability and vanishing flux established in support.flux_identity, integration of the exact certificate and R*b^2=w^2 give E_f[z^2-12v*w^2+6v^4]>=alpha E_f[v^4]>=(1/1000)E_f[v^4], where alpha=1661507/1521000000. This is a bound on the expectation for these profiles.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The bound |u|<=1 and the zero-field symmetry are essential. This does not assert q(t)=t for an arbitrary admissible coefficient; that is a later consequence of minimality and full support.",
+  "citation_ids": [
+   "support_diffusion_source",
+   "support_regularity_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.moment_identity",
+  "kind": "claim",
+  "label": "Gradient martingale and the derivative of its second moment",
+  "locator": "regularity.tex:189–238; lem:diffusion",
+  "source_id": "support_tex_regularity",
+  "statement": "For gamma in U and its controlled diffusion X from support.diffusion, u=Phi_x satisfies u(t,X_t)=int_0^t Phi_xx(s,X_s)dB_s for t<1. Consequently q(t)=E[u(t,X_t)^2] is C1 on [0,1), q(0)=0, 0<=q<=1, and q'(t)=E[Phi_xx(t,X_t)^2], with the right derivative at 0. These moment functions converge uniformly under the compact-strip approximations.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The universal associated-diffusion quantifier is retained; replacing it with an existential witness would weaken the selected target. The identities are below terminal time 1, not a classical derivative assertion at 1. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_closure_source",
+   "support_diffusion_source",
+   "support_uniqueness_lean_source",
+   "full_support_implementation"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.moment_saturation",
+  "kind": "claim",
+  "label": "Full contact gives both moments for every associated diffusion",
+  "locator": "variation.tex:243–246; Main.lean:44–59; Diffusion/Uniqueness.lean:13–63",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma, full relative support makes q(t)=t for all 0<t<1 by contact, with q(0)=0 from symmetry. Differentiating using q'(t)=E[Phi_xx(t,X_t)^2] gives E[Phi_xx(t,X_t)^2]=1 for 0<=t<1, including the right derivative at 0. Pathwise uniqueness transfers both identities from the constructed diffusion to every associated diffusion on the same Brownian system.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Ordinary consequence of the imported landscape theorem, full support and attained Parisi formula. Add a common independent N(0,1/2) offset to match covariance; remove it using its Gaussian tail. Each target overlap is fixed before taking size. No typical-pair law, continuum-simultaneous event, efficient construction, Lean extraction or formal proof acceptance is asserted.",
+  "citation_ids": [
+   "acz2020_near_ground_pairs"
+  ],
+  "evidence_ids": [
+   "near_ground_pair_warrants_20261024"
+  ],
+  "id": "support.near_ground_pairs",
+  "kind": "claim",
+  "label": "Near-ground configurations at a prescribed overlap",
+  "locator": "Proposition 1, equation (5), p.5; proof pp.15–16; pure-SK specialization reconstructed in the long record §5.3",
+  "source_id": "acz2020_infinite_support",
+  "statement": "For pure zero-field Gaussian SK H_n=n^(-1/2) sum_{i<j} J_ij sigma_i sigma_j, every fixed r in [0,1) and epsilon,eta>0 admit K=K(r,epsilon,eta)>0 independent of n, such that with disorder probability at least 1-K exp(-n/K) there exist sigma,tau with |R(sigma,tau)-r|<epsilon and both H_n(sigma)/n,H_n(tau)/n >= P_*-eta, for all n>=1.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Includes a=0 only when 0 lies in the support, using the one-sided slope bound there. All q and gamma occurrences refer to the same diffusion/coefficient. A schematic area illustration is not a prerequisite. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_closure_source",
+   "support_closure_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.no_bounded_gap",
+  "kind": "claim",
+  "label": "No bounded gap between support points",
+  "locator": "variation.tex:223–237; bounded-gap contradiction",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma and its Stieltjes measure, no support-free interval (a,b) can have endpoints a,b in S with 0<=a<b<1. Constancy of gamma and contact give q(a)=a, q(b)=b and q'(a),q'(b)<=1. If the plateau height is positive, strict convexity gives q'(t) below the endpoint chord and below 1; if zero, strict increase gives q'(t)<q'(b)<=1. Integration contradicts q(b)-q(a)=b-a.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Zero is not assumed to be a support point here. No left endpoint slope/contact condition is imported from the bounded-gap case; only q(0)=0 is used. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_closure_source",
+   "support_closure_lean_source",
+   "support_contact_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.no_initial_gap",
+  "kind": "claim",
+  "label": "No initial gap when zero is outside the support",
+  "locator": "variation.tex:239–242; initial-gap case",
+  "source_id": "support_tex_variation",
+  "statement": "For an admissible minimizer gamma, an initial support-complement component [0,b), with 0<b<1 and b in S, is impossible. Since mu([0,b))=0, gamma=0 on [0,b). The zero-interval result gives q'(t)<q'(b)<=1 for 0<t<b, but symmetry gives q(0)=0 and contact at b gives q(b)=b. Integration contradicts these two values.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_minimizer"
+  ],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Time 1 is outside the support domain; this route does not assume a contact point or derivative there. Includes c=0 and does not appeal to infinite support as an extra premise. The minimizer premise here belongs to the ordinary manuscript model; formal-interface hypotheses remain on the separate Lean target. This classification does not prove a transport between formal models.",
+  "citation_ids": [
+   "support_terminal_source",
+   "support_terminal_lean_source",
+   "support_closure_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.no_terminal_gap",
+  "kind": "claim",
+  "label": "A minimizer has no terminal plateau or empty support",
+  "locator": "variation.tex:130–213 and 215–221; lem:no-terminal-plateau",
+  "source_id": "support_tex_variation",
+  "statement": "For every admissible minimizer gamma, there do not exist 0<=a<1 and finite c>=0 with gamma=c on (a,1). Indeed the terminal defect yields q(t)-t<0 near 1 and hence G(s)<0 for s sufficiently close to 1, contradicting G>=0. In particular support cannot be empty, since that would force gamma=0.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Ordinary mathematical deduction, not a new selected Lean endpoint or Comparator result. All coefficient/PDE/diffusion requirements are local quantified guards. The iff has no minimizer premise. The converse uses |G(s)|<=1-s, weighted Fubini and convexity of the control-value functional. Arbitrary curves with contact properties need not arise from this gamma; the criterion alone neither proves full support nor constructs a minimizer.",
+  "citation_ids": [
+   "support_optimality_chl",
+   "support_optimality_chen",
+   "support_variation_source",
+   "support_model_source"
+  ],
+  "evidence_ids": [
+   "support_optimality_warrant_20261024"
+  ],
+  "id": "support.optimality_criterion",
+  "kind": "claim",
+  "label": "An exact first-order criterion for the same admissible coefficient",
+  "locator": "CHL arXiv:1609.04368v4 Proposition 4, printed p.14; long reasoning record §3.5",
+  "source_id": "chl2018_zero_temperature",
+  "statement": "For an admissible gamma in the pure zero-field SK normalization, let Phi, X and q(t)=E[Phi_x(t,X_t)^2] be the control value, diffusion and moment for this same gamma. Let mu([0,t])=gamma(t), S=supp_[0,1)(mu), and G(s)=integral_s^1(q(t)-t)dt. Then gamma minimizes the zero-temperature Parisi functional if and only if G(s)>=0 for every s<1 and G=0 on S.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The interval hypothesis supplies continuity at t; this is important for the corresponding Lean coercivity source. Only derivative moments through order four pass to the limit, with one further derivative bound for path evaluation; no density-score convergence is asserted. The c=0 case is separate.",
+  "citation_ids": [
+   "support_transfer_source",
+   "support_regularity_source",
+   "support_diffusion_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.plateau_transfer",
+  "kind": "claim",
+  "label": "Plateau-preserving approximation and curvature identity",
+  "locator": "regularity.tex:240–296; lem:constant-transfer",
+  "source_id": "support_tex_regularity",
+  "statement": "For gamma in U equal to c>0 on an open interval I contained in (0,1), every t in I has a closed neighborhood on which positive bounded nondecreasing finite-step approximants remain exactly c, with terminal smoothing M_n>=||gamma_n||infinity and M_n->infinity. Spatial derivatives and bounded polynomial moments along coupled paths converge there. With r=cPhi_x, v=r_x, w=r_xx, z=r_xxx, Phi_xx>0 and c^2 q'''(t)=E[z^2-12v*w^2+6v^4].",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Unconditional with respect to minimization; conditional on admissibility and a positive plateau. The cited Lean positive_gap_curvature supplies the positivity of the second derivative of curvatureMoment, not a claim of literal equality between every manuscript lemma and a Lean type.",
+  "citation_ids": [
+   "support_curvature_source",
+   "support_gap_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.positive_curvature",
+  "kind": "claim",
+  "label": "Strict curvature on a positive constant interval",
+  "locator": "curvature.tex:9–52; prop:gap-curvature",
+  "source_id": "support_tex_curvature",
+  "statement": "For every gamma in U and its controlled diffusion, if gamma=c>0 on an open interval I contained in (0,1), then q'''(t)>=(1/(1000*c^2))E[(cPhi_xx(t,X_t))^4]>0 for every t in I. Hence q' is strictly convex on I. The same local assertion applies to each interior point of (a,b) with 0<=a<b<1; the endpoints are reached by continuity of q'.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Pure finite polynomial identity and coefficient comparison. Analytic signs, density, integration, approximation and strictness are separate nodes. The explicit coefficients are source-bound rather than redefined in a second store; inspection of a Lean proof ending in ring does not report a replay.",
+  "citation_ids": [
+   "support_certificate_source",
+   "support_certificate_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.rational_certificate",
+  "kind": "claim",
+  "label": "Exact rational identity with a coercive remainder",
+  "locator": "certificate.tex:19–164; cert:identity-lemma; Density/Certificate.lean:62–69",
+  "source_id": "support_tex_certificate",
+  "statement": "For real formal variables R,K,v,b,j,z,L, B=b-2v and S=z+bv-2Rb, with the exact rational coefficients and polynomials Q,T,F2,P0,...,P4,P_rem specified in certificate.tex:38–164, z^2-12Rvb^2+6v^4=(z+Q)^2+ST+sum_i p_i P_i+W(F2)+L(x0 v^2+h b v)+P_rem. W uses the formal derivative rules of signs.tex:423–427. All 22 coefficients of P_rem(R,K,v,B,j) are positive, including 1661507/1521000000 for v^4, greater than 1/1000.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Ordinary source-assisted analytic deduction; no new Lean declaration, formal replay or independent acceptance. No effective endpoint rate or normalization of Stieltjes mass is asserted. The nonminimizing counterexample concerns pointwise positivity only.",
+  "citation_ids": [
+   "authored_r9_support_raw_curvature_negative_absolute_terminal"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026_r9"
+  ],
+  "id": "support.raw_curvature_negative_absolute_terminal",
+  "kind": "claim",
+  "label": "Negative raw curvature with absolute-value terminal data",
+  "locator": "Long reasoning record #pointwise-curvature-obstruction",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For fixed 0<t<1, tau=1-t and x=sqrt(tau), the admissible constant coefficient gamma_c=c has Phi_c=c^(-1)log E exp(c|x+sqrt(tau)Z|). Its raw expression d_c^2-12*c*a_c*b_c^2+6*c^2*a_c^4 equals -12*a_0^3*c/tau+O(c^2), hence is negative for sufficiently small c>0. Here a,b,d are the second, third and fourth spatial derivatives; a_0=sqrt(2/(pi*tau))*exp(-x^2/(2*tau)).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Source-level analytic leaf package. Heat-semigroup estimates, control-value stability, interpolation and Gronwall are supplied in the cited proof but not individually represented. There is no uniform spatial-derivative bound up to terminal time 1. No minimizer hypothesis is needed.",
+  "citation_ids": [
+   "support_model_source",
+   "support_regularity_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.regularity",
+  "kind": "claim",
+  "label": "Compact-strip regularity and approximation",
+  "locator": "regularity.tex:16–187; lem:regularity",
+  "source_id": "support_tex_regularity",
+  "statement": "In pure zero-field SK with xi(t)=t^2/2, for every gamma in U (nonnegative, nondecreasing, right-continuous and L1 on [0,1)), the control value Phi with terminal |x| is even, convex, one-Lipschitz, and |x|<=Phi(t,x)<=|x|+sqrt(2(1-t)/pi)+(1/2)int_t^1 gamma. Every positive spatial derivative is bounded and jointly continuous on [0,T]xR for T<1, locally absolutely continuous in time and satisfies the differentiated PDE almost everywhere. L1 coefficient approximation, including finite-step coefficients with terminal M_n^(-1)log(2cosh(M_n x)), M_n->infinity, gives uniform derivative convergence on each such strip.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "All finite-data guards are local quantified premises. No minimizer is needed. The proof constructs backward and forward shape, Wronskian, Gaussian-tail and derivative premises and calls gaussian_shape_coercivity. That theorem integrates on Ioi 0, proves zero endpoint flux and reflects. This is an authored proof-body correspondence, not an extracted dependency or fresh Lean acceptance. The whole-line integrated_coercivity_of_flux helper is not this application.",
+  "citation_ids": [
+   "support-r2-13-finite-density-call",
+   "full_support_origin_coercivity"
+  ],
+  "evidence_ids": [
+   "R2-13-SUP-001"
+  ],
+  "id": "support.source_finite_density_coercivity",
+  "kind": "claim",
+  "label": "Concrete finite-data half-line coercivity application",
+  "locator": "Density/FiniteDensity.lean:111–188",
+  "source_id": "support-r2-13-finite-density",
+  "statement": "For c:N→NNReal strictly positive at every index, monotone and bounded above by M, h:NNReal with h>0, and natural indices 0<i≤N, put r(x)=c(i)*deriv(backwardBoundary c h (softAbs M) N i)(x). Then (1/1000) times the finiteDensity-weighted integral of quarticMoment r is at most the corresponding integral of coercivePolynomial r. The same inequality holds as a finite-feedback diffusion expectation after finite_density_identity.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Fixed finite-step smooth-terminal data only; constants may depend on these data. This leaf includes heat-kernel construction and Gaussian convolution estimates. No uniform-in-approximation tail assertion or minimizer hypothesis is made.",
+  "citation_ids": [
+   "support_tails_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.step_tails",
+  "kind": "claim",
+  "label": "Finite-step density transform and differentiated tails",
+  "locator": "signs.tex:17–167; tail:class",
+  "source_id": "support_tex_signs",
+  "statement": "Fix 0=t0<...<tN=1, 0<c1<=...<=cN<=M, gamma=ci on each step, terminal Phi(1,x)=M^(-1)log(2cosh(Mx)), and the associated diffusion from 0. On a step of height c, set l=cPhi, r=l_x, v=r_x, w=r_xx, z=r_xxx and factor the positive density f=e^l g. Then g evolves by forward heat, g_+=g_- exp(-delta Phi) at upward jumps, and s=-partial_x log g is odd. At positive times away from 0, the source proves differentiated exponential backward tails and Gaussian-times-exponential forward tails, so s=x/t-beta(t)+exponentially decaying error.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. Source-level measure-construction package: total mass may be infinite; no probability normalization or density is assumed. Standard Stieltjes construction and support properties are not expanded into separate proof nodes.",
+  "citation_ids": [
+   "support_model_source",
+   "support_stieltjes_lean_source",
+   "support_model_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.stieltjes_measure",
+  "kind": "claim",
+  "label": "Stieltjes measure with the correct initial mass",
+  "locator": "main.tex:53–63; Support/GapCurvature.lean:96–119",
+  "source_id": "support_tex_main",
+  "statement": "For every nonnegative, nondecreasing, right-continuous integrable gamma on [0,1), there exists a locally finite Stieltjes measure mu with mu([0,t])=gamma(t). Thus mu({0})=gamma(0) and mu((a,b])=gamma(b)-gamma(a) for 0<=a<b<1. Its relative support is closed. The support argument applies to every measure satisfying this convention.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. No differentiability or density is inferred from strict increase or full support. The implication only needs the cumulative convention and positive mass in every nonempty open interval.",
+  "citation_ids": [
+   "support_closure_source",
+   "support_closure_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.strict_increase",
+  "kind": "claim",
+  "label": "Full relative support forces strict increase",
+  "locator": "variation.tex:247–249; Support/Closure.lean:47–67",
+  "source_id": "support_tex_variation",
+  "statement": "For gamma in U and a Stieltjes measure mu with full relative support [0,1), every 0<=a<b<1 has mu((a,b))>0. Hence gamma(b)-gamma(a)=mu((a,b])>0. In particular every admissible minimizer is strictly increasing once support.full_relative_support has been applied.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_support_terminal_chord_barrier"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "support.terminal_chord_barrier",
+  "kind": "claim",
+  "label": "A terminal convex-chord obstruction",
+  "locator": "Long reasoning record #qualitative-terminal-gap",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "Let r<1 and q be C1 on [r,1), with q(r)=r, qprime(r)<=1, q<=1 and qprime strictly convex on (r,1). Then q(t)<t for r<t<1. A crossing forces qprime(t)>1 by strict trapezoid comparison; subsequent convex secants force q(s)>1 near 1. No derivative at one is used.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. The boundary-layer estimate itself does not use minimality. It uses the finite plateau and terminal cusp, not a derivative estimate uniform up to time 1. Constants depend on the fixed coefficient/plateau; no quantitative bound uniform over minimizers is claimed.",
+  "citation_ids": [
+   "support_terminal_source",
+   "support_terminal_defect_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.terminal_defect",
+  "kind": "claim",
+  "label": "Square-root terminal deficit on a finite plateau",
+  "locator": "variation.tex:144–207; eq:terminal-layer; ContactPotential.lean:124–208",
+  "source_id": "support_tex_variation",
+  "statement": "For gamma in U with gamma=c on (a,1), where 0<=a<1 and finite c>=0, and its controlled diffusion, there are C>0 and t0<1 such that 1-q(t)>=C*sqrt(1-t) for t0<t<1. The tilted heat kernel (ordinary heat kernel for c=0) supplies a uniform positive density bound near x=0 at late times; both terminal signs retain positive tilted probability on |x|<=sqrt(1-t).",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [
+   "scalar.paper_admissible"
+  ],
+  "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted.",
+  "citation_ids": [
+   "authored_r8_support_zero_candidate_descent"
+  ],
+  "evidence_ids": [
+   "ordinary_deductions_review_20261026"
+  ],
+  "id": "support.zero_candidate_descent",
+  "kind": "claim",
+  "label": "The zero coefficient is not minimizing",
+  "locator": "Long reasoning record #zero-coefficient-example",
+  "source_id": "authored_long_comparisons_20261024",
+  "statement": "For the admissible zero coefficient in pure zero-field SK, q0(t)=2 arcsin(t)/pi and D+P(0)[1]=1/4-1/pi<0. Thus empty Stieltjes support cannot occur at a minimizer. The calculation does not inherit minimizer moment identities.",
+  "status": "unverified"
+ },
+ {
+  "assumption_ids": [],
+  "boundary": "Curated source-level mathematical statement, not an elaborated Lean extraction or independently accepted proof. Its displayed local hypotheses are quantified guards; a hypothetical plateau is not an added premise of the full-support theorem. No division by c and no appeal to the positive-plateau certificate. For an initial interval (0,b), apply the assertion locally at each t>0 and use continuity at 0 for the final integration.",
+  "citation_ids": [
+   "support_transfer_source",
+   "support_gap_lean_source"
+  ],
+  "evidence_ids": [
+   "support_source_bindings_20261024",
+   "support_graph_semantic_review_pending"
+  ],
+  "id": "support.zero_curvature",
+  "kind": "claim",
+  "label": "Strict increase on a zero constant interval",
+  "locator": "regularity.tex:298–308; zero case of lem:constant-transfer",
+  "source_id": "support_tex_regularity",
+  "statement": "For gamma in U and its controlled diffusion, if gamma=0 on an open interval I contained in (0,1), then q''(t)=E[Phi_xxx(t,X_t)^2]>0 for t in I; thus q' is strictly increasing there. A Gaussian transition from any earlier interior time gives full spatial support. Phi_xxx cannot vanish identically, because an even quadratic cannot be both one-Lipschitz and a bounded distance from |x|.",
+  "status": "unverified"
+ }
+]

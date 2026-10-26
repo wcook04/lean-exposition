@@ -11,6 +11,15 @@ FILTER = ROOT / "scripts/paper_anchors.lua"
 
 @unittest.skipUnless(shutil.which("pandoc"), "Pandoc is optional paper tooling")
 class PaperRenderingTests(unittest.TestCase):
+    def test_editorial_page_break_is_pdf_only(self):
+        source = 'Before.\n\n<!-- pdf-page-break -->\n\n## Payoff\n\nAfter.\n'
+        base = ['pandoc', '-f', 'markdown', '--lua-filter', str(FILTER)]
+        tex = subprocess.check_output(base + ['-t', 'latex'], input=source, text=True)
+        html = subprocess.check_output(base + ['-t', 'html'], input=source, text=True)
+        self.assertIn('\\newpage', tex)
+        self.assertNotIn('\\newpage', html)
+        self.assertIn('After.', html)
+
     def test_authored_html_bookmarks_survive_latex_conversion(self):
         paths = [ROOT / "papers/qaoa-sk/long/reasoning-record.md",
                  ROOT / "papers/qaoa-sk/short/paper.md"]

@@ -1,0 +1,288 @@
+// About: a short authored introduction to what the site is, a small key to
+// its visual language, the edition it serves (with edition-pinned link and
+// citation), and the architectural companion paper on request. The paper is
+// not served by the API; it is read from the repository at build time, so it
+// always matches the checkout the site was built from.
+
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import source from "../../../papers/architecture/paper.md?raw";
+import type { Route } from "../app/router";
+import { routeHref } from "../app/router";
+import { useEdition } from "../app/data";
+import { citationText, copyText, editionLink } from "../app/cite";
+import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
+import { prepareDocument } from "./engine";
+import { prefixPaths } from "./links";
+import { documentPaths } from "./documents";
+import { mountFigures } from "./mount";
+import "./reader-content.css";
+import "./about.css";
+
+const RECORD_MEANINGS: { table: string; noun: string; meaning: string }[] = [
+  { table: "nodes", noun: "records", meaning: "claims, assumptions, main results and Lean declarations" },
+  { table: "edges", noun: "links", meaning: "each saying that one record is used in the argument for another" },
+  { table: "citations", noun: "citations", meaning: "links from a record to a place in a source" },
+  { table: "sources", noun: "sources", meaning: "papers and files, identified by address and, for files, by a hash of their bytes" },
+  { table: "evidence", noun: "check records", meaning: "checks, including those planned but not run" },
+];
+
+const STATE_WORDS: Record<string, string> = {
+  draft: "draft",
+  needs_revision: "needs revision",
+  approved: "approved",
+  reviewed: "reviewed",
+};
+
+function words(value: string): string {
+  return STATE_WORDS[value] ?? value.replace(/_/g, " ");
+}
+
+const COMPANION = "companion";
+
+export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> }) {
+  const { snapshot, overview, graph, map } = useEdition();
+  const checks = map.records.evidence;
+  const mostNotRun = checks.filter((c) => c.status === "not_run").length * 2 > checks.length;
+  const prose = useRef<HTMLDivElement>(null);
+  // A link into the companion (any fragment other than the edition facts) opens it.
+  const [companion, setCompanion] = useState(!!route.anchor && route.anchor !== "edition");
+
+  const prepared = useMemo(() => {
+    const bytes = new TextEncoder().encode(source);
+    const doc = prepareDocument({
+      stage: "architecture",
+      bytes,
+      documentPath: "architecture/paper.md",
+      documentPaths: prefixPaths(documentPaths(), "qaoa-sk/"),
+    });
+    return { html: doc.renderAll().map((p) => p.html).join("\n"), front: doc.frontMatter ?? {} };
+  }, []);
+
+  const title = String(prepared.front.title ?? "The architectural companion");
+  const subtitle = prepared.front.subtitle ? String(prepared.front.subtitle) : null;
+  const date = prepared.front.date ? String(prepared.front.date) : null;
+
+  useLayoutEffect(() => {
+    const el = prose.current;
+    if (!el || !companion) return;
+    // Fresh slots on every mount: mountFigures marks a slot as mounted and
+    // unmounts its roots after a tick, so reusing slots (as React's strict
+    // mode does by running effects twice) would leave them empty.
+    el.innerHTML = prepared.html;
+    return mountFigures(el);
+  }, [prepared, companion]);
+
+  useEffect(() => {
+    if (!route.anchor) return;
+    if (route.anchor !== "edition") setCompanion(true);
+    requestAnimationFrame(() => document.getElementById(route.anchor!)?.scrollIntoView({ block: "start" }));
+  }, [route.anchor]);
+
+  const papers = STAGE_ORDER.map((stage) => overview.papers.find((p) => p.stage === stage)).filter((p) => !!p);
+  const long = overview.papers.find((p) => p.stage === "long");
+  const goal = (long?.paper_scope.selected_goal_ids ?? graph.goals).find((g) => graph.nodes.has(g));
+  const goalLabel = goal ? graph.nodes.get(goal)!.label : null;
+
+  return (
+    <article className="about">
+      <header className="about__intro">
+        <h1>About this site</h1>
+        <p className="about__lede">
+          This site presents one mathematical result
+          {goalLabel ? (
+            <>
+              , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
+            </>
+          ) : null}{" "}
+          and three written accounts of it. The <a href={routeHref({ view: "read", stage: "expository" })}>exposition</a>{" "}
+          explains the ideas with worked examples. The <a href={routeHref({ view: "read", stage: "short" })}>short paper</a>{" "}
+          states the result and proves it for readers who know the field. The{" "}
+          <a href={routeHref({ view: "read", stage: "long" })}>long record</a> reconstructs each step of the argument and names
+          the source each step comes from.
+        </p>
+        <p className="about__lede">
+          Each step of the argument is stored as a record: a claim, an assumption, or a declaration in Lean, a language in
+          which a computer can check proofs. Links between records say which records the argument for a result uses. Passages
+          in the three accounts are linked to the records they discuss, so from a passage you can open its records, and from
+          a record you can open the passages about it.
+        </p>
+        <p className="about__lede">
+          Some records have <a href={routeHref({ view: "checks" })}>checks</a> attached, for example whether a cited file still
+          has its recorded hash, or whether a Lean project compiles. Each check has a recorded outcome: passed, failed,
+          unavailable or not run.{mostNotRun ? " Most checks in this edition have not been run." : ""}
+        </p>
+      </header>
+
+      <section className="about__key" aria-labelledby="about-key">
+        <h2 id="about-key">How the argument map is drawn</h2>
+        <ul className="about__keylist">
+          <li>
+            <span className="about__sample">
+              {graph.origins
+                .filter((o) => o.slot > 0)
+                .map((o) => (
+                  <span key={o.family} className="src-sq" data-slot={o.slot} aria-hidden="true" />
+                ))}
+              <span className="src-sq" data-slot={0} aria-hidden="true" />
+            </span>
+            <span>
+              Each record has a small coloured square and the name of the source it comes from. Records from the same source
+              have the same colour.
+            </span>
+          </li>
+          <li>
+            <span className="about__sample about__sample--lines" aria-hidden="true">
+              <span className="rel-sample" />
+              <span className="rel-sample rel-sample--formalizes" />
+            </span>
+            <span>
+              A line joins a record to a result whose argument uses it, with the arrowhead at the result. A grey, solid line
+              is a recorded use. A cyan, dashed line joins a result to the Lean declaration recorded as corresponding to it.
+            </span>
+          </li>
+          <li>
+            <span className="about__sample" aria-hidden="true">
+              <span className="about__tag">Assumes</span>
+            </span>
+            <span>
+              An assumption is a violet tag with a dotted border, shown on each result that assumes it. When several results
+              use a record that has no recorded inputs of its own, the record is drawn under each of them, with a coloured
+              band along the bottom of each copy.
+            </span>
+          </li>
+          <li>
+            <span className="about__sample" aria-hidden="true">
+              <span className="rel-sample rel-sample--lit" />
+            </span>
+            <span>
+              Amber outlines the record or link you have selected, and the keyboard focus. When you trace what a record rests
+              on, its grey lines turn amber; assumption tags and Lean lines on the traced route keep their own colours and
+              are drawn brighter.
+            </span>
+          </li>
+        </ul>
+        <p className="about__keynote">
+          The Key button on the <a href={routeHref({ view: "map" })}>argument map</a> opens the same explanation. On the checks
+          page each outcome is written as a word, and only a failed outcome is shown in colour.
+        </p>
+      </section>
+
+      <section className="about__serves" id="edition" aria-labelledby="serves">
+        <h2 id="serves">The edition you are reading</h2>
+        <p>
+          Everything on this site comes from one captured edition: a fixed set of files holding the records and the three
+          accounts, served by a read-only server. The site sends the edition’s identifier with every request. If the server
+          starts serving a different edition while you read, the site says so and asks you to reload, so the two editions
+          are never mixed on one page.
+        </p>
+        <dl className="facts">
+          <div>
+            <dt>Edition</dt>
+            <dd>
+              Bundle <code translate="no">{snapshot.bundle_id}</code>, version {snapshot.bundle_version}. Manifest SHA-256{" "}
+              <code translate="no" className="about__hash">
+                {snapshot.manifest_sha256}
+              </code>
+              <span className="about__copies">
+                <CopyButton label="Copy link to this edition" text={() => editionLink({ view: "map" }, snapshot)} />
+                <CopyButton
+                  label="Copy citation"
+                  text={() => citationText({ place: goalLabel ?? undefined }, { view: "map", node: goal }, snapshot)}
+                />
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Accounts</dt>
+            <dd>
+              <ul>
+                {papers.map((p) => (
+                  <li key={p.stage}>
+                    <a href={routeHref({ view: "read", stage: p.stage })}>{PAPER_NAMES[p.stage].short}</a>: {words(p.state)},{" "}
+                    {words(p.review_state)}; {p.passages} passages linked to records, in {p.sections} sections.
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>Records</dt>
+            <dd>
+              <ul>
+                {RECORD_MEANINGS.filter((r) => overview.record_counts[r.table] !== undefined).map((r) => (
+                  <li key={r.table}>
+                    <span className="num">{overview.record_counts[r.table]}</span> {r.noun}: {r.meaning}.
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>Run it yourself</dt>
+            <dd>
+              <code>lean-exposition serve</code> starts the read-only server, and <code>npm run dev</code> in <code>site/</code>{" "}
+              starts this site. The repository’s <code>site/README.md</code> lists the full commands.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="about__companion" aria-labelledby="companion-title">
+        <h2 id="companion-title" className="visually-hidden">
+          The architectural companion
+        </h2>
+        <button
+          type="button"
+          className="control about__open"
+          aria-expanded={companion}
+          aria-controls={COMPANION}
+          onClick={() => setCompanion((open) => !open)}
+        >
+          {companion ? "Close the architectural companion" : "Read the architectural companion"}
+        </button>
+        <p className="about__open-note">
+          A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
+          records, and on how those records and links are made.
+        </p>
+        <div id={COMPANION} hidden={!companion}>
+          <header className="about__head">
+            <h1>{title}</h1>
+            {subtitle && <p className="about__subtitle">{subtitle}</p>}
+            {date && <p className="about__date">{date}</p>}
+          </header>
+          <div ref={prose} className="prose about__prose" />
+        </div>
+      </section>
+    </article>
+  );
+}
+
+/** A copy action that says what happened, and offers the text when the browser refuses. */
+function CopyButton({ label, text }: { label: string; text: () => string }) {
+  const [state, setState] = useState<{ status: "idle" } | { status: "copied" } | { status: "manual"; text: string }>({ status: "idle" });
+  useEffect(() => {
+    if (state.status !== "copied") return;
+    const timer = window.setTimeout(() => setState({ status: "idle" }), 2400);
+    return () => window.clearTimeout(timer);
+  }, [state]);
+  return (
+    <span className="copyact">
+      <button
+        type="button"
+        className="control copyact__button"
+        onClick={async () => {
+          const value = text();
+          setState((await copyText(value)) ? { status: "copied" } : { status: "manual", text: value });
+        }}
+      >
+        {label}
+      </button>
+      <span className="copyact__status" role="status">
+        {state.status === "copied" ? "Copied" : ""}
+      </span>
+      {state.status === "manual" && (
+        <textarea className="copyact__manual" readOnly value={state.text} aria-label={`${label}: select and copy`} rows={3} onFocus={(e) => e.currentTarget.select()} />
+      )}
+    </span>
+  );
+}

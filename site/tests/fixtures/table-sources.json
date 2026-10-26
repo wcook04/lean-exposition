@@ -1,0 +1,854 @@
+[
+ {
+  "id": "ac2015_unique_minimizer",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "CMP 335 (2015), 1429–1444",
+  "url": "https://doi.org/10.1007/s00220-014-2254-z"
+ },
+ {
+  "id": "ac2017_ground_state",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1606.05335v2",
+  "url": "https://arxiv.org/abs/1606.05335v2"
+ },
+ {
+  "id": "active_derived_lake_lock",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/lake-manifest.json",
+  "redistribution": "original",
+  "revision": "450c8947971dbad9be943b8705ea96f822240961",
+  "sha256": "24de7b18068dd3465150ae082bfa3dee6f2423b5b66937bebfdc0489ba3c8058",
+  "url": "urn:sha256:24de7b18068dd3465150ae082bfa3dee6f2423b5b66937bebfdc0489ba3c8058"
+ },
+ {
+  "id": "active_derived_lakefile",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/lakefile.lean",
+  "redistribution": "original",
+  "revision": "450c8947971dbad9be943b8705ea96f822240961",
+  "sha256": "82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74",
+  "url": "urn:sha256:82b47148544cf1a645a28738d8c93451bc1f98c5441f9d8b5988b6d7a5547c74"
+ },
+ {
+  "id": "acz2020_infinite_support",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1703.06872v2",
+  "url": "https://arxiv.org/abs/1703.06872v2"
+ },
+ {
+  "id": "authored_long_comparisons_20261024",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "redistribution": "original",
+  "revision": "sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+  "sha256": "9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+  "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+ },
+ {
+  "id": "bfmvz2022_tree_transfer",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2110.14206v3",
+  "url": "https://arxiv.org/abs/2110.14206v3"
+ },
+ {
+  "id": "bgmz2022_even_spin",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2204.10306v2",
+  "url": "https://arxiv.org/abs/2204.10306v2"
+ },
+ {
+  "id": "boulebnane2026_spin_boson_v2",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2505.07929v2",
+  "sha256": "319eb1dee22cef0a82b52e1d66883a92a75b54fa821036ea40fc07ee4f714cc6",
+  "url": "https://arxiv.org/abs/2505.07929v2"
+ },
+ {
+  "id": "chen2026_full_support",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2607.18032v1",
+  "url": "https://arxiv.org/abs/2607.18032v1"
+ },
+ {
+  "id": "chl2018_zero_temperature",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1609.04368v4",
+  "url": "https://arxiv.org/abs/1609.04368v4"
+ },
+ {
+  "id": "circuit-r2-26-source-assembly",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/06-assembly.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "988a128a8d8fe3af7db36f77d51fdaf08dccbe569ed775838440beba173d8618",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/06-assembly.tex"
+ },
+ {
+  "id": "circuit-r2-26-source-foundations",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/02-foundations.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "810bd9c20d6b8dcade6ffff3f69ca13d605faef052047dc371b8235a46728977",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/02-foundations.tex"
+ },
+ {
+  "id": "circuit-r2-26-source-maxcut",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/08-regular-maxcut.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "f91ff15e40c243cf3ceaaa34bd219ac233e27e62287b48036767da36c951d5fb",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/08-regular-maxcut.tex"
+ },
+ {
+  "id": "circuit-r2-26-source-positive",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/07-positive-temperature.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "bd4773f261bbf4e67d5828d22cbf56bc23daf630590b19176a58e560d091a3cf",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/07-positive-temperature.tex"
+ },
+ {
+  "id": "circuit-r2-26-source-seed",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/05-seed-simulation.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "1cbfd3455278dd3a8e8bd8493a66e905448cb2fd36f249f5cde77e67293ed46c",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/05-seed-simulation.tex"
+ },
+ {
+  "id": "circuit-r2-26-source-synthesis",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/04-classical-synthesis.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "1a3f69d85f8ebde38696e12ec1a3e94051cefb1efaaf64079bea99db4e052f6c",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/04-classical-synthesis.tex"
+ },
+ {
+  "id": "eams2021_mean_field_optimization",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2001.00904v1",
+  "url": "https://arxiv.org/abs/2001.00904v1"
+ },
+ {
+  "id": "eams2023_finite_step",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2111.06813v2",
+  "url": "https://arxiv.org/abs/2111.06813v2"
+ },
+ {
+  "id": "family_scope",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/docs/281.md",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "244155dd6e7310ab65b1b4ec342c499149057fe90ae0aba8340a0c5bd656a072",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md"
+ },
+ {
+  "id": "fggz2022_fixed_depth",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1910.08187v4",
+  "url": "https://arxiv.org/abs/1910.08187v4"
+ },
+ {
+  "id": "full_support_config",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/ComparatorChallenges/SKFullSupport.json",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "15a00a19f702bd58a30ca37d606d67e9d5cbc41aeae2334c76b5b3c50d5bea6c",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.json"
+ },
+ {
+  "id": "full_support_gaussian_log_density",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "3f226cb89df80503a070c28cb47953232a282b6aad07e94f61f4eaf86061374f",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/GaussianLogDensity.lean"
+ },
+ {
+  "id": "full_support_manuscript",
+  "kind": "literature",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "86256ac3e995c880c1f9075b3e2410d6cb5ca37e4f00ef6303c7605e87e1d3d8",
+  "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf"
+ },
+ {
+  "id": "full_support_proof",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Main.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "99bee3ef9c623855a5c0194b07b4ddb47ac76c3a3ff5b925c0ffa9b6ffd68cc6",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Main.lean"
+ },
+ {
+  "id": "full_support_statement",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/ComparatorChallenges/SKFullSupport.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "d8694501338ef2719c0b22738ccc2aca29ddb94cfe82ce048b842f71279d4085",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean"
+ },
+ {
+  "id": "full_support_variation_integrals",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Support/VariationIntegrals.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "1a3d360f7f3abc0b6a51ca5fce0ff54e6b7393f88f9278231103217f135c1627",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/VariationIntegrals.lean"
+ },
+ {
+  "id": "jt2016_dynamic_programming",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1502.04398v4",
+  "url": "https://arxiv.org/abs/1502.04398v4"
+ },
+ {
+  "id": "lean_toolchain",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/lean-toolchain",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/lean-toolchain"
+ },
+ {
+  "id": "lopatto2026_external_field_v1",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2610.00127v1",
+  "url": "https://arxiv.org/abs/2610.00127v1"
+ },
+ {
+  "id": "lopatto2026_interval_support",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2607.11756v3",
+  "url": "https://arxiv.org/abs/2607.11756v3"
+ },
+ {
+  "id": "lopatto2026_interval_support_v4",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2607.11756v4",
+  "url": "https://arxiv.org/abs/2607.11756v4"
+ },
+ {
+  "id": "mathlib_lake_lock",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/provenance/mathlib-lake-manifest.json",
+  "redistribution": "vendored",
+  "revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "sha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+  "url": "https://raw.githubusercontent.com/leanprover-community/mathlib4/d13f23b723b8a846827a245b89c10fc7d3f11612/lake-manifest.json"
+ },
+ {
+  "id": "mathlib_license",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/provenance/mathlib-LICENSE",
+  "redistribution": "vendored",
+  "revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+  "url": "https://raw.githubusercontent.com/leanprover-community/mathlib4/d13f23b723b8a846827a245b89c10fc7d3f11612/LICENSE"
+ },
+ {
+  "id": "montanari2025_sk_optimization",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1812.10897v2",
+  "url": "https://arxiv.org/abs/1812.10897v2"
+ },
+ {
+  "id": "openai_license",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/LICENSE",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/LICENSE"
+ },
+ {
+  "id": "qaoa_finite_size_2026",
+  "kind": "literature",
+  "license": "CC-BY-4.0",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2609.40309v1",
+  "sha256": "8b80ae44e8ddf3692a08d4c199c91467951c10ff67598283098ca828b59a3319",
+  "url": "https://arxiv.org/abs/2609.40309v1"
+ },
+ {
+  "id": "qaoa_introduction",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "b14a192b301cc839f84eeed4b36f6eb0e5842ed1da59cf09af5be37e7d767642",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/01-introduction.tex"
+ },
+ {
+  "id": "qaoa_manuscript",
+  "kind": "literature",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "4d07ebe181b03157398deef72b23eff8046183f67855d30f9e48e222550a44ba",
+  "url": "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf"
+ },
+ {
+  "id": "qaoa_original_2014",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:1411.4028v1",
+  "sha256": "0b8f8649ffa0ae294d74a5d67a2198754283aa397771cc5b8c72161f3d1bb0a3",
+  "url": "https://arxiv.org/abs/1411.4028v1"
+ },
+ {
+  "id": "scalar-r2-13-source-constant-fatou",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "af3bae1e409791d4fd82491ba0e0675856cc8dfef88f7b7269d741bf6f1c031d",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-curvature-moment",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "b1f8b4872c5e007260d6ad6d5a5ed519dc640b55b65eba27fde4ef06ca2439f0",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-diffusion-existence",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "d6923f7a12f8ae9e33b432e7ed7898a1fef327b5f20f36fe5c052c295e025ee9",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/DiffusionExistence.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-empirical-limit",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "c7e3201e4bbc01380c13717a1b3836651a360a1c134edc3484b26b3731c6a86a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-gaussian-transpose",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/GaussianTranspose.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "e7a77dae846c6b9f8ae9d6792a1e7841b9675756066c9ff9fedb66dcc8a92378",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianTranspose.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-guerra-upper",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "e4d1c57072ff7ae7b37abd353d8abe0113e5a0184a0862bed60b1fb43cf76a78",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/WeakGuerra.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-literal-lower",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "4ebfab6b7de3dd1878f6d07a696bceb54ec99b28c7ffe28e896714d31f391ec3",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/LiteralLower.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-regularity",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Control/Regularity.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "28cf931f415660bde6f3015562716ff8da8394245e264682cd98f51b44439937",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/Regularity.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-rounding-spin",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/RoundingSpin.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "121420be02cc5d4c8eeb031c19f38ace933ae1f5321503a953fe92de3fb48c8f",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/RoundingSpin.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-spin-limit",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "9220138b2e4fae336b12f8be5cf614d0bfe24c44ec438773837d0834136920ee",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/BlockCoeff.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-strip-definition",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Control/StripRegularity.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "aeb6036f178ff43d186e573ca701ce95461594228f2a091497dfcb115d11e211",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Control/StripRegularity.lean"
+ },
+ {
+  "id": "scalar-r2-13-source-terminal-assembly",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "348a14fa51ab17f431cb82b11fec6a4161af7a71f7d06cc4e6b35d5b84bfdf2f",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean"
+ },
+ {
+  "id": "scalar-r2-26-source-algorithm-application",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/algorithm-application.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "07a7175f47d7d940f263cc76eec11d20faab836be3a7b0e0cff110331fde1a0a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/algorithm-application.tex"
+ },
+ {
+  "id": "scalar-r2-26-source-consequences",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/consequences.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "8ee82460b3e1b5711c45c35108c4238fabd15031a4908b0467beb5ce071af13a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/consequences.tex"
+ },
+ {
+  "id": "scalar-r2-26-source-contact-assembly",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "7096a099050698723d49ceec0c435cb6c2aacd72eb78aca2364d0da08ee0ff7a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/ContactAssembly.lean"
+ },
+ {
+  "id": "scalar-r2-26-source-fixed-strip",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "5e4a37fb62bd9fc1a3d09db141ce6d3dc2424ae1f76094a83fd294ad334a97ce",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean"
+ },
+ {
+  "id": "scalar-r2-26-source-formal-targets",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "5dea2e50a2b0c71e8e16ca222505c18bfddca0091ea9f81052bb604e350022c7",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/MainConclusions.lean"
+ },
+ {
+  "id": "scalar-r2-26-source-minimizer-contact",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Variation/MinimizerContact.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "d81daca5469e110d759771057f01cdb5c8464c9dd74c36b62121c93a2aab2c13",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Variation/MinimizerContact.lean"
+ },
+ {
+  "id": "scalar-r2-26-source-order-parameter-regularity",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/order-parameter-regularity.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "39477c735eb19beedcdd0c8406f9fd1a441aba21ddf2b00906ad1fc806851044",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/order-parameter-regularity.tex"
+ },
+ {
+  "id": "scalar-r2-26-source-qaoa-scalar",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/03-classical-optimization.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "31797348ed594459cda64196ac06935c5bf837762f2ea4d671de03ef2e34c3f8",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/build/sections/03-classical-optimization.tex"
+ },
+ {
+  "id": "scalar-r2-26-source-value-model",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Model.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "5be7a2d9b1b1ae5e6677cace4d3a53bd13ac91f41e9984338cebe4ce8f2a78de",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Model.lean"
+ },
+ {
+  "id": "scalar-r6-source-empirical-energy-limit",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "c7e3201e4bbc01380c13717a1b3836651a360a1c134edc3484b26b3731c6a86a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean"
+ },
+ {
+  "id": "scalar-r6-source-finite-adaptive-lower",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "1a7713c58245bebc5f893086f98ac1ed63c30ce2d821f421e71d4251d9c09515",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/QuadraticSK.lean"
+ },
+ {
+  "id": "scalar-r6-source-gaussian-column-split",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "6fae3ca82b892e6f40df9c835f9cda05eb9d0a041d7d2c3c448401d379024410",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/GaussianColumn.lean"
+ },
+ {
+  "id": "scalar-r6-source-predictable-lower",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "af3bae1e409791d4fd82491ba0e0675856cc8dfef88f7b7269d741bf6f1c031d",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/ConstantFatou.lean"
+ },
+ {
+  "id": "scalar_value_config",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/ComparatorChallenges/SKValue.json",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "6a6c5c7039e3a475c7f777375498ccff393b0d5334d2cee111ca3eeefab3ec11",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKValue.json"
+ },
+ {
+  "id": "scalar_value_proof",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKValue/Main.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "390733e213a313ee1203cfec1be71022a601ee338b2c06202aae0bae75f83cb2",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/Main.lean"
+ },
+ {
+  "id": "scalar_value_statement",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/ComparatorChallenges/SKValue.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "1c059a9b0e733ab43a2944ee6af222191f12b27c14714582613e1d5ff99f1d6e",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKValue.lean"
+ },
+ {
+  "id": "sellke2021_external_field",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2105.03506v4 (6 October 2021)",
+  "sha256": "f774906b5273e81afc2dd92f551eae16a522150476135ec0b437277edbd0b328",
+  "url": "https://arxiv.org/abs/2105.03506v4"
+ },
+ {
+  "id": "sellke2023_external_field_v6",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2105.03506v6 (17 December 2023)",
+  "sha256": "cfccbe9b67a6c122a04fe0e220bd480d87438429c40df252e1387aa584385474",
+  "url": "https://arxiv.org/html/2105.03506v6"
+ },
+ {
+  "id": "support-r2-13-finite-density",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "76d765cb219fb63f9226becce8245c1a8b80efe9968b099e395a969f80e0e66d",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/FiniteDensity.lean"
+ },
+ {
+  "id": "support_lean_certificate",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Density/Certificate.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "e4d1b86b6a26db99984368147bebd0f1053ff0458bfca1fa5b2c62f2e183b68a",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/Certificate.lean"
+ },
+ {
+  "id": "support_lean_closure",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Support/Closure.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "a36c8179b452d1a3acfe425ab118033aae7b10683af20c0ff40ccd1aeee83e05",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/Closure.lean"
+ },
+ {
+  "id": "support_lean_contact",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Support/ContactPotential.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "ae585f38a65d338935722798ad943a7955b9f9c1e6634f1b4518f02d6b648568",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/ContactPotential.lean"
+ },
+ {
+  "id": "support_lean_gap_curvature",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Support/GapCurvature.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "9f1bcc1a8c2d886139c649c03222463fd2e3b88f98e68446ad0d016a303519c6",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/GapCurvature.lean"
+ },
+ {
+  "id": "support_lean_model",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Model.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "c72e9e5f248caa916cdc03bc307a00edf889db75170fa851fea54ff5d2cc1a10",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Model.lean"
+ },
+ {
+  "id": "support_lean_no_terminal",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "8d177bfdef9e983d4799c912c4b97797e9e4ee44e5a1874cf8da0bae1cd4ce11",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean"
+ },
+ {
+  "id": "support_lean_uniqueness",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "a92af755a6507d3df356445fc79ff0739312fe1eb53a7cae08b2171df87ea851",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Diffusion/Uniqueness.lean"
+ },
+ {
+  "id": "support_source_coercive_moments",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Density/CoerciveMoments.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "0cb4e487e07adb9dbd66674f350a229d4fe8ae1532283427b30b11f9bd6fe4d6",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/CoerciveMoments.lean"
+ },
+ {
+  "id": "support_source_sample_jets",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/lean/OAI/Probability/SKSupport/Density/SampleJets.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "13bbff4ede05b8df154357438ed43051c273d41e64a0cc251b2921ed331816c3",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean"
+ },
+ {
+  "id": "support_tex_certificate",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/certificate.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "8943edb57f7b7560ce35af962ccdbe072c359bf6c0dd0992ef97862e9cd7b484",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/certificate.tex"
+ },
+ {
+  "id": "support_tex_curvature",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/curvature.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "c6d2dd2ad8d3ecbc4d88036ed2706d435f1298908969d54d766e4ae4f9842eec",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/curvature.tex"
+ },
+ {
+  "id": "support_tex_main",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "81883e687493504caf10dbc250a34445eb24b3d3e45322fc02d2b655951e4310",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex"
+ },
+ {
+  "id": "support_tex_regularity",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/regularity.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "f3e574a4ccba24d5ea8b171e326d35edca96bf18724a0cbaade3f1fda1d127aa",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/regularity.tex"
+ },
+ {
+  "id": "support_tex_signs",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/signs.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "48eda6c618cbbd6d95e6e7518c22888572900a951d7a4b4f3de2cbb3668a36b5",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/signs.tex"
+ },
+ {
+  "id": "support_tex_variation",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/variation.tex",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "3147c6d0804e587da9c11c9969d2f306c2f812acb47ec6d45c8587e7aeb8ab52",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/variation.tex"
+ },
+ {
+  "id": "upstream_lake_lock",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/provenance/lake-manifest.json",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "cf6105a25d9dca2f166b241d9191bd12c7e13305890dc9c4d0952351cccc0794",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/lake-manifest.json"
+ },
+ {
+  "id": "upstream_lakefile",
+  "kind": "file",
+  "license": "Apache-2.0",
+  "path": "upstream/provenance/lakefile.lean",
+  "redistribution": "vendored",
+  "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+  "sha256": "4cca977ebece444b6c999d99755c1ad3c93119bafc127ea761f7f703c7279e74",
+  "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/lakefile.lean"
+ },
+ {
+  "id": "zhou2026_near_critical",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "CPAM 79 (2026), DOI 10.1002/cpa.70038",
+  "url": "https://doi.org/10.1002/cpa.70038"
+ }
+]

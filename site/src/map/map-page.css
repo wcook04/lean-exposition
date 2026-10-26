@@ -1,0 +1,675 @@
+/* Map bar on top; below it the argument (canvas or outline) with the dock under
+   it, and, while something is inspected, the inspector as a full-height column. */
+.map-page {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.map-page__main {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-page__main > .tree,
+.map-page__main > :not(.map-note) {
+  flex: 1;
+  min-height: 0;
+}
+
+.map-page > .panel {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2 / 4;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  min-height: 0;
+  height: auto;
+}
+
+.map-page > .dock {
+  position: relative;
+  grid-column: 1;
+  grid-row: 3;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  min-width: 0;
+}
+
+/* A slim note over the canvas when the selection is not drawn as asked. */
+.map-note {
+  position: absolute;
+  z-index: 8;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 6px;
+  margin: 0;
+  padding: 7px 16px;
+  white-space: nowrap;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sheet);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  animation: map-note-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-note .linklike {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@keyframes map-note-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -4px);
+  }
+}
+
+/* The bar above the argument: goal, account, view, tools. Never scaled with the map. */
+
+.map-bar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: var(--bar-h);
+  padding: 0 22px;
+  background: color-mix(in oklab, var(--ground) 70%, var(--surface));
+  border-bottom: 1px solid var(--rule);
+  min-width: 0;
+}
+
+.map-bar__label {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.goal-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.goal-switch__items {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.goal-switch__item,
+.map-views button {
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+
+.goal-switch__item:hover,
+.map-views button:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.goal-switch__item[aria-checked="true"] {
+  background: var(--raised);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 0 0 1px var(--rule-strong), 0 1px 2px rgb(0 0 0 / 0.06);
+}
+
+.map-views {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--sunk);
+  flex: none;
+}
+
+.map-views button {
+  height: 28px;
+}
+
+.map-views button[aria-pressed="true"] {
+  background: var(--raised);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+/* Records used by: a picker that opens the account switch. */
+.acct-picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.acct-picker__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 7px;
+  background: var(--raised);
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.acct-picker__button:hover {
+  border-color: var(--ink-3);
+}
+
+.acct-picker__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-bar__tools {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.map-tool,
+.map-keypop > .control {
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.map-tool:hover,
+.map-keypop > .control:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.map-tool:disabled {
+  color: var(--ink-3);
+  cursor: default;
+  background: none;
+}
+
+.map-tool[aria-expanded="true"],
+.map-keypop > .control[aria-expanded="true"] {
+  background: color-mix(in oklab, var(--ink) 7%, transparent);
+  color: var(--ink);
+}
+
+.map-more {
+  position: relative;
+}
+
+.map-more__list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-reveal) var(--ease-out) both;
+}
+
+.map-more__item {
+  display: block;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-more__item:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+/* Phones: native selects for goal and account, at touch size. */
+.map-bar__selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.map-bar__field {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.map-bar__field select {
+  width: 100%;
+  min-width: 0;
+  height: var(--target);
+  padding: 0 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-base);
+}
+
+.map-key {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.map-key__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.map-bar > .map-key .map-key__sources {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 2px 18px;
+}
+
+.map-key__sources li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-key__sources li[data-slot="1"] {
+  --cat: var(--src-1);
+}
+.map-key__sources li[data-slot="2"] {
+  --cat: var(--src-2);
+}
+.map-key__sources li[data-slot="3"] {
+  --cat: var(--src-3);
+}
+
+.map-key__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--cat, transparent) 14%, var(--surface));
+  border: 1px solid color-mix(in oklab, var(--cat, var(--ink-3)) 60%, var(--rule));
+  box-shadow: inset 0 2px 0 var(--cat, var(--rule-strong));
+}
+
+/* The key behind one button: colours, line styles and how to go deeper. */
+.map-keypop {
+  position: relative;
+}
+
+.map-keypop__panel {
+  --line: color-mix(in oklab, var(--ink-3) 55%, var(--ground));
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px 16px 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-panel) var(--ease-out) both;
+}
+
+:root[data-theme="dark"] .map-keypop__panel {
+  --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .map-keypop__panel {
+    --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+  }
+}
+
+@keyframes keypop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.map-keypop__title {
+  margin: 12px 0 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.map-keypop__title:first-child {
+  margin-top: 0;
+}
+
+.map-keypop__sources {
+  display: grid;
+  gap: 4px;
+}
+
+.map-keypop__lines {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.map-keypop__lines li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-keypop__sample {
+  flex: none;
+  overflow: visible;
+}
+
+.map-keypop__note {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+/* Check rows, shared with the record panel. */
+
+.check {
+  display: grid;
+  grid-template-columns: 14px auto 1fr;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.check__mark {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+  transform: translateY(1px);
+}
+
+.check--passed .check__mark {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+}
+
+.check--failed .check__mark {
+  border-color: var(--fail);
+  border-radius: 1px;
+  transform: translateY(1px) rotate(45deg) scale(0.85);
+}
+
+.check__kind {
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.check__outcome {
+  color: var(--ink-2);
+}
+
+.linklike {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+/* Below 1600px the colour key lives behind the Key button only. */
+@media (max-width: 1599px) {
+  .map-bar > .map-key {
+    display: none;
+  }
+}
+
+@media (max-width: 1359px) {
+  .map-bar {
+    gap: 18px;
+    padding: 0 16px;
+  }
+  .goal-switch__item,
+  .map-views button {
+    padding: 0 9px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* The panel becomes a bottom sheet; its heights come from panel.css. */
+  .map-page > .panel {
+    position: fixed;
+    grid-column: auto;
+    grid-row: auto;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    /* Peek: as tall as its title and two actions, never more than half the screen. */
+    height: var(--sheet-drag, auto);
+    max-height: 55dvh;
+  }
+  .map-page > .panel[data-sheet="full"] {
+    height: var(--sheet-drag, calc(100dvh - var(--topbar-h) - 8px));
+    max-height: none;
+  }
+  .map-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* The key opens within the viewport, not off its left edge. */
+  .map-keypop__panel {
+    position: fixed;
+    top: auto;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    margin-top: 8px;
+    max-height: 70dvh;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .map-bar {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .map-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 16px 10px;
+  }
+  .map-views {
+    flex: 1;
+  }
+  .map-views button {
+    flex: 1;
+    height: 40px;
+    padding: 0 6px;
+  }
+  .map-bar__tools {
+    gap: 0;
+  }
+  .map-tool,
+  .map-keypop > .control {
+    height: var(--target);
+  }
+}
+
+/* Account switch: all records, or one account's. The caption counts coverage. */
+
+.acct-switch {
+  position: relative;
+  flex: none;
+  display: grid;
+  gap: 3px;
+}
+
+.acct-switch__group {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+}
+
+.acct-switch__item {
+  padding: 3px 9px;
+  border: 0;
+  border-radius: calc(var(--radius-m) - 2px);
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-press) var(--ease-out);
+}
+
+.acct-switch__item:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.acct-switch__item[aria-checked="true"] {
+  background: var(--lit-wash);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--lit);
+}
+
+.acct-switch__caption {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.acct-switch__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 360px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  white-space: normal;
+}
+
+.acct-switch__pop ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.acct-switch__pop li {
+  display: grid;
+  gap: 1px;
+}
+
+.acct-switch__name {
+  justify-self: start;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink);
+  text-align: left;
+}
+
+.acct-switch__why {
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .acct-switch__group {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}

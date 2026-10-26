@@ -109,3 +109,12 @@ results distinct.
 
 Continue with [graph-to-long](../graph-to-long/SKILL.md) after selecting the
 result and fixing its current claim ceiling.
+
+## Close the transition and improve the method
+
+Use the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+Record the sources inspected, graph edition, skill version and unresolved
+questions in the existing review account. When a review exposes a mistaken
+claim, edge, source role or checking status, repair that record and inspect its
+paper uses. Test a general recording lesson outside this problem before adding
+it here. A later prose improvement cannot repair an incorrect source relation.

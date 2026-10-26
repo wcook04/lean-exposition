@@ -1,5 +1,10 @@
 # Authoring transitions
 
+The **authoring transitions** are this repository's reusable writing funnel.
+Each transition has a **transition skill**; the shared **review-and-refinement
+loop** improves those skills from evidence gathered while using them. Keep
+these names across the guides and architectural companion.
+
 These skills teach decisions that the CLI cannot make. They can be read by a
 human or copied into an agent's supported skill directory. The Python package
 does not load or execute them.
@@ -28,6 +33,28 @@ document. Record consequential choices and observed failures in the existing
 review account. The [maintenance loop](../docs/authoring.md#use-and-improve-the-transition-skills)
 explains how a revision can improve these instructions without treating every
 local preference as a general rule.
+
+## Run the funnel for another problem
+
+1. Choose the result, its current evidence and the reader's task. Identify the
+   actual sources and available checks; record missing material explicitly.
+2. Start at the earliest affected transition in the table. Read its skill,
+   reconstruct or revise that output, then inspect the downstream accounts
+   that use the changed claim. A new exposition does not require rewriting an
+   unchanged long proof; a corrected hypothesis does require checking its uses.
+3. Review the result in reading order and follow its proof destinations. Use
+   the stage's completion question below, alongside the local structural checks.
+4. Apply the [review-and-refinement loop](../docs/authoring.md#use-and-improve-the-transition-skills).
+   Repair the current account, then test whether the lesson belongs in the
+   responsible skill. Preserve a local choice as local when it does not transfer.
+5. Retain the reviewed edition, decisions and method version in the existing
+   review record. Begin the next problem with the revised local skill, rather
+   than requiring its author to rediscover a lesson in old review archives.
+
+The [authoring guide's transfer examples](../docs/authoring.md#check-transfer-beyond-the-current-problem)
+show how to test a lesson outside the SK example, including a case where a
+teaching repair cannot replace a proof. These are worked method checks, not
+claims of improved human learning.
 
 The long record must make its selected argument recoverable. The expert paper
 must make its contribution and decisive reasoning assessable. The exposition

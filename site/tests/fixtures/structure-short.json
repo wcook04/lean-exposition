@@ -1,0 +1,1306 @@
+{
+ "stage": "short",
+ "paper": {
+  "path": "papers/short.md",
+  "byte_length": 54103,
+  "sections": [
+   {
+    "heading_span": {
+     "end_byte": 69,
+     "end_line": 1,
+     "start_byte": 0,
+     "start_line": 1
+    },
+    "level": 1,
+    "parent_ref": null,
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "span": {
+     "end_byte": 54103,
+     "end_line": 1076,
+     "start_byte": 0,
+     "start_line": 1
+    },
+    "title": "Full support and positive density in the zero-temperature SK model"
+   },
+   {
+    "heading_span": {
+     "end_byte": 1425,
+     "end_line": 27,
+     "start_byte": 1390,
+     "start_line": 27
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/1390",
+    "span": {
+     "end_byte": 8045,
+     "end_line": 164,
+     "start_byte": 1390,
+     "start_line": 27
+    },
+    "title": "1. The result and the mechanism"
+   },
+   {
+    "heading_span": {
+     "end_byte": 8101,
+     "end_line": 165,
+     "start_byte": 8045,
+     "start_line": 165
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/8045",
+    "span": {
+     "end_byte": 14908,
+     "end_line": 316,
+     "start_byte": 8045,
+     "start_line": 165
+    },
+    "title": "2. Minimality gives contact; curvature excludes gaps"
+   },
+   {
+    "heading_span": {
+     "end_byte": 14938,
+     "end_line": 317,
+     "start_byte": 14908,
+     "start_line": 317
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/14908",
+    "span": {
+     "end_byte": 26197,
+     "end_line": 553,
+     "start_byte": 14908,
+     "start_line": 317
+    },
+    "title": "3. The integrated estimate"
+   },
+   {
+    "heading_span": {
+     "end_byte": 26263,
+     "end_line": 554,
+     "start_byte": 26197,
+     "start_line": 554
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/26197",
+    "span": {
+     "end_byte": 32262,
+     "end_line": 677,
+     "start_byte": 26197,
+     "start_line": 554
+    },
+    "title": "4. A second use: the density cannot vanish inside the interval"
+   },
+   {
+    "heading_span": {
+     "end_byte": 32298,
+     "end_line": 678,
+     "start_byte": 32262,
+     "start_line": 678
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "span": {
+     "end_byte": 45383,
+     "end_line": 944,
+     "start_byte": 32262,
+     "start_line": 678
+    },
+    "title": "5. Consequences for optimisation"
+   },
+   {
+    "heading_span": {
+     "end_byte": 32354,
+     "end_line": 681,
+     "start_byte": 32329,
+     "start_line": 681
+    },
+    "level": 3,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32329",
+    "span": {
+     "end_byte": 34590,
+     "end_line": 724,
+     "start_byte": 32329,
+     "start_line": 681
+    },
+    "title": "5.1 The scalar value"
+   },
+   {
+    "heading_span": {
+     "end_byte": 34622,
+     "end_line": 725,
+     "start_byte": 34590,
+     "start_line": 725
+    },
+    "level": 3,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/34590",
+    "span": {
+     "end_byte": 36261,
+     "end_line": 754,
+     "start_byte": 34590,
+     "start_line": 725
+    },
+    "title": "5.2 The classical algorithm"
+   },
+   {
+    "heading_span": {
+     "end_byte": 36321,
+     "end_line": 755,
+     "start_byte": 36261,
+     "start_line": 755
+    },
+    "level": 3,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/36261",
+    "span": {
+     "end_byte": 45383,
+     "end_line": 944,
+     "start_byte": 36261,
+     "start_line": 755
+    },
+    "title": "5.3 A fixed QAOA circuit before the thermodynamic limit"
+   },
+   {
+    "heading_span": {
+     "end_byte": 45402,
+     "end_line": 945,
+     "start_byte": 45383,
+     "start_line": 945
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/45383",
+    "span": {
+     "end_byte": 47050,
+     "end_line": 970,
+     "start_byte": 45383,
+     "start_line": 945
+    },
+    "title": "6. Formal scope"
+   },
+   {
+    "heading_span": {
+     "end_byte": 47064,
+     "end_line": 971,
+     "start_byte": 47050,
+     "start_line": 971
+    },
+    "level": 2,
+    "parent_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/47050",
+    "span": {
+     "end_byte": 54103,
+     "end_line": 1076,
+     "start_byte": 47050,
+     "start_line": 971
+    },
+    "title": "References"
+   }
+  ],
+  "passages": [
+   {
+    "anchor": "abstract",
+    "assumption_ids": [
+     "assumptions.full_support_minimizer",
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 1357,
+     "end_line": 23,
+     "start_byte": 143,
+     "start_line": 5
+    },
+    "citation_ids": [
+     "authored_r8_scaling_contact",
+     "full_support_chord_derivative",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "scalar-r2-26-cite-formal-model-transport-open",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scalar-r2-26-cite-transport-support-model",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "full_support",
+     "support.full_relative_support",
+     "scalar.smooth_positive_density"
+    ],
+    "content_span": {
+     "end_byte": 1331,
+     "end_line": 22,
+     "start_byte": 168,
+     "start_line": 5
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/abstract",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/0",
+    "selected": true
+   },
+   {
+    "anchor": "model",
+    "assumption_ids": [],
+    "block_span": {
+     "end_byte": 5080,
+     "end_line": 105,
+     "start_byte": 1426,
+     "start_line": 29
+    },
+    "citation_ids": [
+     "ac2017_ground_state",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_type",
+     "scalar-r2-26-cite-minimizer-attainment",
+     "scalar-r2-26-cite-parisi-formula",
+     "scope_281",
+     "support_diffusion_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_uniqueness_lean_source"
+    ],
+    "claim_ids": [
+     "support.stieltjes_measure",
+     "support.regularity",
+     "support.diffusion",
+     "scalar.parisi_formula",
+     "scalar.minimizer_attainment"
+    ],
+    "content_span": {
+     "end_byte": 5057,
+     "end_line": 104,
+     "start_byte": 1448,
+     "start_line": 29
+    },
+    "evidence_class": "context",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/model",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/1390",
+    "selected": true
+   },
+   {
+    "anchor": "main-result",
+    "assumption_ids": [
+     "assumptions.full_support_minimizer",
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 8021,
+     "end_line": 161,
+     "start_byte": 5082,
+     "start_line": 107
+    },
+    "citation_ids": [
+     "acz2020_infinite_support",
+     "authored_r8_scaling_contact",
+     "chen2026_full_support",
+     "full_support_chord_derivative",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "scalar-r2-26-cite-formal-model-transport-open",
+     "scalar-r2-26-cite-minimizer-attainment",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scalar-r2-26-cite-transport-support-model",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "full_support",
+     "support.full_relative_support",
+     "support.moment_saturation",
+     "scalar.smooth_positive_density",
+     "scalar.minimizer_attainment"
+    ],
+    "content_span": {
+     "end_byte": 7992,
+     "end_line": 160,
+     "start_byte": 5110,
+     "start_line": 107
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/main-result",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/1390",
+    "selected": true
+   },
+   {
+    "anchor": "contact",
+    "assumption_ids": [
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 11036,
+     "end_line": 230,
+     "start_byte": 8102,
+     "start_line": 167
+    },
+    "citation_ids": [
+     "authored_r8_scaling_contact",
+     "full_support_chord_derivative",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_type",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scope_281",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_diffusion_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "support.first_variation",
+     "support.contact",
+     "support.contact_derivatives"
+    ],
+    "content_span": {
+     "end_byte": 11011,
+     "end_line": 229,
+     "start_byte": 8126,
+     "start_line": 167
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/contact",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/8045",
+    "selected": true,
+    "treatments": [
+     {
+      "claim_id": "support.contact",
+      "kinds": [
+       "derivation"
+      ],
+      "rationale": "Derives nonnegative tail cost and its vanishing on the support by feasible atom addition and compact fractional mass removal. The first-variation formula and regularity are cited inputs, and the sign conclusion uses minimality."
+     },
+     {
+      "claim_id": "support.contact_derivatives",
+      "kinds": [
+       "derivation"
+      ],
+      "rationale": "Derives the value and slope conditions from derivatives of the contact function, with a separate right-hand expansion at zero. The origin argument retains contact at zero when zero belongs to the support and the zero-field identity q(0)=0."
+     }
+    ]
+   },
+   {
+    "anchor": "gap-proof",
+    "assumption_ids": [
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 14882,
+     "end_line": 313,
+     "start_byte": 11068,
+     "start_line": 234
+    },
+    "citation_ids": [
+     "acz2020_infinite_support",
+     "authored_r8_scaling_contact",
+     "chen2026_full_support",
+     "full_support_chord_derivative",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "support.positive_curvature",
+     "support.zero_curvature",
+     "support.no_bounded_gap",
+     "support.no_initial_gap",
+     "support.no_terminal_gap"
+    ],
+    "content_span": {
+     "end_byte": 14855,
+     "end_line": 312,
+     "start_byte": 11094,
+     "start_line": 234
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/gap-proof",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/8045",
+    "selected": true,
+    "treatments": [
+     {
+      "claim_id": "support.positive_curvature",
+      "kinds": [
+       "statement",
+       "application"
+      ],
+      "rationale": "States the quantitative curvature estimate for any admissible positive plateau and applies it together with minimiser contact to exclude a bounded gap. The estimate is an imported input here; its nonminimiser scope does not supply contact."
+     },
+     {
+      "claim_id": "support.no_bounded_gap",
+      "kinds": [
+       "derivation"
+      ],
+      "rationale": "Derives the bounded-gap contradiction by integrating the endpoint-chord bound for q prime. Contact and the imported curvature estimate have separate roles; the initial and terminal cases are treated separately in the same passage."
+     }
+    ]
+   },
+   {
+    "anchor": "curvature",
+    "assumption_ids": [],
+    "block_span": {
+     "end_byte": 26164,
+     "end_line": 550,
+     "start_byte": 14939,
+     "start_line": 319
+    },
+    "citation_ids": [
+     "chen2026_full_support",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_coercivity_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_regularity_source",
+     "support_tails_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source"
+    ],
+    "claim_ids": [
+     "support.flux_identity",
+     "support.rational_certificate",
+     "support.integrated_coercivity",
+     "support.plateau_transfer",
+     "support.positive_curvature",
+     "support.backward_shapes",
+     "support.forward_shapes",
+     "support.fixed_time_spatial_coercivity"
+    ],
+    "content_span": {
+     "end_byte": 26137,
+     "end_line": 549,
+     "start_byte": 14965,
+     "start_line": 319
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/curvature",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/14908",
+    "selected": true
+   },
+   {
+    "anchor": "density-consequence",
+    "assumption_ids": [
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 32231,
+     "end_line": 674,
+     "start_byte": 26264,
+     "start_line": 556
+    },
+    "citation_ids": [
+     "authored_r8_scaling_contact",
+     "full_support_chord_derivative",
+     "full_support_implementation",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "lopatto2026_external_field_v1",
+     "lopatto2026_interval_support",
+     "lopatto2026_interval_support_v4",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "scalar.smooth_positive_density",
+     "support.fixed_time_spatial_coercivity"
+    ],
+    "content_span": {
+     "end_byte": 32194,
+     "end_line": 673,
+     "start_byte": 26300,
+     "start_line": 556
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/density-consequence",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/26197",
+    "selected": true,
+    "treatments": [
+     {
+      "claim_id": "scalar.smooth_positive_density",
+      "kinds": [
+       "derivation"
+      ],
+      "rationale": "Develops smoothness from the quotient of moments before differentiating, then transfers the quantitative spatial-moment inequality through local constant replacements at a fixed interior time. Compact-strip stability is a cited input; positivity is asserted only for 0<t<1, and the argument does not transfer third time derivatives or add formal acceptance."
+     },
+     {
+      "claim_id": "support.fixed_time_spatial_coercivity",
+      "kinds": [
+       "derivation",
+       "explanation"
+      ],
+      "rationale": "Derives the continuous-coefficient fixed-time inequality by admissible local constant replacement and common-strip convergence of spatial moments, then applies it after q=t. Minimality is unnecessary for the transfer itself."
+     }
+    ]
+   },
+   {
+    "anchor": "scalar-value",
+    "assumption_ids": [
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 36228,
+     "end_line": 752,
+     "start_byte": 32299,
+     "start_line": 680
+    },
+    "citation_ids": [
+     "ac2017_ground_state",
+     "authored_r8_scaling_contact",
+     "chen2026_full_support",
+     "circuit-r2-26-cite-gaussian-root-calculus",
+     "circuit-r2-26-cite-rooted-realization",
+     "full_support_chord_derivative",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "scalar-r2-26-cite-conditional-rounding",
+     "scalar-r2-26-cite-correlation-vector-control",
+     "scalar-r2-26-cite-eams-algorithm",
+     "scalar-r2-26-cite-euler-normalization",
+     "scalar-r2-26-cite-manuscript-terminal-value",
+     "scalar-r2-26-cite-minimizer-attainment",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-parisi-formula",
+     "scalar-r2-26-cite-separate-classical-algorithm",
+     "scalar-r2-26-cite-shifted-gaussian-limit",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scalar_value_comparator",
+     "scalar_value_finite_cutoff_antecedent",
+     "scalar_value_implementation",
+     "scalar_value_type",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "scalar.manuscript_terminal_value",
+     "scalar.parisi_formula",
+     "scalar.separate_classical_algorithm"
+    ],
+    "content_span": {
+     "end_byte": 36198,
+     "end_line": 751,
+     "start_byte": 32328,
+     "start_line": 680
+    },
+    "evidence_class": "source_argument",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/scalar-value",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "selected": true,
+    "treatments": [
+     {
+      "claim_id": "scalar.manuscript_terminal_value",
+      "kinds": [
+       "derivation",
+       "explanation"
+      ],
+      "rationale": "Explains the terminal-gradient martingale and displays the cancellation that gives the scalar value identity, with endpoint and covariance justifications delegated to the cited source and long record. This use needs the full-support moment identities, not positive density."
+     }
+    ]
+   },
+   {
+    "anchor": "qaoa-boundary",
+    "assumption_ids": [
+     "assumptions.qaoa_model_and_limits",
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 45352,
+     "end_line": 941,
+     "start_byte": 36230,
+     "start_line": 754
+    },
+    "citation_ids": [
+     "authored_r8_circuit_sampled_finite_instance_optimum",
+     "authored_r8_scalar_finite_maximum_concentration",
+     "authored_r8_scaling_contact",
+     "authored_r8_unshifted_gaussian",
+     "authored_r9_finite_formula_word",
+     "bfmvz2022_tree_transfer",
+     "boulebnane2026_spin_boson_v2",
+     "circuit-r2-26-cite-additive-responses",
+     "circuit-r2-26-cite-bounded-trigonometric",
+     "circuit-r2-26-cite-classical-fixed-minimizer",
+     "circuit-r2-26-cite-classical-primary",
+     "circuit-r2-26-cite-color-exclusion",
+     "circuit-r2-26-cite-energy-transfer",
+     "circuit-r2-26-cite-external-mode-energy",
+     "circuit-r2-26-cite-fixed-word-transfer",
+     "circuit-r2-26-cite-gate-calculus",
+     "circuit-r2-26-cite-gaussian-root-calculus",
+     "circuit-r2-26-cite-helper-contraction",
+     "circuit-r2-26-cite-masked-controls",
+     "circuit-r2-26-cite-ordinary-updates",
+     "circuit-r2-26-cite-ordinary-word-positive",
+     "circuit-r2-26-cite-ordinary-word-primary",
+     "circuit-r2-26-cite-orthogonal-quadratics",
+     "circuit-r2-26-cite-rooted-realization",
+     "circuit-r2-26-cite-seed-packets",
+     "circuit-r2-26-cite-seed-removal",
+     "circuit-r2-26-cite-seeded-synthesis",
+     "circuit-r2-26-cite-selective-accuracy",
+     "circuit-r2-26-cite-selective-control",
+     "circuit-r2-26-cite-sign-smoothing",
+     "circuit-r2-26-cite-singular-echo",
+     "circuit-r2-26-cite-upper-bound-padding",
+     "circuit-r2-26-cite-visibility",
+     "circuit-r2-26-cite-weighted-unitary-calculus",
+     "fggz2022_fixed_depth",
+     "full_support_chord_derivative",
+     "full_support_implementation",
+     "full_support_origin_coercivity",
+     "qaoa_main_theorem",
+     "qaoa_manuscript_arguments",
+     "qaoa_routes",
+     "scalar-r2-26-cite-conditional-rounding",
+     "scalar-r2-26-cite-correlation-vector-control",
+     "scalar-r2-26-cite-euler-normalization",
+     "scalar-r2-26-cite-manuscript-terminal-value",
+     "scalar-r2-26-cite-minimizer-attainment",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-parisi-formula",
+     "scalar-r2-26-cite-shifted-gaussian-limit",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scalar-r2-26-cite-terminal-loss",
+     "scalar_value_finite_cutoff_antecedent",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "qaoa_thermodynamic_first",
+     "circuit.bounded_trigonometric",
+     "circuit.seeded_synthesis",
+     "circuit.seed_removal",
+     "circuit.fixed_word_transfer",
+     "scalar.euler_normalization",
+     "scalar.conditional_rounding",
+     "scalar.shifted_gaussian_limit",
+     "scalar.correlation_vector_control",
+     "circuit.rooted_realization",
+     "circuit.sampled_finite_instance_optimum",
+     "scalar.unshifted_gaussian_limit",
+     "circuit.finite_formula_word_approximation"
+    ],
+    "content_span": {
+     "end_byte": 45321,
+     "end_line": 940,
+     "start_byte": 36260,
+     "start_line": 754
+    },
+    "evidence_class": "context",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/qaoa-boundary",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/32262",
+    "selected": true,
+    "treatments": [
+     {
+      "claim_id": "qaoa_thermodynamic_first",
+      "kinds": [
+       "statement",
+       "explanation"
+      ],
+      "rationale": "States the accuracy-dependent finite deterministic depth and angles before the size limit, and outlines the additional synthesis, seed-removal and fixed-word transfer steps. The passage routes the complete construction elsewhere and gives no depth rate, finite-size rate or efficient angle-selection guarantee."
+     },
+     {
+      "claim_id": "scalar.shifted_gaussian_limit",
+      "kinds": [
+       "statement",
+       "explanation"
+      ],
+      "rationale": "States the finite adjacent-correlation limit and explains normalization, mean-preserving rounding, l2 error control and the mesh-before-cutoff order; full estimates remain in the long record."
+     },
+     {
+      "claim_id": "circuit.rooted_realization",
+      "kinds": [
+       "explanation"
+      ],
+      "rationale": "Explains the first-chaos coefficient of the parent coordinate and its pairing with the generating child direction, including the zero independent-root-seed contribution. The source theorem supplies the full rooted construction."
+     }
+    ]
+   },
+   {
+    "anchor": "evidence-scope",
+    "assumption_ids": [
+     "assumptions.full_support_minimizer",
+     "assumptions.value_diffusion",
+     "assumptions.value_minimizer",
+     "scalar.paper_admissible",
+     "scalar.paper_minimizer"
+    ],
+    "block_span": {
+     "end_byte": 47048,
+     "end_line": 969,
+     "start_byte": 45403,
+     "start_line": 947
+    },
+    "citation_ids": [
+     "authored_r8_scaling_contact",
+     "full_support_chord_derivative",
+     "full_support_comparator",
+     "full_support_implementation",
+     "full_support_manuscript",
+     "full_support_origin_coercivity",
+     "full_support_type",
+     "qaoa_main_theorem",
+     "qaoa_routes",
+     "scalar-r2-13-cite-diffusion-exists",
+     "scalar-r2-13-cite-fixed-strip-application",
+     "scalar-r2-13-cite-ground-state-identity-with-diffusion",
+     "scalar-r2-13-cite-ground-state-upper",
+     "scalar-r2-13-cite-minimizer-curvature-moment",
+     "scalar-r2-13-cite-spin-sequence-limit",
+     "scalar-r2-13-cite-strip-regularity",
+     "scalar-r2-13-cite-strip-value-lower",
+     "scalar-r2-13-cite-terminal-parisi-assembly",
+     "scalar-r2-26-cite-conditional-fixed-strip",
+     "scalar-r2-26-cite-formal-contact-input",
+     "scalar-r2-26-cite-formal-finite-gaussian-clause",
+     "scalar-r2-26-cite-formal-model-transport-open",
+     "scalar-r2-26-cite-formal-parisi-clause",
+     "scalar-r2-26-cite-formal-scalar-clause",
+     "scalar-r2-26-cite-lean-gaussian-target",
+     "scalar-r2-26-cite-lean-parisi-target",
+     "scalar-r2-26-cite-lean-scalar-target",
+     "scalar-r2-26-cite-paper-admissible",
+     "scalar-r2-26-cite-paper-minimizer",
+     "scalar-r2-26-cite-smooth-positive-density",
+     "scalar-r2-26-cite-transport-support-model",
+     "scalar.source_empirical_energy_limit_lean_source",
+     "scalar.source_finite_adaptive_lower_lean_source",
+     "scalar.source_gaussian_column_split_lean_source",
+     "scalar.source_predictable_lower_lean_source",
+     "scalar_value_comparator",
+     "scalar_value_implementation",
+     "scalar_value_type",
+     "scope_281",
+     "support-r2-13-finite-density-call",
+     "support_backward_source",
+     "support_certificate_lean_source",
+     "support_certificate_source",
+     "support_closure_lean_source",
+     "support_closure_source",
+     "support_coercivity_source",
+     "support_contact_lean_source",
+     "support_contact_source",
+     "support_curvature_source",
+     "support_diffusion_source",
+     "support_fixed_time_polynomials",
+     "support_fixed_time_source",
+     "support_flux_source",
+     "support_forward_source",
+     "support_gap_lean_source",
+     "support_model_lean_source",
+     "support_model_source",
+     "support_optimality_chl",
+     "support_regularity_source",
+     "support_stieltjes_lean_source",
+     "support_tails_source",
+     "support_terminal_defect_lean_source",
+     "support_terminal_lean_source",
+     "support_terminal_source",
+     "support_transfer_source",
+     "support_uniqueness_lean_source",
+     "support_variation_source"
+    ],
+    "claim_ids": [
+     "full_support",
+     "lean.full_support",
+     "scalar_value",
+     "lean.value_consequences",
+     "scalar.formal_model_transport_open"
+    ],
+    "content_span": {
+     "end_byte": 47016,
+     "end_line": 968,
+     "start_byte": 45434,
+     "start_line": 947
+    },
+    "evidence_class": "context",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/evidence-scope",
+    "section_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sections/45383",
+    "selected": true
+   }
+  ],
+  "document_parts": [
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/0",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/0",
+    "span": {
+     "end_byte": 143,
+     "end_line": 4,
+     "start_byte": 0,
+     "start_line": 1
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/abstract",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/143",
+    "span": {
+     "end_byte": 1357,
+     "end_line": 23,
+     "start_byte": 143,
+     "start_line": 5
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/1357",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/1357",
+    "span": {
+     "end_byte": 1426,
+     "end_line": 28,
+     "start_byte": 1357,
+     "start_line": 23
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/model",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/1426",
+    "span": {
+     "end_byte": 5080,
+     "end_line": 105,
+     "start_byte": 1426,
+     "start_line": 29
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/5080",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/5080",
+    "span": {
+     "end_byte": 5082,
+     "end_line": 106,
+     "start_byte": 5080,
+     "start_line": 105
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/main-result",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/5082",
+    "span": {
+     "end_byte": 8021,
+     "end_line": 161,
+     "start_byte": 5082,
+     "start_line": 107
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/8021",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/8021",
+    "span": {
+     "end_byte": 8102,
+     "end_line": 166,
+     "start_byte": 8021,
+     "start_line": 161
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/contact",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/8102",
+    "span": {
+     "end_byte": 11036,
+     "end_line": 230,
+     "start_byte": 8102,
+     "start_line": 167
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/11036",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/11036",
+    "span": {
+     "end_byte": 11068,
+     "end_line": 233,
+     "start_byte": 11036,
+     "start_line": 230
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/gap-proof",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/11068",
+    "span": {
+     "end_byte": 14882,
+     "end_line": 313,
+     "start_byte": 11068,
+     "start_line": 234
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/14882",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/14882",
+    "span": {
+     "end_byte": 14939,
+     "end_line": 318,
+     "start_byte": 14882,
+     "start_line": 313
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/curvature",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/14939",
+    "span": {
+     "end_byte": 26164,
+     "end_line": 550,
+     "start_byte": 14939,
+     "start_line": 319
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/26164",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/26164",
+    "span": {
+     "end_byte": 26264,
+     "end_line": 555,
+     "start_byte": 26164,
+     "start_line": 550
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/density-consequence",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/26264",
+    "span": {
+     "end_byte": 32231,
+     "end_line": 674,
+     "start_byte": 26264,
+     "start_line": 556
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/32231",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/32231",
+    "span": {
+     "end_byte": 32299,
+     "end_line": 679,
+     "start_byte": 32231,
+     "start_line": 674
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/scalar-value",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/32299",
+    "span": {
+     "end_byte": 36228,
+     "end_line": 752,
+     "start_byte": 32299,
+     "start_line": 680
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/36228",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/36228",
+    "span": {
+     "end_byte": 36230,
+     "end_line": 753,
+     "start_byte": 36228,
+     "start_line": 752
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/qaoa-boundary",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/36230",
+    "span": {
+     "end_byte": 45352,
+     "end_line": 941,
+     "start_byte": 36230,
+     "start_line": 754
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/45352",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/45352",
+    "span": {
+     "end_byte": 45403,
+     "end_line": 946,
+     "start_byte": 45352,
+     "start_line": 941
+    }
+   },
+   {
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/passages/evidence-scope",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/45403",
+    "span": {
+     "end_byte": 47048,
+     "end_line": 969,
+     "start_byte": 45403,
+     "start_line": 947
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/sha256:b3fb22a55f09aba18f53cd9bbac859142355ee389bba5aa7bf98d016dc611a43/papers/short.json/parts/47048",
+    "segment_ref": "sha256:7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a/papers/short.md/unmapped/47048",
+    "span": {
+     "end_byte": 54103,
+     "end_line": 1076,
+     "start_byte": 47048,
+     "start_line": 969
+    }
+   }
+  ]
+ },
+ "reading_links": [
+  {
+   "from_anchor": "density-consequence",
+   "from_text_sha256": "7841eed04f6229f96059e3cab13df055039eab9b21d32fbbe568823fc554dbd2",
+   "kind": "expands",
+   "rationale": "Develops the smoothness and fixed-time local-replacement arguments that the exposition names as further reading. Both treatments retain interior-only strict positivity and separate this ordinary argument from formal-check status.",
+   "to_anchor": "density-and-approximation",
+   "to_stage": "expository",
+   "to_text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977"
+  },
+  {
+   "from_anchor": "scalar-value",
+   "from_text_sha256": "8d40f7c84ecb188980f5883d6883ac435a31b89662b34d493381662f4216b0f7",
+   "kind": "expands",
+   "rationale": "Expands the terminal-gradient and scalar-value pointer with the martingale limit, integral cancellation and source destinations. The short passage also has further topics; this link concerns its scalar-value treatment, not equivalence of the whole passages.",
+   "to_anchor": "scalar-identities",
+   "to_stage": "expository",
+   "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae"
+  },
+  {
+   "from_anchor": "qaoa-boundary",
+   "from_text_sha256": "3ec2b303400d4cd5534e3bc1e62ef87ff7ed44c9bd9830c7fd61d30d539f324c",
+   "kind": "expands",
+   "rationale": "Adds the theorem quantifiers, order of limits and circuit-stage outline to the exposition reference. It remains an outlook with a destination for the full construction, rather than a complete circuit proof.",
+   "to_anchor": "qaoa-boundary",
+   "to_stage": "expository",
+   "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53"
+  }
+ ]
+}

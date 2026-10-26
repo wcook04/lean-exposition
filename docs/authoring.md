@@ -29,6 +29,19 @@ it appears in prose.
 
 ## Use and improve the transition skills
 
+This is the shared **review-and-refinement loop** for the four authoring
+transitions. A pass can improve the current papers and the method used on the
+next problem. Those are separate outcomes: a sound local revision need not
+yield a new general rule, and a method edit does not establish better writing.
+
+### Start a pass
+
+Record a short brief in the existing review account: the selected result and
+claim boundary; reader and intended takeaway; exact input and output editions;
+transition skill/version; and the question this pass should resolve. Reuse the
+current brief when these have not changed. Do not equate access to an annex,
+Lean corpus or review packet with having read its contents.
+
 Begin with the relevant skill and the current source versions. Choose the
 mathematical question, supported result and intended reader before choosing
 sections. Rank candidate material by its contribution to that purpose: a proof
@@ -37,13 +50,18 @@ essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
-Calibrate expert prose against passages in several nearby mathematical papers:
+Calibrate expert prose against original passages in nearby mathematical papers:
 their vocabulary, notation, order of definitions, theorem and proof structure,
-citations, and allocation of detail to the difficult step. Adopt conventions
-that fit the present audience, rather than copying sentences or imposing a
-project vocabulary. A specialist source may assume background that an exposition
-must teach. Record the source passage and the editorial decision it informed;
-the presence of a literature shelf is not evidence that it shaped the writing.
+citations, and allocation of detail to the difficult step. Match the source
+edition and mathematical setting before transferring a convention or comparison.
+Preserve the field's useful terms and explain their operations at the reader's
+level. A specialist source may assume background that an exposition must teach.
+Compare its prerequisites and purpose before adopting its order or compression;
+write the explanation independently rather than copying its prose. Distinguish
+the chronology of results and source editions from the order chosen to explain
+them. Companion papers can share a statement without sharing a proof route.
+Record the passage and the editorial decision it informed; neither a literature
+shelf nor a reviewer's description establishes that its practice was inspected.
 
 Apply the skill to the document, then read the delivered result in order. In the
 existing mapping's `review_notes` or source-review record, identify the skill
@@ -52,11 +70,33 @@ decisions, passages revised, review performed and remaining limitations. The
 presence of a skill file proves neither its use nor improved comprehension.
 Use the current fields; no separate skill-execution service is required.
 
+### Find the decision that needs repair
+
 When review finds a failure, repair the passage and inspect its consumers first.
 Then improve the method at the transition that made the decision. Keep one
 shared maintenance loop here; the four skills own their stage-specific choices.
 The working instructions are local and complete. The [Erdős method transfer](erdos-method-transfer.md)
 records their bootstrap examples, not a dependency on another checkout.
+
+Route the lesson to the decision that produced the problem, even when a later
+paper first exposed it:
+
+- **Source to graph:** a claim's meaning, source edition, credit, dependency,
+  premise supplier or checking outcome was recorded incorrectly or incompletely.
+- **Graph to long:** the selected argument lacks a recoverable inference,
+  construction, boundary case or correspondence between mathematical settings.
+- **Long to short:** selection lost a necessary assumption, contribution,
+  decisive mechanism or reachable full-proof destination.
+- **Record to exposition:** the chosen reader cannot yet perform an operation,
+  recognise an object, follow the order, or explain why a construction is needed.
+
+A lesson shared by several transitions belongs in this guide; link to it from
+the skills rather than repeating a growing checklist. A runtime defect belongs
+with its implementation and regression check. An unresolved mathematical claim
+returns to research. Treat conflicting reviews as claims to adjudicate against
+the sources and reader task, not as instructions to combine indiscriminately.
+
+### Assess, revise, generalise and check
 
 Use this loop for each substantive review batch:
 
@@ -82,6 +122,14 @@ Use this loop for each substantive review batch:
    Record the disposition in the existing mapping `review_notes` and source
    review account. Reopen the decision if later evidence contradicts it.
 
+Check two directions before closing: a changed source claim reaches all its
+recorded uses, and every revised paper claim still reaches adequate support.
+The graph locates candidates; read the affected passages to decide what needs
+changing. Keep unaffected prose and earlier review records intact. A batch is
+closed when its findings have reasoned dispositions, the affected outputs have
+been inspected, and any unresolved issue has an exact next check or owner.
+Neither a quota of edits nor another review packet is a completion condition.
+
 A compact method record should identify the observed difficulty, source check,
 before/after passage, owning skill, reused or changed instruction, transfer cases,
 exception, validation and remaining question. This record belongs with the
@@ -89,6 +137,50 @@ review, not in the mathematical reading path. Mark the result as **refined**,
 **existing rule applied**, **local choice only**, or **unresolved**. Author,
 agent and independent reader reviews remain separate; successful revision and
 structural checks do not establish improved learning without reader evidence.
+
+Keep historical method versions intact. Changing a skill does not mean it was
+used to write an older paper. Record the new version only after applying it to
+the identified passages, and state the scope of that application. The current
+validators check document and graph bindings; they do not execute skills or
+verify these review-note assertions. A reusable procedure is maintained through
+author practice and review, without inventing a second runtime workflow.
+
+### Check transfer beyond the current problem
+
+Consider the lesson: **when a reader cannot perform an unfamiliar operation,
+teach that operation in a small case before its first consequential use, then
+reuse it in the argument**. Its owner is the exposition skill. It is conditional
+on the reader and the operation, not a requirement that every paper begin with
+an example. Two elementary transfer trials expose its useful scope:
+
+**Weighted averaging.** A reader knows arithmetic but has not used weights.
+For values 1 and 4 with weights 2 and 1, calculate
+\((2\cdot1+1\cdot4)/(2+1)=2\) before writing
+\(\sum_i w_i x_i/\sum_i w_i\). Explain why the denominator is the total
+weight. Changing the weights to 1 and 2 gives 3; multiplying both weights by
+the same positive number leaves the average unchanged. These changes test
+the operation rather than memorisation of the first answer. State the domain:
+nonnegative weights with positive total. The example does not justify an
+infinite-sum interchange or a signed-weight probability law.
+
+**Induction.** A reader knows sums and algebra but not induction. Compute the
+first three sums of consecutive odd numbers, obtaining 1, 4 and 9. Define what
+the index counts, then show that adding the next term changes \(n^2\) to
+\(n^2+(2n+1)=(n+1)^2\). The long record retains the base case and the
+universal induction step; an expert account may state that argument directly.
+The exposition uses the examples to teach the step, then asks for the next
+increment and why the proof reaches every positive integer.
+
+**Rejection case.** Three correct numerical sums do not prove the identity for
+every index. If the induction step is absent from the source argument, adding
+examples cannot close that proof gap. Return to graph-to-long or research.
+Likewise, a reader already fluent in these operations may need the decisive
+theorem first; impose no remedial worked example on that expert account.
+
+These are author-executed transfer checks with explicit expected answers, not
+observed reader responses. Record actual attempts using the
+[reader-review procedure](reader-review.md). When a new lesson fails a transfer
+case, narrow or reject it before treating it as reusable.
 
 ## Establish that the inputs suffice
 
@@ -283,6 +375,8 @@ axiom list does not make a theorem unconditional.
 
 An ordinary proof can be valid without a complete formalization. Identify its
 formal ingredients separately from the steps supplied by the ordinary argument.
+A later ordinary deduction may remove a hypothesis; retain that hypothesis when
+describing an unchanged Lean declaration and identify the additional argument.
 A finite computation has its finite domain and checker; an infinite conclusion
 requires an argument reducing it to that computation. A conditional implication
 may itself have either ordinary or formal proof, while its additional input

@@ -53,6 +53,12 @@ first and second moments; and explaining the ordered limits of the QAOA claim.
 Only ask a task after the corresponding material has been read. An answer about
 the no-gap argument cannot establish comprehension of the circuit construction.
 
+Match each task to the inference in the edition being read. After a proof-route
+revision, keep useful tasks for unchanged steps and replace or supplement those
+that miss the new step. If an easy example makes distinct quantities equal,
+use a nearby case that separates them. Check the other hypotheses and the worked
+answer first; an arbitrary broken example may test a different failure.
+
 ## Preserve the attempt, including assistance
 
 Record the first response before any correction. Keep later hints, answer exposure
@@ -91,6 +97,14 @@ bundle and inspect the delivered rendition. Record the successor's digest and
 actual checks. An author reporting a fix is distinct from a reader confirming it.
 If an earlier acceptance no longer describes the changed content, reopen that
 review. Preserve its original edition, question and actual coverage.
+
+Close the authoring pass with the
+[review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills).
+Locate the decision that caused the difficulty, then distinguish an existing
+rule that was missed, a missing reusable instruction and a choice specific to
+this paper. A new instruction needs transfer cases and an exception before it
+enters the responsible transition skill. Keep the original reader observation
+separate from this author's diagnosis and from a later confirmation of the fix.
 
 No person has completed a session merely because these instructions or an answer
 key exist. Report an actual attempt only from the retained response and assistance

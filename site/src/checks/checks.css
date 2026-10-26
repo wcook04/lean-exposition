@@ -1,0 +1,623 @@
+/* The checks ledger: one reading column, records separated by hairlines,
+   outcomes as a word with a small mark. The accent marks only the section
+   or record the reader arrived at. */
+
+.checks {
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-8);
+}
+
+.checks__head h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.checks__lede {
+  margin-top: var(--space-3);
+  max-width: 38rem;
+  font-size: var(--fs-read);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.checks__band {
+  margin-top: var(--space-7);
+}
+
+.checks__band > h2 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.checks__intro {
+  margin-top: var(--space-4);
+  max-width: 38rem;
+  color: var(--ink-2);
+}
+
+.checks__notice {
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  color: var(--ink-2);
+}
+
+/* Said once for the whole edition: how much was run, and what review means. */
+.checks__edition {
+  margin-top: var(--space-4);
+  max-width: 40rem;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--rule-strong);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink);
+}
+
+.checks__head .caps {
+  margin-bottom: var(--space-2);
+}
+
+.checks__head h1 .lean {
+  font-size: 0.8em;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
+.checks__error {
+  color: var(--fail);
+  font-size: var(--fs-ui);
+}
+
+.checks code.lean {
+  overflow-wrap: anywhere;
+}
+
+/* Arrival: a thin accent rule in the gutter, never a filled panel. */
+.checks .is-selected {
+  position: relative;
+}
+
+.checks .is-selected::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4));
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--lit);
+}
+
+.checks .node-checks.is-selected::before {
+  top: var(--space-1);
+}
+
+/* ---------------------------------------------------------- formal statements */
+
+.formal {
+  padding: var(--space-6) 0 var(--space-5);
+}
+
+.formal + .formal {
+  border-top: 1px solid var(--rule);
+}
+
+.formal__name {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
+.formal__of {
+  margin-top: var(--space-2);
+  color: var(--ink-2);
+}
+
+.formal__of a {
+  color: var(--ink);
+}
+
+.formal__map {
+  white-space: nowrap;
+  font-size: var(--fs-ui);
+}
+
+.formal__lean {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--sunk);
+  border-radius: var(--radius-m);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--formal);
+}
+
+.formal__lean .lean {
+  font-size: 1em;
+}
+
+.formal__scope {
+  margin-top: var(--space-3);
+  max-width: 40rem;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+  color: var(--ink-2);
+}
+
+.formal__label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.formal__checks {
+  margin-top: var(--space-5);
+}
+
+.formal__checks h4 {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+}
+
+.ledger__break {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* -------------------------------------------------------------- outcome key */
+
+.outcomes {
+  margin: var(--space-3) 0 var(--space-2);
+  display: grid;
+  gap: var(--space-2);
+  max-width: 40rem;
+}
+
+.outcomes__row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.outcomes dt,
+.outcomes dd {
+  margin: 0;
+}
+
+.outcomes dd {
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+}
+
+/* ------------------------------------------------------------ kinds of check */
+
+.chevron {
+  transition: transform var(--t-state) var(--ease-out);
+}
+
+.chevron.is-open {
+  transform: rotate(90deg);
+}
+
+.kind__more {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--fs-ui);
+}
+
+/* ---------------------------------------------------------------- a record */
+
+.ledger {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+}
+
+.ev {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.ev + .ev {
+  border-top: 1px solid var(--rule);
+}
+
+.ev__outcome {
+  padding-top: 1px;
+}
+
+.ev__body {
+  min-width: 0;
+}
+
+.ev__tool {
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+
+.ev__kind {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.ev__meta {
+  margin-top: var(--space-1);
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+  line-height: var(--lh-snug);
+}
+
+.ev__meta a {
+  color: var(--ink);
+}
+
+.ev__meta a.lean {
+  color: var(--formal);
+  font-size: 0.82rem;
+}
+
+.ev__date {
+  color: var(--ink);
+}
+
+.ev__details {
+  margin-top: var(--space-2);
+  max-width: 40rem;
+  font-size: var(--fs-ui);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.ev__details.is-clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.ev__extra {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.ev__label {
+  font-weight: 600;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+}
+
+.ev__command {
+  margin: var(--space-1) 0 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--sunk);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+
+.ev__sources .lean {
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.ev__receipt {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.ev__receipt .lean {
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.ev__hash {
+  word-break: break-all;
+}
+
+.ev__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+}
+
+.ev__more {
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.ev__more:hover {
+  text-decoration-color: currentColor;
+}
+
+/* --------------------------------------------------------------- outcomes */
+
+.outcome {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.outcome__mark {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  transform: translateY(-1px);
+}
+
+.outcome--passed .outcome__mark {
+  background: currentColor;
+}
+
+.outcome--failed {
+  color: var(--fail);
+}
+
+.outcome--failed .outcome__mark {
+  border-radius: 1px;
+  background: currentColor;
+  transform: translateY(-1px) rotate(45deg) scale(0.9);
+}
+
+.outcome--unavailable,
+.outcome--not_run {
+  color: var(--ink-2);
+}
+
+.outcome--not_run .outcome__mark {
+  border-style: dashed;
+}
+
+@media (max-width: 640px) {
+  .checks {
+    padding: var(--space-6) var(--space-4) var(--space-7);
+  }
+  .checks .is-selected::before {
+    left: calc(-1 * var(--space-3));
+  }
+  .outcomes__row,
+  .ev {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+  .ev__outcome {
+    padding-top: 0;
+  }
+}
+
+.ev__details.is-short {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.ev--compact {
+  padding: var(--space-3) 0;
+}
+
+/* ------------------------------------------------------------ rows per kind
+   Check / What it examined / Recorded outcome / Details. A row's history
+   opens beneath it across the full width. */
+
+.checktable {
+  width: 100%;
+  margin-top: var(--space-4);
+  border-collapse: collapse;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+}
+
+.checktable thead th {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  color: var(--ink-2);
+}
+
+.checktable thead th:nth-child(1) {
+  width: 22%;
+}
+
+.checktable thead th:nth-child(3) {
+  width: 24%;
+}
+
+.checktable thead th:last-child {
+  width: 1%;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+.checkrow > tr:first-child > * {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+.checkrow > tr:first-child > :last-child {
+  padding-right: 0;
+}
+
+.checkrow + .checkrow > tr:first-child > * {
+  border-top: 1px solid var(--rule);
+}
+
+.checkrow__kind {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.checkrow__examined {
+  color: var(--ink-2);
+}
+
+.checkrow__subjects {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.checkrow__counts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.checkrow__counts .outcome {
+  font-weight: 500;
+}
+
+.checkrow__counts .outcome--failed {
+  font-weight: 600;
+}
+
+.checkrow__note {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+
+.checkrow__toggle {
+  white-space: nowrap;
+}
+
+.checkrow__history > td {
+  padding: 0 0 var(--space-4) var(--space-4);
+  border-left: 2px solid var(--rule);
+}
+
+.checkrow__history[hidden] {
+  display: none;
+}
+
+.checkrow__history .ledger {
+  margin-top: 0;
+}
+
+.outcome-key {
+  margin-top: var(--space-5);
+  font-size: var(--fs-ui);
+}
+
+.outcome-key summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  width: max-content;
+}
+
+.outcome-key summary:hover {
+  color: var(--ink);
+}
+
+.subject h2 .lean {
+  font-size: 0.8em;
+}
+
+.subject .checks__intro a.lean {
+  color: var(--formal);
+}
+
+/* Phones: each kind becomes a block; the column names become small labels. */
+@media (max-width: 700px) {
+  .checktable thead {
+    display: none;
+  }
+  .checktable,
+  .checkrow,
+  .checkrow > tr,
+  .checkrow > tr > * {
+    display: block;
+    width: auto;
+  }
+  .checkrow > tr:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-4) 0;
+  }
+  .checkrow + .checkrow > tr:first-child {
+    border-top: 1px solid var(--rule);
+  }
+  .checkrow > tr:first-child > *,
+  .checkrow + .checkrow > tr:first-child > * {
+    padding: 0;
+    border-top: 0;
+  }
+  .checkrow__kind {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .checkrow__details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .checkrow__examined,
+  .checkrow__outcome {
+    grid-column: 1 / -1;
+  }
+  .checkrow__examined::before,
+  .checkrow__outcome::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .checkrow__details::before {
+    content: none;
+  }
+  .checkrow__history[hidden] {
+    display: none;
+  }
+  .checkrow__history > td {
+    padding: 0 0 var(--space-4) var(--space-3);
+  }
+}

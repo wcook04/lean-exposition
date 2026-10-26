@@ -9,11 +9,12 @@ the accounts share a graph and how a reader moves between them. Agents use
 ## Write and review
 
 - [Authoring guide](authoring.md): connect passages to claims, assumptions and
-  sources, then record mathematical and reader review.
+  sources, then use the [review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills)
+  to repair the account and test lessons for the next problem.
 - [Review one explanation](reader-review.md): freeze an edition, ask a bounded
   reader question and preserve the response through later revisions.
-- [Writing methods](../skills/README.md): choose the method for a detailed record,
-  short paper or exposition.
+- [Authoring transitions](../skills/README.md): four local skills for source
+  recording, detailed reconstruction, expert selection and exposition.
 - [Erdős examples](erdos-method-transfer.md): concrete writing methods illustrated
   by eight problem corpora.
 

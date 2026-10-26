@@ -259,3 +259,108 @@ Itô product identities. These finite checks do not validate the analytic
 hypotheses. Draft review states and formal-check outcomes are retained;
 source-assisted reading and exact bindings do not establish complete proof
 acceptance or measured reader comprehension.
+
+### Examples and alternate proofs, 26 October 2026
+
+Ten further reviews examined edition `ba7025b6`. Their suggestions were
+checked against actual arguments and exact source editions. Returns 01–04
+and 06 informed an operation-first exposition: a Gaussian average, two ways
+to count accumulated-weight area, and the elementary substitution giving
+$q_0(1/2)=1/3$ precede their abstract uses. The same weights return in the
+tail-cost calculation. A decision-before-noise example makes the control's
+information restriction concrete. Optional stochastic derivations follow
+the complete main argument. Additional examples and figures were not added
+when an existing example could perform the same explanatory task.
+
+Returns 05–06 supplied two useful proof choices. The
+[global scaling argument](../long/reasoning-record.md#global-scaling-contact)
+justifies contact by signed Fubini using
+$\int\gamma|q-t|\le\int\gamma<\infty$, even for infinite total mass.
+The [qualitative terminal proof](../long/reasoning-record.md#qualitative-terminal-gap)
+uses finite convex chords, contact and $q\le1$, without a derivative at
+one. The original local-removal proof and stronger quantitative terminal
+estimate remain in the long record. The graph distinguishes the alternate
+ordinary support argument from the original source and formal route.
+
+Returns 07–10 sharpened the expert paper around a named fixed-time
+spatial-moment proposition. The forward/backward heat cancellation explains
+the integration law; a signed certificate term identifies the joint shape
+comparison's role. The quantitative margin survives spatial approximation
+and gives strict density positivity, beyond what qualitative crossing alone
+supplies. The circuit discussion now displays the exact finite rooted-energy
+observable: the correct limit alone cannot determine its adjacent index.
+The prose uses the literature's conventions with original wording and precise
+credit, without claiming priority for the source results.
+
+Three checked consequences also have explicit destinations. The
+[coefficient budget](../long/reasoning-record.md#coefficient-budget) proves
+$\int_0^1\gamma\le1$ and $\gamma(t)\le(1-t)^{-1}$; the earlier blanket
+absence-of-bounds claim is replaced by the missing derivative constants and
+effective mesh threshold. The [spatial inequality at jumps](../long/reasoning-record.md#fixed-time-jump-extension)
+is an ordinary extension, not a change to the retained Lean continuity
+hypothesis, and is unnecessary for either principal application. The
+[finite-instance sampling consequence](../long/reasoning-record.md#sampled-finite-instance)
+uses a union bound for measured energy and the maximum under the same disorder.
+It gives an asymptotic joint-probability statement, without an effective size
+threshold, efficient angle search or every-instance guarantee.
+
+Nineteen selected returned calculation programs were rerun on preserved
+copies, including the elementary examples, rational certificate and finite
+circuit checks. All passed at their stated finite or numerical scope.
+Source-assisted mathematical review and subsequent sequential reading are
+neither blind readings nor human comprehension studies. Formal targets,
+historical receipts and unknown corrected-replay outcomes are unchanged.
+The existing local transition skills incorporate the tested lessons about
+operations, quantitative margins and finite observables; the workflow remains
+self-contained.
+
+### Operations, interfaces and endpoint normalization, 26 October 2026
+
+Ten further advisory returns examined edition `9609283`. Their proposed
+changes were compared with the current sources, and their claims were
+reviewed separately from editorial preferences. The central contact,
+curvature, density and scalar deductions survived the selected checks.
+This revision preserves those arguments and makes compressed transitions
+explicit.
+
+Returns 01–06 informed the exposition's treatment of operations. Probability
+density assigns interval probabilities before it weights an expectation.
+The two weights lead to finite contact before the measure argument.
+A time-step calculation explains feedback; a quarter-time example separates
+accumulated from remaining noise, which coincide at half time. Convexity and
+the spatial Lipschitz bound follow from the control representation. Initial
+and terminal gaps retain different proofs; the terminal argument rearranges
+the chord inequality and reaches its contradiction strictly below time one.
+Questions precede the spin payoff, with answers after the main argument.
+Additional figures and longer control examples were declined where existing
+examples could do the same work more economically.
+
+Returns 07–10 sharpened the expert paper's statements and changes of
+mathematical setting. The common spatial estimate is numbered; the detailed
+edition comparison follows the density proof. The rooted construction
+identifies its objects before displaying its energy. An imported circuit
+approximation proposition and three error terms connect finite Gaussian
+data to one ordinary word. The same-instance measured configuration
+consequence has a corollary and joint-second-moment proof. The analytic core
+remains the paper's principal subject.
+
+The long record adds a separate [endpoint proof](../long/reasoning-record.md#coefficient-total-mass)
+that the first Hessian moment tends to zero. Spatial monotonicity, reflected
+Brownian comparison and the unit second moment establish $\int_0^1\gamma=1$
+and the tail identity. This normalizes $\gamma(t)\,dt$, not the Stieltjes
+increment measure. Sellke's v4 equality and v6 inequality with its even-mixture
+remark are distinguished; the proof does not substitute an endpoint into a
+compact-strip formula. Monotone quadrature and weighted Gronwall sharpen the
+[fixed-strip estimate](../long/reasoning-record.md#scalar-error-budget).
+A [constant-coefficient calculation](../long/reasoning-record.md#pointwise-curvature-obstruction)
+shows negative raw curvature with the actual absolute-value terminal datum,
+without contradicting the positive-expectation theorem.
+
+These are ordinary deductions and source consequences. Their graph records
+remain unverified, separate from unchanged formal declarations and checking
+evidence. All 22 returned finite calculation programs passed on disposable
+copies; this does not certify the analytic imports. Source-assisted agent
+review is not an unassisted or human-reader study. The local methods now
+retain exact imported interfaces, compare proof routes by hypotheses and
+quantitative conclusions, and use changed examples to distinguish quantities
+hidden by an initial symmetry.

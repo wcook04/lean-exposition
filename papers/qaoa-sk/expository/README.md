@@ -6,19 +6,27 @@ It starts from the finite spin problem, introduces the variational objects,
 and explains how minimality and curvature force the no-gap contradiction.
 Initial and terminal gaps receive their own arguments.
 
-The intended reader knows calculus and elementary probability. The necessary
-stochastic identities are explained where they enter and identified as source
-inputs. The paired cumulative/increment plot distinguishes a positive function
-from a measure with full support; the area picture shows the contradiction.
-The paper's task is to make that argument understandable, not to teach every
-result retained in the source corpus.
+The intended reader knows algebra and elementary calculus. Gaussian
+expectation is taught as a weighted integral, and two finite masses prepare
+the cumulative measure and its later tail-cost calculation. The zero
+coefficient gives an expected payoff and the elementary half-time calculation
+$q_0(1/2)=1/3$ before the general moment identity is used. The paired
+cumulative/increment plot distinguishes positive height from full support;
+the area picture shows the contradiction.
+
+The main route accepts precisely stated analytic inputs and develops their
+no-gap consequence. Contact uses scaling of existing mass, including diffuse
+mass. The terminal case uses finite-interval convexity and the existing bound
+$q\le1$; the stronger quantitative terminal estimate remains in the long
+record. Section 7 collects the optional zero-candidate, PDE, Itô and curvature
+calculations after the proof and its return to spins.
 
 The ending returns to the spins: a separate landscape theorem and full
 support give near-optimal pairs at each prescribed approximate overlap.
 Density, scalar-value and quantum-algorithm consequences have a brief outlook.
 Their detailed arguments remain in the [long reasoning record](../long/reasoning-record.md):
-§§5.1–5.2 treat density, §5.3 the overlap-pair consequence, §6 the scalar value, §7 its finite Gaussian
-approximation and §9 the circuit construction. Having these sources in a
+§§9.1–9.2 treat density, §9.3 the overlap-pair consequence, §6 the scalar
+value, §7 its finite Gaussian approximation and §8 the circuit construction. Having these sources in a
 review packet does not make them required chapters of the exposition.
 
 [Correspondence](correspondence.json) binds the authored passages to the
@@ -29,9 +37,10 @@ uses pinned public mathematical-source URLs so its citations remain usable
 when the exact manuscript bytes are assembled into a portable bundle.
 
 The paper is a draft. Source and agent review checked the displayed
-statements, examples and reconstructed inference chain. A further sequential
-agent review checked first-use explanations, purpose before construction and
-the inference joining successive steps. Complete independent audit of the
+statements, examples and reconstructed inference chain. The revised scaling
+and terminal arguments were checked as ordinary mathematical deductions.
+Agent review of the reading sequence checked first-use explanations, optional
+reading routes and the inference joining successive steps. Complete independent audit of the
 analytic proofs, successful research Comparator replay and human reader
 understanding have not been independently assessed here. The mapping's
 review notes describe the actual scope and remaining review.

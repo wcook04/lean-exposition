@@ -3,6 +3,9 @@
 -- as hyperref labels, with a fresh destination at the original text position.
 function RawBlock(block)
   if FORMAT == "latex" and block.format == "html" then
+    if block.text:match('^%s*<!%-%- pdf%-page%-break %-%->%s*$') then
+      return pandoc.RawBlock("latex", "\\newpage")
+    end
     local id = block.text:match('^%s*<a%s+id="([%w_:%.%-]+)"%s*>%s*</a>%s*$')
     if id then
       return pandoc.RawBlock("latex", "\\hypertarget{" .. id .. "}{}\\phantomsection\\label{" .. id .. "}")

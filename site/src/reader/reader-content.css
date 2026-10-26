@@ -1,0 +1,372 @@
+/* Typography for rendered manuscript prose (output of src/reader/engine.ts).
+   Everything is scoped under .prose and uses only the tokens in
+   src/styles/tokens.css. KaTeX's own stylesheet is imported here so any page
+   that mounts rendered parts gets the math fonts with the prose styles. */
+
+@import "katex/dist/katex.min.css";
+
+.prose {
+  max-width: var(--measure);
+  font-family: var(--font-serif);
+  font-size: var(--fs-read);
+  line-height: var(--lh-read);
+  color: var(--ink);
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-kerning: normal;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* ------------------------------------------------------------ block rhythm */
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose table,
+.prose pre,
+.prose figure,
+.prose .math-display {
+  margin: 0 0 var(--space-4);
+}
+
+.prose p + p {
+  margin-top: 0;
+}
+
+/* --------------------------------------------------------------- headings */
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  font-variant-numeric: lining-nums;
+  hyphens: manual;
+  text-wrap: balance;
+  scroll-margin-top: calc(var(--topbar-h) + var(--space-4));
+}
+
+.prose h1 {
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  margin: 0 0 var(--space-3);
+}
+
+.prose h2 {
+  font-size: var(--fs-h2);
+  margin: var(--space-7) 0 var(--space-4);
+}
+
+.prose h3 {
+  font-size: var(--fs-h3);
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-size: var(--fs-h4);
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.prose h1 + h2 {
+  margin-top: 0;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+/* Explicit bookmarks and heading aliases: present for navigation only. */
+.prose a.anchor {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  scroll-margin-top: calc(var(--topbar-h) + var(--space-4));
+}
+
+.prose [id] {
+  scroll-margin-top: calc(var(--topbar-h) + var(--space-4));
+}
+
+/* ---------------------------------------------------------- run-in leads */
+
+.prose p.run-in > .run-in__lead {
+  font-weight: 600;
+}
+
+.prose p.run-in:is(
+    [data-run-in="theorem"],
+    [data-run-in="proposition"],
+    [data-run-in="lemma"],
+    [data-run-in="corollary"],
+    [data-run-in="definition"]
+  ) {
+  margin-top: var(--space-5);
+}
+
+.prose p.run-in[data-run-in="proof"] > .run-in__lead {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.prose p.run-in:is([data-run-in="question"], [data-run-in="answer"]) > .run-in__lead {
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------ links */
+
+.prose a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
+}
+
+.prose a.companion {
+  text-decoration-color: color-mix(in oklab, var(--lit-line) 70%, transparent);
+}
+
+/* The arrow is glued to the last word (a word joiner precedes it), so it
+   never wraps onto a line by itself. */
+.prose a.ext::after {
+  content: "\2060\2197";
+  display: inline;
+  margin-left: 0.08em;
+  font-family: var(--font-sans);
+  font-size: 0.72em;
+  vertical-align: 0.32em;
+  line-height: 0;
+  color: var(--ink-3);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.prose .link-unresolved {
+  border-bottom: 1px dotted var(--rule-strong);
+}
+
+/* ------------------------------------------------------------------- math */
+
+/* Punctuation after inline math stays on the formula's line. */
+.prose .math-nobreak {
+  white-space: nowrap;
+}
+
+/* KaTeX may still break a long formula between relations. */
+.prose .math-nobreak > .katex {
+  white-space: normal;
+}
+
+.prose .math-nobreak--whole > .katex {
+  white-space: nowrap;
+}
+
+.prose .katex {
+  font-size: 1.05em;
+  text-rendering: auto;
+}
+
+.prose .math-display {
+  display: block;
+  margin: var(--space-3) 0 var(--space-4);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--space-1) 0;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose span.math-display {
+  margin: var(--space-3) 0;
+}
+
+.prose .math-display > .katex-display {
+  margin: 0;
+  text-align: center;
+}
+
+.prose .math-display > .katex-display > .katex {
+  display: inline-block;
+  max-width: none;
+}
+
+.prose .math-display:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: 2px;
+}
+
+.prose .tex-fallback {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  color: var(--ink-2);
+  background: var(--sunk);
+  border-radius: var(--radius-s);
+  padding: 0 0.3em;
+  white-space: pre-wrap;
+}
+
+.prose .tex-fallback[data-display="true"] {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  margin: var(--space-3) 0;
+}
+
+/* ------------------------------------------------------------------ lists */
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li {
+  margin: 0 0 var(--space-1);
+  padding-left: 0.15em;
+}
+
+.prose li > p {
+  margin-bottom: var(--space-2);
+}
+
+.prose li::marker {
+  color: var(--ink-3);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ----------------------------------------------------------------- tables */
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.94em;
+  line-height: var(--lh-snug);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  text-align: left;
+}
+
+.prose th:first-child,
+.prose td:first-child {
+  padding-left: 0;
+}
+
+.prose th:last-child,
+.prose td:last-child {
+  padding-right: 0;
+}
+
+.prose thead th {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  border-bottom-color: var(--rule-strong);
+  vertical-align: bottom;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom-color: var(--rule-strong);
+}
+
+/* --------------------------------------------------------- other blocks */
+
+.prose blockquote {
+  margin-left: 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--rule-strong);
+  color: var(--ink-2);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: var(--space-6) 0;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  font-variant-ligatures: none;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: var(--space-3) var(--space-4);
+  background: var(--sunk);
+  border-radius: var(--radius-m);
+  line-height: var(--lh-snug);
+  hyphens: none;
+}
+
+.prose pre code {
+  font-size: var(--fs-sm);
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- figures */
+
+.prose figure.paper-figure {
+  margin: var(--space-6) 0;
+}
+
+.prose .paper-figure__art {
+  display: block;
+  width: 100%;
+}
+
+.prose .paper-figure__art:empty {
+  min-height: 0;
+}
+
+.prose figure.paper-figure figcaption {
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+  font-variant-numeric: lining-nums;
+  hyphens: manual;
+}
+
+.prose figcaption .katex {
+  font-size: 1.08em;
+}
+
+/* On a phone the title block gives way sooner to the text. */
+@media (max-width: 700px) {
+  .prose h1 {
+    font-size: 1.75rem;
+  }
+  .prose h2 {
+    font-size: 1.375rem;
+    margin-top: var(--space-6);
+  }
+}

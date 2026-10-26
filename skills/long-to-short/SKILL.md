@@ -59,13 +59,16 @@ material as unavailable rather than assuming a link's destination is adequate.
    notation only when it reduces repeated explanation. Keep the short paper
    within its chosen mathematical scope; a further application with different
    hypotheses belongs in a separate argument, even when it motivates this one.
-   When shortening a construction to an identification or equivalence, retain
-   the map or convention needed by the next calculation. If the argument uses
-   only a shared invariant, name that invariant instead of claiming more.
-   Explain why that invariant is the observable needed downstream. Equality of
-   a scalar quantity does not by itself connect an optimization construction to
-   a circuit, algorithm or geometric object. Retain the short identifying formula
-   and route the construction proving its preservation to the long record.
+   When a construction changes mathematical setting, give enough of its local
+   statement for this reader to identify the input objects, output object,
+   preserved observable and remaining approximation. Define the needed map or
+   state a precise imported theorem, then route its construction to the long
+   record. A formula and citation alone may leave the new objects unidentified.
+   Retain the finite identifying formula: equal scalar limits do not identify
+   a finite observable, circuit, algorithm or geometric object. If only a shared
+   invariant is used, say why it suffices without claiming interchangeable
+   objects. Routine renaming within the reader's existing setting needs no new
+   theorem interface.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference
@@ -84,6 +87,11 @@ material as unavailable rather than assuming a link's destination is adequate.
    Preserve the complete long argument; never rebuild it from the shortened
    paper. Independent routes may stay there. Essential assumptions,
    attribution and the reason for the decisive step stay beside their uses.
+   Compare alternative proofs by hypotheses and exact conclusions, including
+   rates, before calling one indispensable or superseded. A shorter argument
+   may settle the selected question while losing a stronger bound or wider
+   domain. Companions can use different proofs; state which route each uses
+   and do not transfer a formal check to an alternative ordinary argument.
 6. Reconcile the shared statements in both directions: corrections in the
    short paper must reach the long record, and assumptions revealed by the
    long argument must reach the short paper. Resolve differing evidence labels
@@ -92,6 +100,9 @@ material as unavailable rather than assuming a link's destination is adequate.
    adapted constructions, supplied ideas and corrections at their actual uses.
    Carry still-used inputs and credit into the surviving passages; remove a
    citation only when its role has gone.
+   If a stronger estimate serves a later use, say why that use needs its margin
+   or broader hypotheses. A qualitative condition may already suffice for the
+   first conclusion. Preserve that distinction when explaining the contribution.
    Gather toolchain details and run history in one verification destination.
 8. Run `lean-exposition check-bundle DIR`. Inspect links and the rendered paper.
    Review mathematical meaning before sentence polish. A successful bundle
@@ -136,3 +147,12 @@ Record the input versions, contribution selected, consequential cuts and their
 destinations under [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
 The [Erdős method transfer](../../docs/erdos-method-transfer.md) illustrates
 selection by mathematical purpose and preservation of the decisive inference.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+If selection hid an assumption, mechanism or proof destination, repair the
+short account and read the complete round trip to its support. Record why the
+material was retained, relocated or cut. Generalise the decision criterion
+only after testing it on different results; this paper's preferred length or
+section order is not a rule for every expert audience.

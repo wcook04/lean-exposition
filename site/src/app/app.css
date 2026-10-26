@@ -1,0 +1,474 @@
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__main {
+  flex: 1;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html[data-view="map"],
+html[data-view="map"] body {
+  overflow: hidden;
+}
+
+html[data-view="map"] .app {
+  height: 100%;
+}
+
+/* Top bar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: var(--topbar-h);
+  padding: 0 var(--space-5);
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  letter-spacing: -0.005em;
+}
+
+.wordmark__mark {
+  width: 22px;
+  height: 22px;
+}
+
+.wordmark__mark path {
+  stroke: var(--ink);
+}
+
+.wordmark__mark circle {
+  fill: var(--lit);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  height: 100%;
+}
+
+/* A job in the bar: Argument, Read, Checks. The current one carries the
+   amber underline on the bar's bottom rule. */
+.topnav__job {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.topnav__job:hover,
+.readmenu__button[aria-expanded="true"] {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.topnav__job[aria-current="page"] {
+  color: var(--ink);
+}
+
+.topnav__job[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc((36px - var(--topbar-h)) / 2);
+  height: 2px;
+  background: var(--lit);
+  border-radius: 2px;
+}
+
+/* Read: a menu of the three accounts, each with its job. */
+.readmenu {
+  position: relative;
+}
+
+.readmenu__chev {
+  color: var(--ink-3);
+  transition: transform var(--t-state) var(--ease-out);
+}
+
+.readmenu__chev.is-open {
+  transform: rotate(180deg);
+}
+
+.readmenu__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -8px;
+  z-index: 50;
+  width: 22rem;
+  padding: var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-sheet);
+  animation: menu-in var(--t-reveal) var(--ease-out);
+}
+
+.readmenu__menu[hidden] {
+  display: none;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.readmenu__item {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-m);
+  color: var(--ink);
+  text-decoration: none;
+  outline: none;
+}
+
+.readmenu__item:hover,
+.readmenu__item:focus-visible {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.readmenu__item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--lit);
+}
+
+.readmenu__item[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--lit);
+}
+
+.readmenu__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  line-height: var(--lh-snug);
+}
+
+.readmenu__state {
+  font-family: var(--font-sans);
+}
+
+.readmenu__job {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--ink-2);
+}
+
+.topbar__tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.topbar__about {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 10px;
+  margin-right: var(--space-2);
+  border-radius: var(--radius-m);
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  transition: color var(--t-hover) var(--ease-out);
+}
+
+.topbar__about:hover,
+.topbar__about[aria-current="page"] {
+  color: var(--ink);
+}
+
+.search-trigger {
+  color: var(--ink-2);
+  gap: 8px;
+}
+
+.search-trigger .kbd {
+  margin-left: 2px;
+}
+
+.menu-toggle,
+.phonemenu {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  .search-trigger .kbd {
+    display: none;
+  }
+}
+
+/* Phones and narrow tablets: brand, named Search, and one menu. */
+@media (max-width: 900px) {
+  .topbar {
+    gap: var(--space-3);
+    padding: 0 var(--space-4);
+  }
+  .topnav,
+  .topbar__about,
+  .topbar__scheme {
+    display: none;
+  }
+  .menu-toggle {
+    display: inline-flex;
+    min-width: var(--target);
+    min-height: var(--target);
+    justify-content: center;
+  }
+  .search-trigger {
+    min-height: var(--target);
+  }
+  .phonemenu:not([hidden]) {
+    display: block;
+    position: absolute;
+    top: var(--topbar-h);
+    left: 0;
+    right: 0;
+    max-height: calc(100dvh - var(--topbar-h));
+    overflow-y: auto;
+    padding: var(--space-2) var(--space-4) var(--space-4);
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--shadow-sheet);
+    animation: menu-in var(--t-reveal) var(--ease-out);
+  }
+  .phonemenu__list,
+  .phonemenu__accounts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .phonemenu__list > li + li {
+    border-top: 1px solid var(--rule);
+  }
+  .phonemenu__job {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: var(--target);
+    color: var(--ink);
+    font-size: var(--fs-base);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .phonemenu__job--head {
+    min-height: 36px;
+    padding-top: var(--space-2);
+  }
+  .phonemenu__job--quiet {
+    color: var(--ink-2);
+    font-weight: 400;
+  }
+  .phonemenu__job[aria-current]::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--space-3));
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--lit);
+  }
+  .phonemenu__accounts {
+    padding-bottom: var(--space-2);
+  }
+  .phonemenu__accounts .readmenu__item {
+    padding: var(--space-2) 0 var(--space-2) var(--space-3);
+    min-height: var(--target);
+  }
+  .phonemenu__accounts .readmenu__item[aria-current="page"]::before {
+    left: 0;
+  }
+  .phonemenu__scheme {
+    margin-top: var(--space-3);
+    gap: var(--space-2);
+    min-height: var(--target);
+  }
+}
+
+@media (max-width: 380px) {
+  .wordmark span {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Boot, errors and edition changes */
+
+.boot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-5);
+  color: var(--ink-2);
+  text-align: center;
+}
+
+/* A still outline of the page about to appear. No shimmer: nothing loops. */
+.skeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5);
+}
+
+.skeleton--paper {
+  max-width: calc(var(--reader-measure) + 2 * var(--space-5));
+  padding-top: var(--space-7);
+}
+
+.skeleton__bar {
+  display: block;
+  height: 12px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--ink) 7%, transparent);
+}
+
+.skeleton__bar--caps {
+  width: 9rem;
+  height: 9px;
+  margin-bottom: 6px;
+}
+
+.skeleton__bar--title {
+  width: 70%;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.skeleton__bar--short {
+  width: 40%;
+  margin-top: -4px;
+}
+
+.skeleton__bar--line {
+  height: 13px;
+}
+
+.skeleton__gap {
+  height: 12px;
+}
+
+.skeleton__title {
+  margin-bottom: 10px;
+  font-family: var(--font-serif);
+  font-size: var(--fs-plate);
+  line-height: 1.12;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.skeleton__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.skeleton__bar--button {
+  width: 9.5rem;
+  height: 36px;
+  border-radius: var(--radius-m);
+}
+
+@media (max-width: 640px) {
+  .skeleton {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+.boot--error h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  color: var(--ink);
+}
+
+.boot--error p {
+  max-width: 36rem;
+}
+
+.page-message {
+  max-width: 40rem;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-5);
+}
+
+.page-message h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-4);
+}
+
+.page-loading {
+  padding: var(--space-7);
+  color: var(--ink-3);
+  text-align: center;
+}
+
+.edition-banner {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-5);
+  background: var(--lit-wash);
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  border-bottom: 1px solid var(--rule);
+}

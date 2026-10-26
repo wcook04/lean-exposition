@@ -94,9 +94,14 @@ class CorpusQueryTests(unittest.TestCase):
             self.assertEqual(ids(result), {"support.positive_curvature", "scalar.constant_curvature"})
             self.assertEqual(ids(result, "citations"),
                              {"support_curvature_source", "scalar-r2-26-cite-constant-curvature"})
-            self.assertEqual(len(ids(result, "evidence")), 8)
+            self.assertEqual(ids(result, "evidence"), {
+                "support_source_bindings_20261024", "support_graph_semantic_review_pending",
+                "R2-26-SR-012", "R2-26-SR-013", "R2-26-SR-014",
+                "R2-25-E023", "R2-25-E024", "R2-25-E036",
+                "ordinary_deductions_review_20261026",
+            })
             self.assertEqual(ids(result, "sources"), {"support_tex_curvature"})
-            self.assertEqual(len(result["selected_record_refs"]), 13)
+            self.assertEqual(len(result["selected_record_refs"]), 14)
             citation = record_ref(result, "citations", "support_curvature_source")
             usage = next(row for row in result["record_usage"] if row["record_ref"] == citation)
             # Check exact destinations against captured authored mappings. An

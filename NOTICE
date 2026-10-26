@@ -46,3 +46,8 @@ adc7f1241b42e322a6451854ab7e4b4c146bf78a, under Apache-2.0.
 The adaptation relabels the endpoints, uses grayscale shading and explains
 the schematic area comparison. The original source and licence remain in
 examples/qaoa-sk/upstream/; the figure caption identifies the source.
+
+The reading website under site/ adapts graph-layout, connector-routing and
+motion techniques from d3-dag, dagre, msagljs, xyflow and markmap under the MIT
+licence. site/THIRD_PARTY_NOTICES.md names the adapted sources and carries their
+notices; the site's runtime dependencies keep their own licences.

@@ -37,9 +37,12 @@ when it helps the reader understand that result. Route substantial further
 results to the existing long record and give only the outlook needed to place
 the selected result. Length follows the explanation; do not equate exposition
 with an expanded version of the entire research record. Aim for a short,
-complete route into one meaningful result. If its prerequisites make that
-impossible for the stated reader, narrow the result or state a stronger reader
-prerequisite rather than appending every upstream chapter.
+complete route into one meaningful result. Distinguish an audience chosen by
+the author from one fixed by the request. For a fixed audience, first try a
+small calculation, a better order or a precisely stated accepted input.
+Stronger prerequisites or a narrower result change the requested scope; report
+the remaining mismatch rather than treating that change as a completed teaching
+task. An author choosing the audience may make that tradeoff explicitly.
 
 Name the operations and results the reader is assumed to know, not just a
 level such as “graduate”. Separate those from what the exposition must teach.
@@ -62,11 +65,19 @@ research claim as though explaining it made it established.
    size to expose the difficulty: a case where all values are distinct cannot
    teach why multiplicities matter. Work through the relevant calculation or
    construction, including the checks that make the example admissible.
-   Where useful, carry one candidate through several definitions so the reader
-   can calculate their relationships. Explicitly separate admissibility from
-   optimality and a definition from an identity proved only at an optimum.
-   Reuse the example only while it reveals something; do not force an unhelpful
-   running example through every section.
+   When a representation is unfamiliar but its operation can be performed in a
+   small case, work that case before the general notation.
+   A finite weighted sum can prepare an integral and return when the proof
+   counts those contributions in a different order. Keep its inputs consistent
+   across those uses. It explains the operation; the general interchange still
+   needs justification, and diffuse mass may need a different removal example.
+   Separate admissibility from optimality and a definition from an identity
+   proved only at an optimum. Reuse the example while it reveals something;
+   do not force it through every section or rehearse operations the reader knows.
+   Check what a convenient symmetry or normalisation makes indistinguishable.
+   If the proof later needs that distinction, keep the easy first calculation
+   and try one nearby case that separates the quantities. This is a reason for
+   a particular changed case, not a rule against symmetric examples.
 3. Move from that example to the general argument. Explain why a construction
    or estimate is needed before introducing its machinery. Keep the hard
    inference visible: write down the last established fact, the next required
@@ -76,9 +87,12 @@ research claim as though explaining it made it established.
    why the next choice exists and why the choices reach the stated conclusion.
    A named technique or an analogy does not supply that connection. If the
    complete source argument does not supply it, refer the gap for research review.
-   An imported estimate may remain an explicitly stated input: teach what it
-   guarantees and how it is used, with a full-proof destination. Do not replace
-   it with an intuitive picture that quietly claims to prove the estimate.
+   Before importing a property, check whether a short deduction from the
+   displayed representation would explain it using this reader's available
+   tools. Show it when it unlocks a later step; do not turn this into a demand
+   to reprove analytic machinery. Keep regularity, attainment and quantitative
+   estimates as precisely stated inputs where needed, with their hypotheses,
+   use and full-proof destination. An intuitive picture cannot supply them.
    When an imported estimate closes an elementary argument, consider finishing
    that argument before opening the estimate's technical proof. List the
    exhaustive cases and discharge each once. The test is continuity of the
@@ -98,6 +112,9 @@ research claim as though explaining it made it established.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
+   For nested operations, say what is fixed, what is chosen or random, and in
+   which order the operations occur. Evaluating, squaring and averaging cannot
+   be interchanged merely because the same symbols occur in each expression.
    Inspect hidden conventions when they affect the statement or next operation:
    the domain, topology, normalisation or identification may carry real content.
    Explain that content at its use; unfolding every implementation definition
@@ -112,12 +129,16 @@ research claim as though explaining it made it established.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
    the reader what survives, keeping the other conditions explicit. Choose a
    change that requires using the key inference, not repeating its wording.
+   If the proof route changes, retarget the task to the new inference; an old
+   successful exercise may assess only the unchanged part of the argument.
    Recheck choices that depend on the changed parameter; holding them fixed
    is itself a condition to justify.
    Give a justified answer separately from the question, or mark it open.
    Distinguish a false conclusion from an inconclusive test or a proof that no
-   longer applies. An open question can teach the boundary, but cannot supply
-   a correctness verdict on the reader's answer.
+   longer applies. Say when a countermodel concerns only a reduced calculus
+   argument and is not an instance of the original mathematical system. An open
+   question can teach the boundary, but cannot supply a correctness verdict on
+   the reader's answer.
 7. Distinguish explanatory reconstruction from discovery history. Credit source
    theorems, borrowed constructions and teaching models by their actual roles.
    A helpful stylistic comparison does not justify the local mathematics.
@@ -200,3 +221,12 @@ Patrick Massot's [formal-to-informal discussion](https://www.youtube.com/watch?v
 (2024, 38:07–41:28) distinguishes hidden definitions from further proof detail,
 including the reason a reduction suffices. It informs the point-of-use checks
 above; it does not establish their teaching benefit for this reader.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+Start from the first operation or inference the intended reader could not yet
+perform. Repair its point of use, then try the explanation with a changed case.
+Separate the local choice of example from the reusable teaching decision;
+test the latter outside this problem and for an audience where it should not
+apply. Record author checks separately from actual reader responses.

@@ -72,12 +72,19 @@ reading order. Keep that first response separate from the assisted reread.
    proof, a later consequence and a comparison. Their position in consecutive
    sections is not an implication. State the role of a cited result at its use;
    a source pointer may supply a proof, a hypothesis or only context.
+   Before calling an antecedent merely related, compare its theorem class and
+   translate its parameters: a differently written statement may supply the
+   exact input. Distinguish credit for that result, the detailed proof followed
+   and the present reorganisation. A new grouping of known steps is not by
+   itself a new mathematical result.
 3. Explain each load-bearing transition through what is already known, what
    the next step requires, and the local argument that connects them. A graph
    edge or the word “therefore” cannot supply a missing inference.
    When changing variables, normalization or indices, give the map and derive
    the identities used. State what information it preserves; justify a reverse
-   implication separately when an equivalence is claimed.
+   implication separately when an equivalence is claimed. Identify the finite
+   observable before taking its limit: different finite expressions can converge
+   to the same value, so limiting agreement cannot determine an index or map.
 4. At each assumption's use, say what it permits. Check domains, endpoint
    cases, signs, parameter dependence and witness choices. If several premises
    require one witness, show that the same witness meets them together.
@@ -92,6 +99,11 @@ reading order. Keep that first response separate from the assisted reread.
    allowed parameter dependence: the fixed-witness consequence may hold while a
    uniform rate remains unavailable. Conversely, a family-wide conclusion cannot
    inherit a uniform bound from separate finite bounds without an argument.
+   Distinguish the qualitative condition that makes an argument work from the
+   quantitative margin used to pass strictness through a limit or control an
+   approximation. State which step needs the magnitude and how its bound depends
+   on the fixed inputs. Before declaring a bound unavailable, check consequences
+   of existing identities and limit that claim to the argument or sources inspected.
 6. Keep complete derivations and subsidiary cases at named destinations.
    Preserve a failed route when it explains an obstruction or the necessity
    of an assumption. Record what failed and what that failure leaves possible.
@@ -127,6 +139,9 @@ reading order. Keep that first response separate from the assisted reread.
    property it preserves that the next step needs. Existence of an isomorphism
    alone does not specify the map used by a later calculation. If only an invariant
    is needed, state that weaker fact; do not promise interchangeable objects.
+   Name the observable and conditioning in an expectation identity. Equal means
+   need not identify states, laws or operations; inspect the composition or higher
+   moment actually needed by the next step.
 9. Run `lean-exposition check-bundle DIR`. Review the argument separately,
    then inspect the delivered Markdown or rendered paper and its references.
 
@@ -198,3 +213,12 @@ Retain the selected inputs, decisions and observed reconstruction failures in
 the existing review record, following [skill use and maintenance](../../docs/authoring.md#use-and-improve-the-transition-skills).
 The [Erdős method transfer](../../docs/erdos-method-transfer.md) supplies worked
 cases of argument selection, complete construction and informative failures.
+
+## Close the transition and improve the method
+
+Apply the shared [review-and-refinement loop](../../docs/authoring.md#use-and-improve-the-transition-skills).
+Trace a reconstruction failure to its missing inference or representation
+change, repair the long destination, and inspect shorter accounts that use it.
+Keep a mathematical discovery separate from the writing lesson it suggests.
+Record which instruction was applied or refined and what transfer cases support
+that decision; preserve any still-unproved step as an obligation.

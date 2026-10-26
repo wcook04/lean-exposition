@@ -2,7 +2,7 @@
 
 ## A long reasoning record
 
-Draft, 25 October 2026. Mathematical sources: OpenAI's full-support
+Draft, 26 October 2026. Mathematical sources: OpenAI's full-support
 manuscript of 27 September 2026 and QAOA manuscript of 25 September 2026,
 at the [pinned public revision](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a).
 
@@ -571,6 +571,14 @@ $0\le\varepsilon\le\varepsilon_0$, where $\varepsilon_0>0$.
 This is a feasibility hypothesis: an arbitrary signed bump in $\gamma$
 need not preserve monotonicity. Since $\mathcal U$ is convex, it is enough
 to check that the endpoint $\gamma+\varepsilon_0\eta$ is admissible.
+The formula below is the zero-field, $\xi''=1$ specialization of
+[Chen, Handschy and Lerman, arXiv:1609.04368v4, Proposition 4](https://arxiv.org/abs/1609.04368v4). Their chord
+$\gamma_\theta=(1-\theta)\gamma+\theta\gamma_1$ gives this direction
+by taking $\gamma_1=\gamma+\varepsilon_0\eta$ and
+$\theta=\varepsilon/\varepsilon_0$. Their class $\mathcal U$ permits
+unnormalized cumulative measures with finite cumulative integral, so
+this change of parameter also covers the scaling direction $-\gamma$.
+We reconstruct the detailed PDE proof from OpenAI's Lemma 6.1.
 
 For $0<\varepsilon\le\varepsilon_0$, put
 $\beta=\gamma+\varepsilon\eta$,
@@ -733,6 +741,30 @@ $S$. Terminal, interior and initial gaps remain to be excluded.
 
 ### 3.5 What the first-order criterion does, and does not, establish
 
+<a id="global-scaling-contact"></a>
+
+There is also a global alternative to compact mass removal. Atom addition
+still gives $G\ge0$. Now replace $\mu$ by $(1-\varepsilon)\mu$,
+or equivalently $\gamma$ by $(1-\varepsilon)\gamma$, for
+$0\le\varepsilon\le1$. This preserves admissibility, and its direction
+$-\gamma$ lies in $L^1$, although it may be unbounded. The first
+variation in §3.2 therefore applies. The signed interchange is justified by
+$$
+\int_{[0,1)}\!\int_s^1|q(t)-t|\,dt\,\mu(ds)
+ =\int_0^1\gamma(t)|q(t)-t|\,dt
+ \le\int_0^1\gamma(t)\,dt<\infty.
+$$
+Consequently
+$$
+0\le D_+\mathcal P(\gamma)[-\gamma]
+ =-\frac12\int_{[0,1)}G(s)\,\mu(ds).
+$$
+Together with $G\ge0$, this gives $\int G\,d\mu=0$. Continuity
+then gives $G=0$ on relative support, including zero, as in §3.3.
+Finite weighted mass is sufficient throughout; no finite total mass or
+density of $\mu$ has been assumed. This ordinary argument uses the
+same integrable-direction first variation as the local removal proof.
+
 For the actual moment function associated with $\gamma$, the two
 potential conditions $G\ge0$ and $G=0$ on $S$ are also sufficient for
 minimality. This ordinary deduction explains exactly how much variational
@@ -865,6 +897,37 @@ integration argument; it uses a smooth terminal value and makes no claim
 to be the zero-temperature minimiser. The displayed negative value is an
 exact elementary calculation. The heat formula itself is
 [OpenAI (2026a), Lemma 2.1][fs-reg].
+
+<a id="pointwise-curvature-obstruction"></a>
+
+The same pointwise obstruction occurs with the actual terminal datum
+$|x|$. For the admissible constant coefficient $\gamma_c\equiv c>0$,
+write $\tau=1-t>0$ and use the same heat formula:
+$$
+\Phi_c(t,x)=c^{-1}\log\mathbb E e^{c|x+\sqrt\tau Z|}.
+$$
+At $c=0$ its continuous extension is the heat value, whose derivatives are
+$$
+a_0=\sqrt{\frac2{\pi\tau}}e^{-x^2/(2\tau)},\qquad
+b_0=-\frac{x}{\tau}a_0,\qquad
+d_0=\left(\frac{x^2}{\tau^2}-\frac1\tau\right)a_0.
+$$
+At $x=\sqrt\tau$, $d_0=0$ and $b_0^2=a_0^2/\tau>0$.
+For fixed $t,x$, Gaussian convolution may be differentiated in $x$
+through its kernel and expanded in $c$ near zero: exponential moments
+dominate every resulting polynomial factor. The apparent singularity
+of $c^{-1}\log\mathbb E e^{c|x+\sqrt\tau Z|}$ is removable, and its
+spatial derivatives through order four are smooth in $c$. Hence
+$$
+d_c^2-12c a_cb_c^2+6c^2a_c^4
+ =-\frac{12a_0^3}{\tau}c+O(c^2)<0
+$$
+for all sufficiently small positive $c$, at that fixed point.
+This is an ordinary consequence of the constant-coefficient formula,
+not an arbitrary assignment of unrelated derivative values. It neither
+asserts minimality of $\gamma_c$ nor contradicts the positive expectation
+proved below; it shows why that expectation cannot be replaced by a
+pointwise inequality even in the absolute-value-terminal model.
 
 ### 4.2 The smooth finite-step problem and its boundary control
 
@@ -1317,6 +1380,27 @@ quantities have already disappeared after integration.
 [OpenAI (2026a), Lemmas 2.1–2.3][fs-reg];
 [Proposition 5.1][fs-curv].
 
+<a id="fixed-time-jump-extension"></a>
+
+**The spatial inequality at a coefficient jump.** Continuity at $t$ is
+a sufficient hypothesis in Proposition 4.1 and in the retained sampled
+formal interface. The ordinary spatial-moment argument permits a little
+more. Fix $c=\gamma(t)>0$ and replace $\gamma$ by $c$ on
+$[t-\delta,t+\delta)$, leaving it unchanged elsewhere. Monotonicity
+preserves both joins and right continuity. For fixed
+$0<\delta_0<\min(t,1-t)$ and $0<\delta\le\delta_0$,
+$$
+\|\gamma_\delta-\gamma\|_1
+\le2\delta\,\gamma(t+\delta_0)\longrightarrow0.
+$$
+Thus local boundedness suffices for the same strip stability and coupled
+expectation limit. Each replacement has a positive plateau at $t$, so
+(4.1) holds at a jump too, with the stated right-continuous value $c$.
+This extension concerns spatial moments only: it supplies no time
+derivative $q'''(t)$ or $\gamma'(t)$ at a jump and does not remove a
+hypothesis from the retained Lean declaration. Neither application below
+requires this extension.
+
 **Corollary 4.2 (positive plateaus).** Suppose now that $\gamma=c>0$
 on an open interval $I\subset(0,1)$ and $t\in I$. Then (4.2) gives
 $q'''(t)=\mathcal C_\gamma(t)$. To establish strictness for this
@@ -1391,18 +1475,18 @@ coefficient. These premises are available before any support gap is
 excluded. We first deal with the endpoint at one, then use the curvature
 estimate on the remaining intervals.
 
-| Possible component outside the support | Contradiction used |
-| --- | --- |
-| $(a,1)$ or $[0,1)$ | The terminal cusp gives $1-q(t)\gtrsim\sqrt{1-t}$, hence $G<0$ near one. |
-| $(a,b)$ with contact at both ends and coefficient $c>0$ | Strict convexity puts $q'$ below its endpoint chord, although its integral must be $b-a$. |
-| A bounded gap with coefficient zero | The heat argument makes $q'$ strictly increasing, below the right contact slope. |
-| An initial gap | If $0\in S$, use its one-sided contact slope; if $0\notin S$, the coefficient is zero and $q(0)=0$ follows from symmetry. |
+For a terminal interval $(a,1)$, including empty support $[0,1)$,
+the cusp estimate gives $1-q(t)\gtrsim\sqrt{1-t}$ and hence $G<0$
+near one. On a positive plateau with two contact endpoints, strict
+convexity puts $q'$ below its endpoint chord, although its integral
+must equal the interval length. On a zero plateau the heat argument
+makes $q'$ strictly increasing, below the right contact slope.
+At an initial gap, use the one-sided contact slope if $0\in S$;
+otherwise the coefficient is zero and symmetry supplies $q(0)=0$.
 
 <a id="terminal-gap"></a>
 
-**Why a terminal plateau violates the variational inequality.**
-
-Suppose that $\gamma=c$ on $(a,1)$, where $0\le a<1$ and
+**Why a terminal plateau violates the variational inequality.** Suppose that $\gamma=c$ on $(a,1)$, where $0\le a<1$ and
 $c\ge0$ is finite. The endpoint $1$ is outside the support domain, so
 there is no contact condition there to complete an endpoint-chord
 argument. Instead we will prove
@@ -1497,6 +1581,38 @@ then $\mu_\gamma=0$ and $\gamma=0$ on all of $[0,1)$.
 The terminal-plateau conclusion was already recorded in
 [Auffinger, Chen and Zeng (2020), Remark 7][acz]; the estimates above
 supply the quantitative argument needed here.
+
+<a id="qualitative-terminal-gap"></a>
+
+**A shorter qualitative exclusion.** The existing curvature input also
+excludes a terminal support gap without estimating its boundary layer.
+Here is the elementary calculus step. Suppose
+$q\in C^1([r,1))$, $q(r)=r$, $q'(r)\le1$, $q\le1$, and $q'$
+is strictly convex on $(r,1)$. If $q(t)\ge t$ at some $r<t<1$,
+strict integration below the finite endpoint chord gives
+$$
+t-r\le\int_r^t q'(v)\,dv
+ <\frac{t-r}{2}\bigl(q'(r)+q'(t)\bigr),
+$$
+so $q'(t)>1$. For $t<s<1$, convexity then gives
+$$
+q'(s)\ge q'(t)+\frac{s-t}{t-r}\bigl(q'(t)-q'(r)\bigr)
+\ge q'(t)>1.
+$$
+Consequently $q(s)\ge t+(s-t)q'(t)>1$ for $s$ sufficiently
+close to one, a contradiction. Thus $q(t)<t$ throughout $(r,1)$.
+All chord endpoints lie below one; no derivative at one is used.
+
+To apply this argument independently of the quantitative proof, first
+exclude empty support by the [zero-coefficient descent](#zero-coefficient-example):
+$D_+\mathcal P(0)[1]=1/4-1/\pi<0$. A nonempty support with a
+terminal complementary component has a last point $r<1$. Its plateau
+has positive height, since a neighbourhood of $r$ has positive measure.
+The contact values and slope at $r$, including the one-sided case $r=0$,
+and positive-plateau curvature meet the calculus hypotheses. Since
+$0\le q\le1$, integration gives $G(r)<0$, contradicting atom addition.
+This is an ordinary consequence of the previously stated inputs. The
+quantitative proof above is retained for its stronger estimate (5.1).
 
 **The remaining gaps have a finite right contact point.**
 
@@ -1697,6 +1813,133 @@ its magnitude tends to zero by integrability. This finite-cutoff
 correction is consistent with the exact terminal identity above.
 <!-- /passage:value -->
 
+<!-- passage:coefficient-budget -->
+<a id="coefficient-budget"></a>
+
+**A coefficient budget from the first curvature moment.** Full support
+also bounds the minimizing coefficient. Put $m(t)=\mathbb E a(t,X_t)$.
+The compact-strip identity
+$$
+da(t,X_t)=-\gamma(t)a(t,X_t)^2\,dt+b(t,X_t)\,dB_t
+$$
+holds before any smoothness conclusion for $\gamma$; the bounded strip
+derivatives make its stochastic integral a martingale.
+[OpenAI (2026a), proof of Corollary 6.4][fs-density].
+At zero, $X_0=0$, $a(0,0)\ge0$ and $\mathbb E a(0,X_0)^2=1$
+give $a(0,0)=1$. Taking expectations and using
+$\mathbb E a(t,X_t)^2=1$ therefore yields
+$$
+m(t)=1-\int_0^t\gamma(s)\,ds,\qquad 0\le t<1.
+$$
+Convexity gives $m(t)\ge0$. Letting $t\uparrow1$ and using
+monotonicity of $\gamma$ on every tail gives
+$$
+\int_0^1\gamma(s)\,ds\le1,\qquad
+0\le\gamma(t)\le\frac{m(t)}{1-t}\le\frac1{1-t}.
+$$
+Indeed, $(s-t)\gamma(t)\le\int_t^s\gamma\le m(t)$ for
+$t<s<1$. Integrating the first-moment identity also gives
+$$
+I(T)=T-\int_0^T(T-s)\gamma(s)\,ds,\qquad
+P_*=1-\int_0^1(1-s)\gamma(s)\,ds.
+$$
+The second equality uses (6.1), so it retains that proposition's
+ground-state identification. These are ordinary consequences in the
+normalization $\xi''=1$. The budget alone does not identify the terminal
+first moment. The following endpoint argument supplies that additional
+information.
+
+<a id="coefficient-total-mass"></a>
+
+**Proposition 6.2 (terminal normalization in zero field).** For the
+minimizer and diffusion of Theorem 5.1,
+$$
+\lim_{t\uparrow1}m(t)=0,\qquad
+\int_0^1\gamma(s)\,ds=1,\qquad
+m(t)=\int_t^1\gamma(s)\,ds,
+$$
+and consequently
+$$
+P_*=\int_0^1s\gamma(s)\,ds.
+$$
+Thus $\gamma(s)\,ds$ has total mass one; this does not normalize the
+Stieltjes measure $d\gamma$. This is an ordinary analytic consequence,
+separate from the selected formal endpoints.
+
+**Proof.** The backward comparison in §4.3 gives
+$\Phi_{xxx}(t,x)\le0$ for $x>0$ in every positive finite-step
+approximation. Compact-strip convergence of the third spatial derivative
+passes this inequality to $\gamma$. Together with evenness and convexity,
+it says that $a(t,x)$ is nonnegative, even and nonincreasing in $|x|$.
+These inputs are [OpenAI (2026a), Lemma 3.2][fs-signs] and
+[Lemma 2.1][fs-reg]; they do not require differentiability of $\gamma$.
+Uniform terminal convergence to $|x|$ and convex difference quotients
+give $u(t,x)\to1$ at every fixed $x>0$. For each $\delta>0$,
+$$
+0\le a(t,\delta)
+\le\frac2\delta\int_{\delta/2}^{\delta}a(t,x)\,dx
+=\frac2\delta\bigl(u(t,\delta)-u(t,\delta/2)\bigr)
+\longrightarrow0.
+$$
+The spatial monotonicity is essential here: convergence of convex
+functions alone would not imply convergence of their second derivatives.
+
+It remains to control the probability of the shrinking region where
+curvature can be large. Oddness and monotonicity give $u(t,x)\ge0$
+for $x\ge0$, so the drift points away from zero. Tanaka's formula for
+$R_t=|X_t|$ gives
+$$
+R_t=W_t+V_t+L_t,\qquad
+W_t=\int_0^t\operatorname{sgn}(X_s)\,dB_s,\qquad
+V_t=\int_0^t\gamma(s)u(s,R_s)\,ds.
+$$
+Here $L$ is the local time of $X$ at zero.
+The occupation-time formula and $d\langle X\rangle_s=ds$ imply
+$\int_0^t\mathbf1_{\{X_s=0\}}\,ds=0$. Thus $\langle W\rangle_t=t$,
+and the continuous martingale $W$ is Brownian motion. The process $V$
+is nondecreasing and starts at zero; $L$ increases only when $R=0$.
+The reflection formula therefore gives, pathwise,
+$$
+R_t=W_t+V_t-\min\left(0,\inf_{s\le t}(W_s+V_s)\right)
+\ge W_t-\min\left(0,\inf_{s\le t}W_s\right)=:R_t^0.
+$$
+Indeed $0\le V_s\le V_t$ bounds the subtracted minimum by
+$\min(0,\inf_{s\le t}W_s)+V_t$. No independence of $V$ and $W$
+is needed. Reflected Brownian motion $R_t^0$ has the one-time law
+$|B_t|$, so for $t>0$,
+$$
+\Pr(|X_t|\le\delta)
+\le\Pr(|B_t|\le\delta)
+\le\sqrt{\frac2\pi}\frac{\delta}{\sqrt t}.
+$$
+Splitting at $|X_t|=\delta$, using spatial monotonicity outside and
+Cauchy–Schwarz with $\mathbb E a(t,X_t)^2=1$ inside, yields
+$$
+0\le m(t)\le a(t,\delta)
+              +\sqrt{\Pr(|X_t|\le\delta)}.
+$$
+First let $t\uparrow1$ and then $\delta\downarrow0$. This proves
+$m(1-)=0$. The compact-strip identity for $m$ now gives total mass one
+and the tail formula. Tonelli and (6.1) give the stated expression for
+$P_*$. In particular,
+$$
+0\le P_*-I(T)=\int_T^1(s-T)\gamma(s)\,ds
+\le(1-T)m(T)=o(1-T).
+$$
+No numerical rate for $m(T)\to0$ or for the required spatial derivative
+bounds follows from this proof.
+
+The endpoint distinction also matters when comparing editions.
+[Sellke, arXiv:2105.03506v4, Lemma 2.9, equation (2.7)](https://arxiv.org/abs/2105.03506v4)
+states the expected-Hessian tail equality. In
+[version 6, Lemma 2.9, equation (2.8), and Remark 2.10](https://arxiv.org/html/2105.03506v6#S2.SS3),
+the general statement is an inequality; the remark obtains equality
+indirectly for even mixtures. The specialized zero-field proof above
+supplies its own endpoint argument from the shape and contact identities,
+rather than substituting $t=1$ into a compact-strip formula or relying on
+the older equality in its full stated generality.
+<!-- /passage:coefficient-budget -->
+
 <a id="finite-gaussian-approximation"></a>
 
 <a id="finite-gaussian-correlations"></a>
@@ -1827,6 +2070,26 @@ $$
  =\Delta\sum_{j=1}^{N-1}\frac{\mathbb E a(t_j,Y_j)}{c_j}+o(1)
  \longrightarrow\int_0^T\mathbb E a(t,X_t)\,dt.
 $$
+
+<a id="unshifted-scalar-comparison"></a>
+
+The same vector estimates also give an unshifted sum with this limit:
+$$
+\left|\sum_{j=1}^N A_jB_j-\sum_{j=1}^N\alpha_j\beta_j\right|
+\le(1+C_T)e_N\longrightarrow0,
+$$
+$$
+\sum_{j=1}^N A_jB_j
+=\Delta\sum_{j=1}^N
+  \frac{\mathbb E a(t_{j-1},Y_{j-1})}{c_j}+o(1)
+\longrightarrow\int_0^T\mathbb E a(t,X_t)\,dt.
+$$
+The latter is a left Riemann sum: $c_j\to1$ uniformly and the Euler
+coupling replaces $Y_{j-1}$ by $X_{t_{j-1}}$. Equal continuum limits
+therefore do not identify the finite expression needed by the circuit.
+The rooted energy calculation in §8.1 selects the adjacent pairing;
+the two finite pairings can differ, as [§10.4](#one-step-example) shows.
+
 Only afterward let $T\uparrow1$, obtaining $P_*$.
 The mesh count $N$ is unrelated to the spin-system size $n$.
 As in [OpenAI (2026a), Proposition 7.2][fs-cons], these coefficients
@@ -1878,20 +2141,27 @@ $$
 for $u$ and $a$, respectively, on this strip. No derivative of $\gamma$
 is used. Brownian coupling gives
 $\|X_s-X_{\pi_N(s)}\|_2\le\sqrt\Delta+\Gamma\Delta$.
-Subtract the Euler and diffusion equations, take a pathwise maximum over
-grid times, then apply Minkowski and discrete Gronwall. With
+Subtract the Euler and diffusion equations and split the drift difference
+on $[t_j,t_{j+1}]$ as
 $$
-R_N=\Gamma TK_T\sqrt\Delta+
- [\Gamma T(J+\Gamma K_T)+V]\Delta,
+\gamma(s)\bigl(u(s,X_s)-u(t_j,Y_j)\bigr)
+ +\bigl(\gamma(s)-\gamma(t_j)\bigr)u(t_j,Y_j).
 $$
-the result is
+Put $A_T=\int_0^T\gamma(s)\,ds\le1$ and
+$w_j=\int_{t_j}^{t_{j+1}}\gamma(s)\,ds$. Taking a pathwise maximum
+over grid times, Minkowski and discrete Gronwall give, with
+$$
+R_N=A_TK_T\sqrt\Delta+
+ [A_T(J+\Gamma K_T)+V]\Delta,
+$$
+the bound
 $$
 \delta_N\le\left\|\max_{j\le N}|Y_j-X_{t_j}|\right\|_2
-\le e^{\Gamma K_TT}R_N.
+\le e^{K_TA_T}R_N\le e^{K_T}R_N.
 $$
-Indeed the maximal norm through index $j$ is at most
-$\Gamma K_T\Delta$ times the sum of its preceding values plus $R_N$;
-the term $V\Delta$ is exactly the monotone quadrature bound. For the
+The recurrence weights the preceding maximal norm on interval $j$ by
+$K_Tw_j$; their sum is $K_TA_T$. The term $V\Delta$ is the monotone
+quadrature bound for the coefficient. For the
 martingale residual, Itô isometry and the same increment estimate give
 $$
 e_N\le K_T\delta_N+
@@ -1912,38 +2182,45 @@ These estimates give an explicit sufficient condition for all the required
 normalisers to be positive. They do not assume positivity for every
 coarse mesh.
 
-Let
-$\omega_f(h)=\sup\{|f(t)-f(s)|:s,t\in[0,T],\,|t-s|\le h\}$.
-The same increment bound gives
-$\omega_f(\Delta)\le L_T\sqrt\Delta+(H+\Gamma L_T)\Delta$;
-in particular this modulus tends to zero.
+The first-moment identity in §6 makes $f=m$ nonincreasing, with
+$f(0)=1$. Its right Riemann sum therefore satisfies
+$$
+0\le I(T)-\Delta\sum_{j=1}^N f(t_j)
+\le\Delta\bigl(f(0)-f(T)\bigr).
+$$
+Removing the last term adds $\Delta f(T)$, so
+$0\le I(T)-\Delta\sum_{j=1}^{N-1}f(t_j)\le\Delta$.
 The difference between the shifted interior sum and the integral is bounded by
 $$
  \left|\Delta\sum_{j=1}^{N-1}
        \frac{\mathbb E a(t_j,Y_j)}{c_j}-\int_0^T f(t)\,dt\right|
- \le TK_Td_N+TL_T\delta_N+T\omega_f(\Delta)+\Delta.
+ \le TK_Td_N+TL_T\delta_N+\Delta.
 $$
-The first two terms replace the normalisers and Euler positions. For the
-last two, compare with the right Riemann sum over $j=1,\ldots,N$,
-then remove its single terminal term $\Delta f(T)$.
+The first two terms replace the normalisers and Euler positions; the
+last is the preceding monotone quadrature estimate.
 Combining this with the vector and rounding-endpoint estimate gives
 $$
  \begin{aligned}
  |S_{T,N}-P_*|
- \le{}&(1-T)
+ \le{}&(1-T)m(T)
    +\bigl(2+\sqrt{T(1+d_N)}\bigr)e_N
    +\sqrt{\Delta(1+d_N)}\\
- &+TK_Td_N+TL_T\delta_N+T\omega_f(\Delta)+\Delta .
+ &+TK_Td_N+TL_T\delta_N+\Delta .
  \end{aligned}
 $$
 In particular, for each fixed minimizer and $T<1$ there are finite
 $C_{\gamma,T}$ and $N_0(\gamma,T)$ such that
 $$
-|S_{T,N}-P_*|\le1-T+C_{\gamma,T}\sqrt{T/N}
+|S_{T,N}-P_*|\le(1-T)m(T)+C_{\gamma,T}\sqrt{T/N}
 \qquad(N\ge N_0(\gamma,T)).
 $$
-The constants are not uniform as $T\uparrow1$, and no numerical bound
-on the minimizing coefficient has been supplied. All terms after $1-T$
+The constants are not uniform as $T\uparrow1$. The
+[coefficient budget](#coefficient-budget) bounds $\int\gamma$ and
+$\gamma$ on each fixed strip, but numerical bounds for all strip
+derivative constants and an effective mesh threshold are not supplied.
+The scalar tail bound $(1-T)m(T)\le1-T$ uses only monotonicity of
+the first moment; Proposition 6.2 further makes it $o(1-T)$.
+All terms after this scalar tail
 tend to zero at each fixed $T<1$. Given a scalar
 tolerance $\zeta>0$, first choose $T$ with $1-T<\zeta/2$, then choose
 $N_0(\gamma,T,\zeta)$ so that their sum is below $\zeta/2$ for every
@@ -3583,6 +3860,8 @@ not change the research replay outcome in §13.
 
 <!-- passage:gaussian-sanity-check -->
 
+<a id="zero-coefficient-example"></a>
+
 ### 10.3 The zero coefficient
 
 The admissible coefficient $\gamma_0=0$ makes the use of minimality in
@@ -4326,6 +4605,42 @@ collapsed state is a different experiment.
 
 <!-- /passage:qaoa-quantifiers -->
 
+<!-- passage:sampled-finite-instance -->
+<a id="sampled-finite-instance"></a>
+
+**Comparison with the same finite instance.** The concentration of the
+finite maximum in §11.1.2 strengthens this to a near-optimal sampled
+configuration. For every $\varepsilon>0$, there is one finite
+deterministic word $W$, independent of $n$ and $J$, such that
+$$
+\Pr_{J,\Sigma}\!\left\{
+H_{n,J}(\Sigma)\ge\max_\sigma H_{n,J}(\sigma)-\varepsilon n
+\right\}\longrightarrow1.
+$$
+To see this, choose the word with $v_W\ge P_*-\varepsilon/4$ and
+write $r_n=\mathbb E(E_n-v_W)^2\to0$ and
+$M_n=\max_\sigma H_{n,J}(\sigma)/n$. The convergence
+$\mathbb E M_n\to P_*$ makes its bias at most $\varepsilon/4$
+for all sufficiently large $n$. The Gaussian coefficient-vector bound
+from §11.1.2 and Chebyshev's inequality for $E_n$ then give, for $n\ge2$,
+$$
+\Pr_J\{M_n>P_*+\varepsilon/2\}
+ \le2\exp\!\left\{-\frac{n^2\varepsilon^2}{16(n-1)}\right\},
+\qquad
+\Pr_{J,\Sigma}\{E_n<v_W-\varepsilon/4\}
+ \le\frac{16r_n}{\varepsilon^2}.
+$$
+Outside these two events, $M_n-E_n\le\varepsilon$. Their union
+therefore has probability tending to zero. The maximum and measured
+energy use the same disorder; the union bound needs no independence.
+One fresh preparation and measurement suffices for this asymptotic
+statement. Its inputs are the ordinary-word theorem, the external
+fixed-word second-moment theorem and Gaussian concentration; it is
+not a clause of the selected formal endpoints. The unspecified sequence
+$r_n$ and mean-maximum bias still give no effective size threshold or
+efficient angle-selection procedure.
+<!-- /passage:sampled-finite-instance -->
+
 <!-- passage:qaoa-depth -->
 
 <a id="depth-quantifiers"></a>
@@ -4902,6 +5217,10 @@ are recorded in the companion source review. This remains a draft after source-b
 
 - Sellke (2021), *Optimizing Mean Field Spin Glasses with External
   Field*, [arXiv:2105.03506v4](https://arxiv.org/abs/2105.03506v4).
+- Sellke (2024), *Optimizing Mean Field Spin Glasses with External
+  Field*, *Electronic Journal of Probability* **29**, paper 4.
+  Inspected revision: [arXiv:2105.03506v6, 17 December 2023](https://arxiv.org/html/2105.03506v6).
+  Lemma 2.9 and Remark 2.10 are distinguished from the preceding v4 entry.
 - Jekel, Sandhu and Shi (2026), *Potential Hessian Ascent: The
   Sherrington–Kirkpatrick Model*,
   [arXiv:2408.02360v3](https://arxiv.org/abs/2408.02360v3).
