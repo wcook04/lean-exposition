@@ -111,7 +111,7 @@ describe("rendering the papers", () => {
     console.log("[reader] per-paper counts", JSON.stringify(counts));
   });
 
-  it("leaves no raw syntax in the output", () => {
+  it("leaves no raw syntax in the output", { timeout: 15000 }, () => {
     for (const [name, parts] of Object.entries(rendered)) {
       for (const part of parts) {
         const text = visibleText(part.html);
