@@ -33,6 +33,9 @@ export default defineConfig(({ mode }) => {
     test: {
       environment: "jsdom",
       include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+      // Several tests render all three papers and parse every part into a DOM;
+      // on a shared CI runner that can take longer than Vitest's 5 s default.
+      testTimeout: 30000,
     },
   };
 });
