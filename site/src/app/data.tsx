@@ -37,6 +37,8 @@ export interface Edition {
   context: "loading" | "ready" | "error";
   /** Why the stored edges and evidence could not be read, when `context` is "error". */
   contextError?: unknown;
+  /** The full check records (with the records each concerns), once the stored tables have arrived. */
+  evidence?: EvidenceRecord[];
 }
 
 type EditionState =
@@ -134,7 +136,7 @@ function primePaper(stage: Stage): void {
 export async function loadEdition(): Promise<Edition> {
   const { snapshot, discovery } = await openEdition();
   const [core, stored] = await Promise.all([loadCore(), loadStored()]);
-  return { snapshot, discovery, overview: core.overview, map: core.map, graph: coreGraph(core, stored), context: "ready" };
+  return { snapshot, discovery, overview: core.overview, map: core.map, graph: coreGraph(core, stored), context: "ready", evidence: stored.evidence };
 }
 
 /**
@@ -180,7 +182,7 @@ export function EditionProvider({
             ready = { graph, core: value };
             setState({
               status: "ready",
-              edition: { snapshot, discovery, overview: value.overview, map: value.map, graph, context: storedValue ? "ready" : "loading" },
+              edition: { snapshot, discovery, overview: value.overview, map: value.map, graph, context: storedValue ? "ready" : "loading", evidence: storedValue?.evidence },
             });
           },
           (error: unknown) => alive && setState({ status: "error", error }),
@@ -191,7 +193,7 @@ export function EditionProvider({
             storedValue = value;
             if (!ready) return;
             enrich(ready.graph, ready.core, value);
-            setState((prev) => (prev.status === "ready" ? { status: "ready", edition: { ...prev.edition, context: "ready" } } : prev));
+            setState((prev) => (prev.status === "ready" ? { status: "ready", edition: { ...prev.edition, context: "ready", evidence: value.evidence } } : prev));
           },
           (error: unknown) => {
             if (!alive) return;
