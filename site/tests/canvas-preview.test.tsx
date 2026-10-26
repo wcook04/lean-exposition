@@ -5,7 +5,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { graphFixture } from "./fixtures";
 import { ArgumentTree, type MapViewHandle } from "../src/map/ArgumentTree";
-import { reach } from "../src/map/treeModel";
+import { neededExpansion, reach, scopedGraph } from "../src/map/treeModel";
 
 let root: Root;
 let container: HTMLDivElement;
@@ -42,19 +42,25 @@ const records = () => [...container.querySelectorAll<HTMLElement>(".card")].map(
 const claimsBelow = (drawn: string[]) => [...reach(graph, goal)].filter((id) => !drawn.includes(id) && graph.nodes.get(id)!.kind !== "assumption");
 
 describe("preview never commits", () => {
-  it("tints drawn records and counts folded ones without unfolding or saving", () => {
+  it("opens exactly the routes to previewed records, saves nothing, and folds them again afterwards", async () => {
     draw(null);
     const before = cards();
     const stored = { ...sessionStorage };
     const deep = claimsBelow(before).slice(0, 3);
-    const drawn = before.find((id) => id !== goal)!;
-    draw(new Set([...deep, drawn]));
-    expect(cards()).toEqual(before);
+    const outside = [...graph.nodes.keys()].find((id) => !reach(graph, goal).has(id) && graph.nodes.get(id)!.kind !== "assumption")!;
+    draw(new Set([...deep, outside]));
+    await act(() => new Promise((r) => setTimeout(r, 260)));
+    for (const id of deep) expect(records()).toContain(id);
+    const open = [...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!).sort();
+    expect(open).toEqual([...neededExpansion(scopedGraph(graph, goal), goal, deep)].sort());
+    for (const id of deep) expect(container.querySelector(`.card[data-record="${id}"]`)!.className).toContain("is-passage");
     expect({ ...sessionStorage }).toEqual(stored);
-    expect(container.querySelector(`[data-card="${drawn}"]`)!.className).toContain("is-preview");
-    expect(container.querySelector(".tree__note")!.textContent).toContain(`${deep.length} linked records are in collapsed branches`);
+    // Only a record this argument cannot draw is noted.
+    expect(container.querySelector(".tree__note")!.textContent).toContain("1 linked record is not in the argument for this main result");
     draw(null);
-    expect(cards()).toEqual(before);
+    await act(() => new Promise((r) => setTimeout(r, 320)));
+    await act(() => new Promise((r) => setTimeout(r, 10)));
+    expect(container.querySelectorAll(".card__inputs[aria-expanded='true']").length).toBe(0);
     expect(container.querySelector(".tree__note")).toBeNull();
   });
 

@@ -162,8 +162,26 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
         </ul>
         <p className="about__keynote">
-          The Key button on the <a href={routeHref({ view: "map" })}>argument map</a> opens the same explanation. On the checks
-          page each outcome is written as a word, and only a failed outcome is shown in colour.
+          A word in small capitals on each card names the kind of record: claim, assumption, main result or Lean declaration.
+          Only assumption cards have a dashed border. When you choose an account under “Records used by”, each card carries one
+          of three marks: the record has a passage of its own in that account, the account uses it without a passage of its
+          own, or the account does not use it.
+        </p>
+        <p className="about__keynote">
+          The map has three views. Steps opens the main result at reading size. Overview fits the whole argument on the
+          screen; as you zoom out, each card first shows only its title and then becomes a small tile in its source’s colour,
+          and the main result and the selected record keep their names. Outline shows the same argument as a list you scroll.
+        </p>
+        <p className="about__keynote">
+          Selecting a card opens its record in a panel. The card’s “Inputs” button, or the Space key, draws the records it
+          uses, and the arrow keys move between cards. Pointing at a line shows a short description of that step, and
+          selecting the line opens the step. “Show all branches” and “Collapse branches”, at the bottom right of the map, open
+          or close every branch at once.
+        </p>
+        <p className="about__keynote">
+          The key row under the <a href={routeHref({ view: "map" })}>argument map</a>’s header shows the colours, lines and
+          marks in short; the Key button shows or hides it. On the checks page each outcome is written as a word, and only a
+          failed outcome is shown in colour.
         </p>
       </section>
 

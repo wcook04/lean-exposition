@@ -62,6 +62,6 @@ describe("Read menu", () => {
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
     expect(host.querySelector('[aria-label="Search records and passages"]')).not.toBeNull();
     expect(host.querySelector('button[aria-label="Menu"]')).not.toBeNull();
-    expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Argument");
+    expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Argument map");
   });
 });

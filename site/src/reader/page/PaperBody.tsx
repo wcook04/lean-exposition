@@ -413,7 +413,7 @@ function PassageTools({
         </button>
       )}
       <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
-        Linked passages…
+        Linked passages
       </button>
     </>
   );
@@ -444,10 +444,33 @@ interface Natural {
   widest: number;
 }
 
+/**
+ * KaTeX splits a display into pieces after each relation sign, and a breaking
+ * display wraps between them. A piece that starts inside brackets is joined to the
+ * piece before it, so a bracketed condition such as "(0 ≤ t₁ < t₂ < 1)" never splits.
+ * Runs once per formula; joined pieces render exactly as before when nothing wraps.
+ */
+export function joinBracketedPieces(math: HTMLElement): void {
+  const html = math.querySelector<HTMLElement>(":scope > .katex-html");
+  if (!html || html.dataset.joined) return;
+  html.dataset.joined = "true";
+  let depth = 0;
+  let previous: HTMLElement | null = null;
+  for (const piece of Array.from(html.querySelectorAll<HTMLElement>(":scope > .katex-base"))) {
+    const inside = depth > 0;
+    for (const mark of Array.from(piece.querySelectorAll(".mopen, .mclose"))) depth = Math.max(0, depth + (mark.classList.contains("mopen") ? 1 : -1));
+    if (inside && previous) {
+      while (piece.firstChild) previous.appendChild(piece.firstChild);
+      piece.remove();
+    } else previous = piece;
+  }
+}
+
 function measureNatural(box: HTMLElement, math: HTMLElement): Natural {
   box.style.fontSize = "";
   delete box.dataset.fit;
   delete box.dataset.align;
+  joinBracketedPieces(math);
   const tag = box.querySelector<HTMLElement>(".katex-tag, .tag");
   const widths = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base")).map((piece) => piece.getBoundingClientRect().width);
   const widest = Math.max(0, ...widths);

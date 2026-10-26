@@ -38,17 +38,17 @@
   position: relative;
   z-index: 3;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
-  height: 44px;
+  gap: 4px var(--space-3);
+  min-height: 44px;
   flex: none;
-  padding: 0 var(--space-2) 0 var(--space-4);
+  padding: 6px var(--space-2) 6px var(--space-4);
   border-bottom: 1px solid var(--rule);
   background: var(--ground);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink-2);
-  white-space: nowrap;
 }
 
 .map-pane__kind {
@@ -56,25 +56,23 @@
   color: var(--ink-3);
 }
 
+/* The goal's name and the state line are shown whole: when the row is too narrow they wrap. */
 .map-pane__goal {
   flex: 0 1 auto;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-family: var(--font-serif);
   font-size: var(--fs-ui);
   color: var(--ink);
 }
 
 .map-pane__state {
-  flex: 1 1 0;
+  flex: 1 1 12em;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--ink-3);
 }
 
 .map-pane__follow {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -121,6 +119,7 @@
 
 .map-pane__open {
   flex: none;
+  white-space: nowrap;
   color: var(--ink-2);
   text-decoration: underline;
   text-decoration-color: var(--rule-strong);
@@ -154,7 +153,7 @@
 .map-pane__notice {
   position: absolute;
   z-index: 3;
-  top: calc(44px + var(--space-3));
+  top: var(--space-3);
   left: var(--space-4);
   max-width: min(560px, calc(100% - 2 * var(--space-4)));
   display: flex;
@@ -176,6 +175,15 @@
 }
 
 /* ---- Canvas ---------------------------------------------------------------------- */
+
+/* Everything under the header: the canvas, the notice and the inspector laid over it. */
+.map-pane__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
 
 .map-pane__canvas {
   position: relative;
@@ -202,7 +210,7 @@
 .reader__map .reader__inspector--over {
   position: absolute;
   z-index: 4;
-  top: 44px;
+  top: 0;
   right: 0;
   bottom: 0;
   width: var(--reader-inspector);

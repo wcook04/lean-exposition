@@ -161,6 +161,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
           </svg>
         </button>
       </header>
+      <div className="map-pane__body">
       {notice && (
         <p className="map-pane__notice" role="status">
           <span>No passage in this paper is linked to {noticeLabel}.</span>
@@ -184,6 +185,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
         />
       </div>
       {overlay}
+      </div>
     </section>
   );
 }

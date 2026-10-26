@@ -243,9 +243,10 @@
 
 .card__head {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 2px 8px;
   margin: 0 0 6px;
   min-width: 0;
 }
@@ -254,19 +255,25 @@
   white-space: nowrap;
 }
 
+/* The source's name is shown whole: beside the kind when it fits, else wrapping onto its own line. */
 .card__src {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 5px;
   min-width: 0;
+  margin-left: auto;
   font-size: var(--fs-xs);
   color: var(--ink-2);
-  white-space: nowrap;
+  text-align: right;
+}
+
+.card__src .src-sq {
+  flex: none;
+  align-self: center;
 }
 
 .card__srcname {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .card__open {
@@ -555,10 +562,6 @@
 }
 .tree--compact .card__title {
   font-size: 0.875rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .tree--compact .card__title.lean {
   font-size: 0.75rem;
@@ -587,7 +590,8 @@
   align-items: center;
   justify-content: center;
   gap: calc(5px / var(--k));
-  padding: calc(10px / var(--k)) calc(14px / var(--k));
+  /* TILE in canvas/representation.ts: the engine sizes titles to fit this box. */
+  padding: calc(10px / var(--k)) calc(8px / var(--k)) calc(7px / var(--k));
   text-align: center;
   opacity: 0;
   pointer-events: none;
@@ -595,21 +599,24 @@
 }
 
 .card__compact .src-sq {
+  /* In the corner, clear of the title's padding box. */
   position: absolute;
-  left: calc(8px / var(--k));
-  top: calc(8px / var(--k));
-  width: calc(8px / var(--k));
-  height: calc(8px / var(--k));
+  left: calc(4px / var(--k));
+  top: calc(3px / var(--k));
+  width: calc(6px / var(--k));
+  height: calc(6px / var(--k));
 }
 
 .card__ctitle {
   max-width: 100%;
   font-family: var(--font-sans);
-  font-size: calc(13px / var(--k));
+  /* The size that fits the whole title (13px down to 11px on screen) and the lines the tile then
+     holds: both set per card by the engine (--title, --lines), so "…" appears only when it cannot fit. */
+  font-size: calc(var(--title, 13px) / var(--k));
   line-height: 1.22;
   color: var(--ink);
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: var(--lines, 4);
   -webkit-box-orient: vertical;
   overflow: hidden;
   overflow-wrap: normal;
@@ -621,13 +628,14 @@
 /* A Lean name is not a word: it may break after its dots and underscores (LeanName). */
 .card__ctitle.lean {
   font-family: var(--font-mono);
-  font-size: calc(12px / var(--k));
-  overflow-wrap: anywhere;
+  font-size: calc(var(--title, 12px) / var(--k));
+  line-height: 1.22;
 }
 
 /* The goal's plate: "MAIN RESULT" and its title, centred, at a constant 18px on screen. */
 .card__cmain {
   display: none;
+  line-height: 1.2;
   font-family: var(--font-sans);
   font-size: calc(11px / var(--k));
   font-weight: 600;
@@ -642,9 +650,8 @@
 
 .card--root .card__ctitle {
   font-family: var(--font-serif);
-  font-size: calc(18px / var(--k));
+  font-size: calc(var(--title, 18px) / var(--k));
   line-height: 1.2;
-  -webkit-line-clamp: 3;
   max-width: calc(560px / var(--k));
 }
 
@@ -657,11 +664,6 @@
   opacity: 1;
 }
 
-/* A record with a screen label shows its name there, not twice. */
-.tree[data-rep="compact"] .card.is-selected .card__compact,
-.tree[data-rep="compact"] .card.is-hover .card__compact {
-  opacity: 0;
-}
 
 .tree[data-rep="mark"] .card {
   background: color-mix(in oklab, var(--cat, var(--src-0)) var(--mark-mix), var(--ground));
@@ -715,7 +717,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  max-width: min(420px, 70%);
   padding: 5px 10px;
   border-radius: 7px;
   background: var(--surface);
@@ -723,9 +724,9 @@
   box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.4);
   font: 500 13px/1.3 var(--font-sans);
   color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Wraps to as many lines as the name needs. */
+  max-width: min(320px, 70%);
+  text-wrap: pretty;
 }
 
 .tree__label.is-selected {
@@ -1017,6 +1018,13 @@
   color: var(--ink);
 }
 
+/* The statement starts at the plate's padding: no paragraph margin above its first line,
+   including a theorem's run-in paragraph (reader-content.css gives it a top margin). */
+.prose.plate__statement > :first-child,
+.prose.plate__statement > p.run-in:first-child {
+  margin-top: 0;
+}
+
 .plate__statement p {
   margin: 0;
 }
@@ -1178,13 +1186,10 @@
   font: 500 13px/1.28 var(--font-sans);
   color: var(--rel-assumes-lit);
   text-align: left;
-  /* A premise is read, not guessed: wrap to a second line before truncating. */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  /* A premise is read, not guessed: the tag wraps to as many lines as its name needs. */
+  display: inline-block;
   white-space: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   cursor: pointer;
   transition: background-color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
 }
@@ -1269,10 +1274,6 @@
 
 .card--clone .card__title {
   font-size: 15px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .card--clone .card__title.lean {
@@ -1387,6 +1388,32 @@
 @media (prefers-reduced-motion: reduce) {
   .links-passage > g,
   .heads-passage .head--lit {
+    animation: none;
+  }
+}
+
+/* ---- The peek: a card's whole lineage while the pointer rests on it ------------------
+   Records it adds are drawn at half strength (their opacity is set by the engine), with
+   no shadow, and their lines at half strength; lines among records already drawn light
+   in their type colours. */
+
+.card.is-peeked {
+  box-shadow: none;
+}
+
+.links .is-peeked,
+.heads .is-peeked {
+  filter: opacity(0.5);
+}
+
+.links-peek > g,
+.heads-peek .head--lit {
+  animation: passage-in var(--t-state) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links-peek > g,
+  .heads-peek .head--lit {
     animation: none;
   }
 }

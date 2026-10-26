@@ -1,18 +1,19 @@
-/* Map bar on top; below it the argument (canvas or outline) with the dock under
-   it, and, while something is inspected, the inspector as a full-height column. */
+/* The header on top, the key row under it (in the flow, so the canvas gives it
+   room); below them the argument (canvas or outline) with the dock under it,
+   and, while something is inspected, the inspector as a full-height column. */
 .map-page {
   flex: 1;
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   overflow: hidden;
 }
 
 .map-page__main {
   position: relative;
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3;
   min-height: 0;
   min-width: 0;
   display: flex;
@@ -20,7 +21,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note) {
+.map-page__main > :not(.map-note):not(.map-controls) {
   flex: 1;
   min-height: 0;
 }
@@ -28,7 +29,7 @@
 .map-page > .panel {
   position: relative;
   grid-column: 2;
-  grid-row: 2 / 4;
+  grid-row: 2 / 5;
   top: auto;
   right: auto;
   bottom: auto;
@@ -39,7 +40,7 @@
 .map-page > .dock {
   position: relative;
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 4;
   left: auto;
   right: auto;
   bottom: auto;
@@ -55,16 +56,17 @@
   transform: translateX(-50%);
   max-width: calc(100% - 32px);
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
   gap: 0 6px;
   margin: 0;
   padding: 7px 16px;
-  white-space: nowrap;
+  text-align: center;
   background: var(--surface);
   border: 1px solid var(--rule-strong);
-  border-radius: 999px;
+  /* A pill on one line; a long record name wraps and the pill becomes a rounded box. */
+  border-radius: 16px;
   box-shadow: var(--shadow-sheet);
   font-size: var(--fs-sm);
   color: var(--ink-2);
@@ -73,11 +75,9 @@
 
 .map-note .linklike {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   color: var(--ink);
   font-weight: 600;
+  text-align: center;
 }
 
 @keyframes map-note-in {
@@ -87,46 +87,192 @@
   }
 }
 
-/* The bar above the argument: goal, account, view, tools. Never scaled with the map. */
 
-.map-bar {
+/* ---- The header: what is drawn (the main result), how (the view), from which
+   account, and the key. On the page ground with a hairline below; never scaled
+   with the map. Its parts are grid cells, so they never overlap: below about
+   1100px (in ems, so larger text compresses sooner) the title takes its short
+   name and the account label hides behind the button's accessible name; on
+   phones the header takes two rows. */
+
+.map-head {
   grid-column: 1 / -1;
   grid-row: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  grid-template-areas: "title views acct key";
   align-items: center;
-  gap: 28px;
-  min-height: var(--bar-h);
-  padding: 0 22px;
-  background: color-mix(in oklab, var(--ground) 70%, var(--surface));
+  column-gap: 24px;
+  min-height: 64px;
+  padding: 6px var(--space-5);
+  background: var(--ground);
   border-bottom: 1px solid var(--rule);
   min-width: 0;
 }
 
-.map-bar__label {
-  font-size: var(--fs-xs);
-  letter-spacing: 0.02em;
+/* Title block: "Argument for" over the main result's title, a menu button. */
+.goal-menu {
+  grid-area: title;
+  position: relative;
+  display: grid;
+  justify-items: start;
+  min-width: 0;
+}
+
+.goal-menu__label {
+  font-size: var(--fs-sm);
+  line-height: 1.2;
   color: var(--ink-3);
+}
+
+.goal-menu__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 32px;
+  margin-left: -8px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.goal-menu__button:hover,
+.goal-menu__button[aria-expanded="true"] {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+/* The title is cut short only when even the short name cannot fit; the full title is then the button's tooltip. */
+.goal-menu__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.goal-switch {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
+.goal-menu__chev {
+  flex: none;
+  color: var(--ink-3);
+  transition: transform var(--t-hover) var(--ease-out);
 }
 
-.goal-switch__items {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  min-width: 0;
+.goal-menu__chev.is-open {
+  transform: rotate(180deg);
 }
 
-.goal-switch__item,
+/* An invisible copy of the full title, measured to decide whether it fits. */
+.goal-menu__measure {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: none;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.goal-menu__menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: -8px;
+  width: min(560px, calc(100vw - 32px));
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-reveal) var(--ease-out) both;
+}
+
+.goal-menu__menu[hidden] {
+  display: none;
+}
+
+.goal-menu__item {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 2px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.goal-menu__item:hover,
+.goal-menu__item:focus-visible {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.goal-menu__tick {
+  grid-row: 1;
+  align-self: center;
+  color: var(--ink);
+  visibility: hidden;
+}
+
+.goal-menu__item[aria-checked="true"] .goal-menu__tick {
+  visibility: visible;
+}
+
+.goal-menu__name {
+  grid-column: 2;
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  line-height: 1.3;
+}
+
+.goal-menu__item[aria-checked="true"] .goal-menu__name {
+  font-weight: 600;
+}
+
+.goal-menu__where {
+  grid-column: 2;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+/* View: one pill whose thumb slides to the view shown. */
+.map-views {
+  grid-area: views;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+
+.map-views__thumb {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 7px;
+  background: var(--raised);
+  box-shadow: 0 0 0 1px var(--rule-strong), 0 1px 2px rgb(0 0 0 / 0.08);
+  transition: transform var(--t-state) var(--ease-move), width var(--t-state) var(--ease-move);
+}
+
 .map-views button {
-  height: 32px;
-  padding: 0 12px;
+  position: relative;
+  height: 30px;
+  padding: 0 14px;
   border: 0;
   border-radius: 7px;
   background: none;
@@ -134,50 +280,38 @@
   font-size: var(--fs-ui);
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+  transition: color var(--t-hover) var(--ease-out);
 }
 
-.goal-switch__item:hover,
-.map-views button:hover {
+.map-views button:hover,
+.map-views button[aria-pressed="true"] {
   color: var(--ink);
-  background: color-mix(in oklab, var(--ink) 5%, transparent);
-}
-
-.goal-switch__item[aria-checked="true"] {
-  background: var(--raised);
-  color: var(--ink);
-  font-weight: 600;
-  box-shadow: 0 0 0 1px var(--rule-strong), 0 1px 2px rgb(0 0 0 / 0.06);
-}
-
-.map-views {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 2px;
-  border-radius: 9px;
-  background: var(--sunk);
-  flex: none;
-}
-
-.map-views button {
-  height: 28px;
 }
 
 .map-views button[aria-pressed="true"] {
-  background: var(--raised);
-  color: var(--ink);
   font-weight: 600;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-views__thumb {
+    transition: none;
+  }
 }
 
 /* Records used by: a picker that opens the account switch. */
 .acct-picker {
+  grid-area: acct;
   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: none;
+  min-width: 0;
+}
+
+.acct-picker__label {
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+  white-space: nowrap;
 }
 
 .acct-picker__button {
@@ -187,7 +321,7 @@
   height: 32px;
   padding: 0 12px;
   border: 1px solid var(--rule-strong);
-  border-radius: 7px;
+  border-radius: var(--radius-m);
   background: var(--raised);
   color: var(--ink);
   font-size: var(--fs-ui);
@@ -203,195 +337,43 @@
   position: absolute;
   z-index: 30;
   top: calc(100% + 8px);
-  left: 0;
+  right: 0;
+  max-width: calc(100vw - 32px);
   padding: 12px;
   background: var(--surface);
   border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-l);
   box-shadow: var(--shadow-sheet);
   animation: keypop-in var(--t-reveal) var(--ease-out) both;
 }
 
-.map-bar__tools {
-  display: flex;
+/* Key: a toggle for the key row. */
+.map-head__key {
+  grid-area: key;
+  justify-self: end;
+  display: inline-flex;
   align-items: center;
-  flex: none;
-  gap: 4px;
-  margin-left: auto;
-}
-
-.map-tool,
-.map-keypop > .control {
+  gap: 7px;
   height: 32px;
   padding: 0 10px;
   border: 0;
-  border-radius: 7px;
+  border-radius: var(--radius-m);
   background: none;
-  color: var(--ink);
+  color: var(--ink-2);
   font-size: var(--fs-ui);
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
 }
 
-.map-tool:hover,
-.map-keypop > .control:hover {
+.map-head__key:hover {
+  color: var(--ink);
   background: color-mix(in oklab, var(--ink) 5%, transparent);
 }
 
-.map-tool:disabled {
-  color: var(--ink-3);
-  cursor: default;
-  background: none;
-}
-
-.map-tool[aria-expanded="true"],
-.map-keypop > .control[aria-expanded="true"] {
+.map-head__key[aria-expanded="true"] {
+  color: var(--ink);
   background: color-mix(in oklab, var(--ink) 7%, transparent);
-  color: var(--ink);
-}
-
-.map-more {
-  position: relative;
-}
-
-.map-more__list {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 200px;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-sheet);
-  animation: keypop-in var(--t-reveal) var(--ease-out) both;
-}
-
-.map-more__item {
-  display: block;
-  width: 100%;
-  min-height: 36px;
-  padding: 0 10px;
-  border: 0;
-  border-radius: var(--radius-s);
-  background: none;
-  color: var(--ink);
-  font-size: var(--fs-ui);
-  text-align: left;
-  cursor: pointer;
-}
-
-.map-more__item:hover {
-  background: color-mix(in oklab, var(--ink) 5%, transparent);
-}
-
-/* Phones: native selects for goal and account, at touch size. */
-.map-bar__selects {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  width: 100%;
-}
-
-.map-bar__field {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.map-bar__field select {
-  width: 100%;
-  min-width: 0;
-  height: var(--target);
-  padding: 0 10px;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-m);
-  background: var(--raised);
-  color: var(--ink);
-  font: inherit;
-  font-size: var(--fs-base);
-}
-
-.map-key {
-  flex: 1;
-  min-width: 0;
-  display: grid;
-  gap: 3px;
-}
-
-.map-key__sources {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.map-bar > .map-key .map-key__sources {
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: 2px 18px;
-}
-
-.map-key__sources li {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.map-key__sources li[data-slot="1"] {
-  --cat: var(--src-1);
-}
-.map-key__sources li[data-slot="2"] {
-  --cat: var(--src-2);
-}
-.map-key__sources li[data-slot="3"] {
-  --cat: var(--src-3);
-}
-
-.map-key__swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  background: color-mix(in oklab, var(--cat, transparent) 14%, var(--surface));
-  border: 1px solid color-mix(in oklab, var(--cat, var(--ink-3)) 60%, var(--rule));
-  box-shadow: inset 0 2px 0 var(--cat, var(--rule-strong));
-}
-
-/* The key behind one button: colours, line styles and how to go deeper. */
-.map-keypop {
-  position: relative;
-}
-
-.map-keypop__panel {
-  --line: color-mix(in oklab, var(--ink-3) 55%, var(--ground));
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 8px);
-  right: 0;
-  width: min(360px, calc(100vw - 32px));
-  padding: 14px 16px 16px;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-sheet);
-  animation: keypop-in var(--t-panel) var(--ease-out) both;
-}
-
-:root[data-theme="dark"] .map-keypop__panel {
-  --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .map-keypop__panel {
-    --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
-  }
 }
 
 @keyframes keypop-in {
@@ -401,47 +383,160 @@
   }
 }
 
-.map-keypop__title {
-  margin: 12px 0 6px;
-  font-size: var(--fs-xs);
-  font-weight: 600;
+/* ---- The key row: in the flow under the header, wrapping when narrow. ---- */
+
+.keyrow {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 28px;
+  min-width: 0;
+  padding: 9px var(--space-5);
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  line-height: 1.3;
   color: var(--ink-2);
 }
 
-.map-keypop__title:first-child {
-  margin-top: 0;
+.keyrow[hidden] {
+  display: none;
 }
 
-.map-keypop__sources {
-  display: grid;
-  gap: 4px;
-}
-
-.map-keypop__lines {
-  display: grid;
-  gap: 4px;
+.keyrow__sources,
+.keyrow__marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
 }
 
-.map-keypop__lines li {
-  display: flex;
+.keyrow__marks li {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.map-keypop__sample {
+.keyrow__marks .map-key__sample {
   flex: none;
+  width: 36px;
   overflow: visible;
 }
 
-.map-keypop__note {
+/* An assumption tag, as the map draws one on a result, without its name. */
+.keyrow__tag {
+  flex: none;
+  width: 30px;
+  height: 16px;
+  border: 1.5px dotted var(--rel-assumes);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+/* A record drawn more than once: a small card with the band along its foot. */
+.keyrow__clone {
+  flex: none;
+  position: relative;
+  width: 28px;
+  height: 18px;
+  overflow: hidden;
+  border: 1px solid var(--card-border, var(--rule-strong));
+  border-radius: 4px;
+  background: var(--card);
+}
+
+.keyrow__clone::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: color-mix(in oklab, var(--src-1) 35%, var(--card));
+}
+
+.keyrow__more a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.keyrow__more a:hover {
+  text-decoration-color: currentColor;
+}
+
+.map-key__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
   margin: 0;
-  font-size: var(--fs-sm);
-  line-height: 1.45;
+  padding: 0;
+  list-style: none;
+}
+
+.map-key__sources li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-key__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--cat, var(--src-0)) var(--mark-mix), var(--ground));
+  border: 1px solid color-mix(in oklab, var(--cat, var(--src-0)) 85%, var(--ground));
+}
+
+/* ---- Branch buttons on the canvas, bottom right above the dock. ---- */
+
+.map-controls {
+  position: absolute;
+  z-index: 8;
+  right: 16px;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-sheet);
+}
+
+.map-controls__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 11px 0 9px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.map-controls__button:hover {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.map-controls__button[aria-disabled="true"] {
+  color: var(--ink-3);
+  background: none;
+  cursor: default;
+}
+
+.map-controls__button svg {
+  flex: none;
   color: var(--ink-2);
 }
 
@@ -495,21 +590,26 @@
   cursor: pointer;
 }
 
-/* Below 1600px the colour key lives behind the Key button only. */
-@media (max-width: 1599px) {
-  .map-bar > .map-key {
-    display: none;
-  }
-}
 
-@media (max-width: 1359px) {
-  .map-bar {
-    gap: 18px;
-    padding: 0 16px;
+/* Below about 1100px: the short title, and the account label behind the button's name. */
+@media (max-width: 68.75em) {
+  .map-head {
+    column-gap: 16px;
+    padding: 6px var(--space-4);
   }
-  .goal-switch__item,
+  .acct-picker__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   .map-views button {
-    padding: 0 9px;
+    padding: 0 11px;
+  }
+  .keyrow {
+    padding-inline: var(--space-4);
   }
 }
 
@@ -535,47 +635,58 @@
   .map-page {
     grid-template-columns: minmax(0, 1fr);
   }
-  /* The key opens within the viewport, not off its left edge. */
-  .map-keypop__panel {
-    position: fixed;
-    top: auto;
-    left: 16px;
-    right: 16px;
-    width: auto;
-    margin-top: 8px;
-    max-height: 70dvh;
-    overflow: auto;
-  }
 }
 
-@media (max-width: 1100px) and (min-width: 701px) {
-  .map-bar {
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    padding: 8px 16px;
+/* Phones: two rows (title and Key; view and account), touch-sized. */
+@media (max-width: 43.75em) {
+  .map-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title key"
+      "views acct";
+    row-gap: 6px;
+    column-gap: 8px;
+    padding: 6px var(--space-4) 8px;
   }
-}
-
-@media (max-width: 700px) {
-  .map-bar {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px 16px 10px;
+  .goal-menu__button,
+  .map-head__key,
+  .acct-picker__button {
+    min-height: var(--target);
+  }
+  .map-head__key {
+    margin-right: -8px;
   }
   .map-views {
-    flex: 1;
+    min-width: 0;
   }
   .map-views button {
-    flex: 1;
-    height: 40px;
-    padding: 0 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 38px;
+    padding: 0 10px;
   }
-  .map-bar__tools {
-    gap: 0;
+  .map-controls__button {
+    height: 38px;
   }
-  .map-tool,
-  .map-keypop > .control {
-    height: var(--target);
+}
+
+/* Narrow phones and large text: the view and the account each take a row. */
+@media (max-width: 23.75em) {
+  .map-head {
+    grid-template-areas:
+      "title key"
+      "views views"
+      "acct acct";
+  }
+  .acct-picker {
+    justify-self: start;
+  }
+  .acct-picker__pop {
+    left: 0;
+    right: auto;
+  }
+  .map-controls__button {
+    padding: 0 8px;
   }
 }
 

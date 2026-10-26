@@ -144,19 +144,30 @@
   text-decoration-color: color-mix(in oklab, var(--lit-line) 70%, transparent);
 }
 
-/* The arrow is glued to the last word (a word joiner precedes it), so it
-   never wraps onto a line by itself. */
+/* The arrow is glued to the last word: the pseudo-element's only character is a
+   word joiner, so it never wraps onto a line by itself. The arrow is drawn in the
+   padding (a mask over the ink colour), where the link's underline does not run;
+   a text arrow with the underline under it read as a broken glyph. */
 .prose a.ext::after {
-  content: "\2060\2197";
+  content: "\2060";
   display: inline;
-  margin-left: 0.08em;
-  font-family: var(--font-sans);
-  font-size: 0.72em;
-  vertical-align: 0.32em;
-  line-height: 0;
-  color: var(--ink-3);
-  text-decoration: none;
-  white-space: nowrap;
+  margin-left: 0.1em;
+  padding-left: 0.62em;
+  background-color: var(--ink-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+}
+
+/* Forced colours drop backgrounds; keep a text arrow there. */
+@media (forced-colors: active) {
+  .prose a.ext::after {
+    content: "\2060\2197";
+    padding-left: 0;
+    -webkit-mask: none;
+    mask: none;
+  }
 }
 
 .prose .link-unresolved {

@@ -7,21 +7,21 @@
 // being looked at (camera, unfolded branches, steps or overview) lives in the
 // history entry, so Back returns to the same view; see scene.ts.
 
-import { forwardRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from "react";
+import { forwardRef, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from "react";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { navigate, type Route } from "../app/router";
-import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
+import { PAPER_NAMES, statedIn } from "../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "./ArgumentTree";
 import { ArgumentOutline } from "./ArgumentOutline";
-import { pathFromGoal, reach } from "./treeModel";
+import { pathFromGoal, reach, scopedGraph, usesOf } from "./treeModel";
 import { TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
 import { RecordPanel } from "../panels/RecordPanel";
 import { EdgePanel } from "../panels/EdgePanel";
 import { usePresence } from "../panels/presence";
 import { chooseAccount } from "../panels/accountStore";
 import { AccountSwitch } from "../panels/AccountSwitch";
-import { MapKey, SourceSwatches } from "./MapKey";
+import { KeyRow } from "./MapKey";
 import { ReadingsDock } from "../ribbons/ReadingsDock";
 import { prefersReducedMotion } from "../app/theme";
 import { readScene, sceneWriter, type MapScene } from "./scene";
@@ -35,6 +35,26 @@ type TreeHandle = MapViewHandle;
 
 const INTRO_KEY = "lx-map-intro";
 const DISPLAY_KEY = "lx-map-display";
+/** The reader's choice to show or hide the key row, kept across visits. */
+export const KEY_ROW_KEY = "lx-map-key";
+
+type View = "steps" | "overview" | "outline";
+
+function readLocal(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeLocal(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* storage unavailable */
+  }
+}
 
 function useMedia(query: string): boolean {
   const [match, setMatch] = useState(() => typeof window !== "undefined" && !!window.matchMedia?.(query).matches);
@@ -127,6 +147,8 @@ export function MapPage({ route }: { route: MapRoute }) {
     return requestedGoal;
   }, [selectionIds, requestedGoal, goals, graph]);
   const goalTitle = allGoals.find((g) => g.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
+  const goalFullTitle = graph.nodes.get(goal)?.label ?? goalTitle;
+  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: graph.nodes.get(g.id)?.label ?? g.title })), [goals, graph]);
   const goalReach = useMemo(() => reach(graph, goal), [graph, goal]);
   const scopedReach = useMemo(() => reach(graph, goal, within), [graph, goal, within]);
   const stepNotDrawn = !!edgeObj && !(goalReach.has(edgeObj.from) && goalReach.has(edgeObj.to));
@@ -135,7 +157,8 @@ export function MapPage({ route }: { route: MapRoute }) {
   // ---- View: steps, overview or outline -----------------------------------------------
 
   const phone = useMedia("(max-width: 700px)");
-  const narrow = useMedia("(max-width: 1279px)");
+  // Below about 1100px (in ems, so larger text compresses the header sooner) the header uses short names.
+  const wide = useMedia("(min-width: 68.75em)");
   const [chosenDisplay, setChosenDisplay] = useState<Display | null>(() => {
     const v = readSession(DISPLAY_KEY);
     return v === "map" || v === "outline" ? v : null;
@@ -144,6 +167,19 @@ export function MapPage({ route }: { route: MapRoute }) {
   const chooseDisplay = (d: Display) => {
     setChosenDisplay(d);
     writeSession(DISPLAY_KEY, d);
+  };
+  // The key row: shown unless the reader hid it. On a phone, or a window under 760px
+  // tall (where its lines would push the first row of cards off the canvas), it is
+  // hidden unless the reader showed it; the front page explains the drawing first.
+  const short = useMedia("(max-height: 759px)");
+  const [chosenKey, setChosenKey] = useState<boolean | null>(() => {
+    const v = readLocal(KEY_ROW_KEY);
+    return v === "shown" ? true : v === "hidden" ? false : null;
+  });
+  const keyShown = chosenKey ?? !(phone || short);
+  const chooseKey = (shown: boolean) => {
+    setChosenKey(shown);
+    writeLocal(KEY_ROW_KEY, shown ? "shown" : "hidden");
   };
   const initialScene = useRef<MapScene | null>(null);
   if (initialScene.current === null) initialScene.current = readScene(has) ?? ({} as MapScene);
@@ -176,7 +212,15 @@ export function MapPage({ route }: { route: MapRoute }) {
     treeRef.current.restoreScene(scene);
   }, [restoreTick, display]);
 
-  const onSceneSettled = useCallback((scene: MapScene) => writer.save(scene), [writer]);
+  // Which branches are open, as the tree last reported it; the canvas buttons use it to say when they would change nothing.
+  const [openIds, setOpenIds] = useState<ReadonlySet<string> | null>(null);
+  const onSceneSettled = useCallback(
+    (scene: MapScene) => {
+      writer.save(scene);
+      setOpenIds(new Set(scene.expanded));
+    },
+    [writer],
+  );
 
   // ---- Navigation -------------------------------------------------------------------
 
@@ -196,8 +240,7 @@ export function MapPage({ route }: { route: MapRoute }) {
   // Focus: closing the inspector returns to what opened it.
   const openerRef = useRef<string | null>(null);
   const focusGoalControl = () => {
-    const el = goalBarRef.current?.querySelector<HTMLElement>('[aria-checked="true"], select');
-    el?.focus();
+    goalBarRef.current?.querySelector<HTMLElement>(".goal-menu__button")?.focus();
   };
   const returnFocus = (ids: (string | null | undefined)[]) => {
     const order = [openerRef.current, ...ids].filter((id): id is string => !!id);
@@ -309,10 +352,20 @@ export function MapPage({ route }: { route: MapRoute }) {
     };
   }, [panelOpen, shown.value]);
   const noteShown = outsideScope || stepNotDrawn;
+  // The branch buttons float at the canvas's bottom right; framing keeps cards clear of them.
+  const controlsRoom = phone ? 64 : 56;
   const insets: Insets = useMemo(
-    () => ({ top: noteShown ? 64 : 20, left: 20, right: 20, bottom: 20 + sheetInset }),
-    [sheetInset, noteShown],
+    () => ({ top: noteShown ? 64 : 20, left: 20, right: 20, bottom: 20 + sheetInset + controlsRoom }),
+    [sheetInset, noteShown, controlsRoom],
   );
+
+  // What "Show all branches" and "Collapse branches" would change.
+  const expandable = useMemo(() => {
+    const scoped = scopedGraph(graph, goal);
+    return [...reach(scoped, goal, within)].filter((id) => id !== goal && usesOf(scoped, id, within).length > 0);
+  }, [graph, goal, within]);
+  const allOpen = !!openIds && expandable.every((id) => openIds.has(id));
+  const noneOpen = !!openIds && !expandable.some((id) => openIds.has(id)) && !route.edge && !route.trace;
 
   // One recorded route from the goal, inside the chosen account; null when there is none.
   const crumbs = useMemo(() => (shownNode ? pathFromGoal(graph, goal, shownNode, within) : null), [graph, goal, shownNode, within]);
@@ -321,13 +374,12 @@ export function MapPage({ route }: { route: MapRoute }) {
   const scopeLine = `${route.lens ? `Records the ${accountWord(route.lens).toLowerCase()} uses` : "All accounts"} · ${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument`;
 
 
-  const viewButtons: { id: "steps" | "overview" | "outline"; label: string }[] = [
-    { id: "steps", label: "Steps" },
-    { id: "overview", label: "Overview" },
-    { id: "outline", label: "Outline" },
-  ];
-  const viewPressed = (v: "steps" | "overview" | "outline") => (v === "outline" ? display === "outline" : display === "map" && mode === v);
-  const chooseView = (v: "steps" | "overview" | "outline") => {
+  const chooseView = (v: View) => {
+    // Pressing the view already shown frames it again: Steps around the selection, Overview the whole argument.
+    if (viewPressed(v)) {
+      if (v !== "outline") treeRef.current?.fitAll();
+      return;
+    }
     if (v === "outline") return chooseDisplay("outline");
     if (display !== "map") {
       // The tree mounts afresh; give it this entry's remembered camera.
@@ -338,79 +390,23 @@ export function MapPage({ route }: { route: MapRoute }) {
     chooseDisplay("map");
     setMode(v);
   };
+  const viewPressed = (v: View) => (v === "outline" ? display === "outline" : display === "map" && mode === v);
 
   return (
-    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`}>
-      <div className="map-bar" role="toolbar" aria-label="Argument map controls" aria-orientation="horizontal">
-        {phone ? (
-          <div className="map-bar__selects" ref={goalBarRef}>
-            <label className="map-bar__field">
-              <span className="map-bar__label">Main result</span>
-              <select value={goal} onChange={(event) => changeGoal(event.target.value)}>
-                {!goals.some((g) => g.id === goal) && <option value={goal}>{goalTitle}</option>}
-                {goals.map((g) => (
-                  <option key={g.id} value={g.id}>
-                    {g.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="map-bar__field">
-              <span className="map-bar__label">Records used by</span>
-              <select value={route.lens ?? ""} onChange={(event) => changeLens((event.target.value || undefined) as Stage | undefined)}>
-                <option value="">All accounts</option>
-                {STAGE_ORDER.map((s) => (
-                  <option key={s} value={s}>
-                    {PAPER_NAMES[s].short}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        ) : (
-          <>
-            <GoalSwitch ref={goalBarRef} goals={goals} goal={goal} onGoal={changeGoal} />
-            <AccountPicker lens={route.lens} onLens={changeLens} onSelect={(id) => select(id)} />
-          </>
-        )}
-        <div className="map-views" role="group" aria-label="View">
-          {viewButtons.map((v) => (
-            <button key={v.id} type="button" aria-pressed={viewPressed(v.id)} onClick={() => chooseView(v.id)}>
-              {v.label}
-            </button>
-          ))}
-        </div>
-        <div className="map-key">
-          <SourceSwatches origins={graph.origins} />
-        </div>
-        <div className="map-bar__tools">
-          {!narrow && !phone && (
-            <>
-              <button type="button" className="map-tool" onClick={collapse} disabled={display !== "map"}>
-                Collapse branches
-              </button>
-              <button type="button" className="map-tool" onClick={() => treeRef.current?.expandAll()} disabled={display !== "map"}>
-                Show all branches
-              </button>
-              <button type="button" className="map-tool" onClick={() => treeRef.current?.fitAll()} disabled={display !== "map"}>
-                Show overview
-              </button>
-            </>
-          )}
-          {/* The bar's own tools fold into "More" at narrower widths. */}
-          {(narrow || phone) && (
-            <MoreMenu
-              items={[
-                { label: "Collapse branches", run: collapse },
-                { label: "Show all branches", run: () => treeRef.current?.expandAll() },
-                { label: "Show overview", run: () => treeRef.current?.fitAll() },
-              ]}
-              disabled={display !== "map"}
-            />
-          )}
-          <MapKey origins={graph.origins} />
-        </div>
+    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}${keyShown ? " map-page--key" : ""}`}>
+      <div className="map-head" role="group" aria-label="Argument map controls">
+        <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
+        <ViewSwitch pressed={viewPressed} onView={chooseView} />
+        <AccountPicker lens={route.lens} onLens={changeLens} onSelect={(id) => select(id)} />
+        <button type="button" className="map-head__key" aria-expanded={keyShown} aria-controls="map-key-row" onClick={() => chooseKey(!keyShown)}>
+          <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+            <rect x="2" y="3" width="4" height="4" rx="1" fill="currentColor" />
+            <path d="M8.5 5h5.5M2 11.5h4M8.5 11.5h5.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          Key
+        </button>
       </div>
+      <KeyRow id="map-key-row" origins={graph.origins} hidden={!keyShown} />
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (
@@ -440,6 +436,34 @@ export function MapPage({ route }: { route: MapRoute }) {
               </>
             )}
           </p>
+        )}
+        {display === "map" && (
+          <div className="map-controls" role="group" aria-label="Branches of the argument" style={{ bottom: 16 + sheetInset }}>
+            <button
+              type="button"
+              className="map-controls__button"
+              aria-disabled={allOpen || undefined}
+              title={allOpen ? "Every branch of this argument is already shown" : undefined}
+              onClick={() => !allOpen && treeRef.current?.expandAll()}
+            >
+              <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+                <path d="M8 2.5v11M2.5 8h11" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              Show all branches
+            </button>
+            <button
+              type="button"
+              className="map-controls__button"
+              aria-disabled={noneOpen || undefined}
+              title={noneOpen ? "Only the main result and its direct inputs are shown" : undefined}
+              onClick={() => !noneOpen && collapse()}
+            >
+              <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+                <path d="M2.5 8h11" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              Collapse branches
+            </button>
+          </div>
         )}
         {display === "map" ? (
           <ArgumentTree
@@ -517,52 +541,180 @@ export function MapPage({ route }: { route: MapRoute }) {
   );
 }
 
-// ---- The bar's controls ---------------------------------------------------------------
+// ---- The header's controls ------------------------------------------------------------
 
+/** A main result: its short name, its full title and the accounts that state it. */
+type GoalChoice = { id: string; title: string; full?: string; stages: Stage[] };
 
-/** Goal: a radio group with arrow keys, one tab stop, selection following focus. */
-const GoalSwitch = forwardRef<HTMLDivElement, { goals: { id: string; title: string; stages: Stage[] }[]; goal: string; onGoal(id: string): void }>(
-  function GoalSwitch({ goals, goal, onGoal }, ref) {
-    const checked = goals.some((g) => g.id === goal) ? goal : goals[0]?.id;
-    const onKey = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-      const i = goals.findIndex((g) => g.id === checked);
-      let j = -1;
-      if (event.key === "ArrowRight" || event.key === "ArrowDown") j = (i + 1) % goals.length;
-      else if (event.key === "ArrowLeft" || event.key === "ArrowUp") j = (i - 1 + goals.length) % goals.length;
-      else if (event.key === "Home") j = 0;
-      else if (event.key === "End") j = goals.length - 1;
-      if (j < 0) return;
+/**
+ * "Argument for", then the main result's title as a menu button. The menu lists
+ * the main results by full title with the accounts that state each, as
+ * menuitemradio items: ↑ ↓ Home End move, Enter or Space chooses, Escape closes
+ * and returns focus to the button. Below about 1100px, or when the full title
+ * would not fit beside the other controls, the button carries the short name.
+ */
+const GoalMenu = forwardRef<
+  HTMLDivElement,
+  { goals: GoalChoice[]; goal: string; fullTitle: string; shortTitle: string; wide: boolean; onGoal(id: string): void }
+>(function GoalMenu({ goals, goal, fullTitle, shortTitle, wide, onGoal }, ref) {
+  const id = useId();
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement | null>(null);
+  const button = useRef<HTMLButtonElement>(null);
+  const measure = useRef<HTMLSpanElement>(null);
+  const items = useRef<(HTMLButtonElement | null)[]>([]);
+  const close = useCallback(() => setOpen(false), []);
+  usePopover(open, close, root);
+  const choices = goals.some((g) => g.id === goal) ? goals : [{ id: goal, title: shortTitle, stages: [] }, ...goals];
+
+  // The full title only where it fits: the slot's width is set by the header, never by the title.
+  const [fits, setFits] = useState(true);
+  useLayoutEffect(() => {
+    const slot = root.current;
+    const probe = measure.current;
+    if (!slot || !probe) return;
+    const check = () => setFits(probe.offsetWidth <= slot.clientWidth);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(slot);
+    return () => observer.disconnect();
+  }, [fullTitle]);
+  const full = wide && fits;
+
+  const focusItem = (i: number) => requestAnimationFrame(() => items.current[(i + choices.length) % choices.length]?.focus());
+  const openAt = (i: number) => {
+    setOpen(true);
+    focusItem(i);
+  };
+  const checkedIndex = Math.max(0, choices.findIndex((g) => g.id === goal));
+  const choose = (g: GoalChoice) => {
+    setOpen(false);
+    button.current?.focus();
+    if (g.id !== goal) onGoal(g.id);
+  };
+  const onButtonKey = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      onGoal(goals[j].id);
-      const el = event.currentTarget;
-      requestAnimationFrame(() => el.querySelector<HTMLElement>(`[data-goal="${CSS.escape(goals[j].id)}"]`)?.focus());
-    };
-    return (
-      <div className="goal-switch">
-        <span className="map-bar__label" id="goal-switch-label">
-          Main result
+      openAt(checkedIndex);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      openAt(choices.length - 1);
+    }
+  };
+  const onMenuKey = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const at = items.current.indexOf(document.activeElement as HTMLButtonElement);
+    let j: number | null = null;
+    if (event.key === "ArrowDown") j = at + 1;
+    else if (event.key === "ArrowUp") j = at - 1;
+    else if (event.key === "Home") j = 0;
+    else if (event.key === "End") j = choices.length - 1;
+    else if (event.key === "Tab") setOpen(false);
+    if (j === null) return;
+    event.preventDefault();
+    focusItem(j);
+  };
+
+  return (
+    <div
+      className="goal-menu"
+      ref={(el) => {
+        root.current = el;
+        if (typeof ref === "function") ref(el);
+        else if (ref) ref.current = el;
+      }}
+    >
+      <span className="goal-menu__label" id={`${id}-label`}>
+        Argument for
+      </span>
+      <button
+        ref={button}
+        type="button"
+        className="goal-menu__button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={`${id}-menu`}
+        aria-labelledby={`${id}-label ${id}-title`}
+        title={full ? undefined : fullTitle}
+        onClick={() => (open ? setOpen(false) : openAt(checkedIndex))}
+        onKeyDown={onButtonKey}
+      >
+        <span className="goal-menu__title" id={`${id}-title`}>
+          {full ? fullTitle : shortTitle}
         </span>
-        <div className="goal-switch__items" role="radiogroup" aria-labelledby="goal-switch-label" ref={ref} onKeyDown={onKey}>
-          {goals.map((g) => (
-            <button
-              key={g.id}
-              type="button"
-              role="radio"
-              data-goal={g.id}
-              aria-checked={g.id === goal}
-              tabIndex={g.id === checked ? 0 : -1}
-              className="goal-switch__item"
-              title={g.stages.length === 3 ? "A main result of all three accounts" : `A main result of the ${g.stages.map((s) => PAPER_NAMES[s].short.toLowerCase()).join(" and the ")}`}
-              onClick={() => g.id !== goal && onGoal(g.id)}
-            >
-              {g.title}
-            </button>
-          ))}
-        </div>
+        <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" className={`goal-menu__chev${open ? " is-open" : ""}`}>
+          <path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <span ref={measure} className="goal-menu__button goal-menu__measure" aria-hidden="true">
+        <span className="goal-menu__title">{fullTitle}</span>
+        <svg viewBox="0 0 10 10" width="10" height="10" />
+      </span>
+      <div id={`${id}-menu`} role="menu" aria-label="Main results" className="goal-menu__menu" hidden={!open} onKeyDown={onMenuKey}>
+        {choices.map((g, i) => (
+          <button
+            key={g.id}
+            ref={(el) => {
+              items.current[i] = el;
+            }}
+            type="button"
+            role="menuitemradio"
+            aria-checked={g.id === goal}
+            tabIndex={-1}
+            data-goal={g.id}
+            className="goal-menu__item"
+            onClick={() => choose(g)}
+          >
+            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" className="goal-menu__tick">
+              <path d="M2 6.5 L5 9 L10 3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="goal-menu__name">{g.id === goal ? fullTitle : g.full ?? g.title}</span>
+            {g.stages.length > 0 && <span className="goal-menu__where">{statedIn(g.stages)}</span>}
+          </button>
+        ))}
       </div>
-    );
-  },
-);
+    </div>
+  );
+});
+
+/** Steps, Overview, Outline: one pill whose thumb slides to the view shown. */
+function ViewSwitch({ pressed, onView }: { pressed(v: View): boolean; onView(v: View): void }) {
+  const group = useRef<HTMLDivElement>(null);
+  const views: { id: View; label: string }[] = [
+    { id: "steps", label: "Steps" },
+    { id: "overview", label: "Overview" },
+    { id: "outline", label: "Outline" },
+  ];
+  const current = views.find((v) => pressed(v.id))?.id;
+  const [thumb, setThumb] = useState<{ x: number; w: number } | null>(null);
+  useLayoutEffect(() => {
+    const el = group.current;
+    if (!el) return;
+    const place = () => {
+      const b = el.querySelector<HTMLElement>('[aria-pressed="true"]');
+      setThumb(b ? { x: b.offsetLeft, w: b.offsetWidth } : null);
+    };
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [current]);
+  return (
+    <div className="map-views" role="group" aria-label="View" ref={group}>
+      {thumb && <span className="map-views__thumb" aria-hidden="true" style={{ transform: `translateX(${thumb.x}px)`, width: thumb.w }} />}
+      {views.map((v) => (
+        <button
+          key={v.id}
+          type="button"
+          aria-pressed={pressed(v.id)}
+          title={pressed(v.id) && v.id !== "outline" ? `Frame the ${v.id === "steps" ? "steps" : "overview"} again` : undefined}
+          onClick={() => onView(v.id)}
+        >
+          {v.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 function usePopover(open: boolean, close: () => void, root: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -594,7 +746,7 @@ function AccountPicker({ lens, onLens, onSelect }: { lens?: Stage; onLens(stage:
   usePopover(open, close, root);
   return (
     <div className="acct-picker" ref={root}>
-      <span className="map-bar__label" id="acct-picker-label">
+      <span className="acct-picker__label" id="acct-picker-label">
         Records used by
       </span>
       <button
@@ -624,40 +776,6 @@ function AccountPicker({ lens, onLens, onSelect }: { lens?: Stage; onLens(stage:
             }}
           />
         </div>
-      )}
-    </div>
-  );
-}
-
-/** Secondary tools behind one button. */
-function MoreMenu({ items, disabled }: { items: { label: string; run(): void }[]; disabled?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
-  const close = useCallback(() => setOpen(false), []);
-  usePopover(open, close, root);
-  return (
-    <div className="map-more" ref={root}>
-      <button type="button" className="map-tool" aria-expanded={open} aria-controls="map-more-list" onClick={() => setOpen((v) => !v)} disabled={disabled}>
-        More
-      </button>
-      {open && (
-        <ul id="map-more-list" className="map-more__list">
-          {items.map((item) => (
-            <li key={item.label}>
-              <button
-                type="button"
-                className="map-more__item"
-                onClick={() => {
-                  setOpen(false);
-                  item.run();
-                  root.current?.querySelector<HTMLElement>("button")?.focus();
-                }}
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
       )}
     </div>
   );

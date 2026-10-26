@@ -31,11 +31,9 @@ export function traceTiming(
   return out;
 }
 
-/** The first sentence of a recorded explanation, for a tooltip. */
-export function firstSentence(text: string, max = 220): string {
+/** The first sentence of a recorded explanation, for a tooltip: whole, however long. */
+export function firstSentence(text: string): string {
   const t = text.trim().replace(/\s+/g, " ");
   const m = t.match(/^(.+?[.!?])(\s+(?=[A-Z(])|$)/);
-  let s = m ? m[1] : t;
-  if (s.length > max) s = s.slice(0, max - 1).replace(/\s+\S*$/, "") + "…";
-  return s;
+  return m ? m[1] : t;
 }

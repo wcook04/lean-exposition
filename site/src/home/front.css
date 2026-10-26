@@ -1,0 +1,501 @@
+/* The front page: a quiet editorial page whose picture is the theorem itself
+   and the real argument map. One container, on the wordmark's left edge; flat
+   ground; amber is not used here (the primary button is ink). */
+
+html[data-view="home"] {
+  scroll-padding-top: calc(var(--topbar-h) + 16px);
+}
+
+.front {
+  --front-max: 1360px;
+  width: 100%;
+  max-width: calc(var(--front-max) + 2 * var(--space-5));
+  padding: 0 var(--space-5);
+}
+
+/* ---- Hero: the title, one sentence, two actions; the statement beside them. ---- */
+
+.front__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: 56px;
+  padding: 56px 0 64px;
+}
+
+.front__title {
+  max-width: 13em;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 1.1rem + 2.4vw, 2.875rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.front .front__lede {
+  max-width: 31em;
+  margin: 20px 0 0;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.front__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 32px 0 0;
+}
+
+.front__primary,
+.front__secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 20px;
+  border-radius: var(--radius-m);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
+}
+
+.front__primary {
+  background: var(--ink);
+  color: var(--ground);
+  border: 1px solid var(--ink);
+}
+
+.front__primary:hover {
+  background: color-mix(in oklab, var(--ink) 86%, var(--ground));
+}
+
+.front__secondary {
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.front__secondary:hover {
+  border-color: var(--ink-3);
+  background: color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+/* The statement on a quiet plate, set larger than on the map. */
+.front__plate {
+  margin: 0;
+  padding: 28px 32px 24px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+}
+
+.front__plate .plate__statement {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.front__plate .plate__source {
+  margin-top: 14px;
+}
+
+/* ---- Bands ---- */
+
+.front__band {
+  padding: 56px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.front__band h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.front__text {
+  max-width: 36em;
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.front__subhead {
+  margin: 40px 0 8px;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.front__more {
+  margin: 16px 0 0;
+}
+
+.front a:not(.front__primary):not(.front__secondary):not(.front__figure) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.front a:not(.front__primary):not(.front__secondary):not(.front__figure):hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- The three accounts: rows in one grammar, not cards. ---- */
+
+.accounts {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 12px 56px;
+  padding: 22px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.account__name {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.account__job {
+  max-width: 36em;
+  margin: 0;
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.account__facts {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.account__meta {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.account__strip {
+  padding: 4px 0;
+}
+
+.account__bars {
+  display: block;
+  width: 100%;
+  height: 12px;
+}
+
+.account__count {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+/* ---- The argument map: the real drawing at the mark scale, and its key. ----
+   Wide: words, key and results in the left column; the drawing beside them on the
+   map's own dotted ground. Narrow: heading, drawing, key, results, in DOM order. */
+
+.mapband {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas:
+    "head fig"
+    "key fig"
+    "results fig";
+  grid-template-rows: auto auto 1fr;
+  column-gap: 56px;
+  align-items: start;
+}
+
+.mapband__head {
+  grid-area: head;
+}
+
+.mapband .front__key {
+  grid-area: key;
+  margin-top: 28px;
+}
+
+.mapband__results {
+  grid-area: results;
+}
+
+.front__figure {
+  grid-area: fig;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  min-width: 0;
+  padding: 36px 24px 14px;
+  background-color: var(--ground);
+  background-image: radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  text-decoration: none;
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+
+.front__figure:hover {
+  border-color: var(--rule-strong);
+}
+
+/* The drawing is sized by its height; a narrow window narrows it, keeping its proportions. */
+.argfig {
+  display: block;
+  height: min(600px, 72vh);
+  width: auto;
+  max-width: 100%;
+}
+
+/* What the drawing is, and that the whole panel opens it in the map. */
+.front__figcap {
+  justify-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.front__figopen {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.front__figure:hover .front__figopen {
+  text-decoration-color: currentColor;
+}
+
+.argfig__tile rect {
+  fill: color-mix(in oklab, var(--cat, var(--src-0)) var(--mark-mix), var(--ground));
+  stroke: color-mix(in oklab, var(--cat, var(--src-0)) 85%, var(--ground));
+  stroke-width: calc(1px / var(--k));
+}
+
+.argfig__tile--assumption rect {
+  fill: none;
+  stroke-dasharray: calc(4px / var(--k)) calc(3px / var(--k));
+  stroke-width: calc(1.5px / var(--k));
+}
+
+.argfig__tile--root rect:first-child {
+  stroke: var(--ink);
+  stroke-width: calc(2px / var(--k));
+}
+
+.argfig__tile rect.argfig__band {
+  fill: color-mix(in oklab, var(--cat, var(--src-0)) 35%, var(--ground));
+  stroke: none;
+}
+
+.front__key {
+  display: grid;
+  gap: 16px;
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+.front__sources {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+}
+
+.front__sources li {
+  align-items: flex-start;
+}
+
+.front__sources--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 18px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.front__sources .map-key__swatch {
+  margin-top: 2px;
+}
+
+.front__lines {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 14px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.front__lines li {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.front__lines .map-key__sample {
+  width: 36px;
+  overflow: visible;
+}
+
+.results {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.results li {
+  display: grid;
+  gap: 2px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.results li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.results a {
+  justify-self: start;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+.results__where {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+/* ---- Checks and footer ---- */
+
+.front__counts {
+  max-width: 40em;
+  margin: 20px 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* In this sentence every outcome has the same weight, so "passed" is not read as the
+   headline; only a recorded failure keeps its colour (DESIGN.md, one channel per meaning). */
+.front__counts .outcome {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.front__counts .outcome--failed {
+  color: var(--fail);
+}
+
+.results__lead {
+  max-width: 36em;
+  margin: 0 0 12px;
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.front__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+}
+
+.front .front__foot a {
+  color: var(--ink-2);
+}
+
+/* ---- Narrower windows: stack the hero and each row in reading order. ---- */
+
+@media (max-width: 68.75em) {
+  .front__hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding: 40px 0 48px;
+  }
+  .front__plate {
+    max-width: 44rem;
+  }
+  .mapband {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "head" "fig" "key" "results";
+    grid-template-rows: none;
+  }
+  .front__figure {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 50em) {
+  .account {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .account__facts {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 43.75em) {
+  .front {
+    padding: 0 var(--space-4);
+  }
+  .front__hero {
+    padding: 28px 0 40px;
+  }
+  .front .front__lede {
+    font-size: 1.0625rem;
+  }
+  .front__plate {
+    padding: 20px 18px 18px;
+  }
+  .front__plate .plate__statement {
+    font-size: 1.125rem;
+  }
+  .front__band {
+    padding: 40px 0;
+  }
+  .front__band h2 {
+    font-size: 1.5rem;
+  }
+  .front__figure {
+    padding: 12px;
+  }
+}

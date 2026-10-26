@@ -79,8 +79,10 @@ changes representation with the screen scale `k`:
 | `0.5 ≤ k < 0.8` | **Compact** | Title only, at a constant 13px on screen, source square |
 | `k < 0.5` | **Mark** | A tile in its source colour, no text |
 
-In compact and mark form, the goal, the selected record and the hovered record
-carry labels drawn at screen size, so the reader always knows where they are.
+In compact form each tile shows its title, centred, in as many lines as the
+tile's height on screen holds. In mark form the goal, the selected record and
+the hovered record carry labels drawn at screen size, so the reader always
+knows where they are.
 **Steps** is the reading mode: it opens at `k = 1` and keeps the opened record
 in view. **Overview** fits the whole goal and uses marks. Opening a mark returns
 to Steps around it. When Steps cannot fit every input of the opened record,
@@ -145,6 +147,67 @@ Records that have inputs of their own are never copied.
 - Selected: a 2px amber outline outside the border. The title does not move.
 - Records outside the current lit route recede: their borders and fills fade
   toward the ground; their text keeps its contrast.
+- **Text is cut short only when it cannot fit.** A compact tile first sets its title smaller, down
+  to 11px on screen (a Lean name to 10px, breaking only after its dots and
+  underscores, or in a tile also between the words of a camel-case name), before
+  it shortens it. A box that has room shows the
+  whole text; a box that grows with its content never shortens it. An ellipsis
+  appears only when the text needs more room than the box can give at that
+  moment, and the full text is then one hover or focus away. Cards, tags and
+  source names grow with their text; a compact tile shows as many lines as its
+  height on screen holds.
+- **Resting the pointer on a card draws its whole lineage.** After about 300ms
+  on a card (not while dragging and not while the map is moving), every record
+  below it, down to the records with no recorded inputs, is drawn: records
+  already on the map keep their places and the lines among them light in their
+  type colours; records not yet drawn are placed where opening their branches
+  would put them, at half strength, without a shadow, and cannot take keyboard
+  focus. The card under the pointer stays where it is on screen. The lineage
+  stays drawn while the pointer is on that card or on any card of the lineage,
+  and folds back about 200ms after it leaves them. Clicking the card, or a card
+  drawn at half strength, keeps the lineage open and selects the clicked record.
+  Keyboard focus and touch do not draw a lineage. If the pointer is still resting
+  at 900ms and part of the lineage lies outside the canvas, the camera zooms out
+  about the pointer until the lineage fits (no lower than k = 0.5) and returns
+  when the lineage folds.
+
+### The map header
+
+- **Title block.** "Argument for" in small sans over the main result's full title
+  in serif, which opens the menu of main results, each with the accounts that
+  state it. Below 1100px it shows the short name ("Full support").
+- **On the right:** the view switch (Steps, Overview, Outline; pressing the
+  current view frames it again), "Records used by" with its account menu, and
+  Key. No control repeats a view: framing the whole argument is the Overview view.
+- **Key row.** In the flow under the header, so the map yields the room: the
+  source colours by name, each line type, the assumption tag, the band of a record
+  drawn under each use, and "How the map is drawn" (About). It wraps onto more
+  lines and never overlaps or cuts. Shown by default except on phones and windows
+  under 760px tall, where it would push the first row of cards off the canvas; a
+  reader's choice to show or hide it is remembered.
+- **On the canvas.** "Show all branches" and "Collapse branches" sit bottom right
+  in the grammar of the canvas notes (surface, hairline, short shadow). A button
+  that would change nothing is disabled and says why. The room they take is part
+  of the canvas insets, so framing never puts a card under them.
+- The header never overlaps itself or scrolls sideways, from 320px to 2560px and
+  at 125% text: parts compress first, then wrap onto a second row.
+
+## Front page
+
+"/" is for someone arriving for the first time. The map is at "/map"; "/" with map
+parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
+
+- **First screen.** The edition title, one sentence saying what the site holds, the
+  one filled button ("Read the exposition") and "Open the argument map"; beside them
+  the main result's statement on a plate, as the papers typeset it. The statement
+  is the page's picture.
+- **Then, in order:** the three accounts (what each is for and for whom, its
+  section count, and its strip of linked passages drawn over the paper's full
+  length); the argument map (how to read the drawing, the real argument laid out by
+  the map's engine on the canvas ground, its key, and the main results with the
+  accounts that state each); the recorded checks, counted from the edition.
+- A fact true of all three accounts is said once, not on every row. Every number
+  is computed from the edition.
 
 ## Inspector
 
@@ -173,7 +236,11 @@ to whatever opened it.
 | Hover or focus | Colour and outline only | `--t-hover` 120ms |
 | Inspector, popover, sheet | Fade and at most 8px travel; content present at once | `--t-reveal` 180ms |
 | Account or treatment switch | Crossfade of the changed text only | `--t-state` 160ms |
-| Unfold or fold | Records grow from the opened card; one synchronised move of cards, lines and camera | `--t-unfold` 360ms |
+| Unfold or fold | Staged so that two maps never show through each other: leaving records and lines fade where they are within 120ms; the records that stay and the camera move together; arriving records fade in at their final places over the last part of the move | `--t-unfold` 360ms |
+| Drawing or folding a card's lineage (pointer resting on it) | As an unfold or fold, with the card under the pointer held still on screen; added records end at half strength | `--t-unfold` 360ms |
+| Widening for a lineage (pointer still resting at 900ms, part of the lineage outside the canvas) | The camera zooms out about the pointer, only as far as the lineage needs and not below k = 0.5; it returns when the lineage folds, unless the reader moved the map | 450–700ms |
+| Pointing at a passage mark or an inspector row on the map page (after 180ms) | Opens the routes to that passage's records and frames them with the passage outline; another mark moves straight to its records; 250ms after the pointer leaves, the unfolding and camera from before come back, unless the reader moved the map or opened something | As an unfold or fold |
+| Following a passage (map beside the paper) | As an unfold or fold, with the camera on a smooth-zoom path whose time grows with its travel | 450–900ms |
 | Camera correction | Only as far as needed; never after an unrelated reflow | `--t-camera` 320ms |
 | Lighting a route | Spreads from the selected record, one rank after another, pattern kept | ≤ `--t-trace` 520ms |
 | Card ↔ compact ↔ mark | Crossfade as the scale crosses a threshold | 160ms |
