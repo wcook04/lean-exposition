@@ -44,11 +44,13 @@ Stronger prerequisites or a narrower result change the requested scope; report
 the remaining mismatch rather than treating that change as a completed teaching
 task. An author choosing the audience may make that tradeoff explicitly.
 
-Name the operations and results the reader is assumed to know, not just a
-level such as “graduate”. Separate those from what the exposition must teach.
-For each unfamiliar prerequisite used in the proof, find its first use and
-decide whether to explain it there or supply a precise accessible reference.
-Knowing a lemma does not imply knowing why this argument needs it.
+Work backward from the intended use to the operations and results it needs.
+For each, decide what this reader can already do, what a small calculation
+must teach, and what precise result they will accept as an input. Put that
+preparation before its first consequential use and check that the later passage
+can actually use it. A level such as “graduate” or a list of defined terms is
+not this prerequisite ladder. A standard operation already available to the
+reader needs no remedial example; knowing a lemma need not explain its purpose.
 
 If the argument is incomplete, either select an established part or make the
 unresolved step an explicit subject of the exposition. Do not introduce a new
@@ -105,16 +107,19 @@ research claim as though explaining it made it established.
    Once the selected result is proved, consider returning to the opening
    question before developing further machinery or consequences. Keep an
    intervening lemma when the promised payoff actually depends on it.
-   After a conclusion changes the context, explicitly reset the objects and
-   hypotheses before explaining a previously imported result. A general
-   comparison coefficient need not have the identities just proved for a
-   minimizer. The reader must know which object each later formula concerns.
+   When returning from an example, announced theorem or completed proof, check
+   the [active objects and claims](../../docs/authoring.md#check-the-active-objects-and-claims).
+   Restore only the roles or assumptions that changed; a general comparison
+   object need not have the identities just proved for an optimum.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
    For nested operations, say what is fixed, what is chosen or random, and in
-   which order the operations occur. Evaluating, squaring and averaging cannot
-   be interchanged merely because the same symbols occur in each expression.
+   which order the operations occur. If choices depend on observations,
+   distinguish the rule chosen in advance from its actions on realized data.
+   Test a changed information pattern when that dependence is consequential.
+   Evaluating, squaring and averaging cannot be interchanged merely because
+   the same symbols occur in each expression.
    Inspect hidden conventions when they affect the statement or next operation:
    the domain, topology, normalisation or identification may carry real content.
    Explain that content at its use; unfolding every implementation definition
@@ -129,6 +134,11 @@ research claim as though explaining it made it established.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
    the reader what survives, keeping the other conditions explicit. Choose a
    change that requires using the key inference, not repeating its wording.
+   For independent use, sometimes leave the method unnamed or choose a change
+   that makes the earlier conclusion unavailable. Ask which tool applies and
+   why; another case with the same answer can still serve initial practice.
+   At the promised payoff, check whether an earlier operation can be retrieved
+   without repeating its worked solution.
    If the proof route changes, retarget the task to the new inference; an old
    successful exercise may assess only the unchanged part of the argument.
    Recheck choices that depend on the changed parameter; holding them fixed

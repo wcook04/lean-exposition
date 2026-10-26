@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
-      "revision": "sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "revision": "sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "sha256": "5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -1837,7 +1837,7 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
@@ -1851,7 +1851,7 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.5, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     },
     {
@@ -1936,63 +1936,63 @@
       "source_id": "authored_long_comparisons_20261024",
       "title": "A terminal convex-chord obstruction",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_support_zero_candidate_descent",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The zero coefficient is not minimizing",
       "locator": "Long reasoning record #zero-coefficient-example",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_support_full_relative_support_curvature",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Full support by contact and local curvature",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_scalar_minimizer_coefficient_budget",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Integral and pointwise bounds for a minimizer",
       "locator": "Long reasoning record #coefficient-budget",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_support_fixed_time_spatial_coercivity_at_jumps",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Spatial coercivity at a coefficient jump",
       "locator": "Long reasoning record #fixed-time-jump-extension",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_scalar_finite_maximum_concentration",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Concentration of the finite SK maximum",
       "locator": "Long record §11.1.2, passage gibbs-comparison, Gaussian Lipschitz bound and concentration estimate",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_circuit_sampled_finite_instance_optimum",
       "source_id": "authored_long_comparisons_20261024",
       "title": "One measured configuration approaches its instance maximum",
       "locator": "Long reasoning record #sampled-finite-instance",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_scaling_contact",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Contact by admissible global scaling",
       "locator": "Long reasoning record #global-scaling-contact",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "authored_r8_unshifted_gaussian",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The unshifted scalar comparison",
       "locator": "Long record #unshifted-scalar-comparison",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6"
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     },
     {
       "id": "scalar_hessian_tail_v4",
@@ -2012,14 +2012,14 @@
       "id": "authored_r9_scalar_minimizer_total_coefficient_mass",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Terminal coefficient normalization in zero field",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "locator": "Long reasoning record #coefficient-total-mass"
     },
     {
       "id": "authored_r9_support_raw_curvature_negative_absolute_terminal",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Negative raw curvature with absolute-value terminal data",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "locator": "Long reasoning record #pointwise-curvature-obstruction"
     },
     {
@@ -2033,8 +2033,22 @@
       "id": "authored_r9_finite_formula_word",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Fixed Gaussian formula to an ordinary circuit",
-      "url": "urn:sha256:9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
       "locator": "Long §§8.1–8.6, #qaoa-construction; expert Proposition 5."
+    },
+    {
+      "id": "authored_r10_empty_support_chord",
+      "source_id": "authored_long_comparisons_20261024",
+      "title": "Empty support and a finite-chord obstruction",
+      "locator": "Long reasoning record #empty-support-chord",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+    },
+    {
+      "id": "authored_r10_finite_maximizer_uniqueness",
+      "source_id": "authored_long_comparisons_20261024",
+      "title": "Exact finite maximizers and near-ground pairs",
+      "locator": "Long reasoning record #exact-finite-maximizers",
+      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
     }
   ],
   "nodes": [
@@ -4197,15 +4211,17 @@
       "status": "unverified",
       "source_id": "authored_long_comparisons_20261024",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "statement": "For an admissible pure zero-field SK minimizer, its Stieltjes support is [0,1). Zero-candidate descent excludes empty support; contact and positive-plateau curvature exclude bounded gaps; zero-plateau curvature excludes an initial gap. At a last support point r, the terminal chord obstruction gives q(t)<t and G(r)<0, contradicting atom addition. Consequently q(t)=t and E[Phi_xx(t,X_t)^2]=1 for 0<=t<1. This alternate proof does not use the quantitative terminal defect estimate.",
+      "statement": "For an admissible pure zero-field SK minimizer, its Stieltjes support is [0,1). A finite-chord comparison using q(0)=0, q<=1 and strict zero-interval convexity excludes empty support; contact and positive-plateau curvature exclude bounded gaps; zero-plateau curvature excludes an initial gap. At a last support point r, the terminal chord obstruction gives q(t)<t and G(r)<0, contradicting atom addition. Consequently q(t)=t and E[Phi_xx(t,X_t)^2]=1 for 0<=t<1. This alternate proof does not use the quantitative terminal defect estimate.",
       "assumption_ids": [
         "scalar.paper_minimizer"
       ],
       "citation_ids": [
-        "authored_r8_support_full_relative_support_curvature"
+        "authored_r8_support_full_relative_support_curvature",
+        "authored_r10_empty_support_chord"
       ],
       "evidence_ids": [
-        "ordinary_deductions_review_20261026"
+        "ordinary_deductions_review_20261026",
+        "ordinary_r10_proof_route_review_20261026"
       ],
       "boundary": "Ordinary authored deduction checked against retained mathematical inputs; no new Lean declaration, elaborated dependency, cross-model transport, Comparator acceptance or independent proof certification is asserted."
     },
@@ -4363,6 +4379,42 @@
         "ordinary_deductions_review_20261026_r9"
       ],
       "boundary": "Ordinary source consequence for the specified Gaussian data, not arbitrary L2 functions, a finite-size circuit identity, efficient angle selection or a selected Lean endpoint. Eligibility and seed-dependence restrictions remain essential."
+    },
+    {
+      "id": "support.empty_support_chord_obstruction",
+      "kind": "claim",
+      "label": "Empty support excluded by a finite chord",
+      "status": "unverified",
+      "source_id": "authored_long_comparisons_20261024",
+      "locator": "Long reasoning record #empty-support-chord",
+      "statement": "For an admissible pure zero-field SK minimizer, empty Stieltjes support would give gamma=0. The zero-interval identity makes q strictly convex, while q(0)=0 and q<=1. For 0<t<s<1, q(t)<=t*q(s)/s<=t/s; letting s tend to one gives q(t)<=t. A second strict finite chord gives q(t)<t, hence G(0)=integral_0^1(q(t)-t)dt<0, contrary to feasible atom addition. No terminal value or derivative is assumed and no arcsine evaluation is needed.",
+      "assumption_ids": [
+        "scalar.paper_minimizer"
+      ],
+      "citation_ids": [
+        "authored_r10_empty_support_chord"
+      ],
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
+      ],
+      "boundary": "Ordinary source-assisted deduction from retained analytic inputs. This does not supply an extracted Lean declaration, formal-model transport, Comparator acceptance or independent mathematical certification."
+    },
+    {
+      "id": "scalar.finite_maximum_unique_modulo_flip",
+      "kind": "claim",
+      "label": "Finite Gaussian maximizers are unique up to reversal",
+      "status": "unverified",
+      "source_id": "authored_long_comparisons_20261024",
+      "locator": "Long reasoning record #exact-finite-maximizers",
+      "statement": "For every fixed positive integer n, the pure zero-field SK Hamiltonian with independent standard Gaussian pair couplings has almost surely exactly one maximizing pair {sigma,-sigma}. Configurations not related by global reversal differ in at least one pair product, so their energy difference is a nondegenerate Gaussian; a finite union excludes all such ties. This does not exclude nearly maximizing configurations at other overlaps in the large-n limit.",
+      "assumption_ids": [],
+      "citation_ids": [
+        "authored_r10_finite_maximizer_uniqueness"
+      ],
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
+      ],
+      "boundary": "Elementary finite-model deduction. It distinguishes exact maximizers at fixed size from near-ground pairs and supplies no rate, algorithm, formal replay or independent acceptance."
     }
   ],
   "edges": [
@@ -4399,8 +4451,8 @@
         "remaining_assumption_ids": [],
         "source_span": {
           "source_id": "authored_long_comparisons_20261024",
-          "start_line": 3447,
-          "end_line": 3506
+          "start_line": 3576,
+          "end_line": 3653
         },
         "rationale": "The long record applies ACZ Proposition 1 to the full-support minimizer and identifies its value using the attained Parisi formula. Attainment is supplied by the separately sourced scalar.minimizer_attainment node (and explained in long section 2.3); it is not an extra caller premise of the landscape consequence. This records the ordinary same-witness application only. The external landscape theorem and the covariance correction remain necessary inputs; no cross-model Lean transport, checked substitution or formal acceptance is asserted."
       }
@@ -6470,10 +6522,10 @@
     },
     {
       "from": "support.full_relative_support_curvature",
-      "to": "support.zero_candidate_descent",
+      "to": "support.empty_support_chord_obstruction",
       "kind": "supports",
       "evidence_ids": [
-        "ordinary_deductions_review_20261026"
+        "ordinary_r10_proof_route_review_20261026"
       ]
     },
     {
@@ -6698,6 +6750,38 @@
       "kind": "supports",
       "evidence_ids": [
         "ordinary_deductions_review_20261026_r9"
+      ]
+    },
+    {
+      "from": "support.empty_support_chord_obstruction",
+      "to": "support.zero_curvature",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
+      ]
+    },
+    {
+      "from": "support.empty_support_chord_obstruction",
+      "to": "support.moment_identity",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
+      ]
+    },
+    {
+      "from": "support.empty_support_chord_obstruction",
+      "to": "support.contact",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
+      ]
+    },
+    {
+      "from": "support.empty_support_chord_obstruction",
+      "to": "support.stieltjes_measure",
+      "kind": "supports",
+      "evidence_ids": [
+        "ordinary_r10_proof_route_review_20261026"
       ]
     }
   ],
@@ -10497,6 +10581,24 @@
         "circuit.finite_formula_word_approximation"
       ],
       "details": "R9 assimilation checked endpoint spatial decay, Tanaka and Skorokhod comparison, unit second moment, weighted Gronwall and monotone quadrature, the absolute-terminal counterexample, and feasible-direction chord reparametrization. Sellke v4 is distinguished from v6. Existing formal evidence is unchanged; source-assisted reasoning does not certify complete proofs or reader comprehension."
+    },
+    {
+      "id": "ordinary_r10_proof_route_review_20261026",
+      "kind": "semantic_review",
+      "status": "not_run",
+      "command": [],
+      "tool": "Source-assisted ordinary deduction; independent acceptance not run",
+      "source_ids": [
+        "authored_long_comparisons_20261024",
+        "support_tex_regularity",
+        "support_tex_variation"
+      ],
+      "subject_ids": [
+        "support.empty_support_chord_obstruction",
+        "scalar.finite_maximum_unique_modulo_flip",
+        "support.full_relative_support_curvature"
+      ],
+      "details": "R10 assimilation, 26 October 2026: checked both finite-chord comparisons, the strict integral, the empty-support implication gamma=0, and feasible atom addition. The main qualitative proof now uses these existing inputs rather than the separately retained explicit zero-candidate calculation. Original quantitative and arcsine arguments remain available. Historical receipts and formal targets are unchanged; this record does not report an independent proof acceptance or a formal replay."
     }
   ],
   "scope": "Manually curated, source-grounded intake of two public formal interfaces and a distinct broader manuscript claim. The default selection is the full-support interface. The graph has no extracted Lean dependency edges and supplies no checked proof, semantic certification, or reader acceptance.",

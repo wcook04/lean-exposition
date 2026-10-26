@@ -124,9 +124,13 @@ reading order. Keep that first response separate from the assisted reread.
    argument. Put reproducibility commands, dependency versions and run receipts
    in a verification section rather than interrupting every proof step.
    Use small calibrations to test signs, normalization and indexing across
-   representations. Separate agreement in a finite example from the theorem
-   transferring the general construction. Before passing signed quantities to
-   an expectation limit, exhibit the actual integrability, domination or
+   representations. Choose a case where plausible competing formulas differ;
+   agreement forced by symmetry or a shared limit cannot select between them.
+   For an approximation, name the actual residual and its error norm, and
+   check that it controls the later operation, including any growing sum.
+   A finite calibration does not supply the general transfer or limit theorem.
+   Before passing signed quantities to an expectation limit, exhibit the
+   actual integrability, domination or
    nonnegative-correction argument; almost-sure convergence alone is insufficient.
 8. Bind each material claim and explanatory passage to graph IDs and source
    locations in the companion mapping. Include the assumptions and citations

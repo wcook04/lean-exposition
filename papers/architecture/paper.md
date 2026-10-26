@@ -356,7 +356,9 @@ the contact argument. The transferable lesson is not that every exposition
 needs those weights. It is to let the reader perform an unfamiliar operation
 before relying on it in a proof, then use the example again when its purpose
 becomes clear. A specialist who already knows the operation may need no such
-preparation. Before retaining a lesson as general guidance, the author tests
+preparation. A further question changes a hypothesis enough to change the
+answer: carrying out the same calculation does not by itself show when the
+argument applies. Before retaining a lesson as general guidance, the author tests
 it on differently shaped problems and a case where it should not apply.
 Missing mathematical support returns to research, however clear the examples
 become.

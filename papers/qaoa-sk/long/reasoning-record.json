@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "9e0f6d255eb0a116c513a0c11e94d28559f0a429ef365c3137bb4ff3b6a061d6",
-  "graph_sha256": "c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97",
+  "content_sha256": "5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+  "graph_sha256": "d50b9164c653678bad45f0f573e2946db8be23255a316a205d4fb829be4148ad",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -62,6 +62,7 @@
     "scalar.euler_normalization",
     "scalar.finite_gibbs_comparison",
     "scalar.finite_maximum_concentration",
+    "scalar.finite_maximum_unique_modulo_flip",
     "scalar.fixed_strip_error_budget",
     "scalar.formal_contact_input",
     "scalar.formal_finite_gaussian_clause",
@@ -99,6 +100,7 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
     "support.fixed_time_spatial_coercivity_at_jumps",
@@ -133,6 +135,8 @@
     "acz2020_near_ground_pairs",
     "authored_bounded_angle_depth_comparison",
     "authored_gibbs_comparison",
+    "authored_r10_empty_support_chord",
+    "authored_r10_finite_maximizer_uniqueness",
     "authored_r8_circuit_sampled_finite_instance_optimum",
     "authored_r8_scalar_finite_maximum_concentration",
     "authored_r8_scalar_minimizer_coefficient_budget",
@@ -341,6 +345,7 @@
     "scalar.euler_normalization",
     "scalar.finite_gibbs_comparison",
     "scalar.finite_maximum_concentration",
+    "scalar.finite_maximum_unique_modulo_flip",
     "scalar.fixed_strip_error_budget",
     "scalar.formal_contact_input",
     "scalar.formal_finite_gaussian_clause",
@@ -380,6 +385,7 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.endpoint_chord_area",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
@@ -660,7 +666,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "57a256c212893045d619877857fb85c65624f54a772d22b4be708157f93edaf3",
+      "text_sha256": "d58097f07cd1e6f39c8187c914210966003332c8375cb99df638e58fac7f6fd5",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -859,7 +865,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "aa964dde6a90ed9fb518967e74c0dbc2b79821f95c34aefa501f8709f40cd0da",
+      "text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
       "claim_ids": [
         "support.backward_shapes",
         "support.forward_shapes",
@@ -984,7 +990,7 @@
     },
     {
       "anchor": "gaps",
-      "text_sha256": "d25ca858d5a9dd0ff5d5a8f8e369894117e5271755a27191e1904485f38bf89e",
+      "text_sha256": "0af2551c658a8151f3a370f39da0ff3804d4295d853f4054050f0f486f95cb77",
       "claim_ids": [
         "support.no_bounded_gap",
         "support.no_initial_gap",
@@ -992,9 +998,11 @@
         "support.full_relative_support",
         "support.moment_saturation",
         "support.terminal_chord_barrier",
-        "support.full_relative_support_curvature"
+        "support.full_relative_support_curvature",
+        "support.empty_support_chord_obstruction"
       ],
       "citation_ids": [
+        "authored_r10_empty_support_chord",
         "authored_r8_scaling_contact",
         "authored_r8_support_full_relative_support_curvature",
         "authored_r8_support_terminal_chord_barrier",
@@ -1639,7 +1647,7 @@
     },
     {
       "anchor": "qaoa-assembly",
-      "text_sha256": "621137b409164cb2103c6bf0b079849fb03a48229e6881fad9a34400d473002f",
+      "text_sha256": "f818a5acea07e6c37f638659c49ea5de84afafd1ef144b47e4b0ebdd1f32ff69",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.ordinary_word_primary",
@@ -1867,12 +1875,14 @@
     },
     {
       "anchor": "overlap-pairs",
-      "text_sha256": "1f3ba8d3c7a2797947721eb559af4a73ac86a3705e8c0c7439fa0d532821a4ec",
+      "text_sha256": "ebb83cd5ca2c8d68675b73f8ba68da559aa0742853ebd93dd7c4c56204f9af8f",
       "claim_ids": [
-        "support.near_ground_pairs"
+        "support.near_ground_pairs",
+        "scalar.finite_maximum_unique_modulo_flip"
       ],
       "citation_ids": [
         "acz2020_near_ground_pairs",
+        "authored_r10_finite_maximizer_uniqueness",
         "authored_r8_scaling_contact",
         "full_support_chord_derivative",
         "full_support_origin_coercivity",
@@ -2620,7 +2630,7 @@
       ],
       "evidence_class": "context",
       "rationale": "Support interface and ordinary convexity bridge from sampled chord slopes; preserves half-line coercivity rather than applying an inapplicable generic flux lemma.",
-      "text_sha256": "6da61235c01d9774cced00b44db0bdb9014e36521742f6d9a8ffc7dcb9e3f307"
+      "text_sha256": "b7e7c759a67bb95109204410d8bb0b6e067c85a31f0dd77ae301bce307d1c19e"
     },
     {
       "anchor": "formal-scalar",
@@ -2663,7 +2673,7 @@
       ],
       "evidence_class": "context",
       "rationale": "Directly maps the first two assembled scalar declarations and their actual caller premises: the same minimizer and associated diffusion, with fixed 0<T<1 for the Gaussian clause. The implementation supplies strip bounds and the unit curvature moment internally. The generic fixed-strip helper and its local premises are not direct roots of this endpoint passage.",
-      "text_sha256": "80fef2054a089e2c1fd37b4e18ada33b1f8efd81154ddd9a4df5d30b30ad2e41"
+      "text_sha256": "91b0d805016f6c66536c5859aca78f9461392e8a7d650f67937a8115256e6090"
     },
     {
       "anchor": "formal-parisi-clause",
@@ -2840,7 +2850,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "0978be84adcef4519b60378de7db41e9db07f342204e7eb0f19e63b6fe1a883f",
+      "text_sha256": "f53e415355e7edbebe877a2342716cdd97091aa738548b5493a37ea01a9d0ca1",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -2979,7 +2989,8 @@
     "25 October 2026 source-assisted revision: reorganized the continuous support-to-circuit proof before its consequences, independent scalar comparison and formal correspondence; stated the common fixed-time coercivity estimate, defined the seed initialization and exclusion formulas locally, corrected fixed-word finite-size quantifiers, and separated the scalar endpoint caller premises from internally supplied helper conditions. Heat and finite-net consequences are ordinary deductions with their exact hypotheses. Existing formal checking outcomes are unchanged.",
     "25 October 2026 R7 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 299c7d99e5e1ad817154f628664939111eee761da0f0dacc103e08ddbf7a7c03). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R8 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 8b8d55a5ee58d0c309f8ae0b0e97a95be27dd286b199a6d1bf0d61f487c4dc9b). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 R9 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 017ac5f8582a8434375d609c3081580d33ae3cc2ec1870ad09f769d9ac95eab7). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "26 October 2026 R9 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 017ac5f8582a8434375d609c3081580d33ae3cc2ec1870ad09f769d9ac95eab7). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 R10 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 e779c0a6f282d578aeb254a1aca53517e44065244459972a3d930a9d94197176). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
   ],
   "reading_links": [
     {
@@ -2987,25 +2998,25 @@
       "from_text_sha256": "321c7f6471edb2c0650cf7e690f668d25a7340ca70207d3194e944e845669936",
       "to_stage": "expository",
       "to_anchor": "contact-and-gap",
-      "to_text_sha256": "fd19588bcaefcd1ac5817099cb6313a8463a02dd828664e1a54b287a87be525a",
+      "to_text_sha256": "9d210a8aa1803cc21a62795da03ba1d1d62a9af1dd61d10a4d00a6761b093c54",
       "kind": "expands",
       "rationale": "Expands the mass-variation and endpoint-contact part of the exposition; the target also uses a separate curvature input."
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "aa964dde6a90ed9fb518967e74c0dbc2b79821f95c34aefa501f8709f40cd0da",
+      "from_text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "c42384b2168fe8db6688048b71b9990aada98c0576e5bbaed4763745b37ac244",
+      "to_text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "aa964dde6a90ed9fb518967e74c0dbc2b79821f95c34aefa501f8709f40cd0da",
+      "from_text_sha256": "e034fb67475dada0b73f17aeb74968708c854ce104991ac61f084b16259e380b",
       "to_stage": "expository",
       "to_anchor": "curvature-transfer",
-      "to_text_sha256": "e6321f8f70336ebec521aa122753ce281527c05f737938155b8eef0aa0c8b2f3",
+      "to_text_sha256": "10bbf8df4377210eb04b99421edab30dbd91c35af15e8882aa1bdcee5f7ac3ce",
       "kind": "expands",
       "rationale": "Supplies the finite-step analytic and algebraic steps behind the integrated bound; the approximation argument is developed in the separate fixed-time-coercivity passage."
     },
@@ -3014,7 +3025,7 @@
       "from_text_sha256": "173dd66553afd9cad2eed29daddcf9499ea0b87a4b972ac93c103569042dd7a5",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "7841eed04f6229f96059e3cab13df055039eab9b21d32fbbe568823fc554dbd2",
+      "to_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
       "kind": "expands",
       "rationale": "Expands the smoothness and no-origin-atom part of the short density account; strict positivity is developed in a separate long passage."
     },
@@ -3023,7 +3034,7 @@
       "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
       "to_stage": "short",
       "to_anchor": "density-consequence",
-      "to_text_sha256": "7841eed04f6229f96059e3cab13df055039eab9b21d32fbbe568823fc554dbd2",
+      "to_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
       "kind": "expands",
       "rationale": "Expands the fixed-time transfer used in the short density proof: positive finite-step approximations preserve the coefficient at the selected continuity point, and compact-strip control passes the spatial moments to the limit. Smoothness and the final minimizing application are separate steps."
     },
@@ -3041,16 +3052,16 @@
       "from_text_sha256": "f395b6cc25d95af1ee94a132e6071b02a0d7cf321eaa6e35de2aee5f74c61834",
       "to_stage": "short",
       "to_anchor": "scalar-value",
-      "to_text_sha256": "8d40f7c84ecb188980f5883d6883ac435a31b89662b34d493381662f4216b0f7",
+      "to_text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
       "kind": "expands",
       "rationale": "Develops the terminal value identity described in the short paper; finite Gaussian approximation remains a separate part of the construction."
     },
     {
       "from_anchor": "qaoa-assembly",
-      "from_text_sha256": "621137b409164cb2103c6bf0b079849fb03a48229e6881fad9a34400d473002f",
+      "from_text_sha256": "f818a5acea07e6c37f638659c49ea5de84afafd1ef144b47e4b0ebdd1f32ff69",
       "to_stage": "short",
       "to_anchor": "qaoa-boundary",
-      "to_text_sha256": "3ec2b303400d4cd5534e3bc1e62ef87ff7ed44c9bd9830c7fd61d30d539f324c",
+      "to_text_sha256": "e31ecfdc738b890fba6ec67bf14b7964d1c0c9d4e38d798ded6cd008d616d3e7",
       "kind": "expands",
       "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
     },
@@ -3059,7 +3070,7 @@
       "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "c42384b2168fe8db6688048b71b9990aada98c0576e5bbaed4763745b37ac244",
+      "to_text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },
@@ -3068,7 +3079,7 @@
       "from_text_sha256": "8586467bc7ae0bc26eb9c6e2822abc1b7e31bfb6171b760040968addf3e9ebcd",
       "to_stage": "expository",
       "to_anchor": "curvature-transfer",
-      "to_text_sha256": "e6321f8f70336ebec521aa122753ce281527c05f737938155b8eef0aa0c8b2f3",
+      "to_text_sha256": "10bbf8df4377210eb04b99421edab30dbd91c35af15e8882aa1bdcee5f7ac3ce",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     }
