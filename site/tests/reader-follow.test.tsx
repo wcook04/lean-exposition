@@ -129,6 +129,7 @@ vi.mock("../src/app/data", () => ({ useEdition: () => ({ graph }) }));
 vi.mock("../src/app/router", () => ({ navigate: vi.fn(), routeHref: () => "#" }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },
@@ -241,8 +242,8 @@ describe("compact line limits", async () => {
     expect(compactLines(124, 0.79, "card")).toBe(5);
     expect(compactLines(124, 0.52, "card")).toBe(2);
     expect(compactLines(40, 0.5, "card")).toBe(1);
-    // The plate keeps a line for "MAIN RESULT".
-    expect(compactLines(300, 0.65, "root")).toBe(7);
+    // The plate keeps a line for "MAIN RESULT"; its title starts at 24px.
+    expect(compactLines(300, 0.65, "root")).toBe(5);
     expect(compactLines(200, 1, "card")).toBe(compactLines(200, 1, "lean") - 1);
   });
 });
@@ -335,7 +336,7 @@ describe("shrink to fit", async () => {
     expect(fitTitle(words(3), 176, 124, 0.7, "card")).toEqual({ size: 13, lines: expect.any(Number), fits: true });
   });
 
-  it("chooses the largest smaller size at which the whole title fits, else clamps at 11px", () => {
+  it("chooses the largest smaller size at which the whole title fits, else clamps at 10px", () => {
     // A tile 176 x 124 at k = 0.55: 80.8px wide and 49.2px tall on screen less padding (two lines at 13px).
     const t = words(14, 130);
     const fit = fitTitle(t, 176, 124, 0.55, "card");
@@ -348,8 +349,8 @@ describe("shrink to fit", async () => {
         const lines = Math.max(1, Math.floor((124 * 0.55 - 19 + 0.5) / (s * 1.22)));
         expect(wrapLines(t, s, width)).toBeGreaterThan(lines);
       }
-    } else expect(fit.size).toBe(11);
-    expect(fitTitle(words(60, 200), 176, 124, 0.52, "card")).toMatchObject({ size: 11, fits: false });
+    } else expect(fit.size).toBe(10);
+    expect(fitTitle(words(60, 200), 176, 124, 0.52, "card")).toMatchObject({ size: 10, fits: false });
   });
 
   it("breaks a Lean name only between its pieces, down to 10px", () => {
@@ -360,38 +361,83 @@ describe("shrink to fit", async () => {
   });
 });
 
-describe("the peek's zoom", async () => {
-  const { ArgumentTree, peekZoomView } = await import("../src/map/ArgumentTree");
-  const { lineageOf } = await import("../src/map/treeModel");
+describe("text on marks and the plate", async () => {
+  const { fitMark, fitPlate, fitTitle, keptPieces, shortTitle, titlePieces, wrapLines, STATEMENT_W } = await import("../src/map/canvas/representation");
+  const words = (n: number, w = 40) => ({ pieces: Array.from({ length: n }, (_, i) => ({ w, gap: i ? 25 : 0 })) });
 
-  it("zooms about the point, only as far as the lineage needs and never below 0.5", () => {
-    const boxes = new Map([
-      ["a", { x: 0, y: 0, w: 100, h: 100 }],
-      ["b", { x: 0, y: 900, w: 100, h: 100 }],
-    ]);
-    const l = { boxes } as unknown as Parameters<typeof peekZoomView>[0];
-    const vp = { width: 800, height: 600, insets: { top: 20, right: 20, bottom: 20, left: 20 } };
-    const v = { x: 100, y: 50, k: 1 };
-    const pt = { x: 150, y: 100 };
-    const to = peekZoomView(l, () => true, v, vp, pt)!;
-    // The point keeps its world position.
-    expect((pt.x - to.x) / to.k).toBeCloseTo((pt.x - v.x) / v.k);
-    expect((pt.y - to.y) / to.k).toBeCloseTo((pt.y - v.y) / v.k);
-    // The lowest card's bottom lands on the canvas's bottom edge.
-    expect(1000 * to.k + to.y).toBeCloseTo(580, 0);
-    expect(to.k).toBeGreaterThanOrEqual(0.5);
-    expect(peekZoomView(l, (id) => id === "a", v, vp, pt)).toBeNull();
-    const far = new Map([["a", { x: 0, y: 0, w: 100, h: 100 }], ["b", { x: 0, y: 9000, w: 100, h: 100 }]]);
-    expect(peekZoomView({ boxes: far } as unknown as Parameters<typeof peekZoomView>[0], () => true, v, vp, pt)!.k).toBe(0.5);
+  it("shows a mark's whole title when it fits at 10px or more on screen", () => {
+    // A 176 x 213 card at k = 0.4 is a 70 x 85 mark on screen.
+    expect(fitMark(words(3), 176, 213, 0.4, "card")).toMatchObject({ size: 13, fits: true, show: true });
   });
 
-  it("keeps the hovered card still while zoomed out, and returns the camera when the peek ends", async () => {
+  it("cuts a long title at 10px when two lines fit, every word fits across and half the words stay", () => {
+    const t = words(14, 130);
+    const fit = fitMark(t, 176, 124, 0.45, "card");
+    expect(fit).toMatchObject({ size: 10, fits: false, show: true });
+    expect(fit.lines).toBeGreaterThanOrEqual(2);
+    expect(wrapLines(t, 10, 176 * 0.45 - 10)).toBeGreaterThan(fit.lines);
+    expect(fit.kept! * 2).toBeGreaterThanOrEqual(14);
+    // Four words of nine are not enough to name the record: a plain mark instead.
+    expect(fitMark(words(9, 280), 176, 90, 0.4, "card")).toMatchObject({ kept: 4, show: false });
+  });
+
+  it("cuts after a whole word, with room for the ellipsis, and drops trailing punctuation", () => {
+    const t = {
+      pieces: ["Existence,", "coupling", "and", "uniqueness", "of", "the", "controlled", "diffusion"].map((text, i) => ({ text, w: text.length * 50, gap: i ? 25 : 0 })),
+      ellipsis: 100,
+    };
+    // At 10px a 60px line holds "Existence," (50px), then "coupling and" (57.5px), but "and…" would overflow.
+    const kept = keptPieces(t, 10, 60, 2);
+    expect(kept).toBe(2);
+    expect(shortTitle(t, kept)).toBe("Existence, coupling…");
+    expect(shortTitle(t, 1)).toBe("Existence…");
+    expect(shortTitle(t, 4)).toBe("Existence, coupling and uniqueness…");
+    expect(fitTitle(t, 176, 40, 0.5, "card")).toMatchObject({ fits: false, short: expect.stringMatching(/…$/) });
+  });
+
+  it("keeps hyphenated words whole in the plate's title", () => {
+    expect(titlePieces("Full support of zero-temperature SK minimizers", false, true).map((p) => p.text)).toEqual(["Full", "support", "of", "zero-temperature", "SK", "minimizers"]);
+    expect(titlePieces("zero-temperature", false).map((p) => p.text)).toEqual(["zero-", "temperature"]);
+  });
+
+  it("stays a plain mark when a word is wider than a line or no line fits", () => {
+    expect(fitMark(words(3, 900), 176, 124, 0.45, "card").show).toBe(false);
+    expect(fitMark(words(1), 176, 122, 0.15, "card").show).toBe(false);
+    expect(fitMark(words(3), 176, 122, 0.15, "card").show).toBe(false);
+  });
+
+  it("judges each mark by its own size, so the plate keeps its title after the tiles lose theirs", () => {
+    const title = words(6, 400);
+    expect(fitMark(title, 176, 213, 0.25, "card").show).toBe(false);
+    expect(fitMark(title, 800, 427, 0.25, "root")).toMatchObject({ fits: true, show: true });
+  });
+
+  it("adds the theorem's first sentence to the plate when it is wide and tall enough", () => {
+    const title = words(6, 400);
+    // Two lines at 24px, or one line at 19.5px, within a fifth of it: the plate takes one line.
+    expect(fitPlate(title, 800, 427, 0.65, 91)).toMatchObject({ size: 19.5, lines: 1, fits: true, statement: true });
+    // The 560px measure holds the six words at 21px (25.25 x 21 = 530px).
+    expect(fitPlate(title, 800, 427, 0.85, 91)).toMatchObject({ size: 21, lines: 1, statement: true });
+    // Unmeasured, too narrow for STATEMENT_W, or too short: the title alone.
+    expect(fitPlate(title, 800, 427, 0.65, 0).statement).toBe(false);
+    expect(800 * 0.44 - 18).toBeLessThan(STATEMENT_W);
+    expect(fitPlate(title, 800, 427, 0.44, 91).statement).toBe(false);
+    expect(fitPlate(title, 800, 200, 0.6, 91)).toMatchObject({ statement: false, fits: true });
+  });
+});
+
+describe("opening a card", async () => {
+  const { ArgumentTree } = await import("../src/map/ArgumentTree");
+  const { lineageOf } = await import("../src/map/treeModel");
+  const W = 1400;
+  const H = 700;
+  const stub = () => {
     vi.stubGlobal(
       "ResizeObserver",
       class {
         constructor(private cb: (entries: unknown[]) => void) {}
         observe(el: HTMLElement) {
-          if (el.classList.contains("tree")) this.cb([{ contentRect: { width: 1400, height: 520 }, target: el }]);
+          if (el.classList.contains("tree")) this.cb([{ contentRect: { width: W, height: H }, target: el }]);
         }
         disconnect() {}
       },
@@ -399,33 +445,57 @@ describe("the peek's zoom", async () => {
     vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }));
     const height = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetHeight");
     Object.defineProperty(HTMLElement.prototype, "offsetHeight", { configurable: true, get() { return this.dataset?.card ? (this.dataset.card === goal ? 300 : 120) : 0; } });
+    return () => {
+      if (height) Object.defineProperty(HTMLElement.prototype, "offsetHeight", height);
+    };
+  };
+  const world = () => {
+    const [, x, y, k] = container.querySelector<HTMLElement>(".tree__world")!.style.transform.match(/translate\(([-\d.]+)px, ([-\d.]+)px\) scale\(([-\d.]+)\)/)!.map(Number);
+    return { x, y, k };
+  };
+  // The closed card with the largest lineage.
+  const biggest = () =>
+    [...container.querySelectorAll<HTMLElement>(".card:not(.card--root)")]
+      .filter((el) => el.querySelector(".card__inputs[aria-expanded='false']"))
+      .sort((a, b) => lineageOf(scoped, b.dataset.record!).size - lineageOf(scoped, a.dataset.record!).size)[0];
+  const drawn = () => new Set([...container.querySelectorAll<HTMLElement>(".card")].map((el) => el.dataset.record!));
+
+  it("zooms about the pointer when scrolled up or down, and pans when swiped sideways", async () => {
+    const restore = stub();
     try {
       act(() => root.render(<ArgumentTree graph={graph} goal={goal} insets={insets} persist={false} onSelect={() => {}} onTrace={() => {}} />));
       await act(() => new Promise((r) => setTimeout(r, 1300)));
-      const world = () => {
-        const [, x, y, k] = container.querySelector<HTMLElement>(".tree__world")!.style.transform.match(/translate\(([-\d.]+)px, ([-\d.]+)px\) scale\(([-\d.]+)\)/)!.map(Number);
-        return { x, y, k };
-      };
-      // The closed card with the largest lineage.
-      const card = [...container.querySelectorAll<HTMLElement>(".card:not(.card--root)")]
-        .filter((el) => el.querySelector(".card__inputs[aria-expanded='false']"))
-        .sort((a, b) => lineageOf(scoped, b.dataset.record!).size - lineageOf(scoped, a.dataset.record!).size)[0];
-      const centre = () => {
-        const v = world();
-        const [, x, y] = card.style.transform.match(/translate\(([-\d.]+)px, ([-\d.]+)px\)/)!.map(Number);
-        return { x: (x + parseFloat(card.style.width) / 2) * v.k + v.x, y: (y + 60) * v.k + v.y };
-      };
+      const tree = container.querySelector<HTMLElement>(".tree")!;
       const home = world();
-      const before = centre();
-      act(() => void card.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
-      // The lineage is drawn after the rest, then (reduced motion) the zoom follows at once.
-      await act(() => new Promise((r) => setTimeout(r, 400)));
-      await act(() => new Promise((r) => setTimeout(r, 200)));
+      // Two fingers on a trackpad: small, fractional steps.
+      act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaY: 6.5, deltaX: 0.5, clientX: 700, clientY: 350, bubbles: true, cancelable: true })));
       const zoomed = world();
       expect(zoomed.k).toBeLessThan(home.k);
-      expect(zoomed.k).toBeGreaterThanOrEqual(0.5);
-      expect(Math.abs(centre().x - before.x)).toBeLessThan(1);
-      expect(Math.abs(centre().y - before.y)).toBeLessThan(1);
+      expect((700 - zoomed.x) / zoomed.k).toBeCloseTo((700 - home.x) / home.k, 3);
+      expect((350 - zoomed.y) / zoomed.k).toBeCloseTo((350 - home.y) / home.k, 3);
+      act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaX: 40, deltaY: 3, bubbles: true, cancelable: true })));
+      const panned = world();
+      expect(panned.k).toBeCloseTo(zoomed.k, 6);
+      expect(panned.x).toBeCloseTo(zoomed.x - 40, 3);
+      expect(panned.y).toBeCloseTo(zoomed.y, 3);
+    } finally {
+      restore();
+    }
+  });
+
+  it("draws the lineage on hover without moving the camera, and leaves the camera where it was", async () => {
+    const restore = stub();
+    try {
+      act(() => root.render(<ArgumentTree graph={graph} goal={goal} insets={insets} persist={false} onSelect={() => {}} onTrace={() => {}} />));
+      await act(() => new Promise((r) => setTimeout(r, 1300)));
+      const card = biggest();
+      const home = world();
+      act(() => void card.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+      await act(() => new Promise((r) => setTimeout(r, 400)));
+      await act(() => new Promise((r) => setTimeout(r, 900)));
+      expect(container.querySelectorAll(".card.is-peeked").length).toBeGreaterThan(0);
+      // No zoom, however long the pointer rests.
+      expect(world().k).toBeCloseTo(home.k, 4);
       act(() => void card.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
       await act(() => new Promise((r) => setTimeout(r, 300)));
       const back = world();
@@ -434,7 +504,51 @@ describe("the peek's zoom", async () => {
       expect(back.x).toBeCloseTo(home.x, 1);
       expect(back.y).toBeCloseTo(home.y, 1);
     } finally {
-      if (height) Object.defineProperty(HTMLElement.prototype, "offsetHeight", height);
+      restore();
+    }
+  });
+
+  it("opens a clicked card's whole lineage and frames it, and a click on the empty map puts the map back", async () => {
+    const restore = stub();
+    try {
+      const selected: (string | null)[] = [];
+      act(() => root.render(<ArgumentTree graph={graph} goal={goal} insets={insets} persist={false} onSelect={(id) => selected.push(id)} onTrace={() => {}} />));
+      await act(() => new Promise((r) => setTimeout(r, 1300)));
+      const card = biggest();
+      const id = card.dataset.record!;
+      const home = world();
+      const before = drawn();
+      act(() => card.querySelector<HTMLElement>(".card__open")!.click());
+      await act(() => new Promise((r) => setTimeout(r, 500)));
+      expect(selected).toEqual([id]);
+      // Every record below it that is drawn as a card (assumptions are tags) is on the map, solid...
+      const lineage = [...lineageOf(scoped, id)].filter((x) => graph.nodes.get(x)!.kind !== "assumption");
+      expect(lineage.length).toBeGreaterThan(1);
+      for (const x of lineage) expect(container.querySelector(`.card[data-record="${x}"]`)).not.toBeNull();
+      expect(container.querySelectorAll(".card.is-peeked").length).toBe(0);
+      // ...and the card and all of it lie inside the canvas.
+      const v = world();
+      for (const x of [id, ...lineage]) {
+        for (const el of container.querySelectorAll<HTMLElement>(`.card[data-record="${x}"]`)) {
+          const [, cx, cy] = el.style.transform.match(/translate\(([-\d.]+)px, ([-\d.]+)px\)/)!.map(Number);
+          const left = cx * v.k + v.x;
+          const top = cy * v.k + v.y;
+          expect(left).toBeGreaterThanOrEqual(insets.left - 1);
+          expect(top).toBeGreaterThanOrEqual(insets.top - 1);
+          expect(left + parseFloat(el.style.width) * v.k).toBeLessThanOrEqual(W - insets.right + 1);
+          expect(top + 120 * v.k).toBeLessThanOrEqual(H - insets.bottom + 1);
+        }
+      }
+      // A click on the empty map: the unfolding and camera from before.
+      act(() => container.querySelector<HTMLElement>(".tree")!.click());
+      await act(() => new Promise((r) => setTimeout(r, 500)));
+      expect(drawn()).toEqual(before);
+      const back = world();
+      expect(back.k).toBeCloseTo(home.k, 4);
+      expect(back.x).toBeCloseTo(home.x, 1);
+      expect(back.y).toBeCloseTo(home.y, 1);
+    } finally {
+      restore();
     }
   });
 });

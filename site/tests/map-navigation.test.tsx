@@ -20,6 +20,7 @@ vi.mock("../src/panels/EdgePanel", () => ({ EdgePanel: () => null }));
 vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, SourceSwatches: () => null }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },

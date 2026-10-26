@@ -239,6 +239,19 @@
   text-align: left;
 }
 
+/* A breaking display breaks after a relation sign: the pieces between two relation signs
+   (.math-seg, PaperBody.tsx) stay on one line unless the run alone is wider than the line
+   (data-open). Outside a breaking display a run is not a box at all. */
+.prose .math-display .math-seg {
+  display: contents;
+}
+
+.prose .math-display:is([data-fit="wrap"], [data-fit="wrap-tagged"]) .math-seg:not([data-open]) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+
 /* Each piece keeps its full height and depth, so a fraction never overlaps the next line. */
 .prose .math-display[data-fit="wrap"] > .katex-display > .katex > .katex-html,
 .prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html {

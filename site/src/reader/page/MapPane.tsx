@@ -10,7 +10,7 @@ import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
-import { TheoremBody, mainGoal, startingGoals } from "../../map/TheoremPlate";
+import { StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
 import { firstPassageFor, type Structures } from "./model";
@@ -179,6 +179,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
           mode="steps"
           litIds={litIds}
           rootContent={<TheoremBody goal={goal} />}
+          rootExcerpt={<StatementExcerpt goal={goal} />}
           onSelect={onSelect}
           onTrace={(id) => navigate({ view: "map", goal, node: id, trace: "rests" })}
           onUserMove={onUserMove}

@@ -442,7 +442,12 @@ interface Natural {
   tag: number;
   /** The widest piece KaTeX cannot break, at full size. */
   widest: number;
+  /** The runs between relation signs (groupRelationSegments), each with its width at full size. */
+  segments: { el: HTMLElement; w: number }[];
 }
+
+/** A run between relation signs shorter than this many ems stays with the run before it ("n ≥ 1."). */
+const TAIL_EM = 2.5;
 
 /**
  * KaTeX splits a display into pieces after each relation sign, and a breaking
@@ -466,19 +471,81 @@ export function joinBracketedPieces(math: HTMLElement): void {
   }
 }
 
+/**
+ * A breaking display breaks after a relation sign, not after a plus or minus: the pieces
+ * between two relation signs are wrapped in one run (.math-seg), which stays on one line
+ * while it fits ("1 − Ke^{−n/K}" never splits at its minus), and a run shorter than
+ * `tail` pixels stays with the run before it. A run wider than the line opens and breaks
+ * at its operators after all (fitDisplay). Runs once per formula, after joinBracketedPieces;
+ * the runs change nothing while the display does not break.
+ */
+export function groupRelationRuns(math: HTMLElement, tail: number): void {
+  const html = math.querySelector<HTMLElement>(":scope > .katex-html");
+  if (!html || html.dataset.runs) return;
+  html.dataset.runs = "true";
+  const runs: HTMLElement[][] = [];
+  let run: HTMLElement[] = [];
+  const close = () => {
+    if (run.length) runs.push(run);
+    run = [];
+  };
+  for (const child of Array.from(html.children) as HTMLElement[]) {
+    // An explicit line break or the equation number ends a run.
+    if (!child.classList.contains("katex-base")) {
+      close();
+      continue;
+    }
+    run.push(child);
+    if (endsWithRelation(child)) close();
+  }
+  close();
+  const width = (r: HTMLElement[]) => r.reduce((sum, p) => sum + p.getBoundingClientRect().width, 0);
+  for (let i = runs.length - 1; i > 0; i--) {
+    const a = runs[i - 1];
+    const b = runs[i];
+    if (width(b) < tail && a[a.length - 1].nextElementSibling === b[0]) {
+      a.push(...b);
+      runs.splice(i, 1);
+    }
+  }
+  for (const r of runs) {
+    if (r.length < 2) continue;
+    const seg = document.createElement("span");
+    seg.className = "math-seg";
+    r[0].before(seg);
+    seg.append(...r);
+  }
+}
+
+function endsWithRelation(piece: HTMLElement): boolean {
+  const atoms = Array.from(piece.children).filter((c) => !c.classList.contains("mspace") && !c.classList.contains("katex-strut"));
+  return !!atoms.length && atoms[atoms.length - 1].classList.contains("mrel");
+}
+
 function measureNatural(box: HTMLElement, math: HTMLElement): Natural {
   box.style.fontSize = "";
   delete box.dataset.fit;
   delete box.dataset.align;
   joinBracketedPieces(math);
+  groupRelationRuns(math, TAIL_EM * (parseFloat(getComputedStyle(math).fontSize) || 16));
   const tag = box.querySelector<HTMLElement>(".katex-tag, .tag");
-  const widths = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base")).map((piece) => piece.getBoundingClientRect().width);
+  const pieces = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base, :scope > .katex-html > .math-seg > .katex-base"));
+  const widths = pieces.map((piece) => piece.getBoundingClientRect().width);
   const widest = Math.max(0, ...widths);
-  if (!tag) return { formula: math.scrollWidth, tag: 0, widest };
+  const segments = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .math-seg")).map((el) => ({
+    el,
+    w: Array.from(el.children).reduce((sum, p) => sum + p.getBoundingClientRect().width, 0),
+  }));
+  if (!tag) return { formula: math.scrollWidth, tag: 0, widest, segments };
   // KaTeX stretches a numbered display to the full width and pins the number to
   // the right, so the formula's own width is the sum of its pieces.
   const formula = widths.reduce((sum, w) => sum + w, 0);
-  return { formula, tag: tag.getBoundingClientRect().width, widest };
+  return { formula, tag: tag.getBoundingClientRect().width, widest, segments };
+}
+
+/** At a breaking size, each run stays whole while it fits the line; a wider one opens to break at its operators. */
+function openRuns(size: Natural, scale: number, available: number): void {
+  for (const s of size.segments) s.el.toggleAttribute("data-open", s.w * scale > available);
 }
 
 /**
@@ -524,8 +591,10 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     }
     // Too wide even beside a small number: the number takes its own line under
     // the formula, and the formula breaks between relation signs.
-    box.style.fontSize = `${breakSize(size, available)}em`;
+    const tagged = breakSize(size, available);
+    box.style.fontSize = `${tagged}em`;
     box.dataset.fit = "wrap-tagged";
+    openRuns(size, tagged, available);
     return;
   }
   if (size.formula <= available + 1) {
@@ -539,8 +608,10 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     box.dataset.fit = "scaled";
     return;
   }
-  box.style.fontSize = `${breakSize(size, available)}em`;
+  const wrap = breakSize(size, available);
+  box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
+  openRuns(size, wrap, available);
 }
 
 /** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */

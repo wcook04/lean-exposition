@@ -208,6 +208,26 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
   );
 }
 
+/**
+ * The theorem's first sentence alone, for the plate's compact form on the map. That
+ * form takes no pointer or focus, so links become plain text; ids are dropped so they
+ * never repeat the full plate's.
+ */
+export function StatementExcerpt({ goal }: { goal: string }) {
+  const statement = useStatement(goal, true);
+  const html = useMemo(() => (statement?.html ? plainExcerpt(statement.html) : ""), [statement]);
+  if (!html) return null;
+  return <div className="prose plate__statement" dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+function plainExcerpt(html: string): string {
+  const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
+  const root = doc.body.firstElementChild as HTMLElement;
+  root.querySelectorAll("a").forEach((a) => a.replaceWith(...Array.from(a.childNodes)));
+  root.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  return root.innerHTML;
+}
+
 /** The theorem itself: a run-in statement and its displays, else the opening paragraph and its displays. */
 /**
  * The statement's paragraphs: the theorem's lead paragraph, its displays, and up to

@@ -171,11 +171,15 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <p className="about__keynote">
           The map has three views. Steps opens the main result at reading size. Overview fits the whole argument on the
           screen; as you zoom out, each card first shows only its title and then becomes a small tile in its source’s colour,
-          and the main result and the selected record keep their names. Outline shows the same argument as a list you scroll.
+          which keeps its title for as long as the tile has room for it. Outline shows the same argument as a list you scroll.
+          Scrolling up or down zooms in and out around the pointer, and dragging moves the map.
         </p>
         <p className="about__keynote">
-          Selecting a card opens its record in a panel. The card’s “Inputs” button, or the Space key, draws the records it
-          uses, and the arrow keys move between cards. Pointing at a line shows a short description of that step, and
+          Clicking a card opens its record in a panel, opens every record below it, and moves the map so that the card and
+          all of those records are in view. Clicking an empty part of the map closes the panel and puts the map back as it
+          was. Resting the pointer on a card draws the records below it at half strength until the pointer leaves. The
+          card’s “Inputs” button, or the Space key, draws only the records it uses directly, and the arrow keys move between
+          cards. Pointing at a line shows a short description of that step, and
           selecting the line opens the step. “Show all branches” and “Collapse branches”, at the bottom right of the map, open
           or close every branch at once.
         </p>
