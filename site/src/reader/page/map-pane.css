@@ -1,0 +1,267 @@
+/* The argument map beside the paper (MapPane.tsx). From 1480px the reader
+   stops centring: outline at a 32px gutter, the paper at its measure, a 48px
+   gap, then the map pane to the right edge, full height under the top bar.
+   Below 1480px nothing here applies. */
+
+.reader.reader--follow {
+  grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
+  justify-content: start;
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+.reader__map {
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  min-width: 0;
+  /* 32px of column gap plus this: 48px between the paper and the map. */
+  margin-left: 16px;
+  display: flex;
+}
+
+.map-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--ground);
+  border-left: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+/* ---- Header ---------------------------------------------------------------------- */
+
+.map-pane__head {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 44px;
+  flex: none;
+  padding: 0 var(--space-2) 0 var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--ground);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.map-pane__kind {
+  flex: none;
+  color: var(--ink-3);
+}
+
+.map-pane__goal {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-serif);
+  font-size: var(--fs-ui);
+  color: var(--ink);
+}
+
+.map-pane__state {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink-3);
+}
+
+.map-pane__follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  min-height: 30px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color var(--t-hover) var(--ease-out),
+    border-color var(--t-hover) var(--ease-out),
+    background-color var(--t-hover) var(--ease-out);
+}
+
+.map-pane__follow:hover {
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+.map-pane__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+  transition:
+    background-color var(--t-state) var(--ease-out),
+    border-color var(--t-state) var(--ease-out);
+}
+
+.map-pane__follow[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--lit-line) 55%, var(--rule));
+  background: color-mix(in oklab, var(--lit-wash) 55%, transparent);
+}
+
+.map-pane__follow[aria-pressed="true"] .map-pane__dot {
+  border-color: var(--lit);
+  background: var(--lit);
+}
+
+.map-pane__open {
+  flex: none;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+}
+
+.map-pane__open:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.map-pane__hide {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.map-pane__hide:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
+.map-pane__notice {
+  position: absolute;
+  z-index: 3;
+  top: calc(44px + var(--space-3));
+  left: var(--space-4);
+  max-width: min(560px, calc(100% - 2 * var(--space-4)));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  animation: map-pane-in var(--t-reveal) var(--ease-out) backwards;
+}
+
+.map-pane__notice a {
+  color: var(--ink);
+}
+
+/* ---- Canvas ---------------------------------------------------------------------- */
+
+.map-pane__canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  transition: opacity var(--t-state) var(--ease-out);
+}
+
+/* A different main result: the canvas crossfades (out, then the new one in). */
+.map-pane__canvas.is-fading {
+  opacity: 0;
+}
+
+.map-pane__canvas .tree--unframed {
+  opacity: 0;
+}
+
+.map-pane__canvas .tree {
+  transition: opacity var(--t-state) var(--ease-out);
+}
+
+/* ---- The passage inspector, over the right of the pane ------------------------- */
+
+.reader__map .reader__inspector--over {
+  position: absolute;
+  z-index: 4;
+  top: 44px;
+  right: 0;
+  bottom: 0;
+  width: var(--reader-inspector);
+  height: auto;
+  border: 0;
+  border-left: 1px solid var(--rule);
+  border-radius: 0;
+  box-shadow: var(--shadow-sheet);
+  animation: map-pane-slide var(--t-reveal) var(--ease-out) backwards;
+}
+
+@keyframes map-pane-slide {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+
+@keyframes map-pane-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---- In the text --------------------------------------------------------------- */
+
+.reader-strip__map {
+  gap: 6px;
+  min-height: 30px;
+  flex: none;
+  font-size: var(--fs-sm);
+}
+
+/* A card chosen in the map: its passage's margin mark flashes amber once. */
+.part--mapped.part--flash::before {
+  animation: part-flash 1100ms var(--ease-out);
+}
+
+@keyframes part-flash {
+  0%,
+  45% {
+    opacity: 1;
+    background: var(--lit);
+    box-shadow: 0 0 0 2px var(--lit-wash);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pane__canvas,
+  .map-pane__canvas .tree {
+    transition: none;
+  }
+  .map-pane__notice,
+  .reader__map .reader__inspector--over {
+    animation: none;
+  }
+  .part--mapped.part--flash::before {
+    animation: none;
+    opacity: 1;
+    background: var(--lit);
+  }
+}

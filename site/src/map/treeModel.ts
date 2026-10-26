@@ -7,7 +7,7 @@
 // `within`, where given, is a per-account or per-passage view: only records in
 // that set are ever shown (the goal always is).
 
-import type { ArgEdge, ArgGraph } from "../model/graph";
+import { argumentProjection, type ArgEdge, type ArgGraph } from "../model/graph";
 import type { EngineEdge } from "./engine/types";
 
 export const TREE_KINDS = new Set(["supports", "formalizes", "assumes"]);
@@ -133,4 +133,61 @@ export function expandTo(graph: ArgGraph, goal: string, targets: Iterable<string
     }
   }
   return changed;
+}
+
+/** The graph with only the edges live in the goal's scoped argument (a premise an application supplies is not drawn back in). */
+export function scopedGraph(graph: ArgGraph, goal: string): ArgGraph {
+  let live: Set<string>;
+  try {
+    live = argumentProjection(graph, [goal]).edges;
+  } catch {
+    return graph;
+  }
+  const keep = (e: ArgEdge) => !TREE_KINDS.has(e.kind) || live.has(e.key);
+  if (graph.edges.every(keep)) return graph;
+  const filter = (m: Map<string, ArgEdge[]>) => new Map([...m].map(([k, list]) => [k, list.filter(keep)]));
+  return { ...graph, edges: graph.edges.filter(keep), out: filter(graph.out), in: filter(graph.in) };
+}
+
+/**
+ * Exactly the unfolded set that draws `targets` from the goal: every record on
+ * the map's own route (pathFromGoal) to each target, short of the target
+ * itself. An assumption is drawn as a tag on a record that assumes it, so for
+ * an assumption it is that record which must be drawn, not unfolded.
+ * Targets the goal's argument does not reach are left out.
+ */
+export function neededExpansion(graph: ArgGraph, goal: string, targets: Iterable<string>, within?: Within): Set<string> {
+  const open = new Set<string>();
+  for (const target of targets) {
+    const path = pathFromGoal(graph, goal, target, within);
+    if (!path) continue;
+    const tag = graph.nodes.get(target)?.kind === "assumption";
+    for (const id of path.slice(1, tag ? -2 : -1)) open.add(id);
+  }
+  return open;
+}
+
+export interface GoalChoice {
+  id: string;
+  /** Selected by the account being read. */
+  own: boolean;
+}
+
+/**
+ * The main result whose argument contains most of `records`. Ties go to the
+ * account's own selected results (in their order), then to `current`, then to
+ * the earlier candidate. With no record contained anywhere, `current` stays.
+ */
+export function chooseGoal(records: readonly string[], candidates: readonly GoalChoice[], reachOf: (goal: string) => ReadonlySet<string>, current?: string | null): string | null {
+  let best: { id: string; score: number; rank: number } | null = null;
+  candidates.forEach((c, i) => {
+    const r = reachOf(c.id);
+    const score = records.filter((id) => r.has(id)).length;
+    // Lower rank wins a tie.
+    const rank = (c.own ? 0 : 2) + (c.id === current ? 0 : 1) + i / 1000;
+    if (!best || score > best.score || (score === best.score && rank < best.rank)) best = { id: c.id, score, rank };
+  });
+  const chosen = best as { id: string; score: number } | null;
+  if (!chosen || chosen.score === 0) return current ?? candidates[0]?.id ?? null;
+  return chosen.id;
 }

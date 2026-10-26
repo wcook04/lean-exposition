@@ -24,10 +24,10 @@ import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayo
 import { select } from "d3-selection";
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from "d3-zoom";
 import type { Stage } from "../api/types";
-import { argumentProjection, closure, lensRole, type ArgEdge, type ArgGraph, type ArgNode } from "../model/graph";
+import { closure, lensRole, type ArgEdge, type ArgGraph, type ArgNode } from "../model/graph";
 import type { Trace } from "../app/router";
 import { kindName } from "./labels";
-import { TREE_KINDS, expandTo, pathFromGoal, reach, routeTo, usesOf, visibleEdges, visibleSet } from "./treeModel";
+import { expandTo, neededExpansion, pathFromGoal, reach, routeTo, scopedGraph, usesOf, visibleEdges, visibleSet } from "./treeModel";
 import { transitiveReduction } from "./engine/skeleton";
 import { consumerOf, edgeKeyOf, layoutScope, recordOf, splitSharedLeaves } from "./engine/occurrences";
 import { layoutBounds, layoutTree } from "./engine/layout";
@@ -68,6 +68,13 @@ export interface MapViewHandle {
   revealIds(ids: readonly string[]): void;
   /** Move keyboard focus to a drawn card; false when it is not drawn. */
   focusCard(id: string): boolean;
+  /**
+   * Draw these records and frame them. With `exclusive`, the unfolding becomes
+   * exactly the branches needed to draw them from the goal (everything else
+   * folds) in one synchronised move; otherwise their routes are added to what
+   * is open. False when the goal's argument draws none of them.
+   */
+  focusIds(ids: readonly string[], options?: { exclusive?: boolean }): boolean;
 }
 
 export interface TreeProps {
@@ -107,9 +114,22 @@ export interface TreeProps {
   onEdgeSelect?(key: string | null): void;
   /** A per-account view: when set, the tree only shows records in this set (the root always). */
   within?: ReadonlySet<string>;
+  /**
+   * Records linked to the passage being read: an amber outline (distinct from
+   * the selection), with the lines and assumption tags between them lit in
+   * their type colours. Never unfolds or moves anything by itself.
+   */
+  litIds?: ReadonlySet<string> | null;
+  /** Remember unfolded branches for the session (default). Off for a map that follows something else. */
+  persist?: boolean;
+  /** The reader moved the map themselves: a pan, a zoom, an unfold or an edge chip. */
+  onUserMove?(): void;
 }
 
 const STORE = "lx-tree-expanded:";
+
+/** Following a passage never frames below this scale: cards keep their titles at reading size. */
+const FOCUS_FLOOR = 0.85;
 
 /** World widths. Narrow enough that a goal's first row usually reads at k = 1 on a laptop. */
 function widthOf(node: ArgNode, isRoot: boolean, compact: boolean, rootW: number): number {
@@ -145,20 +165,6 @@ function hashSet(set: ReadonlySet<string>): string {
   let h = 0;
   for (const id of [...set].sort()) for (let i = 0; i < id.length; i++) h = (Math.imul(h, 31) + id.charCodeAt(i)) | 0;
   return (h >>> 0).toString(36);
-}
-
-/** The graph with only the edges live in the goal's scoped argument (a premise an application supplies is not drawn back in). */
-function scopedGraph(graph: ArgGraph, goal: string): ArgGraph {
-  let live: Set<string>;
-  try {
-    live = argumentProjection(graph, [goal]).edges;
-  } catch {
-    return graph;
-  }
-  const keep = (e: ArgEdge) => !TREE_KINDS.has(e.kind) || live.has(e.key);
-  if (graph.edges.every(keep)) return graph;
-  const filter = (m: Map<string, ArgEdge[]>) => new Map([...m].map(([k, list]) => [k, list.filter(keep)]));
-  return { ...graph, edges: graph.edges.filter(keep), out: filter(graph.out), in: filter(graph.in) };
 }
 
 interface CardState {
@@ -221,6 +227,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const repRef = useRef<Rep>("card");
   const onSettledRef = useRef(props.onSceneSettled);
   onSettledRef.current = props.onSceneSettled;
+  const onUserMoveRef = useRef(props.onUserMove);
+  onUserMoveRef.current = props.onUserMove;
+  const persist = props.persist ?? true;
+  const litIds = props.litIds && props.litIds.size ? props.litIds : null;
 
   // ---- Mode -------------------------------------------------------------------------
 
@@ -247,6 +257,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const storeKey = STORE + goal + (within ? `|${hashSet(within)}` : "");
   const derived = !!(compact && within && echo && echo.size);
   const readStore = (key: string) => {
+    if (!persist) return new Set<string>();
     try {
       const raw = sessionStorage.getItem(key);
       if (raw) return new Set(JSON.parse(raw) as string[]);
@@ -263,13 +274,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     setExpanded(readStore(storeKey));
   }, [storeKey]);
   useEffect(() => {
-    if (derived) return;
+    if (derived || !persist) return;
     try {
       sessionStorage.setItem(storeKey, JSON.stringify([...expandedState]));
     } catch {
       /* storage unavailable */
     }
-  }, [expandedState, storeKey, derived]);
+  }, [expandedState, storeKey, derived, persist]);
 
   // In a passage view (side pane), the route to the passage's records is open; their
   // own uses stay folded. Toggles there flip that default until the passage changes.
@@ -640,6 +651,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       set(els, `ov:${pe.key}`, d);
       set(els, `lit:${pe.key}`, d);
       set(els, `litcase:${pe.key}`, d);
+      set(els, `plit:${pe.key}`, d);
+      set(els, `plitcase:${pe.key}`, d);
       set(els, `mask:${pe.key}`, d);
       set(els, `sel:${pe.key}`, d);
       set(els, `hit:${pe.key}`, roundedPath(re.own, r));
@@ -649,6 +662,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const hd = polygonPath(head);
           set(els, `ahead:${pe.key}`, hd, isFresh ? e : 1);
           set(els, `lithead:${pe.key}`, hd);
+          set(els, `plithead:${pe.key}`, hd);
           set(els, `selhead:${pe.key}`, hd);
           set(els, `ovhead:${pe.key}`, hd);
         }
@@ -869,7 +883,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       camera = pendingCamera.current(layout);
       if (!built.provisional) pendingCamera.current = null;
     }
-    if (camera) motion.current.view = { from: viewRef.current, to: camera };
+    if (camera) {
+      // One camera move at a time: this one starts from wherever the last one had got to.
+      cameraOnly.current = null;
+      motion.current.view = { from: viewRef.current, to: camera };
+    }
     // A camera move that joined the previous (provisional) pass carries over.
     else if (before?.view && now - before.start < 60) motion.current.view = { from: before.view.from, to: before.view.to };
     if (animate) setMoving(true);
@@ -1079,6 +1097,60 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     [boundsOf, floor],
   );
 
+  /**
+   * Following a passage: its records and the cards that use them, at a scale
+   * from FOCUS_FLOOR to 1. When they cannot all fit, the first record in
+   * reading order and its consumers; the edge chips count the rest.
+   */
+  const focusReq = useRef<string[] | null>(null);
+  const focusFrame = useCallback(
+    (ids: readonly string[]) =>
+      (l: Layout): View | null => {
+        const skeleton = builtRef.current.skeleton;
+        const pad = 28;
+        const groups: Bounds[][] = [];
+        for (const id of ids) {
+          const tag = graph.nodes.get(id)?.kind === "assumption";
+          // An assumption is drawn as tags on the records that assume it: the highest of those stands for it
+          // (every tag lights; framing them all would pull the camera across the whole map).
+          const holders = tag ? [...l.boxes.keys()].filter((lid) => usesOf(graph, recordOf(lid), within).some((e) => e.kind === "assumes" && e.to === id)) : [];
+          holders.sort((a, b) => l.boxes.get(a)!.y - l.boxes.get(b)!.y || l.boxes.get(a)!.x - l.boxes.get(b)!.x);
+          const cards = tag ? holders.slice(0, 1) : [pick(l, id)].filter((lid): lid is string => !!lid);
+          if (!cards.length) continue;
+          const own = cards.map((lid) => l.boxes.get(lid)!);
+          const group: Bounds[] = own.map((r) => ({ x0: r.x - pad, y0: r.y - pad, x1: r.x + r.w + pad, y1: r.y + r.h + pad }));
+          if (!tag) {
+            const t = own[0];
+            for (const e of skeleton) {
+              if (e.to !== cards[0]) continue;
+              const c = l.boxes.get(e.from);
+              if (!c) continue;
+              // The goal's plate is tall: of it, only the foot where the line arrives.
+              if (e.from === goal) group.push({ x0: Math.max(c.x, t.x - 60), x1: Math.min(c.x + c.w, t.x + t.w + 60), y0: c.y + c.h - 72, y1: c.y + c.h + pad });
+              else group.push({ x0: c.x - pad, y0: c.y - pad, x1: c.x + c.w + pad, y1: c.y + c.h + pad });
+            }
+          }
+          groups.push(group);
+        }
+        if (!groups.length) return null;
+        const union = (list: Bounds[]): Bounds => ({
+          x0: Math.min(...list.map((b) => b.x0)),
+          y0: Math.min(...list.map((b) => b.y0)),
+          x1: Math.max(...list.map((b) => b.x1)),
+          y1: Math.max(...list.map((b) => b.y1)),
+        });
+        const vp = viewport();
+        const availW = vp.width - vp.insets.left - vp.insets.right;
+        const availH = vp.height - vp.insets.top - vp.insets.bottom;
+        const all = union(groups.flat());
+        const fit = Math.min(availW / Math.max(1, all.x1 - all.x0), availH / Math.max(1, all.y1 - all.y0));
+        if (fit >= FOCUS_FLOOR) return fitBounds(all, vp, { min: FOCUS_FLOOR, max: STEPS_K });
+        return frameBox(union(groups[0]), vp, { min: FOCUS_FLOOR, max: STEPS_K, anchor: groups[0][0] });
+      },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [graph, goal, within],
+  );
+
   // ---- Scenes -----------------------------------------------------------------------
 
   const expandedRef = useRef(expandedState);
@@ -1158,6 +1230,38 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         });
     },
     [goalReach, revealFn, moveCamera, derived, echo, graph, goal, within, expanded],
+  );
+
+  const doFocusIds = useCallback(
+    (ids: readonly string[], options: { exclusive?: boolean } = {}): boolean => {
+      const list = ids.filter((id) => goalReach.has(id));
+      if (!list.length) return false;
+      if (derived) {
+        doRevealIds(list);
+        return true;
+      }
+      focusReq.current = list;
+      pinRef.current = null;
+      userMoved.current = true;
+      userMovedSinceAsk.current = true;
+      const frame = focusFrame(list);
+      const cur = expandedRef.current;
+      const needed = neededExpansion(graph, goal, list, within);
+      const next = options.exclusive ? needed : new Set([...cur, ...needed]);
+      const same = next.size === cur.size && [...next].every((id) => cur.has(id));
+      if (same && framedRef.current && !builtRef.current.provisional) {
+        pendingCamera.current = null;
+        const v = frame(builtRef.current.layout);
+        if (v) moveCamera(v);
+        return true;
+      }
+      // Framed with the layout that draws them: cards, lines and camera move as one.
+      pendingCamera.current = frame;
+      if (!same) setExpanded(next);
+      return true;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [goalReach, derived, focusFrame, graph, goal, within, moveCamera],
   );
 
   useImperativeHandle(
@@ -1243,6 +1347,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         scheduleSettle();
       },
       revealIds: doRevealIds,
+      focusIds: doFocusIds,
       focusCard: (id) => {
         const lid = pick(builtRef.current.layout, id);
         const el = lid ? cardEls.current.get(lid)?.querySelector<HTMLElement>(".card__open") : null;
@@ -1255,7 +1360,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [boundsOf, moveCamera, goalReach, goal, graph, within, derived, echo, expanded, startView, compact, mode, selected, getScene, doRevealIds, revealFn, controlled, requestMode, overviewView, floor],
+    [boundsOf, moveCamera, goalReach, goal, graph, within, derived, echo, expanded, startView, compact, mode, selected, getScene, doRevealIds, doFocusIds, revealFn, controlled, requestMode, overviewView, floor],
   );
 
   // ---- Camera input -----------------------------------------------------------------
@@ -1275,6 +1380,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         if (event.sourceEvent) {
           userMoved.current = true;
           userMovedSinceAsk.current = true;
+          onUserMoveRef.current?.();
           if (motion.current) motion.current.view = undefined;
           cameraOnly.current = null;
           pendingCamera.current = null;
@@ -1321,6 +1427,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       userMovedSinceAsk.current = true;
       pendingCamera.current = null;
       cameraOnly.current = null;
+      onUserMoveRef.current?.();
       window.clearTimeout(wheelEnd);
       wheelEnd = window.setTimeout(scheduleSettle, 160);
     };
@@ -1374,12 +1481,14 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const first = fittedGoal.current === null;
       const wait = first && !compact && !selected && mode === "steps" && !holdOver && (built.provisional || !statementIn());
       if (wait) return;
+      // A requested focus is framed once the layout that draws it has its sizes.
+      if (focusReq.current && built.provisional && !holdOver) return;
       fittedGoal.current = goal;
-      if (!selected) userMoved.current = false;
-      const v = mode === "overview" ? overviewView(layout) : startView(layout);
+      if (!selected && !focusReq.current) userMoved.current = false;
+      const v = focusReq.current ? focusFrame(focusReq.current)(layout) : mode === "overview" ? overviewView(layout) : startView(layout);
       if (v) moveCamera(v, !first);
       setFramed(true);
-    } else if (!userMoved.current && !selected && !moving && mode === "steps" && !(compact && echo?.size) && !built.provisional) {
+    } else if (!userMoved.current && !focusReq.current && !selected && !moving && mode === "steps" && !(compact && echo?.size) && !built.provisional) {
       const v = startView(layout);
       if (v) moveCamera(v, false);
     }
@@ -1515,6 +1624,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     (id: string, lid: string = id) => {
       if (id === goal || inputsOf(id).length === 0) return;
       userMoved.current = true;
+      onUserMoveRef.current?.();
       pinRef.current = lid;
       const opening = !expanded.has(id);
       if (opening) {
@@ -1662,7 +1772,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const parts = ["tag"];
     if (hoverTag === e.to) parts.push("is-hover");
     if (selected === e.to || selectedEdge === e.key) parts.push("is-selected");
-    if (litOn && traced?.has(e.from) && traced.has(e.to)) parts.push("is-lit");
+    if ((litOn && traced?.has(e.from) && traced.has(e.to)) || (litIds?.has(e.from) && litIds.has(e.to))) parts.push("is-lit");
+    // A passage's assumption is drawn only as these tags: they carry its outline.
+    if (litIds?.has(e.to)) parts.push("is-passage");
     return parts.join(" ");
   };
 
@@ -1718,6 +1830,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     return new Set(built.skeleton.filter((e) => traced.has(recordOf(e.from)) && traced.has(recordOf(e.to))).map((e) => e.key));
   }, [traced, built]);
 
+  /** Lines between two records of the passage being read. */
+  const passageKeys = useMemo(() => {
+    if (!litIds) return new Set<string>();
+    return new Set(built.skeleton.filter((e) => litIds.has(recordOf(e.from)) && litIds.has(recordOf(e.to))).map((e) => e.key));
+  }, [litIds, built]);
+
   const drawTiming = useMemo(() => {
     if (!litKeys.size || !selected || !trace) return new Map<string, { delay: number; dur: number; from: "start" | "end" }>();
     return traceTiming(
@@ -1764,6 +1882,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     else if (selected && !near && tagHolders.has(selected)) parts.push(holdsTag(id) ? "is-near" : "is-quiet");
     if (echoOn) parts.push(echo!.has(id) ? "is-echo" : within ? "" : "is-quiet");
     if (previewOn && preview!.has(id)) parts.push("is-preview");
+    if (litIds?.has(id)) parts.push("is-passage");
     if (exitShown.has(lid)) parts.push("is-exiting");
     return parts.filter(Boolean).join(" ");
   };
@@ -1806,6 +1925,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const ids = chips.ids[side];
     if (!ids.length) return;
     userMovedSinceAsk.current = true;
+    onUserMoveRef.current?.();
     moveCamera(panToward(side, ids, builtRef.current.layout.boxes, viewRef.current, viewport()), true, CAMERA_MS);
   };
 
@@ -1899,6 +2019,16 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 <path ref={pathRef(`lit:${k}`)} className={`link link--${kindOf(k)} link--lit`} />
               </g>
             ))}
+          </g>
+          <g className="links-passage">
+            {[...passageKeys]
+              .filter((k) => built.plan.edges.has(k))
+              .map((k) => (
+                <g key={k}>
+                  <path ref={pathRef(`plitcase:${k}`)} className="casing casing--lit" />
+                  <path ref={pathRef(`plit:${k}`)} className={`link link--${kindOf(k)} link--lit`} />
+                </g>
+              ))}
           </g>
           {edgeObj && built.plan.edges.has(edgeObj.key) && (
             <g className="links-sel">
@@ -2116,6 +2246,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 const at = t.from === "start" ? t.delay + t.dur - 40 : t.delay;
                 return <path key={k} ref={pathRef(`lithead:${k}`)} className={`head head--${kindOf(k)} head--lit`} style={{ ["--d" as string]: `${Math.max(0, at)}ms` }} />;
               })}
+          </g>
+          <g className="heads-passage">
+            {[...passageKeys]
+              .filter((k) => built.plan.edges.get(k)?.arrow)
+              .map((k) => (
+                <path key={k} ref={pathRef(`plithead:${k}`)} className={`head head--${kindOf(k)} head--lit`} />
+              ))}
           </g>
           {edgeObj && built.plan.edges.get(edgeObj.key)?.arrow && <path ref={pathRef(`selhead:${edgeObj.key}`)} className={`head head--${edgeObj.kind} head--lit`} />}
         </svg>

@@ -22,6 +22,7 @@ import { Chooser } from "./page/Chooser";
 import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, Sections, SectionsPopover } from "./page/Outline";
+import { MapPane } from "./page/MapPane";
 import {
   chainOf,
   companionAnchor,
@@ -101,6 +102,16 @@ function useMedia(query: string): boolean {
   return matches;
 }
 
+const MAP_PANE_KEY = "lx-reader-map";
+
+function readMapShown(): boolean {
+  try {
+    return sessionStorage.getItem(MAP_PANE_KEY) !== "hidden";
+  } catch {
+    return true;
+  }
+}
+
 function cssPx(name: string, fallback: number): number {
   const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
   return Number.isFinite(value) ? value : fallback;
@@ -148,6 +159,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const mid = useMedia("(min-width: 1120px)");
   const compareRoom = useMedia("(min-width: 1280px)");
   const phone = useMedia("(max-width: 700px)");
+  // From 1480px the paper moves left and the argument map follows it on the right.
+  const followRoom = useMedia("(min-width: 1480px)");
+  const [mapShown, setMapShown] = useState(readMapShown);
+  const paneOn = followRoom && mapShown;
+  const showMap = useCallback((shown: boolean) => {
+    setMapShown(shown);
+    try {
+      sessionStorage.setItem(MAP_PANE_KEY, shown ? "shown" : "hidden");
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
 
   const bodyRef = useRef<BodyHandle>(null);
   const paperRef = useRef<HTMLDivElement>(null);
@@ -161,6 +184,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const outline = useMemo(() => outlineOf(doc), [doc]);
   const [currentPart, setCurrentPart] = useState(0);
   const [currentHeading, setCurrentHeading] = useState<string | null>(null);
+  /** The passage under the map's reading line (38% down the text area), and that passage once it has stayed there. */
+  const [followPart, setFollowPart] = useState(-1);
+  const [followAnchor, setFollowAnchor] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [action, setAction] = useState<SelectionAction | null>(null);
   const [inspect, setInspect] = useState<InspectorTarget | null>(null);
@@ -367,6 +393,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         }
       }
       setCurrentPart(part);
+      // The map follows the passage under a lower reading line, or the nearest one above it
+      // (before the first passage, the first one below).
+      const followLine = top + (window.innerHeight - top) * 0.38;
+      const at = partAt(body, doc.parts.length, followLine);
+      let follow = at;
+      while (follow >= 0 && doc.parts[follow]?.kind !== "passage") follow--;
+      if (follow < 0) {
+        follow = at;
+        while (follow < doc.parts.length && doc.parts[follow]?.kind !== "passage") follow++;
+      }
+      setFollowPart(follow < doc.parts.length ? follow : -1);
       let heading: string | null = null;
       for (const entry of outline) {
         if (entry.part < part) heading = entry.id;
@@ -396,6 +433,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, [doc, outline, saveNow, readingTop]);
 
   const currentAnchor = doc.parts[currentPart]?.kind === "passage" ? doc.parts[currentPart].anchor : undefined;
+
+  // Fast scrolling passes passages by: the map acts once one has been current for 180ms.
+  useEffect(() => {
+    const part = doc.parts[followPart];
+    const anchor = part?.kind === "passage" ? (part.anchor ?? null) : null;
+    const t = window.setTimeout(() => setFollowAnchor(anchor), 180);
+    return () => window.clearTimeout(t);
+  }, [followPart, doc]);
+  const followRecords = useMemo(() => (followAnchor ? passageRecords(passageOf(structure, followAnchor)) : []), [followAnchor, structure]);
 
   // ---- Links -------------------------------------------------------------------------
 
@@ -561,6 +607,35 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     void jumpTo(id, { smooth: true, focus });
   };
 
+  /** From the map beside the text: scroll to the passage, then its margin mark flashes amber once. */
+  const jumpFromMap = useCallback(
+    (anchor: string) => {
+      selfAnchor.current = anchor;
+      go({ ...here, anchor, beside: undefined });
+      void jumpTo(anchor, { smooth: true }).then((ok) => {
+        if (!ok) return;
+        let done = false;
+        const flash = () => {
+          if (done) return;
+          done = true;
+          window.removeEventListener("scrollend", flash);
+          const el = paperRef.current?.querySelector<HTMLElement>(`[data-passage="${CSS.escape(anchor)}"]`);
+          if (!el) return;
+          el.classList.remove("part--flash");
+          void el.offsetWidth;
+          el.classList.add("part--flash");
+          window.setTimeout(() => el.classList.remove("part--flash"), 1200);
+        };
+        // After the smooth scroll ends; at once when the page did not move (or had already landed).
+        const y0 = window.scrollY;
+        window.addEventListener("scrollend", flash, { once: true });
+        window.setTimeout(() => Math.abs(window.scrollY - y0) < 1 && flash(), 120);
+        window.setTimeout(flash, 950);
+      });
+    },
+    [go, here, jumpTo],
+  );
+
   const toTop = () => {
     go({ ...here, anchor: undefined, beside: undefined });
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
@@ -643,7 +718,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const head = { name: names.short, job: names.job, reader: names.reader, status };
   const chain = chainOf(outline, currentHeading);
   const inspecting = !!inspect;
-  const columnInspector = inspecting && mid;
+  // Beside the map the inspector slides in over the right of the pane instead of taking a column.
+  const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide);
   const sectionsProps = { entries: outline, current: currentHeading, onJump: (id: string) => jumpWithHistory(id, true) };
   const currentRecords = currentAnchor ? passageRecords(passageOf(structure, currentAnchor)) : [];
@@ -672,7 +748,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   return (
     <div
-      className={`reader reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}`}
+      className={`reader reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
     >
       {outlineColumn && (
         <aside className="reader__outline" inert={route.beside ? true : undefined}>
@@ -719,6 +795,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               })}
             </ol>
           </nav>
+          {followRoom && !mapShown && (
+            <button type="button" className="control reader-strip__map" onClick={() => showMap(true)}>
+              <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
+                <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+                <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
+              </svg>
+              Show the map beside the text
+            </button>
+          )}
           {visit && !route.beside && (
             <div className="reader-strip__visit">
               <button type="button" className="control reader-strip__return" onClick={returnToOrigin}>
@@ -777,6 +862,27 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <aside className="reader__inspector" aria-label="Records linked to this passage" inert={route.beside ? true : undefined}>
           {inspector}
         </aside>
+      )}
+
+      {paneOn && (
+        <div className="reader__map">
+          <MapPane
+            stage={stage}
+            structures={structures}
+            anchor={followAnchor}
+            records={followRecords}
+            inert={!!route.beside}
+            onHide={() => showMap(false)}
+            onJump={jumpFromMap}
+            overlay={
+              inspecting ? (
+                <aside className="reader__inspector reader__inspector--over" aria-label="Records linked to this passage">
+                  {inspector}
+                </aside>
+              ) : undefined
+            }
+          />
+        </div>
       )}
 
       {!mid && !route.beside && (
