@@ -145,7 +145,9 @@ reading order. Keep that first response separate from the assisted reread.
    is needed, state that weaker fact; do not promise interchangeable objects.
    Name the observable and conditioning in an expectation identity. Equal means
    need not identify states, laws or operations; inspect the composition or higher
-   moment actually needed by the next step.
+   moment actually needed by the next step. For probability laws, follow the
+   [model and counterexample checks](../../docs/authoring.md#check-the-active-objects-and-claims);
+   Gaussian marginals alone need not imply a jointly Gaussian law.
 9. Run `lean-exposition check-bundle DIR`. Review the argument separately,
    then inspect the delivered Markdown or rendered paper and its references.
 

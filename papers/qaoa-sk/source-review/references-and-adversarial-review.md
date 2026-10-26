@@ -423,3 +423,43 @@ applied where sufficient. Transfer examples and exceptions belong in the
 local methods, while this account records their use on the reviewed edition.
 Model review and successful structural checks are not observations of human
 learning.
+
+### Independent audits and evidence boundaries, 26 October 2026
+
+Subsequent agent audits compared all four accounts with their retained sources
+and exercised the graph and bundle interfaces independently. The exposition
+now specifies Brownian noise before identifying a future increment as Gaussian.
+The short and long accounts state the joint Gaussian law for fixed child-space
+vectors before using zero covariance to conclude independence. The source
+comparison avoids an ordering claim where the retained dates conflict.
+Conventional attribution to a paper's listed author was reviewed and retained.
+
+Two distinct cases exercise the general authoring lesson. A symmetric two-point
+variable and a Gaussian can have equal variance and different laws. Likewise,
+if an independent symmetric sign multiplies a standard Gaussian, the resulting
+pair has Gaussian marginals and zero covariance but equal absolute values.
+The respective missing hypotheses are the Brownian increment model and a joint
+Gaussian law. The exception is a claim only about a second moment: identifying
+the entire law is then unnecessary. These cases and their scope inform the
+[shared method](../../../docs/authoring.md#use-and-improve-the-transition-skills)
+and the source-to-graph and graph-to-long transitions.
+
+The graph audits distinguish supplying an ordinary quantified premise from
+removing an axiom or proof hole used by a retained Lean proof. Documentary
+credit for a supplied premise also survives its removal as a free obligation.
+The current passage mappings now include those premise citations. Historical
+captures retain their earlier reading rules and expose differences from the
+current authoring requirements through inspection. These are correspondence
+and validation changes, not new mathematical theorems.
+
+The architecture companion retains its two semantic diagrams and clarifies
+what a passage map can establish. Its website description and figure-source
+notices now agree with the maintained sources. A proposed additional control
+calculation remains supplementary: its availability alone did not justify
+lengthening the existing reading route.
+
+The software checks use synthetic positive and negative fixtures. They test
+receipt consistency, scoped obligations, historical reading and new assembly;
+they do not authenticate arbitrary local JSON or supply a native Lean or
+Comparator result. This editorial revision does not change the graph's
+recorded formal outcomes or claim measured human comprehension.

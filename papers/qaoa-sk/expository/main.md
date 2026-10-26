@@ -325,10 +325,13 @@ The variational problem assigns each $\gamma$ a value by a one-dimensional
 auxiliary optimisation. Its final reward at state $x$ is $|x|$: this is
 the best one-spin score $\max_{\sigma\in\{-1,1\}}x\sigma$.
 First take $\gamma=0$, when only noise changes the state. The
-normalisation $\xi(t)=t^2/2$ gives $\xi''=1$, so the auxiliary noise accumulated over an interval of length $h$ has variance
-$h$, the variance of $\sqrt hZ$. Starting at
-time $t$ in state $x$, the remaining noise is therefore distributed
-as $\sqrt{1-t}Z$. The expected final reward is
+normalisation $\xi(t)=t^2/2$ gives $\xi''=1$, and the auxiliary noise
+is **Brownian motion** $B$: a continuous random path starting at zero.
+Its increments over disjoint time intervals are independent; over an
+interval of length $h$, an increment has the law of the centred
+Gaussian $\sqrt h Z$. Starting at time $t$ in state $x$, the remaining
+noise $B_1-B_t$ therefore has the law of $\sqrt{1-t}Z$. The expected
+final reward is
 
 $$
 \Phi_0(t,x)=\mathbb E|x+\sqrt{1-t}Z|
@@ -344,11 +347,8 @@ starting state; it is not a probability density.
 
 For a general $\gamma$, a response can bias the future state, with a
 quadratic cost. Here the overlap scale $t$ plays the role of time;
-the path is auxiliary, not a motion of the spins.
-The noise is **Brownian motion** $B$: a continuous random path starting
-at zero. Its increments over disjoint time intervals are independent;
-over an interval of length $h$, an increment has the same distribution
-as the centred Gaussian $\sqrt h Z$.
+the path is auxiliary, not a motion of the spins. The noise is the
+Brownian motion introduced above.
 
 A **control** $\alpha_s\in[-1,1]$ chooses a response at each time
 using only noise already observed since the starting time. The whole
@@ -1296,9 +1296,10 @@ area alone does not establish a smaller Parisi value.
 
 <a id="answer-2"></a>
 
-**[Question 2](#question-2).** The state has accumulated variance $1/4$, so it is
-distributed as $Z/2$. The remaining noise has variance $3/4$, and
-its standard deviation in the value-slope formula is $\sqrt3/2$.
+**[Question 2](#question-2).** For $\gamma=0$, the state is $X_{1/4}=B_{1/4}$, a
+centred Gaussian with variance $1/4$, so it has the law of $Z/2$.
+The remaining independent Gaussian noise $B_1-B_{1/4}$ has variance
+$3/4$ and standard deviation $\sqrt3/2$.
 Thus
 
 $$

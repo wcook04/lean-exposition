@@ -878,11 +878,14 @@ the spin–boson description of [Boulebnane et al. (2026)][spin-boson].
 Its classical sector consists of square-integrable functions built
 recursively from a local Gaussian seed and child-generated Gaussian
 coordinates, with inner product given by expectation.
-A centred real child direction $f$ gives a Gaussian coordinate
-$\mathsf G(f)$ at the receiving root, with
+For any finite list of fixed centred real child directions, their
+coordinates at the receiving root have a joint centred Gaussian law.
+For two such directions $f,g$,
 $$
 \mathbb E[\mathsf G(f)\mathsf G(g)]=\langle f,g\rangle.
 $$
+The directions are fixed elements of the child space, even when their
+values depend on the child's Gaussian coordinates.
 The receiving root's seed is independent of these coordinates;
 compatible embeddings preserve them as the recursive depth grows.
 The root shift $\mathsf L$ inserts a child direction into the first

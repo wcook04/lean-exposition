@@ -154,8 +154,8 @@
     "support.zero_candidate_descent",
     "support.zero_curvature"
   ],
-  "content_sha256": "72aacbebc0dc0ade8872703a935fe72bdb590e2d3012c755a258d85446671d1c",
-  "graph_sha256": "d50b9164c653678bad45f0f573e2946db8be23255a316a205d4fb829be4148ad",
+  "content_sha256": "6ef55c7e96523a4d0d7757d7d17afd69b9b199189b6efbc2167c1a0e54ab05e4",
+  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
   "passages": [
     {
       "anchor": "opening",
@@ -276,7 +276,7 @@
       ],
       "evidence_class": "source_argument",
       "rationale": "Probability-density averaging, value response and controlled state arrive in sequence. Fixed-control convexity and Lipschitz bounds are derived; a forward step explains feedback, and unequal-time variances distinguish state from remaining noise. Analytic moment facts remain explicit imports.",
-      "text_sha256": "c7bf25c6f062ecf8b5a94a53dde2b54536d46681cffc7b37d17d096f82b8465b"
+      "text_sha256": "8ff9561e7fad399a6f1f9d9f5fc8544e8bf9b88185fd5d636cd26f50e526cefa"
     },
     {
       "anchor": "full-support-statement",
@@ -682,7 +682,7 @@
       ],
       "evidence_class": "example",
       "rationale": "Answers on finite admissibility, unequal-time Gaussian response, tilted chords and terminal gaps retain their respective hypotheses. The calculus countermodel is not an SK minimizer; no human comprehension result is asserted.",
-      "text_sha256": "49570fe21790d43612c50645c5f8c7b3b3944adc70a020f6f53dd528132fab4d"
+      "text_sha256": "039a2d7e0a4af4b9b35cbd35da9d5e2aca4629ea157a28ca17b5ba11e40ebe47"
     },
     {
       "anchor": "density-and-approximation",
@@ -853,6 +853,8 @@
         "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
@@ -1004,7 +1006,8 @@
     "25 October 2026 R7 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 952de69685aa19529724825351fd7f8e4a6ab826527fa116fbfa1d77717cd85f). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R8 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 1416f1236affa7451984f9d0b3a64f6204202e2ea5beda0c2f9df2dbd6ed13c0). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 14bd4d766102048f9a61324a2cdcb6d94c869e597820f9cd06d92443ca2f5737). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 R10 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "26 October 2026 R10 review assimilation: applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 independent Terra audit: Applied local skills/record-to-expository/SKILL.md (SHA256 f41d346f745aacc3e3e8bf255cb04135db25c592c17c29c1c6537b30fe1e195a). Moved the Brownian law before its first use and checked the zero-coefficient quarter-time answer; a longer feasible-control calculation remains supplementary. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
   ],
   "review_state": "needs_revision",
   "schema_version": "1.2",
@@ -1115,7 +1118,7 @@
   "reading_links": [
     {
       "from_anchor": "changed-case-answer",
-      "from_text_sha256": "49570fe21790d43612c50645c5f8c7b3b3944adc70a020f6f53dd528132fab4d",
+      "from_text_sha256": "039a2d7e0a4af4b9b35cbd35da9d5e2aca4629ea157a28ca17b5ba11e40ebe47",
       "to_stage": "expository",
       "to_anchor": "changed-cases",
       "to_text_sha256": "9d36c75c61d346616f19a1ed59b1380c1992fecc2e7719d70bd2238ed98b27d1",

@@ -27,8 +27,10 @@ API_ROOT = "/api/v1"
 TABLES = ("nodes", "edges", "sources", "citations", "evidence")
 FAMILIES = ("declarations", "arguments", "citations", "platform", "provenance")
 MAX_QUERY_BYTES = 8192
+MAX_QUERY_FIELDS = 128
 MAX_RESPONSE_BYTES = 16 * 1024 * 1024
 MAX_PAGE_SIZE = 200
+MAX_OFFSET = 999999999
 DEFAULT_CACHE_BYTES = 32 * 1024 * 1024
 
 
@@ -131,7 +133,7 @@ class Parameters:
             if re.search(r"%(?![0-9a-fA-F]{2})", query):
                 raise ValueError("invalid escape")
             self.values = parse_qs(query, keep_blank_values=True, strict_parsing=True,
-                                   encoding="utf-8", errors="strict", max_num_fields=128)
+                                   encoding="utf-8", errors="strict", max_num_fields=MAX_QUERY_FIELDS)
         except (ValueError, UnicodeError):
             raise APIError(400, "invalid_query", "Use a valid UTF-8 URL query.") from None
         if set(self.values) - set(allowed) - {"manifest"}:
@@ -220,7 +222,23 @@ class WebApplication:
         self._summaries = {ref: self._record_summary(ref) for ref in self._records}
 
     def _href(self, route, **query):
-        return API_ROOT + route + "?" + urlencode({"manifest": self.manifest_sha256, **query}, doseq=True)
+        encoded = urlencode({"manifest": self.manifest_sha256, **query}, doseq=True)
+        if len(encoded.encode("ascii")) > MAX_QUERY_BYTES:
+            raise APIError(414, "generated_query_too_long",
+                           "A generated API query exceeds the query-byte limit; narrow the selection.")
+        if encoded.count("&") + 1 > MAX_QUERY_FIELDS:
+            raise APIError(400, "generated_query_too_many_fields",
+                           "A generated API query exceeds the field limit; narrow the selection.")
+        return API_ROOT + route + "?" + encoded
+
+    def _optional_link(self, name, route, **query):
+        """Keep a valid edition readable when one optional link cannot fit."""
+        try:
+            return {name: self._href(route, **query)}
+        except APIError as exc:
+            if exc.code not in {"generated_query_too_long", "generated_query_too_many_fields"}:
+                raise
+            return {name: None, f"{name}_unavailable_reason": exc.code}
 
     def _companion_configuration(self):
         return {"resolver_version": COMPANION_RESOLVER_VERSION,
@@ -331,15 +349,24 @@ class WebApplication:
                 "meaning": "Document structure and authored passage correspondences. Reading order, containment and text overlap do not assert mathematical dependencies. Source text and support record bodies are fetched separately."}
 
     def _page(self, rows, params, route):
-        offset = params.integer("offset", 0, 0, 999999999)
+        offset = params.integer("offset", 0, 0, MAX_OFFSET)
         limit = params.integer("limit", 50, 1, MAX_PAGE_SIZE)
         return self._page_result(rows[offset:offset + limit], len(rows), offset, limit, params, route)
 
     def _page_result(self, items, total, offset, limit, params, route):
         query = {key: values for key, values in params.values.items()
                  if key not in {"manifest", "offset", "limit"}}
-        next_href = (self._href(route, **query, offset=offset + limit, limit=limit)
-                     if offset + limit < total else None)
+        next_href = None
+        if offset + limit < total:
+            # Reserve room for the last page as well as the immediate next page:
+            # crossing a decimal digit boundary must not break a later link.
+            last_offset = offset + ((total - 1 - offset) // limit) * limit
+            if last_offset > MAX_OFFSET:
+                raise APIError(400, "pagination_out_of_range",
+                               "Selection exceeds the pagination offset limit; narrow the selection.")
+            last_href = self._href(route, **query, offset=last_offset, limit=limit)
+            next_href = (last_href if last_offset == offset + limit else
+                         self._href(route, **query, offset=offset + limit, limit=limit))
         return {"items": items, "total": total,
                 "offset": offset, "limit": limit, "next": next_href}
 
@@ -367,8 +394,10 @@ class WebApplication:
                   for member in usage["paper_memberships"]]
         return {"ref": ref, "table": table,
                 **{key: record[key] for key in ("id", "kind", "status") if key in record},
+                **({"formal_result_assurance": row["formal_result_assurance"]}
+                   if "formal_result_assurance" in row else {}),
                 "label": record.get("label", record.get("title", record.get("id", ref))),
-                "papers": papers, "href": self._href("/record", ref=ref)}
+                "papers": papers, **self._optional_link("href", "/record", ref=ref)}
 
     def _map_view(self, view):
         # Preserve selected records, typed links, application bindings and scope;
@@ -376,7 +405,7 @@ class WebApplication:
         # than repeated for every record in a graph with hundreds of records.
         return {**view, "representation": "map", "records": {
             table: [{**{key: value for key, value in self._summaries[row["ref"]].items()
-                        if key in {"ref", "id", "label", "kind", "status"}},
+                        if key in {"ref", "id", "label", "kind", "status", "formal_result_assurance"}},
                      **({"relevant": row["relevant"]} if "relevant" in row else {})} for row in rows]
             for table, rows in view["records"].items()},
             "records_href": self._href("/records"),
@@ -405,8 +434,8 @@ class WebApplication:
             stage, passage = self._passages[link["passage_ref"]]
             rows.append({**link, "text": passage["text"], "span": passage["content_span"],
                          "paper_href": self._href(f"/papers/{stage}"),
-                         "reading_href": self._href("/papers/reading", paper=stage, passage=passage["anchor"]),
-                         "query_href": self._href("/papers/query", paper=stage, passage=passage["anchor"])})
+                         **self._optional_link("reading_href", "/papers/reading", paper=stage, passage=passage["anchor"]),
+                         **self._optional_link("query_href", "/papers/query", paper=stage, passage=passage["anchor"])})
         return rows
 
     def _search_index(self):
@@ -416,7 +445,7 @@ class WebApplication:
             rows.append({"ref": ref, "table": table, "label": record.get("label", record.get("id", ref)),
                          "text": json.dumps(record, ensure_ascii=False, sort_keys=True),
                          "papers": sorted({p["stage"] for p in self._usage[ref]["paper_memberships"]}),
-                         "href": self._href("/record", ref=ref)})
+                         **self._optional_link("href", "/record", ref=ref)})
         for stage, view in self._papers.items():
             content = view["paper"]["text"].encode("utf-8")
             for table, items in (("passages", view["paper"]["passages"]),
@@ -428,9 +457,9 @@ class WebApplication:
                     rows.append({"ref": item["ref"], "table": table,
                                  "label": item.get("title", item.get("anchor", item["ref"])),
                                  "text": text, "papers": [stage], "span": span,
-                                 "href": self._href("/papers/query", paper=stage,
-                                                    **{"section" if table == "sections" else "passage":
-                                                       item["ref"] if table == "sections" else item["anchor"]})})
+                                 **self._optional_link("href", "/papers/query", paper=stage,
+                                                       **{"section" if table == "sections" else "passage":
+                                                          item["ref"] if table == "sections" else item["anchor"]})})
         return sorted(rows, key=lambda row: (row["table"], row["ref"]))
 
     def _dispatch(self, route, p):
@@ -502,7 +531,7 @@ class WebApplication:
                 page["representation"] = "summary"
             else:
                 page["items"] = [{"table": self._records[ref][0], **self._records[ref][1],
-                                  "usage": self._usage[ref], "href": self._href("/record", ref=ref)}
+                                  "usage": self._usage[ref], **self._optional_link("href", "/record", ref=ref)}
                                  for ref in page["items"]]
             return page
         if route == "/facets":
@@ -523,16 +552,16 @@ class WebApplication:
                 raise APIError(404, "record_not_found", "Record reference is absent from this graph edition.")
             table, row = self._records[ref]
             lenses = ({
-                "prerequisites": self._href("/graph", view="arguments", node=row["record"]["id"], assumptions="true"),
-                "consumers": self._href("/graph", view="arguments", node=row["record"]["id"], direction="consumers", assumptions="true"),
-                "direct_passages": self._href("/papers/query", node=row["record"]["id"], relation="direct"),
-                "prerequisite_uses": self._href("/papers/query", node=row["record"]["id"], relation="prerequisites"),
+                **self._optional_link("prerequisites", "/graph", view="arguments", node=row["record"]["id"], assumptions="true"),
+                **self._optional_link("consumers", "/graph", view="arguments", node=row["record"]["id"], direction="consumers", assumptions="true"),
+                **self._optional_link("direct_passages", "/papers/query", node=row["record"]["id"], relation="direct"),
+                **self._optional_link("prerequisite_uses", "/papers/query", node=row["record"]["id"], relation="prerequisites"),
             } if table == "nodes" else {})
             return {"table": table, **row, "usage": self._usage[ref],
                     "aligned_passages": self._aligned_passages(ref),
                     "lenses": lenses,
                     "relations": self._adjacent[ref],
-                    "neighborhood_href": self._href("/neighborhood", ref=ref)}
+                    **self._optional_link("neighborhood_href", "/neighborhood", ref=ref)}
         if route == "/relations":
             families = p.many("family", choices=FAMILIES) or list(FAMILIES)
             stage = p.one("paper", choices=STAGES)
@@ -588,7 +617,7 @@ class WebApplication:
                                                                     choices=("direct", "prerequisites")),
                                 include_views=representation == "full")
         if route == "/papers/reading":
-            offset = p.integer("offset", 0, 0, 999999999)
+            offset = p.integer("offset", 0, 0, MAX_OFFSET)
             limit = p.integer("limit", 50, 1, MAX_PAGE_SIZE)
             result = self._reader.query_reading(**self._paper_selectors(p, require_stage=True),
                                                target_stage=p.one("target", choices=STAGES),
@@ -596,8 +625,8 @@ class WebApplication:
             pagination = result.pop("pagination")
             page = self._page_result(result.pop("links"), pagination["total"], offset, limit, p, route)
             result["passage_cards"] = [card | {
-                "query_href": self._href("/papers/query", paper=card["stage"], passage=card["anchor"], representation="matches"),
-                "reading_href": self._href("/papers/reading", paper=card["stage"], passage=card["anchor"])}
+                **self._optional_link("query_href", "/papers/query", paper=card["stage"], passage=card["anchor"], representation="matches"),
+                **self._optional_link("reading_href", "/papers/reading", paper=card["stage"], passage=card["anchor"])}
                 for card in result["passage_cards"]]
             return result | page
         if route == "/compare":
@@ -686,6 +715,8 @@ class WebApplication:
             if pin is not None and pin != self.manifest_sha256:
                 raise APIError(409, "edition_mismatch", "Requested edition is not the edition served by this application.")
             if method == "OPTIONS":
+                if self.allow_origin and environ.get("HTTP_ORIGIN") == self.allow_origin:
+                    headers.append(("Access-Control-Allow-Headers", "If-None-Match"))
                 start_response("204 No Content", headers + [("Allow", "GET, HEAD, OPTIONS"),
                                                             ("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS")])
                 return []

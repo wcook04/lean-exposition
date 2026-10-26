@@ -49,7 +49,8 @@ keep execution status unknown; do not infer a successful check from a file.
    discharges each premise for that same witness. Use the supported application
    contract rather than changing a logical ingredient into a citation to hide
    a premise. An ordinary-model premise and a formal-interface premise remain
-   different until a source-supported transport identifies them.
+   different until a source-supported transport identifies them. When a premise
+   is supplied, preserve the [citation and formal-dependency boundaries](../../docs/authoring.md#track-assumptions-and-citations-through-a-rewrite).
    Compare entry through an assembled endpoint with entry through its explanatory
    passage. Directly selecting a conditional helper and its premises can make
    supplied obligations appear free again. Select the endpoint for endpoint

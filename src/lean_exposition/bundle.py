@@ -7,12 +7,13 @@ import stat
 import zipfile
 import zlib
 from collections.abc import Mapping
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from importlib.resources import files
 from pathlib import Path
 from types import MappingProxyType
 
-from .contracts import ContractError, decode_json, digest, encoded, local_path, require_refs, required_citation_ids, validate_artifact, validate_graph, validate_schema, write_json
+from .contracts import ContractError, decode_json, digest, encoded, local_path, require_refs, required_citation_ids, validate_artifact, validate_graph, validate_schema
 
 STAGES = ("long", "short", "expository")
 BUNDLE_FILES = ("manifest.json", "graph.json") + tuple(
@@ -21,6 +22,13 @@ BUNDLE_FILES = ("manifest.json", "graph.json") + tuple(
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 MAX_BUNDLE_BYTES = 64 * 1024 * 1024
 MAX_ARCHIVE_BYTES = MAX_BUNDLE_BYTES + 1024 * 1024
+_DIRECTORY_HANDLES = (
+    bool(getattr(os, "O_NOFOLLOW", 0)) and bool(getattr(os, "O_DIRECTORY", 0))
+    and bool(getattr(os, "O_NONBLOCK", 0))
+    and os.open in os.supports_dir_fd and os.mkdir in os.supports_dir_fd
+    and os.stat in os.supports_dir_fd and os.stat in os.supports_follow_symlinks
+    and os.listdir in os.supports_fd
+)
 
 
 @dataclass(frozen=True, init=False, slots=True)
@@ -61,15 +69,14 @@ def _require_empty_output(out: Path) -> None:
 
 def scaffold(graph: dict, out: Path) -> dict:
     summary = validate_graph(graph)
+    out = Path(out)
     _require_empty_output(out)
-    out.mkdir(parents=True, exist_ok=True)
     graph_bytes = encoded(graph)
-    (out / "graph.json").write_bytes(graph_bytes)
+    payload = {"graph.json": graph_bytes}
     for stage in STAGES:
         content = files("lean_exposition").joinpath(f"resources/templates/{stage}.md").read_bytes()
         path = f"papers/{stage}.md"
-        local_path(out, path).parent.mkdir(exist_ok=True)
-        local_path(out, path).write_bytes(content)
+        payload[path] = content
         mapping = {
             "schema_version": "1.0", "stage": stage, "state": "scaffold", "path": path,
             "content_sha256": digest(content), "graph_sha256": digest(graph_bytes),
@@ -78,25 +85,68 @@ def scaffold(graph: dict, out: Path) -> dict:
             "assumption_ids": summary["assumptions"], "unresolved_ids": summary["unresolved"],
             "passages": [], "review_state": "not_reviewed", "review_notes": [],
         }
-        write_json(out / f"papers/{stage}.json", mapping)
-    payload = {name: (out / name).read_bytes() for name in BUNDLE_FILES[1:]}
+        payload[f"papers/{stage}.json"] = encoded(mapping)
     manifest = _manifest(graph["id"], payload, ["scaffold"] * len(STAGES))
-    write_json(out / "manifest.json", manifest)
+    payload["manifest.json"] = encoded(manifest)
+    for name, content in payload.items():
+        if len(content) > MAX_MEMBER_BYTES:
+            raise ContractError(f"artifact exceeds size limit: {name}")
+    if sum(map(len, payload.values())) > MAX_BUNDLE_BYTES:
+        raise ContractError("bundle exceeds total size limit")
+    _validate_payload(payload)
+    _write_bundle_directory(out, payload)
     check_bundle(out)
     return manifest
 
 
-def _read_regular(path: Path, name: str, limit: int) -> bytes:
-    """Bound reads and refuse links or special files before consuming bytes."""
+@contextmanager
+def _open_directory(path, name: str, *, dir_fd: int | None = None):
+    """Hold a directory open without following the final component."""
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | getattr(os, "O_NONBLOCK", 0)
+    try:
+        fd = os.open(path, flags, dir_fd=dir_fd) if dir_fd is not None else os.open(path, flags)
+    except OSError as exc:
+        raise ContractError(f"cannot open bundle directory: {name}") from exc
+    try:
+        if not stat.S_ISDIR(os.fstat(fd).st_mode):
+            raise ContractError(f"not a bundle directory: {name}")
+        yield fd
+    finally:
+        os.close(fd)
+
+
+def _fdopen(fd: int, mode: str):
+    try:
+        return os.fdopen(fd, mode)
+    except BaseException:
+        os.close(fd)
+        raise
+
+
+def _read_regular(path: Path, name: str, limit: int, *, dir_fd: int | None = None) -> bytes:
+    """Bound reads and refuse links or special files before consuming bytes.
+
+    Descriptor-relative calls are anchored to an already opened directory. On
+    platforms without directory handles, lstat/fstat checks retain portable use
+    but cannot prevent substitution of a parent directory by a concurrent actor.
+    """
     flags = (os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
              | getattr(os, "O_NONBLOCK", 0) | getattr(os, "O_BINARY", 0))
     try:
-        if path.is_symlink():
-            raise ContractError(f"symlink is not a bundle artifact: {name}")
-        with os.fdopen(os.open(path, flags), "rb") as stream:
+        before = None
+        if dir_fd is None:
+            before = Path(path).lstat()
+            if stat.S_ISLNK(before.st_mode):
+                raise ContractError(f"symlink is not a bundle artifact: {name}")
+            if not stat.S_ISREG(before.st_mode):
+                raise ContractError(f"not a regular artifact: {name}")
+        fd = os.open(path, flags, dir_fd=dir_fd) if dir_fd is not None else os.open(path, flags)
+        with _fdopen(fd, "rb") as stream:
             metadata = os.fstat(stream.fileno())
             if not stat.S_ISREG(metadata.st_mode):
                 raise ContractError(f"not a regular artifact: {name}")
+            if before is not None and not os.path.samestat(before, metadata):
+                raise ContractError(f"artifact changed during open: {name}")
             if metadata.st_size > limit:
                 raise ContractError(f"artifact exceeds size limit: {name}")
             content = stream.read(limit + 1)
@@ -110,15 +160,25 @@ def _read_regular(path: Path, name: str, limit: int) -> bytes:
 
 
 def _capture_directory(root: Path) -> dict[str, bytes]:
-    payload = {}
-    size = 0
-    for name in BUNDLE_FILES:
-        content = _read_regular(local_path(root, name), name, MAX_MEMBER_BYTES)
-        size += len(content)
-        if size > MAX_BUNDLE_BYTES:
-            raise ContractError("bundle exceeds total size limit")
-        payload[name] = content
-    return payload
+    def capture(read):
+        payload = {}
+        size = 0
+        for name in BUNDLE_FILES:
+            content = read(name)
+            size += len(content)
+            if size > MAX_BUNDLE_BYTES:
+                raise ContractError("bundle exceeds total size limit")
+            payload[name] = content
+        return payload
+
+    if not _DIRECTORY_HANDLES:
+        return capture(lambda name: _read_regular(local_path(root, name), name, MAX_MEMBER_BYTES))
+    with _open_directory(root, "bundle") as root_fd:
+        with _open_directory("papers", "papers", dir_fd=root_fd) as papers_fd:
+            def read(name):
+                parent_fd = papers_fd if name.startswith("papers/") else root_fd
+                return _read_regular(Path(name).name, name, MAX_MEMBER_BYTES, dir_fd=parent_fd)
+            return capture(read)
 
 
 def _capture_archive(path: Path) -> dict[str, bytes]:
@@ -176,7 +236,7 @@ def _decode_artifact(payload: dict[str, bytes], name: str, schema: str) -> dict:
     return value
 
 
-def _validate_payload(payload: dict[str, bytes]) -> dict:
+def _validate_payload(payload: dict[str, bytes], *, current_authoring: bool = False) -> dict:
     manifest = _decode_artifact(payload, "manifest.json", "bundle")
     if manifest["publication"] != "local_only":
         raise ContractError("this tool prepares local bundles only")
@@ -207,7 +267,11 @@ def _validate_payload(payload: dict[str, bytes]) -> dict:
         if artifact["stage"] != s or artifact["path"] != f"papers/{s}.md":
             raise ContractError("paper mapping uses wrong stage/path")
         try:
-            validate_artifact(artifact, graph, digest(payload["graph.json"]), payload[artifact["path"]])
+            validate_artifact(
+                artifact, graph, digest(payload["graph.json"]), payload[artifact["path"]],
+                require_current_formal_assurance=current_authoring,
+                require_current_citations=current_authoring,
+            )
         except (ContractError, ValueError) as exc:
             raise _artifact_error(name, exc) from exc
         states.append(artifact["state"])
@@ -258,13 +322,73 @@ def check_bundle(root: Path | BundleCapture) -> dict:
     return _validated_capture(root)[1]
 
 
+def _write_regular(path, name: str, content: bytes, *, dir_fd: int | None = None) -> None:
+    flags = (os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+             | getattr(os, "O_BINARY", 0))
+    try:
+        fd = (os.open(path, flags, 0o666, dir_fd=dir_fd) if dir_fd is not None
+              else os.open(path, flags, 0o666))
+        with _fdopen(fd, "wb") as stream:
+            metadata = os.fstat(stream.fileno())
+            if not stat.S_ISREG(metadata.st_mode):
+                raise ContractError(f"not a regular artifact: {name}")
+            if dir_fd is None:
+                current = Path(path).lstat()
+                if not stat.S_ISREG(current.st_mode) or not os.path.samestat(current, metadata):
+                    raise ContractError(f"artifact changed during open: {name}")
+            stream.write(content)
+    except OSError as exc:
+        raise ContractError(f"cannot write artifact: {name}") from exc
+
+
+def _check_directory_identity(fd: int, path, name: str, *, dir_fd: int | None = None) -> None:
+    try:
+        current = (os.stat(path, dir_fd=dir_fd, follow_symlinks=False) if dir_fd is not None
+                   else os.stat(path, follow_symlinks=False))
+        if not stat.S_ISDIR(current.st_mode) or not os.path.samestat(current, os.fstat(fd)):
+            raise ContractError(f"bundle directory changed during assembly: {name}")
+    except OSError as exc:
+        raise ContractError(f"bundle directory changed during assembly: {name}") from exc
+
+
+def _write_bundle_directory(out: Path, payload: dict[str, bytes]) -> None:
+    """Write through held directory handles where available.
+
+    The pathname fallback preserves portable use with regular-file checks, but
+    cannot guarantee confinement against concurrent parent-directory swaps.
+    """
+    _require_empty_output(out)
+    out.mkdir(parents=True, exist_ok=True)
+    if not _DIRECTORY_HANDLES:
+        for name in BUNDLE_FILES:
+            target = local_path(out, name)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            _write_regular(target, name, payload[name])
+        return
+    with _open_directory(out, "output") as root_fd:
+        if os.listdir(root_fd):
+            raise ContractError("output directory must be empty")
+        try:
+            os.mkdir("papers", dir_fd=root_fd)
+        except OSError as exc:
+            raise ContractError("cannot create bundle papers directory") from exc
+        with _open_directory("papers", "papers", dir_fd=root_fd) as papers_fd:
+            for name in BUNDLE_FILES:
+                parent_fd = papers_fd if name.startswith("papers/") else root_fd
+                _write_regular(Path(name).name, name, payload[name], dir_fd=parent_fd)
+            _check_directory_identity(papers_fd, "papers", "papers", dir_fd=root_fd)
+            _check_directory_identity(root_fd, out, "output")
+
+
 def assemble_bundle(
     graph_path: Path, stage_pairs: dict[str, tuple[Path, Path]], out: Path,
 ) -> dict:
     """Package three existing Markdown/mapping pairs without changing bindings.
 
     Each pair is (Markdown path, mapping path). Graph and document hashes must
-    already bind the supplied bytes. Validation finishes before output is created.
+    already bind the supplied bytes. New assembly requires current citation and
+    formal-result assurance checks; check_bundle and load_bundle retain the
+    historical reading contract. Validation finishes before output is created.
     """
     if set(stage_pairs) != set(STAGES):
         raise ContractError("assembly requires exactly long, short and expository pairs")
@@ -286,14 +410,8 @@ def assemble_bundle(
     payload["manifest.json"] = encoded(manifest)
     if sum(map(len, payload.values())) > MAX_BUNDLE_BYTES:
         raise ContractError("bundle exceeds total size limit")
-    _validate_payload(payload)
-    _require_empty_output(out)
-    out.mkdir(parents=True, exist_ok=True)
-    for name in BUNDLE_FILES:
-        target = local_path(out, name)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        with target.open("xb") as stream:
-            stream.write(payload[name])
+    _validate_payload(payload, current_authoring=True)
+    _write_bundle_directory(out, payload)
     return manifest
 
 

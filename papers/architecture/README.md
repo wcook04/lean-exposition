@@ -33,8 +33,9 @@ without installing the software.
 
 The two figures answer different questions: why three papers share one corpus,
 and which two ingredients a particular contradiction uses. They adapt the
-parallel-record and shared-support TikZ compositions in `paper.md` at local
-commit `4246d4e`, whose source is Will Cook's
+parallel-record composition (figure 2) in `paper.md` at local commit `fde01ef`
+and the shared-support composition (figure 1) at `4246d4e`. Both draw on
+Will Cook's
 [*A Repository-Based System for Research and Publication*](https://github.com/wcook04/plectis-erdos/blob/61fb590921e3b5a100dc264bed052c9cf6959daf/paper/systems/claim-faithful-publication-systems-paper.tex)
 ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). The first replaces
 the linear funnel with three accounts mapped to shared support. The second

@@ -224,6 +224,12 @@ about the general object. Perform this audit in the review account; put only
 the needed reminder or derivation in the reading path. Check the repaired
 passage from its actual entry point, without borrowing later conclusions.
 
+Before deriving a law or independence, identify the model and any joint or
+dependence assumptions used. A finite set of matching numerical summaries does
+not by itself identify a law. Test a proposed counterexample against every
+hypothesis of the claim; if it violates one, it may refute a weakened claim
+but not the original statement.
+
 ## Preserve correspondence
 
 Choose each paper's goals deliberately. Mapping schema `1.1` lets the long
@@ -417,6 +423,12 @@ correction, standard terminology and explanatory comparison. State the role in
 the prose. A formal declaration link does not replace credit to earlier
 mathematics, and a writing model does not prove the target argument.
 
+When an application supplies an ordinary premise for particular parameters,
+that premise may cease to be free in this application, but retain its documentary
+citations and the supplier's sources. Check the asserted substitution separately.
+An authored binding does not remove an extracted Lean axiom or `sorryAx`
+dependency, or certify a formal substitution.
+
 After a move or cut, follow the reference to the actual destination. Compare
 its statement, assumptions and notation with the claim that now depends on it.
 Reconcile short and long versions in both directions. A correction in one may
@@ -562,6 +574,19 @@ lean-exposition assemble draft/graph.json \
 lean-exposition check-bundle assembled
 lean-exposition export assembled --out authored.zip
 ```
+
+Before using `formal_result` for a passage, run
+`lean-exposition inspect draft/graph.json` and read `formal_result_assurances`
+for its selected declarations. Current eligibility requires bound extraction
+and build observations; it does not authenticate execution or establish a
+mathematical correspondence. Do not relabel an incomplete historical receipt as
+a current observation.
+
+`assemble` applies the current formal-result and documentary-citation checks
+to new authoring, including citations for supplied premises. `check-bundle`
+uses the historical citation and formal-result rules for existing captures;
+other integrity checks still apply. The [bundle guide](bundle-consumers.md#assemble-authored-papers)
+shows how to inspect current assurance and citation gaps without changing a capture.
 
 The output directory must be empty. Assembly validates the supplied bindings
 without repairing stale hashes or rewriting prose, then creates a new manifest

@@ -12,7 +12,8 @@ from urllib.parse import quote
 from .bundle import STAGES, BundleCapture, load_bundle
 from .contracts import (
     ARGUMENT_EDGES, LEAN_EDGES, ContractError, argument_contexts, closure, decode_json, digest,
-    encoded, require_refs, required_citation_ids, select, validate_graph,
+    documentary_citation_seeds, encoded, formal_result_assurances, require_refs,
+    required_citation_ids, select, validate_graph,
 )
 
 PAPER_VIEW_VERSION = "0.3.1"
@@ -20,6 +21,8 @@ PAPER_QUERY_VERSION = "0.4.1"
 COMPACT_PAPER_QUERY_VERSION = "0.1.0"
 READING_VIEW_VERSION = "0.1.0"
 CORPUS_VIEW_VERSION = "0.1.1"
+APPLICATION_METADATA_SCOPE = ("remaining_assumption_ids is authored historical metadata, not an effective "
+                              "obligation audit; path-local suppression may be lifted for retained formal dependencies.")
 CORPUS_QUERY_VERSION = "0.1.0"
 
 
@@ -95,6 +98,8 @@ def inspect_graph(graph: dict, goals: list[str] | None = None) -> dict:
         "title": selected["title"],
         "scope": selected["scope"],
         "notes": copy.deepcopy(selected["notes"]),
+        "formal_result_assurances": formal_result_assurances(
+            selected, [node["id"] for node in selected["nodes"] if node["kind"] == "declaration"]),
         "nodes": [
             {
                 **copy.deepcopy(node),
@@ -474,6 +479,11 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                        for identity in sorted(identifiers)]
                for table, identifiers in (("nodes", node_ids), ("citations", citation_ids),
                                           ("sources", source_ids), ("evidence", evidence_ids))}
+    paper_assurances = formal_result_assurances(
+        graph, sorted(n for n in node_ids if tables["nodes"][n]["kind"] == "declaration"))
+    for row in records["nodes"]:
+        if row["record"]["id"] in paper_assurances:
+            row["formal_result_assurance"] = copy.deepcopy(paper_assurances[row["record"]["id"]])
     records["edges"] = sorted(chosen_edges, key=lambda row: row["ref"])
     correspondence_links = []
     for passage in selected_passages:
@@ -574,6 +584,13 @@ def _project_paper(payload: dict[str, bytes], stage: str, passages: list[str] | 
                      "unmapped_bytes": sum(s["span"]["end_byte"] - s["span"]["start_byte"] for s in unmapped),
                      "source_bytes_opened": False, "receipt_bytes_opened": False,
                      "per_root_dependency_completeness": "unknown",
+                     "formal_result_assurances": paper_assurances,
+                     "effective_retained_assumption_ids": sorted(
+                         n for n in node_ids if tables["nodes"][n]["kind"] == "assumption"),
+                     "document_citation_audit": _document_citation_audit(graph, mapping),
+                     "passage_citation_audits": [{"anchor": p["anchor"], **_passage_citation_audit(graph, p)}
+                                                 for p in selected_passages],
+                     "citation_audit_scope": "Recorded documentary references only; missing effective citation IDs do not establish a mathematical or editorial verdict.",
                      "heading_syntax": "ATX headings only; Setext and HTML headings are not parsed",
                      "scope": "Mapped passages are correspondences, not sentence-level formal support. Section-passage overlaps are document structure, not claim or proof implications. Unmapped text and passages omitted by the selector remain in the validated paper. Graph records outside the selected prerequisite closure remain in the bundle and are not asserted absent. Argument links combine recorded Lean references, curated support, formalization correspondence and explicit assumptions; their SCCs describe only that mixed recorded reachability. Reading order and platform decomposition are separate."},
     }
@@ -613,6 +630,8 @@ def _argument_adjacency(graph: dict, graph_hash: str) -> dict[str, list[dict]]:
             "kind": edge["kind"], "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
             "derived": False, "record_ref": edge_ref,
             **({"application": copy.deepcopy(edge["application"])} if "application" in edge else {}),
+            **({"application_metadata_scope": APPLICATION_METADATA_SCOPE}
+               if "application" in edge else {}),
         })
     for node in graph["nodes"]:
         for target in node["assumption_ids"]:
@@ -630,19 +649,41 @@ def _argument_adjacency(graph: dict, graph_hash: str) -> dict[str, list[dict]]:
     return adjacency
 
 
-def _witness_tree(adjacency: dict[str, list[dict]], roots: set[str]) -> dict[str, tuple]:
-    """Shortest recorded paths in premise contexts; never globally erase a use."""
+def _passage_citation_audit(graph: dict, passage: dict) -> dict:
+    """Report recorded documentary requirements without changing paper bytes."""
+    roots = passage["claim_ids"] + passage["assumption_ids"]
+    required = required_citation_ids(graph, roots)
+    return {"effective_required_citation_ids": sorted(required),
+            "missing_effective_citation_ids": sorted(required - set(passage["citation_ids"]))}
+
+
+def _document_citation_audit(graph: dict, mapping: dict) -> dict:
+    roots = mapping["claim_ids"] + mapping["selected_goal_ids"] + mapping["assumption_ids"]
+    required = required_citation_ids(graph, roots)
+    return {"effective_required_citation_ids": sorted(required),
+            "missing_effective_citation_ids": sorted(required - set(mapping["citation_ids"]))}
+
+
+def _witness_tree(graph: dict, adjacency: dict[str, list[dict]], roots: set[str]) -> dict[str, tuple]:
+    """Shortest paths through the same scoped states as the contract closure."""
+    _, transitions = argument_contexts(graph, sorted(roots))
+    links_by_key = {(link["from_node_id"], link["to_node_id"], link["kind"]): link
+                    for links in adjacency.values() for link in links}
+    outgoing = {}
+    for source, target, edge in transitions:
+        kind = edge["kind"] if edge else "assumption_ids"
+        link = links_by_key[(source[0], target[0], kind)]
+        outgoing.setdefault(source, []).append((target, link))
+    for links in outgoing.values():
+        links.sort(key=lambda item: (item[0][0], item[1]["kind"], item[1]["id"]))
     paths = {root: (root, []) for root in sorted(roots)}
     pending = deque((root, frozenset(), root, []) for root in sorted(roots))
     visited = {(root, frozenset()) for root in roots}
     while pending:
         node, discharged, root, prefix = pending.popleft()
-        for link in adjacency[node]:
-            target = link["to_node_id"]
-            supplied = {p["assumption_id"] for p in link.get("application", {}).get("premise_bindings", [])}
-            scope = discharged | supplied
-            state = (target, frozenset(scope))
-            if target in scope or state in visited:
+        for state, link in outgoing.get((node, discharged), ()):
+            target, scope = state
+            if state in visited:
                 continue
             visited.add(state)
             contextual = copy.deepcopy(link)
@@ -745,6 +786,11 @@ def project_corpus(bundle_path: Path | BundleCapture | ConsumerSession, *, expec
     records = {table: [{"ref": ref(table, row["id"]), "record": copy.deepcopy(row)}
                        for row in sorted(graph[table], key=lambda row: row["id"])]
                for table in ("nodes", "citations", "sources", "evidence")}
+    assurances = formal_result_assurances(graph, [n["id"] for n in graph["nodes"]
+                                                   if n["kind"] == "declaration"])
+    for row in records["nodes"]:
+        if row["record"]["id"] in assurances:
+            row["formal_result_assurance"] = assurances[row["record"]["id"]]
     records["edges"] = []
     relations = {family: [] for family in ("declarations", "arguments", "citations", "platform", "provenance")}
     def field_link(owner_ref, field, target_table, target, family="provenance"):
@@ -768,7 +814,9 @@ def project_corpus(bundle_path: Path | BundleCapture | ConsumerSession, *, expec
                                   "to": ref("nodes", edge["to"]), "kind": edge["kind"],
                                   "semantic_class": _RELATION_SEMANTICS[edge["kind"]][0],
                                   "derived": False, "record_ref": edge_ref,
-                                  **({"application": copy.deepcopy(edge["application"])} if "application" in edge else {})})
+                                  **({"application": copy.deepcopy(edge["application"]),
+                                      "application_metadata_scope": APPLICATION_METADATA_SCOPE}
+                                     if "application" in edge else {})})
         for field in ("from", "to"):
             field_link(edge_ref, field, "nodes", edge[field])
         for evidence_id in edge["evidence_ids"]:
@@ -1126,7 +1174,7 @@ def query_papers(
                 continue
             claim_seeds, assumption_seeds = set(passage["claim_ids"]), set(passage["assumption_ids"])
             direct = claim_seeds | assumption_seeds
-            paths = _witness_tree(adjacency, direct) if relation == "prerequisites" else {}
+            paths = _witness_tree(graph, adjacency, direct) if relation == "prerequisites" else {}
             candidates = direct if relation == "direct" else set(paths)
             matched_ids = sorted(candidates.intersection(node_ids)) if node_ids is not None else []
             if node_ids is not None and not matched_ids:
@@ -1160,6 +1208,7 @@ def query_papers(
                 "matched_node_ids": matched_ids,
                 "direct_claim_ids": sorted(claim_seeds),
                 "direct_assumption_ids": sorted(assumption_seeds),
+                **_passage_citation_audit(graph, passage),
                 "section_overlaps": copy.deepcopy(overlaps),
                 "byte_overlaps": byte_overlaps,
                 "whole_passage_extends_beyond_selected_ranges": byte_ranges is not None and range_covered_until < content_span["end_byte"],
@@ -1171,7 +1220,7 @@ def query_papers(
         selected_passages = [p for p in full["paper"]["passages"] if p["anchor"] in selected_set]
         claims = {n for p in selected_passages for n in p["claim_ids"]}
         assumptions = {n for p in selected_passages for n in p["assumption_ids"]}
-        paths = _witness_tree(adjacency, claims | assumptions)
+        paths = _witness_tree(graph, adjacency, claims | assumptions)
         required = set(paths)
         prerequisite_only = required - claims
         boundary_witnesses = []
@@ -1184,6 +1233,8 @@ def query_papers(
             "retained_node_ids": sorted(required),
             "not_mapped_as_claim_ids": sorted(prerequisite_only),
             "required_assumption_ids": sorted(n for n in required if nodes[n]["kind"] == "assumption"),
+            "formal_result_assurances": formal_result_assurances(
+                graph, sorted(n for n in required if nodes[n]["kind"] == "declaration")),
             "unresolved_node_ids": sorted(n for n in required if nodes[n]["status"] in
                                           {"open", "unverified", "external", "conditional"}),
             "outside_closure_node_ids": sorted(set(nodes) - required),
@@ -1191,19 +1242,28 @@ def query_papers(
                                       "text": nodes[n]["boundary"]}
                                      for n in sorted(required) if "boundary" in nodes[n]],
             "witnesses": boundary_witnesses,
-            "meaning": "Not mapped as a claim means absent from the selected passages' claim_ids, not absent from their prose. Explicit assumption references and all recorded prerequisites are retained. No sentence-level explanation coverage is inferred.",
+            "meaning": "Not mapped as a claim means absent from the selected passages' claim_ids, not absent from their prose. The whole-passage boundary treats explicitly mapped assumptions as roots, alongside recorded prerequisites; it is not a list of undischarged premises for each individual claim. No sentence-level explanation coverage is inferred.",
         }
         result_paper = {"stage": paper_stage, "matches": matches,
                         "selected_section_refs": section_refs if section_refs is not None else [],
-                        "support_boundary": boundary}
+                        "support_boundary": boundary,
+                        "document_citation_audit": copy.deepcopy(full["coverage"]["document_citation_audit"])}
         if include_views:
             result_paper["view"] = _project_paper(payload, paper_stage, selected, session=session)
         else:
+            document_coverage = copy.deepcopy(full["coverage"])
+            document_coverage["formal_result_assurances"] = formal_result_assurances(
+                graph, sorted(n for n in required if nodes[n]["kind"] == "declaration"))
+            document_coverage["effective_retained_assumption_ids"] = sorted(
+                n for n in required if nodes[n]["kind"] == "assumption")
+            document_coverage["passage_citation_audits"] = [
+                {"anchor": p["anchor"], **_passage_citation_audit(graph, p)} for p in selected_passages]
             result_paper.update({
                 "document": {"path": full["paper"]["path"], "byte_length": full["paper"]["byte_length"],
                              "line_count": full["paper"]["line_count"],
                              **copy.deepcopy({key: full[key] for key in
-                                 ("paper_view_version", "state", "review_state", "paper_scope", "bundle", "coverage")})},
+                                 ("paper_view_version", "state", "review_state", "paper_scope", "bundle")}),
+                             "coverage": document_coverage},
                 "passages": [copy.deepcopy({**passage, "selected": True}) for passage in selected_passages],
                 "correspondence_links": [copy.deepcopy(link) for link in full["correspondence_links"]
                                          if link["source_anchor"] in selected_set],
@@ -1378,7 +1438,7 @@ def query_reading(
         "links": ordered_links, "semantic_certification": False,
         **({"pagination": {"offset": offset, "limit": limit, "total": total}} if limit is not None else {}),
         "coverage": {
-            "query_truncated": limit is not None and (offset > 0 or stop < total),
+            "query_truncated": limit is not None and len(ordered_links) < total,
             "source_bytes_opened": False, "receipt_bytes_opened": False,
             "selection_policy": "query_papers whole-passage selection; union within each selector family, intersection between families",
             "authored_link_policy": "Links incident to selected passages, in their stored direction; target_stage filters the other endpoint",
@@ -1460,7 +1520,7 @@ def project_graph(
 
     seed_node_ids = set(chosen)
     if view == "citations":
-        seed_node_ids = closure(graph, chosen)
+        seed_node_ids = documentary_citation_seeds(graph, chosen)
     seeds = {ref("nodes", identity) for identity in seed_node_ids}
     if session is not None:
         links = list(session._graph_links[view])
@@ -1556,7 +1616,7 @@ def project_graph(
                for table, rows in tables.items()}
     components, condensation = _view_components(reached, links)
     platform_fields = ("platform_closure_status", "local_verification", "assumption_audit",
-                       "limits", "omissions", "hidden_relations")
+                       "limits", "omissions", "hidden_relations", "platform_deprecation")
     observations = [{"evidence_id": e["id"], "status": e["status"],
                      "relevant": e["id"] in relevant_evidence,
                      "recorded": {k: copy.deepcopy(e.get("receipt", {})[k])
@@ -1577,7 +1637,9 @@ def project_graph(
         "seed_record_refs": sorted(seeds), "selected_record_refs": sorted(reached),
         "traversal": {"direction": direction, "edge_kinds": sorted(kinds[view]),
                       "include_assumptions": include_assumptions,
-                      "citation_seeds": "argument_closure" if view == "citations" else None,
+                      "citation_seeds": ("argument_closure_and_supplied_premises"
+                                         if view == "citations" and seed_node_ids != closure(graph, chosen)
+                                         else "argument_closure" if view == "citations" else None),
                       "provenance_edge_seeds": "edges incident to requested roots" if view == "provenance" else None,
                       "provenance_evidence_seeds": "evidence with a requested root as subject" if view == "provenance" else None,
                       "recorded_from_to": True,
@@ -1595,8 +1657,16 @@ def project_graph(
             "empty_result_meaning": "No recorded relation in this view; not a proof of independence.",
             "boundaries": [{"node_id": n, "text": tables["nodes"][n]["boundary"]}
                            for n in sorted(node_ids) if "boundary" in tables["nodes"][n]],
+            "formal_result_assurances": formal_result_assurances(
+                graph, sorted(n for n in node_ids if tables["nodes"][n]["kind"] == "declaration")),
+            "effective_retained_assumption_ids": (
+                sorted(n for n in closure(graph, chosen) if tables["nodes"][n]["kind"] == "assumption")
+                if view == "arguments" and include_assumptions and direction == "prerequisites" else None),
+            "effective_assumptions_scope": (
+                "Full recorded scoped argument closure, including Lean dependency edges that this narrower view may omit; not a complete extracted proof DAG."
+                if view == "arguments" and include_assumptions and direction == "prerequisites" else None),
             "platform_observations": observations,
-            "platform_grouping": "union_for_navigation; group membership unavailable from graph edges",
+            "platform_grouping": "union_for_navigation; group membership may be recorded in platform_deprecation, but is unavailable from graph edges or older receipts",
             "source_bytes_opened": False,
             "locator_semantics": "Recorded free-text navigation hint; coordinates are not checked by this view.",
         },

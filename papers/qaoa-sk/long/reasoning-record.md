@@ -347,7 +347,7 @@ A qualitative crossing statement alone supplies no positive limiting
 fourth-moment margin. [Lopatto, arXiv:2607.11756v4, equation (1.2),
 §2 and Proposition 5.1](https://arxiv.org/abs/2607.11756v4).
 
-Two later editions sharpen the comparison without entering the pinned
+Two related works sharpen the comparison without entering the pinned
 September proof. [Lopatto, arXiv:2607.11756v4, Proposition 5.1 and
 (5.8)–Corollary 5.6](https://arxiv.org/abs/2607.11756v4), proves a
 conditional curvature crossing on a positive constant interval. Its
@@ -2515,13 +2515,15 @@ generally $d\Gamma(A)$ sums $A$ over those $m$ child factors. The
 vacuum characteristic function
 $\langle\Omega,e^{itq(f)}\Omega\rangle=e^{-t^2\|f\|^2/2}$ fixes the
 Gaussian normalization.
-In the real classical sector, a centred child vector $f$ produces a
-parent Gaussian position $\mathsf G(f)=q(f)$ with
+For any finite list of fixed centred real child vectors, their parent
+positions $\mathsf G(f)=q(f)$ are jointly centred Gaussian; for $f,g$,
 $$
 \mathbb E[\mathsf G(f)\mathsf G(g)]=\langle f,g\rangle,
 \qquad
 \|[\mathsf G(f)-\mathsf G(g)]\mathrm{vac}\|=\|f-g\|.
 $$
+The directions are fixed elements of the child space, even when their
+values depend on the child's Gaussian coordinates.
 The receiving root's own seed is a separate, independent tensor factor.
 The root shift
 $$
@@ -2538,8 +2540,9 @@ roles in the next calculation.
 
 Start with the standard root seed $g_0=S$ and recursively set
 $Z_{j+1}=\mathsf G(g_j)$. Suppose $g_0,\ldots,g_{j-1}$ are centred
-orthonormal vectors. The covariance identity gives independent standard
-normals $Z_1,\ldots,Z_j$. In the scalar construction of §7, the multiplier
+orthonormal vectors. The joint Gaussian law of their lifts and the covariance
+identity give independent standard normals $Z_1,\ldots,Z_j$. In the scalar
+construction of §7, the multiplier
 of $Z_j$ in $g_j$ depends only on its predecessors. Conditional centring
 therefore makes $g_j$ orthogonal to $g_1,\ldots,g_{j-1}$, and the chosen
 normaliser $c_j$ gives unit norm. Independence of the receiving-root
@@ -5297,9 +5300,12 @@ of its original invocation. Neither is a replay of the subsequently
 repaired source configuration.
 
 This editorial revision does not establish a new formal result.
-Detailed reading coverage, exact finite-check
-results, preserved unsuccessful observations and the remaining obligations
-are recorded in the [companion source review](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/papers/qaoa-sk/source-review/README.md). This remains a draft after source-based agent review; independent mathematical acceptance and a human reconstruction study have not been performed.
+The [source review through 26 October 2026](https://github.com/wcook04/lean-exposition/blob/ef46d0e72787c1dc283733b10b433d112f97ac64/papers/qaoa-sk/source-review/references-and-adversarial-review.md)
+records the preceding paper revision's reading coverage, finite checks,
+unsuccessful observations and remaining obligations; viewing it requires
+repository access. This remains a draft after source-based agent review;
+independent mathematical acceptance and a human reconstruction study
+have not been performed.
 <!-- /passage:verification -->
 
 ## References

@@ -1,7 +1,9 @@
 """Retrieve explicitly licensed, pinned public bytes, without executing them."""
 from __future__ import annotations
 
+import ipaddress
 import re
+import socket
 import unicodedata
 import urllib.parse
 import urllib.request
@@ -10,13 +12,61 @@ from pathlib import Path
 from .contracts import ContractError, digest, local_path, portable_path
 
 
+def _canonical_hostname(hostname: str) -> str:
+    try:
+        hostname = hostname.encode("idna").decode("ascii").rstrip(".").lower()
+    except UnicodeError:
+        raise ContractError("source URL must use a public host") from None
+    if not hostname or "%" in hostname or "\\" in hostname:
+        raise ContractError("source URL must use a public host")
+    return hostname
+
+
 def _public_url(value: str):
-    if not isinstance(value, str) or any(c.isspace() for c in value):
+    """Check URL syntax and literal addresses, without resolving hostname DNS."""
+    if not isinstance(value, str) or any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in value):
         raise ContractError("source URL must be public HTTPS without credentials/query")
-    parsed = urllib.parse.urlsplit(value)
-    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment:
+    try:
+        parsed = urllib.parse.urlsplit(value)
+        hostname = parsed.hostname
+        port = parsed.port
+    except ValueError:
+        raise ContractError("source URL must be public HTTPS without credentials/query") from None
+    if (parsed.scheme != "https" or not hostname or parsed.username is not None or parsed.password is not None
+            or parsed.query or parsed.fragment or port == 0):
         raise ContractError("source URL must be public HTTPS without credentials/query")
+    hostname = _canonical_hostname(hostname)
+    if hostname == "localhost" or hostname.endswith(".localhost"):
+        raise ContractError("source URL must use a public host")
+    try:
+        address = ipaddress.ip_address(hostname)
+    except ValueError:
+        try:
+            # The system resolver also accepts legacy numeric IPv4 forms, such
+            # as 127.1 and 0x7f000001; parse them without performing DNS.
+            address = ipaddress.IPv4Address(socket.inet_aton(hostname))
+        except OSError:
+            address = None  # Hostname DNS and proxy resolution are not checked.
+    if address is not None and not _public_address(address):
+        raise ContractError("source URL must use a public host")
     return parsed
+
+
+def _public_address(address):
+    if isinstance(address, ipaddress.IPv6Address) and address.ipv4_mapped is not None:
+        address = address.ipv4_mapped
+    return address.is_global and not address.is_multicast and not address.is_reserved
+
+
+class _PublicRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, fp, code, msg, headers, newurl):
+        _public_url(newurl)  # Check before urllib can issue the redirected request.
+        return super().redirect_request(request, fp, code, msg, headers, newurl)
+
+
+def _open(request, timeout):
+    opener = urllib.request.build_opener(_PublicRedirect())
+    return opener.open(request, timeout=timeout)
 
 
 def validate_lock(lock: dict) -> None:
@@ -48,10 +98,11 @@ def validate_lock(lock: dict) -> None:
             raise ContractError("source URL is not pinned to the locked revision")
         if "repository" in source:
             repository = _public_url(source["repository"])
-            if repository.hostname == "github.com":
+            if _canonical_hostname(repository.hostname) == "github.com":
                 owner_repo = repository.path.strip("/").removesuffix(".git")
                 prefix = f"/{owner_repo}/{source['revision']}/"
-                if parsed.hostname != "raw.githubusercontent.com" or not parsed.path.startswith(prefix):
+                if (_canonical_hostname(parsed.hostname) != "raw.githubusercontent.com"
+                        or not parsed.path.startswith(prefix)):
                     raise ContractError("source URL differs from the locked repository")
                 if "upstream_path" in row and parsed.path != prefix + row["upstream_path"]:
                     raise ContractError("source URL differs from the locked upstream path")
@@ -94,7 +145,7 @@ def fetch(lock: dict, root: Path) -> dict:
     root.mkdir(parents=True, exist_ok=True)
     for row in lock["files"]:
         request = urllib.request.Request(row["url"], headers={"User-Agent": "lean-exposition/0.1"})
-        with urllib.request.urlopen(request, timeout=45) as response:
+        with _open(request, timeout=45) as response:
             _public_url(response.url)
             data = response.read(row["bytes"] + 1)
         if digest(data) != row["sha256"] or len(data) != row["bytes"]:

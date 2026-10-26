@@ -731,11 +731,11 @@
     {
       "id": "authored_long_comparisons_20261024",
       "kind": "file",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
-      "revision": "sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
+      "revision": "sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "license": "Apache-2.0",
       "redistribution": "original",
-      "sha256": "5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "sha256": "4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "qaoa_finite_size_2026",
@@ -1837,7 +1837,7 @@
       "id": "authored_gibbs_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Finite Gibbs comparison: elementary derivation in the authored long record",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.1.2, passage:gibbs-comparison; content-addressed source edition, not an external-paper attribution."
     },
     {
@@ -1851,7 +1851,7 @@
       "id": "authored_bounded_angle_depth_comparison",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Conditional growing-depth consequence of the later estimate",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "locator": "papers/qaoa-sk/long/reasoning-record.md §11.5, passage:qaoa-finite-size; elementary logarithmic deduction from the quoted corollary."
     },
     {
@@ -1936,63 +1936,63 @@
       "source_id": "authored_long_comparisons_20261024",
       "title": "A terminal convex-chord obstruction",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_support_zero_candidate_descent",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The zero coefficient is not minimizing",
       "locator": "Long reasoning record #zero-coefficient-example",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_support_full_relative_support_curvature",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Full support by contact and local curvature",
       "locator": "Long reasoning record #qualitative-terminal-gap",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_scalar_minimizer_coefficient_budget",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Integral and pointwise bounds for a minimizer",
       "locator": "Long reasoning record #coefficient-budget",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_support_fixed_time_spatial_coercivity_at_jumps",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Spatial coercivity at a coefficient jump",
       "locator": "Long reasoning record #fixed-time-jump-extension",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_scalar_finite_maximum_concentration",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Concentration of the finite SK maximum",
       "locator": "Long record §11.1.2, passage gibbs-comparison, Gaussian Lipschitz bound and concentration estimate",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_circuit_sampled_finite_instance_optimum",
       "source_id": "authored_long_comparisons_20261024",
       "title": "One measured configuration approaches its instance maximum",
       "locator": "Long reasoning record #sampled-finite-instance",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_scaling_contact",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Contact by admissible global scaling",
       "locator": "Long reasoning record #global-scaling-contact",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r8_unshifted_gaussian",
       "source_id": "authored_long_comparisons_20261024",
       "title": "The unshifted scalar comparison",
       "locator": "Long record #unshifted-scalar-comparison",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "scalar_hessian_tail_v4",
@@ -2012,14 +2012,14 @@
       "id": "authored_r9_scalar_minimizer_total_coefficient_mass",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Terminal coefficient normalization in zero field",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "locator": "Long reasoning record #coefficient-total-mass"
     },
     {
       "id": "authored_r9_support_raw_curvature_negative_absolute_terminal",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Negative raw curvature with absolute-value terminal data",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "locator": "Long reasoning record #pointwise-curvature-obstruction"
     },
     {
@@ -2033,7 +2033,7 @@
       "id": "authored_r9_finite_formula_word",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Fixed Gaussian formula to an ordinary circuit",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
       "locator": "Long §§8.1–8.6, #qaoa-construction; expert Proposition 5."
     },
     {
@@ -2041,14 +2041,14 @@
       "source_id": "authored_long_comparisons_20261024",
       "title": "Empty support and a finite-chord obstruction",
       "locator": "Long reasoning record #empty-support-chord",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     },
     {
       "id": "authored_r10_finite_maximizer_uniqueness",
       "source_id": "authored_long_comparisons_20261024",
       "title": "Exact finite maximizers and near-ground pairs",
       "locator": "Long reasoning record #exact-finite-maximizers",
-      "url": "urn:sha256:5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5"
+      "url": "urn:sha256:4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b"
     }
   ],
   "nodes": [

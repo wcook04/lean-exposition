@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "fe4f57d2e486e6e9a25807b774a9c6f1de30fa9e53d3261302eee99c44a45ccf",
-  "graph_sha256": "d50b9164c653678bad45f0f573e2946db8be23255a316a205d4fb829be4148ad",
+  "content_sha256": "2654c308bfdc03c4fb5f7af8ab710bc40d835325499549203bc16f48c7393160",
+  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -784,7 +784,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "e31ecfdc738b890fba6ec67bf14b7964d1c0c9d4e38d798ded6cd008d616d3e7",
+      "text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -1021,7 +1021,8 @@
     "25 October 2026 R7 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R8 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 56a78ba57bbd0ed6ff64cbdb89d625aa3e815cfee8875dcd2346ea94a83cb6f6). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 534feb1b0753760508bd21802c94d503e4cb71999415a107bd70bd2b0378fd53). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 R10 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "26 October 2026 R10 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 independent Terra audit: Applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Compared the fixed-direction joint Gaussian premise with the long record and the original rooted construction. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
   ],
   "reading_links": [
     {
@@ -1044,7 +1045,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "e31ecfdc738b890fba6ec67bf14b7964d1c0c9d4e38d798ded6cd008d616d3e7",
+      "from_text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",

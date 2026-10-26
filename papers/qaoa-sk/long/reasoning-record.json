@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "5b01d2e2a0b9c9599244b0d0867096a6f9e946e8b143895de5d87aa639a302b5",
-  "graph_sha256": "d50b9164c653678bad45f0f573e2946db8be23255a316a205d4fb829be4148ad",
+  "content_sha256": "4c9295a2523573f12164b174b03286ffb9fe26b7bd62fb1993e374710073c62b",
+  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -666,7 +666,7 @@
     },
     {
       "anchor": "dependencies",
-      "text_sha256": "d58097f07cd1e6f39c8187c914210966003332c8375cb99df638e58fac7f6fd5",
+      "text_sha256": "8742773b2d50847d9ee6fecca04872b0c26bc49c89fab4086c55edc00a479b7e",
       "claim_ids": [
         "scalar.parisi_formula",
         "scalar.minimizer_attainment",
@@ -1370,6 +1370,8 @@
         "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
@@ -1413,7 +1415,7 @@
     },
     {
       "anchor": "qaoa-rooted",
-      "text_sha256": "b5d5ab7c081b0ba232c67e63f9b00012793fa9e813ee056b69c316314e9cb562",
+      "text_sha256": "686894c447a411db55c21ed454683acb3f050e5594a5420741e2dccc3aea48ad",
       "claim_ids": [
         "circuit.gaussian_root_calculus",
         "circuit.energy_transfer",
@@ -2333,6 +2335,8 @@
         "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
@@ -2423,6 +2427,8 @@
         "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
@@ -2516,6 +2522,8 @@
         "scalar-r2-26-cite-euler-normalization",
         "scalar-r2-26-cite-manuscript-terminal-value",
         "scalar-r2-26-cite-minimizer-attainment",
+        "scalar-r2-26-cite-paper-admissible",
+        "scalar-r2-26-cite-paper-minimizer",
         "scalar-r2-26-cite-parisi-formula",
         "scalar-r2-26-cite-shifted-gaussian-limit",
         "scalar-r2-26-cite-smooth-positive-density",
@@ -2850,7 +2858,7 @@
     },
     {
       "anchor": "verification",
-      "text_sha256": "f53e415355e7edbebe877a2342716cdd97091aa738548b5493a37ea01a9d0ca1",
+      "text_sha256": "c00a5afc325911433f02cf358f32dc66492047ce3fb04fd99f63131963657b29",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -2990,7 +2998,8 @@
     "25 October 2026 R7 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 299c7d99e5e1ad817154f628664939111eee761da0f0dacc103e08ddbf7a7c03). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R8 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 8b8d55a5ee58d0c309f8ae0b0e97a95be27dd286b199a6d1bf0d61f487c4dc9b). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R9 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 017ac5f8582a8434375d609c3081580d33ae3cc2ec1870ad09f769d9ac95eab7). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 R10 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 e779c0a6f282d578aeb254a1aca53517e44065244459972a3d930a9d94197176). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "26 October 2026 R10 review assimilation: applied local skills/graph-to-long/SKILL.md (SHA256 e779c0a6f282d578aeb254a1aca53517e44065244459972a3d930a9d94197176). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 independent Terra audit: Applied local skills/graph-to-long/SKILL.md (SHA256 dc581c07e4a9cce5944dde35085329cefd169a59873b941769332252b7b03d87). Checked the joint Gaussian law for fixed child-space directions against the source, retained neutral chronology and corrected the prior-review locator. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
   ],
   "reading_links": [
     {
@@ -3061,7 +3070,7 @@
       "from_text_sha256": "f818a5acea07e6c37f638659c49ea5de84afafd1ef144b47e4b0ebdd1f32ff69",
       "to_stage": "short",
       "to_anchor": "qaoa-boundary",
-      "to_text_sha256": "e31ecfdc738b890fba6ec67bf14b7964d1c0c9d4e38d798ded6cd008d616d3e7",
+      "to_text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
       "kind": "expands",
       "rationale": "Expands the final error allocation and order of choices after the separate synthesis and seed-removal inputs; it does not replace those inputs by the scalar statement."
     },
