@@ -208,6 +208,36 @@
   max-width: none;
 }
 
+/* A display too wide even at 80% of its size breaks between relation signs,
+   with every line centred, instead of scrolling sideways. */
+.prose .math-display[data-fit="wrap"] > .katex-display > .katex,
+.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex {
+  display: block;
+  white-space: normal;
+}
+
+/* The equation number on its own line, flush right under the formula. */
+.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html > :is(.katex-tag, .tag) {
+  position: static;
+  flex-basis: 100%;
+  text-align: right;
+}
+
+/* A numbered display too tight to centre beside its number is set flush left. */
+.prose .math-display[data-align="start"] > .katex-display > .katex {
+  text-align: left;
+}
+
+/* Each piece keeps its full height and depth, so a fraction never overlaps the next line. */
+.prose .math-display[data-fit="wrap"] > .katex-display > .katex > .katex-html,
+.prose .math-display[data-fit="wrap-tagged"] > .katex-display > .katex > .katex-html {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  row-gap: 0.45em;
+}
+
 .prose .math-display:focus-visible {
   outline: 2px solid var(--lit);
   outline-offset: 2px;

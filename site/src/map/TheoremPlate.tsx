@@ -9,6 +9,8 @@ import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { partOfPassage, sectionTitleOf, useDocument } from "../reader/documents";
 import { goalCheckLine } from "../checks/summary";
 import { mountFigures } from "../reader/mount";
+import { markWideMaths } from "../reader/page/PaperBody";
+import { formatLeanSignature, tokenizeLean } from "../panels/leanTokens";
 
 /** The result every account selects: the site's main theorem. */
 export function mainGoal(edition: Edition): string {
@@ -110,7 +112,15 @@ export function TheoremBody({ goal }: { goal: string }) {
   const statement = useStatement(goal);
   const statementRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (statementRef.current) return mountFigures(statementRef.current);
+    const el = statementRef.current;
+    if (!el) return;
+    const unmount = mountFigures(el);
+    // A display wider than the plate shrinks to fit, then breaks at a relation; it never scrolls here.
+    const unmark = markWideMaths(el);
+    return () => {
+      unmark();
+      unmount?.();
+    };
   }, [statement]);
   // A long statement is clamped with a soft fade; the source link below stays in view.
   const clampRef = useRef<HTMLDivElement>(null);
@@ -154,7 +164,7 @@ export function TheoremBody({ goal }: { goal: string }) {
         {formalNode && (
           <div className="plate__lean">
             <p className="caps plate__label">In Lean</p>
-            <code className="lean plate__code">{leanStatement ?? formalNode.label}</code>
+            <LeanSignature source={leanStatement ?? formalNode.label} />
             <p className="plate__leanstatus">
               Recorded Lean correspondence{correspondence?.warrant?.status ? ` · review ${correspondence.warrant.status.replace(/_/g, " ")}` : ""}
             </p>
@@ -205,4 +215,22 @@ function excerptStatement(html: string): string {
 
 export function useMainGoal(): string {
   return mainGoal(useEdition());
+}
+
+/** The Lean statement laid out as Lean code is written, one binder per line, with light colouring. */
+function LeanSignature({ source }: { source: string }) {
+  const tokens = useMemo(() => tokenizeLean(formatLeanSignature(source)), [source]);
+  return (
+    <code className="lean plate__code">
+      {tokens.map((t, i) =>
+        t.kind === "space" || t.kind === "punct" ? (
+          t.text
+        ) : (
+          <span key={i} className={`lk lk--${t.kind}`}>
+            {t.text}
+          </span>
+        ),
+      )}
+    </code>
+  );
 }
