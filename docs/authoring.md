@@ -43,6 +43,10 @@ citations, and allocation of detail to the difficult step. Match the source
 edition and mathematical setting before transferring a convention or comparison.
 Preserve the field's useful terms and explain their operations at the reader's
 level. A specialist source may assume background that an exposition must teach.
+Compare its prerequisites and purpose before adopting its order or compression;
+write the explanation independently rather than copying its prose. Distinguish
+the chronology of results and source editions from the order chosen to explain
+them. Companion papers can share a statement without sharing a proof route.
 Record the passage and the editorial decision it informed; neither a literature
 shelf nor a reviewer's description establishes that its practice was inspected.
 

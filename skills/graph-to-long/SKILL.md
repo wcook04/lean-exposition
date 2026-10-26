@@ -72,6 +72,11 @@ reading order. Keep that first response separate from the assisted reread.
    proof, a later consequence and a comparison. Their position in consecutive
    sections is not an implication. State the role of a cited result at its use;
    a source pointer may supply a proof, a hypothesis or only context.
+   Before calling an antecedent merely related, compare its theorem class and
+   translate its parameters: a differently written statement may supply the
+   exact input. Distinguish credit for that result, the detailed proof followed
+   and the present reorganisation. A new grouping of known steps is not by
+   itself a new mathematical result.
 3. Explain each load-bearing transition through what is already known, what
    the next step requires, and the local argument that connects them. A graph
    edge or the word “therefore” cannot supply a missing inference.

@@ -53,6 +53,12 @@ first and second moments; and explaining the ordered limits of the QAOA claim.
 Only ask a task after the corresponding material has been read. An answer about
 the no-gap argument cannot establish comprehension of the circuit construction.
 
+Match each task to the inference in the edition being read. After a proof-route
+revision, keep useful tasks for unchanged steps and replace or supplement those
+that miss the new step. If an easy example makes distinct quantities equal,
+use a nearby case that separates them. Check the other hypotheses and the worked
+answer first; an arbitrary broken example may test a different failure.
+
 ## Preserve the attempt, including assistance
 
 Record the first response before any correction. Keep later hints, answer exposure

@@ -30,12 +30,14 @@ with arbitrarily small error in that fraction.
 We follow the quantitative proof in [OpenAI (2026a)][support-manuscript];
 [Hong-Bin Chen (2026), Theorem 1.3][chen-support] had already proved
 full support by a different method. The estimate used here makes the
-final contradiction a direct comparison of areas. We assume algebra and elementary calculus. Weighted averages and
-cumulative mass are introduced through calculations; the deeper analytic
-facts are stated where the proof needs them. Sections 1–6 explain the
-no-gap argument and its consequence for spins. Section 7 supplies optional
-calculations behind the stated inputs; the full analytic proofs remain
-in the cited sources.
+final contradiction a direct comparison of areas. We assume algebra
+and elementary calculus, and introduce probability and cumulative mass
+through calculations. The deeper analytic facts are stated where the
+proof needs them. By the end of Sections 1–6, the reader should be able
+to reconstruct how minimality and those inputs exclude each kind of gap,
+then translate the result into a statement about spin configurations.
+Section 7 gives optional calculations and answers to the short questions
+in the text; the full analytic proofs remain in the cited sources.
 <!-- /passage:opening -->
 
 <!-- passage:spins-and-overlap -->
@@ -46,6 +48,8 @@ called a **spin**. A configuration is the vector
 $\sigma=(\sigma_1,\ldots,\sigma_n)$.
 For each unordered pair choose an independent standard Gaussian
 $J_{ij}$, a normal random variable with mean zero and variance one.
+Independence means that learning the other couplings does not change
+the probability distribution of this one.
 These coefficients, or **couplings**, are drawn once and then held
 fixed while we maximise the energy, or **Hamiltonian**,
 
@@ -64,14 +68,27 @@ For two spins, $H_2(\sigma)=J_{12}\sigma_1\sigma_2/\sqrt2$.
 Choosing equal or opposite signs according to the sign of $J_{12}$ gives
 $\max_\sigma H_2(\sigma)=|J_{12}|/\sqrt2$.
 
-Expectation means a probability-weighted average. For a standard Gaussian
-$Z$, with density $\varphi(z)=(2\pi)^{-1/2}e^{-z^2/2}$, this is the integral
+To average over the couplings, we first need their probabilities.
+A **probability density** assigns probability by area. For a standard
+Gaussian random variable $Z$, the density is
+$\varphi(z)=(2\pi)^{-1/2}e^{-z^2/2}$; it is nonnegative, has total
+integral one, and for $a\le b$ gives
+
+$$
+\Pr(a\le Z\le b)=\int_a^b\varphi(z)\,dz.
+$$
+
+In particular, a single point has probability zero. The density's height
+is not the probability of that point. To average a score $f(Z)$, weight
+it by this same density. Its **expectation** is
 
 $$
 \mathbb E f(Z)=\int_{\mathbb R}f(z)\varphi(z)\,dz.
 $$
 
-For example, symmetry gives $\mathbb EZ=0$, whereas
+For the standard Gaussian, $\mathbb EZ=0$ and $\mathbb EZ^2=1$.
+For a mean-zero random variable, its **variance** is this mean square;
+thus $\sqrt h Z$ has variance $h$ for $h>0$. Symmetry gives the zero mean, whereas
 $\mathbb E|Z|=2\int_0^\infty z\varphi(z)\,dz=\sqrt{2/\pi}$.
 Thus the expected two-spin maximum is $1/\sqrt\pi$. For any signs
 chosen before seeing the coupling, the expected energy is instead zero.
@@ -101,9 +118,8 @@ of their sites, and more generally at any prescribed fraction up to
 one half.
 
 Our normalisation gives the covariance function $\xi(t)=t^2/2$ in the
-variational problem below. The following calculation explains that
-convention and can be skipped on a first reading. For fixed
-$\sigma,\tau$, put $v_i=\sigma_i\tau_i$. When we expand the product
+variational problem below. **Optional normalisation calculation.**
+For fixed $\sigma,\tau$, put $v_i=\sigma_i\tau_i$. When we expand the product
 of energies, different couplings have mean product zero by independence
 and their zero means; a coupling multiplied by itself has mean one.
 Together with $v_i^2=1$, this gives
@@ -118,8 +134,10 @@ $$
 Dividing by $n$ gives the limiting covariance
 $\xi(t)=t^2/2$. For exact covariance
 $n\xi(R)$, add the same independent centred Gaussian of variance $1/2$
-to every energy; this leaves the expected maximum unchanged. Reversing
-one configuration's signs preserves its energy and reverses its
+to every energy; this leaves the expected maximum unchanged.
+
+**Back to the spin question.** Reversing one configuration's signs
+preserves its energy and reverses its
 overlap with another. We next define deterministic candidate values
 indexed by nonnegative overlap scales $t$. The Parisi theorem in
 Section 3 identifies their minimum with the limiting spin optimum;
@@ -186,7 +204,8 @@ may be summed in either order. A mass at one would change none of the
 cumulative values below one, so one is excluded from the domain.
 
 The **support** consists of points whose every neighbourhood carries
-positive mass; neighbourhoods are taken within $[0,1)$. Full support means
+positive mass. A neighbourhood here is an interval around the point,
+clipped to $[0,1)$. Full support means
 that every nonempty relative open interval carries mass. Equivalently,
 $\gamma$ is strictly increasing: full support gives a positive increment
 on each $(a,b]$ with $a<b$, and a positive increment on a smaller interval
@@ -273,19 +292,35 @@ function is not the conclusion we seek. Nor does full support alone
 assert a density: a measure with summable positive masses at a dense countable
 set has full support. The further-reading note returns to the stronger
 density conclusion.
+
+**Question 1: allowed changes.** Return to the two weights
+$2\delta_{1/4}+\delta_{3/4}$. For $0<\varepsilon<1$, which changes
+leave an admissible cumulative function: adding $\varepsilon$ mass at
+$1/2$, removing it at $1/4$, removing it at $1/2$, or multiplying
+both weights by $1-\varepsilon$? Check monotonicity as well as
+nonnegativity. Answers are in Section 7.4.
 <!-- /passage:order-parameter-example -->
 
 <!-- passage:value-and-diffusion -->
 ## 3. How a candidate receives its value
+
+To rule out a candidate, we will look for an allowed change that lowers
+its value. Adding mass at one scale changes the cumulative coefficient
+at every later scale. We therefore need both a value for each candidate
+and a way to compute the cost of that change. The auxiliary optimisation
+below supplies the value; its response to the starting state will enter
+the first-variation formula in Section 5.1.
 
 ### 3.1 First evaluate the zero coefficient
 
 The variational problem assigns each $\gamma$ a value by a one-dimensional
 auxiliary optimisation. Its final reward at state $x$ is $|x|$: this is
 the best one-spin score $\max_{\sigma\in\{-1,1\}}x\sigma$.
-First take $\gamma=0$, when only noise changes the state. Starting at
-time $t$ in state $x$, the remaining noise is Gaussian with variance
-$1-t$. Thus the expected final reward is
+First take $\gamma=0$, when only noise changes the state. The auxiliary
+clock is chosen so that noise accumulated over an interval of length
+$h$ has variance $h$, the variance of $\sqrt hZ$. Starting at
+time $t$ in state $x$, the remaining noise is therefore distributed
+as $\sqrt{1-t}Z$. The expected final reward is
 
 $$
 \Phi_0(t,x)=\mathbb E|x+\sqrt{1-t}Z|
@@ -303,9 +338,9 @@ For a general $\gamma$, a response can bias the future state, with a
 quadratic cost. Here the overlap scale $t$ plays the role of time;
 the path is auxiliary, not a motion of the spins.
 The noise is **Brownian motion** $B$: a continuous random path starting
-at zero, with independent centred Gaussian increments. Over a time
-interval of length $h$, its increment has the same distribution as
-$\sqrt h Z$.
+at zero. Its increments over disjoint time intervals are independent;
+over an interval of length $h$, an increment has the same distribution
+as the centred Gaussian $\sqrt h Z$.
 
 A **control** $\alpha_s\in[-1,1]$ chooses a response at each time
 using only noise already observed since the starting time. It can react
@@ -360,15 +395,34 @@ that the zero candidate minimises.
 
 ### 3.3 The response, the state and the averaged square
 
-For fixed $t$, let $u(t,x)=\partial_x\Phi_\gamma(t,x)$ be the slope
-as the starting state $x$ changes. A small shift $\delta$ changes the
+First consider the value as a function of the starting state, holding
+$t$ and $\gamma$ fixed; we also write $\Phi=\Phi_\gamma$.
+For any permitted control, use the same
+responses to each Brownian history at two starting states $x$ and $y$.
+The costs are unchanged, and the triangle inequality bounds the change
+in the terminal reward by $|x-y|$. Taking the supremum over controls gives
+
+$$
+|\Phi_\gamma(t,x)-\Phi_\gamma(t,y)|\le |x-y|.
+$$
+
+The value is also **convex**: between two states its graph lies at or
+below the chord joining their values. Indeed,
+each fixed-control payoff is an average of translated absolute-value
+functions, hence convex. Its chord lies at or below the chord of the
+best endpoint payoffs; taking the supremum preserves that upper bound.
+
+[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity] supply spatial
+differentiability below time one. Let $u(t,x)=\partial_x\Phi_\gamma(t,x)$ be the slope
+as the starting state changes. A small shift $\delta$ changes the
 best expected payoff by approximately $u(t,x)\delta$. Write
 $a(t,x)=\partial_{xx}\Phi_\gamma(t,x)$ for the rate at which that
-slope changes. The source proves convexity and $|u|\le1$, hence $a\ge0$.
-These are spatial derivatives: time is held fixed.
+slope changes. The displayed bound gives $|u|\le1$, and convexity
+gives $a\ge0$. These are spatial derivatives: time is held fixed.
 
 For the zero coefficient, the slope can be computed directly. Put
-$F_{\mathrm G}(z)=\int_{-\infty}^z\varphi(y)\,dy$. Moving $x$
+$F_{\mathrm G}(z)=\Pr(Z\le z)=\int_{-\infty}^z\varphi(y)\,dy$.
+Moving $x$
 slightly raises $|x+\sqrt{1-t}Z|$ when the final state is positive
 and lowers it when the final state is negative. Consequently
 
@@ -396,9 +450,7 @@ slope will enter the sensitivity to $\gamma$. The control theorem and
 the first-variation formula in Section 5.1 make these connections rigorous; the square
 completion alone does not justify differentiating an optimised value.
 The zero-temperature control representation is in
-[Auffinger–Chen, Corollary 2, equation (12), and the extension after (13)][auffinger-chen];
-[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity] give the regularity
-used here.
+[Auffinger–Chen, Corollary 2, equation (12), and the extension after (13)][auffinger-chen].
 
 Following the slope response generates the random state
 
@@ -407,10 +459,18 @@ X_t=B_t+\int_0^t\gamma(s)u(s,X_s)\,ds,\qquad X_0=0.
 $$
 
 This is the **associated diffusion**. The rule is called **feedback**
-because it uses the slope at the currently reached state. An atom at
-scale $s$ switches on a cumulative contribution to the drift and cost
-from $s$ onward; it does not make $X$ jump, since the drift accumulates
-through a time integral.
+because it uses the slope at the currently reached state. With $\gamma$
+and $u$ supplied, a short forward step of length $h$ from state $x$
+at time $t$, with $t+h<1$, is approximated by
+
+$$
+x+h\gamma(t)u(t,x)+\sqrt h Z.
+$$
+
+The response is evaluated before the fresh independent noise $Z$ is
+observed. This discrete approximation explains the order of operations;
+the integral equation defines the continuous process. Its drift accumulates
+through time, so even a jump of $\gamma$ does not make $X$ jump.
 
 Fix $\gamma$, follow a path to $X_t$, evaluate the slope there, square
 it, and average over paths. This defines a deterministic curve
@@ -424,7 +484,15 @@ the response evaluated at it are random. Squaring before averaging
 retains the size of both positive and negative responses.
 
 **A calculation at half time.** For $\gamma=0$, $X_t=B_t$ and
-$B_{1/2}$ has the same distribution as $Z/\sqrt2$. Therefore
+$B_{1/2}$ has the same distribution as $Z/\sqrt2$. We can average
+over paths by grouping them according to the state reached. At half
+time the reached state has density $e^{-x^2}/\sqrt\pi$. This density
+describes its **law**, assigning probability to positions on the real line. The law has
+total mass one even though the order-parameter measure $\mu_0$ is
+zero. The two measures describe different objects.
+
+Average $u_0(1/2,x)^2$ with this density. Substituting $x=z/\sqrt2$
+gives
 
 $$
 \begin{aligned}
@@ -435,11 +503,16 @@ q_0(1/2)
 \end{aligned}
 $$
 
-The response at the fixed state zero is $u_0(1/2,0)=0$, yet its
-mean square at the random state is $1/3$. In particular, $q(t)=t$
-is not a definition valid for every candidate. At zero coefficient
-all controls give the same payoff, but $q_0$ uses the specific value
-slope $u_0$, not an arbitrarily chosen optimal control.
+The response at zero is zero, but its mean square at the random state
+is $1/3$. Thus $q(t)=t$ is not automatic. Although every control is
+optimal at $\gamma=0$, $q_0$ uses the value slope $u_0$.
+Section 7.1 uses the whole curve to find a feasible decrease of
+$\mathcal P(0)$; a discrepancy at one time does not suffice.
+
+**Question 2: change the time.** Still take $\gamma=0$ everywhere,
+but now set $t=1/4$. What variance has the state accumulated, and
+what variance remains in its future reward? Write the Gaussian integral
+for $q_0(1/4)$ without evaluating it. Section 7.4 gives the answer.
 
 The analytic facts needed in the proof are
 
@@ -455,6 +528,8 @@ These facts hold for every admissible candidate and follow from
 [OpenAI (2026a), Lemmas 2.1–2.2][support-regularity]. They suffice for
 the proof below together with the further inputs stated at their uses.
 Section 7.2 explains the PDE and stochastic calculation behind them.
+The next argument uses these stated properties of the deterministic
+curve $q$ to test changes of the cumulative weight $\gamma$.
 <!-- /passage:value-and-diffusion -->
 
 <!-- passage:full-support-statement -->
@@ -492,7 +567,7 @@ the opposite change may violate nonnegativity or monotonicity.
 Precisely, let $\eta\in L^1(0,1)$, meaning $\int_0^1|\eta(t)|\,dt<\infty$, and suppose
 $\gamma+\varepsilon\eta$ stays admissible for every
 $0\le\varepsilon\le\varepsilon_0$, for some $\varepsilon_0>0$.
-[OpenAI (2026a), Lemma 6.1][support-variation] proves
+The formula is
 
 $$
 D\mathcal P(\gamma)[\eta]
@@ -503,20 +578,22 @@ Here $q$ belongs to the unperturbed candidate $\gamma$.
 The term $-t/2$ comes from the explicit penalty in $\mathcal P$;
 $q(t)/2$ is the sensitivity of the reoptimised control value. The latter
 is the analytic content of the formula, not differentiation with a fixed
-control. The proof compares control values and bounds the terminal
-remainder by the $L^1$ tail of $\eta$; related zero-temperature
-variation formulas are in [Chen–Handschy–Lerman (2018),
-Propositions 2–4][chl-optimality].
+control. [Chen–Handschy–Lerman (2018), Proposition 4][chl-optimality]
+gives the derivative along the segment joining any two admissible
+coefficients. Taking the second endpoint to be
+$\gamma+\varepsilon_0\eta$ and rescaling the segment parameter gives
+the formula above. The detailed proof in
+[OpenAI (2026a), Lemma 6.1][support-variation] compares value functions
+and bounds the terminal remainder by the $L^1$ tail of $\eta$.
 <!-- /passage:first-variation -->
-
-
 
 <!-- passage:contact-and-gap -->
 
 Adding a small atom at scale $s$ raises the cumulative function at
 *every* later scale. It is always allowed: the total mass is not
 fixed, so no compensating removal is required. Its direction is
-$\eta(t)=\mathbf1_{[s,1)}(t)$. Thus
+$\eta(t)=\mathbf1_{[s,1)}(t)$, equal to zero before $s$ and one
+from $s$ onward. Thus
 
 $$
 D\mathcal P(\gamma)[\mathbf1_{[s,1)}]
@@ -525,7 +602,11 @@ $$
 
 For the candidate in Figure 1, adding $\varepsilon$ mass at $s=1/2$
 creates a jump of height $\varepsilon$ there and raises the entire
-remaining curve by $\varepsilon$. This explains the tail integral:
+remaining curve by $\varepsilon$. The coefficient changes only on
+that tail, but its optimised value and feedback must be recomputed:
+earlier starting states also face a changed future control problem. The
+first-variation theorem accounts for this dependence. Its formula
+has a tail integral because that is where the coefficient changes:
 $G(s)/2$ is the marginal cost of placing mass at $s$. At a minimiser,
 $G(s)\ge0$ for every $s<1$.
 
@@ -541,7 +622,21 @@ in this identity belong to that candidate; no optimality has been assumed.
 Reducing both weights by a fraction $\varepsilon$ multiplies the
 cumulative function by $1-\varepsilon$.
 
-Apply that reduction now to a minimiser. The direction $\eta=-\gamma$
+Suppose temporarily that this two-weight candidate minimised
+$\mathcal P$. Addition would give two nonnegative costs,
+$G(1/4)\ge0$ and $G(3/4)\ge0$, while the allowed reduction would give
+
+$$
+0\le-\frac12\bigl(2G(1/4)+G(3/4)\bigr).
+$$
+
+Both costs must be zero: their positive-weighted sum is nonnegative,
+and the reduction forces it to be nonpositive. This is a necessary
+condition under the temporary minimiser assumption, not a claim that
+the two-weight candidate attains the minimum.
+
+For a general minimiser, the same argument replaces the finite sum by
+an integral. The direction $\eta=-\gamma$
 is integrable, and $(1-\varepsilon)\gamma$ remains admissible for
 $0\le\varepsilon\le1$. It scales all existing mass by the same
 factor. For the continuous candidate in Figure 1, it multiplies the
@@ -572,11 +667,13 @@ nonnegative function touches zero there. The scaling argument is the
 variational argument of [Chen, Proposition 3.2, equations (3.11)–(3.12)][chen-support],
 applied with the integrable-direction formula above.
 
-Scaling removes only mass that exists. In contrast, subtracting an atom
-at $1/2$ from Figure 1 would create a downward jump: there is no atom
-there to remove. Nonnegative values alone would not make the altered
-candidate nondecreasing. We have proved contact on the support, not
-that every zero of $G$ must carry mass.
+Scaling removes only mass that exists. In Figure 1, even the supported
+point $1/4$ has no atom: intervals around it carry mass, but the point
+itself does not. Subtracting $\varepsilon\delta_{1/4}$ would create a
+downward jump. For $0<\varepsilon<1/4$ the cumulative values would
+remain nonnegative, but the function would no longer be nondecreasing.
+Support alone does not permit atom removal. We have proved contact
+on the support, not that every zero of $G$ must carry mass.
 
 ### 5.2 Contact gives endpoint conditions
 
@@ -589,14 +686,17 @@ q(s)=s,\qquad q'(s)\le1.
 $$
 
 At zero, if it belongs to the support, contact and symmetry give
-$G(0)=q(0)=0$. The expansion
-$G(h)=\tfrac12(1-q'(0))h^2+o(h^2)$ and nonnegativity imply
-$q'(0)\le1$. This one-sided argument includes an atom at zero.
+$G(0)=q(0)=0$. If $q'(0)>1$, continuity would give $q'(t)>1$
+for small positive $t$. Integration would then give $q(t)>t$, so
+$G'(t)=t-q(t)<0$. Starting from $G(0)=0$, this would force $G(t)<0$,
+a contradiction. Hence $q'(0)\le1$. This one-sided argument includes
+an atom at zero.
 
 ### 5.3 Strict curvature creates an impossible integral
 
-The support is relatively closed in $[0,1)$. Every missing point lies
-in a maximal interval of its complement. Such an interval has two
+The support is relatively closed in $[0,1)$. Starting at a missing
+point, enlarge its mass-free interval until it reaches support or a
+boundary of the domain. Such a maximal interval has two
 support endpoints, starts at zero outside the support, or reaches one.
 We treat these three cases in order; the last includes empty support.
 
@@ -707,12 +807,16 @@ $$
 Here is why the inequality is strict. On this interval $X_t=B_t$,
 whose density is positive everywhere at positive times. If the expected
 square were zero, continuity would force $\Phi_{xxx}(t,x)=0$ for
-every $x$. Then $\Phi(t,\cdot)$ would be a quadratic polynomial.
-Its bounded slope removes the quadratic term, and its evenness removes
-the linear term. It would be constant. But choosing zero control gives
+every $x$: a nonzero value would give a small interval on which the
+square is positive, and that interval has positive probability.
+Then $\Phi(t,\cdot)$ would be a quadratic polynomial, and its bounded
+slope would make it affine, a linear function plus a constant.
+But choosing zero control gives
 $\Phi_\gamma(t,x)\ge\mathbb E|x+B_1-B_t|\ge|x|$: the average
 absolute value is at least the absolute value of the average. This
-rules out constancy. The heat identity and the needed regularity are
+rules out an affine value: domination of $|x|$ in the positive tail
+requires slope at least one, while the negative tail requires slope
+at most minus one. The heat identity and the needed regularity are
 in [OpenAI (2026a), Lemmas 2.2–2.3][support-regularity].
 
 Thus $q'$ is strictly increasing, and right contact gives
@@ -751,7 +855,10 @@ Its left endpoint $r<1$ is supported, and its constant height is
 positive, by the same mass argument as in Section 5.3. We have
 $q(r)=r$ and $q'(r)\le1$, and $q'$ is strictly convex on $(r,1)$.
 There is no contact condition at one. We use the bound $q\le1$
-instead.
+instead. We will show that $q$ stays below the diagonal throughout
+the gap, which makes the tail cost $G(r)$ negative. If it reached
+the diagonal, the area comparison would force its slope above one;
+convexity would preserve enough of that excess to violate $q\le1$.
 
 Put $h(t)=q'(t)-1$, so $h(r)\le0$. If $q(t)\ge t$ at some
 $r<t<1$, strict integration below the chord on the finite interval
@@ -763,15 +870,28 @@ $$
 \le\frac{t-r}{2}h(t).
 $$
 
-Hence $h(t)>0$. Convexity says that subsequent secant slopes cannot
-fall: for $t<s<1$,
+Hence $h(t)>0$. To control a later slope, use the same chord rule
+on the larger interval $[r,s]$, where $t<s<1$. At its interior
+point $t$ this gives
+
+$$
+h(t)\le\frac{s-t}{s-r}h(r)+\frac{t-r}{s-r}h(s).
+$$
+
+Solving for the right endpoint gives
 
 $$
 h(s)\ge h(t)+\frac{s-t}{t-r}\bigl(h(t)-h(r)\bigr)\ge h(t)>0.
 $$
 
-Consequently $q(s)\ge t+(s-t)(1+h(t))$. As $s$ approaches one,
-the right side approaches $1+(1-t)h(t)>1$, contradicting $q(s)\le1$.
+Consequently $q(s)\ge t+(s-t)(1+h(t))$. Choose any time
+
+$$
+t+\frac{1-t}{1+h(t)}<s<1.
+$$
+
+Such a choice exists because $h(t)>0$, and the lower bound now gives
+$q(s)>1$, contradicting $q(s)\le1$ strictly before time one.
 Thus $q(t)<t$ throughout $(r,1)$, giving
 $G(r)=\int_r^1(q(t)-t)\,dt<0$, contrary to the addition test.
 Only finite-interval convexity and the bound on $q$ were used; no
@@ -791,7 +911,26 @@ $q(t)=t$ for every interior time, and symmetry includes zero.
 Differentiating gives $\mathbb E[a(t,X_t)^2]=1$, completing the theorem.
 <!-- /passage:endpoints -->
 
+<!-- passage:changed-cases -->
+### 5.5 Two checks on the gap argument
+
+**Question 3: tilt the chord.** Suppose a differentiable function $f$ on $[2,5]$ has
+$f(2)=2$, $f(5)=5$, $f'(2)=1/2$ and $f'(5)=3/2$. If $f'$ is
+strictly convex, can these data hold? What changes if strict convexity
+is weakened to convexity? The endpoint chord is now tilted, so a
+pointwise comparison with the constant one is unavailable.
+
+**Question 4: the missing right endpoint.** In the terminal proof,
+why does a point with $q(t)\ge t$ force $h(t)>0$? Which inequality
+keeps the later slopes above one, and where does the bound $q\le1$
+enter? Explain the two stages without assigning any value to $q'(1)$.
+
+Answers are in Section 7.4.
+<!-- /passage:changed-cases -->
+
 <!-- passage:overlap-payoff -->
+<!-- pdf-page-break -->
+
 ## 6. Return to the spins
 
 We can now return to the arrangement of nearly optimal spin choices.
@@ -813,8 +952,13 @@ $$
 \left|\frac{k}{n}-\frac{1-r}{2}\right|<\frac\varepsilon2.
 $$
 
-At target overlap $1/2$, two nearly optimal choices can differ on
-approximately one quarter of the sites; at target zero, on half.
+For example, fix an energy loss $\eta>0$ per spin and take
+$r=1/2$ and $\varepsilon=0.02$. With probability tending to one
+exponentially fast, the same instance has two configurations with
+energies per spin at least $P_*-\eta$ and a differing-site fraction
+between $0.24$ and $0.26$. No numerical threshold for $n$ is asserted.
+At target zero, the differing-site fraction can be arbitrarily close
+to one half.
 The pair may depend on the chosen target and the couplings. This is
 existence for each fixed target, not a statement about
 typically sampled pairs or a procedure for finding them. The companion
@@ -823,34 +967,14 @@ typically sampled pairs or a procedure for finding them. The companion
 gives the probability bound and the covariance adjustment.
 <!-- /passage:overlap-payoff -->
 
-<!-- passage:changed-cases -->
-### A check on the area argument
-
-**Question.** Suppose a differentiable function $f$ on $[2,5]$ has
-$f(2)=2$, $f(5)=5$, $f'(2)=1/2$ and $f'(5)=3/2$. If $f'$ is
-strictly convex, can these data hold? What changes if strict convexity
-is weakened to convexity? The endpoint chord is now tilted, so a
-pointwise comparison with the constant one is unavailable.
-
-Try the comparison before reading the answer below.
-<!-- /passage:changed-cases -->
-
-<!-- passage:changed-case-answer -->
-**Answer.** A strictly convex $f'$ lies below its endpoint chord.
-That chord has mean height $(1/2+3/2)/2=1$, hence integral three.
-Therefore $f(5)-f(2)=\int_2^5f'(t)\,dt<3$, contradicting the
-prescribed values. With non-strict convexity the data are possible:
-$f(t)=2+(t-2)/2+(t-2)^2/6$ has affine derivative and satisfies all
-four endpoint values. The argument needs a strict loss of area; the
-common endpoint upper bound of one in Figure 2 is convenient, not essential. This is a
-calculus example, not a candidate SK moment function.
-<!-- /passage:changed-case-answer -->
-
 ## 7. Optional calculations
 
-The no-gap argument and the return to spins are complete. These
-calculations explain the zero-candidate test, the moment identity and
-the strict-curvature input used above.
+The no-gap argument and the return to spins are complete. Section 7.1
+checks the zero-candidate descent by Gaussian calculus using the stated
+moment identity. Section 7.2 explains the value equation and stochastic
+chain rule behind that identity. Section 7.3 describes the mechanism
+of the strict-curvature estimate; its full proof remains in the sources.
+Section 7.4 gives the answers to the earlier questions.
 
 <!-- passage:zero-candidate -->
 ### 7.1 Why the zero candidate does not minimise
@@ -988,9 +1112,16 @@ q'''=\mathbb E[d^2-12cab^2+6c^2a^4].
 $$
 
 The negative middle term prevents a pointwise positivity argument.
-The source instead uses the spatial probability density $f_t(x)$ of
-$X_t$. Its probability law $f_t(x)\,dx$ is a measure in $x$, distinct from the Stieltjes measure
-$\mu_\gamma(ds)$ on overlap scales. For step coefficients
+The source instead averages with the spatial probability density
+$f_t(x)$ of $X_t$ at positive time. As in the half-time example,
+for any integrable function $F$, grouping paths by their reached position gives
+
+$$
+\mathbb E[F(X_t)]=\int_{\mathbb R}F(x)f_t(x)\,dx.
+$$
+
+These are probability weights on states $x$, distinct from the
+Stieltjes weights $\mu_\gamma(ds)$ on overlap scales. For step coefficients
 and smoothed terminal data, this density factors into positive functions
 propagated from the two ends of the time interval. Bounds on their
 logarithmic derivatives supply the signs needed in integration by parts.
@@ -1064,6 +1195,53 @@ and the companion *Long Reasoning Record*,
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-algebra">[§4.4, “How the signs make a correction with zero expectation useful”](../long/reasoning-record.md#curvature-algebra)</span>,
 and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="plateau-limit">[§4.5, “A fixed-time inequality and its plateau application”](../long/reasoning-record.md#plateau-limit)</span>.
 <!-- /passage:curvature-transfer -->
+
+<!-- passage:changed-case-answer -->
+### 7.4 Answers to the questions
+
+**Question 1.** Adding mass at $1/2$ gives cumulative heights
+$0,2,2+\varepsilon,3+\varepsilon$, in their successive intervals;
+removing it at $1/4$ gives heights $0,2-\varepsilon,3-\varepsilon$.
+Both functions remain nonnegative and nondecreasing. Removing mass at
+$1/2$ instead lowers the height from $2$ to $2-\varepsilon$ there,
+creating a downward jump, so it is forbidden even though all values
+remain nonnegative. Scaling both weights preserves all admissibility
+conditions. These tests concern allowed candidates; a smaller ordinary
+area alone does not establish a smaller Parisi value.
+
+**Question 2.** The state has accumulated variance $1/4$, so it is
+distributed as $Z/2$. The remaining noise has variance $3/4$, and
+its standard deviation in the value-slope formula is $\sqrt3/2$.
+Thus
+
+$$
+q_0(1/4)=\int_{\mathbb R}
+\left(2F_{\mathrm G}(z/\sqrt3)-1\right)^2\varphi(z)\,dz.
+$$
+
+The two variances agree at half time, but not here. For nonzero $z$,
+the magnitude of the response is now smaller, so $q_0(1/4)<1/3$.
+The arcsine formula in Section 7.1 also gives this comparison.
+
+**Question 3.** A strictly convex $f'$ lies below its endpoint chord.
+That chord has mean height $(1/2+3/2)/2=1$, hence integral three.
+Therefore $f(5)-f(2)=\int_2^5f'(t)\,dt<3$, contradicting the
+prescribed values. With non-strict convexity the data are possible:
+$f(t)=2+(t-2)/2+(t-2)^2/6$ has affine derivative and satisfies all
+four endpoint values. The argument needs a strict loss of area; the
+common endpoint upper bound of one in Figure 2 is convenient, not essential. This is a
+calculus example, not a candidate SK moment function.
+
+**Question 4.** Since $q(r)=r$, reaching or passing the diagonal at
+$t$ means $\int_r^t h\ge0$. Strict convexity places $h$ below its
+endpoint chord, so that integral is less than
+$(t-r)(h(r)+h(t))/2$. With $h(r)\le0$, this forces $h(t)>0$.
+The chord rule on $[r,s]$, solved for $h(s)$, keeps every later value
+at least $h(t)$. Integrating gives
+$q(s)\ge t+(s-t)(1+h(t))>1$ for a suitable $s<1$, violating the
+bound. If $q$ never reaches the diagonal, then $G(r)<0$ instead.
+Thus both possibilities contradict the conditions on a minimiser.
+<!-- /passage:changed-case-answer -->
 
 ### Further reading
 
@@ -1143,8 +1321,8 @@ The links below select the editions used.
 - **Wei-Kuo Chen, Madeline Handschy and Gilad Lerman (2018).** *On the
   energy landscape of the mixed even p-spin model*, Probability Theory
   and Related Fields 171, 53–95. [Version 4][chl-optimality].
-  Zero-temperature analytic and variational results and the explicit
-  zero-candidate descent.
+  Proposition 4 gives the first-variation formula used in Section 5.1;
+  the proof of Theorem 6 gives the zero-candidate descent.
 - **Antonio Auffinger, Wei-Kuo Chen and Qiang Zeng (2020).** *The SK model
   is infinite step replica symmetry breaking at zero temperature*.
   [Version 2][acz], Proposition 1 and Remark 7. Near-ground overlap pairs

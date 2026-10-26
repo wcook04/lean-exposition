@@ -313,3 +313,54 @@ historical receipts and unknown corrected-replay outcomes are unchanged.
 The existing local transition skills incorporate the tested lessons about
 operations, quantitative margins and finite observables; the workflow remains
 self-contained.
+
+### Operations, interfaces and endpoint normalization, 26 October 2026
+
+Ten further advisory returns examined edition `9609283`. Their proposed
+changes were compared with the current sources, and their claims were
+reviewed separately from editorial preferences. The central contact,
+curvature, density and scalar deductions survived the selected checks.
+This revision preserves those arguments and makes compressed transitions
+explicit.
+
+Returns 01–06 informed the exposition's treatment of operations. Probability
+density assigns interval probabilities before it weights an expectation.
+The two weights lead to finite contact before the measure argument.
+A time-step calculation explains feedback; a quarter-time example separates
+accumulated from remaining noise, which coincide at half time. Convexity and
+the spatial Lipschitz bound follow from the control representation. Initial
+and terminal gaps retain different proofs; the terminal argument rearranges
+the chord inequality and reaches its contradiction strictly below time one.
+Questions precede the spin payoff, with answers after the main argument.
+Additional figures and longer control examples were declined where existing
+examples could do the same work more economically.
+
+Returns 07–10 sharpened the expert paper's statements and changes of
+mathematical setting. The common spatial estimate is numbered; the detailed
+edition comparison follows the density proof. The rooted construction
+identifies its objects before displaying its energy. An imported circuit
+approximation proposition and three error terms connect finite Gaussian
+data to one ordinary word. The same-instance measured configuration
+consequence has a corollary and joint-second-moment proof. The analytic core
+remains the paper's principal subject.
+
+The long record adds a separate [endpoint proof](../long/reasoning-record.md#coefficient-total-mass)
+that the first Hessian moment tends to zero. Spatial monotonicity, reflected
+Brownian comparison and the unit second moment establish $\int_0^1\gamma=1$
+and the tail identity. This normalizes $\gamma(t)\,dt$, not the Stieltjes
+increment measure. Sellke's v4 equality and v6 inequality with its even-mixture
+remark are distinguished; the proof does not substitute an endpoint into a
+compact-strip formula. Monotone quadrature and weighted Gronwall sharpen the
+[fixed-strip estimate](../long/reasoning-record.md#scalar-error-budget).
+A [constant-coefficient calculation](../long/reasoning-record.md#pointwise-curvature-obstruction)
+shows negative raw curvature with the actual absolute-value terminal datum,
+without contradicting the positive-expectation theorem.
+
+These are ordinary deductions and source consequences. Their graph records
+remain unverified, separate from unchanged formal declarations and checking
+evidence. All 22 returned finite calculation programs passed on disposable
+copies; this does not certify the analytic imports. Source-assisted agent
+review is not an unassisted or human-reader study. The local methods now
+retain exact imported interfaces, compare proof routes by hypotheses and
+quantitative conclusions, and use changed examples to distinguish quantities
+hidden by an initial symmetry.

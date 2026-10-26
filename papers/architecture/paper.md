@@ -309,8 +309,11 @@ another application. That package contains the captured writing and records;
 some original sources remain external. Source references identify what should
 be consulted, but cannot guarantee that an unavailable source will later be
 retrievable. The current tools provide local queries and a programming
-interface. An interactive reading website is a possible consumer of these
-operations, not an interface already delivered by this project.
+interface. The repository also includes a reading website that consumes a
+captured edition: readers can unfold the argument, follow a passage to its
+recorded claims, and move between the three accounts. The website displays
+the same source and checking records; it does not supply additional proof
+or turn an authored correspondence into a verified one.
 
 For authors, the cycle begins with reading sources, selecting a result and
 recording its support. Reconstruction supplies the long account; editorial

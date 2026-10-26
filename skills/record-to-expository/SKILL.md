@@ -74,6 +74,10 @@ research claim as though explaining it made it established.
    Separate admissibility from optimality and a definition from an identity
    proved only at an optimum. Reuse the example while it reveals something;
    do not force it through every section or rehearse operations the reader knows.
+   Check what a convenient symmetry or normalisation makes indistinguishable.
+   If the proof later needs that distinction, keep the easy first calculation
+   and try one nearby case that separates the quantities. This is a reason for
+   a particular changed case, not a rule against symmetric examples.
 3. Move from that example to the general argument. Explain why a construction
    or estimate is needed before introducing its machinery. Keep the hard
    inference visible: write down the last established fact, the next required
@@ -83,9 +87,12 @@ research claim as though explaining it made it established.
    why the next choice exists and why the choices reach the stated conclusion.
    A named technique or an analogy does not supply that connection. If the
    complete source argument does not supply it, refer the gap for research review.
-   An imported estimate may remain an explicitly stated input: teach what it
-   guarantees and how it is used, with a full-proof destination. Do not replace
-   it with an intuitive picture that quietly claims to prove the estimate.
+   Before importing a property, check whether a short deduction from the
+   displayed representation would explain it using this reader's available
+   tools. Show it when it unlocks a later step; do not turn this into a demand
+   to reprove analytic machinery. Keep regularity, attainment and quantitative
+   estimates as precisely stated inputs where needed, with their hypotheses,
+   use and full-proof destination. An intuitive picture cannot supply them.
    When an imported estimate closes an elementary argument, consider finishing
    that argument before opening the estimate's technical proof. List the
    exhaustive cases and discharge each once. The test is continuity of the
@@ -122,12 +129,16 @@ research claim as though explaining it made it established.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
    the reader what survives, keeping the other conditions explicit. Choose a
    change that requires using the key inference, not repeating its wording.
+   If the proof route changes, retarget the task to the new inference; an old
+   successful exercise may assess only the unchanged part of the argument.
    Recheck choices that depend on the changed parameter; holding them fixed
    is itself a condition to justify.
    Give a justified answer separately from the question, or mark it open.
    Distinguish a false conclusion from an inconclusive test or a proof that no
-   longer applies. An open question can teach the boundary, but cannot supply
-   a correctness verdict on the reader's answer.
+   longer applies. Say when a countermodel concerns only a reduced calculus
+   argument and is not an instance of the original mathematical system. An open
+   question can teach the boundary, but cannot supply a correctness verdict on
+   the reader's answer.
 7. Distinguish explanatory reconstruction from discovery history. Credit source
    theorems, borrowed constructions and teaching models by their actual roles.
    A helpful stylistic comparison does not justify the local mathematics.
