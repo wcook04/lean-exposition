@@ -77,7 +77,9 @@ reading order. Keep that first response separate from the assisted reread.
    edge or the word “therefore” cannot supply a missing inference.
    When changing variables, normalization or indices, give the map and derive
    the identities used. State what information it preserves; justify a reverse
-   implication separately when an equivalence is claimed.
+   implication separately when an equivalence is claimed. Identify the finite
+   observable before taking its limit: different finite expressions can converge
+   to the same value, so limiting agreement cannot determine an index or map.
 4. At each assumption's use, say what it permits. Check domains, endpoint
    cases, signs, parameter dependence and witness choices. If several premises
    require one witness, show that the same witness meets them together.
@@ -92,6 +94,11 @@ reading order. Keep that first response separate from the assisted reread.
    allowed parameter dependence: the fixed-witness consequence may hold while a
    uniform rate remains unavailable. Conversely, a family-wide conclusion cannot
    inherit a uniform bound from separate finite bounds without an argument.
+   Distinguish the qualitative condition that makes an argument work from the
+   quantitative margin used to pass strictness through a limit or control an
+   approximation. State which step needs the magnitude and how its bound depends
+   on the fixed inputs. Before declaring a bound unavailable, check consequences
+   of existing identities and limit that claim to the argument or sources inspected.
 6. Keep complete derivations and subsidiary cases at named destinations.
    Preserve a failed route when it explains an obstruction or the necessity
    of an assumption. Record what failed and what that failure leaves possible.
@@ -127,6 +134,9 @@ reading order. Keep that first response separate from the assisted reread.
    property it preserves that the next step needs. Existence of an isomorphism
    alone does not specify the map used by a later calculation. If only an invariant
    is needed, state that weaker fact; do not promise interchangeable objects.
+   Name the observable and conditioning in an expectation identity. Equal means
+   need not identify states, laws or operations; inspect the composition or higher
+   moment actually needed by the next step.
 9. Run `lean-exposition check-bundle DIR`. Review the argument separately,
    then inspect the delivered Markdown or rendered paper and its references.
 

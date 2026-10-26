@@ -19,7 +19,7 @@ Choose one entrance; reading every account in order is unnecessary.
 
 | Paper | What you can reconstruct | Inputs and next destination |
 | --- | --- | --- |
-| [Exposition](qaoa-sk/expository/main.md) · [PDF](qaoa-sk/expository/main.pdf) | Feasible mass changes, contact and the area contradiction, with separate endpoint cases and a finite-spin payoff | Calculus, measures and expectation; accepts stated stochastic and analytic inputs. Visit long §§3–5 for their proofs. |
+| [Exposition](qaoa-sk/expository/main.md) · [PDF](qaoa-sk/expository/main.pdf) | Feasible mass changes, contact and the area contradiction, with separate endpoint cases and a finite-spin payoff | Algebra and elementary calculus; teaches weighted averages and cumulative mass, and accepts stated stochastic and analytic inputs. Visit long §§3–5 for their proofs. |
 | [Short paper](qaoa-sk/short/paper.md) · [PDF](qaoa-sk/short/paper.pdf) | How one quantitative inequality excludes support gaps and then gives positive density | Stochastic calculus and variational arguments; imports the shape comparisons and certificate. Visit long §4 for those inputs or §7 for the finite Gaussian construction. |
 | [Long reasoning record](qaoa-sk/long/reasoning-record.md) · [PDF](qaoa-sk/long/reasoning-record.pdf) | Selected analytic, scalar and circuit arguments with local hypotheses and source destinations | Enter at a named proof obligation. Substantial imported circuit theorems and formal-model transport boundaries remain identified. |
 

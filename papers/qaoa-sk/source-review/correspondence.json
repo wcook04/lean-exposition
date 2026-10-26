@@ -303,5 +303,5 @@
       "boundary": "The permitted axioms are propext, Quot.sound and Classical.choice; enable_nanoda is false. These are configured allowances, not observed axiom-audit or Comparator results."
     }
   ],
-  "graph_sha256": "80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2"
+  "graph_sha256": "3bdbc0c7428d49713cc561c28238058e5e046de147c82797706e590deb13af2f"
 }

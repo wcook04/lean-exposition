@@ -37,13 +37,14 @@ essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
-Calibrate expert prose against passages in several nearby mathematical papers:
+Calibrate expert prose against original passages in nearby mathematical papers:
 their vocabulary, notation, order of definitions, theorem and proof structure,
-citations, and allocation of detail to the difficult step. Adopt conventions
-that fit the present audience, rather than copying sentences or imposing a
-project vocabulary. A specialist source may assume background that an exposition
-must teach. Record the source passage and the editorial decision it informed;
-the presence of a literature shelf is not evidence that it shaped the writing.
+citations, and allocation of detail to the difficult step. Match the source
+edition and mathematical setting before transferring a convention or comparison.
+Preserve the field's useful terms and explain their operations at the reader's
+level. A specialist source may assume background that an exposition must teach.
+Record the passage and the editorial decision it informed; neither a literature
+shelf nor a reviewer's description establishes that its practice was inspected.
 
 Apply the skill to the document, then read the delivered result in order. In the
 existing mapping's `review_notes` or source-review record, identify the skill
@@ -283,6 +284,8 @@ axiom list does not make a theorem unconditional.
 
 An ordinary proof can be valid without a complete formalization. Identify its
 formal ingredients separately from the steps supplied by the ordinary argument.
+A later ordinary deduction may remove a hypothesis; retain that hypothesis when
+describing an unchanged Lean declaration and identify the additional argument.
 A finite computation has its finite domain and checker; an infinite conclusion
 requires an argument reducing it to that computation. A conditional implication
 may itself have either ordinary or formal proof, while its additional input

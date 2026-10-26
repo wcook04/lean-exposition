@@ -64,8 +64,10 @@ material as unavailable rather than assuming a link's destination is adequate.
    only a shared invariant, name that invariant instead of claiming more.
    Explain why that invariant is the observable needed downstream. Equality of
    a scalar quantity does not by itself connect an optimization construction to
-   a circuit, algorithm or geometric object. Retain the short identifying formula
-   and route the construction proving its preservation to the long record.
+   a circuit, algorithm or geometric object. Retain the finite identifying
+   formula, what each map preserves and where an approximation enters; equal
+   limits alone cannot identify a finite observable. Route the construction
+   proving its preservation to the long record.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference
@@ -92,6 +94,9 @@ material as unavailable rather than assuming a link's destination is adequate.
    adapted constructions, supplied ideas and corrections at their actual uses.
    Carry still-used inputs and credit into the surviving passages; remove a
    citation only when its role has gone.
+   If a stronger estimate serves a later use, say why that use needs its margin
+   or broader hypotheses. A qualitative condition may already suffice for the
+   first conclusion. Preserve that distinction when explaining the contribution.
    Gather toolchain details and run history in one verification destination.
 8. Run `lean-exposition check-bundle DIR`. Inspect links and the rendered paper.
    Review mathematical meaning before sentence polish. A successful bundle

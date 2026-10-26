@@ -259,3 +259,57 @@ Itô product identities. These finite checks do not validate the analytic
 hypotheses. Draft review states and formal-check outcomes are retained;
 source-assisted reading and exact bindings do not establish complete proof
 acceptance or measured reader comprehension.
+
+### Examples and alternate proofs, 26 October 2026
+
+Ten further reviews examined edition `ba7025b6`. Their suggestions were
+checked against actual arguments and exact source editions. Returns 01–04
+and 06 informed an operation-first exposition: a Gaussian average, two ways
+to count accumulated-weight area, and the elementary substitution giving
+$q_0(1/2)=1/3$ precede their abstract uses. The same weights return in the
+tail-cost calculation. A decision-before-noise example makes the control's
+information restriction concrete. Optional stochastic derivations follow
+the complete main argument. Additional examples and figures were not added
+when an existing example could perform the same explanatory task.
+
+Returns 05–06 supplied two useful proof choices. The
+[global scaling argument](../long/reasoning-record.md#global-scaling-contact)
+justifies contact by signed Fubini using
+$\int\gamma|q-t|\le\int\gamma<\infty$, even for infinite total mass.
+The [qualitative terminal proof](../long/reasoning-record.md#qualitative-terminal-gap)
+uses finite convex chords, contact and $q\le1$, without a derivative at
+one. The original local-removal proof and stronger quantitative terminal
+estimate remain in the long record. The graph distinguishes the alternate
+ordinary support argument from the original source and formal route.
+
+Returns 07–10 sharpened the expert paper around a named fixed-time
+spatial-moment proposition. The forward/backward heat cancellation explains
+the integration law; a signed certificate term identifies the joint shape
+comparison's role. The quantitative margin survives spatial approximation
+and gives strict density positivity, beyond what qualitative crossing alone
+supplies. The circuit discussion now displays the exact finite rooted-energy
+observable: the correct limit alone cannot determine its adjacent index.
+The prose uses the literature's conventions with original wording and precise
+credit, without claiming priority for the source results.
+
+Three checked consequences also have explicit destinations. The
+[coefficient budget](../long/reasoning-record.md#coefficient-budget) proves
+$\int_0^1\gamma\le1$ and $\gamma(t)\le(1-t)^{-1}$; the earlier blanket
+absence-of-bounds claim is replaced by the missing derivative constants and
+effective mesh threshold. The [spatial inequality at jumps](../long/reasoning-record.md#fixed-time-jump-extension)
+is an ordinary extension, not a change to the retained Lean continuity
+hypothesis, and is unnecessary for either principal application. The
+[finite-instance sampling consequence](../long/reasoning-record.md#sampled-finite-instance)
+uses a union bound for measured energy and the maximum under the same disorder.
+It gives an asymptotic joint-probability statement, without an effective size
+threshold, efficient angle search or every-instance guarantee.
+
+Nineteen selected returned calculation programs were rerun on preserved
+copies, including the elementary examples, rational certificate and finite
+circuit checks. All passed at their stated finite or numerical scope.
+Source-assisted mathematical review and subsequent sequential reading are
+neither blind readings nor human comprehension studies. Formal targets,
+historical receipts and unknown corrected-replay outcomes are unchanged.
+The existing local transition skills incorporate the tested lessons about
+operations, quantitative margins and finite observables; the workflow remains
+self-contained.

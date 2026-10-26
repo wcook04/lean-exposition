@@ -23,14 +23,17 @@ curvature inside it. Once full support fixes the diffusion moments, a local
 constant replacement transfers the same estimate to prove strictly positive
 density. This second passage transfers spatial moments, not time derivatives.
 
-The short paper derives the decisive moment identities and states precisely
-which sign comparisons, rational identity and approximation estimates it imports.
-The scalar value identity and the finite sum of adjacent Gaussian correlations
-explain the subsequent QAOA application. The second gradient moment supplies
-increment variances, while covariance with the driving Brownian motion gives
-the value; the finite construction preserves these roles. The separate circuit
-theorem is stated
-with its limit order; its construction remains in the long record.
+The short paper states the common fixed-time spatial-moment estimate,
+derives the decisive moment identities, and explains the coupled heat
+equations and signed polynomial decomposition behind the imported estimate.
+It retains the local constant replacement and its uniform strip bounds.
+The scalar value identity distinguishes the moment that normalises increment
+variances from the covariance that gives the value. For the QAOA application,
+the paper defines the circuit and its expected energy, then identifies the
+exact finite rooted energy as a sum of adjacent Gaussian correlations.
+The separate synthesis theorems and the additional concentration input for
+a sampled near-optimal configuration have explicit proof destinations in
+the long record.
 
 The intended reader knows elementary stochastic calculus and variational
 arguments. The analytic sign propagation, rational polynomial certificate and
@@ -56,12 +59,13 @@ The [long record](../long/reasoning-record.md) retains the broader recovery rout
 
 | Short-paper argument | Companion section in the long record |
 | --- | --- |
-| Integrated curvature estimate | [§4: Strict curvature on a constant interval](../long/reasoning-record.md#curvature-and-gap-certificate) |
+| Fixed-time spatial estimate and plateau curvature | [§4.5: A fixed-time inequality and its plateau application](../long/reasoning-record.md#fixed-time-coercivity) |
 | The three kinds of support gap | [§5: Excluding terminal, interior and initial gaps](../long/reasoning-record.md#gap-elimination) |
-| Smooth positive density | [§§5.1–5.2](../long/reasoning-record.md#smooth-density-consequence) |
+| Smooth positive density | [§§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence) |
 | Scalar value identity | [§6: Recovering the value from a martingale](../long/reasoning-record.md#scalar-value-identities) |
 | Finite Gaussian approximation | [§7: A finite Gaussian spin and its adjacent correlations](../long/reasoning-record.md#finite-gaussian-approximation) |
-| Further circuit construction | [§9: From the scalar formula to one ordinary QAOA word](../long/reasoning-record.md#qaoa-construction) |
+| Rooted energy and further circuit construction | [§§8.1–8.6: From the scalar formula to one ordinary QAOA word](../long/reasoning-record.md#qaoa-construction) |
+| Sampled finite-instance consequence | [§11.2: What is averaged, and a fixed-word probability consequence](../long/reasoning-record.md#fixed-word-probability) |
 
 The paper uses companion section names and immutable public manuscript URLs
 so those references remain meaningful in the eight-file bundle. This README

@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "f2f3180089d7c6bcdfbedf6471f85cb5e58ff04d8811e374eb9ac96e9c2d8112",
-  "graph_sha256": "80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2",
+  "content_sha256": "1dabdab9c9c559e0761855650c8066ef7ab26a4554c6c9b04c209f75cc1bf02c",
+  "graph_sha256": "3bdbc0c7428d49713cc561c28238058e5e046de147c82797706e590deb13af2f",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -13,6 +13,7 @@
     "circuit.bounded_trigonometric",
     "circuit.fixed_word_transfer",
     "circuit.rooted_realization",
+    "circuit.sampled_finite_instance_optimum",
     "circuit.seed_removal",
     "circuit.seeded_synthesis",
     "full_support",
@@ -29,6 +30,7 @@
     "scalar.separate_classical_algorithm",
     "scalar.shifted_gaussian_limit",
     "scalar.smooth_positive_density",
+    "scalar.unshifted_gaussian_limit",
     "scalar_value",
     "support.backward_shapes",
     "support.contact",
@@ -54,6 +56,10 @@
   "citation_ids": [
     "ac2017_ground_state",
     "acz2020_infinite_support",
+    "authored_r8_circuit_sampled_finite_instance_optimum",
+    "authored_r8_scalar_finite_maximum_concentration",
+    "authored_r8_scaling_contact",
+    "authored_r8_unshifted_gaussian",
     "bfmvz2022_tree_transfer",
     "chen2026_full_support",
     "circuit-r2-26-cite-additive-responses",
@@ -184,15 +190,18 @@
     "circuit.color_exclusion",
     "circuit.energy_transfer",
     "circuit.external_mode_energy",
+    "circuit.fixed_word_concentration",
     "circuit.fixed_word_transfer",
     "circuit.gate_calculus",
     "circuit.gaussian_root_calculus",
     "circuit.helper_contraction",
     "circuit.masked_controls",
+    "circuit.one_measurement_near_optimum",
     "circuit.ordinary_updates",
     "circuit.ordinary_word_primary",
     "circuit.orthogonal_quadratics",
     "circuit.rooted_realization",
+    "circuit.sampled_finite_instance_optimum",
     "circuit.seed_packets",
     "circuit.seed_removal",
     "circuit.seeded_synthesis",
@@ -210,6 +219,7 @@
     "scalar.conditional_rounding",
     "scalar.correlation_vector_control",
     "scalar.euler_normalization",
+    "scalar.finite_maximum_concentration",
     "scalar.formal_contact_input",
     "scalar.formal_finite_gaussian_clause",
     "scalar.formal_model_transport_open",
@@ -240,6 +250,7 @@
     "scalar.source_strip_value_lower",
     "scalar.source_terminal_parisi_assembly",
     "scalar.terminal_loss",
+    "scalar.unshifted_gaussian_limit",
     "scalar_value",
     "support.backward_shapes",
     "support.contact",
@@ -270,13 +281,14 @@
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "8351bc49f244b6efdee011fd1d3651c2a569724a3784a916fa2129140568f126",
+      "text_sha256": "37c5688fe19e560e103104cf77810bf6f745a3056af5b85c373d0a931cbfc12c",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
         "scalar.smooth_positive_density"
       ],
       "citation_ids": [
+        "authored_r8_scaling_contact",
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
@@ -327,7 +339,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "cb57d1f23f6c6136cdd33c0256a1a51db0b8395fa3bde62063c95d6acb3e8fe2",
+      "text_sha256": "f42fe9eef7ac599d155d6fa407ffc42e11bd4f0d5cad08b893bd108bb6ea5c0a",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -357,7 +369,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "6ee5cca335df27bbc8b538f3ea7d8b65bf0a64cc5071f69bc3701d6c17a08206",
+      "text_sha256": "dc0515d35ebd36ca9eb28422f027684069df598c39bd507a89cbaf6231be74bb",
       "claim_ids": [
         "full_support",
         "support.full_relative_support",
@@ -367,6 +379,7 @@
       ],
       "citation_ids": [
         "acz2020_infinite_support",
+        "authored_r8_scaling_contact",
         "chen2026_full_support",
         "full_support_chord_derivative",
         "full_support_comparator",
@@ -426,6 +439,7 @@
         "support.contact_derivatives"
       ],
       "citation_ids": [
+        "authored_r8_scaling_contact",
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
@@ -469,7 +483,7 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "2bd78f76104e9421a570492db7e198e8e3133c8f80d6820fd575b9373c2c2b48",
+      "text_sha256": "d59eb03bcaffede1e335964fd70e566fc6f5c65a01b96081d7e4ccadabd4afbe",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
@@ -479,6 +493,7 @@
       ],
       "citation_ids": [
         "acz2020_infinite_support",
+        "authored_r8_scaling_contact",
         "chen2026_full_support",
         "full_support_chord_derivative",
         "full_support_comparator",
@@ -544,7 +559,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "bc03d3b37e0920bb8f18ea628f35e1c357fed46b2ce2c212bb5852a491b9c4df",
+      "text_sha256": "e3c6869f504d54c9c44828fb3b969e536a611094ea0e9d1f45a916d9d452b658",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -552,7 +567,8 @@
         "support.plateau_transfer",
         "support.positive_curvature",
         "support.backward_shapes",
-        "support.forward_shapes"
+        "support.forward_shapes",
+        "support.fixed_time_spatial_coercivity"
       ],
       "citation_ids": [
         "chen2026_full_support",
@@ -590,12 +606,13 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "758e09e5b2f12e52e108c919cf59ccaed0e26b70e6b3d5279bd3633c277e1726",
+      "text_sha256": "31a95143c977f34c68be65b5c44b5a97f601f6394c19c7ec4f6f2a48f55da80e",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
       ],
       "citation_ids": [
+        "authored_r8_scaling_contact",
         "full_support_chord_derivative",
         "full_support_implementation",
         "full_support_origin_coercivity",
@@ -657,7 +674,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "780d9ef37ec6a4364de2edc73a44ed71e9a315834bceed18de6db2b8776dfdd3",
+      "text_sha256": "eee8f4372c7abd1a82ea081724c5e9c28a5635c14687cc59bb440792ae7d9bcb",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -665,6 +682,7 @@
       ],
       "citation_ids": [
         "ac2017_ground_state",
+        "authored_r8_scaling_contact",
         "chen2026_full_support",
         "circuit-r2-26-cite-gaussian-root-calculus",
         "circuit-r2-26-cite-rooted-realization",
@@ -737,7 +755,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "d219565cc703eefe5fc50d00a948dcba1308e33e006962605ace6e644fcfde78",
+      "text_sha256": "f1a0ec76a61ba5c092965cab56aea5c8c379ea7d794c54ccbf73d6b5d4b54d5e",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -748,9 +766,15 @@
         "scalar.conditional_rounding",
         "scalar.shifted_gaussian_limit",
         "scalar.correlation_vector_control",
-        "circuit.rooted_realization"
+        "circuit.rooted_realization",
+        "circuit.sampled_finite_instance_optimum",
+        "scalar.unshifted_gaussian_limit"
       ],
       "citation_ids": [
+        "authored_r8_circuit_sampled_finite_instance_optimum",
+        "authored_r8_scalar_finite_maximum_concentration",
+        "authored_r8_scaling_contact",
+        "authored_r8_unshifted_gaussian",
         "bfmvz2022_tree_transfer",
         "circuit-r2-26-cite-additive-responses",
         "circuit-r2-26-cite-bounded-trigonometric",
@@ -862,7 +886,7 @@
     },
     {
       "anchor": "evidence-scope",
-      "text_sha256": "7ffa7390c8f5906b8690e6f5d2ea7afbbb4761cc637f0e2505819eb57050deb5",
+      "text_sha256": "0ec7468b41f4e88da837d7f50124aac590eb7f1b579d6ae736c11db8f10e41cb",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -871,6 +895,7 @@
         "scalar.formal_model_transport_open"
       ],
       "citation_ids": [
+        "authored_r8_scaling_contact",
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
@@ -959,21 +984,22 @@
     "25 October 2026 round-six revision: applied long-to-short after source-based adjudication of returns 05–07. Preserved the contact/gap, terminal minorisation, smoothness-before-differentiation and fixed-strip spatial transfer arguments. Added coupled-shape explanation, a common spatial identity, separately versioned literature comparisons, the EAMS classical consequence, rooted-energy purpose and accurate seed-control wording; improved companion navigation. Independently reran the inspected review06 exact rational checker successfully. This is bounded source-assisted agent review and finite algebra, not a human reader study, full analytic acceptance, Lean replay, Comparator acceptance or research-v2 result. All ten passage identities and the draft/needs_revision state are retained; parent will assemble, render and inspect the final multi-paper edition.",
     "25 October 2026 integrated review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons were incorporated into the four local transition skills and docs/authoring.md. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and three scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "25 October 2026 r7 expert assimilation: applied long-to-short at parent input revision a6f9f0360963a8a31dce3e59ee912d1a758476d0 after complete sequential expert reading, reviews05–07 and selected09–10 link/correspondence findings. Primary checks included the pinned support/circuit TeX and formal challenge/implementation endpoints; exact Chen v1 terminal/classical passages; Lopatto v3/v4 passages; EAMS v1 Theorem2/Assumption2/Corollary2.2; Sellke v4 Proposition3.10/Lemma3.11. Reorganised the common spatial moment and application chronology, assigned local credit, and preserved theorem hypotheses and formal unknowns. The isolated exact certificate checker returned zero residual,22 positive remainder terms and all displayed Ito moment identities. Detailed dispositions and limits are retained in the external expert-assimilation record. This is source-assisted agent revision, not independent full analytic acceptance or human-reader testing. Parent handles final global graph rebinding, medium-specific links, rendering and inspection.",
-    "25 October 2026 R7 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "25 October 2026 R7 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 R8 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 56a78ba57bbd0ed6ff64cbdb89d625aa3e815cfee8875dcd2346ea94a83cb6f6). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
   ],
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "758e09e5b2f12e52e108c919cf59ccaed0e26b70e6b3d5279bd3633c277e1726",
+      "from_text_sha256": "31a95143c977f34c68be65b5c44b5a97f601f6394c19c7ec4f6f2a48f55da80e",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
-      "to_text_sha256": "13965b4a14329c15276ceb693df5967acba3ea2f91add8f15fb838da01a23f78",
+      "to_text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977",
       "kind": "expands",
       "rationale": "Develops the smoothness and fixed-time local-replacement arguments that the exposition names as further reading. Both treatments retain interior-only strict positivity and separate this ordinary argument from formal-check status."
     },
     {
       "from_anchor": "scalar-value",
-      "from_text_sha256": "780d9ef37ec6a4364de2edc73a44ed71e9a315834bceed18de6db2b8776dfdd3",
+      "from_text_sha256": "eee8f4372c7abd1a82ea081724c5e9c28a5635c14687cc59bb440792ae7d9bcb",
       "to_stage": "expository",
       "to_anchor": "scalar-identities",
       "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae",
@@ -982,7 +1008,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "d219565cc703eefe5fc50d00a948dcba1308e33e006962605ace6e644fcfde78",
+      "from_text_sha256": "f1a0ec76a61ba5c092965cab56aea5c8c379ea7d794c54ccbf73d6b5d4b54d5e",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",

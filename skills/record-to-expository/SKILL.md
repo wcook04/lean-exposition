@@ -37,9 +37,12 @@ when it helps the reader understand that result. Route substantial further
 results to the existing long record and give only the outlook needed to place
 the selected result. Length follows the explanation; do not equate exposition
 with an expanded version of the entire research record. Aim for a short,
-complete route into one meaningful result. If its prerequisites make that
-impossible for the stated reader, narrow the result or state a stronger reader
-prerequisite rather than appending every upstream chapter.
+complete route into one meaningful result. Distinguish an audience chosen by
+the author from one fixed by the request. For a fixed audience, first try a
+small calculation, a better order or a precisely stated accepted input.
+Stronger prerequisites or a narrower result change the requested scope; report
+the remaining mismatch rather than treating that change as a completed teaching
+task. An author choosing the audience may make that tradeoff explicitly.
 
 Name the operations and results the reader is assumed to know, not just a
 level such as “graduate”. Separate those from what the exposition must teach.
@@ -62,11 +65,15 @@ research claim as though explaining it made it established.
    size to expose the difficulty: a case where all values are distinct cannot
    teach why multiplicities matter. Work through the relevant calculation or
    construction, including the checks that make the example admissible.
-   Where useful, carry one candidate through several definitions so the reader
-   can calculate their relationships. Explicitly separate admissibility from
-   optimality and a definition from an identity proved only at an optimum.
-   Reuse the example only while it reveals something; do not force an unhelpful
-   running example through every section.
+   When a representation is unfamiliar but its operation can be performed in a
+   small case, work that case before the general notation.
+   A finite weighted sum can prepare an integral and return when the proof
+   counts those contributions in a different order. Keep its inputs consistent
+   across those uses. It explains the operation; the general interchange still
+   needs justification, and diffuse mass may need a different removal example.
+   Separate admissibility from optimality and a definition from an identity
+   proved only at an optimum. Reuse the example while it reveals something;
+   do not force it through every section or rehearse operations the reader knows.
 3. Move from that example to the general argument. Explain why a construction
    or estimate is needed before introducing its machinery. Keep the hard
    inference visible: write down the last established fact, the next required
@@ -98,6 +105,9 @@ research claim as though explaining it made it established.
 4. Introduce symbols and terminology by their mathematical roles. Keep standard
    terms when their definitions fit. Avoid importing local research nicknames
    that require a separate glossary to decipher the statement.
+   For nested operations, say what is fixed, what is chosen or random, and in
+   which order the operations occur. Evaluating, squaring and averaging cannot
+   be interchanged merely because the same symbols occur in each expression.
    Inspect hidden conventions when they affect the statement or next operation:
    the domain, topology, normalisation or identification may carry real content.
    Explain that content at its use; unfolding every implementation definition
