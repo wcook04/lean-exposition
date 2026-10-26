@@ -1,8 +1,11 @@
 # Reading website
 
 Read the [published website](https://wcook04.github.io/lean-exposition-site/).
-The published edition runs entirely on GitHub Pages. The source repository
-remains private; its separate public deployment repository contains built files.
+The published edition runs entirely on GitHub Pages.
+[lean-exposition](https://github.com/wcook04/lean-exposition) owns the source,
+papers and build workflow.
+[lean-exposition-site](https://github.com/wcook04/lean-exposition-site) holds
+the generated website; make changes here and let the workflow publish them.
 
 The website shows one captured edition of the worked example as a reader would
 want to explore it:
@@ -75,8 +78,7 @@ The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
 `main`, checks the static search against the server, and pushes only `site/dist/`
 to `wcook04/lean-exposition-site`. That repository serves its `main` branch with
 GitHub Pages. `PAGES_DEPLOY_KEY` is a repository secret containing a write-enabled
-deploy key scoped to that public output repository. No source access token or
-private backend code is copied into the website.
+deploy key scoped to that public output repository. Only the built website is copied into the deployment repository.
 
 ## Run it locally
 

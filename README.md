@@ -231,6 +231,13 @@ records preserve those distinctions.
 
 ## Development and licence
 
+This repository owns the papers, tools and website source. Its
+[publishing workflow](.github/workflows/pages.yml) builds the reading edition
+and sends the generated files to
+[lean-exposition-site](https://github.com/wcook04/lean-exposition-site), which
+serves the [website](https://wcook04.github.io/lean-exposition-site/) through
+GitHub Pages. Make source changes here; the deployment repository is build output.
+
 Agents start at [AGENTS.md](AGENTS.md), which routes setup, writing, queries and
 validation to their owners. The [contribution guide](CONTRIBUTING.md) covers setup and validation; the
 [architecture and contracts](docs/contracts.md) describe the software's boundaries.
