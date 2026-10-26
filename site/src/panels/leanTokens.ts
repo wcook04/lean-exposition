@@ -131,3 +131,44 @@ function markBinders(tokens: LeanToken[]): void {
     if (names.length && next && next.kind === "punct" && next.text.startsWith(":")) names.forEach((n) => (n.kind = "binder"));
   });
 }
+
+const SIG_OPEN = "([{⦃⟨";
+const SIG_CLOSE = ")]}⦄⟩";
+const DECLARATION = /^(theorem|lemma|def|abbrev|instance|example|axiom)\s/;
+
+/**
+ * Lay out a one-line declaration signature the way Lean code is usually
+ * written: the head on the first line, then each top-level binder on its own
+ * line and the type after the final colon, all indented by two spaces.
+ * Only whitespace changes; anything that is not a single-line declaration is
+ * returned unchanged.
+ */
+export function formatLeanSignature(source: string): string {
+  const text = source.trim();
+  if (!DECLARATION.test(text) || text.includes("\n")) return source;
+  const lines: string[] = [];
+  let current = "";
+  let depth = 0;
+  let seenBinder = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (depth === 0 && SIG_OPEN.includes(ch)) {
+      if (current.trim()) lines.push(current.trimEnd());
+      current = "  ";
+      seenBinder = true;
+    }
+    if (SIG_OPEN.includes(ch)) depth += 1;
+    if (SIG_CLOSE.includes(ch)) depth = Math.max(0, depth - 1);
+    // The colon that introduces the statement's type, after the binders.
+    if (depth === 0 && seenBinder && ch === ":" && text[i - 1] === " " && text[i + 1] === " " && text[i + 2] !== "=") {
+      lines.push(`${current.trimEnd()} :`);
+      current = "  ";
+      i += 1; // skip the space after the colon
+      continue;
+    }
+    if (depth === 0 && ch === " " && current.trim() === "") continue;
+    current += ch;
+  }
+  if (current.trim()) lines.push(current.trimEnd());
+  return seenBinder ? lines.join("\n") : source;
+}

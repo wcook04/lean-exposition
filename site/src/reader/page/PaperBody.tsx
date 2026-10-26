@@ -426,10 +426,114 @@ function PassageTools({
  * ("Scroll formula →", "←" at the end, "↔" between) and offers "Expand",
  * a labelled dialog with the formula at full width.
  */
+/** A display may shrink to this share of its size; past it, it breaks at a relation sign instead. */
+const FIT_FLOOR = 0.8;
+/** A numbered display cannot break without losing its number, so it may shrink further. */
+const TAGGED_FLOOR = 0.72;
+/** Space kept between a formula and its equation number, in pixels at full size. */
+const TAG_GAP = 16;
+/** Last resort before scrolling: a single unbreakable piece may shrink this far. */
+const PIECE_FLOOR = 0.62;
+
+interface Natural {
+  /** The formula's width at full size, number excluded. */
+  formula: number;
+  /** The equation number's width at full size, or 0. */
+  tag: number;
+  /** The widest piece KaTeX cannot break, at full size. */
+  widest: number;
+}
+
+function measureNatural(box: HTMLElement, math: HTMLElement): Natural {
+  box.style.fontSize = "";
+  delete box.dataset.fit;
+  delete box.dataset.align;
+  const tag = box.querySelector<HTMLElement>(".katex-tag, .tag");
+  const widths = Array.from(math.querySelectorAll<HTMLElement>(":scope > .katex-html > .katex-base")).map((piece) => piece.getBoundingClientRect().width);
+  const widest = Math.max(0, ...widths);
+  if (!tag) return { formula: math.scrollWidth, tag: 0, widest };
+  // KaTeX stretches a numbered display to the full width and pins the number to
+  // the right, so the formula's own width is the sum of its pieces.
+  const formula = widths.reduce((sum, w) => sum + w, 0);
+  return { formula, tag: tag.getBoundingClientRect().width, widest };
+}
+
+/**
+ * Fit a display formula to its column. An unnumbered display shrinks if that
+ * keeps it at or above FIT_FLOOR of its size; otherwise it shrinks to the floor
+ * and KaTeX breaks it between relation signs. A numbered display keeps its
+ * formula clear of the number: it is centred when there is room, set flush
+ * left when that is enough, and shrunk only as far as needed beyond that; if
+ * even that is not enough, its number moves to a line of its own and the
+ * formula breaks like an unnumbered one.
+ * Widths are measured once at full size so repeated calls do not oscillate.
+ */
+function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): void {
+  const math = box.querySelector<HTMLElement>(":scope > .katex-display > .katex");
+  // Two per cent of slack absorbs rounding in KaTeX's spacing, so a shrunk display really fits.
+  const available = box.clientWidth * 0.98;
+  if (!math || !available) return;
+  let size = natural.get(box);
+  if (!size) {
+    size = measureNatural(box, math);
+    natural.set(box, size);
+  }
+  if (size.tag) {
+    const centred = size.formula + 2 * (size.tag + TAG_GAP);
+    const flush = size.formula + size.tag + TAG_GAP;
+    if (centred <= available + 1) {
+      box.style.fontSize = "";
+      delete box.dataset.fit;
+      delete box.dataset.align;
+      return;
+    }
+    box.dataset.align = "start";
+    if (flush <= available + 1) {
+      box.style.fontSize = "";
+      delete box.dataset.fit;
+      return;
+    }
+    const scale = available / flush;
+    if (scale >= TAGGED_FLOOR) {
+      box.style.fontSize = `${Math.floor(scale * 1000) / 1000}em`;
+      box.dataset.fit = "scaled";
+      return;
+    }
+    // Too wide even beside a small number: the number takes its own line under
+    // the formula, and the formula breaks between relation signs.
+    box.style.fontSize = `${breakSize(size, available)}em`;
+    box.dataset.fit = "wrap-tagged";
+    return;
+  }
+  if (size.formula <= available + 1) {
+    box.style.fontSize = "";
+    delete box.dataset.fit;
+    return;
+  }
+  const scale = available / size.formula;
+  if (scale >= FIT_FLOOR) {
+    box.style.fontSize = `${Math.floor(scale * 1000) / 1000}em`;
+    box.dataset.fit = "scaled";
+    return;
+  }
+  box.style.fontSize = `${breakSize(size, available)}em`;
+  box.dataset.fit = "wrap";
+}
+
+/** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */
+function breakSize(size: Natural, available: number): number {
+  if (!size.widest || size.widest * FIT_FLOOR <= available) return FIT_FLOOR;
+  return Math.max(Math.floor((available / size.widest) * 1000) / 1000, PIECE_FLOOR);
+}
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   const cues = new Map<HTMLElement, HTMLElement>();
+  const natural = new WeakMap<HTMLElement, Natural>();
+  let live = true;
   const update = (box: HTMLElement) => {
+    fitDisplay(box, natural);
+    // Only a formula that still does not fit after shrinking and breaking scrolls.
     const wide = box.scrollWidth > box.clientWidth + 1;
     box.dataset.overflow = String(wide);
     const atStart = box.scrollLeft <= 1;
@@ -461,7 +565,14 @@ export function markWideMaths(root: HTMLElement): () => void {
   const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
   boxes.forEach((b) => observer.observe(b));
   boxes.forEach(update);
+  // KaTeX's fonts can arrive after the first measurement; measure again once they have.
+  void document.fonts?.ready.then(() => {
+    if (!live) return;
+    boxes.forEach((b) => natural.delete(b));
+    boxes.forEach(update);
+  });
   return () => {
+    live = false;
     observer.disconnect();
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
     cues.forEach((cue) => cue.remove());

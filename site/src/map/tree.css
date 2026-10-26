@@ -1033,6 +1033,8 @@
 }
 
 .plate__lean {
+  /* The rule spans the Lean block, not the height of a long statement beside it. */
+  align-self: start;
   min-width: 0;
   padding-left: 18px;
   border-left: 1px solid var(--rule);
@@ -1044,10 +1046,12 @@
 
 .plate__code {
   display: block;
-  font: 13px/1.6 var(--font-mono);
+  font: 12.5px/1.65 var(--font-mono);
   color: var(--ink-2);
+  /* Lines are laid out by formatLeanSignature; a line too long for the column
+     continues under its own indent rather than at an arbitrary character. */
   white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .plate__leanstatus {

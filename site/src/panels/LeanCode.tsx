@@ -1,10 +1,10 @@
 // A recorded Lean statement in mono with light syntax colouring.
 
 import { useMemo } from "react";
-import { tokenizeLean } from "./leanTokens";
+import { formatLeanSignature, tokenizeLean } from "./leanTokens";
 
 export function LeanCode({ source }: { source: string }) {
-  const tokens = useMemo(() => tokenizeLean(source), [source]);
+  const tokens = useMemo(() => tokenizeLean(formatLeanSignature(source)), [source]);
   return (
     <pre className="panel__lean">
       <code className="lean">
