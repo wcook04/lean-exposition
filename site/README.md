@@ -1,5 +1,9 @@
 # Reading website
 
+Read the [published website](https://wcook04.github.io/lean-exposition-site/).
+The published edition runs entirely on GitHub Pages. The source repository
+remains private; its separate public deployment repository contains built files.
+
 The website shows one captured edition of the worked example as a reader would
 want to explore it:
 
@@ -22,6 +26,42 @@ rules (type, colour, the map's drawing conventions, motion and wording) are in
 Everything shown comes from the read-only [web API](../docs/web-api.md). The site
 adds layout and wording, not facts. It pins the edition it opened, and if the
 server starts serving a different edition it says so and asks you to reload.
+
+## Build the GitHub Pages edition
+
+After installing the Python package, assemble and export the bundle from the
+repository root:
+
+```sh
+lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
+  --long papers/qaoa-sk/long/reasoning-record.md papers/qaoa-sk/long/reasoning-record.json \
+  --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
+  --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
+  --out build/reading-edition
+python site/scripts/export-static.py build/reading-edition
+cd site
+npm ci
+REQUIRE_STATIC_PARITY=true npm test
+VITE_STATIC_EDITION=true VITE_BASE_PATH=/lean-exposition-site/ npm run build
+```
+
+The exporter captures responses from the existing Python application. The
+browser loads those files, pages captured record tables, matches text selections
+to whole passages, and searches the server's indexed fields with Python's Unicode
+casefold rules. Tests compare search results and highlights against the server.
+This transport supports the reading website; it is not a complete hosted API.
+The bundle's draft, review and publication metadata remain visible.
+
+The build writes route entry files for direct paper, map, search and checks
+links, so a page reload needs no Python server. `site/public/edition/` and
+`site/dist/` are generated output and stay out of the source repository.
+
+The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
+`main`, checks the static search against the server, and pushes only `site/dist/`
+to `wcook04/lean-exposition-site`. That repository serves its `main` branch with
+GitHub Pages. `PAGES_DEPLOY_KEY` is a repository secret containing a write-enabled
+deploy key scoped to that public output repository. No source access token or
+private backend code is copied into the website.
 
 ## Run it locally
 

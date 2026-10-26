@@ -7,6 +7,7 @@
 // HTTP cache revalidates them with the server's ETags.
 
 import type { ApiErrorBody, Discovery, Envelope, Snapshot } from "./types";
+import { staticRequest } from "./static";
 
 const API_ORIGIN: string = (import.meta.env.VITE_API_ORIGIN as string | undefined) ?? "";
 const API_BASE = "/api/v1";
@@ -68,7 +69,9 @@ function withParams(path: string, params: Params = {}, pinned = true): string {
 async function request(url: string, init?: RequestInit): Promise<Response> {
   let response: Response;
   try {
-    response = await fetch(absolute(url), { headers: { Accept: "application/json" }, ...init });
+    response = import.meta.env.VITE_STATIC_EDITION === "true"
+      ? await staticRequest(url)
+      : await fetch(absolute(url), { headers: { Accept: "application/json" }, ...init });
   } catch (cause) {
     throw new ApiError(0, "network", "The site could not connect to the server that holds the records.", url);
   }

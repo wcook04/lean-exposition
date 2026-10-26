@@ -1,5 +1,8 @@
 # lean-exposition
 
+[Read the interactive website](https://wcook04.github.io/lean-exposition-site/) ·
+[Website development and publishing](site/README.md)
+
 **From formal proofs to mathematics people can understand.**
 
 [Lean](https://lean-lang.org/) is a language and proof assistant that checks
