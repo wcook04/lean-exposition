@@ -1,0 +1,248 @@
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__main {
+  flex: 1;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html[data-view="map"],
+html[data-view="map"] body {
+  overflow: hidden;
+}
+
+html[data-view="map"] .app {
+  height: 100%;
+}
+
+/* Top bar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: var(--topbar-h);
+  padding: 0 var(--space-5);
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  letter-spacing: -0.005em;
+}
+
+.wordmark__mark {
+  width: 22px;
+  height: 22px;
+}
+
+.wordmark__mark path {
+  stroke: var(--ink);
+}
+
+.wordmark__mark circle {
+  fill: var(--lit);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.topnav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: var(--radius-m);
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--t-press) var(--ease-out), background-color var(--t-press) var(--ease-out);
+}
+
+.topnav a:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.topnav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.topnav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -11px;
+  height: 2px;
+  background: var(--lit);
+  border-radius: 2px;
+}
+
+.topbar__tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.search-trigger {
+  color: var(--ink-2);
+  gap: 8px;
+}
+
+.search-trigger .kbd {
+  margin-left: 2px;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  .search-trigger span {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    gap: var(--space-3);
+    padding: 0 var(--space-4);
+  }
+  .menu-toggle {
+    display: inline-flex;
+  }
+  .search-trigger .kbd {
+    display: none;
+  }
+  .topnav {
+    display: none;
+    position: absolute;
+    top: var(--topbar-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-2) var(--space-4) var(--space-4);
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--shadow-sheet);
+  }
+  .topnav--open {
+    display: flex;
+  }
+  .topnav a {
+    height: 44px;
+    font-size: var(--fs-base);
+  }
+  .topnav a[aria-current="page"]::after {
+    left: 0;
+    right: auto;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    height: auto;
+  }
+}
+
+/* Boot, errors and edition changes */
+
+.boot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-5);
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.boot__mark {
+  width: 120px;
+  height: 60px;
+}
+
+.boot__mark path {
+  fill: none;
+  stroke: var(--lit);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation: boot-draw 1.4s var(--ease-move) forwards;
+}
+
+@keyframes boot-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.boot--error h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  color: var(--ink);
+}
+
+.boot--error p {
+  max-width: 36rem;
+}
+
+.page-message {
+  max-width: 40rem;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-5);
+}
+
+.page-message h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-4);
+}
+
+.page-loading {
+  padding: var(--space-7);
+  color: var(--ink-3);
+  text-align: center;
+}
+
+.edition-banner {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-5);
+  background: var(--lit-wash);
+  color: var(--ink);
+  font-size: var(--fs-ui);
+  border-bottom: 1px solid var(--rule);
+}

@@ -179,6 +179,12 @@ text selections. Summary cards, compact graph maps and matches-only passage
 queries let a frontend load detail as readers select it. The backend supplies
 the data; a frontend can choose its own graph renderer and reading interface.
 
+The repository's own [reading website](site/README.md) is one such frontend.
+It shows the main theorem with the recorded argument beneath it, lets you
+unfold any result into what it uses, and opens the papers with each passage's
+mapped claims beside the text. It runs against a local `serve` process; its
+guide gives the commands.
+
 ## Sources and verification
 
 The [examples guide](examples/README.md) covers three starting points:
@@ -208,6 +214,7 @@ records preserve those distinctions.
 | [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
 | [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |
 | [src/lean_exposition/](src/lean_exposition/) | Python CLI, read-only [web backend](src/lean_exposition/web.py), consumer library, packaged schemas and templates |
+| [site/](site/) · [site guide](site/README.md) | The reading website: the argument as a tree you unfold, the three papers with their mapped claims beside them, and the recorded checks, all read from the web API |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
 | [scripts/](scripts/) | Repository layout/link checks, the [web benchmark](scripts/benchmark_web.py) and the [paper bookmark filter](scripts/paper_anchors.lua) |

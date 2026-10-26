@@ -1,0 +1,263 @@
+.dock {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--dock-h);
+  padding: 8px 24px 12px;
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+}
+
+.dock--collapsed {
+  height: auto;
+}
+
+.dock__head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  height: 22px;
+  margin-bottom: 10px;
+}
+
+.dock__title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dock__hint {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock__toggle {
+  margin-left: auto;
+  min-height: 24px;
+  color: var(--ink-2);
+}
+
+.dock__body {
+  display: grid;
+  grid-template-columns: 176px 1fr;
+  gap: 16px;
+}
+
+.dock__labels {
+  display: flex;
+  flex-direction: column;
+}
+
+.dock__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-m);
+  background: none;
+  cursor: pointer;
+  font-size: var(--fs-ui);
+  color: var(--ink);
+  transition: background-color var(--t-press) var(--ease-out), border-color var(--t-press) var(--ease-out);
+}
+
+.dock__label:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.dock__label[aria-pressed="true"] {
+  border-color: var(--lit);
+  background: var(--lit-wash);
+}
+
+.dock__label-name {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  white-space: nowrap;
+}
+
+.dock__label-meta {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.dock__area {
+  position: relative;
+  min-width: 0;
+}
+
+.dock__svg {
+  display: block;
+  overflow: visible;
+}
+
+.strip__line {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.strip__tick {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.strip {
+  transition: opacity var(--t-state) var(--ease-out);
+}
+
+.strip--dimmed {
+  opacity: 0.35;
+}
+
+.seg {
+  cursor: pointer;
+  outline: none;
+}
+
+.seg__hit {
+  fill: transparent;
+}
+
+.seg__mark {
+  fill: var(--region, var(--ink-3));
+  fill-opacity: 0.62;
+  transition: fill-opacity var(--t-press) var(--ease-out);
+}
+
+.seg--example .seg__mark {
+  fill: var(--ground);
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.seg:hover .seg__mark,
+.seg:focus-visible .seg__mark,
+.seg--active .seg__mark {
+  fill-opacity: 1;
+  stroke: var(--lit);
+  stroke-width: 1.5;
+  stroke-dasharray: none;
+}
+
+.seg--related .seg__mark {
+  fill-opacity: 1;
+}
+
+.thread {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.thread--rest {
+  stroke: var(--ink-3);
+  stroke-opacity: 0.4;
+}
+
+.thread--active {
+  stroke: var(--lit-line);
+  stroke-opacity: 0.95;
+  stroke-width: 1.5;
+}
+
+.thread--shared_claim.thread--active {
+  stroke: var(--ink-3);
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+}
+
+.thread--illustrates {
+  stroke-dasharray: 3 2;
+}
+
+.thread--answers {
+  stroke-dasharray: 1 2.5;
+  stroke-linecap: round;
+}
+
+.dock-tip {
+  position: absolute;
+  bottom: calc(100% + 30px);
+  width: 300px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.dock-tip__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  line-height: 1.3;
+}
+
+.dock-tip__meta {
+  margin-top: 4px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  line-height: var(--lh-snug);
+}
+
+@media (max-width: 900px) {
+  .dock {
+    display: none;
+  }
+}
+
+/* The selected record's passages: amber, with a marker above each so the
+   lighting does not rely on colour alone, and a brief pulse on a new selection. */
+
+.strip--selecting .seg:not(.seg--lit) .seg__mark {
+  fill-opacity: 0.28;
+}
+
+.seg--lit .seg__mark {
+  fill: var(--lit);
+  fill-opacity: 0.9;
+}
+
+.seg__halo {
+  fill: none;
+  stroke: var(--lit-line);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: seg-pulse 520ms var(--ease-out) both;
+}
+
+.seg__pin {
+  fill: var(--lit);
+}
+
+@keyframes seg-pulse {
+  0% {
+    transform: scale(1.6, 2.2);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.dock__label-meta--lit {
+  color: var(--lit);
+  font-weight: 600;
+}

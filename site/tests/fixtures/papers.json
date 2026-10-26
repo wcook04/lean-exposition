@@ -1,0 +1,53 @@
+[
+ {
+  "stage": "long",
+  "paper_scope": {
+   "mapping_schema_version": "1.2",
+   "meaning": "Authored focus; mentioned claims and retained prerequisites may extend beyond these goals.",
+   "selected_goal_ids": [
+    "full_support",
+    "scalar_value",
+    "qaoa_thermodynamic_first"
+   ],
+   "selected_goal_refs": [
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support",
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar_value",
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/qaoa_thermodynamic_first"
+   ]
+  },
+  "passages": 48,
+  "sections": 64
+ },
+ {
+  "stage": "short",
+  "paper_scope": {
+   "mapping_schema_version": "1.2",
+   "meaning": "Authored focus; mentioned claims and retained prerequisites may extend beyond these goals.",
+   "selected_goal_ids": [
+    "full_support",
+    "scalar.smooth_positive_density"
+   ],
+   "selected_goal_refs": [
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support",
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.smooth_positive_density"
+   ]
+  },
+  "passages": 10,
+  "sections": 11
+ },
+ {
+  "stage": "expository",
+  "paper_scope": {
+   "mapping_schema_version": "1.2",
+   "meaning": "Authored focus; mentioned claims and retained prerequisites may extend beyond these goals.",
+   "selected_goal_ids": [
+    "full_support"
+   ],
+   "selected_goal_refs": [
+    "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support"
+   ]
+  },
+  "passages": 19,
+  "sections": 19
+ }
+]

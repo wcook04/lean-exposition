@@ -1,0 +1,557 @@
+.map-page {
+  --dock-h: 152px;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.map-page__canvas {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  min-height: 0;
+  min-width: 0;
+}
+
+.map-page > .panel {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  min-height: 0;
+  height: auto;
+}
+
+.map-page > .dock {
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  left: auto;
+  right: auto;
+  bottom: auto;
+}
+
+/* The bar above the argument: which goal, a one-line key, the fold controls. */
+
+.map-bar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+}
+
+.goal-switch {
+  display: inline-flex;
+  flex: none;
+  padding: 3px;
+  gap: 2px;
+  background: var(--sunk);
+  border-radius: var(--radius-l);
+}
+
+.goal-switch__item {
+  display: grid;
+  gap: 1px;
+  padding: 5px 14px 6px;
+  border: 0;
+  border-radius: calc(var(--radius-l) - 3px);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-press) var(--ease-out);
+}
+
+.goal-switch__item:hover {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.goal-switch__item[aria-checked="true"] {
+  background: var(--surface);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--ink) 18%, transparent), 0 0 0 1px var(--rule);
+}
+
+.goal-switch__name {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.2;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.goal-switch__note {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.goal-switch__item[aria-checked="true"] .goal-switch__name {
+  color: var(--ink);
+}
+
+.map-key {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.map-key__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.map-bar > .map-key .map-key__sources {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 2px 18px;
+}
+
+.map-key__sources li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-key__sources li[data-slot="1"] {
+  --cat: var(--src-1);
+}
+.map-key__sources li[data-slot="2"] {
+  --cat: var(--src-2);
+}
+.map-key__sources li[data-slot="3"] {
+  --cat: var(--src-3);
+}
+
+.map-key__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--cat, transparent) 14%, var(--surface));
+  border: 1px solid color-mix(in oklab, var(--cat, var(--ink-3)) 60%, var(--rule));
+  box-shadow: inset 0 2px 0 var(--cat, var(--rule-strong));
+}
+
+/* The key behind one button: colours, line styles and how to go deeper. */
+.map-keypop {
+  position: relative;
+}
+
+.map-keypop__panel {
+  --line: color-mix(in oklab, var(--ink-3) 55%, var(--ground));
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px 16px 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  animation: keypop-in var(--t-panel) var(--ease-out) both;
+}
+
+:root[data-theme="dark"] .map-keypop__panel {
+  --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .map-keypop__panel {
+    --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+  }
+}
+
+@keyframes keypop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.map-keypop__title {
+  margin: 12px 0 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.map-keypop__title:first-child {
+  margin-top: 0;
+}
+
+.map-keypop__sources {
+  display: grid;
+  gap: 4px;
+}
+
+.map-keypop__lines {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.map-keypop__lines li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-keypop__sample {
+  flex: none;
+  overflow: visible;
+}
+
+.map-keypop__note {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.map-bar__tools {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+/* The theorem inside the goal's card. */
+
+.theorem {
+  display: grid;
+  gap: 14px;
+}
+
+.theorem--two {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 28px;
+  align-items: start;
+}
+
+.theorem__main {
+  display: grid;
+  gap: 12px;
+}
+
+.prose.prose--theorem {
+  max-width: none;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.prose--theorem p + p,
+.prose--theorem p + .math-display,
+.prose--theorem .math-display + p {
+  margin-top: 0.45em;
+}
+
+.prose--theorem .math-display {
+  margin: 0.55em 0;
+}
+
+.theorem__source {
+  margin-top: -6px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.theorem__recorded {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.theorem__formal {
+  display: grid;
+  gap: 8px;
+  padding-left: 24px;
+  border-left: 1px solid var(--rule);
+}
+
+.theorem__lean-line {
+  display: grid;
+  gap: 4px;
+}
+
+.theorem__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+
+.theorem__lean {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
+.theorem__checks {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.theorem__more {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: var(--fs-sm);
+}
+
+.theorem__read ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.theorem__read a {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  height: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  text-decoration: none;
+  transition: border-color var(--t-press) var(--ease-out), background-color var(--t-press) var(--ease-out);
+}
+
+.theorem__read a:hover {
+  border-color: var(--ink-3);
+  background: color-mix(in oklab, var(--ink) 3%, transparent);
+}
+
+.theorem__read-name {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.theorem__read-job {
+  font-size: var(--fs-xs);
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+/* Check rows, shared with the record panel. */
+
+.check {
+  display: grid;
+  grid-template-columns: 14px auto 1fr;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.check__mark {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+  transform: translateY(1px);
+}
+
+.check--passed .check__mark {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+}
+
+.check--failed .check__mark {
+  border-color: var(--fail);
+  border-radius: 1px;
+  transform: translateY(1px) rotate(45deg) scale(0.85);
+}
+
+.check__kind {
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.check__outcome {
+  color: var(--ink-2);
+}
+
+.linklike {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+/* Below 1600px the colour key lives behind the Key button only. */
+@media (max-width: 1599px) {
+  .map-bar > .map-key {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .goal-switch__note {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .map-page {
+    --dock-h: 0px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .map-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  .goal-switch {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .map-key {
+    flex-basis: 100%;
+    order: 3;
+  }
+  .map-key__sources {
+    gap: 2px 12px;
+    font-size: var(--fs-xs);
+  }
+  /* The panel becomes a bottom sheet; its heights come from panel.css. */
+  .map-page > .panel {
+    position: fixed;
+    grid-column: auto;
+    grid-row: auto;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: var(--sheet-drag, 45dvh);
+  }
+  .map-page > .panel[data-sheet="full"] {
+    height: var(--sheet-drag, calc(100dvh - var(--topbar-h) - 8px));
+  }
+}
+
+/* Account switch: all records, or one account's. The caption counts coverage. */
+
+.acct-switch {
+  position: relative;
+  flex: none;
+  display: grid;
+  gap: 3px;
+}
+
+.acct-switch__group {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+}
+
+.acct-switch__item {
+  padding: 3px 9px;
+  border: 0;
+  border-radius: calc(var(--radius-m) - 2px);
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-press) var(--ease-out);
+}
+
+.acct-switch__item:hover {
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.acct-switch__item[aria-checked="true"] {
+  background: var(--lit-wash);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--lit);
+}
+
+.acct-switch__caption {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.acct-switch__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 360px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  white-space: normal;
+}
+
+.acct-switch__pop ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.acct-switch__pop li {
+  display: grid;
+  gap: 1px;
+}
+
+.acct-switch__name {
+  justify-self: start;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink);
+  text-align: left;
+}
+
+.acct-switch__why {
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .acct-switch__group {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,581 @@
+.tree {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  --k: 1;
+}
+
+.tree:active {
+  cursor: grabbing;
+}
+
+.tree__world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+.tree__links {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Connectors: a result up into the result it helps prove. Quiet at rest, clear when you look.
+   Paths and positions are written per frame by the engine; nothing here animates geometry. */
+
+.tree {
+  --line: color-mix(in oklab, var(--ink-3) 55%, var(--ground));
+}
+
+:root[data-theme="dark"] .tree {
+  --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tree {
+    --line: color-mix(in oklab, var(--ink-3) 62%, var(--ground));
+  }
+}
+
+.tree__heads {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.link {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+  transition: stroke var(--t-state) var(--ease-out), opacity var(--t-state) var(--ease-out);
+}
+
+.link--formalizes {
+  stroke: color-mix(in oklab, var(--formal) 70%, var(--ground));
+  stroke-dasharray: 5 4;
+}
+
+.link--assumes {
+  stroke-dasharray: 0.1 4.2;
+  stroke-linecap: round;
+  stroke-width: 1.6;
+}
+
+.tree--dim .links,
+.tree--dim .heads {
+  opacity: 0.3;
+}
+
+.link--near {
+  stroke: var(--ink-2);
+  stroke-width: 1.6;
+}
+
+.link--near.link--formalizes {
+  stroke: var(--formal);
+}
+
+.link--lit,
+.link--selected {
+  stroke: var(--lit-line);
+  stroke-width: 2;
+}
+
+.link--lit {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: link-draw var(--dur, 300ms) var(--ease-move) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.link--lit.link--assumes {
+  stroke-dasharray: 1 1;
+}
+
+@keyframes link-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+.head {
+  fill: var(--line);
+  stroke: none;
+}
+
+.head--near {
+  fill: var(--ink-2);
+}
+
+.head--lit {
+  fill: var(--lit-line);
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: head-pop 160ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes head-pop {
+  from {
+    transform: scale(0);
+  }
+}
+
+/* An applied conditional result: some of its premises are supplied by this step. */
+.ring {
+  fill: var(--ground);
+  stroke: var(--ink-3);
+  stroke-width: 1.1;
+}
+
+.hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 18;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.tree--moving .hit {
+  pointer-events: none;
+}
+
+/* The relation under the pointer. */
+
+.edge-tip {
+  position: absolute;
+  z-index: 5;
+  max-width: 320px;
+  padding: 9px 12px 8px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+  pointer-events: none;
+  display: grid;
+  gap: 5px;
+}
+
+.edge-tip__rel {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.edge-tip__warrant {
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  line-height: 1.38;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.edge-tip__app {
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+
+.edge-tip__status {
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+}
+
+.edge-tip--compact {
+  max-width: 260px;
+  padding: 7px 10px 6px;
+}
+
+.edge-tip--compact .edge-tip__warrant {
+  font-size: 0.875rem;
+}
+
+/* Cards */
+
+.card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 11px 14px 9px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--ink) 5%, transparent);
+  cursor: pointer;
+  outline: none;
+  transform-origin: 50% 50%;
+  transition:
+    opacity var(--t-state) var(--ease-out),
+    border-color var(--t-press) var(--ease-out),
+    box-shadow var(--t-press) var(--ease-out),
+    background-color var(--t-press) var(--ease-out);
+}
+
+.card:hover,
+.card.is-hover {
+  border-color: var(--ink-3);
+  box-shadow: 0 6px 18px -10px color-mix(in oklab, var(--ink) 45%, transparent);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: 2px;
+}
+
+.card.is-selected {
+  border-color: var(--lit);
+  box-shadow: 0 0 0 1px var(--lit), 0 10px 26px -14px color-mix(in oklab, var(--lit) 60%, transparent);
+}
+
+.card.is-echo,
+.tree .card.is-echo:not(.card--root)[data-slot] {
+  border-color: var(--lit);
+  background: color-mix(in oklab, var(--lit-wash) 55%, var(--surface));
+  box-shadow: inset 0 3px 0 var(--lit), 0 0 0 1px var(--lit);
+}
+
+.tree .card.is-traced:not(.is-selected):not(.card--root) {
+  border-color: var(--lit-line);
+  box-shadow: inset 0 3px 0 var(--lit-line);
+  background: color-mix(in oklab, var(--lit-wash) 28%, var(--surface));
+}
+
+.card.is-dim {
+  opacity: 0.32;
+}
+
+.card.is-quiet {
+  opacity: 0.62;
+}
+
+.tree--moving .card {
+  transition: none;
+}
+
+.card.is-exiting {
+  pointer-events: none;
+}
+
+.card.is-near {
+  border-color: var(--ink-3);
+}
+
+.card.is-edge-end {
+  border-color: var(--lit);
+  box-shadow: 0 0 0 1px var(--lit);
+}
+
+/* Starting points and assumptions: a quiet base line, the ground the argument stands on. */
+.card--leaf::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -6px;
+  height: 0;
+  border-bottom: 2px solid color-mix(in oklab, var(--ink-3) 30%, var(--ground));
+  border-radius: 1px;
+}
+
+/* First visit: the argument settles in rank by rank. */
+.tree--intro .card {
+  animation: intro-in 420ms var(--ease-out) both;
+  animation-delay: calc(var(--rank, 0) * 70ms);
+}
+
+.tree--intro .tree__links,
+.tree--intro .tree__heads {
+  animation: intro-in 520ms var(--ease-out) both;
+  animation-delay: 160ms;
+}
+
+@keyframes intro-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.card__kind {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+
+.card__label {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.27;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-wrap: pretty;
+}
+
+.card__label.lean {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
+.card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 22px;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.card__unfold {
+  flex: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 9px 0 7px;
+  margin-left: -4px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background-color var(--t-press) var(--ease-out), color var(--t-press) var(--ease-out);
+}
+
+.card__unfold:hover {
+  background: color-mix(in oklab, var(--ink) 7%, transparent);
+  color: var(--ink);
+}
+
+.card__unfold.is-open {
+  color: var(--ink-3);
+}
+
+.card__shown {
+  color: var(--ink-3);
+}
+
+.card__leaf {
+  color: var(--ink-3);
+  font-style: italic;
+}
+
+/* Kinds */
+
+.card--goal:not(.card--root) {
+  border-color: var(--ink-2);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--rule-strong);
+}
+
+.card--declaration {
+  background: color-mix(in oklab, var(--formal) 7%, var(--surface));
+  border-color: color-mix(in oklab, var(--formal) 45%, var(--rule));
+}
+
+.card--assumption {
+  background: transparent;
+  border-style: dashed;
+}
+
+.card.is-open .card__label::after {
+  content: " (open)";
+  color: var(--fail);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+}
+
+/* Lens: what one account discusses (unchanged), relies on (outlined), leaves out (faint). */
+
+.card.role-support {
+  background: transparent;
+  border-style: dashed;
+}
+
+.card.role-outside {
+  opacity: 0.28;
+}
+
+/* The goal: the theorem at the top of its own argument. */
+
+.card--root {
+  padding: 18px 22px 16px;
+  border-color: var(--ink-2);
+  border-width: 1px;
+  box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px var(--rule-strong), var(--shadow-sheet);
+  cursor: default;
+  justify-content: flex-start;
+}
+
+.card--root.is-selected {
+  box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px var(--lit), var(--shadow-sheet);
+}
+
+.card__root .card__kind {
+  margin-bottom: 4px;
+}
+
+.card__title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  cursor: pointer;
+  text-wrap: balance;
+}
+
+.card__theorem {
+  margin-top: 12px;
+  cursor: auto;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Compact cards for a side pane */
+
+.tree--compact .card {
+  padding: 7px 10px 6px;
+  gap: 3px;
+}
+
+.tree--compact .card__label {
+  font-size: 0.8125rem;
+  -webkit-line-clamp: 2;
+}
+
+.tree--compact .card__foot {
+  min-height: 16px;
+}
+
+.tree--compact .card__unfold {
+  height: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .tree--intro .card,
+  .tree--intro .tree__links,
+  .tree--intro .tree__heads {
+    transition: none;
+    animation: none;
+  }
+  .link--lit,
+  .head--lit {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Where each step comes from: a tint, a rule along the top and a named swatch. */
+
+.card[data-slot="1"] {
+  --cat: var(--src-1);
+}
+.card[data-slot="2"] {
+  --cat: var(--src-2);
+}
+.card[data-slot="3"] {
+  --cat: var(--src-3);
+}
+
+.card:not(.card--root)[data-slot]:not([data-slot="0"]) {
+  background: color-mix(in oklab, var(--cat) 7%, var(--surface));
+  border-color: color-mix(in oklab, var(--cat) 42%, var(--rule));
+  box-shadow: inset 0 3px 0 var(--cat), 0 1px 0 color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.card:not(.card--root)[data-slot="0"] {
+  box-shadow: inset 0 3px 0 var(--rule-strong);
+}
+
+.card__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  min-width: 0;
+  max-width: 55%;
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__swatch {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--cat, transparent);
+  border: 1px solid var(--cat, var(--ink-3));
+}
+
+.card[data-slot="0"] .card__swatch {
+  background: transparent;
+}
+
+/* Cards keep a common minimum height so rows read evenly. */
+.card:not(.card--root) {
+  min-height: 84px;
+}
+
+.tree--compact .card:not(.card--root) {
+  min-height: 54px;
+}
+
+/* The goal's statement: clamped to a sensible height with a soft fade. */
+.card--root .theorem__clamp {
+  max-height: 10.6em;
+  overflow: hidden;
+}
+
+.card--root .theorem__clamp.is-clamped {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 3.2em), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 3.2em), transparent);
+}
+
+/* A narrow theorem card stacks the statement above its Lean counterpart. */
+.tree--narrow .card--root .theorem--two {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.tree--narrow .card--root .theorem__formal {
+  padding-left: 0;
+  padding-top: 12px;
+  border-left: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.tree--narrow .card__title {
+  font-size: 1.3rem;
+}

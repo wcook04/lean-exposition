@@ -1,0 +1,3374 @@
+[
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fassumptions.full_support_minimizer",
+  "id": "assumptions.full_support_minimizer",
+  "kind": "assumption",
+  "label": "Full-support interface: Brownian system and admissible minimizer",
+  "papers": [
+   {
+    "direct_passage_count": 5,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/assumptions.full_support_minimizer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fassumptions.qaoa_model_and_limits",
+  "id": "assumptions.qaoa_model_and_limits",
+  "kind": "assumption",
+  "label": "Gaussian zero-field model and ordered limits",
+  "papers": [
+   {
+    "direct_passage_count": 7,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/assumptions.qaoa_model_and_limits",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fassumptions.value_diffusion",
+  "id": "assumptions.value_diffusion",
+  "kind": "assumption",
+  "label": "Scalar-value interface: associated diffusion for its first two clauses",
+  "papers": [
+   {
+    "direct_passage_count": 7,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/assumptions.value_diffusion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fassumptions.value_minimizer",
+  "id": "assumptions.value_minimizer",
+  "kind": "assumption",
+  "label": "Scalar-value interface: Brownian space and admissible minimizer",
+  "papers": [
+   {
+    "direct_passage_count": 8,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/assumptions.value_minimizer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.additive_responses",
+  "id": "circuit.additive_responses",
+  "kind": "claim",
+  "label": "Additive cut responses retain scalar second order",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.additive_responses",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.bounded_trigonometric",
+  "id": "circuit.bounded_trigonometric",
+  "kind": "claim",
+  "label": "Bounded odd trigonometric angle approximation",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.bounded_trigonometric",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.classical_fixed_minimizer",
+  "id": "circuit.classical_fixed_minimizer",
+  "kind": "goal",
+  "label": "Conditional bounded synthesis input for a given minimizer",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.classical_fixed_minimizer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.classical_positive",
+  "id": "circuit.classical_positive",
+  "kind": "goal",
+  "label": "Alternative finite-temperature bounded synthesis input",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.classical_positive",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.classical_primary",
+  "id": "circuit.classical_primary",
+  "kind": "goal",
+  "label": "Closed existence of a near-optimal bounded synthesis input",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.classical_primary",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.classical_strong_limit",
+  "id": "circuit.classical_strong_limit",
+  "kind": "claim",
+  "label": "Smooth local formulas converge strongly with occupation bounds",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.classical_strong_limit",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.color_exclusion",
+  "id": "circuit.color_exclusion",
+  "kind": "claim",
+  "label": "Raw seed reencoding and ancestor exclusion",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.color_exclusion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.energy_transfer",
+  "id": "circuit.energy_transfer",
+  "kind": "claim",
+  "label": "Finite-degree edge energy requires occupation control",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.energy_transfer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.even_p_spin_obstruction",
+  "id": "circuit.even_p_spin_obstruction",
+  "kind": "claim",
+  "label": "A separate thermodynamic-first ceiling for even higher-spin models",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.even_p_spin_obstruction",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.external_mode_energy",
+  "id": "circuit.external_mode_energy",
+  "kind": "claim",
+  "label": "One persistent Gaussian mode and rooted energy induction",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.external_mode_energy",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.fixed_word_concentration",
+  "id": "circuit.fixed_word_concentration",
+  "kind": "claim",
+  "label": "Fixed-word SK QAOA first and second measurement moments",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.fixed_word_concentration",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.fixed_word_transfer",
+  "id": "circuit.fixed_word_transfer",
+  "kind": "claim",
+  "label": "Fixed ordinary tree word transfers to fixed-angle SK",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.fixed_word_transfer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.gate_calculus",
+  "id": "circuit.gate_calculus",
+  "kind": "claim",
+  "label": "Smooth exclusion-gate calculus",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.gate_calculus",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.gaussian_root_calculus",
+  "id": "circuit.gaussian_root_calculus",
+  "kind": "claim",
+  "label": "Root shift and classical Gaussian first chaos",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.gaussian_root_calculus",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.helper_contraction",
+  "id": "circuit.helper_contraction",
+  "kind": "claim",
+  "label": "Pinned helpers implement propagation through contraction",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.helper_contraction",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.high_girth_maxcut",
+  "id": "circuit.high_girth_maxcut",
+  "kind": "goal",
+  "label": "Fixed normalized angles on all sufficiently high-girth regular graphs",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.high_girth_maxcut",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.later_finite_size_comparison",
+  "id": "circuit.later_finite_size_comparison",
+  "kind": "claim",
+  "label": "A later finite-size estimate for a bounded-angle class",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.later_finite_size_comparison",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.masked_controls",
+  "id": "circuit.masked_controls",
+  "kind": "claim",
+  "label": "Finite compilation of masked local controls",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.masked_controls",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.one_measurement_near_optimum",
+  "id": "circuit.one_measurement_near_optimum",
+  "kind": "claim",
+  "label": "One measured sample approaches the SK optimum with high joint probability",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.one_measurement_near_optimum",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.ordinary_updates",
+  "id": "circuit.ordinary_updates",
+  "kind": "claim",
+  "label": "Ordinary cost and mixer root updates",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.ordinary_updates",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.ordinary_word_positive",
+  "id": "circuit.ordinary_word_positive",
+  "kind": "goal",
+  "label": "Alternative-route finite ordinary near-optimal word",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.ordinary_word_positive",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.ordinary_word_primary",
+  "id": "circuit.ordinary_word_primary",
+  "kind": "goal",
+  "label": "Primary-route finite ordinary near-optimal word",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.ordinary_word_primary",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.orthogonal_quadratics",
+  "id": "circuit.orthogonal_quadratics",
+  "kind": "claim",
+  "label": "Orthogonal mask quadratics have small exponentials",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.orthogonal_quadratics",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.positive_finite_step",
+  "id": "circuit.positive_finite_step",
+  "kind": "claim",
+  "label": "EAMS finite-step law and corrected edge identity",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.positive_finite_step",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.positive_input",
+  "id": "circuit.positive_input",
+  "kind": "assumption",
+  "label": "Independent finite-temperature input family",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim",
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.positive_input",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.positive_mesh",
+  "id": "circuit.positive_mesh",
+  "kind": "claim",
+  "label": "Fixed-temperature normalized mesh converges strongly",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.positive_mesh",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.positive_rooted_clipping",
+  "id": "circuit.positive_rooted_clipping",
+  "kind": "claim",
+  "label": "Positive-temperature rooted output and clipping",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.positive_rooted_clipping",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.positive_value",
+  "id": "circuit.positive_value",
+  "kind": "claim",
+  "label": "Finite-temperature scalar approximation to P_*",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.positive_value",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.rooted_realization",
+  "id": "circuit.rooted_realization",
+  "kind": "claim",
+  "label": "Exact rooted realization of the scalar coefficient sum",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.rooted_realization",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.seed_packets",
+  "id": "circuit.seed_packets",
+  "kind": "claim",
+  "label": "Exact small packet and weighted tail estimates",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.seed_packets",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.seed_removal",
+  "id": "circuit.seed_removal",
+  "kind": "claim",
+  "label": "Every finite seeded word has a finite ordinary approximation",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.seed_removal",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.seeded_synthesis",
+  "id": "circuit.seeded_synthesis",
+  "kind": "claim",
+  "label": "Seeded synthesis with explicit helper loss",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.seeded_synthesis",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.selective_accuracy",
+  "id": "circuit.selective_accuracy",
+  "kind": "claim",
+  "label": "Selective pulse errors are o(r) on ordinary tails",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.selective_accuracy",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.selective_control",
+  "id": "circuit.selective_control",
+  "kind": "claim",
+  "label": "Exact finite selective rotations with zero clocks",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.selective_control",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.sign_smoothing",
+  "id": "circuit.sign_smoothing",
+  "kind": "claim",
+  "label": "Finite sign smoothing preserves the rooted value",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.sign_smoothing",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.singular_echo",
+  "id": "circuit.singular_echo",
+  "kind": "claim",
+  "label": "The cost–flip–cost–unflip echo retains finite signal",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.singular_echo",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.upper_bound_padding",
+  "id": "circuit.upper_bound_padding",
+  "kind": "claim",
+  "label": "Classical upper bound and identity-padding monotonicity",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.upper_bound_padding",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.visibility",
+  "id": "circuit.visibility",
+  "kind": "claim",
+  "label": "Finite visibility choices precede the small-packet limit",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.visibility",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.weighted_finite_horizon",
+  "id": "circuit.weighted_finite_horizon",
+  "kind": "claim",
+  "label": "Corrected weighted finite-tree estimate with explicit hypotheses",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.weighted_finite_horizon",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fcircuit.weighted_unitary_calculus",
+  "id": "circuit.weighted_unitary_calculus",
+  "kind": "claim",
+  "label": "Weighted sums, products and commuting substitution",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/circuit.weighted_unitary_calculus",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Ffull_support",
+  "id": "full_support",
+  "kind": "goal",
+  "label": "Full support of zero-temperature SK minimizers",
+  "papers": [
+   {
+    "direct_passage_count": 5,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/full_support",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Flean.full_support",
+  "id": "lean.full_support",
+  "kind": "declaration",
+  "label": "OAI.ZeroTemperatureSK.full_support",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/lean.full_support",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Flean.value_consequences",
+  "id": "lean.value_consequences",
+  "kind": "declaration",
+  "label": "OAI.SKValue.value_consequences",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/lean.value_consequences",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fqaoa_thermodynamic_first",
+  "id": "qaoa_thermodynamic_first",
+  "kind": "goal",
+  "label": "QAOA approaches the SK optimum in the thermodynamic-first limit",
+  "papers": [
+   {
+    "direct_passage_count": 6,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/qaoa_thermodynamic_first",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.conditional_fixed_strip",
+  "id": "scalar.conditional_fixed_strip",
+  "kind": "claim",
+  "label": "Formal fixed-strip implication with analytic hypotheses exposed",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.conditional_fixed_strip",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.conditional_rounding",
+  "id": "scalar.conditional_rounding",
+  "kind": "claim",
+  "label": "Independent Gaussian rounding preserves the conditional mean",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.conditional_rounding",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.constant_curvature",
+  "id": "scalar.constant_curvature",
+  "kind": "claim",
+  "label": "Separate positive and zero constant-interval inequalities",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.constant_curvature",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.correlation_vector_control",
+  "id": "scalar.correlation_vector_control",
+  "kind": "claim",
+  "label": "Dimension-independent control of both coefficient vectors",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.correlation_vector_control",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.euler_normalization",
+  "id": "scalar.euler_normalization",
+  "kind": "claim",
+  "label": "Fixed-strip Euler convergence and normalized directions",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.euler_normalization",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.finite_gibbs_comparison",
+  "id": "scalar.finite_gibbs_comparison",
+  "kind": "claim",
+  "label": "Finite Gibbs values and exact Gibbs samples",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.finite_gibbs_comparison",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.fixed_strip_error_budget",
+  "id": "scalar.fixed_strip_error_budget",
+  "kind": "claim",
+  "label": "Fixed-strip scalar accuracy with its cutoff dependence exposed",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.fixed_strip_error_budget",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.fixed_strip_input_bounds",
+  "id": "scalar.fixed_strip_input_bounds",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: analytic strip-bound premises",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.fixed_strip_input_bounds",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.fixed_strip_input_diffusion",
+  "id": "scalar.fixed_strip_input_diffusion",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: model, diffusion and cutoff premises",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.fixed_strip_input_diffusion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.fixed_strip_input_unit_moment",
+  "id": "scalar.fixed_strip_input_unit_moment",
+  "kind": "assumption",
+  "label": "Fixed-strip lemma: unit curvature-moment premise",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.fixed_strip_input_unit_moment",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.formal_contact_input",
+  "id": "scalar.formal_contact_input",
+  "kind": "claim",
+  "label": "The scalar implementation derives its own contact identity",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.formal_contact_input",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.formal_finite_gaussian_clause",
+  "id": "scalar.formal_finite_gaussian_clause",
+  "kind": "claim",
+  "label": "Finite-Gaussian branch at a fixed interior cutoff",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.formal_finite_gaussian_clause",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.formal_model_transport_open",
+  "id": "scalar.formal_model_transport_open",
+  "kind": "claim",
+  "label": "Direct formal composition between the two models remains unwitnessed",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.formal_model_transport_open",
+  "status": "open",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.formal_parisi_clause",
+  "id": "scalar.formal_parisi_clause",
+  "kind": "claim",
+  "label": "Parisi identity branch without a supplied diffusion",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.formal_parisi_clause",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.formal_scalar_clause",
+  "id": "scalar.formal_scalar_clause",
+  "kind": "claim",
+  "label": "Scalar-value branch with a supplied diffusion",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.formal_scalar_clause",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.integrated_coercivity",
+  "id": "scalar.integrated_coercivity",
+  "kind": "claim",
+  "label": "Conditional analytic coercivity from the identity",
+  "papers": [],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.integrated_coercivity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.lean_gaussian_target",
+  "id": "scalar.lean_gaussian_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.finite_gaussian_target",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.lean_gaussian_target",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.lean_parisi_target",
+  "id": "scalar.lean_parisi_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.ground_state_parisi_target",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.lean_parisi_target",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.lean_scalar_target",
+  "id": "scalar.lean_scalar_target",
+  "kind": "declaration",
+  "label": "OAI.SKValue.scalar_value_target",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.lean_scalar_target",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.manuscript_terminal_value",
+  "id": "scalar.manuscript_terminal_value",
+  "kind": "claim",
+  "label": "Terminal martingale and ground-state value formulas",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.manuscript_terminal_value",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.minimizer_attainment",
+  "id": "scalar.minimizer_attainment",
+  "kind": "claim",
+  "label": "External attainment of the variational infimum",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.minimizer_attainment",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.paper_admissible",
+  "id": "scalar.paper_admissible",
+  "kind": "assumption",
+  "label": "Manuscript admissible coefficient and normalization",
+  "papers": [
+   {
+    "direct_passage_count": 17,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 8,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 7,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.paper_admissible",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.paper_minimizer",
+  "id": "scalar.paper_minimizer",
+  "kind": "assumption",
+  "label": "Manuscript minimizer hypothesis",
+  "papers": [
+   {
+    "direct_passage_count": 15,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 8,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 7,
+    "roles": [
+     "mapped_assumption"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.paper_minimizer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.parisi_formula",
+  "id": "scalar.parisi_formula",
+  "kind": "claim",
+  "label": "External zero-temperature Parisi formula",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.parisi_formula",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.separate_classical_algorithm",
+  "id": "scalar.separate_classical_algorithm",
+  "kind": "claim",
+  "label": "Separate finite-disorder optimization consequence",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.separate_classical_algorithm",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.shifted_gaussian_limit",
+  "id": "scalar.shifted_gaussian_limit",
+  "kind": "claim",
+  "label": "Shifted finite Gaussian coefficient limit",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.shifted_gaussian_limit",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.smooth_positive_density",
+  "id": "scalar.smooth_positive_density",
+  "kind": "claim",
+  "label": "Further manuscript corollary: smooth positive density",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.smooth_positive_density",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_diffusion_exists",
+  "id": "scalar.source_diffusion_exists",
+  "kind": "claim",
+  "label": "Internally constructed diffusion for every admissible coefficient",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_diffusion_exists",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_empirical_energy_limit",
+  "id": "scalar.source_empirical_energy_limit",
+  "kind": "claim",
+  "label": "The empirical adaptive energy converges to adjacent correlations",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_empirical_energy_limit",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_finite_adaptive_lower",
+  "id": "scalar.source_finite_adaptive_lower",
+  "kind": "claim",
+  "label": "Finite adaptive Gaussian offsets are bounded by the SK optimum",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_finite_adaptive_lower",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_fixed_strip_application",
+  "id": "scalar.source_fixed_strip_application",
+  "kind": "claim",
+  "label": "Fixed-strip mesh limit with every analytic input supplied",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_fixed_strip_application",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_gaussian_column_split",
+  "id": "scalar.source_gaussian_column_split",
+  "kind": "claim",
+  "label": "Splitting one Gaussian column preserves the expected quadratic maximum",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_gaussian_column_split",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_ground_state_identity_with_diffusion",
+  "id": "scalar.source_ground_state_identity_with_diffusion",
+  "kind": "claim",
+  "label": "Scalar ground-state identity from the two inequalities",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_ground_state_identity_with_diffusion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_ground_state_upper",
+  "id": "scalar.source_ground_state_upper",
+  "kind": "claim",
+  "label": "Ground-state upper bound by every admissible Parisi value",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_ground_state_upper",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_minimizer_curvature_moment",
+  "id": "scalar.source_minimizer_curvature_moment",
+  "kind": "claim",
+  "label": "Unit curvature moment after the concrete minimizer suppliers",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_minimizer_curvature_moment",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_predictable_lower",
+  "id": "scalar.source_predictable_lower",
+  "kind": "claim",
+  "label": "Predictable orthonormal correlations are bounded by the ground-state value",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_predictable_lower",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_spin_sequence_limit",
+  "id": "scalar.source_spin_sequence_limit",
+  "kind": "claim",
+  "label": "Actual convergence of the normalized expected finite-spin maximum",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_spin_sequence_limit",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_strip_regularity",
+  "id": "scalar.source_strip_regularity",
+  "kind": "claim",
+  "label": "Concrete strip regularity for every admissible coefficient",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_strip_regularity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_strip_value_lower",
+  "id": "scalar.source_strip_value_lower",
+  "kind": "claim",
+  "label": "Curvature integral bounded by the finite-spin value on each fixed strip",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_strip_value_lower",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.source_terminal_parisi_assembly",
+  "id": "scalar.source_terminal_parisi_assembly",
+  "kind": "claim",
+  "label": "Terminal formulas at the Parisi value after concrete suppliers",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.source_terminal_parisi_assembly",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar.terminal_loss",
+  "id": "scalar.terminal_loss",
+  "kind": "claim",
+  "label": "Explicit scalar terminal error bound",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar.terminal_loss",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fscalar_value",
+  "id": "scalar_value",
+  "kind": "goal",
+  "label": "Parisi value identities and finite Gaussian approximation",
+  "papers": [
+   {
+    "direct_passage_count": 4,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/scalar_value",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.backward_shapes",
+  "id": "support.backward_shapes",
+  "kind": "claim",
+  "label": "Backward shape signs and smooth quotient extension",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.backward_shapes",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.contact",
+  "id": "support.contact",
+  "kind": "claim",
+  "label": "Nonnegative potential vanishing on the support",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.contact",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.contact_derivatives",
+  "id": "support.contact_derivatives",
+  "kind": "claim",
+  "label": "Endpoint contact and slope bounds, including zero",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.contact_derivatives",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.diffusion",
+  "id": "support.diffusion",
+  "kind": "claim",
+  "label": "Existence, coupling and uniqueness of the controlled diffusion",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.diffusion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.endpoint_chord_area",
+  "id": "support.endpoint_chord_area",
+  "kind": "claim",
+  "label": "The integrated endpoint-chord inequality",
+  "papers": [
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.endpoint_chord_area",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.first_variation",
+  "id": "support.first_variation",
+  "kind": "claim",
+  "label": "The admissible one-sided first variation",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.first_variation",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.fixed_time_spatial_coercivity",
+  "id": "support.fixed_time_spatial_coercivity",
+  "kind": "claim",
+  "label": "Spatial coercivity at a positive continuity time",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.fixed_time_spatial_coercivity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.flux_identity",
+  "id": "support.flux_identity",
+  "kind": "claim",
+  "label": "Nonnegative certificate variables and zero expected divergence",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.flux_identity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.forward_shapes",
+  "id": "support.forward_shapes",
+  "kind": "claim",
+  "label": "Forward score signs and ratio comparison",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.forward_shapes",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.full_relative_support",
+  "id": "support.full_relative_support",
+  "kind": "claim",
+  "label": "Exhausting the support complement",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.full_relative_support",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.integrated_coercivity",
+  "id": "support.integrated_coercivity",
+  "kind": "claim",
+  "label": "The integrated lower bound for smooth profiles",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.integrated_coercivity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.moment_identity",
+  "id": "support.moment_identity",
+  "kind": "claim",
+  "label": "Gradient martingale and the derivative of its second moment",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.moment_identity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.moment_saturation",
+  "id": "support.moment_saturation",
+  "kind": "claim",
+  "label": "Full contact gives both moments for every associated diffusion",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.moment_saturation",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.near_ground_pairs",
+  "id": "support.near_ground_pairs",
+  "kind": "claim",
+  "label": "Near-ground configurations at a prescribed overlap",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.near_ground_pairs",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.no_bounded_gap",
+  "id": "support.no_bounded_gap",
+  "kind": "claim",
+  "label": "No bounded gap between support points",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.no_bounded_gap",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.no_initial_gap",
+  "id": "support.no_initial_gap",
+  "kind": "claim",
+  "label": "No initial gap when zero is outside the support",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.no_initial_gap",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.no_terminal_gap",
+  "id": "support.no_terminal_gap",
+  "kind": "claim",
+  "label": "A minimizer has no terminal plateau or empty support",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.no_terminal_gap",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.optimality_criterion",
+  "id": "support.optimality_criterion",
+  "kind": "claim",
+  "label": "An exact first-order criterion for the same admissible coefficient",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.optimality_criterion",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.plateau_transfer",
+  "id": "support.plateau_transfer",
+  "kind": "claim",
+  "label": "Plateau-preserving approximation and curvature identity",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.plateau_transfer",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.positive_curvature",
+  "id": "support.positive_curvature",
+  "kind": "claim",
+  "label": "Strict curvature on a positive constant interval",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.positive_curvature",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.rational_certificate",
+  "id": "support.rational_certificate",
+  "kind": "claim",
+  "label": "Exact rational identity with a coercive remainder",
+  "papers": [
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.rational_certificate",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.regularity",
+  "id": "support.regularity",
+  "kind": "claim",
+  "label": "Compact-strip regularity and approximation",
+  "papers": [
+   {
+    "direct_passage_count": 3,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 2,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.regularity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.source_finite_density_coercivity",
+  "id": "support.source_finite_density_coercivity",
+  "kind": "claim",
+  "label": "Concrete finite-data half-line coercivity application",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.source_finite_density_coercivity",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.step_tails",
+  "id": "support.step_tails",
+  "kind": "claim",
+  "label": "Finite-step density transform and differentiated tails",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.step_tails",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.stieltjes_measure",
+  "id": "support.stieltjes_measure",
+  "kind": "claim",
+  "label": "Stieltjes measure with the correct initial mass",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.stieltjes_measure",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.strict_increase",
+  "id": "support.strict_increase",
+  "kind": "claim",
+  "label": "Full relative support forces strict increase",
+  "papers": [
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.strict_increase",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.terminal_defect",
+  "id": "support.terminal_defect",
+  "kind": "claim",
+  "label": "Square-root terminal deficit on a finite plateau",
+  "papers": [
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 0,
+    "roles": [
+     "recorded_prerequisite"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.terminal_defect",
+  "status": "unverified",
+  "table": "nodes"
+ },
+ {
+  "href": "/api/v1/record?manifest=94ac20666b57003fe72baf4bf3e377a547df15dafdb54d3e1e25bc1a6f46fc0c&ref=sha256%3A80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2%2Fnodes%2Fsupport.zero_curvature",
+  "id": "support.zero_curvature",
+  "kind": "claim",
+  "label": "Strict increase on a zero constant interval",
+  "papers": [
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "long"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "short"
+   },
+   {
+    "direct_passage_count": 1,
+    "roles": [
+     "mapped_claim"
+    ],
+    "stage": "expository"
+   }
+  ],
+  "ref": "sha256:80362f24c20684756f91b12b1fd4fadf28d282225c2417fb5135e12661242cf2/nodes/support.zero_curvature",
+  "status": "unverified",
+  "table": "nodes"
+ }
+]

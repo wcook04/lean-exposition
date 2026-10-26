@@ -6,7 +6,7 @@ import sys
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-FILES = [ROOT / x for x in ('README.md', 'AGENTS.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'SECURITY.md', 'examples/README.md')]
+FILES = [ROOT / x for x in ('README.md', 'AGENTS.md', 'CLAUDE.md', 'CONTRIBUTING.md', 'SECURITY.md', 'examples/README.md', 'site/README.md')]
 for directory in ('docs', 'skills', 'lean', 'papers'):
     FILES.extend((ROOT / directory).rglob('*.md'))
 FILES.extend((ROOT / 'examples').glob('*/README.md'))

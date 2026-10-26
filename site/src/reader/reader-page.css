@@ -1,0 +1,868 @@
+/* The paper reader: an outline, the paper and a companion pane. Tokens only.
+   Widths: the outline column appears at 1280px, the pane at 900px; below
+   that the page is one column with a bar and a sheet the reader opens. */
+
+.reader {
+  --gutter: 16px;
+  --rule-x: 2px;
+  --text: 37rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  flex: 1;
+  overflow-anchor: none;
+}
+
+.reader--mid {
+  --pane-w: clamp(340px, 34vw, 400px);
+  --gutter: 44px;
+  --rule-x: 22px;
+  grid-template-columns: minmax(0, 1fr) var(--pane-w);
+}
+
+.reader--wide {
+  --outline-w: clamp(188px, 14.6vw, 236px);
+  --pane-w: clamp(400px, 29vw, 460px);
+  --gutter: clamp(124px, 30vw - 248px, 200px);
+  --rule-x: calc(var(--gutter) - 20px);
+  grid-template-columns: var(--outline-w) minmax(0, 1fr) var(--pane-w);
+}
+
+.reader-loading {
+  margin: var(--space-8) auto;
+  color: var(--ink-3);
+  font-size: var(--fs-ui);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ paper */
+
+.reader__paper {
+  position: relative;
+  min-width: 0;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+  overflow-anchor: none;
+}
+
+.reader--mid .reader__paper {
+  padding: var(--space-7) var(--space-5) var(--space-8) var(--space-4);
+}
+
+.reader--narrow .reader__paper {
+  padding-bottom: calc(var(--space-8) + 56px);
+}
+
+.reader .paper.prose {
+  max-width: calc(var(--gutter) + var(--text));
+  margin-inline: auto;
+}
+
+.account-line,
+.reader-notice {
+  max-width: var(--text);
+}
+
+/* The page's own scroll padding already clears the top bar. */
+.reader .paper.prose [id],
+.reader .paper.prose a.anchor {
+  scroll-margin-top: var(--space-4);
+}
+
+.account-line,
+.reader-notice {
+  padding-left: 0;
+  margin-left: calc(max(0px, (100% - var(--gutter) - var(--text)) / 2) + var(--gutter));
+}
+
+.account-line {
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.account-line > p {
+  max-width: var(--text);
+}
+
+.account-line__name {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.account-line__more {
+  margin-top: 2px;
+  color: var(--ink-3);
+}
+
+.reader-notice {
+  margin-top: calc(-1 * var(--space-5));
+  margin-bottom: var(--space-6);
+  font-size: var(--fs-ui);
+  color: var(--ink);
+}
+
+.reader-notice::before {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  background: var(--lit);
+  vertical-align: 0.08em;
+}
+
+/* ------------------------------------------------------------------ parts */
+
+.part {
+  position: relative;
+  /* Margins stay inside each part, so a part's measured height is all the
+     room it takes; the page holds the reading position by those heights. */
+  display: flow-root;
+  padding-left: var(--gutter);
+  padding-bottom: var(--space-4);
+}
+
+.part__text > :last-child {
+  margin-bottom: 0;
+}
+
+.part__text {
+  max-width: var(--text);
+}
+
+.part--blank {
+  height: 0;
+  padding: 0;
+}
+
+.part__placeholder {
+  max-width: var(--text);
+}
+
+/* A mapped passage: a thin rule in its region's ink, in the gutter. */
+.part--mapped::before {
+  content: "";
+  position: absolute;
+  left: var(--rule-x);
+  top: 0.3em;
+  bottom: 0.3em;
+  width: 2px;
+  border-radius: 1px;
+  background: color-mix(in oklab, var(--region, var(--rule-strong)) 34%, transparent);
+  transition: background-color var(--t-state) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .part--mapped:hover::before {
+    background: color-mix(in oklab, var(--region, var(--rule-strong)) 78%, transparent);
+  }
+}
+
+.part--mapped:focus-within::before {
+  background: color-mix(in oklab, var(--region, var(--rule-strong)) 78%, transparent);
+}
+
+/* Its claims, in the margin beside it, on hover or focus. */
+.part__margin {
+  display: none;
+}
+
+.reader--wide .part__margin {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--gutter) - 32px);
+}
+
+.margin-claims {
+  position: sticky;
+  top: calc(var(--topbar-h) + var(--space-5));
+  padding-top: 0.25em;
+  opacity: 0;
+  transition: opacity var(--t-state) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .part--mapped:hover .margin-claims {
+    opacity: 1;
+  }
+}
+
+.part--mapped:focus-within .margin-claims {
+  opacity: 1;
+}
+
+.margin-claims ul,
+.pane__chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.margin-claims li + li {
+  margin-top: 6px;
+}
+
+.reader .claim-chip,
+.claim-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.32;
+  color: var(--ink-2);
+  text-decoration: none;
+  hyphens: manual;
+  text-wrap: pretty;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0;
+}
+
+.claim-chip .region-dot {
+  transform: translateY(-0.05em);
+}
+
+.claim-chip:hover {
+  color: var(--ink);
+}
+
+.claim-chip:hover > span:last-child {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.claim-chip .lean {
+  font-size: 0.84em;
+  overflow-wrap: anywhere;
+  color: var(--formal);
+}
+
+.margin-claims__more,
+.pane__more,
+.routes__more,
+.route__why {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-sans);
+  color: var(--ink-3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in oklab, currentColor 55%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.margin-claims__more {
+  margin-top: 6px;
+  margin-left: calc(0.62em + 7px);
+  font-size: var(--fs-sm);
+}
+
+.margin-claims__more:hover,
+.pane__more:hover,
+.routes__more:hover,
+.route__why:hover {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------- routes at a passage's end */
+
+.routes {
+  max-width: var(--text);
+  margin: var(--space-3) 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+  font-variant-numeric: lining-nums;
+  hyphens: manual;
+}
+
+.routes:empty {
+  display: none;
+}
+
+.routes::before {
+  content: "";
+  display: block;
+  width: 28px;
+  margin-bottom: var(--space-2);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.routes__authored {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.route + .route {
+  margin-top: 3px;
+}
+
+.route__lead {
+  color: var(--ink-2);
+}
+
+.reader .route__link,
+.reader .routes__shared a {
+  color: var(--ink);
+  text-decoration-color: color-mix(in oklab, var(--lit-line) 60%, transparent);
+}
+
+.route__why {
+  margin-left: 2px;
+  font-size: var(--fs-xs);
+}
+
+.route__rationale {
+  margin: var(--space-1) 0 var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--rule-strong);
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  text-wrap: pretty;
+}
+
+.routes__shared {
+  margin-top: var(--space-1);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.routes__authored + .routes__shared {
+  margin-top: var(--space-2);
+}
+
+.reader .routes__shared a {
+  color: var(--ink-2);
+  text-decoration-color: color-mix(in oklab, currentColor 30%, transparent);
+}
+
+.routes__account {
+  color: var(--ink-2);
+}
+
+.routes__more {
+  font-size: var(--fs-xs);
+}
+
+/* ---------------------------------------------------------------- outline */
+
+.reader__outline {
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  min-width: 0;
+  display: flex;
+  border-right: 1px solid var(--rule);
+}
+
+.outline {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  padding: var(--space-6) 0 0;
+}
+
+.accounts {
+  padding: 0 var(--space-4) var(--space-4) var(--space-5);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.accounts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.accounts__item {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.accounts__item:hover {
+  color: var(--ink);
+}
+
+.accounts__item[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.accounts__keeping {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--ink-3);
+  text-wrap: pretty;
+}
+
+.outline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-3) var(--space-6) 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 28px), transparent 100%);
+}
+
+.outline__item a {
+  position: relative;
+  display: block;
+  padding: 4px var(--space-2) 4px var(--space-5);
+  font-size: var(--fs-sm);
+  line-height: 1.36;
+  color: var(--ink-2);
+  text-decoration: none;
+  text-wrap: pretty;
+  font-variant-numeric: lining-nums;
+}
+
+.outline__item--l3 a {
+  padding-left: calc(var(--space-5) + var(--space-3));
+  color: var(--ink-3);
+}
+
+.outline__item--l2 + .outline__item--l2 a,
+.outline__item--l3 + .outline__item--l2 a {
+  margin-top: 4px;
+}
+
+.outline__item a:hover {
+  color: var(--ink);
+}
+
+.outline__item a[aria-current="location"] {
+  color: var(--ink);
+}
+
+.outline__item a[aria-current="location"]::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  bottom: 5px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--lit);
+}
+
+.outline__item a:focus-visible {
+  outline-offset: -2px;
+}
+
+/* The outline as a menu (narrower screens). */
+.outline-menu {
+  position: relative;
+}
+
+.outline-menu__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.outline-menu__toggle:hover {
+  color: var(--ink);
+}
+
+.outline-menu__toggle svg {
+  flex: none;
+}
+
+.outline-menu__current {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outline-menu--pane {
+  border-bottom: 1px solid var(--rule);
+}
+
+.outline-menu__sheet {
+  position: absolute;
+  z-index: 20;
+  left: var(--space-3);
+  right: var(--space-3);
+  top: calc(100% + 4px);
+  max-height: min(70vh, 560px);
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-sheet);
+}
+
+.outline-menu__sheet[hidden] {
+  display: none;
+}
+
+.outline-menu--bar .outline-menu__sheet {
+  position: fixed;
+  left: var(--space-3);
+  right: var(--space-3);
+  top: auto;
+  bottom: 64px;
+}
+
+.outline-menu__sheet .outline__list {
+  padding-bottom: var(--space-3);
+}
+
+/* ------------------------------------------------------------------- pane */
+
+.reader__pane {
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  min-width: 0;
+  border-left: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.companion-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.pane__head {
+  padding: var(--space-4) var(--space-5) var(--space-3);
+}
+
+.pane__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pane__title--serif {
+  margin-top: 2px;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+}
+
+.pane__note {
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.pane__chips {
+  margin-top: var(--space-3);
+}
+
+.pane__chips li + li {
+  margin-top: 5px;
+}
+
+.pane__more {
+  margin-left: calc(0.62em + 7px);
+  font-size: var(--fs-sm);
+}
+
+.pane__map {
+  position: relative;
+  flex: 1;
+  min-height: 220px;
+  border-top: 1px solid var(--rule);
+  background: var(--ground);
+}
+
+.pane__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pane__back {
+  color: var(--ink-2);
+  padding-left: var(--space-2);
+}
+
+.pane__open {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
+  padding-block: 6px;
+}
+
+.pane__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.pane--record .pane__scroll .panel {
+  background: transparent;
+}
+
+.pane__account {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.pane__head--beside {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pane__context {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.pane__message {
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+}
+
+.pane__label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.beside__text {
+  padding: var(--space-5) var(--space-5) 0;
+  font-size: var(--fs-base);
+  max-width: none;
+}
+
+.beside__text h1,
+.beside__text h2 {
+  font-size: var(--fs-h3);
+  margin-top: var(--space-5);
+}
+
+.beside__text h3,
+.beside__text h4 {
+  font-size: var(--fs-h4);
+}
+
+.beside__text > :first-child {
+  margin-top: 0;
+}
+
+.beside__claims {
+  margin: var(--space-2) var(--space-5) 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.beside__where {
+  padding: var(--space-4) var(--space-5) var(--space-6);
+  font-size: var(--fs-sm);
+}
+
+.matches {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-5) var(--space-6);
+}
+
+.match {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.match__place {
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  color: var(--ink);
+}
+
+.match .pane__chips {
+  margin-top: var(--space-2);
+}
+
+/* ---------------------------------------------------------- the selection */
+
+.select-action {
+  position: absolute;
+  z-index: 15;
+  transform: translate(-50%, -100%);
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+  box-shadow: var(--shadow-sheet);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  cursor: pointer;
+  animation: select-in var(--t-state) var(--ease-out) backwards;
+}
+
+.select-action--below {
+  transform: translate(-50%, 0);
+}
+
+.select-action--margin {
+  transform: none;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 5px var(--space-2);
+  white-space: normal;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.reader--selecting .margin-claims {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.select-action:hover {
+  border-color: var(--ink-3);
+}
+
+@keyframes select-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------- one column: bar and sheet */
+
+.reader-bar {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: var(--space-1) var(--space-3) calc(var(--space-1) + env(safe-area-inset-bottom));
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+}
+
+.reader-bar .outline-menu {
+  flex: 1;
+  min-width: 0;
+}
+
+.reader-bar .outline-menu__toggle {
+  padding: 0 var(--space-2);
+}
+
+.reader-bar__pane {
+  flex: none;
+  min-height: 36px;
+}
+
+.sheet {
+  position: fixed;
+  z-index: 35;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(76vh, 640px);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-top: 1px solid var(--rule);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: var(--shadow-sheet);
+  animation: sheet-in var(--t-panel) var(--ease-out) backwards;
+}
+
+.sheet__grip {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-1) var(--space-2) 0;
+}
+
+.sheet .companion-pane {
+  flex: 1;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+/* A display formula wider than the column scrolls inside its own box; a
+   soft edge says there is more of it. */
+.reader .prose .math-display[data-overflow="true"],
+.pane .prose .math-display[data-overflow="true"] {
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 36px), transparent 100%);
+}
+
+.reader .prose .math-display[data-overflow="true"][data-scrolled-end="true"],
+.pane .prose .math-display[data-overflow="true"][data-scrolled-end="true"] {
+  mask-image: none;
+}
+
+/* A numbered display (\tag) needs the full width of its box, or the number
+   is drawn over the formula. */
+.reader .prose .math-display > .katex-display:has(.katex-tag, .tag) > .katex,
+.pane .prose .math-display > .katex-display:has(.katex-tag, .tag) > .katex {
+  display: block;
+}

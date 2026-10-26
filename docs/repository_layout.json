@@ -27,7 +27,8 @@
     "scripts": "Repository maintenance commands",
     "skills": "Optional authoring instructions independent of runtime",
     "src": "Installable Python runtime and packaged resources",
-    "tests": "Executable regression tests"
+    "tests": "Executable regression tests",
+    "site": "Reading website for one captured bundle: the argument map, paper reader and recorded checks, built on the web API"
   },
   "required_paths": [
     "AGENTS.md",
@@ -69,7 +70,8 @@
     "tests/test_reading_views.py",
     "tests/test_web_reading.py",
     "tests/test_web_companions.py",
-    "scripts/benchmark_web.py"
+    "scripts/benchmark_web.py",
+    "site/README.md"
   ],
   "readme_map": [
     ".github/",
@@ -80,7 +82,8 @@
     "scripts/",
     "skills/",
     "src/lean_exposition/",
-    "tests/"
+    "tests/",
+    "site/"
   ],
   "entry_references": [
     "README.md",
