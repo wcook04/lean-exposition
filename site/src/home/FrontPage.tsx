@@ -38,7 +38,7 @@ const SUPPORT_PDF = `${RELEASE}/preprints/Full-support-of-the-zero-temperature-S
 const QAOA_PDF = `${RELEASE}/preprints/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026/QAOA-attains-the-SK-ground-state-energy-in-the-thermodynamic-first-limit-September-25-2026.pdf`;
 const LEAN_SOURCE = `${RELEASE_TREE}/lean/OAI/Probability`;
 const ATLAS_FAMILY = "https://wcook04.github.io/plectis-atlas/families/281.html";
-const SITE_REPOSITORY = "https://github.com/wcook04/lean-exposition-site#readme";
+const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
 const pdfHref = (stage: Stage) => `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
 
@@ -236,8 +236,8 @@ export function FrontPage() {
             two papers, their theorems beside the Lean statements, and what outside groups report about them.
           </li>
           <li>
-            <Out href={SITE_REPOSITORY}>The public repository of this website</Out> holds the built pages and the three PDFs, with a
-            README that links back to the release and to Plectis Atlas.
+            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
+            instructions for running the tools and building this website.
           </li>
         </ul>
       </section>
