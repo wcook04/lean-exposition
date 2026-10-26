@@ -28,16 +28,18 @@ reproduced unmodified from hanwenzhu/LeanArchitect, revision
 9f3bb53916b9d6fa05b7777389e1844f82b1c9a6, under Apache-2.0. See the retained
 LICENSE and docs/references.json for the source inventory and file hashes.
 
-Five systems diagrams in papers/architecture/paper.md adapt Will Cook's
+Two systems diagrams in papers/architecture/paper.md adapt Will Cook's
 "A Repository-Based System for Research and Publication" in wcook04/plectis-erdos,
 revision 61fb590921e3b5a100dc264bed052c9cf6959daf, under CC-BY-4.0.
 Their content has been redrawn for this repository's workflow and evidence
 boundaries. Exact source, figure identifiers and licence links are recorded in
 papers/architecture/README.md.
 
-The opening funnel adapts Will Cook's mathematics-map film composition for
-this paper's reader groups and source-navigation paths. It does not reproduce
-the film's result-specific examples, page counts or verification claims.
+An earlier edition's opening funnel adapted Will Cook's mathematics-map film
+composition for its reader groups and source-navigation paths. It did not
+reproduce the film's result-specific examples, page counts or verification
+claims. The current companion replaces that funnel with three accounts mapped
+to shared support.
 
 The gap-area figure in papers/qaoa-sk/expository/main.md adapts the
 gap-convexity figure from OpenAI's "Full support of the zero-temperature

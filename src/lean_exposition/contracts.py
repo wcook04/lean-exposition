@@ -12,6 +12,7 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
 from jsonschema import Draft202012Validator
+from jsonschema.validators import extend
 
 
 class ContractError(ValueError):
@@ -23,13 +24,38 @@ def digest(data: bytes) -> str:
 
 
 def encoded(value: dict) -> bytes:
-    return (json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
+    try:
+        return (json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
+    except UnicodeEncodeError as exc:
+        raise ContractError("JSON contains an unpaired Unicode surrogate") from exc
+
+
+def _check_unicode_scalars(value) -> None:
+    """Check native JSON-like keys and values without recursion or normalization."""
+    pending, seen = [value], set()
+    while pending:
+        item = pending.pop()
+        if isinstance(item, str):
+            if any(0xD800 <= ord(character) <= 0xDFFF for character in item):
+                raise ContractError("JSON contains an unpaired Unicode surrogate")
+        elif isinstance(item, (list, tuple, dict)):
+            identity = id(item)
+            if identity in seen:
+                continue
+            seen.add(identity)
+            if isinstance(item, dict):
+                pending.extend(item.keys())
+                pending.extend(item.values())
+            else:
+                pending.extend(item)
 
 
 def decode_json(data: bytes) -> dict:
     """Decode exactly the bytes checked or captured, without ambiguous JSON."""
     def pairs(items):
         result = {}
+        for key, _ in items:
+            _check_unicode_scalars(key)
         for key, value in items:
             if key in result:
                 raise ContractError(f"duplicate JSON key: {key}")
@@ -42,8 +68,10 @@ def decode_json(data: bytes) -> dict:
         if not math.isfinite(result):
             raise ContractError(f"non-finite JSON number: {value}")
         return result
-    return json.loads(data.decode("utf-8"), object_pairs_hook=pairs,
-                      parse_constant=invalid_constant, parse_float=finite_float)
+    value = json.loads(data.decode("utf-8"), object_pairs_hook=pairs,
+                       parse_constant=invalid_constant, parse_float=finite_float)
+    _check_unicode_scalars(value)
+    return value
 
 
 def read_json(path: Path) -> dict:
@@ -83,9 +111,32 @@ def local_path(root: Path, relative: str) -> Path:
     return current
 
 
+_UPSTREAM_UNIQUE_ITEMS = Draft202012Validator.VALIDATORS["uniqueItems"]
+
+
+def _unique_items(validator, enabled, instance, schema):
+    # These keys distinguish whole JSON objects. When they do not distinguish
+    # every record, defer to jsonschema's full JSON equality, not ID equality.
+    if enabled and type(instance) is list and all(type(row) is dict for row in instance):
+        if all(type(row.get("id")) is str for row in instance):
+            ids = [row["id"] for row in instance]
+            if len(ids) == len(set(ids)):
+                return
+        elif all(all(type(row.get(key)) is str for key in ("from", "to", "kind"))
+               for row in instance):
+            triples = [(row["from"], row["to"], row["kind"]) for row in instance]
+            if len(triples) == len(set(triples)):
+                return
+    yield from _UPSTREAM_UNIQUE_ITEMS(validator, enabled, instance, schema)
+
+
+_SchemaValidator = extend(Draft202012Validator, {"uniqueItems": _unique_items})
+
+
 def validate_schema(value: dict, name: str) -> None:
+    _check_unicode_scalars(value)
     schema = json.loads(files("lean_exposition").joinpath(f"resources/schemas/{name}.schema.json").read_text())
-    errors = sorted(Draft202012Validator(schema).iter_errors(value), key=lambda e: str(e.path))
+    errors = sorted(_SchemaValidator(schema).iter_errors(value), key=lambda e: str(e.path))
     if errors:
         e = errors[0]
         raise ContractError(f"{name}:{'/'.join(map(str, e.path))}: {e.message}")
@@ -161,6 +212,102 @@ def validate_process_receipt(receipt: dict, *, evidence_kind: str | None = None)
             and receipt.get("status") == "passed"
             and receipt.get("stdout_utf8_valid") is False):
         raise ContractError("successful extraction requires valid UTF-8 stdout")
+    if receipt.get("receipt_profile") == "comparator-process-v2":
+        if kind != "comparator":
+            raise ContractError("Comparator process profile requires Comparator evidence")
+        _validate_comparator_v2(receipt)
+
+
+def _validate_comparator_v2(receipt: dict) -> None:
+    """Check recorded v2 observations, not their authenticity or theorem scope."""
+    def observation(name):
+        value = receipt.get(name)
+        if (not isinstance(value, dict) or not isinstance(value.get("status"), str) or
+                value["status"] not in {"read", "unavailable"}):
+            raise ContractError(f"invalid Comparator {name}")
+        sha = value.get("sha256")
+        if value["status"] == "read":
+            if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{64}", sha) is None:
+                raise ContractError(f"invalid Comparator {name} hash")
+        elif sha is not None:
+            raise ContractError(f"unavailable Comparator {name} cannot carry a hash")
+        if name.startswith("launch_"):
+            if not isinstance(value.get("requested"), str) or not value["requested"]:
+                raise ContractError(f"invalid Comparator {name} request")
+            if value["status"] == "read" and any(
+                not isinstance(value.get(field), str) or not value[field]
+                for field in ("path", "resolved_path")
+            ):
+                raise ContractError(f"invalid Comparator {name} path")
+        return value
+
+    before, after = observation("config_read_before"), observation("config_read_after")
+    launch_before = observation("launch_executable_before")
+    launch_after = observation("launch_executable_after")
+    if (receipt.get("config_sha256") != before.get("sha256") or
+            receipt.get("config_sha256_after") != after.get("sha256")):
+        raise ContractError("Comparator configuration hashes differ from observations")
+    for field, changed in (("config_changed", before.get("sha256") != after.get("sha256")),
+                           ("launch_executable_changed", launch_before != launch_after)):
+        if type(receipt.get(field)) is not bool or receipt[field] != changed:
+            raise ContractError(f"Comparator {field} differs from observations")
+    scope = receipt.get("config_observation")
+    if (not isinstance(scope, dict) or not isinstance(scope.get("status"), str) or
+            scope["status"] not in {"observed", "invalid", "unavailable"}):
+        raise ContractError("invalid Comparator configuration observation")
+    if scope["status"] == "observed":
+        if before["status"] != "read":
+            raise ContractError("observed Comparator scope requires readable configuration")
+        value = scope.get("scope")
+        if (not isinstance(value, dict) or
+                any(not isinstance(value.get(key), str) or not value[key].strip()
+                    for key in ("challenge_module", "solution_module")) or
+                any(not isinstance(value.get(key), list) or
+                    any(not isinstance(item, str) or not item for item in value[key])
+                    for key in ("theorem_names", "definition_names", "permitted_axioms")) or
+                not (value["theorem_names"] or value["definition_names"]) or
+                type(value.get("enable_nanoda")) is not bool):
+            raise ContractError("invalid observed Comparator scope")
+        kernels = value.get("external_kernels")
+        if (not isinstance(kernels, dict) or
+                any(not isinstance(name, str) or not name or not isinstance(cmd, list) or
+                    not cmd or any(not isinstance(token, str) for token in cmd) or not cmd[0]
+                    for name, cmd in kernels.items()) or
+                (value["enable_nanoda"] and kernels) or
+                not isinstance(scope.get("unknown_fields"), list) or
+                any(not isinstance(field, str) for field in scope["unknown_fields"]) or
+                scope.get("claim_association") != "not_checked"):
+            raise ContractError("invalid observed Comparator scope")
+    if receipt.get("status") == "passed":
+        command = receipt.get("command")
+        if (receipt.get("process_status") != "passed" or
+                type(receipt.get("returncode")) is not int or receipt["returncode"] != 0 or
+                receipt.get("source_changed") is not False or scope["status"] != "observed" or
+                before["status"] != "read" or after["status"] != "read" or
+                launch_before["status"] != "read" or launch_after["status"] != "read" or
+                not isinstance(command, list) or not command or
+                not isinstance(command[0], str) or launch_before["requested"] != command[0] or
+                receipt["config_changed"] or receipt["launch_executable_changed"] or
+                any(field in receipt for field in ("failure_reason", "failure_stage", "source_snapshot_error"))):
+            raise ContractError("passed Comparator v2 receipt has contradictory observations")
+
+
+def validate_extraction_request(receipt: dict, declaration_count: int) -> None:
+    """Validate a present request; graph selection may differ from its roots."""
+    if "extraction_request" not in receipt:
+        return
+    request = receipt["extraction_request"]
+    if (not isinstance(request, dict) or
+            set(request) != {"module", "roots", "module_prefixes", "max_declarations"} or
+            not isinstance(request.get("module"), str) or not request["module"] or
+            request["module"] != receipt.get("module") or
+            not isinstance(request.get("roots"), list) or not request["roots"] or
+            any(not isinstance(value, str) or not value for value in request["roots"]) or
+            not isinstance(request.get("module_prefixes"), list) or
+            any(not isinstance(value, str) or not value for value in request["module_prefixes"]) or
+            type(request.get("max_declarations")) is not int or
+            request["max_declarations"] < max(1, declaration_count)):
+        raise ContractError("extraction request differs from receipt module or declaration limit")
 
 
 def validate_extraction_report(report: dict) -> None:
@@ -309,12 +456,23 @@ def argument_contexts(graph: dict, roots=None, edge_kinds=None, *, include_assum
     A state is (node ID, discharged premise IDs). Keeping states, rather than
     globally deleting premises, preserves an independently reached free use.
     Suppliers are ordinary support edges outside the annotated theorem branch.
+    A retained formal axiom or proof hole can restore that ID on its own path.
     """
+    return _argument_contexts(graph, roots, edge_kinds,
+                              include_assumptions=include_assumptions,
+                              retain_formal_dependencies=True)
+
+
+def _argument_contexts(graph: dict, roots=None, edge_kinds=None, *, include_assumptions=True,
+                       retain_formal_dependencies=True):
     nodes = indexed(graph["nodes"], "node")
     seeds = list(graph["selected_goals"] if roots is None else roots)
     require_refs(seeds, nodes, "closure root")
     kinds = ARGUMENT_EDGES if edge_kinds is None else set(edge_kinds)
     require_refs(kinds, EDGE_KINDS, "closure edge kind")
+    extracted_subjects = {subject for evidence in graph.get("evidence", [])
+                          if evidence["kind"] == "extraction" and evidence["status"] == "passed"
+                          for subject in evidence["subject_ids"]}
     neighbors: dict[str, list[dict]] = {}
     for e in graph["edges"]:
         if e["kind"] in kinds:
@@ -336,10 +494,20 @@ def argument_contexts(graph: dict, roots=None, edge_kinds=None, *, include_assum
             require_refs(nodes[node]["assumption_ids"], nodes, "closure assumption")
             steps.extend((target, discharged, None) for target in nodes[node]["assumption_ids"])
         for target, scope, edge in steps:
-            if target not in scope:
-                successor = (target, frozenset(scope))
-                transitions.append((state, successor, edge))
-                pending.append(successor)
+            if target in scope:
+                # A supplied premise cannot alter a retained Lean proof's axiom
+                # inventory or fill a hole. Classification is occurrence-specific.
+                assumption = nodes[target]
+                is_hole = target == "sorryAx" or assumption.get("declaration") == "sorryAx"
+                is_lean_dependency = (assumption["kind"] == "assumption" and
+                    ((edge is None and node in extracted_subjects) or
+                     (edge is not None and edge["kind"] in LEAN_EDGES)))
+                if not retain_formal_dependencies or not (is_hole or is_lean_dependency):
+                    continue
+                scope = scope - {target}
+            successor = (target, frozenset(scope))
+            transitions.append((state, successor, edge))
+            pending.append(successor)
     return states, transitions
 
 
@@ -400,15 +568,84 @@ def _validate_applications(graph: dict, nodes: dict, sources: dict) -> None:
         local["edges"].extend({"from": root, "to": p["supplier_id"], "kind": "supports"}
                               for p in app["premise_bindings"])
         required = {n for n in closure(local, [root]) if n in nodes and nodes[n]["kind"] == "assumption"}
-        if set(app["remaining_assumption_ids"]) != required:
+        old_states, _ = _argument_contexts(local, [root], retain_formal_dependencies=False)
+        historical = {n for n, _ in old_states if n in nodes and nodes[n]["kind"] == "assumption"}
+        if set(app["remaining_assumption_ids"]) not in (required, historical):
             raise ContractError("application remaining assumptions differ from scoped inputs")
+
+
+def documentary_citation_seeds(graph: dict, roots=None) -> set[str]:
+    """Record proof-use and supplied-premise references without making them assumptions."""
+    states, transitions = argument_contexts(graph, roots)
+    seeds = {node for node, _ in states}
+    seeds.update(p["assumption_id"] for _, _, edge in transitions if edge
+                 for p in edge.get("application", {}).get("premise_bindings", []))
+    return seeds
 
 
 def required_citation_ids(graph: dict, roots=None) -> set[str]:
     """Preserve reference credit without treating cited claims as prerequisites."""
-    argument = closure(graph, roots)
-    cited = closure(graph, argument, {"cites"})
+    cited = closure(graph, documentary_citation_seeds(graph, roots), {"cites"})
     return {c for n in graph["nodes"] if n["id"] in cited for c in n["citation_ids"]}
+
+
+def _historical_required_citation_ids(graph: dict, roots=None) -> set[str]:
+    """Retain the original validation policy for captured historical mappings."""
+    cited = closure(graph, closure(graph, roots), {"cites"})
+    return {c for n in graph["nodes"] if n["id"] in cited for c in n["citation_ids"]}
+
+
+def formal_result_assurances(graph: dict, node_ids=None) -> dict[str, dict]:
+    """Describe recorded eligibility on a validated graph, not execution truth."""
+    nodes = indexed(graph["nodes"], "node")
+    selected = list(nodes) if node_ids is None else list(node_ids)
+    require_refs(selected, nodes, "formal result node")
+    evidence = indexed(graph["evidence"], "evidence")
+    result = {}
+    for node_id in selected:
+        node = nodes[node_id]
+        associated = [evidence[e] for e in node["evidence_ids"] if e in evidence]
+        extracted = [item for item in associated
+                     if item["kind"] == "extraction" and item["status"] == "passed"
+                     and node_id in item["subject_ids"]
+                     and item.get("receipt", {}).get("projection_profile") == "lean-extraction-v2"]
+        builds = [item for item in associated if item["kind"] == "lean_build"
+                  and item["status"] == "passed" and node_id in item["subject_ids"]
+                  and node.get("source_id") in item["source_ids"]
+                  and item.get("receipt", {}).get("process_status") == "passed"]
+        current = []
+        for item in extracted:
+            receipt = item["receipt"]
+            hashes = (receipt.get("extractor_sha256"), receipt.get("extractor_template_sha256"),
+                      receipt.get("stdout_sha256"), receipt.get("stdout_bytes_sha256"))
+            complete = (isinstance(receipt.get("extraction_request"), dict) and
+                        receipt.get("report_stdout_binding") == "lean-report-stdout-v1" and
+                        receipt.get("process_status") == "passed" and receipt.get("stdout_utf8_valid") is True and
+                        all(isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{64}", sha) for sha in hashes) and
+                        hashes[2] == hashes[3])
+            if complete and any(build["receipt"].get("module") == receipt.get("module") and
+                                build["receipt"].get("source_hashes") == receipt.get("source_hashes")
+                                for build in builds):
+                current.append(item["id"])
+        safe = (node["kind"] == "declaration" and node["status"] == "kernel_checked" and
+                node.get("is_unsafe") is False and node.get("is_partial") is False and bool(extracted))
+        eligible = bool(safe and current)
+        safety = ("recorded_safe_v2" if safe else
+                  "legacy_or_unknown_safety" if node["status"] == "kernel_checked" else
+                  "not_kernel_checked")
+        result[node_id] = {"node_id": node_id, "recorded_status": node["status"],
+                           "formal_result_eligible": eligible, "safety_classification": safety,
+                           "assurance_state": ("current_observations" if eligible else
+                                               "historical_or_incomplete" if node["status"] == "kernel_checked"
+                                               else "not_kernel_checked"),
+                           "v2_extraction_evidence_ids": sorted(item["id"] for item in extracted),
+                           "current_extraction_evidence_ids": sorted(current),
+                           "scope": "Recorded classification and bound evidence only; no execution authentication or mathematical acceptance."}
+    return result
+
+
+def formal_result_assurance(graph: dict, node_id: str) -> dict:
+    return formal_result_assurances(graph, [node_id])[node_id]
 
 
 def validate_graph(graph: dict) -> dict:
@@ -468,6 +705,8 @@ def validate_graph(graph: dict) -> dict:
                 raise ContractError("evidence status differs from its receipt")
         if receipt is not None and item["kind"] in {"lean_build", "extraction", "comparator"}:
             validate_process_receipt(receipt, evidence_kind=item["kind"])
+        if receipt is not None and item["kind"] == "extraction":
+            validate_extraction_request(receipt, len(item["subject_ids"]))
         if item["kind"] in {"lean_build", "extraction", "comparator"} and item["status"] == "passed":
             if not item["source_ids"] or not item["command"] or not item["subject_ids"]:
                 raise ContractError("successful Lean evidence requires sources, subjects and command")
@@ -607,6 +846,29 @@ def validate_graph(graph: dict) -> dict:
                        and all(node["id"] in evidence[e]["subject_ids"] and node["source_id"] in evidence[e]["source_ids"] for node in endpoints)
                        for e in edge["evidence_ids"]):
                 raise ContractError("platform decomposition needs source-bound platform observation evidence")
+    # Do not infer missing axioms or follow structural edges. Reject only a
+    # positively recorded type/value path or extracted inventory leading to a
+    # known hole, even if one declaration's own inventory omitted it.
+    extracted = {subject for item in evidence.values()
+                 if item["kind"] == "extraction" and item["status"] == "passed"
+                 for subject in item["subject_ids"]}
+    incoming: dict[str, set[str]] = {}
+    for edge in graph["edges"]:
+        if edge["kind"] in {"lean_type_dependency", "lean_value_dependency"}:
+            incoming.setdefault(edge["to"], set()).add(edge["from"])
+    for subject in extracted:
+        for assumption in nodes[subject]["assumption_ids"]:
+            incoming.setdefault(assumption, set()).add(subject)
+    holes = {identity for identity, node in nodes.items()
+             if identity == "sorryAx" or node.get("declaration") == "sorryAx"}
+    affected, pending = set(holes), list(holes)
+    while pending:
+        for predecessor in incoming.get(pending.pop(), ()):
+            if predecessor not in affected:
+                affected.add(predecessor)
+                pending.append(predecessor)
+    if any(nodes[identity]["status"] == "kernel_checked" for identity in affected):
+        raise ContractError("kernel_checked cannot have a recorded type/value dependency path to sorryAx")
     _validate_applications(graph, nodes, sources)
     selected = closure(graph)
     if graph["extraction_status"] in {"partial", "complete"} and not any(e["kind"] == "extraction" and e["status"] == "passed" for e in evidence.values()):
@@ -630,7 +892,11 @@ def select(graph: dict, goals: list[str]) -> dict:
     return result
 
 
-def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: bytes) -> None:
+def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: bytes, *,
+                      require_current_formal_assurance: bool = False,
+                      require_current_citations: bool = False) -> None:
+    if type(require_current_formal_assurance) is not bool or type(require_current_citations) is not bool:
+        raise ContractError("current authoring validation flags must be boolean")
     validate_schema(artifact, "artifact")
     validate_graph(graph)
     nodes = indexed(graph["nodes"], "node")
@@ -654,7 +920,11 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
     unresolved = {n for n in required if nodes[n]["status"] in {"open", "unverified", "external", "conditional"}}
     if not assumptions <= set(artifact["assumption_ids"]) or not unresolved <= set(artifact["unresolved_ids"]):
         raise ContractError("artifact omits assumptions or unresolved obligations")
-    required_cites = required_citation_ids(graph, roots)
+    # Read historical captures under their original citation rule. New authoring
+    # enforces effective documentary credit both globally and in each passage.
+    citation_requirements = (required_citation_ids if require_current_citations
+                             else _historical_required_citation_ids)
+    required_cites = citation_requirements(graph, roots)
     if not required_cites <= set(artifact["citation_ids"]):
         raise ContractError("artifact dropped a claim citation")
     # Reading metadata describes authored treatment and navigation only. It does
@@ -693,6 +963,10 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
         anchors = [p["anchor"] for p in artifact["passages"]]
         if len(set(anchors)) != len(anchors):
             raise ContractError("duplicate passage anchor")
+        formal_assurance = (formal_result_assurances(graph)
+                            if require_current_formal_assurance and
+                            any(p["evidence_class"] == "formal_result" for p in artifact["passages"])
+                            else {})
         intervals = []
         text = content.decode("utf-8")
         if set(re.findall(r"<!-- /?passage:([^>]+) -->", text)) != set(anchors):
@@ -705,11 +979,15 @@ def validate_artifact(artifact: dict, graph: dict, graph_hash: str, content: byt
                 not passage["claim_ids"] or any(nodes[n]["kind"] != "declaration" or nodes[n]["status"] != "kernel_checked" for n in passage["claim_ids"])
             ):
                 raise ContractError("formal_result passage requires kernel-checked declarations")
+            if (passage["evidence_class"] == "formal_result" and require_current_formal_assurance and
+                    any(not formal_assurance[n]["formal_result_eligible"]
+                        for n in passage["claim_ids"])):
+                raise ContractError("new formal_result requires current bound extraction and build observations")
             passage_roots = passage["claim_ids"] + passage["assumption_ids"]
             passage_closure = closure(graph, passage_roots)
             if not {n for n in passage_closure if nodes[n]["kind"] == "assumption"} <= set(passage["assumption_ids"]):
                 raise ContractError("passage omits an applicable assumption")
-            if not required_citation_ids(graph, passage_roots) <= set(passage["citation_ids"]):
+            if not citation_requirements(graph, passage_roots) <= set(passage["citation_ids"]):
                 raise ContractError("passage omits an applicable citation")
             # A stable explicit marker binds the exact passage bytes, not a fuzzy heading.
             marker = f"<!-- passage:{passage['anchor']} -->"

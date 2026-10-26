@@ -12,13 +12,16 @@ the cumulative measure and its later tail-cost calculation. The zero
 coefficient gives an expected payoff and the elementary half-time calculation
 $q_0(1/2)=1/3$ before the general moment identity is used. The paired
 cumulative/increment plot distinguishes positive height from full support;
-the area picture shows the contradiction.
+the area picture shows the contradiction. A known feedback rule is distinguished
+from its random responses, and changed-case questions test when the area
+argument applies and how the spin conclusion uses sign reversal.
 
 The main route accepts precisely stated analytic inputs and develops their
 no-gap consequence. Contact uses scaling of existing mass, including diffuse
 mass. The terminal case uses finite-interval convexity and the existing bound
 $q\le1$; the stronger quantitative terminal estimate remains in the long
-record. Section 7 collects the optional zero-candidate, PDE, Itô and curvature
+record. Two finite chords exclude empty support using the same available
+inputs. Section 7 collects the optional zero-candidate, PDE, Itô and curvature
 calculations after the proof and its return to spins.
 
 The ending returns to the spins: a separate landscape theorem and full

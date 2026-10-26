@@ -19,7 +19,9 @@ covariance convention, then defines the increment measure and the diffusion
 moment used in the first variation. Its focus is two uses of OpenAI's
 quantitative estimate for an admissible integrable zero-temperature SK minimiser.
 Variational contact at the endpoints of a support gap conflicts with strict
-curvature inside it. Once full support fixes the diffusion moments, a local
+curvature inside it. Finite-chord arguments also exclude empty support and a
+terminal gap, with the stronger quantitative boundary estimate retained in
+the long record. Once full support fixes the diffusion moments, a local
 constant replacement transfers the same estimate to prove strictly positive
 density. This second passage transfers spatial moments, not time derivatives.
 
@@ -31,7 +33,9 @@ The scalar value identity distinguishes the moment that normalises increment
 variances from the covariance that gives the value. For the QAOA application,
 the paper defines the circuit and its expected energy, then identifies the
 exact finite rooted energy as a sum of adjacent Gaussian correlations.
-The separate synthesis theorems and the additional concentration input for
+The imported finite-observable approximation states the consequence before
+explaining its rooted representation and required exclusions. The separate
+synthesis theorems and the additional concentration input for
 a sampled near-optimal configuration have explicit proof destinations in
 the long record.
 

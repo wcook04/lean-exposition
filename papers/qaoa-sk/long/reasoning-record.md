@@ -319,7 +319,35 @@ The direct zero-temperature gap proof
 below is therefore essential. [Chen (2026), Remarks 1.4–1.5][chen2026];
 [OpenAI (2026a), §§1–2][fs-main].
 
-Two later editions sharpen the comparison without entering the pinned
+<a id="finite-temperature-dictionary"></a>
+
+The coefficient classes in this comparison can be translated explicitly.
+In the positive-temperature convention, write
+$$
+U_t=-\frac{\beta^2}{2}(U_{yy}+\alpha_\nu U_y^2),
+\qquad U(1,y)=\log\cosh y.
+$$
+Set $\Phi_\beta(t,x)=\beta^{-1}U(t,\beta x)$ and
+$\gamma_\beta=\beta\alpha_\nu$. Direct differentiation gives
+$$
+(\Phi_\beta)_t=-\tfrac12\bigl((\Phi_\beta)_{xx}
+ +\gamma_\beta(\Phi_\beta)_x^2\bigr),\qquad
+\Phi_\beta(1,x)=\beta^{-1}\log\cosh(\beta x).
+$$
+Dividing the associated diffusion by $\beta$ likewise gives unit Brownian
+noise and drift $\gamma_\beta(\Phi_\beta)_x$. Conversely, every bounded
+nonnegative, nondecreasing, right-continuous coefficient on $[0,1)$ has
+this form: choose $\beta>0$ at least its supremum, take distribution
+function $\alpha_\nu=\gamma/\beta$ below one, and put the remaining
+probability mass at one. This identifies coefficient classes, not
+minimizers at different temperatures. The terminal values differ from
+$|x|$ by at most $(\log2)/\beta$, but passing a strict inequality to the
+cusp and to coefficients unbounded near one still needs uniform estimates.
+A qualitative crossing statement alone supplies no positive limiting
+fourth-moment margin. [Lopatto, arXiv:2607.11756v4, equation (1.2),
+§2 and Proposition 5.1](https://arxiv.org/abs/2607.11756v4).
+
+Two related works sharpen the comparison without entering the pinned
 September proof. [Lopatto, arXiv:2607.11756v4, Proposition 5.1 and
 (5.8)–Corollary 5.6](https://arxiv.org/abs/2607.11756v4), proves a
 conditional curvature crossing on a positive constant interval. Its
@@ -329,10 +357,18 @@ increases; it does not assert an unconditional positive third derivative.
 [Lopatto, arXiv:2610.00127v1, Theorem 2.3 and §8](https://arxiv.org/abs/2610.00127v1),
 works at positive temperature and positive external field. Its comparison
 requires one-sided bounds on the coefficient before and after the chosen
-time, a moment inequality and a stationarity equality. The subsequent
-moment bootstrap yields smooth, strictly positive density on a nontrivial
-support interval; a singleton support is a separate case. Neither theorem
-removes the hypotheses of the zero-temperature argument below.
+time, a moment inequality and a stationarity equality. Several of these conditions are automatic in its density application:
+monotonicity supplies the one-sided bounds at a continuity point, contact
+on a full-support interval makes the scalar inequality an equality, and
+the quotient formula for the coefficient supplies stationarity. Its
+moment bootstrap then gives smooth, strictly positive density on a
+nontrivial support interval; a singleton support is a separate case.
+Appendix B, Theorem B.1 and equation (B.1), also prove strict positivity
+in the zero-field positive-temperature setting, where the extra
+noncentered-law condition is unnecessary. These results are therefore
+close analytic antecedents. The distinction used below is the
+unconditional quantitative fourth-moment margin for the comparison
+coefficient and its controlled passage to the zero-temperature cusp.
 
 Here is an explicit example of the information lost in such a limit.
 It concerns admissible measures, not Parisi minimizers. Put
@@ -1123,7 +1159,26 @@ $j(0)=0$; reflection gives $j\ge0$ everywhere.
 
 ### 4.4 How the signs make a correction with zero expectation useful
 
-At a fixed positive time inside a step define
+Here the coefficient is a positive constant $c$ on the step containing
+the chosen time. The variables are the rescaled spatial derivatives
+$$
+r=c\Phi_x,\qquad v=c\Phi_{xx},\qquad
+w=c\Phi_{xxx},\qquad z=c\Phi_{xxxx}.
+$$
+Write $h=e^{c\Phi}$ and factor the forward diffusion density as $f=hg$;
+its auxiliary score is $s=-\partial_x\log g$. These are the backward
+and forward quantities compared in §4.3. On the positive half-line,
+where $r,s>0$, set
+$$
+H=\frac{w}{2r}+v,\qquad
+j=s_x-\frac{s}{r}v,\qquad
+\rho=\frac{s_x}{s}-\frac vr,
+\qquad j=s\rho.
+$$
+In this certificate only,
+$b=-w/r$ is a quotient; it is not the derivative $\Phi_{xxx}$ denoted
+by $b$ in the unscaled curvature formula. At a fixed positive time
+inside the step define
 
 $$
 R=r^2,\quad K=rs,\quad b=-w/r,\quad B=b-2v,
@@ -1281,7 +1336,15 @@ The surplus of the first coefficient over $1/1000$ is exactly
 $140507/1521000000>0$. The rational identity and positive table can
 be checked by finite arithmetic. Their application to this diffusion
 also uses the signs, quotient behaviour, integrability and vanishing
-flux proved above. [OpenAI (2026a), Lemma 4.1 and Proposition 4.2][fs-cert].
+flux proved above. Dividing the integrated inequality by $c^2$ returns
+$$
+\mathbb E[\Phi_{xxxx}^2-12c\Phi_{xx}\Phi_{xxx}^2
+                  +6c^2\Phi_{xx}^4]
+\ge\frac{c^2}{1000}\mathbb E\Phi_{xx}^4.
+$$
+This is the unscaled estimate needed by the gap argument. Section 4.5
+passes it to the original coefficient and supplies strictness for the
+limiting solution. [OpenAI (2026a), Lemma 4.1 and Proposition 4.2][fs-cert].
 
 <!-- /passage:curvature -->
 
@@ -1603,10 +1666,30 @@ Consequently $q(s)\ge t+(s-t)q'(t)>1$ for $s$ sufficiently
 close to one, a contradiction. Thus $q(t)<t$ throughout $(r,1)$.
 All chord endpoints lie below one; no derivative at one is used.
 
-To apply this argument independently of the quantitative proof, first
-exclude empty support by the [zero-coefficient descent](#zero-coefficient-example):
-$D_+\mathcal P(0)[1]=1/4-1/\pi<0$. A nonempty support with a
-terminal complementary component has a last point $r<1$. Its plateau
+<a id="empty-support-chord"></a>
+
+To close the empty-support case using the same preceding inputs, observe
+that empty Stieltjes support forces $\gamma=0$ everywhere. The
+[zero-interval argument](#zero-plateau) makes $q$ strictly convex on
+$[0,1)$, whereas the positive-plateau argument above makes $q'$ strictly
+convex. Here $q(0)=0$ and $0\le q\le1$. For $0<t<s<1$, convexity gives
+$$
+q(t)\le\frac ts q(s)\le\frac ts.
+$$
+Letting $s\uparrow1$ in this bound gives $q(t)\le t$. Now fix
+$t<u<1$; strict convexity on the finite interval $[0,u]$ gives
+$$
+q(t)<\frac tu q(u)\le t.
+$$
+Thus the bounded continuous integrand $q(t)-t$ is strictly negative on
+$(0,1)$, so $G(0)<0$, contrary to the allowed addition of mass at zero.
+Neither a value nor a derivative at one has been assumed. The
+[explicit zero-coefficient calculation](#zero-coefficient-example)
+additionally gives $D_+\mathcal P(0)[1]=1/4-1/\pi$; the qualitative
+argument needs only its sign.
+
+A nonempty support with a terminal complementary component has a last
+point $r<1$. Its plateau
 has positive height, since a neighbourhood of $r$ has positive measure.
 The contact values and slope at $r$, including the one-sided case $r=0$,
 and positive-plateau curvature meet the calculus hypotheses. Since
@@ -2432,13 +2515,15 @@ generally $d\Gamma(A)$ sums $A$ over those $m$ child factors. The
 vacuum characteristic function
 $\langle\Omega,e^{itq(f)}\Omega\rangle=e^{-t^2\|f\|^2/2}$ fixes the
 Gaussian normalization.
-In the real classical sector, a centred child vector $f$ produces a
-parent Gaussian position $\mathsf G(f)=q(f)$ with
+For any finite list of fixed centred real child vectors, their parent
+positions $\mathsf G(f)=q(f)$ are jointly centred Gaussian; for $f,g$,
 $$
 \mathbb E[\mathsf G(f)\mathsf G(g)]=\langle f,g\rangle,
 \qquad
 \|[\mathsf G(f)-\mathsf G(g)]\mathrm{vac}\|=\|f-g\|.
 $$
+The directions are fixed elements of the child space, even when their
+values depend on the child's Gaussian coordinates.
 The receiving root's own seed is a separate, independent tensor factor.
 The root shift
 $$
@@ -2455,8 +2540,9 @@ roles in the next calculation.
 
 Start with the standard root seed $g_0=S$ and recursively set
 $Z_{j+1}=\mathsf G(g_j)$. Suppose $g_0,\ldots,g_{j-1}$ are centred
-orthonormal vectors. The covariance identity gives independent standard
-normals $Z_1,\ldots,Z_j$. In the scalar construction of §7, the multiplier
+orthonormal vectors. The joint Gaussian law of their lifts and the covariance
+identity give independent standard normals $Z_1,\ldots,Z_j$. In the scalar
+construction of §7, the multiplier
 of $Z_j$ in $g_j$ depends only on its predecessors. Conditional centring
 therefore makes $g_j$ orthogonal to $g_1,\ldots,g_{j-1}$, and the chosen
 normaliser $c_j$ gives unit norm. Independence of the receiving-root
@@ -3286,6 +3372,52 @@ QAOA form. [OpenAI (2026b), §2, “Ordinary root updates”][q-ordinary-updates
 
 ### 8.6 Fixing the word before the thermodynamic limit
 
+<a id="finite-formula-energy-error"></a>
+
+**Approximating a specified finite observable.** First fix $T,N$ and the
+positive finite normalizers in §7. The rooted construction in §8.1 has
+energy exactly $S_{T,N}$. Let $z$ be a smoothed version of its rounded
+spin $F_N$, let $m=\sin(2\theta)$ be the bounded formula's spin output,
+and let $m^{\mathrm{col}}$ be its color-excluded approximation. Write
+$$
+\delta_s=\|z-F_N\|_2,\qquad
+\delta_b=\|m-z\|_2,\qquad
+\delta_c=\|m^{\mathrm{col}}-m\|_2.
+$$
+These measure errors of the spin outputs, not of the angles. The rooted
+shift is a contraction, so
+$$
+|\mathcal E(f)-\mathcal E(g)|
+\le(\|f\|_2+\|g\|_2)\|f-g\|_2.
+$$
+All these outputs have norm at most one. Apply synthesis with tolerance
+$\eta_s$ and total helper probability $p_H$, then remove the seeds with
+energy tolerance $\eta_r$. The source's absolute synthesis bound and
+seed-removal theorem, followed by fixed-word transfer, give one ordinary
+word $W$ with
+$$
+|v(W)-S_{T,N}|
+\le2(\delta_s+\delta_b+\delta_c)
+       +2\eta_s+2\sqrt{p_H}+\eta_r.
+\tag{8.2}
+$$
+The bounded formula is chosen before the colors and helper law. The
+excluded receiver and ancestor colors prevent a dependency from returning
+through a traversed branch; reserved helper colors are absent from every
+dependency and the output is zero on helpers. Color refinement and small
+positive helper probabilities jointly control $\delta_c$ and $p_H$.
+Only then is synthesis performed with that law fixed, using the same
+sitewise Gaussian seed at every seed gate. Each term in (8.2) can thus be
+made smaller than its allotted tolerance in this order.
+[OpenAI (2026b), Lemmas 3.1–3.4][q-classical];
+[synthesis energy bound][q-synthesis-statement];
+[seed removal][q-seed-statement].
+
+This establishes an absolute approximation of each specified finite
+$S_{T,N}$ in the construction, without assuming it is already near $P_*$.
+It preserves the energy; it does not assert reproduction of the entire
+classical output law. Near-optimality now adds the cutoff and mesh choices.
+
 Allocate errors after choosing the desired $\varepsilon>0$. Apply the
 classical near-optimality proposition with the two tolerances
 $\varepsilon/4$ and $\eta_H=(\varepsilon/8)^2$. It supplies one
@@ -3497,7 +3629,25 @@ reverse one spin configuration: the pure two-spin Hamiltonian preserves
 its energy and changes the overlap's sign. The finite net covers the
 endpoints as well, with centres strictly below one.
 
-This deduction uses fixed tolerances and target-dependent pairs. It gives
+<a id="exact-finite-maximizers"></a>
+
+There is a useful contrast at a fixed finite size. If $\sigma,\tau$
+differ at $k$ sites, precisely the $k(n-k)$ edges crossing that set change
+their spin product. Their independent Gaussian contributions give
+$$
+\operatorname{Var}(H_n(\sigma)-H_n(\tau))=\frac{4k(n-k)}n.
+$$
+For $0<k<n$ this is positive, so the two energies tie with probability
+zero. A finite union over pairs, together with
+$H_n(-\sigma)=H_n(\sigma)$, shows that almost surely the exact maximum
+has one maximizing pair $\{\sigma_*,-\sigma_*\}$. The overlap conclusion
+above concerns nearly optimal pairs at intermediate separations. Its
+threshold $P_*-\eta$ is deterministic; setting $\eta=0$ would not turn
+it into exact maximization of a finite sample. This elementary deduction
+uses only the displayed Gaussian Hamiltonian and is separate from the
+external asymptotic landscape theorem.
+
+The overlap deduction uses fixed tolerances and target-dependent pairs. It gives
 neither exact arbitrary real overlaps at finite $n$, a typical-pair law,
 a search procedure, nor a guarantee for tolerances shrinking with $n$.
 It uses the external landscape theorem, full support and attainment, and
@@ -4905,7 +5055,7 @@ one null set. Controls are progressive for the natural filtration of
 Brownian increments and bounded by one pointwise. These are not
 additional regularity or minimizer-existence assumptions. See the
 [exact support statement][support-type] and the companion
-source-interface review.
+[source-interface review](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/papers/qaoa-sk/source-review/full-support-interface.md).
 
 There is one useful distinction between the manuscript's first variation
 and its formal counterpart. The formal result initially gives a derivative
@@ -4980,7 +5130,7 @@ and the gradient converges to $U$ almost surely and in $L^2$ from below
 one. The internal terminal-gradient lemma proves $UX_1=|X_1|$
 without requiring $X_1$ to have no atom at zero. That identity is used
 inside the implementation; it is not an extra conjunct of the endpoint. See the [scalar statement][value-type] and its
-complete dictionary.
+[complete dictionary](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/papers/qaoa-sk/source-review/scalar-value-interface.md).
 
 <!-- /passage:formal-scalar -->
 
@@ -5117,7 +5267,8 @@ unrun plans and an earlier full-support attempt that could not start
 because the Comparator executable was unavailable. A later retained
 attempt, observed on 23 October 2026, built and exported the challenge,
 then stopped while building the implementing solution. The retained
-partial-observation receipt and log preserve that event: the imported
+[partial-observation receipt](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/examples/qaoa-sk/verification/full-support-build-failure-20261023.json)
+and [log](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/examples/qaoa-sk/verification/full-support-build-failure-20261023.log) preserve that event: the imported
 object for `Diffusion/AbsIncrement` was missing. The challenge is an
 admitted specification, so its successful build and export are not a
 proof of the theorem. There was no successful solution export or
@@ -5135,8 +5286,8 @@ corrected replay, the full-support challenge built and its exporter was
 observed running. Reconciliation on 25 October found that the controller
 had stopped without a recovered terminal research result. Comparator
 and research extraction outcomes therefore remain unknown, neither
-rejected nor accepted. The companion source review retains this
-interruption separately from the original build failures.
+rejected nor accepted. The [interruption receipt](https://github.com/wcook04/lean-exposition/blob/21b1f9e995c4276fdad02377b378f11541a3d5e9/examples/qaoa-sk/verification/corrected-replay-interruption-20261025.json)
+retains this observation separately from the original build failures.
 
 The later observation is additional run history, not a replacement for
 the earlier event or a mathematical rejection of the theorem. Neither
@@ -5149,9 +5300,12 @@ of its original invocation. Neither is a replay of the subsequently
 repaired source configuration.
 
 This editorial revision does not establish a new formal result.
-Detailed reading coverage, exact finite-check
-results, preserved unsuccessful observations and the remaining obligations
-are recorded in the companion source review. This remains a draft after source-based agent review; independent mathematical acceptance and a human reconstruction study have not been performed.
+The [source review through 26 October 2026](https://github.com/wcook04/lean-exposition/blob/ef46d0e72787c1dc283733b10b433d112f97ac64/papers/qaoa-sk/source-review/references-and-adversarial-review.md)
+records the preceding paper revision's reading coverage, finite checks,
+unsuccessful observations and remaining obligations; viewing it requires
+repository access. This remains a draft after source-based agent review;
+independent mathematical acceptance and a human reconstruction study
+have not been performed.
 <!-- /passage:verification -->
 
 ## References

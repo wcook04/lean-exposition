@@ -37,6 +37,8 @@ Reading guidance never changes proof traversal, evidence or review status.
 
 The schemas are packaged under
 [`src/lean_exposition/resources/schemas/`](../src/lean_exposition/resources/schemas/).
+JSON decoding rejects duplicate keys, non-finite numbers and unpaired Unicode
+surrogates in keys or values; valid escaped surrogate pairs remain supported.
 Graph version `1.0` remains supported; version `1.1` adds the Lean declaration
 kind and safety fields for new extraction. Artifact `1.0` retains its original
 rule that each paper selects exactly the graph's selected goals. Artifact `1.1`
@@ -73,6 +75,15 @@ safety classification is unknown. Already retained version `1` graphs validate
 under their original projection profile; validation of that historical binding
 does not add the missing safety or locator assurance. Do not rehash an old graph
 under the new profile as though its extractor had emitted new fields.
+
+The derived `formal_result_assurance` reports recorded safety separately from
+current authoring eligibility. Current eligibility also requires a matching
+passed build observation, the extraction request and driver hashes, valid
+matching stdout hashes, and the retained report-to-stdout binding. An older or
+incomplete receipt remains readable but does not become current by losing
+fields. These observations are not authenticated execution or mathematical
+acceptance. Strict authoring validation can require this current eligibility;
+historical bundle reads do not rewrite older evidence.
 
 The research checkout, source distribution, installed wheel and explanation
 bundle serve different purposes. The checkout carries authored papers and
@@ -132,7 +143,8 @@ certifies an argument.
 
 Citation requirements follow a separate reference closure through `cites` edges.
 This retains attribution without importing a cited work's assumptions as logical
-prerequisites of the selected result.
+prerequisites of the selected result. The documentary seeds include premise
+records named by traversed applications even when those premises are supplied.
 
 Graph `1.2` can annotate a `supports` edge with one authored theorem application.
 The edge still points from conclusion to conditional theorem. Its `application`
@@ -142,6 +154,12 @@ ordinary support edge from the conclusion. The conditional proof stays reachable
 only its supplied premise occurrences are discharged in this application.
 An independent use of that premise, or a supplier that still requires it, remains
 free. Queries retain the bindings; they do not check their mathematical meaning.
+An extracted Lean axiom dependency or `sorryAx` remains an obligation of its
+retained declaration even if an authored binding names the same node. A binding
+does not change the Lean proof term. Older `remaining_assumption_ids` values may
+reflect the earlier scoping rule; they remain authored records, while queries
+recompute effective requirements and must not treat the field as a complete
+formal dependency audit.
 
 The format supports one application layer. Nested applications and cycles through
 an application consumer are rejected; ordinary dependency cycles still work.
@@ -189,7 +207,12 @@ configuration and first-launch-executable observations. Their `process_status`
 is separate from an input-binding failure. The `comparator-process-v2` receipt
 profile is an additive process record, not a graph-schema revision or a new
 proof-verdict format; effective nested checker, cache and sandbox identities
-remain explicitly unestablished. See the [receipt field contract](verification.md#reading-a-new-comparator-process-receipt).
+remain explicitly unestablished. Passing v2 receipts must have internally
+consistent process, configuration and first-launch observations; failed or
+legacy receipts preserve their distinct outcomes. A passing legacy receipt
+without the v2 profile is a historical process claim, not evidence of current
+v2 input checks or an authenticated Comparator verdict; removing v2 fields
+cannot add those observations. See the [receipt field contract](verification.md#reading-a-new-comparator-process-receipt).
 The extraction projection also binds its completeness state and each declaration's
 inspection boundary. Regenerate the receipt after changing those fields.
 
@@ -198,12 +221,19 @@ axioms are explicit assumption nodes. Quantified hypotheses remain in the record
 Lean type; the author must explain their meaning. Imported dependencies outside the
 selected module scope remain boundary nodes. `sorryAx` is an unresolved obligation.
 A partial extraction or an empty uninspected assumption list must not be advertised
-as a complete assumption audit.
+as a complete assumption audit. A `kernel_checked` label is rejected when a
+recorded Lean type/value dependency path or extracted axiom inventory reaches
+`sorryAx`; structural edges do not by themselves establish that dependency.
 
 Source hashes bind bytes, not meaning. Public URLs identify references, not permissions.
 The source lock distinguishes exact fetched bytes from explicitly modified configuration.
 `audit-sources` checks both. `fetch` materializes only recorded source URLs and inline
 derived configurations into an empty destination; it never executes fetched code.
+Fetch accepts HTTPS source URLs and checks each redirect before following it. It
+rejects credentials, queries, fragments, localhost and non-public IP literals;
+hostname DNS and proxies are not verified or pinned. Treat source locks and
+hostname resolution as trusted inputs, not an SSRF boundary. Byte hashes establish
+equality to the lock, not meaning or source authenticity.
 
 ## Papers and bundles
 
@@ -217,7 +247,9 @@ paper-selected goals and all assumptions, citations and unresolved obligations
 that affect their claims. Explicitly mapped assumptions also seed these checks,
 including their own prerequisites and citation requirements. Every authored
 passage must contain non-whitespace text. Passage-level bindings preserve the
-local dependencies too. Review
+local dependencies too. Historical mappings remain readable under their original
+citation rule, and query views expose any missing current documentary credit.
+Strict new-authoring checks require current credit at document and passage level. Review
 notes describe work actually performed; a schema check cannot confer expert acceptance.
 
 A local bundle contains `graph.json`, three Markdown/JSON paper pairs and

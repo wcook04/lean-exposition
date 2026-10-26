@@ -55,7 +55,12 @@ def _uuid(value):
 
 def theorem_id(url: str) -> str:
     """Accept only a canonical public theorem page, never an arbitrary API URL."""
-    parsed = urlsplit(url)
+    if not isinstance(url, str):
+        raise Prove2MeError("expected https://prove2.me/theorems/UUID")
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        raise Prove2MeError("expected https://prove2.me/theorems/UUID") from None
     parts = parsed.path.strip("/").split("/")
     if (parsed.scheme != "https" or parsed.netloc != "prove2.me" or parsed.query
             or parsed.fragment or len(parts) != 2 or parts[0] != "theorems"
@@ -66,12 +71,15 @@ def theorem_id(url: str) -> str:
 
 def _reference(value):
     """A public record's source link is a reference, never a download instruction."""
-    if not isinstance(value, str) or len(value) > 2000 or any(c.isspace() for c in value):
+    if (not isinstance(value, str) or len(value) > 2000
+            or any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in value)
+            or any(0xD800 <= ord(c) <= 0xDFFF for c in value)):
         return None
     try:
         url = urlsplit(value)
-        if (url.scheme == "https" and url.hostname and not url.username
-                and not url.password and not url.query and not url.fragment):
+        port = url.port  # Reject malformed or out-of-range ports.
+        if (url.scheme == "https" and url.hostname and url.username is None
+                and url.password is None and not url.query and not url.fragment and port != 0):
             return value
     except ValueError:
         pass
@@ -113,7 +121,7 @@ class Prove2MeClient:
             raise Prove2MeError("API response byte budget exceeded")
         try:
             value = decode_json(raw)
-        except (ValueError, UnicodeError):
+        except (ValueError, UnicodeError, RecursionError):
             raise Prove2MeError("Prove2Me returned malformed JSON") from None
         if not isinstance(value, dict):
             raise Prove2MeError("Prove2Me returned a non-object response")
@@ -149,7 +157,7 @@ class Prove2MeClient:
             raise Prove2MeError("platform version changed; review current API documentation before intake")
         token, expiry = auth.get("access_token"), auth.get("expires_at")
         if (not isinstance(token, str) or not token or len(token) > 8192
-                or any(c.isspace() for c in token) or not isinstance(expiry, (int, float))
+                or re.fullmatch(r"[!-~]+", token) is None or type(expiry) not in (int, float)
                 or expiry <= time.time() + 60):
             raise Prove2MeError("authentication returned unusable token metadata")
         self.token, self.expires_at = token, expiry
@@ -164,23 +172,40 @@ class Prove2MeClient:
             "Accept": "application/json", "Authorization": "Bearer " + self.token}))
 
 
+def _deprecation(value):
+    """Distinguish an omitted field from a reported null or valid timestamp."""
+    if "deprecated_at" not in value:
+        return None
+    timestamp = value["deprecated_at"]
+    if timestamp is None:
+        return False
+    if not isinstance(timestamp, str) or len(timestamp) > 100:
+        raise Prove2MeError("invalid platform deprecation timestamp")
+    try:
+        datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    except ValueError:
+        raise Prove2MeError("invalid platform deprecation timestamp") from None
+    return True
+
+
 def _public_entity(value, entity, identity):
     if value.get("visibility") != "public":
         raise _Unavailable("record does not explicitly declare public visibility")
     if value.get(entity + "_id") != identity:
         raise Prove2MeError("platform entity identity mismatch")
     name = value.get(entity + "_name")
-    if not isinstance(name, str) or not 0 < len(name) <= 1000 or any(ord(c) < 32 for c in name):
+    if (not isinstance(name, str) or not 0 < len(name) <= 1000
+            or any(ord(c) < 32 or 0xD800 <= ord(c) <= 0xDFFF for c in name)):
         raise Prove2MeError("invalid platform declaration name")
     status = value.get("status") if entity == "theorem" else "not_reported"
-    if entity == "theorem" and status not in {"Open", "Proved", "Disproved"}:
+    if entity == "theorem" and (not isinstance(status, str) or status not in {"Open", "Proved", "Disproved"}):
         raise Prove2MeError("unrecognized platform theorem status")
     rev = value.get("mathlib_rev")
     if not isinstance(rev, str) or re.fullmatch(r"[0-9a-f]{40}", rev) is None:
         raise Prove2MeError("platform record has no full Mathlib revision")
     result = {"id": identity, "entity": entity, "name": name, "status": status,
               "visibility": "public", "mathlib_rev": rev,
-              "deprecated": value.get("deprecated_at") is not None}
+              "deprecated": _deprecation(value)}
     reference = _reference(value.get("source"))
     if reference:
         result["source_reference"] = reference
@@ -254,7 +279,7 @@ def collect_prove2me(url: str, client: Prove2MeClient, *, max_nodes=100, max_dep
                 children.append((kind, child_id))
                 pending.append((kind, child_id, depth + 1))
             groups.append({"submission_id": submission, "children": children,
-                           "deprecated": row.get("deprecated_at") is not None})
+                           "deprecated": _deprecation(row)})
         decompositions[key] = (groups, provenance)
 
     # Only the matching environment facts survive; no unrelated listing is saved.
@@ -283,6 +308,7 @@ def collect_prove2me(url: str, client: Prove2MeClient, *, max_nodes=100, max_dep
                        "Decomposition edges unite alternative groups; they are not a conjunctive proof obligation.",
                        "Definition dependencies, hidden platform relations and proof-body dependencies are not audited."]}
     files, provenance_rows = {}, []
+    entity_deprecations, group_deprecations = [], []
 
     def snapshot(source_id, route, payload, provenance):
         path = "snapshots/" + source_id + ".json"
@@ -299,6 +325,8 @@ def collect_prove2me(url: str, client: Prove2MeClient, *, max_nodes=100, max_dep
         node_id = f"prove2me:{kind}:{identity}"
         source_id = f"{kind}-{identity}"
         snapshot(source_id, f"/{kind}s/{identity}", record, provenance)
+        entity_deprecations.append({"node_id": node_id, "source_id": source_id,
+                                    "deprecated": record["deprecated"]})
         citation_id = "cite:" + node_id
         graph["citations"].append({"id": citation_id, "title": record["name"],
             "url": f"https://prove2.me/{kind}s/{identity}", "source_id": source_id,
@@ -324,6 +352,11 @@ def collect_prove2me(url: str, client: Prove2MeClient, *, max_nodes=100, max_dep
             public_groups.append({"submission_id": group["submission_id"], "children": children,
                                   "deprecated": group["deprecated"],
                                   "omitted_children": len(group["children"]) - len(children)})
+            group_deprecations.append({"node_id": f"prove2me:theorem:{identity}",
+                "source_id": "decompositions-" + identity, "submission_id": group["submission_id"],
+                "deprecated": group["deprecated"],
+                "children": [f"prove2me:{c['entity']}:{c['id']}" for c in children],
+                "omitted_children": len(group["children"]) - len(children)})
             destinations.update((c["entity"], c["id"]) for c in children)
         snapshot("decompositions-" + identity, f"/theorems/{identity}/decompositions",
                  {"theorem_id": identity, "decompositions": public_groups}, provenance)
@@ -340,6 +373,8 @@ def collect_prove2me(url: str, client: Prove2MeClient, *, max_nodes=100, max_dep
                     "platform_closure_status": "partial", "local_verification": "not_run",
                     "assumption_audit": "not_run", "limits": {"max_nodes": max_nodes, "max_depth": max_depth},
                     "omissions": dict(sorted(omitted.items())), "hidden_relations": "unknown",
+                    "platform_deprecation": {"entities": entity_deprecations,
+                                             "groups": group_deprecations},
                     "environments": environments, "provenance": provenance_rows}})
     validate_graph(graph)
     files["graph.json"] = encoded(graph)

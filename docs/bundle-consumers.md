@@ -8,6 +8,13 @@ The [independent example](../examples/consumer/README.md) reads an exported ZIP
 with Python's standard library. The installed package additionally validates the
 graph and passage contracts.
 
+The independent reader accepts a regular archive file, checks its opened file
+identity and uses nonblocking and no-follow open flags when the platform provides
+them. On platforms without those flags, the pre-open and post-open checks do not
+guarantee nonblocking or no-follow behavior if the path is replaced concurrently;
+use a trusted, stable input path there. These checks do not confine ancestor
+directories.
+
 For a website or HTTP client, the [web API](web-api.md) serves these same
 consumer views from one captured edition, with search, pagination and exact
 record/paper links. Direct library use and offline bundle reading remain available.
@@ -204,12 +211,15 @@ papers/expository.md
 papers/expository.json
 ```
 
-The manifest uses schema `1.0`; paper mappings may use `1.0` or `1.1`.
-Mapping `1.0` requires the graph-selected goals; `1.1` permits independently
-selected paper goals with their own required coverage. The graph may use `1.0` or
-`1.1`; graph `1.1` carries the declaration safety fields bound by version 2
-extraction. Historical `1.0` graphs keep their original evidence and its limits.
-An older consumer that supports graph `1.0` alone must reject `1.1` explicitly.
+The manifest uses schema `1.0`; the graph and each paper mapping independently
+use `1.0`, `1.1` or `1.2`. Mapping `1.0` requires the graph-selected goals;
+`1.1` and `1.2` permit independently selected paper goals with their own
+required coverage. Mapping `1.2` also permits passage treatments and hash-bound
+reading links. Graph `1.1` adds declaration safety fields bound by version 2
+extraction; graph `1.2` additionally permits scoped applications. Historical
+`1.0` graphs keep their original evidence and its limits. A consumer must reject
+any version it does not support; it must not silently apply an older version's
+rules to it. The [version contract](contracts.md) describes the distinctions.
 
 The manifest names the graph and three paper stages, with SHA-256 hashes of the
 other seven files. Each paper mapping binds its exact Markdown bytes and exact
@@ -226,7 +236,9 @@ Consumers must obtain those bytes separately before claiming to have checked the
 Embedded receipt records remain available in the graph.
 
 Reject unsupported schema or bundle versions. Reject duplicate JSON keys, duplicate
-archive members, missing or extra archive files, links and hash mismatches. The
+archive members, missing or extra archive files, links and hash mismatches. JSON
+keys and string values must contain Unicode scalar values: valid escaped surrogate
+pairs are accepted, but unpaired surrogates are rejected. The
 package reader accepts stored and deflated ZIP entries, with limits of 32 MiB per
 member, 64 MiB of expanded content, and 65 MiB for the archive. It never follows
 paths from ZIP metadata to write files. Directory reads capture only the fixed
@@ -816,6 +828,14 @@ hashes or repairs stale bindings. Correct the authoring records at their source
 before retrying. See the [authoring guide](authoring.md) for passage bindings.
 The [QAOA paper guide](../papers/README.md#assemble-the-authored-bundle) gives the
 complete command for the three maintained authored drafts.
+
+New assembly applies the current documentary citation and formal-result
+eligibility requirements. For existing captures, `check-bundle` uses the
+historical citation and formal-result eligibility rules while still applying
+current integrity and schema checks. To inspect current coverage without
+changing that capture, `inspect-bundle BUNDLE --paper long` reports
+`coverage.document_citation_audit`, `coverage.passage_citation_audits` and
+`coverage.formal_result_assurances`. These records do not certify the mathematics.
 
 ### Paper links after assembly
 

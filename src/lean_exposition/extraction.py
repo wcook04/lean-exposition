@@ -2,8 +2,11 @@
 import re
 from pathlib import Path
 
-from .contracts import ContractError, digest, encoded, extraction_projection_digest, local_path, validate_extraction_report, validate_graph, validate_process_receipt
-from .verification import _source_hashes
+from .contracts import (ContractError, digest, encoded, extraction_projection_digest,
+                        local_path, validate_extraction_report,
+                        validate_extraction_request, validate_graph,
+                        validate_process_receipt)
+from .verification import _decode_extraction_stdout, _source_hashes
 
 
 def _bound_receipt(receipt: dict, project: Path, module: str, *, evidence_kind: str) -> None:
@@ -36,11 +39,21 @@ def _bound_receipt(receipt: dict, project: Path, module: str, *, evidence_kind: 
                             + ", ".join(changed))
 
 
-def _public_receipt(receipt: dict) -> dict:
+def _current_extraction_receipt(receipt: dict) -> bool:
+    return (receipt.get("evidence_kind") == "elaboration_process" and
+            all(field in receipt for field in (
+                "extraction_request", "extractor_template_sha256", "process_status")))
+
+
+def _public_receipt(receipt: dict, *, strict_text_hash: bool = False) -> dict:
     """Keep evidence metadata, excluding machine-specific diagnostic output."""
-    # Raw diagnostics determine the legacy display-text digests during
-    # projection. Canonicalize a copy before checking newer byte observations;
-    # neither the caller's receipt nor a recorded raw-byte digest is rewritten.
+    # Current process observations must agree before projection. Historical
+    # receipts retain the earlier rule that raw diagnostic text is authoritative
+    # for its display-text hash; a missing current field also precludes current
+    # assurance in the derived graph classification.
+    if _current_extraction_receipt(receipt) or strict_text_hash:
+        validate_process_receipt(receipt)
+    # Canonicalize a copy without rewriting the caller's receipt or raw-byte hash.
     receipt = receipt.copy()
     for stream in ("stdout", "stderr"):
         if stream in receipt:
@@ -89,6 +102,31 @@ def _public_receipt(receipt: dict) -> dict:
     return result
 
 
+def _check_retained_output(receipt: dict, report_hash: str) -> bool:
+    """Compare a retained raw report when present; old redacted receipts remain readable."""
+    if "stdout" not in receipt:
+        return False
+    stdout = receipt["stdout"]
+    if not isinstance(stdout, str):
+        raise ContractError("receipt stdout must be text")
+    marker_present = any(line.startswith("LEAN_EXPOSITION_JSON:")
+                         for line in stdout.split("\n"))
+    # A current producer always records these fields alongside its stdout. Old
+    # receipts may retain diagnostics without the original report, so absence
+    # of the marker alone does not establish a contradiction for those records.
+    current_receipt = _current_extraction_receipt(receipt)
+    if not marker_present and not current_receipt:
+        return False
+    try:
+        raw_report = _decode_extraction_stdout(stdout)
+        raw_hash = digest(encoded(raw_report))
+    except (RecursionError, TypeError, ValueError) as exc:
+        raise ContractError("invalid extraction report in retained process output") from exc
+    if raw_hash != report_hash:
+        raise ContractError("extraction report differs from retained process output")
+    return True
+
+
 def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> dict:
     """Source and environment bytes bind results; unresolved boundary nodes remain."""
     project = project.resolve()
@@ -97,16 +135,12 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
     receipt = report.get("receipt", {})
     if not isinstance(receipt, dict):
         raise ContractError("extraction receipt must be an object")
-    if "extraction_request" in receipt:
-        request = receipt["extraction_request"]
-        if (not isinstance(request, dict)
-                or set(request) != {"module", "roots", "module_prefixes", "max_declarations"}
-                or any(request.get(field) != report[field]
-                       for field in ("module", "roots", "module_prefixes"))
-                or type(request.get("max_declarations")) is not int
-                or request["max_declarations"] < 1
-                or len(report["declarations"]) > request["max_declarations"]):
-            raise ContractError("extraction request differs from report or declaration limit")
+    validate_extraction_request(receipt, len(report["declarations"]))
+    if "extraction_request" in receipt and any(
+        receipt["extraction_request"][field] != report[field]
+        for field in ("module", "roots", "module_prefixes")
+    ):
+        raise ContractError("extraction request differs from report")
     if "extractor_template_sha256" in receipt and (
         not isinstance(receipt["extractor_template_sha256"], str)
         or re.fullmatch(r"[0-9a-f]{64}", receipt["extractor_template_sha256"]) is None
@@ -125,10 +159,11 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
         raise ContractError("extraction report requires a successful process receipt")
     try:
         report_hash = digest(encoded({k: v for k, v in report.items() if k != "receipt"}))
-    except UnicodeEncodeError as exc:
+    except (RecursionError, TypeError, ValueError) as exc:
         raise ContractError("extraction report is not canonical UTF-8 JSON") from exc
     if receipt.get("report_sha256") != report_hash:
         raise ContractError("extraction report differs from its receipt")
+    retained_report_bound = _check_retained_output(receipt, report_hash)
     _bound_receipt(receipt, project, report["module"], evidence_kind="elaboration_process")
     if build_receipt is not None:
         _bound_receipt(build_receipt, project, report["module"], evidence_kind="lean_build")
@@ -241,11 +276,26 @@ def to_graph(report: dict, project: Path, build_receipt: dict | None = None) -> 
                                    "boundary": "Extraction limit or missing declaration; unresolved."}
                 edges.append({"from": d["name"], "to": name, "kind": kind, "evidence_ids": ["extract"]})
     receipt = _public_receipt(receipt)
+    if retained_report_bound:
+        # This is an observation of internal consistency, not authentication
+        # of the process or a proof of semantic correspondence.
+        receipt["report_stdout_binding"] = "lean-report-stdout-v1"
+    current_hashes = (receipt.get("extractor_sha256"), receipt.get("extractor_template_sha256"),
+                      receipt.get("stdout_sha256"), receipt.get("stdout_bytes_sha256"))
+    current_observations = (
+        report["schema_version"] == 2 and retained_report_bound and
+        _current_extraction_receipt(receipt) and receipt.get("process_status") == "passed" and
+        receipt.get("stdout_utf8_valid") is True and
+        all(isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{64}", sha) for sha in current_hashes) and
+        current_hashes[2] == current_hashes[3]
+    )
     evidence = [{"id": "extract", "kind": "extraction", "status": "passed", "command": receipt["command"],
                  "tool": sources[-1]["revision"], "source_ids": [s["id"] for s in sources],
                  "subject_ids": sorted(declaration_ids), "details": "Expression extraction executed; not a fresh kernel replay, equivalence proof, or prose review.", "receipt": receipt}]
     if build_receipt is not None:
-        public_build_receipt = _public_receipt(build_receipt)
+        public_build_receipt = _public_receipt(
+            build_receipt, strict_text_hash=current_observations and
+            build_receipt.get("process_status") == "passed")
         status = build_receipt["status"]
         if status == "timed_out":
             status = "unavailable"

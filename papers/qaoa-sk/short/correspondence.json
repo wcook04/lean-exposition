@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "7b07c474e9e4b493474081a793473deb1d5ecae2fdcc29bf9c00dc4caa8bbe8a",
-  "graph_sha256": "c941bb8e2efcb2c545fdebbfec6f904193275455192bec48bcb452c5b8ab7f97",
+  "content_sha256": "2654c308bfdc03c4fb5f7af8ab710bc40d835325499549203bc16f48c7393160",
+  "graph_sha256": "29868cd5087ccd81a8790921d83e6224dc94c03954f73aedfe63c8c354b92643",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -37,29 +37,33 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
     "support.flux_identity",
     "support.forward_shapes",
-    "support.full_relative_support",
+    "support.full_relative_support_curvature",
     "support.integrated_coercivity",
     "support.moment_saturation",
     "support.no_bounded_gap",
     "support.no_initial_gap",
-    "support.no_terminal_gap",
     "support.plateau_transfer",
     "support.positive_curvature",
     "support.rational_certificate",
     "support.regularity",
     "support.stieltjes_measure",
+    "support.terminal_chord_barrier",
     "support.zero_curvature"
   ],
   "citation_ids": [
     "ac2017_ground_state",
     "acz2020_infinite_support",
+    "authored_r10_empty_support_chord",
     "authored_r8_circuit_sampled_finite_instance_optimum",
     "authored_r8_scalar_finite_maximum_concentration",
     "authored_r8_scaling_contact",
+    "authored_r8_support_full_relative_support_curvature",
+    "authored_r8_support_terminal_chord_barrier",
     "authored_r8_unshifted_gaussian",
     "authored_r9_finite_formula_word",
     "bfmvz2022_tree_transfer",
@@ -262,12 +266,14 @@
     "support.contact",
     "support.contact_derivatives",
     "support.diffusion",
+    "support.empty_support_chord_obstruction",
     "support.endpoint_chord_area",
     "support.first_variation",
     "support.fixed_time_spatial_coercivity",
     "support.flux_identity",
     "support.forward_shapes",
     "support.full_relative_support",
+    "support.full_relative_support_curvature",
     "support.integrated_coercivity",
     "support.moment_identity",
     "support.moment_saturation",
@@ -281,20 +287,24 @@
     "support.step_tails",
     "support.stieltjes_measure",
     "support.strict_increase",
+    "support.terminal_chord_barrier",
     "support.terminal_defect",
     "support.zero_curvature"
   ],
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "eef136c45986b7a91ed295b898a402de57c2f941ac6d68fce74d297f278c493a",
+      "text_sha256": "b248167eae553b719c0eb10bf16034f92ca35c755f3b5aaaac09ee8f8c2d2b03",
       "claim_ids": [
         "full_support",
-        "support.full_relative_support",
+        "support.full_relative_support_curvature",
         "scalar.smooth_positive_density"
       ],
       "citation_ids": [
+        "authored_r10_empty_support_chord",
         "authored_r8_scaling_contact",
+        "authored_r8_support_full_relative_support_curvature",
+        "authored_r8_support_terminal_chord_barrier",
         "full_support_chord_derivative",
         "full_support_comparator",
         "full_support_implementation",
@@ -376,17 +386,20 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "cc10370f54313e8393ac8d17962bfd7c1fb9b8a8496023ffae0694013953285d",
+      "text_sha256": "256941ae7774efd8d11c3183eab82b85e2225f3cbc0478df601a7a6be26d40cc",
       "claim_ids": [
         "full_support",
-        "support.full_relative_support",
+        "support.full_relative_support_curvature",
         "support.moment_saturation",
         "scalar.smooth_positive_density",
         "scalar.minimizer_attainment"
       ],
       "citation_ids": [
         "acz2020_infinite_support",
+        "authored_r10_empty_support_chord",
         "authored_r8_scaling_contact",
+        "authored_r8_support_full_relative_support_curvature",
+        "authored_r8_support_terminal_chord_barrier",
         "chen2026_full_support",
         "full_support_chord_derivative",
         "full_support_comparator",
@@ -492,17 +505,20 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "e5734a9d217e5725d524293f12d03f12e2d8b70037060cd31ce1fe527220c1a2",
+      "text_sha256": "e3c43c2d3c3bfb92a1368c72af4ad738993f320d8dccfea7765ff1379cc729ea",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
         "support.no_bounded_gap",
         "support.no_initial_gap",
-        "support.no_terminal_gap"
+        "support.terminal_chord_barrier",
+        "support.empty_support_chord_obstruction"
       ],
       "citation_ids": [
         "acz2020_infinite_support",
+        "authored_r10_empty_support_chord",
         "authored_r8_scaling_contact",
+        "authored_r8_support_terminal_chord_barrier",
         "chen2026_full_support",
         "full_support_chord_derivative",
         "full_support_comparator",
@@ -569,7 +585,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "c42384b2168fe8db6688048b71b9990aada98c0576e5bbaed4763745b37ac244",
+      "text_sha256": "837e25bc155ca179084b4fde406a2344257c727c47d8bf6d75bab0dd7561a286",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -614,7 +630,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "7841eed04f6229f96059e3cab13df055039eab9b21d32fbbe568823fc554dbd2",
+      "text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -686,7 +702,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "8d40f7c84ecb188980f5883d6883ac435a31b89662b34d493381662f4216b0f7",
+      "text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -768,7 +784,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "3ec2b303400d4cd5534e3bc1e62ef87ff7ed44c9bd9830c7fd61d30d539f324c",
+      "text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -1004,12 +1020,14 @@
     "25 October 2026 r7 expert assimilation: applied long-to-short at parent input revision a6f9f0360963a8a31dce3e59ee912d1a758476d0 after complete sequential expert reading, reviews05–07 and selected09–10 link/correspondence findings. Primary checks included the pinned support/circuit TeX and formal challenge/implementation endpoints; exact Chen v1 terminal/classical passages; Lopatto v3/v4 passages; EAMS v1 Theorem2/Assumption2/Corollary2.2; Sellke v4 Proposition3.10/Lemma3.11. Reorganised the common spatial moment and application chronology, assigned local credit, and preserved theorem hypotheses and formal unknowns. The isolated exact certificate checker returned zero residual,22 positive remainder terms and all displayed Ito moment identities. Detailed dispositions and limits are retained in the external expert-assimilation record. This is source-assisted agent revision, not independent full analytic acceptance or human-reader testing. Parent handles final global graph rebinding, medium-specific links, rendering and inspection.",
     "25 October 2026 R7 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 5f36f5d86ec39d1d5682ad4eaad2b81c36d2bd452330adcaacafda1f813f87c5). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed from their reviewed claim selections after ordinary manuscript premises were separated from the formal interface and four scoped applications were recorded. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R8 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 56a78ba57bbd0ed6ff64cbdb89d625aa3e815cfee8875dcd2346ea94a83cb6f6). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of the examples-first revision, shared spatial estimate, alternate terminal proof, coefficient budget, jump remark and sampled finite-instance consequence. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
-    "26 October 2026 R9 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 534feb1b0753760508bd21802c94d503e4cb71999415a107bd70bd2b0378fd53). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained."
+    "26 October 2026 R9 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 534feb1b0753760508bd21802c94d503e4cb71999415a107bd70bd2b0378fd53). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 R10 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
+    "26 October 2026 independent Terra audit: Applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Compared the fixed-direction joint Gaussian premise with the long record and the original rooted construction. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained."
   ],
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "7841eed04f6229f96059e3cab13df055039eab9b21d32fbbe568823fc554dbd2",
+      "from_text_sha256": "6de258893f1de2bf5651e3bb562842c7d27e77cb8089b59d7628771be464ccee",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
       "to_text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977",
@@ -1018,7 +1036,7 @@
     },
     {
       "from_anchor": "scalar-value",
-      "from_text_sha256": "8d40f7c84ecb188980f5883d6883ac435a31b89662b34d493381662f4216b0f7",
+      "from_text_sha256": "8824282d35770d546071b74cfdbec4bf16d31900d2f30c5f23ad6115ec610eb4",
       "to_stage": "expository",
       "to_anchor": "scalar-identities",
       "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae",
@@ -1027,7 +1045,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "3ec2b303400d4cd5534e3bc1e62ef87ff7ed44c9bd9830c7fd61d30d539f324c",
+      "from_text_sha256": "99b0611d8586a5f3d2bf0e149eed62924a187cfd4f48fd612f6196cdcbfef3e6",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",

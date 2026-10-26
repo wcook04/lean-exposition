@@ -207,6 +207,29 @@ mapping records say `draft` until the stated review has happened. A draft may
 explain established parts and visibly incomplete arguments without upgrading the
 unresolved conclusion.
 
+### Check the active objects and claims
+
+When an argument returns from an example, changes representation or recombines
+earlier constructions, identify the object now fixed, the changes permitted,
+the facts already available and the next goal. An announced theorem is still
+a target in its proof. At a linked proof destination, restore the small
+dictionary an incoming reader needs to parse its first inference. An
+uninterrupted calculation with unchanged objects needs no repeated inventory.
+
+Classify a reused property as a definition, hypothesis, proved conclusion or
+precisely stated input. A normalization proved later for an optimum cannot be
+moved into the admissible class without checking how it changes the available
+variations. Likewise, a property of one example cannot silently become a fact
+about the general object. Perform this audit in the review account; put only
+the needed reminder or derivation in the reading path. Check the repaired
+passage from its actual entry point, without borrowing later conclusions.
+
+Before deriving a law or independence, identify the model and any joint or
+dependence assumptions used. A finite set of matching numerical summaries does
+not by itself identify a law. Test a proposed counterexample against every
+hypothesis of the claim; if it violates one, it may refute a weakened claim
+but not the original statement.
+
 ## Preserve correspondence
 
 Choose each paper's goals deliberately. Mapping schema `1.1` lets the long
@@ -400,6 +423,12 @@ correction, standard terminology and explanatory comparison. State the role in
 the prose. A formal declaration link does not replace credit to earlier
 mathematics, and a writing model does not prove the target argument.
 
+When an application supplies an ordinary premise for particular parameters,
+that premise may cease to be free in this application, but retain its documentary
+citations and the supplier's sources. Check the asserted substitution separately.
+An authored binding does not remove an extracted Lean axiom or `sorryAx`
+dependency, or certify a formal substitution.
+
 After a move or cut, follow the reference to the actual destination. Compare
 its statement, assumptions and notation with the claim that now depends on it.
 Reconcile short and long versions in both directions. A correction in one may
@@ -418,17 +447,12 @@ an acceptance, so the author must revisit it.
 ### Read the paper in order
 
 Read each mathematical draft from its first sentence, without consulting its
-mapping or anticipating a later definition. At every transition, identify what
-the reader already knows, why the next object is needed, and what justifies the
-next inference. Record the first point where a definition, motivation, argument
-or citation arrives too late. A coherent overview does not repair a broken
-sequence of paragraphs.
-
-Read once without using knowledge from later pages. At each transition, track
+mapping or using knowledge from later pages. At each transition, track
 the question being answered, the objects and assumptions already available,
 and the inference that the next sentence asks the reader to make. A term may
 be defined yet still be unmotivated; a formula may be correct yet arrive before
-the problem it solves. Repair the sequence by explaining the purpose, moving
+the problem it solves. Record the first point where the available explanation
+does not support the next step. Repair the sequence by explaining the purpose, moving
 the construction or supplying the missing inference. Adding a glossary or a
 forward reference does not by itself repair that dependence. Apply this review
 to every paper at its declared prerequisite level, including abstracts,
@@ -550,6 +574,19 @@ lean-exposition assemble draft/graph.json \
 lean-exposition check-bundle assembled
 lean-exposition export assembled --out authored.zip
 ```
+
+Before using `formal_result` for a passage, run
+`lean-exposition inspect draft/graph.json` and read `formal_result_assurances`
+for its selected declarations. Current eligibility requires bound extraction
+and build observations; it does not authenticate execution or establish a
+mathematical correspondence. Do not relabel an incomplete historical receipt as
+a current observation.
+
+`assemble` applies the current formal-result and documentary-citation checks
+to new authoring, including citations for supplied premises. `check-bundle`
+uses the historical citation and formal-result rules for existing captures;
+other integrity checks still apply. The [bundle guide](bundle-consumers.md#assemble-authored-papers)
+shows how to inspect current assurance and citation gaps without changing a capture.
 
 The output directory must be empty. Assembly validates the supplied bindings
 without repairing stale hashes or rewriting prose, then creates a new manifest

@@ -43,6 +43,14 @@ flags, safe HTTPS source references, decomposition groups and matching toolchain
 They exclude proof/definition bodies, natural-language statements, comments,
 audits, account metadata and unrelated environment rows.
 
+Deprecation is `true` for a reported timestamp, `false` for an explicit null,
+and `null` when the field was omitted. Invalid timestamp values stop intake.
+New graphs also retain these observations in the platform evidence receipt's
+`platform_deprecation`: `entities` bind flags to node and source IDs; `groups`
+bind each submission, its flag, public child IDs and omitted-child count to the
+decomposition snapshot. The same child can occur in both current and deprecated
+groups. Older graphs may lack this receipt field; absence means unknown.
+
 Each snapshot's source record binds its retained bytes with SHA-256 and observation
 time. The platform observation receipt separately records the SHA-256 of the raw
 response read in memory. A filtered snapshot cannot reproduce the raw response
@@ -62,9 +70,10 @@ it does not mean a proof passed.
 Edges point from the consuming theorem to its prerequisite and have kind
 `platform_decomposition`. They come from `/theorems/UUID/decompositions`, not from
 the direction of arrows in the website's graph. Alternative submission groups
-remain in the filtered snapshots; their union provides navigation and must not
-be read as one conjunctive proof obligation. A null submission ID is preserved
-as an unattributed prerequisite group. Deprecated groups remain visibly marked.
+remain in the filtered snapshots and new graph receipts; their union provides
+navigation and must not be read as one conjunctive proof obligation. A null
+submission ID is preserved as an unattributed prerequisite group. Deprecation
+belongs to the individual observation or group, not to a union edge.
 The normal argument closure excludes these edges; platform closure is separate.
 
 ## Boundaries and omissions

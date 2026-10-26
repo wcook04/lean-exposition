@@ -153,8 +153,8 @@ The result at issue says that an admissible minimiser has no such gap: its
 measure has full support relative to $[0,1)$. The endpoint one is excluded.
 Existence of a minimiser comes from a separate theorem of
 [Auffinger and Chen](https://arxiv.org/abs/1606.05335v2).
-[Hong-Bin Chen](https://arxiv.org/abs/2607.18032v1) had already established
-full support by another method. The worked accounts reconstruct the
+An earlier [paper by Hong-Bin Chen](https://arxiv.org/abs/2607.18032v1)
+established full support by another method. The worked accounts reconstruct the
 quantitative argument in [OpenAI's full-support manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/build/main.tex).
 Their contribution here is the explanation and its correspondence to sources.
 
@@ -218,8 +218,9 @@ A reader who does not yet understand a gap can instead enter the
 Its example separates a positive cumulative value from vanishing increments.
 The later section “Why a flat interval cannot minimise” develops the contact
 and area argument. This route teaches the objects that the specialist route
-assumes. The graph can locate both passages because they discuss shared
-claims; reading them supplies the different explanations.
+assumes. The graph connects the example to the Stieltjes-measure definition
+and records its use in the later argument; reading each passage supplies the
+explanation.
 
 ## 4. What survives a shorter account
 
@@ -240,10 +241,10 @@ its own stopping point clear.
 
 The passage maps help enforce this discipline. For the claims an author
 selects, the checks require the recorded assumptions, citations and unresolved
-obligations to remain attached. They can catch a missing reference or changed
-text. They cannot detect every misleading sentence, determine whether an
-assumption has been explained well, or decide whether a cited argument is
-adequate. Those are questions for mathematical and editorial review.
+obligations to remain in the map. They can catch a missing reference or an
+unreconciled change to mapped text. They cannot tell whether the theorem's
+wording still states the assumption, or whether the cited argument is adequate.
+Those are questions for mathematical and editorial review.
 
 Attribution survives the same selection. The no-gap theorem retains credit
 for the earlier support result and for the quantitative proof being explained.
@@ -356,7 +357,9 @@ the contact argument. The transferable lesson is not that every exposition
 needs those weights. It is to let the reader perform an unfamiliar operation
 before relying on it in a proof, then use the example again when its purpose
 becomes clear. A specialist who already knows the operation may need no such
-preparation. Before retaining a lesson as general guidance, the author tests
+preparation. A further question changes a hypothesis enough to change the
+answer: carrying out the same calculation does not by itself show when the
+argument applies. Before retaining a lesson as general guidance, the author tests
 it on differently shaped problems and a case where it should not apply.
 Missing mathematical support returns to research, however clear the examples
 become.

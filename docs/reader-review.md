@@ -19,6 +19,9 @@ Retain the bundle, the actual PDF or other rendition, and a short request record
 Keep the request, original response and subsequent author decisions outside the
 eight-file bundle. A request is a plan. Until a response exists, record the reading
 as unperformed; silence does not report either understanding or rejection.
+Identify an author check, model or agent analysis, and an independent person's
+attempt separately. A model's worked answers and simulated reading difficulties
+can inform revision; they do not record human understanding or learning gains.
 
 Keep the first-account prompt, later diagnostic questions and assessor answer key
 in separate files or separately released pages. Prepare a blank response sheet and
@@ -58,6 +61,10 @@ revision, keep useful tasks for unchanged steps and replace or supplement those
 that miss the new step. If an easy example makes distinct quantities equal,
 use a nearby case that separates them. Check the other hypotheses and the worked
 answer first; an arbitrary broken example may test a different failure.
+Distinguish executing a named operation from selecting it independently. When
+the latter is the question, withhold the method cue and include a case where
+the familiar argument may not apply. Record whether the reader identifies a
+false conclusion, insufficient information, or only the failure of that route.
 
 ## Preserve the attempt, including assistance
 
