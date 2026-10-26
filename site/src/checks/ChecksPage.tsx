@@ -22,6 +22,7 @@ import {
   type EvidenceCard,
   type KindGroup,
 } from "./summary";
+import { CheckMap } from "./CheckMap";
 import "./checks.css";
 
 const PAGE = 25;
@@ -141,6 +142,8 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
       )}
 
       {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
+
+      {target.type !== "node" && <CheckMap />}
 
       <section className="checks__band" aria-labelledby="by-kind">
         <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "All checks, by kind"}</h2>
