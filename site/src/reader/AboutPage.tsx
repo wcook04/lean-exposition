@@ -12,6 +12,8 @@ import { routeHref } from "../app/router";
 import { useEdition } from "../app/data";
 import { citationText, copyText, editionLink } from "../app/cite";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
+import { AUTHOR, LINKS, VIDEOS } from "../app/author";
+import { Out } from "../app/Out";
 import { prepareDocument } from "./engine";
 import { prefixPaths } from "./links";
 import { documentPaths } from "./documents";
@@ -280,6 +282,53 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </header>
           <div ref={prose} className="prose about__prose" />
         </div>
+      </section>
+
+      <section className="about__made" id="made-by" aria-labelledby="made-by-title">
+        <h2 id="made-by-title">Who made this site</h2>
+        <p>
+          {AUTHOR} made this site. It is one part of <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching
+          mathematics with AI and on tools that help people follow what AI produces. His own research is on Erdős problems,
+          questions posed by the mathematician Paul Erdős.
+        </p>
+        <p>
+          Two of his other projects sit closest to this one. His <Out href={LINKS.mathsMap}>maths map</Out> on Plectis lets
+          you see how the proofs, papers and explanations of his Erdős problem research connect. On{" "}
+          <Out href={LINKS.atlas}>Plectis Atlas</Out>, the results in OpenAI’s mathematics release are set beside the outside
+          reports that assess them, and family 281, the result explained here, has <Out href={LINKS.atlasFamily}>its own page</Out>.
+          Here that one result is taken further: an argument map of its proof, and three written accounts of it, each linked
+          to the map.
+        </p>
+        <p>
+          A walkthrough video of this result is planned but not yet recorded. It will be like his walkthrough of Erdős
+          problem #257, the first video below.
+        </p>
+        <ul className="about__links">
+          <li>
+            <Out href={VIDEOS.erdos257.url}>{VIDEOS.erdos257.title}</Out>
+            <span className="about__len">{VIDEOS.erdos257.minutes} min</span>
+            <span>A walkthrough of his work on one Erdős problem, from the question to the formal proof.</span>
+          </li>
+          <li>
+            <Out href={VIDEOS.mathsMap.url}>{VIDEOS.mathsMap.title}</Out>
+            <span className="about__len">{VIDEOS.mathsMap.minutes} min</span>
+            <span>A tour of the maths map, including the long record and the papers for problem #257.</span>
+          </li>
+          <li>
+            <Out href={VIDEOS.atlas.url}>{VIDEOS.atlas.title}</Out>
+            <span className="about__len">{VIDEOS.atlas.minutes} min</span>
+            <span>One result followed through Plectis Atlas, its claims compared with the checked statement.</span>
+          </li>
+        </ul>
+        <p>
+          All his videos are on <Out href={LINKS.youtube}>his YouTube channel</Out>, and his public repositories are{" "}
+          <Out href={LINKS.github}>on GitHub</Out>. To get in touch about collaboration, use the{" "}
+          <Out href={LINKS.contact}>contact page on Plectis</Out>; he posts updates on <Out href={LINKS.x}>X</Out>.
+        </p>
+        <p className="about__start">
+          New to his work? Start here: <Out href={VIDEOS.introduction.url}>{VIDEOS.introduction.title}</Out>
+          <span className="about__len">{VIDEOS.introduction.minutes} min</span>
+        </p>
       </section>
     </article>
   );

@@ -472,3 +472,25 @@ html[data-view="map"] .app {
   font-size: var(--fs-ui);
   border-bottom: 1px solid var(--rule);
 }
+
+/* A link that leaves the site: the arrow is drawn in the padding of a word joiner, so it
+   stays on the link's last word and the underline does not run under it. */
+a.out::after {
+  content: "\2060";
+  margin-left: 0.1em;
+  padding-left: 0.62em;
+  background-color: var(--ink-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9 9 3M4.5 3H9v4.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 100% 0.12em / 0.62em 0.62em;
+}
+
+@media (forced-colors: active) {
+  a.out::after {
+    content: "\2060\2197";
+    padding-left: 0;
+    -webkit-mask: none;
+    mask: none;
+  }
+}

@@ -245,6 +245,11 @@ Run `python scripts/check_layout.py`, `python scripts/check_links.py` and
 `python -m unittest discover -s tests -v` after a change. Use
 `python scripts/check_layout.py --index` to check the staged tree before committing.
 
+Will Cook made this project as part of [Plectis](https://wcook04.github.io/plectis/),
+his projects on researching mathematics with AI and on tools that help people
+follow what AI produces. His videos, including walkthroughs of results, are on
+[YouTube](https://www.youtube.com/@willcook2004).
+
 Original code and documentation are Apache-2.0; see [LICENSE](LICENSE) and
 [NOTICE](NOTICE). Included upstream sources retain their own licences and credit.
 The [source lock](examples/qaoa-sk/source-lock.json) identifies exact revisions

@@ -118,6 +118,11 @@ https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lea
 Plectis Atlas has a page for the same family:
 https://wcook04.github.io/plectis-atlas/families/281.html
 
+Will Cook made this website as part of Plectis, his projects on researching
+mathematics with AI and on tools that help people follow what AI produces:
+https://wcook04.github.io/plectis/
+His videos are on YouTube: https://www.youtube.com/@willcook2004
+
 Source, papers, tools and contribution instructions:
 https://github.com/wcook04/lean-exposition
 
