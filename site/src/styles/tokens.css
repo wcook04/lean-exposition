@@ -1,7 +1,10 @@
 /* Design tokens. DESIGN.md explains each group and the rules for using it.
    Colours were chosen in OKLCH and checked for WCAG contrast against the
    ground in both schemes. Night is the day theme with the lights off: the
-   same hues, lightness inverted. */
+   same hues, lightness inverted. The neutrals (ground, surfaces, rules and
+   inks) are the family palette that Will Cook's websites share
+   (https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md):
+   warm paper and violet ink by day, violet ground and bone ink at night. */
 
 :root {
   color-scheme: light;
@@ -72,19 +75,25 @@
   --reader-inspector: 336px;
   --reader-gap: 32px;
 
-  /* Day: cool paper and ink. */
-  --ground: #f2f5f7;
-  --surface: #fafbfd;
-  --raised: #ffffff;
-  --sunk: #e9ecf0;
-  --rule: #d5dade;
-  --rule-strong: #b9bec4;
-  --ink: #181f28;
-  --ink-2: #474e57;
-  --ink-3: #666c74;
+  /* Day: the family's warm paper and violet ink. */
+  --ground: #f8f0e2;
+  --surface: #fffdf7;
+  --raised: #fffefa;
+  --sunk: #f1e7d4;
+  --rule: #eaddc9;
+  --rule-strong: #d9c7ae;
+  --ink: #191520;
+  --ink-2: #544d5d;
+  --ink-3: #6d6473;
+  /* The hairline that alone marks a quiet control (a ghost button, a field): 3:1 or
+     more against every surface it sits on (WCAG 1.4.11). Decorative rules stay
+     --rule and --rule-strong. Adapted from the Plectis site's --rule-control. */
+  --rule-control: #938067;
 
-  /* Amber is the reader's lamp: what you are attending to. Nothing else uses it. */
-  --lit: #ac5b00;
+  /* Amber is the reader's lamp: what you are attending to. Nothing else uses it.
+     Deepened from #ac5b00 on the warm paper so amber words keep 4.5:1 on the
+     ground and on sunk wells. */
+  --lit: #a25200;
   --lit-wash: #fae4c7;
   --lit-line: #c9761a;
   --lit-glow: rgb(201 118 26 / 0);
@@ -112,10 +121,10 @@
 
   /* Cards on the map. */
   --card: var(--raised);
-  --card-border: #c9ced4;
-  --card-shadow: 0 1px 0 rgb(24 31 40 / 0.03), 0 2px 6px -2px rgb(24 31 40 / 0.08);
-  --card-shadow-lift: 0 1px 0 rgb(24 31 40 / 0.04), 0 10px 24px -10px rgb(24 31 40 / 0.22);
-  --grid-dot: rgb(24 31 40 / 0.085);
+  --card-border: #d4c7b4;
+  --card-shadow: 0 1px 0 rgb(25 21 32 / 0.03), 0 2px 6px -2px rgb(25 21 32 / 0.08);
+  --card-shadow-lift: 0 1px 0 rgb(25 21 32 / 0.04), 0 10px 24px -10px rgb(25 21 32 / 0.22);
+  --grid-dot: rgb(25 21 32 / 0.085);
 
   /* Regions of the argument: marks, then territories. */
   --region-support: #396791;
@@ -134,22 +143,43 @@
   --src-0: #8a929b;
   --mark-mix: 64%;
 
-  --shadow-sheet: 0 1px 0 rgb(24 31 40 / 0.04), 0 8px 28px -12px rgb(24 31 40 / 0.22);
-  --shadow-panel: -1px 0 0 var(--rule), -18px 0 40px -28px rgb(24 31 40 / 0.28);
-  --scrim: rgb(242 245 247 / 0.86);
+  --shadow-sheet: 0 1px 0 rgb(25 21 32 / 0.04), 0 8px 28px -12px rgb(25 21 32 / 0.22);
+  --shadow-panel: -1px 0 0 var(--rule), -18px 0 40px -28px rgb(25 21 32 / 0.28);
+  --scrim: rgb(248 240 226 / 0.86);
+
+  /* The family's shared parts (styles/family.css) read these names. Links on this
+     site are ink, so a family link under the pointer turns ink; keyboard focus is
+     amber here as everywhere on the site. A held film frame takes the quiet ink. */
+  --fam-page: var(--ground);
+  --fam-surface: var(--surface);
+  --fam-ink: var(--ink);
+  --fam-ink-soft: var(--ink-2);
+  --fam-muted: var(--ink-2);
+  --fam-faint: var(--ink-3);
+  --fam-rule: var(--rule);
+  --fam-rule-strong: var(--rule-strong);
+  --fam-accent: var(--ink);
+  --fam-film-ink: var(--ink-2);
+  --fam-serif: var(--font-serif);
+  --fam-sans: var(--font-sans);
+}
+
+:focus-visible {
+  --fam-accent: var(--lit);
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --ground: #0e1319;
-  --surface: #161c24;
-  --raised: #1b222b;
-  --sunk: #090e13;
-  --rule: #282e36;
-  --rule-strong: #3c434c;
-  --ink: #e2e7eb;
-  --ink-2: #b2b8bf;
-  --ink-3: #868d95;
+  --ground: #1c1526;
+  --surface: #272132;
+  --raised: #2f2839;
+  --sunk: #150f1e;
+  --rule: #363040;
+  --rule-strong: #484251;
+  --ink: #f2e6d4;
+  --ink-2: #bcb8c6;
+  --ink-3: #a6a2b1;
+  --rule-control: #787383;
   --lit: #fab250;
   --lit-wash: #3d290e;
   --lit-line: #f3a43a;
@@ -162,10 +192,10 @@
   --rel-formalizes: #3f8698;
   --rel-formalizes-lit: #55c7df;
   --edge-strong: #a7b0ba;
-  --card-border: #343c46;
+  --card-border: #413b4b;
   --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
   --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
-  --grid-dot: rgb(226 231 235 / 0.06);
+  --grid-dot: rgb(242 230 212 / 0.06);
   --region-support: #80b0de;
   --region-scalar: #79bba4;
   --region-circuit: #ca98c5;
@@ -180,21 +210,22 @@
   --mark-mix: 60%;
   --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.3), 0 12px 32px -14px rgb(0 0 0 / 0.7);
   --shadow-panel: -1px 0 0 var(--rule), -24px 0 48px -30px rgb(0 0 0 / 0.8);
-  --scrim: rgb(14 19 25 / 0.86);
+  --scrim: rgb(28 21 38 / 0.86);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --ground: #0e1319;
-    --surface: #161c24;
-    --raised: #1b222b;
-    --sunk: #090e13;
-    --rule: #282e36;
-    --rule-strong: #3c434c;
-    --ink: #e2e7eb;
-    --ink-2: #b2b8bf;
-    --ink-3: #868d95;
+    --ground: #1c1526;
+    --surface: #272132;
+    --raised: #2f2839;
+    --sunk: #150f1e;
+    --rule: #363040;
+    --rule-strong: #484251;
+    --ink: #f2e6d4;
+    --ink-2: #bcb8c6;
+    --ink-3: #a6a2b1;
+    --rule-control: #787383;
     --lit: #fab250;
     --lit-wash: #3d290e;
     --lit-line: #f3a43a;
@@ -207,10 +238,10 @@
     --rel-formalizes: #3f8698;
     --rel-formalizes-lit: #55c7df;
     --edge-strong: #a7b0ba;
-    --card-border: #343c46;
+    --card-border: #413b4b;
     --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
     --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
-    --grid-dot: rgb(226 231 235 / 0.06);
+    --grid-dot: rgb(242 230 212 / 0.06);
     --region-support: #80b0de;
     --region-scalar: #79bba4;
     --region-circuit: #ca98c5;
@@ -225,6 +256,6 @@
     --mark-mix: 60%;
     --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.3), 0 12px 32px -14px rgb(0 0 0 / 0.7);
     --shadow-panel: -1px 0 0 var(--rule), -24px 0 48px -30px rgb(0 0 0 / 0.8);
-    --scrim: rgb(14 19 25 / 0.86);
+    --scrim: rgb(28 21 38 / 0.86);
   }
 }

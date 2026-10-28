@@ -23,6 +23,10 @@ want to explore it:
   recorded run: passed, failed, unavailable or not run.
 - **The architectural companion.** The About page includes the paper on why
   several accounts share one record, with a link to its standalone PDF.
+- **The papers.** The front page's shelf (the header's "Papers") shows each paper's
+  first page, who it is for, and links to read it here or open its PDF.
+- **The films.** Two films are in preparation: one on how to use this site, near the
+  top of the front page, and one on the mathematics, at the end of its layers.
 
 Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
 rules (type, colour, the map's drawing conventions, motion and wording) are in
@@ -69,6 +73,11 @@ aliases preserve their relative links to one another, including links opened
 from the existing `pdf/` downloads.
 The companion's Markdown is embedded from `papers/architecture/paper.md` at build
 time rather than included as a fourth account in the captured bundle.
+The papers shelf shows each PDF's first page from `public/paper-pages/`, rendered with
+`python site/scripts/render-paper-pages.py` (Poppler's `pdftocairo` and `cwebp`).
+Its `manifest.json` records each PDF's SHA-256: the build shows a picture only while it
+matches its PDF, and `npm test` fails until a re-rendered PDF's picture is rendered
+again.
 The build also publishes the explicitly listed Support build and extraction
 observation at `verification/full-support-build-extraction-observation-20261026.json`.
 The Checks page links to it. `publicObservations()` in `vite.config.ts` owns this
@@ -79,6 +88,20 @@ The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
 to `wcook04/lean-exposition-site`. That repository serves its `main` branch with
 GitHub Pages. `PAGES_DEPLOY_KEY` is a repository secret containing a write-enabled
 deploy key scoped to that public output repository. Only the built website is copied into the deployment repository.
+
+## The family of websites
+
+This site is one of [Will Cook's websites](https://wcook04.github.io/), which share a
+header ladder ("Will Cook / Lean Exposition"), film slots and a footer list of the
+other sites, as the [family contract](https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md)
+describes. `src/app/family.json` is an unchanged copy of that repository's `sites.json`
+and `src/styles/family.css` of its `assets/family/family.css`; `src/styles/tokens.css`
+maps the stylesheet's `--fam-*` names onto this site's tokens. A film without a
+YouTube address is held "In preparation". When one is published, copy the updated
+`sites.json` to `src/app/family.json` and the film's two stills
+(`assets/films/<id>-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
+slot shows the still, play chip and running time and opens YouTube. The tests check
+that every released film this site shows has both stills.
 
 ## Run it locally
 
@@ -156,7 +179,7 @@ the promised explanation.
 | Folder | What it does |
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
-| `src/home/` | The front page at "/": what the site holds, the main result's statement, the three accounts with their strips, the argument drawn by the map's engine, and the recorded checks |
+| `src/home/` | The front page at "/": what the site holds, the main result's statement, the shelf of papers (`PaperShelf.tsx`), the three accounts with their strips, the argument drawn by the map's engine, and the recorded checks |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
 | `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |
@@ -164,7 +187,8 @@ the promised explanation.
 | `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
 | `src/figures/` | Redrawn paper figures: the mathematical plots and the companion's shared claim, joint inputs and reading journey; the missing-area plot has an optional Explore mode |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
-| `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md) |
+| `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md). `family.css` is the family's shared stylesheet, copied unchanged |
+| `src/app/` | The frame: routes, the top bar with the family's ladder, the edition's data, the film slot and the sister sites (`FilmSlot.tsx`, `SisterSites.tsx`, from `family.json`) |
 
 ## Conventions
 

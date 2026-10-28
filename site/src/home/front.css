@@ -15,9 +15,13 @@ html[data-view="home"] {
 
 /* ---- Hero: the title, one sentence, two actions; the statement beside them. ---- */
 
+/* The right column holds the plate and the site film. At 6:5 it stays shorter than the
+   words beside it from about 1240px up, and below that the film takes its own row (see
+   the rule before "Narrower windows"), so the plate's statement arriving never moves
+   the page below it. */
 .front__hero {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   align-items: center;
   gap: 56px;
   padding: 56px 0 64px;
@@ -77,7 +81,7 @@ html[data-view="home"] {
 }
 
 .front__secondary {
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule-control);
   color: var(--ink);
 }
 
@@ -93,6 +97,32 @@ html[data-view="home"] {
   font-size: var(--fs-base);
   line-height: 1.5;
   color: var(--ink-2);
+}
+
+/* The theorem's plate, and under it the film on how to use this site
+   (styles/family.css): a small frame beside its title, so the hero keeps its height
+   and the theorem, the actions and the film share the first screen. */
+.front__aside {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+.front__film {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  max-width: 36rem;
+}
+
+.front__film .film-slot__caption {
+  margin-top: 0;
+}
+
+.front__film .film-slot__text {
+  font-size: var(--fs-ui);
+  line-height: 1.5;
 }
 
 /* ---- The mathematics in plain words: prose beside one of the exposition's figures. ---- */
@@ -206,6 +236,14 @@ html[data-view="home"] {
   line-height: 1.5;
 }
 
+/* Beside the words, the plate holds about its final height while its statement loads,
+   so the film under it does not move when the statement arrives. */
+@media (min-width: 68.8125em) {
+  .front__plate {
+    min-height: 13rem;
+  }
+}
+
 .front__plate .plate__source {
   margin-top: 14px;
 }
@@ -246,14 +284,16 @@ html[data-view="home"] {
   margin: 16px 0 0;
 }
 
-.front a:not(.front__primary):not(.front__secondary):not(.front__figure) {
+/* Links in the page's text. The family's parts (film slots, sister sites) and the
+   shelf's pictures keep their own link styles. */
+.front a:not(.front__primary):not(.front__secondary):not(.front__figure):not(.film-slot a):not(.fam-sites a):not(.shelf__sheet) {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--rule-strong);
   text-underline-offset: 3px;
 }
 
-.front a:not(.front__primary):not(.front__secondary):not(.front__figure):hover {
+.front a:not(.front__primary):not(.front__secondary):not(.front__figure):not(.film-slot a):not(.fam-sites a):not(.shelf__sheet):hover {
   text-decoration-color: currentColor;
 }
 
@@ -436,15 +476,20 @@ html[data-view="home"] {
 }
 
 .front__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  display: grid;
+  gap: 24px;
   padding: 28px 0 40px;
   border-top: 1px solid var(--rule);
   font-size: var(--fs-sm);
 }
 
-.front .front__foot a {
+.front__footrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.front .front__footrow a {
   color: var(--ink-2);
 }
 
@@ -635,28 +680,33 @@ html[data-view="home"] {
   white-space: nowrap;
 }
 
-/* The video is not made yet: an empty dashed frame, its name the only words inside. */
-.funnel__layer--video {
+/* The last layer is the film on the mathematics (styles/family.css). Its frame is
+   the layer's edge, so the layer draws no box of its own: the held frame beside its
+   title and description, then the film it will be like. */
+.funnel__layer--film {
   grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  padding: 22px;
-  background: transparent;
-  border: 1px dashed var(--rule-strong);
+  padding: 14px 0 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
 }
 
-.funnel__video {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  color: var(--ink-2);
+.funnel__film {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.funnel__film .film-slot__caption {
+  margin-top: 0;
 }
 
 .funnel__videonote {
   max-width: 40em;
-  margin: 6px 0 0;
+  margin: 2px 0 0;
   font-size: var(--fs-sm);
   line-height: 1.5;
-  text-align: center;
   color: var(--ink-2);
 }
 
@@ -676,6 +726,209 @@ html[data-view="home"] {
   color: var(--ink-2);
 }
 
+/* ---- The papers: one shelf, each paper's first page standing on one hairline, its
+   name, who it is for and its two actions beneath. Adapted from the Plectis site's
+   papers band (sites/microcosm/assets/style.css, .home-papers): the picture is only
+   the page's ink, laid on paper here, so it serves both schemes; at night the page
+   stays paper, the day's cream dimmed by the night ground. ---- */
+
+.papers {
+  --sheet-w: clamp(128px, 11vw, 168px);
+  --sheet-box: calc(var(--sheet-w) * 456 / 352);
+  --sheet-paper: var(--surface);
+  --sheet-edge: var(--rule-strong);
+  --sheet-shadow: 0 1px 1px rgb(25 21 32 / 0.05), 0 14px 24px -16px rgb(25 21 32 / 0.42);
+  --sheet-ink: 0.92;
+}
+
+.shelf {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: var(--sheet-box) auto auto auto;
+  column-gap: clamp(28px, 3.4vw, 56px);
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The shelf: one hairline under every page. */
+.shelf::before {
+  content: "";
+  position: absolute;
+  top: var(--sheet-box);
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--rule-strong);
+  pointer-events: none;
+}
+
+.shelf__paper {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  min-width: 0;
+}
+
+.shelf__stand {
+  display: flex;
+  align-items: flex-end;
+}
+
+.shelf__sheet {
+  display: block;
+  width: var(--sheet-w);
+  aspect-ratio: 352 / 456;
+  overflow: hidden;
+  background: var(--sheet-paper);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--sheet-edge), var(--sheet-shadow);
+  transition: transform var(--t-reveal) var(--ease-out);
+}
+
+.shelf__sheet img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: var(--sheet-ink);
+}
+
+/* The companion is about the other three, so its page stands smaller beside them. */
+.shelf__paper--companion .shelf__sheet {
+  width: calc(var(--sheet-w) * 0.78);
+}
+
+.shelf__name {
+  margin: 20px 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.3125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.shelf__who {
+  margin: 6px 0 0;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.shelf__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px 18px;
+  margin: 12px 0 0;
+  font-size: var(--fs-ui);
+  font-weight: 600;
+}
+
+/* An action under the pointer or the keyboard lifts its own page. */
+.shelf__paper:has(.shelf__actions a:focus-visible) .shelf__sheet {
+  transform: translateY(-4px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shelf__paper:has(.shelf__actions a:hover, .shelf__sheet:hover) .shelf__sheet {
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf__sheet {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .papers {
+    --sheet-paper: color-mix(in oklab, #f8f0e2 92%, #000);
+    --sheet-edge: rgb(0 0 0 / 0.4);
+    --sheet-shadow: 0 18px 30px -18px rgb(0 0 0 / 0.8);
+  }
+}
+
+:root[data-theme="dark"] .papers {
+  --sheet-paper: color-mix(in oklab, #f8f0e2 92%, #000);
+  --sheet-edge: rgb(0 0 0 / 0.4);
+  --sheet-shadow: 0 18px 30px -18px rgb(0 0 0 / 0.8);
+}
+
+/* Two pairs a row, each pair on its own stretch of shelf. */
+@media (max-width: 68.75em) {
+  .shelf {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    row-gap: 40px;
+  }
+  .shelf::before {
+    content: none;
+  }
+  .shelf__paper {
+    grid-row: auto;
+    grid-template-rows: var(--sheet-box) auto auto auto;
+  }
+  .shelf__stand {
+    border-bottom: 1px solid var(--rule-strong);
+  }
+}
+
+/* A phone: one paper a row, its page beside its words. */
+@media (max-width: 37.5em) {
+  .papers {
+    --sheet-w: 96px;
+  }
+  .shelf {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+  .shelf__paper {
+    grid-template-columns: var(--sheet-w) minmax(0, 1fr);
+    grid-template-rows: none;
+    column-gap: 16px;
+    align-items: start;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .shelf__stand {
+    grid-row: 1 / span 3;
+    align-items: flex-start;
+    border-bottom: 0;
+  }
+  .shelf__paper--companion .shelf__stand {
+    justify-content: center;
+  }
+  .shelf__name {
+    margin-top: 0;
+  }
+}
+
+/* Between the stacked hero and a wide window the plate and the film together would
+   stand taller than the words beside them, so the plate's statement arriving would
+   move the page: here the film takes its own row under both columns. */
+@media (min-width: 68.8125em) and (max-width: 77.5em) {
+  .front__hero {
+    grid-template-areas:
+      "intro plate"
+      "film film";
+    row-gap: 32px;
+  }
+  .front__intro {
+    grid-area: intro;
+  }
+  .front__aside {
+    display: contents;
+  }
+  .front__plate {
+    grid-area: plate;
+  }
+  .front__film {
+    grid-area: film;
+  }
+}
+
 /* ---- Narrower windows: stack the hero and each row in reading order. ---- */
 
 @media (max-width: 68.75em) {
@@ -686,6 +939,9 @@ html[data-view="home"] {
   }
   .front__plate {
     max-width: 44rem;
+  }
+  .front__aside {
+    gap: 32px;
   }
   .mapband {
     grid-template-columns: minmax(0, 1fr);
@@ -724,8 +980,29 @@ html[data-view="home"] {
     grid-template-columns: minmax(0, 1fr);
     padding: 14px 16px;
   }
+  .funnel__layer--film {
+    padding: 14px 0 0;
+  }
+  .funnel__film {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .funnel__film .film-slot__caption {
+    margin-top: 0.8rem;
+  }
   .funnel__links {
     justify-content: flex-start;
+  }
+  /* A phone: the site film's frame over its words, at a width that holds its name. */
+  .front__film {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .front__film .film-slot__frame {
+    max-width: 280px;
+  }
+  .front__film .film-slot__caption {
+    margin-top: 0.8rem;
   }
 }
 

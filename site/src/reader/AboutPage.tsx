@@ -12,7 +12,10 @@ import { routeHref } from "../app/router";
 import { useEdition } from "../app/data";
 import { citationText, copyText, editionLink } from "../app/cite";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
-import { AUTHOR, LINKS, VIDEOS } from "../app/author";
+import { AUTHOR, LINKS } from "../app/author";
+import { familyFilm, minutesOf, type FamilyFilm } from "../app/family";
+import { FilmSlot } from "../app/FilmSlot";
+import { SisterSites } from "../app/SisterSites";
 import { Out } from "../app/Out";
 import { prepareDocument } from "./engine";
 import { prefixPaths } from "./links";
@@ -41,6 +44,26 @@ function words(value: string): string {
 }
 
 const COMPANION = "companion";
+
+/** His released films closest to this result, each with what it shows, from the family registry. */
+const RELATED_FILMS: { film: FamilyFilm; shows: string }[] = [
+  { film: familyFilm("mathematics"), shows: "A walkthrough of his work on one Erdős problem, from the question to the formal proof." },
+  { film: familyFilm("mathematics-overview"), shows: "A tour of the maths map, including the long record and the papers for problem #257." },
+  { film: familyFilm("atlas"), shows: "One result followed through Plectis Atlas, its claims compared with the checked statement." },
+];
+const INTRODUCTION = familyFilm("introduction");
+
+/** A released film as a line of the list: its title, opening YouTube, and its length. */
+function FilmLink({ film }: { film: FamilyFilm }) {
+  const minutes = minutesOf(film);
+  if (!film.youtube) return <span>{film.title}</span>;
+  return (
+    <>
+      <Out href={film.youtube}>{film.title}</Out>
+      {minutes ? <span className="about__len">{minutes} min</span> : null}
+    </>
+  );
+}
 
 export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> }) {
   const { snapshot, overview, graph, map } = useEdition();
@@ -266,8 +289,8 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           >
             {companion ? "Close the architectural companion" : "Read the architectural companion"}
           </button>
-          <a className="control" href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`}>
-            Companion PDF <span className="num">({PAPER_PDFS.architecture.pages} pages)</span>
+          <a className="control" href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`} target="_blank" rel="noopener">
+            Open the companion PDF, <span className="num">{PAPER_PDFS.architecture.pages} pages</span>
           </a>
         </div>
         <p className="about__open-note">
@@ -300,25 +323,20 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           to the map.
         </p>
         <p>
-          A walkthrough video of this result is planned but not yet recorded. It will be like his walkthrough of Erdős
-          problem #257, the first video below.
+          Two films about this result are in preparation: one on how to use this site, and one on the mathematics. The
+          second will be like his walkthrough of Erdős problem #257, the first video in the list below.
         </p>
+        <div className="about__films">
+          <FilmSlot film={familyFilm("interfaces")} size="small" sizes="(min-width: 700px) 320px, 100vw" />
+          <FilmSlot film={familyFilm("sk-no-gap")} size="small" sizes="(min-width: 700px) 320px, 100vw" />
+        </div>
         <ul className="about__links">
-          <li>
-            <Out href={VIDEOS.erdos257.url}>{VIDEOS.erdos257.title}</Out>
-            <span className="about__len">{VIDEOS.erdos257.minutes} min</span>
-            <span>A walkthrough of his work on one Erdős problem, from the question to the formal proof.</span>
-          </li>
-          <li>
-            <Out href={VIDEOS.mathsMap.url}>{VIDEOS.mathsMap.title}</Out>
-            <span className="about__len">{VIDEOS.mathsMap.minutes} min</span>
-            <span>A tour of the maths map, including the long record and the papers for problem #257.</span>
-          </li>
-          <li>
-            <Out href={VIDEOS.atlas.url}>{VIDEOS.atlas.title}</Out>
-            <span className="about__len">{VIDEOS.atlas.minutes} min</span>
-            <span>One result followed through Plectis Atlas, its claims compared with the checked statement.</span>
-          </li>
+          {RELATED_FILMS.map(({ film, shows }) => (
+            <li key={film.id}>
+              <FilmLink film={film} />
+              <span>{shows}</span>
+            </li>
+          ))}
         </ul>
         <p>
           All his videos are on <Out href={LINKS.youtube}>his YouTube channel</Out>, and his public repositories are{" "}
@@ -326,9 +344,9 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           <Out href={LINKS.contact}>contact page on Plectis</Out>; he posts updates on <Out href={LINKS.x}>X</Out>.
         </p>
         <p className="about__start">
-          New to his work? Start here: <Out href={VIDEOS.introduction.url}>{VIDEOS.introduction.title}</Out>
-          <span className="about__len">{VIDEOS.introduction.minutes} min</span>
+          New to his work? Start here: <FilmLink film={INTRODUCTION} />
         </p>
+        <SisterSites className="about__sisters" />
       </section>
     </article>
   );

@@ -450,6 +450,20 @@ html:has(.reader) {
   text-wrap: pretty;
 }
 
+.outline__pdf {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+/* The account's PDF: a plain link in ink, named with its page count. */
+.pdf-link {
+  display: inline-block;
+  max-width: 100%;
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .outline__list {
   list-style: none;
   margin: 0;
@@ -1243,7 +1257,7 @@ html:has(.reader) {
   align-items: center;
   min-height: 32px;
   padding: 0 var(--space-3);
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule-control);
   border-radius: var(--radius-m);
   background: var(--surface);
   box-shadow: var(--shadow-sheet);

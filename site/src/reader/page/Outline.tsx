@@ -21,6 +21,17 @@ export interface AccountHead {
   job: string;
   reader: string;
   status: string;
+  /** The paper's PDF, opened in a new tab. */
+  pdf?: { href: string; pages: number };
+}
+
+/** "Open PDF, 21 pages": the account's PDF, beside the words that say who it is for. */
+export function PdfLink({ pdf }: { pdf: NonNullable<AccountHead["pdf"]> }) {
+  return (
+    <a className="pdf-link" href={pdf.href} target="_blank" rel="noopener">
+      Open PDF, {pdf.pages} {pdf.pages === 1 ? "page" : "pages"}
+    </a>
+  );
 }
 
 export function OutlineColumn(props: Props & { head: AccountHead }) {
@@ -45,6 +56,11 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
           {head.reader}
           {head.status && <> {head.status}</>}
         </p>
+        {head.pdf && (
+          <p className="outline__pdf">
+            <PdfLink pdf={head.pdf} />
+          </p>
+        )}
       </div>
       <Sections {...props} listRef={listRef} />
     </nav>
