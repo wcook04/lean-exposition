@@ -21,7 +21,8 @@ export interface FamilySite {
   purpose: string;
   status: string | null;
   films: string[];
-  repos: FamilyLink[];
+  /** Ids into the registry's top-level list of repositories. */
+  repos: string[];
 }
 
 export interface FamilyFilm {
