@@ -53,6 +53,12 @@ them to TeX with patterns; show authored mathematics from the papers instead.
 
 ## Colour
 
+The neutrals (ground, surfaces, rules and inks) follow the palette Will Cook's websites
+share, warm paper and violet ink by day and a violet ground with bone ink at night
+([the family contract](https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md));
+the colours below that carry meaning keep their own hues on it, each checked again on
+the new grounds.
+
 - **Ground, surface, raised.** The page, reading surfaces, and cards.
 - **Ink 1–3.** Text and marks, in falling emphasis. `--ink-3` still passes 4.5:1.
 - **Source slots `--src-1…3`.** A validated colour-blind-safe set; slot 0 is
@@ -63,6 +69,9 @@ them to TeX with patterns; show authored mathematics from the papers instead.
 - **`--fail`.** A recorded failed outcome. Never a mathematical verdict.
 - **Edges `--edge-rest`, `--edge-strong`, `--edge-lit`.** Rest lines keep at least
   3:1 against the ground in both schemes.
+- **`--rule-control`.** The hairline of a control that has no other edge (a ghost
+  button, a field, a picker): 3:1 or more against every surface it sits on. Rules that
+  only divide stay `--rule` and `--rule-strong`.
 
 ## The map
 
@@ -221,27 +230,45 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   increases across every interval in [0, 1) with a positive derivative); one quieter
   line saying what the site holds; the one filled button ("Read the exposition") and
   "Open the argument map"; beside them the first sentence of Theorem 1 as the short
-  paper typesets it, labelled as its first part.
-- **Then, in order:** what OpenAI's release asked and proved, as three plain questions,
-  each answered with who proved it, where each account explains it, and its argument on
-  the map; the technical explanation behind one disclosure (the problem beside the
-  exposition's gap figure, how the proof rules out a gap beside its area figure, and
-  what follows); the layers from OpenAI's release (family 281, its manuscripts and Lean
-  source) through the argument map, the long record, the short paper and the exposition
-  to a walkthrough video not yet recorded (planned, like Will Cook's walkthrough of Erdős
-  problem #257), drawn as a stepped funnel whose narrowing shows their order and not
-  their length, each layer linked to read here or as a PDF with its real page count,
-  followed by Plectis Atlas's family page, the source repository and who made the site;
-  the argument map's drawing and key; and what has been checked, stated literally. The
-  footer names Will Cook and Plectis.
+  paper typesets it, labelled as its first part, and under it the film on how to use
+  this site, small and beside its title, because its subject is the site rather than
+  the result. Where the plate and the film together would stand taller than the words
+  beside them (about 1100 to 1240px), the film takes its own row under both, so the
+  statement arriving never moves the page.
+- **Then, in order:** the papers on one shelf (the exposition, the short paper, the
+  long record and, smaller, the architectural companion), each standing as its real
+  first page with one line on who it is for, "Read it here" and "Open PDF, N pages"
+  (the header's "Papers" opens this shelf); what OpenAI's release asked and proved, as
+  three plain questions, each answered with who proved it, where each account explains
+  it, and its argument on the map; the technical explanation behind one disclosure (the
+  problem beside the exposition's gap figure, how the proof rules out a gap beside its
+  area figure, and what follows); the layers from OpenAI's release (family 281, its
+  manuscripts and Lean source) through the argument map, the long record, the short
+  paper and the exposition to the film on the mathematics (in preparation, planned like
+  Will Cook's walkthrough of Erdős problem #257), drawn as a stepped funnel whose
+  narrowing shows their order and not their length, each layer linked to read here or
+  as a PDF with its real page count, followed by Plectis Atlas's family page, the source
+  repository and who made the site; the argument map's drawing and key; and what has
+  been checked, stated literally. The footer names Will Cook and Plectis, then lists his
+  other websites.
 - **Who made the site.** The About page ends with it: Will Cook, Plectis and the two
-  projects closest to this one (the maths map and Plectis Atlas), the videos most
-  related to this result, his channel, repositories and contact page, and last the
-  introduction video. Names, titles and addresses come from his own pages
-  (`src/app/author.ts`); a video that does not exist yet is called planned, never linked.
+  projects closest to this one (the maths map and Plectis Atlas), the two films about
+  this result in preparation, the videos most related to this result, his channel,
+  repositories and contact page, the introduction video, and his other websites. Names
+  and addresses come from his own pages (`src/app/author.ts`); websites and films come
+  from the family registry (`src/app/family.json`), and a film without a YouTube address
+  is shown in preparation, never linked.
+- **The family's parts.** The header's ladder ("Will Cook / Lean Exposition"), the film
+  slots and the footer's sister sites are the markup of the family contract, styled by
+  `src/styles/family.css`, an unchanged copy, through the `--fam-*` names in
+  `tokens.css`. Focus on them is amber, as everywhere here; under the pointer their
+  links turn ink, like the site's own.
 - The page reads whole with the disclosure closed. The PDFs are served from the
   repository's own renders under `pdf/`, with page counts read from the files at build
-  time (`vite.config.ts`).
+  time (`vite.config.ts`), and open in a new tab. The shelf's pictures are the PDFs'
+  first pages, drawn as ink on a transparent ground and laid on paper in both schemes
+  (`scripts/render-paper-pages.py`); a picture that no longer matches its PDF is not
+  shown.
 - A fact true of all three accounts is said once, not on every row. Every number
   taken from the edition is computed.
 

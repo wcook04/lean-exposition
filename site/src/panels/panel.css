@@ -451,7 +451,7 @@
   width: 100%;
   min-height: 34px;
   padding: 0 10px;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule-control);
   border-radius: var(--radius-m);
   background: var(--raised);
   color: var(--ink);
@@ -809,7 +809,7 @@
   margin-left: 4px;
   padding: 0 6px;
   min-height: 22px;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule-control);
   border-radius: var(--radius-s);
   background: none;
   font-size: var(--fs-xs);
@@ -1157,7 +1157,7 @@
   .panel__action {
     min-height: var(--target);
     padding: 0 12px;
-    border: 1px solid var(--rule-strong);
+    border: 1px solid var(--rule-control);
     border-radius: var(--radius-m);
     background: transparent;
     font-size: var(--fs-ui);

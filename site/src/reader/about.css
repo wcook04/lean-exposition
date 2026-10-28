@@ -239,7 +239,7 @@
   flex-basis: 100%;
   width: 100%;
   padding: var(--space-2);
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule-control);
   border-radius: var(--radius-s);
   background: var(--surface);
   color: var(--ink);
@@ -298,8 +298,8 @@
   margin-bottom: var(--space-4);
 }
 
-.about__made p + p,
-.about__made ul + p {
+.about__made > p + p,
+.about__made > ul + p {
   margin-top: var(--space-3);
 }
 
@@ -344,4 +344,25 @@
 
 .about__start .about__len {
   margin-left: var(--space-2);
+}
+
+/* The two films about this result, held in preparation side by side (styles/family.css). */
+.about__films {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+/* His other websites, as every site of the family ends. */
+.about__sisters {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 640px) {
+  .about__films {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

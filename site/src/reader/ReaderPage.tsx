@@ -21,7 +21,8 @@ import { Inspector, type InspectorTarget } from "./page/Inspector";
 import { Chooser } from "./page/Chooser";
 import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
-import { OutlineColumn, Sections, SectionsPopover } from "./page/Outline";
+import { OutlineColumn, PdfLink, Sections, SectionsPopover } from "./page/Outline";
+import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { MapPane } from "./page/MapPane";
 import {
   chainOf,
@@ -715,7 +716,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const names = PAPER_NAMES[stage];
   const status = statusWords(structure.state, structure.review_state);
-  const head = { name: names.short, job: names.job, reader: names.reader, status };
+  const pdf = { href: `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`, pages: PAPER_PDFS[stage].pages };
+  const head = { name: names.short, job: names.job, reader: names.reader, status, pdf };
   const chain = chainOf(outline, currentHeading);
   const inspecting = !!inspect;
   // Beside the map the inspector slides in over the right of the pane instead of taking a column.
@@ -825,7 +827,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           <p className="account-line">
             {!phone && <>{names.job} </>}
             {names.reader}
-            {status && <> {status}</>}
+            {status && <> {status}</>} <PdfLink pdf={pdf} />
           </p>
         )}
         {notice && (

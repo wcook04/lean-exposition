@@ -1,12 +1,13 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { copyFileSync, createReadStream, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, createReadStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 
 // The three accounts and architectural companion, as the repository renders them.
 // Download links use page counts read from the same files at build time.
-const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = {
+export const PAPER_PDFS: Record<string, { file: string; name: string; alias?: string }> = {
   long: { file: "../papers/qaoa-sk/long/reasoning-record.pdf", name: "long-record.pdf", alias: "long/reasoning-record.pdf" },
   short: { file: "../papers/qaoa-sk/short/paper.pdf", name: "short-paper.pdf", alias: "short/paper.pdf" },
   expository: { file: "../papers/qaoa-sk/expository/main.pdf", name: "exposition.pdf", alias: "expository/main.pdf" },
@@ -58,7 +59,39 @@ export function pdfPageCount(buf: Buffer): number {
   return pages;
 }
 
-/** Serves the PDFs under /pdf/ in development, copies them into every build, and exports their page counts. */
+/** Each PDF's first page as the papers shelf shows it, from scripts/render-paper-pages.py. */
+export const PAPER_PAGES = "public/paper-pages";
+
+interface FirstPage {
+  src: string;
+  srcSet: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * The first-page picture of a PDF, while it still matches the PDF's bytes; null when
+ * the PDF has changed since the picture was rendered, so the shelf never shows a stale page.
+ */
+export function firstPage(stage: string, pdf: Buffer): FirstPage | null {
+  const manifestPath = resolve(PAPER_PAGES, "manifest.json");
+  if (!existsSync(manifestPath)) return null;
+  const row = JSON.parse(readFileSync(manifestPath, "utf8"))[stage] as
+    | { pdf_sha256: string; files: Record<string, string>; width: number; height: number }
+    | undefined;
+  const digest = `sha256:${createHash("sha256").update(pdf).digest("hex")}`;
+  if (!row || row.pdf_sha256 !== digest) return null;
+  const files = Object.entries(row.files).sort(([a], [b]) => Number(a) - Number(b));
+  if (!files.length || !files.every(([, file]) => existsSync(resolve(PAPER_PAGES, file)))) return null;
+  return {
+    src: `paper-pages/${files[files.length - 1][1]}`,
+    srcSet: files.map(([width, file]) => `paper-pages/${file} ${width}w`).join(", "),
+    width: row.width,
+    height: row.height,
+  };
+}
+
+/** Serves the PDFs under /pdf/ in development, copies them into every build, and exports their page counts and first pages. */
 function paperPdfs(): Plugin {
   const id = "virtual:paper-pdfs";
   return {
@@ -68,7 +101,9 @@ function paperPdfs(): Plugin {
       if (resolved !== `\0${id}`) return null;
       const entries = Object.entries(PAPER_PDFS).map(([stage, p]) => {
         const buf = readFileSync(resolve(p.file));
-        return [stage, { path: `pdf/${p.name}`, pages: pdfPageCount(buf) }];
+        const page = firstPage(stage, buf);
+        if (!page) this.warn(`${p.file} has no current first-page picture; run python site/scripts/render-paper-pages.py`);
+        return [stage, { path: `pdf/${p.name}`, pages: pdfPageCount(buf), ...(page ? { firstPage: page } : {}) }];
       });
       return `export const PAPER_PDFS = ${JSON.stringify(Object.fromEntries(entries))};`;
     },

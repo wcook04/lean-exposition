@@ -7,7 +7,7 @@ import type { Stage } from "../api/types";
 export type Trace = "rests" | "uses";
 
 export type Route =
-  | { view: "home" }
+  | { view: "home"; anchor?: string }
   | {
       view: "map";
       node?: string;
@@ -68,7 +68,7 @@ export function parseRoute(url: URL): Route {
   // carries any map parameter was made when the map lived there, so it still
   // opens the map.
   const MAP_PARAMS = ["g", "n", "t", "lens", "e"];
-  if (path === "/" && !MAP_PARAMS.some((name) => q.has(name))) return { view: "home" };
+  if (path === "/" && !MAP_PARAMS.some((name) => q.has(name))) return hash ? { view: "home", anchor: hash } : { view: "home" };
   if (path === "/" || path === "/map") {
     const trace = q.get("t");
     const lens = q.get("lens");
@@ -134,7 +134,7 @@ export function routeHref(route: Route): string {
   const q = new Query();
   switch (route.view) {
     case "home":
-      return `${BASE}/`;
+      return `${BASE}/${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     case "map": {
       if (route.goal) q.set("g", route.goal);
       if (route.node) q.set("n", route.node);
@@ -196,6 +196,19 @@ export function useRoute(): Route {
   );
 }
 
+/**
+ * Whether a link opens one of this site's own views. On GitHub Pages the sister
+ * sites share the origin, so a path outside the site's base belongs to another site;
+ * a path naming a file (a PDF, a JSON observation) is a file, and the API is the API.
+ * The browser opens all of those itself.
+ */
+export function isAppPath(url: URL, origin: string = window.location.origin): boolean {
+  if (url.origin !== origin) return false;
+  if (BASE && url.pathname !== BASE && !url.pathname.startsWith(`${BASE}/`)) return false;
+  if (url.pathname.startsWith(`${BASE}/api/`)) return false;
+  return !/\.[a-z0-9]+$/i.test(url.pathname);
+}
+
 /** Intercept same-origin anchor clicks so internal links route without reload. */
 export function useLinkInterception(): void {
   useEffect(() => {
@@ -206,8 +219,7 @@ export function useLinkInterception(): void {
       const href = anchor.getAttribute("href");
       if (!href || href.startsWith("#") || href.startsWith("mailto:")) return;
       const url = new URL(href, window.location.href);
-      if (url.origin !== window.location.origin) return;
-      if (url.pathname.startsWith(`${BASE}/api/`)) return;
+      if (!isAppPath(url)) return;
       event.preventDefault();
       navigate(url.pathname + url.search + url.hash);
     };

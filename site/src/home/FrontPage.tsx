@@ -1,18 +1,25 @@
 // The front page, for a reader arriving for the first time: the theorem in plain
-// words and as the short paper states it; what OpenAI's release asked and proved,
-// with where each result is explained here; the technical explanation behind one
-// disclosure (the problem, how the proof rules out a gap with the exposition's two
-// figures, and what follows); the layers from OpenAI's release down to the
-// exposition and the walkthrough video still to be recorded, each linked, and who made
-// the site; the argument drawn by the map's own engine; and what has been checked. The
+// words and as the short paper states it, with the film on how to use this site; the
+// papers on one shelf, each to read here or open as a PDF; what OpenAI's release asked
+// and proved, with where each result is explained here; the technical explanation
+// behind one disclosure (the problem, how the proof rules out a gap with the
+// exposition's two figures, and what follows); the layers from OpenAI's release down to
+// the exposition and the film on the mathematics, each linked, and who made the site;
+// the argument drawn by the map's own engine; and what has been checked. The
 // mathematical prose follows the papers' own statements and attributions (audited
-// against them, claim by claim). Every number taken from the edition or the PDFs is computed.
+// against them, claim by claim). Every number taken from the edition or the PDFs is
+// computed; the films come from the family registry (app/family.json).
 
+import { useEffect } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
-import { routeHref } from "../app/router";
-import { AUTHOR, LINKS, VIDEOS } from "../app/author";
+import { routeHref, useRoute } from "../app/router";
+import { AUTHOR, LINKS } from "../app/author";
+import { familyFilm, minutesOf } from "../app/family";
+import { FilmSlot } from "../app/FilmSlot";
+import { SisterSites } from "../app/SisterSites";
+import { PAPERS_ANCHOR } from "../app/TopBar";
 import { Out } from "../app/Out";
 import { EDITION_TITLE } from "../app/PageTitle";
 import { PAPER_NAMES } from "../app/papers";
@@ -22,6 +29,7 @@ import { countsInWords } from "../checks/summary";
 import { useReadings } from "../ribbons/useReadings";
 import { StripMarks } from "../ribbons/StripMarks";
 import { ArgumentFigure } from "./ArgumentFigure";
+import { PaperShelf } from "./PaperShelf";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
@@ -42,7 +50,18 @@ const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
 const pdfHref = (stage: Stage) => `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
 
+/** The films this site holds a place for, and the released film the mathematics one will be like. */
+const SITE_FILM = familyFilm("interfaces");
+const MATHS_FILM = familyFilm("sk-no-gap");
+const ERDOS_FILM = familyFilm("mathematics");
+
 export function FrontPage() {
+  const route = useRoute();
+  const anchor = route.view === "home" ? route.anchor : undefined;
+  // An address that names a band (the header's "Papers" is /#papers) opens the page there.
+  useEffect(() => {
+    if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ block: "start" }));
+  }, [anchor]);
   const edition = useEdition();
   const { graph } = edition;
   const goal = mainGoal(edition);
@@ -77,9 +96,24 @@ export function FrontPage() {
             </a>
           </p>
         </div>
-        <figure className="front__plate">
-          <TheoremBody goal={goal} lean={false} foot={false} first />
-        </figure>
+        <div className="front__aside">
+          <figure className="front__plate">
+            <TheoremBody goal={goal} lean={false} foot={false} first />
+          </figure>
+          {/* How to use this site, as a film: small and beside its title, because its subject is the site, not the result. */}
+          <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
+        </div>
+      </section>
+
+      {/* The papers, each to read here or to open as a PDF. */}
+      <section className="front__band papers" id={PAPERS_ANCHOR} aria-labelledby="front-papers">
+        <h2 id="front-papers" className="front__bandtitle">
+          The papers
+        </h2>
+        <p className="front__text">
+          Each paper can be read on this site or opened as a PDF. {shared ?? ""}
+        </p>
+        <PaperShelf />
       </section>
 
       {/* What was asked and proved, for any mathematical reader. Each answer and attribution
@@ -153,8 +187,8 @@ export function FrontPage() {
           From OpenAI’s release to the exposition
         </h2>
         <p className="front__text">
-          The layers run from OpenAI’s release and its Lean code down to the exposition, and then a video in preparation.
-          Each is linked here, to read on this site or as a PDF. {shared ?? ""}
+          The layers run from OpenAI’s release and its Lean code down to the exposition, and then a film in preparation.
+          Each is linked here, to read on this site or as a PDF.
         </p>
         <ol className="funnel">
           <li className="funnel__layer" style={{ ["--step" as string]: 0 }}>
@@ -209,19 +243,26 @@ export function FrontPage() {
                   <a href={routeHref({ view: "read", stage })}>
                     Read it here{paper ? `, ${plural(paper.sections, "section")}` : ""}
                   </a>
-                  <a href={pdfHref(stage)}>
-                    PDF, {plural(pdf.pages, "page")}
+                  <a href={pdfHref(stage)} target="_blank" rel="noopener">
+                    Open PDF, {plural(pdf.pages, "page")}
+                    <span className="sr-only">: {PAPER_NAMES[stage].short}</span>
                   </a>
                 </p>
               </li>
             );
           })}
-          <li className="funnel__layer funnel__layer--video" style={{ ["--step" as string]: 5 }}>
-            <p className="funnel__video">Walkthrough video, not yet recorded</p>
-            <p className="funnel__videonote">
-              {AUTHOR}, who made this site, plans a walkthrough of this result like his{" "}
-              <Out href={VIDEOS.erdos257.url}>{VIDEOS.erdos257.minutes}-minute walkthrough of Erdős problem #257</Out>.
-            </p>
+          {/* The last layer: the film on the mathematics, held in preparation until it is on YouTube. */}
+          <li className="funnel__layer funnel__layer--film" style={{ ["--step" as string]: 5 }}>
+            <FilmSlot film={MATHS_FILM} className="funnel__film" sizes="(min-width: 1100px) 360px, (min-width: 700px) 40vw, 100vw" />
+            {ERDOS_FILM.youtube ? (
+              <p className="funnel__videonote">
+                {AUTHOR}, who made this site, plans it like his{" "}
+                <Out href={ERDOS_FILM.youtube}>
+                  {minutesOf(ERDOS_FILM) ? `${minutesOf(ERDOS_FILM)}-minute ` : ""}walkthrough of Erdős problem #257
+                </Out>
+                .
+              </p>
+            ) : null}
           </li>
         </ol>
         <SourceSwatches origins={graph.origins} className="front__sources front__sources--inline" />
@@ -307,11 +348,14 @@ export function FrontPage() {
       </section>
 
       <footer className="front__foot">
-        <a href={routeHref({ view: "about" })}>About this site</a>
-        <a href={routeHref({ view: "about", anchor: "edition" })}>Edition and citation</a>
-        <span className="front__byline">
-          Made by <a href={routeHref({ view: "about", anchor: "made-by" })}>{AUTHOR}</a>, part of <Out href={LINKS.plectis}>Plectis</Out>
-        </span>
+        <div className="front__footrow">
+          <a href={routeHref({ view: "about" })}>About this site</a>
+          <a href={routeHref({ view: "about", anchor: "edition" })}>Edition and citation</a>
+          <span className="front__byline">
+            Made by <a href={routeHref({ view: "about", anchor: "made-by" })}>{AUTHOR}</a>, part of <Out href={LINKS.plectis}>Plectis</Out>
+          </span>
+        </div>
+        <SisterSites />
       </footer>
     </div>
   );

@@ -1,14 +1,16 @@
-// The site's frame: three jobs (Argument map, Read, Checks), About as a quieter
-// link, search and the scheme. Read is a menu button listing the three
-// accounts with the job each one does. On phones the same items sit behind
-// one menu button so the bar never clips.
+// The site's frame: the family's ladder ("Will Cook / Lean Exposition"), four jobs
+// (Argument map, Read, Papers, Checks), About as a quieter link, search and the
+// scheme. Read is a menu button listing the three accounts with the job each one
+// does; Papers goes to the front page's shelf of the four papers and their PDFs. On
+// phones the same items sit behind one menu button so the bar never clips.
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { Stage } from "../api/types";
-import { routeHref, type Route } from "./router";
+import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
+import { FAMILY } from "./family";
 
 interface Props {
   route: Route;
@@ -59,19 +61,29 @@ export function TopBar({ route, onSearch }: Props) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <a className="wordmark" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
-        <svg viewBox="0 0 32 32" aria-hidden="true" className="wordmark__mark">
-          <path d="M4 27 L4 5 M4 27 L28 27" fill="none" strokeWidth="2" strokeLinecap="round" />
-          <path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" strokeWidth="2.6" strokeLinecap="round" />
-          <circle cx="16" cy="14" r="3" />
-        </svg>
-        <span>Lean Exposition</span>
-      </a>
+      {/* The ladder out of this site (docs/family.md): Will Cook's home page lists every website and film. */}
+      <span className="fam-ladder">
+        <a className="fam-ladder__up" href={FAMILY.owner.home} rel="author">
+          {FAMILY.owner.name}
+        </a>
+        <span className="fam-ladder__sep" aria-hidden="true">
+          /
+        </span>
+        <a className="wordmark" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
+          <svg viewBox="0 0 32 32" aria-hidden="true" className="wordmark__mark">
+            <path d="M4 27 L4 5 M4 27 L28 27" fill="none" strokeWidth="2" strokeLinecap="round" />
+            <path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" strokeWidth="2.6" strokeLinecap="round" />
+            <circle cx="16" cy="14" r="3" />
+          </svg>
+          <span>Lean Exposition</span>
+        </a>
+      </span>
       <nav className="topnav" aria-label="Main">
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
           Argument map
         </a>
         <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} />
+        <PapersLink className="topnav__job" route={route} />
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
           Checks
         </a>
@@ -221,7 +233,7 @@ function ReadMenu({ current, stage, drafts }: { current: boolean; stage: Stage |
 
 // ------------------------------------------------------------------- phones
 
-/** Below 900px: a disclosure holding the same three jobs, the accounts and About. */
+/** Below 56.25em (900px at the default text size): a disclosure holding the same four jobs, the accounts and About. */
 function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; drafts: Partial<Record<Stage, string>>; scheme: Scheme }) {
   const id = useId();
   const [open, setOpen] = useState(false);
@@ -298,6 +310,9 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
               </ul>
             </li>
             <li>
+              <PapersLink className="phonemenu__job" route={route} onGo={() => setOpen(false)} />
+            </li>
+            <li>
               <a className="phonemenu__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
                 Checks
               </a>
@@ -316,6 +331,34 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
 }
 
 // ------------------------------------------------------------------- pieces
+
+/** The id of the front page's shelf of papers, which "Papers" opens. */
+export const PAPERS_ANCHOR = "papers";
+
+/**
+ * Papers: the front page's shelf, where each paper can be read here or opened as a
+ * PDF. On the front page itself the link scrolls to the shelf even when the address
+ * already names it.
+ */
+function PapersLink({ className, route, onGo }: { className: string; route: Route; onGo?: () => void }) {
+  return (
+    <a
+      className={className}
+      href={routeHref({ view: "home", anchor: PAPERS_ANCHOR })}
+      onClick={(event) => {
+        onGo?.();
+        if (route.view !== "home" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const shelf = document.getElementById(PAPERS_ANCHOR);
+        if (!shelf) return;
+        event.preventDefault();
+        if (route.anchor !== PAPERS_ANCHOR) navigate(routeHref({ view: "home", anchor: PAPERS_ANCHOR }));
+        shelf.scrollIntoView({ block: "start" });
+      }}
+    >
+      Papers
+    </a>
+  );
+}
 
 function SchemeToggle({ scheme, className, labelled }: { scheme: Scheme; className: string; labelled?: boolean }) {
   const label = scheme === "dark" ? "Switch to light colours" : "Switch to dark colours";

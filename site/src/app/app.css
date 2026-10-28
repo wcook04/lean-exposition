@@ -36,9 +36,16 @@ html[data-view="map"] .app {
   border-bottom: 1px solid var(--rule);
 }
 
+/* The family's ladder (styles/family.css) holds "Will Cook /" and the wordmark. The
+   wordmark takes its baseline from its name, so the small "Will Cook" sits on the
+   name's line, and its mark stays centred beside the name. */
+.topbar .fam-ladder {
+  flex: none;
+}
+
 .wordmark {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
   flex: none;
   color: var(--ink);
@@ -49,6 +56,7 @@ html[data-view="map"] .app {
 }
 
 .wordmark__mark {
+  align-self: center;
   width: 22px;
   height: 22px;
 }
@@ -240,14 +248,15 @@ html[data-view="map"] .app {
   display: none;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 67.5em) {
   .search-trigger .kbd {
     display: none;
   }
 }
 
-/* Phones and narrow tablets: brand, named Search, and one menu. */
-@media (max-width: 900px) {
+/* Phones and narrow tablets: brand, named Search, and one menu. The widths are in em,
+   so a reader whose browser sets larger text gets the menu at a wider window. */
+@media (max-width: 56.25em) {
   .topbar {
     gap: var(--space-3);
     padding: 0 var(--space-4);
@@ -334,9 +343,42 @@ html[data-view="map"] .app {
   }
 }
 
-@media (max-width: 380px) {
-  .wordmark span {
+/* Phones: the ladder keeps both rungs; Search keeps its icon and its name for
+   assistive technology, and the parts tighten so nothing leaves the bar. */
+@media (max-width: 30em) {
+  .topbar .fam-ladder {
+    gap: 0.35rem;
+  }
+  .topbar .fam-ladder__up {
+    font-size: 0.75rem;
+  }
+  .wordmark {
+    gap: 8px;
     font-size: 1.0625rem;
+  }
+  .wordmark__mark {
+    width: 20px;
+    height: 20px;
+  }
+  .search-trigger {
+    min-width: var(--target);
+    justify-content: center;
+    padding: 0;
+  }
+  .search-trigger__word {
+    display: none;
+  }
+}
+
+@media (max-width: 22.5em) {
+  .topbar {
+    gap: var(--space-2);
+  }
+  .wordmark {
+    font-size: 1rem;
+  }
+  .wordmark__mark {
+    display: none;
   }
 }
 

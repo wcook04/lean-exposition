@@ -1,0 +1,42 @@
+{
+  "architecture": {
+    "files": {
+      "176": "architecture-176.webp",
+      "352": "architecture-352.webp"
+    },
+    "height": 456,
+    "pdf": "papers/architecture/paper.pdf",
+    "pdf_sha256": "sha256:dac00afd7c6b9c3d14b90d743b13cf3018e789d57e9169e441d5ad2cd82c5c98",
+    "width": 352
+  },
+  "expository": {
+    "files": {
+      "176": "exposition-176.webp",
+      "352": "exposition-352.webp"
+    },
+    "height": 456,
+    "pdf": "papers/qaoa-sk/expository/main.pdf",
+    "pdf_sha256": "sha256:e7febe1f6024919226ef911a7bc9f0b42226de508fff0f654ad3c7fe93d6890d",
+    "width": 352
+  },
+  "long": {
+    "files": {
+      "176": "long-record-176.webp",
+      "352": "long-record-352.webp"
+    },
+    "height": 456,
+    "pdf": "papers/qaoa-sk/long/reasoning-record.pdf",
+    "pdf_sha256": "sha256:4678e0f16e26ed8bf0058823b426c142db889e6c4c06868001b4f10b91ee0beb",
+    "width": 352
+  },
+  "short": {
+    "files": {
+      "176": "short-paper-176.webp",
+      "352": "short-paper-352.webp"
+    },
+    "height": 456,
+    "pdf": "papers/qaoa-sk/short/paper.pdf",
+    "pdf_sha256": "sha256:6a4ede39bd2e7da612fb0f0a46f6f5ffc3180bea7613286689c2632bae2e058c",
+    "width": 352
+  }
+}
