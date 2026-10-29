@@ -25,8 +25,9 @@ want to explore it:
   several accounts share one record, with a link to its standalone PDF.
 - **The papers.** The front page's shelf (the header's "Papers") shows each paper's
   first page, who it is for, and links to read it here or open its PDF.
-- **The films.** Two films are in preparation: one on how to use this site, near the
-  top of the front page, and one on the mathematics, at the end of its layers.
+- **The videos.** [How to use this site](https://www.youtube.com/watch?v=sYMDcT7vyng),
+  near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=VCuznHMNSEs),
+  at the end of its layers. Both open on YouTube.
 
 Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
 rules (type, colour, the map's drawing conventions, motion and wording) are in

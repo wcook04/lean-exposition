@@ -87,11 +87,15 @@ The separate [architectural companion](papers/architecture/README.md) ·
 different reading routes, and how to follow a short claim to its assumptions,
 detailed argument and original or formal sources.
 
-### YouTube walkthrough — coming soon
+### YouTube walkthroughs
 
-A planned walkthrough will start with a concrete example, explain the question
-and the key proof idea, then show how to follow the same mathematics through the
-papers and Lean sources. The video link will appear here once it is available.
+[How different can two nearly best answers be?](https://www.youtube.com/watch?v=VCuznHMNSEs)
+starts with four magnets and explains the mathematical question.
+[Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
+shows how to follow the papers, assumptions, results and sources on the reading website.
+
+[Introduction V3](https://www.youtube.com/watch?v=MBmVMMogXTA) explains how the projects
+fit together. All websites, code and videos are on [my home page](https://wcook04.github.io/).
 
 ## Use the workflow for another result
 
