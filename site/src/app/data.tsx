@@ -282,9 +282,16 @@ export interface PaperData {
   bytes: Uint8Array;
 }
 
+/** The static reader omits unused correspondence edges; live APIs keep their full route. */
+export function loadPaperStructure(stage: Stage): Promise<PaperStructure> {
+  return get<PaperStructure>(`/papers/${stage}/structure`,
+    import.meta.env.VITE_STATIC_EDITION === "true" ? { representation: "reader" } : {},
+  ).then((response) => response.data);
+}
+
 export function loadPaper(stage: Stage): Promise<PaperData> {
-  return Promise.all([get<PaperStructure>(`/papers/${stage}/structure`), documentBytes(stage)]).then(
-    ([structure, bytes]) => ({ stage, structure: structure.data, bytes }),
+  return Promise.all([loadPaperStructure(stage), documentBytes(stage)]).then(
+    ([structure, bytes]) => ({ stage, structure, bytes }),
   );
 }
 

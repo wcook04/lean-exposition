@@ -74,6 +74,39 @@ describe("table-specific static loading", () => {
   });
 });
 
+describe("reader structure compatibility", () => {
+  it.each([false, true])("uses an optional reader projection while preserving the full route (present=%s)", async (compact) => {
+    vi.resetModules();
+    const { staticRequest: request } = await import("../src/api/static");
+    const route = "/papers/short/structure";
+    const full = { paper: { passages: [{ anchor: "passage", content_span: { start_byte: 1, end_byte: 7 } }] },
+      coverage: { unresolved: ["gap"] }, correspondence_links: ["edge"] };
+    const reader = { paper: full.paper, coverage: full.coverage };
+    const index = { version: 1, api_version: "1.2", snapshot: { manifest_sha256: "pin" }, documents: { short: "short.md" },
+      responses: { [route]: "full.json", "/papers/query?paper=short&representation=matches": "matches.json",
+        ...(compact ? { [`${route}?representation=reader`]: "reader.json" } : {}) } };
+    const values: Record<string, unknown> = { "index.json": index, "full.json": full, "reader.json": reader,
+      "matches.json": { coverage: full.coverage, papers: [{ stage: "short", matches: [{ anchor: "passage" }] }] } };
+    const requested: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      const name = url.split("/edition/")[1];
+      requested.push(name);
+      if (name === "short.md") return new Response(" é abc ");
+      return Response.json(values[name]);
+    }));
+    try {
+      expect((await (await request(`/api/v1${route}?representation=reader&manifest=pin`)).json()).data).toEqual(compact ? reader : full);
+      const selected = await (await request("/api/v1/papers/query?paper=short&start=1&end=3&manifest=pin")).json();
+      expect(selected.data.coverage).toEqual(full.coverage);
+      expect(selected.data.papers[0].matches[0].byte_overlaps[0].overlap_span).toEqual({ start_byte: 1, end_byte: 3 });
+      if (compact) expect(requested).not.toContain("full.json");
+      expect((await (await request(`/api/v1${route}`)).json()).data).toEqual(full);
+      expect((await request(`/api/v1${route}?representation=unknown`)).status).toBe(404);
+      expect((await request(`/api/v1${route}?representation=reader&manifest=wrong`)).status).toBe(409);
+    } finally { vi.unstubAllGlobals(); }
+  });
+});
+
 // The normal frontend suite stays usable without Python. The deployment job
 // always exports first and sets REQUIRE_STATIC_PARITY to enforce this gate.
 const out = resolve("public/edition");
@@ -95,6 +128,19 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
       const full = read(fullFile);
       expect(Object.keys(tableFiles!).sort()).toEqual(Object.keys(full).sort());
       for (const [table, file] of Object.entries(tableFiles!)) expect(read(file)).toEqual(full[table]);
+    }
+  });
+  it("retains all paper content and coverage in the smaller reader structures", () => {
+    const index = read("index.json") as StaticIndex;
+    for (const stage of ["long", "short", "expository"]) {
+      const route = `/papers/${stage}/structure`;
+      const full = read(index.responses[route]);
+      const reader = read(index.responses[`${route}?representation=reader`]);
+      const { correspondence_links: _links, support_record_refs: _refs, representation: _representation,
+        representation_version: _version, ...retained } = full;
+      expect(reader).toEqual({ ...retained, representation: "reader_structure", representation_version: "1.0",
+        omitted_fields: ["correspondence_links", "support_record_refs"] });
+      expect(JSON.stringify(reader).length).toBeLessThan(JSON.stringify(full).length);
     }
   });
   it("serves all recorded data from static files and enforces edition pins", async () => {

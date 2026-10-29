@@ -132,14 +132,18 @@ export async function staticRequest(url: string): Promise<Response> {
     const matchParams = new URLSearchParams({ paper: stage, representation: "matches" });
     const [data, structure, document] = await Promise.all([
       load<Row>(index.responses[key(route, matchParams)]),
-      load<Row>(index.responses[`/papers/${stage}/structure`]),
+      load<Row>(index.responses[`/papers/${stage}/structure?representation=reader`] ?? index.responses[`/papers/${stage}/structure`]),
       fetch(root + index.documents[stage]).then((r) => r.arrayBuffer()),
     ]);
     return envelope(selectionMatches(data, structure, new Uint8Array(document), Number(params.get("start")), Number(params.get("end"))));
   }
   const normalized = new URLSearchParams(params);
   normalized.delete("offset"); normalized.delete("limit");
-  const file = index.responses[key(route, normalized)];
+  // Older captured editions retain the complete structure at the original
+  // route; a new reader can still open them without the optional projection.
+  const readerStructure = /^\/papers\/(long|short|expository)\/structure$/.test(route)
+    && normalized.size === 1 && normalized.get("representation") === "reader";
+  const file = index.responses[key(route, normalized)] ?? (readerStructure ? index.responses[route] : undefined);
   if (!file) return Response.json({ error: { code: "not_found", message: "This request is not part of the captured reading website." } }, { status: 404 });
   const data = await load<Row>(file);
   return envelope(Array.isArray(data.items) && "total" in data ? { ...data, ...page(data.items, params, route, index.snapshot.manifest_sha256) } : data);

@@ -8,9 +8,8 @@
 // reading position, so Back and "Return to …" land on the line the reader left.
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { PaperStructure, Stage } from "../api/types";
-import { get } from "../api/client";
-import { describeError, useEdition, useResource } from "../app/data";
+import type { Stage } from "../api/types";
+import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
 import { navigate, routeHref, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
@@ -63,7 +62,7 @@ export function ReaderPage({ route }: { route: ReadRoute }) {
   const loaded = useDocument(route.stage);
   // The other accounts' structures name destinations; the paper never waits for them.
   const others = useResource<Structures>("reader:structures", () =>
-    Promise.all(STAGE_ORDER.map((s) => get<PaperStructure>(`/papers/${s}/structure`).then((r) => [s, r.data] as const))).then(
+    Promise.all(STAGE_ORDER.map((s) => loadPaperStructure(s).then((structure) => [s, structure] as const))).then(
       (pairs) => Object.fromEntries(pairs) as Structures,
     ),
   );

@@ -2,7 +2,7 @@ import { act, createRef } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { prepareDocument } from "../src/reader/engine";
-import { PaperBody, type BodyHandle } from "../src/reader/page/PaperBody";
+import { nearestPart, PaperBody, type BodyHandle } from "../src/reader/page/PaperBody";
 import { graphFixture } from "./fixtures";
 
 const graph = graphFixture();
@@ -82,6 +82,34 @@ function flushFrames() {
 }
 
 describe("paper layout work", () => {
+  it("finds the nearest idle-rendering part in logarithmic geometry reads, including gaps and blank parts", () => {
+    const geometry: { top: number; bottom: number }[] = [];
+    const elements = new Map<number, HTMLElement>();
+    let y = 0;
+    let reads = 0;
+    for (let index = 0; index < 1024; index++) {
+      const height = index % 17 === 0 ? 0 : 80;
+      const bounds = { top: y, bottom: y + height };
+      geometry.push(bounds);
+      const element = document.createElement("section");
+      element.getBoundingClientRect = () => { reads++; return bounds as DOMRect; };
+      elements.set(index, element);
+      y += height + (index % 3 === 0 ? 10 : 0);
+    }
+    for (const line of [-100, ...geometry.flatMap((r) => [r.top, r.bottom, r.bottom + 3]), y + 100]) {
+      let expected = 0;
+      let distance = Infinity;
+      geometry.forEach((r, index) => {
+        const away = Math.max(0, r.top - line, line - r.bottom);
+        if (away < distance) { distance = away; expected = index; }
+      });
+      reads = 0;
+      expect(nearestPart(elements, line)).toBe(expected);
+      expect(reads).toBeLessThan(25);
+    }
+    expect(nearestPart(new Map(), 20)).toBe(0);
+  });
+
   it("compensates a changed part above the reader without remeasuring every other part", () => {
     const { observer, notify } = show();
     partReads = 0;

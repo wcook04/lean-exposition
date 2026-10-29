@@ -478,6 +478,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   // ---- Element registries (positions and paths are written per frame, not by React) ----
 
   const cardEls = useRef(new Map<string, HTMLElement>());
+  const cardVersion = useRef(0);
   const pathEls = useRef(new Map<string, SVGPathElement>());
   const labelEls = useRef(new Map<string, HTMLElement>());
   const cardRefCache = useRef(new Map<string, (el: HTMLElement | null) => void>());
@@ -489,6 +490,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         else cardEls.current.delete(id);
         // A card drawn again is a new element: its title size and text flags are written afresh.
         fitOf.current.delete(id);
+        measured.current.delete(id);
+        cardVersion.current++;
       };
       cardRefCache.current.set(id, fn);
     }
@@ -533,10 +536,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const exitingRef = useRef(exiting);
   exitingRef.current = exiting;
 
-  const applyView = useCallback((v: View) => {
+  const applyView = useCallback((v: View, onAnimationFrame = false) => {
     const wrap = wrapRef.current;
     const zoom = zoomRef.current;
     if (!wrap || !zoom) return;
+    // An automatic camera leg already runs on the paint clock. Keep its scale
+    // compensation on that clock too, rather than queueing it one frame later.
+    if (onAnimationFrame) paintScale(v.k);
     select(wrap).call(zoom.transform, zoomIdentity.translate(v.x, v.y).scale(v.k));
   }, []);
 
@@ -568,25 +574,37 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
    * sizes and flags are written only when they change.
    */
   const fitOf = useRef(new Map<string, string>());
-  const measured = useRef(new Map<string, { label: string; t: MeasuredTitle }>());
+  const measured = useRef(new Map<string, { label: string; kind: TitleKind; title: HTMLElement; t: MeasuredTitle }>());
+  const lastLineInputs = useRef<{ layout: Layout; k: number; rep: Rep; statementH: number; cards: number } | null>(null);
   /** Marks showing their whole title: a screen-space label over one would repeat it. */
   const titled = useRef(new Set<string>());
   /** The plate's first sentence: its height on screen at STATEMENT_W wide, 0 until measured. */
   const statementH = useRef(0);
   const applyLines = useCallback(() => {
     const k = viewRef.current.k;
-    const mark = repRef.current === "mark";
-    const boxes = builtRef.current.layout.boxes;
+    const rep = repRef.current;
+    const mark = rep === "mark";
+    const layout = builtRef.current.layout;
+    const prev = lastLineInputs.current;
+    // A representation render, the camera frame and the statement observer can
+    // all request the same fit. Their arithmetic and DOM reads are shared until
+    // an actual fitting input changes; new labels still receive their visibility.
+    if (prev?.layout === layout && prev.k === k && prev.rep === rep && prev.statementH === statementH.current && prev.cards === cardVersion.current) {
+      for (const [id, label] of labelEls.current) label.hidden = titled.current.has(id);
+      return;
+    }
+    lastLineInputs.current = { layout, k, rep, statementH: statementH.current, cards: cardVersion.current };
+    const boxes = layout.boxes;
     for (const [lid, el] of cardEls.current) {
       const box = boxes.get(lid) ?? shown.current.get(lid)?.rect;
       if (!box) continue;
       const kind: TitleKind = lid === goalRef.current ? "root" : el.dataset.kind === "declaration" ? "lean" : "card";
-      const title = el.querySelector<HTMLElement>(".card__ctitle");
+      let m = measured.current.get(lid);
+      const title = m?.title ?? el.querySelector<HTMLElement>(".card__ctitle");
       if (!title) continue;
       const label = title.textContent ?? "";
-      let m = measured.current.get(lid);
-      if (!m || m.label !== label) {
-        m = { label, t: measureTitle(title, label, kind) };
+      if (!m || m.label !== label || m.kind !== kind) {
+        m = { label, kind, title, t: measureTitle(title, label, kind) };
         measured.current.set(lid, m);
       }
       let text = true;
@@ -642,6 +660,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const redo = () => {
       measured.current.clear();
       fitOf.current.clear();
+      lastLineInputs.current = null;
       applyLines();
     };
     fonts.addEventListener("loadingdone", redo);
@@ -657,10 +676,26 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const notesRef = useRef<HTMLDivElement>(null);
   const chipsRaf = useRef(0);
   const refitOnFrame = useRef(false);
+  const paintedScale = useRef(1);
+  const chipsEnabled = useRef(false);
+  chipsEnabled.current = !compact && mode === "steps";
+  function paintScale(k: number) {
+    const wrap = wrapRef.current;
+    if (!wrap || paintedScale.current === k) return;
+    wrap.style.setProperty("--k", String(k));
+    wrap.style.backgroundSize = `${22 * k}px ${22 * k}px`;
+    paintedScale.current = k;
+  }
   const refreshChips = useCallback(() => {
     if (chipsRaf.current) return;
     chipsRaf.current = requestAnimationFrame(() => {
       chipsRaf.current = 0;
+      const v = viewRef.current;
+      // --k is inherited by the whole drawing. Updating it per input event
+      // makes the next wheel event's viewport read flush style/layout again,
+      // even when both events precede the same paint. Publish only that paint's
+      // final scale; gesture coordinates and the world transform stay immediate.
+      paintScale(v.k);
       if (refitOnFrame.current) {
         refitOnFrame.current = false;
         applyLines();
@@ -668,8 +703,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       placeLabels();
       const boxes = builtRef.current.layout.boxes;
       const vp = viewport();
-      const v = viewRef.current;
-      const ids = beyond(boxes, v, vp);
+      const showChips = chipsEnabled.current && repRef.current !== "mark";
+      // Hidden chips have no positions or counts to publish. The note still
+      // avoids cards, but never needs the connector obstacles used by chips.
+      if (!showChips && !notesRef.current) return;
+      const ids = showChips ? beyond(boxes, v, vp) : emptyChips().ids;
       // Screen-space controls never sit over a card: each slides along its edge to a free place, or hides.
       const rects = screenRects(boxes.values(), v);
       const { insets } = vp;
@@ -695,7 +733,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const hLines: typeof rects = [];
       const vLines: typeof rects = [];
       const routedNow = lastRouted.current;
-      if (routedNow) {
+      if (showChips && routedNow) {
         const add = (a: Pt, b: Pt) => {
           const x0 = Math.min(a.x, b.x) * v.k + v.x;
           const x1 = Math.max(a.x, b.x) * v.k + v.x;
@@ -787,7 +825,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       if (m?.view) {
         const v = m.view;
         const t = v.dur > 0 ? Math.min(1, Math.max(0, (now - v.start) / v.dur)) : 1;
-        applyView(t >= 1 ? v.to : v.at(easeMove(t)));
+        applyView(t >= 1 ? v.to : v.at(easeMove(t)), true);
         cameraMoving = t < 1;
       }
       placeLabels();
@@ -935,7 +973,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       return;
     }
     const raw = Math.min(1, (now - c.start) / c.dur);
-    applyView(raw >= 1 ? c.to : c.at(easeMove(raw)));
+    applyView(raw >= 1 ? c.to : c.at(easeMove(raw)), true);
     if (raw < 1) cameraRaf.current = requestAnimationFrame(cameraTick);
     else {
       cameraOnly.current = null;
@@ -1104,6 +1142,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   // Redraw paths after any render (new overlay elements need their geometry now).
   useLayoutEffect(() => {
+    // A caller can replace a rendered title without rebuilding its box. Preserve
+    // that content check while camera-only frames reuse the element and fit.
+    for (const m of measured.current.values()) {
+      if (m.label === m.title.textContent) continue;
+      lastLineInputs.current = null;
+      break;
+    }
     applyLines();
     if (!motion.current && lastRouted.current) {
       const all = new Map<string, Rect>();
@@ -1674,10 +1719,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const scaleChanged = t.k !== viewRef.current.k;
         viewRef.current = { x: t.x, y: t.y, k: t.k };
         world.style.transform = `translate(${t.x}px, ${t.y}px) scale(${t.k})`;
-        if (scaleChanged) wrap.style.setProperty("--k", String(t.k));
         // The dot grid lives in world space: it moves and scales with the map.
         wrap.style.backgroundPosition = `${t.x}px ${t.y}px`;
-        if (scaleChanged) wrap.style.backgroundSize = `${22 * t.k}px ${22 * t.k}px`;
         // While the camera travels on its own, the representation is the one it lands in: a move
         // that zooms out on the way never flips cards to tiles and back (two images crossfading).
         const now = performance.now();
@@ -1703,6 +1746,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     wrap.dataset.rep = repRef.current;
     wrap.style.setProperty("--k", String(viewRef.current.k));
     wrap.style.backgroundSize = `${22 * viewRef.current.k}px ${22 * viewRef.current.k}px`;
+    paintedScale.current = viewRef.current.k;
     let wheelEnd = 0;
     const onWheel = (event: WheelEvent) => {
       if ((event.target as Element).closest?.(".tree__ui")) return;

@@ -60,7 +60,6 @@ const cancelIdle = (id: number) => {
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
   const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
-  const [near, setNear] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
   const renderedRef = useRef(rendered);
@@ -68,7 +67,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const topRef = useRef(topInset);
   topRef.current = topInset;
 
-  const add = useCallback((parts: number[], also?: "near") => {
+  const add = useCallback((parts: number[]) => {
     const fresh = parts.filter((i) => i >= 0 && i < doc.parts.length);
     setRendered((prev) => {
       if (fresh.every((i) => prev.has(i))) return prev;
@@ -76,13 +75,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       fresh.forEach((i) => next.add(i));
       return next;
     });
-    if (also)
-      setNear((prev) => {
-        if (fresh.every((i) => prev.has(i))) return prev;
-        const next = new Set(prev);
-        fresh.forEach((i) => next.add(i));
-        return next;
-      });
   }, [doc]);
 
   // Scroll anchoring, done here so every browser behaves alike: the first
@@ -152,7 +144,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
             return;
           }
           waiters.current.push({ parts: wanted, resolve });
-          add(wanted, "near");
+          add(wanted);
         }),
       partElement: (index) => elements.current.get(index) ?? null,
       reanchor,
@@ -179,7 +171,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     const observer = new IntersectionObserver(
       (entries) => {
         const hits = entries.filter((e) => e.isIntersecting).map((e) => Number((e.target as HTMLElement).dataset.part));
-        if (hits.length) add(hits, "near");
+        if (hits.length) add(hits);
       },
       { rootMargin: NEAR_MARGIN },
     );
@@ -284,7 +276,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           stage={stage}
           doc={doc}
           rendered={rendered.has(part.index)}
-          near={near.has(part.index)}
           structures={structures}
           graph={graph}
           lit={!!part.anchor && part.anchor === inspected}
@@ -297,15 +288,37 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   );
 });
 
-function nearestPart(elements: Map<number, HTMLElement>, line: number): number {
-  let best = 0;
-  let bestDistance = Infinity;
-  elements.forEach((el, index) => {
-    const r = el.getBoundingClientRect();
-    const d = r.top <= line && r.bottom >= line ? 0 : Math.min(Math.abs(r.top - line), Math.abs(r.bottom - line));
-    if (d < bestDistance) [best, bestDistance] = [index, d];
-  });
-  return best;
+export function nearestPart(elements: Map<number, HTMLElement>, line: number): number {
+  const ordered = [...elements.entries()].sort((a, b) => a[0] - b[0]);
+  if (!ordered.length) return 0;
+  const rects = new Map<number, DOMRect>();
+  const rect = (index: number) => {
+    let value = rects.get(index);
+    if (!value) {
+      value = ordered[index][1].getBoundingClientRect();
+      rects.set(index, value);
+    }
+    return value;
+  };
+  const firstEndingAt = (y: number) => {
+    let lo = 0;
+    let hi = ordered.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (rect(mid).bottom < y) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
+  };
+  // Parts remain in document order, including the placeholders. Locate the
+  // reading line without laying out every part on each idle-rendering batch.
+  const after = firstEndingAt(line);
+  if (after === 0) return ordered[0][0];
+  const before = rect(after - 1);
+  if (after < ordered.length && Math.max(0, rect(after).top - line) < line - before.bottom) return ordered[after][0];
+  // A blank part can share an end with its predecessor; keep the earlier part
+  // on a tie, just as the former linear scan did.
+  return ordered[firstEndingAt(before.bottom)][0];
 }
 
 interface PartProps {
@@ -313,7 +326,6 @@ interface PartProps {
   stage: Stage;
   doc: PreparedDocument;
   rendered: boolean;
-  near: boolean;
   structures: Structures;
   graph: ArgGraph;
   lit: boolean;
@@ -632,17 +644,26 @@ function breakSize(size: Natural, available: number): number {
 
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
+  if (!boxes.length) return () => {};
   const cues = new Map<HTMLElement, HTMLElement>();
   const natural = new WeakMap<HTMLElement, Natural>();
+  const widths = new WeakMap<HTMLElement, number>();
   let live = true;
-  const update = (box: HTMLElement) => {
-    fitDisplay(box, natural);
+  const update = (box: HTMLElement, force = false) => {
+    const width = box.clientWidth;
+    // Fitting can change a display's height, which the observer reports back.
+    // Only a different available width (or newly loaded fonts) needs another
+    // fit; scrolling a formula only changes its cue.
+    if (force || widths.get(box) !== width) {
+      fitDisplay(box, natural);
+      widths.set(box, width);
+    }
     // Only a formula that still does not fit after shrinking and breaking scrolls.
     const wide = box.scrollWidth > box.clientWidth + 1;
-    box.dataset.overflow = String(wide);
+    if (box.dataset.overflow !== String(wide)) box.dataset.overflow = String(wide);
     const atStart = box.scrollLeft <= 1;
     const atEnd = box.scrollLeft + box.clientWidth >= box.scrollWidth - 2;
-    box.dataset.scrolledEnd = String(atEnd);
+    if (box.dataset.scrolledEnd !== String(atEnd)) box.dataset.scrolledEnd = String(atEnd);
     let cue = cues.get(box);
     if (wide && !cue) {
       cue = makeCue(box);
@@ -655,7 +676,7 @@ export function markWideMaths(root: HTMLElement): () => void {
       box.setAttribute("aria-label", "Formula wider than the column, scroll sideways to read it");
     }
     if (!cue) return;
-    cue.hidden = !wide;
+    if (cue.hidden !== !wide) cue.hidden = !wide;
     const where = atStart ? "start" : atEnd ? "end" : "between";
     if (cue.dataset.at !== where) {
       cue.dataset.at = where;
@@ -668,13 +689,15 @@ export function markWideMaths(root: HTMLElement): () => void {
   boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
   const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
   boxes.forEach((b) => observer.observe(b));
-  boxes.forEach(update);
+  boxes.forEach((box) => update(box));
   // KaTeX's fonts can arrive after the first measurement; measure again once they have.
-  void document.fonts?.ready.then(() => {
-    if (!live) return;
-    boxes.forEach((b) => natural.delete(b));
-    boxes.forEach(update);
-  });
+  if (document.fonts && document.fonts.status !== "loaded") {
+    void document.fonts.ready.then(() => {
+      if (!live) return;
+      boxes.forEach((b) => natural.delete(b));
+      boxes.forEach((box) => update(box, true));
+    });
+  }
   return () => {
     live = false;
     observer.disconnect();
