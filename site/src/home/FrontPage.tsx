@@ -187,8 +187,8 @@ export function FrontPage() {
           From OpenAI’s release to the exposition
         </h2>
         <p className="front__text">
-          The layers run from OpenAI’s release and its Lean code down to the exposition, and then a film in preparation.
-          Each is linked here, to read on this site or as a PDF.
+          The layers run from OpenAI’s release and its Lean code down to the exposition and a film about the mathematics.
+          Read the papers on this site or as PDFs, and watch the film on YouTube.
         </p>
         <ol className="funnel">
           <li className="funnel__layer" style={{ ["--step" as string]: 0 }}>
@@ -251,12 +251,12 @@ export function FrontPage() {
               </li>
             );
           })}
-          {/* The last layer: the film on the mathematics, held in preparation until it is on YouTube. */}
+          {/* The last layer: the film on the mathematics. */}
           <li className="funnel__layer funnel__layer--film" style={{ ["--step" as string]: 5 }}>
             <FilmSlot film={MATHS_FILM} className="funnel__film" sizes="(min-width: 1100px) 360px, (min-width: 700px) 40vw, 100vw" />
             {ERDOS_FILM.youtube ? (
               <p className="funnel__videonote">
-                {AUTHOR}, who made this site, plans it like his{" "}
+                For another mathematical walkthrough, see {AUTHOR}’s{" "}
                 <Out href={ERDOS_FILM.youtube}>
                   {minutesOf(ERDOS_FILM) ? `${minutesOf(ERDOS_FILM)}-minute ` : ""}walkthrough of Erdős problem #257
                 </Out>

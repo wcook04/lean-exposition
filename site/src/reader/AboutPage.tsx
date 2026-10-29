@@ -323,8 +323,8 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           to the map.
         </p>
         <p>
-          Two films about this result are in preparation: one on how to use this site, and one on the mathematics. The
-          second will be like his walkthrough of Erdős problem #257, the first video in the list below.
+          Two films accompany this result: one shows how to use this site, and one explains the mathematics. His
+          walkthrough of Erdős problem #257 is linked below.
         </p>
         <div className="about__films">
           <FilmSlot film={familyFilm("interfaces")} size="small" sizes="(min-width: 700px) 320px, 100vw" />
