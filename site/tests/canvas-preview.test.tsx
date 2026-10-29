@@ -90,3 +90,91 @@ describe("preview never commits", () => {
     expect(card.querySelector(".card__inputs")!.textContent).toMatch(/^\d+ inputs?/);
   });
 });
+
+// High-rate camera input must not turn into a title/layout pass and a complete
+// card/connector render for every pointer event. Keep the world transform exact,
+// then perform scale-dependent work once at the next animation frame.
+describe("camera display work", () => {
+  function frameQueue() {
+    let serial = 0;
+    const pending = new Map<number, FrameRequestCallback>();
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+      pending.set(++serial, callback);
+      return serial;
+    });
+    vi.stubGlobal("cancelAnimationFrame", (id: number) => pending.delete(id));
+    return () => act(() => {
+      const callbacks = [...pending.values()];
+      pending.clear();
+      for (const callback of callbacks) callback(performance.now());
+    });
+  }
+
+  function wheel(deltaX: number, deltaY: number) {
+    act(() => container.querySelector(".tree")!.dispatchEvent(new WheelEvent("wheel", {
+      deltaX, deltaY, clientX: 200, clientY: 150, bubbles: true, cancelable: true,
+    })));
+  }
+
+  it("pans immediately and updates edge controls without refitting or rerendering the cards", () => {
+    const nextFrame = frameQueue();
+    const ref = draw(null);
+    act(() => ref.current!.restoreScene({ camera: { x: 0, y: 0, k: 1 }, expanded: [], mode: "steps" }));
+    nextFrame();
+    const beforeCards = cards();
+    const beforeLines = [...container.querySelectorAll(".hit")];
+    const world = container.querySelector<HTMLElement>(".tree__world")!;
+    const worldX = () => Number(world.style.transform.match(/translate\(([-\d.e+]+)px/)![1]);
+    const beforeX = worldX();
+    const card = container.querySelector<HTMLElement>(".card")!;
+    const titleQueries = vi.spyOn(card, "querySelector");
+    const heights = vi.spyOn(card, "offsetHeight", "get");
+
+    wheel(10000, 0);
+    wheel(10000, 0);
+    const camera = ref.current!.getScene().camera;
+    expect(camera.x).toBeCloseTo(-20000);
+    expect(camera.y).toBe(0);
+    expect(camera.k).toBe(1);
+    expect(worldX()).toBeCloseTo(beforeX - 20000);
+    nextFrame();
+
+    // The chip membership changed across the viewport, but its state belongs
+    // to the small control layer: the card measurement effect never reruns.
+    expect(container.querySelector(".tree__chip--down")).toBeNull();
+    expect(titleQueries).not.toHaveBeenCalled();
+    expect(heights).not.toHaveBeenCalled();
+    expect(cards()).toEqual(beforeCards);
+    expect([...container.querySelectorAll(".hit")]).toEqual(beforeLines);
+    titleQueries.mockRestore();
+    heights.mockRestore();
+  });
+
+  it("coalesces same-representation zooms while keeping the latest camera and all semantic zoom forms", () => {
+    const nextFrame = frameQueue();
+    const ref = draw(null);
+    act(() => ref.current!.restoreScene({ camera: { x: 0, y: 0, k: 1 }, expanded: [], mode: "steps" }));
+    nextFrame();
+    const card = container.querySelector<HTMLElement>(".card")!;
+    const titleQueries = vi.spyOn(card, "querySelector");
+    wheel(0, -10);
+    wheel(0, -10);
+    const camera = ref.current!.getScene().camera;
+    expect(camera.k).toBeGreaterThan(1);
+    expect(titleQueries).not.toHaveBeenCalled();
+    nextFrame();
+    expect(titleQueries.mock.calls.filter(([selector]) => selector === ".card__ctitle")).toHaveLength(1);
+    expect(ref.current!.getScene().camera).toEqual(camera);
+
+    const before = cards();
+    for (const [k, representation] of [[0.35, "mark"], [0.65, "compact"], [1, "card"]] as const) {
+      act(() => ref.current!.restoreScene({ camera: { x: 10, y: 20, k }, expanded: [], mode: "steps" }));
+      nextFrame();
+      expect(container.querySelector<HTMLElement>(".tree")!.dataset.rep).toBe(representation);
+      expect(cards()).toEqual(before);
+      expect(container.querySelectorAll(".card__open").length).toBe(before.length);
+      expect(ref.current!.getScene().camera.k).toBe(k);
+    }
+    titleQueries.mockRestore();
+  });
+});

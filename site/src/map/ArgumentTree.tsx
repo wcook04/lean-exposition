@@ -22,7 +22,7 @@
 // Camera input: d3-zoom. Screen-space parts (edge chips, labels, notes) live
 // in ./canvas.
 
-import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { select } from "d3-selection";
 import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } from "d3-zoom";
 import type { Stage } from "../api/types";
@@ -544,6 +544,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const placeLabels = useCallback(() => {
     const v = viewRef.current;
     const W = sizeRef.current.width;
+    const positions: [HTMLElement, string][] = [];
+    // Read every label before writing any transform, so one label cannot force
+    // layout after the preceding label's style changed.
     for (const [id, el] of labelEls.current) {
       const r = shown.current.get(id)?.rect ?? builtRef.current.layout.boxes.get(id);
       if (!r) continue;
@@ -551,8 +554,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const top = r.y * v.k + v.y;
       const w = el.offsetWidth;
       const left = Math.max(8, Math.min(W - w - 8, cx - w / 2));
-      el.style.transform = `translate(${left.toFixed(1)}px, ${(top - el.offsetHeight - 6).toFixed(1)}px)`;
+      positions.push([el, `translate(${left.toFixed(1)}px, ${(top - el.offsetHeight - 6).toFixed(1)}px)`]);
     }
+    for (const [el, transform] of positions) el.style.transform = transform;
   }, []);
 
   /**
@@ -645,18 +649,23 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     return () => fonts.removeEventListener("loadingdone", redo);
   }, [applyLines]);
 
-  // Edge chips: counted from the layout against the current view, re-rendered only when counts change.
-  const [chips, setChips] = useState<{ ids: Beyond; at: Record<Side, number | null>; notes: { x: number; top: boolean } | null }>({
-    ids: { left: [], right: [], up: [], down: [] },
-    at: { left: null, right: null, up: null, down: null },
-    notes: null,
-  });
+  // Camera input can arrive several times per frame. The world transform stays
+  // synchronous for d3's picking/gesture coordinates; screen-space controls and
+  // title fitting consume only the latest view once per frame.
+  const chips = useRef<ChipState>(emptyChips());
+  const controlsRef = useRef<{ update(chips: ChipState): void }>(null);
   const notesRef = useRef<HTMLDivElement>(null);
   const chipsRaf = useRef(0);
+  const refitOnFrame = useRef(false);
   const refreshChips = useCallback(() => {
     if (chipsRaf.current) return;
     chipsRaf.current = requestAnimationFrame(() => {
       chipsRaf.current = 0;
+      if (refitOnFrame.current) {
+        refitOnFrame.current = false;
+        applyLines();
+      }
+      placeLabels();
       const boxes = builtRef.current.layout.boxes;
       const vp = viewport();
       const v = viewRef.current;
@@ -717,11 +726,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         // what lies beyond, sitting on the cut-off edge of the row rather than over its titles.
         if (at[side] === null && (side === "down" || side === "up")) at[side] = Math.round(want);
       }
-      setChips((prev) =>
-        sameBeyond(prev.ids, ids) && SIDES.every((side) => prev.at[side] === at[side] || (prev.at[side] !== null && at[side] !== null && Math.abs(prev.at[side]! - at[side]!) < 2)) && prev.notes?.x === notes?.x && prev.notes?.top === notes?.top
-          ? prev
-          : { ids, at, notes },
-      );
+      const prev = chips.current;
+      if (!sameBeyond(prev.ids, ids) || !SIDES.every((side) => prev.at[side] === at[side] || (prev.at[side] !== null && at[side] !== null && Math.abs(prev.at[side]! - at[side]!) < 2)) || prev.notes?.x !== notes?.x || prev.notes?.top !== notes?.top) {
+        chips.current = { ids, at, notes };
+        controlsRef.current?.update(chips.current);
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1662,24 +1671,27 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           pendingCamera.current = null;
         }
         const t = event.transform;
+        const scaleChanged = t.k !== viewRef.current.k;
         viewRef.current = { x: t.x, y: t.y, k: t.k };
         world.style.transform = `translate(${t.x}px, ${t.y}px) scale(${t.k})`;
-        wrap.style.setProperty("--k", String(t.k));
+        if (scaleChanged) wrap.style.setProperty("--k", String(t.k));
         // The dot grid lives in world space: it moves and scales with the map.
         wrap.style.backgroundPosition = `${t.x}px ${t.y}px`;
-        wrap.style.backgroundSize = `${22 * t.k}px ${22 * t.k}px`;
+        if (scaleChanged) wrap.style.backgroundSize = `${22 * t.k}px ${22 * t.k}px`;
         // While the camera travels on its own, the representation is the one it lands in: a move
         // that zooms out on the way never flips cards to tiles and back (two images crossfading).
         const now = performance.now();
         const flight = cameraOnly.current ?? motion.current?.view;
         const r = repFor(flight && now < flight.start + flight.dur ? flight.to.k : t.k);
-        if (r !== repRef.current) {
+        const representationChanged = r !== repRef.current;
+        if (representationChanged) {
           repRef.current = r;
           wrap.dataset.rep = r;
           setRep(r);
         }
-        placeLabels();
-        applyLines();
+        // Panning changes no card's available title space. Refitting every
+        // title is needed only for a scale change (or a new representation).
+        refitOnFrame.current ||= scaleChanged || representationChanged;
         refreshChips();
       })
       .on("end", (event: { sourceEvent?: Event | null }) => {
@@ -1689,6 +1701,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const s = select(wrap);
     s.call(behaviour);
     wrap.dataset.rep = repRef.current;
+    wrap.style.setProperty("--k", String(viewRef.current.k));
+    wrap.style.backgroundSize = `${22 * viewRef.current.k}px ${22 * viewRef.current.k}px`;
     let wheelEnd = 0;
     const onWheel = (event: WheelEvent) => {
       if ((event.target as Element).closest?.(".tree__ui")) return;
@@ -2421,7 +2435,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   const showChips = !compact && mode === "steps" && rep !== "mark";
   const chipClick = (side: Side) => {
-    const ids = chips.ids[side];
+    const ids = chips.current.ids[side];
     if (!ids.length) return;
     userMovedSinceAsk.current = true;
     focusHeld.current = false;
@@ -2813,36 +2827,18 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           </span>
         ))}
       </div>
-      {showChips &&
-        SIDES.map((side) =>
-          chips.ids[side].length && chips.at[side] !== null ? (
-            <button
-              key={side}
-              type="button"
-              className={`tree__ui tree__chip tree__chip--${side}`}
-              style={chipStyle(side, insets, chips.at[side]!)}
-              onClick={() => chipClick(side)}
-              aria-label={`Show ${uniqueCount(chips.ids[side])} more ${uniqueCount(chips.ids[side]) === 1 ? "record" : "records"} ${side === "up" ? "above" : side === "down" ? "below" : `to the ${side}`}`}
-            >
-              {chipText(side, uniqueCount(chips.ids[side]))}
-            </button>
-          ) : null,
-        )}
-      {!compact && (previewOutside.length > 0 || hiddenEdges.length > 0) && (
-        <div
-          ref={notesRef}
-          className={`tree__ui tree__notes${chips.notes?.top ? " tree__notes--top" : ""}`}
-          style={chips.notes?.top ? { left: chips.notes.x, top: insets.top } : { left: chips.notes?.x ?? insets.left, bottom: insets.bottom }}
-          onClick={(event) => event.stopPropagation()}
-        >
-          {previewOutside.length > 0 && (
-            <p className="tree__note" role="status">
-              {previewOutside.length === 1 ? "1 linked record is not in the argument for this main result" : `${previewOutside.length} linked records are not in the argument for this main result`}
-            </p>
-          )}
-          <SimplifiedMap graph={fullGraph} hidden={hiddenEdges} onChoose={(key) => (onEdgeSelect ? onEdgeSelect(key) : onSelect(edgeByKey.get(key)?.from ?? null))} />
-        </div>
-      )}
+      <MapEdgeControls
+        ref={controlsRef}
+        showChips={showChips}
+        showNotes={!compact && (previewOutside.length > 0 || hiddenEdges.length > 0)}
+        insets={insets}
+        notesRef={notesRef}
+        outsideCount={previewOutside.length}
+        graph={fullGraph}
+        hiddenEdges={hiddenEdges}
+        onChip={chipClick}
+        onChoose={(key) => (onEdgeSelect ? onEdgeSelect(key) : onSelect(edgeByKey.get(key)?.from ?? null))}
+      />
       {tipEdge && (
         <EdgeTip
           tip={tipEdge}
@@ -2857,6 +2853,57 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       )}
     </div>
   );
+});
+
+interface ChipState {
+  ids: Beyond;
+  at: Record<Side, number | null>;
+  notes: { x: number; top: boolean } | null;
+}
+
+function emptyChips(): ChipState {
+  return { ids: { left: [], right: [], up: [], down: [] }, at: { left: null, right: null, up: null, down: null }, notes: null };
+}
+
+/** Only these screen-space controls rerender when the camera changes their positions. */
+const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
+  showChips: boolean;
+  showNotes: boolean;
+  insets: Insets;
+  notesRef: RefObject<HTMLDivElement | null>;
+  outsideCount: number;
+  graph: ArgGraph;
+  hiddenEdges: readonly ArgEdge[];
+  onChip(side: Side): void;
+  onChoose(key: string): void;
+}>(function MapEdgeControls({ showChips, showNotes, insets, notesRef, outsideCount, graph, hiddenEdges, onChip, onChoose }, ref) {
+  const [chips, setChips] = useState(emptyChips);
+  useImperativeHandle(ref, () => ({ update: setChips }), []);
+  return <>
+    {showChips && SIDES.map((side) => {
+      if (!chips.ids[side].length || chips.at[side] === null) return null;
+      const count = uniqueCount(chips.ids[side]);
+      return <button
+        key={side}
+        type="button"
+        className={`tree__ui tree__chip tree__chip--${side}`}
+        style={chipStyle(side, insets, chips.at[side]!)}
+        onClick={() => onChip(side)}
+        aria-label={`Show ${count} more ${count === 1 ? "record" : "records"} ${side === "up" ? "above" : side === "down" ? "below" : `to the ${side}`}`}
+      >{chipText(side, count)}</button>;
+    })}
+    {showNotes && <div
+      ref={notesRef}
+      className={`tree__ui tree__notes${chips.notes?.top ? " tree__notes--top" : ""}`}
+      style={chips.notes?.top ? { left: chips.notes.x, top: insets.top } : { left: chips.notes?.x ?? insets.left, bottom: insets.bottom }}
+      onClick={(event) => event.stopPropagation()}
+    >
+      {outsideCount > 0 && <p className="tree__note" role="status">
+        {outsideCount === 1 ? "1 linked record is not in the argument for this main result" : `${outsideCount} linked records are not in the argument for this main result`}
+      </p>}
+      <SimplifiedMap graph={graph} hidden={hiddenEdges} onChoose={onChoose} />
+    </div>}
+  </>;
 });
 
 const uniqueCount = (lids: readonly string[]) => new Set(lids.map(recordOf)).size;

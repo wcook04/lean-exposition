@@ -27,6 +27,53 @@ describe("static reader algorithms", () => {
   });
 });
 
+describe("table-specific static loading", () => {
+  it.each([false, true])("preserves records and pagination with per-table files=%s", async (split) => {
+    vi.resetModules();
+    const { staticRequest: request } = await import("../src/api/static");
+    const nodes = [{ ref: "nodes:z", record: { id: "z" } }, { ref: "nodes:a", record: { id: "a" } }];
+    const sources = [{ ref: "sources:s", record: { id: "s" } }];
+    const summaries = nodes.map(({ ref }) => ({ ref, label: ref }));
+    const index = {
+      version: 1, api_version: "1.2", snapshot: { manifest_sha256: "pinned" },
+      records: "records.json", summaries: "summaries.json", responses: {}, documents: {},
+      ...(split ? { records_by_table: { nodes: "nodes.json", sources: "sources.json" },
+        summaries_by_table: { nodes: "node-summaries.json" } } : {}),
+    };
+    const values: Record<string, unknown> = { "index.json": index,
+      "records.json": { nodes, sources }, "summaries.json": { nodes: summaries },
+      "nodes.json": nodes, "sources.json": sources, "node-summaries.json": summaries };
+    const requested: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      const name = url.split("/edition/")[1];
+      requested.push(name);
+      if (!(name in values)) throw new Error(`Unexpected file ${name}`);
+      return Response.json(values[name]);
+    }));
+    try {
+      const first = await (await request("/api/v1/records?table=nodes&limit=1&manifest=pinned")).json();
+      expect(first.data.items).toEqual([nodes[1]]);
+      expect(first.data.total).toBe(2);
+      expect((await (await request(first.data.next)).json()).data.items).toEqual([nodes[0]]);
+      const filtered = await (await request("/api/v1/records?table=nodes&ref=nodes:z")).json();
+      expect(filtered.data.items).toEqual([nodes[0]]);
+      expect((await (await request("/api/v1/records?table=sources")).json()).data.items).toEqual(sources);
+      expect((await (await request("/api/v1/records?table=nodes&representation=summary")).json()).data.items)
+        .toEqual([summaries[1], summaries[0]]);
+      if (split) {
+        expect(requested).not.toContain("records.json");
+        expect(requested).not.toContain("summaries.json");
+        expect(requested.filter((name) => name === "nodes.json")).toHaveLength(1);
+      }
+      // Complete queries still include every table and pin mismatches never fetch data.
+      expect((await (await request("/api/v1/records")).json()).data.items).toEqual([nodes[1], nodes[0], sources[0]]);
+      const beforeMismatch = requested.length;
+      expect((await request("/api/v1/records?table=nodes&manifest=wrong")).status).toBe(409);
+      expect(requested).toHaveLength(beforeMismatch);
+    } finally { vi.unstubAllGlobals(); }
+  });
+});
+
 // The normal frontend suite stays usable without Python. The deployment job
 // always exports first and sets REQUIRE_STATIC_PARITY to enforce this gate.
 const out = resolve("public/edition");
@@ -39,6 +86,15 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
     const searchIndex = read(index.search) as SearchIndex;
     for (const { params, expected } of read("parity.json")) {
       expect(search(searchIndex, new URLSearchParams(params), index.snapshot.manifest_sha256)).toEqual(expected);
+    }
+  });
+  it("exports each table without changing any records or summaries", () => {
+    const index = read("index.json") as StaticIndex;
+    for (const [fullFile, tableFiles] of [[index.records, index.records_by_table], [index.summaries, index.summaries_by_table]] as const) {
+      expect(tableFiles).toBeDefined();
+      const full = read(fullFile);
+      expect(Object.keys(tableFiles!).sort()).toEqual(Object.keys(full).sort());
+      for (const [table, file] of Object.entries(tableFiles!)) expect(read(file)).toEqual(full[table]);
     }
   });
   it("serves all recorded data from static files and enforces edition pins", async () => {

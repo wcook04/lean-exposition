@@ -51,8 +51,13 @@ def export(bundle, out):
     for table in TABLES:
         records[table] = complete("/records", table=table)["items"]
     index["records"] = write(records)
-    index["summaries"] = write({t: [app._record_summary(r["ref"]) for r in rows]
-                                for t, rows in records.items()})
+    summaries = {t: [app._record_summary(r["ref"]) for r in rows]
+                 for t, rows in records.items()}
+    index["summaries"] = write(summaries)
+    # Keep the complete tables for unscoped requests and older clients. Readers
+    # asking for one table need not download unrelated citation/check records.
+    index["records_by_table"] = {t: write(rows) for t, rows in records.items()}
+    index["summaries_by_table"] = {t: write(rows) for t, rows in summaries.items()}
     for ref in sorted(app._records):
         capture("/record", ref=ref)
     for stage in STAGES:

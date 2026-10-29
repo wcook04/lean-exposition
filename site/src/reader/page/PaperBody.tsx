@@ -95,11 +95,11 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const pinned = useRef(false);
   // The size of each part as the resize observer last reported it.
   const sizes = useRef(new Map<Element, number>());
-  const reanchor = useCallback((force?: boolean) => {
+  const reanchor = useCallback((force?: boolean, observed = false) => {
     const line = topRef.current;
     if (force) {
       elements.current.forEach((el) => sizes.current.set(el, el.getBoundingClientRect().height));
-    } else {
+    } else if (!observed) {
       // A part has changed size and the observer has not yet heard it: keep
       // the anchor as it was, so the observer can move the page by the change.
       for (const [el, size] of sizes.current) if (Math.abs(el.getBoundingClientRect().height - size) > 0.5) return;
@@ -189,13 +189,19 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   }, [add]);
 
   useEffect(() => {
+    let frame = 0;
     const onScroll = () => {
-      if (!pinned.current) reanchor();
+      if (pinned.current || frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (!pinned.current) reanchor();
+      });
     };
     const release = () => (pinned.current = false);
     window.addEventListener("scroll", onScroll, { passive: true });
     for (const type of ["wheel", "touchstart", "keydown", "pointerdown"]) window.addEventListener(type, release, { passive: true, capture: true });
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       for (const type of ["wheel", "touchstart", "keydown", "pointerdown"]) window.removeEventListener(type, release, { capture: true });
     };
@@ -213,9 +219,13 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         if (Math.abs(delta) >= 0.5) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
       }
       if (pinned.current && held?.el.isConnected) {
-        elements.current.forEach((el) => sizes.current.set(el, el.getBoundingClientRect().height));
         anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top };
-      } else reanchor(true);
+      } else {
+        // Delivered entries already update every changed part's cached size.
+        // Reading all the other parts again makes each background insertion
+        // scan the entire long paper; only locating the new anchor is needed.
+        reanchor(false, true);
+      }
     });
     resizeObserver.current = observer;
     elements.current.forEach((el) => observer.observe(el));

@@ -12,6 +12,9 @@ export interface StaticIndex {
   records: string;
   summaries: string;
   search: string;
+  /** Optional per-table files; older captured editions retain the full-table path. */
+  records_by_table?: Record<string, string>;
+  summaries_by_table?: Record<string, string>;
 }
 export interface SearchIndex {
   rows: Row[];
@@ -110,9 +113,17 @@ export async function staticRequest(url: string): Promise<Response> {
   if (document && index.documents[document[1]]) return fetch(root + index.documents[document[1]]);
   if (route === "/search") return envelope(search(await load<SearchIndex>(index.search), params, index.snapshot.manifest_sha256));
   if (route === "/records") {
-    const all = await load<Record<string, Row[]>>(params.get("representation") === "summary" ? index.summaries : index.records);
+    const summary = params.get("representation") === "summary";
     const refs = params.getAll("ref"), table = params.get("table");
-    const rows = (table ? all[table] ?? [] : Object.values(all).flat()).filter((row) => !refs.length || refs.includes(row.ref))
+    const tableFiles = summary ? index.summaries_by_table : index.records_by_table;
+    const tableFile = table && tableFiles && Object.hasOwn(tableFiles, table) ? tableFiles[table] : undefined;
+    let records: Row[];
+    if (tableFile) records = await load<Row[]>(tableFile);
+    else {
+      const all = await load<Record<string, Row[]>>(summary ? index.summaries : index.records);
+      records = table ? all[table] ?? [] : Object.values(all).flat();
+    }
+    const rows = records.filter((row) => !refs.length || refs.includes(row.ref))
       .sort((a, b) => a.ref < b.ref ? -1 : a.ref > b.ref ? 1 : 0);
     return envelope(page(rows, params, route, index.snapshot.manifest_sha256));
   }
