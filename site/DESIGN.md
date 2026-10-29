@@ -258,7 +258,7 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   and addresses come from his own pages (`src/app/author.ts`); websites and films come
   from the family registry (`src/app/family.json`), and a film without a YouTube address
   is shown in preparation, never linked.
-- **The family's parts.** The header's ladder ("Will Cook / Lean Exposition"), the film
+- **The family's parts.** The header's lockup (the Plectis plait to the home page, a rule, then the rising-graph mark and "Lean Exposition"), the film
   slots and the footer's sister sites are the markup of the family contract, styled by
   `src/styles/family.css`, an unchanged copy, through the `--fam-*` names in
   `tokens.css`. Focus on them is amber, as everywhere here; under the pointer their

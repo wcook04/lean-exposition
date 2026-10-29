@@ -1,5 +1,5 @@
 // The family's shared parts (docs/family.md in wcook04.github.io): the film slot in both
-// of its states, the sister sites, the header's ladder, and the copy of the registry and
+// of its states, the sister sites, the header's lockup, and the copy of the registry and
 // stylesheet they are rendered from.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -184,7 +184,7 @@ describe("the sister sites", () => {
   });
 });
 
-describe("the header's ladder", () => {
+describe("the header's lockup", () => {
   let root: Root | undefined;
   let host: HTMLDivElement | undefined;
   afterEach(async () => {
@@ -192,23 +192,37 @@ describe("the header's ladder", () => {
     host?.remove();
   });
 
-  it("puts Will Cook before the wordmark and adds Papers to the jobs", async () => {
+  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and adds Papers to the jobs", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     const { TopBar } = await import("../src/app/TopBar");
     host = document.createElement("div");
     document.body.append(host);
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
-    const ladder = host.querySelector(".topbar > .fam-ladder")!;
-    const up = ladder.querySelector<HTMLAnchorElement>("a.fam-ladder__up")!;
-    expect(up.textContent).toBe("Will Cook");
-    expect(up.getAttribute("href")).toBe("https://wcook04.github.io/");
-    expect(up.getAttribute("rel")).toBe("author");
-    expect(ladder.querySelector(".fam-ladder__sep")!.getAttribute("aria-hidden")).toBe("true");
-    expect(up.compareDocumentPosition(ladder.querySelector("a.wordmark")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const lockup = host.querySelector(".topbar > .fam-lockup")!;
+    expect([...lockup.children].map((el) => el.className)).toEqual(["fam-lockup__home", "fam-lockup__rule", "fam-lockup__site"]);
+    const home = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__home")!;
+    expect(home.getAttribute("href")).toBe("https://wcook04.github.io/");
+    expect(home.getAttribute("rel")).toBe("author");
+    const plait = home.querySelector("img")!;
+    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and films");
+    expect(plait.getAttribute("src")).toMatch(/^\/(lean-exposition-site\/)?plectis\.svg$/);
+    expect(lockup.querySelector(".fam-lockup__rule")!.getAttribute("aria-hidden")).toBe("true");
+    const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
+    expect(own.getAttribute("href")).toBe("/");
+    expect(own.querySelector("svg.wordmark__mark")!.getAttribute("aria-hidden")).toBe("true");
+    expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
+    expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
     expect(jobs).toEqual(["Argument map", "Read", "Papers", "Checks"]);
     expect(host.querySelector<HTMLAnchorElement>(".topnav a[href='/#papers']")!.textContent).toBe("Papers");
+  });
+
+  it("serves the plait from beside the site, with nothing from another host", () => {
+    const svg = readFileSync(path.join(site, "public/plectis.svg"), "utf8");
+    expect(svg).toMatch(/^<svg|^<\?xml/);
+    expect(svg).not.toMatch(/(href|src)=["'](https?:)?\/\//);
+    expect(svg).not.toMatch(/url\(["']?(https?:)?\/\//);
   });
 });
 

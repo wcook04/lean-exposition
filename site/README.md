@@ -92,11 +92,12 @@ deploy key scoped to that public output repository. Only the built website is co
 ## The family of websites
 
 This site is one of [Will Cook's websites](https://wcook04.github.io/), which share a
-header ladder ("Will Cook / Lean Exposition"), film slots and a footer list of the
-other sites, as the [family contract](https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md)
+header lockup (the Plectis plait, which opens the home page, a short rule, then this
+site's mark and name), film slots and a footer list of the other sites, as the [family contract](https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md)
 describes. `src/app/family.json` is an unchanged copy of that repository's `sites.json`
 and `src/styles/family.css` of its `assets/family/family.css`; `src/styles/tokens.css`
-maps the stylesheet's `--fam-*` names onto this site's tokens. A film without a
+maps the stylesheet's `--fam-*` names onto this site's tokens. `public/plectis.svg` is an unchanged
+copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A film without a
 YouTube address is held "In preparation". When one is published, copy the updated
 `sites.json` to `src/app/family.json` and the film's two stills
 (`assets/films/<id>-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
@@ -188,7 +189,7 @@ the promised explanation.
 | `src/figures/` | Redrawn paper figures: the mathematical plots and the companion's shared claim, joint inputs and reading journey; the missing-area plot has an optional Explore mode |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
 | `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md). `family.css` is the family's shared stylesheet, copied unchanged |
-| `src/app/` | The frame: routes, the top bar with the family's ladder, the edition's data, the film slot and the sister sites (`FilmSlot.tsx`, `SisterSites.tsx`, from `family.json`) |
+| `src/app/` | The frame: routes, the top bar with the family's lockup, the edition's data, the film slot and the sister sites (`FilmSlot.tsx`, `SisterSites.tsx`, from `family.json`) |
 
 ## Conventions
 
