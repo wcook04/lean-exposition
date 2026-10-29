@@ -94,7 +94,7 @@ describe("running times", () => {
 
 describe("a film slot", () => {
   it("holds a film in preparation with the registration-mark frame and no link", () => {
-    const film = familyFilm("sk-no-gap");
+    const film: FamilyFilm = { ...familyFilm("sk-no-gap"), youtube: null, duration_seconds: null, still: null };
     const host = render(<FilmSlot film={film} size="small" />);
     const figure = host.querySelector("figure")!;
     expect(figure.className).toBe("film-slot film-slot--small film-slot--pending");
@@ -146,7 +146,7 @@ describe("a film slot", () => {
   });
 
   it("switches by itself once the registry gives the film's address and still", () => {
-    const held = familyFilm("interfaces");
+    const held: FamilyFilm = { ...familyFilm("interfaces"), youtube: null, duration_seconds: null, still: null };
     expect(render(<FilmSlot film={held} />).querySelector(".film-slot--pending")).not.toBeNull();
     const released = { ...held, youtube: "https://www.youtube.com/watch?v=abc_123-XY", duration_seconds: 300, still: "assets/films/interfaces" };
     const host = render(<FilmSlot film={released} />);
