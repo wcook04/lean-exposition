@@ -69,6 +69,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
 
   // ---- Following ---------------------------------------------------------------------
 
+  // Every newly opened pane follows; a pause lasts for this open pane only.
   const [following, setFollowing] = useState(true);
   const [paused, setPaused] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -136,8 +137,10 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
   }, []);
 
   const toggleFollowing = () => {
+    // The pending initial frame reads this ref, so a click takes effect at once.
+    followingRef.current = !followingRef.current;
     setPaused(false);
-    setFollowing((v) => !v);
+    setFollowing(followingRef.current);
   };
 
   // ---- Back into the text ------------------------------------------------------------
@@ -173,7 +176,7 @@ export function MapPane({ stage, structures, anchor, records, overlay, inert, on
         <span className="map-pane__state" role="status">
           {paused && !following ? "Paused while you move the map" : anchor && !records.length ? "No record is linked to this passage." : ""}
         </span>
-        <button type="button" className="map-pane__follow" aria-pressed={following} onClick={toggleFollowing}>
+        <button type="button" className="map-pane__follow" aria-pressed={following} title={following ? "Turn off following the text" : "Follow the passage you are reading"} onClick={toggleFollowing}>
           <span className="map-pane__dot" aria-hidden="true" />
           Follow the text
         </button>

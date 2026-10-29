@@ -88,7 +88,8 @@
   transition:
     color var(--t-hover) var(--ease-out),
     border-color var(--t-hover) var(--ease-out),
-    background-color var(--t-hover) var(--ease-out);
+    background-color var(--t-hover) var(--ease-out),
+    box-shadow var(--t-hover) var(--ease-out);
 }
 
 .map-pane__follow:hover {
@@ -108,13 +109,15 @@
 
 .map-pane__follow[aria-pressed="true"] {
   color: var(--ink);
-  border-color: color-mix(in oklab, var(--lit-line) 55%, var(--rule));
-  background: color-mix(in oklab, var(--lit-wash) 55%, transparent);
+  border-color: var(--lit-line);
+  background: var(--lit-wash);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--lit-line) 25%, transparent), 0 0 12px -3px var(--lit-glow);
 }
 
 .map-pane__follow[aria-pressed="true"] .map-pane__dot {
   border-color: var(--lit);
   background: var(--lit);
+  box-shadow: 0 0 7px var(--lit-glow);
 }
 
 .map-pane__open {

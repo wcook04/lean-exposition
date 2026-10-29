@@ -44,7 +44,7 @@ vi.mock("../src/api/client", () => {
   };
 });
 
-const { EditionProvider, useEdition } = await import("../src/app/data");
+const { EditionProvider, useEdition, loadPaperStructure } = await import("../src/app/data");
 
 let root: Root | undefined;
 let host: HTMLDivElement | undefined;
@@ -57,6 +57,16 @@ afterEach(async () => {
 });
 
 describe("loading contract", () => {
+  it("requests the smaller paper structure only for static editions", async () => {
+    try {
+      vi.stubEnv("VITE_STATIC_EDITION", "true");
+      await loadPaperStructure("short");
+      expect(asked.at(-1)).toBe("/papers/short/structure::reader:0");
+      vi.stubEnv("VITE_STATIC_EDITION", "false");
+      await loadPaperStructure("short");
+      expect(asked.at(-1)).toBe("/papers/short/structure:::0");
+    } finally { vi.unstubAllEnvs(); }
+  });
   it("renders on the core, then attaches warrants to the same graph", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     const seen: { context: string; graph: unknown; warrants: number; cites: number }[] = [];

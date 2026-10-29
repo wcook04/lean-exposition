@@ -1,5 +1,79 @@
-import { describe, expect, it } from "vitest";
-import { groupRelationRuns, joinBracketedPieces } from "../src/reader/page/PaperBody";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { groupRelationRuns, joinBracketedPieces, markWideMaths } from "../src/reader/page/PaperBody";
+
+afterEach(() => vi.unstubAllGlobals());
+
+describe("display fitting notifications", () => {
+  it("does not create a resize observer for prose without display maths", () => {
+    const observer = vi.fn();
+    vi.stubGlobal("ResizeObserver", observer);
+    markWideMaths(document.createElement("div"))();
+    expect(observer).not.toHaveBeenCalled();
+  });
+
+  it("avoids DOM writes on duplicate, height-only and scroll notifications, and refits a changed width", () => {
+    let resize: ResizeObserverCallback | undefined;
+    vi.stubGlobal("ResizeObserver", class {
+      constructor(callback: ResizeObserverCallback) { resize = callback; }
+      observe() {} disconnect() {}
+    });
+    const root = document.createElement("div");
+    root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base">x = y</span></span></span></span></div>';
+    const box = root.firstElementChild as HTMLElement;
+    const math = box.querySelector<HTMLElement>(".katex")!;
+    let width = 300;
+    Object.defineProperty(box, "clientWidth", { get: () => width });
+    Object.defineProperty(box, "scrollWidth", { get: () => width });
+    Object.defineProperty(math, "scrollWidth", { get: () => 360 });
+    const stop = markWideMaths(root);
+    const changes = new MutationObserver(() => {});
+    changes.observe(root, { attributes: true, subtree: true, childList: true });
+    const notify = () => resize!([{
+      target: box, contentRect: box.getBoundingClientRect(),
+      borderBoxSize: [], contentBoxSize: [], devicePixelContentBoxSize: [],
+    }], {} as ResizeObserver);
+    notify();
+    box.dispatchEvent(new Event("scroll"));
+    notify();
+    expect(changes.takeRecords()).toHaveLength(0);
+    expect(box.dataset.fit).toBe("scaled");
+    width = 600;
+    notify();
+    expect(changes.takeRecords().length).toBeGreaterThan(0);
+    expect(box.dataset.fit).toBeUndefined();
+    expect(box.style.fontSize).toBe("");
+    changes.disconnect();
+    stop();
+  });
+
+  it("remeasures formula geometry when pending fonts finish loading at the same width", async () => {
+    vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+    let ready!: () => void;
+    const previous = Object.getOwnPropertyDescriptor(document, "fonts");
+    Object.defineProperty(document, "fonts", { configurable: true, value: {
+      status: "loading", ready: new Promise<void>((resolve) => { ready = resolve; }),
+    } });
+    const root = document.createElement("div");
+    root.innerHTML = '<div class="math-display"><span class="katex-display"><span class="katex"><span class="katex-html"><span class="katex-base">x = y</span></span></span></span></div>';
+    const box = root.firstElementChild as HTMLElement;
+    let formulaWidth = 360;
+    Object.defineProperty(box, "clientWidth", { get: () => 300 });
+    Object.defineProperty(box, "scrollWidth", { get: () => 300 });
+    Object.defineProperty(box.querySelector(".katex"), "scrollWidth", { get: () => formulaWidth });
+    const stop = markWideMaths(root);
+    try {
+      expect(box.dataset.fit).toBe("scaled");
+      formulaWidth = 600;
+      ready();
+      await Promise.resolve();
+      expect(box.dataset.fit).toBe("wrap");
+    } finally {
+      stop();
+      if (previous) Object.defineProperty(document, "fonts", previous);
+      else Reflect.deleteProperty(document, "fonts");
+    }
+  });
+});
 
 // KaTeX's output for "A = B (0 ≤ t_1 < t_2 < 1)." in outline: one piece after each relation sign.
 function display(): HTMLElement {

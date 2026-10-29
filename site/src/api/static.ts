@@ -12,6 +12,9 @@ export interface StaticIndex {
   records: string;
   summaries: string;
   search: string;
+  /** Optional per-table files; older captured editions retain the full-table path. */
+  records_by_table?: Record<string, string>;
+  summaries_by_table?: Record<string, string>;
 }
 export interface SearchIndex {
   rows: Row[];
@@ -110,9 +113,17 @@ export async function staticRequest(url: string): Promise<Response> {
   if (document && index.documents[document[1]]) return fetch(root + index.documents[document[1]]);
   if (route === "/search") return envelope(search(await load<SearchIndex>(index.search), params, index.snapshot.manifest_sha256));
   if (route === "/records") {
-    const all = await load<Record<string, Row[]>>(params.get("representation") === "summary" ? index.summaries : index.records);
+    const summary = params.get("representation") === "summary";
     const refs = params.getAll("ref"), table = params.get("table");
-    const rows = (table ? all[table] ?? [] : Object.values(all).flat()).filter((row) => !refs.length || refs.includes(row.ref))
+    const tableFiles = summary ? index.summaries_by_table : index.records_by_table;
+    const tableFile = table && tableFiles && Object.hasOwn(tableFiles, table) ? tableFiles[table] : undefined;
+    let records: Row[];
+    if (tableFile) records = await load<Row[]>(tableFile);
+    else {
+      const all = await load<Record<string, Row[]>>(summary ? index.summaries : index.records);
+      records = table ? all[table] ?? [] : Object.values(all).flat();
+    }
+    const rows = records.filter((row) => !refs.length || refs.includes(row.ref))
       .sort((a, b) => a.ref < b.ref ? -1 : a.ref > b.ref ? 1 : 0);
     return envelope(page(rows, params, route, index.snapshot.manifest_sha256));
   }
@@ -121,14 +132,18 @@ export async function staticRequest(url: string): Promise<Response> {
     const matchParams = new URLSearchParams({ paper: stage, representation: "matches" });
     const [data, structure, document] = await Promise.all([
       load<Row>(index.responses[key(route, matchParams)]),
-      load<Row>(index.responses[`/papers/${stage}/structure`]),
+      load<Row>(index.responses[`/papers/${stage}/structure?representation=reader`] ?? index.responses[`/papers/${stage}/structure`]),
       fetch(root + index.documents[stage]).then((r) => r.arrayBuffer()),
     ]);
     return envelope(selectionMatches(data, structure, new Uint8Array(document), Number(params.get("start")), Number(params.get("end"))));
   }
   const normalized = new URLSearchParams(params);
   normalized.delete("offset"); normalized.delete("limit");
-  const file = index.responses[key(route, normalized)];
+  // Older captured editions retain the complete structure at the original
+  // route; a new reader can still open them without the optional projection.
+  const readerStructure = /^\/papers\/(long|short|expository)\/structure$/.test(route)
+    && normalized.size === 1 && normalized.get("representation") === "reader";
+  const file = index.responses[key(route, normalized)] ?? (readerStructure ? index.responses[route] : undefined);
   if (!file) return Response.json({ error: { code: "not_found", message: "This request is not part of the captured reading website." } }, { status: 404 });
   const data = await load<Row>(file);
   return envelope(Array.isArray(data.items) && "total" in data ? { ...data, ...page(data.items, params, route, index.snapshot.manifest_sha256) } : data);

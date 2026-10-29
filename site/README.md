@@ -61,6 +61,16 @@ casefold rules. Tests compare search results and highlights against the server.
 This transport supports the reading website; it is not a complete hosted API.
 The bundle's draft, review and publication metadata remain visible.
 
+Record requests for one table load only that table's content-addressed file.
+The export retains complete record and summary files for unscoped requests and
+older clients; the reader also accepts captured editions without table files.
+This keeps unused citation data out of the initial paper load without changing
+the available records, pagination, search or edition pinning.
+The static reader also requests a smaller paper structure that retains the
+complete paper, coverage and reading links while omitting the expanded
+correspondence edges and support-reference list. The full structure remains
+available at its original route; older editions and live APIs remain supported.
+
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and
 `site/dist/` are generated output and stay out of the source repository.

@@ -51,12 +51,26 @@ def export(bundle, out):
     for table in TABLES:
         records[table] = complete("/records", table=table)["items"]
     index["records"] = write(records)
-    index["summaries"] = write({t: [app._record_summary(r["ref"]) for r in rows]
-                                for t, rows in records.items()})
+    summaries = {t: [app._record_summary(r["ref"]) for r in rows]
+                 for t, rows in records.items()}
+    index["summaries"] = write(summaries)
+    # Keep the complete tables for unscoped requests and older clients. Readers
+    # asking for one table need not download unrelated citation/check records.
+    index["records_by_table"] = {t: write(rows) for t, rows in records.items()}
+    index["summaries_by_table"] = {t: write(rows) for t, rows in summaries.items()}
     for ref in sorted(app._records):
         capture("/record", ref=ref)
     for stage in STAGES:
         capture(f"/papers/{stage}/structure")
+        # The reading components use the paper, coverage and authored reading
+        # links, not the expanded correspondence graph. Retain the full route
+        # above and opt into this smaller transport representation explicitly.
+        structure = data(f"/papers/{stage}/structure")
+        omitted = ("correspondence_links", "support_record_refs")
+        reader_structure = {k: v for k, v in structure.items() if k not in omitted}
+        reader_structure.update(representation="reader_structure", representation_version="1.0",
+                                omitted_fields=list(omitted))
+        index["responses"][f"/papers/{stage}/structure?representation=reader"] = write(reader_structure)
         index["responses"][f"/papers/{stage}/sections"] = write(complete(f"/papers/{stage}/sections"))
         index["documents"][stage] = write(app._files[f"papers/{stage}.md"], "md")
         capture("/papers/query", paper=stage, representation="matches")

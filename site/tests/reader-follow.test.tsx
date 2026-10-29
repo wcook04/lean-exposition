@@ -150,6 +150,76 @@ describe("MapPane", async () => {
   }
   const toggle = () => container.querySelector<HTMLButtonElement>(".map-pane__follow")!;
 
+  it("starts following before a passage arrives, toggles immediately, and keeps a deliberate pause across passages", () => {
+    show(null);
+    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    expect(toggle().title).toBe("Turn off following the text");
+    act(() => toggle().click());
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    expect(toggle().title).toBe("Follow the passage you are reading");
+    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
+    show("contact-and-gap");
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    show("endpoints");
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    act(() => toggle().click());
+    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    expect(toggle().title).toBe("Turn off following the text");
+    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
+  });
+
+  it("follows again when a paused pane is closed and reopened", () => {
+    show("contact-and-gap");
+    act(() => toggle().click());
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    act(() => root.render(null));
+    show("contact-and-gap");
+    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+  });
+
+  it("keeps following through initial framing, then yields to wheel and drag input immediately", async () => {
+    vi.stubGlobal("ResizeObserver", class {
+      constructor(private cb: (entries: unknown[]) => void) {}
+      observe(el: HTMLElement) {
+        if (el.classList.contains("tree")) this.cb([{ contentRect: { width: 820, height: 900 }, target: el }]);
+      }
+      disconnect() {}
+    });
+    vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }));
+    show("contact-and-gap");
+    // Includes expandAll, the delayed initial passage frame, and late first-fit setup.
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1300)));
+    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    const tree = container.querySelector<HTMLElement>(".map-pane .tree")!;
+    const world = tree.querySelector<HTMLElement>(".tree__world")!;
+    const before = world.style.transform;
+    act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
+    expect(world.style.transform).not.toBe(before);
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
+    act(() => toggle().click());
+    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
+    const beforeDrag = world.style.transform;
+    const mouse = (type: string, clientX: number, clientY: number) => {
+      const event = new MouseEvent(type, { clientX, clientY, bubbles: true });
+      // Vitest's Window proxy is rejected by jsdom's UIEvent constructor.
+      Object.defineProperty(event, "view", { value: window });
+      return event;
+    };
+    act(() => {
+      tree.dispatchEvent(mouse("mousedown", 400, 400));
+      window.dispatchEvent(mouse("mousemove", 450, 420));
+      window.dispatchEvent(mouse("mouseup", 450, 420));
+    });
+    expect(world.style.transform).not.toBe(beforeDrag);
+    expect(toggle().getAttribute("aria-pressed")).toBe("false");
+    expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
+    // d3 suppresses the click following a drag until the next task; let that
+    // capture listener expire before another test clicks in this window.
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+  });
+
   it("follows each passage without folding, pauses when the reader moves the map, and refocuses when turned back on", () => {
     const opened = () => new Set([...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!));
     const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))];

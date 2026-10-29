@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import katex from "katex";
 import type { Stage } from "../src/api/types";
 import { byteOffsetOf, figureKey, prepareDocument, sha256Hex, type PreparedDocument } from "../src/reader/engine";
@@ -65,6 +65,36 @@ function visibleText(html: string): string {
 }
 
 describe("math", () => {
+  it("reuses identical typesetting across parts, separating display math and retaining every error", () => {
+    const source = "$x$. $x$. $\\unknowncommand$\n\n";
+    const tail = "$x$.\n\n$$x$$\n\n$\\unknowncommand$";
+    const split = new TextEncoder().encode(source).length;
+    const bytes = new TextEncoder().encode(source + tail);
+    const doc = prepareDocument({
+      stage: "long", bytes,
+      parts: [
+        { kind: "unmapped_text", span: { start_byte: 0, end_byte: split } },
+        { kind: "unmapped_text", span: { start_byte: split, end_byte: bytes.length } },
+      ],
+      documentPath: DOCUMENT_PATHS.long, documentPaths: DOCUMENT_PATHS,
+    });
+    const typeset = vi.spyOn(katex, "renderToString");
+    try {
+      const first = doc.render(0);
+      const second = doc.render(1);
+      expect(typeset).toHaveBeenCalledTimes(3);
+      expect(dom(first.html).querySelectorAll(".katex")).toHaveLength(2);
+      expect(dom(second.html).querySelectorAll(".katex-display")).toHaveLength(1);
+      expect(first.mathErrors).toHaveLength(1);
+      expect(second.mathErrors).toEqual(first.mathErrors);
+      expect(dom(second.html).querySelector(".tex-fallback")?.textContent).toBe("\\unknowncommand");
+      expect(doc.render(0)).toBe(first);
+      expect(typeset).toHaveBeenCalledTimes(3);
+    } finally {
+      typeset.mockRestore();
+    }
+  });
+
   it("every formula compiles with throwOnError", () => {
     for (const [name, bytes] of [
       ...STAGES.map((s) => [s, documentFixture(s)] as const),

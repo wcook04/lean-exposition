@@ -90,3 +90,150 @@ describe("preview never commits", () => {
     expect(card.querySelector(".card__inputs")!.textContent).toMatch(/^\d+ inputs?/);
   });
 });
+
+// High-rate camera input must not turn into a title/layout pass and a complete
+// card/connector render for every pointer event. Keep the world transform exact,
+// then perform scale-dependent work once at the next animation frame.
+describe("camera display work", () => {
+  function frameQueue() {
+    let serial = 0;
+    const pending = new Map<number, FrameRequestCallback>();
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+      pending.set(++serial, callback);
+      return serial;
+    });
+    vi.stubGlobal("cancelAnimationFrame", (id: number) => pending.delete(id));
+    return (now = performance.now()) => act(() => {
+      const callbacks = [...pending.values()];
+      pending.clear();
+      for (const callback of callbacks) callback(now);
+    });
+  }
+
+  function wheel(deltaX: number, deltaY: number) {
+    act(() => container.querySelector(".tree")!.dispatchEvent(new WheelEvent("wheel", {
+      deltaX, deltaY, clientX: 200, clientY: 150, bubbles: true, cancelable: true,
+    })));
+  }
+
+  it("pans immediately and updates edge controls without refitting or rerendering the cards", () => {
+    const nextFrame = frameQueue();
+    const ref = draw(null);
+    act(() => ref.current!.restoreScene({ camera: { x: 0, y: 0, k: 1 }, expanded: [], mode: "steps" }));
+    nextFrame();
+    const beforeCards = cards();
+    const beforeLines = [...container.querySelectorAll(".hit")];
+    const world = container.querySelector<HTMLElement>(".tree__world")!;
+    const worldX = () => Number(world.style.transform.match(/translate\(([-\d.e+]+)px/)![1]);
+    const beforeX = worldX();
+    const card = container.querySelector<HTMLElement>(".card")!;
+    const titleQueries = vi.spyOn(card, "querySelector");
+    const heights = vi.spyOn(card, "offsetHeight", "get");
+
+    wheel(10000, 0);
+    wheel(10000, 0);
+    const camera = ref.current!.getScene().camera;
+    expect(camera.x).toBeCloseTo(-20000);
+    expect(camera.y).toBe(0);
+    expect(camera.k).toBe(1);
+    expect(worldX()).toBeCloseTo(beforeX - 20000);
+    nextFrame();
+
+    // The chip membership changed across the viewport, but its state belongs
+    // to the small control layer: the card measurement effect never reruns.
+    expect(container.querySelector(".tree__chip--down")).toBeNull();
+    expect(titleQueries).not.toHaveBeenCalled();
+    expect(heights).not.toHaveBeenCalled();
+    expect(cards()).toEqual(beforeCards);
+    expect([...container.querySelectorAll(".hit")]).toEqual(beforeLines);
+    titleQueries.mockRestore();
+    heights.mockRestore();
+  });
+
+  it("coalesces same-representation zooms while keeping the latest camera and all semantic zoom forms", () => {
+    const nextFrame = frameQueue();
+    const ref = draw(null);
+    act(() => ref.current!.restoreScene({ camera: { x: 0, y: 0, k: 1 }, expanded: [], mode: "steps" }));
+    nextFrame();
+    const card = container.querySelector<HTMLElement>(".card")!;
+    const title = card.querySelector<HTMLElement>(".card__ctitle")!;
+    const titleReads = vi.spyOn(title, "textContent", "get");
+    const titleQueries = vi.spyOn(card, "querySelector");
+    wheel(0, -10);
+    wheel(0, -10);
+    const camera = ref.current!.getScene().camera;
+    expect(camera.k).toBeGreaterThan(1);
+    const tree = container.querySelector<HTMLElement>(".tree")!;
+    // Several wheel events before a paint publish one inherited scale, avoiding
+    // a full drawing style flush at the next event's viewport read.
+    expect(tree.style.getPropertyValue("--k")).toBe("1");
+    expect(titleQueries).not.toHaveBeenCalled();
+    expect(titleReads).not.toHaveBeenCalled();
+    nextFrame();
+    expect(Number(tree.style.getPropertyValue("--k"))).toBe(camera.k);
+    expect(titleReads).toHaveBeenCalledTimes(1);
+    expect(titleQueries).not.toHaveBeenCalled();
+    expect(ref.current!.getScene().camera).toEqual(camera);
+
+    const before = cards();
+    for (const [k, representation] of [[0.35, "mark"], [0.65, "compact"], [1, "card"]] as const) {
+      act(() => ref.current!.restoreScene({ camera: { x: 10, y: 20, k }, expanded: [], mode: "steps" }));
+      const readsAfterRepresentationCommit = titleReads.mock.calls.length;
+      nextFrame();
+      // The representation commit already fitted this exact scale. Its pending
+      // camera frame must not read and fit every title a second time.
+      expect(titleReads).toHaveBeenCalledTimes(readsAfterRepresentationCommit);
+      expect(container.querySelector<HTMLElement>(".tree")!.dataset.rep).toBe(representation);
+      expect(cards()).toEqual(before);
+      expect(container.querySelectorAll(".card__open").length).toBe(before.length);
+      expect(ref.current!.getScene().camera.k).toBe(k);
+    }
+    titleQueries.mockRestore();
+    titleReads.mockRestore();
+  });
+
+  it("invalidates cached title measurements when fonts arrive or a rendered label changes", () => {
+    const nextFrame = frameQueue();
+    const originalFonts = Object.getOwnPropertyDescriptor(document, "fonts");
+    const fonts = new EventTarget();
+    Object.defineProperty(document, "fonts", { configurable: true, value: fonts });
+    const localGraph = graphFixture();
+    const ref = createRef<MapViewHandle>();
+    const render = () => act(() => root.render(<ArgumentTree ref={ref} graph={localGraph} goal={goal} insets={insets} onSelect={() => {}} onTrace={() => {}} />));
+    try {
+      render();
+      nextFrame();
+      const card = container.querySelector<HTMLElement>(`.card[data-record="${goal}"]`)!;
+      const title = card.querySelector<HTMLElement>(".card__ctitle")!;
+      const queries = vi.spyOn(card, "querySelector");
+      act(() => fonts.dispatchEvent(new Event("loadingdone")));
+      expect(queries.mock.calls.filter(([selector]) => selector === ".card__ctitle")).toHaveLength(1);
+      queries.mockRestore();
+
+      const styles = vi.spyOn(window, "getComputedStyle");
+      // The same box can retain its dimensions when its authored label changes.
+      localGraph.nodes.get(goal)!.label += " with its updated title";
+      render();
+      expect(title.textContent).toContain("with its updated title");
+      expect(styles.mock.calls.some(([el]) => el === title)).toBe(true);
+      styles.mockRestore();
+    } finally {
+      if (originalFonts) Object.defineProperty(document, "fonts", originalFonts);
+      else Reflect.deleteProperty(document, "fonts");
+    }
+  });
+
+  it("keeps an automatic camera leg and its scale compensation on the same animation frame", () => {
+    const nextFrame = frameQueue();
+    const ref = draw(null);
+    act(() => ref.current!.restoreScene({ camera: { x: 0, y: 0, k: 1 }, expanded: [], mode: "steps" }));
+    nextFrame();
+    act(() => ref.current!.zoomBy(0.9));
+    nextFrame(performance.now() + 100);
+    const camera = ref.current!.getScene().camera;
+    expect(camera.k).toBeLessThan(1);
+    expect(camera.k).toBeGreaterThan(0.9);
+    // No second frame is needed to update screen-size text and line widths.
+    expect(Number(container.querySelector<HTMLElement>(".tree")!.style.getPropertyValue("--k"))).toBe(camera.k);
+  });
+});

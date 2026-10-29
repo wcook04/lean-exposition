@@ -18,6 +18,7 @@ import {
   INLINE_OPEN,
   protectMath,
   renderTex,
+  type MathResult,
   type MathSpan,
 } from "./math";
 import { sanitizeHtml } from "./sanitize";
@@ -566,6 +567,20 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
   const anchorIndex = registry.entries();
   const issues = registry.duplicates.map((d) => `duplicate explicit id "${d.id}" in parts ${d.parts[0]} and ${d.parts[1]}`);
 
+  // Inline symbols recur throughout a paper. Keep a bounded cache on this
+  // prepared document, so later parts can reuse exactly the same KaTeX output
+  // without retaining an unbounded second copy of every unique formula.
+  const mathCache = new Map<string, MathResult>();
+  const typesetSpan = (span: MathSpan): MathResult => {
+    const key = `${span.display ? "display" : "inline"}:${span.tex}`;
+    let result = mathCache.get(key);
+    if (result) mathCache.delete(key);
+    else result = renderTex(span.tex, span.display);
+    mathCache.set(key, result);
+    if (mathCache.size > 256) mathCache.delete(mathCache.keys().next().value!);
+    return result;
+  };
+
   const render = (index: number): RenderedPart => {
     const st = states[index];
     if (!st) throw new RangeError(`no part ${index}`);
@@ -589,7 +604,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     const typeset = (n: string) => {
       const span = st.spans[Number(n)];
       if (!span) return "";
-      const r = renderTex(span.tex, span.display);
+      const r = typesetSpan(span);
       if (r.error) mathErrors.push({ tex: span.tex, message: r.error });
       return r.html;
     };
