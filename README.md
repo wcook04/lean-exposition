@@ -89,7 +89,7 @@ detailed argument and original or formal sources.
 
 ### YouTube walkthroughs
 
-[How different can two nearly best answers be?](https://www.youtube.com/watch?v=VCuznHMNSEs)
+[How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw)
 starts with four magnets and explains the mathematical question.
 [Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
 shows how to follow the papers, assumptions, results and sources on the reading website.

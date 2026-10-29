@@ -26,7 +26,7 @@ want to explore it:
 - **The papers.** The front page's shelf (the header's "Papers") shows each paper's
   first page, who it is for, and links to read it here or open its PDF.
 - **The videos.** [How to use this site](https://www.youtube.com/watch?v=sYMDcT7vyng),
-  near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=VCuznHMNSEs),
+  near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=IUAhxUriDVw),
   at the end of its layers. Both open on YouTube.
 
 Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
