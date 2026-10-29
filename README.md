@@ -245,7 +245,7 @@ Run `python scripts/check_layout.py`, `python scripts/check_links.py` and
 `python -m unittest discover -s tests -v` after a change. Use
 `python scripts/check_layout.py --index` to check the staged tree before committing.
 
-Will Cook made this project as part of [Plectis](https://wcook04.github.io/plectis/),
+Will Cook made this project as part of [Plectis](https://wcook04.github.io/practical-formal-verification/),
 his projects on researching mathematics with AI and on tools that help people
 follow what AI produces. His videos, including walkthroughs of results, are on
 [YouTube](https://www.youtube.com/@willcook2004).
