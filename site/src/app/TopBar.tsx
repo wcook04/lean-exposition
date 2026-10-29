@@ -1,4 +1,4 @@
-// The site's frame: the family's ladder ("Will Cook / Lean Exposition"), four jobs
+// The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), four jobs
 // (Argument map, Read, Papers, Checks), About as a quieter link, search and the
 // scheme. Read is a menu button listing the three accounts with the job each one
 // does; Papers goes to the front page's shelf of the four papers and their PDFs. On
@@ -61,21 +61,23 @@ export function TopBar({ route, onSearch }: Props) {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      {/* The ladder out of this site (docs/family.md): Will Cook's home page lists every website and film. */}
-      <span className="fam-ladder">
-        <a className="fam-ladder__up" href={FAMILY.owner.home} rel="author">
-          {FAMILY.owner.name}
+      {/* The family lockup (docs/family.md): the Plectis plait opens Will Cook's home page,
+          which lists every website and film; the rule parts it from this site's mark and name,
+          which open this site's front page. */}
+      <span className="fam-lockup">
+        <a className="fam-lockup__home" href={FAMILY.owner.home} rel="author" title="All of Will Cook's websites and films">
+          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="Will Cook: all websites and films" width={26} height={26} />
         </a>
-        <span className="fam-ladder__sep" aria-hidden="true">
-          /
-        </span>
-        <a className="wordmark" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
+        <span className="fam-lockup__rule" aria-hidden="true" />
+        <a className="fam-lockup__site" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
           <svg viewBox="0 0 32 32" aria-hidden="true" className="wordmark__mark">
             <path d="M4 27 L4 5 M4 27 L28 27" fill="none" strokeWidth="2" strokeLinecap="round" />
             <path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" strokeWidth="2.6" strokeLinecap="round" />
             <circle cx="16" cy="14" r="3" />
           </svg>
-          <span>Lean Exposition</span>
+          <span className="fam-lockup__name" translate="no">
+            Lean Exposition
+          </span>
         </a>
       </span>
       <nav className="topnav" aria-label="Main">

@@ -36,27 +36,15 @@ html[data-view="map"] .app {
   border-bottom: 1px solid var(--rule);
 }
 
-/* The family's ladder (styles/family.css) holds "Will Cook /" and the wordmark. The
-   wordmark takes its baseline from its name, so the small "Will Cook" sits on the
-   name's line, and its mark stays centred beside the name. */
-.topbar .fam-ladder {
+/* The family's lockup (styles/family.css): the Plectis plait, a short upright rule,
+   then this site's mark and name. The lockup owns the layout and the name's type;
+   the site keeps its own mark, the rising graph in ink with its amber dot. */
+.topbar .fam-lockup {
   flex: none;
-}
-
-.wordmark {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  flex: none;
-  color: var(--ink);
-  text-decoration: none;
-  font-family: var(--font-serif);
-  font-size: 1.1875rem;
-  letter-spacing: -0.005em;
 }
 
 .wordmark__mark {
-  align-self: center;
+  flex: none;
   width: 22px;
   height: 22px;
 }
@@ -343,19 +331,9 @@ html[data-view="map"] .app {
   }
 }
 
-/* Phones: the ladder keeps both rungs; Search keeps its icon and its name for
+/* Phones: the lockup keeps both links; Search keeps its icon and its name for
    assistive technology, and the parts tighten so nothing leaves the bar. */
 @media (max-width: 30em) {
-  .topbar .fam-ladder {
-    gap: 0.35rem;
-  }
-  .topbar .fam-ladder__up {
-    font-size: 0.75rem;
-  }
-  .wordmark {
-    gap: 8px;
-    font-size: 1.0625rem;
-  }
   .wordmark__mark {
     width: 20px;
     height: 20px;
@@ -374,7 +352,7 @@ html[data-view="map"] .app {
   .topbar {
     gap: var(--space-2);
   }
-  .wordmark {
+  .topbar .fam-lockup__name {
     font-size: 1rem;
   }
   .wordmark__mark {
