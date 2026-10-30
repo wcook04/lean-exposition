@@ -100,8 +100,11 @@ export function FrontPage() {
           <figure className="front__plate">
             <TheoremBody goal={goal} lean={false} foot={false} first />
           </figure>
-          {/* How to use this site, as a film: small and beside its title, because its subject is the site, not the result. */}
-          <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
+          {/* The site walkthrough and the mathematics explanation, together at the top. */}
+          <div className="front__films">
+            <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
+            <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
+          </div>
         </div>
       </section>
 
