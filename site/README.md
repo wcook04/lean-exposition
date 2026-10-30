@@ -23,9 +23,8 @@ want to explore it:
   recorded run: passed, failed, unavailable or not run.
 - **The architectural companion.** The About page includes the paper on why
   several accounts share one record, with a link to its standalone PDF.
-- **The papers.** The front page’s reading journey (the header’s "Papers") shows the three
-  accounts and their first pages in a narrowing sequence, followed by the mathematics film.
-  The architectural companion sits separately, with its own reading and PDF links.
+- **The papers.** The front page's shelf (the header's "Papers") shows each paper's
+  first page, who it is for, and links to read it here or open its PDF.
 - **The videos.** [How to use this site](https://www.youtube.com/watch?v=sYMDcT7vyng),
   near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=IUAhxUriDVw),
   at the end of its layers. Both open on YouTube.

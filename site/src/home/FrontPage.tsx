@@ -1,6 +1,6 @@
 // The front page, for a reader arriving for the first time: the theorem in plain
 // words and as the short paper states it, with the film on how to use this site; the
-// reading journey through the papers and the mathematics film; what OpenAI's release asked
+// papers on one shelf, each to read here or open as a PDF; what OpenAI's release asked
 // and proved, with where each result is explained here; the technical explanation
 // behind one disclosure (the problem, how the proof rules out a gap with the
 // exposition's two figures, and what follows); the layers from OpenAI's release down to
@@ -29,7 +29,7 @@ import { countsInWords } from "../checks/summary";
 import { useReadings } from "../ribbons/useReadings";
 import { StripMarks } from "../ribbons/StripMarks";
 import { ArgumentFigure } from "./ArgumentFigure";
-import { ArchitectureCompanion } from "./PaperShelf";
+import { PaperShelf } from "./PaperShelf";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
@@ -50,7 +50,7 @@ const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
 const pdfHref = (stage: Stage) => `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
 
-/** The website walkthrough, mathematics explanation and a related walkthrough. */
+/** The films this site holds a place for, and the released film the mathematics one will be like. */
 const SITE_FILM = familyFilm("interfaces");
 const MATHS_FILM = familyFilm("sk-no-gap");
 const ERDOS_FILM = familyFilm("mathematics");
@@ -100,121 +100,20 @@ export function FrontPage() {
           <figure className="front__plate">
             <TheoremBody goal={goal} lean={false} foot={false} first />
           </figure>
-          {/* The first film demonstrates the site; the mathematics film follows the papers. */}
+          {/* How to use this site, as a film: small and beside its title, because its subject is the site, not the result. */}
           <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
         </div>
       </section>
 
-      {/* The layers, from OpenAI's release down to the shortest account: each one linked,
-          to read on this site or as a PDF. The narrowing shows their order, not their length. */}
-      <section className="front__band papers" id={PAPERS_ANCHOR} aria-labelledby="front-layers">
-        <h2 id="front-layers" className="front__bandtitle">
-          From the sources to an explanation
+      {/* The papers, each to read here or to open as a PDF. */}
+      <section className="front__band papers" id={PAPERS_ANCHOR} aria-labelledby="front-papers">
+        <h2 id="front-papers" className="front__bandtitle">
+          The papers
         </h2>
         <p className="front__text">
-          Three accounts make the argument available to different readers: from a detailed record, through a research paper,
-          to an introduction. The narrowing shows the reading journey, not the papers’ page counts. {shared ?? ""}
+          Each paper can be read on this site or opened as a PDF. {shared ?? ""}
         </p>
-        <ol className="funnel">
-          <li className="funnel__layer" style={{ ["--step" as string]: 0 }}>
-            <div className="funnel__body">
-              <h3 className="funnel__name">OpenAI’s release, family 281</h3>
-              <p className="funnel__what">Two manuscripts dated September 2026, and Lean code for two of their statements.</p>
-            </div>
-            <p className="funnel__links">
-              <Out href={FAMILY_SCOPE}>Family 281 and its Lean scope</Out>
-              <Out href={SUPPORT_PDF}>Full-support manuscript, PDF</Out>
-              <Out href={QAOA_PDF}>QAOA manuscript, PDF</Out>
-              <Out href={LEAN_SOURCE}>Lean source</Out>
-            </p>
-          </li>
-          <li className="funnel__layer" style={{ ["--step" as string]: 1 }}>
-            <div className="funnel__body">
-              <h3 className="funnel__name">The argument map</h3>
-              <p className="funnel__what">
-                {plural(recordCount, "record")} and the {plural(linkCount, "link")} between them: the claims, assumptions and Lean
-                declarations the argument uses, and which result uses which.
-              </p>
-            </div>
-            <p className="funnel__links">
-              <a href={routeHref({ view: "map" })}>Open the argument map</a>
-            </p>
-          </li>
-          {(["long", "short", "expository"] as Stage[]).map((stage, i) => {
-            const paper = edition.overview.papers.find((p) => p.stage === stage);
-            const strip = readings.status === "ready" ? readings.value.strips.find((s) => s.stage === stage) : undefined;
-            const linked = strip?.passages.filter((p) => p.claims.length).length;
-            const pdf = PAPER_PDFS[stage];
-            return (
-              <li key={stage} className={`funnel__layer funnel__layer--paper${pdf.firstPage ? "" : " funnel__layer--no-page"}`} style={{ ["--step" as string]: i + 2 }}>
-                {pdf.firstPage ? (
-                  <a className="shelf__sheet funnel__sheet" href={pdfHref(stage)} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true">
-                    <img src={`${import.meta.env.BASE_URL}${pdf.firstPage.src}`} srcSet={pdf.firstPage.srcSet.split(", ").map((entry) => `${import.meta.env.BASE_URL}${entry}`).join(", ")} sizes="96px" alt="" width={pdf.firstPage.width} height={pdf.firstPage.height} loading="lazy" decoding="async" />
-                  </a>
-                ) : null}
-                <div className="funnel__body">
-                  <h3 className="funnel__name">{PAPER_NAMES[stage].short}</h3>
-                  <p className="funnel__what">
-                    {PAPER_NAMES[stage].job} {PAPER_NAMES[stage].reader}
-                  </p>
-                  <div
-                    className="funnel__strip"
-                    role="img"
-                    aria-label={
-                      linked === undefined
-                        ? `${PAPER_NAMES[stage].short} in reading order`
-                        : `${PAPER_NAMES[stage].short}: ${plural(linked, "passage")} linked to steps of the argument, placed where each falls in the paper and coloured by the source of its steps`
-                    }
-                  >
-                    <StripMarks strip={strip} className="account__bars" />
-                  </div>
-                </div>
-                <p className="funnel__links">
-                  <a href={routeHref({ view: "read", stage })}>
-                    Read it here{paper ? `, ${plural(paper.sections, "section")}` : ""}
-                  </a>
-                  <a href={pdfHref(stage)} target="_blank" rel="noopener">
-                    Open PDF, {plural(pdf.pages, "page")}
-                    <span className="sr-only">: {PAPER_NAMES[stage].short}</span>
-                  </a>
-                </p>
-              </li>
-            );
-          })}
-          {/* The last layer: the film on the mathematics. */}
-          <li className="funnel__layer funnel__layer--film" style={{ ["--step" as string]: 5 }}>
-            <p className="funnel__film-label">Watch the mathematical explanation</p>
-            <FilmSlot film={MATHS_FILM} className="funnel__film" sizes="(min-width: 1100px) 360px, (min-width: 700px) 40vw, 100vw" />
-            {ERDOS_FILM.youtube ? (
-              <p className="funnel__videonote">
-                For another mathematical walkthrough, see {AUTHOR}’s{" "}
-                <Out href={ERDOS_FILM.youtube}>
-                  {minutesOf(ERDOS_FILM) ? `${minutesOf(ERDOS_FILM)}-minute ` : ""}walkthrough of Erdős problem #257
-                </Out>
-                .
-              </p>
-            ) : null}
-          </li>
-        </ol>
-        <ArchitectureCompanion />
-        <SourceSwatches origins={graph.origins} className="front__sources front__sources--inline" />
-        <ul className="elsewhere">
-          <li>
-            <Out href={LINKS.atlasFamily}>Plectis Atlas, family 281</Out> is this family’s page on Plectis Atlas, another of{" "}
-            {AUTHOR}’s websites: OpenAI’s two papers, their theorems beside the Lean statements, and what outside groups report
-            about them.
-          </li>
-          <li>
-            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
-            instructions for running the tools and building this website.
-          </li>
-          <li>
-            <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, as part of{" "}
-            <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help
-            people follow what AI produces. How this site fits with his other projects, with links to his videos, is on the
-            About page.
-          </li>
-        </ul>
+        <PaperShelf />
       </section>
 
       {/* What was asked and proved, for any mathematical reader. Each answer and attribution
@@ -279,6 +178,111 @@ export function FrontPage() {
           </summary>
           <TechnicalExplanation />
         </details>
+      </section>
+
+      {/* The layers, from OpenAI's release down to the shortest account: each one linked,
+          to read on this site or as a PDF. The narrowing shows their order, not their length. */}
+      <section className="front__band" aria-labelledby="front-layers">
+        <h2 id="front-layers" className="front__bandtitle">
+          From OpenAI’s release to the exposition
+        </h2>
+        <p className="front__text">
+          The layers run from OpenAI’s release and its Lean code down to the exposition and a film about the mathematics.
+          Read the papers on this site or as PDFs, and watch the film on YouTube.
+        </p>
+        <ol className="funnel">
+          <li className="funnel__layer" style={{ ["--step" as string]: 0 }}>
+            <div className="funnel__body">
+              <h3 className="funnel__name">OpenAI’s release, family 281</h3>
+              <p className="funnel__what">Two manuscripts dated September 2026, and Lean code for two of their statements.</p>
+            </div>
+            <p className="funnel__links">
+              <Out href={FAMILY_SCOPE}>Family 281 and its Lean scope</Out>
+              <Out href={SUPPORT_PDF}>Full-support manuscript, PDF</Out>
+              <Out href={QAOA_PDF}>QAOA manuscript, PDF</Out>
+              <Out href={LEAN_SOURCE}>Lean source</Out>
+            </p>
+          </li>
+          <li className="funnel__layer" style={{ ["--step" as string]: 1 }}>
+            <div className="funnel__body">
+              <h3 className="funnel__name">The argument map</h3>
+              <p className="funnel__what">
+                {plural(recordCount, "record")} and the {plural(linkCount, "link")} between them: the claims, assumptions and Lean
+                declarations the argument uses, and which result uses which.
+              </p>
+            </div>
+            <p className="funnel__links">
+              <a href={routeHref({ view: "map" })}>Open the argument map</a>
+            </p>
+          </li>
+          {(["long", "short", "expository"] as Stage[]).map((stage, i) => {
+            const paper = edition.overview.papers.find((p) => p.stage === stage);
+            const strip = readings.status === "ready" ? readings.value.strips.find((s) => s.stage === stage) : undefined;
+            const linked = strip?.passages.filter((p) => p.claims.length).length;
+            const pdf = PAPER_PDFS[stage];
+            return (
+              <li key={stage} className="funnel__layer" style={{ ["--step" as string]: i + 2 }}>
+                <div className="funnel__body">
+                  <h3 className="funnel__name">{PAPER_NAMES[stage].short}</h3>
+                  <p className="funnel__what">
+                    {PAPER_NAMES[stage].job} {PAPER_NAMES[stage].reader}
+                  </p>
+                  <div
+                    className="funnel__strip"
+                    role="img"
+                    aria-label={
+                      linked === undefined
+                        ? `${PAPER_NAMES[stage].short} in reading order`
+                        : `${PAPER_NAMES[stage].short}: ${plural(linked, "passage")} linked to steps of the argument, placed where each falls in the paper and coloured by the source of its steps`
+                    }
+                  >
+                    <StripMarks strip={strip} className="account__bars" />
+                  </div>
+                </div>
+                <p className="funnel__links">
+                  <a href={routeHref({ view: "read", stage })}>
+                    Read it here{paper ? `, ${plural(paper.sections, "section")}` : ""}
+                  </a>
+                  <a href={pdfHref(stage)} target="_blank" rel="noopener">
+                    Open PDF, {plural(pdf.pages, "page")}
+                    <span className="sr-only">: {PAPER_NAMES[stage].short}</span>
+                  </a>
+                </p>
+              </li>
+            );
+          })}
+          {/* The last layer: the film on the mathematics. */}
+          <li className="funnel__layer funnel__layer--film" style={{ ["--step" as string]: 5 }}>
+            <FilmSlot film={MATHS_FILM} className="funnel__film" sizes="(min-width: 1100px) 360px, (min-width: 700px) 40vw, 100vw" />
+            {ERDOS_FILM.youtube ? (
+              <p className="funnel__videonote">
+                For another mathematical walkthrough, see {AUTHOR}’s{" "}
+                <Out href={ERDOS_FILM.youtube}>
+                  {minutesOf(ERDOS_FILM) ? `${minutesOf(ERDOS_FILM)}-minute ` : ""}walkthrough of Erdős problem #257
+                </Out>
+                .
+              </p>
+            ) : null}
+          </li>
+        </ol>
+        <SourceSwatches origins={graph.origins} className="front__sources front__sources--inline" />
+        <ul className="elsewhere">
+          <li>
+            <Out href={LINKS.atlasFamily}>Plectis Atlas, family 281</Out> is this family’s page on Plectis Atlas, another of{" "}
+            {AUTHOR}’s websites: OpenAI’s two papers, their theorems beside the Lean statements, and what outside groups report
+            about them.
+          </li>
+          <li>
+            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
+            instructions for running the tools and building this website.
+          </li>
+          <li>
+            <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, as part of{" "}
+            <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help
+            people follow what AI produces. How this site fits with his other projects, with links to his videos, is on the
+            About page.
+          </li>
+        </ul>
       </section>
 
       {/* Wide: the words and key on the left, the drawing beside them. Narrow: in reading order. */}
