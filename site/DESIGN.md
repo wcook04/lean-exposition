@@ -230,11 +230,9 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   increases across every interval in [0, 1) with a positive derivative); one quieter
   line saying what the site holds; the one filled button ("Read the exposition") and
   "Open the argument map"; beside them the first sentence of Theorem 1 as the short
-  paper typesets it, labelled as its first part, and under it the film on how to use
-  this site, small and beside its title, because its subject is the site rather than
-  the result. Where the plate and the film together would stand taller than the words
-  beside them (about 1100 to 1240px), the film takes its own row under both, so the
-  statement arriving never moves the page.
+  paper typesets it, labelled as its first part. Below it, the website walkthrough and
+  mathematics film appear together, each with its thumbnail and title. On narrower
+  screens they follow the theorem in the reading order.
 - **Then, in order:** the papers on one shelf (the exposition, the short paper, the
   long record and, smaller, the architectural companion), each standing as its real
   first page with one line on who it is for, "Read it here" and "Open PDF, N pages"

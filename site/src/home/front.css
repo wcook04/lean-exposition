@@ -15,10 +15,8 @@ html[data-view="home"] {
 
 /* ---- Hero: the title, one sentence, two actions; the statement beside them. ---- */
 
-/* The right column holds the plate and the site film. At 6:5 it stays shorter than the
-   words beside it from about 1240px up, and below that the film takes its own row (see
-   the rule before "Narrower windows"), so the plate's statement arriving never moves
-   the page below it. */
+/* The right column holds the theorem and both films. At intermediate widths the
+   films take a full row beneath the introduction and theorem. */
 .front__hero {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
@@ -99,13 +97,16 @@ html[data-view="home"] {
   color: var(--ink-2);
 }
 
-/* The theorem's plate, and under it the film on how to use this site
-   (styles/family.css): a small frame beside its title, so the hero keeps its height
-   and the theorem, the actions and the film share the first screen. */
+/* Below the theorem, the two films use the family's small thumbnail and title layout. */
 .front__aside {
   display: grid;
   gap: 28px;
   min-width: 0;
+}
+
+.front__films {
+  display: grid;
+  gap: 18px;
 }
 
 .front__film {
@@ -905,9 +906,7 @@ html[data-view="home"] {
   }
 }
 
-/* Between the stacked hero and a wide window the plate and the film together would
-   stand taller than the words beside them, so the plate's statement arriving would
-   move the page: here the film takes its own row under both columns. */
+/* Between the stacked hero and a wide window, put both films under the two columns. */
 @media (min-width: 68.8125em) and (max-width: 77.5em) {
   .front__hero {
     grid-template-areas:
@@ -924,7 +923,7 @@ html[data-view="home"] {
   .front__plate {
     grid-area: plate;
   }
-  .front__film {
+  .front__films {
     grid-area: film;
   }
 }
