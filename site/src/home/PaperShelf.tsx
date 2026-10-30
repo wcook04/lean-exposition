@@ -1,5 +1,4 @@
-// The papers on one shelf: the three accounts, from the most introductory to the most
-// detailed, then the architectural companion, smaller, as the paper about the others.
+// The architectural companion stands apart from the three mathematical accounts.
 // Each stands as its real first page (rendered from the PDF the link opens, by
 // scripts/render-paper-pages.py), with its name, one line on who it is for from the
 // site's own descriptions, and two actions: read it on this site, or open its PDF in a
@@ -7,7 +6,6 @@
 
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { routeHref } from "../app/router";
-import { PAPER_NAMES } from "../app/papers";
 
 type PaperKey = keyof typeof PAPER_PDFS;
 
@@ -21,16 +19,9 @@ interface ShelfPaper {
 }
 
 const SHELF: ShelfPaper[] = [
-  ...(["expository", "short", "long"] as const).map((stage) => ({
-    key: stage,
-    name: PAPER_NAMES[stage].short,
-    who: PAPER_NAMES[stage].reader,
-    read: routeHref({ view: "read", stage }),
-  })),
   {
     key: "architecture",
     name: "Architectural companion",
-    // The About page's description of the companion, as a line on who it is for.
     who: "Written for readers who want to know why the result is written up as three accounts linked to one set of records, and how those records and links are made.",
     read: routeHref({ view: "about", anchor: "companion" }),
     companion: true,
@@ -40,8 +31,13 @@ const SHELF: ShelfPaper[] = [
 const base = import.meta.env.BASE_URL;
 const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? "" : "s"}`;
 
-export function PaperShelf() {
+export function ArchitectureCompanion() {
   return (
+    <aside className="companion" aria-labelledby="companion-heading">
+      <div>
+        <h3 id="companion-heading">About the three accounts</h3>
+        <p>A separate paper on how the accounts and their shared records are made.</p>
+      </div>
     <ul className="shelf">
       {SHELF.map((paper) => {
         const pdf = PAPER_PDFS[paper.key];
@@ -81,5 +77,6 @@ export function PaperShelf() {
         );
       })}
     </ul>
+    </aside>
   );
 }

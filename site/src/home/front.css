@@ -624,7 +624,7 @@ html[data-view="home"] {
    the order of the layers, not their length; each layer prints its real size. ---- */
 
 .funnel {
-  --inset: 3.2%;
+  --inset: 5%;
   display: grid;
   gap: 8px;
   margin: 28px 0 0;
@@ -643,6 +643,49 @@ html[data-view="home"] {
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: var(--radius-m);
+}
+
+.funnel__layer--paper {
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+}
+
+.funnel__layer--no-page {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.funnel .funnel__sheet {
+  width: 76px;
+}
+
+.funnel__film-label {
+  margin: 0 0 4px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.companion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.companion h3 {
+  margin: 0;
+  font: 500 1.3125rem/1.25 var(--font-serif);
+}
+
+.companion > div > p {
+  color: var(--ink-2);
+  max-width: 34em;
+}
+
+.companion .shelf {
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
 }
 
 .funnel__name {
@@ -980,6 +1023,14 @@ html[data-view="home"] {
     grid-template-columns: minmax(0, 1fr);
     padding: 14px 16px;
   }
+  .funnel__layer--paper {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+  .funnel__layer--no-page { grid-template-columns: minmax(0, 1fr); }
+  .funnel .funnel__sheet { width: 64px; grid-row: span 2; }
+  .funnel__layer--paper .funnel__links { grid-column: 2; }
+  .funnel__layer--no-page .funnel__links { grid-column: auto; }
+  .companion { grid-template-columns: minmax(0, 1fr); }
   .funnel__layer--film {
     padding: 14px 0 0;
   }

@@ -235,22 +235,7 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   the result. Where the plate and the film together would stand taller than the words
   beside them (about 1100 to 1240px), the film takes its own row under both, so the
   statement arriving never moves the page.
-- **Then, in order:** the papers on one shelf (the exposition, the short paper, the
-  long record and, smaller, the architectural companion), each standing as its real
-  first page with one line on who it is for, "Read it here" and "Open PDF, N pages"
-  (the header's "Papers" opens this shelf); what OpenAI's release asked and proved, as
-  three plain questions, each answered with who proved it, where each account explains
-  it, and its argument on the map; the technical explanation behind one disclosure (the
-  problem beside the exposition's gap figure, how the proof rules out a gap beside its
-  area figure, and what follows); the layers from OpenAI's release (family 281, its
-  manuscripts and Lean source) through the argument map, the long record, the short
-  paper and the exposition to the film on the mathematics (in preparation, planned like
-  Will Cook's walkthrough of Erdős problem #257), drawn as a stepped funnel whose
-  narrowing shows their order and not their length, each layer linked to read here or
-  as a PDF with its real page count, followed by Plectis Atlas's family page, the source
-  repository and who made the site; the argument map's drawing and key; and what has
-  been checked, stated literally. The footer names Will Cook and Plectis, then lists his
-  other websites.
+- **Then, in order:** the reading journey from OpenAI’s release and the argument map through the long record, short paper and exposition to the mathematics film. The three accounts use their real first pages and link to the reader and PDF. The narrowing communicates the order of the journey, not page counts or a claim that the accounts were written in a strictly linear sequence. The architectural companion is a separate paper about the accounts and their shared records. Then come the questions and results, the technical explanation, the map and the recorded checks.
 - **Who made the site.** The About page ends with it: Will Cook, Plectis and the two
   projects closest to this one (the maths map and Plectis Atlas), the two films about
   this result in preparation, the videos most related to this result, his channel,
