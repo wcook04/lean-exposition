@@ -1,9 +1,9 @@
-/* The argument map beside the paper (MapPane.tsx). From 1280px the reader stops
-   centring: the paper at its measure (at least half the window's width from 1280
-   to 1500px, where the outline folds into "Sections"), then the map pane to the
-   right edge, full height under the top bar. Above 1500px the outline returns and
-   the paper yields to keep the pane at 600px. Below 1280px nothing here applies:
-   the map opens as a sheet. */
+/* The right page (MapPane.tsx). From 1280px the reader stops centring: the paper at its
+   measure (at least half the window's width from 1280 to 1500px, where the outline folds
+   into "Sections"), then the right page to the window's edge, full height under the top
+   bar. Above 1500px the outline returns and the paper yields to keep the page at 600px.
+   The graph stands above the Lean; from 860px of page they stand side by side, the Lean
+   next to the paper. Below 1280px it opens as a sheet. */
 
 .reader.reader--follow {
   grid-template-columns: minmax(0, min(var(--reader-measure), 50vw)) minmax(0, 1fr);
@@ -27,15 +27,116 @@
 }
 
 .map-pane {
+  --lean-share: 0.5;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   flex: 1;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
   min-width: 0;
   min-height: 0;
   background: var(--ground);
   border-left: 1px solid var(--rule);
   overflow: hidden;
+  container: right-page / inline-size;
+}
+
+.map-pane__pages {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+}
+
+.map-pane--both .map-pane__pages {
+  grid-template-rows: minmax(0, 1fr) 11px minmax(0, calc(var(--lean-share) * 100%));
+}
+
+.map-pane__graph {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  container: graph / size;
+}
+
+/* The drag handle: the graph and the Lean share one edge. */
+.map-pane__handle {
+  display: grid;
+  place-items: center;
+  border-block: 1px solid var(--rule);
+  background: var(--ground);
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.map-pane__handle span {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.map-pane__handle:hover span,
+.map-pane.is-dragging .map-pane__handle span {
+  background: var(--ink-3);
+}
+
+.map-pane.is-dragging {
+  user-select: none;
+}
+
+.map-pane__reopen {
+  justify-self: end;
+  min-height: 28px;
+  margin: var(--space-1) var(--space-3);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+.map-pane__reopen:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+@container right-page (min-width: 860px) {
+  /* Side by side, with the Lean next to the paper it answers. */
+  .map-pane--both .map-pane__pages {
+    grid-template-columns: minmax(0, calc(var(--lean-share) * 100%)) 11px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .map-pane__pages .lean-page {
+    order: 1;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .map-pane--both .map-pane__pages .map-pane__handle {
+    order: 2;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .map-pane--both .map-pane__pages .map-pane__graph {
+    order: 3;
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .map-pane__handle {
+    border-block: 0;
+    border-inline: 1px solid var(--rule);
+    cursor: ew-resize;
+  }
+  .map-pane__handle span {
+    width: 3px;
+    height: 40px;
+  }
 }
 
 /* ---- Header ---------------------------------------------------------------------- */
@@ -189,30 +290,6 @@
   background: var(--sunk);
 }
 
-/* In the flow above the canvas, so the canvas's own notes and chips never cover it. */
-.map-pane__notice {
-  position: relative;
-  z-index: 3;
-  margin: var(--space-3) var(--space-4) 0;
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-  background: var(--surface);
-  box-shadow: var(--card-shadow);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-  animation: map-pane-in var(--t-reveal) var(--ease-out) backwards;
-}
-
-.map-pane__notice a {
-  color: var(--ink);
-}
-
 /* ---- Canvas ---------------------------------------------------------------------- */
 
 /* Everything under the header: the canvas, the notice and the inspector laid over it. */
@@ -244,30 +321,6 @@
   transition: opacity var(--t-state) var(--ease-out);
 }
 
-/* ---- The passage inspector, over the right of the pane ------------------------- */
-
-.reader__map .reader__inspector--over {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--reader-inspector);
-  height: auto;
-  border: 0;
-  border-left: 1px solid var(--rule);
-  border-radius: 0;
-  box-shadow: var(--shadow-sheet);
-  animation: map-pane-slide var(--t-reveal) var(--ease-out) backwards;
-}
-
-@keyframes map-pane-slide {
-  from {
-    opacity: 0;
-    transform: translateX(8px);
-  }
-}
-
 @keyframes map-pane-in {
   from {
     opacity: 0;
@@ -290,50 +343,11 @@
   background: var(--sunk);
 }
 
-/* A card chosen in the map: its passage's margin mark flashes amber once. */
-.part--mapped.part--flash::before {
-  animation: part-flash 1100ms var(--ease-out);
-}
-
-@keyframes part-flash {
-  0%,
-  45% {
-    opacity: 1;
-    background: var(--lit);
-    box-shadow: 0 0 0 2px var(--lit-wash);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .map-pane__canvas,
   .map-pane__canvas .tree {
     transition: none;
   }
-  .map-pane__notice,
-  .record-dock--docked,
-  .reader__map .reader__inspector--over {
-    animation: none;
-  }
-  .part--mapped.part--flash::before {
-    animation: none;
-    opacity: 1;
-    background: var(--lit);
-  }
-}
-
-.map-pane__dismiss {
-  margin-left: auto;
-  padding: 0 var(--space-1);
-  border: 0;
-  background: none;
-  font-size: 1.1em;
-  line-height: 1;
-  color: var(--ink-3);
-  cursor: pointer;
-}
-
-.map-pane__dismiss:hover {
-  color: var(--ink);
 }
 
 /* What the tints on this map mean; the same order as the path through the paper. */
@@ -399,74 +413,301 @@
   box-shadow: 0 0 0 1px var(--lit-line);
 }
 
-/* ---- The record sheet, docked under the map -------------------------------------- */
+.map-pane .card[data-trail="pinned"] {
+  border-color: var(--lit-line);
+  background: var(--lit-wash);
+  box-shadow: 0 0 0 2px var(--lit-line);
+}
 
-.record-dock {
+/* ---- The graph on a short page ---------------------------------------------------- */
+
+@container graph (max-height: 300px) {
+  .map-pane__row--trail {
+    display: none;
+  }
+}
+
+/* ---- The Lean page ---------------------------------------------------------------- */
+
+.lean-page {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
   background: var(--surface);
+  font-family: var(--font-sans);
 }
 
-.record-dock--docked {
-  --dock-share: 0.5;
-  position: absolute;
-  z-index: 3;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(var(--dock-share) * 100%);
-  border-top: 1px solid var(--rule-strong);
-  box-shadow: var(--shadow-sheet);
-  animation: map-pane-rise var(--t-reveal) var(--ease-out) backwards;
-}
-
-.record-dock__handle {
-  flex: none;
-  display: grid;
-  place-items: center;
-  height: 14px;
-  margin-top: -1px;
-  cursor: ns-resize;
-  touch-action: none;
-}
-
-.record-dock__handle span {
-  width: 40px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--rule-strong);
-  transition: background-color var(--t-hover) var(--ease-out);
-}
-
-.record-dock__handle:hover span,
-.record-dock.is-dragging .record-dock__handle span {
-  background: var(--ink-3);
-}
-
-.record-dock__bar {
+.lean-page__head {
   flex: none;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 2px var(--space-4);
-  min-height: 32px;
-  padding: 0 var(--space-2) var(--space-1) var(--space-4);
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 2px var(--space-2) 2px var(--space-4);
   border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.lean-page__state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  margin: 0;
+}
+
+.lean-page__words {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lean-page__words strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lean-page__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+}
+
+.lean-page__state[data-via="follow"] .lean-page__dot {
+  border-color: var(--ink-2);
+  background: var(--ink-2);
+}
+
+/* Amber: this is what you are looking at, and it stays. */
+.lean-page__state[data-via="pin"] .lean-page__dot {
+  border-color: var(--lit-line);
+  background: var(--lit-line);
+}
+
+.lean-page__action {
+  flex: none;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.lean-page__action:hover,
+.lean-page__action[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+.lean-page__close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.lean-page__close:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
+.lean-page__body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lean-page__body:focus {
+  outline: none;
+}
+
+.lean-page__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+  color: var(--ink);
+}
+
+.lean-page__role {
+  margin: 2px 0 var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.lean-page__plain {
+  margin: var(--space-2) 0;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink);
+}
+
+.lean-page__note {
+  margin: var(--space-2) 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.lean-page__plain kbd {
+  padding: 0 4px;
+  border: 1px solid var(--rule-control);
+  border-radius: 3px;
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
 }
 
-.record-dock__map {
+/* One step can have several declarations: their names, and one shown at a time. */
+.lean-page__rows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-2);
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.lean-page__rows button {
+  min-height: 26px;
+  padding: 0 var(--space-1);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.lean-page__rows button code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+
+.lean-page__rows button:hover {
+  color: var(--ink);
+}
+
+.lean-page__rows button[aria-pressed="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--lit-line);
+}
+
+.lean-page__topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lean-page__topics button {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 30px;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lean-page__topics button:hover {
+  color: var(--lit);
+}
+
+.lean-page__has {
+  flex: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.lean-page__places {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+}
+
+.lean-page__label {
+  margin: 0 0 2px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.lean-page__places ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lean-page__places a,
+.lean-page__map {
   color: var(--ink-2);
   text-decoration: underline;
   text-decoration-color: var(--rule-strong);
   text-underline-offset: 0.2em;
 }
 
-.record-dock__map:hover {
+.lean-page__places a:hover,
+.lean-page__map:hover {
   color: var(--ink);
   text-decoration-color: currentColor;
+}
+
+.lean-page__map {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+}
+
+.lean-page .panel {
+  position: static;
+  width: auto;
+  height: auto;
+  max-height: none;
+  padding: 0 0 var(--space-5);
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.lean-page .panel__title {
+  font-size: var(--fs-h3);
+}
+
+.lean-page .reader__inspector,
+.lean-page .inspector {
+  position: static;
+  width: auto;
+  height: auto;
+  border: 0;
+  box-shadow: none;
+}
+
+.lean-page__body:has(> .reader__inspector) {
+  padding: 0;
 }
 
 .visit__comparepapers {
@@ -483,83 +724,77 @@
   text-decoration-color: currentColor;
 }
 
-.record-dock__close {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 28px;
-  margin-left: auto;
-  padding: 0 var(--space-2);
-  border: 0;
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink-2);
-  font: inherit;
-  cursor: pointer;
-}
+/* ---- The right page as a sheet ----------------------------------------------------- */
 
-.record-dock__close:hover {
-  color: var(--ink);
-  background: var(--sunk);
-}
-
-.record-dock__scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.record-dock .panel {
-  position: static;
-  width: auto;
-  height: auto;
-  max-height: none;
-  padding: 0 var(--space-4) var(--space-5);
-  border: 0;
-  box-shadow: none;
-  background: transparent;
-}
-
-.record-dock .panel__title {
-  font-size: var(--fs-h3);
-}
-
-@keyframes map-pane-rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-
-/* ---- The map as a sheet ----------------------------------------------------------- */
-
-.modal--map .modal__box {
-  height: 100%;
-}
-
-.modal--map .modal__body {
+.right-sheet {
+  position: fixed;
+  z-index: 40;
   display: flex;
-  flex: 1;
-  min-height: 0;
-  padding: 0;
+  background: var(--ground);
+  animation: map-pane-in var(--t-reveal) var(--ease-out) backwards;
 }
 
-.modal--map .map-pane {
+.right-sheet:focus {
+  outline: none;
+}
+
+.right-sheet--side {
+  top: var(--topbar-h);
+  right: 0;
+  bottom: 0;
+  width: min(680px, 64vw);
+  border-left: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-sheet);
+}
+
+.right-sheet--phone {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60dvh;
+  border-top: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-sheet);
+}
+
+.right-sheet .map-pane {
   border-left: 0;
 }
 
-/* Wide enough for labelled tiles; a phone's sheet takes the whole width anyway. */
-.modal--map.modal--side-end {
-  width: min(720px, 92vw);
-  max-width: none;
-}
-
-.modal--record.modal--side-end {
-  width: min(560px, 92vw);
-  max-width: none;
-}
-
-.modal--record .modal__body {
+.right-sheet__close {
+  position: absolute;
+  z-index: 2;
+  top: 4px;
+  right: var(--space-2);
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
   padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.right-sheet .lean-page__head {
+  padding-right: 44px;
+}
+
+.right-sheet__wait {
+  margin: auto;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+/* The last line of the paper can still scroll clear of the sheet. */
+html[data-right-sheet] .reader__paper {
+  padding-bottom: 62dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .right-sheet {
+    animation: none;
+  }
 }

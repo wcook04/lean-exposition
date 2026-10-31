@@ -1,29 +1,30 @@
-// The argument map beside the paper, from 1280px, and as a sheet on narrower
-// screens. It opens with every branch drawn: records this paper discusses at full
-// strength, the rest quieter. It follows what the reader is reading: as a passage
-// settles under the reading line, the map frames that passage's records and
-// outlines them in amber, and records already passed stay tinted, so the map shows
-// the paper's path and how far along it the reader is. The reader stays in charge:
-// panning, zooming or unfolding pauses following. Choosing a card scrolls the text
-// to its best passage and opens the record in a sheet docked under the map; for a
-// record this paper does not discuss, it also says which paper does.
+// The right page: the graph above the Lean, or beside it where the page is at least 860px
+// wide, with a drag handle between them. Either can be closed and the choice is remembered.
+// It opens with every branch drawn, records this paper discusses at full strength and the
+// rest quieter, and it follows the reader: as a statement settles under the reading line its
+// card lights, the camera moves only if the card has left the view, and its Lean fills the
+// Lean page. Records already passed stay tinted. Panning or zooming pauses the camera. Under
+// 1280px the same page opens as a sheet.
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
-import type { AlignedStatement, Alignment } from "../../api/lean";
+import type { Alignment } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref } from "../../app/router";
-import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
+import { PAPER_NAMES } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
-import { bestSlice, firstPassageFor, type Structures } from "./model";
-import { RecordDock, readDockShare, type OpenRecord } from "./RecordDock";
+import { passageTopics, statementFor, type TieModel } from "../ties";
+import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
+import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, readPanes, saveDockShare, savePanes, type LeanView, type Panes } from "./RecordDock";
+import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
+import { useSignal, useSlowSignal } from "./signal";
 import "./map-pane.css";
 
-/** The inspector's width when it slides in over the pane (--reader-inspector). */
-const INSPECTOR_W = 336;
+/** From this page width the Lean stands beside the graph, next to the paper. */
+const SIDE_BY_SIDE = 860;
 /** --t-state: the canvas crossfades when the main result changes. */
 const CROSSFADE_MS = 160;
 
@@ -36,57 +37,58 @@ export type PaneHover = (ids: ReadonlySet<string> | null) => void;
 interface Props {
   stage: Stage;
   structures: Structures;
-  /** The passage being followed (already settled under the reading line), or null before any. */
-  anchor: string | null;
-  /** The records to light: those of the statement under the reading line, or else of the passage. */
-  records: readonly string[];
-  /** All the records of the passage, which decide the main result. Defaults to `records`. */
-  passage?: readonly string[];
-  /** Records reached earlier in the paper, tinted on the map. */
-  passed?: ReadonlySet<string>;
-  /** "§3 of 8, 14 of 37 records so far". */
-  progress?: string;
+  outline: OutlineEntry[];
+  trail: PaperTrail;
+  /** What changes as the reader reads; the page re-renders here, never above. */
+  signals: ReaderSignals;
+  ties: TieModel;
+  /** What the address has pinned. */
+  pin: Pin | null;
   alignment?: Alignment | null;
-  /** The record open in the docked sheet. */
-  record?: OpenRecord | null;
-  /** Filled by the pane: the paper's record chips light cards through it. */
+  /** Filled by the pane: the paper's statements light cards through it. */
   hoverRef?: MutableRefObject<PaneHover | null>;
-  /** The passage inspector, drawn over the right of the pane. */
-  overlay?: ReactNode;
+  /** Stands in on the Lean page: the passage inspector. */
+  leanSlot?: ReactNode;
   inert?: boolean;
-  /** The pane fills a modal, which has its own title and close control. */
+  /** The page fills a sheet, which has its own close control. */
   inModal?: boolean;
   onHide(): void;
-  /** A card was chosen: open the record and take the text to its best slice, else this passage, if it has one. */
-  onRecord?(id: string, anchor: string | null, slice: AlignedStatement | null): void;
-  onCloseRecord?(): void;
+  /** A card or list item was chosen. */
+  onRecord?(id: string): void;
+  onRelease(): void;
+  onPoint(tie: number | null, record?: string): void;
   passageHref?(stage: Stage, anchor: string): string;
 }
 
-export const MapPane = memo(function MapPane({
-  stage,
-  structures,
-  anchor,
-  records,
-  passage = records,
-  passed,
-  progress,
-  alignment = null,
-  record = null,
-  hoverRef,
-  overlay,
-  inert,
-  inModal,
-  onHide,
-  onRecord,
-  onCloseRecord,
-  passageHref,
-}: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const reduced = useReducedMotion();
   const treeRef = useRef<MapViewHandle>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
+
+  // ---- What the reader is on ---------------------------------------------------------
+
+  const follow = useSlowSignal(signals.follow);
+  const pointed = useSignal(signals.point);
+  const caption = useSignal(signals.caption);
+  const preview = useSignal(rightPreview);
+  const anchor = follow.anchor;
+  const passage = useMemo(() => passageRecords(anchor ? passageOf(structures[stage], anchor) : undefined), [anchor, structures, stage]);
+  const followRecord = follow.tie !== null ? ties.index.ties[follow.tie].record : null;
+  const records = useMemo(() => (pin ? [pin.record] : followRecord ? [followRecord] : passage), [pin, followRecord, passage]);
+  const passed = useMemo(() => trailAt(trail, anchor, passage), [trail, anchor, passage]);
+  const progress = useMemo(() => trailWords(outline, follow.part, passed), [outline, follow.part, passed]);
+  const view = useMemo<LeanView>(() => {
+    // The pinned statement itself under the pointer is just the pin.
+    if (pointed && !(pin && pointed.record === pin.record && pointed.tie === pin.tie)) return pointed.tie !== null ? { via: "point", kind: "statement", tie: pointed.tie, record: pointed.record } : { via: "point", kind: "record", record: pointed.record };
+    if (pin) return pin.tie !== null ? { via: "pin", kind: "statement", tie: pin.tie, record: pin.record } : { via: "pin", kind: "record", record: pin.record };
+    if (follow.tie !== null) return { via: "follow", kind: "statement", tie: follow.tie, record: ties.index.ties[follow.tie].record };
+    const topics = passageTopics(ties, anchor);
+    const ids = topics.length ? topics : passage;
+    return anchor && ids.length ? { via: "follow", kind: "passage", anchor, records: ids } : { via: "follow", kind: "nothing" };
+  }, [pointed, pin, follow.tie, ties, anchor, passage]);
 
   // ---- Which main result -------------------------------------------------------------
 
@@ -123,7 +125,6 @@ export const MapPane = memo(function MapPane({
   // Every newly opened pane follows; a pause lasts for this open pane only.
   const [following, setFollowing] = useState(true);
   const [paused, setPaused] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
   const followingRef = useRef(following);
   followingRef.current = following;
   // The statement's records where the map draws them, else the rest of its passage.
@@ -133,14 +134,10 @@ export const MapPane = memo(function MapPane({
   }, [records, passage, reachOf, goal]);
   // A chip in the paper, or a list in the sheet, lights its cards while pointed at.
   const [hovered, setHovered] = useState<ReadonlySet<string> | null>(null);
-  useEffect(() => {
-    if (!hoverRef) return;
-    hoverRef.current = setHovered;
-    return () => {
-      hoverRef.current = null;
-    };
-  }, [hoverRef]);
   const litIds = useMemo(() => (drawable.length ? new Set(drawable) : null), [drawable]);
+  const passedIds = passed.passed;
+  // The tree's own selection moves its camera. A pin must not, so it is only ever lit here.
+  const pinned = pin?.record ?? null;
   // Scrolling must stay smooth, so while it runs the trail is written straight onto the
   // tiles (one attribute each, no render), and the map draws the lit lines when it stops.
   const [settledLit, setSettledLit] = useState(litIds);
@@ -161,35 +158,86 @@ export const MapPane = memo(function MapPane({
   const writeTrail = useCallback(() => {
     bodyRef.current?.querySelectorAll<HTMLElement>(".card[data-record]").forEach((card) => {
       const id = card.dataset.record!;
-      const state = litIds?.has(id) ? "here" : passed?.has(id) ? "passed" : "";
+      const state = pinned === id ? "pinned" : litIds?.has(id) ? "here" : passedIds.has(id) ? "passed" : "";
       if ((card.dataset.trail ?? "") !== state) card.dataset.trail = state;
     });
-  }, [litIds, passed]);
+  }, [litIds, passedIds, pinned]);
   // The records this paper links a passage to: everything else on the map is drawn faded.
   const coverage = useMemo(() => {
     const ids = new Set<string>();
     for (const p of structures[stage]?.paper.passages ?? []) for (const id of [...p.claim_ids, ...p.assumption_ids]) ids.add(id);
     return ids;
   }, [structures, stage]);
-  const overlayOpen = !!overlay;
-  // The docked sheet lies over the lower part of the canvas; the map frames what it leaves.
-  const [bodyH, setBodyH] = useState(0);
-  const [share, setShare] = useState(readDockShare);
-  useEffect(() => {
-    const body = bodyRef.current;
-    if (!body) return;
-    const observer = new ResizeObserver(() => setBodyH(body.clientHeight));
-    observer.observe(body);
-    setBodyH(body.clientHeight);
-    return () => observer.disconnect();
-  }, []);
-  const dockH = record ? Math.round(bodyH * share) : 0;
-  const insets: Insets = useMemo(
-    () => ({ top: 12, left: 16, bottom: 12 + dockH, right: overlayOpen ? INSPECTOR_W + 16 : 16 }),
-    [overlayOpen, dockH],
+  // The split between the graph and the Lean, remembered, with more for the Lean on a short page.
+  const [share, setShare] = useState<number | null>(null);
+  const [panes, setPanes] = useState<Panes>(() => (inModal ? { graph: !window.matchMedia("(max-width: 700px)").matches, lean: true } : readPanes({ graph: true, lean: true })));
+  const setPane = useCallback(
+    (name: keyof Panes, shown: boolean) => {
+      setPanes((was) => {
+        const next = { ...was, [name]: shown };
+        if (!inModal) savePanes(next);
+        return next;
+      });
+    },
+    [inModal],
   );
+  const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 12, right: 16 }), []);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const value = share ?? readDockShare(root.clientHeight);
+    root.style.setProperty("--lean-share", String(value));
+  }, [share]);
 
-  useEffect(() => setNotice(null), [anchor]);
+  // The drag writes one custom property; the map hears the new room when it ends.
+  const onHandleDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const root = rootRef.current;
+    if (event.button !== 0 || !root) return;
+    event.preventDefault();
+    const handle = event.currentTarget;
+    handle.setPointerCapture(event.pointerId);
+    const box = root.getBoundingClientRect();
+    const side = box.width >= SIDE_BY_SIDE;
+    let value = share ?? readDockShare(box.height);
+    root.classList.add("is-dragging");
+    const move = (e: PointerEvent) => {
+      // Stacked, the Lean is below the handle; side by side, it is to the left of it.
+      value = clampDock(side ? (e.clientX - box.left) / box.width : (box.bottom - e.clientY) / box.height);
+      root.style.setProperty("--lean-share", String(value));
+    };
+    const end = () => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", end);
+      handle.removeEventListener("pointercancel", end);
+      root.classList.remove("is-dragging");
+      saveDockShare(value);
+      setShare(value);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
+  };
+
+  const onHandleKey = (event: React.KeyboardEvent) => {
+    const root = rootRef.current;
+    if (!root) return;
+    const side = root.clientWidth >= SIDE_BY_SIDE;
+    const step = event.key === (side ? "ArrowRight" : "ArrowUp") ? 0.05 : event.key === (side ? "ArrowLeft" : "ArrowDown") ? -0.05 : 0;
+    if (!step) return;
+    event.preventDefault();
+    const next = clampDock((share ?? readDockShare(root.clientHeight)) + step);
+    saveDockShare(next);
+    setShare(next);
+  };
+
+  useEffect(() => {
+    if (!hoverRef) return;
+    hoverRef.current = setHovered;
+    return () => {
+      hoverRef.current = null;
+    };
+  }, [hoverRef]);
+
   // After every commit: the tree may have drawn new tiles.
   useEffect(writeTrail);
 
@@ -198,7 +246,7 @@ export const MapPane = memo(function MapPane({
   inViewRef.current = (ids) => {
     const canvas = bodyRef.current?.getBoundingClientRect();
     if (!canvas?.width) return false;
-    const bottom = canvas.bottom - dockH;
+    const bottom = canvas.bottom;
     return ids.every((id) => {
       const cards = bodyRef.current!.querySelectorAll<HTMLElement>(`.card[data-record="${CSS.escape(id)}"]`);
       if (!cards.length) return true; // an assumption, drawn on the records that assume it
@@ -212,7 +260,7 @@ export const MapPane = memo(function MapPane({
 
   useEffect(() => {
     if (!following || fadeTo) return;
-    const want = goalFor(passage);
+    const want = goalFor(pin ? [pin.record] : passage);
     if (want !== goal) {
       // Another main result: a deliberate crossfade, never a jump mid-motion.
       setFadeTo(want);
@@ -267,16 +315,8 @@ export const MapPane = memo(function MapPane({
 
   // ---- Back into the text ------------------------------------------------------------
 
-  const onSelect = useCallback(
-    (id: string | null) => {
-      if (!id) return;
-      const slice = bestSlice(alignment, stage, id);
-      const passage = slice?.anchor ?? firstPassageFor(structures[stage], [id]);
-      setNotice(slice || passage ? null : id);
-      onRecord?.(id, passage, slice);
-    },
-    [alignment, structures, stage, onRecord],
-  );
+  const onSelect = useCallback((id: string | null) => id && onRecord?.(id), [onRecord]);
+  const onCard = useCallback((id: string | null) => onPoint(id ? statementFor(ties, id) : null, id ?? undefined), [onPoint, ties]);
 
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
   const tree = useMemo(
@@ -290,114 +330,111 @@ export const MapPane = memo(function MapPane({
         persist={false}
         mode="overview"
         tileWidth={PANE_TILE_W}
-        selected={record?.id}
         litIds={settledLit}
         previewIds={hovered}
         coverage={coverage}
         onSelect={onSelect}
+        onHover={onCard}
         onTrace={onTrace}
         onUserMove={onUserMove}
       />
     ),
-    [goal, graph, insets, record?.id, settledLit, hovered, coverage, onSelect, onTrace, onUserMove],
+    [goal, graph, insets, settledLit, hovered, coverage, onSelect, onCard, onTrace, onUserMove],
   );
 
   const mapHref = routeHref({ view: "map", goal, node: drawable[0] });
-  const noticeLabel = notice ? (graph.nodes.get(notice)?.label ?? notice) : "";
-  // Where a record this paper does not discuss is read instead.
-  const elsewhere = notice
-    ? STAGE_ORDER.filter((s) => s !== stage)
-        .map((s) => ({ stage: s, anchor: firstPassageFor(structures[s], [notice]) }))
-        .filter((r): r is { stage: Stage; anchor: string } => !!r.anchor)
-    : [];
-
-  const state = paused && !following ? "Paused while you move the map" : anchor && !records.length ? "No record is linked to this passage." : "";
+  const closeGraph = () => (panes.lean ? setPane("graph", false) : onHide());
+  const closeLean = () => (panes.graph ? setPane("lean", false) : onHide());
 
   return (
-    <section className="map-pane" aria-label="Argument map beside the text" inert={inert ? true : undefined}>
-      <header className="map-pane__head">
-        <div className="map-pane__row">
-          <span className="map-pane__goal" title={title}>
-            {title}
-          </span>
-          <button
-            type="button"
-            className={`map-pane__follow${paused && !following ? " map-pane__follow--resume" : ""}`}
-            aria-pressed={following}
-            title={following ? "Turn off following the text" : "Follow the passage you are reading"}
-            onClick={toggleFollowing}
-          >
-            <span className="map-pane__dot" aria-hidden="true" />
-            {following ? "Following the text" : "Follow the text"}
-          </button>
-          <a
-            className="map-pane__open"
-            href={mapHref}
-            onClick={(event) => {
-              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-              event.preventDefault();
-              navigate({ view: "map", goal, node: drawable[0] });
-            }}
-          >
-            Open the full map
-          </a>
-          {!inModal && (
-            <button type="button" className="map-pane__hide" aria-label="Hide the map beside the text" onClick={onHide}>
-              <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
-          )}
-        </div>
-        <div className="map-pane__row map-pane__row--trail">
-          {progress && <span className="map-pane__progress">{progress}</span>}
-          <span className="map-pane__state" role="status">
-            {state}
-          </span>
-          <span className="map-pane__legend">
-            <span className="map-pane__swatch map-pane__swatch--passed" aria-hidden="true" />
-            Passed
-            <span className="map-pane__swatch map-pane__swatch--lit" aria-hidden="true" />
-            This passage
-            <span className="map-pane__swatch" aria-hidden="true" />
-            Ahead
-            <span className="map-pane__swatch map-pane__swatch--faded" aria-hidden="true" />
-            Not in the {PAPER_NAMES[stage].short.toLowerCase()}
-          </span>
-        </div>
-      </header>
-      <div className="map-pane__body" ref={bodyRef}>
-        {notice && (
-          <p className="map-pane__notice" role="status">
-            <span>
-              <strong>{noticeLabel}</strong>: this paper does not discuss it.
-            </span>
-            {elsewhere.map((r) => (
-              <a key={r.stage} href={routeHref({ view: "read", stage: r.stage, anchor: r.anchor })}>
-                Read it in the {PAPER_NAMES[r.stage].short.toLowerCase()}
+    <section ref={rootRef} className={`map-pane${panes.graph && panes.lean ? " map-pane--both" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+      <div className="map-pane__pages">
+      {panes.graph && (
+        <div className="map-pane__graph">
+          <header className="map-pane__head">
+            <div className="map-pane__row">
+              <span className="map-pane__goal" title={title}>
+                {title}
+              </span>
+              {paused && !following && (
+                <button type="button" className="map-pane__follow map-pane__follow--resume" onClick={toggleFollowing}>
+                  Follow the text again
+                </button>
+              )}
+              <a
+                className="map-pane__open"
+                href={mapHref}
+                onClick={(event) => {
+                  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  navigate({ view: "map", goal, node: drawable[0] });
+                }}
+              >
+                Open the full map
               </a>
-            ))}
-            <button type="button" className="map-pane__dismiss" aria-label="Dismiss" onClick={() => setNotice(null)}>
-              ×
-            </button>
-          </p>
-        )}
-        <div className={`map-pane__canvas${fadeTo ? " is-fading" : ""}`}>
-          {tree}
+              <button type="button" className="map-pane__hide" aria-label="Close the graph" onClick={closeGraph}>
+                <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                  <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
+            <div className="map-pane__row map-pane__row--trail">
+              {progress && <span className="map-pane__progress">{progress}</span>}
+              <span className="map-pane__legend">
+                <span className="map-pane__swatch map-pane__swatch--passed" aria-hidden="true" />
+                Passed
+                <span className="map-pane__swatch map-pane__swatch--lit" aria-hidden="true" />
+                Here
+                <span className="map-pane__swatch" aria-hidden="true" />
+                Ahead
+                <span className="map-pane__swatch map-pane__swatch--faded" aria-hidden="true" />
+                Not in the {PAPER_NAMES[stage].short.toLowerCase()}
+              </span>
+            </div>
+          </header>
+          <div className="map-pane__body" ref={bodyRef}>
+            <div className={`map-pane__canvas${fadeTo ? " is-fading" : ""}`}>{tree}</div>
+          </div>
         </div>
-        {record && (
-          <RecordDock
-            record={record}
-            share={share}
-            onShare={setShare}
-            onClose={() => onCloseRecord?.()}
-            onSelect={onSelect}
-            onEcho={setHovered}
-            passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
-          />
-        )}
-        {overlay}
+      )}
+      {panes.graph && panes.lean && (
+        <div
+          className="map-pane__handle"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize the graph and the Lean"
+          aria-valuemin={Math.round(DOCK_MIN * 100)}
+          aria-valuemax={Math.round(DOCK_MAX * 100)}
+          aria-valuenow={Math.round((share ?? 0.5) * 100)}
+          tabIndex={0}
+          onPointerDown={onHandleDown}
+          onKeyDown={onHandleKey}
+        >
+          <span aria-hidden="true" />
+        </div>
+      )}
+      {panes.lean && (
+        <LeanDock
+          view={view}
+          ties={ties}
+          stage={stage}
+          alignment={alignment}
+          caption={pointed ? null : caption}
+          captionRecords={caption ? passageTopics(ties, caption) : undefined}
+          slot={preview ?? leanSlot}
+          onRelease={onRelease}
+          onPick={(id) => onRecord?.(id)}
+          onPoint={onPoint}
+          onClose={closeLean}
+          passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
+        />
+      )}
       </div>
+      {!(panes.graph && panes.lean) && (
+        <button type="button" className="map-pane__reopen" onClick={() => setPane(panes.graph ? "lean" : "graph", true)}>
+          {panes.graph ? "Show the Lean" : "Show the graph"}
+        </button>
+      )}
     </section>
   );
 });

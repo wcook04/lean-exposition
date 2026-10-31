@@ -8,12 +8,92 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
+import type { PreparedDocument, TextBlock } from "../engine";
+import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
 
 interface Props {
   entries: OutlineEntry[];
   current: string | null;
+  /** Statements with Lean per section. */
+  counts?: Map<string, TieCount>;
+  /** The paper, for search. */
+  doc?: PreparedDocument;
   onJump(id: string): void;
+  /** Go to a source line found by search. */
+  onLine?(line: number): void;
+}
+
+const HITS = 24;
+
+/** One hit's words around the match, the match marked. Adapted from Proof Reader's Contents. */
+function Snippet({ text, at, length }: { text: string; at: number; length: number }) {
+  const from = Math.max(0, text.lastIndexOf(" ", Math.max(0, at - 28)));
+  const to = Math.min(text.length, at + length + 44);
+  return (
+    <>
+      {from > 0 && "…"}
+      {text.slice(from, at)}
+      <mark>{text.slice(at, at + length)}</mark>
+      {text.slice(at + length, to)}
+      {to < text.length && "…"}
+    </>
+  );
+}
+
+/** Search within this paper, including what has not rendered yet. `/` starts it. */
+function PaperSearch({ doc, onLine, onQuery, focusKey }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void; focusKey?: number }) {
+  const input = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState("");
+  const needle = query.trim().toLowerCase();
+  useEffect(() => onQuery(!!needle), [needle, onQuery]);
+  useEffect(() => {
+    if (focusKey) input.current?.focus();
+  }, [focusKey]);
+  const found = useMemo(() => {
+    if (needle.length < 2) return [];
+    const hits: { block: TextBlock; at: number }[] = [];
+    for (const block of doc.textBlocks()) {
+      const at = block.text.toLowerCase().indexOf(needle);
+      if (at >= 0) hits.push({ block, at });
+      if (hits.length === HITS) break;
+    }
+    return hits;
+  }, [doc, needle]);
+  return (
+    <div className="paper-search" role="search">
+      <input
+        ref={input}
+        type="search"
+        value={query}
+        placeholder="Search this paper  ( / )"
+        aria-label="Search this paper"
+        onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && found[0]) onLine(found[0].block.line);
+          if (event.key === "Escape") {
+            event.stopPropagation();
+            setQuery("");
+            event.currentTarget.blur();
+          }
+        }}
+      />
+      {needle.length >= 2 &&
+        (found.length ? (
+          <ul className="paper-search__found">
+            {found.map(({ block, at }) => (
+              <li key={`${block.line}:${at}`}>
+                <button type="button" onClick={() => onLine(block.line)}>
+                  <Snippet text={block.text} at={at} length={needle.length} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="paper-search__none">Nothing in this paper matches that.</p>
+        ))}
+    </div>
+  );
 }
 
 export interface AccountHead {
@@ -36,6 +116,18 @@ export function PdfLink({ pdf }: { pdf: NonNullable<AccountHead["pdf"]> }) {
 
 export function OutlineColumn(props: Props & { head: AccountHead }) {
   const listRef = useRef<HTMLOListElement>(null);
+  const [focusKey, setFocusKey] = useState(0);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const typing = (event.target as HTMLElement).closest?.("input, textarea");
+      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey) {
+        event.preventDefault();
+        setFocusKey((n) => n + 1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   // Keep the current entry in view inside the column, without moving the page.
   useEffect(() => {
     const list = listRef.current;
@@ -62,16 +154,20 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
           </p>
         )}
       </div>
-      <Sections {...props} listRef={listRef} />
+      <Sections {...props} listRef={listRef} focusKey={focusKey} />
     </nav>
   );
 }
 
-export function Sections({ entries, current, onJump, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, focusKey }: Props & { listRef?: React.RefObject<HTMLOListElement | null>; focusKey?: number }) {
   const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
   const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
+  const [searching, setSearching] = useState(false);
+  const any = !!counts && [...counts.values()].some((c) => c.lean);
   return (
-    <ol className="outline__list" ref={listRef}>
+    <>
+    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} focusKey={focusKey} />}
+    <ol className="outline__list" ref={listRef} hidden={searching}>
       {shown.map((entry) => (
         <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
           <a
@@ -83,19 +179,40 @@ export function Sections({ entries, current, onJump, listRef }: Props & { listRe
               onJump(entry.id);
             }}
           >
-            {sectionLabel(entry.title)}
+            <span className="outline__title">{sectionLabel(entry.title)}</span>
+            {!!counts?.get(entry.id)?.lean && (
+              <span className="outline__ties num" title={`${counts.get(entry.id)!.lean} statements with Lean, of ${counts.get(entry.id)!.all} tied`}>
+                {counts.get(entry.id)!.lean}
+              </span>
+            )}
           </a>
         </li>
       ))}
     </ol>
+    {any && !searching && <p className="outline__key">Numbers count the statements with Lean in each section.</p>}
+    </>
   );
 }
 
 /** The sections behind a "Sections" control: a non-modal popover beside the paper. */
 export function SectionsPopover(props: Props) {
   const [open, setOpen] = useState(false);
+  const [focusKey, setFocusKey] = useState(0);
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  // Slash starts a search, as on most reading sites.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const typing = (event.target as HTMLElement).closest?.("input, textarea");
+      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey) {
+        event.preventDefault();
+        setOpen(true);
+        setFocusKey((n) => n + 1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   useEffect(() => {
     if (!open) return;
     const onDown = (event: PointerEvent) => {
@@ -131,9 +248,14 @@ export function SectionsPopover(props: Props) {
       <div id={id} className="sections-popover" hidden={!open}>
         <Sections
           {...props}
+          focusKey={focusKey}
           onJump={(target) => {
             setOpen(false);
             props.onJump(target);
+          }}
+          onLine={(line) => {
+            setOpen(false);
+            props.onLine?.(line);
           }}
         />
       </div>

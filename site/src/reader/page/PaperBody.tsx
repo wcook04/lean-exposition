@@ -2,36 +2,22 @@
 // parts near the viewport are rendered, the rest wait as placeholders sized
 // from their byte length and are rendered in idle time. Heights that change
 // above the reading line are compensated, so the line a reader is on never
-// moves. A mapped passage carries a slim rule in the margin (amber while it is
-// in the inspector) and, under its heading, a quiet bar: the records it discusses
-// by name, a Lean mark where they have Lean, and its linked passages.
+// moves. Each tied statement carries a tick in the margin (statements.ts). A mapped
+// passage has, under its heading, one quiet line: all its records, and its linked passages.
 
-import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { shortTitle } from "../../compare/useAlignment";
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
-import { authoredRoutes, chipSplit, chipTitle, estimateHeight, idleOrder, leanRecord, linkedCount, passageOf, passageRecords, type Structures } from "./model";
+import { authoredRoutes, estimateHeight, idleOrder, linkedCount, passageOf, passageRecords, type Structures } from "./model";
+import type { Statements } from "./statements";
 
 export interface Links {
   node(id: string): string;
   beside(stage: Stage, anchor: string): string;
 }
-
-/** What a passage's bar needs from the page; a context, so that a change re-renders the bars and no text. */
-export interface PassageBar {
-  /** The record open in its sheet. */
-  open: string | null;
-  /** The records of the statement under the reading line. */
-  inView: ReadonlySet<string>;
-  onRecord(id: string, opener: HTMLElement, lean?: boolean): void;
-  /** Light this record on the map beside the paper, or nothing. */
-  onHover(id: string | null): void;
-}
-
-export const PassageBarContext = createContext<PassageBar>({ open: null, inView: new Set(),  onRecord() {}, onHover() {} });
 
 export interface BodyHandle {
   /** Render these parts (and wait until they are laid out). */
@@ -47,10 +33,13 @@ interface Props {
   stage: Stage;
   doc: PreparedDocument;
   structures: Structures;
-  graph: ArgGraph;
+  /** Kept for the callers that build the page around it. */
+  graph?: ArgGraph;
   initial: number[];
   /** The passage open in the inspector, whose margin rule is lit. */
   inspected: string | null;
+  /** Told when a part's text reaches the page, for its ties. */
+  statements?: Statements;
   onInspect(anchor: string, opener: HTMLElement): void;
   onSameTopic(anchor: string, opener: HTMLElement): void;
   /** The reading line, in viewport pixels from the top, used for height compensation. */
@@ -74,7 +63,7 @@ const cancelIdle = (id: number) => {
 };
 
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
-  const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
+  const { stage, doc, structures, initial, topInset, inspected, statements, onInspect, onSameTopic } = props;
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
@@ -293,8 +282,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           doc={doc}
           rendered={rendered.has(part.index)}
           structures={structures}
-          graph={graph}
           lit={!!part.anchor && part.anchor === inspected}
+          statements={statements}
           onInspect={onInspect}
           onSameTopic={onSameTopic}
           register={register}
@@ -343,14 +332,14 @@ interface PartProps {
   doc: PreparedDocument;
   rendered: boolean;
   structures: Structures;
-  graph: ArgGraph;
   lit: boolean;
+  statements?: Statements;
   onInspect(anchor: string, opener: HTMLElement): void;
   onSameTopic(anchor: string, opener: HTMLElement): void;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, structures, graph, lit, onInspect, onSameTopic, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, onInspect, onSameTopic, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
@@ -364,11 +353,13 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
     if (!html || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
+    statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
+      statements?.adopt(part.index, null);
       unmount();
       unmark();
     };
-  }, [html]);
+  }, [html, statements, part.index]);
 
   // The passage's controls sit under its opening heading (or above its first
   // line), inside the rendered text, so they read as part of the passage.
@@ -410,7 +401,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
       {slot &&
         anchor &&
         createPortal(
-          <PassageTools stage={stage} anchor={anchor} records={records} structures={structures} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
+          <PassageTools stage={stage} anchor={anchor} records={records} structures={structures} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
           slot,
         )}
     </section>
@@ -422,7 +413,6 @@ function PassageTools({
   anchor,
   records,
   structures,
-  graph,
   lit,
   onInspect,
   onSameTopic,
@@ -431,52 +421,16 @@ function PassageTools({
   anchor: string;
   records: string[];
   structures: Structures;
-  graph: ArgGraph;
   lit: boolean;
   onInspect(anchor: string, opener: HTMLElement): void;
   onSameTopic(anchor: string, opener: HTMLElement): void;
 }) {
-  const { open, inView, onRecord, onHover } = useContext(PassageBarContext);
-  const { shown, more } = chipSplit(records);
-  const lean = useMemo(() => leanRecord(records, graph), [records, graph]);
   const linked = useMemo(() => linkedCount(structures, { stage, anchor }), [structures, stage, anchor]);
   return (
     <>
-      {shown.map((id) => {
-        const node = graph.nodes.get(id);
-        const label = node?.label ?? id;
-        return (
-          <button
-            key={id}
-            type="button"
-            className={`record-chip${node?.kind === "assumption" ? " record-chip--assumption" : ""}${node?.kind === "declaration" ? " lean" : ""}${inView.has(id) ? " is-here" : ""}`}
-            aria-pressed={open === id}
-            title={label}
-            aria-label={`${label}. Open its record`}
-            onClick={(event) => onRecord(id, event.currentTarget)}
-            onPointerEnter={() => onHover(id)}
-            onPointerLeave={() => onHover(null)}
-            onFocus={() => onHover(id)}
-            onBlur={() => onHover(null)}
-          >
-            {chipTitle(shortTitle(id, label))}
-          </button>
-        );
-      })}
-      {more > 0 && (
-        <button
-          type="button"
-          className="passage-tools__records"
-          aria-pressed={lit}
-          aria-label={`All ${records.length} records linked to this passage`}
-          onClick={(event) => onInspect(anchor, event.currentTarget)}
-        >
-          and {more} more
-        </button>
-      )}
-      {lean && (
-        <button type="button" className="passage-tools__lean" aria-label={`Lean for ${graph.nodes.get(lean)?.label ?? "this record"}`} onClick={(event) => onRecord(lean, event.currentTarget, true)}>
-          Lean
+      {records.length > 0 && (
+        <button type="button" className="passage-tools__records" aria-pressed={lit} onClick={(event) => onInspect(anchor, event.currentTarget)}>
+          {records.length === 1 ? "1 record" : `${records.length} records`} in this passage
         </button>
       )}
       <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>

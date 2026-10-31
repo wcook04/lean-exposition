@@ -54,6 +54,14 @@ export interface PreparedDocument {
   lineOfByte(byte: number): number;
   render(index: number): RenderedPart;
   renderAll(): RenderedPart[];
+  /** Every block's words with its source line, for searching text that has not rendered yet. */
+  textBlocks(): TextBlock[];
+}
+
+export interface TextBlock {
+  part: number;
+  line: number;
+  text: string;
 }
 
 export interface RenderedPart {
@@ -795,6 +803,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     return result;
   };
 
+  let blocks: TextBlock[] | undefined;
   const render = (index: number): RenderedPart => {
     const st = states[index];
     if (!st) throw new RangeError(`no part ${index}`);
@@ -821,5 +830,14 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     lineOfByte,
     render,
     renderAll: () => parts.map((p) => render(p.index)),
+    textBlocks: () =>
+      (blocks ??= states.flatMap((st, part) =>
+        st.tokens.flatMap((token, i) => {
+          if (token.type !== "inline") return [];
+          const line = Number(st.tokens[i - 1]?.attrGet("data-line") ?? parts[part].lines.start);
+          const text = inlineText(token.children ?? [], st.spans).replace(/\s+/g, " ").trim();
+          return text ? [{ part, line, text }] : [];
+        }),
+      )),
   };
 }

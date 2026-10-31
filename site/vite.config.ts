@@ -241,7 +241,7 @@ function routeData(route: string, base: string): string[] {
     graph && responses[graph],
     index.summaries_by_table?.nodes,
     ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
-    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`]] : []),
+    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];

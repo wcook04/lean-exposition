@@ -169,6 +169,34 @@ html:has(.reader) {
 
 /* --------------------------------------------- the location strip (sticky) */
 
+.reader-strip__steps {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 2px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.reader-strip__steps button {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.reader-strip__steps button:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
 .reader-strip {
   position: sticky;
   z-index: 6;
@@ -369,8 +397,8 @@ html:has(.reader) {
   padding: 0;
 }
 
-/* A mapped passage: a slim rule in the margin, amber while it is in the inspector. */
-.part--mapped::before {
+/* The passage open in the inspector: a slim rule in the margin. */
+.part--mapped[data-lit]::before {
   content: "";
   position: absolute;
   left: calc(-1 * var(--mark-x));
@@ -378,27 +406,86 @@ html:has(.reader) {
   bottom: calc(var(--space-4) + 0.2em);
   width: 2px;
   border-radius: 1px;
-  background: var(--rule-strong);
-  opacity: 0.75;
-  transition:
-    background-color var(--t-state) var(--ease-out),
-    opacity var(--t-state) var(--ease-out);
-}
-
-.part--mapped:has(.passage-tools :focus-visible)::before {
-  opacity: 1;
-  background: var(--ink-3);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .part--mapped:hover::before {
-    opacity: 1;
-  }
-}
-
-.part--mapped[data-lit]::before {
-  opacity: 1;
   background: var(--lit-line);
+}
+
+/* A tied statement. At rest the paper reads as a paper: a thin tick in the margin, darker
+   where the step has Lean, and nothing on the words. */
+:root {
+  /* The highlighter: the statement being read, and the Lean lines it maps to. */
+  --highlighter: color-mix(in oklab, var(--lit-line) 20%, transparent);
+  --tie-wash: color-mix(in oklab, var(--ink) 7%, transparent);
+}
+
+.part__ticks {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--mark-x) - 1px);
+  width: 3px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--rule-strong);
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.tick[data-lean] {
+  background: color-mix(in oklab, var(--ink-3) 70%, var(--rule-strong));
+}
+
+.tick[data-point] {
+  background: var(--ink);
+}
+
+.tick[data-on],
+.tick[data-pin] {
+  width: 3px;
+  background: var(--lit-line);
+}
+
+.paper .tie {
+  cursor: pointer;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.paper .tie[data-point] {
+  background-color: var(--tie-wash);
+}
+
+.paper .tie[data-on],
+.paper .tie[data-pin] {
+  background-color: var(--highlighter);
+}
+
+.paper .tie:focus {
+  outline: none;
+}
+
+.paper .tie:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* One plain line at the top of a paper: what the marks are for. */
+.paper-hint {
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink);
+}
+
+.paper-hint__more {
+  color: var(--ink-3);
 }
 
 /* A heading focused by an explicit jump is announced, not ringed: it is not a control. */
@@ -454,58 +541,91 @@ html:has(.reader) {
   background: var(--lit-wash);
 }
 
-/* A record the passage discusses, by name: a small control, hairline and sans. */
-.passage-tools button.record-chip {
-  min-height: 24px;
-  max-width: 100%;
-  margin-left: 0;
-  padding: 1px 8px;
+/* ---------------------------------------------------------------- outline */
+
+.outline__title {
+  min-width: 0;
+}
+
+.outline__ties {
+  flex: none;
+  margin-left: auto;
+  padding-left: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.outline__item a {
+  display: flex;
+  align-items: baseline;
+}
+
+.outline__key {
+  margin: var(--space-2) 0 var(--space-3);
+  padding: 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-ui);
+  color: var(--ink-3);
+}
+
+.paper-search {
+  flex: none;
+  margin-bottom: var(--space-2);
+  padding: 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+}
+
+.paper-search input {
+  width: 100%;
+  min-height: 30px;
+  padding: 0 var(--space-2);
   border: 1px solid var(--rule-control);
   border-radius: var(--radius-s);
-  background: var(--ground);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.paper-search__found {
+  max-height: min(60vh, 520px);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.paper-search__found button {
+  display: block;
+  width: 100%;
+  padding: 4px var(--space-1);
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
   color: var(--ink-2);
+  font: inherit;
+  line-height: var(--lh-ui);
   text-align: left;
-  transition:
-    color var(--t-hover) var(--ease-out),
-    border-color var(--t-hover) var(--ease-out),
-    background-color var(--t-hover) var(--ease-out);
+  cursor: pointer;
 }
 
-.passage-tools button.record-chip:hover {
+.paper-search__found button:hover {
   color: var(--ink);
-  border-color: var(--lit-line);
-  background: var(--ground);
+  background: var(--sunk);
 }
 
-/* The statement under the reading line. */
-.passage-tools button.record-chip.is-here {
-  color: var(--ink);
-  border-color: var(--lit-line);
+.paper-search__found mark {
+  background: var(--highlighter);
+  color: inherit;
 }
 
-.passage-tools button.record-chip--assumption {
-  border-style: dashed;
+.paper-search__none {
+  margin: var(--space-2) var(--space-1);
+  color: var(--ink-3);
 }
-
-.passage-tools button.record-chip[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: var(--lit-line);
-  background: var(--lit-wash);
-}
-
-.passage-tools button.record-chip.lean {
-  font-size: var(--fs-xs);
-}
-
-.passage-tools__lean {
-  font-weight: 600;
-}
-
-.passage-tools__topic {
-  margin-left: auto;
-}
-
-/* ---------------------------------------------------------------- outline */
 
 .reader__outline {
   position: sticky;
