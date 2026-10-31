@@ -323,12 +323,12 @@ export function tieCounts(model: TieModel, sections: { id: string; start: number
   return counts;
 }
 
-/** "Statement of Lemma 2"-free words for a tie's role, as a reader says them. */
+/** What a paper does with a step at this place, as a reader says it. */
 export const ROLE_WORDS: Record<StatementRole, string> = {
-  statement: "States it",
-  definition: "Defines it",
-  derivation: "Derives it",
-  explanation: "Explains it",
-  example: "Works an example",
-  mention: "Mentions it",
+  statement: "Stated",
+  definition: "Defined",
+  derivation: "Derived",
+  explanation: "Explained",
+  example: "Worked as an example",
+  mention: "Mentioned",
 };

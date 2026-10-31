@@ -27,12 +27,11 @@
 }
 
 .map-pane {
-  --lean-share: 0.5;
+  --lean-share: 0.75;
   position: relative;
-  display: grid;
+  display: flex;
   flex: 1;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) auto;
+  flex-direction: column;
   min-width: 0;
   min-height: 0;
   background: var(--ground);
@@ -42,31 +41,62 @@
 }
 
 .map-pane__pages {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
+  position: relative;
+  display: flex;
+  flex: 1;
   min-width: 0;
   min-height: 0;
-}
-
-.map-pane--both .map-pane__pages {
-  grid-template-rows: minmax(0, 1fr) 11px minmax(0, calc(var(--lean-share) * 100%));
 }
 
 .map-pane__graph {
   display: flex;
+  flex: 1;
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  container: graph / size;
 }
 
-/* The drag handle: the graph and the Lean share one edge. */
+/* One line under the graph, in plain words, so nothing ever floats over a card. */
+.map-pane__line {
+  flex: none;
+  display: block;
+  margin: 0;
+  padding: 7px var(--space-4);
+  border-top: 1px solid var(--rule);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.map-pane__line[data-via="point"] {
+  color: var(--ink);
+}
+
+/* The Lean: a layer that rises over the graph. The graph beneath keeps its size and camera. */
+.lean-page {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--lean-share) * 100%);
+  box-shadow: 0 -1px 0 var(--rule-strong);
+}
+
 .map-pane__handle {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--lean-share) * 100%);
   display: grid;
   place-items: center;
-  border-block: 1px solid var(--rule);
+  height: 11px;
   background: var(--ground);
+  border-top: 1px solid var(--rule);
   cursor: ns-resize;
   touch-action: none;
 }
@@ -88,49 +118,36 @@
   user-select: none;
 }
 
-.map-pane__reopen {
-  justify-self: end;
-  min-height: 28px;
-  margin: var(--space-1) var(--space-3);
-  padding: 0 var(--space-2);
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink-2);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  cursor: pointer;
+/* Out of the Lean's way, and back: a transform only, so the camera is never touched. */
+.map-pane__canvas {
+  transition:
+    transform 240ms var(--ease-out),
+    opacity var(--t-state) var(--ease-out);
 }
 
-.map-pane__reopen:hover {
-  color: var(--ink);
-  border-color: var(--ink-3);
+.map-pane--open .map-pane__row--trail,
+.map-pane--open .map-pane__line {
+  display: none;
 }
 
 @container right-page (min-width: 860px) {
   /* Side by side, with the Lean next to the paper it answers. */
-  .map-pane--both .map-pane__pages {
-    grid-template-columns: minmax(0, calc(var(--lean-share) * 100%)) 11px minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
-  }
-  .map-pane__pages .lean-page {
-    order: 1;
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .map-pane--both .map-pane__pages .map-pane__handle {
-    order: 2;
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .map-pane--both .map-pane__pages .map-pane__graph {
-    order: 3;
-    grid-column: 3;
-    grid-row: 1;
+  .lean-page {
+    top: 0;
+    right: auto;
+    width: calc(var(--lean-share) * 100%);
+    height: auto;
+    box-shadow: 1px 0 0 var(--rule-strong);
   }
   .map-pane__handle {
-    border-block: 0;
-    border-inline: 1px solid var(--rule);
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: calc(var(--lean-share) * 100%);
+    width: 11px;
+    height: auto;
+    border-top: 0;
+    border-right: 1px solid var(--rule);
     cursor: ew-resize;
   }
   .map-pane__handle span {
@@ -305,7 +322,6 @@
   position: relative;
   flex: 1;
   min-height: 0;
-  transition: opacity var(--t-state) var(--ease-out);
 }
 
 /* A different main result: the canvas crossfades (out, then the new one in). */
@@ -383,14 +399,6 @@
   box-shadow: 0 0 0 2px var(--lit-line);
 }
 
-/* ---- The graph on a short page ---------------------------------------------------- */
-
-@container graph (max-height: 300px) {
-  .map-pane__row--trail {
-    display: none;
-  }
-}
-
 /* ---- The Lean page ---------------------------------------------------------------- */
 
 .lean-page {
@@ -407,63 +415,33 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 36px;
-  padding: 2px var(--space-2) 2px var(--space-4);
-  border-bottom: 1px solid var(--rule);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
+  min-height: 40px;
+  padding: 4px var(--space-2) 2px var(--space-4);
 }
 
-.lean-page__state {
+.lean-page__names {
   flex: 1;
   display: flex;
-  align-items: center;
-  gap: 7px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
   min-width: 0;
+}
+
+.lean-page__title {
   margin: 0;
-}
-
-.lean-page__words {
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.lean-page__words strong {
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  font-weight: 500;
+  line-height: var(--lh-snug);
   color: var(--ink);
 }
 
-@container right-page (max-width: 520px) {
-  .lean-page__head {
-    flex-wrap: wrap;
-  }
-  .lean-page__state {
-    flex-basis: 100%;
-  }
-  .right-sheet .lean-page__state {
-    flex-basis: calc(100% - 44px);
-  }
-}
-
-.lean-page__dot {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink-3);
-}
-
-.lean-page__state[data-via="follow"] .lean-page__dot {
-  border-color: var(--ink-2);
-  background: var(--ink-2);
-}
-
-/* Amber: this is what you are looking at, and it stays. */
-.lean-page__state[data-via="pin"] .lean-page__dot {
-  border-color: var(--lit-line);
-  background: var(--lit-line);
+/* The raw name is detail: small, beside its plain title. */
+.lean-page__raw {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
 }
 
 .lean-page__action {
@@ -474,7 +452,8 @@
   border-radius: var(--radius-s);
   background: transparent;
   color: var(--ink-2);
-  font: inherit;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -485,48 +464,38 @@
   border-color: var(--ink-3);
 }
 
-.lean-page__close {
-  display: inline-grid;
-  place-items: center;
+/* Where each paper states this: plain links with the exact landing. */
+.lean-crumbs {
   flex: none;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  border-radius: var(--radius-s);
-  background: transparent;
-  color: var(--ink-3);
-  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  padding: 0 var(--space-4) var(--space-1);
+  font-size: var(--fs-sm);
 }
 
-.lean-page__close:hover {
+.lean-crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+}
+
+.lean-crumbs a:hover {
   color: var(--ink);
-  background: var(--sunk);
+  text-decoration-color: currentColor;
 }
 
-.lean-page__body {
-  flex: 1;
-  min-height: 0;
-  padding: var(--space-3) var(--space-4) var(--space-4);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.lean-page__body:focus {
-  outline: none;
-}
-
-.lean-page__title {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: var(--fs-base);
-  font-weight: 500;
-  line-height: var(--lh-snug);
-  color: var(--ink);
-}
-
-.lean-page__role {
-  margin: 2px 0 var(--space-2);
+.lean-page__lead {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+  padding: 0 var(--space-4) var(--space-1);
   font-size: var(--fs-sm);
   color: var(--ink-3);
 }
@@ -536,9 +505,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0 var(--space-2);
-  margin: 0 0 var(--space-2);
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
+  margin: 0;
 }
 
 .lean-page__also button {
@@ -559,50 +526,27 @@
   text-decoration-color: currentColor;
 }
 
-.lean-page__plain {
-  margin: var(--space-2) 0;
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
-  color: var(--ink);
-}
-
-.lean-page__note {
-  margin: var(--space-2) 0;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.lean-page__plain kbd {
-  padding: 0 4px;
-  border: 1px solid var(--rule-control);
-  border-radius: 3px;
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-}
-
-/* One step can have several declarations: their names, and one shown at a time. */
+/* One step can have several declarations: one shown at a time. */
 .lean-page__rows {
+  flex: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 2px var(--space-2);
-  margin: 0 0 var(--space-2);
-  padding: 0;
+  gap: 2px var(--space-3);
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-1);
   list-style: none;
 }
 
 .lean-page__rows button {
   min-height: 26px;
-  padding: 0 var(--space-1);
+  padding: 0;
   border: 0;
   border-bottom: 2px solid transparent;
   background: transparent;
   color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
   cursor: pointer;
-}
-
-.lean-page__rows button code {
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
 }
 
 .lean-page__rows button:hover {
@@ -614,76 +558,23 @@
   border-bottom-color: var(--lit-line);
 }
 
-.lean-page__topics {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.lean-page__body {
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--space-4) var(--space-2);
+  overflow: hidden;
 }
 
-.lean-page__topics button {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
-  width: 100%;
-  min-height: 30px;
-  padding: 4px 0;
-  border: 0;
-  border-bottom: 1px solid var(--rule);
-  background: transparent;
+.lean-page__body--read {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lean-page__plain {
+  margin: var(--space-2) 0;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
   color: var(--ink);
-  font-family: var(--font-serif);
-  font-size: var(--fs-base);
-  text-align: left;
-  cursor: pointer;
-}
-
-.lean-page__topics button:hover {
-  color: var(--lit);
-}
-
-.lean-page__has {
-  flex: none;
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
-}
-
-.lean-page__places {
-  margin-top: var(--space-3);
-  font-size: var(--fs-sm);
-}
-
-.lean-page__label {
-  margin: 0 0 2px;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--ink-2);
-}
-
-.lean-page__places ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.lean-page__places a,
-.lean-page__map {
-  color: var(--ink-2);
-  text-decoration: underline;
-  text-decoration-color: var(--rule-strong);
-  text-underline-offset: 0.2em;
-}
-
-.lean-page__places a:hover,
-.lean-page__map:hover {
-  color: var(--ink);
-  text-decoration-color: currentColor;
-}
-
-.lean-page__map {
-  display: inline-block;
-  margin-top: var(--space-3);
-  font-size: var(--fs-sm);
 }
 
 .lean-page .panel {
@@ -708,10 +599,6 @@
   height: auto;
   border: 0;
   box-shadow: none;
-}
-
-.lean-page__body:has(> .reader__inspector) {
-  padding: 0;
 }
 
 .visit__comparepapers {
@@ -781,8 +668,22 @@
   cursor: pointer;
 }
 
+.right-sheet .map-pane__head,
 .right-sheet .lean-page__head {
   padding-right: 44px;
+}
+
+/* A phone has no room for a band of graph: an open step fills the sheet. */
+.right-sheet--phone .map-pane--open .map-pane__graph {
+  visibility: hidden;
+}
+
+.right-sheet--phone .map-pane--open .map-pane__handle {
+  display: none;
+}
+
+.right-sheet--phone .lean-page {
+  height: 100%;
 }
 
 .right-sheet__wait {

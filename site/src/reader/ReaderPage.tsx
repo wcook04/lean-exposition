@@ -1,10 +1,10 @@
 // The paper reader: one account at its reading measure, with the proof on the page facing
 // it. Four verbs run the page (reading-model.md). Follow: the reading line picks the
 // statement under it, which takes the highlighter at once, and once it has held the line
-// for a moment the right page shows its card and its Lean. Point: a tied statement reacts
-// to the pointer or to focus, and after a short dwell the right page previews it. Open: a
-// click pins it, as one history entry whose address names the record and the statement.
-// Back: the browser's own, to the same pixel.
+// for a moment its card lights on the graph. Point: a tied statement reacts to the pointer
+// or to focus, its card lights, and a line under the graph names it. Open: a click pins it
+// and its Lean rises over the graph, as one history entry whose address names the record
+// and the statement. Back: the browser's own, to the same pixel.
 //
 // Scrolling never sets state on this component. It writes attributes (statements.ts) and
 // signals (page/signal.ts) that the few small things showing them read. A chosen treatment
@@ -18,12 +18,13 @@ import { BackControl } from "../app/BackControl";
 import { navigate, routeHref, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
+import { hostLean, type LeanWalk } from "../lean/walk";
 import { restoreScroll } from "../app/restore";
 import { namePlace, onLeave } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import type { ArgGraph } from "../model/graph";
 import type { PreparedDocument } from "./engine";
-import { alignmentResource } from "../compare/useAlignment";
+import { alignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
 import { PaperBody, type BodyHandle, type Links } from "./page/PaperBody";
@@ -179,7 +180,7 @@ const LINE_REACH = 0.32;
 /** Further than this share of the window in one hold is flying, not reading. */
 const FLYING = 0.5;
 /** What the thread reaches on the Lean page: the lit lines where they are drawn, else the step's title. */
-const LEAN_TARGET = "[data-lit], .lean-clause, .lean-page__title";
+const LEAN_TARGET = ".lean-line.is-lit, .lean-page__title";
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
@@ -587,6 +588,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // ---- What is on the right page ------------------------------------------------------
 
+  const hereRef = useRef<ReadRoute>(route);
+  hereRef.current = route;
+
   /** The address names a pin: the record, and its statement when this paper has one. */
   const pin = useMemo<Pin | null>(() => {
     if (!route.node) return null;
@@ -617,7 +621,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const drawThread = useCallback(() => {
     const path = thread.current;
     if (!path) return;
-    const t = pinRef.current?.tie ?? current.current;
+    const t = pinRef.current?.tie ?? null;
     const first = t !== null ? statements.first(t) : null;
     const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
     const page = document.querySelector(".lean-page");
@@ -625,7 +629,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const target = (page?.querySelector(LEAN_TARGET) ?? null)?.getBoundingClientRect();
     const box = first?.getClientRects()[0];
     const top = readingTop();
-    if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || page?.closest(".map-pane__pages")?.querySelector(".lean-page") !== page || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
+    if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
       if (path.getAttribute("d")) path.setAttribute("d", "");
       return;
     }
@@ -647,7 +651,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const release = useCallback(() => {
     const here = hereRef.current;
-    if (here.node || here.at) navigate({ ...here, node: undefined, at: undefined }, { replace: true });
+    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined }, { replace: true });
   }, []);
 
   useEffect(() => {
@@ -808,21 +812,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   useEffect(
     () =>
       namePlace(() => {
+        // Leaving an open step, the way back names the step in words.
+        const open = hereRef.current.node;
+        if (open) return shortTitle(open, graph.nodes.get(open)?.label ?? open);
         const chain = chainOf(outline, signals.heading.get());
         const last = chain[chain.length - 1];
         return `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
       }),
-    [outline, signals, stage],
+    [outline, signals, stage, graph],
   );
 
   // ---- Links -------------------------------------------------------------------------
 
   const here: ReadRoute = useMemo(
-    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside }),
-    [stage, route.anchor, route.at, route.node, route.beside],
+    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, decl: route.decl, beside: route.beside }),
+    [stage, route.anchor, route.at, route.node, route.decl, route.beside],
   );
-  const hereRef = useRef(here);
-  hereRef.current = here;
   const links: Links = useMemo(
     () => ({
       node: (id) => routeHref({ ...here, node: id, beside: undefined }),
@@ -887,12 +892,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // ---- Pinning -------------------------------------------------------------------------
 
+  /** A name in the Lean, or a Lean result from search: the Lean page walks there, as one history entry. */
+  const openDecl = useCallback(
+    (walk: LeanWalk) => {
+      go({ ...hereRef.current, decl: walk.name, beside: undefined });
+      return true;
+    },
+    [go],
+  );
+  useEffect(() => hostLean(openDecl), [openDecl]);
+
   /** A statement in the paper: one history entry, and the paper does not move. */
   const openStatement = useCallback(
     (t: number) => {
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
-      go({ ...hereRef.current, node: tie.record, at: tie.at, beside: undefined });
+      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, beside: undefined });
     },
     [ties, go],
   );
@@ -1155,7 +1170,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (id: string) => {
       const statement = statementFor(ties, id);
       const tie = statement !== null ? ties.index.ties[statement] : null;
-      const to = { ...hereRef.current, node: id, at: tie?.at, beside: undefined };
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, beside: undefined };
       if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
       go(to);
     },
@@ -1265,10 +1280,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     signals,
     ties,
     pin,
+    decl: route.decl ?? null,
     alignment,
     hoverRef: paneHover,
     onRecord: openFromMap,
     onRelease: release,
+    onName: openDecl,
     passageHref: links.beside,
     onPoint: pointAt,
   };
@@ -1410,7 +1427,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </div>
       )}
 
-      {!paneOn && !route.beside && (sheetOpen || !!pin) && (
+      {!paneOn && !route.beside && (sheetOpen || !!pin || !!route.decl) && (
         <RightSheet phone={phone} onClose={closeSheet}>
           <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
             <MapPane {...paneProps} inModal onHide={closeSheet} />

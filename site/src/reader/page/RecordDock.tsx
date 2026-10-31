@@ -1,51 +1,50 @@
-// The Lean page: the lower half of the right page, or its left half where the page is wide
-// enough. It is not something a reader opens. It always shows the Lean of what is being
-// read, what is being pointed at, or what is pinned, and says which in one quiet line. A
-// statement with no Lean says so and offers the papers; so does a stretch of paper with no
-// ties at all. A pinned record can open its whole record panel here.
+// The expanded Lean. The graph is what stands on the right page while reading; a click on a
+// statement or a highlighted card opens that step here, rising from its card over the graph,
+// which keeps its place underneath. It is headed by the step's plain title with the raw name
+// small beside it, then where each paper states the step, then the raw Lean with its exact
+// lines lit. A step with no Lean says so and offers the papers. Back or Escape closes it.
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import type { AlignedStatement, Alignment, StatementLean } from "../../api/lean";
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { shortTitle } from "../../compare/useAlignment";
 import { LazyLeanBlock } from "../../lean/lazy";
+import type { LeanWalk } from "../../lean/walk";
 import { statementHref } from "../links";
-import { sectionLabel } from "../../map/TheoremPlate";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
+import { bestSlice, sectionNumber } from "./model";
 
-/** What the Lean page is showing and why. */
-export type LeanView =
-  | { via: "follow" | "point" | "pin"; kind: "statement"; tie: number; record: string }
-  | { via: "point" | "pin"; kind: "record"; record: string }
-  | { via: "follow"; kind: "passage"; anchor: string; records: readonly string[] }
-  | { via: "follow"; kind: "nothing" };
+/** What is open: a step, its statement here when it has one, or a declaration walked to. */
+export interface LeanOpen {
+  record: string | null;
+  tie: number | null;
+  /** A declaration reached by a name in the Lean or from search. */
+  decl: string | null;
+}
 
 interface Props {
-  view: LeanView;
+  open: LeanOpen;
   ties: TieModel;
   stage: Stage;
   alignment: Alignment | null;
-  /** The passage of an untied paragraph under the pointer: named on one line, nothing moves. */
-  caption?: string | null;
-  captionRecords?: readonly string[];
-  /** Stands in for the view: a theorem or citation preview, or the passage inspector. */
+  /** Stands in for the Lean: a theorem or citation preview, or the passage inspector. */
   slot?: ReactNode;
   onRelease(): void;
   onPick(id: string): void;
   onPoint(tie: number | null, record?: string): void;
-  onClose?(): void;
-  /** In a sheet, closing is letting go. */
-  inSheet?: boolean;
+  onName?(walk: LeanWalk): void;
+  /** Where the opening rises from. */
+  from?: HTMLElement | null;
   passageHref(stage: Stage, anchor: string): string;
 }
 
-/** The Lean a statement means, or the record's own rows where it names none. */
-function leanRows(alignment: Alignment | null, record: string, at: string | null): StatementLean[] {
-  const row = alignment?.records[record];
+/** The Lean a statement means, or the record's own rows where it names none, without repeats. */
+function leanRows(alignment: Alignment | null, record: string | null, at: string | null): StatementLean[] {
+  const row = record ? alignment?.records[record] : undefined;
   if (!row) return [];
   const statement = at ? row.statements.find((s) => s.at === at) : undefined;
   const rows: StatementLean[] = statement?.lean?.length ? statement.lean : row.lean;
@@ -58,54 +57,45 @@ function leanRows(alignment: Alignment | null, record: string, at: string | null
   });
 }
 
-function placeOf(statement: AlignedStatement): string {
-  const name = PAPER_NAMES[statement.paper].short;
-  return statement.section ? `${name}, ${sectionLabel(statement.section)}` : name;
+/** The record a declaration belongs to, if the alignment links one. */
+export function recordOfDecl(alignment: Alignment | null, name: string): string | null {
+  for (const [id, row] of Object.entries(alignment?.records ?? {})) if (row.lean.some((lean) => lean.name === name)) return id;
+  return null;
 }
 
-/** Where else the step is stated, nearest paper first. */
-function Elsewhere({ stage, record, at, alignment, none }: { stage: Stage; record: string; at: string | null; alignment: Alignment | null; none?: string }) {
-  const rows = (alignment?.records[record]?.statements ?? []).filter((s) => s.at !== at && s.role !== "mention");
+const lastName = (name: string) => name.slice(name.lastIndexOf(".") + 1);
+
+/** A declaration's name in words: the authored one, else its record's title, else its last part with spaces. */
+export function plainName(alignment: Alignment | null, name: string): string {
+  const authored = (alignment as { names?: Record<string, string | { title?: string; plain?: string }> } | null)?.names?.[name];
+  if (typeof authored === "string") return authored;
+  if (authored?.title || authored?.plain) return (authored.title ?? authored.plain)!;
+  const record = recordOfDecl(alignment, name);
+  if (record) return shortTitle(record, alignment!.records[record].short || record);
+  return lastName(name).replace(/_/g, " ");
+}
+
+/** Short paper §2, Long record §5.3, Exposition §4, Compare: where each paper states this, each a link. */
+export function PaperCrumbs({ record, row, stage, alignment }: { record: string; row: RecordAlignment | undefined; stage: Stage; alignment: Alignment | null }) {
   const order = [stage, ...STAGE_ORDER.filter((s) => s !== stage)];
-  const seen = new Set<string>();
-  const shown = order.flatMap((paper) => rows.filter((s) => s.paper === paper).slice(0, 2)).filter((s) => {
-    const key = `${s.paper}${s.at}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
+  const places = order.flatMap((paper) => {
+    const slice = bestSlice(alignment, paper, record);
+    return slice ? [{ paper, slice }] : [];
   });
-  if (!shown.length) return none ? <p className="lean-page__note">{none}</p> : null;
   return (
-    <div className="lean-page__places">
-      <h4 className="lean-page__label">Also stated in</h4>
-      <ul>
-        {shown.map((s) => (
-          <li key={`${s.paper}${s.at}`}>
-            <a href={statementHref(s)}>{placeOf(s)}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <nav className="lean-crumbs" aria-label="Where the papers state this">
+      {places.map(({ paper, slice }) => (
+        <a key={paper} href={statementHref(slice)} title={slice.section || undefined}>
+          {PAPER_NAMES[paper].short}
+          {slice.section ? ` ${sectionNumber(slice.section)}` : ""}
+        </a>
+      ))}
+      {row && <a href={routeHref({ view: "compare", node: record })}>Compare</a>}
+    </nav>
   );
 }
 
-function Declaration({ row }: { row: StatementLean }) {
-  // Exact lines and the fill-the-page layout come from the Lean lane's block.
-  const extra = { lines: row.lines, compact: true } as object;
-  return <LazyLeanBlock key={`${row.module}:${row.name}`} name={row.name} module={row.module} relation={row.relation ?? undefined} note={row.note} clause={row.clause} {...extra} />;
-}
-
-/** A declaration's last name, or as much of its namespace as tells two apart. */
-function shortName(name: string, all: readonly { name: string }[]): string {
-  const parts = name.split(".");
-  for (let keep = 1; keep < parts.length; keep++) {
-    const tail = parts.slice(-keep).join(".");
-    if (all.filter((row) => row.name === name || row.name.endsWith(`.${tail}`)).length === all.filter((row) => row.name === name).length) return tail;
-  }
-  return name;
-}
-
-/** Other steps tied to the same words. Pointing lights them, choosing pins them. */
+/** Other steps tied to the same words. Pointing lights them, choosing opens them. */
 function AlsoHere({ tie, ties, onPick, onPoint }: { tie: number; ties: TieModel; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
   const { graph } = useEdition();
   const others = [...new Set(sameWords(ties, tie).map((t) => ties.index.ties[t].record))].filter((id) => id !== ties.index.ties[tie].record && graph.nodes.has(id));
@@ -123,223 +113,143 @@ function AlsoHere({ tie, ties, onPick, onPoint }: { tie: number; ties: TieModel;
   );
 }
 
-function Statement({ view, ties, stage, alignment, full, onPick, onPoint }: { view: Extract<LeanView, { kind: "statement" | "record" }>; ties: TieModel; stage: Stage; alignment: Alignment | null; full: ReactNode; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
+export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick, onPoint, onName, from, passageHref }: Props) {
   const { graph } = useEdition();
-  const tie = view.kind === "statement" ? ties.index.ties[view.tie] : null;
-  const at = tie?.at ?? null;
-  const rows = useMemo(() => leanRows(alignment, view.record, at), [alignment, view.record, at]);
-  // Before the alignment arrives the statement's own index row names its first declaration.
-  const fallback: StatementLean | null =
-    tie?.lean && tie.name && tie.module ? { name: tie.name, module: tie.module, line: tie.lines?.[0] ?? 0, end_line: tie.lines?.[1] ?? 0, relation: null, note: "", lines: tie.lines ?? [0, 0] } : null;
-  const list = rows.length ? rows : fallback ? [fallback] : [];
+  const page = useRef<HTMLDivElement>(null);
+  const [full, setFull] = useState(false);
   const [chosen, setChosen] = useState(0);
-  useEffect(() => setChosen(0), [view.record, at]);
-  const row = list[Math.min(chosen, list.length - 1)];
-  const label = graph.nodes.get(view.record)?.label ?? alignment?.records[view.record]?.short ?? view.record;
-  if (full) return <>{full}</>;
-  return (
-    <>
-      <h3 className="lean-page__title">{label}</h3>
-      {tie && <p className="lean-page__role">{ROLE_WORDS[tie.role]} here</p>}
-      {view.kind === "statement" && <AlsoHere tie={view.tie} ties={ties} onPick={onPick} onPoint={onPoint} />}
-      {!tie && <p className="lean-page__note">This paper has no statement of this step.</p>}
-      {list.length > 1 && (
-        <ul className="lean-page__rows" aria-label="Lean declarations of this step">
-          {list.map((item, i) => (
-            <li key={`${item.module}:${item.name}`}>
-              <button type="button" aria-pressed={i === Math.min(chosen, list.length - 1)} title={item.name} onClick={() => setChosen(i)}>
-                <code>{shortName(item.name, list)}</code>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {row ? (
-        <Declaration row={row} />
-      ) : alignment ? (
-        <p className="lean-page__plain">No Lean declaration is linked to this step.</p>
-      ) : null}
-      <Elsewhere stage={stage} record={view.record} at={at} alignment={alignment} none={row ? undefined : "No paper states it apart from here."} />
-    </>
-  );
-}
+  const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
+  const at = tie?.at ?? null;
+  const record = open.record;
+  const rows = useMemo(() => {
+    const list = leanRows(alignment, record, at);
+    if (list.length || !tie?.name || !tie.module) return list;
+    // Before the alignment arrives the statement's own index row names its first declaration.
+    return [{ name: tie.name, module: tie.module, line: tie.lines?.[0] ?? 0, end_line: tie.lines?.[1] ?? 0, relation: null, note: "", lines: tie.lines ?? [0, 0] } as StatementLean];
+  }, [alignment, record, at, tie]);
+  const key = open.decl ?? `${record}|${at}`;
+  const [shown, setShown] = useState(key);
+  if (shown !== key) {
+    setShown(key);
+    setChosen(0);
+    setFull(false);
+  }
+  const row = open.decl ? null : rows[Math.min(chosen, rows.length - 1)];
+  const name = open.decl ?? row?.name ?? null;
+  const plain = record ? shortTitle(record, graph.nodes.get(record)?.label ?? alignment?.records[record]?.short ?? record) : name ? plainName(alignment, name) : "";
 
-function Passage({ records, ties, alignment, onPick, onPoint }: { records: readonly string[]; ties: TieModel; alignment: Alignment | null; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
-  const { graph } = useEdition();
-  const shown = records.filter((id) => graph.nodes.has(id));
-  return (
-    <>
-      <p className="lean-page__plain">No sentence at the reading line is tied to the Lean. This passage discusses:</p>
-      <ul className="lean-page__topics">
-        {shown.map((id) => {
-          const hasLean = !!alignment?.records[id]?.lean.length;
-          return (
-            <li key={id}>
-              <button
-                type="button"
-                onClick={() => onPick(id)}
-                onPointerEnter={() => onPoint(statementFor(ties, id), id)}
-                onPointerLeave={() => onPoint(null)}
-                onFocus={() => onPoint(statementFor(ties, id), id)}
-                onBlur={() => onPoint(null)}
-              >
-                <span>{shortTitle(id, graph.nodes.get(id)!.label)}</span>
-                <span className="lean-page__has">{hasLean ? "Lean" : "no Lean"}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </>
-  );
-}
-
-function stateWords(view: LeanView, label: string, topics: string[] | undefined): ReactNode {
-  if (topics?.length) return <>No exact tie in this paragraph. Its passage discusses {topics.join(", ")}.</>;
-  if (view.via === "pin") return <>Pinned: <strong>{label}</strong></>;
-  if (view.via === "point") return <>Pointing at: <strong>{label}</strong></>;
-  if (view.kind === "statement") return <>Following the text: <strong>{label}</strong></>;
-  if (view.kind === "passage") return <>Following the text: no exact statement here</>;
-  return <>Following the text</>;
-}
-
-export function LeanDock({ view, ties, stage, alignment, caption, captionRecords, slot, onRelease, onPick, onPoint, onClose, inSheet, passageHref }: Props) {
-  const { graph } = useEdition();
-  const body = useRef<HTMLDivElement>(null);
-  const [fullFor, setFullFor] = useState<string | null>(null);
-  const record = view.kind === "statement" || view.kind === "record" ? view.record : null;
-  const label = record ? shortTitle(record, graph.nodes.get(record)?.label ?? record) : "";
-  const full = view.via === "pin" && record !== null && fullFor === record;
-  // A new thing to read starts at its top, in this page's own scroller.
-  const key = view.kind === "statement" ? `s${view.tie}` : record ?? view.kind;
-  useEffect(() => {
-    if (body.current) body.current.scrollTop = 0;
-  }, [key]);
-  const topics = caption ? captionRecords?.filter((id) => graph.nodes.has(id)).slice(0, 3).map((id) => shortTitle(id, graph.nodes.get(id)!.label)) : undefined;
+  // The Lean rises out of the card: it opens from the card's box to its own.
+  const opening = useRef(true);
+  useLayoutEffect(() => {
+    const el = page.current;
+    if (!opening.current || !el) return;
+    opening.current = false;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !from?.isConnected || !el.animate) return;
+    const box = el.getBoundingClientRect();
+    const card = from.getBoundingClientRect();
+    const inset = [card.top - box.top, box.right - card.right, box.bottom - card.bottom, card.left - box.left].map((v) => `${Math.max(0, Math.round(v))}px`).join(" ");
+    el.animate([{ clipPath: `inset(${inset} round 7px)`, opacity: 0.5 }, { clipPath: "inset(0px round 0px)", opacity: 1 }], { duration: 240, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" });
+  }, [from]);
 
   return (
-    <div className="lean-page" role="region" aria-label="The Lean of this statement">
+    <div className="lean-page" ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
       <header className="lean-page__head">
-        <p className="lean-page__state" data-via={view.via} role="status">
-          <span className="lean-page__dot" aria-hidden="true" />
-          <span className="lean-page__words">{stateWords(view, label, topics)}</span>
-        </p>
-        {view.via === "pin" && (
-          <>
-            {record && graph.nodes.has(record) && (
-              <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFullFor(full ? null : record)}>
-                Whole record
-              </button>
-            )}
-            {!inSheet && (
-              <button type="button" className="lean-page__action" onClick={onRelease}>
-                Follow the text
-              </button>
-            )}
-          </>
-        )}
-        {onClose && (
-          <button type="button" className="lean-page__close" aria-label="Close the Lean" onClick={onClose}>
-            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-              <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+        <div className="lean-page__names">
+          <h3 className="lean-page__title">{plain}</h3>
+          {name && !slot && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
+        </div>
+        {!!record && !slot && graph.nodes.has(record) && (
+          <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
+            Whole record
           </button>
         )}
+        <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
+          Close
+        </button>
       </header>
-      <div className="lean-page__body" ref={body} tabIndex={-1} data-keep>
-        {slot ?? (
-          <>
-            {(view.kind === "statement" || view.kind === "record") && (
-              <Statement
-                view={view}
-                ties={ties}
-                stage={stage}
-                alignment={alignment}
-                onPick={onPick}
-                onPoint={onPoint}
-                full={
-                  full ? (
-                    <RecordPanel
-                      key={record!}
-                      nodeId={record!}
-                      compact
-                      onClose={() => setFullFor(null)}
-                      onSelect={onPick}
-                      onTrace={(trace: Trace | undefined) => navigate({ view: "map", node: record!, trace })}
-                      passageHref={passageHref}
-                    />
-                  ) : null
-                }
+      {slot ? (
+        <div className="lean-page__body lean-page__body--read" data-keep>
+          {slot}
+        </div>
+      ) : (
+        <>
+          {record && <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} />}
+          {tie && open.tie !== null && (
+            <div className="lean-page__lead">
+              <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>
+              <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
+            </div>
+          )}
+          {!open.decl && rows.length > 1 && !full && (
+            <ul className="lean-page__rows" aria-label="Lean declarations of this step">
+              {rows.map((item, i) => (
+                <li key={`${item.module}:${item.name}`}>
+                  <button type="button" aria-pressed={i === Math.min(chosen, rows.length - 1)} title={item.name} onClick={() => setChosen(i)}>
+                    {plainName(alignment, item.name) === plain ? lastName(item.name) : plainName(alignment, item.name)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className={`lean-page__body${full || !name ? " lean-page__body--read" : ""}`} data-keep>
+            {full && record ? (
+              <RecordPanel
+                key={record}
+                nodeId={record}
+                compact
+                onClose={() => setFull(false)}
+                onSelect={onPick}
+                onTrace={(trace: Trace | undefined) => navigate({ view: "map", node: record, trace })}
+                passageHref={passageHref}
               />
-            )}
-            {view.kind === "passage" && <Passage records={view.records} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />}
-            {view.kind === "nothing" && (
-              <p className="lean-page__plain">
-                Nothing in this stretch of the paper is tied to the Lean. Scroll on, or press <kbd>j</kbd> for the next tied statement.
-              </p>
-            )}
-          </>
-        )}
-        {record && !slot && (
-          <a className="lean-page__map" href={routeHref({ view: "map", node: record })}>
-            Open in the full map
-          </a>
-        )}
-      </div>
+            ) : name ? (
+              <LazyLeanBlock
+                key={`${row?.module ?? ""}:${name}`}
+                name={name}
+                module={row?.module}
+                relation={row?.relation ?? undefined}
+                note={row?.note}
+                clause={row?.clause}
+                lines={row?.lines}
+                compact
+                fill
+                onName={onName}
+              />
+            ) : alignment ? (
+              <p className="lean-page__plain">No Lean declaration is linked to this step. The papers above state it.</p>
+            ) : null}
+          </div>
+        </>
+      )}
     </div>
   );
 }
 
-// ---- The split between the graph and the Lean -------------------------------------------
+// ---- How far the Lean rises ---------------------------------------------------------------
 
-const SHARE_KEY = "lx-reader-sheet";
-const PANES_KEY = "lx-reader-panes";
-export const DOCK_MIN = 0.28;
-export const DOCK_MAX = 0.8;
-/** Below this page height the Lean is what a reader came for, so it starts with more room. */
-const SHORT_PAGE = 680;
+const SHARE_KEY = "lx-reader-lean";
+export const DOCK_MIN = 0.4;
+export const DOCK_MAX = 0.88;
 
 export function clampDock(share: number): number {
   return Math.min(DOCK_MAX, Math.max(DOCK_MIN, share));
 }
 
-/** The remembered split, or by default half, or more for the Lean on a short page. */
-export function readDockShare(height = 0): number {
-  const fallback = height && height < SHORT_PAGE ? 0.62 : 0.5;
+/** The remembered height, or most of the page; side by side, a little over half of its width. */
+export function readDockShare(side = false): number {
+  const fallback = side ? 0.54 : 0.75;
   try {
-    const value = Number(localStorage.getItem(SHARE_KEY));
+    const value = Number(localStorage.getItem(`${SHARE_KEY}${side ? "-side" : ""}`));
     return value ? clampDock(value) : fallback;
   } catch {
     return fallback;
   }
 }
 
-export function saveDockShare(share: number) {
+export function saveDockShare(share: number, side = false) {
   try {
-    localStorage.setItem(SHARE_KEY, String(share));
+    localStorage.setItem(`${SHARE_KEY}${side ? "-side" : ""}`, String(share));
   } catch {
-    /* storage unavailable: the split lasts until the page closes */
-  }
-}
-
-export interface Panes {
-  graph: boolean;
-  lean: boolean;
-}
-
-export function readPanes(fallback: Panes): Panes {
-  try {
-    const value = JSON.parse(localStorage.getItem(PANES_KEY) ?? "null") as Panes | null;
-    return value && (value.graph || value.lean) ? value : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-export function savePanes(panes: Panes) {
-  try {
-    localStorage.setItem(PANES_KEY, JSON.stringify(panes));
-  } catch {
-    /* storage unavailable */
+    /* storage unavailable: the height lasts until the page closes */
   }
 }
