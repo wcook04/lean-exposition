@@ -1,0 +1,4575 @@
+{
+  "schema": 1,
+  "statements": [
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "mention",
+      "from": "We explain why a minimising order parameter",
+      "to": "interval below one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "clause": "StrictMonoOn (extend γ.val) (Ico (0:ℝ) 1)",
+          "note": "Strictly increasing on [0,1) is what rules out a constant stretch below one."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Minimality",
+      "to": "to connect the required values.",
+      "after": "The proof compares two consequences of a hypothetical gap. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+          "lines": [
+            370,
+            375
+          ],
+          "note": "The two endpoint values, two slope bounds and strict convexity. Lean ends with the mean value theorem, not an area.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "mention",
+      "from": "Initial and terminal gaps need separate arguments.",
+      "to": "separate arguments.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            419,
+            424
+          ],
+          "note": "The terminal case and the zero-height case arrive as their own hypotheses, hend and hzero."
+        }
+      ]
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "mention",
+      "from": "We then return to",
+      "to": "with arbitrarily small error in that fraction."
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "definition",
+      "from": "At each of $n$ positions, or **sites**",
+      "to": "$\\sigma=(\\sigma_1,\\ldots,\\sigma_n)$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "clause": "(σ : Fin n → Bool)",
+          "note": "Lean encodes each sign as a Boolean, read as +1 or -1 inside the sum.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "definition",
+      "from": "For each unordered pair choose an independent standard Gaussian",
+      "to": "J_{ij}\\sigma_i\\sigma_j.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "lines": [
+            91,
+            93
+          ],
+          "note": "Sum over i<j, divided by the square root of n. The couplings are indexed by all ordered pairs; only i<j enter.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.spinDisorder",
+          "lines": [
+            95,
+            96
+          ],
+          "note": "Product of standard Gaussians over all ordered pairs, so independence is built into the measure.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "A positive coupling rewards equal signs; a negative one rewards opposite",
+      "to": "signs.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "clause": "J (i,j) * (if σ i then 1 else -1) * (if σ j then 1 else -1)",
+          "note": "Each term is the coupling times the product of two signs.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "example",
+      "from": "For example, positive couplings on pairs $12$ and $23$ favour",
+      "to": "is called **frustration**.",
+      "note": "Illustration only: frustration has no Lean counterpart."
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The factor $n^{-1/2}$ fixes",
+      "to": "the model's scale.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "clause": "/ Real.sqrt n",
+          "note": "The same factor, as a division.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "example",
+      "from": "For two spins, $H_2(\\sigma)",
+      "to": "$\\max_\\sigma H_2(\\sigma)=|J_{12}|/\\sqrt2$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "lines": [
+            91,
+            93
+          ],
+          "note": "At n=2 one term survives. Lean never evaluates this case or the maximum.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "A **probability density** assigns probability by area.",
+      "to": "\\Pr(a\\le Z\\le b)=\\int_a^b\\varphi(z)\\,dz.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinDisorder",
+          "clause": "gaussianReal 0 1",
+          "note": "Lean names the law by mathlib's gaussianReal; the density formula stays inside mathlib.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "Symmetry gives the zero mean, whereas",
+      "to": "\\sqrt{2/\\pi}$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Gaussian.gaussian_abs_moment",
+          "lines": [
+            54,
+            55
+          ],
+          "note": "Absolute moment of a centred Gaussian. Variance one gives this value.",
+          "relation": "states"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.BrownianSystem.abs_increment",
+          "lines": [
+            14,
+            17
+          ],
+          "note": "At t=0 the increment is B_1, a standard Gaussian, so this gives the square root of 2/π.",
+          "relation": "contains"
+        }
+      ],
+      "note": "A worked Gaussian integral the Lean also needs, for the terminal-value bound."
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "example",
+      "from": "Thus the expected two-spin maximum is $1/\\sqrt\\pi$.",
+      "to": "instead zero.",
+      "note": "No Lean counterpart: the Lean has no two-spin case."
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The order matters: we choose signs for each realised coupling, then average",
+      "to": "the achieved maximum.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.expectedSKMaximum",
+          "clause": "∫ J, sSup (Set.range (spinHamiltonian n J)) ∂spinDisorder n",
+          "note": "The maximum sits inside the integral: signs are chosen after each coupling draw.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.source_spin_sequence_limit",
+      "paper": "expository",
+      "role": "definition",
+      "from": "For many spins, we seek the limiting expected",
+      "to": "after taking the maximum.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.expectedSKMaximum",
+          "lines": [
+            98,
+            99
+          ],
+          "note": "Expected maximum divided by n.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.groundStateValue",
+          "lines": [
+            101,
+            101
+          ],
+          "note": "Written with limUnder, which is defined even with no limit. Convergence is a separate theorem.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.SKValueG.groundStateSequence_tendsto",
+          "note": "The actual convergence, proved in the scalar development."
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The model is **pure** because every term contains",
+      "to": "no additional term $h\\sum_i\\sigma_i$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.spinHamiltonian",
+          "lines": [
+            92,
+            93
+          ],
+          "note": "Only two-spin products appear, and there is no one-spin term.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "definition",
+      "from": "To compare two configurations for the *same couplings*",
+      "to": "with a disagreement counted as $-1$.",
+      "note": "Overlap has no definition in the Lean: neither selected theorem mentions it."
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "example",
+      "from": "If they disagree at $k$ positions",
+      "to": "two disagreements would give zero."
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Our normalisation gives the covariance function $\\xi(t)=t^2/2$ in the",
+      "to": "variational problem below.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "(1 / 2 : ℝ) * ∫ t in (0 : ℝ)..1, t * extend γ.val t",
+          "note": "Lean never names ξ. Unit noise and this correction term are written directly, which is the same choice."
+        }
+      ]
+    },
+    {
+      "record": "scalar.finite_maximum_unique_modulo_flip",
+      "paper": "expository",
+      "role": "mention",
+      "from": "Reversing one configuration's signs",
+      "to": "overlap with another."
+    },
+    {
+      "record": "scalar.parisi_formula",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The Parisi theorem in",
+      "to": "the finite maximisation.",
+      "lean": [
+        {
+          "name": "OAI.SKValue.groundStateValue_le_parisi",
+          "lines": [
+            129,
+            130
+          ],
+          "note": "The Lean does prove this link in the scalar model: this bound here, equality at a minimiser in ground_state_parisi_target."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "file": "OAI/Probability/SKSupport/Main.lean",
+          "lines": [
+            35,
+            36
+          ],
+          "note": "The support theorem itself never mentions spins: it assumes minimality and speaks only of the variational problem.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "example",
+      "from": "A candidate order parameter records accumulated weight.",
+      "to": "\\end{cases}\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF",
+          "lines": [
+            12,
+            12
+          ],
+          "note": "The cumulative function of a finite measure. This three-step case is one instance; Lean states none.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "example",
+      "from": "Its area is $2(1/2)+3(1/4)=7/4$.",
+      "to": "giving $2(3/4)+1(1/4)=7/4$ again.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+          "lines": [
+            117,
+            119
+          ],
+          "note": "Taking H=1 gives these two counts of one area, for any finite measure. The numbers are not in Lean.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "**Stieltjes measure** records the increments:",
+      "to": "\\gamma(b)-\\gamma(a).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsStieltjesMeasure",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "The first equation, as the Lean convention."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc",
+          "lines": [
+            26,
+            27
+          ],
+          "note": "The second equation, in additive form with extended nonnegative values.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "These cumulative values determine the measure uniquely.",
+      "to": "uniquely.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "∀ μ : Measure Time, IsStieltjesMeasure γ μ → μ.support = Set.univ",
+          "note": "Lean proves no uniqueness. It quantifies over every Stieltjes measure instead.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The first\nequation permits mass",
+      "to": "point is an **atom**.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parameterMeasure",
+          "clause": "ENNReal.ofReal (γ.val ⊥) • Measure.dirac ⊥",
+          "note": "The constructed measure adds this atom of size γ(0) at the bottom of Time."
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The weights need not be probabilities of",
+      "to": "or even finite.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsStieltjesMeasure",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "Any measure on Time qualifies, with no condition on its total mass."
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "statement",
+      "from": "They are finite on each $[0,T]$ with $T<1$.",
+      "to": "$T<1$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.finiteOnCompacts",
+          "lines": [
+            187,
+            188
+          ],
+          "note": "Finite on compact subsets of Time, such as [0,T].",
+          "relation": "states"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Admissibility requires",
+      "to": "<\\infty.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "integrable : Integrable (extend val)",
+          "note": "Lean requires the first integral finite. The equality with the weighted mass integral is not stated."
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Right-continuity includes a jump's new value",
+      "to": "as in the example.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "right_continuous : ∀ t, ContinuousWithinAt val (Set.Ici t) t",
+          "note": "The field that fixes the value at a jump."
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This is the same two ways of counting area as above",
+      "to": "may be summed in either order.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+          "lines": [
+            117,
+            119
+          ],
+          "note": "Lean's exchange is for finite measures only. It never needs this identity for infinite total mass.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "A mass at one would change none of the",
+      "to": "one is excluded from the domain.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Time",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            12,
+            12
+          ],
+          "note": "Time is the half-open interval [0,1), so one is not a point of the domain.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "definition",
+      "from": "The **support** consists of points whose every neighbourhood",
+      "to": "clipped to $[0,1)$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.InSupport",
+          "lines": [
+            71,
+            72
+          ],
+          "note": "Uses mathlib's Measure.support on the subtype Time, whose neighbourhoods are the clipped intervals.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Full support means",
+      "to": "carries mass.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "clause": "μ.support=univ",
+          "note": "Lean says the support is all of Time."
+        }
+      ]
+    },
+    {
+      "record": "support.strict_increase",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Equivalently,",
+      "to": "with $a<b$,",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support",
+          "lines": [
+            56,
+            62
+          ],
+          "note": "Exactly this: full support gives positive mass on (a,b], so γ(a)<γ(b)."
+        }
+      ]
+    },
+    {
+      "record": "support.strict_increase",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "and a positive increment on a smaller interval",
+      "to": "gives positive mass there.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support",
+          "lines": [
+            47,
+            48
+          ],
+          "note": "Lean has only the forward direction. This converse is not stated."
+        }
+      ],
+      "note": "The paper's equivalence is one implication in the Lean; the other direction has no declaration."
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "example",
+      "from": "For example, the admissible candidate",
+      "to": "$1/8$ to $1/4$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.eq_cdf_of_measure_Ioc_zero",
+          "lines": [
+            31,
+            33
+          ],
+          "note": "Zero mass on (a,b] gives equal values. Lean states this generally; this candidate is not in Lean.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "example",
+      "from": "Both endpoints of the gap remain in the support because every",
+      "to": "reaches a region carrying positive mass.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap",
+          "lines": [
+            82,
+            83
+          ],
+          "note": "For any gap, Lean obtains support at the right end, and at the left end unless that end is zero."
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "example",
+      "from": "The upper curve in Figure 1 stays positive across the gap;",
+      "to": "it is its *increments* that vanish.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap",
+          "lines": [
+            150,
+            152
+          ],
+          "note": "A support gap forces a constant height. Lean allows height zero here; positivity is a separate case.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This candidate has infinitely many",
+      "to": "do not give full support.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            431,
+            432
+          ],
+          "note": "Support cofinal in [0,1) is only the input to exists_support_gap. The gap it returns must still be excluded."
+        }
+      ]
+    },
+    {
+      "record": "support.stieltjes_measure",
+      "paper": "expository",
+      "role": "example",
+      "from": "A constant candidate $\\gamma(t)=c>0$",
+      "to": "the conclusion we seek.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parameterMeasure",
+          "lines": [
+            109,
+            110
+          ],
+          "note": "For constant γ the Stieltjes part vanishes and only the atom remains. Lean does not state this case."
+        }
+      ]
+    },
+    {
+      "record": "scalar.smooth_positive_density",
+      "paper": "expository",
+      "role": "mention",
+      "from": "Nor does full support alone",
+      "to": "density conclusion.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "(∀ a b : Time, a < b → γ.val a < γ.val b)",
+          "note": "The Lean conclusion stops at support and strict increase. It has no density clause.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "example",
+      "from": "**Question 1: allowed changes.**",
+      "to": "nonnegativity.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.addCDF",
+          "lines": [
+            21,
+            26
+          ],
+          "note": "Adding a finite measure always keeps every admissibility field.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
+          "lines": [
+            66,
+            72
+          ],
+          "note": "Removal needs ν ≤ μ, which is the test this question asks about. Scaling is not built in Lean.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "definition",
+      "from": "The variational problem assigns each $\\gamma$ a value",
+      "to": "$\\max_{\\sigma\\in\\{-1,1\\}}x\\sigma$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            49,
+            51
+          ],
+          "note": "A supremum over controls of an expected payoff.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "|x + W.B 1 ω - W.B (Real.toNNReal t) ω +",
+          "note": "The final reward is the absolute value of the final state. The one-spin reading is the paper's.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.full_support_minimizer",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Our",
+      "to": "a continuous random path starting at zero.",
+      "after": "([Auffinger–Chen, Theorem 2][auffinger-chen]). ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.BrownianSystem",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "brownian : IsBrownianReal B law",
+          "note": "Rate-one noise is taken as given. Lean has no variance-rate parameter."
+        }
+      ]
+    },
+    {
+      "record": "assumptions.full_support_minimizer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Its increments over disjoint time intervals are independent;",
+      "to": "Gaussian $\\sqrt h Z$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.BrownianSystem.abs_increment",
+          "lines": [
+            18,
+            19
+          ],
+          "note": "hasLaw_sub is the increment law the Lean uses, from the Brownian structure in W.brownian.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Starting at time $t$ in state $x$, the remaining",
+      "to": "\\varphi(z)\\,dz.\n$$",
+      "after": "interval of length $h$, an increment has the law of the centred\nGaussian $\\sqrt h Z$. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_on_terminal_plateau",
+          "clause": "value W γ t=varianceLogHeat c (1-t) abs",
+          "note": "With c=0 on a zero tail, varianceLogHeat is the Gaussian average of |x|, which is this formula.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "At $(t,x)=(0,0)$ this is the calculation already performed:",
+      "to": "$\\Phi_0(0,0)=\\sqrt{2/\\pi}$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.BrownianSystem.abs_increment",
+          "lines": [
+            14,
+            17
+          ],
+          "note": "At t=0 this is the expected absolute value of B_1. Lean does not name the zero candidate's value.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "At $t=1$ no noise remains and the",
+      "to": "value is $|x|$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_terminal_uniform",
+          "lines": [
+            29,
+            31
+          ],
+          "note": "At t=1 both bounds are zero, so the value is |x|, for every coefficient.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "definition",
+      "from": "A **control** $\\alpha_s\\in[-1,1]$ chooses a response",
+      "to": "observed since the starting time.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Control",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "progressive : IsProgressive (incrementFiltration W t) val",
+          "note": "Adapted to the Brownian increments after the start, as in incrementFiltration.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Control",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "bound : ∀ s ω, |val s ω| ≤ 1",
+          "note": "The bound by one.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The whole",
+      "to": "but future noise is not.",
+      "after": "using only noise already observed since the starting time. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Control",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "progressive : IsProgressive (incrementFiltration W t) val",
+          "note": "The filtration restricts noise only. γ enters the payoff as a fixed deterministic function.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The continuous control problem repeats decisions",
+      "to": "the finite example only illustrates that\nrestriction.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Control",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "progressive : IsProgressive (incrementFiltration W t) val",
+          "note": "The restriction itself. The sign example above is not in Lean.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "definition",
+      "from": "For a starting position $x$, the value is",
+      "to": "\\right].\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            49,
+            51
+          ],
+          "note": "The supremum of expected payoffs.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            43,
+            47
+          ],
+          "note": "The same payoff. Lean indexes a control by time elapsed since the start, s minus t.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Inside the absolute value, noise and the accumulated bias",
+      "to": "running control cost.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            45,
+            46
+          ],
+          "note": "Noise and accumulated bias, inside the absolute value.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            47,
+            47
+          ],
+          "note": "The running cost.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The supremum chooses the best permitted rule;",
+      "to": "condition is progressive measurability.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "sSup (Set.range (fun α : Control W (Real.toNNReal t) =>",
+          "note": "A real supremum over the Control structure, so progressive measurability is part of the index set.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.control_values_bddAbove",
+          "lines": [
+            30,
+            33
+          ],
+          "note": "This bound makes the real supremum a true one.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "example",
+      "from": "At $\\gamma=0$ both control terms vanish, recovering Section 3.1.",
+      "to": "Section 3.1.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            46,
+            46
+          ],
+          "clause": "extend γ.val s",
+          "note": "Both integrals carry this factor, so they vanish at zero. Lean has no lemma for this case.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_minimizer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The inner supremum chooses a response for fixed $\\gamma$;",
+      "to": "minimises $\\mathcal P$ over $\\gamma$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsMinimizer",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "The outer problem. Lean states minimality against every order parameter."
+        }
+      ]
+    },
+    {
+      "record": "scalar.source_ground_state_upper",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Each candidate supplies an upper bound, and minimisation finds the",
+      "to": "sharpest one.",
+      "lean": [
+        {
+          "name": "OAI.SKValue.groundStateValue_le_parisi",
+          "lines": [
+            129,
+            130
+          ],
+          "note": "Every coefficient, in the scalar model. No Lean theorem maps it to the support model's parisi."
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_minimizer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The no-gap theorem assumes a minimiser and proves a property of it.",
+      "to": "property of it.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.full_support",
+          "file": "OAI/Probability/SKSupport/Main.lean",
+          "clause": "(hmin : IsMinimizer W γ)",
+          "note": "Minimality is a hypothesis. Lean never shows that a minimiser exists.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "mention",
+      "from": "The value $\\mathcal P(0)=\\sqrt{2/\\pi}$ alone does not establish",
+      "to": "that the zero candidate minimises."
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "For any permitted control, use the same",
+      "to": "in the terminal reward by $|x-y|$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff_space_le",
+          "lines": [
+            72,
+            84
+          ],
+          "note": "The same control and path at x and y, with the triangle inequality; the cost term cancels.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Taking the supremum over controls gives",
+      "to": "\\le |x-y|.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_space_le",
+          "lines": [
+            90,
+            103
+          ],
+          "note": "Supremum over controls of the pathwise bound.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.value_lipschitz",
+          "lines": [
+            105,
+            106
+          ],
+          "note": "The result: the value is 1-Lipschitz in the starting state.",
+          "relation": "states"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The value is also **convex**:",
+      "to": "translated absolute-value\nfunctions, hence convex.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff_convex",
+          "lines": [
+            14,
+            22
+          ],
+          "note": "Each path's payoff is a translated absolute value minus a constant.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.expected_controlPayoff_convex",
+          "lines": [
+            24,
+            29
+          ],
+          "note": "The average over paths stays convex.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Its chord lies at or below the chord of the",
+      "to": "preserves that upper bound.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_convex",
+          "lines": [
+            38,
+            48
+          ],
+          "note": "The chord for one control, then the bound by each endpoint's supremum, then the supremum.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity] supply spatial",
+      "to": "differentiability below time one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_contDiff",
+          "lines": [
+            86,
+            87
+          ],
+          "note": "Smooth in x, at each time below one.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Let $u(t,x)=\\partial_x\\Phi_\\gamma(t,x)$ be the slope",
+      "to": "as the starting state changes.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            53,
+            54
+          ],
+          "note": "The spatial derivative of the value.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Write\n$a(t,x)=",
+      "to": "slope changes.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.curvature",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            56,
+            57
+          ],
+          "note": "The spatial derivative of the gradient.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The displayed bound gives $|u|\\le1$, and convexity",
+      "to": "gives $a\\ge0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient_abs_le_one",
+          "lines": [
+            14,
+            15
+          ],
+          "note": "From the 1-Lipschitz bound.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.curvature_nonneg",
+          "lines": [
+            190,
+            191
+          ],
+          "note": "From monotonicity of the gradient, which comes from convexity.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "For the zero coefficient, the slope can be computed directly.",
+      "to": "\\right)-1.\n$$",
+      "note": "The Lean never computes this slope."
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "Differentiating the integral is legitimate:",
+      "to": "minus the probability of a negative one."
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "For general $\\gamma$, the control theorem says that the slope response",
+      "to": "attains the value.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.exists_feedback_verification",
+          "lines": [
+            30,
+            34
+          ],
+          "note": "On a constant-coefficient segment: a feedback Euler control comes within ε of the value. No exact optimal control is stated.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The response-dependent gain per unit time is therefore",
+      "to": "attains its maximum.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.integrated_completion_square",
+          "lines": [
+            20,
+            26
+          ],
+          "note": "The same completed square, integrated: line 26 uses the nonnegativity of c times (α minus u) squared.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.completion_square_feedback",
+          "lines": [
+            32,
+            33
+          ],
+          "note": "The value at v=u.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The optimised contribution $\\gamma u^2/2$ also explains why a squared",
+      "to": "slope will enter the sensitivity to $\\gamma$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.valueRate",
+          "clause": "(1/2:ℝ)*extend γ.val t*(gradient W γ t x)^2",
+          "note": "The same term, inside the time rate of the value.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "We first fix $\\gamma$ and obtain the deterministic value and slope by",
+      "to": "the state already reached.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            53,
+            54
+          ],
+          "note": "A deterministic function, built from value before any path is run.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "gradient W γ s (X (Real.toNNReal s) ω))",
+          "note": "The drift at time s reads only s and the state at s.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.diffusion",
+      "paper": "expository",
+      "role": "statement",
+      "from": "The cited regularity theorem",
+      "to": "for a fixed Brownian motion.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_isDiffusion",
+          "lines": [
+            309,
+            310
+          ],
+          "note": "Existence for every coefficient, on the given Brownian system."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness",
+          "lines": [
+            13,
+            15
+          ],
+          "note": "Almost-sure uniqueness up to time one."
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "expository",
+      "role": "definition",
+      "from": "The\nrule is called **feedback**",
+      "to": "reached state.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "gradient W γ s (X (Real.toNNReal s) ω))",
+          "note": "The slope evaluated at the state already reached.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.euler_normalization",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "With $\\gamma$ and $u$ supplied, a short forward step",
+      "to": "\\sqrt h Z.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.eulerState",
+          "lines": [
+            41,
+            43
+          ],
+          "note": "The same step on a mesh: previous state, scaled Gaussian, then step times γ times gradient, both read at the left end.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.euler_normalization",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The response is evaluated before the fresh independent noise $Z$ is",
+      "to": "observed.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.eulerState",
+          "clause": "gradient W γ (meshTime T N j) (eulerState W γ T N j z)",
+          "note": "The gradient reads state j, which does not depend on coordinate j of the noise.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Its drift accumulates",
+      "to": "does not make $X$ jump.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "ContinuousOn (fun t : ℝ => X (Real.toNNReal t) ω) (Set.Icc 0 1)",
+          "note": "Path continuity is part of the definition. A jump of γ only changes the integrand.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Fix $\\gamma$, follow a path to $X_t$, evaluate the slope there",
+      "to": "q(t):=\\mathbb E[u(t,X_t)^2].\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "The expected square of the gradient along X.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "**A calculation at half time.**",
+      "to": "The two measures describe different objects.",
+      "note": "The Lean has no zero-coefficient moment calculation."
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "Average $u_0(1/2,x)^2$ with this density.",
+      "to": "dv=\\varphi(z)\\,dz.\n\\end{aligned}\n$$"
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "The response at zero is zero, but its mean square at the random state",
+      "to": "a discrepancy at one time does not suffice."
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "**Question 2: change the time and the future.**",
+      "to": "Identify what remains\nunchanged and what must be recomputed."
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "The analytic facts needed in the proof are",
+      "to": "\\qquad q'(t)=\\mathbb E[a(t,X_t)^2].\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+          "lines": [
+            155,
+            157
+          ],
+          "note": "q'=E[a²] on [0,1), one-sided at zero."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_zero",
+          "lines": [
+            151,
+            152
+          ],
+          "note": "q(0)=0.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_bounds",
+          "lines": [
+            125,
+            126
+          ],
+          "note": "0≤q and |q|≤1."
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Here $C^1$ means continuously differentiable, with derivatives at zero",
+      "to": "from the right.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+          "clause": "(Ici (0:ℝ))",
+          "note": "The derivative is taken within t≥0."
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "In particular, $q'$ stays continuous across jumps of",
+      "to": "$\\gamma$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_continuousOn_unit",
+          "lines": [
+            142,
+            143
+          ],
+          "note": "Continuity on [0,1), with no condition on jumps of γ.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Spatial curvature controls the growth of the squared response.",
+      "to": "squared response.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.compactSquare_generator",
+          "lines": [
+            88,
+            90
+          ],
+          "note": "The generator of the squared gradient along the drift equals the curvature squared.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "These facts hold for every admissible candidate and follow from",
+      "to": "[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity].",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+          "lines": [
+            155,
+            157
+          ],
+          "note": "No minimiser hypothesis: γ is any OrderParameter."
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The initial value",
+      "to": "is even in $x$.",
+      "after": "These facts hold for every admissible candidate and follow from\n[OpenAI (2026a), Lemmas 2.1–2.2][support-regularity]. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_even",
+          "lines": [
+            155,
+            162
+          ],
+          "note": "Same fact, different proof: evenness passes from finite-step approximations. Lean never reflects controls.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Hence $u(t,0)=0$, and the zero-field starting state",
+      "to": "gives $q(0)=0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient_zero",
+          "lines": [
+            177,
+            178
+          ],
+          "note": "The gradient is odd, so it vanishes at zero.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.stripQ_zero",
+          "lines": [
+            34,
+            41
+          ],
+          "note": "X_0=0 and that vanishing give the zero start; squareMoment_zero then reads it off the integrated identity.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "full_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Zero field supplies $q(0)=0$;",
+      "to": "curvature estimate.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_zero",
+          "lines": [
+            151,
+            152
+          ],
+          "note": "q(0)=0.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "value W γ 0 0",
+          "note": "Zero field is built in: state zero at time zero, unit noise.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "full_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The statement does not cover",
+      "to": "mixed-spin covariance functions.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            59,
+            60
+          ],
+          "note": "Lean's model has no field and no covariance parameter to vary.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Here $\\Phi_\\gamma$ and $u$ are deterministic functions;",
+      "to": "positive and negative responses.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "gradient W γ t is a fixed function; the randomness enters only through X at ω.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "mention",
+      "from": "In Section 5, $q(t)-t$ will determine the first-order cost",
+      "to": "so its cost requires a tail integral.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential",
+          "lines": [
+            18,
+            19
+          ],
+          "note": "The tail integral of q(t)-t.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This discrete approximation explains the order of operations;",
+      "to": "the integral equation defines the continuous process.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "X (Real.toNNReal t) ω = W.B (Real.toNNReal t) ω +",
+          "note": "The integral equation, which is the Lean definition. Euler steps are separate.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "For a general $\\gamma$, a response can bias the future state, with a",
+      "to": "quadratic cost.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.controlPayoff",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            46,
+            47
+          ],
+          "note": "The bias and its quadratic cost.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "A rule chosen in advance can still give different responses on different",
+      "to": "observed paths.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Control",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "val : ℝ≥0 → Ω → ℝ",
+          "note": "A control is a function of time and of the path.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "scalar.paper_admissible",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Expectation now averages over",
+      "to": "rather than over spin couplings.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "∫ ω, controlPayoff W γ t x α ω ∂W.law",
+          "note": "An integral over the Brownian system's law, with no spin variables.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.qaoa_model_and_limits",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "thus $\\sqrt h Z$ has variance $h$ for $h>0$.",
+      "to": "for $h>0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.varianceHeat",
+          "lines": [
+            35,
+            35
+          ],
+          "note": "Averages g(x+√t y) over a standard Gaussian y, so t is the variance of the added noise.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "We begin with the first-order cost",
+      "to": "exclude every possible gap.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "lines": [
+            23,
+            29
+          ],
+          "note": "The Lean proof is this one call: contact, no terminal plateau, and the two gap-curvature cases.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "definition",
+      "from": "The **first variation** in a direction $\\eta$",
+      "to": "$\\varepsilon\\mapsto\\mathcal P(\\gamma+\\varepsilon\\eta)$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+          "lines": [
+            152,
+            154
+          ],
+          "note": "Lean states no derivative in ε: a limit of difference quotients at steps 1/(n+1) along the chord to β."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "statement",
+      "from": "At a minimum its right derivative is nonnegative",
+      "to": "nonnegativity or monotonicity.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_variational_inequality",
+          "lines": [
+            173,
+            175
+          ],
+          "note": "The limit of nonnegative quotients is nonnegative. Lean has only this one-sided inequality."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Precisely, let $\\eta\\in L^1(0,1)$, meaning",
+      "to": "=\\frac12\\int_0^1\\eta(t)(q(t)-t)\\,dt.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+          "clause": "(𝓝 ((1/2:ℝ)*(∫ s in (0:ℝ)..1, (extend β.val s-extend γ.val s)*(squareMoment W γ (diffusion W γ) s-s))))",
+          "note": "The same integral with η=β-γ. Lean needs no ε₀: an admissible direction is the chord towards β."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Here $q$ belongs to the unperturbed candidate $\\gamma$.",
+      "to": "candidate $\\gamma$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+          "clause": "squareMoment W γ (diffusion W γ) s-s",
+          "note": "The moment uses γ's own diffusion, with no perturbed coefficient inside."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The term $-t/2$ comes from the outer correction in $\\mathcal P$;",
+      "to": "in $\\mathcal P$;",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.normalizedParisiDifference_eq",
+          "lines": [
+            143,
+            145
+          ],
+          "note": "The Parisi quotient is the value quotient minus this correction integral.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.penalty_difference",
+          "lines": [
+            133,
+            135
+          ],
+          "note": "The correction is linear in the coefficient.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "$q(t)/2$ is the sensitivity of the reoptimised control value.",
+      "to": "not differentiation with a fixed\ncontrol.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.normalizedValueDifference_limit",
+          "lines": [
+            91,
+            93
+          ],
+          "note": "The limit of the value quotients, which is the analytic content.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "[Chen–Handschy–Lerman (2018), Proposition 4][chl-optimality]",
+      "to": "coefficients.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.chord",
+          "lines": [
+            12,
+            13
+          ],
+          "note": "The segment joining γ and β, shown admissible field by field.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+          "lines": [
+            152,
+            154
+          ],
+          "note": "Lean proves the segment formula itself rather than importing it."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Taking the second endpoint to be",
+      "to": "the formula above.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_variational_inequality",
+          "lines": [
+            170,
+            172
+          ],
+          "note": "Lean does no rescaling. Later uses take β=γ+ν's cumulative function directly, at ε₀=1."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The detailed proof in",
+      "to": "$L^1$ tail of $\\eta$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.mixed_difference_integral",
+          "lines": [
+            86,
+            89
+          ],
+          "note": "The value difference is a terminal term plus the weighted mixed moment.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.mixed_difference_terminal_bound",
+          "lines": [
+            107,
+            109
+          ],
+          "note": "The terminal term is bounded by the L1 tail of the coefficient difference.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.normalizedValueDifference_truncation",
+          "lines": [
+            50,
+            52
+          ],
+          "note": "The two combined for one chord step and one strip.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Adding a small atom at scale $s$ raises the cumulative function at",
+      "to": "*every* later scale.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.addCDF_difference",
+          "lines": [
+            28,
+            29
+          ],
+          "note": "The change is the cumulative function of the added measure, positive from s onward.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "It is always allowed: the total mass is not",
+      "to": "no compensating removal is required.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.addCDF",
+          "lines": [
+            21,
+            26
+          ],
+          "note": "Sum of γ and a finite measure's cumulative function, with every field proved. No normalisation appears.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Its direction is",
+      "to": "from $s$ onward.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_integral",
+          "lines": [
+            23,
+            24
+          ],
+          "note": "For a unit atom at s this integral is one exactly when s≤t.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Thus\n\n$$\nD\\mathcal P(\\gamma)[\\mathbf1",
+      "to": "=:\\frac12G(s).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential",
+          "lines": [
+            18,
+            19
+          ],
+          "note": "G, without the factor one half.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+          "lines": [
+            59,
+            62
+          ],
+          "note": "The chord towards γ+1_[s,1), rewritten by Fubini for the Dirac measure at s."
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "example",
+      "from": "For the candidate in Figure 1, adding $\\varepsilon$ mass at $s=1/2$",
+      "to": "remaining curve by $\\varepsilon$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.addCDF",
+          "lines": [
+            21,
+            22
+          ],
+          "note": "The general construction. Lean uses a unit atom with the small step on the chord; this figure is not in Lean.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The coefficient changes only on",
+      "to": "accounts for this dependence.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.mixedQ",
+          "lines": [
+            31,
+            32
+          ],
+          "note": "Lean tracks the changed problem here: γ's gradient along a drift mixing both coefficients, whose limit is mixedQ_perturbation_limit.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "statement",
+      "from": "$G(s)/2$ is the marginal cost of placing mass at $s$. At a minimiser,",
+      "to": "$G(s)\\ge0$ for every $s<1$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+          "lines": [
+            57,
+            58
+          ],
+          "note": "Stated for every s in Time, from adding a unit atom at s."
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "example",
+      "from": "For the two weights in Section 2, the same accounting gives",
+      "to": "entire remaining tail.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+          "lines": [
+            117,
+            119
+          ],
+          "note": "With ν the two weights and H=q-t. Lean's lemma is general and states no such case.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Now fix a general minimiser $\\gamma$",
+      "to": "by the same\nfactor.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+          "lines": [
+            73,
+            75
+          ],
+          "note": "Lean does not scale. It removes μ restricted to a compact set, keeping the removed mass finite."
+        }
+      ],
+      "note": "The paper uses the global direction minus gamma, following Chen. The Lean instead removes finite pieces of the measure."
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "To see the order of",
+      "to": "\\mu_\\gamma(ds).\n\\end{aligned}\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_integral",
+          "lines": [
+            23,
+            24
+          ],
+          "note": "A weight at r counts at t exactly when r≤t.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+          "lines": [
+            120,
+            121
+          ],
+          "note": "The same exchange, written with this indicator, for a finite measure.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Thus the allowed reduction gives",
+      "to": "\\mu_\\gamma(ds).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_remove",
+          "lines": [
+            64,
+            71
+          ],
+          "note": "Lean's version: for finite ν≤μ, the integral of G against ν is at most zero.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The exchange of integration order is valid even if the total mass is",
+      "to": "<\\infty.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+          "lines": [
+            76,
+            78
+          ],
+          "note": "Lean avoids this: μ restricted to a compact set is finite, so finiteCDF_fubini suffices."
+        }
+      ],
+      "note": "This bound has no Lean counterpart because the Lean never integrates against infinite mass."
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Since $G\\ge0$, its integral must be zero.",
+      "to": "its integral must be zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos",
+          "lines": [
+            219,
+            219
+          ],
+          "note": "Nonpositive by removal, nonnegative by sign.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "If $G$ were positive at a",
+      "to": "contradicting that zero\nintegral.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos",
+          "lines": [
+            220,
+            228
+          ],
+          "note": "Same idea, without a lower bound: G vanishes almost everywhere, and {G≠0} would be an open set with positive mass.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Hence $G=0$ on the support.",
+      "to": "on the support.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.zero_on_support_of_compact_mass_removal",
+          "lines": [
+            230,
+            235
+          ],
+          "note": "Applied on the compact set below (t+1)/2, since μ need not be finite."
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Scaling removes only mass that exists.",
+      "to": "mass that exists.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
+          "clause": "(hν : ν ≤ μ)",
+          "note": "Lean's removal has this hypothesis: only mass already in μ can go.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "example",
+      "from": "In Figure 1, even the supported",
+      "to": "no longer be nondecreasing.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.removeCDF_monotone",
+          "lines": [
+            54,
+            55
+          ],
+          "note": "ν≤μ is what gives monotonicity. An atom at a point carrying no atom fails it.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Support alone does not permit atom removal.",
+      "to": "every zero of $G$ must carry mass.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.zero_on_support_of_compact_mass_removal",
+          "clause": "∀ t, InSupport μ t → G t = 0",
+          "note": "The implication runs one way: support gives G=0, with no converse."
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "An interior",
+      "to": "is a minimum of $G$.",
+      "after": "We need information about $q$ at the ends of a possible gap. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.value_contact_of_potential_min",
+          "lines": [
+            255,
+            258
+          ],
+          "note": "G is nonnegative and zero at s, so s is a local minimum.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Since\n$G'(s)=s-q(s)$",
+      "to": "q'(s)\\le1.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_hasDerivAt",
+          "lines": [
+            47,
+            49
+          ],
+          "note": "G'(s)=s-q(s) for 0<s<1."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.value_contact_of_potential_min",
+          "lines": [
+            259,
+            260
+          ],
+          "note": "The first derivative vanishes at the minimum, so q(s)=s.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min",
+          "lines": [
+            262,
+            268
+          ],
+          "note": "Lean never takes G''. Its one-sided argument gives the slope bound at every support point.",
+          "relation": "proof"
+        }
+      ],
+      "note": "Lean has one slope argument for all support points; it does not separate interior points from zero."
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "At zero, if it belongs to the support, contact and symmetry give",
+      "to": "$G(0)=q(0)=0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.contact_conditions",
+          "lines": [
+            307,
+            309
+          ],
+          "note": "At t=0 Lean takes q(0)=0 from the hypothesis hq0; contact gives G(0)=0.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "If $q'(0)>1$, continuity would give $q'(t)>1$",
+      "to": "for small positive $t$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min",
+          "lines": [
+            269,
+            279
+          ],
+          "note": "Lean uses difference quotients near s, not continuity of q': if d>1 then slope q s t>1 close to s.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Integration would then give $q(t)>t$, so",
+      "to": "$G'(t)=t-q(t)<0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min",
+          "lines": [
+            280,
+            290
+          ],
+          "note": "The quotient gives q(t)>t, so G'<0 on the interval and G is strictly decreasing.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Starting from $G(0)=0$, this would force $G(t)<0$,",
+      "to": "a contradiction.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min",
+          "lines": [
+            291,
+            293
+          ],
+          "note": "G falls below zero, against nonnegativity.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.contact_derivatives",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Hence $q'(0)\\le1$.",
+      "to": "an atom at zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.contact_conditions",
+          "lines": [
+            312,
+            313
+          ],
+          "note": "The same one-sided lemma at every support point, zero included.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The support is relatively closed in $[0,1)$.",
+      "to": "$[0,1)$.",
+      "after": "### 5.3 Strict curvature creates an impossible integral",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap",
+          "lines": [
+            84,
+            85
+          ],
+          "note": "μ.isClosed_support, transferred from Time to a closed subset of the reals.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Starting at a missing",
+      "to": "boundary of the domain.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap",
+          "lines": [
+            90,
+            97
+          ],
+          "note": "The largest support point below x, or zero, and the smallest above it, by compactness.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Such a maximal interval has two",
+      "to": "or reaches one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap",
+          "lines": [
+            80,
+            83
+          ],
+          "note": "The left end is zero or supported. Reaching one is excluded first, by hright, which supplies support to the right."
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "We treat these three cases in order; the last includes empty support.",
+      "to": "empty support.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            431,
+            457
+          ],
+          "note": "Lean's order differs: terminal first, by hend; then one bounded gap, split on the height c."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Its constant height $c$ is necessarily positive:",
+      "to": "so $c=\\mu_\\gamma([0,t])>0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            443,
+            444
+          ],
+          "note": "Lean does not prove c>0 from the left endpoint. It splits on c, and c=0 takes the zero-curvature route."
+        }
+      ],
+      "note": "Same cases, organised differently: the Lean case split is on the height, not on the endpoint."
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "If $r=0$, this mass is an atom at zero.",
+      "to": "atom at zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            448,
+            455
+          ],
+          "note": "With c>0, a left end of zero outside the support is impossible: the height would be zero."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Contact imposes",
+      "to": "q'(s)\\le1.\n$$",
+      "after": "If $r=0$, this mass is an atom at zero. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            437,
+            442
+          ],
+          "note": "Values at both ends and the right slope, from contact; q(0)=0 when the left end is zero."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            447,
+            449
+          ],
+          "note": "The left slope, needed only when c>0."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "The first two conditions require area $s-r$ under $q'$ across the gap.",
+      "to": "across the gap.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+          "lines": [
+            366,
+            368
+          ],
+          "note": "Lean says this with the mean value theorem: some point has slope exactly one."
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The next input forces the actual $q'$ below",
+      "to": "in the same way.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "lines": [
+            378,
+            380
+          ],
+          "note": "The strict chord inequality, then the bound by the larger endpoint slope."
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "expository",
+      "role": "statement",
+      "from": "**Strict-curvature input ([OpenAI (2026a), Proposition 5.1][support-curvature]).**",
+      "to": "\\qquad(r<t<s).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+          "lines": [
+            65,
+            68
+          ],
+          "note": "Multiplied through by c², at a continuity point of γ, which every plateau point is."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant",
+          "lines": [
+            39,
+            42
+          ],
+          "note": "Identifies stripThird with q''' on the interval.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.actualQuartic_pos",
+          "lines": [
+            51,
+            52
+          ],
+          "note": "Strict positivity of the fourth moment.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The gap argument uses its strict sign; it does not use the particular",
+      "to": "number $1/1000$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripThird_pos",
+          "lines": [
+            84,
+            90
+          ],
+          "note": "The strict sign, from the quantitative bound. Only this reaches positive_gap_curvature.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+          "lines": [
+            51,
+            51
+          ],
+          "note": "What the gap argument receives: positivity, with no constant."
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The final inequality uses $a(t,x)>0$, proved by Gaussian smoothing",
+      "to": "would only give $a\\ge0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.actualQuartic_pos",
+          "lines": [
+            51,
+            56
+          ],
+          "note": "Lean needs less: a not identically zero, and every interval charged by X_t. No pointwise a>0.",
+          "relation": "part"
+        }
+      ],
+      "note": "The Lean route to a positive fourth moment differs from the paper's."
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Because $q'''=(q')''$, the function $q'$ is strictly convex:",
+      "to": "lies strictly below their joining chord.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_positive_constant_gap",
+          "lines": [
+            389,
+            391
+          ],
+          "note": "strictConvexOn_of_deriv2_pos, from the second derivative of q' on the open interval."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The moment identity makes $q'$ continuous at the endpoints, even if",
+      "to": "needed only inside the gap.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_positive_constant_gap",
+          "lines": [
+            384,
+            387
+          ],
+          "note": "q' is continuous on the closed interval; curvature is assumed only on the open one."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_continuousOn_unit",
+          "lines": [
+            142,
+            143
+          ],
+          "note": "The source of that continuity.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Hence\n\n$$\nq'(t)<\\frac{s-t}{s-r}",
+      "to": "(r<t<s).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "lines": [
+            377,
+            380
+          ],
+          "note": "Same two steps. Lean's second bound is the larger endpoint slope, which equals the chord's supremum."
+        }
+      ]
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Integration gives $q(s)-q(r)<s-r$, contradicting contact.",
+      "to": "Integration gives $q(s)-q(r)<s-r$, contradicting contact.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+          "lines": [
+            361,
+            368
+          ],
+          "note": "Lean's contradiction: the mean value theorem gives slope one somewhere, against q'<1."
+        }
+      ],
+      "note": "Lean uses the mean value theorem where the paper integrates."
+    },
+    {
+      "record": "support.no_bounded_gap",
+      "paper": "expository",
+      "role": "example",
+      "from": "For the candidate in Section 2,",
+      "to": "strictly less than $1/3$.",
+      "after": "contradicting contact. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+          "lines": [
+            364,
+            365
+          ],
+          "note": "The same clash, for any a<b. This candidate is not in Lean."
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Suppose $[0,s)$ is",
+      "to": "Then $\\gamma=0$ there,",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap",
+          "lines": [
+            169,
+            173
+          ],
+          "note": "If zero and (0,b) miss the support, γ vanishes on (0,b)."
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Instead the\nzero-coefficient heat identity gives",
+      "to": "\\qquad(0<t<s).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripSecond_eq_actual",
+          "lines": [
+            22,
+            24
+          ],
+          "note": "The expected polynomial. At c=0 only the squared third derivative remains."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant",
+          "lines": [
+            30,
+            33
+          ],
+          "note": "Identifies stripSecond with q'' on the interval."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.stripSecond_zero_pos",
+          "lines": [
+            92,
+            96
+          ],
+          "note": "The strict sign.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "On this interval $X_t=B_t$,",
+      "to": "everywhere at positive times.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_interval_pos",
+          "lines": [
+            77,
+            79
+          ],
+          "note": "Lean uses something more general: for any γ, at positive time, X_t charges every open interval. No density and no X=B.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "If the expected",
+      "to": "has positive probability.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.integral_pos_of_interval_support",
+          "lines": [
+            14,
+            29
+          ],
+          "note": "A continuous nonnegative function, nonzero somewhere, has positive integral against such a law.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Then $\\Phi(t,\\cdot)$ would be a quadratic polynomial",
+      "to": "a linear function plus a constant.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.third_not_identically_zero",
+          "lines": [
+            53,
+            71
+          ],
+          "note": "Zero third derivative makes a constant, so u=cx since u(0)=0, and the bound at x=2/c forces c=0.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "But choosing zero control gives",
+      "to": "absolute value of the average.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.abs_le_value",
+          "lines": [
+            64,
+            70
+          ],
+          "note": "The same two inequalities, as a calc block, with the zero control.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "This\nrules out an affine value",
+      "to": "at most minus one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.curvature_not_identically_zero",
+          "lines": [
+            37,
+            44
+          ],
+          "note": "Different finish: zero gradient makes the value constant, then x=value+1 contradicts |x|≤value. No tail slopes.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Thus $q'$ is strictly increasing, and right contact gives",
+      "to": "for $0<t<s$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_zero_constant_gap",
+          "lines": [
+            400,
+            405
+          ],
+          "note": "q' strictly increasing, so q'<q'(b)≤1 on the open interval."
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Symmetry supplies $q(0)=0$,",
+      "to": "contact gives $q(s)=s$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            437,
+            441
+          ],
+          "note": "q(a)=a is hq0 when a=0, and contact otherwise; contact gives q(b)=b."
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Integrating again gives too little area.",
+      "to": "too little area.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+          "lines": [
+            366,
+            368
+          ],
+          "note": "Again the mean value theorem in Lean.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_curvature",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Strictness was needed only at positive times; symmetry can make the",
+      "to": "vanish at $(0,0)$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripSecond_zero_pos",
+          "clause": "(ht : 0 < (t:ℝ))",
+          "note": "Positive time is a hypothesis here. In Lean it comes from diffusion_interval_pos: X_0 is a point mass."
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Although the forward path is Brownian here, the backward value receives",
+      "to": "$\\Phi_\\gamma(s,\\cdot)$ from the later coefficient.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripSecond_zero_pos",
+          "lines": [
+            92,
+            93
+          ],
+          "note": "γ on the gap sets c=0; value is still the full value, depending on later coefficients.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.no_initial_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The case where zero itself is supported was already included",
+      "to": "one-sided slope bound.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            447,
+            449
+          ],
+          "note": "by_cases on whether zero is in the support: if it is, contact gives the left slope."
+        }
+      ]
+    },
+    {
+      "record": "support.no_terminal_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "**Empty support.** This would mean $\\gamma=0$ everywhere.",
+      "to": "$\\gamma=0$ everywhere.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+          "clause": "0 ≤ c",
+          "note": "Lean has no chord argument here: γ=0 is the terminal plateau with a=0, c=0."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.support_cofinal_of_no_terminal_plateau",
+          "lines": [
+            123,
+            127
+          ],
+          "note": "Excluding plateaus gives support beyond every point, so the support is not empty.",
+          "relation": "part"
+        }
+      ],
+      "note": "This case and its chord argument are the paper's own; the Lean folds empty support into the terminal plateau."
+    },
+    {
+      "record": "support.empty_support_chord_obstruction",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Recall that $q(0)=0$ and $q\\le1$.",
+      "to": "$q\\le1$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_zero",
+          "lines": [
+            151,
+            152
+          ],
+          "note": "q(0)=0.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_bounds",
+          "lines": [
+            125,
+            126
+          ],
+          "note": "The bound by one.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Hence $G(0)=\\int_0^1(q(t)-t)\\,dt<0$, contrary to the allowed",
+      "to": "addition of mass at zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+          "lines": [
+            57,
+            58
+          ],
+          "note": "The addition test at s=0. The negative value of G(0) is not derived in Lean."
+        }
+      ]
+    },
+    {
+      "record": "support.no_terminal_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "**Terminal gap.** Now suppose a maximal missing interval",
+      "to": "by the same mass argument as in Section 5.3.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+          "lines": [
+            53,
+            54
+          ],
+          "note": "Lean's plateau needs no supported left end, and c may be zero."
+        }
+      ]
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "We have",
+      "to": "strictly convex on $(r,1)$.",
+      "after": "positive, by the same mass argument as in Section 5.3. ",
+      "note": "The Lean terminal proof uses none of these three facts."
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "There is no contact condition at one. We use the bound $q\\le1$",
+      "to": "recalling that $q=\\mathbb E[u^2]$ and $|u|\\le1$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_bounds",
+          "lines": [
+            129,
+            133
+          ],
+          "note": "The cap on q, from gradient_abs_le_one. In Lean it is used for integrability, not for this barrier.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.no_terminal_gap",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Thus $q(t)<t$ throughout $(r,1)$, giving",
+      "to": "contrary to the addition test.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.terminal_plateau_q_lt_near_one",
+          "lines": [
+            15,
+            18
+          ],
+          "note": "Lean gets q<t only near one, from the square-root defect, with no convexity.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+          "lines": [
+            72,
+            78
+          ],
+          "note": "G(b)<0 at that nearby b, against contactPotential_nonneg. Lean does not reach the left end r."
+        }
+      ],
+      "note": "Same conclusion, different proof: the Lean follows the source's terminal estimate rather than this chord barrier."
+    },
+    {
+      "record": "support.terminal_defect",
+      "paper": "expository",
+      "role": "mention",
+      "from": "The source's different terminal argument proves the stronger estimate",
+      "to": "coefficient, without the left contact data used here.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect",
+          "clause": "C*Real.sqrt (1-(T:ℝ)) ≤ 1-squareMoment W γ (diffusion W γ) T",
+          "note": "This is the proof the Lean uses. Its hypotheses have only the constant tail: no contact, no minimiser."
+        }
+      ]
+    },
+    {
+      "record": "support.moment_saturation",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "These cases exhaust the complement of the support. Contact now gives",
+      "to": "completing the theorem.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "lines": [
+            30,
+            33
+          ],
+          "note": "Differentiating full contact gives the unit curvature moment."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            458,
+            460
+          ],
+          "note": "Full support and contact give q(t)=t.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_saturation",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Contact now gives",
+      "to": "and symmetry includes zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+          "lines": [
+            459,
+            460
+          ],
+          "note": "One step: contact at every point. Lean's contact already covers zero, using hq0.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_saturation",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Differentiating gives $\\mathbb E[a(t,X_t)^2]=1$",
+      "to": "completing the theorem.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_eq_one_of_full_contact",
+          "lines": [
+            462,
+            466
+          ],
+          "note": "A function equal to t has derivative one, one-sided at zero.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "**Question 3: tilt the chord.**",
+      "to": "can these data hold?",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hda : q' a ≤ 1) (hdb : q' b ≤ 1)",
+          "note": "These data break hdb: f'(5)=3/2. Lean's theorem does not apply, and Lean has no tilted-chord version."
+        }
+      ],
+      "note": "The paper's question leaves the Lean theorem's hypotheses on purpose; the integrated chord inequality in the source has no Lean statement."
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "What changes if strict convexity",
+      "to": "is weakened to convexity?",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hconvex : StrictConvexOn ℝ (Icc a b) q')",
+          "note": "Lean assumes strict convexity. Its proof needs the strict lt_on_openSegment step."
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The endpoint chord is now tilted, so a",
+      "to": "constant one is unavailable.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "lines": [
+            376,
+            380
+          ],
+          "note": "Lean's proof is exactly that pointwise comparison with one, which is why it needs both slopes at most one."
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "Finally,",
+      "to": "strict convexity of $f'$?",
+      "after": "pointwise comparison with the constant one is unavailable. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hda : q' a ≤ 1) (hdb : q' b ≤ 1)",
+          "note": "Slope 2 also breaks hdb. The answer shows these data can occur, so hdb cannot simply be dropped."
+        }
+      ]
+    },
+    {
+      "record": "support.no_terminal_gap",
+      "paper": "expository",
+      "role": "example",
+      "from": "**Question 4: the missing right endpoint.**",
+      "to": "terminal plateau cannot minimise.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+          "lines": [
+            53,
+            54
+          ],
+          "note": "The result the question asks you to explain. Its proof differs from the chord argument of Section 5.4."
+        }
+      ]
+    },
+    {
+      "record": "support.no_terminal_gap",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Identify what replaces",
+      "to": "time one.",
+      "after": "explain why a terminal plateau cannot minimise. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.terminal_plateau_q_lt_near_one",
+          "lines": [
+            15,
+            18
+          ],
+          "note": "In Lean the replacement is the square-root defect, which puts q below t near one.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "example",
+      "from": "Then check whether the exact bound $q\\le1$ could be replaced",
+      "to": "at $r=0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_bounds",
+          "clause": "|squareMoment W γ (diffusion W γ) t| ≤ 1",
+          "note": "The exact cap in Lean. The test polynomial is a calculus exercise and is not in Lean.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "If $k$ sites differ, $k/n=(1-R)/2$.",
+      "to": "<\\frac\\varepsilon2.\n$$",
+      "note": "Elementary arithmetic on overlaps, outside both Lean statements."
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The pair may depend on the chosen target and the couplings.",
+      "to": "a procedure for finding them."
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The threshold $P_*-\\eta$ refers to the limiting value,",
+      "to": "particular finite instance's maximum.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.groundStateValue",
+          "lines": [
+            101,
+            101
+          ],
+          "note": "The limiting value. The near-ground theorem itself is not in Lean.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "example",
+      "from": "**Question 5: use the spin conclusion.**",
+      "to": "the choice $\\eta=1/n$?"
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Its formula",
+      "to": "where the coefficient changes:",
+      "after": "The\nfirst-variation theorem accounts for this dependence. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+          "clause": "∫ r : Time, (∫ t in (r:ℝ)..1, H t) ∂ν",
+          "note": "The inner integral starts at r: each unit of mass acts on its own tail.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The scaling argument is the",
+      "to": "applied with the integrable-direction formula above.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+          "lines": [
+            73,
+            75
+          ],
+          "note": "The Lean replaces scaling by compact removal."
+        }
+      ]
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "We will show that $q$ stays below the diagonal throughout the gap,",
+      "to": "The proof has two steps.",
+      "note": "The Lean also finds q below t, but only near one, by a different estimate."
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Only finite-interval convexity and the bound on $q$ were used; no",
+      "to": "was assumed."
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "example",
+      "from": "At target zero, the differing-site fraction can be arbitrarily close",
+      "to": "one half."
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "example",
+      "from": "The constant direction $\\eta=1$ is admissible and adds an atom at zero.",
+      "to": "atom at zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+          "lines": [
+            59,
+            62
+          ],
+          "note": "At s=0 this lemma's direction is this constant. Lean never evaluates the cost at γ=0."
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This calculation uses the heat and variation formulas, not a minimiser",
+      "to": "hypothesis;",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+          "lines": [
+            152,
+            154
+          ],
+          "note": "The chord limit holds for any two order parameters, with no minimality."
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "At $t=1$ there is no noise or response left to accumulate",
+      "to": "is $|x|$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_terminal_uniform",
+          "lines": [
+            29,
+            31
+          ],
+          "note": "At t=1 both bounds are zero, so the value is |x|.",
+          "relation": "contains"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Its partial differential equation (PDE) runs backward",
+      "to": "\\Phi_\\gamma(1,x)=|x|.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.valueRate",
+          "lines": [
+            14,
+            15
+          ],
+          "note": "The right-hand side.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.value_integral_rate",
+          "lines": [
+            92,
+            94
+          ],
+          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it asks nothing at jumps of γ.",
+          "relation": "states"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "With the spatial derivatives $u$ and $a$ defined in Section 3.3,",
+      "to": "-\\tfrac12\\gamma(t)v^2h\\right\\}+o(h).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.constant_interval_verification_upper",
+          "lines": [
+            121,
+            124
+          ],
+          "note": "Lean does not prove this recursion. It verifies the PDE's solution from above, on constant-coefficient steps.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.exists_feedback_verification",
+          "lines": [
+            27,
+            34
+          ],
+          "note": "And from below, within ε, by a feedback control.",
+          "relation": "proof"
+        }
+      ],
+      "note": "The paper's one-step recursion is heuristic, as it says; the Lean verification route replaces it."
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The square completion from Section 3.3 gives a supremum of",
+      "to": "and hence the stated PDE.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.integrated_completion_square",
+          "lines": [
+            20,
+            26
+          ],
+          "note": "The completed square as an inequality, used in the upper verification.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.completion_square_feedback",
+          "lines": [
+            32,
+            33
+          ],
+          "note": "Equality at v=u.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Itô's rule is the chain rule for Brownian paths.",
+      "to": "its noise term is $f_x\\,dB_t$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.expected_hasDerivWithinAt_right",
+          "lines": [
+            14,
+            25
+          ],
+          "note": "Lean has no Itô integral here. It differentiates expectations directly, giving the same drift terms and no noise term.",
+          "relation": "proof"
+        }
+      ],
+      "note": "The Lean takes a weak route: it never writes a stochastic differential in this proof."
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Differentiate the PDE in $x$ and take $b_t=\\gamma u$.",
+      "to": "a(t,X_t)\\,dB_t.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.deriv_compactValueRate",
+          "lines": [
+            30,
+            34
+          ],
+          "note": "The PDE differentiated in x, on a strip. The cancellation appears inside the generator below.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Thus $M_t=u(t,X_t)$ is a bounded **martingale**",
+      "to": "value.",
+      "lean": [
+        {
+          "name": "OAI.SKValue.diffusion_gradient_stopped_martingale",
+          "lines": [
+            98,
+            112
+          ],
+          "note": "Proved in the scalar model, stopped at T. The support proof of the moment identity never uses a martingale.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Zero field gives symmetry and $M_0=u(0,0)=0$.",
+      "to": "$M_0=u(0,0)=0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient_zero",
+          "lines": [
+            177,
+            178
+          ],
+          "note": "u(t,0)=0 for t<1.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Applying Itô's rule once more",
+      "to": "a(t,X_t)^2\\,dt.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.compactSquare_generator",
+          "lines": [
+            86,
+            90
+          ],
+          "note": "The drift of the square: its generator plus time rate equals the curvature squared.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The noise term has mean zero because its coefficient is nonanticipating",
+      "to": "bounded on each strip ending before one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripQ_hasDerivWithinAt_right",
+          "lines": [
+            43,
+            45
+          ],
+          "note": "No noise term arises: the right derivative of the expectation is taken directly.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "Taking expectations and",
+      "to": "which gives the asserted derivative.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripQ_eq_integral",
+          "lines": [
+            74,
+            76
+          ],
+          "note": "Integrating the right derivative on a strip.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_eq_integral_curvatureMoment",
+          "lines": [
+            136,
+            138
+          ],
+          "note": "q(t) is the integral of q'."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+          "lines": [
+            155,
+            157
+          ],
+          "note": "The derivative formula."
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "For each fixed $T<1$, the required spatial derivatives are bounded on",
+      "to": "$[0,T]\\times\\mathbb R$,",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds",
+          "clause": "|iteratedDeriv (m+1) (value W γ t) x| ≤ C",
+          "note": "Each positive order, uniformly on the strip."
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "and step-coefficient and smooth-terminal",
+      "to": "justify the identities.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.approxValue_derivative_uniform",
+          "note": "Uniform convergence of derivatives along finite-step, log-cosh terminal approximations."
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The bounds depend on the coefficient",
+      "to": "and strip.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds",
+          "lines": [
+            106,
+            109
+          ],
+          "note": "C comes after γ, T and m, so it depends on them."
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "statement",
+      "from": "The PDE holds almost everywhere in time.",
+      "to": "in time.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_integral_rate",
+          "lines": [
+            92,
+            94
+          ],
+          "note": "Stated as an integral identity in time, so no pointwise statement is needed.",
+          "relation": "states"
+        }
+      ]
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "These are not",
+      "to": "bounds up to time one.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds",
+          "clause": "(hT1 : T < 1)",
+          "note": "Every strip ends strictly before one."
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Take any admissible",
+      "to": "without assuming\nminimality.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+          "lines": [
+            48,
+            50
+          ],
+          "note": "No IsMinimizer hypothesis: γ is any order parameter constant on (a,b)."
+        }
+      ]
+    },
+    {
+      "record": "support.plateau_transfer",
+      "paper": "expository",
+      "role": "definition",
+      "from": "Set $b=\\Phi_{xxx}$ and $d=\\Phi_{xxxx}$ there.",
+      "to": "$d=\\Phi_{xxxx}$ there.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.actualJet",
+          "lines": [
+            32,
+            33
+          ],
+          "note": "The m-th spatial derivative of the value along the diffusion: m=2,3,4 give a, b, d.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.plateau_transfer",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Differentiating the PDE and applying Itô's rule gives",
+      "to": "q'''=\\mathbb E[d^2-12cab^2+6c^2a^4].\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripSecond_eq_actual",
+          "lines": [
+            22,
+            24
+          ],
+          "note": "q'' as the expected polynomial in c, a and b.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
+          "lines": [
+            36,
+            39
+          ],
+          "note": "q''' as the expected polynomial in c, a, b and d."
+        }
+      ]
+    },
+    {
+      "record": "support.plateau_transfer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The negative middle term prevents a pointwise positivity argument.",
+      "to": "positivity argument.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
+          "clause": "12*c*actualJet W γ t 2 ξ*(actualJet W γ t 3 ξ)^2",
+          "note": "The negative middle term."
+        }
+      ]
+    },
+    {
+      "record": "support.step_tails",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The source instead averages with the spatial probability density",
+      "to": "f_t(x)\\,dx.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.finiteDensity",
+          "lines": [
+            130,
+            132
+          ],
+          "note": "The density, available only for finite-step data at grid times."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.finite_density_identity",
+          "lines": [
+            52,
+            57
+          ],
+          "note": "Expectations along the finite feedback path as integrals against it."
+        }
+      ],
+      "note": "The Lean has this density only at the finite-step level; for a general coefficient it passes through limits."
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The proof needs",
+      "to": "[OpenAI (2026a), §3][support-signs].",
+      "after": "Stieltjes weights $\\mu_\\gamma(ds)$ on overlap scales. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs",
+          "lines": [
+            181,
+            188
+          ],
+          "note": "The seven signs on x>0 that the density and value supply."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio",
+          "lines": [
+            124,
+            129
+          ],
+          "note": "The comparison giving one of those signs from the density ratio.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The operation can be written directly for the positive density $f_t$;",
+      "to": "=\\int_{\\mathbb R}(Ff_t)'(x)\\,dx=0.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            135,
+            140
+          ],
+          "note": "The same zero: Lean integrates the flux on x>0, where r(0)=0 kills the boundary term, then reflects.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_flux_derivative",
+          "lines": [
+            159,
+            161
+          ],
+          "note": "The flux derivative, for this one certificate polynomial F2."
+        }
+      ],
+      "note": "The Lean has the integrated form only for the certificate flux, not for general F."
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "example",
+      "from": "For a small example of this operation",
+      "to": "$\\mathbb E[2-2Z^2]=0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussianLogDensity_derivative",
+          "lines": [
+            22,
+            23
+          ],
+          "note": "The density's derivative. With d=1/2, U=0 this is -x times the density. Lean never takes this F.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "example",
+      "from": "Although $2x^2-1$ is negative near zero,",
+      "to": "Hence $\\mathbb E[2Z^2-1]=1>0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            141,
+            153
+          ],
+          "note": "The same move on the real polynomial: add certDivergence, compare pointwise, and hiZero removes it from the integral.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "example",
+      "from": "The boundary term vanishes because a",
+      "to": "tends to zero.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_expBound_tendsto_zero",
+          "lines": [
+            43,
+            44
+          ],
+          "note": "Polynomial growth is a special case of ExponentialBound, against a Gaussian factor.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            131,
+            134
+          ],
+          "note": "Applied to the flux at infinity.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This illustrates",
+      "to": "SK-specific sign estimates.",
+      "after": "polynomial times the Gaussian density tends to zero. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_halfLine_coercive",
+          "lines": [
+            216,
+            224
+          ],
+          "note": "The SK-specific pointwise bound: the example does not supply this, the signs do.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.source_finite_density_coercivity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The source first uses positive nondecreasing finite-step coefficients",
+      "to": "bound as well as smoothness.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.finite_feedback_coercivity",
+          "lines": [
+            173,
+            175
+          ],
+          "note": "Positive, monotone steps, with every height at most M."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.softAbs",
+          "lines": [
+            69,
+            69
+          ],
+          "note": "The log-cosh terminal value, written with a division by M.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.rational_certificate",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "A rational polynomial identity gives the second inequality by writing",
+      "to": "sum of nonnegative terms.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+          "lines": [
+            62,
+            66
+          ],
+          "note": "The identity, proved by ring."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity",
+          "lines": [
+            107,
+            111
+          ],
+          "note": "The second inequality, after all the terms are shown nonnegative.",
+          "relation": "part"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound",
+          "lines": [
+            92,
+            105
+          ],
+          "note": "The remainder bound, by positivity on an explicit sum."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Certificate.coercivity_constant",
+          "lines": [
+            124,
+            125
+          ],
+          "note": "1661507/1521000000 exceeds 1/1000."
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The density bounds and vanishing boundary",
+      "to": "justify the first.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            131,
+            140
+          ],
+          "note": "Flux tends to zero at infinity and vanishes at zero, so the divergence integrates to zero.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.integrated_coercivity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Consequently",
+      "to": "\\mathbb E[a(t,X_t)^4].\n$$",
+      "after": "products justify the first. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            141,
+            162
+          ],
+          "note": "Half-line integration with reflection, for shape data, then the constant weakened to 1/1000."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+          "lines": [
+            111,
+            116
+          ],
+          "note": "The inequality with constant 1/1000 at a finite-step grid time."
+        }
+      ]
+    },
+    {
+      "record": "support.plateau_transfer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "To reach an arbitrary admissible coefficient, fix a time inside the",
+      "to": "keeping the same\nvalue $c$ near that time.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positiveGamma_L1",
+          "lines": [
+            154,
+            155
+          ],
+          "note": "L1 approximation by positive steps.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.positiveCoeff_sample_limit",
+          "lines": [
+            120,
+            121
+          ],
+          "note": "Lean does not keep c fixed: the sampled heights tend to γ(t) at a continuity point.",
+          "relation": "proof"
+        }
+      ],
+      "note": "Different device: the Lean samples and takes limits rather than freezing the plateau value."
+    },
+    {
+      "record": "support.plateau_transfer",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Uniform convergence of spatial derivatives through order four on a",
+      "to": "coupled\npaths,",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positiveValue_derivative_uniform",
+          "lines": [
+            115,
+            118
+          ],
+          "note": "Every order m, not only four.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.positivePath_sample_limit",
+          "lines": [
+            16,
+            18
+          ],
+          "note": "The coupled paths, on the same Brownian system.",
+          "relation": "proof"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.sampleJet_limit",
+          "lines": [
+            35,
+            36
+          ],
+          "note": "The two combined along almost every path.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.fixed_time_spatial_coercivity",
+      "paper": "expository",
+      "role": "derivation",
+      "from": "passes the quantitative inequality to the limit.",
+      "to": "to the limit.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+          "lines": [
+            135,
+            143
+          ],
+          "note": "Dominated convergence on both sides, then le_of_tendsto_of_tendsto."
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Strictness is",
+      "to": "would not suffice.",
+      "after": "paths, passes the quantitative inequality to the limit. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.actualQuartic_pos",
+          "lines": [
+            51,
+            56
+          ],
+          "note": "Also established for the limit, by a different argument: a is not identically zero and X_t charges every interval.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.fixed_time_spatial_coercivity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The auxiliary logarithmic derivatives need not converge",
+      "to": "removed by integration.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.sample_coercivity",
+          "lines": [
+            78,
+            80
+          ],
+          "note": "By this point the inequality involves value derivatives only, so only those are passed to the limit.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "example",
+      "from": "**[Question 1](#question-1).** Adding mass at $1/2$",
+      "to": "Both functions remain nonnegative and nondecreasing.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.addCDF",
+          "lines": [
+            21,
+            26
+          ],
+          "note": "Adding is always admissible.",
+          "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
+          "lines": [
+            66,
+            72
+          ],
+          "note": "Removing at 1/4 meets ν≤μ when ε is below the weight two.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "example",
+      "from": "Removing mass at",
+      "to": "remain nonnegative.",
+      "after": "Both functions remain nonnegative and nondecreasing. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
+          "clause": "(hν : ν ≤ μ)",
+          "note": "No mass at 1/2 means ν≤μ fails, so Lean cannot build this candidate.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "expository",
+      "role": "example",
+      "from": "Scaling both weights preserves all admissibility",
+      "to": "conditions.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter.chord",
+          "lines": [
+            12,
+            23
+          ],
+          "note": "The chord towards zero would be this scaling. The Lean never takes it.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "expository",
+      "role": "example",
+      "from": "Changing the coefficient after $1/2$ leaves $X_{1/4}=B_{1/4}$:",
+      "to": "its drift has been zero up to that time.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "clause": "∫ s in (0 : ℝ)..t, extend γ.val s *",
+          "note": "The drift integrand carries γ on [0,t], so zero γ there gives X_t=B_t. Lean has no lemma for this.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.moment_identity",
+      "paper": "expository",
+      "role": "example",
+      "from": "The remaining Brownian noise",
+      "to": "reveal future random noise.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.squareMoment",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "note": "q reads the gradient of the full value, which depends on the whole future coefficient.",
+          "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "support.zero_candidate_descent",
+      "paper": "expository",
+      "role": "example",
+      "from": "**[Question 2](#question-2).** For $\\gamma=0$",
+      "to": "The arcsine formula in Section 7.1 also gives this comparison.",
+      "note": "A zero-coefficient calculation, not in the Lean."
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "**[Question 3](#question-3).** A strictly convex $f'$ lies below its endpoint chord.",
+      "to": "endpoint chord.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "hconvex.lt_on_openSegment",
+          "note": "This step, used in Lean only with both slopes at most one."
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "That chord has mean height",
+      "to": "prescribed values.",
+      "note": "No Lean counterpart: f'(5)=3/2 is outside the Lean theorem's hypotheses."
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The argument needs a strict loss of area; the",
+      "to": "convenient, not essential.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "max_le hda hdb",
+          "note": "The Lean does use this common bound, which is why its theorem is narrower than the chord argument here."
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "With the right slope changed to $2$, the chord has mean $5/4$,",
+      "to": "cannot supply enough area.",
+      "note": "No Lean counterpart: a calculus example."
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "example",
+      "from": "**[Question 4](#question-4).** Set $h=q'-1$.",
+      "to": "contradict the conditions on a minimiser.",
+      "note": "This repeats the chord proof of Section 5.4, which the Lean does not use."
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "example",
+      "from": "For the proposed polynomial, $q(0)=0$",
+      "to": "supplied by $|u|\\le1$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.gradient_abs_le_one",
+          "lines": [
+            14,
+            15
+          ],
+          "note": "The source of the exact cap. The polynomial is not in Lean.",
+          "relation": "part"
+        }
+      ]
+    },
+    {
+      "record": "support.near_ground_pairs",
+      "paper": "expository",
+      "role": "example",
+      "from": "**[Question 5](#question-5).** Choose $r=0.4$",
+      "to": "This stronger choice is not established by the stated result."
+    },
+    {
+      "record": "scalar.formal_scalar_clause",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "They use the first curvature moment",
+      "to": "used here.",
+      "lean": [
+        {
+          "name": "OAI.SKValue.ScalarValueConclusion",
+          "clause": "groundStateValue = ∫ t in (0 : ℝ)..1, ∫ ω, curvature W γ t (X t ω) ∂W.μ",
+          "note": "The first moment of the curvature, integrated in time, gives the value."
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The global scaling argument for contact follows Chen's variational proof.",
+      "to": "variational proof.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+          "lines": [
+            73,
+            75
+          ],
+          "note": "The Lean does not follow this: it removes compact pieces of μ."
+        }
+      ]
+    },
+    {
+      "record": "support.terminal_chord_barrier",
+      "paper": "expository",
+      "role": "mention",
+      "from": "The empty-support and terminal convexity arguments in Section 5.4 are",
+      "to": "arguments are not claimed to have been replayed in Lean."
+    },
+    {
+      "record": "support.regularity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Subtract the present value, divide by $h$, and Taylor-expand.",
+      "to": "+\\sup_{|v|\\le1}\\gamma(t)(v\\Phi_x-v^2/2).\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.exists_feedback_verification",
+          "lines": [
+            27,
+            28
+          ],
+          "note": "Lean's PDE has the supremum already evaluated, as c/2 times the squared gradient.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.integrated_coercivity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "The proof in Section 5 used strict curvature on a positive constant",
+      "to": "those bounds.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            106,
+            114
+          ],
+          "note": "Lean's form: signs and density shape as hypotheses, the integrated inequality as conclusion."
+        }
+      ]
+    },
+    {
+      "record": "support.integrated_coercivity",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "This is how the correction produces a useful lower bound for the",
+      "to": "negative at particular states.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            143,
+            152
+          ],
+          "note": "Pointwise bound with the divergence added, then the divergence integrates away.",
+          "relation": "proof"
+        }
+      ]
+    },
+    {
+      "record": "support.endpoint_chord_area",
+      "paper": "expository",
+      "role": "example",
+      "from": "With non-strict convexity the data are possible:",
+      "to": "four endpoint values.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hconvex : StrictConvexOn ℝ (Icc a b) q')",
+          "note": "The Lean assumes strict convexity. This example is not in Lean."
+        }
+      ]
+    },
+    {
+      "record": "lean.full_support",
+      "paper": "expository",
+      "role": "explanation",
+      "from": "Neither",
+      "to": "or the complete QAOA circuit theorem.",
+      "after": "concern the value identity and finite Gaussian approximation. ",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "lines": [
+            81,
+            88
+          ],
+          "note": "Its clauses: existence of μ and X, full support, strict increase, the two moments. Nothing further."
+        }
+      ]
+    }
+  ]
+}
