@@ -63,12 +63,13 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
   return stage === here ? where : `${PAPER_NAMES[stage].short}, ${where}`;
 }
 
-/** "Draft; review needs revision." from the structure's state and review state. */
+/** "Draft. No independent mathematician has accepted it yet." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
   if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
-  if (review) parts.push(`Review recorded as ${review === "needs_revision" ? "needing revision" : words(review)}.`);
+  // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
+  if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");
 }
 

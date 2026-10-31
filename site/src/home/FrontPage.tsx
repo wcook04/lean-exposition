@@ -20,8 +20,8 @@ import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { PAPERS_ANCHOR } from "../app/TopBar";
 import { Out } from "../app/Out";
-import { RECORD_INDEX } from "virtual:record-index";
-import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, TIE_AUDIT, outcomeCounts } from "../checks/summary";
+import { LINK_CAVEAT } from "../app/caveat";
+import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
 import { FrontHeroBody } from "./FrontHero";
 import { LevelsBand } from "./LevelsBand";
 import { Rich, texHtml } from "../figures/tex";
@@ -40,8 +40,8 @@ const QAOA_PDF = `${RELEASE}/preprints/QAOA-attains-the-SK-ground-state-energy-i
 const LEAN_SOURCE = `${RELEASE_TREE}/lean/OAI/Probability`;
 const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
-/** The Lean modules in the vendored tree, as the edition's index counts them; the guide's count if an edition has no index. */
-const LEAN_MODULES = SITE_FACTS.lean?.modules ?? 349;
+/** The Lean modules in the vendored tree, as the edition's index counts them. */
+const LEAN_MODULES = SITE_FACTS.lean?.modules ?? null;
 
 /** The films this site holds a place for, and the released film the mathematics one will be like. */
 const SITE_FILM = familyFilm("interfaces");
@@ -226,7 +226,7 @@ function ReaderStill() {
         </p>
         {ties && (
           <p>
-            The three papers have {ties.total.toLocaleString("en-GB")} marked statements, {ties.lean} of them with Lean. AI agents read both sides of each mark; no program has compared what they mean.
+            The three papers have {ties.statements.toLocaleString("en-GB")} marked statements, {ties.withLean} of them with Lean. {LINK_CAVEAT}
           </p>
         )}
         <p>
@@ -356,7 +356,7 @@ const COLUMNS = ["passed", "failed", "unavailable", "not_run"] as const;
 function CheckTable() {
   const { map } = useEdition();
   const counts = outcomeCounts(map.records.evidence);
-  const links = Object.values(RECORD_INDEX).reduce((sum, row) => sum + row.lean, 0);
+  const { ties, leanLinks, audit } = SITE_FACTS;
   return (
     <>
       <table className="checktable">
@@ -390,16 +390,15 @@ function CheckTable() {
       <p className="checktable__note">
         A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a Lean
         project compiles.{" "}
-        {SITE_FACTS.ties ? (
+        {ties && (
           <>
-            AI agents also tied {SITE_FACTS.ties.total.toLocaleString("en-GB")} statements in the papers to the argument by reading
-            both sides, {SITE_FACTS.ties.lean} of them to Lean, and linked the steps to {links} Lean declarations. An agent then
-            re-read {TIE_AUDIT.sampled} of the ties and corrected the {TIE_AUDIT.wrong} it found wrong.
+            AI agents also marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean,
+            and tied them to the steps of the argument.{" "}
           </>
-        ) : (
-          <>AI agents also linked the steps to {links} Lean declarations by reading the sources.</>
-        )}{" "}
-        A program confirms that each one still lands. No independent review of whether the two statements match has been done.
+        )}
+        {leanLinks && <>They made {leanLinks.links} links from steps to Lean, reaching {leanLinks.declarations} declarations. </>}
+        {audit && <>An AI agent then re-read {audit.sampled} of the ties and corrected the {audit.wrong} it found wrong. </>}
+        A program confirms that each one still lands. No independent mathematician has reviewed them.
       </p>
     </>
   );

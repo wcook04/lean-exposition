@@ -23,6 +23,7 @@ import {
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
 import { SITE_FACTS } from "virtual:site-facts";
+import { MODELS_STEP } from "../app/caveat";
 import { useAlignment } from "../compare/useAlignment";
 import { declTitle } from "../model/declTitle";
 import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
@@ -32,6 +33,9 @@ import type { LeanWalk } from "./walk";
 export type LineRange = readonly [first: number, last: number];
 
 type LineRanges = LineRange | readonly LineRange[];
+
+/** Modules of the second model. Its objects are defined apart from the full-support model's. */
+const VALUE_MODEL = "OAI.Probability.SKValue";
 
 export interface LeanBlockProps {
   /** Full declaration name. */
@@ -500,6 +504,11 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         </div>
       )}
       {decl.doc && !compact && <p className="lean-block__doc">{decl.doc}</p>}
+      {!row && module.module.startsWith(VALUE_MODEL) && (
+        <p className="lean-block__model">
+          This is OpenAI’s value model. <a href={routeHref({ view: "map", node: MODELS_STEP })}>No Lean theorem connects it to the full-support model.</a>
+        </p>
+      )}
 
       <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
       {where.map((body) => (

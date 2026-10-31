@@ -308,7 +308,9 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
-  the sentence is left out.
+  the sentence is left out. Each count says what it counts. A marked statement is one stop of
+  the reader's stepper, a tie joins a statement to one step, and a link joins a step to a Lean
+  declaration. The audit's numbers are in `examples/qaoa-sk/verification/tie-audit.json`.
 - **The first screen is HTML.** The build types the hero and the bar into `index.html`
   (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
   any script or data, and reaches readers and crawlers that run no script. React takes over

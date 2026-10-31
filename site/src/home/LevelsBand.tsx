@@ -114,7 +114,7 @@ const base = import.meta.env.BASE_URL;
 /** The levels of the funnel, widest first. */
 const STAGES: Stage[] = ["long", "short", "expository"];
 
-export function LevelsBand({ id, leanModules }: { id: string; leanModules: number }) {
+export function LevelsBand({ id, leanModules }: { id: string; leanModules: number | null }) {
   const edition = useEdition();
   const { graph } = edition;
   const goal = edition.graph.goals.find((g) => g === "full_support") ?? edition.graph.goals[0];
@@ -196,7 +196,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       id: "lean",
       name: "The Lean proof",
       who: "OpenAI’s statements and proofs, written for a computer to check.",
-      count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} steps`,
+      count: `${leanModules === null ? "" : `${plural(leanModules, "source file")}, `}linked to ${counts.lean} of the ${total} steps on this site`,
       read: routeHref({ view: "lean" }),
       readWord: "Open the Lean index",
     },
@@ -205,7 +205,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       stage,
       name: PAPER_NAMES[stage].short,
       who: PAPER_NAMES[stage].reader,
-      count: `${counts[stage]} of the ${total} steps${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].total} marked statements, ${SITE_FACTS.ties.papers[stage].lean} with Lean` : ""}`,
+      count: `${counts[stage]} of the ${total} steps on this site${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].statements} marked statements, ${SITE_FACTS.ties.papers[stage].withLean} with Lean` : ""}`,
       read: routeHref({ view: "read", stage }),
       readWord: "Read it here",
     })),

@@ -1610,7 +1610,7 @@ function Crumbs({ signals, outline, name, stage, phone, hint, onTop, onJump }: {
       {/* The first screen says what to do; it goes as soon as there is a section to name. */}
       {hint && !chain.length && (
         <span className="reader-strip__hint" title="A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean. j and k step through them.">
-          {phone ? "Tap" : "Click"} any marked statement to see its Lean.
+          {phone ? "Tap" : "Click"} a statement with a dark tick to see its Lean.
         </span>
       )}
       <ol>

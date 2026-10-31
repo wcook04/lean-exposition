@@ -21,6 +21,7 @@ import { familyFilm, minutesOf, type FamilyFilm } from "../app/family";
 import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { Out } from "../app/Out";
+import { LINK_CAVEAT } from "../app/caveat";
 import { KeyList } from "../app/KeysHelp";
 import { prepareDocument } from "./engine";
 import { prefixPaths } from "./links";
@@ -39,7 +40,7 @@ const RECORD_MEANINGS: { table: string; noun: string; meaning: string }[] = [
 
 const STATE_WORDS: Record<string, string> = {
   draft: "draft",
-  needs_revision: "needs revision",
+  needs_revision: "no independent mathematician has accepted it yet",
   approved: "approved",
   reviewed: "reviewed",
 };
@@ -132,7 +133,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
             </>
           ) : null}{" "}
-          with OpenAI’s Lean beside the text. You read a paper as you would any paper, and every marked statement opens its Lean.
+          with OpenAI’s Lean beside the text. You read a paper as you would any paper, and a statement with a dark tick in the margin opens its Lean.
         </p>
       </header>
 
@@ -143,7 +144,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <ol className="about__routes">
           <li>
             <a href={routeHref({ view: "read", stage: "short" })}>The papers</a>
-            <span>Start here. Each marked statement opens its Lean beside the text, and the graph of the proof follows as you scroll.</span>
+            <span>Start here. A statement with a dark tick opens its Lean beside the text, and the graph of the proof follows as you scroll.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>
@@ -222,12 +223,13 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           in the three accounts are tied to the steps they state, explain or use
           {ties ? (
             <>
-              : <span className="num">{ties.total.toLocaleString("en-GB")}</span> ties, <span className="num">{ties.lean}</span> of them with Lean
+              : <span className="num">{ties.statements.toLocaleString("en-GB")}</span> marked statements, <span className="num">{ties.withLean}</span> of them with Lean, joined to steps by{" "}
+              <span className="num">{ties.total.toLocaleString("en-GB")}</span> ties
             </>
           ) : null}
           {leanLinks !== null ? (
             <>
-              . Another <span className="num">{leanLinks}</span> authored links join steps to Lean declarations
+              . Another <span className="num">{leanLinks}</span> links join steps to Lean declarations
             </>
           ) : null}
           {SITE_FACTS.references ? (
@@ -235,8 +237,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               , and <span className="num">{SITE_FACTS.references}</span> references in the papers open in place
             </>
           ) : null}
-          . People or agents read both sides of each tie; no program has compared what they mean. The site adds layout and
-          wording; it says what was recorded and no more.
+          . {LINK_CAVEAT} The site adds layout and wording; it says what was recorded and no more.
         </p>
       </section>
 

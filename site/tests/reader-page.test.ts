@@ -87,7 +87,7 @@ describe("naming places", () => {
   });
 
   it("puts the edition status in words", () => {
-    expect(statusWords("draft", "needs_revision")).toBe("Draft. Review recorded as needing revision.");
+    expect(statusWords("draft", "needs_revision")).toBe("Draft. No independent mathematician has accepted it yet.");
     expect(statusWords(undefined, undefined)).toBe("");
   });
 

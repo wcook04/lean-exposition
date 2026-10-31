@@ -255,7 +255,7 @@ export const RELATION_WORDS: Record<LeanRelation, string> = {
 };
 
 /** Said once, near the link. */
-export const LINK_CAVEAT = "People or agents read the two and linked them. No program has checked that they say the same thing.";
+export { LINK_CAVEAT } from "../app/caveat";
 
 export function dependencyWords(source: string | undefined): string {
   return source === "elaborated" ? "Names from Lean's elaborated report" : "Names found in the source text";

@@ -195,6 +195,8 @@
   line-height: var(--lh-ui);
   color: var(--ink);
 }
+.lean-block__model { margin: 0 0 var(--space-2); font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-2); }
+.lean-block__model a { color: inherit; text-underline-offset: 3px; }
 .lean-block__caveat {
   margin: 2px 0 0;
   font-size: var(--fs-sm);
@@ -242,7 +244,9 @@
 /* The caveat is said once in a column or page: a block that follows another block
    carrying it stays silent, whatever wraps the two. */
 :has(.lean-block__caveat) ~ * .lean-block__caveat,
-:has(.lean-block__caveat) ~ .lean-block__caveat {
+:has(.lean-block__caveat) ~ .lean-block__model { margin: 0 0 var(--space-2); font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-2); }
+.lean-block__model a { color: inherit; text-underline-offset: 3px; }
+.lean-block__caveat {
   display: none;
 }
 
