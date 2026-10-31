@@ -463,15 +463,16 @@ Four verbs run the page.
 
 - **Follow.** One reading line, 30% of the way down the paper, picks the statement under
   it, or the nearest within a third of the page, the one just read winning a near tie.
-  The statement takes the highlighter at once. Once it has held the line for 200ms, and
-  the page is no longer flying past, its card lights and the line under the graph names
-  it. The address keeps up by replacing the entry once the reader stops.
+  Its tick in the margin lights at once, and nothing touches the words: the paper reads as a
+  paper. Once it has held the line for 200ms, and the page is no longer flying past, its card
+  lights and the line under the graph names it. The address keeps up by replacing the entry once the reader stops.
 - **Point.** A statement under the pointer or focus takes a soft wash and its card lights
   at once; after a 150ms dwell the line under the graph names it, and a Lean kept open
   previews it. Moving away restores. A card does the same in the other direction. An untied
   paragraph names its passage's records in that line and moves nothing. Pointing never
   pushes history.
-- **Open.** A click pins and raises the Lean: one history entry, `?n=<record>&l=<slice>`,
+- **Open.** A click pins and raises the Lean, and only then does the statement take the full
+  highlighter. A step with no Lean does not open: the line under the graph says so. A click is one history entry, `?n=<record>&l=<slice>`,
   and the paper does not move. A card pins too, and the paper goes to the statement while the
   graph stays. A name in the Lean walks in place, as its own entry. A pin ends when the reader
   scrolls the statement away, on Escape, or on Back. A drag or a double click that selects text
@@ -491,7 +492,10 @@ step has Lean, drawn from where the words actually fell. The thread crosses only
 gutter and goes whenever an end leaves the screen.
 
 The outline counts the statements with Lean in each section, and searches the paper's
-text, including what has not rendered yet.
+text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
+covers no text. A passage's steps and links open from "This passage" under the graph, and the
+first screen's one instruction sits in the strip. On a phone there is one row of chrome, which
+goes while reading down and comes back going up, and a tapped statement moves above the sheet.
 
 ### References
 

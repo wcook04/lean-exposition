@@ -102,7 +102,8 @@ export function PaperCrumbs({ record, row, stage, alignment, decl, at, children 
           title={near ? "This paper states the step. It does not name this declaration at that place." : slice.section || undefined}
         >
           {PAPER_NAMES[paper].short}
-          {slice.section ? ` ${sectionNumber(slice.section)}` : ""}
+          {/* A place with no number (the opening) is the paper itself: its name is enough. */}
+          {sectionNumber(slice.section ?? "").startsWith("§") ? ` ${sectionNumber(slice.section)}` : ""}
           {near && <span className="lean-crumbs__near">, same step</span>}
         </a>
       ))}
