@@ -544,7 +544,7 @@ the locators inside a reference-list entry) are in the table too, with the reaso
 
 | Kind | Short | Long | Exposition | A click |
 | --- | --- | --- | --- | --- |
-| Citation, with its locator | 61 | 212 | 35 | Opens the list entry and the locator in place, with "Open source" |
+| Citation, with its locator | 61 | 212 | 35 | Opens a card in place: the theorem or page cited, the entry from the paper's own reference list, "Open source" and "Go to the reference list" |
 | Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
 | Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
 | Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
@@ -552,8 +552,10 @@ the locators inside a reference-list entry) are in the table too, with the reaso
 
 Pointing or focusing shows the target on the right page after 150ms, in place of the Lean until
 the pointer leaves. It covers no text and moves nothing in the paper. An inset is part of the page: it pushes only what is below it, the reader's line stays
-where it is, and Escape, a second click or Close puts the page back. Opening one adds no history;
-a jump does, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+where it is, and Back, Escape, a second click or Close puts the page back to the pixel. Each open is
+one history entry at the same address, and the entry remembers what stands, so Forward and a reload
+bring it back. While a reference is open the right page goes on following the paper; there is
+one view of it at a time. A jump is a history entry too, and the Back on the strip names the place left, "Back to Short paper §2". A reference
 inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
 usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
 
