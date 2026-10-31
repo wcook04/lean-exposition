@@ -13,6 +13,7 @@ import { goalFor, reach, scopedGraph, usesOf } from "../map/treeModel";
 import type { ArgGraph } from "../model/graph";
 import { fetchModule } from "../lean/data";
 import { LazyLeanBlock } from "../lean/lazy";
+import { statementHref } from "../reader/links";
 import { onIdle } from "./idle";
 import { LazyStatementSlice, primeSlices } from "./lazy";
 import { ModeSwitch } from "./ModeSwitch";
@@ -393,7 +394,6 @@ function LevelBody({ record, level }: { record: RecordAlignment; level: Level })
 }
 
 function SliceRow({ statement }: { statement: AlignedStatement }) {
-  const anchor = statement.anchor ?? statement.heading_id ?? undefined;
   return (
     <article className="bench-slice">
       <header className="bench-slice__head">
@@ -402,7 +402,7 @@ function SliceRow({ statement }: { statement: AlignedStatement }) {
       </header>
       <LazyStatementSlice statement={statement} />
       {statement.note && <p className="bench-slice__note">{statement.note}</p>}
-      <a className="bench-slice__read" href={routeHref({ view: "read", stage: statement.paper, anchor })}>
+      <a className="bench-slice__read" href={statementHref(statement)}>
         Read in context
       </a>
     </article>

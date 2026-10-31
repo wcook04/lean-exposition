@@ -15,8 +15,9 @@ import { statedDate } from "../checks/summary";
 import { closure, type ArgEdge } from "../model/graph";
 import { transitiveReduction } from "../map/engine/skeleton";
 import { recordLine, useRecordAlignment } from "../compare/useAlignment";
-import { StatementSlice } from "../compare/StatementSlice";
-import { LeanBlock } from "../lean/LeanBlock";
+import { LazyStatementSlice } from "../compare/lazy";
+import { LazyLeanBlock } from "../lean/lazy";
+import { statementHref } from "../reader/links";
 import { LENS_ORDER } from "../map/levels";
 import { PAPER_NAMES } from "../app/papers";
 import { Accounts } from "./Accounts";
@@ -193,12 +194,12 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             </p>
           ) : null}
           <Pane id="statement" title="In Lean">
-            <InLean nodeId={nodeId} aligned={aligned} statement={record?.statement ? String(record.statement) : null} kind={node.kind} status={node.status} compact={compact} />
+            <InLean nodeId={nodeId} aligned={aligned} statement={record?.statement ? String(record.statement) : null} kind={node.kind} status={node.status} />
           </Pane>
 
           <Pane id="explanation" title="In the papers">
             {aligned?.statements.length ? (
-              <PaperSlices aligned={aligned} first={account} href={href} compact={compact} resetKey={nodeId} />
+              <PaperSlices aligned={aligned} first={account} compact={compact} resetKey={nodeId} />
             ) : (
               <>
                 {goalBody}
@@ -325,20 +326,18 @@ function InLean({
   statement,
   kind,
   status,
-  compact,
 }: {
   nodeId: string;
   aligned: RecordAlignment | null;
   statement: string | null;
   kind: string;
   status: string;
-  compact?: boolean;
 }) {
   if (aligned?.lean.length)
     return (
       <div className="panel__lean">
         {aligned.lean.map((row) => (
-          <LeanBlock key={row.name} name={row.name} relation={row.relation} note={row.note} compact={compact} />
+          <LazyLeanBlock key={row.name} name={row.name} relation={row.relation} note={row.note} clause={row.clause} compact />
         ))}
       </div>
     );
@@ -369,13 +368,11 @@ const ROLE_ORDER: AlignedStatement["role"][] = ["statement", "definition", "deri
 function PaperSlices({
   aligned,
   first,
-  href,
   compact,
   resetKey,
 }: {
   aligned: RecordAlignment;
   first?: Stage;
-  href(stage: Stage, anchor: string): string;
   compact?: boolean;
   resetKey: string;
 }) {
@@ -409,9 +406,9 @@ function PaperSlices({
               <span>
                 {ROLE_WORDS[slice.role]}, in {slice.section}
               </span>
-              {slice.anchor && <a href={href(stage, slice.anchor)}>Read in context</a>}
+              <a href={statementHref(slice)}>Read in context</a>
             </p>
-            <StatementSlice statement={slice} compact={compact} />
+            <LazyStatementSlice statement={slice} compact={compact} />
           </div>
         ))
       )}

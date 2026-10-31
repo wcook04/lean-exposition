@@ -130,6 +130,18 @@ def _clause(modules, item):
     return {"clause": clause, "clause_in": _find(modules, item["clause_file"], item["clause_name"])[1]["name"]}
 
 
+def _check_clause(index, row):
+    """A clause outside the declaration it names would silently fail to light."""
+    if "clause" not in row:
+        return
+    name = row.get("clause_in", row["name"])
+    texts = ["\n".join(module["source"].splitlines()[declaration["line"] - 1:declaration["end_line"]])
+             for module in index["modules"] if "source" in module
+             for declaration in module["declarations"] if declaration["name"] == name]
+    if texts and not any(row["clause"] in text for text in texts):
+        raise ValueError(f"clause is not in {name}")
+
+
 def _check_keys(row, required, optional, where, errors):
     if not isinstance(row, dict):
         errors.append(f"{where}: must be an object")
@@ -198,6 +210,7 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                             "end_line": target["end_line"], "relation": item["relation"], "note": note}
                 try:
                     resolved.update(_clause(modules, item))
+                    _check_clause(index, resolved)
                 except ValueError as exc:
                     errors.append(f"{at}: {exc}")
                 lean.append(resolved)

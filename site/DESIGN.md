@@ -86,9 +86,9 @@ always shows words. There are no blank tiles and no marks without text.
 
 | Scale | Representation | Shows |
 | --- | --- | --- |
-| `k ≥ 0.8` in Steps | **Card** | Kind word, source square and name, title, inputs control, the word Lean where it applies |
-| `k < 0.8` in Steps | **Tile** | Title from 13px down to 11px on screen, source square, the word Lean where the tile is at least 120px wide |
-| Overview, at every scale | **Tile** in the dense layout | The same, 190×46 world pixels (60 tall under a paper's lens, for the section) |
+| `k ≥ 0.8` in Step by step | **Card** | Title, inputs control, the kind word where the record is not a claim |
+| `k < 0.8` in Step by step | **Tile** | Title from 13px down to 11px on screen, and nothing else |
+| Whole argument, at every scale | **Tile** in the dense layout | The same, 190×46 world pixels (60 tall under a paper's lens, for the section) |
 
 A tile uses the record's short title (`shortTitle`, from the build-time record
 index) and falls back to its label. A title that still cannot fit is cut after a
@@ -96,15 +96,17 @@ whole word. Under the pointer or focus, a shortened title shows whole on the lin
 under the header, which it covers for that moment: it never covers a card and
 never moves the canvas. A tile shows nothing of the card beneath it.
 
-**The floor.** Steps stops at `k = 0.5`, the side pane at `0.6`, and Overview at
+**The floor.** Step by step stops at `k = 0.5`, the side pane at `0.6`, and Whole argument at
 `11/13`, the scale at which 13px world text is 11px on screen. If the drawing is
 then taller or wider than the canvas it pans; it does not shrink further. The
 dense layout is chosen so that the 30 records of the Full support argument fit a
 1440×640 canvas at that floor.
 
-**Steps** is the reading mode: it opens at `k = 1` with the plate and the whole
-first row, and shows what is unfolded. **Overview** draws every branch of the
-argument without changing what is unfolded, so Steps comes back exactly as it was.
+**Whole argument** is the first view: every record named, with the main theorem
+and its Lean open beside it, because that is what a reader came to see. **Step by
+step** opens at `k = 1` with the plate and the first row and shows what is unfolded;
+Whole argument draws every branch without changing what is unfolded, so Step by step
+comes back exactly as it was.
 
 **The goal's plate** is at most 200px tall: the title, one sentence of the theorem
 and the ways on. The full theorem and its Lean are in the record sheet.
@@ -188,8 +190,10 @@ Records that have inputs of their own are never copied.
 ### Cards
 
 - Raised surface, `--card-border`, `--radius-card`, `--card-shadow`.
-- Header row: kind word on the left, source square and short source name on the
-  right. Title below in 17px STIX. Lean declarations set their name in mono.
+- A card says what the record is and nothing else: its title, its inputs control and,
+  for a record that is not a claim, the kind word. Source, level and Lean belong to the
+  record's sheet. Marks repeated on nearly every card carry no information, so they
+  do not appear. An assumption reads as a line of words with a dotted rule.
 - Assumptions: dashed border. No other record uses a dashed border.
 - Selected: a 2px amber outline outside the border. The title does not move.
 - Records outside the current lit route recede: their borders and fills fade
@@ -219,19 +223,18 @@ Records that have inputs of their own are never copied.
 - **Title block.** "Argument for" in small sans over the main result's full title
   in serif, which opens the menu of main results, each with the accounts that
   state it. Below 1100px it shows the short name ("Full support").
-- **On the right:** the level lens, the view switch (Steps, Overview, Outline;
+- **On the right:** the level lens, the view switch (Whole argument, Step by step, Outline;
   pressing the current view frames it again) and Key.
 - **The line under the header.** One sentence on how much of the argument the level
-  uses, then the key on the same line: line samples, the assumption tag, the band
-  of a record drawn again, and the source colours. It never wraps and never pushes
-  a card: items with no room leave whole, and the Key popover has them all, with
-  the keys and "How the map is drawn". Keeping the key on the line is the reader's
-  choice, remembered; it is hidden by default on phones and windows under 760px tall.
-- **The foot bar.** A row of its own under the canvas, so nothing in it can cover a
-  card: the paper walk on the left, "Show all branches" and "Collapse branches" on
-  the right. Show all keeps the view, the camera and the cards' order, and holds the
-  selection still; Collapse returns exactly the unfolding, order and camera from
-  before. A button that would change nothing is disabled and says why.
+  uses and what a line means. The drawing needs no legend on screen. Key says the rest
+  in words, lists the links the map leaves out, gives the keys and "How the map is
+  drawn".
+- **The foot bar.** Only when it has something to do, in a row of its own under the
+  canvas so nothing in it can cover a card: the paper walk on the left under a paper's
+  lens, and in Step by step "Show all branches" and "Collapse branches" on the right.
+  Show all keeps the view, the camera and the cards' order, and holds the selection
+  still; Collapse returns exactly the unfolding, order and camera from before. A button
+  that would change nothing is disabled and says why.
 - The header never overlaps itself or scrolls sideways, from 320px to 2560px and
   at 125% text: parts compress first, then wrap onto a second row.
 
@@ -320,7 +323,7 @@ to whatever opened it.
 | Account or treatment switch | Crossfade of the changed text only | `--t-state` 160ms |
 | Unfold or fold | Staged so that two maps never show through each other: leaving records and lines fade where they are within 120ms; the records that stay and the camera move together; arriving records fade in at their final places over the last part of the move | `--t-unfold` 360ms |
 | Selecting a card (a click or an arrow key) | The smallest pan, at the same scale | `--t-camera` 320ms |
-| Choosing a level | As an unfold or fold: leaving records fade, the rest close up, Overview refits | `--t-unfold` 360ms |
+| Choosing a level | As an unfold or fold: leaving records fade, the rest close up, the whole argument refits | `--t-unfold` 360ms |
 | Show all, collapse, open everything below | As an unfold or fold, with the selected card (else the goal) held still on screen | `--t-unfold` 360ms |
 | Pointing at an inspector row | Tints that record if it is drawn; nothing unfolds or moves | `--t-hover` 120ms |
 | Following a passage (map beside the paper) | As an unfold or fold, with the camera on a smooth-zoom path whose time grows with its travel | 450–900ms |

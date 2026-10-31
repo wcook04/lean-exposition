@@ -1344,3 +1344,7 @@
   font-size: 0.8125rem;
   overflow-wrap: anywhere;
 }
+
+.step__leanroute .panel__group {
+  margin-top: var(--space-2);
+}

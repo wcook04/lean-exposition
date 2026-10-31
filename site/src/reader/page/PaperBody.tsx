@@ -3,21 +3,35 @@
 // from their byte length and are rendered in idle time. Heights that change
 // above the reading line are compensated, so the line a reader is on never
 // moves. A mapped passage carries a slim rule in the margin (amber while it is
-// in the inspector) and, under its heading, two quiet controls: its records
-// ("2 claims · 2 assumptions") and "Same topic in…".
+// in the inspector) and, under its heading, a quiet bar: the records it discusses
+// by name, a Lean mark where they have Lean, and its linked passages.
 
-import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { shortTitle } from "../../compare/useAlignment";
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
-import { authoredRoutes, estimateHeight, idleOrder, passageOf, passageRecords, recordTally, type Structures } from "./model";
+import { authoredRoutes, chipSplit, chipTitle, estimateHeight, idleOrder, leanRecord, linkedCount, passageOf, passageRecords, type Structures } from "./model";
 
 export interface Links {
   node(id: string): string;
   beside(stage: Stage, anchor: string): string;
 }
+
+/** What a passage's bar needs from the page; a context, so that a change re-renders the bars and no text. */
+export interface PassageBar {
+  /** The record open in its sheet. */
+  open: string | null;
+  /** The records of the statement under the reading line. */
+  inView: ReadonlySet<string>;
+  onRecord(id: string, opener: HTMLElement, lean?: boolean): void;
+  /** Light this record on the map beside the paper, or nothing. */
+  onHover(id: string | null): void;
+}
+
+export const PassageBarContext = createContext<PassageBar>({ open: null, inView: new Set(),  onRecord() {}, onHover() {} });
 
 export interface BodyHandle {
   /** Render these parts (and wait until they are laid out). */
@@ -43,6 +57,8 @@ interface Props {
   topInset: number;
 }
 
+/** Rendered text runs this much taller than a placeholder's estimate (long record, 1440px). */
+const TEXT_SCALE = 1.3;
 const NEAR_MARGIN = "1500px 0px";
 const IDLE_DELAY_MS = 1200;
 
@@ -374,6 +390,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
   }, [html, tools]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
+  const textSize = useMemo(() => ({ "--part-h": `${Math.round(estimateHeight(part, 680) * TEXT_SCALE)}px` }) as React.CSSProperties, [part]);
 
   if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
 
@@ -386,14 +403,14 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
       className={`part${mapped ? " part--mapped" : ""}${html ? "" : " part--pending"}`}
     >
       {html ? (
-        <div ref={textRef} className="part__text" dangerouslySetInnerHTML={{ __html: html }} />
+        <div ref={textRef} className="part__text" style={textSize} dangerouslySetInnerHTML={{ __html: html }} />
       ) : (
         <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
       )}
       {slot &&
         anchor &&
         createPortal(
-          <PassageTools anchor={anchor} records={records} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
+          <PassageTools stage={stage} anchor={anchor} records={records} structures={structures} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
           slot,
         )}
     </section>
@@ -401,41 +418,69 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
 });
 
 function PassageTools({
+  stage,
   anchor,
   records,
+  structures,
   graph,
   lit,
   onInspect,
   onSameTopic,
 }: {
+  stage: Stage;
   anchor: string;
   records: string[];
+  structures: Structures;
   graph: ArgGraph;
   lit: boolean;
   onInspect(anchor: string, opener: HTMLElement): void;
   onSameTopic(anchor: string, opener: HTMLElement): void;
 }) {
-  const tally = records.length ? recordTally(records, graph) : null;
+  const { open, inView, onRecord, onHover } = useContext(PassageBarContext);
+  const { shown, more } = chipSplit(records);
+  const lean = useMemo(() => leanRecord(records, graph), [records, graph]);
+  const linked = useMemo(() => linkedCount(structures, { stage, anchor }), [structures, stage, anchor]);
   return (
     <>
-      {tally && (
+      {shown.map((id) => {
+        const node = graph.nodes.get(id);
+        const label = node?.label ?? id;
+        return (
+          <button
+            key={id}
+            type="button"
+            className={`record-chip${node?.kind === "assumption" ? " record-chip--assumption" : ""}${node?.kind === "declaration" ? " lean" : ""}${inView.has(id) ? " is-here" : ""}`}
+            aria-pressed={open === id}
+            title={label}
+            aria-label={`${label}. Open its record`}
+            onClick={(event) => onRecord(id, event.currentTarget)}
+            onPointerEnter={() => onHover(id)}
+            onPointerLeave={() => onHover(null)}
+            onFocus={() => onHover(id)}
+            onBlur={() => onHover(null)}
+          >
+            {chipTitle(shortTitle(id, label))}
+          </button>
+        );
+      })}
+      {more > 0 && (
         <button
           type="button"
           className="passage-tools__records"
           aria-pressed={lit}
-          aria-label={`${tally} linked to this passage. Show them`}
+          aria-label={`All ${records.length} records linked to this passage`}
           onClick={(event) => onInspect(anchor, event.currentTarget)}
         >
-          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-            <rect x="1.5" y="2" width="9" height="2" rx="1" fill="currentColor" />
-            <rect x="1.5" y="5.5" width="9" height="2" rx="1" fill="currentColor" opacity="0.7" />
-            <rect x="1.5" y="9" width="6" height="2" rx="1" fill="currentColor" opacity="0.45" />
-          </svg>
-          {tally}
+          and {more} more
+        </button>
+      )}
+      {lean && (
+        <button type="button" className="passage-tools__lean" aria-label={`Lean for ${graph.nodes.get(lean)?.label ?? "this record"}`} onClick={(event) => onRecord(lean, event.currentTarget, true)}>
+          Lean
         </button>
       )}
       <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
-        Linked passages
+        {linked === 0 ? "Linked passages" : linked === 1 ? "1 linked passage" : `${linked} linked passages`}
       </button>
     </>
   );

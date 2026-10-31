@@ -2,9 +2,11 @@
 // reading position are named and found. Nothing here touches the DOM or the
 // network, so the rules are tested directly against the captured fixtures.
 
+import type { AlignedStatement, Alignment, StatementRole } from "../../api/lean";
 import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
+import { recordLine } from "../../compare/useAlignment";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -139,6 +141,22 @@ export interface AccountDestinations {
   shared: { record: string; places: Destination[] }[];
 }
 
+const SPECIFIC = new WeakMap<PaperStructure, StructurePassage[]>();
+
+/** A paper's passages, those mapping fewest records first; every bar on the page asks for this. */
+function specificFirst(structure: PaperStructure): StructurePassage[] {
+  let sorted = SPECIFIC.get(structure);
+  if (!sorted) {
+    sorted = [...structure.paper.passages].sort(
+      (a, b) =>
+        a.claim_ids.length + a.assumption_ids.length - (b.claim_ids.length + b.assumption_ids.length) ||
+        a.block_span.start_byte - b.block_span.start_byte,
+    );
+    SPECIFIC.set(structure, sorted);
+  }
+  return sorted;
+}
+
 /**
  * Where the same topic is treated, for the "Passages linked to this one" chooser: for each
  * other account, the authored reading links touching this passage with their
@@ -159,11 +177,7 @@ export function sameTopic(structures: Structures, here: { stage: Stage; anchor: 
       .map((r) => ({ stage, anchor: r.anchor, relation: relationWord(r), rationale: r.rationale }));
     const shared: AccountDestinations["shared"] = [];
     if (stage !== here.stage && structure) {
-      const passages = [...structure.paper.passages].sort(
-        (a, b) =>
-          a.claim_ids.length + a.assumption_ids.length - (b.claim_ids.length + b.assumption_ids.length) ||
-          a.block_span.start_byte - b.block_span.start_byte,
-      );
+      const passages = specificFirst(structure);
       for (const record of claims) {
         const places = passages
           .filter((p) => p.claim_ids.includes(record) && !taken.has(`${stage}:${p.anchor}`))
@@ -247,6 +261,162 @@ export function firstPassageFor(structure: PaperStructure | undefined, ids: stri
     if (hit) return hit.anchor;
   }
   return null;
+}
+
+const ROLE_ORDER: StatementRole[] = ["statement", "definition", "derivation", "explanation", "example", "mention"];
+
+/**
+ * The alignment's best slice of this paper for a record: statement first, then
+ * definition, derivation, explanation, example, mention, the earliest within a role.
+ */
+export function bestSlice(alignment: Alignment | null, stage: Stage, id: string): AlignedStatement | null {
+  const slices = (alignment?.records[id]?.statements ?? []).filter((s) => s.paper === stage);
+  return [...slices].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0] ?? null;
+}
+
+export { sliceAt, statementHref } from "../links";
+
+/** The source lines an `l` value names in this document. */
+export function resolveAt(doc: Pick<PreparedDocument, "lineOfByte">, at: string): { start: number; end: number } | null {
+  const bytes = /^b(\d+)-(\d+)$/.exec(at);
+  if (bytes) return { start: doc.lineOfByte(Number(bytes[1])), end: doc.lineOfByte(Math.max(Number(bytes[1]), Number(bytes[2]) - 1)) };
+  const lines = /^(\d+)(?:-(\d+))?$/.exec(at);
+  if (!lines) return null;
+  const start = Number(lines[1]);
+  return { start, end: Math.max(start, Number(lines[2] ?? start)) };
+}
+
+/** The parts that hold these lines. */
+export function partsOfLines(parts: PreparedPart[], lines: { start: number; end: number }): number[] {
+  return parts.filter((p) => !p.blank && p.lines.start <= lines.end && p.lines.end >= lines.start).map((p) => p.index);
+}
+
+export interface SliceRow {
+  id: string;
+  start: number;
+  end: number;
+  mention: boolean;
+}
+
+/** Every record's slices of this paper, as source lines, for following block by block. */
+export function sliceRows(alignment: Alignment | null, doc: Pick<PreparedDocument, "lineOfByte">, stage: Stage): SliceRow[] {
+  const rows: SliceRow[] = [];
+  for (const [id, record] of Object.entries(alignment?.records ?? {})) {
+    for (const s of record.statements) {
+      if (s.paper !== stage) continue;
+      rows.push({ id, start: doc.lineOfByte(s.start_byte), end: doc.lineOfByte(Math.max(s.start_byte, s.end_byte - 1)), mention: s.role === "mention" });
+    }
+  }
+  return rows;
+}
+
+/** The records whose slices cover these lines: a mention counts only when nothing states more. */
+export function recordsCovering(rows: SliceRow[], lines: { start: number; end: number }): string[] {
+  const hit = rows.filter((r) => r.start <= lines.end && r.end >= lines.start);
+  const firm = hit.filter((r) => !r.mention);
+  return [...new Set((firm.length ? firm : hit).map((r) => r.id))];
+}
+
+// ----------------------------------------------------------- reading trail
+
+/** One paper's path through its records, computed once from its structure. */
+export interface PaperTrail {
+  /** Each passage's position in reading order. */
+  order: Map<string, number>;
+  /** Each record's first passage in reading order. */
+  first: Map<string, number>;
+}
+
+export function paperTrail(structure: PaperStructure | undefined): PaperTrail {
+  const order = new Map<string, number>();
+  const first = new Map<string, number>();
+  const passages = [...(structure?.paper.passages ?? [])].sort((a, b) => a.block_span.start_byte - b.block_span.start_byte);
+  passages.forEach((passage, i) => {
+    order.set(passage.anchor, i);
+    for (const id of passageRecords(passage)) if (!first.has(id)) first.set(id, i);
+  });
+  return { order, first };
+}
+
+export interface TrailPlace {
+  /** Records reached earlier in the paper, without those in the current passage. */
+  passed: Set<string>;
+  /** Records the reader has reached, the current passage included. */
+  seen: number;
+  /** Every record the paper links a passage to. */
+  total: number;
+}
+
+/** Where a reader at this passage stands on the paper's path; records ahead are the rest. */
+export function trailAt(trail: PaperTrail, anchor: string | null, current: readonly string[]): TrailPlace {
+  const at = anchor === null ? undefined : trail.order.get(anchor);
+  const passed = new Set<string>();
+  let seen = 0;
+  const here = new Set(current);
+  for (const [id, first] of trail.first) {
+    if (at === undefined || first > at) continue;
+    seen++;
+    if (!here.has(id)) passed.add(id);
+  }
+  return { passed, seen, total: trail.first.size };
+}
+
+/**
+ * "§3 of 8, 14 of 37 records so far". Only numbered top-level sections count; in
+ * text before the first of them, or after the last, the section is named instead.
+ */
+export function trailWords(outline: OutlineEntry[], part: number, place: Pick<TrailPlace, "seen" | "total">): string {
+  const records = place.total ? `${place.seen} of ${place.total} records so far` : "";
+  const tops = outline.filter((e) => e.parent === null);
+  const numbered = tops.filter((e) => /^\d/.test(e.title));
+  let at: OutlineEntry | undefined;
+  for (const entry of tops) {
+    if (entry.part > part) break;
+    at = entry;
+  }
+  let where = "";
+  if (at && /^\d/.test(at.title)) where = `${sectionNumber(at.title)} of ${numbered.length}`;
+  else if (at) where = at.title;
+  else if (numbered.length) where = `Before §1 of ${numbered.length}`;
+  return [where, records].filter(Boolean).join(", ");
+}
+
+// ---------------------------------------------------------- passage chips
+
+/** How many records a passage's bar names before "and 4 more". */
+export const CHIP_LIMIT = 3;
+
+export function chipSplit(ids: readonly string[], limit = CHIP_LIMIT): { shown: string[]; more: number } {
+  // A single remaining record is shown: "and 1 more" takes the room of its name.
+  const shown = ids.length <= limit + 1 ? [...ids] : ids.slice(0, limit);
+  return { shown, more: ids.length - shown.length };
+}
+
+/** A title for a chip: cut after a whole word, only when it would not fit. */
+export function chipTitle(title: string, max = 42): string {
+  if (title.length <= max) return title;
+  const cut = title.slice(0, max);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.]+$/, "")}…`;
+}
+
+/** The first of these records with a recorded Lean statement or correspondence. */
+export function leanRecord(
+  ids: readonly string[],
+  graph: { nodes: Map<string, { kind: string }>; out: Map<string, { kind: string }[]> },
+  hasLean: (id: string) => boolean = (id) => !!recordLine(id)?.lean,
+): string | null {
+  for (const id of ids) {
+    if (hasLean(id)) return id;
+    if (graph.nodes.get(id)?.kind === "declaration") return id;
+    if (graph.out.get(id)?.some((e) => e.kind === "formalizes")) return id;
+  }
+  return null;
+}
+
+/** How many passages the "Linked passages" chooser offers for this one. */
+export function linkedCount(structures: Structures, here: { stage: Stage; anchor: string }): number {
+  return sameTopic(structures, here).reduce((n, account) => n + account.authored.length + account.shared.reduce((m, s) => m + s.places.length, 0), 0);
 }
 
 // ---------------------------------------------------------------- outline

@@ -255,7 +255,7 @@ describe("rendering the papers", () => {
     });
     expect(doc.parts[0].headings.map((h) => h.id)).toEqual(["the-case-gamma00", "the-case-gamma00-1"]);
     expect(doc.parts[0].headings[0].aliases).toEqual(["3-the-case-gamma00"]);
-    expect(doc.render(0).html).toMatch(/<a id="3-the-case-gamma00" class="anchor" aria-hidden="true"><\/a><h2 id="the-case-gamma00">3\. The case <span class="katex">/);
+    expect(doc.render(0).html).toMatch(/<a id="3-the-case-gamma00" class="anchor" aria-hidden="true"><\/a><h2 id="the-case-gamma00" data-line="\d+">3\. The case <span class="katex">/);
   });
 
   it("marks bold run-in paragraphs", () => {
@@ -397,5 +397,26 @@ describe("performance", () => {
     doc.renderAll();
     const t2 = performance.now();
     console.log(`[reader] long record: prepare ${(t1 - t0).toFixed(0)} ms, renderAll ${(t2 - t1).toFixed(0)} ms`);
+  });
+});
+
+describe("source lines", () => {
+  const source = "---\ntitle: x\n---\n\n<!-- passage:one -->\n# Heading\n\nFirst paragraph\nruns on.\n\n$$\na + b\n$$\n\n- item one\n- item two\n\nLast paragraph.\n";
+  const bytes = new TextEncoder().encode(source);
+  const doc = prepareDocument({ stage: "short", bytes, documentPath: "short/paper.md", documentPaths: {} });
+  const html = doc.render(0).html;
+  const lineOf = (text: string) => source.split("\n").findIndex((l) => l.includes(text)) + 1;
+
+  it("stamps each block with its line in the document, across dropped comments and folded formulas", () => {
+    expect(html).toContain(`<h1 id="heading" data-line="${lineOf("# Heading")}"`);
+    expect(html).toContain(`<p data-line="${lineOf("First paragraph")}">`);
+    expect(html).toContain(`<div class="math-display" data-line="${lineOf("a + b")}">`);
+    expect(html).toContain(`<li data-line="${lineOf("item two")}">`);
+    expect(html).toContain(`<p data-line="${lineOf("Last paragraph")}">`);
+  });
+
+  it("resolves bytes to lines", () => {
+    expect(doc.lineOfByte(source.indexOf("Last paragraph"))).toBe(lineOf("Last paragraph"));
+    expect(doc.parts[0].lines.start).toBe(1);
   });
 });

@@ -3,7 +3,7 @@
 // Tab reaches one name in a block and the arrow keys walk the rest, so a long proof does
 // not cost a reader hundreds of tab stops.
 
-import { memo, useEffect, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import { memo, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { routeHref } from "../app/router";
 import { mathlibUrl, resolveName, type NameTarget, type Scope } from "./resolve";
 import { tokenLines, type LeanToken } from "./tokenize";
@@ -85,10 +85,6 @@ function hrefOf(target: NameTarget): string {
 export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: CodeViewProps) {
   const root = useRef<HTMLDivElement>(null);
   const lit = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (code.marked) root.current?.querySelector(".lean-clause")?.scrollIntoView({ block: "nearest" });
-  }, [code]);
 
   const nameAt = (node: EventTarget | null) => {
     const element = (node as Element | null)?.closest?.("a[data-t]") as HTMLElement | null;

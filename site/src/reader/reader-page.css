@@ -1,8 +1,11 @@
 /* The paper reader. Tokens only. The paper keeps its measure
    (--reader-measure); context takes room only when it is asked for.
+     >= 1501px  outline · paper · map (map-pane.css)
+     1280–1500  paper · map, the outline as "Sections"
+     With the map turned off, or below 1280:
      >= 1360px  outline · paper · inspector (when open)
      1120–1359  outline · paper, or paper · inspector (the outline becomes "Sections")
-     < 1120     paper alone; Sections and Passage details are modal surfaces */
+     < 1120     paper alone; Sections, Passage details and the map are modal surfaces */
 
 .reader {
   --strip-h: 44px;
@@ -76,6 +79,56 @@ html:has(.reader) {
 
 .reader .paper.prose {
   max-width: var(--reader-measure);
+}
+
+/* Text far from the window is neither laid out nor painted. The rendered height is
+   remembered (auto), so the scrollbar and the page's own anchoring stay steady, and
+   the text stays in the page for find, anchors and assistive technology. It sits on
+   the text, not the part, because the margin mark stands outside the box. */
+.part__text {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto var(--part-h, 240px);
+  overflow-clip-margin: 8px;
+}
+
+@media print {
+  .part__text {
+    content-visibility: visible;
+    contain-intrinsic-block-size: none;
+  }
+}
+
+/* The exact slice a link or a card landed on: amber on arrival, then a quiet mark
+   while it stays the target. The box-shadow extends the wash past the text's edge. */
+.reader .paper.prose [data-slice] {
+  background: var(--slice-mark);
+  box-shadow: 0 0 0 6px var(--slice-mark);
+  animation: slice-arrive 1400ms var(--ease-out) backwards;
+}
+
+.reader {
+  --slice-mark: color-mix(in oklab, var(--lit-wash) 55%, transparent);
+}
+
+@keyframes slice-arrive {
+  0%,
+  40% {
+    background: var(--lit-wash);
+    box-shadow: 0 0 0 6px var(--lit-wash);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader .paper.prose [data-slice] {
+    animation: none;
+  }
+}
+
+@media print {
+  .reader .paper.prose [data-slice] {
+    background: none;
+    box-shadow: none;
+  }
 }
 
 .reader .paper.prose [id],
@@ -358,7 +411,7 @@ html:has(.reader) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2px var(--space-3);
+  gap: var(--space-1) var(--space-2);
   margin: calc(-1 * var(--space-1)) 0 var(--space-3);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
@@ -401,12 +454,55 @@ html:has(.reader) {
   background: var(--lit-wash);
 }
 
-.passage-tools__records svg {
-  color: var(--ink-3);
+/* A record the passage discusses, by name: a small control, hairline and sans. */
+.passage-tools button.record-chip {
+  min-height: 24px;
+  max-width: 100%;
+  margin-left: 0;
+  padding: 1px 8px;
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+  background: var(--ground);
+  color: var(--ink-2);
+  text-align: left;
+  transition:
+    color var(--t-hover) var(--ease-out),
+    border-color var(--t-hover) var(--ease-out),
+    background-color var(--t-hover) var(--ease-out);
 }
 
-.passage-tools__records[aria-pressed="true"] svg {
-  color: var(--lit);
+.passage-tools button.record-chip:hover {
+  color: var(--ink);
+  border-color: var(--lit-line);
+  background: var(--ground);
+}
+
+/* The statement under the reading line. */
+.passage-tools button.record-chip.is-here {
+  color: var(--ink);
+  border-color: var(--lit-line);
+}
+
+.passage-tools button.record-chip--assumption {
+  border-style: dashed;
+}
+
+.passage-tools button.record-chip[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--lit-line);
+  background: var(--lit-wash);
+}
+
+.passage-tools button.record-chip.lean {
+  font-size: var(--fs-xs);
+}
+
+.passage-tools__lean {
+  font-weight: 600;
+}
+
+.passage-tools__topic {
+  margin-left: auto;
 }
 
 /* ---------------------------------------------------------------- outline */
