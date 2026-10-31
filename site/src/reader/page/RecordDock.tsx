@@ -193,26 +193,28 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
   const empty = !record && !name;
   return (
     <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
-      <header className="lean-page__head">
-        {open.via !== "pin" && (
-          <p className="lean-page__state" role="status">
-            <span className="lean-page__dot" aria-hidden="true" />
-            {open.via === "point" ? "Pointing at" : "Following the text"}
-          </p>
-        )}
-        <div className="lean-page__names">
-          {plain && <h3 className="lean-page__title">{plain}</h3>}
-          {name && !slot && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
-        </div>
-        {open.via === "pin" && !!record && !slot && graph.nodes.has(record) && (
-          <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
-            Everything on this step
+      {!slot && (
+        <header className="lean-page__head">
+          {open.via !== "pin" && (
+            <p className="lean-page__state" role="status">
+              <span className="lean-page__dot" aria-hidden="true" />
+              {open.via === "point" ? "Pointing at" : "Following the text"}
+            </p>
+          )}
+          <div className="lean-page__names">
+            {plain && <h3 className="lean-page__title">{plain}</h3>}
+            {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
+          </div>
+          {open.via === "pin" && !!record && graph.nodes.has(record) && (
+            <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
+              Everything on this step
+            </button>
+          )}
+          <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
+            Close
           </button>
-        )}
-        <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
-          Close
-        </button>
-      </header>
+        </header>
+      )}
       {slot ? (
         <div className="lean-page__body lean-page__body--read" data-keep>
           {slot}
