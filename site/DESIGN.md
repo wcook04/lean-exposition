@@ -290,6 +290,14 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   still see what the site does. `src/home/heroMarkup.ts` owns it, and
   `tests/front-hero.test.ts` holds each Lean fragment to the exact statement in OpenAI's
   source.
+- **The first action is reading a paper.** The two buttons are "Read the short paper" and
+  "Read the exposition". Below them, quieter, are Theorem 1 with its Lean open (an address
+  built from the alignment, `heroLinks`), Compare and the map. The graph and the Lean come
+  along beside the paper; they are never the way in.
+- **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
+  reference tables, the published observation and the vendored Lean, and hands the result to
+  the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
+  the sentence is left out.
 - **The first screen is HTML.** The build types the hero and the bar into `index.html`
   (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
   any script or data, and reaches readers and crawlers that run no script. React takes over
@@ -376,18 +384,27 @@ unrelated text.
   so its column reads down as the paper does. A record for a Lean declaration is not a row,
   because the Lean has a column. Two steps whose cells start with the same words share a row.
   A cell shows the strongest thing that level says, and a bare mention does not count. A row's
-  title stays in view while its cells are read; j and k move between rows.
+  title stays in view while its cells are read; j and k move between rows. A Lean cell lights
+  the exact lines, and a name in the code walks in place with a named way back
+  (`WalkingLean.tsx`); the walk stays with the history entry. "Read in context" lands on the
+  exact statement and pins the tie.
 - **One step** is one row in full, reached from a row's title. The rail lists the steps of the
   argument. Each level gets a scrolling column with everything it says about the step, and
   "Uses" and "Used by" walk the argument in either direction. On a phone the levels stack,
   with tabs to jump between them.
 
-Going between the two keeps the step. Pressing a level keeps the row in view.
+Going between the two keeps the step. Pressing a level keeps the row in view. A formula that
+is too wide shrinks, then breaks at a relation sign; a cases or aligned block never breaks,
+because its rows and brace would come apart, so it keeps its shape and scrolls in its own box
+with a cue and Expand.
 
-## The Lean browser
+## The Lean index
 
-"/lean" is OpenAI's Lean at a pinned commit, in two proof trees, for someone who reads Lean. The
-first screen says what the tree is and what was checked, in the words of the Checks page, and
+"/lean" is the index at the back of the book: OpenAI's Lean at a pinned commit, in two proof
+trees, for anyone who wants the files and declarations themselves. It is quiet and last in the
+top bar, and its first lines send a reader to a paper. A plain title comes first wherever the
+alignment's `names` has one, as the heading of a declaration's page, in lists and on tiles, with
+the Lean name small beside it. The first screen says what the tree is and what was checked, in the words of the Checks page, and
 offers `full_support`, `IsMinimizer`, `value_consequences`, the Comparator challenge file and the
 declarations the papers rest on, beside the main theorem itself. The folders stay on the left
 with a find box: Enter opens the first result, which is the exact name, then names that start
@@ -436,9 +453,13 @@ formula is fitted as it comes near the screen, because each measurement forces a
 
 ## Checks
 
-"/checks" opens with one paragraph saying what is established, then a table by kind of check
-with the number passed, failed, unavailable and not run in columns of their own. Outcomes are
-never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
+"/checks" opens with what a Lean reader asks first (`Standing.tsx`): what compiled, at which
+commit and toolchain; the statement; the axioms; any `sorry`; what Comparator has and has not
+done; where the dependency lines come from; and what people or agents read rather than a
+machine. Each row sets what ran beside what that leaves open, and names the checker. When the
+index's `dependency_source` becomes `elaborated`, the dependency row says so by itself. Then
+comes a table by kind of check with the number passed, failed, unavailable and not run in
+columns of their own. Outcomes are never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
 success badge. With a record chosen (`?n=`), the page starts with the checks attached to it.
 
 ## Motion

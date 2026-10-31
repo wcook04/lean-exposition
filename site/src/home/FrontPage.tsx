@@ -64,6 +64,7 @@ export function FrontPage() {
         <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
       </div>
 
+      {/* READER STILL: a real capture of a paper beside its Lean goes here, from the merged build. */}
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
       {/* What was asked and proved, for any mathematical reader. Each answer and attribution

@@ -151,7 +151,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
           <li>
             <a href={routeHref({ view: "map" })}>The argument map</a>
-            <span>The proof as a drawing, from the theorem down. A smaller part of it runs beside each paper.</span>
+            <span>The proof as a drawing, from the theorem down. Each paper shows the part you are reading beside the text.</span>
           </li>
           <li>
             <a href={routeHref({ view: "checks" })}>The checks</a>
@@ -188,7 +188,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </ul>
             <h3>What a click does</h3>
             <ul>
-              <li>Scrolling needs no click. The statement at the reading line takes the highlighter, and the right page follows it.</li>
+              <li>Scrolling needs no click. The statement at the reading line takes the highlighter, and the graph and the Lean beside the paper move to it.</li>
               <li>Pointing at a marked statement or a Lean name lights it everywhere and previews it. Nothing moves.</li>
               <li>Clicking a statement pins it: its Lean opens at the exact lines and the paper stays where it is.</li>
               <li>Clicking a reference opens it in place under the paragraph, with a link to go there.</li>
