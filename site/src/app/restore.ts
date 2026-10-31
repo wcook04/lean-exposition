@@ -90,7 +90,8 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
         const room = document.documentElement.scrollHeight - window.innerHeight;
         if (y > room + 1) waiting = true;
         const wanted = Math.max(0, Math.min(y, room));
-        if (Math.abs(window.scrollY - wanted) > 1) {
+        // Half a pixel: a looser test lets each save and restore creep by one.
+        if (Math.abs(window.scrollY - wanted) > 0.5) {
           window.scrollTo({ top: wanted, behavior: "instant" as ScrollBehavior });
           moved = true;
         }
