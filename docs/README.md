@@ -14,7 +14,7 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
   to repair the account and test lessons for the next problem.
 - [Review one explanation](reader-review.md): freeze an edition, ask a bounded
   reader question and preserve the response through later revisions.
-- [Authoring transitions](../skills/README.md): four local skills for source
+- [Writing methods](../skills/README.md): four local skills for source
   recording, detailed reconstruction, expert selection and exposition.
 - [Erdős examples](erdos-method-transfer.md): concrete writing methods illustrated
   by eight problem corpora.
