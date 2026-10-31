@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { navigate, parseRoute, walkEntry } from "../src/app/router";
 import { snapshotScroll, restoreScroll, SCROLLERS } from "../src/app/restore";
+import { useKeptCamera } from "../src/map/scene";
 import { arrive, arrivedBy, entryKey, leaveAs, namePlace, onLeave, pushEntry, readEntry, readEntryOf, replaceEntry, useBack, useEntryState, writeEntry } from "../src/app/trail";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -291,6 +292,32 @@ describe("state the entry owns", () => {
     expect(seen.current[0]).toBe("lean");
     act(() => popTo(first, "/"));
     expect(seen.current[0]).toBe("papers");
+  });
+});
+
+describe("a map shown in a pane", () => {
+  const scene = { camera: { x: 4, y: 8, k: 1 }, expanded: [], mode: "overview" as const };
+  const has = () => true;
+
+  function Pane({ tree }: { tree: { current: { getScene(): typeof scene; restoreScene(s: typeof scene): void } } }) {
+    useKeptCamera(tree, has);
+    return null;
+  }
+
+  it("keeps its camera on leaving and returns to it, without writing as it follows", () => {
+    vi.useFakeTimers();
+    const tree = { current: { getScene: vi.fn(() => scene), restoreScene: vi.fn() } };
+    mount(<Pane tree={tree} />);
+    expect(tree.current.getScene).not.toHaveBeenCalled();
+    const first = window.history.state;
+    act(() => navigate({ view: "map" }));
+    expect(tree.current.getScene).toHaveBeenCalledTimes(1);
+    expect(tree.current.restoreScene).not.toHaveBeenCalled();
+    act(() => popTo(first, "/"));
+    expect(tree.current.restoreScene).toHaveBeenCalledWith(scene);
+    act(() => void vi.advanceTimersByTime(800));
+    expect(tree.current.restoreScene).toHaveBeenCalledTimes(2);
+    vi.useRealTimers();
   });
 });
 

@@ -290,6 +290,14 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   still see what the site does. `src/home/heroMarkup.ts` owns it, and
   `tests/front-hero.test.ts` holds each Lean fragment to the exact statement in OpenAI's
   source.
+- **The first action is reading a paper.** The two buttons are "Read the short paper" and
+  "Read the exposition". Below them, quieter, are Theorem 1 with its Lean open (an address
+  built from the alignment, `heroLinks`), Compare and the map. The graph and the Lean come
+  along beside the paper; they are never the way in.
+- **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
+  reference tables, the published observation and the vendored Lean, and hands the result to
+  the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
+  the sentence is left out.
 - **The first screen is HTML.** The build types the hero and the bar into `index.html`
   (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
   any script or data, and reaches readers and crawlers that run no script. React takes over
@@ -376,18 +384,27 @@ unrelated text.
   so its column reads down as the paper does. A record for a Lean declaration is not a row,
   because the Lean has a column. Two steps whose cells start with the same words share a row.
   A cell shows the strongest thing that level says, and a bare mention does not count. A row's
-  title stays in view while its cells are read; j and k move between rows.
+  title stays in view while its cells are read; j and k move between rows. A Lean cell lights
+  the exact lines, and a name in the code walks in place with a named way back
+  (`WalkingLean.tsx`); the walk stays with the history entry. "Read in context" lands on the
+  exact statement and pins the tie.
 - **One step** is one row in full, reached from a row's title. The rail lists the steps of the
   argument. Each level gets a scrolling column with everything it says about the step, and
   "Uses" and "Used by" walk the argument in either direction. On a phone the levels stack,
   with tabs to jump between them.
 
-Going between the two keeps the step. Pressing a level keeps the row in view.
+Going between the two keeps the step. Pressing a level keeps the row in view. A formula that
+is too wide shrinks, then breaks at a relation sign; a cases or aligned block never breaks,
+because its rows and brace would come apart, so it keeps its shape and scrolls in its own box
+with a cue and Expand.
 
-## The Lean browser
+## The Lean index
 
-"/lean" is OpenAI's Lean at a pinned commit, in two proof trees, for someone who reads Lean. The
-first screen says what the tree is and what was checked, in the words of the Checks page, and
+"/lean" is the index at the back of the book: OpenAI's Lean at a pinned commit, in two proof
+trees, for anyone who wants the files and declarations themselves. It is quiet and last in the
+top bar, and its first lines send a reader to a paper. A plain title comes first wherever the
+alignment's `names` has one, as the heading of a declaration's page, in lists and on tiles, with
+the Lean name small beside it. The first screen says what the tree is and what was checked, in the words of the Checks page, and
 offers `full_support`, `IsMinimizer`, `value_consequences`, the Comparator challenge file and the
 declarations the papers rest on, beside the main theorem itself. The folders stay on the left
 with a find box: Enter opens the first result, which is the exact name, then names that start
@@ -476,12 +493,83 @@ gutter and goes whenever an end leaves the screen.
 The outline counts the statements with Lean in each section, and searches the paper's
 text, including what has not rendered yet.
 
+### References
+
+Every reference in the three papers is a real link, 639 in all: 117 in the short paper, 442
+in the long record and 80 in the exposition. What each one points to was decided by reading
+its sentence and is kept as data, one table per paper, in
+`examples/qaoa-sk/alignment/references-<paper>.json`, keyed by byte range. A pattern cannot
+decide it. Most numbered results these papers name belong to OpenAI's manuscripts or to other
+cited papers, whose numbers collide with the papers' own: "(6.1)" in the long record is its own
+equation in one sentence and Basso et al.'s in another. The rows that stay plain (126, such as
+the locators inside a reference-list entry) are in the table too, with the reason.
+
+| Kind | Short | Long | Exposition | A click |
+| --- | --- | --- | --- | --- |
+| Citation, with its locator | 61 | 212 | 35 | Opens the list entry and the locator in place, with "Open source" |
+| Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
+| Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
+| Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
+| Section of the long record | 1 | 0 | 0 | Opens beside the paper |
+
+Pointing or focusing shows the target on the right page after 150ms, in place of the Lean until
+the pointer leaves. It covers no text and moves nothing in the paper. An inset is part of the page: it pushes only what is below it, the reader's line stays
+where it is, and Escape, a second click or Close puts the page back. Opening one adds no history;
+a jump does, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
+usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
+
+Text stays byte for byte: marks go in at render time, and `tests/references.test.ts` checks every
+row against the paper's bytes and the rendered page, and fails on a candidate no row has decided. A
+row whose words have moved gives no link at all, because a wrong link is worse than none.
+
 ## Checks
 
-"/checks" opens with one paragraph saying what is established, then a table by kind of check
-with the number passed, failed, unavailable and not run in columns of their own. Outcomes are
-never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
+"/checks" opens with what a Lean reader asks first (`Standing.tsx`): what compiled, at which
+commit and toolchain; the statement; the axioms; any `sorry`; what Comparator has and has not
+done; where the dependency lines come from; and what people or agents read rather than a
+machine. Each row sets what ran beside what that leaves open, and names the checker. When the
+index's `dependency_source` becomes `elaborated`, the dependency row says so by itself. Then
+comes a table by kind of check with the number passed, failed, unavailable and not run in
+columns of their own. Outcomes are never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
 success badge. With a record chosen (`?n=`), the page starts with the checks attached to it.
+
+## Going back
+
+From anywhere on the site a reader can go back to exactly where they were: the
+same page, scroll position, selected card, map camera and lens, open tab and panel
+scroll. Back, Forward and reload all do this, and the visible control is the
+browser's own Back, so the two cannot disagree.
+
+The URL holds what is selected and can be shared. The history entry holds how it
+was being looked at: scroll, tab, camera, a filter typed. `app/trail.ts` keeps one
+record per entry, in `history.state` and mirrored in sessionStorage, because on a
+pop `history.state` has already moved on and the entry being left can only be
+written through the mirror.
+
+| Action | History |
+|---|---|
+| The page, a pinned record, a passage, a Lean declaration or a search query changes | One new entry, with an address |
+| A tab, the scroll, the camera or a filter changes | No entry; the current one is rewritten |
+| Following and pointing | No entry |
+
+The control reads "Back to Short paper §1", "Back to the map" or "Back to
+`minimizer_contact`". It sits in the top bar on every page but the reader, where it
+is in the reader's strip, and takes the place of the site's name on a phone. It
+appears only when there is somewhere in this site to go back to. The key is `[`;
+Alt and Left is the browser's own. A page names itself once with `namePlace`, so no
+link needs special handling.
+
+A place in a paper names the part and the block under the reading line, and never a
+raw page position, because placeholders above it change height as parts render. It
+holds to within half a pixel, as rounding let a save and restore creep by one.
+`restoreScroll` is the one way a place is put back, for the window and every inner
+scroller: it keeps setting the place while content arrives, for up to five seconds,
+and stops the moment the reader touches the wheel, the keyboard or the screen.
+
+A step between Lean names is one entry through `walkEntry`, which adds `&d=` and
+`&dm=` on a page that shows Lean in place and goes to the declaration's own page
+otherwise.
 
 ## Motion
 

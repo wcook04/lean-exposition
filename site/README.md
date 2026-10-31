@@ -28,10 +28,12 @@ want to explore it:
   Back returns to your place.
   Beside any passage you can list the records linked to it and open passages in
   the other accounts that are linked to the same records.
-- **The Lean.** OpenAI's source, every module and declaration, with each central
-  name explained in the papers' notation and the names each declaration mentions.
-- **The checks.** For each kind of check, what it tests and the outcome of each
-  recorded run: passed, failed, unavailable or not run.
+- **The Lean index.** OpenAI's source, every module and declaration, at the back of
+  the book: plain titles first, each central name explained in the papers' notation,
+  and the names each declaration mentions.
+- **The checks.** What compiled, which axioms, any `sorry`, what Comparator has and
+  has not done, and what people or agents read. Then, for each kind of check, what
+  it tests and the outcome of each recorded run: passed, failed, unavailable or not run.
 - **The architectural companion.** The About page includes the paper on why
   several accounts share one record, with a link to its standalone PDF.
 - **The papers and PDFs.** The front page's levels band (the Read menu's "All papers
@@ -202,6 +204,9 @@ in a browser at desktop and phone widths, in both colour schemes.
 After a paper or reader change, exercise a companion link in the built site under
 its deployed base path. Confirm that the opened view contains the intended
 argument, not just its heading, and that returning restores the reading position.
+A new inner scroller needs a `data-keep` attribute or an entry in `SCROLLERS` in
+`src/app/restore.ts`, and a new tab or open panel uses `useEntryState` from
+`src/app/trail.ts`, so that Back restores them.
 Also open the link normally or copy its address: an in-app click handler can hide
 an invalid public URL. Check the actual paper sources for print-only layout
 commands leaking into the reader, while preserving mathematical notation and
@@ -221,7 +226,7 @@ the promised explanation.
 | `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and strip, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`), the Lean graph (`useLeanGraph`, built by `model/leanGraph.ts`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |
 | `src/ribbons/` | The three account strips (`StripMarks`, shared with the front page), folded into a bar under the map until opened |
-| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
+| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, reviewed references that open in place, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
 | `src/figures/` | Redrawn paper figures: the mathematical plots and the companion's shared claim, joint inputs and reading journey; the missing-area plot has an optional Explore mode |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
 | `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md). `family.css` is the family's shared stylesheet, copied unchanged |

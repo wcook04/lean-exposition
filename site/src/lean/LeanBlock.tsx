@@ -453,6 +453,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell }) : store.clear()), [store, shell]);
 
   const walk = onName ? (next: DeclRow) => onName(walkOf(next, decl.name)) : undefined;
+  const plain = shell.plain.get(decl.name);
   const onOpen = useMemoStable((target: NameTarget, _element: HTMLElement, event: MouseEvent) => {
     if (target.kind === "mathlib" || !walk) return;
     event.preventDefault();
@@ -524,15 +525,24 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         <header className="lean-block__head">
           <div className="lean-block__title">
             <p className="lean-block__kind">{parent ? `Field of ${parent.slice(parent.lastIndexOf(".") + 1)}` : kindWord(decl.kind)}</p>
-            <Title className="lean-block__name">
-              {row ? (
-                <a href={row.href}>
-                  <Breakable name={decl.short} />
-                </a>
-              ) : (
+            {plain && (
+              <Title className="lean-block__plain">{row ? <a href={row.href}>{plain}</a> : plain}</Title>
+            )}
+            {plain ? (
+              <p className="lean-block__rawname">
                 <Breakable name={decl.short} />
-              )}
-            </Title>
+              </p>
+            ) : (
+              <Title className="lean-block__name">
+                {row ? (
+                  <a href={row.href}>
+                    <Breakable name={decl.short} />
+                  </a>
+                ) : (
+                  <Breakable name={decl.short} />
+                )}
+              </Title>
+            )}
             {term?.tex && <Notation term={term} />}
           </div>
           {!row && !compact && (

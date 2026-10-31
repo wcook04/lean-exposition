@@ -21,6 +21,7 @@ import {
   type MathResult,
   type MathSpan,
 } from "./math";
+import { equationId, figureId, labelIds, linkReferences, markReferences, referenceIndex, stripRefMarks, type RefIndex, type ReferenceTable } from "./references";
 import { sanitizeHtml } from "./sanitize";
 import { clearTexBlocks, hasMarks, isMarkCode, MARK, markSource, segmentsIn, stripMarks, wrapTies, type TieSegment } from "./ties";
 
@@ -50,6 +51,8 @@ export interface PreparedDocument {
   issues: string[];
   /** Every reference definition of the document, for slices that use them (renderSlice). */
   references: NonNullable<Env["references"]>;
+  /** The paper's reviewed references, once loaded: what its in-text links point to. */
+  refs: RefIndex | null;
   /** The source line, from 1, that holds this byte of the document. */
   lineOfByte(byte: number): number;
   render(index: number): RenderedPart;
@@ -76,6 +79,8 @@ export interface PrepareInput {
   parts?: { kind: string; span: { start_byte: number; end_byte: number }; passageAnchor?: string }[];
   documentPath: string;
   documentPaths: Record<string, string>;
+  /** The reviewed reference table, when the paper has one. */
+  referenceTable?: ReferenceTable | null;
   /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
   ties?: readonly TieSegment[];
 }
@@ -181,8 +186,10 @@ md.core.ruler.push("run_in", (state) => {
     let j = k + 1;
     for (; j < kids.length && kids[j].type !== "strong_close"; j++) text += kids[j].content;
     if (j >= kids.length) continue;
-    const m = RUN_IN.exec(text.trim());
+    const lead = stripRefMarks(text).trim();
+    const m = RUN_IN.exec(lead);
     if (!m) continue;
+    tokens[i].meta = { ...(tokens[i].meta ?? {}), lead };
     tokens[i].attrJoin("class", "run-in");
     tokens[i].attrSet("data-run-in", m[1].toLowerCase());
     kids[k].attrJoin("class", "run-in__lead");
@@ -515,6 +522,8 @@ interface PartState {
   tokens: Token[];
   spans: MathSpan[];
   figures: FigureInfo[];
+  /** Figures before this part, for their numbers. */
+  figuresBefore: number;
   rendered?: RenderedPart;
 }
 
@@ -606,14 +615,26 @@ function stampLines(tokens: Token[], text: string, rawText: string, spans: MathS
   }
 }
 
-function renderTokens(st: PartState, env: RenderEnv, typesetSpan: (span: MathSpan) => MathResult): { html: string; mathErrors: { tex: string; message: string }[] } {
+function renderTokens(
+  st: PartState,
+  env: RenderEnv,
+  typesetSpan: (span: MathSpan) => MathResult,
+  /** The whole paper's references; a slice has none, and no ids, since the original stands elsewhere. */
+  refs?: { index: RefIndex | null },
+): { html: string; mathErrors: { tex: string; message: string }[] } {
   let html = md.renderer.render(st.tokens, md.options, env);
+  const equationAttr = (n: string) => {
+    const id = refs ? equationId(st.spans[Number(n)]?.tex ?? "") : null;
+    return id ? ` id="${esc(id)}"` : "";
+  };
   html = html.replace(new RegExp(`<p${LINE_ATTR}>${MARKS}${FIG_OPEN}(\\d+)${FIG_CLOSE}${MARKS}</p>`, "g"), (_m, line: string | undefined, before: string, n: string, after: string) => {
     const f = st.figures[Number(n)];
     const key = esc(f.key);
-    return `${before}<figure class="paper-figure"${line ? ` data-line="${line}"` : ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"></div><figcaption>${f.captionHtml}</figcaption></figure>${after}`;
+    const id = refs ? ` id="${figureId(st.figuresBefore + Number(n) + 1)}"` : "";
+    return `${before}<figure class="paper-figure"${id}${line ? ` data-line="${line}"` : ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"></div><figcaption>${f.captionHtml}</figcaption></figure>${after}`;
   });
   html = sanitizeHtml(html);
+  if (refs) html = linkReferences(html, refs.index);
   html = html.replace(new RegExp(`<p(?: data-line="\\d+")?>${MARKS}((?:\\s*<a [^>]*class="anchor"[^>]*></a>)+)\\s*${MARKS}</p>`, "g"), "$1$2$3");
   const mathErrors: { tex: string; message: string }[] = [];
   const typeset = (n: string) => {
@@ -625,9 +646,9 @@ function renderTokens(st: PartState, env: RenderEnv, typesetSpan: (span: MathSpa
   };
   html = html.replace(
     new RegExp(`<p${LINE_ATTR}>${MARKS}${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}${MARKS}</p>`, "g"),
-    (_m, line: string | undefined, before: string, n: string, after: string) => `${before}<div class="math-display"${line ? ` data-line="${line}"` : ""}>${typeset(n)}</div>${after}`,
+    (_m, line: string | undefined, before: string, n: string, after: string) => `${before}<div class="math-display"${equationAttr(n)}${line ? ` data-line="${line}"` : ""}>${typeset(n)}</div>${after}`,
   );
-  html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => `<span class="math-display">${typeset(n)}</span>`);
+  html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => `<span class="math-display"${equationAttr(n)}>${typeset(n)}</span>`);
   // Punctuation directly after inline math stays on the formula's line.
   html = html.replace(
     new RegExp(`${INLINE_OPEN}(\\d+)${INLINE_CLOSE}${MARKS}([.,;:!?)\\]\u2019\u201d]+)?`, "g"),
@@ -675,7 +696,7 @@ export function renderSlice(markdown: string, input: SliceInput): RenderedPart {
   );
   const tokens = md.parse(linked, { references });
   const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
-  return { index: -1, ...renderTokens({ tokens, spans, figures }, env, typesetShared) };
+  return { index: -1, ...renderTokens({ tokens, spans, figures, figuresBefore: 0 }, env, typesetShared) };
 }
 
 const sliceMath = new Map<string, MathResult>();
@@ -699,6 +720,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     ? input.parts
     : [{ kind: "unmapped_text", span: { start_byte: 0, end_byte: bytes.length } }];
 
+  const refs = input.referenceTable ? referenceIndex(input.referenceTable, bytes) : null;
   const frontMatter = { value: null as Record<string, unknown> | null };
   const sources: string[] = [];
   const raw: string[] = [];
@@ -711,7 +733,10 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     sources.push(preprocess(text, p.span.start_byte === 0, frontMatter));
     const span = { start: p.span.start_byte, end: p.span.end_byte };
     const inside = input.ties ? segmentsIn(input.ties, span.start, span.end) : [];
-    marked.push(inside.length ? preprocess(clearTexBlocks(markSource(bytes, span, inside, decode)), span.start === 0, { value: null }) : sources[sources.length - 1]);
+    const tied = inside.length ? clearTexBlocks(markSource(bytes, span, inside, decode)) : text;
+    // Reference marks go in over the tie marks, which stand for no bytes.
+    const linked = markReferences(tied, span.start, refs);
+    marked.push(linked === text ? sources[sources.length - 1] : preprocess(linked, span.start === 0, { value: null }));
   }
 
   // Reference definitions from the whole document, available to every part.
@@ -724,6 +749,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
   const parts: PreparedPart[] = [];
   let mathCount = 0;
 
+  let figuresBefore = 0;
+
   // Pass 1: figures, math, parse, explicit anchors.
   marked.forEach((src0, index) => {
     const spans: MathSpan[] = [];
@@ -733,8 +760,8 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     // A mark that a slice left inside a formula must not reach KaTeX.
     for (const span of spans) span.tex = stripMarks(span.tex);
     const tokens = md.parse(text, { references });
-    stampLines(tokens, text, raw[index], spans, lineOfByte(partSpecs[index].span.start_byte));
-    states.push({ tokens, spans, figures });
+    stampLines(tokens, stripRefMarks(text), raw[index], spans, lineOfByte(partSpecs[index].span.start_byte));
+    states.push({ tokens, spans, figures, figuresBefore });
     mathCount += spans.length;
     const spec = partSpecs[index];
     const kind = spec.kind === "mapped_passage" ? "passage" : "text";
@@ -743,6 +770,16 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     for (const m of text.matchAll(/<a id="([^"]+)" class="anchor"/g)) {
       if (registry.claimExplicit(m[1], index)) anchors.push(m[1]);
     }
+    // Numbered equations and figures are addresses too.
+    for (const span of spans) {
+      const id = equationId(span.tex);
+      if (id && registry.claimExplicit(id, index)) anchors.push(id);
+    }
+    figures.forEach((_f, n) => {
+      const id = figureId(figuresBefore + n + 1);
+      if (registry.claimExplicit(id, index)) anchors.push(id);
+    });
+    figuresBefore += figures.length;
     parts.push({
       index,
       kind,
@@ -756,11 +793,19 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
-  // Pass 2: heading ids in document order.
+  // Pass 2: label and heading ids in document order.
+  const labelId = labelIds();
   states.forEach((st, index) => {
     const part = parts[index];
     for (let i = 0; i < st.tokens.length; i++) {
       const t = st.tokens[i];
+      if (t.type === "paragraph_open" && t.meta?.lead) {
+        const id = labelId(t.meta.lead as string);
+        if (id && registry.claimExplicit(id, index)) {
+          t.attrSet("id", id);
+          part.anchors.push(id);
+        }
+      }
       if (t.type !== "heading_open") continue;
       const inline = st.tokens[i + 1];
       const title = inlineText(inline?.children ?? [], st.spans).trim();
@@ -815,7 +860,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    st.rendered = { index, ...renderTokens(st, env, typesetSpan) };
+    st.rendered = { index, ...renderTokens(st, env, typesetSpan, { index: refs }) };
     return st.rendered;
   };
 
@@ -827,6 +872,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     mathCount,
     issues,
     references,
+    refs,
     lineOfByte,
     render,
     renderAll: () => parts.map((p) => render(p.index)),

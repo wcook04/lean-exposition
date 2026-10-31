@@ -1,8 +1,10 @@
-// The ledger of every recorded check in the edition. It opens with one paragraph
-// saying what is established, then a table by kind of check with the number passed,
-// failed, unavailable and not run in columns of their own. Outcomes are never merged
-// across kinds. Only a recorded failure is coloured; there is no percentage and no
-// success badge. Every number is computed from the edition or read from a record.
+// The ledger of every recorded check in the edition. It opens with what a Lean reader asks
+// first (Standing.tsx): what compiled, what Comparator did, which axioms, any sorry, and what
+// is only read. Then a table by kind of check with the number passed, failed, unavailable
+// and not run in columns of their own. Outcomes are never merged across kinds. Only a
+// recorded failure is coloured; there is no percentage and no success badge. Every number
+// is computed from the edition or read from a record. A page about one record keeps the
+// plain paragraph at its head.
 
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Route } from "../app/router";
@@ -25,6 +27,7 @@ import {
   type KindGroup,
 } from "./summary";
 import { RecordList } from "./RecordTiles";
+import { Standing } from "./Standing";
 import "./checks.css";
 
 const PAGE = 25;
@@ -117,21 +120,22 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
 
   return (
     <div className="checks">
-      <header className="checks__head">
-        <div className="checks__lead">
-          <h1>
-            {subject ? (
-              <>
-                Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
-              </>
-            ) : (
-              "What has been checked"
-            )}
-          </h1>
-          <Established cards={cards} />
-        </div>
-        <OutcomeKey />
-      </header>
+      {subject ? (
+        <header className="checks__head">
+          <div className="checks__lead">
+            <h1>
+              Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
+            </h1>
+            <Established cards={cards} />
+          </div>
+          <OutcomeKey />
+        </header>
+      ) : (
+        <header className="checks__first">
+          <h1>What ran on this proof, and what did not</h1>
+          <Standing groups={groups} />
+        </header>
+      )}
 
       {target.type === "unknown" && (
         <p className="checks__notice" role="status">
@@ -143,6 +147,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
 
       <section className="checks__band" aria-labelledby="by-kind">
         <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "Every check, by kind"}</h2>
+        {!subject && <OutcomeKey wide />}
         <CheckTable
           caption="All recorded checks on this site, by kind"
           rows={groups.map((g) => ({ group: g, examined: null }))}
@@ -235,10 +240,10 @@ function Established({ cards }: { cards: EvidenceCard[] }) {
   );
 }
 
-function OutcomeKey() {
+function OutcomeKey({ wide }: { wide?: boolean }) {
   return (
-    <section className="outcome-key" aria-labelledby="outcome-key">
-      <h2 id="outcome-key">What each outcome means</h2>
+    <section className={`outcome-key${wide ? " outcome-key--wide" : ""}`} aria-labelledby="outcome-key">
+      <h2 id="outcome-key" className={wide ? "visually-hidden" : undefined}>What each outcome means</h2>
       <dl className="outcomes">
         {OUTCOME_MEANINGS.map((o) => (
           <div key={o.status} className="outcomes__row">

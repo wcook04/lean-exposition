@@ -914,6 +914,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [ties, go],
   );
 
+  /** "See its Lean" in a reference's inset: the statement opens as if it had been clicked. */
+  const openReferenceLean = useCallback(
+    (record: string, at: string | undefined) => {
+      const t = statementFor(ties, record, at);
+      if (t !== null) openStatement(t);
+    },
+    [ties, openStatement],
+  );
+
   // On desktop the inspector is a column, not a modal: take focus to its title once, explicitly.
   const inspectKey = inspect ? (inspect.kind === "passage" ? `p:${inspect.anchor}` : `s:${inspect.start}`) : "";
   useEffect(() => {
@@ -1395,6 +1404,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           statements={statements}
           onInspect={openInspector}
           onSameTopic={sameTopicOf}
+          onReferenceLean={openReferenceLean}
         />
         {action && (
           <button

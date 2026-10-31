@@ -11,6 +11,7 @@ import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
+import { useReferences } from "./RefInset";
 import { authoredRoutes, estimateHeight, idleOrder, linkedCount, passageOf, passageRecords, type Structures } from "./model";
 import type { Statements } from "./statements";
 
@@ -42,6 +43,8 @@ interface Props {
   statements?: Statements;
   onInspect(anchor: string, opener: HTMLElement): void;
   onSameTopic(anchor: string, opener: HTMLElement): void;
+  /** "See its Lean" in a reference's inset: open this record's slice as a click on its statement would. */
+  onReferenceLean?(record: string, at: string | undefined): void;
   /** The reading line, in viewport pixels from the top, used for height compensation. */
   topInset: number;
 }
@@ -62,8 +65,11 @@ const cancelIdle = (id: number) => {
   else w.clearTimeout(id);
 };
 
+const noLean = () => {};
+
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
-  const { stage, doc, structures, initial, topInset, inspected, statements, onInspect, onSameTopic } = props;
+  const { stage, doc, structures, initial, topInset, inspected, statements, onInspect, onSameTopic, onReferenceLean } = props;
+  const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
@@ -87,7 +93,9 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   // place when anything above it changes height (a part rendered, a figure
   // mounted, a route line arriving), so the text under the reader's eyes
   // never moves.
-  const anchor = useRef<{ el: Element; top: number } | null>(null);
+  // `scroll` is where the page stood when `top` was read: only a change of layout moves the
+  // page back, never a scroll that arrived in the same frame as a change of height.
+  const anchor = useRef<{ el: Element; top: number; scroll: number } | null>(null);
   // A jump's target stays the anchor until the reader scrolls by hand.
   const pinned = useRef(false);
   // The size of each part as the resize observer last reported it.
@@ -135,12 +143,13 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         }
       }
     }
-    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top } : null;
+    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top, scroll: window.scrollY } : null;
   }, []);
 
   useImperativeHandle(
     ref,
-    () => ({
+    () => {
+      const value: BodyHandle = {
       ensure: (parts) =>
         new Promise<void>((resolve) => {
           const wanted = parts.filter((i) => i >= 0 && i < doc.parts.length);
@@ -155,12 +164,16 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       reanchor,
       hold: (el) => {
         reanchor(true);
-        anchor.current = { el, top: el.getBoundingClientRect().top };
+        anchor.current = { el, top: el.getBoundingClientRect().top, scroll: window.scrollY };
         pinned.current = true;
       },
-    }),
+      };
+      handle.current = value;
+      return value;
+    },
     [add, doc, reanchor],
   );
+  const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []), onReferenceLean ?? noLean);
 
   // Resolve waiters once their parts are in the DOM and laid out.
   useLayoutEffect(() => {
@@ -212,11 +225,11 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       for (const entry of entries) sizes.current.set(entry.target, entry.target.getBoundingClientRect().height);
       const held = anchor.current;
       if (held && held.el.isConnected) {
-        const delta = held.el.getBoundingClientRect().top - held.top;
+        const delta = held.el.getBoundingClientRect().top + window.scrollY - held.top - held.scroll;
         if (Math.abs(delta) >= 0.5) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
       }
       if (pinned.current && held?.el.isConnected) {
-        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top };
+        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top, scroll: window.scrollY };
       } else {
         // Delivered entries already update every changed part's cached size.
         // Reading all the other parts again makes each background insertion
@@ -273,7 +286,15 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   }, [doc, add]);
 
   return (
-    <div className="paper prose" data-stage={stage}>
+    <div
+      className="paper prose"
+      data-stage={stage}
+      onClick={references.onClick}
+      onPointerOver={references.onPointerOver}
+      onPointerOut={references.onPointerOut}
+      onFocus={references.onFocus}
+      onBlur={references.onBlur}
+    >
       {doc.parts.map((part) => (
         <Part
           key={part.index}
@@ -289,6 +310,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           register={register}
         />
       ))}
+      {references.portals}
     </div>
   );
 });
@@ -610,6 +632,7 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
       box.dataset.fit = "scaled";
       return;
     }
+    if (unbreakable(math)) return keepWhole(box);
     // Too wide even beside a small number: the number takes its own line under
     // the formula, and the formula breaks between relation signs.
     const tagged = breakSize(size, available);
@@ -629,10 +652,20 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     box.dataset.fit = "scaled";
     return;
   }
+  if (unbreakable(math)) return keepWhole(box);
   const wrap = breakSize(size, available);
   box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
   openRuns(size, wrap, available);
+}
+
+/** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
+const unbreakable = (math: HTMLElement) => !!math.querySelector(".mtable");
+
+/** Such a block keeps its shape at the smallest fitted size, and scrolls in its own box. */
+function keepWhole(box: HTMLElement): void {
+  box.style.fontSize = `${FIT_FLOOR}em`;
+  box.dataset.fit = "scaled";
 }
 
 /** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */

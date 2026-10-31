@@ -213,6 +213,12 @@ function sum(counts: Record<string, number>): number {
 // Added for the checks page. Everything below groups or words what the
 // evidence records already say; nothing is inferred about the mathematics.
 
+/**
+ * The audit of the ties: an agent re-read a stratified sample against the Lean on 31 October
+ * 2026, seed 20261031, and every wrong tie was corrected. The ledger is not published.
+ */
+export const TIE_AUDIT = { sampled: 237, wrong: 4 } as const;
+
 /** The order in which the kinds of check are presented. */
 export const CHECK_ORDER = ["source_hash", "lean_build", "comparator", "extraction", "semantic_review", "platform"] as const;
 

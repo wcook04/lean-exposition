@@ -5,13 +5,18 @@
 // Pan and zoom only ever write to the current entry (never push); app/trail.ts
 // holds the entry.
 
-import { entryKey, readEntry, writeEntry } from "../app/trail";
+import { useEffect, type RefObject } from "react";
+import { arrivedBy, entryKey, onLeave, readEntry, useEntryKey, writeEntry } from "../app/trail";
 import type { MapScene } from "./ArgumentTree";
 
 export type { MapScene };
+type TreeHandle = { getScene(): MapScene; restoreScene(scene: MapScene): void };
 
 const KEY = "mapScene";
+const PANE_KEY = "paneScene";
 const DELAY = 200;
+/** A pane opens with a fit of its own after a moment; the restored camera lands after it. */
+const PANE_SETTLE = 700;
 
 const finite = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -66,4 +71,30 @@ export function sceneWriter() {
     },
     cancel,
   };
+}
+
+/**
+ * The camera of a map shown beside something else, kept per history entry. The
+ * pane follows the reader, so it writes only on leaving, and on coming back it
+ * returns to the view that was left before following resumes.
+ */
+export function useKeptCamera(tree: RefObject<Pick<TreeHandle, "getScene" | "restoreScene"> | null>, has: (id: string) => boolean): void {
+  const key = useEntryKey();
+  useEffect(
+    () =>
+      onLeave(() => {
+        const scene = tree.current?.getScene();
+        if (scene) writeEntry(PANE_KEY, scene);
+      }),
+    [tree],
+  );
+  useEffect(() => {
+    if (arrivedBy() === "push") return;
+    const scene = validScene(readEntry(PANE_KEY), has);
+    if (!scene) return;
+    const put = () => tree.current?.restoreScene(scene);
+    put();
+    const again = window.setTimeout(put, PANE_SETTLE);
+    return () => window.clearTimeout(again);
+  }, [key, tree, has]);
 }
