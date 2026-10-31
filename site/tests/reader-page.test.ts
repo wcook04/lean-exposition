@@ -26,6 +26,21 @@ import {
   type Structures,
 } from "../src/reader/page/model";
 import { documentFixture, graphFixture, structureFixture } from "./fixtures";
+import { statementLine } from "../src/reader/page/position";
+
+describe("selected statement in the visible paper", () => {
+  it("keeps the existing desktop reading line when the statement fits", () => {
+    expect(statementLine(100, 790, 120)).toBe(307);
+  });
+  it("fits the whole theorem above the phone proof sheet when there is room", () => {
+    const line = statementLine(44, 338, 272);
+    expect(line).toBeGreaterThanOrEqual(44);
+    expect(line + 272).toBeLessThanOrEqual(338);
+  });
+  it("starts an oversized statement below the strip rather than behind the sheet", () => {
+    expect(statementLine(44, 338, 700)).toBe(60);
+  });
+});
 
 const PATHS: Record<Stage, string> = {
   long: "long/reasoning-record.md",

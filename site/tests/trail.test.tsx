@@ -512,6 +512,35 @@ describe("restoreScroll", () => {
     el.remove();
   });
 
+  it("keeps a requested paper target on its line while layout and the visible pane settle", async () => {
+    const scrollY = Object.getOwnPropertyDescriptor(window, "scrollY");
+    const scrollHeight = Object.getOwnPropertyDescriptor(document.documentElement, "scrollHeight");
+    let y = 0;
+    let target = 1400;
+    let line = 300;
+    Object.defineProperty(window, "scrollY", { configurable: true, get: () => y });
+    Object.defineProperty(document.documentElement, "scrollHeight", { configurable: true, value: 10000 });
+    const scroll = vi.spyOn(window, "scrollTo").mockImplementation((options) => { y = (options as ScrollToOptions).top ?? 0; });
+    const stop = restoreScroll({ window: () => target - line }, { settle: 100, limit: 1000 });
+    try {
+      expect(y).toBe(1100);
+      // Earlier paper parts finish rendering, and the phone proof sheet opens.
+      target = 2100;
+      line = 60;
+      await vi.waitFor(() => expect(y).toBe(2040));
+      window.dispatchEvent(new Event("wheel"));
+      target = 2600;
+      await new Promise((r) => setTimeout(r, 150));
+      expect(y).toBe(2040);
+    } finally {
+      stop();
+      scroll.mockRestore();
+      if (scrollY) Object.defineProperty(window, "scrollY", scrollY);
+      if (scrollHeight) Object.defineProperty(document.documentElement, "scrollHeight", scrollHeight);
+      else delete (document.documentElement as { scrollHeight?: number }).scrollHeight;
+    }
+  });
+
   it("puts the place back when late fonts arrive, and never after the reader has moved", async () => {
     const listeners = new Set<() => void>();
     const fonts = {

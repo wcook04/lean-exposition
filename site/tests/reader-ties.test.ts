@@ -219,6 +219,41 @@ describe("the model", () => {
     expect(statementFor(model, "nothing")).toBeNull();
   });
 
+  it("keeps record links usable when earlier prose changes their old byte offsets", () => {
+    expect(statementFor(model, "a", "b5970-6319")).toBe(statementFor(model, "a"));
+    expect(statementFor(model, "b", "b6000-6400")).toBe(statementFor(model, "b"));
+    // A stale range without a known record does not invent a correspondence.
+    expect(statementFor(model, "nothing", "b0-9")).toBeNull();
+  });
+
+  it("opens the authored statement before a Lean-linked abstract mention, preserving exact slices", () => {
+    const authored = tieModel({ ...index, ties: [
+      { ...index.ties[0], role: "mention" },
+      { ...index.ties[1], record: "a", role: "statement", lean: true },
+    ] });
+    expect(statementFor(authored, "a")).toBe(1);
+    expect(statementFor(authored, "a", "b500-600")).toBe(1);
+    expect(statementFor(authored, "a", "b0-9")).toBe(0);
+  });
+
+  it("keeps an explicitly unformalised statement and does not promote a mention or definition", () => {
+    const authored = tieModel({ ...index, ties: [
+      { ...index.ties[0], role: "mention" },
+      { ...index.ties[1], record: "a", role: "statement" },
+    ] });
+    const selected = statementFor(authored, "a")!;
+    expect(selected).toBe(1);
+    expect(authored.index.ties[selected].lean).toBe(false);
+    const definitions = tieModel({ ...index, ties: [
+      { ...index.ties[0], role: "definition" },
+      { ...index.ties[1], role: "explanation" },
+    ] });
+    expect(statementFor(definitions, "a")).toBe(0);
+    expect(definitions.index.ties[0].role).toBe("definition");
+    expect(statementFor(model, "b", "b500-600")).toBe(1);
+    expect(model.index.ties[1].role).toBe("mention");
+  });
+
   it("steps in reading order and stops at the ends", () => {
     expect(stepFrom(model, null, 1)).toBe(0);
     expect(stepFrom(model, 0, 1)).toBe(1);

@@ -642,6 +642,24 @@ html.is-reading {
   .reader-strip .mode-toggle button {
     min-width: 44px;
   }
+  .reader-strip .crumbs {
+    overflow: hidden;
+  }
+  .reader-strip .crumbs:has(.crumbs__here) li:not(.crumbs__here) {
+    display: none;
+  }
+  .reader-strip .crumbs__here::before {
+    content: none;
+  }
+  .reader-strip .crumbs li:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .reader-strip .crumbs li:first-child a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .reader--narrow .reader__paper {
     padding-bottom: var(--space-8);
   }

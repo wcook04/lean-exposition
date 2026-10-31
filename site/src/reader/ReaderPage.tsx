@@ -77,6 +77,7 @@ import {
   restoreKey,
   savePosition,
   scrollForPosition,
+  statementLine,
   visitOrigin,
   type ReadingPosition,
   type VisitOrigin,
@@ -176,8 +177,6 @@ function blocksOf(part: HTMLElement | null | undefined, last: number, lines: { s
   return blocks.filter((b, i) => b.line <= lines.end && (blocks[i + 1]?.line ?? last + 1) > lines.start).map((b) => b.el);
 }
 
-/** The reading line, as a share of the height below the strip. */
-const READING_LINE = 0.3;
 /** How far from the reading line a statement still counts as what is being read. */
 const LINE_REACH = 0.32;
 /** Further than this share of the window in one hold is flying, not reading. */
@@ -465,9 +464,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   );
 
   /** The reading line, in pixels from the top of the window. */
-  const readingLine = useCallback(() => {
+  const readingLine = useCallback((height = 0) => {
     const top = readingTop();
-    return top + (window.innerHeight - top) * READING_LINE;
+    const sheet = document.querySelector(".right-sheet--phone")?.getBoundingClientRect();
+    const bottom = sheet ? Math.min(window.innerHeight, sheet.top) : window.innerHeight;
+    return statementLine(top, bottom, height);
   }, [readingTop]);
 
   /**
@@ -490,8 +491,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll === false) return true;
-        const line = readingLine();
-        landing = () => target!.getBoundingClientRect().top + window.scrollY - line;
+        stepped.current = true;
+        current.current = statement;
+        currentSegment.current = ties.segmentsOf[statement][0];
+        update.current();
+        landing = () => {
+          const extent = statements.extent(statement);
+          return target!.getBoundingClientRect().top + window.scrollY - readingLine(extent ? extent.bottom - extent.top : target!.getBoundingClientRect().height);
+        };
       } else {
         const lines = at ? resolveAt(doc, at) : null;
         const parts = lines ? partsOfLines(doc.parts, lines) : [];
@@ -508,8 +515,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const smooth = !!options.smooth && !prefersReducedMotion() && Math.abs(landing() - window.scrollY) < window.innerHeight * 1.5;
       window.scrollTo({ top: Math.max(0, landing()), behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
       const settle = () => {
+        if (!target?.isConnected) return;
         if (Math.abs(landing() - window.scrollY) > 6) window.scrollTo({ top: Math.max(0, landing()), behavior: "instant" as ScrollBehavior });
         body.hold(target!);
+        // Lazy parts, the phone sheet and late fonts can all change this geometry.
+        // Reuse the saved-position restorer; any reader input stops it immediately.
+        restoring.current?.();
+        restoring.current = restoreScroll({ window: landing }, { limit: 20000, settle: 3000, refit: true, onDone: () => body.hold(target!) });
       };
       if (smooth) {
         let done = false;
@@ -788,7 +800,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const body = bodyRef.current;
       if (!body) return;
       const top = readingTop();
-      const line = top + (window.innerHeight - top) * READING_LINE;
+      const line = readingLine();
       let part = partAt(body, doc.parts.length, line);
       const atLine = part;
       // Unmapped text at the reading line (a title block, a bridge paragraph):
@@ -889,7 +901,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, release, drawThread]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, release, drawThread]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1512,6 +1524,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   return (
     <div
       className={`reader reader--${wide ? "wide" : mid ? "mid" : "narrow"}${columnInspector ? " reader--inspecting" : ""}${outlineColumn ? " reader--outlined" : ""}${paneOn ? " reader--follow" : ""}`}
+      onClick={(event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+        if (!link || link.target || link.hasAttribute("download") || link.dataset.external !== undefined || link.href !== window.location.href) return;
+        // Reopen this exact paper passage without adding a duplicate history entry.
+        if (!route.at && !route.anchor) return;
+        event.preventDefault();
+        if (route.at || route.node) void landSlice(route.at, { node: route.node, smooth: true });
+        else if (route.anchor) void jumpTo(route.anchor, { smooth: true });
+      }}
     >
       {outlineColumn && (
         <aside className="reader__outline" inert={route.beside ? true : undefined}>

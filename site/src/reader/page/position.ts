@@ -44,6 +44,12 @@ export interface VisitOrigin {
 
 const ENTRY_NAME = "reading";
 
+/** Keep a selected statement inside the paper left visible above a phone's proof sheet. */
+export function statementLine(top: number, bottom: number, height = 0): number {
+  const inset = top + 16;
+  return Math.min(top + Math.max(0, bottom - top) * 0.3, Math.max(inset, bottom - height - 16));
+}
+
 function state(): Record<string, unknown> {
   return (window.history.state ?? {}) as Record<string, unknown>;
 }
