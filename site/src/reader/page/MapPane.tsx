@@ -70,10 +70,12 @@ interface Props {
   onRelease(): void;
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
+  /** Open the steps and links of the passage being read. */
+  onPassage?(anchor: string | null, opener: HTMLElement): void;
   passageHref?(stage: Stage, anchor: string): string;
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, onPassage, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const reduced = useReducedMotion();
@@ -96,9 +98,11 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const progress = useMemo(() => trailWords(outline, follow.part, passed), [outline, follow.part, passed]);
   const slot = preview ?? leanSlot;
   const openRecord = pin?.record ?? (decl ? recordOfDecl(alignment, decl) : null);
-  const expanded = !!pin || !!decl || !!slot;
+  // A step with no Lean does not open: the line under the graph says so.
+  const pinLean = !!pin && (pin.tie !== null ? ties.index.ties[pin.tie].lean : !!recordLine(pin.record)?.lean);
+  const expanded = pinLean || !!decl || !!slot;
   /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
-  const previewOnly = !!preview && !pin && !decl && !leanSlot;
+  const previewOnly = !!preview && !pinLean && !decl && !leanSlot;
   // A sheet shows what was asked for; keeping the Lean open is for the page beside the paper.
   const [keep, setKeepState] = useState(() => !inModal && readKeepLean());
   const setKeep = useCallback((open: boolean) => {
@@ -198,6 +202,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const [kept, setKept] = useState({ bottom: 0, left: 0 });
   const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 12 + kept.bottom, right: 16 }), [kept]);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const wasOpen = useRef(false);
   const framedFrom = useRef<ReturnType<MapViewHandle["getScene"]> | null>(null);
 
   // How far the Lean rises, remembered. It is a layer over the graph: the canvas beneath keeps
@@ -370,14 +375,18 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
 
   useEffect(() => {
     if (!following || fadeTo) return;
-    const want = goalFor(pin ? [pin.record] : passage);
+    // A pin never changes the main result: closing it must leave the graph as it was.
+    const want = goalFor(passage);
     if (want !== goal) {
       // Another main result: a deliberate crossfade, never a jump mid-motion.
       setFadeTo(want);
       return;
     }
-    // With the Lean open the graph is left alone, so it is as it was when the Lean closes.
-    if (!expanded && drawable.length && !inView(drawable)) treeRef.current?.focusIds(drawable);
+    // With the Lean open the graph is left alone, so it is as it was when the Lean closes. The
+    // run that closes it is left out too: the canvas is still gliding back, and every card reads off.
+    const closing = wasOpen.current && !expanded;
+    wasOpen.current = expanded;
+    if (!expanded && !closing && drawable.length && !inView(drawable)) treeRef.current?.focusIds(drawable);
     // Refocus when the passage, the main result or following changes (the map re-centres itself when its room changes).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawable.join("|"), goal, following, fadeTo, expanded]);
@@ -504,10 +513,23 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             <p className="map-pane__line" data-via={line.via} role="status">
               {line.words}
             </p>
-            {!inModal && !keep && (
-              <button type="button" className="map-pane__keep" onClick={() => setKeep(true)}>
-                Keep the Lean open
+            {pin && !expanded ? (
+              <button type="button" className="map-pane__keep" onClick={onRelease}>
+                Follow the text
               </button>
+            ) : (
+              <>
+                {anchor && onPassage && (
+                  <button type="button" className="map-pane__keep" onClick={(event) => onPassage(anchor, event.currentTarget)}>
+                    This passage
+                  </button>
+                )}
+                {!inModal && !keep && (
+                  <button type="button" className="map-pane__keep" onClick={() => setKeep(true)}>
+                    Keep the Lean open
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -554,6 +576,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const hasLean = (id: string, t: number | null) => (t !== null ? ties.index.ties[t].lean : !!recordLine(id)?.lean);
     // What is not drawn is said here, so that no note ever covers a card.
     const drawn = (id: string) => (reachOf(goal).has(id) ? "" : " Not in the argument drawn here.");
+    if (pin && !expanded) return { via: "pin", words: `${named(pin.record)}. No Lean is linked to this step.${drawn(pin.record)}` };
     if (pointed) return { via: "point", words: `${named(pointed.record)}. ${hasLean(pointed.record, pointed.tie) ? "Has Lean: click to open it." : "No Lean linked."}${drawn(pointed.record)}` };
     if (caption) {
       const topics = passageTopics(ties, caption).filter((id) => graph.nodes.has(id));

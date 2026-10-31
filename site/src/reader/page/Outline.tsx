@@ -6,7 +6,7 @@
 // Choosing another account is the top bar's job: it opens an account from
 // its start, and "Same topic in…" goes from a passage to its treatments.
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
 import type { PreparedDocument, TextBlock } from "../engine";
 import type { TieCount } from "../ties";
@@ -174,59 +174,5 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
     </ol>
     {any && !searching && <p className="outline__key">Numbers count the statements with Lean in each section.</p>}
     </>
-  );
-}
-
-/** The sections behind a "Sections" control: a non-modal popover beside the paper. */
-export function SectionsPopover(props: Props) {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-  const rootRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        event.stopPropagation();
-        setOpen(false);
-        rootRef.current?.querySelector<HTMLButtonElement>(".sections-toggle")?.focus();
-      }
-    };
-    document.addEventListener("pointerdown", onDown);
-    window.addEventListener("keydown", onKey, true);
-    // Scroll the list itself, never the page behind it.
-    const list = rootRef.current?.querySelector<HTMLElement>(".sections-popover .outline__list");
-    const item = list?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (list && item) list.scrollTop = Math.max(0, item.offsetTop - list.offsetTop - list.clientHeight / 3);
-    return () => {
-      document.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("keydown", onKey, true);
-    };
-  }, [open]);
-  return (
-    <div className="sections" ref={rootRef}>
-      <button type="button" className="sections-toggle" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-        </svg>
-        <span>Sections</span>
-      </button>
-      <div id={id} className="sections-popover" hidden={!open}>
-        <Sections
-          {...props}
-          onJump={(target) => {
-            setOpen(false);
-            props.onJump(target);
-          }}
-          onLine={(line) => {
-            setOpen(false);
-            props.onLine?.(line);
-          }}
-        />
-      </div>
-    </div>
   );
 }

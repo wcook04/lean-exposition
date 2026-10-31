@@ -176,11 +176,6 @@ html:has(.reader) {
 }
 
 /* The strip keeps the section's name: Sections shrinks to its icon first. */
-.reader-strip:has(.back-control) .sections-toggle {
-  gap: 0;
-  font-size: 0;
-}
-
 .reader-strip__steps {
   display: inline-flex;
   align-items: center;
@@ -264,6 +259,14 @@ html:has(.reader) {
 
 .reader-strip:has(.back-control) .crumbs li + li::before {
   content: none;
+}
+
+.reader-strip:has(.back-control) .sections-toggle span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 /* The current passage wraps onto a second line before anything is cut. */
@@ -487,16 +490,7 @@ html:has(.reader) {
   background-color: var(--tie-wash);
 }
 
-.paper .tie[data-on] {
-  background-color: var(--highlighter-soft);
-}
-
-/* A display is a block of ink: following, it takes only an underline's worth. */
-.paper .math-display.tie[data-on] {
-  background-color: transparent;
-  box-shadow: inset 0 -2px 0 var(--highlighter);
-}
-
+/* Following marks the margin only (the tick): the paper reads as a paper. */
 .paper .tie[data-pin] {
   background-color: var(--highlighter);
 }
@@ -527,17 +521,66 @@ html:has(.reader) {
   opacity: 0.7;
 }
 
-/* One plain line at the top of a paper: what the marks are for. */
-.paper-hint {
-  margin: 0 0 var(--space-5);
-  font-family: var(--font-sans);
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
+/* The first screen's one line, in the strip: what to do. */
+.reader-strip__hint {
   color: var(--ink);
 }
 
-.paper-hint__more {
-  color: var(--ink-3);
+.reader-strip:has(.reader-strip__hint) .crumbs ol {
+  display: none;
+}
+
+/* Up to 1500px the sections stand on the right page. */
+.sections-side {
+  padding-top: var(--space-2);
+}
+
+.sections-side__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.sections-side__head h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.sections-side .paper-search {
+  padding: 0;
+}
+
+.sections-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+/* A phone has one row of chrome, which goes while reading down. */
+@media (max-width: 700px) {
+  html[data-view="read"] {
+    --reader-top: 0px;
+  }
+  html[data-view="read"] .topbar {
+    position: static;
+  }
+  .reader-strip {
+    top: 0;
+    transition: transform var(--t-state) var(--ease-out);
+  }
+  .reader-strip[data-away] {
+    transform: translateY(-100%);
+  }
+  .reader-strip:has(.back-control) .crumbs,
+  .reader-strip:has(.back-control) .reader-strip__steps span {
+    display: none;
+  }
+  .reader--narrow .reader__paper {
+    padding-bottom: var(--space-8);
+  }
 }
 
 /* A heading focused by an explicit jump is announced, not ringed: it is not a control. */

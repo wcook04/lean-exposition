@@ -2,17 +2,16 @@
 // parts near the viewport are rendered, the rest wait as placeholders sized
 // from their byte length and are rendered in idle time. Heights that change
 // above the reading line are compensated, so the line a reader is on never
-// moves. Each tied statement carries a tick in the margin (statements.ts). A mapped
-// passage has, under its heading, one quiet line: all its records, and its linked passages.
+// moves. Each tied statement carries a tick in the margin (statements.ts), and nothing else
+// stands between the paragraphs: a passage's steps and links are on the right page.
 
 import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
 import { useReferences } from "./RefInset";
-import { authoredRoutes, estimateHeight, idleOrder, linkedCount, passageOf, passageRecords, type Structures } from "./model";
+import { estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
 import type { Statements } from "./statements";
 
 export interface Links {
@@ -41,8 +40,6 @@ interface Props {
   inspected: string | null;
   /** Told when a part's text reaches the page, for its ties. */
   statements?: Statements;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
   /** "See its Lean" in a reference's inset: open this record's slice as a click on its statement would. */
   onReferenceLean?(record: string, at: string | undefined): void;
   /** The reading line, in viewport pixels from the top, used for height compensation. */
@@ -68,7 +65,7 @@ const cancelIdle = (id: number) => {
 const noLean = () => {};
 
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
-  const { stage, doc, structures, initial, topInset, inspected, statements, onInspect, onSameTopic, onReferenceLean } = props;
+  const { stage, doc, structures, initial, topInset, inspected, statements, onReferenceLean } = props;
   const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
@@ -305,8 +302,6 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           structures={structures}
           lit={!!part.anchor && part.anchor === inspected}
           statements={statements}
-          onInspect={onInspect}
-          onSameTopic={onSameTopic}
           register={register}
         />
       ))}
@@ -356,20 +351,16 @@ interface PartProps {
   structures: Structures;
   lit: boolean;
   statements?: Statements;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, onInspect, onSameTopic, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
   const records = useMemo(() => passageRecords(passage), [passage]);
-  const routed = useMemo(() => !!anchor && authoredRoutes(structures, stage, anchor).length > 0, [structures, stage, anchor]);
   const mapped = !!anchor && records.length > 0;
-  const tools = !!anchor && (mapped || routed);
 
   useLayoutEffect(() => {
     if (!html || !textRef.current) return;
@@ -382,25 +373,6 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       unmark();
     };
   }, [html, statements, part.index]);
-
-  // The passage's controls sit under its opening heading (or above its first
-  // line), inside the rendered text, so they read as part of the passage.
-  const [slot, setSlot] = useState<HTMLElement | null>(null);
-  useLayoutEffect(() => {
-    const text = textRef.current;
-    if (!html || !text || !tools) {
-      setSlot(null);
-      return;
-    }
-    const el = document.createElement("div");
-    el.className = "passage-tools";
-    let first = text.firstElementChild;
-    while (first && first.matches("a.anchor")) first = first.nextElementSibling;
-    if (first && /^H[1-6]$/.test(first.tagName)) first.after(el);
-    else text.insertBefore(el, text.firstChild);
-    setSlot(el);
-    return () => el.remove();
-  }, [html, tools]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
   const textSize = useMemo(() => ({ "--part-h": `${Math.round(estimateHeight(part, 680) * TEXT_SCALE)}px` }) as React.CSSProperties, [part]);
@@ -420,47 +392,9 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       ) : (
         <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
       )}
-      {slot &&
-        anchor &&
-        createPortal(
-          <PassageTools stage={stage} anchor={anchor} records={records} structures={structures} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
-          slot,
-        )}
     </section>
   );
 });
-
-function PassageTools({
-  stage,
-  anchor,
-  records,
-  structures,
-  lit,
-  onInspect,
-  onSameTopic,
-}: {
-  stage: Stage;
-  anchor: string;
-  records: string[];
-  structures: Structures;
-  lit: boolean;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
-}) {
-  const linked = useMemo(() => linkedCount(structures, { stage, anchor }), [structures, stage, anchor]);
-  return (
-    <>
-      {records.length > 0 && (
-        <button type="button" className="passage-tools__records" aria-pressed={lit} onClick={(event) => onInspect(anchor, event.currentTarget)}>
-          {records.length === 1 ? "1 step" : `${records.length} steps`} in this passage
-        </button>
-      )}
-      <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
-        {linked === 0 ? "Linked passages" : linked === 1 ? "1 linked passage" : `${linked} linked passages`}
-      </button>
-    </>
-  );
-}
 
 /**
  * A display formula wider than its box scrolls inside it, natively, and keeps

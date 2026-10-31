@@ -16,6 +16,15 @@
   grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
 }
 
+/* On a very wide window the pair stands in the middle, with a sidecar its graph can fill. */
+@media (min-width: 2100px) {
+  .reader.reader--follow,
+  .reader.reader--follow.reader--outlined {
+    grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1040px);
+    justify-content: center;
+  }
+}
+
 .reader__map {
   position: sticky;
   top: var(--topbar-h);
@@ -114,6 +123,10 @@
   bottom: 0;
   height: calc(var(--lean-share) * 100%);
   box-shadow: 0 -1px 0 var(--rule-strong);
+}
+
+.lean-page__also {
+  margin-top: var(--space-3);
 }
 
 .map-pane__handle {
@@ -568,6 +581,39 @@
   color: var(--ink-3);
 }
 
+/* The Lean page has the title and the paper links: the block below brings the rest. */
+.lean-page .lean-block__title {
+  display: none;
+}
+
+.lean-page .lean-block__head > .lean-block__actions {
+  position: static;
+  margin: 0;
+  text-align: right;
+}
+
+.lean-page__role {
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.lean-crumbs button {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-3);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.lean-crumbs button:hover {
+  color: var(--ink);
+}
+
 .lean-crumbs a:hover {
   color: var(--ink);
   text-decoration-color: currentColor;
@@ -614,7 +660,9 @@
 .lean-page__rows {
   flex: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
   gap: 2px var(--space-3);
   margin: 0;
   padding: 0 var(--space-4) var(--space-1);

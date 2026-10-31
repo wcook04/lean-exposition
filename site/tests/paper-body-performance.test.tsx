@@ -68,7 +68,7 @@ function show() {
   });
   const ref = createRef<BodyHandle>();
   act(() => root.render(<PaperBody ref={ref} stage="long" doc={doc} structures={{}} graph={graph}
-    initial={doc.parts.map((p) => p.index)} topInset={56} inspected={null} onInspect={() => {}} onSameTopic={() => {}} />));
+    initial={doc.parts.map((p) => p.index)} topInset={56} inspected={null} />));
   const observer = observers.find((o) => [...o.targets].some((el) => el.hasAttribute("data-part")))!;
   const notify = (targets: Element[]) => act(() => observer.callback(targets.map((target) => ({ target }) as ResizeObserverEntry), {} as ResizeObserver));
   notify([...observer.targets]);

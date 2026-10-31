@@ -32,7 +32,7 @@ import { Inspector, type InspectorTarget } from "./page/Inspector";
 import { Chooser } from "./page/Chooser";
 import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
-import { OutlineColumn, PdfLink, Sections, SectionsPopover } from "./page/Outline";
+import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { PaneHover } from "./page/MapPane";
 import { RightSheet } from "./page/RightSheet";
@@ -289,12 +289,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [inspect, setInspect] = useState<InspectorTarget | null>(null);
   const [chooser, setChooser] = useState<string | null>(null);
   const [sectionsOpen, setSectionsOpen] = useState(false);
+  /** Up to 1500px the sections stand on the right page, where they cover no text. */
+  const [sectionsSide, setSectionsSide] = useState(false);
   const [visit, setVisit] = useState<VisitOrigin | null>(() => visitOrigin());
   const visitRef = useRef(visit);
   visitRef.current = visit;
 
   /** The reading line: below the top bar and the location strip. */
-  const readingTop = useCallback(() => cssPx("--topbar-h", 56) + (stripRef.current?.offsetHeight ?? 0), []);
+  const readingTop = useCallback(() => cssPx("--reader-top", cssPx("--topbar-h", 56)) + (stripRef.current?.offsetHeight ?? 0), []);
 
   // ---- Where the page opens ----------------------------------------------------------
 
@@ -590,6 +592,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // ---- What is on the right page ------------------------------------------------------
 
+  const phoneRef = useRef(phone);
+  phoneRef.current = phone;
   const hereRef = useRef<ReadRoute>(route);
   hereRef.current = route;
 
@@ -759,8 +763,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     update.current = () => {
       if (!frame) frame = requestAnimationFrame(run);
     };
+    let lastY = window.scrollY;
     const onScroll = () => {
       movedAt.current = performance.now();
+      // On a phone the one row of chrome goes while reading down and comes back going up.
+      if (phoneRef.current) {
+        const y = window.scrollY;
+        if (Math.abs(y - lastY) > 12) {
+          stripRef.current?.toggleAttribute("data-away", y > lastY && y > 120);
+          lastY = y;
+        }
+      }
       // The words under the pointer have moved on.
       if (signals.caption.get()) signals.caption.set(null);
       if (pointed.current !== null) pointAtRef.current(null);
@@ -912,8 +925,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
       go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
+      // A phone's sheet rises from the foot: the statement goes above it.
+      const box = phoneRef.current ? statements.first(t)?.getBoundingClientRect() : null;
+      if (box) window.scrollBy({ top: box.top - readingTop() - 12, behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
     },
-    [ties, go],
+    [ties, go, statements, readingTop],
   );
 
   /** "See its Lean" in a reference's inset: the statement opens as if it had been clicked. */
@@ -1099,6 +1115,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         } else if (inspect && (mid || paneOn)) {
           event.preventDefault();
           closeInspector();
+        } else if (sectionsSide) {
+          event.preventDefault();
+          setSectionsSide(false);
         } else if (!paneOn && sheetOpen) {
           event.preventDefault();
           closeSheet();
@@ -1121,7 +1140,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [route.beside, inspect, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, release, step, openStatement]);
+  }, [route.beside, inspect, sectionsSide, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, release, step, openStatement]);
 
   // ---- Clicks inside the paper ---------------------------------------------------------
 
@@ -1285,7 +1304,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         : null
     : null;
 
-  const sameTopicOf = useCallback((anchor: string) => setChooser(anchor), []);
   const paneProps = {
     stage,
     structures,
@@ -1303,6 +1321,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     onName: openDecl,
     passageHref: links.beside,
     onPoint: pointAt,
+    onPassage: (anchor: string | null, opener: HTMLElement) => openInspector(anchor, opener),
   };
 
   const inspector = inspect && (
@@ -1348,8 +1367,23 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       >
         <div className="reader-strip" ref={stripRef}>
           <BackControl className="reader-strip__back" />
-          {mid && !outlineColumn && <Heading signals={signals}>{(current) => <SectionsPopover {...sectionsProps} current={current} />}</Heading>}
-          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          {mid && !outlineColumn && (
+            <button type="button" className="sections-toggle" aria-pressed={sectionsSide} onClick={() => setSectionsSide(!sectionsSide)}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+              <span>Sections</span>
+            </button>
+          )}
+          {!mid && (
+            <button type="button" className="sections-toggle" onClick={() => setSectionsOpen(true)}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+              <span className="visually-hidden">Sections</span>
+            </button>
+          )}
+          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} hint={ties.stops.length > 0} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
@@ -1383,7 +1417,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           )}
         </div>
 
-        {!outlineColumn && (
+        {!outlineColumn && !phone && (
           <p className="account-line">
             {!phone && <>{names.job} </>}
             {names.reader}
@@ -1393,11 +1427,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {notice && (
           <p className="reader-notice" role="status">
             {notice}
-          </p>
-        )}
-        {ties.stops.length > 0 && (
-          <p className="paper-hint">
-            {phone ? "Tap" : "Click"} any marked statement to see its Lean. <span className="paper-hint__more">A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean.{!phone && " Press j and k to step through them."}</span>
           </p>
         )}
         <PaperBody
@@ -1410,8 +1439,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           topInset={readingTop()}
           inspected={inspect?.kind === "passage" ? inspect.anchor : null}
           statements={statements}
-          onInspect={openInspector}
-          onSameTopic={sameTopicOf}
           onReferenceLean={openReferenceLean}
         />
         {action && (
@@ -1443,7 +1470,41 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <div className="reader__map">
           {paneReady && (
             <Suspense fallback={null}>
-              <MapPane {...paneProps} inert={!!route.beside} onHide={hideMap} leanSlot={inspecting ? inspector : undefined} />
+              <MapPane
+                {...paneProps}
+                inert={!!route.beside}
+                onHide={hideMap}
+                leanSlot={
+                  inspecting ? (
+                    inspector
+                  ) : sectionsSide ? (
+                    <section className="sections-side" aria-label="Sections of this paper">
+                      <header className="sections-side__head">
+                        <h3>Sections</h3>
+                        <button type="button" className="lean-page__action" onClick={() => setSectionsSide(false)}>
+                          Close
+                        </button>
+                      </header>
+                      <Heading signals={signals}>
+                        {(current) => (
+                          <Sections
+                            {...sectionsProps}
+                            current={current}
+                            onJump={(id) => {
+                              setSectionsSide(false);
+                              jumpWithHistory(id, true);
+                            }}
+                            onLine={(line) => {
+                              setSectionsSide(false);
+                              jumpToLine(line);
+                            }}
+                          />
+                        )}
+                      </Heading>
+                    </section>
+                  ) : undefined
+                }
+              />
             </Suspense>
           )}
         </div>
@@ -1455,25 +1516,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             <MapPane {...paneProps} inModal onHide={closeSheet} />
           </Suspense>
         </RightSheet>
-      )}
-
-      {!mid && !route.beside && (
-        <div className="reader-bar">
-          <button type="button" className="reader-bar__button" aria-haspopup="dialog" onClick={() => setSectionsOpen(true)}>
-            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-              <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-            </svg>
-            Sections
-          </button>
-          <button type="button" className="reader-bar__button" onClick={() => setSheetOpen(true)}>
-            <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
-              <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
-              <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
-            </svg>
-            Proof
-          </button>
-          <PassageDetails signals={signals} doc={doc} structure={structure} graph={graph} onOpen={openInspector} />
-        </div>
       )}
 
       {!mid && inspect && (
@@ -1493,6 +1535,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {names.short}
             {status && <span className="faint">. {status}</span>}
           </p>
+          <PassageDetails signals={signals} doc={doc} structure={structure} graph={graph} onOpen={(anchor, opener) => {
+            setSectionsOpen(false);
+            openInspector(anchor, opener);
+          }} />
           <Heading signals={signals}>
             {(current) => (
               <Sections
@@ -1557,10 +1603,16 @@ function Heading({ signals, children }: { signals: ReaderSignals; children(curre
   return <>{children(useSignal(signals.heading))}</>;
 }
 
-function Crumbs({ signals, outline, name, stage, phone, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; onTop(): void; onJump(id: string): void }) {
+function Crumbs({ signals, outline, name, stage, phone, hint, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; hint: boolean; onTop(): void; onJump(id: string): void }) {
   const chain = chainOf(outline, useSignal(signals.heading));
   return (
     <nav className="crumbs" aria-label="Where you are in this paper">
+      {/* The first screen says what to do; it goes as soon as there is a section to name. */}
+      {hint && !chain.length && (
+        <span className="reader-strip__hint" title="A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean. j and k step through them.">
+          {phone ? "Tap" : "Click"} any marked statement to see its Lean.
+        </span>
+      )}
       <ol>
         <li>
           <a
@@ -1632,11 +1684,10 @@ function PassageDetails({ signals, doc, structure, graph, onOpen }: { signals: R
       type="button"
       className="reader-bar__button"
       aria-haspopup="dialog"
-      aria-label={records.length ? `Passage details: ${recordTally(records, graph)}` : "Passage details"}
+      aria-label={records.length ? `This passage: ${recordTally(records, graph)}` : "This passage"}
       onClick={(event) => onOpen(anchor ?? null, event.currentTarget)}
     >
-      Passage details
-      {records.length > 0 && <span className="reader-bar__count num">{records.length}</span>}
+      This passage
     </button>
   );
 }

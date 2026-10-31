@@ -84,7 +84,7 @@ export function plainName(alignment: Alignment | null, name: string): string {
 }
 
 /** Short paper §2, Long record §5.3, Exposition §4, Compare: where each paper states this, each a link. */
-export function PaperCrumbs({ record, row, stage, alignment, decl, at }: { record: string; row: RecordAlignment | undefined; stage: Stage; alignment: Alignment | null; decl: string | null; at: string | null }) {
+export function PaperCrumbs({ record, row, stage, alignment, decl, at, children }: { record: string; row: RecordAlignment | undefined; stage: Stage; alignment: Alignment | null; decl: string | null; at: string | null; children?: ReactNode }) {
   const order = [stage, ...STAGE_ORDER.filter((s) => s !== stage)];
   const places = order.flatMap((paper) => {
     // In this paper the open statement is itself the place.
@@ -107,6 +107,7 @@ export function PaperCrumbs({ record, row, stage, alignment, decl, at }: { recor
         </a>
       ))}
       {row && <a href={routeHref({ view: "compare", node: record })}>Compare</a>}
+      {children}
     </nav>
   );
 }
@@ -211,12 +212,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
           <div className="lean-page__names">
             {plain && <h3 className="lean-page__title">{plain}</h3>}
             {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
+          {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
           </div>
-          {open.via === "pin" && !!record && graph.nodes.has(record) && (
-            <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
-              Everything on this step
-            </button>
-          )}
           <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
             Close
           </button>
@@ -228,12 +225,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
         </div>
       ) : (
         <>
-          {record && <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at} />}
-          {tie && open.tie !== null && (
-            <div className="lean-page__lead">
-              <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>
-              <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} />
-            </div>
+          {record && (
+            <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
+              {open.via === "pin" && graph.nodes.has(record) && (
+                <button type="button" aria-pressed={full} onClick={() => setFull(!full)}>
+                  {full ? "Back to the Lean" : "Everything on this step"}
+                </button>
+              )}
+            </PaperCrumbs>
           )}
           {!open.decl && rows.length > 1 && !full && (
             <ul className="lean-page__rows" aria-label="Lean declarations of this step">
@@ -277,6 +276,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
                 compact
                 fill
                 onName={onName}
+                noPapers
+                below={open.tie !== null ? <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} /> : undefined}
               />
             ) : alignment ? (
               <p className="lean-page__plain">No Lean declaration is linked to this step. The papers above state it.</p>
