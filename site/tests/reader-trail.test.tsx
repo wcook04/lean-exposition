@@ -105,7 +105,7 @@ vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: ({ nodeId }: { nodeId
 vi.mock("../src/lean/lazy", () => ({ LazyLeanBlock: ({ name, lines }: { name: string; lines?: number[] }) => <p data-testid="lean">{`${name} ${lines?.join("-")}`}</p> }));
 
 describe("the Lean page", async () => {
-  const { LeanDock, clampDock, DOCK_MAX, DOCK_MIN, plainName, readDockShare, readKeepLean, recordOfDecl, saveKeepLean } = await import("../src/reader/page/RecordDock");
+  const { LeanDock, clampDock, DOCK_MAX, DOCK_MIN, plainName, readDockShare, readKeepLean, recordOfDecl, saveDockShare, saveKeepLean } = await import("../src/reader/page/RecordDock");
   const { tieModel } = await import("../src/reader/ties");
   type Open = import("../src/reader/page/RecordDock").LeanOpen;
   let root: Root;
@@ -182,7 +182,7 @@ describe("the Lean page", async () => {
 
   it("says plainly when a step has no Lean", () => {
     show({ record: "none", tie: 1 });
-    expect(container.textContent).toContain("No Lean declaration is linked to this step.");
+    expect(container.textContent).toContain("No Lean linked.");
   });
 
   it("closes with one control, and opens the whole record only from a pin", () => {
@@ -194,6 +194,7 @@ describe("the Lean page", async () => {
     expect(container.querySelector("[data-testid=panel]")!.textContent).toBe(record);
     show({ via: "follow", record, tie: 0 });
     expect(button("Everything on this step")).toBeUndefined();
+    expect(button("Follow the text")).toBeUndefined();
   });
 
   it("walks to a declaration by name, in words where it can", () => {
@@ -220,18 +221,16 @@ describe("the Lean page", async () => {
     expect(container.querySelector("[data-testid=lean]")).toBeNull();
   });
 
-  it("rises over most of the page, takes half when kept open, and remembers", () => {
+  it("has the whole pane until a reader draws the graph back, and remembers", () => {
     expect(clampDock(0.1)).toBe(DOCK_MIN);
-    expect(clampDock(0.95)).toBe(DOCK_MAX);
-    expect(readDockShare()).toBe(0.75);
-    expect(1 - readDockShare(false, false, 734)).toBeLessThan(96 / 734);
-    expect(readDockShare(false, true)).toBe(0.5);
-    localStorage.setItem("lx-reader-lean", "0.61");
+    expect(clampDock(1.2)).toBe(DOCK_MAX);
+    expect(readDockShare()).toBe(1);
+    saveDockShare(0.61);
     expect(readDockShare()).toBe(0.61);
-    expect(readDockShare(true)).toBeGreaterThan(0.5);
+    expect(readDockShare(true)).toBe(1);
   });
 
-  it("stays closed unless this reader asked to keep it open", () => {
+  it("is in Graph mode unless this reader chose Lean", () => {
     expect(readKeepLean()).toBe(false);
     saveKeepLean(true);
     expect(readKeepLean()).toBe(true);

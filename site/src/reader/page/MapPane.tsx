@@ -3,11 +3,11 @@
 // and the rest quieter: as a statement settles under the reading line its card lights, the
 // camera moves only if the card has left the view, and one line under the graph names it in
 // plain words. Cards ahead are in lighter ink and cards passed at full strength. Panning or
-// zooming pauses the camera. Clicking a card or a statement opens its Lean, which rises over
-// the graph and leaves a band of it above, or stands beside it from 860px of page. The graph
-// underneath is not touched, so closing the Lean leaves it as it was. A reader who wants the
-// Lean beside their reading can drag the handle up or choose "Keep the Lean open"; it then
-// follows the text, and the choice is remembered. Under 1280px the same page opens as a sheet.
+// zooming pauses the camera. That is Graph mode. Lean mode gives the pane to the Lean, in one of
+// two ways: clicking a card or a statement opens that step, which rises from its card and stays
+// put, and the toggle's Lean with nothing opened follows the text. The graph underneath is not
+// touched, so coming back leaves it as it was. The handle draws the graph back above the Lean
+// for those who want both. Under 1280px the same page opens as a sheet.
 
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 import type { Alignment } from "../../api/lean";
@@ -25,13 +25,16 @@ import { recordMark } from "../../map/leanMarks";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
 import { leanTruth, passageTopics, statementFor, type TieModel } from "../ties";
 import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
-import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, readKeepLean, recordOfDecl, saveDockShare, saveKeepLean, type LeanOpen } from "./RecordDock";
+import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, recordOfDecl, saveDockShare, type LeanOpen } from "./RecordDock";
+import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
 import "./map-pane.css";
 
 /** From this page width the Lean stands beside the graph, next to the paper. */
 const SIDE_BY_SIDE = 860;
+/** From this share up the Lean has the pane, and no graph shows. */
+const WHOLE_PANE = 0.97;
 /** How much of the page a preview under the pointer takes. */
 const PREVIEW_SHARE = 0.42;
 /** --t-state: the canvas crossfades when the main result changes. */
@@ -68,6 +71,10 @@ interface Props {
   /** A card or list item was chosen. */
   onRecord?(id: string): void;
   onRelease(): void;
+  /** From an opened statement to the Lean following the text. */
+  onFollowText?(): void;
+  mode: PaneMode;
+  onMode(mode: PaneMode): void;
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
   /** Open the steps and links of the passage being read. */
@@ -77,7 +84,7 @@ interface Props {
   passageHref?(stage: Stage, anchor: string): string;
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, onPassage, passagePart, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onFollowText, mode, onMode, onPoint, onName, onPassage, passagePart, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const reduced = useReducedMotion();
@@ -107,15 +114,11 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const expanded = pinLean || !!decl || !!slot;
   /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
   const previewOnly = !!preview && !pinLean && !decl && !leanSlot;
-  // A sheet shows what was asked for; keeping the Lean open is for the page beside the paper.
-  const [keep, setKeepState] = useState(() => !inModal && readKeepLean());
-  const setKeep = useCallback((open: boolean) => {
-    saveKeepLean(open);
-    setKeepState(open);
-  }, []);
-  const leanShown = expanded || keep;
+  /** Lean mode with nothing opened: the Lean follows the text. */
+  const keep = mode === "lean" && !expanded;
+  const leanShown = mode === "lean" || expanded;
   const leanOpen = useMemo<LeanOpen>(() => {
-    if (expanded) return { via: "pin", record: openRecord, tie: decl ? null : (pin?.tie ?? null), decl, declModule };
+    if (expanded || pin) return { via: "pin", record: openRecord, tie: decl ? null : (pin?.tie ?? null), decl, declModule };
     if (pointed) return { via: "point", record: pointed.record, tie: pointed.tie, decl: null };
     if (followRecord) return { via: "follow", record: followRecord, tie: follow.tie, decl: null };
     const topics = passageTopics(ties, anchor);
@@ -213,21 +216,22 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   // its size and its camera. Only a transform carries the card into the part left showing, and
   // that goes when the Lean closes, so the graph is exactly as it was.
   const isSide = () => (rootRef.current?.clientWidth ?? 0) >= SIDE_BY_SIDE;
-  const keptOnly = keep && !expanded;
+  const keptOnly = keep;
   const applyShare = useCallback(
     (value?: number) => {
       const root = rootRef.current;
       if (!root) return;
       const side = root.clientWidth >= SIDE_BY_SIDE;
-      root.style.setProperty("--lean-share", String(value ?? (previewOnly ? PREVIEW_SHARE : keep || expanded ? readDockShare(side, keptOnly, root.clientHeight) : 0)));
+      root.style.setProperty("--lean-share", String(value ?? (previewOnly && !keep ? PREVIEW_SHARE : leanShown ? readDockShare(side) : 0)));
     },
-    [keep, expanded, keptOnly, previewOnly],
+    [keep, leanShown, previewOnly],
   );
   const measureKept = useCallback(() => {
     const pages = rootRef.current?.querySelector<HTMLElement>(".map-pane__pages");
-    if (!keep || !pages) return setKept({ bottom: 0, left: 0 });
-    const side = pages.clientWidth >= SIDE_BY_SIDE;
-    const share = readDockShare(side, true);
+    const side = !!pages && pages.clientWidth >= SIDE_BY_SIDE;
+    const share = readDockShare(side);
+    // Only a Lean drawn down beside the graph leaves a graph to frame.
+    if (!keep || !pages || share >= WHOLE_PANE) return setKept({ bottom: 0, left: 0 });
     // The graph's line and head are not part of the canvas: only what lies over the canvas counts.
     const body = bodyRef.current?.getBoundingClientRect();
     const box = pages.getBoundingClientRect();
@@ -243,7 +247,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const card = openRecord ? body.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) : null;
     // No card to show (a declaration of no step, a step not drawn here): no band of blank graph.
     rootRef.current?.classList.toggle("map-pane--fold", expanded && !card && !slot);
-    if (!card || !lean || !expanded) {
+    // Under the whole pane there is no band to lift it into.
+    if (!card || !lean || !expanded || readDockShare(isSide()) >= WHOLE_PANE) {
       canvas.style.transform = "";
       return;
     }
@@ -259,7 +264,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       canvas.style.transform = `translateX(${Math.round((left + b.right) / 2 - (c.left + c.right) / 2)}px)`;
     } else {
       // The head gives way while the Lean is open, so the band is all graph.
-      const top = rootRef.current!.getBoundingClientRect().top;
+      const top = body.closest(".map-pane__pages")!.getBoundingClientRect().top;
       const bottom = l.top - 11;
       canvas.style.transform = `translate(${Math.round((b.left + b.right) / 2 - (c.left + c.right) / 2)}px, ${Math.round((top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
     }
@@ -304,7 +309,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const side = isSide();
     // At rest the handle lies at the foot of the graph: drawing it up keeps the Lean open.
     const rest = !keep && !expanded;
-    let value = rest ? 0 : readDockShare(side, keptOnly, root.clientHeight);
+    let value = rest ? 0 : readDockShare(side);
     let raised = false;
     const startY = event.clientY;
     const startX = event.clientX;
@@ -328,12 +333,12 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       // Dragged nearly shut, the kept page closes.
       if (keptOnly && value < DOCK_MIN * 0.8) {
         setKept({ bottom: 0, left: 0 });
-        setKeep(false);
+        onMode("graph");
         return;
       }
       value = clampDock(value);
-      saveDockShare(value, side, rest || keptOnly);
-      if (rest) setKeep(true);
+      saveDockShare(value, side);
+      if (rest) onMode("lean");
       else {
         applyShare(value);
         measureKept();
@@ -350,12 +355,12 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const step = event.key === (side ? "ArrowRight" : "ArrowUp") ? 0.05 : event.key === (side ? "ArrowLeft" : "ArrowDown") ? -0.05 : 0;
     if (!step) return;
     event.preventDefault();
-    if (!keep && !expanded) {
-      if (step > 0) setKeep(true);
+    if (!leanShown) {
+      if (step > 0) onMode("lean");
       return;
     }
-    const next = clampDock(readDockShare(side, keptOnly, rootRef.current?.clientHeight) + step);
-    saveDockShare(next, side, keptOnly);
+    const next = clampDock(readDockShare(side) + step);
+    saveDockShare(next, side);
     applyShare(next);
     measureKept();
     place();
@@ -401,12 +406,13 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     }
     // With the Lean open the graph is left alone, so it is as it was when the Lean closes. The
     // run that closes it is left out too: the canvas is still gliding back, and every card reads off.
-    const closing = wasOpen.current && !expanded;
-    wasOpen.current = expanded;
-    if (!expanded && !closing && drawable.length && !inView(drawable)) treeRef.current?.focusIds(drawable);
+    const away = expanded || (keep && readDockShare(isSide()) >= WHOLE_PANE);
+    const closing = wasOpen.current && !away;
+    wasOpen.current = away;
+    if (!away && !closing && drawable.length && !inView(drawable)) treeRef.current?.focusIds(drawable);
     // Refocus when the passage, the main result or following changes (the map re-centres itself when its room changes).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drawable.join("|"), goal, following, fadeTo, expanded]);
+  }, [drawable.join("|"), goal, following, fadeTo, expanded, keep]);
 
   useEffect(() => {
     if (!fadeTo) return;
@@ -484,38 +490,39 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const line = lineFor();
 
   return (
-    <section ref={rootRef} className={`map-pane${expanded ? " map-pane--open" : ""}${keep ? " map-pane--kept" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className={`map-pane${leanShown ? " map-pane--open" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+      <div className="map-pane__bar">
+        <ModeToggle mode={mode} onMode={onMode} />
+        <span className="map-pane__goal" title={title}>
+          {title}
+        </span>
+        {paused && !following && (
+          <button type="button" className="map-pane__follow map-pane__follow--resume" onClick={toggleFollowing}>
+            Follow the text again
+          </button>
+        )}
+        <a
+          className="map-pane__open"
+          href={mapHref}
+          onClick={(event) => {
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            navigate({ view: "map", goal, node: drawable[0] });
+          }}
+        >
+          Open the full map
+        </a>
+        {!inModal && (
+          <button type="button" className="map-pane__hide" aria-label="Hide the pane" onClick={onHide}>
+            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+              <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
+      </div>
       <div className="map-pane__pages">
         <div className="map-pane__graph">
           <header className="map-pane__head">
-            <div className="map-pane__row">
-              <span className="map-pane__goal" title={title}>
-                {title}
-              </span>
-              {paused && !following && (
-                <button type="button" className="map-pane__follow map-pane__follow--resume" onClick={toggleFollowing}>
-                  Follow the text again
-                </button>
-              )}
-              <a
-                className="map-pane__open"
-                href={mapHref}
-                onClick={(event) => {
-                  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                  event.preventDefault();
-                  navigate({ view: "map", goal, node: drawable[0] });
-                }}
-              >
-                Open the full map
-              </a>
-              {!inModal && (
-                <button type="button" className="map-pane__hide" aria-label="Close the graph" onClick={onHide}>
-                  <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                    <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </button>
-              )}
-            </div>
             <div className="map-pane__row map-pane__row--trail">
               {progress && <span className="map-pane__progress">{progress}</span>}
               <span className="map-pane__legend">The graph fills in as you read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.</span>
@@ -541,11 +548,6 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
                     This passage
                   </button>
                 )}
-                {!inModal && !keep && (
-                  <button type="button" className="map-pane__keep" onClick={() => setKeep(true)}>
-                    Keep the Lean open
-                  </button>
-                )}
               </>
             )}
           </div>
@@ -558,7 +560,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             aria-label="Draw the Lean up over the graph, or size it"
             aria-valuemin={0}
             aria-valuemax={Math.round(DOCK_MAX * 100)}
-            aria-valuenow={leanShown ? Math.round(readDockShare(false, keptOnly) * 100) : 0}
+            aria-valuenow={leanShown ? Math.round(readDockShare() * 100) : 0}
             tabIndex={0}
             onPointerDown={onHandleDown}
             onKeyDown={onHandleKey}
@@ -566,7 +568,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             <span aria-hidden="true" />
           </div>
         )}
-        {leanShown && (
+        {(leanShown || previewOnly) && (
           <>
             <LeanDock
               open={leanOpen}
@@ -575,7 +577,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
               alignment={alignment}
               slot={slot}
               from={from}
-              onRelease={expanded ? onRelease : () => setKeep(false)}
+              onRelease={onRelease}
+              onFollowText={onFollowText}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
               onName={onName}

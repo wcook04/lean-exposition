@@ -621,6 +621,9 @@ html.is-reading {
   .reader-strip:has(.back-control) .reader-strip__steps span {
     display: none;
   }
+  .reader-strip .mode-toggle button {
+    min-width: 44px;
+  }
   .reader--narrow .reader__paper {
     padding-bottom: var(--space-8);
   }

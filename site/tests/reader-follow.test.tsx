@@ -155,10 +155,10 @@ describe("MapPane", async () => {
   const trail = paperTrail(structures.expository);
   const ties = tieModel(null);
 
-  function show(anchor: string | null, onJump = vi.fn()) {
+  function show(anchor: string | null, onJump = vi.fn(), mode: "graph" | "lean" = "graph", onMode: (m: "graph" | "lean") => void = () => {}) {
     act(() => signals.follow.set({ tie: null, anchor, part: 0 }));
     act(() =>
-      root.render(<MapPane stage="expository" structures={structures} outline={[]} trail={trail} signals={signals} ties={ties} pin={null} onHide={() => {}} onRecord={onJump} onRelease={() => {}} onPoint={() => {}} />),
+      root.render(<MapPane stage="expository" structures={structures} outline={[]} trail={trail} signals={signals} ties={ties} pin={null} mode={mode} onMode={onMode} onHide={() => {}} onRecord={onJump} onRelease={() => {}} onPoint={() => {}} />),
     );
   }
   const resume = () => container.querySelector<HTMLButtonElement>(".map-pane__follow");
@@ -238,13 +238,18 @@ describe("MapPane", async () => {
     expect(container.querySelector(".lean-page")).toBeNull();
   });
 
-  it("keeps the Lean closed at rest, and open once asked", () => {
-    show("contact-and-gap");
+  it("has one toggle, and the Lean only in Lean mode", () => {
+    const onMode = vi.fn();
+    show("contact-and-gap", vi.fn(), "graph", onMode);
     expect(container.querySelector(".lean-page")).toBeNull();
-    act(() => container.querySelector<HTMLButtonElement>(".map-pane__keep")!.click());
+    const words = [...container.querySelectorAll<HTMLButtonElement>(".mode-toggle button")];
+    expect(words.map((w) => w.textContent)).toEqual(["Graph", "Lean"]);
+    expect(words[0].getAttribute("aria-pressed")).toBe("true");
+    act(() => words[1].click());
+    expect(onMode).toHaveBeenCalledWith("lean");
+    show("contact-and-gap", vi.fn(), "lean", onMode);
     expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
-    expect(localStorage.getItem("lx-reader-keep-lean")).toBe("open");
-    localStorage.clear();
+    expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe("Lean");
   });
 
   it("lights the passage's drawn records", () => {

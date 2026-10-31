@@ -4,10 +4,9 @@
 // small beside it, then where each paper states the step, then the raw Lean with its exact
 // lines lit. A step with no Lean says so and offers the papers. Back or Escape closes it.
 //
-// A reader who wants it can keep the page open ("Keep the Lean open", or by dragging its
-// handle up). It then follows the text: the Lean of the statement being read, of what is
-// pointed at, or, between statements, what the passage discusses. The line at its head says
-// which, and the choice is remembered in this browser.
+// Lean mode with nothing opened follows the text: the Lean of the statement being read, of what
+// is pointed at, or, between statements, what the passage discusses. The line at its head says
+// which, and an opened statement has a quiet way back to following.
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
@@ -19,7 +18,7 @@ import { shortTitle } from "../../compare/useAlignment";
 import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
-import { ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
+import { leanTruth, ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
 import { paperTarget, sectionNumber } from "./model";
 import { leanPage } from "./rightPage";
 
@@ -44,6 +43,7 @@ interface Props {
   /** Stands in for the Lean: a theorem or citation preview, or the passage inspector. */
   slot?: ReactNode;
   onRelease(): void;
+  onFollowText?(): void;
   onPick(id: string): void;
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
@@ -160,7 +160,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick, onPoint, onName, from, passageHref }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const [full, setFull] = useState(false);
@@ -228,6 +228,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
             {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
           {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
           </div>
+          {open.via === "pin" && onFollowText && !slot && (
+            <button type="button" className="lean-page__quiet" onClick={onFollowText}>
+              Follow the text
+            </button>
+          )}
           <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
             Close
           </button>
@@ -294,7 +299,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
                 below={open.tie !== null ? <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} /> : undefined}
               />
             ) : alignment ? (
-              <p className="lean-page__plain">No Lean declaration is linked to this step. The papers above state it.</p>
+              <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
             ) : null}
           </div>
         </>
@@ -303,59 +308,4 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
   );
 }
 
-// ---- How far the Lean rises ---------------------------------------------------------------
-
-const SHARE_KEY = "lx-reader-lean";
-export const DOCK_MIN = 0.3;
-export const DOCK_MAX = 0.92;
-/** The band of graph left above the Lean by default, in pixels. */
-const BAND = 92;
-
-export function clampDock(share: number): number {
-  return Math.min(DOCK_MAX, Math.max(DOCK_MIN, share));
-}
-
-const shareKey = (side: boolean, kept: boolean) => `${SHARE_KEY}${side ? "-side" : ""}${kept ? "-kept" : ""}`;
-
-/**
- * The remembered size. A click raises the Lean over all but a slim band of graph, which keeps
- * the place; kept open beside the reading, it takes half, so the graph above it stays useful.
- * Side by side, a little over half of the width.
- */
-export function readDockShare(side = false, kept = false, height = 0): number {
-  const fallback = side ? 0.54 : kept ? 0.5 : height ? Math.min(DOCK_MAX, Math.max(0.75, 1 - BAND / height)) : 0.75;
-  try {
-    const value = Number(localStorage.getItem(shareKey(side, kept)));
-    return value ? clampDock(value) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-export function saveDockShare(share: number, side = false, kept = false) {
-  try {
-    localStorage.setItem(shareKey(side, kept), String(share));
-  } catch {
-    /* storage unavailable: the height lasts until the page closes */
-  }
-}
-
-const KEEP_KEY = "lx-reader-keep-lean";
-
-/** Whether this reader keeps the Lean open beside their reading. Closed unless they asked. */
-export function readKeepLean(): boolean {
-  try {
-    return localStorage.getItem(KEEP_KEY) === "open";
-  } catch {
-    return false;
-  }
-}
-
-export function saveKeepLean(open: boolean) {
-  try {
-    if (open) localStorage.setItem(KEEP_KEY, "open");
-    else localStorage.removeItem(KEEP_KEY);
-  } catch {
-    /* storage unavailable: the choice lasts until the page closes */
-  }
-}
+export { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, readKeepLean, saveDockShare, saveKeepLean } from "./panePrefs";
