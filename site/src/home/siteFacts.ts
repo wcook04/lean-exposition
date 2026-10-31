@@ -20,7 +20,7 @@ export interface SiteFacts {
   /** Links from a step to a Lean declaration, and the distinct declarations they reach. */
   leanLinks: { links: number; declarations: number } | null;
   /** The latest audit of the ties, from its summary file. */
-  audit: { date: string; sampled: number; wrong: number; reader: string } | null;
+  audit: { date: string; read: number; changed: number; absencesChecked: number; absencesChanged: number; sampled: number; right: number; loose: number; wrong: number; reader: string } | null;
   /** Links in the papers to theorems, equations, sections and citations, from the reference tables. */
   references: number | null;
   /** Declarations with a plain title. */
@@ -164,7 +164,10 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
     ties,
     steps: overview?.record_counts?.nodes ?? null,
     leanLinks,
-    audit: audit ? { date: dateWords(audit.date), sampled: audit.sampled, wrong: audit.wrong, reader: audit.reader } : null,
+    audit: audit ? {
+      date: dateWords(audit.date), read: audit.read, changed: audit.changed, absencesChecked: audit.absences_checked, absencesChanged: audit.absences_changed,
+      sampled: audit.sampled, right: audit.right, loose: audit.correct_but_loose, wrong: audit.wrong, reader: audit.reader,
+    } : null,
     references,
     plainTitles: alignment?.names ? Object.keys(alignment.names).length : null,
     lean,

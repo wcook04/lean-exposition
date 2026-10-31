@@ -1,14 +1,20 @@
 {
   "record_type": "tie_audit_summary",
   "date": "2026-10-31",
-  "reader": "an AI agent",
-  "method": "Stratified sample, seed 20261031: every statement or definition tie on the argument for full_support, and 25 random derivation or explanation ties from each paper. Each tie was read against the Lean.",
+  "reader": "AI agents",
+  "method": "Seven AI agents read every statement with Lean and every step's Lean rows against the Lean source. Another tried to disprove each statement that said it had no Lean. Another, shown the ties unmarked, re-read a seeded random sample of 150 statements with Lean (seed 20261101: 60 short, 45 expository, 45 long).",
   "population": 1152,
-  "sampled": 237,
-  "wrong": 4,
-  "correct_but_loose": 34,
-  "note_wrong": 2,
+  "read": 988,
+  "changed": 429,
+  "changed_in_substance": 339,
+  "changed_note_only": 90,
+  "absences_checked": 75,
+  "absences_changed": 20,
+  "sampled": 150,
+  "right": 135,
+  "correct_but_loose": 14,
+  "wrong": 1,
   "wrong_ties_corrected": true,
   "ledger_public": false,
-  "boundary": "A summary of one agent's reading. It establishes no equivalence between any paper and the Lean. When a later audit runs, replace these numbers: the site reads them from this file."
+  "boundary": "A summary of AI agents' reading. It establishes no equivalence between any paper and the Lean, and no independent mathematician has reviewed it. Changed means a statement's Lean, tab order, relation, lines or note differ from before the audit, or it now says it has no Lean. When a later audit runs, replace these numbers: the site reads them from this file."
 }

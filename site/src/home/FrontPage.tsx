@@ -397,7 +397,7 @@ function CheckTable() {
           </>
         )}
         {leanLinks && <>They made {leanLinks.links} links from steps to Lean, reaching {leanLinks.declarations} declarations. </>}
-        {audit && <>An AI agent then re-read {audit.sampled} of the ties and corrected the {audit.wrong} it found wrong. </>}
+        {audit && <>AI agents then read all {audit.read} against the Lean and corrected {audit.changed}. In a random {audit.sampled} read blind afterwards, {audit.right} were right, {audit.loose} loose and {audit.wrong} wrong, and those were corrected too. </>}
         A program confirms that each one still lands. No independent mathematician has reviewed them.
       </p>
     </>
