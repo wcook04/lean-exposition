@@ -6,6 +6,7 @@
 
 import { routeHref } from "../app/router";
 import { useAlignment } from "../compare/useAlignment";
+import { declTitle } from "../model/declTitle";
 import type { LeanStep } from "./model";
 
 export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: LeanStep): void }) {
@@ -13,6 +14,7 @@ export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: 
   if (!alignment) return null;
   const step = alignment.steps?.[edgeKey];
   const route = step?.route;
+  const plain = (name: string) => declTitle(alignment, name);
   return (
     <section className="step__leanroute" aria-labelledby="step-leanroute">
       <h3 id="step-leanroute" className="panel__group">
@@ -35,7 +37,8 @@ export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: 
             {route.map((name) => (
               <li key={name}>
                 <a
-                  className="lean"
+                  className={plain(name) ? undefined : "lean"}
+                  title={name}
                   href={routeHref({ view: "lean", decl: name })}
                   translate="no"
                   onClick={(event) => {
@@ -44,7 +47,7 @@ export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: 
                     onWalk({ name, module: moduleOf(alignment, name) });
                   }}
                 >
-                  {name.split(".").pop()}
+                  {plain(name) ?? name.split(".").pop()}
                 </a>
               </li>
             ))}

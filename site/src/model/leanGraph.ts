@@ -7,7 +7,8 @@
 // them cannot be reached from the main theorem by direct uses alone. So a walk from each
 // declaration passes through unlinked names and stops at the next linked one, and a line
 // found that way says how many helpers it stands for. They stay collapsed; the sheet of
-// either end lists every name.
+// either end lists every use. A card goes by its plain title (declTitle.ts), and only a
+// declaration with none shows its name.
 //
 // `uses` is what the Lean index holds. Today that is a scan of the source text, so a name
 // reached through notation or tactics is missing, and the split between statement and proof
@@ -39,6 +40,8 @@ export interface LeanInput {
   /** The goal's own declarations, in the order they should sit under it. */
   main: readonly string[];
   facts(name: string, module: string): LeanFacts | undefined;
+  /** The plain title of a declaration, where it has one. */
+  titleOf?(name: string): string | null;
   /** A file name for the caption, from a module. */
   fileOf?(module: string): string | undefined;
   origin: Origin;
@@ -154,7 +157,7 @@ const phrase = (use: LeanUse, tile: (name: string) => string): string => {
   if (use.kind === "lean_type_dependency") return `The statement of ${from} uses ${to}`;
   if (use.kind === "supports") return `The proof of ${from} uses ${to}`;
   const n = use.helpers.length;
-  return `${from} reaches ${to} through ${n === 1 ? "one helper" : `${n} helpers`}: ${use.helpers.map((h) => h.slice(h.lastIndexOf(".") + 1)).join(", ")}`;
+  return `${from} reaches ${to} through ${n === 1 ? "one helper" : `${n} helpers`}`;
 };
 
 export interface LeanGraph extends ArgGraph {
@@ -175,7 +178,8 @@ export function buildLeanGraph(input: LeanInput): LeanGraph {
   const blank = { papers: {}, region: goal, passedExtraction: false, status: "unverified", origin };
   const nodes = new Map<string, ArgNode>();
   nodes.set(goal, { ...blank, id: goal, ref: goal, kind: "goal", label: goalLabel });
-  const tiles = tileNames(present.keys());
+  const raw = tileNames(present.keys());
+  const tiles = new Map([...present.keys()].map((name) => [name, input.titleOf?.(name) ?? raw.get(name)!]));
   for (const [name, module] of present) {
     const fact = facts(name, module)!;
     const file = input.fileOf?.(module) ?? module;
@@ -184,9 +188,10 @@ export function buildLeanGraph(input: LeanInput): LeanGraph {
       id: name,
       ref: name,
       kind: "declaration",
-      label: name,
+      label: tiles.get(name)!,
       declaration: name,
       tile: tiles.get(name),
+      tilePlain: !!input.titleOf?.(name),
       leanNote: `${leanKindWord(fact.kind)}, ${file} line ${fact.line}`,
     });
   }

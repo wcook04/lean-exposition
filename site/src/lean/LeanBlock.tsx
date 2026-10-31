@@ -22,6 +22,8 @@ import {
 } from "./data";
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
+import { useAlignment } from "../compare/useAlignment";
+import { declTitle } from "../model/declTitle";
 import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
 import { tokenize, type LeanToken } from "./tokenize";
 import type { LeanWalk } from "./walk";
@@ -257,6 +259,7 @@ export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; mod
 
 function DependencyList({ title, names, decl, shell, onWalk }: { title: string; names: readonly string[]; decl: LeanDeclaration; shell: LeanShell; onWalk?(row: DeclRow): void }) {
   const [all, setAll] = useEntryState(`lean-list:${decl.name}:${title}`, false);
+  const alignment = useAlignment();
   const near = (decl as { module?: string }).module;
   const rows = useMemo(() => {
     const found = names.flatMap((name) => {
@@ -276,12 +279,13 @@ function DependencyList({ title, names, decl, shell, onWalk }: { title: string; 
       <ul>
         {shown.map((row) => {
           const record = shell.linked.get(row.name)?.[0];
+          const plain = declTitle(alignment, row.name);
           return (
             <li key={`${row.module}:${row.name}`}>
-              <a href={declHref(row)} onClick={onWalk && plainClick(() => onWalk(row))}>
-                <Breakable name={row.short} />
+              <a href={declHref(row)} title={row.name} onClick={onWalk && plainClick(() => onWalk(row))}>
+                {plain ? <span className="lean-deps__plain">{plain}</span> : <Breakable name={row.short} />}
                 <span className="lean-deps__kind">{kindWord(row.kind)}</span>
-                {record && <span className="lean-deps__record">In the argument: {record.title}</span>}
+                {record && record.title !== plain && <span className="lean-deps__record">In the argument: {record.title}</span>}
               </a>
             </li>
           );

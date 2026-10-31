@@ -16,6 +16,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { ArgEdge, ArgGraph } from "../model/graph";
 import { pathFromGoal, reach, usesOf } from "./treeModel";
 import { recordMark } from "./leanMarks";
+import { recordLine } from "../compare/useAlignment";
 import { LeanGlyph } from "./LeanGlyph";
 import { markWords } from "../model/leanStatus";
 import "./outline.css";
@@ -219,7 +220,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
                   onSelect(edge.to);
                 }}
               >
-                <span className={`orow__title${node.kind === "declaration" ? " lean" : ""}`}>{node.label}</span>
+                <span className={`orow__title${node.kind === "declaration" && !recordLine(edge.to)?.short ? " lean" : ""}`}>{node.kind === "declaration" ? recordLine(edge.to)?.short || node.label : node.label}</span>
                 {node.kind !== "claim" && <span className="orow__kind caps">{kindWord(node.kind)}</span>}
                 <span className="orow__lean">
                   <LeanGlyph mark={mark} label="" />

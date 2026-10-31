@@ -7,6 +7,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
+import { recordLine } from "../compare/useAlignment";
 import { routeHref } from "../app/router";
 import { Accounts } from "./Accounts";
 import type { LeanStep } from "./model";
@@ -107,13 +108,13 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, onWalk, passageH
     return (
       <button
         type="button"
-        className={`step__end${node.kind === "declaration" ? " lean" : ""}`}
+        className={`step__end${node.kind === "declaration" && !recordLine(id)?.short ? " lean" : ""}`}
         data-slot={node.origin.slot}
         onClick={() => onSelect(id)}
         onPointerEnter={() => onEcho?.(new Set([id]))}
         onPointerLeave={() => onEcho?.(new Set([edge.from, edge.to]))}
       >
-        {node.label}
+        {node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label}
       </button>
     );
   };

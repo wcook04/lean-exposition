@@ -13,6 +13,7 @@ import type { LeanModule, LeanModules } from "../api/lean";
 import { alignmentResource, useAlignment } from "../compare/useAlignment";
 import type { ArgGraph, ArgNode } from "../model/graph";
 import { buildLeanGraph, linkedDeclarations, type LeanFacts, type LeanGraph } from "../model/leanGraph";
+import { declTitle } from "../model/declTitle";
 import { markOfDeclaration, type LeanMark } from "../model/leanStatus";
 import { recordMark } from "./leanMarks";
 
@@ -133,6 +134,7 @@ export function useLeanGraph({ enabled, graph, goal, records }: LeanGraphOptions
         linked,
         main: rows(goal).filter((r) => r.relation === "states").map((r) => r.name),
         facts,
+        titleOf: (name) => declTitle(aligned, name),
         fileOf: (module) => files.get(module),
         origin: { family: "lean", label: "Lean formalisation", slot: 3, place: null, locator: null, url: null },
       });

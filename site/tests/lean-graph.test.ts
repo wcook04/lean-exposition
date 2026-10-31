@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildLeanGraph, leanUses, linkedDeclarations, namedIn, simplifyUses, tileNames, type LeanFacts } from "../src/model/leanGraph";
+import { declTitle } from "../src/model/declTitle";
 import type { Origin } from "../src/model/graph";
 
 const origin: Origin = { family: "lean", label: "Lean", slot: 3, place: null, locator: null, url: null };
@@ -69,5 +70,42 @@ describe("the Lean graph", () => {
   it("counts each declaration once across records", () => {
     const rows = (id: string) => (id === "r1" ? [{ name: "a", module: "M" }, { name: "b", module: "M" }] : [{ name: "a", module: "M" }]);
     expect([...linkedDeclarations(["r1", "r2"], rows).keys()]).toEqual(["a", "b"]);
+  });
+});
+
+describe("a declaration's plain title", () => {
+  const sources = {
+    records: {
+      weak: { short: "A part of it", lean: [{ name: "n.a", relation: "part" }, { name: "n.c", relation: "part" }] },
+      strong: { short: "The result", lean: [{ name: "n.a", relation: "states" }] },
+    },
+    dictionary: [{ name: "n.b", words: "The Parisi functional." }, { name: "n.c", words: "Other words." }],
+  };
+
+  it("takes the record that links it most directly, then the dictionary, and has none after that", () => {
+    expect(declTitle(sources, "n.a")).toBe("The result");
+    expect(declTitle(sources, "n.c")).toBe("A part of it");
+    expect(declTitle(sources, "n.b")).toBe("The Parisi functional");
+    expect(declTitle(sources, "n.gone")).toBeNull();
+  });
+
+  it("puts an authored title first", () => {
+    expect(declTitle({ ...sources, names: { "n.a": "Authored" } }, "n.a")).toBe("Authored");
+  });
+
+  it("puts the plain title on the card and says when there is none", () => {
+    const graph = buildLeanGraph({
+      goal: "goal",
+      goalLabel: "G",
+      linked: new Map([["ns.approx_uniform", "M"], ["ns.raw", "M"]]),
+      main: [],
+      facts: table(fact("ns.approx_uniform", ["h"]), fact("h", ["ns.raw"]), fact("ns.raw", [])),
+      titleOf: (name) => (name === "ns.approx_uniform" ? "Derivative bound" : null),
+      origin,
+    });
+    expect(graph.nodes.get("ns.approx_uniform")).toMatchObject({ label: "Derivative bound", tile: "Derivative bound", tilePlain: true, declaration: "ns.approx_uniform" });
+    expect(graph.nodes.get("ns.raw")).toMatchObject({ tile: "raw", tilePlain: false });
+    const via = graph.edges.find((e) => e.kind === "lean_via");
+    expect(via?.note).toBe("Derivative bound reaches raw through one helper");
   });
 });

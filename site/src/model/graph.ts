@@ -52,8 +52,9 @@ export interface ArgNode {
   papers: Partial<Record<Stage, { roles: string[]; direct: number }>>;
   /** The evidence (check) records the node's own record cites; absent when node records were not loaded. */
   evidenceIds?: string[];
-  /** In the Lean graph: the name a tile shows, and what the caption adds to the full name. */
+  /** In the Lean graph: what a tile shows, whether that is plain words or a raw name, and what the caption adds. */
   tile?: string;
+  tilePlain?: boolean;
   leanNote?: string;
 }
 

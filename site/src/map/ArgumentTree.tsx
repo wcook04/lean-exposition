@@ -2439,8 +2439,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const tab = lid === roving ? 0 : -1;
           const lean = hasLean(id, node);
           const section = lens ? props.sectionOf?.get(id) : undefined;
-          const tileLean = node.kind === "declaration";
-          const tile = tileLean ? (node.tile ?? node.label.slice(node.label.lastIndexOf(".") + 1)) : tileTitle(id, node.label);
+          // Plain words wherever they exist: a raw name shows only where nothing better does.
+          const plainTitle = node.tile ?? tileTitle(id, "");
+          const tileLean = node.kind === "declaration" && !(node.tilePlain ?? plainTitle);
+          const tile = node.kind === "declaration" ? plainTitle || node.label.slice(node.label.lastIndexOf(".") + 1) : tileTitle(id, node.label);
           const usedBy = built.shared.get(id) ?? 0;
           const mark = props.statusOf?.(id, node) ?? null;
           return (
@@ -2489,7 +2491,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                   aria-pressed={id === selected}
                   aria-label={`Open ${node.label}`}
                 >
-                  <span className={`card__title${node.kind === "declaration" ? " lean" : ""}`}>{node.kind === "declaration" ? <LeanName name={node.label} /> : node.label}</span>
+                  <span className={`card__title${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={node.label} /> : node.kind === "declaration" ? tile : node.label}</span>
                   {node.status === "open" && <span className="card__status"> (unresolved)</span>}
                 </button>
                 {tags.length > 0 && (

@@ -28,6 +28,7 @@ import { LensControl } from "./LensControl";
 import { WalkBar, useWalk } from "./WalkBar";
 import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence } from "./levels";
 import { recordMark } from "./leanMarks";
+import { declTitle } from "../model/declTitle";
 import { useLeanGraph } from "./useLeanGraph";
 import { useAlignment } from "../compare/useAlignment";
 import type { LeanStep } from "../panels/model";
@@ -486,7 +487,7 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // The place being left, for the Back control on the next page.
   const placeRef = useRef<string | null>(null);
-  placeRef.current = chosenDecl ? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1) : selected ? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected) : leanOn ? "the Lean graph" : "the map";
+  placeRef.current = chosenDecl ? (declTitle(alignment, chosenDecl) ?? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1)) : selected ? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected) : leanOn ? "the Lean graph" : "the map";
   useEffect(() => namePlace(() => placeRef.current), []);
 
   const chooseView = (v: View) => {

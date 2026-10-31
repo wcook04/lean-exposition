@@ -5,6 +5,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { routeHref } from "../app/router";
 import { useAlignment } from "../compare/useAlignment";
+import { declTitle } from "../model/declTitle";
 import { LazyLeanBlock } from "../lean/lazy";
 import type { LeanStep } from "./model";
 import { RELATION_WORDS } from "./model";
@@ -30,6 +31,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
   const bodyRef = useRef<HTMLDivElement>(null);
   const sheet = useSheet({ panel: rootRef, title: headingRef });
   const short = name.slice(name.lastIndexOf(".") + 1);
+  const plain = declTitle(alignment, name);
 
   useLayoutEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
@@ -69,8 +71,8 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
             <span aria-hidden="true">↓ </span>Show the map
           </button>
         )}
-        <h2 id="decl-title" ref={headingRef} tabIndex={-1} className="panel__title lean">
-          {short}
+        <h2 id="decl-title" ref={headingRef} tabIndex={-1} className={`panel__title${plain ? "" : " lean"}`}>
+          {plain ?? short}
         </h2>
         <p className="panel__fullname lean" translate="no">
           {name}
@@ -134,7 +136,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
       </div>
       <div ref={setSlot} className="lean-slot" />
       <p className="visually-hidden" aria-live="polite">
-        {leaving ? "" : `Selected Lean declaration: ${short}.`}
+        {leaving ? "" : `Selected Lean declaration: ${plain ?? short}.`}
       </p>
     </aside>
   );

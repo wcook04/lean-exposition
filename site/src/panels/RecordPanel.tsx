@@ -144,6 +144,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
   const failed = detail.status === "error" ? failureKind(detail.error) : null;
   const peek = sheet.phone && sheet.state === "peek";
   const mark = recordMark(nodeId, node);
+  const leanTitle = node.kind === "declaration" && !recordLine(nodeId)?.short;
   const recordedStatement = record?.statement ? String(record.statement) : null;
   const [slot, setSlot] = useState<HTMLElement | null>(null);
 
@@ -175,9 +176,14 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             <span aria-hidden="true">↓ </span>Show the map
           </button>
         )}
-        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${node.kind === "declaration" ? " lean" : ""}`}>
-          {node.kind === "declaration" ? breakable(node.label) : node.label}
+        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${leanTitle ? " lean" : ""}`}>
+          {leanTitle ? breakable(node.label) : plainLabel(nodeId, node)}
         </h2>
+        {node.kind === "declaration" && !leanTitle && (
+          <p className="panel__fullname lean" translate="no">
+            {node.declaration ?? node.label}
+          </p>
+        )}
         <div className="panel__levels">
           <span className="panel__mark">
             <LeanGlyph mark={mark} label="" />
@@ -254,6 +260,11 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
       </p>
     </aside>
   );
+}
+
+/** A declaration's record goes by its short title; every other record by its label. */
+function plainLabel(id: string, node: { kind: string; label: string }): string {
+  return node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label;
 }
 
 // ------------------------------------------------------------------ route
@@ -685,12 +696,12 @@ function Relations({
                 <span className="rels__what">
                   <button
                     type="button"
-                    className={`rels__name${n.kind === "declaration" ? " lean" : ""}`}
+                    className={`rels__name${n.kind === "declaration" && !recordLine(id)?.short ? " lean" : ""}`}
                     onClick={() => onSelect(id)}
                     onFocus={() => onEcho([id])}
                     onBlur={() => onEcho(null)}
                   >
-                    {n.label}
+                    {plainLabel(id, n)}
                   </button>
                   <span className="rels__meta">
                     {implied.has(edge.key) && <span className="faint">Not drawn on the map</span>}
