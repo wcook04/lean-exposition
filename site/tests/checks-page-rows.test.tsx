@@ -17,8 +17,8 @@ describe("check rows keep outcomes distinct", () => {
     expect(rowNote("comparator", { failed: 1, unavailable: 2, not_run: 2 })).toBe("No successful Comparator result is recorded.");
     expect(rowNote("comparator", { passed: 1, failed: 1 })).toBeNull();
     expect(rowNote("lean_build", { not_run: 2 })).toBeNull();
-    expect(rowNote("extraction", { unavailable: 1, not_run: 1 })).toBe("No successful run is recorded.");
-    expect(rowNote("semantic_review", { not_run: 207 })).toMatch(/^All written, none independently run\./);
+    expect(rowNote("extraction", { unavailable: 1, not_run: 1 })).toMatch(/^No successful run is among these records\./);
+    expect(rowNote("semantic_review", { not_run: 207 })).toMatch(/^All written, none read by a second reader\./);
     expect(rowNote("semantic_review", { not_run: 3, passed: 1 })).toBeNull();
   });
 

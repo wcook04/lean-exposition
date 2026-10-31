@@ -55,8 +55,8 @@ export function leanFill({ shape, statement, proof }: LeanMark): LeanLevel {
 export function markWords(mark: LeanMark): string {
   const { shape, statement, proof } = mark;
   if (statement === "none" && proof === "none") return "No Lean linked";
-  if (shape === "box") return proof === "none" ? "Defined in Lean" : "Defined in Lean, with some of it proved";
-  if (statement === "whole") return proof === "whole" ? "Stated and proved in Lean" : proof === "part" ? "Stated in Lean, with some of it proved" : "Stated in Lean, no proof";
-  if (statement === "part") return proof === "whole" ? "Some of it stated in Lean, step proved there" : "Some of it stated and proved in Lean";
-  return proof === "whole" ? "Its step is proved in Lean, in a different form" : "Some of it proved in Lean";
+  if (shape === "box") return proof === "none" ? "Linked to a Lean definition" : "Linked to a Lean definition, with some of it proved";
+  if (statement === "whole") return proof === "whole" ? "Linked to Lean that states and proves it" : proof === "part" ? "Linked to a Lean statement, with some of it proved" : "Linked to a Lean statement with no proof";
+  if (statement === "part") return proof === "whole" ? "Linked Lean states some of it and proves the step" : "Linked Lean states and proves some of it";
+  return proof === "whole" ? "Linked Lean proves the step in a different form" : "Linked Lean proves some of it";
 }

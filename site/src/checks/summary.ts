@@ -24,7 +24,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   extraction: {
     title: "Dependency extraction",
-    question: "Which Lean declarations the proof uses, as listed by Lean after it has processed the proof.",
+    question: "Which Lean declarations the proof uses, as listed by a program run inside Lean on the compiled proof.",
   },
   semantic_review: {
     title: "Correspondence review",

@@ -74,9 +74,9 @@ describe("words", () => {
   it("says how many steps appear, and where", () => {
     expect(rowsSentence(["short"], 44)).toBe("44 steps appear in the short paper.");
     expect(rowsSentence(["short", "expository"], 30)).toBe("30 steps appear in both the short paper and the exposition.");
-    expect(rowsSentence(["lean", "short", "expository"], 25)).toBe("25 steps appear at all three levels.");
-    expect(rowsSentence(["lean", "long", "short", "expository"], 1)).toBe("1 step appears at all four levels.");
-    expect(rowsSentence(["short", "expository"], 50, true)).toBe("50 steps appear in at least one of these levels.");
+    expect(rowsSentence(["lean", "short", "expository"], 25)).toBe("25 steps appear in all three columns shown.");
+    expect(rowsSentence(["lean", "long", "short", "expository"], 1)).toBe("1 step appears in all four columns shown.");
+    expect(rowsSentence(["short", "expository"], 50, true)).toBe("50 steps appear in at least one column shown.");
   });
 
   it("says whose order the rows are in", () => {

@@ -87,7 +87,7 @@ describe("naming places", () => {
   });
 
   it("puts the edition status in words", () => {
-    expect(statusWords("draft", "needs_revision")).toBe("Draft. No independent mathematician has accepted it yet.");
+    expect(statusWords("draft", "needs_revision")).toBe("Draft, written by AI agents under Will Cook’s direction. No independent mathematician has accepted it yet.");
     expect(statusWords(undefined, undefined)).toBe("");
   });
 

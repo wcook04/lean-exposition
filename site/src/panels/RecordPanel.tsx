@@ -188,7 +188,8 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         <div className="panel__levels">
           <span className="panel__mark">
             <LeanGlyph mark={mark} label="" />
-            {markWords(mark)}
+                        {markWords(mark)}
+            {mark.statement !== "none" || mark.proof !== "none" ? ". An AI agent made this link" : ""}
           </span>
           <a className="panel__quiet" href={routeHref({ view: "compare", node: nodeId })}>
             Compare
