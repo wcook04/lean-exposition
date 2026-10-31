@@ -66,16 +66,16 @@
       "short": "Concrete strip regularity",
       "lean": [
         {
-          "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
-          "name": "SourceStripRegularity",
-          "relation": "defines",
-          "note": "Lists the bounds: value and gradient strips, curvature bound, joint Lipschitz bounds, with constants chosen per cutoff T."
-        },
-        {
           "file": "OAI/Probability/SKValue/Control/Regularity.lean",
           "name": "sourceStripRegularity",
           "relation": "states",
           "note": "Holds for every Brownian space and coefficient, with no minimizer or diffusion premise."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
+          "name": "SourceStripRegularity",
+          "relation": "defines",
+          "note": "Lists the bounds: value and gradient strips, curvature bound, joint Lipschitz bounds, with constants chosen per cutoff T."
         }
       ],
       "statements": [
@@ -100,13 +100,13 @@
           "file": "OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
           "name": "IsDiffusion.curvature_unit_moment_of_contact",
           "relation": "proof",
-          "note": "Same conclusion; its premises are strip regularity and gradient contact."
+          "note": "Scalar model, where contact gives the moment without full support. Premises are strip regularity and gradient contact. Theorem 5.1 belongs to the support model."
         },
         {
           "file": "OAI/Probability/SKValue/Variation/MinimizerContact.lean",
           "name": "IsMinimizer.gradient_moment_contact",
           "relation": "proof",
-          "note": "Supplies the gradient contact premise from minimality and the diffusion."
+          "note": "Scalar model: supplies the gradient contact premise from minimality and the diffusion."
         }
       ],
       "statements": [
@@ -221,7 +221,7 @@
           "file": "OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
           "name": "IsDiffusion.parisi_value_assembly",
           "relation": "states",
-          "note": "Premises are strip regularity, gradient contact and unit curvature moment; a minimizer supplies these at the application."
+          "note": "Premises are strip regularity, gradient contact and unit curvature moment. Strip regularity always holds; a minimiser supplies contact, which gives the moment."
         }
       ],
       "statements": [
@@ -243,19 +243,19 @@
       "short": "Fixed-strip mesh limit",
       "lean": [
         {
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "name": "finite_gaussian_target",
+          "relation": "contains",
+          "note": "Given a minimiser and diffusion. Its conclusion also has the limit to the ground-state value, the proposition's last claim, which this highlight omits.",
+          "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j) ∧\n  Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ))",
+          "clause_file": "OAI/Probability/SKValue/Model.lean",
+          "clause_name": "FiniteGaussianConclusion"
+        },
+        {
           "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
           "name": "IsDiffusion.finite_gaussian_fixed_strip",
           "relation": "proof",
           "note": "Helper with exactly these two conclusions, taking every strip bound as a premise."
-        },
-        {
-          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
-          "name": "finite_gaussian_target",
-          "relation": "contains",
-          "note": "Its conclusion also adds the terminal limit to the ground-state value.",
-          "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j) ∧\n  Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ))",
-          "clause_file": "OAI/Probability/SKValue/Model.lean",
-          "clause_name": "FiniteGaussianConclusion"
         },
         {
           "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",

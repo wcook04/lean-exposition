@@ -66,8 +66,26 @@
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "curvatureMoment_deriv_hasDerivAt_on_constant",
      "relation": "part",
-     "note": "Third time derivative on a constant interval equals stripThird. The approximation step has no counterpart here.",
+     "note": "Third time derivative on a constant interval equals stripThird. The approximation rows follow; the Lean does not keep the value c.",
      "clause": "HasDerivAt (deriv (curvatureMoment W γ)) (stripThird W γ T c t) t"
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/SampleJets.lean",
+     "name": "sample_coercivity",
+     "relation": "part",
+     "note": "The 1/1000 inequality for one finite-step approximant at a sampled time, before the limit."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Regularity/ParameterChords.lean",
+     "name": "positiveCoeff",
+     "relation": "part",
+     "note": "The approximant: sampled gamma plus the mesh, so on a plateau its height is c plus the mesh and c is not kept."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/SampleJets.lean",
+     "name": "sampleCoercive_integral_limit",
+     "relation": "part",
+     "note": "The integrated polynomial passes to the limit at a continuity point of gamma, which is how a plateau's interior is reached."
     }
    ],
    "statements": [
@@ -359,16 +377,16 @@
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "no_zero_constant_gap",
+     "relation": "proof",
+     "note": "With a=0 this is the integration contradiction. It needs q(0)=0 and no left slope bound."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "zero_on_initial_support_gap",
      "relation": "part",
      "note": "The coefficient vanishes on the initial gap when zero lies outside the support.",
      "clause": "∀ t ∈ Ioo 0 b, γ t = 0"
-    },
-    {
-     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
-     "name": "no_zero_constant_gap",
-     "relation": "proof",
-     "note": "With a=0 this is the integration contradiction. It needs q(0)=0 and no left slope bound."
     },
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
@@ -407,6 +425,15 @@
   "support.full_relative_support": {
    "short": "Support is all of [0,1)",
    "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "full_support",
+     "relation": "contains",
+     "note": "Support model. Full support for every Stieltjes measure of the minimiser, and strict increase. Its conclusion also gives both witnesses and the moments.",
+     "clause": "(∀ μ : Measure Time, IsStieltjesMeasure γ μ → μ.support = Set.univ) ∧\n  (∀ a b : Time, a < b → γ.val a < γ.val b)",
+     "clause_file": "OAI/Probability/SKSupport/Model.lean",
+     "clause_name": "FullSupportConclusion"
+    },
     {
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
@@ -522,19 +549,19 @@
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Main.lean",
-     "name": "minimizer_full_support_actual",
-     "relation": "contains",
-     "note": "Its last clause gives both identities for the constructed diffusion.",
-     "clause": "∀ t ∈ Ico (0:ℝ) 1, squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t=1"
-    },
-    {
-     "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "full_support",
      "relation": "contains",
      "note": "Its last clause gives both identities for every associated diffusion on the given Brownian system.",
      "clause": "∀ X : ℝ≥0 → Ω → ℝ, IsDiffusion W γ X → ∀ t : Time,\n    squareMoment W γ X t = (t : ℝ) ∧\n    (∫ ω, (curvature W γ t (X (Real.toNNReal t) ω))^2 ∂W.law) = 1",
      "clause_file": "OAI/Probability/SKSupport/Model.lean",
      "clause_name": "FullSupportConclusion"
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "minimizer_full_support_actual",
+     "relation": "contains",
+     "note": "Its last clause gives both identities for the constructed diffusion.",
+     "clause": "∀ t ∈ Ico (0:ℝ) 1, squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t=1"
     },
     {
      "file": "OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
@@ -632,8 +659,8 @@
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "zero_on_support_of_compact_mass_removal",
-     "relation": "proof",
-     "note": "Abstract step giving G=0 on the support from nonnegativity and compact mass removal."
+     "relation": "part",
+     "note": "Abstract step giving G=0 on the support, the necessity half. The convexity argument for the converse has no Lean declaration."
     }
    ],
    "statements": [
@@ -658,7 +685,7 @@
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "no_gap_of_strictConvex_derivative",
      "relation": "proof",
-     "note": "Same chord step, phrased as a contradiction from q(a)=a and q(b)=b instead of a strict inequality for the increment."
+     "note": "Same chord bound, then the mean value theorem gives the contradiction from q(a)=a and q(b)=b. The area identity and integral are not stated."
     }
    ],
    "statements": [
@@ -796,10 +823,22 @@
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "full_support",
+     "relation": "part",
+     "note": "Support model: all of Theorem 1. Its proof excludes terminal plateaus through the square-root defect, so the curvature-only route of this step is not taken."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
-     "relation": "contains",
+     "relation": "part",
      "note": "Same conclusion. The Lean proof excludes terminal plateaus through the square-root defect, so it does not follow this chord route.",
      "clause": "μ.support=univ"
+    },
+    {
+     "file": "OAI/Probability/SKValue/Variation/MinimizerContact.lean",
+     "name": "IsMinimizer.contactPotential_zero",
+     "relation": "part",
+     "note": "Scalar model: the nearest Lean to this route. Curvature and q<=1 rule out positive G, giving contact on (0,1), and support is never mentioned."
     }
    ],
    "statements": [
