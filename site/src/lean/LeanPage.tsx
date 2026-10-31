@@ -9,6 +9,7 @@
 import { memo, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { AlignedStatement, LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
+import { BAR_LINE } from "../app/TopBar";
 import { navigate, routeHref, type Route } from "../app/router";
 import { arrivedBy, namePlace, useEntryState } from "../app/trail";
 import { useCheckedWords } from "./checked";
@@ -182,7 +183,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
               .
             </Start>
             <Start href={routeHref({ view: "lean", index: "papers" })} title={`The ${count(resting)} declarations the papers rest on`}>
-              Each with the record that links it and where the papers state it.
+              Each with the step that links it and where the papers state it.
             </Start>
           </ul>
         </section>
@@ -462,7 +463,7 @@ function Papers({ decl, shell, onPoint }: { decl: LeanDeclaration; shell: LeanSh
       ))}
       {records.length > 0 && (
         <div className="lean-records">
-          <h3>Linked records</h3>
+          <h3>Linked steps</h3>
           <ul>
             {records.map((record, k) => (
               <RecordRow key={`${record.id}:${k}`} record={record} recordStatements={all.filter((row) => row.record === record.id)} />
@@ -648,7 +649,7 @@ function PapersIndex({ shell }: { shell: LeanShell }) {
       <header className="lean-modhead">
         <Crumbs shell={shell} />
         <h1>The {count(shell.linked.size)} declarations the papers rest on</h1>
-        <p>Each declaration a record of the argument links to, by folder, with where the papers state it. {LINK_CAVEAT}</p>
+        <p>Each declaration a step of the argument links to, by folder, with where the papers state it. {LINK_CAVEAT}</p>
       </header>
       {groups.map(({ folder, rows }) => (
         <section className="lean-rest" key={folder} aria-label={folderLabel(folder)}>
@@ -725,6 +726,20 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
     [decl, route.module, route.folder, route.index, shell],
   );
 
+  // A pointed name is read in the top bar's free space. On a screen without one the line is not shown.
+  useLayoutEffect(() => {
+    const bar = document.getElementById(BAR_LINE);
+    if (!bar) return;
+    const line = document.createElement("div");
+    line.className = "lean-slot lean-slot--compact lean-slot--bar";
+    bar.append(line);
+    setSlot(line);
+    return () => {
+      line.remove();
+      setSlot(null);
+    };
+  }, []);
+
   // PageTitle cannot see the alignment, so the page names its tab once the plain title is known.
   const plainTitle = decl ? shell?.plain.get(decl.name) : undefined;
   useLayoutEffect(() => {
@@ -749,7 +764,6 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   else if (loaded.status === "failed") main = <p className="lean-note">This module could not be loaded.</p>;
   else main = <p className="lean-note">Loading the module</p>;
 
-  const hasCode = !route.index && !(route.folder && !route.module);
   return (
     <div className="lean-page">
       {hasTree ? (
@@ -768,7 +782,6 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
         <div className="lean-scroll" ref={scroller} tabIndex={-1}>
           {main}
         </div>
-        {hasCode && <div className="lean-slot lean-slot--page" ref={setSlot} />}
       </div>
     </div>
   );

@@ -23,14 +23,14 @@ export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: 
       {!route ? (
         <p className="panel__note">
           {step
-            ? "No chain of names was found between these two records. The search is a text scan, which misses names reached through tactics or notation, so this does not show that the Lean lacks the step."
-            : "One of these records has no Lean link, so there is no chain of names to look for."}
+            ? "No chain of names was found between these two steps. The search is a text scan, which misses names reached through tactics or notation, so this does not show that the Lean lacks the step."
+            : "One of these steps has no Lean link, so there is no chain of names to look for."}
         </p>
       ) : (
         <>
           <p className="panel__note">
             {route.length === 1
-              ? "One declaration in OpenAI’s Lean carries both records."
+              ? "One declaration in OpenAI’s Lean carries both steps."
               : "In OpenAI’s Lean, each declaration here names the next in its source, from the result down to what it uses."}
           </p>
           <ol className="step__leanchain">

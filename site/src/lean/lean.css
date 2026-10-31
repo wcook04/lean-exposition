@@ -119,7 +119,9 @@
 /* A cell of Compare's table has room under its code, and nothing to teach at rest. */
 .lean-block.is-bare .lean-slot { height: 46px; margin-top: var(--space-1); padding: 3px 0 0; background: none; border-top: 0; }
 .lean-block.is-bare .lean-slot:empty::before { content: none; }
-.lean-slot--page { margin: 0; padding-inline: clamp(var(--space-4), 2.4vw, var(--space-6)); }
+/* In the top bar: empty at rest, and one name and one line of signature while pointing. */
+.lean-block .lean-slot--bar, .lean-slot.lean-slot--bar { flex: 1; height: 52px; margin: 0; padding: 5px 0 0 var(--space-4); background: none; border-top: 0; }
+.lean-slot--bar:empty::before { content: none; }
 @media (hover: none) {
   .lean-slot:empty { display: none; }
 }
@@ -624,7 +626,6 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 .lean-select span { display: block; margin-bottom: var(--space-1); }
 .lean-select select { min-height: var(--target); font-size: var(--fs-base); }
 @media (max-width: 759px) {
-  .lean-slot--page { position: sticky; bottom: 0; }
   .lean-filter input { min-height: var(--target); font-size: var(--fs-base); }
   .lean-scroll { padding: var(--space-4) var(--space-4) var(--space-6); }
   .lean-intro h1 { font-size: var(--fs-title); }

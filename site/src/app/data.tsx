@@ -314,13 +314,13 @@ export function describeError(error: unknown): { title: string; detail: string }
   if (error instanceof ApiError) {
     if (error.status === 0)
       return {
-        title: "The site cannot reach the server that holds the records",
+        title: "The site cannot reach the server that holds the papers and steps",
         detail: "Start the server with the command lean-exposition serve <bundle>, then reload this page.",
       };
     if (error.status === 409)
       return {
         title: "The server is serving a different edition",
-        detail: "An edition is one fixed set of records and papers, and the server has switched to another one. Reload this page to read it.",
+        detail: "An edition is one fixed set of steps and papers, and the server has switched to another one. Reload this page to read it.",
       };
     if (error.status === 404) return { title: "This site has no such item", detail: error.message };
     return { title: `The server returned an error (HTTP status ${error.status})`, detail: error.message };

@@ -15,7 +15,7 @@ export type Standing = "failed" | "partly" | "passed" | "unrun" | "none";
 export const STANDING_ORDER: Standing[] = ["failed", "partly", "passed", "unrun", "none"];
 
 const STANDING_HEADS: Record<Standing, string> = {
-  failed: "A check on the record failed",
+  failed: "A check on the step failed",
   partly: "Some checks passed",
   passed: "Every check passed",
   unrun: "Checks written, none passed",
@@ -80,16 +80,16 @@ export function RecordList() {
 
   return (
     <section className="checks__band rlist" aria-labelledby="rlist-title">
-      <h2 id="rlist-title">Each record and its checks</h2>
+      <h2 id="rlist-title">Each step and its checks</h2>
       <p className="checks__intro">
-        All {graph.order.length} records, by the checks on their statement or proof. Source-file checks compare file bytes
-        and are left out. Open a record to compare it across the Lean and the papers.
+        All {graph.order.length} steps, by the checks on their statement or proof. Source-file checks compare file bytes
+        and are left out. Open a step to compare it across the Lean and the papers.
       </p>
       {groups.map((group) => (
         <div key={group.standing} className={`rlist__group${group.tiles.length < 10 && group.standing !== "none" ? " is-few" : ""}${group.standing === "failed" ? " is-failed" : ""}`}>
           <h3>
             {STANDING_HEADS[group.standing]}, <span className="num">{group.tiles.length}</span>{" "}
-            {group.tiles.length === 1 ? "record" : "records"}
+            {group.tiles.length === 1 ? "step" : "steps"}
           </h3>
           <ul>
             {group.tiles.map((t) => (

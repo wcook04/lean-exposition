@@ -374,7 +374,7 @@ function UsedBy({ stage, nodeId, href }: { stage: Stage; nodeId: string; href(st
         </button>
       </p>
     );
-  if (items.length === 0) return <p className="acct__state faint">No passage is recorded for a result that uses this record.</p>;
+  if (items.length === 0) return <p className="acct__state faint">No passage is recorded for a result that uses this step.</p>;
   return (
     <ul className="acct__used">
       {items.map((m) => (

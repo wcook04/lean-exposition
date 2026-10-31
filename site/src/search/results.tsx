@@ -123,7 +123,7 @@ const FIELD_NAMES: Record<string, string> = {
   id: "Identifier",
   declaration: "Lean name",
   title: "Title",
-  details: "Record",
+  details: "Step",
   tool: "Tool",
   url: "Address",
   path: "File",

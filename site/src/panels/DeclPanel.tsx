@@ -114,7 +114,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
               In the argument
             </h3>
             {linked.length === 0 ? (
-              <p className="panel__note">No record of the argument is linked to this declaration. It is a helper between the ones that are.</p>
+              <p className="panel__note">No step of the argument is linked to this declaration. It is a helper between the ones that are.</p>
             ) : (
               <ul className="rels">
                 {linked.map((row, i) => (
