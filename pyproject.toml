@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "lean-exposition"
 version = "0.1.0"
-description = "Pinned Lean evidence and traceable mathematical exposition bundles"
+description = "Tools for turning a Lean result and its sources into linked mathematical papers"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
 dependencies = ["jsonschema>=4.23,<5"]
