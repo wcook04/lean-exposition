@@ -1,7 +1,7 @@
 {
   "schema": "will_cook_site_family_v1",
   "about": "The one list of Will Cook's websites, films and repositories. The home page at wcook04.github.io is built from it, and each website keeps a copy for its own header, footer and film slots. Edit this file, then follow README.md, 'Add a released film'.",
-  "updated": "2026-10-29",
+  "updated": "2026-10-31",
   "owner": {
     "name": "Will Cook",
     "home": "https://wcook04.github.io/",
@@ -34,11 +34,15 @@
       "id": "maths",
       "name": "Plectis Mathematics",
       "short": "Mathematics",
-      "url": "https://wcook04.github.io/practical-formal-verification/maths/",
+      "url": "https://wcook04.github.io/practical-formal-verification/map/",
       "routes": [
         {
           "label": "Maths map",
-          "href": "https://wcook04.github.io/practical-formal-verification/maths/universe.html"
+          "href": "https://wcook04.github.io/practical-formal-verification/map/#mathematics"
+        },
+        {
+          "label": "The eight problems",
+          "href": "https://wcook04.github.io/practical-formal-verification/maths/"
         },
         {
           "label": "The papers",
@@ -87,6 +91,26 @@
       ],
       "repos": [
         "lean-exposition"
+      ]
+    },
+    {
+      "id": "proof-reader",
+      "name": "Proof Reader",
+      "short": "Proof Reader",
+      "url": "https://wcook04.github.io/proof-reader/",
+      "routes": [
+        {
+          "label": "Read Contextual Embeddings",
+          "href": "https://wcook04.github.io/proof-reader/#/contextual-embeddings"
+        }
+      ],
+      "purpose": "Read any paper with public Lean as you would read any paper: a graph of the proof follows as you scroll, and a statement opens the authors’ Lean at the exact lines.",
+      "status": "The first paper is Contextual Embeddings by Frohlich, Foster, Kavvos and Wang. The links were made with AI and have not been reviewed by the authors.",
+      "capture": "assets/sites/proof-reader",
+      "capture_caption": "Contextual Embeddings on the left page, with the graph of its Lean proof and the exact lines on the right.",
+      "films": [],
+      "repos": [
+        "proof-reader"
       ]
     },
     {
@@ -211,6 +235,7 @@
       "items": [
         "maths",
         "lean-exposition",
+        "proof-reader",
         "atlas"
       ]
     },
@@ -244,6 +269,12 @@
       "name": "lean-exposition",
       "href": "https://github.com/wcook04/lean-exposition",
       "description": "Pinned Lean evidence and traceable mathematical exposition, with an interactive reading website."
+    },
+    {
+      "id": "proof-reader",
+      "name": "proof-reader",
+      "href": "https://github.com/wcook04/proof-reader",
+      "description": "Plug in any paper with public Lean as a folder: the text is checked against the PDF word for word and the Lean is the authors’ own."
     },
     {
       "id": "plectis-atlas",
