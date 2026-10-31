@@ -14,8 +14,8 @@ import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, use
 import type { Alignment } from "../api/lean";
 import type { PaperStructure, Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
+import { BackControl } from "../app/BackControl";
 import { navigate, routeHref, type Route } from "../app/router";
-import { namePlace } from "../app/trail";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { restoreScroll } from "../app/restore";
@@ -40,7 +40,6 @@ import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
-  bestSlice,
   chainOf,
   companionAnchor,
   firstPassageFor,
@@ -533,7 +532,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (!ok && route.anchor) void jumpTo(route.anchor);
       });
     } else if (route.anchor) void jumpTo(route.anchor);
-    else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    else {
+      // A record this paper discusses without an exact slice opens at its passage.
+      const passage = route.node ? firstPassageFor(structure, [route.node]) : null;
+      if (passage) void jumpTo(passage);
+      else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    }
     if (restoreKey()) patchHistoryState({ lxRestore: undefined });
     lastHref.current = window.location.href;
     return () => {
@@ -836,11 +840,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [structure, stage],
   );
 
-  // The Back control on the next page names the section the reader left.
-  const placeAnchor = useRef(currentAnchor);
-  placeAnchor.current = currentAnchor;
-  useEffect(() => namePlace(() => placeLabel(placeAnchor.current)), [placeLabel]);
-
   const originHere = useCallback(
     (anchor: string | undefined): VisitOrigin => ({ key: keyRef.current, stage, anchor, label: placeLabel(anchor) }),
     [stage, placeLabel],
@@ -862,18 +861,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       setInspect({ kind: "passage", anchor: followAnchor });
     });
   }, [inspect, signals, doc, readingTop]);
-
-  // An address naming a record and no place in the paper opens at that record's
-  // statement, once the alignment says where it is, unless the reader has moved on.
-  const coldRecord = useRef(!initial.saved && !route.at && !route.anchor && !!route.node);
-  useEffect(() => {
-    if (!coldRecord.current || !route.node || !alignment) return;
-    coldRecord.current = false;
-    if (window.scrollY > 8) return;
-    const slice = bestSlice(alignment, stage, route.node);
-    const anchor = slice?.anchor ?? firstPassageFor(structure, [route.node]) ?? undefined;
-    if (slice || anchor) navigate({ ...here, at: slice ? sliceAt(slice) : undefined, anchor }, { replace: true });
-  }, [alignment, here, route.node, stage, structure]);
 
   const openInspector = useCallback((anchor: string | null, opener: HTMLElement | null) => {
     inspectOpener.current = opener;
@@ -1323,6 +1310,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         inert={route.beside ? true : undefined}
       >
         <div className="reader-strip" ref={stripRef}>
+          <BackControl className="reader-strip__back" />
           {mid && !outlineColumn && <Heading signals={signals}>{(current) => <SectionsPopover {...sectionsProps} current={current} />}</Heading>}
           <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}

@@ -242,7 +242,7 @@ export function LeanDock({ view, ties, stage, alignment, caption, captionRecords
           </button>
         )}
       </header>
-      <div className="lean-page__body" ref={body} tabIndex={-1}>
+      <div className="lean-page__body" ref={body} tabIndex={-1} data-keep>
         {slot ?? (
           <>
             {(view.kind === "statement" || view.kind === "record") && (
