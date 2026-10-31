@@ -97,16 +97,16 @@ function DeclReading({ row, term, shell }: { row: DeclRow; term?: DictionaryTerm
       <p className="lean-read__top">
         <Breakable name={row.short} />
         <Notation term={term} />
-        {words && (
-          <span className="lean-read__words">
-            <Prose text={words} />
-          </span>
-        )}
         <span className="lean-read__place">
           {kindWord(row.kind)} in {file}, line {row.line}
           {facts?.printed ? ", as Lean prints it" : ""}
         </span>
       </p>
+      {words && (
+        <p className="lean-read__words">
+          <Prose text={words} />
+        </p>
+      )}
       <code className="lean-read__sig">{facts?.signature ?? " "}</code>
     </>
   );
@@ -119,9 +119,9 @@ export function ReadingLine({ target, shell }: { target: NameTarget; shell: Lean
     <>
       <p className="lean-read__top">
         <Breakable name={target.name} />
-        <span className="lean-read__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</span>
         <span className="lean-read__place">From Mathlib</span>
       </p>
+      <p className="lean-read__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</p>
       <span className="lean-read__note">Click to find it in Mathlib's documentation, in a new tab.</span>
     </>
   );

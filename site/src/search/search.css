@@ -317,6 +317,7 @@
 }
 
 @media (max-width: 1000px) {
+  .search-body.is-exact .search-lean { order: -1; }
   .search-body {
     grid-template-columns: minmax(0, 1fr);
   }

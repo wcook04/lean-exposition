@@ -100,7 +100,7 @@ export function SearchPage({ route }: { route: SearchRoute }) {
       )}
 
       {ready && (
-        <div className="search-body">
+        <div className={`search-body${leanHits?.[0]?.tier === 0 ? " is-exact" : ""}`}>
           <div className="search-body__main">
           {grand === 0 && (
             <p className="search-page__status" role="status">

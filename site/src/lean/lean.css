@@ -115,7 +115,7 @@
 }
 .lean-block:not(.is-fill) > .lean-slot { position: sticky; bottom: 0; z-index: 2; }
 .lean-slot:empty::before { content: "Point at a name to read its signature here."; color: var(--ink-3); }
-.lean-block.is-compact .lean-slot { height: 54px; margin-top: var(--space-2); padding-block: 5px; }
+.lean-block.is-compact .lean-slot, .lean-slot--compact { height: 54px; margin-top: var(--space-2); padding-block: 5px; }
 /* A cell of Compare's table has room under its code, and nothing to teach at rest. */
 .lean-block.is-bare .lean-slot { height: 46px; margin-top: var(--space-1); padding: 3px 0 0; background: none; border-top: 0; }
 .lean-block.is-bare .lean-slot:empty::before { content: none; }
@@ -126,12 +126,15 @@
 .lean-read__top { display: flex; align-items: baseline; gap: var(--space-3); margin: 0; min-width: 0; white-space: nowrap; }
 .lean-read .lean-break { flex: none; max-width: 45%; overflow: hidden; text-overflow: ellipsis; font: 600 13px/20px var(--font-mono); font-variant-ligatures: none; color: var(--ink); }
 .lean-read .lean-break > span { display: inline; }
-.lean-read__words { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+.lean-read__words { margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; line-height: 18px; color: var(--ink); }
 .lean-read__words code { font: 0.93em var(--font-mono); font-variant-ligatures: none; }
 .lean-read__place { flex: none; margin-left: auto; color: var(--ink-3); }
 .lean-read__sig, .lean-read__note { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 .lean-read__sig { font: 12.5px/18px var(--font-mono); font-variant-ligatures: none; color: var(--ink-2); overflow-wrap: anywhere; }
-.lean-block.is-compact .lean-read__sig { -webkit-line-clamp: 1; line-clamp: 1; }
+.lean-read__words + .lean-read__sig, .lean-read__words + .lean-read__note { -webkit-line-clamp: 1; line-clamp: 1; }
+.lean-block.is-compact .lean-read__sig, .lean-slot--compact .lean-read__sig { -webkit-line-clamp: 1; line-clamp: 1; }
+/* Two rows: the words where the dictionary has them, else the signature. */
+.lean-block.is-compact .lean-read__words + *, .lean-slot--compact .lean-read__words + * { display: none; }
 .lean-read .lean-notation { flex: none; }
 @container (max-width: 640px) {
   .lean-read__place { display: none; }
@@ -324,7 +327,9 @@
 .lean-deps__record { flex-basis: 100%; font-size: var(--fs-sm); color: var(--ink-2); }
 
 @container (min-width: 560px) {
-  .lean-deps__columns { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-5); }
+  .lean-deps__columns { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: var(--space-5); }
+}
+@container (min-width: 760px) {
   .lean-terms__list { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-5); }
 }
 @container (max-width: 480px) {
