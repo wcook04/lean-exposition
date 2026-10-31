@@ -105,18 +105,18 @@ vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: ({ nodeId }: { nodeId
 vi.mock("../src/lean/lazy", () => ({ LazyLeanBlock: ({ name, lines }: { name: string; lines?: number[] }) => <p data-testid="lean">{`${name} ${lines?.join("-")}`}</p> }));
 
 describe("the Lean page", async () => {
-  const { LeanDock, clampDock, DOCK_MAX, DOCK_MIN, readDockShare, readPanes, savePanes } = await import("../src/reader/page/RecordDock");
+  const { LeanDock, clampDock, DOCK_MAX, DOCK_MIN, plainName, readDockShare, readKeepLean, recordOfDecl, saveKeepLean } = await import("../src/reader/page/RecordDock");
   const { tieModel } = await import("../src/reader/ties");
-  type View = import("../src/reader/page/RecordDock").LeanView;
+  type Open = import("../src/reader/page/RecordDock").LeanOpen;
   let root: Root;
   let container: HTMLDivElement;
 
-  const lean = { name: "OAI.a.full", module: "OAI.a", line: 4, end_line: 9, relation: "states" as const, note: "", lines: [5, 6] as [number, number] };
-  const other = { ...lean, name: "OAI.b.full" };
+  const lean = { name: "OAI.a.full_support", module: "OAI.a", line: 4, end_line: 9, relation: "states" as const, note: "", lines: [5, 6] as [number, number] };
+  const other = { ...lean, name: "OAI.b.full_support" };
   const alignment: Alignment = {
     dictionary: [],
     records: {
-      [record]: { short: "x", lean: [lean], statements: [slice({ at: "b0-5", lean: [lean, other], lean_source: "statement" }), slice({ paper: "long", at: "b9-12", role: "statement", section: "2.3 The step" })] },
+      [record]: { short: "x", lean: [lean], statements: [slice({ at: "b0-5", role: "statement", section: "2 The result", lean: [lean, other], lean_source: "statement" }), slice({ paper: "long", at: "b9-12", role: "statement", section: "5.3 The step" })] },
       none: { short: "y", lean: [], statements: [slice({ at: "b6-9" })] },
     },
   };
@@ -142,68 +142,85 @@ describe("the Lean page", async () => {
     container.remove();
   });
 
-  const show = (view: View, props: Record<string, unknown> = {}) =>
-    act(() => root.render(<LeanDock view={view} ties={ties} stage="short" alignment={alignment} onRelease={() => {}} onPick={() => {}} onPoint={() => {}} passageHref={() => "#"} {...props} />));
-  const state = () => container.querySelector(".lean-page__state")!;
+  const show = (open: Partial<Open>, props: Record<string, unknown> = {}) =>
+    act(() => root.render(<LeanDock open={{ via: "pin", record: null, tie: null, decl: null, ...open }} ties={ties} stage="short" alignment={alignment} onRelease={() => {}} onPick={() => {}} onPoint={() => {}} passageHref={() => "#"} {...props} />));
+  const button = (words: string) => [...container.querySelectorAll("button")].find((b) => b.textContent === words);
 
-  it("shows a statement's own Lean at its exact lines, and says it is following", () => {
-    show({ via: "follow", kind: "statement", tie: 0, record });
-    expect(state().textContent).toContain("Following the text");
-    expect(container.querySelector("[data-testid=lean]")!.textContent).toBe("OAI.a.full 5-6");
+  it("heads the Lean with the step in plain words and its raw name small beside it", () => {
+    show({ record, tie: 0 });
+    expect(container.querySelector(".lean-page__title")!.textContent).not.toContain("OAI.");
+    expect(container.querySelector(".lean-page__raw")!.textContent).toBe("full_support");
+    expect(container.querySelector("[data-testid=lean]")!.textContent).toBe("OAI.a.full_support 5-6");
+  });
+
+  it("says where each paper states the step, each a link with the exact landing, then Compare", () => {
+    show({ record, tie: 0 });
+    const crumbs = [...container.querySelectorAll<HTMLAnchorElement>(".lean-crumbs a")];
+    expect(crumbs.map((a) => a.textContent)).toEqual(["Short paper §2", "Long record §5.3", "Compare"]);
+    expect(crumbs[1].getAttribute("href")).toContain("l=");
+    expect(crumbs[2].getAttribute("href")).toContain("/compare");
+  });
+
+  it("offers each declaration of a step, one at a time", () => {
+    show({ record, tie: 0 });
     expect(container.querySelectorAll(".lean-page__rows button").length).toBe(2);
-    expect(container.querySelector(".lean-page__places a")!.textContent).toContain("Long paper".slice(0, 4));
   });
 
-  it("says plainly when a step has no Lean, and offers the papers it has", () => {
-    show({ via: "pin", kind: "statement", tie: 1, record: "none" });
+  it("says plainly when a step has no Lean", () => {
+    show({ record: "none", tie: 1 });
     expect(container.textContent).toContain("No Lean declaration is linked to this step.");
-    expect(container.textContent).toContain("No paper states it apart from here.");
   });
 
-  it("says which state it is in, and pinned has a way out", () => {
+  it("closes with one control, and opens the whole record only from a pin", () => {
     const onRelease = vi.fn();
-    show({ via: "pin", kind: "statement", tie: 0, record }, { onRelease });
-    expect(state().textContent).toContain("Pinned:");
-    const release = [...container.querySelectorAll("button")].find((b) => b.textContent === "Follow the text")!;
-    act(() => release.click());
+    show({ record, tie: 0 }, { onRelease });
+    act(() => button("Close")!.click());
     expect(onRelease).toHaveBeenCalledOnce();
-  });
-
-  it("opens the whole record only from a pin", () => {
-    show({ via: "follow", kind: "statement", tie: 0, record });
-    expect([...container.querySelectorAll("button")].some((b) => b.textContent === "Whole record")).toBe(false);
-    show({ via: "pin", kind: "statement", tie: 0, record });
-    act(() => [...container.querySelectorAll("button")].find((b) => b.textContent === "Whole record")!.click());
+    act(() => button("Whole record")!.click());
     expect(container.querySelector("[data-testid=panel]")!.textContent).toBe(record);
+    show({ via: "follow", record, tie: 0 });
+    expect(button("Whole record")).toBeUndefined();
   });
 
-  it("answers for a passage with no exact statement, and for a stretch with no ties", () => {
-    show({ via: "follow", kind: "passage", anchor: "p", records: [record] });
+  it("walks to a declaration by name, in words where it can", () => {
+    show({ record, decl: "OAI.a.full_support" });
+    expect(container.querySelector("[data-testid=lean]")!.textContent).toContain("OAI.a.full_support");
+    expect(recordOfDecl(alignment, "OAI.a.full_support")).toBe(record);
+    expect(plainName(alignment, "OAI.c.some_helper_lemma")).toBe("some helper lemma");
+    expect(plainName({ ...alignment, names: { "OAI.c.x": "The heat identity" } } as Alignment, "OAI.c.x")).toBe("The heat identity");
+  });
+
+  it("kept open, says it is following, and answers between statements", () => {
+    show({ via: "follow", record, tie: 0 });
+    expect(container.querySelector(".lean-page__state")!.textContent).toBe("Following the text");
+    show({ via: "follow", topics: [record] });
     expect(container.textContent).toContain("This passage discusses");
     expect(container.querySelectorAll(".lean-page__topics button").length).toBe(1);
-    show({ via: "follow", kind: "nothing" });
+    show({ via: "follow" });
     expect(container.textContent).toContain("Nothing in this stretch of the paper is tied to the Lean.");
   });
 
-  it("lets a preview stand in, and says nothing has moved", () => {
-    show({ via: "follow", kind: "statement", tie: 0, record }, { slot: <p data-testid="slot">Theorem 1</p> });
+  it("lets a preview stand in", () => {
+    show({ record, tie: 0 }, { slot: <p data-testid="slot">Theorem 1</p> });
     expect(container.querySelector("[data-testid=slot]")).not.toBeNull();
     expect(container.querySelector("[data-testid=lean]")).toBeNull();
   });
 
-  it("keeps the split within its limits and gives the Lean more of a short page", () => {
+  it("rises over most of the page, takes half when kept open, and remembers", () => {
     expect(clampDock(0.1)).toBe(DOCK_MIN);
     expect(clampDock(0.95)).toBe(DOCK_MAX);
-    expect(readDockShare(800)).toBe(0.5);
-    expect(readDockShare(600)).toBeGreaterThan(0.5);
-    localStorage.setItem("lx-reader-sheet", "0.41");
-    expect(readDockShare(600)).toBe(0.41);
+    expect(readDockShare()).toBe(0.75);
+    expect(readDockShare(false, true)).toBe(0.5);
+    localStorage.setItem("lx-reader-lean", "0.61");
+    expect(readDockShare()).toBe(0.61);
+    expect(readDockShare(true)).toBeGreaterThan(0.5);
   });
 
-  it("remembers which side is closed, and never remembers both closed", () => {
-    savePanes({ graph: false, lean: true });
-    expect(readPanes({ graph: true, lean: true })).toEqual({ graph: false, lean: true });
-    savePanes({ graph: false, lean: false });
-    expect(readPanes({ graph: true, lean: true })).toEqual({ graph: true, lean: true });
+  it("stays closed unless this reader asked to keep it open", () => {
+    expect(readKeepLean()).toBe(false);
+    saveKeepLean(true);
+    expect(readKeepLean()).toBe(true);
+    saveKeepLean(false);
+    expect(readKeepLean()).toBe(false);
   });
 });

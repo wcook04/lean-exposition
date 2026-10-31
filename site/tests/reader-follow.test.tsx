@@ -232,9 +232,19 @@ describe("MapPane", async () => {
     for (const el of cards) expect(el.classList.contains("is-elsewhere")).toBe(!covered.has(el.dataset.record!));
   });
 
-  it("says when nothing in this stretch is tied", () => {
+  it("says in one line under the graph when nothing in this stretch is tied", () => {
     show("changed-cases");
-    expect(container.querySelector(".lean-page")!.textContent).toContain("Nothing in this stretch of the paper is tied to the Lean.");
+    expect(container.querySelector(".map-pane__line")!.textContent).toBe("Nothing in this stretch of the paper is tied to the Lean.");
+    expect(container.querySelector(".lean-page")).toBeNull();
+  });
+
+  it("keeps the Lean closed at rest, and open once asked", () => {
+    show("contact-and-gap");
+    expect(container.querySelector(".lean-page")).toBeNull();
+    act(() => container.querySelector<HTMLButtonElement>(".map-pane__keep")!.click());
+    expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
+    expect(localStorage.getItem("lx-reader-keep-lean")).toBe("open");
+    localStorage.clear();
   });
 
   it("lights the passage's drawn records", () => {

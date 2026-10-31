@@ -1,8 +1,13 @@
-// The expanded Lean. The graph is what stands on the right page while reading; a click on a
+// The Lean page. The graph is what stands on the right page while reading; a click on a
 // statement or a highlighted card opens that step here, rising from its card over the graph,
 // which keeps its place underneath. It is headed by the step's plain title with the raw name
 // small beside it, then where each paper states the step, then the raw Lean with its exact
 // lines lit. A step with no Lean says so and offers the papers. Back or Escape closes it.
+//
+// A reader who wants it can keep the page open ("Keep the Lean open", or by dragging its
+// handle up). It then follows the text: the Lean of the statement being read, of what is
+// pointed at, or, between statements, what the passage discusses. The line at its head says
+// which, and the choice is remembered in this browser.
 
 import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Alignment, RecordAlignment, StatementLean } from "../../api/lean";
@@ -20,10 +25,15 @@ import { bestSlice, sectionNumber } from "./model";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
 export interface LeanOpen {
+  /** Why it is showing: a pin stays; the others go with the reader. */
+  via: "pin" | "follow" | "point";
   record: string | null;
   tie: number | null;
   /** A declaration reached by a name in the Lean or from search. */
   decl: string | null;
+  declModule?: string;
+  /** Kept open between statements: what the passage discusses. */
+  topics?: readonly string[];
 }
 
 interface Props {
@@ -113,6 +123,34 @@ function AlsoHere({ tie, ties, onPick, onPoint }: { tie: number; ties: TieModel;
   );
 }
 
+/** Kept open between statements: the records of the passage, each one a way in. */
+function Passage({ records, ties, alignment, onPick, onPoint }: { records: readonly string[]; ties: TieModel; alignment: Alignment | null; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
+  const { graph } = useEdition();
+  const shown = records.filter((id) => graph.nodes.has(id));
+  return (
+    <>
+      <p className="lean-page__plain">No sentence at the reading line is tied to the Lean. This passage discusses:</p>
+      <ul className="lean-page__topics">
+        {shown.map((id) => (
+          <li key={id}>
+            <button
+              type="button"
+              onClick={() => onPick(id)}
+              onPointerEnter={() => onPoint(statementFor(ties, id), id)}
+              onPointerLeave={() => onPoint(null)}
+              onFocus={() => onPoint(statementFor(ties, id), id)}
+              onBlur={() => onPoint(null)}
+            >
+              <span>{shortTitle(id, graph.nodes.get(id)!.label)}</span>
+              <span className="lean-page__has">{alignment?.records[id]?.lean.length ? "Lean" : "no Lean"}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
 export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick, onPoint, onName, from, passageHref }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
@@ -134,7 +172,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
     setChosen(0);
     setFull(false);
   }
-  const row = open.decl ? null : rows[Math.min(chosen, rows.length - 1)];
+  const row = open.decl ? null : (rows[Math.min(chosen, rows.length - 1)] ?? null);
   const name = open.decl ?? row?.name ?? null;
   const plain = record ? shortTitle(record, graph.nodes.get(record)?.label ?? alignment?.records[record]?.short ?? record) : name ? plainName(alignment, name) : "";
 
@@ -144,21 +182,30 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
     const el = page.current;
     if (!opening.current || !el) return;
     opening.current = false;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !from?.isConnected || !el.animate) return;
+    if (open.via !== "pin" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || !from?.isConnected || !el.animate) return;
     const box = el.getBoundingClientRect();
     const card = from.getBoundingClientRect();
     const inset = [card.top - box.top, box.right - card.right, box.bottom - card.bottom, card.left - box.left].map((v) => `${Math.max(0, Math.round(v))}px`).join(" ");
     el.animate([{ clipPath: `inset(${inset} round 7px)`, opacity: 0.5 }, { clipPath: "inset(0px round 0px)", opacity: 1 }], { duration: 240, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" });
+    // Runs for the opening only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [from]);
 
+  const empty = !record && !name;
   return (
-    <div className="lean-page" ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
+    <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
       <header className="lean-page__head">
+        {open.via !== "pin" && (
+          <p className="lean-page__state" role="status">
+            <span className="lean-page__dot" aria-hidden="true" />
+            {open.via === "point" ? "Pointing at" : "Following the text"}
+          </p>
+        )}
         <div className="lean-page__names">
-          <h3 className="lean-page__title">{plain}</h3>
+          {plain && <h3 className="lean-page__title">{plain}</h3>}
           {name && !slot && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
         </div>
-        {!!record && !slot && graph.nodes.has(record) && (
+        {open.via === "pin" && !!record && !slot && graph.nodes.has(record) && (
           <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
             Whole record
           </button>
@@ -202,11 +249,19 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
                 onTrace={(trace: Trace | undefined) => navigate({ view: "map", node: record, trace })}
                 passageHref={passageHref}
               />
+            ) : empty ? (
+              open.topics?.length ? (
+                <Passage records={open.topics} ties={ties} alignment={alignment} onPick={onPick} onPoint={onPoint} />
+              ) : (
+                <p className="lean-page__plain">
+                  Nothing in this stretch of the paper is tied to the Lean. Scroll on, or press <kbd>j</kbd> for the next tied statement.
+                </p>
+              )
             ) : name ? (
               <LazyLeanBlock
-                key={`${row?.module ?? ""}:${name}`}
+                key={`${row?.module ?? open.declModule ?? ""}:${name}`}
                 name={name}
-                module={row?.module}
+                module={row?.module ?? open.declModule}
                 relation={row?.relation ?? undefined}
                 note={row?.note}
                 clause={row?.clause}
@@ -228,28 +283,54 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
 // ---- How far the Lean rises ---------------------------------------------------------------
 
 const SHARE_KEY = "lx-reader-lean";
-export const DOCK_MIN = 0.4;
+export const DOCK_MIN = 0.3;
 export const DOCK_MAX = 0.88;
 
 export function clampDock(share: number): number {
   return Math.min(DOCK_MAX, Math.max(DOCK_MIN, share));
 }
 
-/** The remembered height, or most of the page; side by side, a little over half of its width. */
-export function readDockShare(side = false): number {
-  const fallback = side ? 0.54 : 0.75;
+const shareKey = (side: boolean, kept: boolean) => `${SHARE_KEY}${side ? "-side" : ""}${kept ? "-kept" : ""}`;
+
+/**
+ * The remembered size. A click raises the Lean over most of the page; kept open beside
+ * the reading, it takes half, so the graph above it stays useful. Side by side, a little
+ * over half of the width.
+ */
+export function readDockShare(side = false, kept = false): number {
+  const fallback = side ? 0.54 : kept ? 0.5 : 0.75;
   try {
-    const value = Number(localStorage.getItem(`${SHARE_KEY}${side ? "-side" : ""}`));
+    const value = Number(localStorage.getItem(shareKey(side, kept)));
     return value ? clampDock(value) : fallback;
   } catch {
     return fallback;
   }
 }
 
-export function saveDockShare(share: number, side = false) {
+export function saveDockShare(share: number, side = false, kept = false) {
   try {
-    localStorage.setItem(`${SHARE_KEY}${side ? "-side" : ""}`, String(share));
+    localStorage.setItem(shareKey(side, kept), String(share));
   } catch {
     /* storage unavailable: the height lasts until the page closes */
+  }
+}
+
+const KEEP_KEY = "lx-reader-keep-lean";
+
+/** Whether this reader keeps the Lean open beside their reading. Closed unless they asked. */
+export function readKeepLean(): boolean {
+  try {
+    return localStorage.getItem(KEEP_KEY) === "open";
+  } catch {
+    return false;
+  }
+}
+
+export function saveKeepLean(open: boolean) {
+  try {
+    if (open) localStorage.setItem(KEEP_KEY, "open");
+    else localStorage.removeItem(KEEP_KEY);
+  } catch {
+    /* storage unavailable: the choice lasts until the page closes */
   }
 }

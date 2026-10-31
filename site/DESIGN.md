@@ -382,28 +382,37 @@ page.
 
 ## The reader
 
-Two pages, like an open book: the paper on the left, the proof on the right. The right
-page holds the graph above the Lean, with a handle between them; from 860px of page the
-two stand side by side with the Lean next to the paper. Either can be closed, and the
-split and the choice are remembered. Below 1280px the same page is a sheet opened on
-demand. It is never modal: the paper stays where it is and can still be scrolled.
+A reader reads the paper, as they always have. The graph is a sidecar: full height on the
+page facing the paper, it comes along as they scroll, and it can be closed. One line under
+it names what is lit in plain words and says whether it has Lean. Clicking a statement or a
+highlighted card opens the raw Lean, which rises from the card over the graph and leaves a band
+of it above, or stands beside it from 860px of page. It is headed by the step's plain title
+with the raw name small beside it, then a link to where each paper states it, and Compare. The
+graph underneath keeps its size and camera; only a transform lifts the card clear, so closing
+leaves it exactly as it was. A handle sets the height, and it is remembered.
+
+The Lean closed is the default. A reader who wants it beside their reading can choose "Keep the
+Lean open" or draw the handle up from the foot of the graph; it then follows the text, and that
+is remembered in this browser. Below 1280px the same page is a sheet opened on demand. It is
+never modal: the paper stays where it is and can still be scrolled.
 
 Four verbs run the page.
 
 - **Follow.** One reading line, 30% of the way down the paper, picks the statement under
   it, or the nearest within a third of the page, the one just read winning a near tie.
   The statement takes the highlighter at once. Once it has held the line for 200ms, and
-  the page is no longer flying past, its card lights and its Lean fills the Lean page.
-  The address keeps up by replacing the entry once the reader stops.
+  the page is no longer flying past, its card lights and the line under the graph names
+  it. The address keeps up by replacing the entry once the reader stops.
 - **Point.** A statement under the pointer or focus takes a soft wash and its card lights
-  at once; after a 150ms dwell the Lean page previews it. Moving away restores. A card
-  does the same in the other direction. An untied paragraph names its passage's records
-  in the Lean page's state line and moves nothing. Pointing never pushes history.
-- **Open.** A click pins: one history entry, `?n=<record>&l=<slice>`, and the paper does
-  not move. A card pins too, and the paper goes to the statement while the graph stays.
-  A pin ends when the reader scrolls the statement away, on Escape, or on Back. The Lean
-  page's first line always says which state it is in. A drag or a double click that selects
-  text never pins.
+  at once; after a 150ms dwell the line under the graph names it, and a Lean kept open
+  previews it. Moving away restores. A card does the same in the other direction. An untied
+  paragraph names its passage's records in that line and moves nothing. Pointing never
+  pushes history.
+- **Open.** A click pins and raises the Lean: one history entry, `?n=<record>&l=<slice>`,
+  and the paper does not move. A card pins too, and the paper goes to the statement while the
+  graph stays. A name in the Lean walks in place, as its own entry. A pin ends when the reader
+  scrolls the statement away, on Escape, or on Back. A drag or a double click that selects text
+  never pins.
 - **Back.** The browser's own, named in the strip.
 
 `j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases.

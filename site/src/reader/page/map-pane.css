@@ -57,12 +57,21 @@
 }
 
 /* One line under the graph, in plain words, so nothing ever floats over a card. */
-.map-pane__line {
+.map-pane__foot {
+  --foot-h: 34px;
   flex: none;
-  display: block;
-  margin: 0;
-  padding: 7px var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--foot-h);
+  padding: 0 var(--space-3) 0 var(--space-4);
   border-top: 1px solid var(--rule);
+}
+
+.map-pane__line {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -73,6 +82,27 @@
 
 .map-pane__line[data-via="point"] {
   color: var(--ink);
+}
+
+.map-pane__keep {
+  flex: none;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.map-pane__keep:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
 }
 
 /* The Lean: a layer that rises over the graph. The graph beneath keeps its size and camera. */
@@ -91,7 +121,8 @@
   z-index: 5;
   left: 0;
   right: 0;
-  bottom: calc(var(--lean-share) * 100%);
+  /* At rest it lies at the foot of the graph, just above the line that names what is lit. */
+  bottom: max(35px, calc(var(--lean-share) * 100%));
   display: grid;
   place-items: center;
   height: 11px;
@@ -126,8 +157,13 @@
 }
 
 .map-pane--open .map-pane__row--trail,
-.map-pane--open .map-pane__line {
+.map-pane--open .map-pane__foot,
+.map-pane--kept .map-pane__foot {
   display: none;
+}
+
+.map-pane--kept .map-pane__body {
+  flex: 1;
 }
 
 @container right-page (min-width: 860px) {
@@ -147,12 +183,16 @@
     width: 11px;
     height: auto;
     border-top: 0;
+    border-left: 1px solid var(--rule);
     border-right: 1px solid var(--rule);
     cursor: ew-resize;
   }
   .map-pane__handle span {
     width: 3px;
     height: 40px;
+  }
+  .map-pane__handle {
+    bottom: 0;
   }
 }
 
@@ -419,6 +459,30 @@
   padding: 4px var(--space-2) 2px var(--space-4);
 }
 
+/* Kept open, the line that says it is following. */
+.lean-page__state {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.lean-page__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+}
+
+.lean-page[data-via="follow"] .lean-page__dot {
+  border-color: var(--ink-2);
+  background: var(--ink-2);
+}
+
 .lean-page__names {
   flex: 1;
   display: flex;
@@ -577,6 +641,48 @@
   color: var(--ink);
 }
 
+.lean-page__plain kbd {
+  padding: 0 4px;
+  border: 1px solid var(--rule-control);
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+}
+
+.lean-page__topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lean-page__topics button {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 30px;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lean-page__topics button:hover {
+  color: var(--lit);
+}
+
+.lean-page__has {
+  flex: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
 .lean-page .panel {
   position: static;
   width: auto;
@@ -651,9 +757,13 @@
   border-left: 0;
 }
 
+.right-sheet .lean-page__action[aria-keyshortcuts] {
+  display: none;
+}
+
 .right-sheet__close {
   position: absolute;
-  z-index: 2;
+  z-index: 6;
   top: 4px;
   right: var(--space-2);
   display: inline-grid;

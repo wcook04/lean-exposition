@@ -5,8 +5,9 @@
 // plain words. Cards ahead are in lighter ink and cards passed at full strength. Panning or
 // zooming pauses the camera. Clicking a card or a statement opens its Lean, which rises over
 // the graph and leaves a band of it above, or stands beside it from 860px of page. The graph
-// underneath is not touched, so closing the Lean leaves it as it was. Under 1280px the same
-// page opens as a sheet.
+// underneath is not touched, so closing the Lean leaves it as it was. A reader who wants the
+// Lean beside their reading can drag the handle up or choose "Keep the Lean open"; it then
+// follows the text, and the choice is remembered. Under 1280px the same page opens as a sheet.
 
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 import type { Alignment } from "../../api/lean";
@@ -22,7 +23,7 @@ import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
 import { passageTopics, statementFor, type TieModel } from "../ties";
 import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
-import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, recordOfDecl, saveDockShare } from "./RecordDock";
+import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, readKeepLean, recordOfDecl, saveDockShare, saveKeepLean, type LeanOpen } from "./RecordDock";
 import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
 import { useSignal, useSlowSignal } from "./signal";
 import "./map-pane.css";
@@ -50,6 +51,7 @@ interface Props {
   pin: Pin | null;
   /** A declaration the address names, reached by walking the Lean. */
   decl?: string | null;
+  declModule?: string;
   alignment?: Alignment | null;
   /** Filled by the pane: the paper's statements light cards through it. */
   hoverRef?: MutableRefObject<PaneHover | null>;
@@ -67,7 +69,7 @@ interface Props {
   passageHref?(stage: Stage, anchor: string): string;
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const reduced = useReducedMotion();
@@ -90,6 +92,20 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const slot = preview ?? leanSlot;
   const openRecord = pin?.record ?? (decl ? recordOfDecl(alignment, decl) : null);
   const expanded = !!pin || !!decl || !!slot;
+  // A sheet shows what was asked for; keeping the Lean open is for the page beside the paper.
+  const [keep, setKeepState] = useState(() => !inModal && readKeepLean());
+  const setKeep = useCallback((open: boolean) => {
+    saveKeepLean(open);
+    setKeepState(open);
+  }, []);
+  const leanShown = expanded || keep;
+  const leanOpen = useMemo<LeanOpen>(() => {
+    if (expanded) return { via: "pin", record: openRecord, tie: decl ? null : (pin?.tie ?? null), decl, declModule };
+    if (pointed) return { via: "point", record: pointed.record, tie: pointed.tie, decl: null };
+    if (followRecord) return { via: "follow", record: followRecord, tie: follow.tie, decl: null };
+    const topics = passageTopics(ties, anchor);
+    return { via: "follow", record: null, tie: null, decl: null, topics: topics.length ? topics : passage };
+  }, [expanded, openRecord, decl, declModule, pin, pointed, followRecord, follow.tie, ties, anchor, passage]);
   /** The card the Lean rises from, found as it opens. */
   const [from, setFrom] = useState<HTMLElement | null>(null);
 
@@ -171,18 +187,37 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     for (const p of structures[stage]?.paper.passages ?? []) for (const id of [...p.claim_ids, ...p.assumption_ids]) ids.add(id);
     return ids;
   }, [structures, stage]);
-  const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 12, right: 16 }), []);
+  // Kept open, the Lean holds part of the page for good, so the map frames what is left.
+  const [kept, setKept] = useState({ bottom: 0, left: 0 });
+  const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 12 + kept.bottom, right: 16 }), [kept]);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   // How far the Lean rises, remembered. It is a layer over the graph: the canvas beneath keeps
   // its size and its camera. Only a transform carries the card into the part left showing, and
   // that goes when the Lean closes, so the graph is exactly as it was.
   const isSide = () => (rootRef.current?.clientWidth ?? 0) >= SIDE_BY_SIDE;
-  const applyShare = useCallback((value?: number) => {
-    const root = rootRef.current;
-    if (!root) return;
-    root.style.setProperty("--lean-share", String(value ?? readDockShare(root.clientWidth >= SIDE_BY_SIDE)));
-  }, []);
+  const keptOnly = keep && !expanded;
+  const applyShare = useCallback(
+    (value?: number) => {
+      const root = rootRef.current;
+      if (!root) return;
+      const side = root.clientWidth >= SIDE_BY_SIDE;
+      root.style.setProperty("--lean-share", String(value ?? (keep || expanded ? readDockShare(side, keptOnly) : 0)));
+    },
+    [keep, expanded, keptOnly],
+  );
+  const measureKept = useCallback(() => {
+    const pages = rootRef.current?.querySelector<HTMLElement>(".map-pane__pages");
+    if (!keep || !pages) return setKept({ bottom: 0, left: 0 });
+    const side = pages.clientWidth >= SIDE_BY_SIDE;
+    const share = readDockShare(side, true);
+    // The graph's line and head are not part of the canvas: only what lies over the canvas counts.
+    const body = bodyRef.current?.getBoundingClientRect();
+    const box = pages.getBoundingClientRect();
+    const cover = side ? box.width * share : Math.max(0, (body?.bottom ?? box.bottom) - (box.bottom - box.height * share));
+    setKept(side ? { bottom: 0, left: Math.round(cover) } : { bottom: Math.round(cover), left: 0 });
+  }, [keep]);
+  useLayoutEffect(measureKept, [measureKept]);
   const place = useCallback(() => {
     const canvas = canvasRef.current;
     const body = bodyRef.current;
@@ -190,7 +225,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     if (!canvas || !body) return;
     canvas.style.transform = "";
     const card = openRecord ? body.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) : null;
-    if (!card || !lean) return;
+    if (!card || !lean || !expanded) return;
     const b = body.getBoundingClientRect();
     const l = lean.getBoundingClientRect();
     const c = card.getBoundingClientRect();
@@ -201,7 +236,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const bottom = l.top - 8;
       if (c.top < b.top + 4 || c.bottom > bottom) canvas.style.transform = `translateY(${Math.round((b.top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
     }
-  }, [openRecord]);
+  }, [openRecord, expanded]);
 
   useLayoutEffect(() => {
     applyShare();
@@ -231,11 +266,21 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     handle.setPointerCapture(event.pointerId);
     const box = root.querySelector<HTMLElement>(".map-pane__pages")!.getBoundingClientRect();
     const side = isSide();
-    let value = readDockShare(side);
+    // At rest the handle lies at the foot of the graph: drawing it up keeps the Lean open.
+    const rest = !keep && !expanded;
+    let value = rest ? 0 : readDockShare(side, keptOnly);
+    let raised = false;
+    const startY = event.clientY;
+    const startX = event.clientX;
     root.classList.add("is-dragging");
     const move = (e: PointerEvent) => {
       // Stacked, the Lean is below the handle; side by side, it is to the left of it.
-      value = clampDock(side ? (e.clientX - box.left) / box.width : (box.bottom - e.clientY) / box.height);
+      const raw = side ? (e.clientX - box.left) / box.width : (box.bottom - e.clientY) / box.height;
+      if (rest && !raised) {
+        if (Math.abs(side ? e.clientX - startX : e.clientY - startY) < 24) return;
+        raised = true;
+      }
+      value = rest ? clampDock(raw) : raw;
       applyShare(value);
     };
     const end = () => {
@@ -243,8 +288,21 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       handle.removeEventListener("pointerup", end);
       handle.removeEventListener("pointercancel", end);
       root.classList.remove("is-dragging");
-      saveDockShare(value, side);
-      place();
+      if (rest && !raised) return;
+      // Dragged nearly shut, the kept page closes.
+      if (keptOnly && value < DOCK_MIN * 0.8) {
+        setKept({ bottom: 0, left: 0 });
+        setKeep(false);
+        return;
+      }
+      value = clampDock(value);
+      saveDockShare(value, side, rest || keptOnly);
+      if (rest) setKeep(true);
+      else {
+        applyShare(value);
+        measureKept();
+        place();
+      }
     };
     handle.addEventListener("pointermove", move);
     handle.addEventListener("pointerup", end);
@@ -256,9 +314,14 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const step = event.key === (side ? "ArrowRight" : "ArrowUp") ? 0.05 : event.key === (side ? "ArrowLeft" : "ArrowDown") ? -0.05 : 0;
     if (!step) return;
     event.preventDefault();
-    const next = clampDock(readDockShare(side) + step);
-    saveDockShare(next, side);
+    if (!keep && !expanded) {
+      if (step > 0) setKeep(true);
+      return;
+    }
+    const next = clampDock(readDockShare(side, keptOnly) + step);
+    saveDockShare(next, side, keptOnly);
     applyShare(next);
+    measureKept();
     place();
   };
 
@@ -278,13 +341,14 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   inViewRef.current = (ids) => {
     const canvas = bodyRef.current?.getBoundingClientRect();
     if (!canvas?.width) return false;
-    const bottom = canvas.bottom;
+    const bottom = canvas.bottom - kept.bottom;
+    const left = canvas.left + kept.left;
     return ids.every((id) => {
       const cards = bodyRef.current!.querySelectorAll<HTMLElement>(`.card[data-record="${CSS.escape(id)}"]`);
       if (!cards.length) return true; // an assumption, drawn on the records that assume it
       return [...cards].some((card) => {
         const r = card.getBoundingClientRect();
-        return r.top >= canvas.top && r.bottom <= bottom && r.left >= canvas.left && r.right <= canvas.right;
+        return r.top >= canvas.top && r.bottom <= bottom && r.left >= left && r.right <= canvas.right;
       });
     });
   };
@@ -379,7 +443,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const line = lineFor();
 
   return (
-    <section ref={rootRef} className={`map-pane${expanded ? " map-pane--open" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
+    <section ref={rootRef} className={`map-pane${expanded ? " map-pane--open" : ""}${keep ? " map-pane--kept" : ""}`} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__pages">
         <div className="map-pane__graph">
           <header className="map-pane__head">
@@ -421,34 +485,43 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
               {tree}
             </div>
           </div>
-          <p className="map-pane__line" data-via={line.via} role="status">
-            {line.words}
-          </p>
+          <div className="map-pane__foot">
+            <p className="map-pane__line" data-via={line.via} role="status">
+              {line.words}
+            </p>
+            {!inModal && !keep && (
+              <button type="button" className="map-pane__keep" onClick={() => setKeep(true)}>
+                Keep the Lean open
+              </button>
+            )}
+          </div>
         </div>
-        {expanded && (
+        {(!inModal || leanShown) && (
+          <div
+            className="map-pane__handle"
+            role="separator"
+            aria-orientation="horizontal"
+            aria-label="Draw the Lean up over the graph, or size it"
+            aria-valuemin={0}
+            aria-valuemax={Math.round(DOCK_MAX * 100)}
+            aria-valuenow={leanShown ? Math.round(readDockShare(false, keptOnly) * 100) : 0}
+            tabIndex={0}
+            onPointerDown={onHandleDown}
+            onKeyDown={onHandleKey}
+          >
+            <span aria-hidden="true" />
+          </div>
+        )}
+        {leanShown && (
           <>
-            <div
-              className="map-pane__handle"
-              role="separator"
-              aria-orientation="horizontal"
-              aria-label="Resize the Lean"
-              aria-valuemin={Math.round(DOCK_MIN * 100)}
-              aria-valuemax={Math.round(DOCK_MAX * 100)}
-              aria-valuenow={Math.round(readDockShare() * 100)}
-              tabIndex={0}
-              onPointerDown={onHandleDown}
-              onKeyDown={onHandleKey}
-            >
-              <span aria-hidden="true" />
-            </div>
             <LeanDock
-              open={{ record: openRecord, tie: decl ? null : (pin?.tie ?? null), decl }}
+              open={leanOpen}
               ties={ties}
               stage={stage}
               alignment={alignment}
               slot={slot}
               from={from}
-              onRelease={onRelease}
+              onRelease={expanded ? onRelease : () => setKeep(false)}
               onPick={(id) => onRecord?.(id)}
               onPoint={onPoint}
               onName={onName}

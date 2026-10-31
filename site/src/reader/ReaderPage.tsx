@@ -15,7 +15,7 @@ import type { Alignment } from "../api/lean";
 import type { PaperStructure, Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
 import { BackControl } from "../app/BackControl";
-import { navigate, routeHref, type Route } from "../app/router";
+import { navigate, routeHref, walkEntry, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
@@ -621,7 +621,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const drawThread = useCallback(() => {
     const path = thread.current;
     if (!path) return;
-    const t = pinRef.current?.tie ?? null;
+    const t = pinRef.current?.tie ?? current.current;
     const first = t !== null ? statements.first(t) : null;
     const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
     const page = document.querySelector(".lean-page");
@@ -651,7 +651,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const release = useCallback(() => {
     const here = hereRef.current;
-    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined }, { replace: true });
+    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined }, { replace: true });
   }, []);
 
   useEffect(() => {
@@ -825,8 +825,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- Links -------------------------------------------------------------------------
 
   const here: ReadRoute = useMemo(
-    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, decl: route.decl, beside: route.beside }),
-    [stage, route.anchor, route.at, route.node, route.decl, route.beside],
+    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
+    [stage, route.anchor, route.at, route.node, route.beside, route.decl, route.declModule],
   );
   const links: Links = useMemo(
     () => ({
@@ -893,13 +893,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- Pinning -------------------------------------------------------------------------
 
   /** A name in the Lean, or a Lean result from search: the Lean page walks there, as one history entry. */
-  const openDecl = useCallback(
-    (walk: LeanWalk) => {
-      go({ ...hereRef.current, decl: walk.name, beside: undefined });
-      return true;
-    },
-    [go],
-  );
+  const openDecl = useCallback((walk: LeanWalk) => {
+    walkEntry(walk);
+    return true;
+  }, []);
   useEffect(() => hostLean(openDecl), [openDecl]);
 
   /** A statement in the paper: one history entry, and the paper does not move. */
@@ -907,7 +904,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (t: number) => {
       const tie = ties.index.ties[t];
       selfAt.current = tie.at;
-      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, beside: undefined });
+      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
     },
     [ties, go],
   );
@@ -1170,7 +1167,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (id: string) => {
       const statement = statementFor(ties, id);
       const tie = statement !== null ? ties.index.ties[statement] : null;
-      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, beside: undefined };
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined };
       if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
       go(to);
     },
@@ -1281,6 +1278,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     ties,
     pin,
     decl: route.decl ?? null,
+    declModule: route.declModule,
     alignment,
     hoverRef: paneHover,
     onRecord: openFromMap,
