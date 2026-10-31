@@ -387,36 +387,61 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
 // The public repository that receives the static build has no other README.
 const SITE_README = `# Why the Sherrington–Kirkpatrick order parameter has no gaps
 
-This repository holds the built reading website published at
-https://wcook04.github.io/lean-exposition-site/.
+This repository holds the generated reading website for Lean Exposition.
+Read three papers on one theorem with their Lean statements beside them.
+
+**[Open Theorem 1 with its Lean](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)** · [Website](https://wcook04.github.io/lean-exposition-site/) · [Source and tools](https://github.com/wcook04/lean-exposition) · [Will Cook's projects](https://wcook04.github.io/)
+
+[![The short paper with Theorem 1 highlighted beside its Lean statement.](stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)
 
 The website presents one theorem about the zero-temperature
 Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
-increases across every interval in [0, 1). It has three papers on
-the proof (an exposition, a short paper and a long record), each readable on
-the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
-Lean beside the text, and the site also has an argument map of the steps the
-proof uses, an index of the Lean, and the test runs recorded for them. The architectural companion explains
-why these papers share one graph; read it on the About page or in
-\`pdf/architecture.pdf\`.
+increases across every interval in [0, 1). The mathematics comes from
+[OpenAI's mathematics release, family 281](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md).
+These are drafts explaining existing results; mathematical and reader review
+remain open. The [source repository](https://github.com/wcook04/lean-exposition#the-worked-example)
+gives the exact scope of the Lean and the recorded checks.
 
-The mathematics comes from OpenAI's mathematics release, family 281:
-https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
+## Read and explore
 
-Plectis Atlas has a page for the same family:
-https://wcook04.github.io/plectis-atlas/families/281.html
+| Start with | What you can inspect |
+| --- | --- |
+| [Exposition](https://wcook04.github.io/lean-exposition-site/read/expository/) | An introduction beginning with a two-spin calculation |
+| [Short paper](https://wcook04.github.io/lean-exposition-site/read/short/) | The full-support argument and its scalar consequence |
+| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Derivations, source references and further proof obligations |
+| [Argument map](https://wcook04.github.io/lean-exposition-site/map/) · [Compare](https://wcook04.github.io/lean-exposition-site/compare/) | The recorded proof steps and their passages in each paper |
+| [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The Lean declarations and recorded test runs |
+| [About](https://wcook04.github.io/lean-exposition-site/about/) | The architectural companion explaining why the papers share one graph |
+
+A statement with a dark tick opens its Lean beside the paper.
+The papers and companion are also available in [PDF](pdf/).
+[Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
+indexes the same source family.
+
+## Videos
+
+[How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw)
+starts with four magnets and explains the mathematical question.
+[Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
+walks through this website.
+
+## Source and generated files
+
+Make changes in [lean-exposition](https://github.com/wcook04/lean-exposition).
+Its [main-branch build workflow](https://github.com/wcook04/lean-exposition/blob/main/.github/workflows/pages.yml)
+replaces this repository's files with the built website. Installation,
+local development and contribution instructions live in that source repository.
+
+| Generated path | Contents |
+| --- | --- |
+| [read/](read/) | The three paper readers |
+| [edition/](edition/) | Captured papers, graph and recorded checks used by the site |
+| [pdf/](pdf/) | Downloadable papers and architectural companion |
+| [assets/](assets/) · [stills/](stills/) | Built application files and website screenshots |
 
 Will Cook made this website as part of Plectis, his projects on researching
-mathematics with AI and on tools that help people follow what AI produces:
-https://wcook04.github.io/practical-formal-verification/
-His videos are on YouTube: https://www.youtube.com/@willcook2004
-
-Source, papers, tools and contribution instructions:
-https://github.com/wcook04/lean-exposition
-
-This repository receives the generated website from the source repository’s
-main-branch build workflow. Make changes in the source repository; the workflow
-publishes the resulting files here.
+mathematics with AI and helping people follow what AI produces.
+[Projects](https://wcook04.github.io/) · [Videos](https://www.youtube.com/@willcook2004)
 `;
 
 const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";

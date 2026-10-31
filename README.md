@@ -15,7 +15,7 @@ python -m pip install .
 lean-exposition validate examples/minimal/evidence-graph.json
 ```
 
-The last command reads a saved extraction of a small Lean proof and prints its result, helper lemma and external declarations as JSON. To inspect the real theorem, go to [Inspect one result](#inspect-one-result).
+The last command reads a saved extraction of a small Lean proof and prints JSON. `selected_goals` names `Minimal.result`; `argument_closure` includes its helper lemma `Minimal.swap` and four external declarations. Those declarations are listed under `unresolved` because their bodies are outside this extraction. The command checks the saved graph without rerunning Lean. To inspect the research example, go to [Inspect one result](#inspect-one-result).
 
 [![A paper on the left with Theorem 1 highlighted, and on the right the Lean statement it refers to, opened under the graph of the argument.](site/public/stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)
 
@@ -111,6 +111,11 @@ records preserve those distinctions.
 ## Videos
 
 In [How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw), Will Cook starts with four magnets and explains the mathematical question. In [Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng), he goes through the website. In [Introduction V3](https://www.youtube.com/watch?v=MBmVMMogXTA), he explains how his projects fit together.
+
+## Related projects
+
+- [Proof Reader](https://github.com/wcook04/proof-reader) displays an existing paper beside its authors' Lean, using the argument map developed here. Lean Exposition also supplies methods for writing new explanations of a proof.
+- [Plectis's Erdős research](https://github.com/wcook04/plectis-erdos) collects papers, proofs and research records for eight Erdős problems. Its [mathematics website](https://wcook04.github.io/practical-formal-verification/maths/) is a separate research collection from this repository's Sherrington–Kirkpatrick example.
 
 ## Development and licence
 
