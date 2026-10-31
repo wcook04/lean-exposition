@@ -693,7 +693,7 @@ function PapersIndex({ shell }: { shell: LeanShell }) {
 
 function Message({ children }: { children: ReactNode }) {
   return (
-    <div className="lean-page lean-page--message">
+    <div className="lean-browser lean-browser--message">
       <p>{children}</p>
     </div>
   );
@@ -765,7 +765,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   else main = <p className="lean-note">Loading the module</p>;
 
   return (
-    <div className="lean-page">
+    <div className="lean-browser">
       {hasTree ? (
         <aside className="lean-left">
           <NameFilter shell={shell}>

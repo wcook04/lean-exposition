@@ -19,8 +19,8 @@ import { navigate, routeHref, walkEntry, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
-import { restoreScroll } from "../app/restore";
-import { namePlace, onLeave } from "../app/trail";
+import { INPUT, restoreScroll } from "../app/restore";
+import { entryKey, namePlace, onLeave } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import type { ArgGraph } from "../model/graph";
 import type { PreparedDocument } from "./engine";
@@ -338,10 +338,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: top - el.getBoundingClientRect().top, top, block: blockAtLine(el, top) };
   }, [doc, stage, edition, readingTop]);
 
+  /** The entry put back on its line, until the reader's own input moves on from it. */
+  const heldEntry = useRef<string | null>(null);
   const saveNow = useCallback(() => {
+    // Nothing has moved it since it was restored: measuring again could only add the
+    // rounding of idle rendering, and each save and restore would then creep.
+    if (heldEntry.current === entryKey()) return;
     const position = measurePosition();
     if (position) savePosition(position);
   }, [measurePosition]);
+  useEffect(() => {
+    const release = () => (heldEntry.current = null);
+    for (const type of INPUT) window.addEventListener(type, release, { passive: true, capture: true });
+    return () => {
+      for (const type of INPUT) window.removeEventListener(type, release, { capture: true });
+    };
+  }, []);
 
   // Whatever the way of leaving: a link, Back, a reload.
   useEffect(() => onLeave(saveNow), [saveNow]);
@@ -366,7 +378,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       // if late fonts reflow the text. A browser that scrolls in whole pixels would
       // otherwise lose a little at each one.
       restoring.current?.();
-      restoring.current = restoreScroll({ window: y }, { limit: 20000, refit: true, onDone: () => body.reanchor(true) });
+      heldEntry.current = entryKey();
+      restoring.current = restoreScroll({ window: y }, { limit: 20000, settle: 3000, refit: true, onDone: () => body.reanchor(true) });
       return true;
     },
     [doc, stage, edition, readingTop],

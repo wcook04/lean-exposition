@@ -40,11 +40,14 @@ const ENTRY_NAME = "scroll";
  * place would otherwise carry it off (the browser anchors to whatever is on screen).
  */
 const SETTLE = 1200;
-/** The longest a restore waits for late content; the reader's own input ends it sooner. */
-const LIMIT = 5000;
+/**
+ * The longest a restore waits for late content. Generous, because a slow machine is
+ * when it matters and the reader's own input ends it at once.
+ */
+const LIMIT = 15000;
 /** How long after settling late fonts may still move the text. */
 const REFIT = 3000;
-const INPUT = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+export const INPUT = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
 
 function find(id: string): HTMLElement | null {
   const at = id.lastIndexOf("@");

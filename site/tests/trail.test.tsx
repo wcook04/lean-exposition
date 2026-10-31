@@ -466,6 +466,9 @@ describe("a map shown in a pane", () => {
     expect(tree.current.restoreScene).toHaveBeenCalledWith(scene);
     act(() => void vi.advanceTimersByTime(800));
     expect(tree.current.restoreScene).toHaveBeenCalledTimes(2);
+    window.dispatchEvent(new Event("wheel"));
+    act(() => void vi.advanceTimersByTime(2000));
+    expect(tree.current.restoreScene).toHaveBeenCalledTimes(2);
     vi.useRealTimers();
   });
 });

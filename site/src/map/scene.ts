@@ -6,6 +6,7 @@
 // holds the entry.
 
 import { useEffect, type RefObject } from "react";
+import { INPUT } from "../app/restore";
 import { arrivedBy, entryKey, onLeave, readEntry, useEntryKey, writeEntry } from "../app/trail";
 import type { MapScene } from "./ArgumentTree";
 
@@ -15,8 +16,8 @@ type TreeHandle = { getScene(): MapScene; restoreScene(scene: MapScene): void };
 const KEY = "mapScene";
 const PANE_KEY = "paneScene";
 const DELAY = 200;
-/** A pane opens with a fit of its own after a moment; the restored camera lands after it. */
-const PANE_SETTLE = 700;
+/** When a restored pane is put back again: after its first fit, and after following has settled. */
+const PANE_SETTLE = [700, 1600];
 
 const finite = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -94,7 +95,14 @@ export function useKeptCamera(tree: RefObject<Pick<TreeHandle, "getScene" | "res
     if (!scene) return;
     const put = () => tree.current?.restoreScene(scene);
     put();
-    const again = window.setTimeout(put, PANE_SETTLE);
-    return () => window.clearTimeout(again);
+    // The pane fits itself and then follows the restored line; come back after each, unless
+    // the reader has taken over, for following a hand is what the pane is for.
+    const timers = PANE_SETTLE.map((delay) => window.setTimeout(put, delay));
+    const stop = () => timers.forEach((timer) => window.clearTimeout(timer));
+    for (const type of INPUT) window.addEventListener(type, stop, { passive: true, capture: true, once: true });
+    return () => {
+      stop();
+      for (const type of INPUT) window.removeEventListener(type, stop, { capture: true });
+    };
   }, [key, tree, has]);
 }

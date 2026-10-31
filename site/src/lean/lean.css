@@ -362,19 +362,19 @@
 
 html[data-view="lean"] .app { min-height: 100dvh; }
 
-.lean-page {
+.lean-browser {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   flex: 1;
   min-height: 0;
   background: var(--ground);
 }
-.lean-page--message { padding: var(--space-6) var(--space-5); color: var(--ink-2); }
+.lean-browser--message { padding: var(--space-6) var(--space-5); color: var(--ink-2); }
 
 @media (min-width: 760px) {
   html[data-view="lean"], html[data-view="lean"] body { overflow: hidden; }
   html[data-view="lean"] .app { height: 100dvh; }
-  .lean-page {
+  .lean-browser {
     grid-template-columns: clamp(250px, 26vw, 300px) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
   }
@@ -383,7 +383,7 @@ html[data-view="lean"] .app { min-height: 100dvh; }
   .lean-scroll { flex: 1; }
 }
 @media (min-width: 1180px) {
-  .lean-page { grid-template-columns: clamp(260px, 18vw, 340px) minmax(0, 1fr); }
+  .lean-browser { grid-template-columns: clamp(260px, 18vw, 340px) minmax(0, 1fr); }
 }
 
 .lean-left {

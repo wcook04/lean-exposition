@@ -589,8 +589,10 @@ A place in a paper names the part and the block under the reading line, and neve
 raw page position, because placeholders above it change height as parts render. It
 holds to within half a pixel, as rounding let a save and restore creep by one.
 `restoreScroll` is the one way a place is put back, for the window and every inner
-scroller: it keeps setting the place while content arrives, for up to five seconds,
-and stops the moment the reader touches the wheel, the keyboard or the screen.
+scroller: it keeps setting the place while content arrives, for up to fifteen seconds,
+and stops the moment the reader touches the wheel, the keyboard or the screen. Late
+fonts can put the place back once more, under the same rule. Until the reader's own
+input, a restored place is not measured again, so a save and restore cannot creep.
 
 A step between Lean names is one entry through `walkEntry`, which adds `&d=` and
 `&dm=` on a page that shows Lean in place and goes to the declaration's own page
