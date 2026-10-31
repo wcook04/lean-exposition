@@ -195,7 +195,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
     {
       id: "lean",
       name: "The Lean proof",
-      who: "OpenAI’s statements and proofs, written for a computer to check.",
+      who: "OpenAI’s statements and proofs, written for the Lean compiler.",
       count: `${leanModules === null ? "" : `${plural(leanModules, "source file")}, `}linked to ${counts.lean} of the ${total} steps on this site`,
       read: routeHref({ view: "lean" }),
       readWord: "Open the Lean index",
@@ -217,9 +217,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
         One argument at four levels
       </h2>
       <p className="front__text">
-        The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each
-        paper keeps a narrower part of that graph for a wider reader. Choose a level to see what it keeps, and open any step
-        to compare it across the levels.
+        The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each paper below the Lean covers fewer of those steps than the one above it, for a wider readership. Choose a level to see which steps it covers, and open any step to compare it across the levels.
       </p>
       <div className="levels__body">
         <ol className="levels__rail">

@@ -100,7 +100,7 @@ export function PaperCrumbs({ record, row, stage, alignment, decl, at, children 
           key={paper}
           href={routeHref({ view: "read", stage: paper, anchor: slice.anchor ?? undefined, at: slice.at, node: id })}
           aria-current={paper === stage && slice.at === at ? "location" : undefined}
-          title={near ? "This paper states the step. It does not name this declaration at that place." : slice.section || undefined}
+          title={near ? "The step is stated here, and this declaration is not named at that place." : slice.section || undefined}
         >
           {PAPER_NAMES[paper].short}
           {/* A place with no number (the opening) is the paper itself: its name is enough. */}
@@ -121,7 +121,7 @@ function AlsoHere({ tie, ties, onPick, onPoint }: { tie: number; ties: TieModel;
   if (!others.length) return null;
   return (
     <p className="lean-page__also">
-      <span>The same words also tie to</span>
+      <span>These words are also tied to</span>
       {others.slice(0, 4).map((id) => (
         <button key={id} type="button" onClick={() => onPick(id)} onPointerEnter={() => onPoint(statementFor(ties, id), id)} onPointerLeave={() => onPoint(null)}>
           {shortTitle(id, graph.nodes.get(id)!.label)}
@@ -138,7 +138,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   const shown = records.filter((id) => graph.nodes.has(id));
   return (
     <>
-      <p className="lean-page__plain">No sentence at the reading line is tied to the Lean. This passage discusses:</p>
+      <p className="lean-page__plain">No sentence at the reading line is tied to the Lean. Steps in this passage:</p>
       <ul className="lean-page__topics">
         {shown.map((id) => (
           <li key={id}>

@@ -51,7 +51,7 @@ const GROUP_TITLES: Record<GroupId, string> = {
   sections: "Section headings",
   text: "Text of the papers",
   lean: "Lean declarations",
-  other: "Citations, sources and check records",
+  other: "Citations, sources and run records",
 };
 
 const PAPER_LIMIT = 3;
@@ -173,7 +173,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         group: "start",
         title: graph.nodes.get(e.to)!.label,
         lean: true,
-        meta: `The Lean statement recorded as corresponding to ${graph.nodes.get(e.from)!.label}, with its check records`,
+        meta: `The Lean statement recorded as corresponding to ${graph.nodes.get(e.from)!.label}, with its run records`,
         href: routeHref({ view: "checks", node: e.to }),
       });
     }
@@ -203,7 +203,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         if (!first && page?.total) first = typeOfTable(table);
       }
       if (total > shown && first) {
-        const noun = names.length === 1 ? nounFor(first, total) : "citations, sources and check records";
+        const noun = names.length === 1 ? nounFor(first, total) : "citations, sources and run records";
         out.push({ key: `more:${group}`, group, more: true, title: `See all ${total} matching ${noun}`, href: routeHref({ view: "search", q: results.q, type: first }) });
       }
     };

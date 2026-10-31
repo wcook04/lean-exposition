@@ -525,7 +525,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
           <header className="map-pane__head">
             <div className="map-pane__row map-pane__row--trail">
               {progress && <span className="map-pane__progress">{progress}</span>}
-              <span className="map-pane__legend">The graph fills in as you read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.</span>
+              <span className="map-pane__legend">Cards darken as you read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.</span>
             </div>
           </header>
           <div className="map-pane__body" ref={bodyRef}>
@@ -606,13 +606,13 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     if (pointed) return { via: "point", words: `${says(pointed.record, pointed.tie, "click to open it")}${drawn(pointed.record)}` };
     if (caption) {
       const topics = passageTopics(ties, caption).filter((id) => graph.nodes.has(id));
-      if (topics.length) return { via: "point", words: `No exact tie in this paragraph. Its passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
+      if (topics.length) return { via: "point", words: `No exact tie in this paragraph. Steps in its passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     }
     if (followRecord) return { via: "follow", words: `Reading: ${says(followRecord, follow.tie, "click the statement or its card")}${drawn(followRecord)}` };
     // Past the last passage (the references, say) the nearest passage is not what is on the page.
     const inPassage = !!anchor && passagePart?.(partAt) === anchor;
     const topics = inPassage ? passageTopics(ties, anchor).filter((id) => graph.nodes.has(id)) : [];
-    if (topics.length) return { via: "follow", words: `No exact statement here. This passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
+    if (topics.length) return { via: "follow", words: `No exact statement here. Steps in this passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     return { via: "follow", words: "Nothing in this stretch of the paper is tied to the Lean." };
   }
 });

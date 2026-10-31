@@ -182,7 +182,7 @@ export function StepBench({ route }: { route: CompareRoute }) {
         {!alignment && <p className="bench-note">Loading where each level states this step…</p>}
         {alignment && !record && (
           <p className="bench-note">
-            No level is linked to this step in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
+            No level is linked to this step in this copy of the site. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
           </p>
         )}
         {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} id={node} record={record} slots={slots} />)}
@@ -201,7 +201,7 @@ export function StepBench({ route }: { route: CompareRoute }) {
 }
 
 function GoalMenu({ goals, goal, onPick }: { goals: { id: string; title: string; stages: Stage[] }[]; goal: string; onPick(id: string): void }) {
-  return <PickMenu label="Argument for" showLabel variant="goal" options={goals.map((g) => ({ id: g.id, title: g.title, where: g.stages.length ? statedIn(g.stages) : undefined }))} value={goal} onPick={onPick} />;
+  return <PickMenu label="In the Sherrington–Kirkpatrick (SK) model, argument for" showLabel variant="goal" options={goals.map((g) => ({ id: g.id, title: g.title, where: g.stages.length ? statedIn(g.stages) : undefined }))} value={goal} onPick={onPick} />;
 }
 
 /** The whole argument or one paper's part of it, each with how many steps that is. */

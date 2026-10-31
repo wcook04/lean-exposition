@@ -155,7 +155,8 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
   return (
     <div className={`plate${formalNode ? " plate--two" : ""}`}>
       <div className="plate__body">
-        <div className="plate__main">
+                <div className="plate__main">
+          
           {statement?.html ? (
             <div ref={clampRef} className={`plate__clamp${clamped ? " is-clamped" : ""}`}>
               <div ref={statementRef} className="prose plate__statement" dangerouslySetInnerHTML={{ __html: statement.html }} />
@@ -166,7 +167,7 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
           {statement?.html && (
             <p className="plate__source">
               <a href={routeHref({ view: "read", stage: statement.source.stage, anchor: statement.source.anchor })}>
-                {statement.partial ? "First part of the statement, from the" : "Statement from the"}{" "}
+                {statement.partial ? "Start of the statement, from the" : "Statement from the"}{" "}
                 {PAPER_NAMES[statement.source.stage].short.toLowerCase()}
                 {statement.section ? `, ${sectionLabel(statement.section)}` : ""}
               </a>
@@ -188,7 +189,7 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
         <span className="plate__checks">{checks.line}</span>
         {checks.total > 0 && (
           <a href={routeHref({ view: "checks", node: checkNode })}>
-            {checks.total === 1 ? "Show the check record" : `Show the ${checks.total} check records`}
+            {checks.total === 1 ? "Show the run record" : `Show the ${checks.total} run records`}
           </a>
         )}
         <span className="plate__sep" />

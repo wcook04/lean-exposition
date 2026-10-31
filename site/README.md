@@ -10,32 +10,24 @@ the generated website; make changes here and let the workflow publish them.
 The website shows one captured edition of the worked example as a reader would
 want to explore it:
 
-- **The argument map.** The main result is at the top, with the records its
-  recorded argument uses beneath it. Selecting "Inputs" on a card draws the
-  records that card uses. A line runs from a record to the result that uses it,
-  and each line opens the recorded explanation of that step. Assumptions are
-  drawn as tags on the results that assume them. A switch narrows the map to the
-  records one paper discusses. On a phone the same argument is an outline you
+- **The argument map.** The main result is at the top, with the steps its recorded argument uses beneath it. Selecting "Inputs" on a card draws the steps that card uses. A line runs from a step to the result that uses it, and each line opens the recorded explanation of that use. Assumptions are
+  drawn as tags on the results that assume them. A switch narrows the map to the steps one paper discusses. On a phone the same argument is an outline you
   scroll.
 - **Compare.** The proof as a table. Each row is one step and each column is a
   level, so a step's Lean declaration sits beside its exact statement in the long
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The pane facing the paper has two modes, Graph and Lean. The graph follows the statement
-  you are reading, and pointing at a marked statement lights its card and names it. Clicking
-  a statement or a card goes to its Lean, and any Back returns to the graph and your place.
-  Choosing Lean yourself keeps the Lean following the text.
-  Beside any passage you can list the records linked to it and open passages in
-  the other accounts that are linked to the same records.
+  The pane facing the paper has two modes, Graph and Lean. In Graph the graph moves to the statement
+  you are reading, and pointing at a marked statement lights its card and names it. Clicking a
+  statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
+  Lean yourself keeps the Lean on the statement you are reading.
+  Beside any passage you can list the steps linked to it and open passages in the other papers that are linked to the same steps.
 - **The Lean index.** OpenAI's source, every module and declaration, at the back of
   the book: plain titles first, each central name explained in the papers' notation,
   and the names each declaration mentions.
-- **The checks.** What compiled, which axioms, any `sorry`, what Comparator has and
-  has not done, and what people or agents read. Then, for each kind of check, what
-  it tests and the outcome of each recorded run: passed, failed, unavailable or not run.
-- **The architectural companion.** The About page includes the paper on why
-  several accounts share one record, with a link to its standalone PDF.
+- **What ran.** What compiled, which axioms, any `sorry`, what Comparator has and has not done, and what AI agents read. Then, for each kind of test, what it tests and the outcome of each recorded run: passed, failed, unavailable or not run.
+- **The architectural companion.** The About page includes the paper on why several papers share one graph, with a link to its standalone PDF.
 - **The papers and PDFs.** The front page's levels band (the Read menu's "All papers
   and PDFs") shows each paper's first page, who it is for, and links to read it here
   or open its PDF.
@@ -47,7 +39,7 @@ Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The de
 rules (type, colour, the map's drawing conventions, motion and wording) are in
 [DESIGN.md](DESIGN.md).
 
-The argument map, the three accounts and the recorded checks come from the
+The argument map, the three papers and the recorded test runs come from the
 read-only [web API](../docs/web-api.md). The site pins the edition it opened, and if the
 server starts serving a different edition it says so and asks you to reload.
 
@@ -116,7 +108,7 @@ matches its PDF, and `npm test` fails until a re-rendered PDF's picture is rende
 again.
 The build also publishes the explicitly listed Support build and extraction
 observation at `verification/full-support-build-extraction-observation-20261026.json`.
-The Checks page links to it. `publicObservations()` in `vite.config.ts` owns this
+The What ran page links to it. `publicObservations()` in `vite.config.ts` owns this
 one-file list and serves the same JSON during local development.
 
 The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
@@ -133,7 +125,7 @@ site's mark and name), film slots and a footer list of the other sites, as the [
 describes. `src/app/family.json` is an unchanged copy of that repository's `sites.json`
 and `src/styles/family.css` of its `assets/family/family.css`; `src/styles/tokens.css`
 maps the stylesheet's `--fam-*` names onto this site's tokens. `public/plectis.svg` is an unchanged
-copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A film without a
+copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A video without a
 YouTube address is held "In preparation". When one is published, copy the updated
 `sites.json` to `src/app/family.json` and the film's two stills
 (`assets/films/<id>-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
@@ -189,7 +181,7 @@ To deploy, serve the API and the site from one origin:
 To call an API on another origin instead, set `VITE_API_ORIGIN` when building.
 Then start `serve` with `--allow-origin` set to the site's origin.
 
-## Check it
+## Test it
 
 ```sh
 npm run typecheck

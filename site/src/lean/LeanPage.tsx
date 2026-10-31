@@ -50,7 +50,7 @@ const READING = [
   ["A → B", "If A then B. Between types, a function from A to B."],
   ["A ∧ B", "A and B."],
   [":=", "Is defined as, or is proved by, what follows."],
-  ["by", "Starts a proof written as steps. Lean checks each step."],
+  ["by", "Starts a proof written as steps. Lean rejects a step that does not follow."],
 ] as const;
 
 function HowToRead() {
@@ -106,7 +106,7 @@ function treeOf(shell: LeanShell, prefix: string): Tree {
 }
 
 /** The record a theorem states, by the paper's name for it. */
-const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? lastPart(name);
+const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? shell.plain.get(name) ?? lastPart(name);
 
 function Start({ href, name, title, children }: { href: string; name?: string; title: string; children: ReactNode }) {
   return (
@@ -139,23 +139,23 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
           <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
         </p>
         <p>
-          This is OpenAI's Lean at commit{" "}
+          OpenAI's proof of a theorem about the Sherrington–Kirkpatrick (SK) spin glass is written in Lean, a programming language whose compiler rejects a proof with a wrong step. This is that Lean at commit{" "}
           <a href={revisionUrl} target="_blank" rel="noreferrer">
             <code>{modules.revision.slice(0, 7)}</code>
           </a>{" "}
-          on <code>{modules.toolchain.split(":").pop()}</code>: {count(modules.counts.modules)} modules and {count(modules.counts.declarations)} declarations. It holds two proof trees,{" "}
+          on <code>{modules.toolchain.split(":").pop()}</code>: {count(modules.counts.modules)} modules and {count(modules.counts.declarations)} declarations. It has two proof trees,{" "}
           <a href={routeHref({ view: "lean", folder: support.path })}>
             <code>SKSupport</code>
           </a>{" "}
-          with {count(support.modules)} modules, ending in <code>full_support</code>, and{" "}
+          with {count(support.modules)} modules, whose last theorem is <code>full_support</code>, and{" "}
           <a href={routeHref({ view: "lean", folder: scalar.path })}>
             <code>SKValue</code>
           </a>{" "}
-          with {count(scalar.modules)}, ending in <code>value_consequences</code>, and two challenge files for Comparator.
+          with {count(scalar.modules)}, whose last theorem is <code>value_consequences</code>, and two challenge files for Comparator, a program that compares a Lean proof with a separately written statement.
         </p>
         <p className="lean-intro__checked">
           {checked}{" "}
-          <a href={routeHref({ view: "checks" })}>Every recorded check</a>
+          <a href={routeHref({ view: "checks" })}>Every recorded run</a>
         </p>
       </header>
       <div className="lean-landing">
@@ -184,7 +184,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
               </a>
               .
             </Start>
-            <Start href={routeHref({ view: "lean", index: "papers" })} title={`The ${count(resting)} declarations the papers rest on`}>
+            <Start href={routeHref({ view: "lean", index: "papers" })} title={`The ${count(resting)} declarations linked to the papers`}>
               Each with the step that links it and where the papers state it.
             </Start>
           </ul>
@@ -224,7 +224,7 @@ function TreeNav({ shell, current, landing, index, folder }: { shell: LeanShell;
         Start here
       </a>
       <a className={`lean-tree__main${index ? " is-current" : ""}`} href={routeHref({ view: "lean", index: "papers" })} aria-current={index ? "page" : undefined}>
-        The {count(shell.linked.size)} declarations the papers rest on
+        The {count(shell.linked.size)} declarations linked to the papers
       </a>
       <p className="lean-tree__key">
         <span>Folders and modules</span>
@@ -457,7 +457,7 @@ function Papers({ decl, shell, onPoint }: { decl: LeanDeclaration; shell: LeanSh
       <h2 id="lean-papers">Where the papers state it</h2>
       {first.length === 0 && records.length === 0 && (
         <p className="lean-side__hint">
-          No paper states this declaration directly. The papers rest on <a href={routeHref({ view: "lean", index: "papers" })}>{count(shell.linked.size)} declarations</a>, and this one may be used by them.
+          No paper states this declaration directly. The papers link to <a href={routeHref({ view: "lean", index: "papers" })}>{count(shell.linked.size)} declarations</a>, and this one may be used by them.
         </p>
       )}
       {first.map((row) => (
@@ -523,7 +523,7 @@ function DeclPage({ decl, module, shell, slot }: { decl: LeanDeclaration; module
               </>
             ) : (
               <>
-                A copy stands in the Comparator challenge file <a href={declHref(copy)}>{lastPart(copy.module)}.lean</a>.
+                A copy is in the Comparator challenge file <a href={declHref(copy)}>{lastPart(copy.module)}.lean</a>.
               </>
             )}
           </p>
@@ -744,7 +744,7 @@ function PapersIndex({ shell }: { shell: LeanShell }) {
     <>
       <header className="lean-modhead">
         <Crumbs shell={shell} />
-        <h1>The {count(shell.linked.size)} declarations the papers rest on</h1>
+        <h1>The {count(shell.linked.size)} declarations linked to the papers</h1>
         <p>Each declaration a step of the argument links to, by folder, with where the papers state it. {LINK_CAVEAT}</p>
       </header>
       {groups.map(({ folder, rows }) => (
@@ -829,7 +829,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
         if (decl) return shell?.plain.get(decl.name) ?? decl.short;
         if (knownModule) return lastPart(knownModule);
         if (knownFolder) return folderLabel(knownFolder);
-        if (route.index) return "the declarations the papers rest on";
+        if (route.index) return "the declarations linked to the papers";
         return "the Lean index";
       }),
     [decl, knownModule, knownFolder, route.index, shell],

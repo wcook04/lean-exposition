@@ -2,9 +2,8 @@
 
 For the purpose of the project and a first worked reading, start with the
 [project introduction](../README.md) and [papers guide](../papers/README.md).
-The [architectural companion](../papers/architecture/README.md) explains why
-the accounts share a graph and how a reader moves between them. Agents use
-[AGENTS.md](../AGENTS.md); it links the setup, source owners and checks.
+The [architectural companion](../papers/architecture/README.md) gives the reasons the papers share a graph and describes how a reader moves between them. Agents use
+[AGENTS.md](../AGENTS.md); it links the setup, source owners and test commands.
 
 ## Write and review
 
@@ -21,8 +20,7 @@ the accounts share a graph and how a reader moves between them. Agents use
 ## Use and integrate the tools
 
 - [Examples](../examples/README.md): choose a starting point and run its workflow.
-- [Verification](verification.md): understand and run Lean builds, extraction and
-  Comparator checks.
+- [Verification](verification.md): understand and run Lean builds, extraction and Comparator.
 - [Prove2Me](prove2me.md): read public theorem metadata and preserve its limits.
 - [Bundle consumers](bundle-consumers.md): assemble authored papers, inspect a
   bundle, navigate from any record, resolve exact paper selections or read the

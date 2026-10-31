@@ -19,7 +19,7 @@ export function kindName(kind: string): string {
  * stop and nothing about what the mathematics needs. An assumption is what the argument takes as given.
  */
 export const noInputsWords = (kind: string) =>
-  kind === "assumption" ? "Nothing: the argument takes this as given." : "The argument as written stops here. That says where its links were drawn, and nothing about what the mathematics needs.";
+  kind === "assumption" ? "Nothing: the argument takes this as given." : "The argument as written stops here. Its links were drawn only this far, which says nothing about what the mathematics needs.";
 
 /** A relation's name in the interface (DESIGN.md, Relations). */
 export function relationName(kind: string): string {

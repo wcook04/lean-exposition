@@ -87,7 +87,7 @@ export function FrontPage() {
                 <Rich src="No. Every minimiser increases across every interval in $[0,1)$, and its derivative is positive between $0$ and $1$. OpenAI (2026a) proved both; H.‑B. Chen (2026) had already proved that there are no flat stretches, by a different method." />
               </p>
               <p className="asked__where">
-                Explained in all three accounts:{" "}
+                Explained in all three papers:{" "}
                 <a href={routeHref({ view: "read", stage: "expository" })}>the exposition</a>,{" "}
                 <a href={routeHref({ view: "read", stage: "short", anchor: "model-and-result" })}>the short paper</a> and{" "}
                 <a href={routeHref({ view: "read", stage: "long", anchor: "model-and-three-targets" })}>the long record</a>.{" "}
@@ -130,7 +130,7 @@ export function FrontPage() {
       <section className="front__band checksband" aria-labelledby="front-checks">
         <div className="checksband__words">
           <h2 id="front-checks" className="front__bandtitle">
-            What has been checked
+            What ran on this proof
           </h2>
           <p className="front__text">
             OpenAI’s repository has two statements written in Lean, each with a Lean proof: one of the full-support theorem, which
@@ -143,12 +143,11 @@ export function FrontPage() {
               </>
             )}
             Comparator tests a proof against a separately written statement; it has accepted neither statement, and the second
-            statement has no successful build on record. The failed and interrupted runs are listed with the others.
+            statement has no successful build on record. The failed and interrupted runs are listed on the same page as the others.
           </p>
           <p className="front__text">
             An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind
-            the curvature estimate; it does not check the analysis around that identity. The statements in each account were
-            checked against its sources, by AI agents for the exposition and the long record. No independent mathematical review
+            the curvature estimate; it says nothing about the analysis around that identity. The statements in each paper were compared with its sources, by AI agents for the exposition and the long record. No independent mathematical review
             has been done.
           </p>
         </div>
@@ -182,10 +181,10 @@ export function FrontPage() {
             <a href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`} target="_blank" rel="noopener">
               PDF, {plural(PAPER_PDFS.architecture.pages, "page")}
             </a>
-            ) explains why the result is written up this way.
+            ) gives the reasons for writing the result up this way.
           </li>
           <li>
-            <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, as part of{" "}
+            <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, for{" "}
             <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help
             people follow what AI produces. How this site fits with his other projects, with links to his videos, is on the
             About page.
@@ -198,7 +197,7 @@ export function FrontPage() {
           <a href={routeHref({ view: "about" })}>About this site</a>
           <a href={routeHref({ view: "about", anchor: "edition" })}>Edition and citation</a>
           <span className="front__byline">
-            Made by <a href={routeHref({ view: "about", anchor: "made-by" })}>{AUTHOR}</a>, part of <Out href={LINKS.plectis}>Plectis</Out>
+            Made by <a href={routeHref({ view: "about", anchor: "made-by" })}>{AUTHOR}</a> for <Out href={LINKS.plectis}>Plectis</Out>
           </span>
         </div>
         <SisterSites />
@@ -222,7 +221,7 @@ function ReaderStill() {
           A paper beside its Lean
         </h2>
         <p>
-          The picture shows Theorem 1 of the short paper, clicked. The Lean opens at the lines that state it, and the paper stays where it is.
+          In the picture, a reader has clicked Theorem 1 of the short paper. The Lean has opened at the lines that state the theorem, and the paper has not moved.
         </p>
         {ties && (
           <p>
@@ -310,7 +309,7 @@ function TechnicalExplanation() {
           <p>
             The estimate is the hard step. OpenAI proves it from sign properties of a backward equation and a forward
             probability density, combined with an explicit polynomial identity with rational coefficients. The short paper and
-            the exposition cite it; the long record reconstructs its parts.
+            the exposition cite it; the long record reconstructs its components.
           </p>
         </div>
         <figure className="front__fig">
@@ -360,10 +359,10 @@ function CheckTable() {
   return (
     <>
       <table className="checktable">
-        <caption className="visually-hidden">The checks this site records, by kind and outcome</caption>
+        <caption className="visually-hidden">The runs this site records, by kind and outcome</caption>
         <thead>
           <tr>
-            <th scope="col">Kind of check</th>
+            <th scope="col">Kind of test</th>
             {COLUMNS.map((status) => (
               <th key={status} scope="col" className="checktable__n">
                 {STATUS_WORDS[status].replace(/^./, (c) => c.toUpperCase())}
@@ -388,8 +387,7 @@ function CheckTable() {
         </tbody>
       </table>
       <p className="checktable__note">
-        A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a Lean
-        project compiles.{" "}
+        Each row counts one kind of recorded test, for example whether a cited file still has its recorded hash or whether a Lean project compiles.{" "}
         {ties && (
           <>
             AI agents also marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean,
@@ -398,7 +396,7 @@ function CheckTable() {
         )}
         {leanLinks && <>They made {leanLinks.links} links from steps to Lean, reaching {leanLinks.declarations} declarations. </>}
         {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. In a random {audit.sampled} read blind afterwards, {audit.right} were right, {audit.loose} loose and {audit.wrong} wrong, and those were corrected too.</>}
-        A program confirms that each one still lands. No independent mathematician has reviewed them.
+        A program confirms that both ends of each one still exist. No independent mathematician has reviewed them.
       </p>
     </>
   );

@@ -209,7 +209,7 @@ describe("the Lean page", async () => {
     show({ via: "follow", record, tie: 0 });
     expect(container.querySelector(".lean-page__state")!.textContent).toBe("Following the text");
     show({ via: "follow", topics: [record] });
-    expect(container.textContent).toContain("This passage discusses");
+    expect(container.textContent).toContain("Steps in this passage");
     expect(container.querySelectorAll(".lean-page__topics button").length).toBe(1);
     show({ via: "follow" });
     expect(container.textContent).toContain("Nothing in this stretch of the paper is tied to the Lean.");

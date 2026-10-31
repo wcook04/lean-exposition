@@ -833,7 +833,7 @@ const GoalMenu = forwardRef<
       }}
     >
       <span className="goal-menu__label" id={`${id}-label`}>
-        Argument for
+        In the Sherrington–Kirkpatrick (SK) model, argument for
       </span>
       <button
         ref={button}

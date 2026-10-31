@@ -58,7 +58,7 @@
             53,
             54
           ],
-          "note": "The Support proof uses a square-root deficit here. The Value proof of contact uses the bounded gradient, closer to this sentence.",
+          "note": "The support model's proof uses a square-root deficit here. The scalar model's proof of contact uses the bounded gradient, closer to this sentence.",
           "relation": "states"
         }
       ]
@@ -126,7 +126,7 @@
             91,
             93
           ],
-          "note": "The same Hamiltonian as the Support files write it.",
+          "note": "The same Hamiltonian, as written in the support model.",
           "relation": "defines"
         }
       ]
@@ -164,7 +164,7 @@
             237,
             238
           ],
-          "note": "Scalar model. The limit exists; this proves it.",
+          "note": "Scalar model. This declaration proves that the limit exists.",
           "relation": "part"
         }
       ]
@@ -207,7 +207,7 @@
             65,
             68
           ],
-          "note": "The bound is in the Lean and drives the gap exclusion. The second use, pointwise positivity, is outside it.",
+          "note": "The bound is in the Lean and is used in the gap exclusion. The second use, pointwise positivity, is outside it.",
           "relation": "proof"
         }
       ]
@@ -281,7 +281,7 @@
             12,
             12
           ],
-          "note": "Measures live on the subtype Time, so support is taken there.",
+          "note": "Measures are defined on the subtype Time, so support is taken there.",
           "relation": "defines"
         }
       ]
@@ -553,7 +553,7 @@
             15,
             16
           ],
-          "note": "Strip quantities carry a cutoff T in Time, so T<1; the moment identities are proved on these.",
+          "note": "Strip quantities have a cutoff T in Time, so T<1; the moment identities are proved on these.",
           "relation": "proof"
         }
       ]
@@ -1039,7 +1039,7 @@
             262,
             293
           ],
-          "note": "Lean avoids G″. If the right slope of q exceeded one, G would strictly decrease past s.",
+          "note": "The Lean proof does not use G″. If the right slope of q exceeded one, G would strictly decrease past s.",
           "relation": "proof"
         },
         {
@@ -1232,7 +1232,7 @@
             137,
             149
           ],
-          "note": "This is the Value route: q≤1 stands in for right contact when b=1.",
+          "note": "This is the scalar model's route: q≤1 replaces right contact when b=1.",
           "relation": "proof"
         },
         {
@@ -1241,7 +1241,7 @@
             53,
             54
           ],
-          "note": "The Support route instead excludes terminal plateaus before any gap is chosen.",
+          "note": "The support model's proof instead excludes terminal plateaus before any gap is chosen.",
           "relation": "proof"
         }
       ]
@@ -1259,7 +1259,7 @@
             443,
             446
           ],
-          "note": "Lean does not show positivity here. It splits on c, and a zero plateau goes to the zero-gap lemma whatever the left end is.",
+          "note": "Lean does not show positivity here. It splits on c, and the zero-gap lemma covers a zero plateau whatever the left end is.",
           "relation": "proof"
         },
         {
@@ -1400,7 +1400,7 @@
             393,
             399
           ],
-          "note": "The hypotheses ask only for the right slope bound.",
+          "note": "The hypotheses state only the right slope bound.",
           "relation": "proof"
         }
       ]
@@ -1462,7 +1462,7 @@
             110,
             136
           ],
-          "note": "The Value route: convexity of the slope and q≤1 exclude a positive hump of G reaching one.",
+          "note": "The scalar model's route: convexity of the slope and q≤1 exclude a positive hump of G reaching one.",
           "relation": "proof"
         },
         {
@@ -1489,7 +1489,7 @@
             15,
             18
           ],
-          "note": "The Support route gets q<t only near one, from a square-root deficit in the second moment.",
+          "note": "The support model's proof gives q<t only near one, from a square-root deficit in the second moment.",
           "relation": "proof"
         },
         {
@@ -1498,7 +1498,7 @@
             72,
             78
           ],
-          "note": "Then G(b)<0 against contactPotential_nonneg.",
+          "note": "Then G(b)<0 contradicting contactPotential_nonneg.",
           "relation": "proof"
         }
       ]
@@ -1547,7 +1547,7 @@
             124,
             129
           ],
-          "note": "The Support proof takes the stronger path, through this estimate, rather than the curvature alone.",
+          "note": "The support model's proof uses this stronger estimate rather than the curvature alone.",
           "relation": "proof"
         }
       ]
@@ -1583,7 +1583,7 @@
             427,
             432
           ],
-          "note": "Lean argues by contradiction: a point outside the support sits in a gap with a support point to its right.",
+          "note": "The Lean proof is by contradiction: a point outside the support lies in a gap with a support point to its right.",
           "relation": "proof"
         },
         {
@@ -1740,7 +1740,7 @@
             135,
             139
           ],
-          "note": "Both sides carry an extra factor c²; divide to get this form.",
+          "note": "Both sides have an extra factor c²; divide to get this form.",
           "relation": "states"
         },
         {
@@ -1758,7 +1758,7 @@
             12,
             17
           ],
-          "note": "Scalar model, no transport to the support model: every t in (0,1), no continuity hypothesis, c right-continuous. Jets carry c, so divide by c².",
+          "note": "Scalar model, no transport to the support model: every t in (0,1), no continuity hypothesis, c right-continuous. Jets contain c, so divide by c².",
           "relation": "states"
         }
       ]
@@ -1848,7 +1848,7 @@
             27,
             29
           ],
-          "note": "The Support files keep a,b,d and pass to the rescaled polynomial here.",
+          "note": "The support model keeps a,b,d and passes to the rescaled polynomial here.",
           "relation": "proof"
         }
       ]
@@ -1971,7 +1971,7 @@
             77,
             78
           ],
-          "note": "Scalar model. The terms multiplied by γ. Lean records the combination for b²−2ca³.",
+          "note": "Scalar model. The terms multiplied by γ. Lean states the combination for b²−2ca³.",
           "relation": "part"
         }
       ]
@@ -2147,7 +2147,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape",
           "relation": "part",
-          "note": "r at finite-step data, on each step: BackwardShape bundles r_x>0, concavity, H≤0, H_x≥0. The later rows carry the conditions on s."
+          "note": "r at finite-step data, on each step: BackwardShape bundles r_x>0, concavity, H≤0, H_x≥0. The later rows state the conditions on s."
         },
         {
           "name": "OAI.ZeroTemperatureSK.Heat.BackwardShape",
@@ -2225,7 +2225,7 @@
         {
           "name": "OAI.SKValue.ForwardShape",
           "relation": "part",
-          "note": "Scalar model. The same sign is the field coupled, carried beside slope and concavity through heat steps and jumps."
+          "note": "Scalar model. The same sign is the field coupled, preserved with slope and concavity through heat steps and jumps."
         }
       ],
       "note": "The coupled sign is proved in the Lean and supplied to gaussian_shape_coercivity as hQ. That the separate shapes do not imply it is not shown."
@@ -2345,7 +2345,7 @@
             98,
             99
           ],
-          "note": "Lean needs less: only continuity of the flux at zero, because it integrates on the half-line.",
+          "note": "Lean uses less: only continuity of the flux at zero, because it integrates on the half-line.",
           "relation": "proof"
         }
       ]
@@ -2478,7 +2478,7 @@
             62,
             66
           ],
-          "note": "The square (z+Q)² absorbs z², and the z-linear part cancels through WF₂. Proof: unfold and ring.",
+          "note": "The square (z+Q)² absorbs z², and the terms linear in z cancel through WF₂. Proof: unfold and ring.",
           "relation": "part"
         },
         {
@@ -2504,7 +2504,7 @@
             62,
             66
           ],
-          "note": "The decomposition. Every term except WF₂ and the v⁴ part of remainder makes up the paper R.",
+          "note": "The decomposition. Every term except WF₂ and the v⁴ term of remainder makes up the paper R.",
           "relation": "part"
         },
         {
@@ -2855,7 +2855,7 @@
             51,
             56
           ],
-          "note": "Lean does not use Φ_xx>0. It needs a nonzero value of a somewhere and positive diffusion mass on intervals.",
+          "note": "Lean does not use Φ_xx>0. It uses a nonzero value of a somewhere and positive diffusion mass on intervals.",
           "relation": "proof"
         }
       ]
@@ -2870,7 +2870,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.actualThirdSquare_pos",
           "relation": "proof",
-          "note": "E b²>0 at every positive time. Positive diffusion mass on intervals stands in for a positive density."
+          "note": "E b²>0 at every positive time. Positive diffusion mass on intervals is used in place of a positive density."
         },
         {
           "name": "OAI.ZeroTemperatureSK.integral_pos_of_interval_support",
@@ -2878,7 +2878,7 @@
             14,
             17
           ],
-          "note": "Interval positivity of the diffusion stands in for a positive density.",
+          "note": "Interval positivity of the diffusion is used in place of a positive density.",
           "relation": "proof"
         },
         {
@@ -2895,7 +2895,7 @@
             46,
             73
           ],
-          "note": "If Φ_xxx vanished, u would be linear; boundedness and u(0)=0 kill the slope, and |x|≤Φ then fails.",
+          "note": "If Φ_xxx vanished, u would be linear; boundedness and u(0)=0 force zero slope, and |x|≤Φ then fails.",
           "relation": "part"
         }
       ]
@@ -3070,7 +3070,7 @@
             140,
             143
           ],
-          "note": "Scaled by c²: both sides carry that extra factor. The limit of the sampled inequality, by comparing limits.",
+          "note": "Scaled by c²: both sides have that extra factor. The limit of the sampled inequality, by comparing limits.",
           "relation": "states"
         }
       ]
@@ -3139,7 +3139,7 @@
       "role": "statement",
       "from": "**Corollary 4 (smooth positive density; [OpenAI (2026a),",
       "to": "Only nonnegativity of the density at zero is asserted.",
-      "note": "Neither formal statement contains this corollary. The ties in its proof mark the steps the Lean does have."
+      "note": "Neither formal statement contains this corollary. The highlights in its proof mark the steps that are in the Lean."
     },
     {
       "record": "scalar.smooth_positive_density",
@@ -3399,7 +3399,7 @@
             77,
             78
           ],
-          "note": "Scalar model. The terms multiplied by γ. Lean records the sum, with c frozen, so this display splits it.",
+          "note": "Scalar model. The terms multiplied by γ. Lean states the sum, with c frozen, so this display splits it.",
           "relation": "part"
         }
       ]
@@ -3900,7 +3900,7 @@
             160,
             161
           ],
-          "note": "The Lean records the limit T↑1, without the rate 1−T.",
+          "note": "The Lean states the limit T↑1, without the rate 1−T.",
           "relation": "part"
         }
       ]
@@ -4266,7 +4266,7 @@
             82,
             95
           ],
-          "note": "The rounded spin stands in for u(T,Y_N) in both coefficient vectors.",
+          "note": "The rounded spin replaces u(T,Y_N) in both coefficient vectors.",
           "relation": "part"
         },
         {
@@ -4507,7 +4507,7 @@
             90,
             92
           ],
-          "note": "The retained statement, whose proof is sorry here; Main.lean proves the same name.",
+          "note": "The retained statement, whose proof is sorry here; Main.lean proves the theorem of the same name.",
           "relation": "states"
         },
         {
@@ -4971,7 +4971,7 @@
             33,
             38
           ],
-          "note": "The Value files use a function on ℝ with the same conditions on [0,1). The two models are not transported.",
+          "note": "The scalar model uses a function on ℝ with the same conditions on [0,1). The two models are not transported.",
           "relation": "defines"
         }
       ]
@@ -5316,7 +5316,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.full_support",
           "relation": "contains",
-          "note": "Takes a minimiser as the hypothesis hmin. Its conclusion also carries the moment identities.",
+          "note": "Takes a minimiser as the hypothesis hmin. Its conclusion also includes the moment identities.",
           "file": "OAI/Probability/SKSupport/Main.lean"
         },
         {
@@ -6190,7 +6190,7 @@
       "from": "The two formal models have not been transported",
       "to": "into one another in this record.",
       "lean": [],
-      "note": "Not in the Lean: this records an absence. The Support and scalar models define their objects separately, and no Lean theorem connects them."
+      "note": "Not in the Lean: the support and scalar models define their objects separately, and no Lean theorem connects them."
     }
   ]
 }

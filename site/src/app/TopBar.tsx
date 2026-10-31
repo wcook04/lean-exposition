@@ -1,5 +1,5 @@
 // The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), five jobs
-// (Read first, then Map, Compare, Checks and a quiet Lean index), About as a quieter link, search and
+// (Read first, then Map, Compare, What ran and a quiet Lean index), About as a quieter link, search and
 // the scheme. Read is a menu button listing the three accounts with the job each one
 // does, then the front page's shelf of papers and PDFs. On phones the same items
 // sit behind one menu button so the bar never clips.
@@ -20,9 +20,9 @@ interface Props {
 
 /** One line on what each account is for, as the Read menu says it. */
 export const ACCOUNT_JOBS: Record<Stage, string> = {
-  expository: "explains the ideas with worked examples",
-  short: "states and proves the result, for specialists",
-  long: "reconstructs each step and names its source",
+  expository: "the ideas, with worked examples",
+  short: "the result and its proof, for specialists",
+  long: "each step, with its source",
 };
 
 /** Where a page may put one line of its own in the bar. */
@@ -73,8 +73,8 @@ export function TopBar({ route, onSearch }: Props) {
           which lists every website and film; the rule parts it from this site's mark and name,
           which open this site's front page. */}
       <span className="fam-lockup">
-        <a className="fam-lockup__home" href={FAMILY.owner.home} rel="author" title="All of Will Cook's websites and films">
-          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="Will Cook: all websites and films" width={26} height={26} />
+        <a className="fam-lockup__home" href={FAMILY.owner.home} rel="author" title="All of Will Cook's websites and videos">
+          <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="Will Cook: all websites and videos" width={26} height={26} />
         </a>
         <span className="fam-lockup__rule" aria-hidden="true" />
         <a className="fam-lockup__site" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
@@ -97,7 +97,7 @@ export function TopBar({ route, onSearch }: Props) {
           Compare
         </a>
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
-          Checks
+          What ran
         </a>
         <a className="topnav__job topnav__job--quiet" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
           Lean index
@@ -339,7 +339,7 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
             </li>
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
-                Checks
+                What ran
               </a>
             </li>
             <li>
@@ -390,7 +390,7 @@ function PapersLink({ className, route, onGo, menu }: { className: string; route
       {menu ? (
         <>
           <span className="readmenu__name">All papers and PDFs</span>
-          <span className="readmenu__job">every account on one shelf, with its first page</span>
+          <span className="readmenu__job">every paper on one shelf, with its first page</span>
         </>
       ) : (
         "Papers"

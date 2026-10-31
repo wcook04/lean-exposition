@@ -48,7 +48,7 @@
             419,
             424
           ],
-          "note": "The terminal case and the zero-height case arrive as their own hypotheses, hend and hzero."
+          "note": "The terminal case and the zero-height case are separate hypotheses, hend and hzero."
         }
       ]
     },
@@ -204,7 +204,7 @@
           "relation": "contains"
         }
       ],
-      "note": "A worked Gaussian integral the Lean also needs, for the terminal-value bound."
+      "note": "A worked Gaussian integral the Lean also uses, for the terminal-value bound."
     },
     {
       "record": "assumptions.qaoa_model_and_limits",
@@ -224,7 +224,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.expectedSKMaximum",
           "relation": "defines",
-          "note": "Support model. The maximum sits inside the integral: signs are chosen after each coupling draw.",
+          "note": "Support model. The maximum is inside the integral: signs are chosen after each coupling draw.",
           "clause": "∫ J, sSup (Set.range (spinHamiltonian n J)) ∂spinDisorder n",
           "file": "OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean"
         }
@@ -523,7 +523,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
           "relation": "part",
-          "note": "Lean's exchange is for finite measures only. It never needs this identity for infinite total mass.",
+          "note": "Lean's exchange is for finite measures only. It never uses this identity for infinite total mass.",
           "lines": [
             117,
             119
@@ -681,7 +681,7 @@
             109,
             110
           ],
-          "note": "For constant γ the Stieltjes part vanishes and only the atom remains. Lean does not state this case."
+          "note": "For constant γ the Stieltjes measure vanishes and only the atom remains. Lean does not state this case."
         }
       ]
     },
@@ -714,7 +714,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
           "relation": "defines",
-          "note": "Support model. Removal needs ν≤μ, the test this question asks about. Lean writes no instance here and has no scaling constructor.",
+          "note": "Support model. Removal requires ν≤μ, the condition in this question. Lean writes no instance here and has no scaling constructor.",
           "lines": [
             66,
             72
@@ -969,7 +969,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.value",
           "relation": "defines",
-          "note": "Support model. A real supremum over the Control structure, so progressive measurability is part of the index set.",
+          "note": "Support model. A real supremum over the Control structure, so every control in the index set is progressively measurable.",
           "clause": "sSup (Set.range (fun α : Control W (Real.toNNReal t) =>",
           "file": "OAI/Probability/SKSupport/Model.lean"
         },
@@ -999,7 +999,7 @@
             46,
             47
           ],
-          "note": "Support model. Both integrals carry γ, so they vanish at zero. value_on_terminal_plateau with c=0 gives the resulting formula.",
+          "note": "Support model. Both integrals contain γ, so they vanish at zero. value_on_terminal_plateau with c=0 gives the resulting formula.",
           "file": "OAI/Probability/SKSupport/Model.lean"
         }
       ]
@@ -1347,7 +1347,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.IsDiffusion",
           "relation": "defines",
-          "note": "Support model. The drift at time s reads only s and the state at s.",
+          "note": "Support model. The drift at time s depends only on s and the state at s.",
           "clause": "gradient W γ s (X (Real.toNNReal s) ω))",
           "file": "OAI/Probability/SKSupport/Model.lean"
         }
@@ -1407,7 +1407,7 @@
             41,
             43
           ],
-          "note": "The same step on a mesh: previous state, scaled Gaussian, then step times γ times gradient, both read at the left end.",
+          "note": "The same step on a mesh: previous state, scaled Gaussian, then step times γ times gradient, both evaluated at the left end.",
           "relation": "defines"
         }
       ]
@@ -1422,7 +1422,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.eulerState",
           "clause": "gradient W γ (meshTime T N j) (eulerState W γ T N j z)",
-          "note": "The gradient reads state j, which does not depend on coordinate j of the noise.",
+          "note": "The gradient depends on state j, which does not depend on coordinate j of the noise.",
           "relation": "defines"
         }
       ]
@@ -1437,7 +1437,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.IsDiffusion",
           "relation": "defines",
-          "note": "Support model. Path continuity is part of the definition. A jump of γ only changes the integrand.",
+          "note": "Support model. The definition requires path continuity. A jump of γ only changes the integrand.",
           "clause": "ContinuousOn (fun t : ℝ => X (Real.toNNReal t) ω) (Set.Icc 0 1)",
           "file": "OAI/Probability/SKSupport/Model.lean"
         }
@@ -1620,7 +1620,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.value_even",
           "relation": "part",
-          "note": "Same fact, different proof: evenness passes from finite-step approximations. Lean never reflects controls.",
+          "note": "Proved differently: evenness passes from finite-step approximations. Lean never reflects controls.",
           "lines": [
             155,
             162
@@ -1651,7 +1651,7 @@
             34,
             41
           ],
-          "note": "X_0=0 and that vanishing give the zero start; squareMoment_zero then reads it off the integrated identity.",
+          "note": "X_0=0 and u(t,0)=0 give the zero start; squareMoment_zero then obtains q(0)=0 from the integrated identity.",
           "relation": "proof"
         }
       ]
@@ -1938,7 +1938,7 @@
             91,
             93
           ],
-          "note": "The limit of the value quotients, which is the analytic content.",
+          "note": "The limit of the value quotients.",
           "relation": "proof"
         }
       ]
@@ -2129,7 +2129,7 @@
             31,
             32
           ],
-          "note": "Lean tracks the changed problem here: γ's gradient along a drift mixing both coefficients, whose limit is mixedQ_perturbation_limit.",
+          "note": "For the changed problem, the Lean uses γ's gradient along a drift mixing both coefficients, whose limit is mixedQ_perturbation_limit.",
           "relation": "proof"
         }
       ]
@@ -2253,7 +2253,7 @@
             219,
             219
           ],
-          "note": "Nonpositive by removal, nonnegative by sign.",
+          "note": "The integral is nonpositive by removal and nonnegative by sign.",
           "relation": "proof"
         }
       ]
@@ -2303,7 +2303,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
           "clause": "(hν : ν ≤ μ)",
-          "note": "Lean's removal has this hypothesis: only mass already in μ can go.",
+          "note": "Lean's removal has this hypothesis: only mass already in μ can be removed.",
           "relation": "defines"
         }
       ]
@@ -2461,7 +2461,7 @@
             291,
             293
           ],
-          "note": "G falls below zero, against nonnegativity.",
+          "note": "G falls below zero, contradicting nonnegativity.",
           "relation": "proof"
         }
       ]
@@ -2628,7 +2628,7 @@
             366,
             368
           ],
-          "note": "Lean says this with the mean value theorem: some point has slope exactly one.",
+          "note": "Lean states this with the mean value theorem: some point has slope exactly one.",
           "relation": "proof"
         }
       ]
@@ -2699,7 +2699,7 @@
             84,
             90
           ],
-          "note": "The strict sign, from the quantitative bound. Only this reaches positive_gap_curvature.",
+          "note": "The strict sign, from the quantitative bound. positive_gap_curvature uses only this.",
           "relation": "part"
         },
         {
@@ -2708,7 +2708,7 @@
             51,
             51
           ],
-          "note": "What the gap argument receives: positivity, with no constant."
+          "note": "The gap argument uses positivity, with no constant."
         }
       ]
     },
@@ -2725,7 +2725,7 @@
             51,
             56
           ],
-          "note": "Lean needs less: a not identically zero, and every interval charged by X_t. No pointwise a>0.",
+          "note": "Lean uses less: a not identically zero, and every interval charged by X_t, with no pointwise a>0.",
           "relation": "part"
         }
       ],
@@ -2806,7 +2806,7 @@
             361,
             368
           ],
-          "note": "Lean's contradiction: the mean value theorem gives slope one somewhere, against q'<1.",
+          "note": "Lean's contradiction: the mean value theorem gives slope one somewhere, while q'<1.",
           "relation": "proof"
         }
       ],
@@ -2895,7 +2895,7 @@
             77,
             79
           ],
-          "note": "Lean uses something more general: for any γ, at positive time, X_t charges every open interval. No density and no X=B.",
+          "note": "Lean uses a more general fact: for any γ, at positive time, X_t charges every open interval, with no density and no X=B.",
           "relation": "part"
         }
       ]
@@ -2967,7 +2967,7 @@
             37,
             44
           ],
-          "note": "Different finish: zero gradient makes the value constant, then x=value+1 contradicts |x|≤value. No tail slopes.",
+          "note": "The proof ends differently: zero gradient makes the value constant, then x=value+1 contradicts |x|≤value, with no tail slopes.",
           "relation": "proof"
         }
       ]
@@ -3103,7 +3103,7 @@
           ]
         }
       ],
-      "note": "This case and its chord argument are the paper's own; the Lean folds empty support into the terminal plateau."
+      "note": "This case and its chord argument are the paper's own; the Lean covers empty support within the terminal plateau case."
     },
     {
       "record": "support.empty_support_chord_obstruction",
@@ -3174,7 +3174,7 @@
       "from": "We have",
       "to": "strictly convex on $(r,1)$.",
       "after": "positive, by the same mass argument as in Section 5.3. ",
-      "note": "SKSupport's terminal proof uses none of these three facts. The scalar contact proof uses slope convexity and q≤1."
+      "note": "The support model's terminal proof uses none of these three facts. The scalar contact proof uses slope convexity and q≤1."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -3204,7 +3204,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.terminal_plateau_q_lt_near_one",
           "relation": "proof",
-          "note": "Lean gets q<t only near one, from the square-root defect, with no convexity.",
+          "note": "The Lean proof gives q<t only near one, from the square-root defect, with no convexity.",
           "lines": [
             15,
             18
@@ -3213,14 +3213,14 @@
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
           "relation": "proof",
-          "note": "G(b)<0 at that nearby b, against contactPotential_nonneg. Lean does not reach the left end r.",
+          "note": "G(b)<0 at that nearby b, contradicting contactPotential_nonneg. Lean does not reach the left end r.",
           "lines": [
             72,
             78
           ]
         }
       ],
-      "note": "Same conclusion, different proof: SKSupport follows the source's terminal estimate rather than this chord barrier."
+      "note": "The support model proves the same conclusion by the source's terminal estimate rather than this chord barrier."
     },
     {
       "record": "support.terminal_defect",
@@ -3348,7 +3348,7 @@
             53,
             54
           ],
-          "note": "The result the question asks you to explain. Its proof differs from the chord argument of Section 5.4."
+          "note": "The result Question 4 is about. Its proof differs from the chord argument of Section 5.4."
         }
       ]
     },
@@ -3451,7 +3451,7 @@
       "role": "explanation",
       "from": "We will show that $q$ stays below the diagonal throughout the gap,",
       "to": "The proof has two steps.",
-      "note": "SKSupport also finds q below t, but only near one, by a different estimate."
+      "note": "The support model also finds q below t, but only near one, by a different estimate."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -3530,7 +3530,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.value_integral_rate",
           "relation": "part",
-          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it asks nothing at jumps of γ. Terminal value: third tab.",
+          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it imposes no condition at jumps of γ. Terminal value: third tab.",
           "lines": [
             92,
             94
@@ -3620,7 +3620,7 @@
           "relation": "proof"
         }
       ],
-      "note": "The Lean takes a weak route: it never writes a stochastic differential in this proof."
+      "note": "The Lean proof here is in weak form: it never writes a stochastic differential."
     },
     {
       "record": "support.moment_identity",
@@ -3966,7 +3966,7 @@
             135,
             140
           ],
-          "note": "The same zero: Lean integrates the flux on x>0, where r(0)=0 kills the boundary term, then reflects.",
+          "note": "The same zero: Lean integrates the flux on x>0, where r(0)=0 removes the boundary term, then reflects.",
           "relation": "proof"
         },
         {
@@ -4007,7 +4007,7 @@
       "from": "Although $2x^2-1$ is negative near zero,",
       "to": "Hence $\\mathbb E[2Z^2-1]=1>0$.",
       "lean": [],
-      "note": "Not in the Lean: this example. The same move on the real polynomial is inside gaussian_shape_coercivity, with certDivergence as the correction."
+      "note": "Not in the Lean: this example. The same step on the proof's polynomial is inside gaussian_shape_coercivity, with certDivergence as the correction."
     },
     {
       "record": "support.flux_identity",
@@ -4174,7 +4174,7 @@
           "relation": "proof"
         }
       ],
-      "note": "Different device: the Lean samples and takes limits rather than freezing the plateau value."
+      "note": "The Lean proof samples and takes limits rather than freezing the plateau value."
     },
     {
       "record": "support.plateau_transfer",
@@ -4328,7 +4328,7 @@
       "from": "Changing the coefficient after $1/2$ leaves $X_{1/4}=B_{1/4}$:",
       "to": "its drift has been zero up to that time.",
       "lean": [],
-      "note": "Not in the Lean: it has no lemma for this example. IsDiffusion's drift carries γ on [0,t], so zero γ there would give X_t=B_t."
+      "note": "Not in the Lean: it has no lemma for this example. IsDiffusion's drift contains γ on [0,t], so zero γ there would give X_t=B_t."
     },
     {
       "record": "support.moment_identity",
@@ -4389,7 +4389,7 @@
       "role": "example",
       "from": "**[Question 4](#question-4).** Set $h=q'-1$.",
       "to": "contradict the conditions on a minimiser.",
-      "note": "This repeats the chord proof of Section 5.4, which SKSupport does not use and the scalar contact proof does."
+      "note": "This repeats the chord proof of Section 5.4, which the support model does not use and the scalar contact proof does."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -4975,7 +4975,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.SupportDeterministic.support_cofinal_of_no_terminal_plateau",
           "relation": "part",
-          "note": "The case reaching one: with no terminal plateau there is support beyond every point, so empty support goes too.",
+          "note": "The case reaching one: with no terminal plateau there is support beyond every point, so empty support is excluded too.",
           "lines": [
             123,
             127
@@ -5131,7 +5131,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.diffusion_interval_pos",
           "relation": "part",
-          "note": "Lean uses something more general: for any γ, at positive time, X_t charges every open interval. No density and no X=B.",
+          "note": "Lean uses a more general fact: for any γ, at positive time, X_t charges every open interval, with no density and no X=B.",
           "lines": [
             77,
             79
@@ -5158,7 +5158,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.curvature_not_identically_zero",
           "relation": "proof",
-          "note": "Different finish: zero gradient makes the value constant, then x=value+1 contradicts |x|≤value. No tail slopes.",
+          "note": "The proof ends differently: zero gradient makes the value constant, then x=value+1 contradicts |x|≤value, with no tail slopes.",
           "lines": [
             37,
             44
@@ -5191,7 +5191,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
           "relation": "states",
-          "note": "Same conclusion for the Lean minimizer, covering c=0.",
+          "note": "Same conclusion for the Lean minimiser, covering c=0.",
           "lines": [
             53,
             54
@@ -5251,7 +5251,7 @@
             94
           ],
           "relation": "part",
-          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it asks nothing at jumps of γ."
+          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it imposes no condition at jumps of γ."
         }
       ]
     },
@@ -5544,7 +5544,7 @@
         {
           "name": "OAI.SKValue.FiniteGaussianConclusion",
           "relation": "defines",
-          "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit.",
+          "note": "The three clauses: normaliser positivity, mesh limit and endpoint limit.",
           "lines": [
             155,
             161
@@ -5598,7 +5598,7 @@
         {
           "name": "OAI.SKValue.FiniteGaussianConclusion",
           "relation": "defines",
-          "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit.",
+          "note": "The three clauses: normaliser positivity, mesh limit and endpoint limit.",
           "lines": [
             155,
             161

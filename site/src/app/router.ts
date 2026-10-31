@@ -335,7 +335,7 @@ export function placeOf(route: Route): string {
     case "read":
       return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
     case "checks":
-      return "Checks";
+      return "What ran";
     case "compare":
       return "Compare";
     case "lean":

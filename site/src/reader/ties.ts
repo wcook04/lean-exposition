@@ -297,7 +297,7 @@ export function leanTruth(model: TieModel, t: number, alignment: Alignment | nul
     return { lean: false, words: note ?? "No Lean linked.", note };
   }
   const relation = tie.relation ?? statement?.lean?.[0]?.relation;
-  return { lean: true, words: relation === "part" ? "Lean covers part of this" : "Has Lean", note: null };
+  return { lean: true, words: relation === "part" ? "The Lean has some of this" : "Has Lean", note: null };
 }
 
 /** The records a passage discusses, whether or not any sentence of it is tied exactly. */

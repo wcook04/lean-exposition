@@ -350,7 +350,7 @@ export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: Lea
               Lean reports <code>sorry</code> in this declaration.{" "}
             </>
           ) : null}
-          Lean reports {names.length ? "that it rests on the axioms " : "that it rests on no axioms."}
+          Lean reports {names.length ? "that it depends on the axioms " : "that it depends on no axioms."}
           {names.map((name, k) => (
             <span key={name}>
               {k > 0 && (k === names.length - 1 ? " and " : ", ")}

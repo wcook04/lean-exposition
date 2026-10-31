@@ -29,7 +29,7 @@ describe("check rows keep outcomes distinct", () => {
       card("comparator", "failed", 0),
     ];
     const note = editionNote(cards);
-    expect(note).toContain("Most recorded checks on this site have not been run (6 of 8).");
+    expect(note).toContain("Most run records on this site describe a run that has not happened (6 of 8).");
     expect(note).not.toMatch(/%|verified/);
     const reviewed = editionNote([card("semantic_review", "passed", 0), card("lean_build", "not_run", 0), card("comparator", "failed", 1)]);
     expect(reviewed).toContain("the reviewer is not recorded as independent");
