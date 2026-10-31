@@ -101,8 +101,8 @@ export function selectionMatches(data: Row, structure: Row, bytes: Uint8Array, s
     }) })) };
 }
 
-const documentsLoaded = new Map<string, Promise<Uint8Array>>();
-function documentFile(name: string): Promise<Uint8Array> {
+const documentsLoaded = new Map<string, Promise<Uint8Array<ArrayBuffer>>>();
+function documentFile(name: string): Promise<Uint8Array<ArrayBuffer>> {
   let value = documentsLoaded.get(name);
   if (!value) {
     value = fetch(root + name).then((r) => {
@@ -159,7 +159,7 @@ export async function staticRequest(url: string): Promise<Response> {
     return Response.json({ error: { code: "edition_mismatch", message: "Reload to open the published edition." } }, { status: 409 });
   }
   const document = route.match(/^\/papers\/([^/]+)\/document$/);
-  if (document && index.documents[document[1]]) return fetch(root + index.documents[document[1]]);
+  if (document && index.documents[document[1]]) return new Response(await documentFile(index.documents[document[1]]));
   if (route === "/search") return envelope(search(await load<SearchIndex>(index.search), params, index.snapshot.manifest_sha256));
   if (route === "/records") {
     const summary = params.get("representation") === "summary";
@@ -175,9 +175,9 @@ export async function staticRequest(url: string): Promise<Response> {
     const [data, structure, document] = await Promise.all([
       load<Row>((await responseFile(index, route, key(route, matchParams)))!),
       load<Row>(index.responses[`/papers/${stage}/structure?representation=reader`] ?? index.responses[`/papers/${stage}/structure`]),
-      fetch(root + index.documents[stage]).then((r) => r.arrayBuffer()),
+      documentFile(index.documents[stage]),
     ]);
-    return envelope(selectionMatches(data, structure, new Uint8Array(document), Number(params.get("start")), Number(params.get("end"))));
+    return envelope(selectionMatches(data, structure, document, Number(params.get("start")), Number(params.get("end"))));
   }
   const normalized = new URLSearchParams(params);
   normalized.delete("offset"); normalized.delete("limit");

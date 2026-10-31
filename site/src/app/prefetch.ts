@@ -1,26 +1,24 @@
-// Each page's code, fetched once. Pointing at or focusing a link starts the fetch, so
-// the page is usually ready by the time the click lands; nothing loads until then.
+// Each page's code, fetched once. The page being opened starts at once, so its code and
+// its data download together. Pointing at or focusing a link starts that page's fetch, so
+// it is usually ready by the time the click lands.
 
 import { useEffect } from "react";
+import { code, type Code } from "./code";
 import { parseRoute, type Route } from "./router";
 
 export const PAGES = {
-  home: () => import("../home/FrontPage"),
-  map: () => import("../map/MapPage"),
-  read: () => import("../reader/ReaderPage"),
-  compare: () => import("../compare/ComparePage"),
-  lean: () => import("../lean/LeanPage"),
-  checks: () => import("../checks/ChecksPage"),
-  about: () => import("../reader/AboutPage"),
-  search: () => import("../search/SearchPage"),
-} satisfies Partial<Record<Route["view"], () => Promise<unknown>>>;
+  home: code(() => import("../home/FrontPage")),
+  map: code(() => import("../map/MapPage")),
+  read: code(() => import("../reader/ReaderPage")),
+  compare: code(() => import("../compare/ComparePage")),
+  lean: code(() => import("../lean/LeanPage")),
+  checks: code(() => import("../checks/ChecksPage")),
+  about: code(() => import("../reader/AboutPage")),
+  search: code(() => import("../search/SearchPage")),
+} satisfies Partial<Record<Route["view"], Code<unknown>>>;
 
-const started = new Set<string>();
-
-function prefetch(view: Route["view"]): void {
-  if (started.has(view) || !(view in PAGES)) return;
-  started.add(view);
-  void PAGES[view as keyof typeof PAGES]().catch(() => started.delete(view));
+export function prefetch(view: Route["view"]): void {
+  if (view in PAGES) PAGES[view as keyof typeof PAGES].start();
 }
 
 /** Start fetching the page behind any link of this site that the reader points at or tabs to. */

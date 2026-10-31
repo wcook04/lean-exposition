@@ -9,7 +9,7 @@
 // From 1280px the argument map stands beside the paper unless the reader turned
 // it off; narrower, it opens as a sheet from a button.
 
-import { lazy, startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { AlignedStatement, Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
@@ -18,6 +18,7 @@ import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { sectionLabel } from "../map/TheoremPlate";
 import { alignmentResource } from "../compare/useAlignment";
+import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
 import { PaperBody, PassageBarContext, type BodyHandle, type Links, type PassageBar } from "./page/PaperBody";
 import { Inspector, type InspectorTarget } from "./page/Inspector";
@@ -70,7 +71,10 @@ import "./reader-content.css";
 import "./reader-page.css";
 
 // The pane and the map engine arrive after the paper has painted.
-const MapPane = lazy(() => import("./page/MapPane").then((m) => ({ default: m.MapPane })));
+const mapPane = code(() => import("./page/MapPane"));
+const MapPane = lazyCode(mapPane, (m) => m.MapPane);
+// Beside the paper the pane is part of the page, so its code starts with the page's.
+if (window.matchMedia?.("(min-width: 1280px)").matches) mapPane.start();
 
 type ReadRoute = Extract<Route, { view: "read" }>;
 

@@ -411,6 +411,25 @@ The interface names relations and states by what was recorded.
 Most recorded checks are "not run"; no warrant has been independently reviewed.
 Never suggest otherwise with colour, icons or wording.
 
+## Loading
+
+A page should appear as soon as its data has landed, and nothing should wait in line behind
+something else.
+
+- **Code and data start together.** Each route's HTML names its chunks, everything they
+  import, their stylesheets and the edition files that route asks for first (`routeCode` and
+  `routeData` in `vite.config.ts`). The file names are hashed, so the build reads them from the
+  edition's own index. Without these links a page's code would start only after its data had
+  arrived.
+- **Code that has arrived shows at once.** `lazy()` suspends for a tick even for a finished
+  import, and after a Suspense fallback React holds the next reveal back for about 300ms.
+  That delay was most of the wait on every page. Pages, the Lean viewer, the typesetter and
+  the reader's map pane go through `code()` (`src/app/code.ts`), which answers at once when the
+  module is here, and `main.tsx` starts the opened page's code before anything renders.
+- **Every preload must be used.** A link to a file nothing fetches is a wasted download, and a
+  stylesheet preload needs `crossorigin` to match the request Vite makes for it. After
+  changing what a route loads, check the console for preload warnings at laptop and phone width.
+
 ## Layout and breakpoints
 
 | Width | Map | Inspector | Reader |
