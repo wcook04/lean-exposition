@@ -8,7 +8,7 @@ import { loadPaper } from "../app/data";
 import { STAGE_ORDER } from "../app/papers";
 import { routeHref } from "../app/router";
 import { alignmentResource } from "../compare/useAlignment";
-import { rankRows, type IndexRow } from "./rank";
+import { holdsWord, rankRows, type IndexRow } from "./rank";
 
 export interface CorpusRow extends IndexRow {
   stage: Stage;
@@ -29,7 +29,7 @@ export function statementRows(alignment: Alignment): CorpusRow[] {
       const key = `${statement.paper}:${statement.start_byte}`;
       if (statement.role === "mention" || seen.has(key)) continue;
       seen.add(key);
-      rows.push({ ref: `statement:${key}`, table: "statements", label: record.short, text: statement.markdown, stage: statement.paper, papers: [statement.paper], href: STATEMENT_HREF(statement), section: statement.section, role: statement.role });
+      rows.push({ ref: `statement:${key}`, table: "statements", label: record.short, text: statement.markdown.replace(/\*\*/g, ""), stage: statement.paper, papers: [statement.paper], href: STATEMENT_HREF(statement), section: statement.section, role: statement.role });
     }
   }
   return rows;
@@ -51,7 +51,7 @@ export function paperBlocks(stage: Stage, markdown: string): CorpusRow[] {
     if (text.trim() && !HEADING.test(text.trim()) && !/^references$/i.test(section)) {
       const end = start + encoder.encode(text).length;
       // An address is not the paper's words, and its hyphens would read as word breaks.
-      rows.push({ ref: `paper:${stage}:${start}`, table: "paper", label: section, text: text.replace(/https?:\/\/[^\s)]+/g, ""), stage, papers: [stage], href: routeHref({ view: "read", stage, at: `b${start}-${end}` }), section });
+      rows.push({ ref: `paper:${stage}:${start}`, table: "paper", label: section, text: text.replace(/https?:\/\/[^\s)]+/g, "").replace(/\*\*/g, ""), stage, papers: [stage], href: routeHref({ view: "read", stage, at: `b${start}-${end}` }), section });
     }
     open = [];
   };
@@ -90,14 +90,20 @@ function papersResource(): Promise<CorpusRow[]> {
   return papers;
 }
 
+const PAPERS = ["short", "long", "expository"];
 const ROLES = ["statement", "definition", "derivation", "explanation", "example"];
 
 /** A statement of what was searched for comes before a passage that only uses the words. */
 export function orderStatements(items: readonly SearchItem[], q: string): SearchItem[] {
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
-  const named = (item: SearchItem) => Number(words.every((word) => String(item.label ?? "").toLowerCase().includes(word)));
+  const named = (item: SearchItem) => Number(words.every((word) => holdsWord(String(item.label ?? "").toLowerCase(), word)));
+  const opens = (item: SearchItem) => Number((item.matches?.[0]?.start_character ?? Infinity) < 80);
   const role = (item: SearchItem) => ROLES.indexOf(String(item.role));
-  return items.map((item, i) => ({ item, i })).sort((a, b) => named(b.item) - named(a.item) || role(a.item) - role(b.item) || a.i - b.i).map((row) => row.item);
+  const paper = (item: SearchItem) => PAPERS.indexOf(String((item.papers as string[] | undefined)?.[0]));
+  return items
+    .map((item, i) => ({ item, i }))
+    .sort((a, b) => named(b.item) - named(a.item) || role(a.item) - role(b.item) || paper(a.item) - paper(b.item) || opens(b.item) - opens(a.item) || a.i - b.i)
+    .map((row) => row.item);
 }
 
 export const searchStatements = (q: string): Promise<SearchItem[]> => statementsResource().then((rows) => orderStatements(rankRows(rows, q).get("statements") ?? [], q));

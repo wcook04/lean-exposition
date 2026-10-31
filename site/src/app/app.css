@@ -623,3 +623,14 @@ a.out::after {
 .page-message__routes span {
   color: var(--ink-2);
 }
+
+/* An address that names something this edition does not hold. */
+.address-notice {
+  margin: 0;
+  padding: 6px var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}

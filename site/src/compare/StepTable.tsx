@@ -167,7 +167,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   return (
     <div className="table">
-      <div className="table-scroll" ref={scroller} tabIndex={0} aria-label="The steps of the proof at each level" style={columns}>
+      <div className="table-scroll" ref={scroller} tabIndex={0} aria-label="The steps of the proof at each level" style={columns} data-lean={levels[0] === "lean" ? "" : undefined}>
         <div className="table-top" ref={top}>
           <header className="table-head">
             <ModeSwitch mode="table" step={current ?? main} levels={route.levels} />

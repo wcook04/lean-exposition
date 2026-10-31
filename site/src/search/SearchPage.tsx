@@ -8,7 +8,8 @@ import "katex/dist/katex.min.css";
 import type { SearchItem } from "../api/types";
 import { describeError, useEdition, useResource } from "../app/data";
 import { navigate, routeHref, type Route, type SearchType } from "../app/router";
-import { destination, destinationWords, directHref, LeanResultBody, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES } from "./results";
+import { destination, destinationWords, directHref, LeanResultBody, mainStep, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES, stepTitles } from "./results";
+import { bestMatches, leanShaped, plainSteps } from "./order";
 import { rankedSearch } from "./rank";
 import { leanNames, searchLean, type LeanHit } from "./leanNames";
 import { searchPapers, searchStatements } from "./corpus";
@@ -58,7 +59,11 @@ export function SearchPage({ route }: { route: SearchRoute }) {
   const ready = ranked.status === "ready" ? new Map<SearchType, SearchItem[]>(SEARCH_TABLES.map((t) => [t.type, ranked.value.get(t.table) ?? []])) : null;
   // Without a kind in the address, list the first kind that has matches.
   const type: SearchType | null = route.type ?? (ready ? (SEARCH_TABLES.find((t) => (ready.get(t.type)?.length ?? 0) > 0)?.type ?? null) : null);
-  const listed = type && ready ? ready.get(type) ?? [] : [];
+  const { graph, overview } = useEdition();
+  const steps = stepTitles(graph, mainStep(overview, graph));
+  const best = ready ? bestMatches({ q, steps: ready.get("records") ?? [], statements: ready.get("statements") ?? [], text: ready.get("text") ?? [] }, steps) : [];
+  const found = type && ready ? ready.get(type) ?? [] : [];
+  const listed = type === "records" ? plainSteps(found, steps) : found;
   const total = listed.length;
   const win = pageWindow(total, route.page ?? 1);
   const grand = ready ? [...ready.values()].reduce((s, list) => s + list.length, 0) : 0;
@@ -100,8 +105,22 @@ export function SearchPage({ route }: { route: SearchRoute }) {
       )}
 
       {ready && (
-        <div className={`search-body${leanHits?.[0]?.tier === 0 ? " is-exact" : ""}`}>
+        <div className={`search-body${leanShaped(q) ? " is-exact" : ""}`}>
           <div className="search-body__main">
+          {best.length > 0 && !route.page && (
+            <section className="search-results search-best" aria-labelledby="search-best-title">
+              <h2 id="search-best-title" className="search-results__title">
+                Best match
+              </h2>
+              <ol className="search-results__list">
+                {best.map((item) => (
+                  <li key={item.ref}>
+                    <Result item={item} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
           {grand === 0 && (
             <p className="search-page__status" role="status">
               Nothing in the steps or the papers contains all of these words, as whole words or the starts of words. Try fewer

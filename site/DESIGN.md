@@ -429,7 +429,8 @@ drawn with lines; more are listed, because a fan of lines into one point says no
 page lists its declarations in source order and shows the way up; a folder has its own page.
 
 **`LeanBlock`** is the one view of a declaration on every page: signature first, `Proof ▶` for the
-rest, `source` to the commit-pinned line range, axioms and `sorry` said once with where the
+rest, "Whole file" to the module's source on this site with the declaration's lines lit and Back
+returning, GitHub's commit-pinned line range as a quiet second, axioms and `sorry` said once with where the
 statement comes from (Lean's report, or a text scan, by name). Every identifier is a link: to its
 declaration's page, or to Mathlib's search page, because a name written after `open` is not a full
 name and doc-gen's `find` address would give a 404. `onName` makes a click walk in place. `lines`
@@ -438,19 +439,28 @@ moving anything; `quietLines` keeps `lines` from moving the scroller. `compact f
 340px tall.
 
 **The reading line.** Pointing at a name or focusing it shows its signature, its docstring and the
-paper's notation in one row of fixed height, at the foot of the block or in the host's
-`previewSlot`, so pointing moves nothing and covers nothing. A signature printed by Lean replaces
+paper's notation in one row of fixed height: in the top bar on the Lean pages and Compare, in the
+host's `previewSlot`, or at the foot of the block in flow. It is never sticky, so it can never sit
+over the code. Lean's column in Compare keeps a measure of 460 to 640px; on a laptop narrower
+than 1400px that leaves one paper beside it by default. A signature printed by Lean replaces
 the source text when an edition has one.
 
 The dependency edges come from the source text and say so (`dependency_source`,
 `dependency_note`), because a text parser can miss or misattribute a use. A link from a record to
 a declaration is a reading link, and the page never calls two statements equivalent.
 
+An address can name anything. A name this source does not hold gets one quiet line and the
+index, and the tab is named only from what exists. The map, the reader and Compare do the same
+through `app/AddressNotice.tsx`.
+
 ## Search
 
 "/" opens search everywhere. It is built on the first query, never at startup, from the names,
 the alignment and the three papers' Markdown, cut at blank lines with exact bytes. An exact
-declaration name comes before everything; Enter opens the first result. A result says what it
+theorem number or step title comes first, then the main result, then the papers' statements and
+the steps in plain words, then the papers' text. Raw Lean names come last unless what was typed
+has the shape of a Lean name (`search/order.ts`). British and American spellings find each
+other. Enter opens the first result. A result says what it
 is and where it stands. A hit in a paper goes there as an ordinary entry, with Back; a Lean hit
 opens in the page that registered with `hostLean` (`lean/walk.ts`), and otherwise on its own
 page.

@@ -9,6 +9,7 @@ import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
 import { FrontHero } from "../home/FrontHero";
 import { PAGES, usePrefetchOnIntent } from "./prefetch";
 import { useKeptPlace } from "./restore";
+import { AddressNotice } from "./AddressNotice";
 
 const FrontPage = lazyCode(PAGES.home, (m) => m.FrontPage);
 const MapPage = lazyCode(PAGES.map, (m) => m.MapPage);
@@ -73,6 +74,7 @@ export function App() {
         <PageTitle route={route} />
         <EditionBanner />
         <LinkedEditionNotice />
+        <AddressNotice route={route} />
         <main id="main" className="app__main" tabIndex={-1}>
           <Suspense fallback={route.view === "home" ? <FrontHero /> : <Skeleton view={route.view} />}>
             <Page route={route} onSearch={() => setSearching(true)} />
