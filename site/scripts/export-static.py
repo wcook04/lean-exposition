@@ -174,6 +174,8 @@ def export(bundle, out, *, lean_tree=None, alignment=None, oracle=Path("build/ed
             record(key_of("/lean/module", name=name), named(f"lean/module/{name}.json", data("/lean/module", name=name)))
     if alignment is not None:
         index["responses"]["/alignment"] = named("alignment.json", data("/alignment"))
+        for stage in STAGES:
+            index["responses"][f"/ties/{stage}"] = named(f"ties/{stage}.json", data(f"/ties/{stage}"))
     index["route_maps"] = {route: write(routes[route]) for route in sorted(routes)}
     # Python owns the indexed fields, row order and Unicode folding rules.
     index["search"] = write({"rows": app._search,

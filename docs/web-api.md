@@ -54,9 +54,10 @@ sources are the latest upstream versions.
 ## Response and edition contract
 
 JSON success responses have `api_version`, `snapshot` and `data`. API version
-`1.3` retains the `/api/v1` routes, default full representations and opt-in
-summary, map and matches representations, keeps passage reading guidance and adds
-the optional [Lean and alignment sidecars](#serve-the-lean-index-and-record-alignment).
+`1.4` retains the `/api/v1` routes, default full representations and opt-in
+summary, map and matches representations, keeps passage reading guidance and the
+optional [Lean and alignment sidecars](#serve-the-lean-index-and-record-alignment),
+and adds exact Lean lines to the alignment and the `/ties` routes.
 JSON is compact UTF-8;
 clients must parse fields rather than depend on whitespace or earlier ETags.
 Exact document routes still return the original captured bytes. `snapshot`
@@ -129,7 +130,8 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/lean/modules` | Lean revision, base link, toolchain, counts and modules by folder, without source |
 | `/lean/names` | One compact row per Lean declaration: name, kind, module index, first and last line |
 | `/lean/module?name=…` | One Lean module with its source and declarations |
-| `/alignment` | Where each record is stated in Lean and in each paper, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
+| `/alignment` | Where each record is stated in Lean and in each paper, with exact Lean lines for each row and statement, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
+| `/ties/long` | One paper's marked statements, compact enough for first paint; `short` and `expository` work likewise |
 
 Record tables are `nodes`, `edges`, `sources`, `citations` and `evidence`.
 Relation families are `declarations`, `arguments`, `citations`, `platform` and
@@ -236,10 +238,11 @@ lean-exposition serve build/qaoa-sk-authored \
 
 `--lean-tree` takes a Lean tree or a JSON file from
 `lean-exposition lean-index <tree> --out index.json`; `create_app(...)` takes the
-same values as `lean_index=` and `alignment=`. Without them, the four routes answer
+same values as `lean_index=` and `alignment=`. Without them, these routes answer
 **404**. Neither sidecar enters the bundle: `check-bundle`, the manifest hash and
 every other response stay the same. Discovery's `sidecars` object records whether
-each is available and its SHA-256, the hash of its canonical JSON.
+each is available and its SHA-256, the hash of its canonical JSON. The `/ties` routes
+are computed from the alignment and hashed under `sidecars.ties`.
 
 The index is read from source text with no Lean toolchain, and covers every
 module under `OAI/` and `ComparatorChallenges/`. Structure fields and constructors
@@ -259,8 +262,11 @@ records `dependency_source: "elaborated"` on each. Line links are
 A partial alignment directory is valid: `/alignment` covers the records authored so
 far. When serving, a failing row is left out and listed in the application's
 `alignment_errors`. `lean-exposition check-alignment <dir>` is strict and exits
-nonzero on any failure. [Record alignment](record-alignment.md) owns the format.
-Neither sidecar checks that a Lean statement and a paper statement are equivalent.
+nonzero on any failure. [Record alignment](record-alignment.md) owns the format,
+the [tie index](record-alignment.md#the-tie-index), and
+[what a reader may conclude](record-alignment.md#what-a-reader-may-conclude).
+Neither sidecar checks that a Lean statement and a paper statement are equivalent: a
+landed pointer says nothing about the mathematics, and `lines` makes it no stronger.
 
 ## Resolve a text selection
 
