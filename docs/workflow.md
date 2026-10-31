@@ -94,7 +94,7 @@ lean-exposition serve build/qaoa-sk-authored --port 8000
 
 The [web API guide](web-api.md) covers shared graph navigation, aligned
 paper passages, comparison, search, text selections in one exact version of
-the papers, and the `witness` field, which gives one recorded path connecting two records. Summary cards, compact graph maps and matches-only passage
+the papers, and the `witness_path` field, which gives one recorded path connecting two records. Summary cards, compact graph maps and matches-only passage
 queries let a frontend load detail as readers select it. The backend supplies
 the data; a frontend can choose its own graph renderer and reading interface.
 
