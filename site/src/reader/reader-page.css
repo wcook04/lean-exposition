@@ -51,8 +51,10 @@
   }
 }
 
-/* Headings land below the top bar and the location strip. */
-html:has(.reader) {
+/* Headings land below the top bar and the location strip. A class the reader sets, not
+   html:has(.reader): that puts every element of a long paper under a :has() on the root,
+   and one change of hover then walks the whole document again. */
+html.is-reading {
   scroll-padding-top: calc(var(--topbar-h) + 44px + var(--space-3));
 }
 
