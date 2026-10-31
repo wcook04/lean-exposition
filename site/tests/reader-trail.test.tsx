@@ -230,6 +230,18 @@ describe("the Lean page", async () => {
     expect(readDockShare(true)).toBe(1);
   });
 
+  it("following a statement with no Lean says so, even where its step has Lean elsewhere", () => {
+    const told = tieModel({
+      meaning: "",
+      segments: [[0, 5, [0]]],
+      ties: [{ record, role: "statement", lean: false, note: "Illustration only.", name: null, module: null, lines: null, anchor: "p", at: "b0-5" }],
+      passages: [],
+    });
+    show({ via: "follow", record, tie: 0 }, { ties: told });
+    expect(container.querySelector("[data-testid=lean]")).toBeNull();
+    expect(container.textContent).toContain("Illustration only.");
+  });
+
   it("is in Graph mode unless this reader chose Lean", () => {
     expect(readKeepLean()).toBe(false);
     saveKeepLean(true);

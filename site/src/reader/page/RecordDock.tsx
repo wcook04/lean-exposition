@@ -169,6 +169,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
   const at = tie?.at ?? null;
   const record = open.record;
   const rows = useMemo(() => {
+    // A statement with no Lean has none, whatever its step has elsewhere.
+    if (tie && !tie.lean) return [];
     const list = leanRows(alignment, record, at);
     if (list.length || !tie?.name || !tie.module) return list;
     // Before the alignment arrives the statement's own index row names its first declaration.
