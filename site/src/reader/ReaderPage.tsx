@@ -1529,7 +1529,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
         if (!link || link.target || link.hasAttribute("download") || link.dataset.external !== undefined || link.href !== window.location.href) return;
         // Reopen this exact paper passage without adding a duplicate history entry.
-        if (!route.at && !route.anchor) return;
+        if (!route.at && !route.anchor && !route.node) return;
         event.preventDefault();
         if (route.at || route.node) void landSlice(route.at, { node: route.node, smooth: true });
         else if (route.anchor) void jumpTo(route.anchor, { smooth: true });
