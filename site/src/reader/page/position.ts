@@ -9,7 +9,7 @@
 // reader left, separately from Back and from closing the visit.
 
 import type { Stage } from "../../api/types";
-import { arrivedBy, entryKey } from "../../app/trail";
+import { arrivedBy, entryKey, readEntryOf, writeEntry } from "../../app/trail";
 
 export interface ReadingPosition {
   /** The edition the offsets were measured in; another edition's position is not reused. */
@@ -19,6 +19,17 @@ export interface ReadingPosition {
   /** A stable name for the part: its passage anchor or first heading id. */
   partId?: string;
   offset: number;
+  /**
+   * The line in the window the offset was measured from. Coming back, the same
+   * text lands on the same line even if the strip above the paper has changed height.
+   */
+  top?: number;
+  /**
+   * The block of the part's text under that line, and how far into it. A part can
+   * run to thousands of pixels and its height settle late; the block cannot move
+   * under the reader's eyes that way.
+   */
+  block?: { index: number; offset: number };
 }
 
 export interface VisitOrigin {
@@ -31,7 +42,7 @@ export interface VisitOrigin {
   label: string;
 }
 
-const PREFIX = "lx-read:";
+const ENTRY_NAME = "reading";
 
 function state(): Record<string, unknown> {
   return (window.history.state ?? {}) as Record<string, unknown>;
@@ -69,23 +80,14 @@ export function restoreKey(): string | null {
   return typeof r === "string" ? r : null;
 }
 
-export function savePosition(key: string, position: ReadingPosition): void {
-  try {
-    sessionStorage.setItem(PREFIX + key, JSON.stringify(position));
-  } catch {
-    /* Storage can be unavailable (private windows); Back then opens at the anchor. */
-  }
+/** Keep the reading position in the entry on screen. */
+export function savePosition(position: ReadingPosition): void {
+  writeEntry(ENTRY_NAME, position);
 }
 
 export function loadPosition(key: string): ReadingPosition | null {
-  try {
-    const raw = sessionStorage.getItem(PREFIX + key);
-    if (!raw) return null;
-    const value = JSON.parse(raw) as ReadingPosition;
-    return typeof value.part === "number" && typeof value.offset === "number" ? value : null;
-  } catch {
-    return null;
-  }
+  const value = readEntryOf<ReadingPosition>(key, ENTRY_NAME);
+  return value && typeof value.part === "number" && typeof value.offset === "number" ? value : null;
 }
 
 /**
@@ -104,6 +106,24 @@ export function partOfPosition(
     if (found) return found.index;
   }
   return position.part >= 0 && position.part < here.parts.length ? position.part : null;
+}
+
+/** The block of a part's text at a line of the window. */
+export function blockAtLine(part: Element, line: number): ReadingPosition["block"] {
+  const text = part.querySelector(":scope > .part__text");
+  const blocks = text ? Array.from(text.children) : [];
+  for (let index = 0; index < blocks.length; index++) {
+    const box = blocks[index].getBoundingClientRect();
+    if (box.bottom > line) return { index, offset: line - box.top };
+  }
+  return undefined;
+}
+
+/** The window's scroll that puts a saved position back on its line, as the part now lays out. */
+export function scrollForPosition(part: Element, position: ReadingPosition, line: number): number {
+  const block = position.block && part.querySelector(":scope > .part__text")?.children[position.block.index];
+  const top = block ? block.getBoundingClientRect().top + position.block!.offset : part.getBoundingClientRect().top + position.offset;
+  return top + window.scrollY - line;
 }
 
 export function partIdOf(part: { anchor?: string; headings: { id: string }[] }): string | undefined {
