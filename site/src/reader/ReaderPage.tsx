@@ -39,7 +39,8 @@ import { RightSheet } from "./page/RightSheet";
 import { FOLLOW_HOLD, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
-import { statementFor, statementOf, stepFrom, type TieModel } from "./ties";
+import { ReaderSkeleton } from "./skeletonView";
+import { leanTruth, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
@@ -113,9 +114,7 @@ export function ReaderPage({ route }: { route: ReadRoute }) {
   }
   if (loaded.status !== "ready" || !own) {
     return (
-      <p className="reader-loading" aria-live="polite">
-        Loading the {account.toLowerCase()}…
-      </p>
+      <ReaderSkeleton words={`Loading the ${account.toLowerCase()}…`} />
     );
   }
   return <Reader key={route.stage} route={route} loaded={loaded.value} structures={structures} />;
@@ -266,7 +265,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
-  const statements = useMemo(() => new Statements(ties, doc.parts), [ties, doc]);
+  const statements = useMemo(
+    () =>
+      new Statements(ties, doc.parts, (t) => {
+        const id = ties.index.ties[t].record;
+        return `${shortTitle(id, graph.nodes.get(id)?.label ?? id)}, statement ${ties.place[t] + 1} of ${ties.stops.length}. Press Enter to open it.`;
+      }),
+    [ties, doc, graph],
+  );
   useEffect(() => () => statements.dispose(), [statements]);
 
   const bodyRef = useRef<BodyHandle>(null);
@@ -659,6 +665,48 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     statements.light("on", pin ? null : current.current);
     update.current();
   }, [pin, statements]);
+
+  // A statement with no Lean has nothing to open: what is known about that stands under it.
+  const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
+  useEffect(() => {
+    if (!pin || pin.tie === null || !pinWithoutLean) return;
+    const t = pin.tie;
+    let off = () => undefined as void;
+    let live = true;
+    void bodyRef.current?.ensure([statements.partOf(t)]).then(() => {
+      if (live) off = statements.noteUnder(t, leanTruth(ties, t, alignment).words);
+    });
+    return () => {
+      live = false;
+      off();
+    };
+  }, [pin, pinWithoutLean, statements, ties, alignment]);
+
+  // Opened from the keyboard, focus goes into the Lean, and back to the statement when it closes.
+  const openedByKey = useRef<number | null>(null);
+  const focusLean = useRef(false);
+  useEffect(() => {
+    if (pin && focusLean.current) {
+      focusLean.current = false;
+      if (pinWithoutLean) return;
+      let tries = 0;
+      const look = () => {
+        const title = document.querySelector<HTMLElement>(".lean-page__title");
+        if (title) title.focus({ preventScroll: true });
+        else if (++tries < 60) requestAnimationFrame(look);
+      };
+      look();
+      return;
+    }
+    if (!pin && openedByKey.current !== null) {
+      const t = openedByKey.current;
+      openedByKey.current = null;
+      requestAnimationFrame(() => {
+        statements.rove(t);
+        statements.first(t)?.focus({ preventScroll: true });
+      });
+    }
+  }, [pin, pinWithoutLean, statements]);
 
   const release = useCallback(() => {
     const here = hereRef.current;
@@ -1131,11 +1179,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (event.key === "j" || event.key === "k") {
         event.preventDefault();
         step(event.key === "j" ? 1 : -1);
-      } else if (event.key === "Enter" && current.current !== null) {
+      } else if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key) && target?.closest("[data-t]")) {
+        // On a statement the arrows move between statements, as j and k do.
+        event.preventDefault();
+        step(event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : -1);
+      } else if (event.key === "Enter" || (event.key === " " && target?.closest("[data-t]"))) {
         // Enter on a control belongs to that control.
         if (target && target !== document.body && !target.closest("[data-t]")) return;
+        const mark = target?.closest<HTMLElement>("[data-t]");
+        const t = mark ? statementOf(ties, Number(mark.dataset.t)) : current.current;
+        if (t === null) return;
         event.preventDefault();
-        openStatement(current.current);
+        openedByKey.current = t;
+        focusLean.current = true;
+        openStatement(t);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -1322,6 +1379,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     passageHref: links.beside,
     onPoint: pointAt,
     onPassage: (anchor: string | null, opener: HTMLElement) => openInspector(anchor, opener),
+    passagePart: (part: number) => (doc.parts[part]?.kind === "passage" ? doc.parts[part].anchor : undefined),
   };
 
   const inspector = inspect && (
@@ -1365,6 +1423,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         onBlur={() => pointAt(null)}
         inert={route.beside ? true : undefined}
       >
+        {paneOn && (
+          <a
+            className="skip-link"
+            href="#the-proof"
+            onClick={(event) => {
+              event.preventDefault();
+              const pane = document.querySelector<HTMLElement>(".map-pane");
+              const to = document.querySelector<HTMLElement>(".lean-page__title") ?? pane;
+              if (to === pane) pane?.setAttribute("tabindex", "-1");
+              to?.focus({ preventScroll: true });
+              if (pinRef.current?.tie != null) openedByKey.current = pinRef.current.tie;
+            }}
+          >
+            Skip to the Lean and the graph
+          </a>
+        )}
         <div className="reader-strip" ref={stripRef}>
           <BackControl className="reader-strip__back" />
           {mid && !outlineColumn && (
@@ -1389,7 +1463,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             <button
               type="button"
               className="control reader-strip__map"
-              aria-label={paneRoom ? "The proof beside the paper" : "Open the proof"}
               aria-pressed={paneRoom ? paneOn : undefined}
               onClick={paneRoom ? toggleMap : () => setSheetOpen(true)}
             >
@@ -1397,7 +1470,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
                 <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
               </svg>
-              <span className="reader-strip__word">Proof</span>
+              <span className="reader-strip__word">{paneOn ? "Hide graph" : "Show graph"}</span>
             </button>
           )}
           {visit && !route.beside && (
@@ -1510,7 +1583,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </div>
       )}
 
-      {!paneOn && !route.beside && (sheetOpen || !!pin || !!route.decl) && (
+      {!paneOn && !route.beside && (sheetOpen || (!!pin && !pinWithoutLean) || !!route.decl) && (
         <RightSheet phone={phone} onClose={closeSheet}>
           <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
             <MapPane {...paneProps} inModal onHide={closeSheet} />

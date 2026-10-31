@@ -67,23 +67,26 @@
 
 /* One line under the graph, in plain words, so nothing ever floats over a card. */
 .map-pane__foot {
-  --foot-h: 34px;
+  --foot-h: 46px;
   flex: none;
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  min-height: var(--foot-h);
+  height: var(--foot-h);
   padding: 0 var(--space-3) 0 var(--space-4);
   border-top: 1px solid var(--rule);
 }
 
+/* Two lines at most, in a foot of fixed height: an author's note is read whole. */
 .map-pane__line {
   flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   min-width: 0;
   margin: 0;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.35;
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   color: var(--ink-2);
@@ -135,7 +138,7 @@
   left: 0;
   right: 0;
   /* At rest it lies at the foot of the graph, just above the line that names what is lit. */
-  bottom: max(35px, calc(var(--lean-share) * 100%));
+  bottom: max(47px, calc(var(--lean-share) * 100%));
   display: grid;
   place-items: center;
   height: 11px;
@@ -167,6 +170,14 @@
   transition:
     transform 240ms var(--ease-out),
     opacity var(--t-state) var(--ease-out);
+}
+
+.map-pane--fold .lean-page {
+  height: 100%;
+}
+
+.map-pane--fold .map-pane__handle {
+  display: none;
 }
 
 /* The Lean open: head and foot give way without changing the canvas's size or camera. */

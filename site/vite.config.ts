@@ -6,6 +6,7 @@ import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
+import { readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
@@ -436,7 +437,11 @@ export default defineConfig(({ mode }) => {
         for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
           const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
-          writeFileSync(resolve(out, route, "index.html"), titled(readFileSync(shell, "utf8"), ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
+          // A paper's first paint is already the shape of the page, so nothing moves when it arrives.
+          const page = route.startsWith("read/")
+            ? readFileSync(shell, "utf8").replace('class="app__main"></main>', `class="app__main">${readerSkeletonHtml()}</main>`)
+            : readFileSync(shell, "utf8");
+          writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
         }
         writeFileSync(resolve(out, "404.html"), titled(readFileSync(shell, "utf8"), "Page not found"));
         rmSync(shell);

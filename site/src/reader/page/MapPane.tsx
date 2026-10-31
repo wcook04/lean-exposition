@@ -23,7 +23,7 @@ import { useKeptCamera } from "../../map/scene";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
-import { passageTopics, statementFor, type TieModel } from "../ties";
+import { leanTruth, passageTopics, statementFor, type TieModel } from "../ties";
 import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
 import { clampDock, DOCK_MAX, DOCK_MIN, LeanDock, readDockShare, readKeepLean, recordOfDecl, saveDockShare, saveKeepLean, type LeanOpen } from "./RecordDock";
 import { rightPreview, type Pin, type ReaderSignals } from "./rightPage";
@@ -72,10 +72,12 @@ interface Props {
   onName?(walk: LeanWalk): void;
   /** Open the steps and links of the passage being read. */
   onPassage?(anchor: string | null, opener: HTMLElement): void;
+  /** The passage a part of the paper belongs to, if it belongs to one. */
+  passagePart?(part: number): string | undefined;
   passageHref?(stage: Stage, anchor: string): string;
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, onPassage, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, outline, trail, signals, ties, pin, decl = null, declModule, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onRelease, onPoint, onName, onPassage, passagePart, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const reduced = useReducedMotion();
@@ -89,6 +91,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const follow = useSlowSignal(signals.follow);
   const pointed = useSignal(signals.point);
   const caption = useSignal(signals.caption);
+  const partAt = useSlowSignal(signals.part);
   const preview = useSignal(rightPreview);
   const anchor = follow.anchor;
   const passage = useMemo(() => passageRecords(anchor ? passageOf(structures[stage], anchor) : undefined), [anchor, structures, stage]);
@@ -100,6 +103,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const openRecord = pin?.record ?? (decl ? recordOfDecl(alignment, decl) : null);
   // A step with no Lean does not open: the line under the graph says so.
   const pinLean = !!pin && (pin.tie !== null ? ties.index.ties[pin.tie].lean : !!recordLine(pin.record)?.lean);
+  // The Lean closed, what is said under the graph lasts as long as the pin does.
   const expanded = pinLean || !!decl || !!slot;
   /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
   const previewOnly = !!preview && !pinLean && !decl && !leanSlot;
@@ -236,22 +240,30 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const body = bodyRef.current;
     const lean = rootRef.current?.querySelector(".lean-page");
     if (!canvas || !body) return;
-    canvas.style.transform = "";
     const card = openRecord ? body.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) : null;
-    if (!card || !lean || !expanded) return;
+    // No card to show (a declaration of no step, a step not drawn here): no band of blank graph.
+    rootRef.current?.classList.toggle("map-pane--fold", expanded && !card && !slot);
+    if (!card || !lean || !expanded) {
+      canvas.style.transform = "";
+      return;
+    }
     const b = body.getBoundingClientRect();
     const l = lean.getBoundingClientRect();
-    const c = card.getBoundingClientRect();
+    // Measured where it stands now, which may be part way through gliding to the last place.
+    const now = new DOMMatrixReadOnly(getComputedStyle(canvas).transform);
+    const seen = card.getBoundingClientRect();
+    const c = { left: seen.left - now.e, right: seen.right - now.e, top: seen.top - now.f, bottom: seen.bottom - now.f };
+    // Centred in what is left of the graph, so the place is plain at a glance.
     if (isSide()) {
       const left = l.right + 8;
-      if (c.left < left || c.right > b.right - 8) canvas.style.transform = `translateX(${Math.round((left + b.right) / 2 - (c.left + c.right) / 2)}px)`;
+      canvas.style.transform = `translateX(${Math.round((left + b.right) / 2 - (c.left + c.right) / 2)}px)`;
     } else {
       // The head gives way while the Lean is open, so the band is all graph.
-      const top = rootRef.current!.getBoundingClientRect().top + 2;
-      const bottom = l.top - 12;
-      if (c.top < top || c.bottom > bottom) canvas.style.transform = `translateY(${Math.round((top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
+      const top = rootRef.current!.getBoundingClientRect().top;
+      const bottom = l.top - 11;
+      canvas.style.transform = `translate(${Math.round((b.left + b.right) / 2 - (c.left + c.right) / 2)}px, ${Math.round((top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
     }
-  }, [openRecord, expanded]);
+  }, [openRecord, expanded, slot]);
 
   useLayoutEffect(() => {
     applyShare();
@@ -272,8 +284,13 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const t = window.setTimeout(place, 380);
       return () => window.clearTimeout(t);
     }
+    // On a deep link the tree and the camera are still arriving: place it as each lands.
     const frame = requestAnimationFrame(place);
-    return () => cancelAnimationFrame(frame);
+    const later = [160, 420, 900, 1600].map((ms) => window.setTimeout(place, ms));
+    return () => {
+      cancelAnimationFrame(frame);
+      later.forEach((t) => window.clearTimeout(t));
+    };
   }, [expanded, openRecord, applyShare, place]);
 
   // The drag writes one custom property; the card moves back into view when it ends.
@@ -573,17 +590,25 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   /** One line under the graph, in plain words: what the reader is on or pointing at. */
   function lineFor(): { via: string; words: string } {
     const named = (id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id);
-    const hasLean = (id: string, t: number | null) => (t !== null ? ties.index.ties[t].lean : !!recordLine(id)?.lean);
+    /** "Has Lean: click to open it.", or the note or the plain fact where there is none to open. */
+    const says = (id: string, t: number | null, invite: string) => {
+      if (t === null) return recordLine(id)?.lean ? `${named(id)}. Has Lean: ${invite}.` : `${named(id)}. No Lean linked.`;
+      const truth = leanTruth(ties, t, alignment);
+      if (truth.lean) return `${named(id)}. ${truth.words}: ${invite}.`;
+      return truth.note ?? `${named(id)}. No Lean linked.`;
+    };
     // What is not drawn is said here, so that no note ever covers a card.
     const drawn = (id: string) => (reachOf(goal).has(id) ? "" : " Not in the argument drawn here.");
-    if (pin && !expanded) return { via: "pin", words: `${named(pin.record)}. No Lean is linked to this step.${drawn(pin.record)}` };
-    if (pointed) return { via: "point", words: `${named(pointed.record)}. ${hasLean(pointed.record, pointed.tie) ? "Has Lean: click to open it." : "No Lean linked."}${drawn(pointed.record)}` };
+    if (pin && !expanded) return { via: "pin", words: `${says(pin.record, pin.tie, "")}${drawn(pin.record)}` };
+    if (pointed) return { via: "point", words: `${says(pointed.record, pointed.tie, "click to open it")}${drawn(pointed.record)}` };
     if (caption) {
       const topics = passageTopics(ties, caption).filter((id) => graph.nodes.has(id));
       if (topics.length) return { via: "point", words: `No exact tie in this paragraph. Its passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     }
-    if (followRecord) return { via: "follow", words: `Reading: ${named(followRecord)}. ${ties.index.ties[follow.tie!].lean ? "Has Lean: click the statement or its card." : "No Lean linked."}${drawn(followRecord)}` };
-    const topics = passageTopics(ties, anchor).filter((id) => graph.nodes.has(id));
+    if (followRecord) return { via: "follow", words: `Reading: ${says(followRecord, follow.tie, "click the statement or its card")}${drawn(followRecord)}` };
+    // Past the last passage (the references, say) the nearest passage is not what is on the page.
+    const inPassage = !!anchor && passagePart?.(partAt) === anchor;
+    const topics = inPassage ? passageTopics(ties, anchor).filter((id) => graph.nodes.has(id)) : [];
     if (topics.length) return { via: "follow", words: `No exact statement here. This passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     return { via: "follow", words: "Nothing in this stretch of the paper is tied to the Lean." };
   }

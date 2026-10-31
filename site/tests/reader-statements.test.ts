@@ -56,11 +56,30 @@ describe("statements on the page", () => {
     expect(first.querySelectorAll("[data-on]").length).toBe(0);
   });
 
-  it("gives the current statement the one tab stop", () => {
+  it("keeps one tab stop, with a role and a name, which moves and stays between statements", () => {
     statements.light("on", 0);
+    const stop = () => first.querySelector<HTMLElement>("[tabindex='0']")!;
     expect(first.querySelectorAll("[tabindex='0']").length).toBe(1);
+    expect(stop().getAttribute("role")).toBe("button");
+    expect(stop().getAttribute("aria-label")).toBeTruthy();
     statements.light("on", null);
-    expect(first.querySelectorAll("[tabindex]").length).toBe(0);
+    expect(first.querySelectorAll("[tabindex='0']").length).toBe(1);
+    statements.light("on", 1);
+    expect(stop().dataset.t).toBe("1");
+    expect(first.querySelectorAll("[role='button']").length).toBe(1);
+  });
+
+  it("puts a note under a statement's last words, and takes it away", () => {
+    const off = statements.noteUnder(0, "Not in the Lean.");
+    expect(first.querySelector(".tie-note")).toBeNull();
+    const para = document.createElement("p");
+    first.querySelector(".part__text")!.append(para);
+    para.append(...first.querySelectorAll(".tie"));
+    const remove = statements.noteUnder(0, "Not in the Lean.");
+    expect(para.nextElementSibling?.textContent).toBe("Not in the Lean.");
+    remove();
+    off();
+    expect(first.querySelector(".tie-note")).toBeNull();
   });
 
   it("keeps what is lit when a part renders after it was lit", () => {

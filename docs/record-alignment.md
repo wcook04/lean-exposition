@@ -132,6 +132,10 @@ part of that Lean this one slice means:
 With only `name`, a declaration on the record keeps its row, and any other declaration
 points at its whole statement.
 
+A tie carries the first row's `relation`, so the reader can say "Lean covers part of this" for
+`part` and "Has Lean" otherwise, and a statement with `"lean": []` carries its `note`, which the
+reader shows as written where it would have said why there is no Lean.
+
 Leaving `lean` out shows the record's rows, which is a fallback: those rows are about the
 record, and nobody has said they are what this slice means. `"lean": []` says this slice
 has no Lean of its own. Use it for a passage the Lean does not contain, such as an argument

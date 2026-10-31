@@ -162,7 +162,7 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
               onJump(entry.id);
             }}
           >
-            <span className="outline__title">{sectionLabel(entry.title)}</span>
+            <span className="outline__name">{sectionLabel(entry.title)}</span>
             {!!counts?.get(entry.id)?.lean && (
               <span className="outline__ties num" title={`${counts.get(entry.id)!.lean} statements with Lean, of ${counts.get(entry.id)!.all} tied`}>
                 {counts.get(entry.id)!.lean}
@@ -172,7 +172,14 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
         </li>
       ))}
     </ol>
-    {any && !searching && <p className="outline__key">Numbers count the statements with Lean in each section.</p>}
+    {any && !searching && (
+      <p className="outline__key">
+        Numbers count the statements with Lean in each section. j and k step through the statements.{" "}
+        <button type="button" onClick={() => document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "?", bubbles: true }))}>
+          All the keys ( ? )
+        </button>
+      </p>
+    )}
     </>
   );
 }

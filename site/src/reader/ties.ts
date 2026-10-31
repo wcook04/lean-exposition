@@ -15,7 +15,7 @@
 // The passage-level fallback lives here too: any paragraph with no exact slice can still
 // say what its passage discusses.
 
-import { loadTies as fetchTies, type StatementRole, type TieIndex, type TieSegment } from "../api/lean";
+import { loadTies as fetchTies, type Alignment, type StatementRole, type TieIndex, type TieSegment } from "../api/lean";
 import type { Stage } from "../api/types";
 
 export type { Tie, TieIndex, TiePassage, TieSegment } from "../api/lean";
@@ -283,6 +283,21 @@ export function stepFrom(model: TieModel, segment: number | null, step: 1 | -1):
   if (step > 0) return model.stops.find((t) => firstSegment(t) > segment) ?? null;
   for (let i = model.stops.length - 1; i >= 0; i--) if (firstSegment(model.stops[i]) < segment) return model.stops[i];
   return null;
+}
+
+/**
+ * What is true of a statement and the Lean, in words a reader can take at face value. The tie
+ * index says it; an edition exported before it did has the same facts in the alignment.
+ */
+export function leanTruth(model: TieModel, t: number, alignment: Alignment | null): { lean: boolean; words: string; note: string | null } {
+  const tie = model.index.ties[t];
+  const statement = alignment?.records[tie.record]?.statements.find((s) => s.at === tie.at);
+  if (!tie.lean) {
+    const note = tie.note ?? statement?.note ?? null;
+    return { lean: false, words: note ?? "No Lean linked.", note };
+  }
+  const relation = tie.relation ?? statement?.lean?.[0]?.relation;
+  return { lean: true, words: relation === "part" ? "Lean covers part of this" : "Has Lean", note: null };
 }
 
 /** The records a passage discusses, whether or not any sentence of it is tied exactly. */
