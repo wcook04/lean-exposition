@@ -9,6 +9,7 @@
 // reader left, separately from Back and from closing the visit.
 
 import type { Stage } from "../../api/types";
+import { arrivedBy, entryKey } from "../../app/trail";
 
 export interface ReadingPosition {
   /** The edition the offsets were measured in; another edition's position is not reused. */
@@ -47,19 +48,14 @@ export function patchHistoryState(patch: Record<string, unknown>): void {
   }
 }
 
-/** The key of the current history entry, assigning one when it has none. */
+/** The key of the current history entry. */
 export function historyKey(): string {
-  const current = state().lxKey;
-  if (typeof current === "string") return current;
-  const key = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-  patchHistoryState({ lxKey: key });
-  return key;
+  return entryKey();
 }
 
-/** The current entry's key if it already has one (an entry returned to by Back or Forward). */
+/** The current entry's key when Back or Forward arrived at it; null on a new entry. */
 export function existingHistoryKey(): string | null {
-  const current = state().lxKey;
-  return typeof current === "string" ? current : null;
+  return arrivedBy() === "pop" ? entryKey() : null;
 }
 
 export function visitOrigin(): VisitOrigin | null {

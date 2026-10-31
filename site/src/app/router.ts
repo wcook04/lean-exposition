@@ -3,6 +3,7 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
+import { arrive, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
 
 export type Trace = "rests" | "uses";
 
@@ -225,17 +226,51 @@ function emit() {
   listeners.forEach((l) => l());
 }
 
-window.addEventListener("popstate", emit);
+window.addEventListener("popstate", () => {
+  arrive();
+  emit();
+});
 
+/**
+ * Push when what the reader is looking at changes (page, pinned record, passage,
+ * Lean declaration, search query). Replace for refinements (tabs, scroll, camera,
+ * filters). Leave hooks run first, so every link keeps its place with no special
+ * cases. Following and pointing never push.
+ */
 export function navigate(to: Route | string, options: { replace?: boolean } = {}): void {
   const href = typeof to === "string" ? to : routeHref(to);
   const next = new URL(href, window.location.href);
   if (next.href === window.location.href) return;
-  // A replaced entry keeps its state (the reader keys reading positions on it).
-  if (options.replace) window.history.replaceState(window.history.state, "", next);
-  else window.history.pushState(null, "", next);
+  if (options.replace) replaceEntry(next);
+  else pushEntry(next);
   emit();
 }
+
+/** What a page is called on the Back control when it has not named its place more exactly. */
+export function placeOf(route: Route): string {
+  switch (route.view) {
+    case "home":
+      return "the front page";
+    case "map":
+      return "the map";
+    case "read":
+      return { long: "Long paper", short: "Short paper", expository: "Exposition" }[route.stage];
+    case "checks":
+      return "Checks";
+    case "compare":
+      return "Compare";
+    case "lean":
+      return route.decl ?? "the Lean";
+    case "about":
+      return "About";
+    case "search":
+      return route.q ? `search for “${route.q}”` : "search";
+    case "missing":
+      return "the previous page";
+  }
+}
+
+setDefaultLabel((href) => placeOf(parseRoute(new URL(href))));
 
 export function useRoute(): Route {
   return useSyncExternalStore(
