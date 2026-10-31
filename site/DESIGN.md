@@ -221,54 +221,53 @@ Records that have inputs of their own are never copied.
 "/" is for someone arriving for the first time. The map is at "/map"; "/" with map
 parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
 
-- **The page teaches the result before the site.** Its mathematical prose is a
-  distillation of the three papers, not a description of the software: every claim,
-  hypothesis and attribution on it is one the papers state (see the comment at the top
-  of `src/home/FrontPage.tsx`), and mathematical prose is set in the serif.
-- **First screen.** The edition title; the theorem in words (order parameters are
-  the nondecreasing functions Parisi's formula minimises over, and a minimiser
-  increases across every interval in [0, 1) with a positive derivative); one quieter
-  line saying what the site holds; the one filled button ("Read the exposition") and
-  "Open the argument map"; beside them the first sentence of Theorem 1 as the short
-  paper typesets it, labelled as its first part. Below it, the website walkthrough and
-  mathematics film appear together, each with its thumbnail and title. On narrower
-  screens they follow the theorem in the reading order.
-- **Then, in order:** the papers on one shelf (the exposition, the short paper, the
-  long record and, smaller, the architectural companion), each standing as its real
-  first page with one line on who it is for, "Read it here" and "Open PDF, N pages"
-  (the header's "Papers" opens this shelf); what OpenAI's release asked and proved, as
-  three plain questions, each answered with who proved it, where each account explains
-  it, and its argument on the map; the technical explanation behind one disclosure (the
-  problem beside the exposition's gap figure, how the proof rules out a gap beside its
-  area figure, and what follows); the layers from OpenAI's release (family 281, its
-  manuscripts and Lean source) through the argument map, the long record, the short
-  paper and the exposition to the film on the mathematics (in preparation, planned like
-  Will Cook's walkthrough of Erdős problem #257), drawn as a stepped funnel whose
-  narrowing shows their order and not their length, each layer linked to read here or
-  as a PDF with its real page count, followed by Plectis Atlas's family page, the source
-  repository and who made the site; the argument map's drawing and key; and what has
-  been checked, stated literally. The footer names Will Cook and Plectis, then lists his
-  other websites.
-- **Who made the site.** The About page ends with it: Will Cook, Plectis and the two
-  projects closest to this one (the maths map and Plectis Atlas), the two films about
-  this result in preparation, the videos most related to this result, his channel,
-  repositories and contact page, the introduction video, and his other websites. Names
-  and addresses come from his own pages (`src/app/author.ts`); websites and films come
-  from the family registry (`src/app/family.json`), and a film without a YouTube address
-  is shown in preparation, never linked.
-- **The family's parts.** The header's lockup (the Plectis plait to the home page, a rule, then the rising-graph mark and "Lean Exposition"), the film
-  slots and the footer's sister sites are the markup of the family contract, styled by
-  `src/styles/family.css`, an unchanged copy, through the `--fam-*` names in
-  `tokens.css`. Focus on them is amber, as everywhere here; under the pointer their
-  links turn ink, like the site's own.
-- The page reads whole with the disclosure closed. The PDFs are served from the
-  repository's own renders under `pdf/`, with page counts read from the files at build
-  time (`vite.config.ts`), and open in a new tab. The shelf's pictures are the PDFs'
-  first pages, drawn as ink on a transparent ground and laid on paper in both schemes
-  (`scripts/render-paper-pages.py`); a picture that no longer matches its PDF is not
-  shown.
-- A fact true of all three accounts is said once, not on every row. Every number
-  taken from the edition is computed.
+- **The site's whole idea, in its first screen.** The proof is a table: rows are the steps
+  of the argument and columns are its levels. The hero shows one row of that table for the
+  main theorem: each clause of OpenAI's Lean beside the same clause of Theorem 1, with one
+  plain line matching them. It needs no interaction, and a reader who knows no Lean can
+  still see what the site does. `src/home/heroMarkup.ts` owns it, and
+  `tests/front-hero.test.ts` holds each Lean fragment to the exact statement in OpenAI's
+  source.
+- **The first screen is HTML.** The build types the hero and the bar into `index.html`
+  (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
+  any script or data, and reaches readers and crawlers that run no script. React takes over
+  with the same markup, so nothing moves. Its stylesheet, `hero.css`, loads with the first
+  CSS. Other routes get the bar only.
+- **Then, in order:** the two films, side by side; **one argument at four levels**
+  (`LevelsBand.tsx`): a rail of the levels from the Lean down to the exposition, each with
+  its first page, who it is for, how much of the graph it keeps and its links, beside the
+  main theorem's real argument. Pointing at a level closes the drawing up to the records
+  that level discusses. A paper can skip a step, so two kept records stay joined through
+  any skipped records between them; the drawing is that paper's own narrower graph. Every
+  tile opens that step in Compare. The rail is sticky because the drawing runs longer.
+  This band replaces three that said the same thing (the shelf of papers, the layers and
+  a still drawing), and keeps the `papers` anchor. After it come what was asked and proved;
+  the mathematics of the proof, in full, with the exposition's two figures; what follows;
+  what has been checked, with the outcomes by kind in a table; and where the material
+  comes from. The footer names Will Cook and Plectis, then lists his other websites.
+- **The mathematical prose follows the papers.** Every claim, hypothesis and attribution on
+  the page is one the papers state (see the comment at the top of `src/home/FrontPage.tsx`),
+  and mathematical prose is set in the serif. Every number from the edition is computed.
+- **Who made the site.** The About page ends with it: names and addresses come from his
+  own pages (`src/app/author.ts`); websites and films come from the family registry
+  (`src/app/family.json`), and a film without a YouTube address is shown in preparation,
+  never linked.
+- **The family's parts.** The header's lockup (the Plectis plait to the home page, a rule,
+  then the rising-graph mark and "Lean Exposition"), the film slots and the footer's sister
+  sites are the markup of the family contract, styled by `src/styles/family.css`, an
+  unchanged copy, through the `--fam-*` names in `tokens.css`. Focus on them is amber, as
+  everywhere here; under the pointer their links turn ink, like the site's own.
+- The PDFs are served from the repository's own renders under `pdf/`, with page counts read
+  from the files at build time (`vite.config.ts`), and open in a new tab. The rail's pictures
+  are the PDFs' first pages (`scripts/render-paper-pages.py`); a picture that no longer
+  matches its PDF is not shown.
+
+## The levels and the data behind them
+
+The build reads the authored alignment (`docs/record-alignment.md`) once and ships one line
+per record, `virtual:record-index`, so tile titles and level marks are there at first paint.
+The full alignment, the Lean index and the Lean modules are on-demand files: nothing about
+Lean touches the startup path.
 
 ## Inspector
 

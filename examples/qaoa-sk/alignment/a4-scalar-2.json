@@ -1,0 +1,553 @@
+{
+  "schema_version": "1.0",
+  "records": {
+    "scalar.formal_model_transport_open": {
+      "short": "Model transport unproved",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "OrderParameter",
+          "relation": "defines",
+          "note": "Scalar side of the comparison: coefficient on real time. No Lean theorem maps it to the support model."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "OrderParameter",
+          "relation": "defines",
+          "note": "Support side of the comparison: coefficient on the subtype Time. No Lean theorem maps it to the scalar model."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Once those obligations are proved, an application must use the same",
+          "to": "available without it."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The support and scalar models encode closely related control problems.",
+          "to": "an equivalence of their complete interfaces."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "The two formal models have not been transported",
+          "to": "into one another in this record."
+        }
+      ]
+    },
+    "scalar.separate_classical_algorithm": {
+      "short": "Separate classical algorithm",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The scalar Gaussian construction is not itself an algorithm",
+          "to": "[El Alaoui, Montanari and Sellke, arXiv:2001.00904v1, pp. 7–8][eams20]."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The imported operation count is",
+          "to": "a finite-precision bit-complexity bound."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "Full support and existence give an attained, strictly increasing",
+          "to": "includes no separate numerical-preprocessing or finite-precision bound."
+        }
+      ]
+    },
+    "scalar.source_strip_regularity": {
+      "short": "Concrete strip regularity",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Control/Regularity.lean",
+          "name": "sourceStripRegularity",
+          "relation": "states",
+          "note": "Holds for every Brownian space and coefficient, with no minimizer or diffusion premise."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
+          "name": "SourceStripRegularity",
+          "relation": "defines",
+          "note": "Lists the bounds: value and gradient strips, curvature bound, joint Lipschitz bounds, with constants chosen per cutoff T."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "The implementation derives compact-strip bounds",
+          "to": "before applying its fixed-strip helper."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "**Proposition 2.1 (compact-strip regularity).** For",
+          "to": "|x|\\le\\Phi_\\gamma(t,x)\n\\le |x|+\\sqrt{2(1-t)/\\pi}+\\frac12\\int_t^1\\gamma(s)\\,ds.\n$$"
+        }
+      ]
+    },
+    "scalar.source_minimizer_curvature_moment": {
+      "short": "Unit curvature moment",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
+          "name": "IsDiffusion.curvature_unit_moment_of_contact",
+          "relation": "proof",
+          "note": "Same conclusion; its premises are strip regularity and gradient contact."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Variation/MinimizerContact.lean",
+          "name": "IsMinimizer.gradient_moment_contact",
+          "relation": "proof",
+          "note": "Supplies the gradient contact premise from minimality and the diffusion."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Theorem 5.1 (full support).** In the pure zero-field SK model with",
+          "to": "$0\\le t<1$."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Thus $G$ cannot have a positive component",
+          "to": "value identities from this contact equality."
+        }
+      ]
+    },
+    "scalar.source_diffusion_exists": {
+      "short": "Diffusion constructed for every coefficient",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
+          "name": "diffusionProcess_isDiffusion",
+          "relation": "part",
+          "note": "The concrete process satisfies the diffusion predicate."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
+          "name": "exists_diffusion",
+          "relation": "part",
+          "note": "The existence consequence."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
+          "to": "clauses constructs a minimizer."
+        },
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "**The diffusion and moment identity.** For any admissible $\\gamma$, the",
+          "to": "$q'=\\mathbb E a^2$;"
+        }
+      ]
+    },
+    "scalar.source_spin_sequence_limit": {
+      "short": "Finite-spin value converges",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/BlockCoeff.lean",
+          "name": "groundStateSequence_tendsto",
+          "relation": "states",
+          "note": "Stated for the SKValueG sequence, which the scalar proof identifies with the SKValue sequence by rfl."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "H_n(\\sigma)=\\frac1{\\sqrt n}\\sum_{i<j}J_{ij}\\sigma_i\\sigma_j,\\qquad",
+          "to": "P_*=\\lim_{n\\to\\infty}\\frac1n\\mathbb E\\max_\\sigma H_n(\\sigma)."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The scalar implementation obtains the value equality by two inequalities.",
+          "to": "bound."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The\nconvergence clause establishes existence of the finite-spin limit.",
+          "to": "finite-spin limit."
+        }
+      ]
+    },
+    "scalar.source_ground_state_upper": {
+      "short": "Ground state below Parisi",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+          "name": "groundStateValue_le_parisi",
+          "relation": "states",
+          "note": "For every coefficient, with no minimizer or diffusion premise."
+        },
+        {
+          "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+          "name": "expectedMaximum_le_parisi",
+          "relation": "part",
+          "note": "The finite-spin bound for each positive n, before passing to the limit."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "A finite-profile Gaussian comparison supplies",
+          "to": "for every admissible coefficient."
+        }
+      ]
+    },
+    "scalar.source_terminal_parisi_assembly": {
+      "short": "Terminal formulas at Parisi value",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
+          "name": "IsDiffusion.parisi_value_assembly",
+          "relation": "states",
+          "note": "Premises are strip regularity, gradient contact and unit curvature moment; a minimizer supplies these at the application."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "The scalar\nterminal assembly identifies",
+          "to": "with $\\mathcal P(\\gamma)$;"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The terminal limit first gives",
+          "to": "The ground-state Parisi formula identifies this with $P_*$."
+        }
+      ]
+    },
+    "scalar.source_fixed_strip_application": {
+      "short": "Fixed-strip mesh limit",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "name": "finite_gaussian_target",
+          "relation": "contains",
+          "note": "Its conclusion also adds the terminal limit to the ground-state value."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
+          "name": "IsDiffusion.finite_gaussian_of_contact",
+          "relation": "contains",
+          "note": "Same conclusion with gradient contact as premise; this is where the suppliers are unpacked."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+          "name": "IsDiffusion.finite_gaussian_fixed_strip",
+          "relation": "proof",
+          "note": "Helper with exactly these two conclusions, taking every strip bound as a premise."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 7.1 (finite Gaussian approximation).** For a fixed minimizer",
+          "to": "The limits are taken in that order."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Hence\n$$\n\\sum_{j=0}^NA_jB_{j+1}",
+          "to": "\\longrightarrow\\int_0^T\\mathbb E a(t,X_t)\\,dt.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives",
+          "to": "inputs are not additional hypotheses of the exported clauses."
+        }
+      ]
+    },
+    "scalar.source_strip_value_lower": {
+      "short": "Strip integral below ground state",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
+          "name": "IsDiffusion.strip_value_le_groundState",
+          "relation": "states",
+          "note": "Takes gradient contact as premise; minimality supplies contact at the application."
+        },
+        {
+          "file": "OAI/Probability/SKValue/GroundState/LiteralLower.lean",
+          "name": "shiftedCoefficientSum_le_groundState",
+          "relation": "proof",
+          "note": "The bound on each shifted sum for N>0 and positive raw moments, before the mesh limit."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "At a minimizer, the separate contact and diffusion arguments establish",
+          "to": "then let $T\\uparrow1$."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "It follows that\n$$\nS_{T,N}=\\sum_{j=1}^N A_jB_{j+1}\\le P_*.",
+          "to": "positive active second moments, but no minimizer or diffusion."
+        }
+      ]
+    },
+    "scalar.source_ground_state_identity_with_diffusion": {
+      "short": "Ground state equals Parisi",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "name": "IsMinimizer.ground_state_parisi_of_diffusion",
+          "relation": "states",
+          "note": "Exact premises: a minimizer and a supplied diffusion."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
+          "name": "IsDiffusion.groundState_eq_parisi_of_contact",
+          "relation": "proof",
+          "note": "Same equality with gradient contact as premise; this proof combines the two inequalities."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "First take the mesh\nlimit to obtain $I(T)\\le P_*$, then let $T\\uparrow1$.",
+          "to": "together with $P_*\\le\\mathcal P(\\gamma)$ this proves equality."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The scalar implementation obtains the value equality by two inequalities.",
+          "to": "$P_*\\le\\mathcal P(\\gamma)$ for every admissible coefficient."
+        }
+      ]
+    },
+    "scalar.fixed_strip_error_budget": {
+      "short": "Fixed-strip error budget",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "In particular, for each fixed minimizer and $T<1$ there are finite",
+          "to": "The constants are not uniform as $T\\uparrow1$."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Combining this with the vector and rounding-endpoint estimate gives",
+          "to": "\\end{aligned}\n$$"
+        }
+      ]
+    },
+    "scalar.finite_gibbs_comparison": {
+      "short": "Finite Gibbs comparison",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "This comparison samples the exact Gibbs distribution.",
+          "to": "convergence of $\\mathbb E L_n$."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "There is also a finite probability estimate.",
+          "to": "Gibbs sample also approaches $P_*$ in joint probability."
+        }
+      ]
+    },
+    "scalar.source_gaussian_column_split": {
+      "short": "One Gaussian column split",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/GaussianColumn.lean",
+          "name": "quadraticValue_column",
+          "relation": "states",
+          "note": "Stated with quadraticValue for the paper's V; the direction v is zero or unit, as in the paper."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For a finite nonempty family of candidates $w_s$ and offsets $d_s$, define",
+          "to": "\\bigl((R_vw_s)_s,(d_s+\\langle C_v(w_s),Z\\rangle)_s\\bigr).\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Write $\\alpha=\\langle v,w\\rangle$, $\\beta=\\langle v,w'\\rangle$",
+          "to": "Thus the new field has the old joint Gaussian law."
+        }
+      ]
+    },
+    "scalar.source_finite_adaptive_lower": {
+      "short": "Finite adaptive lower bound",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/QuadraticSK.lean",
+          "name": "finite_adaptive_SK_lower",
+          "relation": "states",
+          "note": "Directions and the selected spin's offset are measurable in the revealed column history; bound is by groundStateSequence n."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Choose each zero-or-unit direction measurably from columns already",
+          "to": "Dividing the offset inequality by $n\\sqrt n$ gives a bound by $e_n$."
+        }
+      ]
+    },
+    "scalar.source_empirical_energy_limit": {
+      "short": "Empirical energy limit",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/EmpiricalEnergyLimit.lean",
+          "name": "empiricalColumnEnergy_ae_tendsto",
+          "relation": "states",
+          "note": "Limit for one index j<K; the paper sums over j. The sign is a measurable real function with square one."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Expand the revealed energy before taking its limit:",
+          "to": "almost surely.\nThis establishes the random-variable limit, but an expectation bound\nstill requires the next step."
+        }
+      ]
+    },
+    "scalar.source_predictable_lower": {
+      "short": "Predictable correlations bound",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/GroundState/ConstantFatou.lean",
+          "name": "predictable_coefficients_le_groundState",
+          "relation": "states",
+          "note": "The sign S appears as spin (F y) for a measurable Boolean F; groundStateValue is the paper's P_*."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 10.1 (predictable Gaussian comparison).** Fix $K<\\infty$",
+          "to": "rather than centring of $f_i$, is what will remove the projection terms."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Since $S^2=1$, $\\|\\widehat S_n\\|=1$ for $n>0$",
+          "to": "Cancelling $2K$ proves the claimed predictable-coefficient inequality."
+        }
+      ]
+    },
+    "scalar.minimizer_coefficient_budget": {
+      "short": "Minimizer coefficient budget",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**A coefficient budget from the first curvature moment.** Full support",
+          "to": "ground-state identification."
+        }
+      ]
+    },
+    "scalar.finite_maximum_concentration": {
+      "short": "Finite maximum concentrates",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "There is also a finite probability estimate. Every configuration has",
+          "to": "\\le2\\exp\\{-n^2s^2/(n-1)\\}.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The cited theorem is stated for the almost-sure normalized maximum.",
+          "to": "the deterministic sequence $\\mathbb E L_n$ has the same limit."
+        }
+      ]
+    },
+    "scalar.unshifted_gaussian_limit": {
+      "short": "Unshifted sum has same limit",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The same vector estimates also give an unshifted sum with this limit:",
+          "to": "the two finite pairings can differ, as [§10.4](#one-step-example) shows."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "The unshifted pairing can\nhave the same scalar limit without identifying this energy.",
+          "to": "this energy."
+        }
+      ]
+    },
+    "scalar.minimizer_total_coefficient_mass": {
+      "short": "Coefficient total mass one",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 6.2 (terminal normalization in zero field).** For the",
+          "to": "separate from the selected formal endpoints."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "First let $t\\uparrow1$ and then $\\delta\\downarrow0$. This proves",
+          "to": "\\le(1-T)m(T)=o(1-T).\n$$"
+        }
+      ]
+    },
+    "scalar.finite_maximum_unique_modulo_flip": {
+      "short": "Finite maximizer unique up to flip",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "There is a useful contrast at a fixed finite size.",
+          "to": "has one maximizing pair $\\{\\sigma_*,-\\sigma_*\\}$."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "At a fixed finite size, almost surely the only exact maximisers are",
+          "to": "probability zero; there are only finitely many pairs."
+        }
+      ]
+    }
+  }
+}

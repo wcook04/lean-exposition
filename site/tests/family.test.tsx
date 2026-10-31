@@ -192,7 +192,7 @@ describe("the header's lockup", () => {
     host?.remove();
   });
 
-  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and adds Papers to the jobs", async () => {
+  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and lists the five jobs", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     const { TopBar } = await import("../src/app/TopBar");
     host = document.createElement("div");
@@ -214,8 +214,8 @@ describe("the header's lockup", () => {
     expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
     expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
-    expect(jobs).toEqual(["Argument map", "Read", "Papers", "Checks"]);
-    expect(host.querySelector<HTMLAnchorElement>(".topnav a[href='/#papers']")!.textContent).toBe("Papers");
+    expect(jobs).toEqual(["Map", "Compare", "Read", "Lean", "Checks"]);
+    expect(host.querySelector<HTMLAnchorElement>(".readmenu a[href='/#papers']")!.textContent).toContain("All papers and PDFs");
   });
 
   it("serves the plait from beside the site, with nothing from another host", () => {

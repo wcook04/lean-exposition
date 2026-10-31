@@ -193,10 +193,21 @@ queries let a frontend load detail as readers select it. The backend supplies
 the data; a frontend can choose its own graph renderer and reading interface.
 
 The repository's own [reading website](site/README.md) is one such frontend.
-It shows the main theorem with the recorded argument beneath it, lets you
-unfold any result into what it uses, and opens the papers with each passage's
-mapped claims beside the text. It runs against a local `serve` process; its
-guide gives the commands.
+It shows the main theorem with the recorded argument beneath it and lets you
+unfold any result into what it uses. **Compare** puts one step side by side at
+every level, from the Lean declaration through the long record and short paper
+to the exposition, and aligns any two papers by the records they share. The
+reader keeps the map beside the paper as you scroll, and the Lean browser opens
+OpenAI's source with each central name explained in the papers' notation. It
+runs against a local `serve` process or as a static edition; its guide gives the
+commands.
+
+Two read-only sidecars make that comparison exact. The
+[Lean index](docs/web-api.md) lists every declaration of the vendored source
+with its text and the names it mentions, and the
+[record alignment](docs/record-alignment.md) points each record to its Lean
+declarations and to the exact slice of each paper that states it. Both are
+checked for landing in pinned bytes; neither says the mathematics matches.
 
 ## Sources and verification
 
@@ -227,7 +238,7 @@ records preserve those distinctions.
 | [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
 | [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |
 | [src/lean_exposition/](src/lean_exposition/) | Python CLI, read-only [web backend](src/lean_exposition/web.py), consumer library, packaged schemas and templates |
-| [site/](site/) · [site guide](site/README.md) | The reading website: the argument as a tree you unfold, the three papers with their mapped claims beside them, and the recorded checks, all read from the web API |
+| [site/](site/) · [site guide](site/README.md) | The reading website: the argument map, side-by-side Compare, the papers beside the map, the Lean browser and the recorded checks, all read from the web API |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
 | [scripts/](scripts/) | Repository layout/link checks, the [web benchmark](scripts/benchmark_web.py) and the [paper bookmark filter](scripts/paper_anchors.lua) |

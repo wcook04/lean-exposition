@@ -19,6 +19,16 @@ export type Route =
     }
   | { view: "read"; stage: Stage; anchor?: string; node?: string; beside?: { stage: Stage; anchor: string } }
   | { view: "checks"; node?: string }
+  | {
+      view: "compare";
+      /** The record compared across its levels. */
+      node?: string;
+      /** Two papers aligned by the records they share, instead of one record across its levels. */
+      papers?: { a: Stage; b: Stage };
+      /** Which levels show, in order, when the reader has chosen. */
+      levels?: Level[];
+    }
+  | { view: "lean"; module?: string; decl?: string }
   | { view: "about"; anchor?: string }
   | {
       view: "search";
@@ -30,6 +40,14 @@ export type Route =
       page?: number;
     }
   | { view: "missing"; path: string };
+
+/** The levels of the funnel, from the Lean down to the exposition. */
+export const LEVELS = ["lean", "long", "short", "expository"] as const;
+export type Level = (typeof LEVELS)[number];
+
+function isLevel(value: string): value is Level {
+  return (LEVELS as readonly string[]).includes(value);
+}
 
 /** The kinds of result search lists, each one table of the edition. */
 export const SEARCH_TYPES = ["records", "sections", "passages", "citations", "sources", "checks"] as const;
@@ -94,6 +112,16 @@ export function parseRoute(url: URL): Route {
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
+  if (path === "/compare/papers") {
+    const a = q.get("a");
+    const b = q.get("b");
+    return { view: "compare", node: q.get("n") ?? undefined, papers: { a: isStage(a) ? a : "short", b: isStage(b) ? b : "expository" } };
+  }
+  if (path === "/compare") {
+    const levels = q.get("levels")?.split(",").filter(isLevel);
+    return { view: "compare", node: q.get("n") ?? undefined, levels: levels?.length ? levels : undefined };
+  }
+  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined };
   if (path === "/about") return { view: "about", anchor: hash };
   if (path === "/search") {
     const type = q.get("type");
@@ -153,6 +181,22 @@ export function routeHref(route: Route): string {
     case "checks":
       if (route.node) q.set("n", route.node);
       return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
+    case "compare": {
+      if (route.papers) {
+        q.set("a", route.papers.a);
+        q.set("b", route.papers.b);
+      }
+      if (route.node) q.set("n", route.node);
+      if (route.levels) q.set("levels", route.levels.join(","));
+      const s = q.toString();
+      return `${BASE}/compare${route.papers ? "/papers" : ""}${s ? `?${s}` : ""}`;
+    }
+    case "lean": {
+      if (route.module) q.set("m", route.module);
+      if (route.decl) q.set("d", route.decl);
+      const s = q.toString();
+      return `${BASE}/lean${s ? `?${s}` : ""}`;
+    }
     case "about":
       return `${BASE}/about${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     case "search": {

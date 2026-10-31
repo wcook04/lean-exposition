@@ -1,40 +1,30 @@
-// The front page, for a reader arriving for the first time: the theorem in plain
-// words and as the short paper states it, with the film on how to use this site; the
-// papers on one shelf, each to read here or open as a PDF; what OpenAI's release asked
-// and proved, with where each result is explained here; the technical explanation
-// behind one disclosure (the problem, how the proof rules out a gap with the
-// exposition's two figures, and what follows); the layers from OpenAI's release down to
-// the exposition and the film on the mathematics, each linked, and who made the site;
-// the argument drawn by the map's own engine; and what has been checked. The
-// mathematical prose follows the papers' own statements and attributions (audited
-// against them, claim by claim). Every number taken from the edition or the PDFs is
-// computed; the films come from the family registry (app/family.json).
+// The front page, for a reader arriving for the first time. The first screen is the
+// theorem itself, clause by clause, with Lean beside the mathematics (heroMarkup.ts; the
+// build puts it in the HTML), then the two films. The levels band shows the same argument
+// narrowing from the Lean through the three papers, and doubles as the shelf of papers.
+// Then what OpenAI's release asked and proved, with where each result is explained here;
+// the mathematics of the proof with the exposition's two figures; and what has been
+// checked. The mathematical prose follows the papers' own statements and attributions
+// (audited against them, claim by claim). Every number taken from the edition or the PDFs
+// is computed; the films come from the family registry (app/family.json).
 
 import { useEffect } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
-import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { routeHref, useRoute } from "../app/router";
 import { AUTHOR, LINKS } from "../app/author";
-import { familyFilm, minutesOf } from "../app/family";
+import { familyFilm } from "../app/family";
 import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { PAPERS_ANCHOR } from "../app/TopBar";
 import { Out } from "../app/Out";
-import { EDITION_TITLE } from "../app/PageTitle";
-import { PAPER_NAMES } from "../app/papers";
-import { TheoremBody, mainGoal } from "../map/TheoremPlate";
-import { Sample, SourceSwatches } from "../map/MapKey";
-import { countsInWords } from "../checks/summary";
-import { useReadings } from "../ribbons/useReadings";
-import { StripMarks } from "../ribbons/StripMarks";
-import { ArgumentFigure } from "./ArgumentFigure";
-import { PaperShelf } from "./PaperShelf";
+import { RECORD_INDEX } from "virtual:record-index";
+import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
+import { FrontHeroBody } from "./FrontHero";
+import { LevelsBand } from "./LevelsBand";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
-import "../map/tree.css";
-import "../ribbons/dock.css";
 import "./front.css";
 
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
@@ -48,12 +38,12 @@ const QAOA_PDF = `${RELEASE}/preprints/QAOA-attains-the-SK-ground-state-energy-i
 const LEAN_SOURCE = `${RELEASE_TREE}/lean/OAI/Probability`;
 const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
-const pdfHref = (stage: Stage) => `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`;
+/** The Lean modules in the vendored tree: OpenAI's two proof trees, as the example guide counts them. */
+const LEAN_MODULES = 347;
 
 /** The films this site holds a place for, and the released film the mathematics one will be like. */
 const SITE_FILM = familyFilm("interfaces");
 const MATHS_FILM = familyFilm("sk-no-gap");
-const ERDOS_FILM = familyFilm("mathematics");
 
 export function FrontPage() {
   const route = useRoute();
@@ -62,62 +52,17 @@ export function FrontPage() {
   useEffect(() => {
     if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ block: "start" }));
   }, [anchor]);
-  const edition = useEdition();
-  const { graph } = edition;
-  const goal = mainGoal(edition);
-  const goalTitle = graph.nodes.get(goal)?.label ?? goal;
-  const readings = useReadings();
-  const shared = sharedStatus((["long", "short", "expository"] as Stage[]).map((stage) => edition.overview.papers.find((p) => p.stage === stage)));
-  // The edition's own counts, as the About page gives them: records and the links between them.
-  const recordCount = edition.overview.record_counts.nodes ?? graph.nodes.size;
-  const linkCount = edition.overview.record_counts.edges ?? graph.edges.length;
-
   return (
     <div className="front">
-      <section className="front__hero" aria-labelledby="front-title">
-        <div className="front__intro">
-          <h1 id="front-title" className="front__title">
-            {EDITION_TITLE}
-          </h1>
-          <p className="front__lede">
-            Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick spin glass as a minimum over
-            nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in
-            [0, 1), and its derivative is positive between 0{" "}and{" "}1.
-          </p>
-          <p className="front__site">
-            This site has three written accounts of the proof, with its steps linked to the passages that discuss them.
-          </p>
-          <p className="front__actions">
-            <a className="front__primary" href={routeHref({ view: "read", stage: "expository" })}>
-              Read the exposition
-            </a>
-            <a className="front__secondary" href={routeHref({ view: "map" })}>
-              Open the argument map
-            </a>
-          </p>
-        </div>
-        <div className="front__aside">
-          <figure className="front__plate">
-            <TheoremBody goal={goal} lean={false} foot={false} first />
-          </figure>
-          {/* The site walkthrough and the mathematics explanation, together at the top. */}
-          <div className="front__films">
-            <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
-            <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
-          </div>
-        </div>
-      </section>
+      <FrontHeroBody />
 
-      {/* The papers, each to read here or to open as a PDF. */}
-      <section className="front__band papers" id={PAPERS_ANCHOR} aria-labelledby="front-papers">
-        <h2 id="front-papers" className="front__bandtitle">
-          The papers
-        </h2>
-        <p className="front__text">
-          Each paper can be read on this site or opened as a PDF. {shared ?? ""}
-        </p>
-        <PaperShelf />
-      </section>
+      {/* The site walkthrough and the mathematics explanation, right under the theorem. */}
+      <div className="front__films">
+        <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
+        <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
+      </div>
+
+      <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
       {/* What was asked and proved, for any mathematical reader. Each answer and attribution
           follows the papers (short paper §§1, 5; exposition §6 and further reading; long
@@ -174,102 +119,47 @@ export function FrontPage() {
           </li>
         </ol>
 
-        <details className="tech">
-          <summary>
-            <span className="tech__label">The technical explanation</span>
-            <span className="tech__hint">The problem, how the proof rules out a gap, and what follows from it</span>
-          </summary>
-          <TechnicalExplanation />
-        </details>
       </section>
 
-      {/* The layers, from OpenAI's release down to the shortest account: each one linked,
-          to read on this site or as a PDF. The narrowing shows their order, not their length. */}
-      <section className="front__band" aria-labelledby="front-layers">
-        <h2 id="front-layers" className="front__bandtitle">
-          From OpenAI’s release to the exposition
+      <TechnicalExplanation />
+
+      <section className="front__band checksband" aria-labelledby="front-checks">
+        <div className="checksband__words">
+          <h2 id="front-checks" className="front__bandtitle">
+            What has been checked
+          </h2>
+          <p className="front__text">
+            OpenAI’s repository has two statements written in Lean, each with a Lean proof: one of the full-support theorem, which
+            assumes a minimiser, and one of the value identities and their finite Gaussian approximation. On 26 October 2026,
+            the full-support implementation built successfully and its conditional root and scoped dependencies were extracted.
+            Dependencies outside that scope remain boundaries. Comparator checks a proof against a separately written statement;
+            its acceptance and the scalar-target results remain pending. Earlier failed and interrupted runs remain in the record.
+          </p>
+          <p className="front__text">
+            An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind
+            the curvature estimate; it does not check the analysis around that identity. The statements in each account were
+            checked against its sources, by AI agents for the exposition and the long record. No independent mathematical review
+            has been done.
+          </p>
+        </div>
+        <div className="checksband__table">
+          <CheckTable />
+          <p className="front__more">
+            <a href={routeHref({ view: "checks" })}>See the recorded checks</a>
+          </p>
+        </div>
+      </section>
+
+      <section className="front__band front__sources-band" aria-labelledby="front-sources">
+        <h2 id="front-sources" className="front__bandtitle">
+          Where this comes from
         </h2>
-        <p className="front__text">
-          The layers run from OpenAI’s release and its Lean code down to the exposition and a film about the mathematics.
-          Read the papers on this site or as PDFs, and watch the film on YouTube.
-        </p>
-        <ol className="funnel">
-          <li className="funnel__layer" style={{ ["--step" as string]: 0 }}>
-            <div className="funnel__body">
-              <h3 className="funnel__name">OpenAI’s release, family 281</h3>
-              <p className="funnel__what">Two manuscripts dated September 2026, and Lean code for two of their statements.</p>
-            </div>
-            <p className="funnel__links">
-              <Out href={FAMILY_SCOPE}>Family 281 and its Lean scope</Out>
-              <Out href={SUPPORT_PDF}>Full-support manuscript, PDF</Out>
-              <Out href={QAOA_PDF}>QAOA manuscript, PDF</Out>
-              <Out href={LEAN_SOURCE}>Lean source</Out>
-            </p>
-          </li>
-          <li className="funnel__layer" style={{ ["--step" as string]: 1 }}>
-            <div className="funnel__body">
-              <h3 className="funnel__name">The argument map</h3>
-              <p className="funnel__what">
-                {plural(recordCount, "record")} and the {plural(linkCount, "link")} between them: the claims, assumptions and Lean
-                declarations the argument uses, and which result uses which.
-              </p>
-            </div>
-            <p className="funnel__links">
-              <a href={routeHref({ view: "map" })}>Open the argument map</a>
-            </p>
-          </li>
-          {(["long", "short", "expository"] as Stage[]).map((stage, i) => {
-            const paper = edition.overview.papers.find((p) => p.stage === stage);
-            const strip = readings.status === "ready" ? readings.value.strips.find((s) => s.stage === stage) : undefined;
-            const linked = strip?.passages.filter((p) => p.claims.length).length;
-            const pdf = PAPER_PDFS[stage];
-            return (
-              <li key={stage} className="funnel__layer" style={{ ["--step" as string]: i + 2 }}>
-                <div className="funnel__body">
-                  <h3 className="funnel__name">{PAPER_NAMES[stage].short}</h3>
-                  <p className="funnel__what">
-                    {PAPER_NAMES[stage].job} {PAPER_NAMES[stage].reader}
-                  </p>
-                  <div
-                    className="funnel__strip"
-                    role="img"
-                    aria-label={
-                      linked === undefined
-                        ? `${PAPER_NAMES[stage].short} in reading order`
-                        : `${PAPER_NAMES[stage].short}: ${plural(linked, "passage")} linked to steps of the argument, placed where each falls in the paper and coloured by the source of its steps`
-                    }
-                  >
-                    <StripMarks strip={strip} className="account__bars" />
-                  </div>
-                </div>
-                <p className="funnel__links">
-                  <a href={routeHref({ view: "read", stage })}>
-                    Read it here{paper ? `, ${plural(paper.sections, "section")}` : ""}
-                  </a>
-                  <a href={pdfHref(stage)} target="_blank" rel="noopener">
-                    Open PDF, {plural(pdf.pages, "page")}
-                    <span className="sr-only">: {PAPER_NAMES[stage].short}</span>
-                  </a>
-                </p>
-              </li>
-            );
-          })}
-          {/* The last layer: the film on the mathematics. */}
-          <li className="funnel__layer funnel__layer--film" style={{ ["--step" as string]: 5 }}>
-            <FilmSlot film={MATHS_FILM} className="funnel__film" sizes="(min-width: 1100px) 360px, (min-width: 700px) 40vw, 100vw" />
-            {ERDOS_FILM.youtube ? (
-              <p className="funnel__videonote">
-                For another mathematical walkthrough, see {AUTHOR}’s{" "}
-                <Out href={ERDOS_FILM.youtube}>
-                  {minutesOf(ERDOS_FILM) ? `${minutesOf(ERDOS_FILM)}-minute ` : ""}walkthrough of Erdős problem #257
-                </Out>
-                .
-              </p>
-            ) : null}
-          </li>
-        </ol>
-        <SourceSwatches origins={graph.origins} className="front__sources front__sources--inline" />
         <ul className="elsewhere">
+          <li>
+            <Out href={FAMILY_SCOPE}>OpenAI’s release, family 281</Out> holds two manuscripts dated September 2026 and Lean code for
+            two of their statements: the <Out href={SUPPORT_PDF}>full-support manuscript</Out>, the{" "}
+            <Out href={QAOA_PDF}>QAOA manuscript</Out> and the <Out href={LEAN_SOURCE}>Lean source</Out>.
+          </li>
           <li>
             <Out href={LINKS.atlasFamily}>Plectis Atlas, family 281</Out> is this family’s page on Plectis Atlas, another of{" "}
             {AUTHOR}’s websites: OpenAI’s two papers, their theorems beside the Lean statements, and what outside groups report
@@ -277,7 +167,12 @@ export function FrontPage() {
           </li>
           <li>
             <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
-            instructions for running the tools and building this website.
+            instructions for running the tools and building this website. The{" "}
+            <a href={routeHref({ view: "about", anchor: "companion" })}>architectural companion</a> (
+            <a href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`} target="_blank" rel="noopener">
+              PDF, {plural(PAPER_PDFS.architecture.pages, "page")}
+            </a>
+            ) explains why the result is written up this way.
           </li>
           <li>
             <a href={routeHref({ view: "about", anchor: "made-by" })}>Who made this site</a>: {AUTHOR}, as part of{" "}
@@ -286,68 +181,6 @@ export function FrontPage() {
             About page.
           </li>
         </ul>
-      </section>
-
-      {/* Wide: the words and key on the left, the drawing beside them. Narrow: in reading order. */}
-      <section className="front__band mapband" aria-labelledby="front-map">
-        <div className="mapband__head">
-          <h2 id="front-map" className="front__bandtitle">
-            The argument map
-          </h2>
-          <p className="front__text">
-            Each step of the argument is stored as a record: a claim, an assumption, or a declaration in Lean, a language in
-            which a computer can check proofs. In the drawing, the main result is the box at the top. Each box under it is a
-            record that its proof uses, and a line runs up from a record to the result that uses it. The colour of a box says
-            which source the record comes from.
-          </p>
-        </div>
-        <a className="front__figure" href={routeHref({ view: "map" })} aria-label={`Open the argument map for ${goalTitle}`}>
-          <ArgumentFigure graph={graph} goal={goal} version={edition.context} />
-          <span className="front__figcap">
-            <span>Full support, with every branch open</span>
-            <span className="front__figopen">Open it in the map</span>
-          </span>
-        </a>
-        <div className="front__key" aria-label="Key to the drawing" role="group">
-          <SourceSwatches origins={graph.origins} className="front__sources" />
-          <ul className="front__lines">
-            <li>
-              <Sample kind="supports" head={false} />
-              Used in the argument for the result above it
-            </li>
-            <li>
-              <Sample kind="formalizes" head={false} />
-              Joins a result to its Lean declaration
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="front__band" aria-labelledby="front-checks">
-        <h2 id="front-checks" className="front__bandtitle">
-          What has been checked
-        </h2>
-        <p className="front__text">
-          OpenAI’s repository has two statements written in Lean, each with a Lean proof: one of the full-support theorem, which
-          assumes a minimiser, and one of the value identities and their finite Gaussian approximation. On 26 October 2026,
-          the full-support implementation built successfully and its conditional root and scoped dependencies were extracted.
-          Dependencies outside that scope remain boundaries. Comparator checks a proof against a separately written statement;
-          its acceptance and the scalar-target results remain pending. Earlier failed and interrupted runs remain in the record.
-        </p>
-        <p className="front__text">
-          An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind
-          the curvature estimate; it does not check the analysis around that identity. The statements in each account were
-          checked against its sources, by AI agents for the exposition and the long record. No independent mathematical review
-          has been done.
-        </p>
-        <p className="front__text">
-          A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a
-          Lean project compiles.
-        </p>
-        <CheckCounts />
-        <p className="front__more">
-          <a href={routeHref({ view: "checks" })}>See the recorded checks</a>
-        </p>
       </section>
 
       <footer className="front__foot">
@@ -371,12 +204,12 @@ export function FrontPage() {
  */
 function TechnicalExplanation() {
   return (
-    <div className="tech__body">
+    <>
       <section className="front__band front__pair" aria-labelledby="front-question">
         <div className="front__prose">
-          <h3 id="front-question" className="front__bandtitle">
+          <h2 id="front-question" className="front__bandtitle">
             Choosing signs to maximise a random energy
-          </h3>
+          </h2>
           <p>
             <Rich src="At each of $n$ sites choose a sign, $+1$ or $-1$, called a spin. Every pair of sites gets its own random weight $J_{ij}$, drawn independently from the standard Gaussian distribution, and a choice of signs $\sigma$ has energy" />
           </p>
@@ -401,9 +234,9 @@ function TechnicalExplanation() {
 
       <section className="front__band front__pair front__pair--flip" aria-labelledby="front-proof">
         <div className="front__prose">
-          <h3 id="front-proof" className="front__bandtitle">
+          <h2 id="front-proof" className="front__bandtitle">
             How the proof rules out a gap
-          </h3>
+          </h2>
           <p>
             <Rich src="Suppose a minimising $\gamma$ were flat between two scales $r$ and $s$ at which it increases. The proof follows an auxiliary curve $q(t)$, the mean square of a slope measured along a random path that $\gamma$ determines." />
           </p>
@@ -431,70 +264,76 @@ function TechnicalExplanation() {
       </section>
 
       <section className="front__band" aria-labelledby="front-follows">
-        <h3 id="front-follows" className="front__bandtitle">
+        <h2 id="front-follows" className="front__bandtitle">
           What follows from it
-        </h3>
+        </h2>
         <ul className="follows">
           <li>
-            <h4>For the spins</h4>
+            <h3>For the spins</h3>
             <p>
               <Rich src="For every overlap $r$ between $0$ and $1$, the same random weights have, with probability tending to one as $n$ grows, two sign choices whose energies per spin are close to $P_*$ and whose overlap is close to $r$. With $r=1/2$, for example, the two choices differ on between 24 and 26 per cent of the sites. This combines a theorem of Auffinger, Chen and Zeng (2020) with the absence of gaps; it shows that such pairs exist, not how to find them." />
             </p>
           </li>
           <li>
-            <h4>A classical algorithm</h4>
+            <h3>A classical algorithm</h3>
             <p>
               <Rich src="The existence of a minimiser without gaps is the assumption under which the message-passing algorithm of El Alaoui, Montanari and Sellke (2021) finds, for any fixed $\varepsilon>0$, a sign choice whose energy is within $\varepsilon n$ of the largest, with probability tending to one. Once the functions it uses are given, it takes a number of arithmetic operations proportional to $n^2$, with a constant that depends on $\varepsilon$; computing those functions, and rounding error, are not counted." />
             </p>
           </li>
           <li>
-            <h4>A quantum circuit</h4>
+            <h3>A quantum circuit</h3>
             <p>
               <Rich src="A second OpenAI manuscript (2026b) proves that for each $\varepsilon>0$ one fixed circuit of the quantum approximate optimization algorithm (QAOA), with depth and angles that depend on $\varepsilon$ but not on $n$ or the weights, reaches an expected energy per spin within $\varepsilon$ of $P_*$ as $n$ grows. Basso, Farhi, Marwaha, Villalonga and Zhou conjectured this in 2022. The proof uses the absence of gaps and a separate circuit construction, which the long record follows." />
             </p>
           </li>
         </ul>
       </section>
-    </div>
+    </>
   );
 }
 
-/**
- * One sentence for a status the three accounts share ("All three are drafts, and each
- * review is recorded as needing revision."), so it is said once; null when they differ.
- */
-function sharedStatus(papers: ({ state?: string; review_state?: string } | undefined)[]): string | null {
-  const first = papers[0];
-  if (!first || papers.some((p) => !p || p.state !== first.state || p.review_state !== first.review_state)) return null;
-  const words = (s: string) => s.replace(/_/g, " ");
-  const parts: string[] = [];
-  if (first.state) parts.push(first.state === "draft" ? "All three accounts are drafts" : `All three accounts are recorded as ${words(first.state)}`);
-  if (first.review_state)
-    parts.push(`each review is recorded as ${first.review_state === "needs_revision" ? "needing revision" : words(first.review_state)}`);
-  if (!parts.length) return null;
-  const sentence = parts.join(", and ");
-  return `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}.`;
-}
+const COLUMNS = ["passed", "failed", "unavailable", "not_run"] as const;
 
-const OUTCOMES = ["passed", "failed", "unavailable", "not_run"];
-
-/** "This site records 222 checks: 3 passed, 2 failed, 3 unavailable and 214 not run.", each count in its outcome's mark. */
-function CheckCounts() {
+/** The recorded checks by kind, and the links this site adds, each named for what it tests. */
+function CheckTable() {
   const { map } = useEdition();
-  const counts: Record<string, number> = {};
-  for (const e of map.records.evidence) counts[e.status] = (counts[e.status] ?? 0) + 1;
-  const total = map.records.evidence.length;
-  const keys = [...OUTCOMES.filter((s) => counts[s]), ...Object.keys(counts).filter((s) => !OUTCOMES.includes(s)).sort()];
+  const counts = outcomeCounts(map.records.evidence);
+  const links = Object.values(RECORD_INDEX).reduce((sum, row) => sum + row.lean, 0);
   return (
-    <p className="front__counts">
-      This site records <span className="num">{plural(total, "check")}</span>
-      {keys.length ? ": " : "."}
-      {keys.map((status, i) => (
-        <span key={status}>
-          <span className={`outcome outcome--${status}`}>{countsInWords({ [status]: counts[status] })}</span>
-          {i < keys.length - 2 ? ", " : i === keys.length - 2 ? " and " : "."}
-        </span>
-      ))}
-    </p>
+    <>
+      <table className="checktable">
+        <caption className="visually-hidden">The checks this site records, by kind and outcome</caption>
+        <thead>
+          <tr>
+            <th scope="col">Kind of check</th>
+            {COLUMNS.map((status) => (
+              <th key={status} scope="col" className="checktable__n">
+                {STATUS_WORDS[status].replace(/^./, (c) => c.toUpperCase())}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {CHECK_ORDER.filter((kind) => counts.has(kind)).map((kind) => (
+            <tr key={kind}>
+              <th scope="row">{CHECK_KINDS[kind]?.title ?? kind}</th>
+              {COLUMNS.map((status) => {
+                const n = counts.get(kind)?.[status] ?? 0;
+                return (
+                  <td key={status} className={`checktable__n${n === 0 ? " is-none" : ""}${status === "failed" && n ? " is-failed" : ""}`}>
+                    {n}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="checktable__note">
+        A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a Lean
+        project compiles. This site also links records to {links} Lean declarations by reading the sources. A program confirms
+        that each link still lands, and no one has reviewed whether the two statements match.
+      </p>
+    </>
   );
 }

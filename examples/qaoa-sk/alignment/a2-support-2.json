@@ -1,0 +1,879 @@
+{
+ "schema_version": "1.0",
+ "records": {
+  "support.integrated_coercivity": {
+   "short": "Integrated lower bound, smooth profiles",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+     "name": "finite_density_coercivity",
+     "relation": "part",
+     "note": "The inequality with constant 1/1000 for concrete finite-step data. The sharper constant does not appear in its statement."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+     "name": "integrated_coercivity_of_flux",
+     "relation": "part",
+     "note": "The sharper constant 1661507/1521000000, with signs and vanishing flux as hypotheses. The finite-data proof does not call this whole-line form."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
+     "name": "gaussian_shape_coercivity",
+     "relation": "proof",
+     "note": "The half-line integration with reflection that the finite-data theorem actually calls."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Integration\nremoves only $\\mathcal W(F_2)$, giving",
+     "to": "\\ge\\frac1{1000}\\mathbb E_fv^4.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "Integration removes $\\mathcal W(F_2)$ and keeps the fourth-moment",
+     "to": "\\tag{5}\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "[OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$",
+     "to": "\\frac1{1000}.\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "A rational polynomial identity gives the second inequality",
+     "to": "\\ge\\frac{c^2}{1000}\\mathbb E[a(t,X_t)^4].\n$$"
+    }
+   ]
+  },
+  "support.plateau_transfer": {
+   "short": "Plateau-preserving approximation",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "curvatureMoment_deriv_hasDerivAt_on_constant",
+     "relation": "part",
+     "note": "Third time derivative on a constant interval equals stripThird. The approximation step has no counterpart here."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
+     "name": "stripThird_eq_actual",
+     "relation": "part",
+     "note": "Expands stripThird as the expected polynomial, in unscaled derivatives, so the identity is divided by c squared."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "**Proof.** Fix $t<T<T'<1$ and a shrinking interval",
+     "to": "where every $\\gamma_n$ equals the same positive $c$."
+    },
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Differentiating the first identity therefore gives",
+     "to": "On a plateau the coefficient derivative vanishes."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "All expectations in this section evaluate spatial functions at",
+     "to": "\\tag{4}\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "To obtain Lemma 2 for an integrable coefficient, choose positive",
+     "to": "so no convergence theorem for the auxiliary\nlogarithmic derivative $s$ is needed."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "Differentiating the PDE and applying Itô's rule gives",
+     "to": "q'''=\\mathbb E[d^2-12cab^2+6c^2a^4].\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "To reach an arbitrary admissible coefficient, fix a time inside the",
+     "to": "passes the quantitative inequality to the limit."
+    }
+   ]
+  },
+  "support.positive_curvature": {
+   "short": "Strict curvature, positive plateau",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "positive_gap_curvature",
+     "relation": "part",
+     "note": "Gives positivity of the second derivative of q′ on the interval. The quantitative bound is not in its statement."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
+     "name": "stripThird_coercive",
+     "relation": "part",
+     "note": "The fourth-moment lower bound, multiplied through by c squared, at a continuity point."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Let $\\gamma\\in\\mathcal U$ be\nconstant with value $c$ on an open interval",
+     "to": "strictly increasing for\n$c=0$."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "**Corollary 4.2 (positive plateaus).**",
+     "to": "This proves strict convexity of $q'$ on $I$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Lemma 2 (constant-interval curvature;",
+     "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "**Strict-curvature input ([OpenAI (2026a), Proposition 5.1][support-curvature]).**",
+     "to": "\\qquad(r<t<s).\n$$"
+    }
+   ]
+  },
+  "support.zero_curvature": {
+   "short": "Strict increase, zero plateau",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "zero_gap_curvature",
+     "relation": "part",
+     "note": "Gives positivity of the derivative of q′ on the interval."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "curvatureMoment_hasDerivAt_on_constant",
+     "relation": "part",
+     "note": "With stripSecond_eq_actual at c=0, this supplies the identity with the third spatial derivative."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
+     "name": "stripSecond_eq_actual",
+     "relation": "part",
+     "note": "Expands stripSecond as an expectation; at c=0 only the squared third derivative remains."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "When $c=0$, the heat equation gives",
+     "to": "giving strict increase of $q'$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$.",
+     "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "The zero plateau has the separate",
+     "to": "and $|x|+O(1)$ growth."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "Instead the\nzero-coefficient heat identity gives",
+     "to": "\\qquad(0<t<s).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "Here is why the inequality is strict.",
+     "to": "at most minus one."
+    }
+   ]
+  },
+  "support.terminal_defect": {
+   "short": "Square-root terminal deficit",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+     "name": "terminal_plateau_second_moment_defect",
+     "relation": "states",
+     "note": "Fixes a base time s past a; explicit smallness conditions on T play the role of the record's t0."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Why a terminal plateau violates the variational inequality.**",
+     "to": "every $t$ sufficiently close to one."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Now write $\\varepsilon=1-t$ and restrict to",
+     "to": "This proves (5.1) with $C=2m\\kappa$."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "The stronger boundary estimate\n$1-q(t)\\geq C\\sqrt{1-t}$ for arbitrary coefficients constant",
+     "to": "Lemma 6.3][FS]"
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "The source's different terminal argument proves the stronger estimate",
+     "to": "coefficient, without the left contact data used here."
+    }
+   ]
+  },
+  "support.no_terminal_gap": {
+   "short": "No terminal plateau at minimizer",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean",
+     "name": "minimizer_no_terminal_plateau",
+     "relation": "states",
+     "note": "Same conclusion for the Lean minimizer, covering c=0."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "support_cofinal_of_no_terminal_plateau",
+     "relation": "part",
+     "note": "Turns the exclusion into support points beyond every time, which rules out empty support."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The sign of the contradiction is now explicit.",
+     "to": "then $\\mu_\\gamma=0$ and $\\gamma=0$ on all of $[0,1)$."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "For a terminal interval $(a,1)$, including empty support $[0,1)$,",
+     "to": "near one."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "The terminal exclusion was already recorded by",
+     "to": "Remark 7][ACZ]."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "[Auffinger–Chen–Zeng, Remark 7][acz] had already recorded the absence",
+     "to": "of terminal plateaus."
+    }
+   ]
+  },
+  "support.no_bounded_gap": {
+   "short": "No bounded support gap",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "no_positive_constant_gap",
+     "relation": "proof",
+     "note": "Abstract calculus contradiction for the positive-height case. It takes contact and curvature as hypotheses."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "no_zero_constant_gap",
+     "relation": "proof",
+     "note": "Abstract contradiction for the zero-height case, using only the right slope bound."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "full_support_of_contact_and_gap_curvature",
+     "relation": "proof",
+     "note": "Its proof obtains each gap from support points and applies these two contradictions."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "First consider a gap $(a,b)$ with both endpoints in $S$, allowing",
+     "to": "The endpoint derivatives need\nonly be at most one; equality has not been assumed."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "If $c=0$, the separate heat argument in Section 4 makes $q'$ strictly",
+     "to": "The left slope bound is unnecessary in this case."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "Suppose $(\\ell,r)$ is a support gap with endpoints in $S$ and $r<1$.",
+     "to": "The geometric\nobstruction is an area deficit under $q'$."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "First suppose $(r,s)$ has both endpoints in the support, with",
+     "to": "q'(s)\\le1.\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "Because $q'''=(q')''$, the function $q'$ is strictly convex: between",
+     "to": "\\qquad(r<t<s).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "Integration gives $q(s)-q(r)<s-r$, contradicting contact.",
+     "to": "Integration gives $q(s)-q(r)<s-r$, contradicting contact."
+    }
+   ]
+  },
+  "support.no_initial_gap": {
+   "short": "No initial support gap",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "zero_on_initial_support_gap",
+     "relation": "part",
+     "note": "The coefficient vanishes on the initial gap when zero lies outside the support."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "no_zero_constant_gap",
+     "relation": "proof",
+     "note": "With a=0 this is the integration contradiction. It needs q(0)=0 and no left slope bound."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "full_support_of_contact_and_gap_curvature",
+     "relation": "proof",
+     "note": "Its proof handles this case by supplying q(0)=0 at the left end of the gap."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "If instead the complementary component is $[0,b)$ with $0\\notin S$,",
+     "to": "throughout $(0,b)$, an impossibility."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "An initial gap $[0,r)$ with $0\\notin S$ and $r\\in S$ has no",
+     "to": "integral contradiction follows without assuming $G(0)=0$."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "**Initial gap with zero outside the support.**",
+     "to": "\\qquad(0<t<s).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "Thus $q'$ is strictly increasing, and right contact gives",
+     "to": "Integrating again gives too little area."
+    }
+   ]
+  },
+  "support.full_relative_support": {
+   "short": "Support is all of [0,1)",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "minimizer_full_support_actual",
+     "relation": "contains",
+     "note": "Its first clause. The Lean type Time is [0,1), so support equal to univ is the relative statement."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "full_support_of_contact_and_gap_curvature",
+     "relation": "proof",
+     "note": "The abstract case analysis that exhausts the complement, given contact and curvature inputs."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "exists_support_gap",
+     "relation": "part",
+     "note": "Produces, from a missing point with support to its right, a gap of the required kind."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Theorem 5.1 (full support).**",
+     "to": "$\\operatorname{supp}\\mu_\\gamma=[0,1)$ and $\\gamma$ is strictly increasing."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The support is relatively closed in $[0,1)$. Its complement is a union",
+     "to": "$b<1$ of $S$."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The cases are exhaustive, so $S=[0,1)$.",
+     "to": "The cases are exhaustive, so $S=[0,1)$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Theorem 1 (full support; quantitative proof following",
+     "to": "\\gamma(t_2)>\\gamma(t_1)\\quad(0\\leq t_1<t_2<1).\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "These cases exhaust the complement of the relatively closed set $S$.",
+     "to": "Consequently $S=[0,1)$"
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "**Source theorem ([OpenAI (2026a), Theorem 1.1][support-manuscript]).**",
+     "to": "has full relative support on $[0,1)$, and $\\gamma$ is strictly increasing."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "The support is relatively closed in $[0,1)$. Starting at a missing",
+     "to": "the last includes empty support."
+    }
+   ]
+  },
+  "support.strict_increase": {
+   "short": "Full support gives strict increase",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "lt_cdf_of_full_support",
+     "relation": "states",
+     "note": "Stated for points of Time with the cumulative convention of the Stieltjes measure."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "strictMonoOn_of_full_support",
+     "relation": "states",
+     "note": "The same implication as strict monotonicity on [0,1)."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "minimizer_full_support_actual",
+     "relation": "contains",
+     "note": "Its second clause gives strict increase for a minimizer."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Finally, every nonempty open subinterval $(a,b)$ receives positive mass.",
+     "to": "\\qquad(0\\le a<b<1).\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "Moreover,\n$\\gamma(t_2)-\\gamma(t_1)=\\mu_\\gamma((t_1,t_2])>0$.",
+     "to": "Moreover,\n$\\gamma(t_2)-\\gamma(t_1)=\\mu_\\gamma((t_1,t_2])>0$."
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "Equivalently,\n$\\gamma$ is strictly increasing: full support gives a positive increment",
+     "to": "inside any neighbourhood gives positive mass there."
+    }
+   ]
+  },
+  "support.moment_saturation": {
+   "short": "Both moments from full contact",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "full_support",
+     "relation": "contains",
+     "note": "Its last clause gives both identities for every associated diffusion on the given Brownian system."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "minimizer_full_support_actual",
+     "relation": "contains",
+     "note": "Its last clause gives both identities for the constructed diffusion."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
+     "name": "diffusion_uniqueness",
+     "relation": "proof",
+     "note": "The pathwise uniqueness that transfers the identities to every associated diffusion."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Theorem 5.1 (full support).**",
+     "to": "$0\\le t<1$."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The cases are exhaustive, so $S=[0,1)$.",
+     "to": "with the right derivative at zero."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "The moment\nconclusion is universal over every diffusion satisfying the specified",
+     "to": "covers exactly $0\\le t<1$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "For the solution of the displayed SDE and every",
+     "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "These cases exhaust the complement of the relatively closed set $S$.",
+     "to": "including the right-hand value at zero."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "For every associated diffusion and every $0\\le t<1$,",
+     "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "These cases exhaust the complement of the support. Contact now gives",
+     "to": "completing the theorem."
+    }
+   ]
+  },
+  "support.source_finite_density_coercivity": {
+   "short": "Finite-data half-line coercivity",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+     "name": "finite_density_coercivity",
+     "relation": "states",
+     "note": "The density-weighted integral form."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+     "name": "finite_feedback_coercivity",
+     "relation": "states",
+     "note": "The same inequality as an expectation along the finite-feedback diffusion."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
+     "name": "gaussian_shape_coercivity",
+     "relation": "proof",
+     "note": "The half-line lemma with origin flux and reflection that the first theorem calls."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "At the origin, the manuscript smoothly extends auxiliary quotient",
+     "to": "and reflection."
+    }
+   ]
+  },
+  "support.optimality_criterion": {
+   "short": "First-order optimality criterion",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+     "name": "contactPotential_nonneg",
+     "relation": "part",
+     "note": "G is nonnegative at a minimizer. The converse direction of the criterion has no Lean declaration."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "zero_on_support_of_compact_mass_removal",
+     "relation": "proof",
+     "note": "Abstract step giving G=0 on the support from nonnegativity and compact mass removal."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "For the actual moment function associated with $\\gamma$, the two",
+     "to": "This proves the converse."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "The converse concerns $G$ built from the PDE and diffusion of the same",
+     "to": "coefficient is constant, established next."
+    }
+   ]
+  },
+  "support.endpoint_chord_area": {
+   "short": "Integrated endpoint-chord inequality",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+     "name": "no_gap_of_strictConvex_derivative",
+     "relation": "proof",
+     "note": "Same chord step, phrased as a contradiction from q(a)=a and q(b)=b instead of a strict inequality for the increment."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "With $h=q'$ and $C_{a,b}$ its endpoint chord, the contradiction is the exact area identity",
+     "to": "The first term is nonnegative; strict convexity makes the second positive."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "If the constant coefficient is $c>0$, Section 4 makes $q'$ strictly",
+     "to": "Integrating contradicts $q(b)-q(a)=b-a$."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "Strict convexity of $q'$ and (2) give\n$$\nq'(t)<",
+     "to": "Integrating contradicts $q(r)-q(\\ell)=r-\\ell$."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "Because $q'''=(q')''$, the function $q'$ is strictly convex: between",
+     "to": "\\qquad(r<t<s).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "example",
+     "from": "A calculus model shows how strict convexity can prevent this.",
+     "to": "The missing area is $1/3-5/18=1/18$."
+    }
+   ]
+  },
+  "support.fixed_time_spatial_coercivity": {
+   "short": "Spatial coercivity at fixed time",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Density/SampleJets.lean",
+     "name": "actual_coercivity",
+     "relation": "states",
+     "note": "Scaled by c squared, so its type needs no c>0. Positivity is needed to divide. Assumes positive time and continuity at t."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Proposition 4.1 (coercivity at a fixed time).**",
+     "to": "Neither minimality nor a constant neighbourhood of $t$ is assumed."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "**Proof.** Fix $t<T<T'<1$ and a shrinking interval",
+     "to": "\\tag{4.3}\n$$"
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "The [fixed-time supplier `actual_coercivity`][support-fixed-time] assumes",
+     "to": "adding a minimizing or plateau premise."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Proposition 3 (fixed-time spatial-moment estimate).**",
+     "to": "Neither minimality nor a constant neighbourhood of $t$ is required."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "**Passage to a fixed time.**",
+     "to": "\\tag{6}\n$$"
+    }
+   ]
+  },
+  "support.terminal_chord_barrier": {
+   "short": "Terminal convex-chord obstruction",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Here is the elementary calculus step. Suppose",
+     "to": "All chord endpoints lie below one; no derivative at one is used."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "A terminal gap $(r,1)$ with nonempty support has $r\\in S$ and",
+     "to": "This uses no contact at one."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "**Reaching the diagonal forces a slope above one.**",
+     "to": "Thus $q(t)<t$ throughout $(r,1)$, giving\n$G(r)=\\int_r^1(q(t)-t)\\,dt<0$, contrary to the addition test."
+    }
+   ]
+  },
+  "support.zero_candidate_descent": {
+   "short": "Zero coefficient is not minimizing",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The admissible coefficient $\\gamma_0=0$ makes the use of minimality in",
+     "to": "Hence this coefficient does not\nminimize."
+    },
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "The\n[explicit zero-coefficient calculation](#zero-coefficient-example)",
+     "to": "additionally gives $D_+\\mathcal P(0)[1]=1/4-1/\\pi$"
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "Return to the Gaussian value and slope from Section 3.",
+     "to": "So a small positive constant coefficient improves the zero candidate."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "Section 7.1 also computes the exact first variation",
+     "to": "$D\\mathcal P(0)[1]=1/4-1/\\pi$."
+    }
+   ]
+  },
+  "support.full_relative_support_curvature": {
+   "short": "Full support by curvature alone",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Main.lean",
+     "name": "minimizer_full_support_actual",
+     "relation": "contains",
+     "note": "Same conclusion. The Lean proof excludes terminal plateaus through the square-root defect, so it does not follow this chord route."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "A nonempty support with a terminal complementary component has a last",
+     "to": "quantitative proof above is retained for its stronger estimate (5.1)."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Theorem 1 (full support; quantitative proof following",
+     "to": "q(t)=t,\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "explanation",
+     "from": "**Proof of Theorem 1, assuming Lemma 2.**",
+     "to": "contact condition."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "These cases exhaust the complement of the relatively closed set $S$.",
+     "to": "This proves Theorem 1 using the stated analytic inputs."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "**Source theorem ([OpenAI (2026a), Theorem 1.1][support-manuscript]).**",
+     "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "These cases exhaust the complement of the support. Contact now gives",
+     "to": "completing the theorem."
+    }
+   ]
+  },
+  "support.fixed_time_spatial_coercivity_at_jumps": {
+   "short": "Spatial coercivity at a jump",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**The spatial inequality at a coefficient jump.**",
+     "to": "requires this extension."
+    }
+   ]
+  },
+  "support.raw_curvature_negative_absolute_terminal": {
+   "short": "Negative raw curvature, absolute-value data",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The same pointwise obstruction occurs with the actual terminal datum",
+     "to": "for all sufficiently small positive $c$, at that fixed point."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "The same section gives a negative pointwise value with the actual",
+     "to": "terminal datum for a small positive constant coefficient"
+    }
+   ]
+  },
+  "support.empty_support_chord_obstruction": {
+   "short": "Empty support, finite chord",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "To close the empty-support case using the same preceding inputs, observe",
+     "to": "Neither a value nor a derivative at one has been assumed."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "If $S$ is empty, then $\\gamma=0$.",
+     "to": "so $G(0)<0$."
+    },
+    {
+     "paper": "expository",
+     "role": "derivation",
+     "from": "**Empty support.** This would mean $\\gamma=0$ everywhere.",
+     "to": "No value or derivative at one was used."
+    }
+   ]
+  }
+ }
+}

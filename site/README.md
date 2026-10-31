@@ -48,7 +48,9 @@ lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
   --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
   --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
   --out build/reading-edition
-python site/scripts/export-static.py build/reading-edition
+python site/scripts/export-static.py build/reading-edition \
+  --lean-tree examples/qaoa-sk/upstream/lean \
+  --alignment examples/qaoa-sk/alignment
 cd site
 npm ci
 REQUIRE_STATIC_PARITY=true npm test
@@ -62,15 +64,24 @@ casefold rules. Tests compare search results and highlights against the server.
 This transport supports the reading website; it is not a complete hosted API.
 The bundle's draft, review and publication metadata remain visible.
 
-Record requests for one table load only that table's content-addressed file.
-The export retains complete record and summary files for unscoped requests and
-older clients; the reader also accepts captured editions without table files.
-This keeps unused citation data out of the initial paper load without changing
-the available records, pagination, search or edition pinning.
-The static reader also requests a smaller paper structure that retains the
-complete paper, coverage and reading links while omitting the expanded
-correspondence edges and support-reference list. The full structure remains
-available at its original route; older editions and live APIs remain supported.
+The export is deterministic and replaces any earlier export. Each response is a
+content-addressed file. `index.json` holds only what startup needs; the maps for
+`/record`, `/papers/query`, `/papers/reading` and `/lean/module` load when a reader
+first asks for that route.
+
+Record requests for one table load only that table's file, and a request with no
+table reads the same per-table files. The static edition carries only what the
+reader reads: a smaller paper structure without the expanded correspondence edges,
+paper queries reduced to their matches, and record responses whose passage text is
+restored from the paper's own bytes. The live API keeps the full responses. The
+exporter writes unpublished samples of those to `build/edition-oracle/`, and
+`tests/static-edition.test.ts` compares the static edition with them.
+
+The Lean index and record alignment have fixed paths (`lean/modules.json`,
+`lean/names.json`, `lean/module/<module>.json`, `alignment.json`), load on demand,
+and change no paper file. An alignment row that fails is printed and left out, so a
+reading edition survives a file still being written;
+`lean-exposition check-alignment examples/qaoa-sk/alignment` is the strict check.
 
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and

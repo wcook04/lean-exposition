@@ -18,10 +18,12 @@ from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from wsgiref.simple_server import make_server
 
 from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
+from .alignment import resolve_alignment
 from .consumer import ConsumerSession
 from .contracts import ContractError, digest
+from .lean_index import canonical, load_index, module_view, modules_view, names_view
 
-API_VERSION = "1.2"
+API_VERSION = "1.3"
 COMPANION_RESOLVER_VERSION = "0.1.0"
 API_ROOT = "/api/v1"
 TABLES = ("nodes", "edges", "sources", "citations", "evidence")
@@ -117,6 +119,10 @@ ROUTES = {
     "/papers/resolve-link": ("Resolve a declared companion document identity without verifying fragments", ("paper", "href")),
     "/compare": ("Shared and exclusive paper support", ("left", "right", "table", "offset", "limit")),
     "/search": ("Literal search of records, headings and passages", ("q", "table", "paper", "offset", "limit")),
+    "/lean/modules": ("Lean index metadata, folders and module counts, without source", ()),
+    "/lean/names": ("One compact row for every indexed Lean declaration", ()),
+    "/lean/module": ("One Lean module with its source and declarations", ("name",)),
+    "/alignment": ("Where each record is stated, in Lean and in each paper", ()),
 }
 
 
@@ -171,7 +177,7 @@ class WebApplication:
 
     def __init__(self, bundle: Path | BundleCapture, *, allow_origin=None, document_paths=None,
                  max_response_bytes=MAX_RESPONSE_BYTES, cache_bytes=DEFAULT_CACHE_BYTES,
-                 cache_entries=128):
+                 cache_entries=128, lean_index=None, alignment=None):
         if allow_origin is not None:
             try:
                 origin = urlsplit(allow_origin)
@@ -220,6 +226,30 @@ class WebApplication:
         self._search = self._search_index()
         self._folded = {row["ref"]: row["text"].casefold() for row in self._search}
         self._summaries = {ref: self._record_summary(ref) for ref in self._records}
+        self._prepare_sidecars(lean_index, alignment)
+
+    def _prepare_sidecars(self, lean_index, alignment):
+        """Lean and alignment sit beside the edition: no bundle byte or hash depends on them."""
+        if alignment is not None and lean_index is None:
+            raise ContractError("alignment requires a Lean index")
+        self._lean = (None if lean_index is None else
+                      lean_index if isinstance(lean_index, dict) else load_index(lean_index))
+        self._lean_modules = {row["name"] for row in self._lean["modules"]} if self._lean else set()
+        self._alignment, self.alignment_errors = None, []
+        if alignment is not None:
+            papers = {stage: self._files[f"papers/{stage}.md"] for stage in STAGES}
+            ids = {row["record"]["id"] for row in self._corpus["records"]["nodes"]}
+            self._alignment, self.alignment_errors = resolve_alignment(
+                alignment, self._lean, papers, ids, strict=False)
+        self._sidecars = {
+            "lean_index": ({"available": False} if self._lean is None else {
+                "available": True, "sha256": digest(canonical(self._lean)),
+                "revision": self._lean["revision"], "toolchain": self._lean["toolchain"],
+                "dependency_source": self._lean["dependency_source"]}),
+            "alignment": ({"available": False} if self._alignment is None else {
+                "available": True, "sha256": digest(canonical(self._alignment)),
+                "records": len(self._alignment["records"]),
+                "dictionary_terms": len(self._alignment["dictionary"])})}
 
     def _href(self, route, **query):
         encoded = urlencode({"manifest": self.manifest_sha256, **query}, doseq=True)
@@ -482,8 +512,24 @@ class WebApplication:
                     "representations": {"records": ["full", "summary"], "graph": ["full", "map"],
                                         "paper_query": ["full", "matches"]},
                     "companion_resolution": self._companion_configuration(),
+                    "sidecars": self._sidecars,
                     "relation_semantics": self._corpus["relation_semantics"],
                     "semantic_certification": False}
+        if route.startswith("/lean/"):
+            if self._lean is None:
+                raise APIError(404, "lean_index_unavailable", "This edition is served without a Lean index.")
+            if route == "/lean/modules":
+                return modules_view(self._lean)
+            if route == "/lean/names":
+                return names_view(self._lean)
+            name = p.one("name", required=True)
+            if name not in self._lean_modules:
+                raise APIError(404, "lean_module_not_found", "This Lean module is absent from the index.")
+            return module_view(self._lean, name)
+        if route == "/alignment":
+            if self._alignment is None:
+                raise APIError(404, "alignment_unavailable", "This edition is served without a record alignment.")
+            return self._alignment
         if route == "/overview":
             return {"graph": self._corpus["graph"], "coverage": self._corpus["coverage"],
                     "record_counts": self._corpus["coverage"]["record_counts"],
@@ -768,11 +814,13 @@ def create_app(bundle: Path | BundleCapture, **options) -> WebApplication:
     return WebApplication(bundle, **options)
 
 
-def serve(bundle: Path, *, host="127.0.0.1", port=8000, allow_origin=None, document_paths=None):
+def serve(bundle: Path, *, host="127.0.0.1", port=8000, allow_origin=None, document_paths=None,
+          lean_index=None, alignment=None):
     """Local reference server; deploy the WSGI callable with a hosting server."""
     if not isinstance(host, str) or not host or type(port) is not int or not 0 <= port <= 65535:
         raise ContractError("host must be nonempty and port must be in 0..65535")
-    app = create_app(bundle, allow_origin=allow_origin, document_paths=document_paths)
+    app = create_app(bundle, allow_origin=allow_origin, document_paths=document_paths,
+                     lean_index=lean_index, alignment=alignment)
     with make_server(host, port, app) as server:
         print(json.dumps({"url": f"http://{host}:{server.server_port}{API_ROOT}",
                           "manifest_sha256": app.manifest_sha256}), flush=True)

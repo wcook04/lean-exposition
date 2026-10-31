@@ -13,3 +13,21 @@ declare module "virtual:paper-pdfs" {
     { path: string; pages: number; firstPage?: FirstPage }
   >;
 }
+
+// One line per record, from the authored alignment, built into the bundle (vite.config.ts).
+declare module "virtual:record-index" {
+  export interface RecordLine {
+    /** Two to five plain words for a tile. */
+    short: string;
+    /** How many Lean declarations are linked to the record. */
+    lean: number;
+    /** The strongest thing each paper does with the record: "statement", "mention" and so on. */
+    levels: Partial<Record<"long" | "short" | "expository", string>>;
+  }
+  export const RECORD_INDEX: Record<string, RecordLine>;
+}
+
+// The first screen's HTML, typeset at build time.
+declare module "virtual:front-hero" {
+  export const HERO_HTML: string;
+}

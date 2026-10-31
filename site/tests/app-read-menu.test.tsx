@@ -36,7 +36,7 @@ describe("Read menu", () => {
     await act(async () => key(button, "ArrowDown"));
     const items = [...host.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]')];
     expect(button.getAttribute("aria-expanded")).toBe("true");
-    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long recordDraft"]);
+    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long recordDraft", "All papers and PDFs"]);
     expect(items[1].getAttribute("aria-current")).toBe("page");
     expect(document.activeElement).toBe(items[0]);
 
@@ -44,13 +44,13 @@ describe("Read menu", () => {
     expect(document.activeElement).toBe(items[1]);
     await act(async () => key(items[1], "ArrowUp"));
     await act(async () => key(items[0], "ArrowUp"));
-    expect(document.activeElement).toBe(items[2]);
-    await act(async () => key(items[2], "e"));
+    expect(document.activeElement).toBe(items[3]);
+    await act(async () => key(items[3], "e"));
     expect(document.activeElement).toBe(items[0]);
     await act(async () => key(items[0], "End"));
-    expect(document.activeElement).toBe(items[2]);
+    expect(document.activeElement).toBe(items[3]);
 
-    await act(async () => key(items[2], "Escape"));
+    await act(async () => key(items[3], "Escape"));
     expect(button.getAttribute("aria-expanded")).toBe("false");
     expect(document.activeElement).toBe(button);
   });
@@ -62,6 +62,6 @@ describe("Read menu", () => {
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
     expect(host.querySelector('[aria-label="Search records and passages"]')).not.toBeNull();
     expect(host.querySelector('button[aria-label="Menu"]')).not.toBeNull();
-    expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Argument map");
+    expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Map");
   });
 });

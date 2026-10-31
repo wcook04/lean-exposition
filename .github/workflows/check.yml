@@ -20,3 +20,38 @@ jobs:
       - run: lean-exposition audit-sources examples/qaoa-sk/source-lock.json --root examples/qaoa-sk
       - run: lean-exposition scaffold examples/qaoa-sk/evidence-graph.json --out build/qaoa-sk
       - run: lean-exposition check-bundle build/qaoa-sk
+      - run: lean-exposition check-alignment examples/qaoa-sk/alignment
+  # The published site's own build, run before a change reaches main, because the
+  # publishing workflow only sees a failure after the merge.
+  site:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '26.7.0'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: python -m pip install .
+      - name: Capture the authored reading edition
+        run: |
+          lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
+            --long papers/qaoa-sk/long/reasoning-record.md papers/qaoa-sk/long/reasoning-record.json \
+            --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
+            --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
+            --out build/reading-edition
+          python site/scripts/export-static.py build/reading-edition --lean-tree examples/qaoa-sk/upstream/lean --alignment examples/qaoa-sk/alignment
+      - run: npm ci
+        working-directory: site
+      - run: npm test
+        working-directory: site
+        env:
+          REQUIRE_STATIC_PARITY: 'true'
+      - run: npm run build
+        working-directory: site
+        env:
+          VITE_STATIC_EDITION: 'true'
+          VITE_BASE_PATH: /lean-exposition-site/

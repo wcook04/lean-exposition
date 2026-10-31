@@ -1,0 +1,976 @@
+{
+ "schema_version": "1.0",
+ "records": {
+  "scalar.paper_admissible": {
+   "short": "Admissible coefficient and normalization",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Model.lean",
+     "name": "OrderParameter",
+     "relation": "defines",
+     "note": "Support model: the admissible coefficient on the interval [0,1)."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Model.lean",
+     "name": "parisi",
+     "relation": "defines",
+     "note": "Support model: the Parisi functional, built on the control value `value`."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "OrderParameter",
+     "relation": "defines",
+     "note": "Scalar model: the same conditions, on a coefficient defined on all reals."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "definition",
+     "from": "Let $\\mathcal U$ consist of nonnegative, nondecreasing, right-continuous",
+     "to": "\\mathcal P(\\gamma)=\\Phi_\\gamma(0,0)-\\frac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "definition",
+     "from": "Let $\\mathcal U$ consist of the nonnegative, nondecreasing,",
+     "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+    },
+    {
+     "paper": "short",
+     "role": "definition",
+     "from": "The Parisi functional $\\mathcal P(\\gamma)$ is defined using",
+     "to": "\\mathcal P(\\gamma)=\\Phi_\\gamma(0,0)-\\tfrac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "definition",
+     "from": "In general, an admissible **order parameter** is a function",
+     "to": "and has finite integral."
+    },
+    {
+     "paper": "expository",
+     "role": "definition",
+     "from": "The **Parisi functional** subtracts an explicit correction from this",
+     "to": "-\\frac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+    }
+   ]
+  },
+  "scalar.paper_minimizer": {
+   "short": "Minimizer hypothesis",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Model.lean",
+     "name": "IsMinimizer",
+     "relation": "defines",
+     "note": "Support model: global minimality of the Parisi functional, taken as a hypothesis."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "IsMinimizer",
+     "relation": "defines",
+     "note": "Scalar model: the same inequality over that model's order parameters."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The support theorem itself assumes a minimizer and proves a property of it;",
+     "to": "it does not separately supply one."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "If $\\gamma\\in\\mathcal U$ minimises $\\mathcal P$, then",
+     "to": "minimises $\\mathcal P$, then"
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "In the pure, zero-field model with $\\xi(t)=t^2/2$, let $\\gamma$ be an",
+     "to": "admissible integrable minimiser of $\\mathcal P$."
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "The theorem requires a minimiser,",
+     "to": "not merely an admissible candidate."
+    }
+   ]
+  },
+  "scalar.parisi_formula": {
+   "short": "Zero-temperature Parisi formula",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
+     "name": "groundStateValue_le_parisi",
+     "relation": "part",
+     "note": "The upper bound for every order parameter, proved in the scalar model."
+    },
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "ground_state_parisi_target",
+     "relation": "part",
+     "note": "Equality at a given minimizer, proved in the scalar model. Taking the infimum and attainment stay outside it."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Auffinger and Chen's zero-temperature Parisi formula and",
+     "to": "attainment identify $P_*$ with $\\min_{\\gamma\\in\\mathcal U}\\mathcal P(\\gamma)$."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "For overlap $R_{12}=n^{-1}\\sum_i\\sigma_i^1\\sigma_i^2$, the covariance is",
+     "to": "maximum."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "At a minimizer, the separate contact and diffusion arguments establish",
+     "to": "to the equality, alongside the imported Parisi formula in §6."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "The Parisi formula expresses $P_*$ as a minimum over nondecreasing",
+     "to": "functions."
+    },
+    {
+     "paper": "short",
+     "role": "explanation",
+     "from": "We use the covariance convention $\\xi(t)=t^2/2$, so $\\xi''=1$;",
+     "to": "[Auffinger and Chen (2017), Theorem 1][AC]."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "The ground-state Parisi\nformula and attainment give",
+     "to": "P_*=\\min_{\\gamma\\text{ admissible}}\\mathcal P(\\gamma).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "Each candidate supplies an upper bound, and minimisation finds the",
+     "to": "Gaussian concentration gives the expected-value form used here."
+    }
+   ]
+  },
+  "scalar.minimizer_attainment": {
+   "short": "Infimum is attained",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Auffinger and Chen's zero-temperature Parisi formula and",
+     "to": "it does not separately supply one."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "Existence of a minimiser is a separate input from",
+     "to": "the proof of Lemma 3][AC]."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "The ground-state Parisi\nformula and attainment give",
+     "to": "P_*=\\min_{\\gamma\\text{ admissible}}\\mathcal P(\\gamma).\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "This equality and attainment are external inputs from",
+     "to": "the proof of Lemma 3][auffinger-chen];"
+    }
+   ]
+  },
+  "scalar.integrated_coercivity": {
+   "short": "Conditional integrated coercivity",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+     "name": "integrated_coercivity_of_flux",
+     "relation": "states",
+     "note": "Keeps the constant 1661507/1521000000, with vanishing flux as hypotheses. Written with R=r^2 and b=-w/r."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+     "name": "coercivity_constant_integral",
+     "relation": "part",
+     "note": "The final step from 1661507/1521000000 down to 1/1000."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Coercivity/IntegratedCoercivity.lean",
+     "name": "integrated_coercivity",
+     "relation": "part",
+     "note": "Scalar model: the 1/1000 bound only, assuming directly that the correction integrates to zero."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Integration\nremoves only",
+     "to": "\\ge\\frac1{1000}\\mathbb E_fv^4.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "[OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$",
+     "to": "\\kappa=\\frac{1661507}{1521000000}>\\frac1{1000}.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "Integration removes $\\mathcal W(F_2)$ and keeps the fourth-moment",
+     "to": "\\tag{5}\n$$"
+    },
+    {
+     "paper": "expository",
+     "role": "explanation",
+     "from": "At this stage, write",
+     "to": "\\ge\\frac{c^2}{1000}\\mathbb E[a(t,X_t)^4].\n$$"
+    }
+   ]
+  },
+  "scalar.constant_curvature": {
+   "short": "Curvature on constant intervals",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "positive_gap_curvature",
+     "relation": "part",
+     "note": "Case c>0. curvatureMoment is q', so two derivatives give q'''. This declaration states strict positivity only."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "zero_gap_curvature",
+     "relation": "part",
+     "note": "Case c=0: the derivative of curvatureMoment is q'', positive on the interval. The identity for q'' is elsewhere."
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
+     "name": "stripThird_coercive",
+     "relation": "proof",
+     "note": "The quantitative 1/1000 bound, multiplied through by c^2, for the strip expression at a continuity point."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Let $\\gamma\\in\\mathcal U$ be\nconstant with value $c$ on an open interval",
+     "to": "$c=0$.",
+     "after": "We establish the following"
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "When $c=0$, the heat equation gives",
+     "to": "giving strict increase of $q'$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Lemma 2 (constant-interval curvature;",
+     "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "**Strict-curvature input (",
+     "to": "\\qquad(r<t<s).\n$$"
+    }
+   ]
+  },
+  "scalar.smooth_positive_density": {
+   "short": "Smooth positive density",
+   "lean": [],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Combining (4.1) with the preceding",
+     "to": "\\quad(0<r<s<1).\n$$"
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Convexity gives $a\\geq0$; the already established second moment gives",
+     "to": "hence $\\gamma(0)=0$."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Induction proves $\\gamma\\in C^\\infty([0,1))$, with derivatives at zero",
+     "to": "monotonicity gives $\\gamma'\\geq0$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**Corollary 4 (smooth positive density;",
+     "to": "Only nonnegativity of the density at zero is asserted."
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "In particular, Cauchy–Schwarz gives",
+     "to": "$\\gamma'(t)\\geq\\gamma(t)^2/2000$ for $0<t<1$."
+    },
+    {
+     "paper": "expository",
+     "role": "statement",
+     "from": "Full support alone does not give a density.",
+     "to": "$\\mu_\\gamma=\\gamma'(t)\\,dt$ with $\\gamma'(t)>0$ for $0<t<1$"
+    }
+   ]
+  },
+  "scalar.manuscript_terminal_value": {
+   "short": "Terminal martingale value formulas",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "scalar_value_target",
+     "relation": "contains",
+     "note": "Conclusion also gives convergence of the finite-spin values and the martingale property. Scalar model, with diffusion supplied by the caller."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "ScalarValueConclusion",
+     "relation": "defines",
+     "note": "The full conjunction: finite-spin limit, terminal variable U with its limits, and the three value identities."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
+     "name": "IsDiffusion.parisi_value_assembly",
+     "relation": "proof",
+     "note": "The same identities with the Parisi value, assuming contact, unit curvature moment and strip regularity."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Proposition 6.1 (terminal value).**",
+     "to": "attained Parisi formula in addition to the support theorem."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The bounded martingale $u(t,X_t)$ converges almost surely and in $L^2$",
+     "to": "forces $U_1^2=1$ almost surely."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Combining the identities and using stochastic integral covariance gives",
+     "to": "=\\mathbb E[U_1B_1]=\\int_0^1\\mathbb E a(t,X_t)\\,dt.\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "The support identities give a scalar representation of $P_*$.",
+     "to": "\\tag{10}\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "derivation",
+     "from": "Boundedness gives\n$|U|\\leq1$",
+     "to": "gives (10)."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "Further martingale arguments recover the ground-state value from the",
+     "to": "used here."
+    }
+   ]
+  },
+  "scalar.euler_normalization": {
+   "short": "Euler convergence, normalized directions",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Gaussian/CoupledCoordinates.lean",
+     "name": "coupled_euler_L2_convergence",
+     "relation": "part",
+     "note": "The convergence of expected squared maximum error, for Euler driven by Brownian increments under strip hypotheses."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Gaussian/CoordinateDependsBefore.lean",
+     "name": "normalized_family_orthonormal",
+     "relation": "part",
+     "note": "Orthonormality of the normalized increments, for any predictable coefficients with positive second moments."
+    },
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "finite_gaussian_target",
+     "relation": "part",
+     "note": "Its first clause gives eventual positivity of active normalizers. Uniform convergence of c_j to 1 is not stated here."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "We first fix $0<T<1$, then a mesh $N\\ge1$,",
+     "to": "orthonormality does not assert independence."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "**The finite Gaussian input.** Fix the minimiser",
+     "to": "They need not be independent Gaussians."
+    }
+   ]
+  },
+  "scalar.conditional_rounding": {
+   "short": "Rounding preserves conditional mean",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Gaussian/CoordinateDependsBefore.lean",
+     "name": "finite_rounding_coefficient",
+     "relation": "states",
+     "note": "Integrated form: correlation with any integrable function of the first N coordinates, for measurable U bounded by one."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Equations/GradientErrorConstant.lean",
+     "name": "gaussian_rounding_mean",
+     "relation": "part",
+     "note": "The one-variable fact: for |a| at most 1, the rounded sign has mean a."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "roundedSign",
+     "relation": "defines",
+     "note": "The sign F_N, with Real.sign, which is zero at zero."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "With $F_{\\rm G}$ the standard Gaussian distribution function, define",
+     "to": "$\\mathbb E[F_N\\mid Z_1,\\ldots,Z_N]=u(T,Y_N)$ exactly."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "A deterministic sign of the gradient would not preserve this conditional",
+     "to": "only in the later endpoint limit."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "With $\\Phi_{\\rm G}$ the standard normal distribution function, set",
+     "to": "with a function of the preceding coordinates."
+    }
+   ]
+  },
+  "scalar.correlation_vector_control": {
+   "short": "Control of coefficient vectors",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Processes/MeshRaw.lean",
+     "name": "mesh_coefficient_errors",
+     "relation": "part",
+     "note": "Both squared ell-2 errors are bounded by gradientMeshError, on a fixed strip with positive active moments."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Equations/GradientErrorConstant.lean",
+     "name": "gradientMeshError_tendsto_zero",
+     "relation": "part",
+     "note": "That error tends to zero as the mesh refines, which supplies the o(1)."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Processes/MeshRaw.lean",
+     "name": "mesh_coefficients_norms",
+     "relation": "part",
+     "note": "The B vector has ell-2 norm at most 1, and the last coordinate B_{N+1} is at most 1 in absolute value."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The approximation\n$$\nM_N=",
+     "to": "Coordinatewise errors would not control a sum of growing length."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "The fixed-$T$ Euler argument gives $e_N\\to0$.",
+     "to": "$|A_NB_{N+1}|\\le e_N+\\sqrt\\Delta/c_N$."
+    },
+    {
+     "paper": "short",
+     "role": "explanation",
+     "from": "Bessel's inequality, applied separately to $(g_j)$",
+     "to": "rounding-coordinate term vanishes."
+    }
+   ]
+  },
+  "scalar.shifted_gaussian_limit": {
+   "short": "Shifted Gaussian coefficient limit",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "finite_gaussian_target",
+     "relation": "contains",
+     "note": "The second clause is the mesh limit. The third clause is the endpoint limit to the ground-state value."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "shiftedCoefficientSum",
+     "relation": "defines",
+     "note": "The shifted sum of A_j B_{j+1}, with A_0=0, over j from 0 to N."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "proof",
+     "note": "The fixed-T mesh limit with strip bounds and the unit curvature moment as hypotheses."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "**Proposition 7.1 (finite Gaussian approximation).**",
+     "to": "The limits are taken in that order."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Hence\n$$\n\\sum_{j=0}^NA_jB_{j+1}",
+     "to": "\\longrightarrow\\int_0^T\\mathbb E a(t,X_t)\\,dt.\n$$"
+    },
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "Only afterward let $T\\uparrow1$, obtaining $P_*$.",
+     "to": "The mesh count $N$ is unrelated to the spin-system size $n$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "The finite quantity\nneeded by the circuit construction is the adjacent pairing",
+     "to": "\\tag{11}\n$$"
+    },
+    {
+     "paper": "short",
+     "role": "explanation",
+     "from": "The same proposition proves this limit.",
+     "to": "fixed; only afterwards does $T\\uparrow1$ give $P_*$."
+    }
+   ]
+  },
+  "scalar.terminal_loss": {
+   "short": "Terminal error bound",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
+     "name": "IsDiffusion.strip_value_le_groundState",
+     "relation": "part",
+     "note": "Only the left inequality, assuming contact. The bound by 1-T has no Lean statement."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The prediction error and the energy tail have different sizes:",
+     "to": "makes it nonnegative."
+    },
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "The QAOA scalar input also uses the tail estimate",
+     "to": "curvature and $\\mathbb E a^2=1$."
+    },
+    {
+     "paper": "short",
+     "role": "statement",
+     "from": "In particular, convexity\nand Cauchy–Schwarz give $0\\leq\\mathbb E a\\leq1$, so",
+     "to": "\\leq1-T.\n$$"
+    }
+   ]
+  },
+  "scalar.formal_scalar_clause": {
+   "short": "Scalar-value branch",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "scalar_value_target",
+     "relation": "states",
+     "note": "Exactly this implication, with the conclusion unfolded in ScalarValueConclusion."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "ScalarValueConclusion",
+     "relation": "defines",
+     "note": "The full conjunction concluded by the target."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Main.lean",
+     "name": "value_consequences",
+     "relation": "contains",
+     "note": "Its first clause."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The second formal statement has three clauses.",
+     "to": "convergence of the gradient and the value identities."
+    },
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "These are the declarations `scalar_value_target` and",
+     "to": "for those objects before applying its fixed-strip helper."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
+     "to": "for those clauses."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+     "to": "concern the value identity and finite Gaussian approximation."
+    }
+   ]
+  },
+  "scalar.formal_finite_gaussian_clause": {
+   "short": "Finite-Gaussian branch",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "finite_gaussian_target",
+     "relation": "states",
+     "note": "Exactly this implication, with the conclusion unfolded in FiniteGaussianConclusion."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "FiniteGaussianConclusion",
+     "relation": "defines",
+     "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Main.lean",
+     "name": "value_consequences",
+     "relation": "contains",
+     "note": "Its second clause."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
+     "to": "`finite_gaussian_target`."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "The index match in the Gaussian statement is exact.",
+     "to": "using exactly the displayed\nindex ranges."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
+     "to": "for those clauses."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+     "to": "concern the value identity and finite Gaussian approximation."
+    }
+   ]
+  },
+  "scalar.formal_parisi_clause": {
+   "short": "Parisi identity branch",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "ground_state_parisi_target",
+     "relation": "states",
+     "note": "Exactly this implication. Its proof supplies diffusionProcess itself."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Main.lean",
+     "name": "value_consequences",
+     "relation": "contains",
+     "note": "Its third clause."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
+     "to": "clauses constructs a minimizer."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "Its third clause identifies the ground-state and",
+     "to": "constructing the diffusion internally."
+    }
+   ]
+  },
+  "scalar.lean_scalar_target": {
+   "short": "scalar_value_target",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "scalar_value_target",
+     "relation": "states",
+     "note": "Exactly this implication, with the conclusion unfolded in ScalarValueConclusion."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "ScalarValueConclusion",
+     "relation": "defines",
+     "note": "The full conjunction concluded by the target."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The second formal statement has three clauses.",
+     "to": "convergence of the gradient and the value identities."
+    },
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "These are the declarations `scalar_value_target` and",
+     "to": "for those objects before applying its fixed-strip helper."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
+     "to": "for those clauses."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+     "to": "concern the value identity and finite Gaussian approximation."
+    }
+   ]
+  },
+  "scalar.lean_gaussian_target": {
+   "short": "finite_gaussian_target",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "finite_gaussian_target",
+     "relation": "states",
+     "note": "Exactly this implication, with the conclusion unfolded in FiniteGaussianConclusion."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "FiniteGaussianConclusion",
+     "relation": "defines",
+     "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "Under the\nsame hypotheses and fixed $0<T<1$, it gives eventual positivity",
+     "to": "`finite_gaussian_target`."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "The index match in the Gaussian statement is exact.",
+     "to": "using exactly the displayed\nindex ranges."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
+     "to": "for those clauses."
+    },
+    {
+     "paper": "expository",
+     "role": "mention",
+     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+     "to": "concern the value identity and finite Gaussian approximation."
+    }
+   ]
+  },
+  "scalar.lean_parisi_target": {
+   "short": "ground_state_parisi_target",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "ground_state_parisi_target",
+     "relation": "states",
+     "note": "Exactly this implication. Its proof supplies diffusionProcess itself."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "statement",
+     "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
+     "to": "clauses constructs a minimizer."
+    },
+    {
+     "paper": "short",
+     "role": "mention",
+     "from": "Its third clause identifies the ground-state and",
+     "to": "constructing the diffusion internally."
+    }
+   ]
+  },
+  "scalar.conditional_fixed_strip": {
+   "short": "Conditional fixed-strip implication",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "states",
+     "note": "Exactly this lemma, with analytic bounds and the unit moment as explicit hypotheses."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "The implementation derives compact-strip bounds",
+     "to": "inputs are not additional hypotheses of the exported clauses."
+    }
+   ]
+  },
+  "scalar.fixed_strip_input_diffusion": {
+   "short": "Fixed-strip diffusion, cutoff premises",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "contains",
+     "note": "Premises hX, hT and hT1. No minimizer appears among its hypotheses."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Model.lean",
+     "name": "IsDiffusion",
+     "relation": "defines",
+     "note": "The diffusion predicate used in premise hX."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "Their caller supplies the same minimizer and",
+     "to": "for those objects before applying its fixed-strip helper."
+    }
+   ]
+  },
+  "scalar.fixed_strip_input_bounds": {
+   "short": "Fixed-strip analytic bounds",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "contains",
+     "note": "Premises hg, hD, hLu, hLa, ha, huLip and haLip."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Equations/GradientStrip.lean",
+     "name": "GradientStrip",
+     "relation": "defines",
+     "note": "The structure behind premise hg, with its bounds and integrated equation."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
+     "name": "SourceStripRegularity",
+     "relation": "defines",
+     "note": "The same bounds, for every cutoff, in the form the top-level proofs supply."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "The implementation derives compact-strip bounds",
+     "to": "inputs are not additional hypotheses of the exported clauses."
+    },
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "Couple the increments to Brownian motion. On the fixed",
+     "to": "gradient and curvature are bounded and Lipschitz."
+    }
+   ]
+  },
+  "scalar.fixed_strip_input_unit_moment": {
+   "short": "Unit curvature-moment premise",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "contains",
+     "note": "Premise hmom."
+    },
+    {
+     "file": "OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",
+     "name": "IsDiffusion.curvature_unit_moment_of_contact",
+     "relation": "proof",
+     "note": "Derives this moment from contact and strip regularity, as the top-level proofs do."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "mention",
+     "from": "The implementation derives compact-strip bounds",
+     "to": "inputs are not additional hypotheses of the exported clauses."
+    }
+   ]
+  },
+  "scalar.formal_contact_input": {
+   "short": "Scalar contact identity",
+   "lean": [
+    {
+     "file": "OAI/Probability/SKValue/Variation/MinimizerContact.lean",
+     "name": "IsMinimizer.gradient_moment_contact",
+     "relation": "states",
+     "note": "Exactly this identity, on [0,1), inside the scalar model."
+    }
+   ],
+   "statements": [
+    {
+     "paper": "long",
+     "role": "explanation",
+     "from": "There is a second way to obtain $q=t$ from the variational inequalities.",
+     "to": "full-support theorem."
+    },
+    {
+     "paper": "long",
+     "role": "derivation",
+     "from": "Thus $G$ cannot have a positive component, and $G\\equiv0$ on",
+     "to": "separately."
+    }
+   ]
+  }
+ }
+}

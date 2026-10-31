@@ -9,12 +9,15 @@ export interface StaticIndex {
   snapshot: Snapshot;
   responses: Record<string, string>;
   documents: Record<string, string>;
-  records: string;
-  summaries: string;
   search: string;
-  /** Optional per-table files; older captured editions retain the full-table path. */
+  /** Whole-edition files, in version 1 editions only. */
+  records?: string;
+  summaries?: string;
+  /** Per-table files; version 1 editions may have only the whole-edition files. */
   records_by_table?: Record<string, string>;
   summaries_by_table?: Record<string, string>;
+  /** Route to a file of `key -> response file`, loaded when that route is first asked for. */
+  route_maps?: Record<string, string>;
 }
 export interface SearchIndex {
   rows: Row[];
@@ -98,9 +101,55 @@ export function selectionMatches(data: Row, structure: Row, bytes: Uint8Array, s
     }) })) };
 }
 
+const documentsLoaded = new Map<string, Promise<Uint8Array>>();
+function documentFile(name: string): Promise<Uint8Array> {
+  let value = documentsLoaded.get(name);
+  if (!value) {
+    value = fetch(root + name).then((r) => {
+      if (!r.ok) throw new Error(`Could not load the captured edition (${r.status}).`);
+      return r.arrayBuffer();
+    }).then((buffer) => new Uint8Array(buffer)).catch((error) => { documentsLoaded.delete(name); throw error; });
+    documentsLoaded.set(name, value);
+  }
+  return value;
+}
+
+/** Passage text is exported once, as the paper; restore it to the server's record response. */
+async function withPassageText(index: StaticIndex, data: Row): Promise<Row> {
+  const passages: Row[] | undefined = data.aligned_passages;
+  if (!passages?.some((passage) => passage.text === undefined)) return data;
+  const decoder = new TextDecoder();
+  const restored = await Promise.all(passages.map(async (passage) => {
+    const bytes = await documentFile(index.documents[passage.stage]);
+    return { ...passage, text: decoder.decode(bytes.slice(passage.span.start_byte, passage.span.end_byte)) };
+  }));
+  return { ...data, aligned_passages: restored };
+}
+
+/** The response file for a key: the startup index first, then its route's own map. */
+async function responseFile(index: StaticIndex, route: string, name: string): Promise<string | undefined> {
+  const file = index.responses[name];
+  if (file) return file;
+  const map = index.route_maps?.[route];
+  return map ? (await load<Record<string, string>>(map))[name] : undefined;
+}
+
+/** Every record of the selected tables, from per-table files where the edition has them. */
+async function loadRecords(index: StaticIndex, summary: boolean, table: string | null): Promise<Row[]> {
+  const tableFiles = summary ? index.summaries_by_table : index.records_by_table;
+  if (tableFiles && table && Object.hasOwn(tableFiles, table)) return load<Row[]>(tableFiles[table]);
+  const whole = summary ? index.summaries : index.records;
+  if (whole) {
+    const all = await load<Record<string, Row[]>>(whole);
+    return table ? all[table] ?? [] : Object.values(all).flat();
+  }
+  if (table || !tableFiles) return [];
+  return (await Promise.all(Object.values(tableFiles).map((file) => load<Row[]>(file)))).flat();
+}
+
 export async function staticRequest(url: string): Promise<Response> {
   const index = await load<StaticIndex>("index.json");
-  if (index.version !== 1) throw new Error("Unsupported captured-edition format.");
+  if (index.version !== 1 && index.version !== 2) throw new Error("Unsupported captured-edition format.");
   const request = new URL(url, window.location.origin);
   const route = request.pathname.replace(/^\/api\/v1/, "");
   const params = new URLSearchParams(request.search);
@@ -115,14 +164,7 @@ export async function staticRequest(url: string): Promise<Response> {
   if (route === "/records") {
     const summary = params.get("representation") === "summary";
     const refs = params.getAll("ref"), table = params.get("table");
-    const tableFiles = summary ? index.summaries_by_table : index.records_by_table;
-    const tableFile = table && tableFiles && Object.hasOwn(tableFiles, table) ? tableFiles[table] : undefined;
-    let records: Row[];
-    if (tableFile) records = await load<Row[]>(tableFile);
-    else {
-      const all = await load<Record<string, Row[]>>(summary ? index.summaries : index.records);
-      records = table ? all[table] ?? [] : Object.values(all).flat();
-    }
+    const records = await loadRecords(index, summary, table);
     const rows = records.filter((row) => !refs.length || refs.includes(row.ref))
       .sort((a, b) => a.ref < b.ref ? -1 : a.ref > b.ref ? 1 : 0);
     return envelope(page(rows, params, route, index.snapshot.manifest_sha256));
@@ -131,7 +173,7 @@ export async function staticRequest(url: string): Promise<Response> {
     const stage = params.get("paper")!;
     const matchParams = new URLSearchParams({ paper: stage, representation: "matches" });
     const [data, structure, document] = await Promise.all([
-      load<Row>(index.responses[key(route, matchParams)]),
+      load<Row>((await responseFile(index, route, key(route, matchParams)))!),
       load<Row>(index.responses[`/papers/${stage}/structure?representation=reader`] ?? index.responses[`/papers/${stage}/structure`]),
       fetch(root + index.documents[stage]).then((r) => r.arrayBuffer()),
     ]);
@@ -143,8 +185,8 @@ export async function staticRequest(url: string): Promise<Response> {
   // route; a new reader can still open them without the optional projection.
   const readerStructure = /^\/papers\/(long|short|expository)\/structure$/.test(route)
     && normalized.size === 1 && normalized.get("representation") === "reader";
-  const file = index.responses[key(route, normalized)] ?? (readerStructure ? index.responses[route] : undefined);
+  const file = await responseFile(index, route, key(route, normalized)) ?? (readerStructure ? index.responses[route] : undefined);
   if (!file) return Response.json({ error: { code: "not_found", message: "This request is not part of the captured reading website." } }, { status: 404 });
-  const data = await load<Row>(file);
+  const data = await withPassageText(index, await load<Row>(file));
   return envelope(Array.isArray(data.items) && "total" in data ? { ...data, ...page(data.items, params, route, index.snapshot.manifest_sha256) } : data);
 }
