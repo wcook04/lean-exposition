@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { ReaderSkeleton } from "../reader/skeletonView";
 import { lazyCode } from "./code";
 import { describeError, EditionProvider, useEdition, useEditionChanged, useEditionRetry } from "./data";
 import { routeHref, useLinkInterception, useRoute, type Route } from "./router";
@@ -8,6 +9,8 @@ import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
 
 import { FrontHero } from "../home/FrontHero";
 import { PAGES, usePrefetchOnIntent } from "./prefetch";
+import { useKeptPlace } from "./restore";
+import { AddressNotice } from "./AddressNotice";
 
 const FrontPage = lazyCode(PAGES.home, (m) => m.FrontPage);
 const MapPage = lazyCode(PAGES.map, (m) => m.MapPage);
@@ -18,12 +21,15 @@ const LeanPage = lazyCode(PAGES.lean, (m) => m.LeanPage);
 const AboutPage = lazyCode(PAGES.about, (m) => m.AboutPage);
 const SearchPage = lazyCode(PAGES.search, (m) => m.SearchPage);
 const SearchPalette = lazy(() => import("../search/SearchPalette").then((m) => ({ default: m.SearchPalette })));
+const KeysHelp = lazy(() => import("./KeysHelp").then((m) => ({ default: m.KeysHelp })));
 
 export function App() {
   useLinkInterception();
   usePrefetchOnIntent();
   const route = useRoute();
   const [searching, setSearching] = useState(false);
+  const [helping, setHelping] = useState(false);
+  useKeptPlace(route.view);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -33,6 +39,15 @@ export function App() {
       if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")) {
         event.preventDefault();
         setSearching(true);
+      } else if (event.key === "?" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        setHelping(true);
+      } else if (event.key === "[" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        // A page that steps through something with [ and ] keeps the key.
+        if (document.querySelector("[data-keeps-brackets]")) return;
+        // Beside Alt-Left, which is the browser's own. The control's name says where it goes.
+        event.preventDefault();
+        document.querySelector<HTMLElement>(".back-control")?.click();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -60,9 +75,10 @@ export function App() {
         <PageTitle route={route} />
         <EditionBanner />
         <LinkedEditionNotice />
+        <AddressNotice route={route} />
         <main id="main" className="app__main" tabIndex={-1}>
           <Suspense fallback={route.view === "home" ? <FrontHero /> : <Skeleton view={route.view} />}>
-            <Page route={route} />
+            <Page route={route} onSearch={() => setSearching(true)} />
           </Suspense>
         </main>
         {searching && (
@@ -70,12 +86,17 @@ export function App() {
             <SearchPalette onClose={() => setSearching(false)} />
           </Suspense>
         )}
+        {helping && (
+          <Suspense fallback={null}>
+            <KeysHelp onClose={() => setHelping(false)} />
+          </Suspense>
+        )}
       </EditionProvider>
     </div>
   );
 }
 
-function Page({ route }: { route: Route }) {
+function Page({ route, onSearch }: { route: Route; onSearch(): void }) {
   switch (route.view) {
     case "home":
       return <FrontPage />;
@@ -98,8 +119,32 @@ function Page({ route }: { route: Route }) {
         <div className="page-message">
           <h1>No page at this address</h1>
           <p>
-            Go to the <a href={routeHref({ view: "home" })}>front page</a> or the <a href={routeHref({ view: "map" })}>argument map</a>,
-            or use search to find a result, a section or a passage.
+            Nothing on this site is at <code translate="no">{route.path}</code>. A link from an older edition may have moved. These pages are here:
+          </p>
+          <ul className="page-message__routes">
+            <li>
+              <a href={routeHref({ view: "read", stage: "short" })}>The short paper</a> <span>states the theorem and proves it</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "read", stage: "expository" })}>The exposition</a> <span>explains the ideas with worked examples</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "read", stage: "long" })}>The long record</a> <span>reconstructs each step and names its source</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "map" })}>The argument map</a> <span>draws the proof, from the theorem down</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "compare" })}>Compare</a> <span>sets each step’s statements side by side</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "home" })}>The front page</a>
+            </li>
+          </ul>
+          <p>
+            <button type="button" className="control" onClick={onSearch}>
+              Search for a result, a section or a passage
+            </button>
           </p>
         </div>
       );
@@ -112,7 +157,7 @@ function EditionBanner() {
   return (
     <div className="edition-banner" role="alert">
       <span>
-        The server has started serving a different edition, that is, a different fixed set of records and papers. This page
+        The server has started serving a different edition, that is, a different fixed set of steps and papers. This page
         still shows the earlier edition.
       </span>
       <button type="button" className="control" onClick={() => window.location.reload()}>
@@ -135,7 +180,7 @@ function MapGate({ route }: { route: Extract<Route, { view: "map" }> }) {
     const { title, detail } = describeError(edition.contextError);
     return (
       <div className="boot boot--error" role="alert">
-        <h1>The links between records could not be loaded</h1>
+        <h1>The links between steps could not be loaded</h1>
         <p>
           {title}. {detail}
         </p>
@@ -156,25 +201,11 @@ function MapGate({ route }: { route: Extract<Route, { view: "map" }> }) {
  * the site loops); the words for assistive technology say what is happening.
  */
 function Skeleton({ view, title }: { view: Route["view"]; title?: string }) {
-  if (view === "read") {
-    return (
-      <div className="skeleton skeleton--paper" aria-busy="true">
-        <p className="visually-hidden" role="status">
-          Loading the paper…
-        </p>
-        <span className="skeleton__bar skeleton__bar--caps" />
-        <span className="skeleton__bar skeleton__bar--title" />
-        <span className="skeleton__bar skeleton__bar--title skeleton__bar--short" />
-        {[100, 96, 98, 92, 60, 0, 100, 94, 97, 88, 99, 45].map((w, i) =>
-          w ? <span key={i} className="skeleton__bar skeleton__bar--line" style={{ width: `${w}%` }} /> : <span key={i} className="skeleton__gap" />,
-        )}
-      </div>
-    );
-  }
+  if (view === "read") return <ReaderSkeleton />;
   return (
     <div className={`skeleton${view === "map" ? " skeleton--plate" : ""}`} aria-busy="true">
       <p className="visually-hidden" role="status">
-        {view === "map" ? "Loading the argument map…" : "Loading the records…"}
+        {view === "map" ? "Loading the argument map…" : "Loading the steps…"}
       </p>
       <span className="skeleton__bar skeleton__bar--caps" />
       {title ? <p className="skeleton__title">{title}</p> : <span className="skeleton__bar skeleton__bar--title" />}
@@ -202,7 +233,7 @@ function LinkedEditionNotice() {
     <div className="edition-banner" role="alert">
       <span>
         The link you followed was copied from edition <code translate="no">{linked.slice(0, EDITION_PREFIX)}</code> of the
-        records and papers. The server is serving edition{" "}
+        steps and papers. The server is serving edition{" "}
         <code translate="no">{snapshot.manifest_sha256.slice(0, EDITION_PREFIX)}</code>, so this page shows that edition, not the
         one the link was copied from.
       </span>

@@ -432,3 +432,54 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* How to use the site: two columns of short lists, so the keys are in view with the marks. */
+.about__using {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.about__using h2 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  color: var(--ink);
+}
+
+.about__using h3 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.about__using ul {
+  margin: 0;
+  padding: 0 0 0 1.1em;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.about__using li + li {
+  margin-top: var(--space-1);
+}
+
+.about__using p {
+  margin: 0;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.about__usegrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 var(--space-6);
+}
+
+@media (max-width: 42em) {
+  .about__usegrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

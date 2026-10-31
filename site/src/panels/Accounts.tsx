@@ -374,7 +374,7 @@ function UsedBy({ stage, nodeId, href }: { stage: Stage; nodeId: string; href(st
         </button>
       </p>
     );
-  if (items.length === 0) return <p className="acct__state faint">No passage is recorded for a result that uses this record.</p>;
+  if (items.length === 0) return <p className="acct__state faint">No passage is recorded for a result that uses this step.</p>;
   return (
     <ul className="acct__used">
       {items.map((m) => (
@@ -393,7 +393,7 @@ function SourceDestination({ nodeId }: { nodeId: string }) {
   const origin = graph.nodes.get(nodeId)!.origin;
   if (origin.family === "none") return null;
   const url = webUrl(origin.url);
-  const name = `${origin.label}${origin.place ? `, ${origin.place}` : ""}`;
+  const name = `${origin.label}${origin.place && origin.family !== "lean" ? `, ${origin.place}` : ""}`;
   return (
     <p className="acct__source" data-slot={origin.slot}>
       <span className="src-sq" aria-hidden="true" />

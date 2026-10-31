@@ -159,6 +159,7 @@
   color: var(--formal);
 }
 
+.palette__notation { margin-left: var(--space-2); font-family: var(--font-serif); font-size: 1rem; font-weight: 400; }
 .palette__title--serif {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
@@ -316,6 +317,7 @@
 }
 
 @media (max-width: 1000px) {
+  .search-body.is-exact .search-lean { order: -1; }
   .search-body {
     grid-template-columns: minmax(0, 1fr);
   }

@@ -9,12 +9,12 @@ import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { statedIn } from "../app/papers";
 import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { kindName } from "../map/labels";
 import { mainGoal, sectionLabel, startingGoals } from "../map/TheoremPlate";
 import { goalFor, reach, scopedGraph, usesOf } from "../map/treeModel";
 import type { ArgGraph } from "../model/graph";
 import { fetchModule } from "../lean/data";
-import { LazyLeanBlock } from "../lean/lazy";
 import { statementHref } from "../reader/links";
 import { onIdle } from "./idle";
 import { LazyStatementSlice, primeSlices } from "./lazy";
@@ -42,6 +42,7 @@ import {
 } from "./model";
 import { shortTitle, useAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
+import { WalkingLean } from "./WalkingLean";
 
 type CompareRoute = Extract<Route, { view: "compare" }>;
 
@@ -68,13 +69,13 @@ export function StepBench({ route }: { route: CompareRoute }) {
   const scoped = useMemo(() => scopedGraph(graph, goal), [graph, goal]);
   const outline = useMemo(() => argumentOutline(scoped, goal), [scoped, goal]);
   const node = asked ?? goal;
-  const [levelFilter, setLevelFilter] = useState<LevelFilter>("all");
+  const [levelFilter, setLevelFilter] = useEntryState<LevelFilter>("bench-level", "all");
   const listed = useMemo(() => filterByLevel(outline, levelFilter, scoped), [outline, levelFilter, scoped]);
   const stepAt = listed.findIndex((row) => row.id === node);
 
   const titleOf = useCallback((id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id), [graph]);
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useEntryState("bench-filter", "");
   const visible = useMemo(() => filterOutline(listed, query, (id) => `${titleOf(id)} ${graph.nodes.get(id)?.label ?? ""}`), [listed, query, titleOf, graph]);
 
   // The levels the reader chose: the address first, then what they chose last time.
@@ -181,10 +182,10 @@ export function StepBench({ route }: { route: CompareRoute }) {
         {!alignment && <p className="bench-note">Loading where each level states this step…</p>}
         {alignment && !record && (
           <p className="bench-note">
-            No level is linked to this record in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
+            No level is linked to this step in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
           </p>
         )}
-        {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} record={record} slots={slots} />)}
+        {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} id={node} record={record} slots={slots} />)}
         <footer className="bench-foot">
           <a className="bench-foot__link" href={previous ? href(previous.id) : undefined} aria-disabled={!previous} rel="prev">
             {previous ? <><span aria-hidden="true">↑ </span><span className="bench-foot__word">Previous: </span>{titleOf(previous.id)}</> : "First step"}
@@ -268,9 +269,9 @@ function StepHead({ graph, node, title, titleOf, href, slots, onToggle, stacked 
           </a>
         </div>
       </div>
-      <RelationLine label="Used by" empty="Nothing in the record uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
+      <RelationLine label="Used by" empty="Nothing in the argument uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
       <div className="bench-rels">
-        <RelationLine label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={limit} />
+        <RelationLine label="Uses" empty="The argument as written stops here." ids={uses} titleOf={titleOf} href={href} limit={limit} />
         {assumes.length > 0 && <RelationLine label="Assumes" ids={assumes} titleOf={titleOf} href={href} limit={limit} assumptions />}
       </div>
     </header>
@@ -320,15 +321,15 @@ function RelationLine({ label, empty, ids, titleOf, href, limit, assumptions }: 
   );
 }
 
-function Columns({ record, slots }: { record: RecordAlignment; slots: Slot[] }) {
+function Columns({ id, record, slots }: { id: string; record: RecordAlignment; slots: Slot[] }) {
   return (
     <div className="bench-levels">
       {slots.map((slot) =>
         slot.state === "column" ? (
-          <section key={slot.level} className="bench-col" style={{ flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
+          <section key={slot.level} className={`bench-col${slot.level === "lean" ? " bench-col--lean" : ""}`} style={slot.level === "lean" ? undefined : { flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
             <ColumnHead level={slot.level} />
             <div className="bench-col__scroll" tabIndex={0} data-scrolls="" aria-label={`${LEVEL_NAMES[slot.level]}, its text for this step`}>
-              <LevelBody record={record} level={slot.level} />
+              <LevelBody id={id} record={record} level={slot.level} />
             </div>
           </section>
         ) : null,
@@ -345,13 +346,13 @@ function ColumnHead({ level }: { level: Level }) {
   );
 }
 
-function LevelBody({ record, level }: { record: RecordAlignment; level: Level }) {
+function LevelBody({ id, record, level }: { id: string; record: RecordAlignment; level: Level }) {
   if (level === "lean") {
     return (
       <>
         {record.lean.map((row) => (
           <article key={row.name} className="bench-decl">
-            <LazyLeanBlock name={row.name} relation={row.relation} note={row.note} clause={row.clause} compact />
+            <WalkingLean row={row} place={`step:${id}:${row.name}`} />
           </article>
         ))}
       </>
@@ -360,13 +361,13 @@ function LevelBody({ record, level }: { record: RecordAlignment; level: Level })
   return (
     <>
       {statementsOf(record, level).map((s) => (
-        <SliceRow key={`${s.start_byte}:${s.end_byte}`} statement={s} />
+        <SliceRow key={`${s.start_byte}:${s.end_byte}`} id={id} statement={s} />
       ))}
     </>
   );
 }
 
-function SliceRow({ statement }: { statement: AlignedStatement }) {
+function SliceRow({ id, statement }: { id: string; statement: AlignedStatement }) {
   return (
     <article className="bench-slice">
       <header className="bench-slice__head">
@@ -375,7 +376,7 @@ function SliceRow({ statement }: { statement: AlignedStatement }) {
       </header>
       <LazyStatementSlice statement={statement} />
       {statement.note && <p className="bench-slice__note">{statement.note}</p>}
-      <a className="bench-slice__read" href={statementHref(statement)}>
+      <a className="bench-slice__read" href={statementHref(statement, id)}>
         Read in context
       </a>
     </article>
@@ -416,7 +417,7 @@ function StackedLevels({ id, record, slots }: { id: string; record: RecordAlignm
         has(level) ? (
           <section key={level} className="bench-stack__level" data-level={level} aria-label={LEVEL_NAMES[level]}>
             <ColumnHead level={level} />
-            <LevelBody record={record} level={level} />
+            <LevelBody id={id} record={record} level={level} />
           </section>
         ) : (
           <p key={level} className="bench-stack__absent">

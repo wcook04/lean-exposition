@@ -107,6 +107,20 @@ describe("reader structure compatibility", () => {
   });
 });
 
+describe("the tie loader", () => {
+  it("asks for one paper's route and returns its data", async () => {
+    vi.resetModules();
+    const ties = { segments: [], ties: [], passages: [], meaning: "" };
+    const get = vi.fn(async () => ({ data: ties }));
+    vi.doMock("../src/api/client", () => ({ get }));
+    try {
+      const { loadTies } = await import("../src/api/lean");
+      expect(await loadTies("short")).toBe(ties);
+      expect(get).toHaveBeenCalledWith("/ties/short");
+    } finally { vi.doUnmock("../src/api/client"); }
+  });
+});
+
 describe("on-demand route maps", () => {
   it("finds a response through its route's map without loading other maps", async () => {
     vi.resetModules();
@@ -213,7 +227,7 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
       const names = new Set(requests.map((url) => url.split("/edition/")[1]));
       const maps = Object.values(index().route_maps!);
       expect(maps.filter((file) => names.has(file))).toEqual([]);
-      expect([...names].filter((file) => file.startsWith("lean/") || file === "alignment.json")).toEqual([]);
+      expect([...names].filter((file) => file.startsWith("lean/") || file.startsWith("ties/") || file === "alignment.json")).toEqual([]);
       expect(statSync(resolve(out, "index.json")).size).toBeLessThan(10_000);
     } finally { vi.unstubAllGlobals(); }
   });
@@ -231,6 +245,46 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
       expect((await staticRequest("/api/v1/lean/module?name=OAI.Nothing")).status).toBe(404);
       expect((await staticRequest("/api/v1/lean/modules?manifest=wrong")).status).toBe(409);
     } finally { vi.unstubAllGlobals(); }
+  });
+  it("serves each paper's small tie index at a fixed path, loaded apart from the alignment", async () => {
+    const edition = index();
+    if (!edition.responses["/ties/short"]) return;
+    const requests: string[] = [];
+    serveFiles(requests);
+    try {
+      // The first drafts' targets were 40 and 120 KB, for a third as many ties. Compressed, each is under 40 KB.
+      for (const [stage, limit] of [["short", 150_000], ["expository", 150_000], ["long", 250_000]] as const) {
+        expect(edition.responses[`/ties/${stage}`]).toBe(`ties/${stage}.json`);
+        expect(statSync(resolve(out, `ties/${stage}.json`)).size).toBeLessThan(limit);
+        const ties = await body(`/api/v1/ties/${stage}`);
+        expect(Object.keys(ties).sort()).toEqual(["meaning", "passages", "segments", "ties"]);
+        let previous = 0;
+        for (const [start, end, members] of ties.segments) {
+          expect(start).toBeGreaterThanOrEqual(previous);
+          expect(end).toBeGreaterThan(start);
+          for (const member of members) expect(ties.ties[member].at).toMatch(/^b\d+-\d+$/);
+          previous = end;
+        }
+        const tied = ties.ties.find((tie: any) => tie.lean);
+        expect(tied.lines[1]).toBeGreaterThanOrEqual(tied.lines[0]);
+        expect(typeof tied.name).toBe("string");
+        expect(typeof tied.module).toBe("string");
+      }
+      expect(requests.some((url) => url.endsWith("alignment.json"))).toBe(false);
+      expect((await staticRequest("/api/v1/ties/other")).status).toBe(404);
+      expect((await staticRequest("/api/v1/ties/short?manifest=wrong")).status).toBe(409);
+    } finally { vi.unstubAllGlobals(); }
+  });
+  it("carries exact Lean lines on every aligned row and statement", () => {
+    if (!index().responses["/alignment"]) return;
+    const { records } = read("alignment.json");
+    for (const record of Object.values<any>(records)) {
+      for (const row of record.lean) expect(row.lines[0]).toBeGreaterThanOrEqual(row.line);
+      for (const slice of record.statements) {
+        expect(slice.at).toBe(`b${slice.start_byte}-${slice.end_byte}`);
+        for (const row of slice.lean) expect(row.lines[1]).toBeLessThanOrEqual(row.end_line);
+      }
+    }
   });
   it("serves all recorded data from static files and enforces edition pins", async () => {
     const requests: string[] = [];

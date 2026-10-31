@@ -87,6 +87,29 @@ html[data-view="map"] .app {
   transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
 }
 
+/* A line a page may fill while something is pointed at. It takes up the bar's free space
+   and adds no height, so filling it moves nothing. */
+.topbar__line {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 68.75em) {
+  .topbar__line {
+    display: none;
+  }
+}
+
+/* The index at the back of the book: there for those who want it, quieter than the jobs. */
+.topnav__job--quiet {
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+}
+
 .topnav__job:hover,
 .readmenu__button[aria-expanded="true"] {
   color: var(--ink);
@@ -188,7 +211,8 @@ html[data-view="map"] .app {
 }
 
 .readmenu__state {
-  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--ink-2);
 }
 
 .readmenu__job {
@@ -513,4 +537,100 @@ a.out::after {
     -webkit-mask: none;
     mask: none;
   }
+}
+
+/* The list of keys, on About and in the `?` dialog. */
+.keylist {
+  margin: 0;
+}
+
+.keylist > div {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: 5px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.keylist dt {
+  display: flex;
+  gap: 4px;
+}
+
+.keylist dd {
+  margin: 0;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.keys-help {
+  width: min(34rem, calc(100vw - 2 * var(--space-4)));
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--ground);
+  color: var(--ink);
+}
+
+.keys-help::backdrop {
+  background: color-mix(in oklab, var(--ink) 30%, transparent);
+}
+
+.keys-help__body {
+  padding: var(--space-4) var(--space-5);
+}
+
+.keys-help h2 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+}
+
+.keys-help__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0;
+  font-size: var(--fs-ui);
+}
+
+.keys-help__foot a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+/* A page that is not there still offers the way into the site. */
+.page-message__routes {
+  display: grid;
+  gap: 2px;
+  margin: var(--space-4) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-message__routes a {
+  display: inline-block;
+  min-height: 24px;
+  color: var(--ink);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.page-message__routes span {
+  color: var(--ink-2);
+}
+
+/* An address that names something this edition does not hold. */
+.address-notice {
+  margin: 0;
+  padding: 6px var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
 }

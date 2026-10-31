@@ -3,6 +3,7 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
+import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
 
 export type Trace = "rests" | "uses";
 
@@ -16,6 +17,11 @@ export type Route =
       goal?: string;
       /** A selected step between two records: an `ArgEdge.key`. */
       edge?: string;
+      /** The Lean graph of this argument in place of the argument. */
+      lean?: boolean;
+      /** The Lean declaration open in the sheet, with its module where a name is declared twice. */
+      decl?: string;
+      declModule?: string;
     }
   | {
       view: "read";
@@ -25,6 +31,9 @@ export type Route =
       at?: string;
       node?: string;
       beside?: { stage: Stage; anchor: string };
+      /** The Lean declaration open beside the paper, with its module where a name is declared twice. */
+      decl?: string;
+      declModule?: string;
     }
   | { view: "checks"; node?: string }
   | {
@@ -38,7 +47,17 @@ export type Route =
       /** The table with the steps only some of the levels have, as well as those all of them have. */
       any?: boolean;
     }
-  | { view: "lean"; module?: string; decl?: string }
+  | {
+      view: "lean";
+      module?: string;
+      decl?: string;
+      /** The module's whole source, with these lines lit ("35-59"), or "all". */
+      file?: string;
+      /** A folder of the tree, as its path. */
+      folder?: string;
+      /** The list of declarations linked to the papers. */
+      index?: "papers";
+    }
   | { view: "about"; anchor?: string }
   | {
       view: "search";
@@ -60,7 +79,7 @@ function isLevel(value: string): value is Level {
 }
 
 /** The kinds of result search lists, each one table of the edition. */
-export const SEARCH_TYPES = ["records", "sections", "passages", "citations", "sources", "checks"] as const;
+export const SEARCH_TYPES = ["records", "statements", "sections", "text", "passages", "citations", "sources", "checks"] as const;
 export type SearchType = (typeof SEARCH_TYPES)[number];
 
 function isSearchType(value: string | null): value is SearchType {
@@ -109,6 +128,9 @@ export function parseRoute(url: URL): Route {
       lens: isStage(lens) ? lens : undefined,
       goal: q.get("g") ?? undefined,
       edge: edgeKeyFromParam(q.get("e")),
+      lean: q.get("v") === "lean" || undefined,
+      decl: q.get("d") ?? undefined,
+      declModule: q.get("dm") ?? undefined,
     };
   }
   const read = path.match(/^\/read\/([a-z]+)$/);
@@ -122,6 +144,8 @@ export function parseRoute(url: URL): Route {
       at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
+      decl: q.get("d") ?? undefined,
+      declModule: q.get("dm") ?? undefined,
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
@@ -129,7 +153,7 @@ export function parseRoute(url: URL): Route {
     const levels = q.get("levels")?.split(",").filter(isLevel);
     return { view: "compare", node: q.get("n") ?? undefined, at: q.get("at") ?? undefined, levels: levels?.length ? levels : undefined, any: q.get("in") === "any" || undefined };
   }
-  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined };
+  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined, file: q.get("file") ?? undefined, folder: q.get("f") ?? undefined, index: q.get("list") === "papers" ? "papers" : undefined };
   if (path === "/about") return { view: "about", anchor: hash };
   if (path === "/search") {
     const type = q.get("type");
@@ -177,44 +201,71 @@ export function routeHref(route: Route): string {
       if (route.trace) q.set("t", route.trace);
       if (route.lens) q.set("lens", route.lens);
       if (route.edge) q.set("e", edgeParam(route.edge));
+      if (route.lean) q.set("v", "lean");
+      if (route.decl) q.set("d", route.decl);
+      if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
-      return `${BASE}/map${s ? `?${s}` : ""}`;
+      return `${BASE}/map/${s ? `?${s}` : ""}`;
     }
     case "read": {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
+      if (route.decl) q.set("d", route.decl);
+      if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
-      return `${BASE}/read/${route.stage}${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
+      return `${BASE}/read/${route.stage}/${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     }
     case "checks":
       if (route.node) q.set("n", route.node);
-      return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
+      return `${BASE}/checks/${q.toString() ? `?${q}` : ""}`;
     case "compare": {
       if (route.node) q.set("n", route.node);
       if (route.at) q.set("at", route.at);
       if (route.levels) q.set("levels", route.levels.join(","));
       if (route.any) q.set("in", "any");
       const s = q.toString();
-      return `${BASE}/compare${s ? `?${s}` : ""}`;
+      return `${BASE}/compare/${s ? `?${s}` : ""}`;
     }
     case "lean": {
       if (route.module) q.set("m", route.module);
       if (route.decl) q.set("d", route.decl);
+      if (route.file) q.set("file", route.file);
+      if (route.folder) q.set("f", route.folder);
+      if (route.index) q.set("list", route.index);
       const s = q.toString();
-      return `${BASE}/lean${s ? `?${s}` : ""}`;
+      return `${BASE}/lean/${s ? `?${s}` : ""}`;
     }
     case "about":
-      return `${BASE}/about${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
+      return `${BASE}/about/${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     case "search": {
       q.set("q", route.q);
       if (route.type) q.set("type", route.type);
       if (route.page && route.page > 1) q.set("p", String(route.page));
-      return `${BASE}/search?${q}`;
+      return `${BASE}/search/?${q}`;
     }
     case "missing":
       return route.path;
   }
+}
+
+/**
+ * The exact address the host serves. Each page is a directory there, so a path
+ * without its slash is redirected, and a redirect loses `history.state`. Every
+ * address the site writes has the slash, so a reload never redirects.
+ */
+export function canonicalPath(pathname: string): string {
+  const path = pathname.replace(/\/+$/, "");
+  if (path === BASE) return `${BASE}/`;
+  const page = BASE && path.startsWith(`${BASE}/`) ? path.slice(BASE.length) : path;
+  return /^\/(?:map|compare|lean|checks|about|search|read\/(?:long|short|expository))$/.test(page) ? `${path}/` : pathname;
+}
+
+// An address that reached us in another form (a server with no redirect, an old link).
+if (canonicalPath(window.location.pathname) !== window.location.pathname) {
+  const here = new URL(window.location.href);
+  here.pathname = canonicalPath(here.pathname);
+  replaceEntry(here);
 }
 
 let current = parseRoute(new URL(window.location.href));
@@ -225,17 +276,76 @@ function emit() {
   listeners.forEach((l) => l());
 }
 
-window.addEventListener("popstate", emit);
+window.addEventListener("popstate", () => {
+  arrive();
+  emit();
+});
 
+/**
+ * Push when what the reader is looking at changes (page, pinned record, passage,
+ * Lean declaration, search query). Replace for refinements (tabs, scroll, camera,
+ * filters). Leave hooks run first, so every link keeps its place with no special
+ * cases. Following and pointing never push.
+ */
 export function navigate(to: Route | string, options: { replace?: boolean } = {}): void {
   const href = typeof to === "string" ? to : routeHref(to);
   const next = new URL(href, window.location.href);
+  next.pathname = canonicalPath(next.pathname);
   if (next.href === window.location.href) return;
-  // A replaced entry keeps its state (the reader keys reading positions on it).
-  if (options.replace) window.history.replaceState(window.history.state, "", next);
-  else window.history.pushState(null, "", next);
+  if (options.replace) replaceEntry(next);
+  else pushEntry(next);
   emit();
 }
+
+/**
+ * One step from a Lean name to another: one history entry with its own address.
+ * A page that shows Lean in place (the map's sheet, the reader's Lean page) keeps
+ * what it shows and gains `&d=name`, with `&dm=module` where a name is declared
+ * twice; `/lean` goes to the declaration; any other page goes to `/lean`. The
+ * host reads `route.decl`. Back returns to the name in `from`, with its scroll.
+ */
+export function walkEntry(walk: { name: string; module?: string; from?: string }): void {
+  const url = new URL(window.location.href);
+  const here = parseRoute(url);
+  let to: string;
+  if (here.view === "map" || here.view === "read") {
+    url.searchParams.set("d", walk.name);
+    if (walk.module) url.searchParams.set("dm", walk.module);
+    else url.searchParams.delete("dm");
+    // A selected step gives way to the declaration; a selected record stays behind it.
+    if (here.view === "map") url.searchParams.delete("e");
+    to = url.href;
+  } else to = new URL(routeHref({ view: "lean", module: walk.module, decl: walk.name }), url).href;
+  if (to === window.location.href) return;
+  if (walk.from) leaveAs(walk.from.slice(walk.from.lastIndexOf(".") + 1));
+  navigate(to);
+}
+
+/** What a page is called on the Back control when it has not named its place more exactly. */
+export function placeOf(route: Route): string {
+  switch (route.view) {
+    case "home":
+      return "the front page";
+    case "map":
+      return "the map";
+    case "read":
+      return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
+    case "checks":
+      return "Checks";
+    case "compare":
+      return "Compare";
+    case "lean":
+      return route.decl?.split(".").pop() ?? "the Lean index";
+    case "about":
+      return "About";
+    case "search":
+      return route.q ? `search for “${route.q}”` : "search";
+    case "missing":
+      return "the previous page";
+  }
+}
+
+setDefaultLabel((href) => placeOf(parseRoute(new URL(href))));
 
 export function useRoute(): Route {
   return useSyncExternalStore(

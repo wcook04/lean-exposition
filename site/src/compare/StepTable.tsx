@@ -7,8 +7,8 @@ import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 import type { RecordAlignment } from "../api/lean";
 import { useEdition } from "../app/data";
 import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { LINK_CAVEAT } from "../lean/data";
-import { LazyLeanBlock } from "../lean/lazy";
 import { sectionLabel, mainGoal } from "../map/TheoremPlate";
 import { statementHref } from "../reader/links";
 import { onIdle } from "./idle";
@@ -18,6 +18,7 @@ import { LEVEL_NAMES, STACK_BELOW, absentWords, filterOutline, roleWords, storeL
 import { defaultLevels, holdHeight, orderWords, rowFor, rowsSentence, sayings, tableRows, type TableRow as Row } from "./table";
 import { alignmentResource, shortTitle, useAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
+import { WalkingLean } from "./WalkingLean";
 
 /** How far from the window a row is typeset, and how many rows ahead are prepared when idle. */
 const NEAR = "900px 0px";
@@ -52,7 +53,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   const titleOf = useCallback((id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id), [graph]);
   const rowTitle = useCallback((row: Row) => [row.id, ...row.also].map(titleOf).join(" "), [titleOf]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useEntryState("table-filter", "");
   const rows = useMemo(() => filterOutline(listed, query, (id) => rowTitle(rowFor(listed, id)!)), [listed, query, rowTitle]);
 
   const scroller = useRef<HTMLDivElement>(null);
@@ -166,7 +167,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   return (
     <div className="table">
-      <div className="table-scroll" ref={scroller} tabIndex={0} aria-label="The steps of the proof at each level" style={columns}>
+      <div className="table-scroll" ref={scroller} tabIndex={0} aria-label="The steps of the proof at each level" style={columns} data-lean={levels[0] === "lean" ? "" : undefined}>
         <div className="table-top" ref={top}>
           <header className="table-head">
             <ModeSwitch mode="table" step={current ?? main} levels={route.levels} />
@@ -252,13 +253,13 @@ const TableRow = memo(function TableRow({ id, titles, record, levels, href, root
         </a>
       </div>
       <div className="trow__cells" style={near ? undefined : { minHeight: hold }}>
-        {near && levels.map((level) => <Cell key={level} level={level} record={record} href={href} />)}
+        {near && levels.map((level) => <Cell key={level} id={id} level={level} record={record} href={href} />)}
       </div>
     </article>
   );
 });
 
-function Cell({ level, record, href }: { level: Level; record: RecordAlignment; href: string }) {
+function Cell({ id, level, record, href }: { id: string; level: Level; record: RecordAlignment; href: string }) {
   const name = LEVEL_NAMES[level];
   if (level === "lean") {
     const first = record.lean[0];
@@ -266,11 +267,17 @@ function Cell({ level, record, href }: { level: Level; record: RecordAlignment; 
     return (
       <section className="tcell" aria-label={name}>
         <p className="tcell__name">{name}</p>
-        <LazyLeanBlock name={first.name} module={first.module} relation={first.relation} note={first.note} clause={first.clause} compact bare />
-        <p className="tcell__foot">
-          <a href={routeHref({ view: "lean", module: first.module, decl: first.name })}>Read in context</a>
-          <More count={record.lean.length - 1} href={href} />
-        </p>
+        <WalkingLean
+          row={first}
+          place={`table:${id}`}
+          bare
+          foot={(here) => (
+            <p className="tcell__foot">
+              <a href={routeHref({ view: "lean", module: here.module, decl: here.name })}>Read in context</a>
+              <More count={record.lean.length - 1} href={href} />
+            </p>
+          )}
+        />
       </section>
     );
   }
@@ -286,7 +293,7 @@ function Cell({ level, record, href }: { level: Level; record: RecordAlignment; 
       <LazyStatementSlice statement={first} />
       {first.note && <p className="bench-slice__note">{first.note}</p>}
       <p className="tcell__foot">
-        <a href={statementHref(first)}>Read in context</a>
+        <a href={statementHref(first, id)}>Read in context</a>
         <More count={others.length} href={href} />
       </p>
     </section>

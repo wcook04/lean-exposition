@@ -1,6 +1,7 @@
 // The front page, for a reader arriving for the first time. The first screen is the
-// theorem itself, clause by clause, with Lean beside the mathematics (heroMarkup.ts; the
-// build puts it in the HTML), then the two films. The levels band shows the same argument
+// theorem itself, clause by clause, with Lean beside the mathematics, and the way into
+// reading a paper (heroMarkup.ts; the build puts it in the HTML), then the two films. The
+// levels band shows the same argument
 // narrowing from the Lean through the three papers, and doubles as the shelf of papers.
 // Then what OpenAI's release asked and proved, with where each result is explained here;
 // the mathematics of the proof with the exposition's two figures; and what has been
@@ -10,6 +11,7 @@
 
 import { useEffect } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { SITE_FACTS } from "virtual:site-facts";
 import { useEdition } from "../app/data";
 import { routeHref, useRoute } from "../app/router";
 import { AUTHOR, LINKS } from "../app/author";
@@ -18,7 +20,7 @@ import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { PAPERS_ANCHOR } from "../app/TopBar";
 import { Out } from "../app/Out";
-import { RECORD_INDEX } from "virtual:record-index";
+import { LINK_CAVEAT } from "../app/caveat";
 import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
 import { FrontHeroBody } from "./FrontHero";
 import { LevelsBand } from "./LevelsBand";
@@ -38,8 +40,8 @@ const QAOA_PDF = `${RELEASE}/preprints/QAOA-attains-the-SK-ground-state-energy-i
 const LEAN_SOURCE = `${RELEASE_TREE}/lean/OAI/Probability`;
 const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 
-/** The Lean modules in the vendored tree: OpenAI's two proof trees, as the example guide counts them. */
-const LEAN_MODULES = 347;
+/** The Lean modules in the vendored tree, as the edition's index counts them. */
+const LEAN_MODULES = SITE_FACTS.lean?.modules ?? null;
 
 /** The films this site holds a place for, and the released film the mathematics one will be like. */
 const SITE_FILM = familyFilm("interfaces");
@@ -61,6 +63,8 @@ export function FrontPage() {
         <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
         <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
       </div>
+
+      <ReaderStill />
 
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
@@ -130,10 +134,16 @@ export function FrontPage() {
           </h2>
           <p className="front__text">
             OpenAI’s repository has two statements written in Lean, each with a Lean proof: one of the full-support theorem, which
-            assumes a minimiser, and one of the value identities and their finite Gaussian approximation. On 26 October 2026,
-            the full-support implementation built successfully and its conditional root and scoped dependencies were extracted.
-            Dependencies outside that scope remain boundaries. Comparator checks a proof against a separately written statement;
-            its acceptance and the scalar-target results remain pending. Earlier failed and interrupted runs remain in the record.
+            assumes a minimiser, and one of the value identities and their finite Gaussian approximation.{" "}
+            {SITE_FACTS.build && SITE_FACTS.extraction && (
+              <>
+                On {SITE_FACTS.build.date}, Lean {SITE_FACTS.build.toolchain.split(":").pop()?.replace(/^v/, "")} compiled the
+                full-support tree without an error, and Lean’s extraction lists {SITE_FACTS.extraction.axioms.length} axioms for the
+                theorem and no <code>sorry</code>.{" "}
+              </>
+            )}
+            Comparator tests a proof against a separately written statement; it has accepted neither statement, and the second
+            statement has no successful build on record. The failed and interrupted runs are listed with the others.
           </p>
           <p className="front__text">
             An exact calculation in rational arithmetic confirmed the 22 positive coefficients of the polynomial identity behind
@@ -145,7 +155,7 @@ export function FrontPage() {
         <div className="checksband__table">
           <CheckTable />
           <p className="front__more">
-            <a href={routeHref({ view: "checks" })}>See the recorded checks</a>
+            <a href={routeHref({ view: "checks" })}>What ran, with every outcome</a>
           </p>
         </div>
       </section>
@@ -166,7 +176,7 @@ export function FrontPage() {
             about them.
           </li>
           <li>
-            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
+            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, the steps of the argument and the software, with
             instructions for running the tools and building this website. The{" "}
             <a href={routeHref({ view: "about", anchor: "companion" })}>architectural companion</a> (
             <a href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`} target="_blank" rel="noopener">
@@ -194,6 +204,54 @@ export function FrontPage() {
         <SisterSites />
       </footer>
     </div>
+  );
+}
+
+const STILL_BASE = `${import.meta.env.BASE_URL}stills/reader-theorem-1`;
+const STILL_ALT = "The short paper open at Theorem 1, with the theorem highlighted. Beside it are the theorem’s card on the graph of the proof and OpenAI’s Lean for it, with the lines that state it lit.";
+
+/** A real capture of the reader, in the reader's scheme: the hidden one is never fetched (`loading="lazy"`). */
+function ReaderStill() {
+  const place = SITE_FACTS.theorem1;
+  const open = routeHref({ view: "read", stage: "short", at: place?.at, node: place ? "full_support" : undefined, anchor: place?.anchor ?? undefined });
+  const ties = SITE_FACTS.ties;
+  return (
+    <section className="front__band front__pair readerstill" aria-labelledby="front-reading">
+      <div className="front__prose">
+        <h2 id="front-reading" className="front__bandtitle">
+          A paper beside its Lean
+        </h2>
+        <p>
+          The picture shows Theorem 1 of the short paper, clicked. The Lean opens at the lines that state it, and the paper stays where it is.
+        </p>
+        {ties && (
+          <p>
+            The three papers have {ties.statements.toLocaleString("en-GB")} marked statements, {ties.withLean} of them with Lean. {LINK_CAVEAT}
+          </p>
+        )}
+        <p>
+          <a href={open}>Open this statement</a>
+        </p>
+      </div>
+      <figure className="front__fig">
+        <a href={open} className="readerstill__link" aria-label="Open Theorem 1 of the short paper with its Lean">
+          {(["light", "dark"] as const).map((scheme) => (
+            <img
+              key={scheme}
+              className={`readerstill__img readerstill__img--${scheme}`}
+              src={`${STILL_BASE}-${scheme}-1440.webp`}
+              srcSet={`${STILL_BASE}-${scheme}-1440.webp 1440w, ${STILL_BASE}-${scheme}-2880.webp 2880w`}
+              sizes="(min-width: 68.75em) 66vw, 100vw"
+              alt={STILL_ALT}
+              width={1440}
+              height={790}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </a>
+      </figure>
+    </section>
   );
 }
 
@@ -298,7 +356,7 @@ const COLUMNS = ["passed", "failed", "unavailable", "not_run"] as const;
 function CheckTable() {
   const { map } = useEdition();
   const counts = outcomeCounts(map.records.evidence);
-  const links = Object.values(RECORD_INDEX).reduce((sum, row) => sum + row.lean, 0);
+  const { ties, leanLinks, audit } = SITE_FACTS;
   return (
     <>
       <table className="checktable">
@@ -331,9 +389,16 @@ function CheckTable() {
       </table>
       <p className="checktable__note">
         A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a Lean
-        project compiles. AI agents also linked the records to {links} Lean declarations by reading the sources, and a second
-        pass re-read those links. A program confirms that each one still lands. No independent review of whether the two
-        statements match has been done.
+        project compiles.{" "}
+        {ties && (
+          <>
+            AI agents also marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean,
+            and tied them to the steps of the argument.{" "}
+          </>
+        )}
+        {leanLinks && <>They made {leanLinks.links} links from steps to Lean, reaching {leanLinks.declarations} declarations. </>}
+        {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. In a random {audit.sampled} read blind afterwards, {audit.right} were right, {audit.loose} loose and {audit.wrong} wrong, and those were corrected too.</>}
+        A program confirms that each one still lands. No independent mathematician has reviewed them.
       </p>
     </>
   );

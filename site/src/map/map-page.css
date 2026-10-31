@@ -22,7 +22,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note, .map-caption) {
+.map-page__main > :not(.map-note, .map-strip, .lean-shelf) {
   flex: 1;
   min-height: 0;
 }
@@ -289,25 +289,18 @@
   }
 }
 
-/* The level lens: the same pill as the view switch. */
+/* The level lens: plain words with their numbers. The one chosen is underlined. */
 .map-lens {
-  grid-area: lens;
-  position: relative;
   display: flex;
-  align-items: center;
-  padding: 3px;
-  border-radius: 10px;
-  background: var(--sunk);
-  box-shadow: inset 0 0 0 1px var(--rule);
+  align-items: baseline;
+  gap: 16px;
   min-width: 0;
 }
 
 .map-lens button {
-  position: relative;
-  height: 30px;
-  padding: 0 12px;
+  padding: 3px 0;
   border: 0;
-  border-radius: 7px;
+  border-bottom: 2px solid transparent;
   background: none;
   color: var(--ink-2);
   font-size: var(--fs-ui);
@@ -322,16 +315,12 @@
 }
 
 .map-lens button[aria-checked="true"] {
-  font-weight: 600;
+  border-bottom-color: var(--ink);
 }
 
 .map-lens__n {
   font-variant-numeric: tabular-nums;
-  color: var(--ink-3);
-}
-
-.map-lens button[aria-checked="true"] .map-lens__n {
-  color: var(--ink-2);
+  color: inherit;
 }
 
 /* Key: a popover that says everything the marks mean. */
@@ -433,18 +422,45 @@
   color: var(--ink-2);
 }
 
-/* ---- The caption: a shortened tile's full title, or the line under the pointer. It sits
-   in a corner of the canvas where it covers no card (showCaption) and takes no pointer. ---- */
+/* ---- The strip under the canvas: the key, or for a moment the name of what the pointer
+   rests on, and Fit. A row of its own, so nothing in it can cover a card. ---- */
+
+.map-strip {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 var(--space-3) 0 var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+  margin-bottom: var(--sheet-inset, 0px);
+}
+
+.map-strip__text {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
 
 .map-caption {
   position: absolute;
-  z-index: 7;
-  max-width: min(46%, 520px);
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: 0.9375rem;
-  line-height: 1.3;
+  background: var(--ground);
+  font-size: var(--fs-sm);
+  line-height: 1.2;
   color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pointer-events: none;
 }
 
@@ -452,21 +468,83 @@
   display: none;
 }
 
-.map-caption[data-at^="top"] {
-  top: 12px;
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.map-caption[data-at^="bottom"] {
-  bottom: calc(12px + var(--sheet-inset, 0px));
+.map-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.map-caption[data-at$="left"] {
-  left: 24px;
+.map-legend .map-key__sample {
+  width: 36px;
+  height: 12px;
 }
 
-.map-caption[data-at$="right"] {
-  right: 24px;
-  text-align: right;
+.map-legend__source {
+  color: var(--ink-3);
+}
+
+.map-fit {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.map-fit:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.map-fit:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: 1px;
+}
+
+.map-loading {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+}
+
+/* The lens says what its numbers count, in the same small line as "Argument for". */
+.map-lensbox {
+  grid-area: lens;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.map-lensbox__label {
+  font-size: var(--fs-xs);
+  line-height: 1.2;
+  color: var(--ink-3);
+  white-space: nowrap;
 }
 
 /* An assumption tag, as the map draws one on a result, without its name. */
@@ -663,8 +741,19 @@
   .map-foot {
     padding-inline: var(--space-4);
   }
-  .map-lens button {
-    padding: 0 8px;
+  /* The header's controls stack rather than overprint: the lens takes a row of its own. */
+  .map-head {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "title views key"
+      "lens lens lens";
+    row-gap: 4px;
+  }
+  .map-lensbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 14px;
   }
 }
 
@@ -716,14 +805,100 @@
     min-width: 0;
     overflow-x: auto;
   }
-  .map-views button,
-  .map-lens button {
+  .map-views button {
     flex: 1 1 auto;
     min-width: 0;
     height: 38px;
     padding: 0 8px;
   }
+  .map-lens button {
+    flex: none;
+    min-height: 32px;
+  }
   .map-controls__button {
     height: 38px;
+  }
+}
+
+/* A laptop: the header's parts close up so the main result keeps its title. */
+@media (max-width: 1400px) {
+  .map-head {
+    column-gap: 14px;
+  }
+
+  .map-lens {
+    gap: 12px;
+  }
+
+  .map-views button {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .map-strip {
+    padding-left: var(--space-4);
+  }
+
+  .lean-shelf {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-inline: var(--space-4);
+    white-space: nowrap;
+  }
+
+  .map-legend {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+.map-legend__place {
+  color: var(--ink);
+}
+
+/* Definitions: nearly every result uses them, so they are a list under the drawing. */
+.lean-shelf {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 6px var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.lean-shelf__head {
+  color: var(--ink-3);
+}
+
+.lean-shelf .is-chosen {
+  color: var(--lit);
+}
+
+.lean-shelf__model {
+  color: var(--ink-3);
+}
+
+/* A short window, such as a laptop at 200%: the words that only label give way to the drawing. */
+@media (max-height: 520px) {
+  .goal-menu__label,
+  .map-lensbox__label {
+    display: none;
+  }
+
+  .map-head {
+    min-height: 0;
+    padding-block: 2px;
+  }
+
+  .lean-shelf {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block: 3px;
+    white-space: nowrap;
   }
 }

@@ -214,7 +214,7 @@ describe("the header's lockup", () => {
     expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
     expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
-    expect(jobs).toEqual(["Map", "Compare", "Read", "Lean", "Checks"]);
+    expect(jobs).toEqual(["Read", "Map", "Compare", "Checks", "Lean index"]);
     expect(host.querySelector<HTMLAnchorElement>(".readmenu a[href='/#papers']")!.textContent).toContain("All papers and PDFs");
   });
 

@@ -7,6 +7,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { SITE_FACTS } from "virtual:site-facts";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { prefersReducedMotion } from "../app/theme";
@@ -113,7 +114,7 @@ const base = import.meta.env.BASE_URL;
 /** The levels of the funnel, widest first. */
 const STAGES: Stage[] = ["long", "short", "expository"];
 
-export function LevelsBand({ id, leanModules }: { id: string; leanModules: number }) {
+export function LevelsBand({ id, leanModules }: { id: string; leanModules: number | null }) {
   const edition = useEdition();
   const { graph } = edition;
   const goal = edition.graph.goals.find((g) => g === "full_support") ?? edition.graph.goals[0];
@@ -195,16 +196,16 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       id: "lean",
       name: "The Lean proof",
       who: "OpenAI’s statements and proofs, written for a computer to check.",
-      count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} records`,
+      count: `${leanModules === null ? "" : `${plural(leanModules, "source file")}, `}linked to ${counts.lean} of the ${total} steps on this site`,
       read: routeHref({ view: "lean" }),
-      readWord: "Browse the Lean",
+      readWord: "Open the Lean index",
     },
     ...STAGES.map((stage) => ({
       id: stage,
       stage,
       name: PAPER_NAMES[stage].short,
       who: PAPER_NAMES[stage].reader,
-      count: `${counts[stage]} of the ${total} records`,
+      count: `${counts[stage]} of the ${total} steps on this site${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].statements} marked statements, ${SITE_FACTS.ties.papers[stage].withLean} with Lean` : ""}`,
       read: routeHref({ view: "read", stage }),
       readWord: "Read it here",
     })),
@@ -216,7 +217,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
         One argument at four levels
       </h2>
       <p className="front__text">
-        The argument is one graph of {total} records: claims, assumptions and Lean declarations, joined by what uses what. Each
+        The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each
         paper keeps a narrower part of that graph for a wider reader. Choose a level to see what it keeps, and open any step
         to compare it across the levels.
       </p>
@@ -287,7 +288,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
               <>The argument for the main theorem. Marked steps are linked to Lean declarations.</>
             ) : (
               <>
-                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} records in the argument for the main theorem.
+                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} steps in the argument for the main theorem.
               </>
             )}
           </figcaption>

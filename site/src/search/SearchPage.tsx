@@ -1,5 +1,5 @@
 // The full results page for one query: every match of one kind, best first
-// (rank.ts), with the matching Lean declarations beside them. The address holds
+// (rank.ts), with the matching Lean declarations beside them, an exact name first. The address holds
 // the exact query, the kind and the page, so Back from an opened result returns
 // here, to the same page.
 
@@ -8,9 +8,12 @@ import "katex/dist/katex.min.css";
 import type { SearchItem } from "../api/types";
 import { describeError, useEdition, useResource } from "../app/data";
 import { navigate, routeHref, type Route, type SearchType } from "../app/router";
-import { destination, destinationWords, directHref, LeanResultBody, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES } from "./results";
+import { destination, destinationWords, directHref, LeanResultBody, mainStep, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES, stepTitles } from "./results";
+import { bestMatches, leanShaped, plainSteps } from "./order";
 import { rankedSearch } from "./rank";
 import { leanNames, searchLean, type LeanHit } from "./leanNames";
+import { searchPapers, searchStatements } from "./corpus";
+import { alignmentResource } from "../compare/useAlignment";
 import "./search.css";
 
 /** Results per page; well inside the API's page limit. */
@@ -24,11 +27,19 @@ const LEAN_SHOWN = 8;
 
 /** Every match of every kind, ranked. Nothing is requested until a query is typed. */
 function useRanked(q: string) {
-  return useResource(q ? `search-ranked:${q}` : null, () => rankedSearch(q, SEARCH_TABLES.map((t) => t.table)));
+  return useResource(q ? `search-ranked:${q}` : null, () =>
+    Promise.all([rankedSearch(q, SEARCH_TABLES.map((t) => t.table)), searchStatements(q), searchPapers(q).catch(() => [])]).then(([ranked, statements, text]) => new Map(ranked).set("statements", statements).set("paper", text)),
+  );
 }
 
 function useLean(q: string) {
-  return useResource(q ? `search-lean:${q}` : null, () => leanNames().then((index) => (index ? searchLean(index, q) : null)));
+  return useResource(q ? `search-lean:${q}` : null, () =>
+    Promise.all([leanNames(), alignmentResource()]).then(([index, alignment]) => {
+      if (!index) return null;
+      const linked = new Set(Object.values(alignment?.records ?? {}).flatMap((record) => record.lean.map((row) => row.name)));
+      return searchLean(index, q, { terms: new Map(alignment?.dictionary.map((term) => [term.name, term])), rests: (name) => linked.has(name) });
+    }),
+  );
 }
 
 /** The 1-based page holding results `from`…`to` and the page count, from a total. */
@@ -48,7 +59,11 @@ export function SearchPage({ route }: { route: SearchRoute }) {
   const ready = ranked.status === "ready" ? new Map<SearchType, SearchItem[]>(SEARCH_TABLES.map((t) => [t.type, ranked.value.get(t.table) ?? []])) : null;
   // Without a kind in the address, list the first kind that has matches.
   const type: SearchType | null = route.type ?? (ready ? (SEARCH_TABLES.find((t) => (ready.get(t.type)?.length ?? 0) > 0)?.type ?? null) : null);
-  const listed = type && ready ? ready.get(type) ?? [] : [];
+  const { graph, overview } = useEdition();
+  const steps = stepTitles(graph, mainStep(overview, graph));
+  const best = ready ? bestMatches({ q, steps: ready.get("records") ?? [], statements: ready.get("statements") ?? [], text: ready.get("text") ?? [] }, steps) : [];
+  const found = type && ready ? ready.get(type) ?? [] : [];
+  const listed = type === "records" ? plainSteps(found, steps) : found;
   const total = listed.length;
   const win = pageWindow(total, route.page ?? 1);
   const grand = ready ? [...ready.values()].reduce((s, list) => s + list.length, 0) : 0;
@@ -70,7 +85,7 @@ export function SearchPage({ route }: { route: SearchRoute }) {
               Results for <q>{q}</q>
             </>
           ) : (
-            "Search records, passages and Lean"
+            "Search the Lean, the steps and the papers"
           )}
         </h1>
         <SearchForm q={route.q} />
@@ -90,12 +105,26 @@ export function SearchPage({ route }: { route: SearchRoute }) {
       )}
 
       {ready && (
-        <div className="search-body">
+        <div className={`search-body${leanShaped(q) ? " is-exact" : ""}`}>
           <div className="search-body__main">
+          {best.length > 0 && !route.page && (
+            <section className="search-results search-best" aria-labelledby="search-best-title">
+              <h2 id="search-best-title" className="search-results__title">
+                Best match
+              </h2>
+              <ol className="search-results__list">
+                {best.map((item) => (
+                  <li key={item.ref}>
+                    <Result item={item} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
           {grand === 0 && (
             <p className="search-page__status" role="status">
-              No record, section heading or linked passage contains all of these words, as whole words or the starts of words.
-              Other text in the papers is not searched. Try fewer words, or another spelling.
+              Nothing in the steps or the papers contains all of these words, as whole words or the starts of words. Try fewer
+              words, or another spelling.
             </p>
           )}
           {grand > 0 && <nav className="search-kinds" aria-label="Kinds of result">
@@ -141,7 +170,6 @@ export function SearchPage({ route }: { route: SearchRoute }) {
               {win.pages > 1 && <Pager route={route} type={type} page={win.page} pages={win.pages} />}
               <p className="search-page__foot">
                 Results come first when the words occur in a title, then when they occur close together and in the order typed.
-                Other text in the papers is not searched.
               </p>
             </section>
           )}

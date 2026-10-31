@@ -7,8 +7,10 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
+import { recordLine } from "../compare/useAlignment";
 import { routeHref } from "../app/router";
 import { Accounts } from "./Accounts";
+import type { LeanStep } from "./model";
 import { LeanRoute } from "./LeanRoute";
 import type { EchoHandler } from "./RecordPanel";
 import { NO_REMAINING, applicationView, relationName, stepBasisLabel, stepPassages, stepVerb, warrantStatus } from "./model";
@@ -22,13 +24,15 @@ interface Props {
   onClose(): void;
   onSelect(id: string): void;
   onEcho?: EchoHandler;
+  /** Walk to a Lean name in the sheet, as one history entry. */
+  onWalk?(walk: LeanStep): void;
   passageHref?: (stage: Stage, anchor: string) => string;
   leaving?: boolean;
   /** Mark the panel's root element, e.g. for the page to restore focus or measure it. */
   panelRef?: React.Ref<HTMLElement>;
 }
 
-export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, leaving, panelRef }: Props) {
+export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, onWalk, passageHref, leaving, panelRef }: Props) {
   const { graph } = useEdition();
   const edge = graph.edges.find((e) => e.key === edgeKey);
   const rootRef = useRef<HTMLElement | null>(null);
@@ -104,13 +108,13 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
     return (
       <button
         type="button"
-        className={`step__end${node.kind === "declaration" ? " lean" : ""}`}
+        className={`step__end${node.kind === "declaration" && !recordLine(id)?.short ? " lean" : ""}`}
         data-slot={node.origin.slot}
         onClick={() => onSelect(id)}
         onPointerEnter={() => onEcho?.(new Set([id]))}
         onPointerLeave={() => onEcho?.(new Set([edge.from, edge.to]))}
       >
-        {node.label}
+        {node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label}
       </button>
     );
   };
@@ -154,7 +158,7 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
       <div className="panel__body" ref={bodyRef} hidden={peek || undefined}>
         <Jumps panes={panes} root={rootRef} resetKey={edgeKey} />
         <div className="panel__content" key={`b:${edgeKey}`}>
-          <LeanRoute edgeKey={edgeKey} />
+          <LeanRoute edgeKey={edgeKey} onWalk={onWalk} />
           {app && (
             <Pane id="use" title="How the theorem is applied in this step">
               <p className="panel__note step__app-status">{app.status}</p>
@@ -276,9 +280,9 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
               label={(stage) => stepBasisLabel(step?.basis.get(stage))}
               note={(stage) =>
                 step?.basis.get(stage) === "both"
-                  ? "Each passage here is linked to both records. That alone does not show that the passage contains this step of the argument."
+                  ? "Each passage here is linked to both steps. That alone does not show that the passage contains this step of the argument."
                   : step?.basis.get(stage) === "consumer"
-                    ? `No passage in this account is linked to both records. The passages here are linked to “${consumer.label}” but not to “${prerequisite.label}”.`
+                    ? `No passage in this account is linked to both steps. The passages here are linked to “${consumer.label}” but not to “${prerequisite.label}”.`
                     : undefined
               }
               empty={() => `No passage in this account is linked to “${consumer.label}”.`}

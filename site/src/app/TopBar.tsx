@@ -1,11 +1,12 @@
 // The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), five jobs
-// (Map, Compare, Read, Lean, Checks), About as a quieter link, search and the
-// scheme. Read is a menu button listing the three accounts with the job each one
+// (Read first, then Map, Compare, Checks and a quiet Lean index), About as a quieter link, search and
+// the scheme. Read is a menu button listing the three accounts with the job each one
 // does, then the front page's shelf of papers and PDFs. On phones the same items
 // sit behind one menu button so the bar never clips.
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { Stage } from "../api/types";
+import { BackControl } from "./BackControl";
 import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
@@ -23,6 +24,9 @@ export const ACCOUNT_JOBS: Record<Stage, string> = {
   short: "states and proves the result, for specialists",
   long: "reconstructs each step and names its source",
 };
+
+/** Where a page may put one line of its own in the bar. */
+export const BAR_LINE = "topbar-line";
 
 type Job = "argument" | "compare" | "read" | "lean" | "checks" | "about" | null;
 
@@ -49,7 +53,7 @@ function jobOf(route: Route): Job {
 function useDraftWords(): Partial<Record<Stage, string>> {
   const edition = useMaybeEdition();
   const out: Partial<Record<Stage, string>> = {};
-  for (const paper of edition?.overview.papers ?? []) if (paper.state === "draft") out[paper.stage] = "Draft";
+  for (const paper of edition?.overview.papers ?? []) if (paper.state === "draft") out[paper.stage] = "draft";
   return out;
 }
 
@@ -85,25 +89,28 @@ export function TopBar({ route, onSearch }: Props) {
         </a>
       </span>
       <nav className="topnav" aria-label="Main">
+        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
           Map
         </a>
         <a className="topnav__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
           Compare
         </a>
-        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
-        <a className="topnav__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
-          Lean
-        </a>
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
           Checks
         </a>
+        <a className="topnav__job topnav__job--quiet" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+          Lean index
+        </a>
       </nav>
+      {route.view !== "read" && <BackControl />}
+      {/* The Lean index and Compare read a pointed name here, so nothing on the page waits for a hover. */}
+      {(route.view === "lean" || route.view === "compare") && <div id={BAR_LINE} className="topbar__line" />}
       <div className="topbar__tools">
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About
         </a>
-        <button type="button" className="control control--plain search-trigger" aria-label="Search records and passages" onClick={onSearch}>
+        <button type="button" className="control control--plain search-trigger" aria-label="Search the papers, the steps and the Lean" onClick={onSearch}>
           <SearchIcon />
           <span className="search-trigger__word" aria-hidden="true">
             Search
@@ -136,7 +143,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
 
   useEffect(() => {
     if (!open || focusOnOpen === null) return;
-    itemsRef.current[focusOnOpen]?.focus();
+    itemsRef.current[focusOnOpen]?.focus({ preventScroll: true });
     setFocusOnOpen(null);
   }, [open, focusOnOpen]);
 
@@ -170,7 +177,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     const index = items.indexOf(document.activeElement as HTMLAnchorElement);
     const move = (to: number) => {
       event.preventDefault();
-      items[(to + items.length) % items.length]?.focus();
+      items[(to + items.length) % items.length]?.focus({ preventScroll: true });
     };
     if (event.key === "ArrowDown") move(index + 1);
     else if (event.key === "ArrowUp") move(index - 1);
@@ -179,7 +186,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     else if (event.key === "Escape") {
       event.preventDefault();
       setOpen(false);
-      buttonRef.current?.focus();
+      buttonRef.current?.focus({ preventScroll: true });
     } else if (event.key === "Tab") setOpen(false);
     else if (event.key.length === 1 && /\S/.test(event.key)) {
       const letter = event.key.toLowerCase();
@@ -232,7 +239,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
           >
             <span className="readmenu__name">
               {PAPER_NAMES[s].short}
-              {drafts[s] && <span className="readmenu__state caps">{drafts[s]}</span>}
+              {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
             </span>
             <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
           </a>
@@ -254,7 +261,8 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
   useEffect(() => setOpen(false), [route]);
   useEffect(() => {
     if (!open) return;
-    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+    // The menu is fixed; focus must not scroll the page behind it, or the reader loses their place.
+    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus({ preventScroll: true });
     const onPointer = (event: PointerEvent) => {
       const target = event.target as Node;
       if (!panelRef.current?.contains(target) && !buttonRef.current?.contains(target)) setOpen(false);
@@ -292,22 +300,12 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
           if (event.key === "Escape") {
             event.preventDefault();
             setOpen(false);
-            buttonRef.current?.focus();
+            buttonRef.current?.focus({ preventScroll: true });
           }
         }}
       >
         <nav aria-label="Main">
           <ul className="phonemenu__list">
-            <li>
-              <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-                Map
-              </a>
-            </li>
-            <li>
-              <a className="phonemenu__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
-                Compare
-              </a>
-            </li>
             <li>
               <span className="phonemenu__job phonemenu__job--head" id={`${id}-read`} aria-current={job === "read" ? "true" : undefined}>
                 Read
@@ -318,7 +316,7 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                     <a href={routeHref({ view: "read", stage: s })} className="readmenu__item" aria-current={stage === s ? "page" : undefined}>
                       <span className="readmenu__name">
                         {PAPER_NAMES[s].short}
-                        {drafts[s] && <span className="readmenu__state caps">{drafts[s]}</span>}
+                        {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
                       </span>
                       <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
                     </a>
@@ -330,13 +328,23 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
               <PapersLink className="phonemenu__job" route={route} onGo={() => setOpen(false)} />
             </li>
             <li>
-              <a className="phonemenu__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
-                Lean
+              <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
+                Map
+              </a>
+            </li>
+            <li>
+              <a className="phonemenu__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
+                Compare
               </a>
             </li>
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
                 Checks
+              </a>
+            </li>
+            <li>
+              <a className="phonemenu__job phonemenu__job--quiet" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+                Lean index
               </a>
             </li>
             <li>

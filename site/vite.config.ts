@@ -6,6 +6,8 @@ import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
+import { readerSkeletonHtml } from "./src/reader/skeleton.ts";
+import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
 // Download links use page counts read from the same files at build time.
@@ -142,23 +144,35 @@ const ROLE_STRENGTH = ["mention", "example", "explanation", "derivation", "defin
 
 interface AuthoredRecord {
   short?: string;
-  lean?: unknown[];
+  lean?: { relation?: string }[];
   statements?: { paper: string; role: string }[];
 }
 
-export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; levels: Record<string, string> }> {
+/** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
+const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*)\.json$/;
+
+export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};
   if (!existsSync(resolve(dir))) return out;
-  for (const name of readdirSync(resolve(dir)).sort()) {
-    if (!name.endsWith(".json") || name === "dictionary.json" || name === "main-theorem.json") continue;
+  const names = readdirSync(resolve(dir)).sort();
+  const level = (levels: Record<string, string>, paper: string, role: string) => {
+    if (ROLE_STRENGTH.indexOf(role) > ROLE_STRENGTH.indexOf(levels[paper] ?? "")) levels[paper] = role;
+  };
+  for (const name of names) {
+    if (!name.endsWith(".json") || NOT_A_BATCH.test(name)) continue;
     const { records } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { records: Record<string, AuthoredRecord> };
     for (const [id, row] of Object.entries(records)) {
       const levels: Record<string, string> = {};
-      for (const { paper, role } of row.statements ?? []) {
-        if (ROLE_STRENGTH.indexOf(role) > ROLE_STRENGTH.indexOf(levels[paper] ?? "")) levels[paper] = role;
-      }
-      out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, levels };
+      for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
+      const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
+      out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, relations, levels };
     }
+  }
+  // Statements added paper by paper count towards their records' levels.
+  for (const name of names) {
+    if (!/^ties-.*\.json$/.test(name)) continue;
+    const { statements } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { statements: { record: string; paper: string; role: string }[] };
+    for (const { record, paper, role } of statements) if (out[record]) level(out[record].levels, paper, role);
   }
   return out;
 }
@@ -172,6 +186,35 @@ function recordIndexModule(): Plugin {
   };
 }
 
+function siteFactsModule(facts: SiteFacts): Plugin {
+  const id = "virtual:site-facts";
+  return {
+    name: "site-facts",
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const SITE_FACTS = ${JSON.stringify(facts)};` : null),
+  };
+}
+
+/** The fields of the reviewed reference tables a reader's page uses. */
+export function referenceModule(stage: string): string {
+  const table = JSON.parse(readFileSync(resolve(ALIGNMENT, `references-${stage}.json`), "utf8"));
+  const references = (table.references as Record<string, unknown>[])
+    .filter((row) => row.kind !== "plain")
+    .map(({ before: _before, cited_as: _cited, ...row }) => row);
+  const used = (field: string, all: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(all).filter(([key]) => references.some((row) => row[field] === key && row.kind !== "other_paper")));
+  return `export default ${JSON.stringify({ paper: table.paper, targets: used("target", table.targets), sources: used("source", table.sources), references })};`;
+}
+
+function referenceTables(): Plugin {
+  const prefix = "virtual:paper-references/";
+  return {
+    name: "paper-references",
+    resolveId: (source) => (source.startsWith(prefix) ? `\0${source}` : null),
+    load: (resolved) => (resolved.startsWith(`\0${prefix}`) ? referenceModule(resolved.slice(prefix.length + 1)) : null),
+  };
+}
+
 /** The chunks each route opens with. What they import starts with them. */
 const ROUTE_CODE: Record<string, string[]> = {
   map: ["MapPage"],
@@ -179,9 +222,10 @@ const ROUTE_CODE: Record<string, string[]> = {
   lean: ["LeanPage"],
   checks: ["ChecksPage"],
   about: ["AboutPage"],
-  "read/long": ["ReaderPage"],
-  "read/short": ["ReaderPage"],
-  "read/expository": ["ReaderPage"],
+  // Each paper's reference table is its own chunk, named for the paper, and the paper waits for it.
+  "read/long": ["ReaderPage", "long"],
+  "read/short": ["ReaderPage", "short"],
+  "read/expository": ["ReaderPage", "expository"],
 };
 
 interface BuiltChunk {
@@ -230,7 +274,7 @@ function routeData(route: string, base: string): string[] {
     graph && responses[graph],
     index.summaries_by_table?.nodes,
     ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
-    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`]] : []),
+    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];
@@ -244,9 +288,9 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
  * the theorem and the bar paint before any script or data arrives, and they reach readers
  * and crawlers that run no script. Pages other than the front page get the frame only.
  */
-function firstScreen(base: string): Plugin {
+function firstScreen(base: string, facts: SiteFacts): Plugin {
   const id = "virtual:front-hero";
-  const hero = heroHtml(heroLinks(base), typeset);
+  const hero = heroHtml(heroLinks(base, facts.theorem1), typeset);
   const frame = frameHtml(base);
   const shell = (main: string) => `<div class="app">${frame}<main id="main" class="app__main">${main}</main></div>`;
   return {
@@ -299,8 +343,9 @@ The website presents one theorem about the zero-temperature
 Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
 increases across every interval in [0, 1). It has three written accounts of
 the proof (an exposition, a short paper and a long record), each readable on
-the site or as a PDF in \`pdf/\`, an argument map of the records the proof
-uses, and the checks recorded for them. The architectural companion explains
+the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
+Lean beside the text, and the site also has an argument map of the steps the
+proof uses, an index of the Lean, and the checks recorded for them. The architectural companion explains
 why these accounts share one record; read it on the About page or in
 \`pdf/architecture.pdf\`.
 
@@ -324,16 +369,32 @@ publishes the resulting files here.
 `;
 
 const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";
-const SITE_PAGES = ["", "map", "compare", "lean", "read/expository", "read/short", "read/long", "checks", "about"];
+const SITE_PAGES = ["", "read/short", "read/expository", "read/long", "map", "compare", "checks", "about", "lean", "lean?list=papers"];
+
+/** What a browser tab says before the page's script takes over, the same words as PageTitle. */
+const ROUTE_TITLES: Record<string, string> = {
+  map: "Argument map",
+  compare: "Compare side by side",
+  lean: "Lean index",
+  checks: "Recorded checks",
+  about: "About",
+  search: "Search",
+  "read/long": "Long record",
+  "read/short": "Short paper",
+  "read/expository": "Exposition",
+};
+const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · Lean Exposition</title>`);
 
 // For readers that fetch text rather than run the page. It describes the same files the
 // browser reads, and no page loads it.
-const LLMS_TXT = `# Why the SK order parameter has no gaps
+const llmsTxt = (facts: SiteFacts) => `# Why the SK order parameter has no gaps
 
-> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of 131 records joins them.
+> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} records joins them.
 
-Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Lean links are authored pointers, and a program checks only that each one still lands.
-
+Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are authored pointers: agents read both sides, and a program confirms only that each one still lands.
+${facts.build && facts.extraction ? `
+Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator has accepted neither main statement, and the scalar value result has no successful build on record.
+` : ""}
 ## Read
 
 - [Exposition](${SITE_URL}pdf/exposition.pdf): objects and ideas, from a calculation with two spins
@@ -345,8 +406,10 @@ Each paper is a narrower part of the same graph. Papers and records are drafts; 
 
 All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
 
-- [Record alignment](${SITE_URL}edition/alignment.json): for each record, its short title, Lean declarations with relation, and exact statement slices in each paper, plus a dictionary from Lean names to the papers' notation
-- edition/lean/: the Lean index, one file per module with source, declarations and name references. References come from the source text and are not elaborated.
+- The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
+- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer that landed, not a check that two texts mean the same thing.
+- The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
+- The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
 - The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite
 
 ## Source
@@ -363,9 +426,10 @@ export default defineConfig(({ mode }) => {
   const api = env.LEAN_EXPOSITION_API ?? "http://127.0.0.1:8000";
   const proxy = { "/api": { target: api, changeOrigin: false } };
   const base = env.VITE_BASE_PATH ?? "/";
+  const facts = siteFacts();
   return {
     base,
-    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), firstScreen(base), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       closeBundle() {
         const out = resolve("dist");
@@ -373,16 +437,20 @@ export default defineConfig(({ mode }) => {
         for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
           const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
-          writeFileSync(resolve(out, route, "index.html"), readFileSync(shell, "utf8").replace("</head>", `${preload}</head>`));
+          // A paper's first paint is already the shape of the page, so nothing moves when it arrives.
+          const page = route.startsWith("read/")
+            ? readFileSync(shell, "utf8").replace('class="app__main"></main>', `class="app__main">${readerSkeletonHtml()}</main>`)
+            : readFileSync(shell, "utf8");
+          writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
         }
-        copyFileSync(shell, resolve(out, "404.html"));
+        writeFileSync(resolve(out, "404.html"), titled(readFileSync(shell, "utf8"), "Page not found"));
         rmSync(shell);
         copyFileSync(resolve("../LICENSE"), resolve(out, "LICENSE.txt"));
         copyFileSync(resolve("../NOTICE"), resolve(out, "NOTICE.txt"));
         copyFileSync(resolve("THIRD_PARTY_NOTICES.md"), resolve(out, "THIRD_PARTY_NOTICES.md"));
         writeFileSync(resolve(out, "README.md"), SITE_README);
         writeFileSync(resolve(out, ".nojekyll"), "");
-        writeFileSync(resolve(out, "llms.txt"), LLMS_TXT);
+        writeFileSync(resolve(out, "llms.txt"), llmsTxt(facts));
         writeFileSync(
           resolve(out, "sitemap.xml"),
           `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${SITE_PAGES.map((page) => `  <url><loc>${SITE_URL}${page}</loc></url>`).join("\n")}\n</urlset>\n`,

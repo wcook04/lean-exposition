@@ -6,14 +6,89 @@
 // Choosing another account is the top bar's job: it opens an account from
 // its start, and "Same topic in…" goes from a passage to its treatments.
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { sectionLabel } from "../../map/TheoremPlate";
+import type { PreparedDocument, TextBlock } from "../engine";
+import type { TieCount } from "../ties";
 import { chainOf, type OutlineEntry } from "./model";
 
 interface Props {
   entries: OutlineEntry[];
   current: string | null;
+  /** Statements with Lean per section. */
+  counts?: Map<string, TieCount>;
+  /** The paper, for search. */
+  doc?: PreparedDocument;
   onJump(id: string): void;
+  /** Go to a source line found by search. */
+  onLine?(line: number): void;
+}
+
+const HITS = 24;
+
+/** One hit's words around the match, the match marked. Adapted from Proof Reader's Contents. */
+function Snippet({ text, at, length }: { text: string; at: number; length: number }) {
+  const from = Math.max(0, text.lastIndexOf(" ", Math.max(0, at - 28)));
+  const to = Math.min(text.length, at + length + 44);
+  return (
+    <>
+      {from > 0 && "…"}
+      {text.slice(from, at)}
+      <mark>{text.slice(at, at + length)}</mark>
+      {text.slice(at + length, to)}
+      {to < text.length && "…"}
+    </>
+  );
+}
+
+/** Search within this paper, including what has not rendered yet. `/` stays the site's search. */
+function PaperSearch({ doc, onLine, onQuery }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void }) {
+  const [query, setQuery] = useState("");
+  const needle = query.trim().toLowerCase();
+  useEffect(() => onQuery(!!needle), [needle, onQuery]);
+  const found = useMemo(() => {
+    if (needle.length < 2) return [];
+    const hits: { block: TextBlock; at: number }[] = [];
+    for (const block of doc.textBlocks()) {
+      const at = block.text.toLowerCase().indexOf(needle);
+      if (at >= 0) hits.push({ block, at });
+      if (hits.length === HITS) break;
+    }
+    return hits;
+  }, [doc, needle]);
+  return (
+    <div className="paper-search" role="search">
+      <input
+        type="search"
+        value={query}
+        placeholder="Search this paper"
+        aria-label="Search this paper"
+        onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && found[0]) onLine(found[0].block.line);
+          if (event.key === "Escape") {
+            event.stopPropagation();
+            setQuery("");
+            event.currentTarget.blur();
+          }
+        }}
+      />
+      {needle.length >= 2 &&
+        (found.length ? (
+          <ul className="paper-search__found">
+            {found.map(({ block, at }) => (
+              <li key={`${block.line}:${at}`}>
+                <button type="button" onClick={() => onLine(block.line)}>
+                  <Snippet text={block.text} at={at} length={needle.length} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="paper-search__none">Nothing in this paper matches that.</p>
+        ))}
+    </div>
+  );
 }
 
 export interface AccountHead {
@@ -67,11 +142,15 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
   );
 }
 
-export function Sections({ entries, current, onJump, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
+export function Sections({ entries, current, counts, doc, onJump, onLine, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
   const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
   const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
+  const [searching, setSearching] = useState(false);
+  const any = !!counts && [...counts.values()].some((c) => c.lean);
   return (
-    <ol className="outline__list" ref={listRef}>
+    <>
+    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
+    <ol className="outline__list" ref={listRef} hidden={searching}>
       {shown.map((entry) => (
         <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
           <a
@@ -83,60 +162,24 @@ export function Sections({ entries, current, onJump, listRef }: Props & { listRe
               onJump(entry.id);
             }}
           >
-            {sectionLabel(entry.title)}
+            <span className="outline__name">{sectionLabel(entry.title)}</span>
+            {!!counts?.get(entry.id)?.lean && (
+              <span className="outline__ties num" title={`${counts.get(entry.id)!.lean} statements with Lean, of ${counts.get(entry.id)!.all} tied`}>
+                {counts.get(entry.id)!.lean}
+              </span>
+            )}
           </a>
         </li>
       ))}
     </ol>
-  );
-}
-
-/** The sections behind a "Sections" control: a non-modal popover beside the paper. */
-export function SectionsPopover(props: Props) {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-  const rootRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        event.stopPropagation();
-        setOpen(false);
-        rootRef.current?.querySelector<HTMLButtonElement>(".sections-toggle")?.focus();
-      }
-    };
-    document.addEventListener("pointerdown", onDown);
-    window.addEventListener("keydown", onKey, true);
-    // Scroll the list itself, never the page behind it.
-    const list = rootRef.current?.querySelector<HTMLElement>(".sections-popover .outline__list");
-    const item = list?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (list && item) list.scrollTop = Math.max(0, item.offsetTop - list.offsetTop - list.clientHeight / 3);
-    return () => {
-      document.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("keydown", onKey, true);
-    };
-  }, [open]);
-  return (
-    <div className="sections" ref={rootRef}>
-      <button type="button" className="sections-toggle" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <path d="M2.5 4h11M2.5 8h11M2.5 12h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-        </svg>
-        Sections
-      </button>
-      <div id={id} className="sections-popover" hidden={!open}>
-        <Sections
-          {...props}
-          onJump={(target) => {
-            setOpen(false);
-            props.onJump(target);
-          }}
-        />
-      </div>
-    </div>
+    {any && !searching && (
+      <p className="outline__key">
+        Numbers count the statements with Lean in each section. j and k step through the statements.{" "}
+        <button type="button" onClick={() => document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "?", bubbles: true }))}>
+          All the keys ( ? )
+        </button>
+      </p>
+    )}
+    </>
   );
 }

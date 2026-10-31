@@ -50,7 +50,8 @@ class Sidecars(unittest.TestCase):
         for path, code in (("/api/v1/lean/modules", "lean_index_unavailable"),
                            ("/api/v1/lean/names", "lean_index_unavailable"),
                            ("/api/v1/lean/module?name=OAI.X", "lean_index_unavailable"),
-                           ("/api/v1/alignment", "alignment_unavailable")):
+                           ("/api/v1/alignment", "alignment_unavailable"),
+                           ("/api/v1/ties/short", "alignment_unavailable")):
             response = request(self.bare, path)
             self.assertEqual((response["status"], body(response)["error"]["code"]), (404, code))
         self.assertEqual(self.data("/api/v1", self.bare)["sidecars"]["lean_index"], {"available": False})
@@ -66,6 +67,8 @@ class Sidecars(unittest.TestCase):
         index = lean_index.build_index(TREE)
         self.assertEqual(sidecars["lean_index"]["sha256"], digest(lean_index.canonical(index)))
         self.assertEqual(len(sidecars["alignment"]["sha256"]), 64)
+        self.assertEqual(len(sidecars["ties"]["sha256"]), 64)
+        self.assertEqual(self.data("/api/v1", self.bare)["sidecars"]["ties"], {"available": False})
 
     def test_modules_names_and_module_match_the_client_contract(self):
         modules = self.data("/api/v1/lean/modules")
@@ -94,6 +97,66 @@ class Sidecars(unittest.TestCase):
         self.assertEqual(row["lean"][0]["name"], "OAI.ZeroTemperatureSK.full_support")
         self.assertEqual(result["dictionary"], [])
         self.assertIn("steps", result)
+
+    def test_alignment_rows_carry_exact_lines_and_statements_their_lean(self):
+        row = self.data("/api/v1/alignment")["records"]["support.moment_saturation"]
+        self.assertEqual((row["lean"][0]["lines"], row["lean"][0]["proof_lines"]), ([35, 36], [37, 59]))
+
+    def test_ties_route_serves_a_small_index_for_each_paper(self):
+        for stage in ("long", "short", "expository"):
+            result = self.data(f"/api/v1/ties/{stage}")
+            self.assertEqual(result.keys(), {"segments", "ties", "passages", "meaning"})
+            self.assertTrue(result["passages"])
+            start, end, records, anchor = result["passages"][0]
+            self.assertLess(start, end)
+            self.assertTrue(records)
+            self.assertIsInstance(anchor, str)
+        self.assertEqual(request(self.app, "/api/v1/ties/other")["status"], 404)
+        self.assertEqual(request(self.app, "/api/v1/ties/short?extra=1")["status"], 400)
+        self.assertEqual(request(self.app, "/api/v1/ties")["status"], 404)
+
+    def test_ties_follow_authored_slices_and_their_lean(self):
+        directory = self.parent / "tied"
+        directory.mkdir()
+        (directory / "one.json").write_text(json.dumps({"schema_version": "1.0", "records": {
+            "support.moment_saturation": {"short": "Both moments", "lean": [
+                {"file": "OAI/Probability/SKSupport/Main.lean", "name": "minimizer_full_support_actual",
+                 "relation": "contains"}],
+                "statements": [{"paper": "short", "role": "statement", "from": "For the solution of the displayed SDE",
+                                "to": "=1.\n$$"}]}}}), encoding="utf-8")
+        (directory / "ties-short.json").write_text(json.dumps({"schema": 1, "statements": [{
+            "record": "support.moment_saturation", "paper": "short", "role": "derivation",
+            "from": "These cases exhaust the complement of the relatively closed set $S$.",
+            "to": "These cases exhaust the complement of the relatively closed set $S$.",
+            "lean": [{"name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual", "lines": [30, 33]}]}]}),
+            encoding="utf-8")
+        app = web.create_app(self.root, lean_index=lean_index.build_index(TREE), alignment=directory)
+        self.assertEqual(app.alignment_errors, [])
+        ties = self.data("/api/v1/ties/short", app)
+        self.assertEqual([tie["lines"] for tie in ties["ties"]], [[19, 22], [30, 33]])
+        self.assertEqual(ties["ties"][0]["name"], "OAI.ZeroTemperatureSK.minimizer_full_support_actual")
+        self.assertEqual(ties["ties"][0]["module"], "OAI.Probability.SKSupport.Main")
+        self.assertEqual(self.data("/api/v1/ties/long", app)["ties"], [])
+
+    def test_plain_names_reach_the_alignment_and_the_ties(self):
+        directory = self.parent / "named"
+        directory.mkdir()
+        (directory / "one.json").write_text(json.dumps({"schema_version": "1.0", "records": {
+            "support.moment_saturation": {"short": "Both moments", "lean": [
+                {"file": "OAI/Probability/SKSupport/Main.lean", "name": "minimizer_full_support_actual",
+                 "relation": "contains"}],
+                "statements": [{"paper": "short", "role": "statement", "from": "For the solution of the displayed SDE",
+                                "to": "=1.\n$$"}]}}}), encoding="utf-8")
+        title = "Full support for minimisers"
+        name = "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
+        (directory / "names.json").write_text(json.dumps({"schema": 1, "names": {name: title}}), encoding="utf-8")
+        app = web.create_app(self.root, lean_index=lean_index.build_index(TREE), alignment=directory)
+        self.assertEqual(app.alignment_errors, [])
+        result = self.data("/api/v1/alignment", app)
+        self.assertEqual(result["names"], {name: title})
+        self.assertEqual(result["records"]["support.moment_saturation"]["lean"][0]["plain"], title)
+        self.assertEqual(self.data("/api/v1/ties/short", app)["ties"][0]["plain"], title)
+        self.assertEqual(self.data("/api/v1/alignment")["names"], {})
 
     def test_a_failing_alignment_row_is_reported_and_left_out(self):
         bad = self.parent / "bad"

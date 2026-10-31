@@ -22,6 +22,7 @@ holds the rules every page follows. The values live in
    | What kind of record is it? | A word in small capitals: CLAIM, ASSUMPTION, LEAN DECLARATION, MAIN RESULT. Assumptions alone get a dashed border. |
    | How does a step use it? | The line's colour and pattern together, with the relation named in words wherever it is inspected. |
    | How does an account treat it? | A shape and a word: ● own passage, ○ used without a passage of its own, ⊟ outside the account's selection. |
+   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and a soft fill: green when it is in Lean, much paler for a part of it, plain for none. The sheet and the outline carry the same fill and say it in words, so nothing rests on the colour alone. |
    | What am I looking at? | Amber. Selection, a lit support route and keyboard focus. Nothing else is amber. |
    | What did a check record? | The outcome in words: passed, failed, unavailable, not run. Only a recorded failure is coloured. |
 
@@ -92,9 +93,8 @@ always shows words. There are no blank tiles and no marks without text.
 
 A tile uses the record's short title (`shortTitle`, from the build-time record
 index) and falls back to its label. A title that still cannot fit is cut after a
-whole word. Under the pointer or focus, a shortened title shows whole on the line
-under the header, which it covers for that moment: it never covers a card and
-never moves the canvas. A tile shows nothing of the card beneath it.
+whole word. Under the pointer or keyboard focus, a tile's full title and its Lean mark in
+words show in the strip under the canvas. A tile shows nothing of the card beneath it.
 
 **The floor.** Step by step stops at `k = 0.5`, the side pane at `0.6`, and Whole argument at
 `11/13`, the scale at which 13px world text is 11px on screen. If the drawing is
@@ -108,24 +108,72 @@ step** opens at `k = 1` with the plate and the first row and shows what is unfol
 Whole argument draws every branch without changing what is unfolded, so Step by step
 comes back exactly as it was.
 
+**Lean fills** come from the alignment and from nothing else (`model/leanStatus.ts`), and read
+as a blueprint does, with no key needed. `states` and `contains` give the green fill, and so does
+`defines` on a definition, which takes a box and has nothing to prove. `part`, and `proof` alone
+(a Lean proof carrying the step in a different form), give the much paler fill. A record with no
+declaration stays the plain card. "Proved" means a theorem or lemma in OpenAI's source with no
+`sorry` in its text, which all 162 rows keep today; whether a build ran stays in each record's
+checks. The sheet says the status in a plain sentence for readers who cannot tell the greens
+apart. `--lean-fill`, `--lean-fill-part` and `--lean-fill-line` are chosen per scheme: ink keeps
+at least 7:1 on both fills, `--ink-3` at least 3.5:1, and the three states stay apart in OKLab.
+A receding card keeps its fill, so it never reads as having no Lean. Amber still means what you
+are looking at, and the reader pane's trail uses no tint. The relations ship in the record
+index, so the fills are there at first paint.
+
+**The strip** under the canvas is a row of its own: the key a newcomer needs, always on the
+page, and Fit. What the pointer rests on is named there for that moment, in place of the key,
+so a caption can never cover a target, and it goes when the pointer goes.
+
+**The Lean graph** is a secondary view (`?v=lean`), a sidecar for those who want it; the argument
+stays the default. It draws the results (theorems and lemmas) behind the argument's steps with the
+same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`), one card each, 53 for Full support.
+The 12 definitions nearly every result uses are a list of plain titles under the drawing, because
+as cards they bury the shape of the proof. It loads on first use, about 120 modules of 349.
+
+Nothing opens off screen. Where the whole graph can be read at once (a monitor), it opens whole.
+Otherwise it opens on the part around the step you came from: that step's results, what uses them
+and what they use. Clicking a card moves that part to it. Fit shows every result, and "Around this
+step" returns. The sheet stays closed until a declaration is chosen, so the drawing has the width,
+and the drawing refits while the reader has not moved it. A title has one size in the drawing and
+zooms with it (`worldText`), so it is never cut; at Fit on a laptop the whole is a shape to read
+closer in, with the title in the strip under the pointer.
+
+A card shows plain words (`model/declTitle.ts`): the authored title, then the short title of the
+step that links it most directly, then the dictionary's words, and the raw name only where none
+exists. The raw name is small under the sheet's heading and in the code. A solid line is a use in
+the proof, a dashed line a use in the statement, a thin dotted line a use reached only through
+helpers no step links; the caption names them. Half the declarations are joined only through
+helpers, so they stay collapsed rather than absent. The lines come from `uses` in the Lean index
+and say so on the strip: a text scan today, and the compiler's report when `dependency_source`
+says `elaborated`. Statement against proof is whether the name is written in the statement's
+lines. A use a longer chain already says is not drawn, and the Key counts those. What nothing drawn
+uses hangs from the goal by a dashed line, which says only that the argument links it. Under a paper's lens the
+numbers count declarations, results and definitions together, and the line above the lens says so. A card opens the sheet at that
+declaration. Helpers with no plain title stay collapsed behind their line, which says how many
+there are.
+
 **The goal's plate** is at most 200px tall: the title, one sentence of the theorem
 and the ways on. The full theorem and its Lean are in the record sheet.
 
 **Navigation.** Two fingers on a trackpad and a wheel pan. A pinch, or Ctrl or ⌘
-with the wheel, zooms about the pointer; + and − zoom too. Dragging pans from
+with the wheel, zooms about the pointer; + and − zoom too. Shift with an arrow key pans, and
+0 or Fit shows the whole drawing as large as it fits. Dragging pans from
 anywhere, cards included, and nothing on the canvas selects as text; a press that
-moves less than 5px is a click. Panning stops while part of the drawing is on the
-canvas. ↑ goes to the result that uses the selected record, ↓ to its first input
+moves less than 5px is a click. The camera cannot lose the drawing (`clampView`): one larger
+than the canvas always fills it but for 40% on one side, one that fits can move a little and
+never more than half of it leaves, and a lens, a sheet or a smaller window that leaves the camera
+past the new edge brings it back. ↑ goes to the result that uses the selected record, ↓ to its first input
 (opening it if it is folded), ← and → among the inputs beside it; each move keeps
 the selection on screen by the smallest pan. Enter opens the selected record's
 inputs and Esc clears the selection. When a card cannot show every input,
 chips at the canvas edge say how many records lie beyond it.
 
-**The level lens.** All, Long record, Short paper, Exposition, each with the number
-of records of this argument it uses, counted from the records its own passages
+**The level lens.** Plain words: All, Long record, Short paper, Exposition, each with the
+number of steps of this argument it uses, the chosen one underlined, counted from the records its own passages
 discuss (`mapped_*` roles; every paper also lists the prerequisites of those
-records, so bare membership would count all of them). One sentence under the
-header says it in words. The levels are not nested: the exposition uses records
+records, so bare membership would count all of them). A small line above the lens says
+what its numbers count. The levels are not nested: the exposition uses records
 the short paper does not, so nothing may say one contains another. Choosing a
 level is the unfold motion: records outside it leave, and the rest close up. A
 line then joins a record to the nearest records it uses in that paper, and may pass
@@ -181,8 +229,8 @@ record locally:
   card ("Assumes · …"). No assumption line crosses the map. A tag selects the
   relation; every tag of the same assumption lights together.
 - **Shared starting records are clones.** A record with no recorded inputs that
-  several results use is drawn beside each of them. A band along a clone's foot
-  marks the copies, and "Used by N" says how many there are. All copies select,
+  several results use is drawn beside each of them. "Used by N" says how many there
+  are, and where Lean fills are off a band along a clone's foot marks the copies. All copies select,
   hover and light as one record; counts count records, not copies.
 
 Records that have inputs of their own are never copied.
@@ -223,10 +271,10 @@ Records that have inputs of their own are never copied.
 - **Title block.** "Argument for" in small sans over the main result's full title
   in serif, which opens the menu of main results, each with the accounts that
   state it. Below 1100px it shows the short name ("Full support").
-- **On the right:** the level lens, the view switch (Whole argument, Step by step, Outline;
-  pressing the current view frames it again) and Key.
-- **The line under the header.** One sentence on how much of the argument the level
-  uses and what a line means. The drawing needs no legend on screen. Key says the rest
+- **On the right:** the level lens, the view switch (Whole argument, Step by step, Outline,
+  Lean graph; pressing the current view frames it again) and Key.
+- **The line under the header.** Under a paper's lens, one sentence on how much of the
+  argument the level uses and what a line means. The strip gives the key. Key says the rest
   in words, lists the links the map leaves out, gives the keys and "How the map is
   drawn".
 - **The foot bar.** Only when it has something to do, in a row of its own under the
@@ -250,6 +298,19 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   still see what the site does. `src/home/heroMarkup.ts` owns it, and
   `tests/front-hero.test.ts` holds each Lean fragment to the exact statement in OpenAI's
   source.
+- **The first action is reading a paper.** The two buttons are "Read the short paper" and
+  "Read the exposition". Below them, quieter, are Theorem 1 with its Lean open (an address
+  built from the alignment, `heroLinks`), Compare and the map. The graph and the Lean come
+  along beside the paper; they are never the way in.
+- **A real still follows the films.** `public/stills/` holds a capture of Theorem 1 open on its
+  Lean, in both schemes, taken from a production build at 1440x790. Retake it when the reader
+  changes visibly (`loading="lazy"`, so the scheme not in use is never fetched).
+- **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
+  reference tables, the published observation and the vendored Lean, and hands the result to
+  the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
+  the sentence is left out. Each count says what it counts. A marked statement is one stop of
+  the reader's stepper, a tie joins a statement to one step, and a link joins a step to a Lean
+  declaration. The audit's numbers are in `examples/qaoa-sk/verification/tie-audit.json`.
 - **The first screen is HTML.** The build types the hero and the bar into `index.html`
   (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
   any script or data, and reaches readers and crawlers that run no script. React takes over
@@ -297,16 +358,22 @@ Selecting a record or a step opens the record sheet: a full-height reading colum
 (`--panel-w`) on the right on desktop, a sheet on phones. It is the drill-down from
 a card, and its first screen answers "what is this, and how is it stated?":
 
-- **Record:** kind, source and title, then the filled action "Compare side by
-  side"; **In Lean**, a `LeanBlock` for each linked declaration; **In the papers**,
+- **Record:** kind, source and title, the Lean mark in words and "Compare"; then, under five
+  short jumps (Statement, Lean, Papers, Uses, Checks), **the statement** quoted from the
+  strongest slice with "Read in context"; **In Lean**, a `LeanBlock` for each linked
+  declaration with its relation, exact lines and `Proof ▶`; **In the papers**,
   tabs for the long record, the short paper and the exposition, each with that
   paper's exact slices as the reader typesets them and "Read in context", then the
   plain recorded statement behind a quiet "As recorded" line; **Uses and used by**,
   rows that move the selection, with "Open everything below"; assumptions; sources
-  and checks. Where the alignment has no slices, the record's passages stand in. It
-  starts on the lens's paper.
+  and checks. The statement and the start of the Lean are on the first screen at 1280×690.
+  Where the alignment has no slices, the record's passages stand in. It starts on the lens's
+  paper. A record with no Lean says so and lists what it rests on, with each input's mark.
+- **Declaration:** the same sheet at one Lean name. Every name in a sheet
+  walks here in place, and each walk is one history entry (`?d=`).
 - **Step:** the relation in words ("*Consumer* uses *prerequisite*", with its
-  type) → for an applied theorem, the objects held fixed, each premise and its
+  type) → the chain of Lean names between the two records, each a walk, or a plain sentence
+  that none was found and what that does not show → for an applied theorem, the objects held fixed, each premise and its
   recorded supplier, and what is still assumed → the recorded explanation →
   related passages in each account.
 
@@ -330,42 +397,238 @@ unrelated text.
   so its column reads down as the paper does. A record for a Lean declaration is not a row,
   because the Lean has a column. Two steps whose cells start with the same words share a row.
   A cell shows the strongest thing that level says, and a bare mention does not count. A row's
-  title stays in view while its cells are read; j and k move between rows.
+  title stays in view while its cells are read; j and k move between rows. A Lean cell lights
+  the exact lines, and a name in the code walks in place with a named way back
+  (`WalkingLean.tsx`); the walk stays with the history entry. "Read in context" lands on the
+  exact statement and pins the tie.
 - **One step** is one row in full, reached from a row's title. The rail lists the steps of the
   argument. Each level gets a scrolling column with everything it says about the step, and
   "Uses" and "Used by" walk the argument in either direction. On a phone the levels stack,
   with tabs to jump between them.
 
-Going between the two keeps the step. Pressing a level keeps the row in view.
+Going between the two keeps the step. Pressing a level keeps the row in view. A formula that
+is too wide shrinks, then breaks at a relation sign; a cases or aligned block never breaks,
+because its rows and brace would come apart, so it keeps its shape and scrolls in its own box
+with a cue and Expand.
 
-## The Lean browser
+## The Lean index
 
-"/lean" makes the Lean readable by someone who does not write it. The folders are on the
-left with a name filter, the module's source is in the middle, and the selected declaration
-is on the right with its linked records. Below the source, the neighbourhood shows what uses
-the declaration and what it uses. Reading aids sit with the code: "How to read Lean" for the
-notation and "What each folder holds" for the library. Where the alignment names a clause,
-`LeanBlock` shows it inside its declaration, under "Where FullSupportConclusion says".
+"/lean" is the index at the back of the book: OpenAI's Lean at a pinned commit, in two proof
+trees, for anyone who wants the files and declarations themselves. It is quiet and last in the
+top bar, and its first lines send a reader to a paper. A plain title comes first wherever the
+alignment's `names` has one, as the heading of a declaration's page, in lists and on tiles, with
+the Lean name small beside it. A pointed name is read in the top bar's free space, which is
+empty at rest, so nothing on the page waits for a hover and pointing moves nothing. The first screen says what the tree is and what was checked, in the words of the Checks page, and
+offers `full_support`, `IsMinimizer`, `value_consequences`, the Comparator challenge file and the
+declarations the papers rest on, beside the main theorem itself. The folders stay on the left
+with a find box: Enter opens the first result, which is the exact name, then names that start
+with what was typed, then names that hold it (`lean/find.ts`).
+
+Every declaration has its own address (`?m=&d=`). Its page says first where the papers state it,
+quoted with "Read in context", then the Lean, facing it from 880px of column width; then what
+uses it and what it uses, split into its statement and its proof. Eight or fewer neighbours are
+drawn with lines; more are listed, because a fan of lines into one point says nothing. A module
+page lists its declarations in source order and shows the way up; a folder has its own page.
+
+**`LeanBlock`** is the one view of a declaration on every page: signature first, `Proof ▶` for the
+rest, "Whole file" to the module's source on this site with the declaration's lines lit and Back
+returning, GitHub's commit-pinned line range as a quiet second, axioms and `sorry` said once with where the
+statement comes from (Lean's report, or a text scan, by name). Every identifier is a link: to its
+declaration's page, or to Mathlib's search page, because a name written after `open` is not a full
+name and doc-gen's `find` address would give a 404. `onName` makes a click walk in place. `lines`
+lights exact lines and may open the proof and move the nearest scroller; `pointed` lights without
+moving anything; `quietLines` keeps `lines` from moving the scroller. `compact fill` works at
+340px tall.
+
+**The reading line.** Pointing at a name or focusing it shows its signature, its docstring and the
+paper's notation in one row of fixed height: in the top bar on the Lean pages and Compare, in the
+host's `previewSlot`, or at the foot of the block in flow. It is never sticky, so it can never sit
+over the code. Lean's column in Compare keeps a measure of 460 to 640px; on a laptop narrower
+than 1400px that leaves one paper beside it by default. A signature printed by Lean replaces
+the source text when an edition has one.
 
 The dependency edges come from the source text and say so (`dependency_source`,
-`dependency_note`), because a text parser can miss or misattribute a use. A link from a
-record to a declaration is a reading link, and the page never calls two statements
-equivalent.
+`dependency_note`), because a text parser can miss or misattribute a use. A link from a record to
+a declaration is a reading link, and the page never calls two statements equivalent.
+
+An address can name anything. A name this source does not hold gets one quiet line and the
+index, and the tab is named only from what exists. The map, the reader and Compare do the same
+through `app/AddressNotice.tsx`.
+
+## Search
+
+"/" opens search everywhere. It is built on the first query, never at startup, from the names,
+the alignment and the three papers' Markdown, cut at blank lines with exact bytes. An exact
+theorem number or step title comes first, then the main result, then the papers' statements and
+the steps in plain words, then the papers' text. Raw Lean names come last unless what was typed
+has the shape of a Lean name (`search/order.ts`). British and American spellings find each
+other. Enter opens the first result. A result says what it
+is and where it stands. A hit in a paper goes there as an ordinary entry, with Back; a Lean hit
+opens in the page that registered with `hostLean` (`lean/walk.ts`), and otherwise on its own
+page.
 
 ## The reader
 
-From 1280px the map sits beside the paper: the paper's own narrower graph, with the records
-of the passage being read lit. It follows block by block, and its goal stays still while the
-reader scrolls. The pane's trail says which section this is and how many of the paper's
-records have come so far. A statement link (`?l=`) lands on the exact line and marks it. A
-formula is fitted as it comes near the screen, because each measurement forces a layout.
+A reader reads the paper, as they always have. The graph is a sidecar: full height on the
+page facing the paper, it comes along as they scroll, and it can be closed. One line under
+it names what is lit in plain words and says whether it has Lean. Clicking a statement or a
+highlighted card opens the raw Lean, which rises from the card over the graph and leaves a band
+of it above, or stands beside it from 860px of page. It is headed by the step's plain title
+with the raw name small beside it, then a link to where each paper states it, and Compare. The
+graph underneath keeps its size and camera; only a transform lifts the card clear, so closing
+leaves it exactly as it was. A handle sets the height, and it is remembered.
+
+The Lean closed is the default. A reader who wants it beside their reading can choose "Keep the
+Lean open" or draw the handle up from the foot of the graph; it then follows the text, and that
+is remembered in this browser. Below 1280px the same page is a sheet opened on demand. It is
+never modal: the paper stays where it is and can still be scrolled.
+
+Four verbs run the page.
+
+- **Follow.** One reading line, 30% of the way down the paper, picks the statement under
+  it, or the nearest within a third of the page, the one just read winning a near tie.
+  Its tick in the margin lights at once, and nothing touches the words: the paper reads as a
+  paper. Once it has held the line for 200ms, and the page is no longer flying past, its card
+  lights and the line under the graph names it. The address keeps up by replacing the entry once the reader stops.
+- **Point.** A statement under the pointer or focus takes a soft wash and its card lights
+  at once; after a 150ms dwell the line under the graph names it, and a Lean kept open
+  previews it. Moving away restores. A card does the same in the other direction. An untied
+  paragraph names its passage's records in that line and moves nothing. Pointing never
+  pushes history.
+- **Open.** A click pins and raises the Lean, and only then does the statement take the full
+  highlighter. A step with no Lean does not open: the line under the graph says so. A click is one history entry, `?n=<record>&l=<slice>`,
+  and the paper does not move. A card pins too, and the paper goes to the statement while the
+  graph stays. A name in the Lean walks in place, as its own entry. A pin ends when the reader
+  scrolls the statement away, on Escape, or on Back. A drag or a double click that selects text
+  never pins.
+- **Back.** The browser's own, named in the strip.
+
+`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases. The
+statements share one tab stop, which the keys and the reading line move, with a role and a name.
+From the keyboard, Enter takes focus into the Lean and closing brings it back to the statement.
+
+Labels say what is so: "Has Lean", "Lean covers part of this" where the first row is `part`, and
+for a statement with `"lean": []` its authors' note, as written, or "No Lean linked". Such a
+statement opens nothing: the note stands under its last words as well as under the graph.
+
+A paper's HTML opens with the page's shape (`reader/skeleton.ts`), so the first paint does not
+move. From 1920px the type and the measure grow together, to 20px at 2560.
+
+Where several statements open on the same words, a step stops there once, and the Lean
+page lists the others under "The same words also tie to".
+
+Scrolling writes attributes and signals, never React state on the page (`page/statements.ts`,
+`page/signal.ts`). Marks reach the text as zero-width private-use characters put in before
+parsing and turned into `.tie` spans once a part's HTML is whole (`ties.ts`); with every
+segment marked, each paper's HTML is byte for byte the same once the spans are taken out,
+and a test holds it there. A statement tick sits in the left margin, darker where the
+step has Lean, drawn from where the words actually fell. The thread crosses only the empty
+gutter and goes whenever an end leaves the screen.
+
+A long paper stays smooth under a fast wheel because the slow work happens before the reader
+arrives. When the page is still, idle time works outwards from the reader: it renders a part,
+lays it out and fits its formulas (`PaperBody`). Far text is still not painted. Each part
+reserves a height from its source lines before any of that, the same height before and after
+its text arrives, so the scrollbar holds steady from the first paint and an address lands at
+the same place on a first load and a reload. No selector may put the whole paper under `:has()`
+on a root element: one change of hover then walks all of it (`html.is-reading` exists for this).
+
+The outline counts the statements with Lean in each section, and searches the paper's
+text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
+covers no text. A passage's steps and links open from "This passage" under the graph, and the
+first screen's one instruction sits in the strip. On a phone there is one row of chrome, which
+goes while reading down and comes back going up, and a tapped statement moves above the sheet.
+
+### References
+
+Every reference in the three papers is a real link, 639 in all: 117 in the short paper, 442
+in the long record and 80 in the exposition. What each one points to was decided by reading
+its sentence and is kept as data, one table per paper, in
+`examples/qaoa-sk/alignment/references-<paper>.json`, keyed by byte range. A pattern cannot
+decide it. Most numbered results these papers name belong to OpenAI's manuscripts or to other
+cited papers, whose numbers collide with the papers' own: "(6.1)" in the long record is its own
+equation in one sentence and Basso et al.'s in another. The rows that stay plain (126, such as
+the locators inside a reference-list entry) are in the table too, with the reason.
+
+| Kind | Short | Long | Exposition | A click |
+| --- | --- | --- | --- | --- |
+| Citation, with its locator | 61 | 212 | 35 | Opens a card in place: the theorem or page cited, the entry from the paper's own reference list, "Open source" and "Go to the reference list" |
+| Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
+| Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
+| Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
+| Section of the long record | 1 | 0 | 0 | Opens beside the paper |
+
+Pointing or focusing shows the target on the right page after 150ms, in place of the Lean until
+the pointer leaves. It covers no text and moves nothing in the paper. An inset is part of the page: it pushes only what is below it, the reader's line stays
+where it is, and Back, Escape, a second click or Close puts the page back to the pixel. Each open is
+one history entry at the same address, and the entry remembers what stands, so Forward and a reload
+bring it back. While a reference is open the right page goes on following the paper; there is
+one view of it at a time. A jump is a history entry too, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
+usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
+
+Text stays byte for byte: marks go in at render time, and `tests/references.test.ts` checks every
+row against the paper's bytes and the rendered page, and fails on a candidate no row has decided. A
+row whose words have moved gives no link at all, because a wrong link is worse than none.
 
 ## Checks
 
-"/checks" opens with one paragraph saying what is established, then a table by kind of check
-with the number passed, failed, unavailable and not run in columns of their own. Outcomes are
-never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
+"/checks" opens with what a Lean reader asks first (`Standing.tsx`): what compiled, at which
+commit and toolchain; the statement; the axioms; any `sorry`; what Comparator has and has not
+done; where the dependency lines come from; and what people or agents read rather than a
+machine. Each row sets what ran beside what that leaves open, and names the checker. When the
+index's `dependency_source` becomes `elaborated`, the dependency row says so by itself. Then
+comes a table by kind of check with the number passed, failed, unavailable and not run in
+columns of their own. Outcomes are never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
 success badge. With a record chosen (`?n=`), the page starts with the checks attached to it.
+
+## Going back
+
+From anywhere on the site a reader can go back to exactly where they were: the
+same page, scroll position, selected card, map camera and lens, open tab and panel
+scroll. Back, Forward and reload all do this, and the visible control is the
+browser's own Back, so the two cannot disagree.
+
+The URL holds what is selected and can be shared. The history entry holds how it
+was being looked at: scroll, tab, camera, a filter typed. `app/trail.ts` keeps one
+record per entry, in `history.state` and mirrored in sessionStorage, because on a
+pop `history.state` has already moved on and the entry being left can only be
+written through the mirror.
+
+| Action | History |
+|---|---|
+| The page, a pinned record, a passage, a Lean declaration or a search query changes | One new entry, with an address |
+| A tab, the scroll, the camera or a filter changes | No entry; the current one is rewritten |
+| Following and pointing | No entry |
+
+`history.state` can be lost: a redirect drops it, and Firefox drops it on a plain
+reload. So every address the site writes is the exact form the host serves, with
+the slash after a page's directory, and a reload never redirects. And sessionStorage
+keeps a copy of each entry under its key, with who it is and which entry the tab is
+on, so a load that finds no state looks itself up and carries on as the same entry.
+When the browser calls such a load a new navigation, it counts as a reload only
+within 30 seconds of leaving and at the same address. Every read and write of
+sessionStorage may fail, and the page then works from `history.state` and memory.
+
+The control reads "Back to Short paper §1", "Back to the map" or "Back to
+`minimizer_contact`". It sits in the top bar on every page but the reader, where it
+is in the reader's strip, and takes the place of the site's name on a phone. It
+appears only when there is somewhere in this site to go back to. The key is `[`;
+Alt and Left is the browser's own. A page names itself once with `namePlace`, so no
+link needs special handling.
+
+A place in a paper names the part and the block under the reading line, and never a
+raw page position, because placeholders above it change height as parts render. It
+holds to within half a pixel, as rounding let a save and restore creep by one.
+`restoreScroll` is the one way a place is put back, for the window and every inner
+scroller: it keeps setting the place while content arrives, for up to fifteen seconds,
+and stops the moment the reader touches the wheel, the keyboard or the screen. Late
+fonts can put the place back once more, under the same rule. Until the reader's own
+input, a restored place is not measured again, so a save and restore cannot creep.
+
+A step between Lean names is one entry through `walkEntry`, which adds `&d=` and
+`&dm=` on a page that shows Lean in place and goes to the declaration's own page
+otherwise.
 
 ## Motion
 
@@ -405,7 +668,7 @@ The interface names relations and states by what was recorded.
 | No successful Comparator result is recorded | no Comparator run is recorded (when one failed) |
 | Review record: passed | independently reviewed |
 | One recorded route from Full support | (a breadcrumb that looks like history) |
-| No recorded inputs | starting point, axiom (a record boundary is not a foundation) |
+| The argument as written stops here (inputs are authored links); "None found", with what the scan misses, for a Lean declaration's uses | No recorded inputs, starting point, axiom |
 | Back to Exposition §5.3 | Back (when the origin is a graph path) |
 
 Most recorded checks are "not run"; no warrant has been independently reviewed.
@@ -436,10 +699,10 @@ something else.
 | --- | --- | --- | --- |
 | ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
 | 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
-| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the map as a sheet |
-| 901–1119px | Canvas | Right column | Paper; sections, passage context and map as sheets |
-| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections, passage context and map as sheets |
-| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar |
+| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the right page as a sheet |
+| 901–1119px | Canvas | Right column | Paper; sections and passage context as sheets; the right page as a side sheet |
+| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets; the right page as a side sheet |
+| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar; a tap opens the Lean in a bottom sheet |
 
 Phones use 16px gutters and `--target` (44px) for primary touch targets. No
 ordinary page scrolls sideways; a wide formula scrolls inside its own box with a

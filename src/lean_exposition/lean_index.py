@@ -33,6 +33,7 @@ HARD_COMMANDS = {"namespace", "section", "end", "mutual", "universe", "attribute
 SOFT_COMMANDS = {"open", "set_option", "omit", "include", "variable", "unseal", "seal"}
 MODIFIERS = {"private", "protected", "public", "noncomputable", "unsafe", "partial", "nonrec",
              "scoped", "local", "meta"}
+LOCAL_TERMS = {"let", "letI", "have", "haveI"}
 OPENERS = {"(": ")", "[": "]", "{": "}", "⟨": "⟩", "⦃": "⦄", "⟦": "⟧", "#[": "]", "@[": "]",
            "`(": ")", "⟪": "⟫"}
 CLOSERS = set(OPENERS.values())
@@ -295,8 +296,11 @@ def _local_binders(tokens, start, end, into):
 
 
 def _signature_stop(tokens, i, end, kind):
-    """Find where a statement stops: `:=`, `by`, `where`, or the first alternative."""
-    depth = 0
+    """Find where a statement stops: `:=`, `by`, `where`, or the first alternative.
+
+    A `let` or `have` in the statement takes one `:=` of its own, so that one does not stop it.
+    """
+    depth = local = 0
     while i < end:
         token_kind, value, _, _, _, first = tokens[i]
         if token_kind == SYMBOL and value in OPENERS:
@@ -304,7 +308,11 @@ def _signature_stop(tokens, i, end, kind):
         elif token_kind == SYMBOL and value in CLOSERS:
             depth -= 1
         elif not depth:
-            if value in {":=", "where", "by"} or (value == "deriving" and token_kind == IDENT):
+            if token_kind == IDENT and value in LOCAL_TERMS:
+                local += 1
+            elif value == ":=" and local:
+                local -= 1
+            elif value in {":=", "where", "by"} or (value == "deriving" and token_kind == IDENT):
                 return i
             if value == "|" and (kind == "inductive" or (first and _is_alternative(tokens, i, end))):
                 return i

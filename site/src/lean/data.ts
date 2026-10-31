@@ -7,6 +7,7 @@ import {
   loadLeanModules,
   loadLeanNames,
   type Alignment,
+  type AlignedStatement,
   type DictionaryTerm,
   type LeanDeclaration,
   type LeanKind,
@@ -19,6 +20,10 @@ import { alignmentResource, shortTitle, useAlignment } from "../compare/useAlign
 import { buildIndex, type LeanIndex } from "./resolve";
 
 export const MAIN_THEOREM = "OAI.ZeroTemperatureSK.full_support";
+export const VALUE_THEOREM = "OAI.SKValue.value_consequences";
+export const MINIMIZER = "OAI.ZeroTemperatureSK.IsMinimizer";
+export const CHALLENGE_FILE = "ComparatorChallenges.SKFullSupport";
+export const VALUE_CHALLENGE_FILE = "ComparatorChallenges.SKValue";
 
 let shellPending: Promise<{ modules: LeanModules; index: LeanIndex }> | null = null;
 let shell: { modules: LeanModules; index: LeanIndex } | undefined;
@@ -36,17 +41,61 @@ export interface LinkedRecord {
   clause?: string;
 }
 
+/** Where a paper states a declaration: an exact slice, and the record that ties it. */
+export interface PaperStatement {
+  statement: AlignedStatement;
+  /** The record whose slice this is; absent for a dictionary entry's quotation. */
+  record?: string;
+}
+
 export interface LeanShell {
   modules: LeanModules;
   index: LeanIndex;
   paths: Map<string, LeanModuleRow>;
   terms: Map<string, DictionaryTerm>;
   linked: Map<string, LinkedRecord[]>;
+  /** Most direct first. An empty map until the alignment arrives. */
+  statements?: Map<string, PaperStatement[]>;
+  /** A plain title for a declaration, by full name. Empty until the alignment arrives. */
+  plain: ReadonlyMap<string, string>;
 }
 
 const pathsMemo = new WeakMap<LeanModules, Map<string, LeanModuleRow>>();
-const termsMemo = new WeakMap<Alignment, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]> }>();
-const emptyAlignment = { terms: new Map<string, DictionaryTerm>(), linked: new Map<string, LinkedRecord[]>() };
+const termsMemo = new WeakMap<Alignment, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]>; statements: Map<string, PaperStatement[]>; plain: ReadonlyMap<string, string> }>();
+const emptyAlignment = { terms: new Map<string, DictionaryTerm>(), linked: new Map<string, LinkedRecord[]>(), statements: new Map<string, PaperStatement[]>(), plain: new Map<string, string>() };
+
+const RELATION_ORDER: LeanRelation[] = ["states", "defines", "contains", "part", "proof"];
+const PAPER_ORDER = ["short", "long", "expository"];
+const ROLE_ORDER = ["statement", "definition", "derivation", "explanation", "example", "mention"];
+
+function statementsOf(alignment: Alignment): Map<string, PaperStatement[]> {
+  const found = new Map<string, { row: PaperStatement; rank: number }[]>();
+  const add = (name: string, row: PaperStatement, rank: number) => {
+    const rows = found.get(name);
+    if (!rows) return void found.set(name, [{ row, rank }]);
+    const same = rows.find((r) => r.row.statement.paper === row.statement.paper && r.row.statement.start_byte === row.statement.start_byte);
+    if (same) same.rank = Math.min(same.rank, rank);
+    else rows.push({ row, rank });
+  };
+  for (const [id, record] of Object.entries(alignment.records)) {
+    for (const lean of record.lean) {
+      for (const statement of record.statements) {
+        // Where a slice says which Lean it means, it counts only for that Lean.
+        if (statement.lean_source === "statement" && !statement.lean?.some((row) => row.name === lean.name)) continue;
+        if (statement.role === "mention") continue;
+        add(lean.name, { statement, record: id }, RELATION_ORDER.indexOf(lean.relation) * 10 + ROLE_ORDER.indexOf(statement.role));
+      }
+    }
+  }
+  for (const term of alignment.dictionary as (DictionaryTerm & { start_byte?: number; end_byte?: number; section?: string; heading_id?: string | null })[]) {
+    if (!term.paper || !term.markdown || term.start_byte === undefined || term.end_byte === undefined) continue;
+    const statement: AlignedStatement = { paper: term.paper, role: "definition", markdown: term.markdown, start_byte: term.start_byte, end_byte: term.end_byte, anchor: term.anchor ?? null, section: term.section ?? "", heading_id: term.heading_id ?? null } as AlignedStatement;
+    add(term.name, { statement }, 5);
+  }
+  const out = new Map<string, PaperStatement[]>();
+  for (const [name, rows] of found) out.set(name, rows.sort((a, b) => a.rank - b.rank || PAPER_ORDER.indexOf(a.row.statement.paper) - PAPER_ORDER.indexOf(b.row.statement.paper)).map((r) => r.row));
+  return out;
+}
 
 function alignmentMaps(alignment: Alignment | null) {
   if (!alignment) return emptyAlignment;
@@ -61,7 +110,7 @@ function alignmentMaps(alignment: Alignment | null) {
         else linked.set(lean.name, [row]);
       }
     }
-    maps = { terms: new Map(alignment.dictionary.map((term) => [term.name, term])), linked };
+    maps = { terms: new Map(alignment.dictionary.map((term) => [term.name, term])), linked, statements: statementsOf(alignment), plain: new Map(Object.entries(alignment.names ?? {})) };
     termsMemo.set(alignment, maps);
   }
   return maps;
@@ -199,14 +248,52 @@ export const kindWord = (kind: LeanKind) => KIND_WORDS[kind] ?? kind;
 
 export const RELATION_WORDS: Record<LeanRelation, string> = {
   states: "States this result",
-  contains: "Contains this result as one part",
+  contains: "A stronger statement, with this result as one part",
   part: "States one part of this result",
-  proof: "Carries this proof step",
+  proof: "Proves this step, in a different form",
   defines: "Defines this object",
 };
 
-export const LINK_CAVEAT = "Linked by reading the source. Not checked as equivalent.";
+/** Said once, near the link. */
+export { LINK_CAVEAT } from "../app/caveat";
 
 export function dependencyWords(source: string | undefined): string {
   return source === "elaborated" ? "Names from Lean's elaborated report" : "Names found in the source text";
+}
+
+/** "1. The result" as "§1", which is how a paper's own section is cited. */
+export function sectionPlace(section: string): string {
+  const number = /^(\d+(?:\.\d+)*)\.?\s/.exec(section)?.[1];
+  return number ? `§${number}` : section;
+}
+
+/** What a compiled extraction adds to a declaration, read wherever it is present. */
+export interface CompiledFacts {
+  /** The pretty-printed type, as Lean prints it. */
+  type?: string;
+  /** Axioms as `#print axioms` reports them. */
+  axioms?: string[];
+  /** Whether Lean reports `sorryAx` among them. */
+  sorry?: boolean;
+  statement_uses?: string[];
+  proof_uses?: string[];
+  statement_used_by?: string[];
+  proof_used_by?: string[];
+}
+
+export const compiled = (decl: LeanDeclaration) => decl as LeanDeclaration & CompiledFacts;
+
+const LEADING = /^(?:\s*(?:@\[[^\]]*\]|noncomputable|private|protected|unsafe|partial)\s+)+/;
+
+/** The statement as one line of source, without attributes and modifiers. */
+export function signatureText(module: LeanModule, decl: LeanDeclaration): string {
+  const text = sourceLines(module).slice(decl.line - 1, decl.signature_end_line).join(" ");
+  return text.replace(/\s+/g, " ").replace(LEADING, "").replace(/\s*(?::=|where)\s*(?:by)?\s*$/, "").trim();
+}
+
+/** The first sentence or so of a docstring, for one line. */
+export function docLine(doc: string | null | undefined): string | null {
+  if (!doc) return null;
+  const text = doc.replace(/\s+/g, " ").trim();
+  return text || null;
 }

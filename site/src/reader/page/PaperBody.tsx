@@ -2,36 +2,22 @@
 // parts near the viewport are rendered, the rest wait as placeholders sized
 // from their byte length and are rendered in idle time. Heights that change
 // above the reading line are compensated, so the line a reader is on never
-// moves. A mapped passage carries a slim rule in the margin (amber while it is
-// in the inspector) and, under its heading, a quiet bar: the records it discusses
-// by name, a Lean mark where they have Lean, and its linked passages.
+// moves. Each tied statement carries a tick in the margin (statements.ts), and nothing else
+// stands between the paragraphs: a passage's steps and links are on the right page.
 
-import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { shortTitle } from "../../compare/useAlignment";
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
-import { authoredRoutes, chipSplit, chipTitle, estimateHeight, idleOrder, leanRecord, linkedCount, passageOf, passageRecords, type Structures } from "./model";
+import { useReferences } from "./RefInset";
+import { estimateHeight, idleOrder, passageOf, passageRecords, type Structures } from "./model";
+import type { Statements } from "./statements";
 
 export interface Links {
   node(id: string): string;
   beside(stage: Stage, anchor: string): string;
 }
-
-/** What a passage's bar needs from the page; a context, so that a change re-renders the bars and no text. */
-export interface PassageBar {
-  /** The record open in its sheet. */
-  open: string | null;
-  /** The records of the statement under the reading line. */
-  inView: ReadonlySet<string>;
-  onRecord(id: string, opener: HTMLElement, lean?: boolean): void;
-  /** Light this record on the map beside the paper, or nothing. */
-  onHover(id: string | null): void;
-}
-
-export const PassageBarContext = createContext<PassageBar>({ open: null, inView: new Set(),  onRecord() {}, onHover() {} });
 
 export interface BodyHandle {
   /** Render these parts (and wait until they are laid out). */
@@ -47,22 +33,28 @@ interface Props {
   stage: Stage;
   doc: PreparedDocument;
   structures: Structures;
-  graph: ArgGraph;
+  /** Kept for the callers that build the page around it. */
+  graph?: ArgGraph;
   initial: number[];
   /** The passage open in the inspector, whose margin rule is lit. */
   inspected: string | null;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
+  /** Told when a part's text reaches the page, for its ties. */
+  statements?: Statements;
+  /** "See its Lean" in a reference's inset: open this record's slice as a click on its statement would. */
+  onReferenceLean?(record: string, at: string | undefined): void;
   /** The reading line, in viewport pixels from the top, used for height compensation. */
   topInset: number;
 }
 
-/** Rendered text runs this much taller than a placeholder's estimate (long record, 1440px). */
-const TEXT_SCALE = 1.3;
 const NEAR_MARGIN = "1500px 0px";
 const IDLE_DELAY_MS = 1200;
+/** Laying out ahead of the reader waits until the page has been still this long. */
+const STILL_MS = 250;
+/** Fitting ahead takes this long at a time: an idle period can run to 50ms, and a task that long is one a reader can feel. */
+const AHEAD_BUDGET_MS = 10;
 
-type Idle = (cb: (deadline: { timeRemaining(): number }) => void) => number;
+type IdleDeadline = { timeRemaining(): number };
+type Idle = (cb: (deadline: IdleDeadline) => void) => number;
 const requestIdle: Idle =
   typeof window !== "undefined" && "requestIdleCallback" in window
     ? (cb) => (window as unknown as { requestIdleCallback: Idle }).requestIdleCallback(cb)
@@ -73,8 +65,11 @@ const cancelIdle = (id: number) => {
   else w.clearTimeout(id);
 };
 
+const noLean = () => {};
+
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
-  const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
+  const { stage, doc, structures, initial, topInset, inspected, statements, onReferenceLean } = props;
+  const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
@@ -98,11 +93,14 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   // place when anything above it changes height (a part rendered, a figure
   // mounted, a route line arriving), so the text under the reader's eyes
   // never moves.
-  const anchor = useRef<{ el: Element; top: number } | null>(null);
+  // `scroll` is where the page stood when `top` was read: only a change of layout moves the
+  // page back, never a scroll that arrived in the same frame as a change of height.
+  const anchor = useRef<{ el: Element; top: number; scroll: number } | null>(null);
   // A jump's target stays the anchor until the reader scrolls by hand.
   const pinned = useRef(false);
   // The size of each part as the resize observer last reported it.
   const sizes = useRef(new Map<Element, number>());
+  const scrolledAt = useRef(0);
   const reanchor = useCallback((force?: boolean, observed = false) => {
     const line = topRef.current;
     if (force) {
@@ -146,12 +144,13 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         }
       }
     }
-    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top } : null;
+    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top, scroll: window.scrollY } : null;
   }, []);
 
   useImperativeHandle(
     ref,
-    () => ({
+    () => {
+      const value: BodyHandle = {
       ensure: (parts) =>
         new Promise<void>((resolve) => {
           const wanted = parts.filter((i) => i >= 0 && i < doc.parts.length);
@@ -166,12 +165,16 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       reanchor,
       hold: (el) => {
         reanchor(true);
-        anchor.current = { el, top: el.getBoundingClientRect().top };
+        anchor.current = { el, top: el.getBoundingClientRect().top, scroll: window.scrollY };
         pinned.current = true;
       },
-    }),
+      };
+      handle.current = value;
+      return value;
+    },
     [add, doc, reanchor],
   );
+  const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []), onReferenceLean ?? noLean);
 
   // Resolve waiters once their parts are in the DOM and laid out.
   useLayoutEffect(() => {
@@ -199,6 +202,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   useEffect(() => {
     let frame = 0;
     const onScroll = () => {
+      scrolledAt.current = performance.now();
       if (pinned.current || frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
@@ -223,11 +227,11 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       for (const entry of entries) sizes.current.set(entry.target, entry.target.getBoundingClientRect().height);
       const held = anchor.current;
       if (held && held.el.isConnected) {
-        const delta = held.el.getBoundingClientRect().top - held.top;
+        const delta = held.el.getBoundingClientRect().top + window.scrollY - held.top - held.scroll;
         if (Math.abs(delta) >= 0.5) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
       }
       if (pinned.current && held?.el.isConnected) {
-        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top };
+        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top, scroll: window.scrollY };
       } else {
         // Delivered entries already update every changed part's cached size.
         // Reading all the other parts again makes each background insertion
@@ -255,17 +259,37 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     } else map.delete(index);
   }, []);
 
-  // Idle time renders the rest, nearest the reader first. The costly step
-  // (typesetting) runs inside the idle callback; React only inserts the HTML.
+  // Idle time works outwards from the reader, one part at a time: it renders the part, then
+  // lays it out and fits its formulas while the page is still. A part's first layout is the
+  // longest single task the paper has, and taking it here keeps it out of a fast scroll.
+  // Nothing moves: a part held off the screen keeps its reserved height until it comes near.
+  // The costly step (typesetting) runs inside the idle callback; React only inserts the HTML.
   useEffect(() => {
     let handle = 0;
     let stopped = false;
-    const step = (deadline: { timeRemaining(): number }) => {
+    let waiting = 0;
+    const prepared = new Set<number>();
+    const still = () => performance.now() - scrolledAt.current >= STILL_MS;
+    const step = (deadline: IdleDeadline) => {
       if (stopped) return;
       const current = renderedRef.current;
       const centre = nearestPart(elements.current, topRef.current);
-      const todo = idleOrder(doc.parts.length, centre).filter((i) => !current.has(i));
-      if (!todo.length) return;
+      const order = idleOrder(doc.parts.length, centre);
+      const next = order.find((i) => !prepared.has(i));
+      if (next === undefined) return;
+      if (current.has(next) && still()) {
+        const text = elements.current.get(next)?.querySelector<HTMLElement>(":scope > .part__text");
+        const until = performance.now() + AHEAD_BUDGET_MS;
+        if (!text || layOutAhead(text, () => performance.now() < until && deadline.timeRemaining() > 1 && still())) prepared.add(next);
+        handle = requestIdle(step);
+        return;
+      }
+      const todo = order.filter((i) => !current.has(i));
+      if (!todo.length) {
+        // All rendered, and the reader is moving: what is left waits for them to stop.
+        waiting = window.setTimeout(() => (handle = requestIdle(step)), STILL_MS);
+        return;
+      }
       const batch: number[] = [];
       while (todo.length && (batch.length === 0 || deadline.timeRemaining() > 10) && batch.length < 3) {
         const i = todo.shift()!;
@@ -279,12 +303,21 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     return () => {
       stopped = true;
       window.clearTimeout(timer);
+      window.clearTimeout(waiting);
       cancelIdle(handle);
     };
   }, [doc, add]);
 
   return (
-    <div className="paper prose" data-stage={stage}>
+    <div
+      className="paper prose"
+      data-stage={stage}
+      onClick={references.onClick}
+      onPointerOver={references.onPointerOver}
+      onPointerOut={references.onPointerOut}
+      onFocus={references.onFocus}
+      onBlur={references.onBlur}
+    >
       {doc.parts.map((part) => (
         <Part
           key={part.index}
@@ -293,13 +326,12 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           doc={doc}
           rendered={rendered.has(part.index)}
           structures={structures}
-          graph={graph}
           lit={!!part.anchor && part.anchor === inspected}
-          onInspect={onInspect}
-          onSameTopic={onSameTopic}
+          statements={statements}
           register={register}
         />
       ))}
+      {references.portals}
     </div>
   );
 });
@@ -343,54 +375,35 @@ interface PartProps {
   doc: PreparedDocument;
   rendered: boolean;
   structures: Structures;
-  graph: ArgGraph;
   lit: boolean;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
+  statements?: Statements;
   register(index: number, el: HTMLElement | null): void;
 }
 
-const Part = memo(function Part({ part, stage, doc, rendered, structures, graph, lit, onInspect, onSameTopic, register }: PartProps) {
+const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, statements, register }: PartProps) {
   const textRef = useRef<HTMLDivElement>(null);
   const html = useMemo(() => (rendered && !part.blank ? doc.render(part.index).html : null), [rendered, part, doc]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
   const records = useMemo(() => passageRecords(passage), [passage]);
-  const routed = useMemo(() => !!anchor && authoredRoutes(structures, stage, anchor).length > 0, [structures, stage, anchor]);
   const mapped = !!anchor && records.length > 0;
-  const tools = !!anchor && (mapped || routed);
 
   useLayoutEffect(() => {
     if (!html || !textRef.current) return;
     const unmount = mountFigures(freshSlots(textRef.current));
     const unmark = markWideMaths(textRef.current);
+    statements?.adopt(part.index, textRef.current.parentElement);
     return () => {
+      statements?.adopt(part.index, null);
       unmount();
       unmark();
     };
-  }, [html]);
-
-  // The passage's controls sit under its opening heading (or above its first
-  // line), inside the rendered text, so they read as part of the passage.
-  const [slot, setSlot] = useState<HTMLElement | null>(null);
-  useLayoutEffect(() => {
-    const text = textRef.current;
-    if (!html || !text || !tools) {
-      setSlot(null);
-      return;
-    }
-    const el = document.createElement("div");
-    el.className = "passage-tools";
-    let first = text.firstElementChild;
-    while (first && first.matches("a.anchor")) first = first.nextElementSibling;
-    if (first && /^H[1-6]$/.test(first.tagName)) first.after(el);
-    else text.insertBefore(el, text.firstChild);
-    setSlot(el);
-    return () => el.remove();
-  }, [html, tools]);
+  }, [html, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
-  const textSize = useMemo(() => ({ "--part-h": `${Math.round(estimateHeight(part, 680) * TEXT_SCALE)}px` }) as React.CSSProperties, [part]);
+  // The same height before and after the text arrives, so rendering a part far away moves nothing.
+  const reserved = useMemo(() => estimateHeight(part), [part]);
+  const textSize = useMemo(() => ({ "--part-h": `${reserved}px` }) as React.CSSProperties, [reserved]);
 
   if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
 
@@ -405,86 +418,11 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, graph,
       {html ? (
         <div ref={textRef} className="part__text" style={textSize} dangerouslySetInnerHTML={{ __html: html }} />
       ) : (
-        <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
+        <div className="part__placeholder" style={{ height: reserved }} aria-hidden="true" />
       )}
-      {slot &&
-        anchor &&
-        createPortal(
-          <PassageTools stage={stage} anchor={anchor} records={records} structures={structures} graph={graph} lit={lit} onInspect={onInspect} onSameTopic={onSameTopic} />,
-          slot,
-        )}
     </section>
   );
 });
-
-function PassageTools({
-  stage,
-  anchor,
-  records,
-  structures,
-  graph,
-  lit,
-  onInspect,
-  onSameTopic,
-}: {
-  stage: Stage;
-  anchor: string;
-  records: string[];
-  structures: Structures;
-  graph: ArgGraph;
-  lit: boolean;
-  onInspect(anchor: string, opener: HTMLElement): void;
-  onSameTopic(anchor: string, opener: HTMLElement): void;
-}) {
-  const { open, inView, onRecord, onHover } = useContext(PassageBarContext);
-  const { shown, more } = chipSplit(records);
-  const lean = useMemo(() => leanRecord(records, graph), [records, graph]);
-  const linked = useMemo(() => linkedCount(structures, { stage, anchor }), [structures, stage, anchor]);
-  return (
-    <>
-      {shown.map((id) => {
-        const node = graph.nodes.get(id);
-        const label = node?.label ?? id;
-        return (
-          <button
-            key={id}
-            type="button"
-            className={`record-chip${node?.kind === "assumption" ? " record-chip--assumption" : ""}${node?.kind === "declaration" ? " lean" : ""}${inView.has(id) ? " is-here" : ""}`}
-            aria-pressed={open === id}
-            title={label}
-            aria-label={`${label}. Open its record`}
-            onClick={(event) => onRecord(id, event.currentTarget)}
-            onPointerEnter={() => onHover(id)}
-            onPointerLeave={() => onHover(null)}
-            onFocus={() => onHover(id)}
-            onBlur={() => onHover(null)}
-          >
-            {chipTitle(shortTitle(id, label))}
-          </button>
-        );
-      })}
-      {more > 0 && (
-        <button
-          type="button"
-          className="passage-tools__records"
-          aria-pressed={lit}
-          aria-label={`All ${records.length} records linked to this passage`}
-          onClick={(event) => onInspect(anchor, event.currentTarget)}
-        >
-          and {more} more
-        </button>
-      )}
-      {lean && (
-        <button type="button" className="passage-tools__lean" aria-label={`Lean for ${graph.nodes.get(lean)?.label ?? "this record"}`} onClick={(event) => onRecord(lean, event.currentTarget, true)}>
-          Lean
-        </button>
-      )}
-      <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>
-        {linked === 0 ? "Linked passages" : linked === 1 ? "1 linked passage" : `${linked} linked passages`}
-      </button>
-    </>
-  );
-}
 
 /**
  * A display formula wider than its box scrolls inside it, natively, and keeps
@@ -656,6 +594,7 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
       box.dataset.fit = "scaled";
       return;
     }
+    if (unbreakable(math)) return keepWhole(box);
     // Too wide even beside a small number: the number takes its own line under
     // the formula, and the formula breaks between relation signs.
     const tagged = breakSize(size, available);
@@ -675,10 +614,20 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     box.dataset.fit = "scaled";
     return;
   }
+  if (unbreakable(math)) return keepWhole(box);
   const wrap = breakSize(size, available);
   box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
   openRuns(size, wrap, available);
+}
+
+/** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
+const unbreakable = (math: HTMLElement) => !!math.querySelector(".mtable");
+
+/** Such a block keeps its shape at the smallest fitted size, and scrolls in its own box. */
+function keepWhole(box: HTMLElement): void {
+  box.style.fontSize = `${FIT_FLOOR}em`;
+  box.dataset.fit = "scaled";
 }
 
 /** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */
@@ -689,6 +638,43 @@ function breakSize(size: Natural, available: number): number {
 
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
 const FIT_MARGIN = "900px 0px";
+
+/** Formulas waiting to be fitted, across all parts: a few each frame, so scrolling never waits for a stack of them. */
+const fitQueue: (() => void)[] = [];
+let fitFrame = 0;
+const FIT_BUDGET_MS = 5;
+
+function drainFits() {
+  fitFrame = 0;
+  const until = performance.now() + FIT_BUDGET_MS;
+  while (fitQueue.length && performance.now() < until) fitQueue.shift()!();
+  if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);
+}
+
+/** Each part's formulas not yet fitted; it stops when `more` says so and reports whether it finished. */
+const fitters = new WeakMap<HTMLElement, (more: () => boolean) => boolean>();
+const laidOut = new WeakSet<HTMLElement>();
+
+/**
+ * Do now what a part would otherwise need the moment it comes near. Reading a position inside
+ * it lays it out, even while it is held off the screen. That first layout is also what asks for
+ * any new KaTeX face, so its formulas are fitted on a later visit, once the fonts have settled:
+ * a width measured in a fallback font is wrong for good. Reading again leaves nothing to redo.
+ * True when the part is finished.
+ */
+function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
+  const first = text.firstElementChild;
+  if (!laidOut.has(text)) {
+    laidOut.add(text);
+    first?.getBoundingClientRect();
+    return false;
+  }
+  if (document.fonts && document.fonts.status !== "loaded") return false;
+  const fitter = fitters.get(text);
+  if (fitter && !fitter(more)) return false;
+  first?.getBoundingClientRect();
+  return true;
+}
 
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
@@ -751,13 +737,24 @@ export function markWideMaths(root: HTMLElement): () => void {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
               near?.unobserve(entry.target);
-              fit(entry.target as HTMLElement);
+              const box = entry.target as HTMLElement;
+              fitQueue.push(() => live && !fitted.has(box) && fit(box));
+              fitFrame ||= requestAnimationFrame(drainFits);
             }
           },
           // scrollMargin reaches the same way through a scrolling column or sheet.
           { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
         );
   boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
+  fitters.set(root, (more) => {
+    for (const box of boxes) {
+      if (fitted.has(box)) continue;
+      if (!more()) return false;
+      near?.unobserve(box);
+      fit(box);
+    }
+    return true;
+  });
   // KaTeX's fonts can arrive after the first measurement; measure again once they have.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
@@ -768,6 +765,7 @@ export function markWideMaths(root: HTMLElement): () => void {
   }
   return () => {
     live = false;
+    fitters.delete(root);
     near?.disconnect();
     observer.disconnect();
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));

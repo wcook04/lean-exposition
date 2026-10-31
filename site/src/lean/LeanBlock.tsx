@@ -2,13 +2,18 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState, type MouseEven
 import "katex/dist/katex.min.css";
 import { leanSourceUrl, type LeanDeclaration, type LeanModule, type LeanRelation } from "../api/lean";
 import { routeHref } from "../app/router";
+import { useEntryState } from "../app/trail";
+import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
+import { statementHref } from "../reader/links";
 import { buildCode, CodeView, type BuiltCode } from "./CodeView";
 import {
+  compiled,
   declIn,
   dependencyWords,
   kindWord,
   LINK_CAVEAT,
   RELATION_WORDS,
+  sectionPlace,
   sourceLines,
   useLeanModule,
   useLeanModules,
@@ -16,9 +21,21 @@ import {
   type LeanShell,
 } from "./data";
 import "./lean.css";
-import { Breakable, clearName, Notation, PathText, Prose, readName } from "./ReadingStrip";
-import { collectLocals, findDecl, makeScope, resolveName, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
+import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
+import { SITE_FACTS } from "virtual:site-facts";
+import { MODELS_STEP } from "../app/caveat";
+import { useAlignment } from "../compare/useAlignment";
+import { declTitle } from "../model/declTitle";
+import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
 import { tokenize, type LeanToken } from "./tokenize";
+import type { LeanWalk } from "./walk";
+
+export type LineRange = readonly [first: number, last: number];
+
+type LineRanges = LineRange | readonly LineRange[];
+
+/** Modules of the second model. Its objects are defined apart from the full-support model's. */
+const VALUE_MODEL = "OAI.Probability.SKValue";
 
 export interface LeanBlockProps {
   /** Full declaration name. */
@@ -43,6 +60,22 @@ export interface LeanBlockProps {
   below?: ReactNode;
   /** The statement alone, for a cell of Compare's table: no caveat, proof or actions. */
   bare?: boolean;
+  /** Source lines to light, first and last inclusive. A range past the statement opens the proof. */
+  lines?: LineRanges;
+  /** Light `lines` without moving the scroller, for a host with several blocks in one column. */
+  quietLines?: boolean;
+  /** Lines lit by pointing: lit where they show, and nothing opens or scrolls. */
+  pointed?: LineRanges;
+  /** Walk in place: a plain click on a name reports here and the page stays. Without it a name is a link. */
+  onName?(walk: LeanWalk): void;
+  /** Fill the host's height: the head and the reading line stay, and the code scrolls between them. */
+  fill?: boolean;
+  /** Where the reading line goes, in place of the block's own foot. */
+  previewSlot?: HTMLElement | null;
+  /** Leave "In the papers" to the host. */
+  noPapers?: boolean;
+  /** Leave the name and its actions to the host. */
+  noHead?: boolean;
 }
 
 /** A conclusion or hypothesis this short is shown under the statement. */
@@ -50,34 +83,37 @@ const SHOWN_CONCLUSION = 20;
 const SHOWN_HYPOTHESIS = 6;
 const SHOWN_HYPOTHESES = 2;
 
-/** How far a name opens in place; past this a name goes to its page. */
-const MAX_DEPTH = 3;
 /** A definition this short is read whole; a longer one folds like a proof. */
 const SHORT_DEFINITION = 12;
 const LIST_LIMIT = 8;
 
 const lineWord = (n: number) => `${n.toLocaleString("en-GB")} ${n === 1 ? "line" : "lines"}`;
 
-interface Opened {
-  row: DeclRow;
-  slot: "statement" | "proof" | "relations";
-  from: HTMLElement | null;
+const rangesOf = (lines: LeanBlockProps["lines"]): readonly LineRange[] => {
+  if (!lines || lines.length === 0) return [];
+  return typeof lines[0] === "number" ? [lines as LineRange] : (lines as readonly LineRange[]);
+};
+
+export const walkOf = (row: DeclRow, from?: string): LeanWalk => ({ name: row.name, module: row.module, short: row.short, from });
+const declHref = (row: DeclRow) => routeHref({ view: "lean", module: row.module, decl: row.name });
+
+/** The nearest scroller inside the page, so the window itself never moves. */
+function scrollerOf(element: HTMLElement): HTMLElement | null {
+  for (let at = element.parentElement; at && at !== document.body; at = at.parentElement) {
+    const { overflowY } = getComputedStyle(at);
+    if ((overflowY === "auto" || overflowY === "scroll") && at.scrollHeight > at.clientHeight) return at;
+  }
+  return null;
 }
 
-function Nest({ opened, parent, depth, onBack }: { opened: Opened; parent: string; depth: number; onBack(): void }) {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    ref.current?.focus({ preventScroll: true });
-    ref.current?.scrollIntoView({ block: "nearest" });
-  }, [opened.row.name]);
-  return (
-    <section className="lean-nest" ref={ref} tabIndex={-1} aria-label={`Definition of ${opened.row.short}`}>
-      <button type="button" className="lean-nest__back" onClick={onBack}>
-        Back to <code>{parent}</code>
-      </button>
-      <LeanBlock key={`${opened.row.module}:${opened.row.name}`} name={opened.row.name} module={opened.row.module} compact depth={depth + 1} />
-    </section>
-  );
+/** Bring the first lit line into its scroller, unless it is in view already. */
+function showLine(line: HTMLElement): void {
+  const scroller = scrollerOf(line);
+  if (!scroller) return;
+  const view = scroller.getBoundingClientRect();
+  const box = line.getBoundingClientRect();
+  if (box.top >= view.top && box.bottom <= view.bottom) return;
+  scroller.scrollTop += box.top - view.top - Math.min(48, view.height / 4);
 }
 
 export interface WhereBody {
@@ -151,7 +187,7 @@ export function useStatementTargets(decl: LeanDeclaration, module: LeanModule, s
   return useMemo(() => [...code.targets, ...where.flatMap((body) => body.code.targets)], [code, where]);
 }
 
-export function Terms({ targets, onOpen }: { targets: NameTarget[]; onOpen(row: DeclRow, element: HTMLElement): void }) {
+export function Terms({ targets, onWalk }: { targets: NameTarget[]; onWalk?(row: DeclRow): void }) {
   const terms = useMemo(() => {
     const seen = new Set<string>();
     const rows: Extract<NameTarget, { kind: "decl" }>[] = [];
@@ -173,11 +209,8 @@ export function Terms({ targets, onOpen }: { targets: NameTarget[]; onOpen(row: 
           <div key={row.name} className="lean-terms__row">
             <dt>
               <a
-                href={routeHref({ view: "lean", module: row.module, decl: row.name })}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onOpen(row, event.currentTarget);
-                }}
+                href={declHref(row)}
+                onClick={onWalk && plainClick(() => onWalk(row))}
               >
                 {term?.tex ? <Notation term={term} /> : <code>{row.short}</code>}
               </a>
@@ -190,7 +223,16 @@ export function Terms({ targets, onOpen }: { targets: NameTarget[]; onOpen(row: 
   );
 }
 
-function CopyName({ name }: { name: string }) {
+/** A click handler for a real link: a plain click walks; a modified one is the browser's. */
+function plainClick(walk: () => void) {
+  return (event: MouseEvent) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    walk();
+  };
+}
+
+export function CopyName({ name }: { name: string }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -210,8 +252,24 @@ function CopyName({ name }: { name: string }) {
   );
 }
 
-function DependencyList({ title, names, decl, shell, onOpen }: { title: string; names: readonly string[]; decl: LeanDeclaration; shell: LeanShell; onOpen(row: DeclRow, element: HTMLElement): void }) {
-  const [all, setAll] = useState(false);
+/** This file on this site, at this declaration; Back returns from it. GitHub is the quiet second. */
+export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell }) {
+  const path = shell.paths.get(module.module)?.path ?? module.path;
+  return (
+    <>
+      <a className="lean-action" href={routeHref({ view: "lean", module: module.module, file: `${decl.line}-${decl.end_line}` })}>
+        Whole file
+      </a>
+      <a className="lean-action lean-action--quiet" href={leanSourceUrl(shell.modules, path, decl.line, decl.end_line)} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}, at commit ${shell.modules.revision.slice(0, 7)} of OpenAI's repository`}>
+        On GitHub
+      </a>
+    </>
+  );
+}
+
+function DependencyList({ title, names, decl, shell, onWalk }: { title: string; names: readonly string[]; decl: LeanDeclaration; shell: LeanShell; onWalk?(row: DeclRow): void }) {
+  const [all, setAll] = useEntryState(`lean-list:${decl.name}:${title}`, false);
+  const alignment = useAlignment();
   const near = (decl as { module?: string }).module;
   const rows = useMemo(() => {
     const found = names.flatMap((name) => {
@@ -227,23 +285,17 @@ function DependencyList({ title, names, decl, shell, onOpen }: { title: string; 
       <p className="lean-deps__title">
         {title} <span className="lean-deps__count">{rows.length.toLocaleString("en-GB")}</span>
       </p>
-      {rows.length === 0 && <p className="lean-deps__none">None found.</p>}
+      {rows.length === 0 && <p className="lean-deps__none">{shell.modules.dependency_source === "elaborated" ? "None found." : "None found. The scan misses names reached through tactics or notation."}</p>}
       <ul>
         {shown.map((row) => {
           const record = shell.linked.get(row.name)?.[0];
+          const plain = declTitle(alignment, row.name);
           return (
             <li key={`${row.module}:${row.name}`}>
-              <a
-                href={routeHref({ view: "lean", module: row.module, decl: row.name })}
-                onClick={(event) => {
-                  if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-                  event.preventDefault();
-                  onOpen(row, event.currentTarget);
-                }}
-              >
-                <Breakable name={row.short} />
+              <a href={declHref(row)} title={row.name} onClick={onWalk && plainClick(() => onWalk(row))}>
+                {plain ? <span className="lean-deps__plain">{plain}</span> : <Breakable name={row.short} />}
                 <span className="lean-deps__kind">{kindWord(row.kind)}</span>
-                {record && <span className="lean-deps__record">In the argument: {record.title}</span>}
+                {record && record.title !== plain && <span className="lean-deps__record">In the argument: {record.title}</span>}
               </a>
             </li>
           );
@@ -258,16 +310,104 @@ function DependencyList({ title, names, decl, shell, onOpen }: { title: string; 
   );
 }
 
+/** Uses split by where they appear, with the wording kept in one place. */
+export function usesOf(decl: LeanDeclaration, module: LeanModule) {
+  const facts = compiled(decl);
+  if (facts.statement_uses && facts.proof_uses) return { statement: facts.statement_uses, proof: facts.proof_uses };
+  const text = sourceLines(module).slice(decl.line - 1, statementLastLine(decl, readsWhole(decl))).join("\n");
+  const split = splitUses(decl.uses, tokenize(text));
+  return readsWhole(decl) ? { statement: decl.uses, proof: [] } : split;
+}
+
 /** Uses and used by, with the same wording wherever they appear. */
-export function Dependencies({ decl, shell, onOpen }: { decl: LeanDeclaration; shell: LeanShell; onOpen(row: DeclRow, element: HTMLElement): void }) {
+export function Dependencies({ decl, module, shell, onWalk }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell; onWalk?(row: DeclRow): void }) {
+  const uses = useMemo(() => usesOf(decl, module), [decl, module]);
   return (
     <div className="lean-deps">
       <p className="lean-deps__source">{dependencyWords(decl.dependency_source ?? shell.modules.dependency_source)}.</p>
       <div className="lean-deps__columns">
-        <DependencyList title="Uses" names={decl.uses} decl={decl} shell={shell} onOpen={onOpen} />
-        <DependencyList title="Used by" names={decl.used_by} decl={decl} shell={shell} onOpen={onOpen} />
+        <DependencyList title="Uses in its statement" names={uses.statement} decl={decl} shell={shell} onWalk={onWalk} />
+        {uses.proof.length > 0 && <DependencyList title="Uses in its proof" names={uses.proof} decl={decl} shell={shell} onWalk={onWalk} />}
+        <DependencyList title="Used by" names={decl.used_by} decl={decl} shell={shell} onWalk={onWalk} />
       </div>
     </div>
+  );
+}
+
+const SORRY = /\bsorry\b/;
+
+/** Axioms and `sorry`: Lean's report where this edition has one, and the text scan said to be one. */
+export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: LeanModule }) {
+  const facts = compiled(decl);
+  const says = useMemo(() => {
+    if (decl.kind === "axiom") return <>Assumed, not proved. Lean takes this as given.</>;
+    if (facts.axioms) {
+      const names = facts.axioms.filter((name) => name !== "sorryAx");
+      return (
+        <>
+          {facts.sorry || facts.axioms.includes("sorryAx") ? (
+            <>
+              Lean reports <code>sorry</code> in this declaration.{" "}
+            </>
+          ) : null}
+          Lean reports {names.length ? "that it rests on the axioms " : "that it rests on no axioms."}
+          {names.map((name, k) => (
+            <span key={name}>
+              {k > 0 && (k === names.length - 1 ? " and " : ", ")}
+              <code>{name}</code>
+            </span>
+          ))}
+          {names.length ? "." : ""}
+        </>
+      );
+    }
+    const code = tokenize(sourceLines(module).slice(decl.line - 1, decl.end_line).join("\n"))
+      .filter((token) => token.kind !== "comment" && token.kind !== "doc" && token.kind !== "string")
+      .map((token) => token.text)
+      .join("");
+    // The published extraction covers one theorem; the edition itself carries no axiom report.
+    if (decl.name === SITE_FACTS.extraction?.root && !SITE_FACTS.extraction.hasSorry) {
+      return (
+        <>
+          Lean’s extraction lists {SITE_FACTS.extraction.axioms.map((axiom, k) => (
+            <span key={axiom}>
+              {k > 0 && ", "}
+              <code>{axiom}</code>
+            </span>
+          ))} for this theorem, and no <code>sorryAx</code>. <a href={routeHref({ view: "checks" })}>What ran</a>
+        </>
+      );
+    }
+    return SORRY.test(code) ? (
+      <>
+        A text scan finds <code>sorry</code> in this declaration. This edition has no report from Lean on its axioms.
+      </>
+    ) : (
+      <>
+        A text scan finds no <code>sorry</code> in this declaration. This edition has no report from Lean on its axioms.
+      </>
+    );
+  }, [decl, module, facts]);
+  return <p className="lean-block__facts">{says}</p>;
+}
+
+/** Where each paper states this declaration, as links that go there. */
+function PapersLine({ name, shell }: { name: string; shell: LeanShell }) {
+  const rows = shell.statements?.get(name);
+  if (!rows?.length) return null;
+  const shown = STAGE_ORDER.flatMap((stage) => rows.find((row) => row.statement.paper === stage) ?? []);
+  return (
+    <p className="lean-block__papers">
+      <span>In the papers:</span>{" "}
+      {shown.map((row, k) => (
+        <span key={row.statement.paper}>
+          {k > 0 && ", "}
+          <a href={statementHref(row.statement)}>
+            {PAPER_NAMES[row.statement.paper].short} {sectionPlace(row.statement.section)}
+          </a>
+        </span>
+      ))}
+    </p>
   );
 }
 
@@ -280,25 +420,41 @@ export interface DeclViewProps {
   proofOpen?: boolean;
   compact?: boolean;
   depth?: number;
-  /** A row in a module's list: a short header, and the fuller parts only while selected. */
-  row?: { href: string; selected: boolean; onSelect(): void };
+  /** A row in a module's list: a short header that links to the declaration's page. */
+  row?: { href: string };
   noDependencies?: boolean;
   noTerms?: boolean;
   clause?: string;
   below?: ReactNode;
   bare?: boolean;
+  lines?: LeanBlockProps["lines"];
+  quietLines?: boolean;
+  pointed?: LeanBlockProps["pointed"];
+  onName?(walk: LeanWalk): void;
+  fill?: boolean;
+  previewSlot?: HTMLElement | null;
+  noPapers?: boolean;
+  noHead?: boolean;
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare }: DeclViewProps) {
-  const [proofChosen, setShowProof] = useState(Boolean(proofOpen));
-  const [opened, setOpened] = useState<Opened | null>(null);
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
+  // Open or folded belongs to the history entry, so Back finds the proof as it was left.
+  const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
+  const store = useMemo(readingStore, []);
+  const root = useRef<HTMLElement>(null);
 
   const lines = sourceLines(module);
   const isDefinition = decl.kind === "def" || decl.kind === "abbrev";
   const statementEnd = statementLastLine(decl, readsWhole(decl));
   const foldLines = decl.end_line - statementEnd;
+  const ranges = rangesOf(litLines);
+  const rangesKey = ranges.map(([a, b]) => `${a}-${b}`).join(",");
   const clauseInProof = Boolean(clause && foldLines > 0 && !lines.slice(decl.line - 1, statementEnd).join("\n").includes(clause) && lines.slice(statementEnd, decl.end_line).join("\n").includes(clause));
-  const showProof = proofChosen || (clauseInProof && !bare);
+  const litInProof = foldLines > 0 && ranges.some(([, last]) => last > statementEnd);
+  const showProof = proofChosen ?? (Boolean(proofOpen) || ((clauseInProof || litInProof) && !bare));
+  const lit = [...ranges, ...rangesOf(pointed)];
+  const litKey = lit.map(([a, b]) => `${a}-${b}`).join(",");
+  const isLit = useMemo(() => (lit.length ? (line: number) => lit.some(([first, last]) => line >= first && line <= last) : undefined), [litKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { statement, scope, tokens } = useMemo(() => {
     const scope = makeScope(decl, module, shell.index, shell.terms);
@@ -317,83 +473,49 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
 
   const allTargets = useMemo(() => [...statement.targets, ...where.flatMap((body) => body.code.targets)], [statement, where]);
 
-  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? readName(target, element, shell) : clearName()), [shell]);
+  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell }) : store.clear()), [store, shell]);
 
-  const open = (next: Opened["row"], slot: Opened["slot"], from: HTMLElement | null) => setOpened({ row: next, slot, from });
-  const onOpenIn = (slot: Opened["slot"]) => (target: NameTarget, element: HTMLElement, event: MouseEvent) => {
-    if (target.kind === "mathlib" || depth >= MAX_DEPTH) return;
+  const walk = onName ? (next: DeclRow) => onName(walkOf(next, decl.name)) : undefined;
+  const plain = shell.plain.get(decl.name);
+  const onOpen = useMemoStable((target: NameTarget, _element: HTMLElement, event: MouseEvent) => {
+    if (target.kind === "mathlib" || !walk) return;
     event.preventDefault();
-    open(target.row, slot, element);
-  };
-  const onOpenStatement = useMemoStable(onOpenIn("statement"));
-  const onOpenProof = useMemoStable(onOpenIn("proof"));
+    walk(target.row);
+  });
 
-  const nest = (slot: Opened["slot"]) =>
-    opened?.slot === slot && (
-      <Nest
-        opened={opened}
-        parent={decl.short}
-        depth={depth}
-        onBack={() => {
-          opened.from?.focus();
-          setOpened(null);
-        }}
-      />
-    );
+  // A range that changes is what the reader is now looking at; pointing and scrolling never reach here.
+  useEffect(() => {
+    if (!rangesKey || quietLines) return;
+    const first = root.current?.querySelector<HTMLElement>(".lean-line.is-lit");
+    if (first) showLine(first);
+  }, [rangesKey, proof, quietLines]);
 
   const parent = (decl as LeanDeclaration & { parent?: string }).parent;
-  const selected = row ? row.selected : true;
   const Title = depth > 0 ? "h3" : "h2";
   const path = shell.paths.get(module.module)?.path ?? module.path;
   const foldWord = isDefinition ? "Definition" : "Proof";
-  const repoUrl = leanSourceUrl(shell.modules, path, decl.line, decl.end_line);
+  const showHead = !noHead;
+  const term = shell.terms.get(decl.name);
 
-  return (
-    <article className={`lean-block${compact ? " is-compact" : ""}${row ? " is-row" : ""}${row?.selected ? " is-selected" : ""}`}>
-      <header className="lean-block__head">
-        <div className="lean-block__title">
-          <p className="lean-block__kind">{parent ? `Field of ${parent.slice(parent.lastIndexOf(".") + 1)}` : kindWord(decl.kind)}</p>
-          <Title className="lean-block__name">
-            {row ? (
-              <a
-                href={row.href}
-                onClick={(event) => {
-                  if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-                  event.preventDefault();
-                  row.onSelect();
-                }}
-              >
-                <Breakable name={decl.short} />
-              </a>
-            ) : (
-              <Breakable name={decl.short} />
-            )}
-          </Title>
-        </div>
-        {!row && (
-          <p className="lean-block__path">
-            <PathText path={path} />, line {decl.line}
+  const body = (
+    <>
+      {relation && (
+        <div className="lean-block__link">
+          <p className="lean-block__relation">
+            {RELATION_WORDS[relation]}.{note ? " " : ""}
+            {note ? <Prose text={note} /> : null}
           </p>
-        )}
-        {relation && (
-          <>
-            <p className="lean-block__relation">
-              {compact && note ? (
-                <Prose text={note} />
-              ) : (
-                <>
-                  {RELATION_WORDS[relation]}.{note ? " " : ""}
-                  {note ? <Prose text={note} /> : null}
-                </>
-              )}
-            </p>
-            {!bare && <p className="lean-block__caveat">{LINK_CAVEAT}</p>}
-          </>
-        )}
-      </header>
-      {decl.doc && <p className="lean-block__doc">{decl.doc}</p>}
+          {!bare && <p className="lean-block__caveat">{LINK_CAVEAT}</p>}
+        </div>
+      )}
+      {decl.doc && !compact && <p className="lean-block__doc">{decl.doc}</p>}
+      {!row && module.module.startsWith(VALUE_MODEL) && (
+        <p className="lean-block__model">
+          This is OpenAI’s value model. <a href={routeHref({ view: "map", node: MODELS_STEP })}>No Lean theorem connects it to the full-support model.</a>
+        </p>
+      )}
 
-      <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpenStatement} />
+      <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
       {where.map((body) => (
         <section className="lean-where" key={body.row.name} aria-label={`Where ${body.row.short} says`}>
           <p className="lean-where__label">
@@ -403,35 +525,75 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
               in {(shell.paths.get(body.row.module)?.path ?? body.row.module).split("/").pop()}, line {body.row.line}
             </span>
           </p>
-          <CodeView code={body.code} label={`Definition of ${body.row.short}`} onRead={read} onOpen={onOpenStatement} />
+          <CodeView code={body.code} label={`Definition of ${body.row.short}`} onRead={read} onOpen={onOpen} />
         </section>
       ))}
-      {nest("statement")}
-      {selected && !noTerms && !bare && <Terms targets={allTargets} onOpen={(next, from) => open(next, "statement", from)} />}
 
       {foldLines > 0 && !bare && (
-        <button type="button" className="lean-fold" aria-expanded={showProof} onClick={() => setShowProof(!proofChosen)}>
-          {foldWord}, {lineWord(foldLines)}
+        <button type="button" className="lean-fold" aria-expanded={showProof} onClick={() => setShowProof(!showProof)}>
+          {foldWord} <span className="lean-fold__mark" aria-hidden="true" /> <span className="lean-fold__lines">{lineWord(foldLines)}</span>
         </button>
       )}
       {proof && (
         <div className="lean-block__proof">
-          <CodeView code={proof} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpenProof} />
+          <CodeView code={proof} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
         </div>
       )}
-      {nest("proof")}
+      {!bare && !row && <LeanFacts decl={decl} module={module} />}
+      {!row && !noPapers && !bare && <PapersLine name={decl.name} shell={shell} />}
+      {!row && !noTerms && !bare && <Terms targets={allTargets} onWalk={walk} />}
+      {!row && !noDependencies && !bare && <Dependencies decl={decl} module={module} shell={shell} onWalk={walk} />}
+      {below}
+    </>
+  );
 
-      {selected && !bare && (
-        <p className="lean-block__actions">
-          <a className="lean-action" href={repoUrl} target="_blank" rel="noreferrer">
-            Open in OpenAI's repository
-          </a>
-          <CopyName name={decl.name} />
-        </p>
+  return (
+    <article ref={root} className={`lean-block${compact ? " is-compact" : ""}${row ? " is-row" : ""}${fill ? " is-fill" : ""}${bare ? " is-bare" : ""}`}>
+      {showHead && (
+        <header className="lean-block__head">
+          <div className="lean-block__title">
+            <p className="lean-block__kind">{parent ? `Field of ${parent.slice(parent.lastIndexOf(".") + 1)}` : kindWord(decl.kind)}</p>
+            {plain && (
+              <Title className="lean-block__plain">{row ? <a href={row.href}>{plain}</a> : plain}</Title>
+            )}
+            {plain ? (
+              <p className="lean-block__rawname">
+                <Breakable name={decl.short} />
+              </p>
+            ) : (
+              <Title className="lean-block__name">
+                {row ? (
+                  <a href={row.href}>
+                    <Breakable name={decl.short} />
+                  </a>
+                ) : (
+                  <Breakable name={decl.short} />
+                )}
+              </Title>
+            )}
+            {term?.tex && <Notation term={term} />}
+          </div>
+          {!row && !compact && (
+            <p className="lean-block__path">
+              <PathText path={path} />, lines {decl.line} to {decl.end_line}
+            </p>
+          )}
+          {!bare && (
+            <p className="lean-block__actions">
+              <SourceLink decl={decl} module={module} shell={shell} />
+              {!row && <CopyName name={decl.name} />}
+            </p>
+          )}
+        </header>
       )}
-      {selected && !noDependencies && !bare && <Dependencies decl={decl} shell={shell} onOpen={(next, from) => open(next, "relations", from)} />}
-      {nest("relations")}
-      {selected && below}
+      {fill ? (
+        <div className="lean-block__scroll" data-keep="">
+          {body}
+        </div>
+      ) : (
+        body
+      )}
+      {(!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
     </article>
   );
 });
@@ -444,7 +606,7 @@ function useMemoStable<A extends unknown[]>(fn: (...args: A) => void): (...args:
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -455,5 +617,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, proofOpen,
   if (!shell || loaded.status !== "ready") return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
-  return <DeclView decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} />;
+  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
 }

@@ -6,7 +6,7 @@ import type { AlignedStatement, Alignment, StatementRole } from "../../api/lean"
 import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
-import { recordLine } from "../../compare/useAlignment";
+import { tieCounts, type TieCount, type TieModel } from "../ties";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -63,12 +63,13 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
   return stage === here ? where : `${PAPER_NAMES[stage].short}, ${where}`;
 }
 
-/** "Draft; review needs revision." from the structure's state and review state. */
+/** "Draft. No independent mathematician has accepted it yet." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
   if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
-  if (review) parts.push(`Review recorded as ${review === "needs_revision" ? "needing revision" : words(review)}.`);
+  // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
+  if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");
 }
 
@@ -274,6 +275,36 @@ export function bestSlice(alignment: Alignment | null, stage: Stage, id: string)
   return [...slices].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0] ?? null;
 }
 
+export interface PaperTarget {
+  /** The step the landing belongs to, which pins there. */
+  record: string;
+  slice: AlignedStatement;
+  /** The paper states the step, and does not name this declaration at that place. */
+  near: boolean;
+}
+
+/**
+ * Where to send a reader from an open declaration to another paper. Chosen by the Lean:
+ * first a slice that itself names this declaration, in this step and then in any step; then
+ * a slice of this step whose Lean includes it; then the step's best statement, said to be
+ * only that. A landing on unrelated words is the one thing this must never do.
+ */
+export function paperTarget(alignment: Alignment | null, paper: Stage, record: string, decl: string | null): PaperTarget | null {
+  const best = (rows: AlignedStatement[]) => [...rows].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0];
+  const own = (alignment?.records[record]?.statements ?? []).filter((s) => s.paper === paper);
+  if (decl) {
+    const names = (s: AlignedStatement) => s.lean?.some((row) => row.name === decl);
+    const stated = own.filter((s) => s.lean_source === "statement" && names(s));
+    if (stated.length) return { record, slice: best(stated), near: false };
+    for (const [id, row] of Object.entries(alignment?.records ?? {})) {
+      const found = row.statements.filter((s) => s.paper === paper && s.lean_source === "statement" && names(s));
+      if (found.length) return { record: id, slice: best(found), near: false };
+    }
+  }
+  const slice = bestSlice(alignment, paper, record);
+  return slice ? { record, slice, near: !!decl } : null;
+}
+
 export { sliceAt, statementHref } from "../links";
 
 /** The source lines an `l` value names in this document. */
@@ -289,32 +320,6 @@ export function resolveAt(doc: Pick<PreparedDocument, "lineOfByte">, at: string)
 /** The parts that hold these lines. */
 export function partsOfLines(parts: PreparedPart[], lines: { start: number; end: number }): number[] {
   return parts.filter((p) => !p.blank && p.lines.start <= lines.end && p.lines.end >= lines.start).map((p) => p.index);
-}
-
-export interface SliceRow {
-  id: string;
-  start: number;
-  end: number;
-  mention: boolean;
-}
-
-/** Every record's slices of this paper, as source lines, for following block by block. */
-export function sliceRows(alignment: Alignment | null, doc: Pick<PreparedDocument, "lineOfByte">, stage: Stage): SliceRow[] {
-  const rows: SliceRow[] = [];
-  for (const [id, record] of Object.entries(alignment?.records ?? {})) {
-    for (const s of record.statements) {
-      if (s.paper !== stage) continue;
-      rows.push({ id, start: doc.lineOfByte(s.start_byte), end: doc.lineOfByte(Math.max(s.start_byte, s.end_byte - 1)), mention: s.role === "mention" });
-    }
-  }
-  return rows;
-}
-
-/** The records whose slices cover these lines: a mention counts only when nothing states more. */
-export function recordsCovering(rows: SliceRow[], lines: { start: number; end: number }): string[] {
-  const hit = rows.filter((r) => r.start <= lines.end && r.end >= lines.start);
-  const firm = hit.filter((r) => !r.mention);
-  return [...new Set((firm.length ? firm : hit).map((r) => r.id))];
 }
 
 // ----------------------------------------------------------- reading trail
@@ -362,11 +367,11 @@ export function trailAt(trail: PaperTrail, anchor: string | null, current: reado
 }
 
 /**
- * "§3 of 8, 14 of 37 records so far". Only numbered top-level sections count; in
+ * "§3 of 8, 14 of 37 steps so far". Only numbered top-level sections count; in
  * text before the first of them, or after the last, the section is named instead.
  */
 export function trailWords(outline: OutlineEntry[], part: number, place: Pick<TrailPlace, "seen" | "total">): string {
-  const records = place.total ? `${place.seen} of ${place.total} records so far` : "";
+  const records = place.total ? `${place.seen} of ${place.total} steps so far` : "";
   const tops = outline.filter((e) => e.parent === null);
   const numbered = tops.filter((e) => /^\d/.test(e.title));
   let at: OutlineEntry | undefined;
@@ -379,39 +384,6 @@ export function trailWords(outline: OutlineEntry[], part: number, place: Pick<Tr
   else if (at) where = at.title;
   else if (numbered.length) where = `Before §1 of ${numbered.length}`;
   return [where, records].filter(Boolean).join(", ");
-}
-
-// ---------------------------------------------------------- passage chips
-
-/** How many records a passage's bar names before "and 4 more". */
-export const CHIP_LIMIT = 3;
-
-export function chipSplit(ids: readonly string[], limit = CHIP_LIMIT): { shown: string[]; more: number } {
-  // A single remaining record is shown: "and 1 more" takes the room of its name.
-  const shown = ids.length <= limit + 1 ? [...ids] : ids.slice(0, limit);
-  return { shown, more: ids.length - shown.length };
-}
-
-/** A title for a chip: cut after a whole word, only when it would not fit. */
-export function chipTitle(title: string, max = 42): string {
-  if (title.length <= max) return title;
-  const cut = title.slice(0, max);
-  const space = cut.lastIndexOf(" ");
-  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.]+$/, "")}…`;
-}
-
-/** The first of these records with a recorded Lean statement or correspondence. */
-export function leanRecord(
-  ids: readonly string[],
-  graph: { nodes: Map<string, { kind: string }>; out: Map<string, { kind: string }[]> },
-  hasLean: (id: string) => boolean = (id) => !!recordLine(id)?.lean,
-): string | null {
-  for (const id of ids) {
-    if (hasLean(id)) return id;
-    if (graph.nodes.get(id)?.kind === "declaration") return id;
-    if (graph.out.get(id)?.some((e) => e.kind === "formalizes")) return id;
-  }
-  return null;
 }
 
 /** How many passages the "Linked passages" chooser offers for this one. */
@@ -453,6 +425,16 @@ export function outlineOf(doc: PreparedDocument): OutlineEntry[] {
   return out;
 }
 
+/** Statements with Lean per outline entry, each section counting its subsections. */
+export function outlineTieCounts(entries: OutlineEntry[], structure: PaperStructure, doc: PreparedDocument, ties: TieModel): Map<string, TieCount> {
+  const sections = entries.map((entry) => {
+    const part = doc.parts[entry.part];
+    const heading = structure.paper.sections.find((s) => s.title === entry.title && s.heading_span.start_byte >= part.span.start && s.heading_span.start_byte < part.span.end);
+    return { id: entry.id, parent: entry.parent, start: heading?.heading_span.start_byte ?? part.span.start };
+  });
+  return tieCounts(ties, sections);
+}
+
 /** The entries from the top-level section down to `id`: a document breadcrumb, not a history. */
 export function chainOf(entries: OutlineEntry[], id: string | null): OutlineEntry[] {
   if (!id) return [];
@@ -471,16 +453,14 @@ export function sectionNumber(title: string): string {
 // ------------------------------------------------------------- rendering
 
 /**
- * A placeholder height for a part not yet rendered, from its byte length.
- * Calibrated against the rendered papers at the desktop measure; the page
- * keeps the reading position fixed when the real height arrives.
+ * The height to reserve for a part that has not been laid out, at the desktop measure. Source
+ * lines predict it where bytes do not: a display formula takes many short lines and a reference
+ * one long one. Calibrated on all three papers. The page keeps the reading position fixed when
+ * the real height arrives.
  */
-export function estimateHeight(part: PreparedPart, columnWidth = 592): number {
+export function estimateHeight(part: PreparedPart): number {
   if (part.blank) return 0;
-  const bytes = part.span.end - part.span.start;
-  const perLine = Math.max(30, columnWidth / 8.6);
-  const lines = bytes / perLine;
-  return Math.round(lines * 29 * 0.78 + part.headings.length * 56 + part.figures.length * 320 + 16);
+  return Math.round((part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20);
 }
 
 /** Parts in order of how soon a reader will reach them, nearest first. */

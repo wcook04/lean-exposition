@@ -129,6 +129,21 @@
   padding: var(--space-5) 0;
 }
 
+.formal__plain {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.formal__plain code {
+  margin-left: var(--space-1);
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+
 .formal__name {
   font-size: 1.0625rem;
   font-weight: 500;
@@ -774,5 +789,141 @@
   }
   .checkrow__failures p {
     margin-left: 0;
+  }
+}
+
+/* The first screen: one table, each row a question a Lean reader asks. The column on the
+   right says what the row does not establish, so the limit sits beside the claim. */
+.checks__first {
+  margin-top: calc(-1 * var(--space-4));
+}
+
+.checks__first h1 {
+  font-family: var(--font-serif);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.standing {
+  width: 100%;
+  margin-top: var(--space-3);
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--fs-ui);
+  line-height: 1.42;
+  color: var(--ink);
+}
+
+.standing thead th {
+  padding: 0 var(--space-4) var(--space-1) 0;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.standing thead th:first-child {
+  width: 9.5rem;
+}
+
+.standing thead th:last-child {
+  width: 38%;
+}
+
+.standing tbody th,
+.standing tbody td {
+  padding: 7px var(--space-4) 7px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.standing tbody th {
+  font-weight: 600;
+}
+
+.standing__open {
+  color: var(--ink-2);
+}
+
+.standing a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rule-control);
+}
+
+.standing a:hover {
+  text-decoration-color: currentColor;
+}
+
+.standing .lean {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  font-variant-ligatures: none;
+  color: var(--formal);
+  overflow-wrap: anywhere;
+}
+
+/* The key to the outcomes, one line each, above the table it explains. */
+.outcome-key--wide {
+  margin-top: var(--space-3);
+}
+
+.outcome-key--wide .outcomes {
+  display: grid;
+  max-width: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+}
+
+.outcome-key--wide .outcomes__row {
+  display: block;
+  padding: 0;
+  border: 0;
+}
+
+.outcome-key--wide dd {
+  margin: 2px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+@media (max-width: 56.25em) {
+  .outcome-key--wide .outcomes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .standing,
+  .standing tbody,
+  .standing tr,
+  .standing th,
+  .standing td {
+    display: block;
+    width: auto;
+  }
+
+  .standing thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .standing tbody tr {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .standing tbody th,
+  .standing tbody td {
+    padding: 2px 0;
+    border: 0;
   }
 }

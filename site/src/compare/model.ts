@@ -131,6 +131,9 @@ export function defaultColumns(width: number): number {
 
 export const STACK_BELOW = 1000;
 
+/** Under this width Lean's measure leaves room for one paper beside it, not two. */
+const LEAN_NEEDS = 1400;
+
 export type Slot =
   | { level: Level; state: "column"; weight: number }
   /** The level has nothing for this record: never a column, and disabled in the level row. */
@@ -147,7 +150,7 @@ export function arrangeLevels(record: RecordAlignment, width: number, chosen?: r
   const has = (level: Level) => amount(record, level) > 0;
   const ranked = LEVELS.filter(has).sort((a, b) => strength(record, b) - strength(record, a) || LEVELS.indexOf(a) - LEVELS.indexOf(b));
   // A choice with nothing for this record would leave the bench empty, so it is set aside here.
-  const shown = new Set(chosen?.some(has) ? chosen.filter(has) : ranked.slice(0, defaultColumns(width)));
+  const shown = new Set(chosen?.some(has) ? chosen.filter(has) : ranked.slice(0, defaultColumns(width) - (width < LEAN_NEEDS && has("lean") && width >= 1280 ? 1 : 0)));
   return LEVELS.map((level) => {
     if (!has(level)) return { level, state: "empty" };
     return shown.has(level) ? { level, state: "column", weight: columnWeight(amount(record, level)) } : { level, state: "folded" };

@@ -10,7 +10,7 @@
 import { argumentProjection, type ArgEdge, type ArgGraph } from "../model/graph";
 import type { EngineEdge } from "./engine/types";
 
-export const TREE_KINDS = new Set(["supports", "formalizes", "assumes"]);
+export const TREE_KINDS = new Set(["supports", "formalizes", "assumes", "lean_type_dependency", "lean_via"]);
 
 type Within = ReadonlySet<string> | null | undefined;
 
@@ -137,6 +137,7 @@ export function expandTo(graph: ArgGraph, goal: string, targets: Iterable<string
 
 /** The graph with only the edges live in the goal's scoped argument (a premise an application supplies is not drawn back in). */
 export function scopedGraph(graph: ArgGraph, goal: string): ArgGraph {
+  if (graph.plain) return graph;
   let live: Set<string>;
   try {
     live = argumentProjection(graph, [goal]).edges;

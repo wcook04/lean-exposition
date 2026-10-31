@@ -51,8 +51,10 @@
   }
 }
 
-/* Headings land below the top bar and the location strip. */
-html:has(.reader) {
+/* Headings land below the top bar and the location strip. A class the reader sets, not
+   html:has(.reader): that puts every element of a long paper under a :has() on the root,
+   and one change of hover then walks the whole document again. */
+html.is-reading {
   scroll-padding-top: calc(var(--topbar-h) + 44px + var(--space-3));
 }
 
@@ -169,6 +171,41 @@ html:has(.reader) {
 
 /* --------------------------------------------- the location strip (sticky) */
 
+.reader-strip__back {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 24ch;
+}
+
+/* The strip keeps the section's name: Sections shrinks to its icon first. */
+.reader-strip__steps {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 2px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.reader-strip__steps button {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.reader-strip__steps button:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
 .reader-strip {
   position: sticky;
   z-index: 6;
@@ -215,6 +252,23 @@ html:has(.reader) {
   content: "/";
   margin: 0 0.5em;
   color: var(--rule-strong);
+}
+
+/* With a named Back in the strip the section stands alone: its name is what must stay. */
+.reader-strip:has(.back-control) .crumbs li:not(.crumbs__here) {
+  display: none;
+}
+
+.reader-strip:has(.back-control) .crumbs li + li::before {
+  content: none;
+}
+
+.reader-strip:has(.back-control) .sections-toggle span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 /* The current passage wraps onto a second line before anything is cut. */
@@ -369,8 +423,8 @@ html:has(.reader) {
   padding: 0;
 }
 
-/* A mapped passage: a slim rule in the margin, amber while it is in the inspector. */
-.part--mapped::before {
+/* The passage open in the inspector: a slim rule in the margin. */
+.part--mapped[data-lit]::before {
   content: "";
   position: absolute;
   left: calc(-1 * var(--mark-x));
@@ -378,27 +432,198 @@ html:has(.reader) {
   bottom: calc(var(--space-4) + 0.2em);
   width: 2px;
   border-radius: 1px;
+  background: var(--lit-line);
+}
+
+/* A tied statement. At rest the paper reads as a paper: a thin tick in the margin, darker
+   where the step has Lean, and nothing on the words. */
+:root {
+  /* The highlighter: a pinned statement, and the Lean lines it maps to. Reading is calmer. */
+  --highlighter: color-mix(in oklab, var(--lit-line) 22%, transparent);
+  --highlighter-soft: color-mix(in oklab, var(--lit-line) 10%, transparent);
+  --tie-wash: color-mix(in oklab, var(--ink) 7%, transparent);
+}
+
+.part__ticks {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--mark-x) - 1px);
+  width: 3px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  border-radius: 1px;
   background: var(--rule-strong);
-  opacity: 0.75;
-  transition:
-    background-color var(--t-state) var(--ease-out),
-    opacity var(--t-state) var(--ease-out);
+  transition: background-color var(--t-hover) var(--ease-out);
 }
 
-.part--mapped:has(.passage-tools :focus-visible)::before {
-  opacity: 1;
-  background: var(--ink-3);
+/* Lean is what a reader looks for: plain at a glance, and still only a hairline. */
+.tick[data-lean] {
+  background: color-mix(in oklab, var(--ink-3) 82%, var(--rule-strong));
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .part--mapped:hover::before {
-    opacity: 1;
+.tick[data-point] {
+  background: var(--ink);
+}
+
+.tick[data-on] {
+  background: var(--lit-line);
+}
+
+.tick[data-pin] {
+  width: 3px;
+  background: var(--lit-line);
+}
+
+.paper .tie {
+  cursor: pointer;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.paper .tie[data-point] {
+  background-color: var(--tie-wash);
+}
+
+/* Following marks the margin only (the tick): the paper reads as a paper. */
+.paper .tie[data-pin] {
+  background-color: var(--highlighter);
+}
+
+.paper .tie:focus {
+  outline: none;
+}
+
+.paper .tie:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* The thread across the gutter. Fixed to the window; it only ever crosses empty space. */
+.reader-thread {
+  position: fixed;
+  z-index: 5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.reader-thread path {
+  fill: none;
+  stroke: var(--lit-line);
+  stroke-width: 1.25;
+  opacity: 0.7;
+}
+
+/* The first screen's one line, in the strip: what to do. */
+.reader-strip__hint {
+  color: var(--ink);
+}
+
+.reader-strip:has(.reader-strip__hint) .crumbs ol {
+  display: none;
+}
+
+/* Up to 1500px the sections stand on the right page, and their list scrolls on its own. */
+.sections-side {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding-top: var(--space-2);
+}
+
+.sections-side .outline__list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A large window reads larger: the type and the measure grow together, so a line holds the
+   same words, from 18px at 1920 to 20px at 2560. Nothing below 1920 changes. */
+@media (min-width: 1921px) {
+  .reader {
+    --fs-read: clamp(18px, calc(18px + (100vw - 1920px) / 320), 20px);
+    --reader-measure: clamp(680px, calc(680px + (100vw - 1920px) * 0.117), 755px);
   }
 }
 
-.part--mapped[data-lit]::before {
-  opacity: 1;
-  background: var(--lit-line);
+/* Beside the page's own: fixed, because the paper column is a positioned box. */
+.reader__paper > .skip-link {
+  position: fixed;
+}
+
+/* What is known about a statement with no Lean, under its last words. */
+.tie-note {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--lit-line);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+  hyphens: manual;
+  text-align: start;
+}
+
+.sections-side__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.sections-side__head h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.sections-side .paper-search {
+  padding: 0;
+}
+
+.sections-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+/* A phone has one row of chrome, which goes while reading down. */
+@media (max-width: 700px) {
+  html[data-view="read"] {
+    --reader-top: 0px;
+  }
+  html[data-view="read"] .topbar {
+    position: static;
+  }
+  .reader-strip {
+    top: 0;
+    transition: transform var(--t-state) var(--ease-out);
+  }
+  .reader-strip[data-away] {
+    transform: translateY(-100%);
+  }
+  .reader-strip:has(.back-control) .crumbs,
+  .reader-strip:has(.back-control) .reader-strip__steps span {
+    display: none;
+  }
+  .reader--narrow .reader__paper {
+    padding-bottom: var(--space-8);
+  }
 }
 
 /* A heading focused by an explicit jump is announced, not ringed: it is not a control. */
@@ -412,17 +637,12 @@ html:has(.reader) {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-2);
-  margin: calc(-1 * var(--space-1)) 0 var(--space-3);
+  /* No negative margin: .part__text clips at its box in WebKit (content-visibility). */
+  margin: 0 0 var(--space-3);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.3;
   hyphens: manual;
-}
-
-.prose h2 + .passage-tools,
-.prose h3 + .passage-tools,
-.prose h4 + .passage-tools {
-  margin-top: calc(-1 * var(--space-1));
 }
 
 .passage-tools button {
@@ -454,58 +674,103 @@ html:has(.reader) {
   background: var(--lit-wash);
 }
 
-/* A record the passage discusses, by name: a small control, hairline and sans. */
-.passage-tools button.record-chip {
-  min-height: 24px;
-  max-width: 100%;
-  margin-left: 0;
-  padding: 1px 8px;
+/* ---------------------------------------------------------------- outline */
+
+.outline__name {
+  min-width: 0;
+}
+
+.outline__ties {
+  flex: none;
+  margin-left: auto;
+  padding-left: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.outline__item a {
+  display: flex;
+  align-items: baseline;
+}
+
+.outline__key button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.outline__key {
+  margin: var(--space-2) 0 var(--space-3);
+  padding: 0 var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-ui);
+  color: var(--ink-3);
+}
+
+.paper-search {
+  flex: none;
+  margin-bottom: var(--space-2);
+  padding: 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+}
+
+.paper-search input {
+  width: 100%;
+  min-height: 30px;
+  padding: 0 var(--space-2);
   border: 1px solid var(--rule-control);
   border-radius: var(--radius-s);
-  background: var(--ground);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.paper-search__found {
+  max-height: min(60vh, 520px);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.paper-search__found button {
+  display: block;
+  width: 100%;
+  padding: 4px var(--space-1);
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
   color: var(--ink-2);
+  font: inherit;
+  line-height: var(--lh-ui);
   text-align: left;
-  transition:
-    color var(--t-hover) var(--ease-out),
-    border-color var(--t-hover) var(--ease-out),
-    background-color var(--t-hover) var(--ease-out);
+  cursor: pointer;
 }
 
-.passage-tools button.record-chip:hover {
+.paper-search__found button:hover {
   color: var(--ink);
-  border-color: var(--lit-line);
-  background: var(--ground);
+  background: var(--sunk);
 }
 
-/* The statement under the reading line. */
-.passage-tools button.record-chip.is-here {
-  color: var(--ink);
-  border-color: var(--lit-line);
+.paper-search__found mark {
+  background: var(--highlighter);
+  color: inherit;
 }
 
-.passage-tools button.record-chip--assumption {
-  border-style: dashed;
+.paper-search__none {
+  margin: var(--space-2) var(--space-1);
+  color: var(--ink-3);
 }
-
-.passage-tools button.record-chip[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: var(--lit-line);
-  background: var(--lit-wash);
-}
-
-.passage-tools button.record-chip.lean {
-  font-size: var(--fs-xs);
-}
-
-.passage-tools__lean {
-  font-weight: 600;
-}
-
-.passage-tools__topic {
-  margin-left: auto;
-}
-
-/* ---------------------------------------------------------------- outline */
 
 .reader__outline {
   position: sticky;

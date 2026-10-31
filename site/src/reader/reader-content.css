@@ -402,7 +402,7 @@
 
 .prose figure.paper-figure figcaption {
   margin-top: var(--space-3);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: var(--fs-sm);
   line-height: var(--lh-ui);
   color: var(--ink-2);
