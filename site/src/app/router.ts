@@ -3,7 +3,7 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import type { Stage } from "../api/types";
-import { arrive, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
+import { arrive, leaveAs, pushEntry, replaceEntry, setDefaultLabel } from "./trail";
 
 export type Trace = "rests" | "uses";
 
@@ -26,6 +26,9 @@ export type Route =
       at?: string;
       node?: string;
       beside?: { stage: Stage; anchor: string };
+      /** The Lean declaration open beside the paper, with its module where a name is declared twice. */
+      decl?: string;
+      declModule?: string;
     }
   | { view: "checks"; node?: string }
   | {
@@ -131,6 +134,8 @@ export function parseRoute(url: URL): Route {
       at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
+      decl: q.get("d") ?? undefined,
+      declModule: q.get("dm") ?? undefined,
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
@@ -193,6 +198,8 @@ export function routeHref(route: Route): string {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
+      if (route.decl) q.set("d", route.decl);
+      if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
       return `${BASE}/read/${route.stage}${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     }
@@ -256,6 +263,30 @@ export function navigate(to: Route | string, options: { replace?: boolean } = {}
   emit();
 }
 
+/**
+ * One step from a Lean name to another: one history entry with its own address.
+ * A page that shows Lean in place (the map's sheet, the reader's Lean page) keeps
+ * what it shows and gains `&d=name`, with `&dm=module` where a name is declared
+ * twice; `/lean` goes to the declaration; any other page goes to `/lean`. The
+ * host reads `route.decl`. Back returns to the name in `from`, with its scroll.
+ */
+export function walkEntry(walk: { name: string; module?: string; from?: string }): void {
+  const url = new URL(window.location.href);
+  const here = parseRoute(url);
+  let to: string;
+  if (here.view === "map" || here.view === "read") {
+    url.searchParams.set("d", walk.name);
+    if (walk.module) url.searchParams.set("dm", walk.module);
+    else url.searchParams.delete("dm");
+    // A selected step gives way to the declaration; a selected record stays behind it.
+    if (here.view === "map") url.searchParams.delete("e");
+    to = url.href;
+  } else to = new URL(routeHref({ view: "lean", module: walk.module, decl: walk.name }), url).href;
+  if (to === window.location.href) return;
+  if (walk.from) leaveAs(walk.from.slice(walk.from.lastIndexOf(".") + 1));
+  navigate(to);
+}
+
 /** What a page is called on the Back control when it has not named its place more exactly. */
 export function placeOf(route: Route): string {
   switch (route.view) {
@@ -264,7 +295,7 @@ export function placeOf(route: Route): string {
     case "map":
       return "the map";
     case "read":
-      return { long: "Long paper", short: "Short paper", expository: "Exposition" }[route.stage];
+      return route.decl?.split(".").pop() ?? { long: "Long paper", short: "Short paper", expository: "Exposition" }[route.stage];
     case "checks":
       return "Checks";
     case "compare":
