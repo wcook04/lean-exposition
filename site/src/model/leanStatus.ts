@@ -6,11 +6,11 @@
 // one part of it, `proof` carries the step in a different form, and `defines` gives an
 // object. So each signal has three levels: the whole of it, part of it, or none.
 //
-// A row other than `defines` always names a theorem or a lemma, and no such declaration
-// in the edition has `sorry` in its text (tests/lean-status.test.ts holds the rule, and
-// leanGraph.ts checks the text of each declaration it draws). That is what "proved in Lean"
-// means on this site: a proof is written in OpenAI's source. Whether a build ran is a
-// separate record, in the sheet's checks.
+// In this edition all 162 rows keep one rule: a row other than `defines` names a theorem or
+// a lemma, with no `sorry` in its text. That is what "proved in Lean" means on this site: a
+// proof is written in OpenAI's source. useLeanGraph reads the text of each declaration it
+// draws; the record marks rest on the rule. Whether a build ran is a separate record, in the
+// sheet's checks.
 
 export type LeanLevel = "whole" | "part" | "none";
 

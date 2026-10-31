@@ -19,10 +19,11 @@ describe("the camera keeps the drawing on the canvas", () => {
     expect(3000 + left.x).toBeCloseTo(980 - 960 * CLAMP_SLACK);
   });
 
-  it("keeps a drawing that fits wholly inside the view", () => {
+  it("lets a drawing that fits move a little, and never loses more than half of it", () => {
     const v = clampView({ x: 9000, y: -9000, k: 1 }, small, vp);
-    expect(v.x + 400).toBeLessThanOrEqual(980);
-    expect(v.y).toBeGreaterThanOrEqual(20);
+    expect(v.x).toBeLessThanOrEqual(980 - 200);
+    expect(v.y + 200).toBeGreaterThanOrEqual(20 + 100);
+    expect(clampView({ x: 30, y: 30, k: 1 }, small, vp)).toEqual({ x: 30, y: 30, k: 1 });
   });
 
   it("holds at every scale", () => {

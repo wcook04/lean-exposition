@@ -65,17 +65,19 @@ export function ensureVisible(b: Bounds, vp: Viewport, view: View, minScale: num
 export const CLAMP_SLACK = 0.4;
 
 /**
- * The nearest view that keeps the drawing on the canvas. A drawing that fits stays inside
- * the view; one that does not always fills at least the rest of the view past the slack,
- * so neither a drag nor a zoom about the pointer can lose it.
+ * The nearest view that keeps the drawing on the canvas. A drawing that fits may be moved a
+ * little past the view's edge, so a drag still answers, and never more than half of it
+ * leaves. One that does not fit always fills the view but for the slack, so neither a drag
+ * nor a zoom about the pointer can lose it.
  */
 export function clampView(view: View, b: Bounds, vp: Viewport, slack = CLAMP_SLACK): View {
   const { insets } = vp;
   const axis = (at: number, lo: number, hi: number, from: number, to: number) => {
     const size = (to - from) * view.k;
     const room = Math.max(1, hi - lo);
-    const min = size <= room ? lo - from * view.k : hi - room * slack - to * view.k;
-    const max = size <= room ? hi - to * view.k : lo + room * slack - from * view.k;
+    const give = Math.min(room * (slack / 2), size / 2);
+    const min = size <= room ? lo - give - from * view.k : hi - room * slack - to * view.k;
+    const max = size <= room ? hi + give - to * view.k : lo + room * slack - from * view.k;
     return min <= max ? Math.max(min, Math.min(max, at)) : (min + max) / 2;
   };
   return {
