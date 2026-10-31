@@ -56,11 +56,13 @@ export interface LeanShell {
   linked: Map<string, LinkedRecord[]>;
   /** Most direct first. An empty map until the alignment arrives. */
   statements?: Map<string, PaperStatement[]>;
+  /** A plain title for a declaration, by full name. Empty until the alignment arrives. */
+  plain: ReadonlyMap<string, string>;
 }
 
 const pathsMemo = new WeakMap<LeanModules, Map<string, LeanModuleRow>>();
-const termsMemo = new WeakMap<Alignment, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]>; statements: Map<string, PaperStatement[]> }>();
-const emptyAlignment = { terms: new Map<string, DictionaryTerm>(), linked: new Map<string, LinkedRecord[]>(), statements: new Map<string, PaperStatement[]>() };
+const termsMemo = new WeakMap<Alignment, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]>; statements: Map<string, PaperStatement[]>; plain: ReadonlyMap<string, string> }>();
+const emptyAlignment = { terms: new Map<string, DictionaryTerm>(), linked: new Map<string, LinkedRecord[]>(), statements: new Map<string, PaperStatement[]>(), plain: new Map<string, string>() };
 
 const RELATION_ORDER: LeanRelation[] = ["states", "defines", "contains", "part", "proof"];
 const PAPER_ORDER = ["short", "long", "expository"];
@@ -108,7 +110,7 @@ function alignmentMaps(alignment: Alignment | null) {
         else linked.set(lean.name, [row]);
       }
     }
-    maps = { terms: new Map(alignment.dictionary.map((term) => [term.name, term])), linked, statements: statementsOf(alignment) };
+    maps = { terms: new Map(alignment.dictionary.map((term) => [term.name, term])), linked, statements: statementsOf(alignment), plain: new Map(Object.entries(alignment.names ?? {})) };
     termsMemo.set(alignment, maps);
   }
   return maps;

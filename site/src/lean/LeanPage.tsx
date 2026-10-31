@@ -1,7 +1,10 @@
-// The Lean source as a Lean user reads it. Every declaration has its own page and address:
-// where the papers state it, then the Lean, then what it uses and what uses it. A module page
-// lists its declarations in source order, a folder page its modules, and the first screen says
-// what this tree is, what has been checked and where to begin.
+// The index at the back of the book: OpenAI's Lean source for anyone who wants the files and
+// declarations themselves. Readers reach the Lean from the papers; this page is the list.
+// Every declaration has its own page and address: where the papers state it, then the Lean,
+// then what it uses and what uses it. A module page lists its declarations in source order, a
+// folder page its modules, and the first screen says what this tree is, what has been run on
+// it and where to begin. A plain title comes first wherever one exists, the Lean name small
+// beside it.
 
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import type { AlignedStatement, LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
@@ -102,12 +105,12 @@ function treeOf(shell: LeanShell, prefix: string): Tree {
 /** The record a theorem states, by the paper's name for it. */
 const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? lastPart(name);
 
-function Start({ href, name, title, children }: { href: string; name: string; title: string; children: ReactNode }) {
+function Start({ href, name, title, children }: { href: string; name?: string; title: string; children: ReactNode }) {
   return (
     <li>
       <a href={href}>
-        <code>{name}</code>
-        <span className="lean-start__what">{title}</span>
+        <span className="lean-start__title">{title}</span>
+        {name && <code>{name}</code>}
       </a>
       <p>{children}</p>
     </li>
@@ -127,7 +130,11 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
   return (
     <>
       <header className="lean-intro">
-        <h1>OpenAI's Lean source</h1>
+        <h1>Lean index</h1>
+        <p>
+          The index at the back of the book, for anyone who wants the files and declarations themselves. To read the mathematics,{" "}
+          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: each marked statement there opens its Lean beside the text.
+        </p>
         <p>
           This is OpenAI's Lean at commit{" "}
           <a href={revisionUrl} target="_blank" rel="noreferrer">
@@ -174,7 +181,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
               </a>
               .
             </Start>
-            <Start href={routeHref({ view: "lean", index: "papers" })} name={`The ${count(resting)} declarations the papers rest on`} title="">
+            <Start href={routeHref({ view: "lean", index: "papers" })} title={`The ${count(resting)} declarations the papers rest on`}>
               Each with the record that links it and where the papers state it.
             </Start>
           </ul>
@@ -324,6 +331,7 @@ function NameFilter({ shell, children }: { shell: LeanShell; children: ReactNode
                     open(row);
                   }}
                 >
+                  {shell.plain.get(row.name) && <strong>{shell.plain.get(row.name)}</strong>}
                   <code>{row.short}</code>
                   <span>
                     {kindWord(row.kind)} in {row.module.startsWith("Comparator") ? `the challenge file ${lastPart(row.module)}` : lastPart(row.module)}
@@ -370,7 +378,7 @@ function Crumbs({ shell, module, folder, here }: { shell: LeanShell; module?: st
   const place = folder ?? (module ? folderOf(shell, module)?.path : undefined);
   return (
     <nav className="lean-crumbs" aria-label="Where this is in the tree">
-      <a href={routeHref({ view: "lean" })}>Lean source</a>
+      <a href={routeHref({ view: "lean" })}>Lean index</a>
       {place && (
         <>
           <span aria-hidden="true">/</span>
@@ -476,15 +484,20 @@ function DeclPage({ decl, module, shell, slot }: { decl: LeanDeclaration; module
   const onPoint = useCallback((lines: readonly [number, number] | undefined) => setLit(lines), []);
   const copies = (shell.index.byName.get(decl.name) ?? []).filter((other) => other.module !== module.module);
   const inChallenge = module.module.startsWith("ComparatorChallenges");
+  const plain = shell.plain.get(decl.name);
   return (
     <article className="lean-decl" data-decl={decl.name}>
       <header className="lean-decl__head">
         <Crumbs shell={shell} module={module.module} here={decl.short} />
         <p className="lean-block__kind">{kindWord(decl.kind)}</p>
         <div className="lean-decl__title">
-          <h1>
-            <Breakable name={decl.short} />
-          </h1>
+          {plain ? (
+            <h1 className="is-plain">{plain}</h1>
+          ) : (
+            <h1>
+              <Breakable name={decl.short} />
+            </h1>
+          )}
           {term?.tex && <Notation term={term} />}
           <p className="lean-block__actions">
             <SourceLink decl={decl} module={module} shell={shell} />
@@ -647,6 +660,7 @@ function PapersIndex({ shell }: { shell: LeanShell }) {
               return (
                 <li key={`${row.module}:${row.name}`}>
                   <a className="lean-rest__name" href={declHref(row)}>
+                    {shell.plain.get(row.name) && <strong>{shell.plain.get(row.name)}</strong>}
                     <Breakable name={row.short} />
                     <span>{kindWord(row.kind)}</span>
                   </a>
@@ -702,13 +716,13 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   useEffect(
     () =>
       namePlace(() => {
-        if (decl) return decl.short;
+        if (decl) return shell?.plain.get(decl.name) ?? decl.short;
         if (route.module) return lastPart(route.module);
         if (route.folder) return folderLabel(route.folder);
         if (route.index) return "the declarations the papers rest on";
-        return "the Lean source";
+        return "the Lean index";
       }),
-    [decl, route.module, route.folder, route.index],
+    [decl, route.module, route.folder, route.index, shell],
   );
 
   // A new declaration starts at its head, unless Back is restoring a place.

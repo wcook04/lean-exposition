@@ -10,6 +10,7 @@ import { buildIndex, type DeclRow } from "../src/lean/resolve";
 
 const row: DeclRow = { name: "OAI.X.OrderParameter", short: "OrderParameter", kind: "structure", module: "OAI.X.Model", line: 17, endLine: 22 };
 const shell: LeanShell = {
+  plain: new Map(),
   modules: {} as LeanModules,
   index: buildIndex({ modules: [], names: [] }),
   paths: new Map([["OAI.X.Model", { module: "OAI.X.Model", path: "OAI/X/Model.lean", lines: 90, declarations: 29, sha256: "" }]]),

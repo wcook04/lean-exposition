@@ -656,6 +656,7 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
       box.dataset.fit = "scaled";
       return;
     }
+    if (unbreakable(math)) return keepWhole(box);
     // Too wide even beside a small number: the number takes its own line under
     // the formula, and the formula breaks between relation signs.
     const tagged = breakSize(size, available);
@@ -675,10 +676,20 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     box.dataset.fit = "scaled";
     return;
   }
+  if (unbreakable(math)) return keepWhole(box);
   const wrap = breakSize(size, available);
   box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
   openRuns(size, wrap, available);
+}
+
+/** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
+const unbreakable = (math: HTMLElement) => !!math.querySelector(".mtable");
+
+/** Such a block keeps its shape at the smallest fitted size, and scrolls in its own box. */
+function keepWhole(box: HTMLElement): void {
+  box.style.fontSize = `${FIT_FLOOR}em`;
+  box.dataset.fit = "scaled";
 }
 
 /** The size for a display that breaks: FIT_FLOOR, or smaller if its widest piece would still not fit. */

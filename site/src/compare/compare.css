@@ -1009,3 +1009,25 @@ html[data-view="compare"] .app {
     position: static;
   }
 }
+
+/* A walk through the Lean inside a cell: the way back sits where the eye already is. */
+.walk-back {
+  display: block;
+  min-height: 24px;
+  margin: 0 0 var(--space-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-sm);
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-control);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.walk-back:hover {
+  text-decoration-color: var(--ink);
+}
