@@ -2308,11 +2308,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         showCaption("");
         onHover?.(null);
       }}
-      onClick={(event) => {
-        if ((event.target as Element).closest?.(".card, button, a, .hit, .tree__ui")) return;
-        if (selected) onSelect(null);
-        if (selectedEdge) onEdgeSelect?.(null);
-      }}
     >
       <div ref={worldRef} className="tree__world" style={{ width: Math.max(1, bounds.x1), height: Math.max(1, bounds.y1) }}>
         <svg className="tree__links" width={1} height={1} aria-hidden="true">
