@@ -32,7 +32,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   platform: {
     title: "Platform label",
-    question: "What an outside platform reports about a statement. This is that platform’s label, not a proof check run for these records.",
+    question: "What an outside platform reports about a statement. This is that platform’s label, not a proof check run for these steps.",
   },
 };
 

@@ -614,7 +614,7 @@ function Argument({
         onEcho={onEcho}
         onEdge={onEdge}
       />
-      <Relations title="Steps that use it directly" edges={uses} end="from" implied={implied} empty="No step is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
+      <Relations title="Steps that use it directly" edges={uses} end="from" implied={implied} empty="Nothing is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
       {assumptions.length > 0 && <Relations title="Assumptions" edges={assumptions} end="to" implied={implied} empty="" onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />}
       <div className="panel__trace" role="group" aria-label="Highlight on the map">
         <button
@@ -641,7 +641,7 @@ function Argument({
         </button>
       </div>
       <p className="panel__note">
-        Each button highlights on the map every step reached through recorded links, directly or through other records.
+        Each button highlights on the map every step reached through recorded links, directly or through other steps.
       </p>
       {(cites.to.length > 0 || cites.from.length > 0) && (
         <div className="panel__cites">

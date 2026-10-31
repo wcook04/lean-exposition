@@ -41,6 +41,8 @@ export function App() {
         event.preventDefault();
         setHelping(true);
       } else if (event.key === "[" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        // A page that steps through something with [ and ] keeps the key.
+        if (document.querySelector("[data-keeps-brackets]")) return;
         // Beside Alt-Left, which is the browser's own. The control's name says where it goes.
         event.preventDefault();
         document.querySelector<HTMLElement>(".back-control")?.click();
@@ -152,7 +154,7 @@ function EditionBanner() {
   return (
     <div className="edition-banner" role="alert">
       <span>
-        The server has started serving a different edition, that is, a different fixed set of records and papers. This page
+        The server has started serving a different edition, that is, a different fixed set of steps and papers. This page
         still shows the earlier edition.
       </span>
       <button type="button" className="control" onClick={() => window.location.reload()}>
@@ -175,7 +177,7 @@ function MapGate({ route }: { route: Extract<Route, { view: "map" }> }) {
     const { title, detail } = describeError(edition.contextError);
     return (
       <div className="boot boot--error" role="alert">
-        <h1>The links between records could not be loaded</h1>
+        <h1>The links between steps could not be loaded</h1>
         <p>
           {title}. {detail}
         </p>
@@ -214,7 +216,7 @@ function Skeleton({ view, title }: { view: Route["view"]; title?: string }) {
   return (
     <div className={`skeleton${view === "map" ? " skeleton--plate" : ""}`} aria-busy="true">
       <p className="visually-hidden" role="status">
-        {view === "map" ? "Loading the argument map…" : "Loading the records…"}
+        {view === "map" ? "Loading the argument map…" : "Loading the steps…"}
       </p>
       <span className="skeleton__bar skeleton__bar--caps" />
       {title ? <p className="skeleton__title">{title}</p> : <span className="skeleton__bar skeleton__bar--title" />}
@@ -242,7 +244,7 @@ function LinkedEditionNotice() {
     <div className="edition-banner" role="alert">
       <span>
         The link you followed was copied from edition <code translate="no">{linked.slice(0, EDITION_PREFIX)}</code> of the
-        records and papers. The server is serving edition{" "}
+        steps and papers. The server is serving edition{" "}
         <code translate="no">{snapshot.manifest_sha256.slice(0, EDITION_PREFIX)}</code>, so this page shows that edition, not the
         one the link was copied from.
       </span>

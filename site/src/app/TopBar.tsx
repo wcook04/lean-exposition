@@ -25,6 +25,9 @@ export const ACCOUNT_JOBS: Record<Stage, string> = {
   long: "reconstructs each step and names its source",
 };
 
+/** Where a page may put one line of its own in the bar. */
+export const BAR_LINE = "topbar-line";
+
 type Job = "argument" | "compare" | "read" | "lean" | "checks" | "about" | null;
 
 function jobOf(route: Route): Job {
@@ -50,7 +53,7 @@ function jobOf(route: Route): Job {
 function useDraftWords(): Partial<Record<Stage, string>> {
   const edition = useMaybeEdition();
   const out: Partial<Record<Stage, string>> = {};
-  for (const paper of edition?.overview.papers ?? []) if (paper.state === "draft") out[paper.stage] = "Draft";
+  for (const paper of edition?.overview.papers ?? []) if (paper.state === "draft") out[paper.stage] = "draft";
   return out;
 }
 
@@ -101,11 +104,13 @@ export function TopBar({ route, onSearch }: Props) {
         </a>
       </nav>
       {route.view !== "read" && <BackControl />}
+      {/* The Lean index reads a pointed name here, so nothing waits on the page for a hover. */}
+      {route.view === "lean" && <div id={BAR_LINE} className="topbar__line" />}
       <div className="topbar__tools">
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About
         </a>
-        <button type="button" className="control control--plain search-trigger" aria-label="Search the papers, the records and the Lean" onClick={onSearch}>
+        <button type="button" className="control control--plain search-trigger" aria-label="Search the papers, the steps and the Lean" onClick={onSearch}>
           <SearchIcon />
           <span className="search-trigger__word" aria-hidden="true">
             Search
@@ -234,7 +239,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
           >
             <span className="readmenu__name">
               {PAPER_NAMES[s].short}
-              {drafts[s] && <span className="readmenu__state caps">{drafts[s]}</span>}
+              {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
             </span>
             <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
           </a>
@@ -311,7 +316,7 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
                     <a href={routeHref({ view: "read", stage: s })} className="readmenu__item" aria-current={stage === s ? "page" : undefined}>
                       <span className="readmenu__name">
                         {PAPER_NAMES[s].short}
-                        {drafts[s] && <span className="readmenu__state caps">{drafts[s]}</span>}
+                        {drafts[s] && <span className="readmenu__state">, {drafts[s]}</span>}
                       </span>
                       <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
                     </a>

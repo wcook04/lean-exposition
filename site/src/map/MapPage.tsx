@@ -539,7 +539,7 @@ export function MapPage({ route }: { route: MapRoute }) {
   const viewPressed = (v: View) => (v === "lean" ? leanOn && display === "map" : leanOn ? false : v === "outline" ? display === "outline" : display === "map" && mode === v);
 
   return (
-    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`}>
+    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`} data-keeps-brackets={(display === "map" && !leanOn && walk.passages.length > 0) || undefined}>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
         <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />

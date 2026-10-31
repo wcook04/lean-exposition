@@ -45,7 +45,7 @@ const GROUP_TABLES: Partial<Record<GroupId, string[]>> = {
 
 const GROUP_TITLES: Record<GroupId, string> = {
   start: "Places to start",
-  map: "Records on the argument map",
+  map: "Steps on the argument map",
   statements: "Statements in the papers",
   sections: "Section headings",
   text: "Text of the papers",
@@ -323,7 +323,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   else if (results && options.length === 0 && results.text)
     status = (
       <>
-        Nothing in the Lean, the records or the papers contains all of the words <q>{results.q}</q>, as whole words or the
+        Nothing in the Lean, the steps or the papers contains all of the words <q>{results.q}</q>, as whole words or the
         starts of words. Try fewer words, or another spelling.
       </>
     );
@@ -353,7 +353,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         onKeyDown={onKeyDown}
       >
         <h2 id={`${uid}-title`} className="visually-hidden">
-          Search the Lean, the records and the papers
+          Search the Lean, the steps and the papers
         </h2>
         <div className="palette__field">
           <svg className="palette__icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
@@ -370,7 +370,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
             aria-activedescendant={options.length > 0 ? optionId(activeIndex) : undefined}
             aria-autocomplete="list"
             aria-describedby={`${uid}-hint`}
-            aria-label="Search the Lean, the records and the papers"
+            aria-label="Search the Lean, the steps and the papers"
             placeholder="A Lean name, a result, words from the papers"
             autoComplete="off"
             autoCorrect="off"

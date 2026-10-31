@@ -87,6 +87,22 @@ html[data-view="map"] .app {
   transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
 }
 
+/* A line a page may fill while something is pointed at. It takes up the bar's free space
+   and adds no height, so filling it moves nothing. */
+.topbar__line {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 68.75em) {
+  .topbar__line {
+    display: none;
+  }
+}
+
 /* The index at the back of the book: there for those who want it, quieter than the jobs. */
 .topnav__job--quiet {
   color: var(--ink-3);
@@ -195,7 +211,8 @@ html[data-view="map"] .app {
 }
 
 .readmenu__state {
-  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--ink-2);
 }
 
 .readmenu__job {

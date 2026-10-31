@@ -80,7 +80,7 @@ export function SearchPage({ route }: { route: SearchRoute }) {
               Results for <q>{q}</q>
             </>
           ) : (
-            "Search the Lean, the records and the papers"
+            "Search the Lean, the steps and the papers"
           )}
         </h1>
         <SearchForm q={route.q} />
@@ -104,7 +104,7 @@ export function SearchPage({ route }: { route: SearchRoute }) {
           <div className="search-body__main">
           {grand === 0 && (
             <p className="search-page__status" role="status">
-              Nothing in the records or the papers contains all of these words, as whole words or the starts of words. Try fewer
+              Nothing in the steps or the papers contains all of these words, as whole words or the starts of words. Try fewer
               words, or another spelling.
             </p>
           )}

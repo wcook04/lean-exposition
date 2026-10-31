@@ -196,7 +196,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       id: "lean",
       name: "The Lean proof",
       who: "OpenAI’s statements and proofs, written for a computer to check.",
-      count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} records`,
+      count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} steps`,
       read: routeHref({ view: "lean" }),
       readWord: "Open the Lean index",
     },
@@ -205,7 +205,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       stage,
       name: PAPER_NAMES[stage].short,
       who: PAPER_NAMES[stage].reader,
-      count: `${counts[stage]} of the ${total} records${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].total} marked statements, ${SITE_FACTS.ties.papers[stage].lean} with Lean` : ""}`,
+      count: `${counts[stage]} of the ${total} steps${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].total} marked statements, ${SITE_FACTS.ties.papers[stage].lean} with Lean` : ""}`,
       read: routeHref({ view: "read", stage }),
       readWord: "Read it here",
     })),
@@ -217,7 +217,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
         One argument at four levels
       </h2>
       <p className="front__text">
-        The argument is one graph of {total} records: claims, assumptions and Lean declarations, joined by what uses what. Each
+        The argument is one graph of {total} steps: claims, assumptions and Lean declarations, joined by what uses what. Each
         paper keeps a narrower part of that graph for a wider reader. Choose a level to see what it keeps, and open any step
         to compare it across the levels.
       </p>
@@ -288,7 +288,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
               <>The argument for the main theorem. Marked steps are linked to Lean declarations.</>
             ) : (
               <>
-                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} records in the argument for the main theorem.
+                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} steps in the argument for the main theorem.
               </>
             )}
           </figcaption>

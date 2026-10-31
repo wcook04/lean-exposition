@@ -46,6 +46,45 @@ html[data-view="home"] {
   max-width: 36em;
 }
 
+/* The reader as it is: a capture of the page, with one rule round it. */
+.readerstill {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 9fr);
+  align-items: center;
+}
+
+.readerstill__link {
+  display: block;
+}
+
+.readerstill__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+}
+
+.readerstill__img--dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .readerstill__img--light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .readerstill__img--dark {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .readerstill__img--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .readerstill__img--dark {
+  display: block;
+}
+
 /* Mathematical prose is set in the serif, like the papers and their formulas. */
 .front__prose p {
   margin: 0 0 14px;
@@ -293,7 +332,8 @@ html[data-view="home"] {
     padding: 40px 0 48px;
   }
   .front__pair,
-  .front__pair--flip {
+  .front__pair--flip,
+  .readerstill {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
