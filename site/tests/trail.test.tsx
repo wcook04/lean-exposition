@@ -1,7 +1,7 @@
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { navigate } from "../src/app/router";
+import { navigate, parseRoute, walkEntry } from "../src/app/router";
 import { snapshotScroll, restoreScroll, SCROLLERS } from "../src/app/restore";
 import { arrive, arrivedBy, entryKey, leaveAs, namePlace, onLeave, pushEntry, readEntry, readEntryOf, replaceEntry, useBack, useEntryState, writeEntry } from "../src/app/trail";
 
@@ -162,6 +162,55 @@ describe("the push and replace policy", () => {
     expect(entryKey()).not.toBe(left);
     expect(window.history.state).toMatchObject({ lxDepth: depth + 1, lxPrevious: left });
     expect(arrivedBy()).toBe("push");
+  });
+});
+
+describe("a walk between Lean names", () => {
+  const seen = { current: null as ReturnType<typeof useBack> };
+
+  it("on the reader is one entry with an address, named for where it came from", () => {
+    mount(<Control seen={seen} />);
+    navigate({ view: "read", stage: "short", node: "a.b", at: "12" });
+    const length = window.history.length;
+    act(() => walkEntry({ name: "OAI.SK.first", module: "OAI.SK", from: "OAI.SK.start" }));
+    expect(window.history.length).toBe(length + 1);
+    expect(parseRoute(new URL(window.location.href))).toMatchObject({ view: "read", stage: "short", node: "a.b", at: "12", decl: "OAI.SK.first", declModule: "OAI.SK" });
+    expect(seen.current?.label).toBe("start");
+  });
+
+  it("walks again, dropping a module the next name does not need", () => {
+    navigate({ view: "read", stage: "short", decl: "OAI.SK.first", declModule: "OAI.SK" });
+    const length = window.history.length;
+    walkEntry({ name: "OAI.SK.second" });
+    expect(window.history.length).toBe(length + 1);
+    const route = parseRoute(new URL(window.location.href));
+    expect(route).toMatchObject({ decl: "OAI.SK.second" });
+    expect(route).not.toHaveProperty("declModule", "OAI.SK");
+  });
+
+  it("does not stack a walk to the name already open", () => {
+    navigate({ view: "read", stage: "short", decl: "OAI.SK.first" });
+    const length = window.history.length;
+    walkEntry({ name: "OAI.SK.first" });
+    expect(window.history.length).toBe(length);
+  });
+
+  it("gives a selected step way to the declaration on the map", () => {
+    navigate({ view: "map", node: "a.b", edge: "a→b→uses" });
+    walkEntry({ name: "OAI.SK.first" });
+    const params = new URL(window.location.href).searchParams;
+    expect(params.get("n")).toBe("a.b");
+    expect(params.get("d")).toBe("OAI.SK.first");
+    expect(params.has("e")).toBe(false);
+  });
+
+  it("goes to the declaration on /lean and from a page that cannot show it", () => {
+    navigate({ view: "lean", module: "A", decl: "A.x" });
+    walkEntry({ name: "B.y", module: "B" });
+    expect(parseRoute(new URL(window.location.href))).toEqual({ view: "lean", module: "B", decl: "B.y" });
+    navigate({ view: "compare" });
+    walkEntry({ name: "A.x", module: "A" });
+    expect(parseRoute(new URL(window.location.href))).toEqual({ view: "lean", module: "A", decl: "A.x" });
   });
 });
 

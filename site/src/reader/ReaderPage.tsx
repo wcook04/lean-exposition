@@ -635,8 +635,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- Links -------------------------------------------------------------------------
 
   const here: ReadRoute = useMemo(
-    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside }),
-    [stage, route.anchor, route.at, route.node, route.beside],
+    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
+    [stage, route.anchor, route.at, route.node, route.beside, route.decl, route.declModule],
   );
   const links: Links = useMemo(
     () => ({
