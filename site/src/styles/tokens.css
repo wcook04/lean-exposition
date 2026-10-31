@@ -122,6 +122,11 @@
   /* Cards on the map. */
   --card: var(--raised);
   --card-border: #d4c7b4;
+  /* What the Lean holds: a soft green as a blueprint has it, and much paler for a part.
+     Ink keeps 7:1 on both in each scheme, --ink-3 keeps 3.5:1, and the states stay apart. */
+  --lean-fill: #cde4c8;
+  --lean-fill-part: #e6f1dc;
+  --lean-fill-line: #a3c79f;
   --card-shadow: 0 1px 0 rgb(25 21 32 / 0.03), 0 2px 6px -2px rgb(25 21 32 / 0.08);
   --card-shadow-lift: 0 1px 0 rgb(25 21 32 / 0.04), 0 10px 24px -10px rgb(25 21 32 / 0.22);
   --grid-dot: rgb(25 21 32 / 0.085);
@@ -193,6 +198,9 @@
   --rel-formalizes-lit: #55c7df;
   --edge-strong: #a7b0ba;
   --card-border: #413b4b;
+  --lean-fill: #2f4b3b;
+  --lean-fill-part: #32393b;
+  --lean-fill-line: #4f7559;
   --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
   --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
   --grid-dot: rgb(242 230 212 / 0.06);
@@ -239,6 +247,9 @@
     --rel-formalizes-lit: #55c7df;
     --edge-strong: #a7b0ba;
     --card-border: #413b4b;
+    --lean-fill: #2f4b3b;
+    --lean-fill-part: #32393b;
+    --lean-fill-line: #4f7559;
     --card-shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 2px 8px -2px rgb(0 0 0 / 0.45);
     --card-shadow-lift: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.75);
     --grid-dot: rgb(242 230 212 / 0.06);

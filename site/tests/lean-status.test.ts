@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { markOfDeclaration, markOfRelations, markWords } from "../src/model/leanStatus";
+import { leanFill, markOfDeclaration, markOfRelations, markWords } from "../src/model/leanStatus";
 
 describe("what the Lean holds of a record", () => {
   it("reads two signals from the alignment's relations", () => {
@@ -25,5 +25,20 @@ describe("what the Lean holds of a record", () => {
     expect(markOfDeclaration("theorem", false)).toEqual({ shape: "round", statement: "whole", proof: "whole" });
     expect(markOfDeclaration("theorem", true).proof).toBe("none");
     expect(markOfDeclaration("structure", false)).toEqual({ shape: "box", statement: "whole", proof: "none" });
+  });
+});
+
+describe("the card's fill", () => {
+  it("is green for what the Lean holds whole, pale for a part, plain for none", () => {
+    expect(leanFill(markOfRelations(["states"], false))).toBe("whole");
+    expect(leanFill(markOfRelations(["defines"], false))).toBe("whole");
+    expect(leanFill(markOfRelations(["part", "proof"], false))).toBe("part");
+    expect(leanFill(markOfRelations(["proof"], false))).toBe("part");
+    expect(leanFill(markOfRelations([], false))).toBe("none");
+  });
+
+  it("is pale for a theorem whose proof has a sorry", () => {
+    expect(leanFill(markOfDeclaration("theorem", true))).toBe("part");
+    expect(leanFill(markOfDeclaration("structure", false))).toBe("whole");
   });
 });

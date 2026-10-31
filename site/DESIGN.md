@@ -22,7 +22,7 @@ holds the rules every page follows. The values live in
    | What kind of record is it? | A word in small capitals: CLAIM, ASSUMPTION, LEAN DECLARATION, MAIN RESULT. Assumptions alone get a dashed border. |
    | How does a step use it? | The line's colour and pattern together, with the relation named in words wherever it is inspected. |
    | How does an account treat it? | A shape and a word: ● own passage, ○ used without a passage of its own, ⊟ outside the account's selection. |
-   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and two ink bars inside it: left for a Lean statement, right for a Lean proof, long for the whole, short for a part. The same mark and its words in the sheet and the outline. |
+   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and a soft fill: green when it is in Lean, much paler for a part of it, plain for none. The sheet and the outline carry the same fill and say it in words, so nothing rests on the colour alone. |
    | What am I looking at? | Amber. Selection, a lit support route and keyboard focus. Nothing else is amber. |
    | What did a check record? | The outcome in words: passed, failed, unavailable, not run. Only a recorded failure is coloured. |
 
@@ -108,14 +108,18 @@ step** opens at `k = 1` with the plate and the first row and shows what is unfol
 Whole argument draws every branch without changing what is unfolded, so Step by step
 comes back exactly as it was.
 
-**Lean marks** come from the alignment and from nothing else (`model/leanStatus.ts`). `states`
-and `contains` give both bars whole; `part` gives short bars; `proof` gives a long right bar,
-because a Lean proof carries the step in a different form; `defines` alone gives a box with a
-left bar and nothing to prove. "Proved" means a theorem or lemma in OpenAI's source with no
+**Lean fills** come from the alignment and from nothing else (`model/leanStatus.ts`), and read
+as a blueprint does, with no key needed. `states` and `contains` give the green fill, and so does
+`defines` on a definition, which takes a box and has nothing to prove. `part`, and `proof` alone
+(a Lean proof carrying the step in a different form), give the much paler fill. A record with no
+declaration stays the plain card. "Proved" means a theorem or lemma in OpenAI's source with no
 `sorry` in its text, which all 162 rows keep today; whether a build ran stays in each record's
-checks. The bars are ink, because a fill or a coloured border would read as the reader pane's
-trail, and amber means what you are looking at. The relations ship in the record index, so the
-marks are there at first paint.
+checks. The sheet says the status in a plain sentence for readers who cannot tell the greens
+apart. `--lean-fill`, `--lean-fill-part` and `--lean-fill-line` are chosen per scheme: ink keeps
+at least 7:1 on both fills, `--ink-3` at least 3.5:1, and the three states stay apart in OKLab.
+A receding card keeps its fill, so it never reads as having no Lean. Amber still means what you
+are looking at, and the reader pane's trail uses no tint. The relations ship in the record
+index, so the fills are there at first paint.
 
 **The strip** under the canvas is a row of its own: the key a newcomer needs, always on the
 page, and Fit. What the pointer rests on is named there for that moment, in place of the key,
@@ -212,8 +216,8 @@ record locally:
   card ("Assumes · …"). No assumption line crosses the map. A tag selects the
   relation; every tag of the same assumption lights together.
 - **Shared starting records are clones.** A record with no recorded inputs that
-  several results use is drawn beside each of them. A band along a clone's foot
-  marks the copies, and "Used by N" says how many there are. All copies select,
+  several results use is drawn beside each of them. "Used by N" says how many there
+  are, and where Lean fills are off a band along a clone's foot marks the copies. All copies select,
   hover and light as one record; counts count records, not copies.
 
 Records that have inputs of their own are never copied.

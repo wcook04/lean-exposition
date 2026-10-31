@@ -419,48 +419,28 @@
   border-color: var(--rel-formalizes);
 }
 
-/* What the Lean holds of a record (model/leanStatus.ts). As in a blueprint: the shape says
-   definition or result, and two independent signals say statement and proof. They are bars
-   inside the card, left for the statement and right for the proof, long for the whole and
-   short for a part. A bar is a shape in ink: colour on this map already means the reader's
-   trail in the pane, and amber means what you are looking at. */
-.tree .card[data-shape="box"] {
+/* What the Lean holds of a record (model/leanStatus.ts), as a blueprint shows it: the shape
+   says definition or result, and a soft green says it is in Lean, much paler for a part of
+   it. A card with no Lean stays plain. The sheet and the outline say the same in words, so
+   nothing rests on the colour alone. Amber still means what you are looking at. */
+.tree .card[data-shape="box"],
+.tree[data-dense] .card[data-shape="box"] {
   border-radius: calc(1.5px / var(--k));
 }
 
-.tree .card[data-shape="round"] {
+.tree .card[data-shape="round"],
+.tree[data-dense] .card[data-shape="round"] {
   border-radius: calc(13px / var(--k));
 }
 
-.card[data-lean-statement]::before,
-.card[data-lean-proof]::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: calc(3px / var(--k));
-  border-radius: calc(1.5px / var(--k));
-  background: var(--formal);
-  pointer-events: none;
+.card[data-lean="whole"] {
+  background: var(--lean-fill);
+  border-color: var(--lean-fill-line);
 }
 
-.card[data-lean-statement]::before {
-  left: calc(3.5px / var(--k));
-}
-
-.card[data-lean-proof]::after {
-  right: calc(3.5px / var(--k));
-}
-
-.card[data-lean-statement="whole"]::before,
-.card[data-lean-proof="whole"]::after {
-  top: calc(9px / var(--k));
-  bottom: calc(9px / var(--k));
-}
-
-.card[data-lean-statement="part"]::before,
-.card[data-lean-proof="part"]::after {
-  top: calc(50% - 5px / var(--k));
-  height: calc(10px / var(--k));
+.card[data-lean="part"] {
+  background: var(--lean-fill-part);
+  border-color: color-mix(in oklab, var(--lean-fill-line) 55%, var(--card-border));
 }
 
 .card:hover,
@@ -496,6 +476,16 @@
   background: color-mix(in oklab, var(--card) 45%, var(--ground));
   border-color: color-mix(in oklab, var(--card-border) 55%, var(--ground));
   box-shadow: none;
+}
+
+/* Receding keeps the status: a quiet card must never read as one with no Lean. */
+.card.is-quiet[data-lean="whole"] {
+  background: color-mix(in oklab, var(--lean-fill) 60%, var(--ground));
+  border-color: color-mix(in oklab, var(--lean-fill-line) 50%, var(--ground));
+}
+
+.card.is-quiet[data-lean="part"] {
+  background: color-mix(in oklab, var(--lean-fill-part) 60%, var(--ground));
 }
 
 .card.is-quiet .card__title {
@@ -1250,6 +1240,11 @@
   height: 5px;
   border-radius: 0 0 calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px);
   background: color-mix(in oklab, var(--cat, var(--src-0)) 35%, var(--card));
+}
+
+/* With the Lean's fill on, a copy needs no second colour at its foot. */
+.card--clone[data-lean]::after {
+  display: none;
 }
 
 .card--clone .card__title {

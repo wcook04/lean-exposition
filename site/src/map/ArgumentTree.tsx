@@ -41,7 +41,7 @@ import { METRICS, METRICS_COMPACT, METRICS_DENSE, type EngineEdge, type Layout, 
 import { COMPACT_FLOOR, DENSE_H, DENSE_H_SECTION, DENSE_MIN_K, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
 import type { MapScene } from "./canvas/scene";
 import type { LeanMark } from "../model/leanStatus";
-import { markWords } from "../model/leanStatus";
+import { leanFill, markWords } from "../model/leanStatus";
 import { useReducedMotion } from "./canvas/useReducedMotion";
 import { SIDES, beyond, chipAt, chipText, freeSpot, panToward, sameBeyond, screenRects, type Beyond, type Side } from "./canvas/chips";
 import { traceTiming } from "./canvas/trace";
@@ -155,8 +155,8 @@ export interface TreeProps {
   /** A quiet line in a free corner of the canvas: the full title of a shortened tile, or the relation under the pointer. */
   captionRef?: RefObject<HTMLElement | null>;
   /**
-   * What the Lean holds of a record: the card's shape and its two bars (statement on the left,
-   * proof on the right). Without it, cards are drawn as they always were.
+   * What the Lean holds of a record: the card's shape and its soft fill, green when it is in
+   * Lean, much paler for a part. Without it, cards are drawn as they always were.
    */
   statusOf?(id: string, node: ArgNode): LeanMark | null;
   /** Let the camera go below the scale where every tile holds its whole title; a title then shortens, and the caption has it whole. */
@@ -2455,8 +2455,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               data-full={node.label}
               data-section={section ?? undefined}
               data-shape={mark?.shape}
-              data-lean-statement={mark && mark.statement !== "none" ? mark.statement : undefined}
-              data-lean-proof={mark && mark.proof !== "none" ? mark.proof : undefined}
+              data-lean={mark && leanFill(mark) !== "none" ? leanFill(mark) : undefined}
               className={cardClass(lid, node, leaf)}
               style={{ width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"

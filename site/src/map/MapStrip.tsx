@@ -27,11 +27,9 @@ export function MapStrip({ lean, captionRef, onFit }: { lean?: StripLean; captio
         {lean ? (
           <ul className="map-legend" aria-label="Key to the Lean graph">
             <li>
-              <LeanGlyph mark={{ shape: "box", statement: "whole", proof: "none" }} /> Definition
+              <LeanGlyph fill="whole" /> In Lean
             </li>
-            <li>
-              <LeanGlyph mark={{ shape: "round", statement: "whole", proof: "whole" }} /> Theorem
-            </li>
+            <li>A box is a definition</li>
             <li>
               <Sample kind="supports" /> Proof uses
             </li>
@@ -48,20 +46,15 @@ export function MapStrip({ lean, captionRef, onFit }: { lean?: StripLean; captio
         ) : (
           <ul className="map-legend" aria-label="Key to the argument">
             <li>
-              <LeanGlyph mark={{ shape: "box" }} /> Definition
+              <LeanGlyph fill="whole" /> Proved in Lean
             </li>
             <li>
-              <LeanGlyph mark={{ shape: "round" }} /> Result
+              <LeanGlyph fill="part" /> Part of it in Lean
             </li>
             <li>
-              <LeanGlyph mark={{ shape: "round", statement: "whole" }} /> Stated in Lean
+              <LeanGlyph fill="none" /> Not in Lean
             </li>
-            <li>
-              <LeanGlyph mark={{ shape: "round", proof: "whole" }} /> Proved in Lean
-            </li>
-            <li>
-              <LeanGlyph mark={{ shape: "round", statement: "part", proof: "part" }} /> Short bar: part of it
-            </li>
+            <li>A box is a definition</li>
           </ul>
         )}
       </div>

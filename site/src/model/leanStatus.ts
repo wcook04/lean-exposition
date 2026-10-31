@@ -42,6 +42,15 @@ export function markOfDeclaration(kind: string, hasSorry: boolean): LeanMark {
   return { shape: result ? "round" : "box", statement: "whole", proof: result && !hasSorry ? "whole" : "none" };
 }
 
+/**
+ * The card's fill. Green for a record the Lean holds whole: stated and proved, or defined.
+ * Much paler for a part of it, which takes in a proof carried in a different form. Plain for none.
+ */
+export function leanFill({ shape, statement, proof }: LeanMark): LeanLevel {
+  if (statement === "none" && proof === "none") return "none";
+  return statement === "whole" && (proof === "whole" || shape === "box") ? "whole" : "part";
+}
+
 /** The mark in words, as the outline, the sheet and the caption say it. */
 export function markWords(mark: LeanMark): string {
   const { shape, statement, proof } = mark;

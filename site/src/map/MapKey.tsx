@@ -54,24 +54,20 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
             <li>
               <span className="keyrow__tag" aria-hidden="true" /> An assumption is a tag on each result that assumes it.
             </li>
-            <li>
-              <span className="keyrow__clone" aria-hidden="true" /> A band along the foot marks a record drawn again under each result that uses it.
-            </li>
+            <li>A record many results use, with nothing drawn below it, is drawn again under each of them.</li>
           </ul>
           <p className="map-keypop__h">Lean</p>
           <ul className="map-keypop__channels">
             <li>
-              <LeanGlyph mark={{ shape: "box" }} /> A box is a definition, a rounded shape a result.
+              <LeanGlyph fill="whole" /> Green: the Lean states and proves it, or defines it. A proof here is a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
             </li>
             <li>
-              <LeanGlyph mark={{ shape: "round", statement: "whole" }} /> The left bar is a Lean statement of it.
+              <LeanGlyph fill="part" /> Pale green: part of it is in Lean, or a Lean proof carries the step in a different form.
             </li>
             <li>
-              <LeanGlyph mark={{ shape: "round", proof: "whole" }} /> The right bar is a Lean proof: a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
+              <LeanGlyph fill="none" /> Plain: no declaration is linked.
             </li>
-            <li>
-              <LeanGlyph mark={{ shape: "round", statement: "part", proof: "part" }} /> A short bar means part of it. With no bars, no declaration is linked.
-            </li>
+            <li>A box is a definition and a rounded shape a result. Each record's sheet says its status in words.</li>
             <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each record's checks.</li>
           </ul>
           {lean && (
