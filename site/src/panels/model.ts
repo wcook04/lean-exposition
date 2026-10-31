@@ -408,3 +408,18 @@ export function excerptLength(blocks: readonly ExcerptBlock[], budget = 300): nu
   }
   return n;
 }
+
+/** How a Lean declaration relates to a record, in the words the Lean views use. */
+export const RELATION_WORDS = {
+  states: "States this result",
+  contains: "Contains this result as one part",
+  part: "States one part of this result",
+  proof: "Carries this proof step",
+  defines: "Defines this object",
+} as const;
+
+/** One step to a declaration. The Lean viewer's LeanWalk carries this and more. */
+export interface LeanStep {
+  name: string;
+  module?: string;
+}

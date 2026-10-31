@@ -288,13 +288,19 @@ export function leanModuleOf(href: string): string | null {
   return m ? `${m[1]}.${m[2].replace(/\//g, ".")}` : null;
 }
 
+export interface RecordSlice {
+  id: string;
+  /** The slice's address, where the alignment gives it. */
+  at?: string;
+}
+
 /** The statement's record with Lean, from the alignment: the one whose slice most overlaps these bytes. */
 export function recordOver(
   span: [number, number],
   paper: string,
-  records: Record<string, { lean: unknown[]; statements: { paper: string; role: string; start_byte: number; end_byte: number }[] }>,
-): string | null {
-  let best: string | null = null;
+  records: Record<string, { lean: unknown[]; statements: { paper: string; role: string; start_byte: number; end_byte: number; at?: string }[] }>,
+): RecordSlice | null {
+  let best: RecordSlice | null = null;
   let score = 0;
   for (const [id, record] of Object.entries(records)) {
     if (!record.lean.length) continue;
@@ -302,7 +308,7 @@ export function recordOver(
       if (slice.paper !== paper || slice.role !== "statement") continue;
       const overlap = Math.min(span[1], slice.end_byte) - Math.max(span[0], slice.start_byte);
       if (overlap > score) {
-        best = id;
+        best = { id, at: slice.at };
         score = overlap;
       }
     }

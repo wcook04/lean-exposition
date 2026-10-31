@@ -1,0 +1,45 @@
+/* The named Back: quiet text with a chevron, a target of at least 24px. */
+
+.back-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: var(--target, 24px);
+  max-width: 30ch;
+  padding: 0 4px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out);
+}
+
+.back-control:hover {
+  color: var(--ink);
+}
+
+.back-control svg {
+  flex: none;
+}
+
+.back-control__words {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar .back-control {
+  flex: 0 1 auto;
+}
+
+/* On a phone the control takes the place of the site's name, which the mark still stands for. */
+@media (max-width: 56.25em) {
+  .topbar:has(.back-control) .fam-lockup__name {
+    display: none;
+  }
+}

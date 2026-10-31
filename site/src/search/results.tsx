@@ -15,11 +15,16 @@ import { renderTex } from "../reader/math";
 import type { ArgGraph } from "../model/graph";
 import { prepareExcerpt, type PreparedExcerpt } from "./excerpt";
 import { markedPieces, type LeanHit } from "./leanNames";
+import { kindWord } from "../lean/data";
+import { isChallengeCopy } from "../lean/find";
+import { hasLeanHost } from "../lean/walk";
 
 /** The API table behind each kind of result, in the order results are listed. */
 export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, string] }[] = [
   { type: "records", table: "nodes", noun: ["record on the map", "records on the map"] },
+  { type: "statements", table: "statements", noun: ["statement in the papers", "statements in the papers"] },
   { type: "sections", table: "sections", noun: ["section heading", "section headings"] },
+  { type: "text", table: "paper", noun: ["place in the papers' text", "places in the papers' text"] },
   { type: "passages", table: "passages", noun: ["linked passage", "linked passages"] },
   { type: "citations", table: "citations", noun: ["citation", "citations"] },
   { type: "sources", table: "sources", noun: ["source", "sources"] },
@@ -41,21 +46,31 @@ export function nounFor(type: SearchType, n: number): string {
 
 /** What search does, said the same way in the palette and on the results page. */
 export const SEARCH_HELP =
-  "Search finds the records (claims, sources, citations and check records), section headings, linked passages and Lean declaration names that contain every word you type, as whole words or the starts of words. It does not search the rest of the papers’ text, and it does not look for words with related meanings.";
+  "Search finds Lean names and what the papers call them, the records of the argument, the exact statements in the papers, section headings and the full text of the three papers. Every word you type must appear, as a whole word or the start of one. It does not look for words with related meanings.";
 
-/** A Lean declaration as a result: its name with the matches marked, and where it lives. */
-export function LeanResultBody({ hit }: { hit: LeanHit }) {
+/** A Lean declaration as a result: the name, what the papers call it, and what and where it is. */
+export function LeanResultBody({ hit, beside }: { hit: LeanHit; beside?: boolean }) {
+  const fromShort = hit.name.length - hit.short.length;
+  const marks = hit.marks.flatMap(([a, b]): [number, number][] => (b <= fromShort ? [] : [[Math.max(a, fromShort) - fromShort, b - fromShort]]));
+  const file = hit.module.split(".").slice(-2).join("/");
+  const notation = hit.term?.tex ? renderTex(hit.term.tex, false).html : null;
   return (
     <>
       <span className="palette__title lean" translate="no">
-        {markedPieces(hit.name, hit.marks).map((piece, i) => (piece.mark ? <mark key={i}>{piece.text}</mark> : <span key={i}>{piece.text}</span>))}
+        {markedPieces(hit.short, marks).map((piece, i) => (piece.mark ? <mark key={i}>{piece.text}</mark> : <span key={i}>{piece.text}</span>))}
+        {notation && <span className="palette__notation" dangerouslySetInnerHTML={{ __html: notation }} />}
       </span>
       <span className="palette__meta">
-        Lean {hit.kind} in {hit.module}
+        Lean {kindWord(hit.kind).toLowerCase()} in {isChallengeCopy(hit.module) ? `the Comparator challenge file ${hit.module.split(".").pop()}` : file}
+        {beside ? ". Opens beside the paper" : ""}
       </span>
+      {hit.term?.words && <span className="palette__excerpt">{hit.term.words.replace(/`/g, "")}</span>}
     </>
   );
 }
+
+/** Whether a Lean result would open beside what is being read. */
+export const opensBeside = hasLeanHost;
 
 /** Where a result will open, in words, before it is opened. */
 export function destinationWords(item: SearchItem): string {
@@ -72,6 +87,10 @@ export function destinationWords(item: SearchItem): string {
       return "Opens on the checks page";
     case "edges":
       return "Opens the record that uses it on the argument map";
+    case "statements":
+      return `Opens the ${paper.toLowerCase()} at this statement`;
+    case "paper":
+      return `Opens the ${paper.toLowerCase()} at this paragraph`;
     default:
       return "Opens the record that uses it";
   }
@@ -89,6 +108,9 @@ export function directHref(item: SearchItem): string | null {
     }
     case "evidence":
       return routeHref({ view: "checks", node: idFromRef(item.ref, "evidence") });
+    case "statements":
+    case "paper":
+      return item.href ?? null;
     default:
       return null;
   }
@@ -140,6 +162,9 @@ export function ResultBody({ item, opening }: { item: SearchItem; opening: boole
       return <SectionResult item={item} excerpt={excerpt} opening={opening} />;
     case "passages":
       return <PassageResult item={item} excerpt={excerpt} opening={opening} />;
+    case "statements":
+    case "paper":
+      return <PaperResult item={item} excerpt={excerpt} />;
     default:
       return <RecordResult item={item} excerpt={excerpt} opening={opening} />;
   }
@@ -194,6 +219,25 @@ function PassageResult({ item, excerpt, opening }: { item: SearchItem; excerpt: 
       <span className="palette__meta">
         Passage in the {stage ? PAPER_NAMES[stage].short.toLowerCase() : "papers"}
         {opening && <span className="palette__opening"> Opening…</span>}
+      </span>
+      {excerpt && <ExcerptLine excerpt={excerpt} />}
+    </>
+  );
+}
+
+const ROLE_NOUNS: Record<string, string> = { statement: "Statement", definition: "Definition", derivation: "Derivation", explanation: "Explanation", example: "Worked example" };
+
+/** A statement or a paragraph of a paper, by where it stands there. */
+function PaperResult({ item, excerpt }: { item: SearchItem; excerpt: PreparedExcerpt | null }) {
+  const stage = stageOf(item);
+  const paper = stage ? PAPER_NAMES[stage].short.toLowerCase() : "papers";
+  const section = String(item.section ?? "");
+  const statement = item.table === "statements";
+  return (
+    <>
+      <span className="palette__title palette__title--serif">{statement ? item.label : section ? sectionLabel(section) : "Opening of the paper"}</span>
+      <span className="palette__meta">
+        {statement ? `${ROLE_NOUNS[String(item.role)] ?? "Statement"} in the ${paper}${section ? `, ${sectionLabel(section)}` : ""}` : `Text of the ${paper}`}
       </span>
       {excerpt && <ExcerptLine excerpt={excerpt} />}
     </>
@@ -295,6 +339,9 @@ export async function destination(item: SearchItem, graph: ArgGraph): Promise<st
       const anchor = item.label ?? idFromRef(item.ref, "passages");
       return stage ? routeHref({ view: "read", stage, anchor }) : null;
     }
+    case "statements":
+    case "paper":
+      return item.href ?? null;
     case "sections": {
       if (!stage) return null;
       const { doc } = await loadDocument(stage);

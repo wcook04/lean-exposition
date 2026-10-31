@@ -28,14 +28,20 @@
 /* ---- Where a jump lands ------------------------------------------------------------ */
 
 .reader .paper.prose [data-landed] {
-  outline: 2px solid var(--lit-line);
+  outline: 1px solid var(--lit-line);
   outline-offset: 4px;
-  transition: outline-color 1.4s ease-out 0.4s;
+  animation: ref-landed 1.8s ease-out forwards;
+}
+
+@keyframes ref-landed {
+  to {
+    outline-color: transparent;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reader .paper.prose [data-landed] {
-    transition: none;
+    animation: none;
   }
 }
 
@@ -110,20 +116,13 @@
   margin-left: auto;
 }
 
-/* ---- The preview on the right page: at its foot, over the graph, never the paper. ------- */
+/* ---- The preview, which stands in for the Lean on the right page. --------------------- */
 
 .ref-preview {
-  position: absolute;
-  z-index: 4;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-height: 46%;
+  height: 100%;
   overflow: hidden;
   padding: var(--space-3) var(--space-4);
   background: var(--ground);
-  border-top: 1px solid var(--rule-strong);
-  border-left: 1px solid var(--rule);
   pointer-events: none;
 }
 

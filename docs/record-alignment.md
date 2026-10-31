@@ -130,12 +130,17 @@ part of that Lean this one slice means:
 | `relation` | One of the relations above, for a name the record does not list. A name the record lists keeps its relation. |
 
 With only `name`, a declaration on the record keeps its row, and any other declaration
-points at its whole statement. An absent `lean` shows the record's rows. `lean: []` is
-rejected: leave the field out.
+points at its whole statement.
+
+Leaving `lean` out shows the record's rows, which is a fallback: those rows are about the
+record, and nobody has said they are what this slice means. `"lean": []` says this slice
+has no Lean of its own. Use it for a passage the Lean does not contain, such as an argument
+it takes another way or a computation it leaves out, so that the reader is not sent to
+the record's Lean as if it stated this text.
 
 Each resolved statement carries `at`, its address `b<start_byte>-<end_byte>`, its `lean`
-list, and `lean_source`. That is `"statement"` when it named its own Lean, and `"record"`
-when it shows the record's rows.
+list, and `lean_source`. That is `"statement"` when the slice said what it means, including
+`[]`, and `"record"` when it shows the record's rows.
 
 ### Add ties without touching the batch files
 
@@ -172,6 +177,10 @@ name. A record that is not aligned, a quotation that does not land or a slice gi
 in the ties files is an error. A slice identical to one already on that record in a batch
 file replaces it, role and note included, which is how to narrow an existing statement
 without editing its file.
+
+## Plain names
+
+`names.json`, optional, is `{ "schema": 1, "names": { "<full declaration name>": "<plain title, two to six words>" } }`: every key must be a declaration in the index, and the title reaches `names` in `/alignment` and `plain` on Lean rows and ties.
 
 ## The dictionary
 
@@ -232,6 +241,7 @@ loading the whole alignment. It holds three lists and a one-line `meaning`:
       "record": "scalar.paper_admissible",
       "role": "definition",
       "lean": true,
+      "from_record": true,
       "name": "OAI.ZeroTemperatureSK.OrderParameter",
       "module": "OAI.Probability.SKSupport.Model",
       "lines": [17, 22],
@@ -257,8 +267,11 @@ narrowest. So a slice can have several segments, and they all share one tie and 
 
 A tie is one statement. `name`, `module` and `lines` come from its first Lean row, the most
 direct, or from the row's `clause_lines` when its clause lives in another definition. All
-three are null, and `lean` false, when the statement has no Lean. For the rest of its rows,
-find the statement with the same `at` in `/alignment`.
+three are null, and `lean` false, when the statement has no Lean, whether it said so with
+`[]` or its record has none. `from_record` is true when the Lean is the record's rows
+rather than the statement's own choice: a page should call those "the record's Lean" and
+not imply that these lines are what the sentence means. For the rest of a tie's rows, find
+the statement with the same `at` in `/alignment`.
 
 `passages` are `[start_byte, end_byte, record ids, anchor]`: what each mapped passage
 discusses, so that a paragraph with no slice can still say so. The ids are the claims and

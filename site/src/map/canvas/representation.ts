@@ -233,6 +233,13 @@ export function fitTitle(t: MeasuredTitle, w: number, h: number, k: number, kind
   const size = sizes[sizes.length - 1];
   const lines = Math.max(1, Math.floor((room + 0.5) / (size * lineH)));
   const kept = keptPieces(t, size, width, lines);
+  // A Lean name is one long word: it is cut where the room ends, so more of it is read.
+  if (kind === "lean" && t.pieces.every((p) => p.text !== undefined)) {
+    const text = t.pieces.map((p) => p.text).join("");
+    const per = (t.pieces.reduce((n, p) => n + p.w, 0) / Math.max(1, text.length)) * (size / REF_PX);
+    const room = Math.max(3, Math.floor((width * lines - (t.ellipsis ?? 0) * (size / REF_PX) - per) / per));
+    return { size, lines, fits: false, kept, short: `${text.slice(0, room).replace(/[._]+$/, "")}…` };
+  }
   const short = kept > 0 && t.pieces[0]?.text !== undefined ? shortTitle(t, kept) : cutPiece(t, size, width);
   return { size, lines, fits: false, kept, short };
 }

@@ -8,48 +8,19 @@
 // The paper's HTML is set once, so an inset is a slot added after the block and filled
 // through a portal, the way a passage's tools are.
 
-import { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode, type RefObject } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal, flushSync } from "react-dom";
-import { leaveAs } from "../../app/trail";
 import { routeHref } from "../../app/router";
 import { alignmentResource } from "../../compare/useAlignment";
 import { documentPaths } from "../documents";
 import { renderSlice, type PreparedDocument } from "../engine";
 import { mountFigures } from "../mount";
-import { leanModuleOf, opensInPlace, recordOver, refView, type RefRow, type RefView } from "../references";
-import { sectionNumber } from "./model";
-import { freshSlots, markWideMaths, PassageBarContext, type BodyHandle } from "./PaperBody";
+import { leanModuleOf, opensInPlace, recordOver, refView, type RecordSlice, type RefRow, type RefView } from "../references";
+import { freshSlots, markWideMaths, type BodyHandle } from "./PaperBody";
+import { POINT_DWELL, previewOnRightPage } from "./rightPage";
 import "./ref-inset.css";
 
-/** How long a pointer or focus stays on a reference before the right page shows it. */
-const DWELL_MS = 150;
-
 // ---- The preview on the right page ------------------------------------------------------
-
-let preview: ReactNode = null;
-const listeners = new Set<() => void>();
-
-function showPreview(next: ReactNode): void {
-  preview = next;
-  listeners.forEach((listener) => listener());
-}
-
-function subscribe(listener: () => void): () => void {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
-}
-
-/** The foot of the right page, where a preview stands. The paper never moves for it. */
-export function RefPreviewHost() {
-  const shown = useSyncExternalStore(subscribe, () => preview);
-  return shown ? (
-    <aside className="ref-preview" aria-hidden="true" data-testid="ref-preview">
-      {shown}
-    </aside>
-  ) : null;
-}
 
 /** What a reference shows on the right page while it is pointed at. */
 function RefPreviewContent({ view, html }: { view: RefView; html: string | null }) {
@@ -64,12 +35,12 @@ function RefPreviewContent({ view, html }: { view: RefView; html: string | null 
     };
   }, [html]);
   return (
-    <>
+    <div className="ref-preview" aria-hidden="true" data-testid="ref-preview">
       {!html && <p className="ref-preview__title">{view.title}</p>}
       {view.note && <p className="ref-preview__note">{view.note}</p>}
       {html && <div ref={text} className="ref-preview__text prose" dangerouslySetInnerHTML={{ __html: html }} />}
       {view.locator && <p className="ref-preview__note">Cited here as: {view.locator}</p>}
-    </>
+    </div>
   );
 }
 
@@ -98,14 +69,14 @@ interface InsetProps {
   view: RefView;
   html: string | null;
   focusFirst: boolean;
+  onLean(record: string, at: string | undefined): void;
   onClose(): void;
 }
 
-function RefInset({ id, stage, view, html, focusFirst, onClose }: InsetProps) {
-  const { onRecord } = useContext(PassageBarContext);
+function RefInset({ id, stage, view, html, focusFirst, onLean, onClose }: InsetProps) {
   const box = useRef<HTMLDivElement>(null);
   const text = useRef<HTMLDivElement>(null);
-  const [record, setRecord] = useState<string | null>(null);
+  const [record, setRecord] = useState<RecordSlice | null>(null);
 
   useEffect(() => {
     const span = view.span;
@@ -149,7 +120,7 @@ function RefInset({ id, stage, view, html, focusFirst, onClose }: InsetProps) {
           </a>
         )}
         {record && (
-          <button type="button" className="ref-inset__lean" onClick={(event) => onRecord(record, event.currentTarget, true)}>
+          <button type="button" className="ref-inset__lean" onClick={() => onLean(record.id, record.at)}>
             See its Lean
           </button>
         )}
@@ -206,7 +177,13 @@ export interface References {
   portals: ReactNode;
 }
 
-export function useReferences(stage: string, doc: PreparedDocument, body: RefObject<BodyHandle | null>, top: () => number): References {
+export function useReferences(
+  stage: string,
+  doc: PreparedDocument,
+  body: RefObject<BodyHandle | null>,
+  top: () => number,
+  onLean: (record: string, at: string | undefined) => void,
+): References {
   const index = doc.refs;
   const [open, setOpen] = useState<Open[]>([]);
   const openRef = useRef(open);
@@ -230,8 +207,8 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
       stopDwell();
       dwell.current = window.setTimeout(() => {
         const view = refView(index, row);
-        showPreview(<RefPreviewContent view={view} html={bodyHtml(doc, stage, view.body)} />);
-      }, DWELL_MS);
+        previewOnRightPage(<RefPreviewContent view={view} html={bodyHtml(doc, stage, view.body)} />);
+      }, POINT_DWELL);
     },
     [doc, index, rowOf, stage, stopDwell],
   );
@@ -239,7 +216,7 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
   const leave = useCallback(() => {
     pointed.current = null;
     stopDwell();
-    showPreview(null);
+    previewOnRightPage(null);
   }, [stopDwell]);
 
   useEffect(() => leave, [leave]);
@@ -310,24 +287,6 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
     return () => window.removeEventListener("keydown", onKey);
   }, [close]);
 
-  /** The place a jump leaves, for the Back that returns to it. */
-  const leavePlace = useCallback(
-    (link: HTMLElement) => {
-      const part = Number(link.closest<HTMLElement>("[data-part]")?.dataset.part ?? -1);
-      const scope = link.closest(".part__text");
-      let title: string | undefined;
-      for (const heading of Array.from(scope?.querySelectorAll("h1,h2,h3,h4,h5,h6") ?? [])) {
-        if (heading.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING) title = heading.textContent ?? undefined;
-      }
-      for (let i = part - 1; i >= 0 && !title; i--) {
-        const headings = doc.parts[i]?.headings.filter((h) => h.level > 1);
-        if (headings?.length) title = headings[headings.length - 1].title;
-      }
-      if (title) leaveAs(sectionNumber(title));
-    },
-    [doc],
-  );
-
   /** Mark where a jump lands, once, as the reader's eyes get there. */
   const land = useCallback(
     (id: string) => {
@@ -349,10 +308,8 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
       const element = event.target as Element;
       const go = element.closest?.<HTMLElement>("a[data-ref-go]");
       if (go) {
-        const from = go.closest(".ref-slot")?.previousElementSibling;
-        if (from) leavePlace(from as HTMLElement);
         land(go.dataset.refGo ?? "");
-        return; // The reader page makes the jump and its history entry.
+        return; // The reader page makes the jump, its history entry and the name of its Back.
       }
       const link = element.closest?.<HTMLElement>("a[data-ref]");
       if (!link) return;
@@ -365,12 +322,9 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
         toggle(link, row, event.detail === 0);
         return;
       }
-      if (row.kind === "section") {
-        leavePlace(link);
-        if (row.target) land(row.target);
-      }
+      if (row.kind === "section" && row.target) land(row.target);
     },
-    [land, leavePlace, rowOf, stopDwell, toggle],
+    [land, rowOf, stopDwell, toggle],
   );
 
   const onPointerOver = useCallback(
@@ -411,12 +365,12 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
     () =>
       open.map((item) =>
         createPortal(
-          <RefInset id={item.id} stage={stage} view={item.view} html={item.html} focusFirst={item.focusFirst} onClose={() => close(item, true)} />,
+          <RefInset id={item.id} stage={stage} view={item.view} html={item.html} focusFirst={item.focusFirst} onLean={onLean} onClose={() => close(item, true)} />,
           item.slot,
           item.id,
         ),
       ),
-    [close, open, stage],
+    [close, onLean, open, stage],
   );
 
   return { onClick, onPointerOver, onPointerOut, onFocus, onBlur, portals };

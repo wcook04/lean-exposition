@@ -315,7 +315,7 @@ describe("what a reference shows", () => {
       c: { lean: [], statements: [{ paper: "short", role: "statement", start_byte: 90, end_byte: 400 }] },
       d: { lean: [{}], statements: [{ paper: "long", role: "statement", start_byte: 90, end_byte: 400 }] },
     };
-    expect(recordOver([95, 305], "short", records)).toBe("b");
+    expect(recordOver([95, 305], "short", records)?.id).toBe("b");
     expect(recordOver([0, 50], "short", records)).toBeNull();
   });
 

@@ -6,7 +6,10 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { graphFixture, structureFixture } from "./fixtures";
 import { chooseGoal, neededExpansion, pathFromGoal, reach, scopedGraph, visibleSet } from "../src/map/treeModel";
-import { passageOf, passageRecords } from "../src/reader/page/model";
+import { paperTrail, passageOf, passageRecords } from "../src/reader/page/model";
+import { Signal } from "../src/reader/page/signal";
+import type { Followed, Pointed } from "../src/reader/page/rightPage";
+import { tieModel } from "../src/reader/ties";
 import type { MapViewHandle } from "../src/map/ArgumentTree";
 
 const graph = graphFixture();
@@ -142,43 +145,25 @@ describe("MapPane", async () => {
   const { MapPane } = await import("../src/reader/page/MapPane");
   const structures = { expository: structureFixture("expository") };
 
+  const signals = {
+    heading: new Signal<string | null>(null),
+    part: new Signal(0),
+    follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }),
+    point: new Signal<Pointed | null>(null),
+    caption: new Signal<string | null>(null),
+  };
+  const trail = paperTrail(structures.expository);
+  const ties = tieModel(null);
+
   function show(anchor: string | null, onJump = vi.fn()) {
-    const records = passageRecords(anchor ? passageOf(structures.expository, anchor) : undefined);
+    act(() => signals.follow.set({ tie: null, anchor, part: 0 }));
     act(() =>
-      root.render(<MapPane stage="expository" structures={structures} anchor={anchor} records={records} onHide={() => {}} onRecord={onJump} />),
+      root.render(<MapPane stage="expository" structures={structures} outline={[]} trail={trail} signals={signals} ties={ties} pin={null} onHide={() => {}} onRecord={onJump} onRelease={() => {}} onPoint={() => {}} />),
     );
-    return records;
   }
-  const toggle = () => container.querySelector<HTMLButtonElement>(".map-pane__follow")!;
+  const resume = () => container.querySelector<HTMLButtonElement>(".map-pane__follow");
 
-  it("starts following before a passage arrives, toggles immediately, and keeps a deliberate pause across passages", () => {
-    show(null);
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
-    expect(toggle().title).toBe("Turn off following the text");
-    act(() => toggle().click());
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    expect(toggle().title).toBe("Follow the passage you are reading");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
-    show("contact-and-gap");
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    show("endpoints");
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    act(() => toggle().click());
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
-    expect(toggle().title).toBe("Turn off following the text");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
-  });
-
-  it("follows again when a paused pane is closed and reopened", () => {
-    show("contact-and-gap");
-    act(() => toggle().click());
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    act(() => root.render(null));
-    show("contact-and-gap");
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
-  });
-
-  it("keeps following through initial framing, then yields to wheel and drag input immediately", async () => {
+  it("keeps following through initial framing, then yields to wheel and drag input immediately, and says how to resume", async () => {
     vi.stubGlobal("ResizeObserver", class {
       constructor(private cb: (entries: unknown[]) => void) {}
       observe(el: HTMLElement) {
@@ -190,17 +175,15 @@ describe("MapPane", async () => {
     show("contact-and-gap");
     // Includes expandAll, the delayed initial passage frame, and late first-fit setup.
     await act(() => new Promise((resolve) => setTimeout(resolve, 1300)));
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    expect(resume()).toBeNull();
     const tree = container.querySelector<HTMLElement>(".map-pane .tree")!;
     const world = tree.querySelector<HTMLElement>(".tree__world")!;
     const before = world.style.transform;
     act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
     expect(world.style.transform).not.toBe(before);
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
-    act(() => toggle().click());
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("");
+    expect(resume()!.textContent).toBe("Follow the text again");
+    act(() => resume()!.click());
+    expect(resume()).toBeNull();
     const beforeDrag = world.style.transform;
     const mouse = (type: string, clientX: number, clientY: number) => {
       const event = new MouseEvent(type, { clientX, clientY, bubbles: true });
@@ -214,8 +197,7 @@ describe("MapPane", async () => {
       window.dispatchEvent(mouse("mouseup", 450, 420));
     });
     expect(world.style.transform).not.toBe(beforeDrag);
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
+    expect(resume()).not.toBeNull();
     // d3 suppresses the click following a drag until the next task; let that
     // capture listener expire before another test clicks in this window.
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
@@ -226,18 +208,17 @@ describe("MapPane", async () => {
     const needed = (anchor: string) => [...neededExpansion(scoped, goal, passageRecords(passageOf(structures.expository, anchor)))];
     const holds = (anchor: string) => needed(anchor).every((id) => opened().has(id));
     show("contact-and-gap");
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    expect(resume()).toBeNull();
     expect(holds("contact-and-gap")).toBe(true);
     // A wheel over the map is the reader taking control.
     act(() => void container.querySelector(".map-pane .tree")!.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
-    expect(toggle().getAttribute("aria-pressed")).toBe("false");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("Paused while you move the map");
+    expect(resume()).not.toBeNull();
     // Paused: the next passage changes nothing on the map.
     const before = opened();
     show("endpoints");
     expect(opened()).toEqual(before);
-    act(() => toggle().click());
-    expect(toggle().getAttribute("aria-pressed")).toBe("true");
+    act(() => resume()!.click());
+    expect(resume()).toBeNull();
     // Following again opens what the passage needs and keeps what was open.
     expect(holds("endpoints")).toBe(true);
     for (const id of before) expect(opened().has(id)).toBe(true);
@@ -251,13 +232,24 @@ describe("MapPane", async () => {
     for (const el of cards) expect(el.classList.contains("is-elsewhere")).toBe(!covered.has(el.dataset.record!));
   });
 
-  it("says when a passage has no linked record", () => {
+  it("says in one line under the graph when nothing in this stretch is tied", () => {
     show("changed-cases");
-    expect(container.querySelector(".map-pane__state")!.textContent).toBe("No record is linked to this passage.");
+    expect(container.querySelector(".map-pane__line")!.textContent).toBe("Nothing in this stretch of the paper is tied to the Lean.");
+    expect(container.querySelector(".lean-page")).toBeNull();
+  });
+
+  it("keeps the Lean closed at rest, and open once asked", () => {
+    show("contact-and-gap");
+    expect(container.querySelector(".lean-page")).toBeNull();
+    act(() => container.querySelector<HTMLButtonElement>(".map-pane__keep")!.click());
+    expect(container.querySelector<HTMLElement>(".lean-page")!.dataset.via).toBe("follow");
+    expect(localStorage.getItem("lx-reader-keep-lean")).toBe("open");
+    localStorage.clear();
   });
 
   it("lights the passage's drawn records", () => {
-    const records = show("contact-and-gap");
+    show("contact-and-gap");
+    const records = passageRecords(passageOf(structures.expository, "contact-and-gap"));
     const lit = [...container.querySelectorAll<HTMLElement>(".card.is-passage")].map((el) => el.dataset.record);
     for (const id of lit) expect(records).toContain(id);
   });

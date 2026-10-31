@@ -6,7 +6,7 @@ import type { AlignedStatement, Alignment, StatementRole } from "../../api/lean"
 import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
-import { recordLine } from "../../compare/useAlignment";
+import { tieCounts, type TieCount, type TieModel } from "../ties";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -291,32 +291,6 @@ export function partsOfLines(parts: PreparedPart[], lines: { start: number; end:
   return parts.filter((p) => !p.blank && p.lines.start <= lines.end && p.lines.end >= lines.start).map((p) => p.index);
 }
 
-export interface SliceRow {
-  id: string;
-  start: number;
-  end: number;
-  mention: boolean;
-}
-
-/** Every record's slices of this paper, as source lines, for following block by block. */
-export function sliceRows(alignment: Alignment | null, doc: Pick<PreparedDocument, "lineOfByte">, stage: Stage): SliceRow[] {
-  const rows: SliceRow[] = [];
-  for (const [id, record] of Object.entries(alignment?.records ?? {})) {
-    for (const s of record.statements) {
-      if (s.paper !== stage) continue;
-      rows.push({ id, start: doc.lineOfByte(s.start_byte), end: doc.lineOfByte(Math.max(s.start_byte, s.end_byte - 1)), mention: s.role === "mention" });
-    }
-  }
-  return rows;
-}
-
-/** The records whose slices cover these lines: a mention counts only when nothing states more. */
-export function recordsCovering(rows: SliceRow[], lines: { start: number; end: number }): string[] {
-  const hit = rows.filter((r) => r.start <= lines.end && r.end >= lines.start);
-  const firm = hit.filter((r) => !r.mention);
-  return [...new Set((firm.length ? firm : hit).map((r) => r.id))];
-}
-
 // ----------------------------------------------------------- reading trail
 
 /** One paper's path through its records, computed once from its structure. */
@@ -381,39 +355,6 @@ export function trailWords(outline: OutlineEntry[], part: number, place: Pick<Tr
   return [where, records].filter(Boolean).join(", ");
 }
 
-// ---------------------------------------------------------- passage chips
-
-/** How many records a passage's bar names before "and 4 more". */
-export const CHIP_LIMIT = 3;
-
-export function chipSplit(ids: readonly string[], limit = CHIP_LIMIT): { shown: string[]; more: number } {
-  // A single remaining record is shown: "and 1 more" takes the room of its name.
-  const shown = ids.length <= limit + 1 ? [...ids] : ids.slice(0, limit);
-  return { shown, more: ids.length - shown.length };
-}
-
-/** A title for a chip: cut after a whole word, only when it would not fit. */
-export function chipTitle(title: string, max = 42): string {
-  if (title.length <= max) return title;
-  const cut = title.slice(0, max);
-  const space = cut.lastIndexOf(" ");
-  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.]+$/, "")}…`;
-}
-
-/** The first of these records with a recorded Lean statement or correspondence. */
-export function leanRecord(
-  ids: readonly string[],
-  graph: { nodes: Map<string, { kind: string }>; out: Map<string, { kind: string }[]> },
-  hasLean: (id: string) => boolean = (id) => !!recordLine(id)?.lean,
-): string | null {
-  for (const id of ids) {
-    if (hasLean(id)) return id;
-    if (graph.nodes.get(id)?.kind === "declaration") return id;
-    if (graph.out.get(id)?.some((e) => e.kind === "formalizes")) return id;
-  }
-  return null;
-}
-
 /** How many passages the "Linked passages" chooser offers for this one. */
 export function linkedCount(structures: Structures, here: { stage: Stage; anchor: string }): number {
   return sameTopic(structures, here).reduce((n, account) => n + account.authored.length + account.shared.reduce((m, s) => m + s.places.length, 0), 0);
@@ -451,6 +392,16 @@ export function outlineOf(doc: PreparedDocument): OutlineEntry[] {
     stack.push(entry);
   });
   return out;
+}
+
+/** Statements with Lean per outline entry, each section counting its subsections. */
+export function outlineTieCounts(entries: OutlineEntry[], structure: PaperStructure, doc: PreparedDocument, ties: TieModel): Map<string, TieCount> {
+  const sections = entries.map((entry) => {
+    const part = doc.parts[entry.part];
+    const heading = structure.paper.sections.find((s) => s.title === entry.title && s.heading_span.start_byte >= part.span.start && s.heading_span.start_byte < part.span.end);
+    return { id: entry.id, parent: entry.parent, start: heading?.heading_span.start_byte ?? part.span.start };
+  });
+  return tieCounts(ties, sections);
 }
 
 /** The entries from the top-level section down to `id`: a document breadcrumb, not a history. */

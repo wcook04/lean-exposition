@@ -15,6 +15,10 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { ArgEdge, ArgGraph } from "../model/graph";
 import { pathFromGoal, reach, usesOf } from "./treeModel";
+import { recordMark } from "./leanMarks";
+import { recordLine } from "../compare/useAlignment";
+import { LeanGlyph } from "./LeanGlyph";
+import { markWords } from "../model/leanStatus";
 import "./outline.css";
 
 type Within = ReadonlySet<string> | undefined;
@@ -191,6 +195,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
         const expanded = open.has(key);
         const canOpen = isHome && n > 0;
         const inline = canOpen && depth < MAX_DEPTH;
+        const mark = recordMark(edge.to, node);
         return (
           <li key={key} className="orow" data-occ={key} data-outline-id={edge.to} data-depth={depth}>
             <div className={`orow__body${selected === edge.to || selectedEdge === edge.key ? " is-selected" : ""}`}>
@@ -209,14 +214,18 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
                 type="button"
                 className="orow__open"
                 aria-pressed={selected === edge.to}
-                aria-label={`${node.label}. ${RELATION_WORDS[edge.kind] ?? edge.kind}, ${kindWord(node.kind).toLowerCase()}. Open the record`}
+                aria-label={`${node.label}. ${RELATION_WORDS[edge.kind] ?? edge.kind}, ${kindWord(node.kind).toLowerCase()}. ${markWords(mark)}. Open the record`}
                 onClick={() => {
                   if (inline && (!expanded || selected === edge.to)) toggle(key);
                   onSelect(edge.to);
                 }}
               >
-                <span className={`orow__title${node.kind === "declaration" ? " lean" : ""}`}>{node.label}</span>
+                <span className={`orow__title${node.kind === "declaration" && !recordLine(edge.to)?.short ? " lean" : ""}`}>{node.kind === "declaration" ? recordLine(edge.to)?.short || node.label : node.label}</span>
                 {node.kind !== "claim" && <span className="orow__kind caps">{kindWord(node.kind)}</span>}
+                <span className="orow__lean">
+                  <LeanGlyph mark={mark} label="" />
+                  {markWords(mark)}
+                </span>
               </button>
               {!isHome && <AlsoUsed graph={graph} id={edge.to} home={home.get(edge.to)} others={otherConsumers(graph, edge.to, argument, parent)} onReveal={() => reveal(edge.to)} />}
             </div>

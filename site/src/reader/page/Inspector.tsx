@@ -41,6 +41,7 @@ const RELATION_NAME: Record<LinkKind, string> = {
   formalizes: "Recorded Lean correspondence",
   lean_type_dependency: "Lean type dependency",
   lean_value_dependency: "Lean proof or value dependency",
+  lean_via: "Lean use through helpers",
   lean_structural_dependency: "Lean structural dependency",
 };
 

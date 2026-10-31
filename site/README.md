@@ -22,8 +22,10 @@ want to explore it:
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The map sits beside the paper and follows what you read; choosing a card moves
-  the paper to its passage and opens the card's Lean and statements in place.
+  The graph stands on the page facing the paper and follows the statement you are
+  reading. Pointing at a marked statement lights its card and names it; clicking opens
+  its Lean over the graph, and clicking a card also takes the paper to the statement.
+  Back returns to your place.
   Beside any passage you can list the records linked to it and open passages in
   the other accounts that are linked to the same records.
 - **The Lean.** OpenAI's source, every module and declaration, with each central
@@ -216,7 +218,7 @@ the promised explanation.
 | `src/compare/` | Compare: the table of every step at each level (`table.ts`, `StepTable.tsx`), one step in full (`StepBench.tsx`), the record alignment's hook and the slice renderer |
 | `src/lean/` | The Lean viewer (`LeanBlock`), its tokenizer and data hooks, and the Lean browser at "/lean" |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
-| `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
+| `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and strip, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`), the Lean graph (`useLeanGraph`, built by `model/leanGraph.ts`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |
 | `src/ribbons/` | The three account strips (`StripMarks`, shared with the front page), folded into a bar under the map until opened |
 | `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, reviewed references that open in place, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |

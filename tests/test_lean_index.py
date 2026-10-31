@@ -209,6 +209,55 @@ structure S (a : Nat)
         self.assertEqual(rows["alternatives"]["signature_end_line"], 4)
         self.assertEqual(rows["S"]["signature_end_line"], 8)
 
+    def test_a_let_or_have_in_a_statement_keeps_its_own_assignment(self):
+        rows = {row["short"]: row for row in lean_index.parse_module('''theorem let_statement (a : Nat) :
+    let b := a + 1
+    let c : Nat := b
+    b = c := by
+  rfl
+lemma have_statement : have h : 1 = 1 := rfl
+    h = h := by
+  rfl
+theorem bracketed : (let b := 1; b) = 1 := by
+  rfl
+def body : Nat := let b := 1; b
+theorem in_the_proof : 1 = 1 := by
+  let b := 1
+  rfl
+''', "M")["declarations"]}
+        self.assertEqual({name: row["signature_end_line"] for name, row in rows.items()},
+                         {"let_statement": 4, "have_statement": 7, "bracketed": 9, "body": 11, "in_the_proof": 12})
+
+    def test_real_statements_with_a_let_end_at_their_own_assignment(self):
+        index = lean_index.build_index(TREE)
+        rows = {(module["name"].rsplit(".", 1)[1], row["short"]): (module, row) for module in index["modules"]
+                for row in module["declarations"]}
+        ends = {("FiniteDensity", "finite_density_coercivity"): 116, ("FiniteDensity", "finite_feedback_coercivity"): 180,
+                ("ExpectedFeedbackStep", "finite_feedback_verification"): 158,
+                ("VariableFeedbackEuler", "variableFeedback_controlledGrid"): 44, ("Coercivity", "rational_identity"): 44,
+                ("Regularity", "cross_value_one_step"): 115, ("Verification", "value_bounded_drift_one_step"): 34,
+                ("ForcedGenerator", "euler_one_step"): 42, ("TestGenerator", "euler_one_step"): 47,
+                ("ThirdOrderRemainderBound", "gradient_euler_one_step"): 187,
+                ("ProfileSplit", "diffusion_prefix_coercivity"): 72, ("SplitShape", "split_profile_coercivity"): 70,
+                ("CrossExpectation", "cross_value_expectation_step"): 37,
+                ("PredictableNormalizer", "euler_normalized_increment_properties"): 279,
+                ("ForcedExpectation", "expectation_step"): 19, ("TestExpectation", "expectation_step"): 19,
+                ("ValueEulerOneStep", "value_euler_one_step"): 48}
+        self.assertEqual(len(ends), 17)
+        for key, end in ends.items():
+            with self.subTest(key=key):
+                module, row = rows[key]
+                self.assertEqual(row["signature_end_line"], end)
+                self.assertTrue(module["source"].split("\n")[end - 1].rstrip().endswith(":= by"))
+
+    def test_every_real_theorem_stops_at_its_own_assignment_or_where(self):
+        for module in lean_index.build_index(TREE)["modules"]:
+            source = module["source"].split("\n")
+            for row in module["declarations"]:
+                if row["kind"] in {"theorem", "lemma"}:
+                    line = source[row["signature_end_line"] - 1]
+                    self.assertTrue(":=" in line or line.rstrip().endswith("where"), row["name"])
+
     def test_structure_fields_in_each_form(self):
         rows = parsed('''structure S where
   mk ::

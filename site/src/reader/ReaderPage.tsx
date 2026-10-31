@@ -1,27 +1,33 @@
-// The paper reader: one account at a protected measure, its sections beside
-// it, and context only when the reader asks for it. Each mapped passage has a
-// slim margin mark and two quiet controls: its records, which open the "In
-// this passage" inspector, and "Same topic in…", which offers the authored
-// treatments elsewhere. A chosen treatment opens as a visit (side by side from
-// 1280px) over the paper, which stays where it was. Deliberate jumps make
-// history entries, passive scrolling never does, and every entry keeps its
-// reading position, so Back and "Return to …" land on the line the reader left.
-// From 1280px the argument map stands beside the paper unless the reader turned
-// it off; narrower, it opens as a sheet from a button.
+// The paper reader: one account at its reading measure, with the proof on the page facing
+// it. Four verbs run the page (reading-model.md). Follow: the reading line picks the
+// statement under it, which takes the highlighter at once, and once it has held the line
+// for a moment its card lights on the graph. Point: a tied statement reacts to the pointer
+// or to focus, its card lights, and a line under the graph names it. Open: a click pins it
+// and its Lean rises over the graph, as one history entry whose address names the record
+// and the statement. Back: the browser's own, to the same pixel.
+//
+// Scrolling never sets state on this component. It writes attributes (statements.ts) and
+// signals (page/signal.ts) that the few small things showing them read. A chosen treatment
+// elsewhere still opens as a visit over the paper, which stays where it was.
 
 import { startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { AlignedStatement, Alignment } from "../api/lean";
-import type { Stage } from "../api/types";
+import type { Alignment } from "../api/lean";
+import type { PaperStructure, Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
-import { navigate, routeHref, type Route } from "../app/router";
+import { BackControl } from "../app/BackControl";
+import { navigate, routeHref, walkEntry, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
+import { hostLean, type LeanWalk } from "../lean/walk";
+import { restoreScroll } from "../app/restore";
+import { namePlace, onLeave } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
-import { alignmentResource } from "../compare/useAlignment";
+import type { ArgGraph } from "../model/graph";
+import type { PreparedDocument } from "./engine";
+import { alignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
-import { PaperBody, PassageBarContext, type BodyHandle, type Links, type PassageBar } from "./page/PaperBody";
-import { RefPreviewHost } from "./page/RefInset";
+import { PaperBody, type BodyHandle, type Links } from "./page/PaperBody";
 import { Inspector, type InspectorTarget } from "./page/Inspector";
 import { Chooser } from "./page/Chooser";
 import { Visit } from "./page/Visit";
@@ -29,33 +35,36 @@ import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections, SectionsPopover } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { PaneHover } from "./page/MapPane";
-import { RecordDock, type OpenRecord } from "./page/RecordDock";
+import { RightSheet } from "./page/RightSheet";
+import { FOLLOW_HOLD, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
+import { Signal, useSignal } from "./page/signal";
+import { Statements } from "./page/statements";
+import { statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
   companionAnchor,
+  firstPassageFor,
   outlineOf,
+  outlineTieCounts,
   paperTrail,
   passageOf,
   passageRecords,
   partsOfLines,
   passagesBetween,
   recordTally,
-  recordsCovering,
   resolveAnchor,
   resolveAt,
   resolveBeside,
   sectionNumber,
   sectionTitleIn,
   selectionSpan,
-  sliceAt,
-  sliceRows,
   statusWords,
-  trailAt,
-  trailWords,
   type Destination,
+  type OutlineEntry,
   type Structures,
 } from "./page/model";
 import {
+  blockAtLine,
   existingHistoryKey,
   historyKey,
   loadPosition,
@@ -64,6 +73,7 @@ import {
   patchHistoryState,
   restoreKey,
   savePosition,
+  scrollForPosition,
   visitOrigin,
   type ReadingPosition,
   type VisitOrigin,
@@ -163,14 +173,15 @@ function blocksOf(part: HTMLElement | null | undefined, last: number, lines: { s
   return blocks.filter((b, i) => b.line <= lines.end && (blocks[i + 1]?.line ?? last + 1) > lines.start).map((b) => b.el);
 }
 
-/** The source lines of the block at a viewport line. */
-function blockAt(part: HTMLElement | null | undefined, y: number, last: number): { start: number; end: number } | null {
-  const blocks = partBlocks(part);
-  for (let i = 0; i < blocks.length; i++) {
-    if (blocks[i].el.getBoundingClientRect().bottom > y) return { start: blocks[i].line, end: (blocks[i + 1]?.line ?? last + 1) - 1 };
-  }
-  return null;
-}
+/** The reading line, as a share of the height below the strip. */
+const READING_LINE = 0.3;
+/** How far from the reading line a statement still counts as what is being read. */
+const LINE_REACH = 0.32;
+/** Further than this share of the window in one hold is flying, not reading. */
+const FLYING = 0.5;
+/** What the thread reaches on the Lean page: the lit lines where they are drawn, else the step's title. */
+const LEAN_TARGET = ".lean-line.is-lit, .lean-page__title";
+const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
   const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
@@ -212,7 +223,7 @@ interface GoOptions {
 function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: LoadedDocument; structures: Structures }) {
   const { graph, snapshot } = useEdition();
   const edition = snapshot.cache_key;
-  const { doc, paper } = loaded;
+  const { doc, paper, ties } = loaded;
   const stage = route.stage;
   const structure = paper.structure;
   const wide = useMedia("(min-width: 1360px)");
@@ -232,8 +243,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       /* storage unavailable */
     }
   }, []);
-  /** Below 1280px, or with the pane turned off: the map as a sheet. */
-  const [mapSheet, setMapSheet] = useState(false);
+  /** Below 1280px, or with the page turned off: the right page as a sheet, opened on demand. */
+  const [sheetOpen, setSheetOpen] = useState(false);
   // The first screen is the paper: the map and the alignment arrive in idle time.
   const [paneReady, setPaneReady] = useState(false);
   const [alignment, setAlignment] = useState<Alignment | null>(null);
@@ -245,29 +256,33 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }, 500),
     [],
   );
-  /** The record open in its sheet: docked under the map, or in a modal when no pane is shown. */
-  const [sheet, setSheet] = useState<OpenRecord | null>(null);
-  const sheetOpener = useRef<HTMLElement | null>(null);
   const paneHover = useRef<PaneHover | null>(null);
+
+  // Written by the scroll path and pointer; read by small leaves and by the right page.
+  const signals = useRef<ReaderSignals>({
+    heading: new Signal<string | null>(null),
+    part: new Signal(0),
+    follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }, sameFollow),
+    point: new Signal<Pointed | null>(null),
+    caption: new Signal<string | null>(null),
+  }).current;
+  const statements = useMemo(() => new Statements(ties, doc.parts), [ties, doc]);
+  useEffect(() => () => statements.dispose(), [statements]);
 
   const bodyRef = useRef<BodyHandle>(null);
   const paperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const keyRef = useRef<string>("");
   const selfAnchor = useRef<string | undefined>(route.anchor);
+  /** The `l` this page wrote itself, so the route effect does not land on it. */
+  const selfAt = useRef<string | undefined | null>(null);
   const lastAnchor = useRef<string | undefined>(route.anchor);
   const lastAt = useRef<string | undefined>(route.at);
   const lastHref = useRef<string>("");
   const inspectOpener = useRef<HTMLElement | null>(null);
 
   const outline = useMemo(() => outlineOf(doc), [doc]);
-  const [currentPart, setCurrentPart] = useState(0);
-  const [currentHeading, setCurrentHeading] = useState<string | null>(null);
-  /** The passage under the map's reading line (38% down the text area), and that passage once it has stayed there. */
-  const [followPart, setFollowPart] = useState(-1);
-  /** The source lines of the block under the reading line, once it has stayed there. */
-  const [followBlock, setFollowBlock] = useState<{ start: number; end: number } | null>(null);
-  const [followAnchor, setFollowAnchor] = useState<string | null>(null);
+  const countsRef = useMemo(() => outlineTieCounts(outline, structure, doc, ties), [outline, structure, doc, ties]);
   const inspectFollowing = useRef(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [action, setAction] = useState<SelectionAction | null>(null);
@@ -283,6 +298,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // ---- Where the page opens ----------------------------------------------------------
 
+  /** The statement an address names: this record's slice, or whichever statement has that slice. */
+  const statementAt = useCallback(
+    (node: string | undefined, at: string | undefined): number | null => {
+      const exact = statementFor(ties, node, at);
+      if (exact !== null || !at) return exact;
+      const found = ties.index.ties.findIndex((tie) => tie.at === at);
+      return found >= 0 ? found : null;
+    },
+    [ties],
+  );
+
   const initial = useMemo(() => {
     keyRef.current = historyKey();
     const from = restoreKey();
@@ -290,7 +316,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const savedPart = saved ? partOfPosition(saved, { stage, edition, parts: doc.parts }) : null;
     const hit = route.anchor ? resolveAnchor(doc, route.anchor) : null;
     const lines = route.at ? resolveAt(doc, route.at) : null;
-    const start = savedPart ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
+    const named = statementAt(route.node, route.at);
+    const start = savedPart ?? (named !== null ? statements.partOf(named) : undefined) ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
     const parts = new Set<number>();
     for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
     if (start < 4) [0, 1, 2].forEach((i) => i < doc.parts.length && parts.add(i));
@@ -306,13 +333,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const part = partAt(body, doc.parts.length, top + 1);
     const el = body.partElement(part);
     if (!el) return null;
-    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: Math.round(top - el.getBoundingClientRect().top) };
+    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: top - el.getBoundingClientRect().top, top, block: blockAtLine(el, top) };
   }, [doc, stage, edition, readingTop]);
 
-  const saveNow = useCallback((key = keyRef.current) => {
+  const saveNow = useCallback(() => {
     const position = measurePosition();
-    if (position && key) savePosition(key, position);
+    if (position) savePosition(position);
   }, [measurePosition]);
+
+  // Whatever the way of leaving: a link, Back, a reload.
+  useEffect(() => onLeave(saveNow), [saveNow]);
+
+  const restoring = useRef<(() => void) | null>(null);
+  useEffect(() => () => restoring.current?.(), []);
 
   const restorePosition = useCallback(
     async (position: ReadingPosition) => {
@@ -322,9 +355,30 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       await body.ensure([part - 1, part, part + 1]);
       const el = body.partElement(part);
       if (!el) return false;
-      const y = el.getBoundingClientRect().top + window.scrollY - readingTop() + position.offset;
-      window.scrollTo({ top: Math.max(0, y), behavior: "instant" as ScrollBehavior });
-      body.reanchor(true);
+      const line = position.top ?? readingTop();
+      const y = () => scrollForPosition(el, position, line);
+      window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
+      body.hold(el);
+      // Parts around it and their mathematics are still settling: stay on the line
+      // until they have, and go back to it once when late fonts reflow the text.
+      restoring.current?.();
+      const settled = () => body.reanchor(true);
+      const fonts = document.fonts;
+      const refit = () => (restoring.current = restoreScroll({ window: y }, { onDone: settled }));
+      const stop = restoreScroll(
+        { window: y },
+        {
+          onDone: () => {
+            settled();
+            fonts?.addEventListener("loadingdone", refit, { once: true });
+            window.setTimeout(() => fonts?.removeEventListener("loadingdone", refit), 3000);
+          },
+        },
+      );
+      restoring.current = () => {
+        stop();
+        fonts?.removeEventListener("loadingdone", refit);
+      };
       return true;
     },
     [doc, stage, edition, readingTop],
@@ -384,32 +438,52 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [doc, stage],
   );
 
+  /** The reading line, in pixels from the top of the window. */
+  const readingLine = useCallback(() => {
+    const top = readingTop();
+    return top + (window.innerHeight - top) * READING_LINE;
+  }, [readingTop]);
+
   /**
-   * The exact landing of `?l=`: mark the blocks of the slice, in amber at first and
-   * quietly while it stays the target, and bring its first block under the reading line.
+   * The exact landing of an address. A statement comes to the reading line and is lit there.
+   * Lines with no statement mark their blocks, amber at first and quietly while they stay
+   * the target, under the strip.
    */
   const landSlice = useCallback(
-    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean } = {}) => {
+    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean; node?: string } = {}) => {
       const body = bodyRef.current;
       const root = paperRef.current;
       if (!body || !root) return false;
       root.querySelectorAll("[data-slice]").forEach((el) => el.removeAttribute("data-slice"));
-      const lines = at ? resolveAt(doc, at) : null;
-      const parts = lines ? partsOfLines(doc.parts, lines) : [];
-      if (!lines || !parts.length) return false;
-      await body.ensure([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
-      const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
-      if (!blocks.length) return false;
-      blocks.forEach((el) => el.setAttribute("data-slice", ""));
-      if (options.scroll === false) return true;
-      const target = blocks[0];
+      const statement = statementAt(options.node, at);
+      let target: Element | undefined;
+      let landing: () => number;
+      if (statement !== null) {
+        const part = statements.partOf(statement);
+        await body.ensure([part - 1, part, part + 1]);
+        target = statements.first(statement) ?? undefined;
+        if (!target) return false;
+        if (options.scroll === false) return true;
+        const line = readingLine();
+        landing = () => target!.getBoundingClientRect().top + window.scrollY - line;
+      } else {
+        const lines = at ? resolveAt(doc, at) : null;
+        const parts = lines ? partsOfLines(doc.parts, lines) : [];
+        if (!lines || !parts.length) return false;
+        await body.ensure([parts[0] - 1, ...parts, parts[parts.length - 1] + 1]);
+        const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
+        if (!blocks.length) return false;
+        blocks.forEach((el) => el.setAttribute("data-slice", ""));
+        if (options.scroll === false) return true;
+        target = blocks[0];
+        landing = () => target!.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
+      }
       setNotice(null);
-      const landing = () => target.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
       const smooth = !!options.smooth && !prefersReducedMotion() && Math.abs(landing() - window.scrollY) < window.innerHeight * 1.5;
       window.scrollTo({ top: Math.max(0, landing()), behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
       const settle = () => {
         if (Math.abs(landing() - window.scrollY) > 6) window.scrollTo({ top: Math.max(0, landing()), behavior: "instant" as ScrollBehavior });
-        body.hold(target);
+        body.hold(target!);
       };
       if (smooth) {
         let done = false;
@@ -424,7 +498,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       } else requestAnimationFrame(settle);
       return true;
     },
-    [doc, readingTop],
+    [doc, readingTop, readingLine, statements, statementAt, ties],
   );
 
   /**
@@ -443,27 +517,31 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // Open at the saved line, the anchor, or the top.
   useLayoutEffect(() => {
-    const previous = window.history.scrollRestoration;
-    window.history.scrollRestoration = "manual";
     // The page holds the reading position itself (PaperBody); the browser's
     // own scroll anchoring would pick nodes in the sticky columns and add to it.
     const root = document.documentElement;
     const previousAnchor = root.style.overflowAnchor;
     root.style.overflowAnchor = "none";
+    // A record's address opened cold lands on its statement, with or without `l`.
+    const named = statementAt(route.node, route.at);
+    const at = named !== null ? ties.index.ties[named].at : route.at;
     if (initial.saved) {
       void restorePosition(initial.saved);
-      if (route.at) void landSlice(route.at, { scroll: false });
-    } else if (route.at) {
-      void landSlice(route.at).then((ok) => {
+      if (at) void landSlice(at, { scroll: false, node: route.node });
+    } else if (at) {
+      void landSlice(at, { node: route.node }).then((ok) => {
         if (!ok && route.anchor) void jumpTo(route.anchor);
       });
     } else if (route.anchor) void jumpTo(route.anchor);
-    else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    else {
+      // A record this paper discusses without an exact slice opens at its passage.
+      const passage = route.node ? firstPassageFor(structure, [route.node]) : null;
+      if (passage) void jumpTo(passage);
+      else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    }
     if (restoreKey()) patchHistoryState({ lxRestore: undefined });
     lastHref.current = window.location.href;
     return () => {
-      saveNow();
-      window.history.scrollRestoration = previous;
       root.style.overflowAnchor = previousAnchor;
     };
     // Once per mounted paper.
@@ -480,7 +558,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const previousKey = keyRef.current;
     const existing = existingHistoryKey();
     const fromPop = !!existing && existing !== previousKey;
-    if (fromPop && previousKey) saveNow(previousKey);
     keyRef.current = historyKey();
     setVisit(visitOrigin());
     const anchorChanged = route.anchor !== lastAnchor.current;
@@ -490,12 +567,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const from = restoreKey();
     const saved = fromPop ? loadPosition(keyRef.current) : from ? loadPosition(from) : null;
     if (from) patchHistoryState({ lxRestore: undefined });
-    if (atChanged) void landSlice(route.at, { scroll: !saved && !!route.at, smooth: !fromPop });
+    // A pin from a sentence, or the address keeping up with the reader: the paper stays.
+    const own = selfAt.current === route.at;
+    selfAt.current = null;
+    const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
+    if (atChanged || own) void landSlice(route.at, { scroll: paperMoves, smooth: !fromPop, node: route.node });
     if (saved) {
       void restorePosition(saved).then((ok) => {
         if (!ok && anchorChanged && route.anchor) void jumpTo(route.anchor);
       });
-    } else if (atChanged && route.at) {
+    } else if (paperMoves) {
       // landSlice has the page.
     } else if (anchorChanged && route.anchor && route.anchor !== selfAnchor.current) {
       void jumpTo(route.anchor, { smooth: !fromPop });
@@ -505,20 +586,113 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     selfAnchor.current = undefined;
   }, [route, jumpTo, landSlice, restorePosition, saveNow]);
 
-  // ---- Following the reader ------------------------------------------------------------
+  // ---- What is on the right page ------------------------------------------------------
+
+  const hereRef = useRef<ReadRoute>(route);
+  hereRef.current = route;
+
+  /** The address names a pin: the record, and its statement when this paper has one. */
+  const pin = useMemo<Pin | null>(() => {
+    if (!route.node) return null;
+    const statement = statementAt(route.node, route.at);
+    return { record: route.node, tie: statement !== null && ties.index.ties[statement].record === route.node ? statement : null };
+  }, [route.node, route.at, statementAt, ties]);
+  const pinRef = useRef(pin);
+  pinRef.current = pin;
+  /** A pin is released by scrolling away: the reader's own hand, after it has been on screen. */
+  const pinSeen = useRef(false);
+  const handMoved = useRef(false);
+  /** The statement under the reading line, on the page at once. */
+  const current = useRef<number | null>(null);
+  const currentSegment = useRef<number | null>(null);
+  /** Stepped to by keys: the line leaves it alone until the reader scrolls by hand. */
+  const stepped = useRef(false);
+  const pointed = useRef<number | null>(null);
+  const pointAtRef = useRef<(t: number | null, record?: string) => void>(() => undefined);
+  const movedAt = useRef(0);
+  const update = useRef<() => void>(() => undefined);
+  const thread = useRef<SVGPathElement>(null);
+
+  /**
+   * The thread: a short line across the gutter from the statement to the Lean beside it. It
+   * only ever crosses the empty gutter, so it can touch no card and no text, and it goes
+   * whenever either end is off the screen. Drawn from what is on screen, with no state.
+   */
+  const drawThread = useCallback(() => {
+    const path = thread.current;
+    if (!path) return;
+    const t = pinRef.current?.tie ?? current.current;
+    const first = t !== null ? statements.first(t) : null;
+    const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
+    const page = document.querySelector(".lean-page");
+    const pane = page?.getBoundingClientRect();
+    const target = (page?.querySelector(LEAN_TARGET) ?? null)?.getBoundingClientRect();
+    const box = first?.getClientRects()[0];
+    const top = readingTop();
+    if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
+      if (path.getAttribute("d")) path.setAttribute("d", "");
+      return;
+    }
+    const y0 = box.top + box.height / 2;
+    const y1 = target.top + Math.min(target.height, 22) / 2;
+    const x0 = paper.right + 4;
+    const x1 = pane.left - 1;
+    const mid = (x0 + x1) / 2;
+    path.setAttribute("d", `M${x0.toFixed(1)} ${y0.toFixed(1)}C${mid.toFixed(1)} ${y0.toFixed(1)} ${mid.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`);
+  }, [statements, readingTop]);
+
+  useEffect(() => {
+    pinSeen.current = false;
+    handMoved.current = false;
+    statements.light("pin", pin?.tie ?? null);
+    statements.light("on", pin ? null : current.current);
+    update.current();
+  }, [pin, statements]);
+
+  const release = useCallback(() => {
+    const here = hereRef.current;
+    if (here.node || here.at || here.decl) navigate({ ...here, node: undefined, at: undefined, decl: undefined, declModule: undefined }, { replace: true });
+  }, []);
 
   useEffect(() => {
     let frame = 0;
     let saveTimer = 0;
-    let blockKey = 0;
-    let blockTimer = 0;
-    const update = () => {
+    let holdTimer = 0;
+    let addressTimer = 0;
+    let settled = "";
+    /** The passage that holds the reading line, or the nearest; every statement belongs to one. */
+    const passageAt = (body: BodyHandle, line: number) => {
+      const at = partAt(body, doc.parts.length, line);
+      let follow = at;
+      while (follow >= 0 && doc.parts[follow]?.kind !== "passage") follow--;
+      if (follow < 0) {
+        follow = at;
+        while (follow < doc.parts.length && doc.parts[follow]?.kind !== "passage") follow++;
+      }
+      return follow < doc.parts.length ? follow : -1;
+    };
+    const settle = (tie: number | null, part: number) => {
+      const anchor = doc.parts[part]?.anchor ?? null;
+      signals.follow.set({ tie, anchor, part });
+      // The address keeps up with the reader once they have stopped, never as a history entry.
+      window.clearTimeout(addressTimer);
+      if (tie === null || pinRef.current) return;
+      addressTimer = window.setTimeout(() => {
+        const here = hereRef.current;
+        const at = ties.index.ties[tie].at;
+        if (here.at === at || here.node || here.beside) return;
+        selfAt.current = at;
+        navigate({ ...here, at }, { replace: true });
+      }, 1400);
+    };
+    const run = () => {
       frame = 0;
       const body = bodyRef.current;
       if (!body) return;
       const top = readingTop();
-      const line = top + (window.innerHeight - top) * 0.3;
+      const line = top + (window.innerHeight - top) * READING_LINE;
       let part = partAt(body, doc.parts.length, line);
+      const atLine = part;
       // Unmapped text at the reading line (a title block, a bridge paragraph):
       // follow the first mapped passage on screen instead, if there is one.
       if (doc.parts[part]?.kind !== "passage") {
@@ -531,24 +705,37 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           }
         }
       }
-      setCurrentPart(part);
-      // The map follows the passage under a lower reading line, or the nearest one above it
-      // (before the first passage, the first one below).
-      const followLine = top + (window.innerHeight - top) * 0.38;
-      const at = partAt(body, doc.parts.length, followLine);
-      let follow = at;
-      while (follow >= 0 && doc.parts[follow]?.kind !== "passage") follow--;
-      if (follow < 0) {
-        follow = at;
-        while (follow < doc.parts.length && doc.parts[follow]?.kind !== "passage") follow++;
+      signals.part.set(part);
+      if (!stepped.current) {
+        const segment = statements.atLine(line, (window.innerHeight - top) * LINE_REACH, atLine);
+        currentSegment.current = segment;
+        current.current = segment === null ? null : statementOf(ties, segment);
+        if (!pinRef.current) statements.light("on", current.current);
       }
-      setFollowPart(follow < doc.parts.length ? follow : -1);
-      const block = blockAt(body.partElement(at), followLine, doc.parts[at]?.lines.end ?? 0);
-      const key = block ? block.start : 0;
-      if (key !== blockKey) {
-        blockKey = key;
-        window.clearTimeout(blockTimer);
-        blockTimer = window.setTimeout(() => setFollowBlock(block), 180);
+      const passage = passageAt(body, line);
+      const key = `${current.current}|${passage}`;
+      if (key !== settled) {
+        settled = key;
+        window.clearTimeout(holdTimer);
+        const held = current.current;
+        // A long statement can hold the line while the page flies past: wait for the page too.
+        let from = window.scrollY;
+        const hold = () => {
+          const moved = Math.abs(window.scrollY - from);
+          from = window.scrollY;
+          if (moved > window.innerHeight * FLYING) holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
+          else settle(held, passage);
+        };
+        holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
+      }
+      const held = pinRef.current?.tie ?? null;
+      if (held !== null) {
+        const box = statements.extent(held);
+        if (box) {
+          const visible = box.bottom > top && box.top < window.innerHeight;
+          if (visible) pinSeen.current = true;
+          else if (pinSeen.current && handMoved.current) release();
+        }
       }
       let heading: string | null = null;
       for (const entry of outline) {
@@ -559,57 +746,87 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         } else break;
       }
       if (window.scrollY < 8) heading = null;
-      setCurrentHeading(heading);
+      signals.heading.set(heading);
+      drawThread();
+    };
+    update.current = () => {
+      if (!frame) frame = requestAnimationFrame(run);
     };
     const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+      movedAt.current = performance.now();
+      // The words under the pointer have moved on.
+      if (signals.caption.get()) signals.caption.set(null);
+      if (pointed.current !== null) pointAtRef.current(null);
+      update.current();
       window.clearTimeout(saveTimer);
       saveTimer = window.setTimeout(() => saveNow(), 200);
     };
+    /** The reader's own hand on the page gives the line back to the reader. */
+    const onHand = () => {
+      stepped.current = false;
+      handMoved.current = true;
+    };
+    const onKeyScroll = (event: KeyboardEvent) => {
+      if (SCROLL_KEYS.has(event.key)) onHand();
+    };
+    const onBar = (event: PointerEvent) => {
+      if (event.target === document.documentElement) onHand();
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
-    const first = window.setTimeout(update, 60);
+    window.addEventListener("wheel", onHand, { passive: true });
+    window.addEventListener("touchmove", onHand, { passive: true });
+    window.addEventListener("keydown", onKeyScroll);
+    window.addEventListener("pointerdown", onBar);
+    const first = window.setTimeout(run, 60);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener("wheel", onHand);
+      window.removeEventListener("touchmove", onHand);
+      window.removeEventListener("keydown", onKeyScroll);
+      window.removeEventListener("pointerdown", onBar);
       cancelAnimationFrame(frame);
       window.clearTimeout(saveTimer);
-      window.clearTimeout(blockTimer);
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, saveNow, readingTop]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, release, drawThread]);
 
-  const currentAnchor = doc.parts[currentPart]?.kind === "passage" ? doc.parts[currentPart].anchor : undefined;
-
-  // Fast scrolling passes passages by: the map acts once one has been current for 180ms.
+  // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
-    const part = doc.parts[followPart];
-    const anchor = part?.kind === "passage" ? (part.anchor ?? null) : null;
-    const t = window.setTimeout(() => setFollowAnchor(anchor), 180);
-    return () => window.clearTimeout(t);
-  }, [followPart, doc]);
-  const followPassage = useMemo(() => (followAnchor ? passageRecords(passageOf(structure, followAnchor)) : []), [followAnchor, structure]);
-  // The statement under the reading line, as the alignment places it; else the whole passage.
-  const slices = useMemo(() => sliceRows(alignment, doc, stage), [alignment, doc, stage]);
-  const followRecords = useMemo(() => {
-    const exact = followBlock ? recordsCovering(slices, followBlock) : [];
-    return exact.length ? exact : followPassage;
-  }, [slices, followBlock, followPassage]);
-  const inView = useMemo(() => new Set(followRecords), [followRecords]);
+    const redraw = () => requestAnimationFrame(drawThread);
+    const off = signals.follow.subscribe(() => window.setTimeout(redraw, 120));
+    const onInner = (event: Event) => (event.target as Element).closest?.(".lean-page") && redraw();
+    window.addEventListener("scroll", onInner, { capture: true, passive: true });
+    return () => {
+      off();
+      window.removeEventListener("scroll", onInner, { capture: true });
+    };
+  }, [signals, drawThread]);
 
-  // The paper's path through its records, and how far along it the reader is.
   const trail = useMemo(() => paperTrail(structure), [structure]);
-  const trailPlace = useMemo(() => trailAt(trail, followAnchor, followPassage), [trail, followAnchor, followPassage]);
-  const trailProgress = useMemo(() => {
-    const part = followAnchor ? doc.parts.findIndex((p) => p.kind === "passage" && p.anchor === followAnchor) : 0;
-    return trailWords(outline, Math.max(0, part), trailPlace);
-  }, [doc, outline, followAnchor, trailPlace]);
+
+  // The place being left, named once for every way of leaving it.
+  useEffect(
+    () =>
+      namePlace(() => {
+        // Leaving an open step, the way back names the step in words.
+        const open = hereRef.current.node;
+        if (open) return shortTitle(open, graph.nodes.get(open)?.label ?? open);
+        const chain = chainOf(outline, signals.heading.get());
+        const last = chain[chain.length - 1];
+        return `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
+      }),
+    [outline, signals, stage, graph],
+  );
 
   // ---- Links -------------------------------------------------------------------------
 
   const here: ReadRoute = useMemo(
-    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside }),
-    [stage, route.anchor, route.at, route.node, route.beside],
+    () => ({ view: "read", stage, anchor: route.anchor, at: route.at, node: route.node, beside: route.beside, decl: route.decl, declModule: route.declModule }),
+    [stage, route.anchor, route.at, route.node, route.beside, route.decl, route.declModule],
   );
   const links: Links = useMemo(
     () => ({
@@ -635,33 +852,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // ---- Inspector -----------------------------------------------------------------------
 
-  // A record named in the address (from the map or search) opens the inspector beside the paper.
-  useEffect(() => {
-    if (paneOn && !inspect) {
-      setSheet((open) => (route.node ? (open?.id === route.node ? open : { id: route.node }) : null));
-      return;
-    }
-    if (!route.node || inspect || !mid) return;
-    const hit = route.anchor ? resolveBeside(doc, structure, route.anchor) : null;
-    const anchor = hit?.passage && passageRecords(passageOf(structure, hit.passage)).includes(route.node) ? hit.passage : null;
-    setInspect({ kind: "passage", anchor });
-    // Only when the record changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route.node]);
-
   // An open passage list keeps up with the reader: once its passage has left the
   // window it moves to the passage being read, instead of standing stale beside it.
   useEffect(() => {
-    if (inspect?.kind !== "passage" || !followAnchor || inspect.anchor === followAnchor) return;
-    const part = inspect.anchor ? doc.parts.findIndex((p) => p.kind === "passage" && p.anchor === inspect.anchor) : -1;
-    const box = part >= 0 ? bodyRef.current?.partElement(part)?.getBoundingClientRect() : null;
-    if (box && box.bottom > readingTop() && box.top < window.innerHeight) return;
-    inspectFollowing.current = true;
-    setInspect({ kind: "passage", anchor: followAnchor });
-    if (route.node) navigate({ ...here, node: undefined }, { replace: true });
-    // Only when the passage being read changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [followAnchor]);
+    if (inspect?.kind !== "passage") return;
+    return signals.follow.subscribe(() => {
+      const { anchor: followAnchor } = signals.follow.get();
+      if (!followAnchor || inspect.anchor === followAnchor) return;
+      const part = inspect.anchor ? doc.parts.findIndex((p) => p.kind === "passage" && p.anchor === inspect.anchor) : -1;
+      const box = part >= 0 ? bodyRef.current?.partElement(part)?.getBoundingClientRect() : null;
+      if (box && box.bottom > readingTop() && box.top < window.innerHeight) return;
+      inspectFollowing.current = true;
+      setInspect({ kind: "passage", anchor: followAnchor });
+    });
+  }, [inspect, signals, doc, readingTop]);
 
   const openInspector = useCallback((anchor: string | null, opener: HTMLElement | null) => {
     inspectOpener.current = opener;
@@ -675,32 +879,44 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     if (opener?.isConnected) opener.focus({ preventScroll: true });
   }, [route.node, here]);
 
+  /** A record chosen in a list: opened like a card. */
   const selectRecord = useCallback(
-    (id: string | null) => navigate({ ...here, node: id ?? undefined, beside: undefined }, { replace: true }),
-    [here],
+    (id: string | null) => {
+      if (!id) return release();
+      const statement = statementFor(ties, id);
+      selfAt.current = statement !== null ? ties.index.ties[statement].at : undefined;
+      navigate({ ...hereRef.current, node: id, at: statement !== null ? ties.index.ties[statement].at : undefined, beside: undefined });
+    },
+    [ties, release],
   );
 
-  // ---- A record's sheet ----------------------------------------------------------------
+  // ---- Pinning -------------------------------------------------------------------------
 
-  const paneOnRef = useRef(paneOn);
-  paneOnRef.current = paneOn;
-  const hereRef = useRef(here);
-  hereRef.current = here;
-
-  /** A record chip or Lean mark in a passage's bar. The address names it where the pane shows it. */
-  const openRecord = useCallback((id: string, opener: HTMLElement | null, lean?: boolean) => {
-    sheetOpener.current = opener;
-    setSheet({ id, lean });
-    if (paneOnRef.current) navigate({ ...hereRef.current, node: id, beside: undefined }, { replace: true });
+  /** A name in the Lean, or a Lean result from search: the Lean page walks there, as one history entry. */
+  const openDecl = useCallback((walk: LeanWalk) => {
+    walkEntry(walk);
+    return true;
   }, []);
+  useEffect(() => hostLean(openDecl), [openDecl]);
 
-  const closeSheet = useCallback(() => {
-    setSheet(null);
-    if (paneOnRef.current && hereRef.current.node) navigate({ ...hereRef.current, node: undefined }, { replace: true });
-    const opener = sheetOpener.current;
-    sheetOpener.current = null;
-    if (opener?.isConnected) opener.focus({ preventScroll: true });
-  }, []);
+  /** A statement in the paper: one history entry, and the paper does not move. */
+  const openStatement = useCallback(
+    (t: number) => {
+      const tie = ties.index.ties[t];
+      selfAt.current = tie.at;
+      go({ ...hereRef.current, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
+    },
+    [ties, go],
+  );
+
+  /** "See its Lean" in a reference's inset: the statement opens as if it had been clicked. */
+  const openReferenceLean = useCallback(
+    (record: string, at: string | undefined) => {
+      const t = statementFor(ties, record, at);
+      if (t !== null) openStatement(t);
+    },
+    [ties, openStatement],
+  );
 
   // On desktop the inspector is a column, not a modal: take focus to its title once, explicitly.
   const inspectKey = inspect ? (inspect.kind === "passage" ? `p:${inspect.anchor}` : `s:${inspect.start}`) : "";
@@ -750,10 +966,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   );
 
   const toggleMap = useCallback(() => showMap(!mapShown), [showMap, mapShown]);
+  const closeSheet = useCallback(() => {
+    setSheetOpen(false);
+    if (hereRef.current.node) release();
+  }, [release]);
   const hideMap = useCallback(() => {
     showMap(false);
-    setMapSheet(false);
-  }, [showMap]);
+    closeSheet();
+  }, [showMap, closeSheet]);
 
   const dismissVisit = useCallback(() => {
     patchHistoryState({ lxVisit: undefined });
@@ -771,38 +991,159 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
   }, [route.beside]);
 
+  // ---- Pointing ------------------------------------------------------------------------
+
+  const pointTimer = useRef(0);
+  const leaveTimer = useRef(0);
+
+  /** Light a statement now, and after a dwell let the right page preview it. Moving off restores. */
+  const pointAt = useCallback(
+    (t: number | null, record?: string) => {
+      window.clearTimeout(leaveTimer.current);
+      if (t === pointed.current && t !== null) return;
+      window.clearTimeout(pointTimer.current);
+      pointed.current = t;
+      statements.light("point", t);
+      if (t === null && !record) {
+        leaveTimer.current = window.setTimeout(() => {
+          paneHover.current?.(null);
+          signals.point.set(null);
+        }, 60);
+        return;
+      }
+      const id = record ?? ties.index.ties[t!].record;
+      paneHover.current?.(new Set([id]));
+      pointTimer.current = window.setTimeout(() => signals.point.set({ tie: t, record: id }), POINT_DWELL);
+    },
+    [statements, signals, ties],
+  );
+  pointAtRef.current = pointAt;
+  useEffect(
+    () => () => {
+      window.clearTimeout(pointTimer.current);
+      window.clearTimeout(leaveTimer.current);
+    },
+    [],
+  );
+
+  const onPaperPointer = (event: React.PointerEvent) => {
+    if (event.pointerType === "touch") return;
+    // Words sliding under a still pointer are not the reader pointing at them.
+    if (performance.now() - movedAt.current < 120) return;
+    const target = event.target as Element;
+    const mark = target.closest?.<HTMLElement>("[data-t]");
+    if (mark) {
+      signals.caption.set(null);
+      pointAt(statementOf(ties, Number(mark.dataset.t)));
+      return;
+    }
+    pointAt(null);
+    const anchor = target.closest?.<HTMLElement>("[data-passage]")?.dataset.passage;
+    signals.caption.set(anchor && target.closest(".part__text") ? anchor : null);
+  };
+
+  const onPaperLeave = () => {
+    pointAt(null);
+    signals.caption.set(null);
+  };
+
+  const onPaperFocus = (event: React.FocusEvent) => {
+    const mark = (event.target as Element).closest?.<HTMLElement>("[data-t]");
+    if (mark) pointAt(statementOf(ties, Number(mark.dataset.t)));
+  };
+
   // ---- Keys ----------------------------------------------------------------------------
+
+  /** Move to the next tied statement: to the reading line, as though the reader had scrolled there. */
+  const step = useCallback(
+    (by: 1 | -1) => {
+      // Between statements the step starts from where the reader is, not from the paper's start.
+      const at = signals.part.get();
+      const from = currentSegment.current;
+      const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
+      if (next === null) return;
+      if (pinRef.current) release();
+      stepped.current = true;
+      current.current = next;
+      currentSegment.current = ties.segmentsOf[next][0];
+      statements.light("on", next);
+      update.current();
+      void landSlice(ties.index.ties[next].at, { node: ties.index.ties[next].record, smooth: true }).then(() => {
+        const first = statements.first(next);
+        if (first) {
+          first.setAttribute("tabindex", "0");
+          first.focus({ preventScroll: true });
+        }
+      });
+    },
+    [ties, statements, signals, landSlice, release],
+  );
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-      if (document.querySelector("[data-modal-open]")) return;
-      if (action) {
-        setAction(null);
+      if (event.defaultPrevented || document.querySelector("[data-modal-open]")) return;
+      const target = event.target as HTMLElement | null;
+      const typing = !!target?.closest?.("input, textarea, select, [contenteditable]");
+      if (event.key === "Escape") {
+        if (action) setAction(null);
+        else if (route.beside) {
+          event.preventDefault();
+          closeVisit();
+        } else if (inspect && (mid || paneOn)) {
+          event.preventDefault();
+          closeInspector();
+        } else if (!paneOn && sheetOpen) {
+          event.preventDefault();
+          closeSheet();
+        } else if (pinRef.current) {
+          event.preventDefault();
+          release();
+        }
         return;
       }
-      if (route.beside) {
+      if (typing || event.metaKey || event.ctrlKey || event.altKey || route.beside) return;
+      if (event.key === "j" || event.key === "k") {
         event.preventDefault();
-        closeVisit();
-      } else if (inspect && mid) {
+        step(event.key === "j" ? 1 : -1);
+      } else if (event.key === "Enter" && current.current !== null) {
+        // Enter on a control belongs to that control.
+        if (target && target !== document.body && !target.closest("[data-t]")) return;
         event.preventDefault();
-        closeInspector();
-      } else if (sheet && paneOn) {
-        event.preventDefault();
-        closeSheet();
+        openStatement(current.current);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [route.beside, inspect, mid, action, closeVisit, closeInspector, sheet, paneOn, closeSheet]);
+  }, [route.beside, inspect, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, release, step, openStatement]);
 
   // ---- Clicks inside the paper ---------------------------------------------------------
 
+  const downAt = useRef<{ x: number; y: number } | null>(null);
+  const pinTimer = useRef(0);
+
   const onPaperClick = (event: React.MouseEvent) => {
-    const a = (event.target as Element).closest?.("a");
-    if (!a || event.button !== 0) return;
+    const target = event.target as Element;
+    const a = target.closest?.("a");
+    if (event.button !== 0) return;
+    if (!a) {
+      if (target.closest?.("button")) return;
+      const mark = target.closest?.<HTMLElement>("[data-t]");
+      window.clearTimeout(pinTimer.current);
+      if (!mark || event.detail > 1) return;
+      // A drag or a selection is reading, not asking.
+      const down = downAt.current;
+      const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
+      const selection = window.getSelection();
+      if (moved || (selection && !selection.isCollapsed && selection.toString().trim())) return;
+      const t = statementOf(ties, Number(mark.dataset.t));
+      if (t === null) return;
+      // The second click of a double click selects a word; wait to see that it does not come.
+      if ((event.nativeEvent as PointerEvent).pointerType === "touch") openStatement(t);
+      else pinTimer.current = window.setTimeout(() => openStatement(t), 210);
+      return;
+    }
     const href = a.getAttribute("href") ?? "";
-    const from = a.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? currentAnchor;
+    const from = a.closest<HTMLElement>("[data-passage]")?.dataset.passage ?? doc.parts[signals.part.get()]?.anchor;
     if (a.dataset.companion !== undefined && a.closest(".part__text")) {
       if (event.metaKey || event.ctrlKey || event.shiftKey) return; // the browser opens it in a new tab or window
       event.preventDefault();
@@ -821,55 +1162,29 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** An explicit jump (outline, breadcrumb, in-text reference): a history stop of its own. */
   const jumpWithHistory = (id: string, focus: boolean) => {
     selfAnchor.current = id;
-    go({ ...here, anchor: id, at: undefined, beside: undefined });
+    go({ ...here, anchor: id, at: undefined, node: undefined, beside: undefined });
     void jumpTo(id, { smooth: true, focus });
   };
 
-  /** From the map: the record opens in its sheet, the paper scrolls to the passage and its margin mark flashes amber once. */
+  /** A line of the paper found by search: a history stop, marked where it lands. */
+  const jumpToLine = (line: number) => {
+    go({ ...here, at: String(line), node: undefined, beside: undefined });
+  };
+
+  /** From the map: the paper goes to the statement, and the graph stays where it is. */
   const openFromMap = useCallback(
-    (id: string, anchor: string | null, slice: AlignedStatement | null) => {
-      setSheet({ id });
-      sheetOpener.current = null;
-      const node = paneOn ? id : here.node;
-      if (slice) {
-        const at = sliceAt(slice);
-        if (at === route.at) void landSlice(at, { smooth: true });
-        selfAnchor.current = slice.anchor ?? undefined;
-        go({ ...here, anchor: slice.anchor ?? here.anchor, at, node, beside: undefined });
-        return;
-      }
-      if (!anchor) {
-        navigate({ ...here, node, beside: undefined }, { replace: true });
-        return;
-      }
-      selfAnchor.current = anchor;
-      go({ ...here, anchor, at: undefined, node, beside: undefined });
-      void jumpTo(anchor, { smooth: true }).then((ok) => {
-        if (!ok) return;
-        let done = false;
-        const flash = () => {
-          if (done) return;
-          done = true;
-          window.removeEventListener("scrollend", flash);
-          const el = paperRef.current?.querySelector<HTMLElement>(`[data-passage="${CSS.escape(anchor)}"]`);
-          if (!el) return;
-          el.classList.remove("part--flash");
-          void el.offsetWidth;
-          el.classList.add("part--flash");
-          window.setTimeout(() => el.classList.remove("part--flash"), 1200);
-        };
-        // After the smooth scroll ends; at once when the page did not move (or had already landed).
-        const y0 = window.scrollY;
-        window.addEventListener("scrollend", flash, { once: true });
-        window.setTimeout(() => Math.abs(window.scrollY - y0) < 1 && flash(), 120);
-        window.setTimeout(flash, 950);
-      });
+    (id: string) => {
+      const statement = statementFor(ties, id);
+      const tie = statement !== null ? ties.index.ties[statement] : null;
+      const to = { ...hereRef.current, node: id, at: tie?.at, decl: undefined, declModule: undefined, beside: undefined };
+      if (tie && hereRef.current.at === tie.at) void landSlice(tie.at, { smooth: true, node: id });
+      go(to);
     },
-    [go, here, jumpTo, landSlice, route.at, paneOn],
+    [go, ties, landSlice],
   );
 
   const toTop = () => {
-    go({ ...here, anchor: undefined, at: undefined, beside: undefined });
+    go({ ...here, anchor: undefined, at: undefined, node: undefined, beside: undefined });
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? ("instant" as ScrollBehavior) : "smooth" });
   };
 
@@ -949,13 +1264,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const status = statusWords(structure.state, structure.review_state);
   const pdf = { href: `${import.meta.env.BASE_URL}${PAPER_PDFS[stage].path}`, pages: PAPER_PDFS[stage].pages };
   const head = { name: names.short, job: names.job, reader: names.reader, status, pdf };
-  const chain = chainOf(outline, currentHeading);
   const inspecting = !!inspect;
-  // Beside the map the inspector slides in over the right of the pane instead of taking a column.
+  // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineColumn = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
-  const sectionsProps = { entries: outline, current: currentHeading, onJump: (id: string) => jumpWithHistory(id, true) };
-  const currentRecords = currentAnchor ? passageRecords(passageOf(structure, currentAnchor)) : [];
+  const sectionsProps = { entries: outline, counts: countsRef, doc, onJump: (id: string) => jumpWithHistory(id, true), onLine: jumpToLine };
   const visitOriginPassage = route.beside
     ? visit && visit.stage === stage
       ? (visit.anchor ?? null)
@@ -968,23 +1281,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const paneProps = {
     stage,
     structures,
-    anchor: followAnchor,
-    records: followRecords,
-    passage: followPassage,
-    passed: trailPlace.passed,
-    progress: trailProgress,
+    outline,
+    trail,
+    signals,
+    ties,
+    pin,
+    decl: route.decl ?? null,
+    declModule: route.declModule,
     alignment,
-    record: sheet,
     hoverRef: paneHover,
     onRecord: openFromMap,
-    onCloseRecord: closeSheet,
+    onRelease: release,
+    onName: openDecl,
     passageHref: links.beside,
+    onPoint: pointAt,
   };
-
-  const bar = useMemo<PassageBar>(
-    () => ({ open: sheet?.id ?? null, inView, onRecord: openRecord, onHover: (id) => paneHover.current?.(id ? new Set([id]) : null) }),
-    [sheet?.id, inView, openRecord],
-  );
 
   const inspector = inspect && (
     <Inspector
@@ -997,7 +1308,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       onSelect={selectRecord}
       onClose={closeInspector}
       onSameTopic={(anchor) => setChooser(anchor)}
-      onVisit={(s, anchor) => openVisit(inspect.kind === "passage" ? (inspect.anchor ?? undefined) : currentAnchor, { stage: s, anchor })}
+      onVisit={(s, anchor) => openVisit(inspect.kind === "passage" ? (inspect.anchor ?? undefined) : doc.parts[signals.part.get()]?.anchor, { stage: s, anchor })}
     />
   );
 
@@ -1007,62 +1318,38 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     >
       {outlineColumn && (
         <aside className="reader__outline" inert={route.beside ? true : undefined}>
-          <OutlineColumn {...sectionsProps} head={head} />
+          <Heading signals={signals}>{(current) => <OutlineColumn {...sectionsProps} current={current} head={head} />}</Heading>
         </aside>
       )}
 
-      <div className="reader__paper" ref={paperRef} onClick={onPaperClick} inert={route.beside ? true : undefined}>
+      <div
+        className="reader__paper"
+        ref={paperRef}
+        onClick={onPaperClick}
+        onPointerDown={(event) => (downAt.current = { x: event.clientX, y: event.clientY })}
+        onPointerOver={onPaperPointer}
+        onPointerLeave={onPaperLeave}
+        onFocus={onPaperFocus}
+        onBlur={() => pointAt(null)}
+        inert={route.beside ? true : undefined}
+      >
         <div className="reader-strip" ref={stripRef}>
-          {mid && !outlineColumn && <SectionsPopover {...sectionsProps} />}
-          <nav className="crumbs" aria-label="Where you are in this paper">
-            <ol>
-              <li>
-                <a
-                  href={routeHref({ view: "read", stage })}
-                  aria-current={chain.length ? undefined : "location"}
-                  onClick={(event) => {
-                    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                    event.preventDefault();
-                    toTop();
-                  }}
-                >
-                  {names.short}
-                </a>
-              </li>
-              {chain.map((entry, i) => {
-                const last = i === chain.length - 1;
-                return (
-                  <li key={entry.id} className={last ? "crumbs__here" : undefined}>
-                    <a
-                      href={`#${encodeURIComponent(entry.id)}`}
-                      title={sectionLabel(entry.title)}
-                      aria-current={last ? "location" : undefined}
-                      onClick={(event) => {
-                        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                        event.preventDefault();
-                        jumpWithHistory(entry.id, true);
-                      }}
-                    >
-                      {last && !phone ? sectionLabel(entry.title) : sectionNumber(entry.title)}
-                    </a>
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
+          <BackControl className="reader-strip__back" />
+          {mid && !outlineColumn && <Heading signals={signals}>{(current) => <SectionsPopover {...sectionsProps} current={current} />}</Heading>}
+          <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
               type="button"
               className="control reader-strip__map"
               aria-pressed={paneRoom ? paneOn : undefined}
-              aria-haspopup={paneRoom ? undefined : "dialog"}
-              onClick={paneRoom ? toggleMap : () => setMapSheet(true)}
+              onClick={paneRoom ? toggleMap : () => setSheetOpen(true)}
             >
               <svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
                 <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
                 <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
               </svg>
-              {paneRoom ? "Map beside the paper" : "Open the map"}
+              {paneRoom ? "Proof beside the paper" : "Open the proof"}
             </button>
           )}
           {visit && !route.beside && (
@@ -1094,20 +1381,25 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {notice}
           </p>
         )}
-        <PassageBarContext.Provider value={bar}>
-          <PaperBody
-            ref={bodyRef}
-            stage={stage}
-            doc={doc}
-            structures={structures}
-            graph={graph}
-            initial={initial.parts}
-            topInset={readingTop()}
-            inspected={inspect?.kind === "passage" ? inspect.anchor : null}
-            onInspect={openInspector}
-            onSameTopic={sameTopicOf}
-          />
-        </PassageBarContext.Provider>
+        {ties.stops.length > 0 && (
+          <p className="paper-hint">
+            {phone ? "Tap" : "Click"} any marked statement to see its Lean. <span className="paper-hint__more">A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean.{!phone && " Press j and k to step through them."}</span>
+          </p>
+        )}
+        <PaperBody
+          ref={bodyRef}
+          stage={stage}
+          doc={doc}
+          structures={structures}
+          graph={graph}
+          initial={initial.parts}
+          topInset={readingTop()}
+          inspected={inspect?.kind === "passage" ? inspect.anchor : null}
+          statements={statements}
+          onInspect={openInspector}
+          onSameTopic={sameTopicOf}
+          onReferenceLean={openReferenceLean}
+        />
         {action && (
           <button
             type="button"
@@ -1128,39 +1420,27 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       )}
 
       {paneOn && (
+        <svg className="reader-thread" aria-hidden="true">
+          <path ref={thread} />
+        </svg>
+      )}
+
+      {paneOn && (
         <div className="reader__map">
           {paneReady && (
             <Suspense fallback={null}>
-              <MapPane
-                {...paneProps}
-                inert={!!route.beside}
-                onHide={hideMap}
-                overlay={
-                  inspecting ? (
-                    <aside className="reader__inspector reader__inspector--over" aria-label="Records linked to this passage">
-                      {inspector}
-                    </aside>
-                  ) : undefined
-                }
-              />
+              <MapPane {...paneProps} inert={!!route.beside} onHide={hideMap} leanSlot={inspecting ? inspector : undefined} />
             </Suspense>
           )}
-          <RefPreviewHost />
         </div>
       )}
 
-      {!paneOn && mapSheet && (
-        <Modal title="Argument map" placement={phone ? "sheet" : "side-end"} className="modal--map" onClose={() => setMapSheet(false)}>
-          <Suspense fallback={null}>
-            <MapPane {...paneProps} inModal onHide={hideMap} />
+      {!paneOn && !route.beside && (sheetOpen || !!pin || !!route.decl) && (
+        <RightSheet phone={phone} onClose={closeSheet}>
+          <Suspense fallback={<p className="right-sheet__wait">Loading the proof</p>}>
+            <MapPane {...paneProps} inModal onHide={closeSheet} />
           </Suspense>
-        </Modal>
-      )}
-
-      {!paneOn && !mapSheet && sheet && graph.nodes.has(sheet.id) && (
-        <Modal title={graph.nodes.get(sheet.id)!.label} hideTitle placement={phone ? "sheet" : "side-end"} className="modal--record" onClose={closeSheet}>
-          <RecordDock record={sheet} docked={false} onClose={closeSheet} onSelect={(id) => setSheet({ id })} passageHref={links.beside} />
-        </Modal>
+        </RightSheet>
       )}
 
       {!mid && !route.beside && (
@@ -1171,23 +1451,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </svg>
             Sections
           </button>
-          <button type="button" className="reader-bar__button" aria-haspopup="dialog" onClick={() => setMapSheet(true)}>
+          <button type="button" className="reader-bar__button" onClick={() => setSheetOpen(true)}>
             <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
               <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
               <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
             </svg>
-            Map
+            Proof
           </button>
-          <button
-            type="button"
-            className="reader-bar__button"
-            aria-haspopup="dialog"
-            aria-label={currentRecords.length ? `Passage details: ${recordTally(currentRecords, graph)}` : "Passage details"}
-            onClick={(event) => openInspector(currentAnchor ?? null, event.currentTarget)}
-          >
-            Passage details
-            {currentRecords.length > 0 && <span className="reader-bar__count num">{currentRecords.length}</span>}
-          </button>
+          <PassageDetails signals={signals} doc={doc} structure={structure} graph={graph} onOpen={openInspector} />
         </div>
       )}
 
@@ -1208,13 +1479,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {names.short}
             {status && <span className="faint">. {status}</span>}
           </p>
-          <Sections
-            {...sectionsProps}
-            onJump={(id) => {
-              setSectionsOpen(false);
-              jumpWithHistory(id, true);
-            }}
-          />
+          <Heading signals={signals}>
+            {(current) => (
+              <Sections
+                {...sectionsProps}
+                current={current}
+                onJump={(id) => {
+                  setSectionsOpen(false);
+                  jumpWithHistory(id, true);
+                }}
+                onLine={(line) => {
+                  setSectionsOpen(false);
+                  jumpToLine(line);
+                }}
+              />
+            )}
+          </Heading>
         </Modal>
       )}
 
@@ -1251,5 +1531,98 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         />
       )}
     </div>
+  );
+}
+
+function sameFollow(a: Followed, b: Followed): boolean {
+  return a.tie === b.tie && a.anchor === b.anchor && a.part === b.part;
+}
+
+/** Renders with the section being read: the one thing here that changes while scrolling. */
+function Heading({ signals, children }: { signals: ReaderSignals; children(current: string | null): React.ReactNode }) {
+  return <>{children(useSignal(signals.heading))}</>;
+}
+
+function Crumbs({ signals, outline, name, stage, phone, onTop, onJump }: { signals: ReaderSignals; outline: OutlineEntry[]; name: string; stage: Stage; phone: boolean; onTop(): void; onJump(id: string): void }) {
+  const chain = chainOf(outline, useSignal(signals.heading));
+  return (
+    <nav className="crumbs" aria-label="Where you are in this paper">
+      <ol>
+        <li>
+          <a
+            href={routeHref({ view: "read", stage })}
+            aria-current={chain.length ? undefined : "location"}
+            onClick={(event) => {
+              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              onTop();
+            }}
+          >
+            {name}
+          </a>
+        </li>
+        {chain.map((entry, i) => {
+          const last = i === chain.length - 1;
+          return (
+            <li key={entry.id} className={last ? "crumbs__here" : undefined}>
+              <a
+                href={`#${encodeURIComponent(entry.id)}`}
+                title={sectionLabel(entry.title)}
+                aria-current={last ? "location" : undefined}
+                onClick={(event) => {
+                  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  onJump(entry.id);
+                }}
+              >
+                {last && !phone ? sectionLabel(entry.title) : sectionNumber(entry.title)}
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+/** "12 of 86" between two arrows: the tied statements, one at a time. j and k do the same. */
+function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties: TieModel; onStep(by: 1 | -1): void }) {
+  const { tie } = useSignal(signals.follow);
+  const place = tie === null ? -1 : ties.place[tie];
+  const arrow = (d: string) => (
+    <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+      <path d={d} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+  return (
+    <div className="reader-strip__steps" role="group" aria-label="Tied statements">
+      <button type="button" aria-label="Previous tied statement" title="Previous tied statement (k)" onClick={() => onStep(-1)}>
+        {arrow("M7.5 2.5L4 6l3.5 3.5")}
+      </button>
+      <span className="num" aria-live="polite">
+        {place >= 0 ? `${place + 1} of ${ties.stops.length}` : `${ties.stops.length} statements`}
+      </span>
+      <button type="button" aria-label="Next tied statement" title="Next tied statement (j)" onClick={() => onStep(1)}>
+        {arrow("M4.5 2.5L8 6l-3.5 3.5")}
+      </button>
+    </div>
+  );
+}
+
+function PassageDetails({ signals, doc, structure, graph, onOpen }: { signals: ReaderSignals; doc: PreparedDocument; structure: PaperStructure; graph: ArgGraph; onOpen(anchor: string | null, opener: HTMLElement | null): void }) {
+  const part = useSignal(signals.part);
+  const anchor = doc.parts[part]?.kind === "passage" ? doc.parts[part].anchor : undefined;
+  const records = anchor ? passageRecords(passageOf(structure, anchor)) : [];
+  return (
+    <button
+      type="button"
+      className="reader-bar__button"
+      aria-haspopup="dialog"
+      aria-label={records.length ? `Passage details: ${recordTally(records, graph)}` : "Passage details"}
+      onClick={(event) => onOpen(anchor ?? null, event.currentTarget)}
+    >
+      Passage details
+      {records.length > 0 && <span className="reader-bar__count num">{records.length}</span>}
+    </button>
   );
 }

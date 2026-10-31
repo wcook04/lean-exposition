@@ -21,6 +21,8 @@ declare module "virtual:record-index" {
     short: string;
     /** How many Lean declarations are linked to the record. */
     lean: number;
+    /** How those declarations relate to the record: "states", "part" and so on, each once. */
+    relations: string[];
     /** The strongest thing each paper does with the record: "statement", "mention" and so on. */
     levels: Partial<Record<"long" | "short" | "expository", string>>;
   }

@@ -19,6 +19,10 @@ import { LazyStatementSlice } from "../compare/lazy";
 import { LazyLeanBlock } from "../lean/lazy";
 import { statementHref } from "../reader/links";
 import { LENS_ORDER } from "../map/levels";
+import { recordMark } from "../map/leanMarks";
+import { LeanGlyph } from "../map/LeanGlyph";
+import { markWords } from "../model/leanStatus";
+import type { LeanStep } from "./model";
 import { PAPER_NAMES } from "../app/papers";
 import { Accounts } from "./Accounts";
 import { LeanCode } from "./LeanCode";
@@ -35,6 +39,7 @@ import {
   stepVerb,
   webUrl,
 } from "./model";
+import { useEntryState } from "../app/trail";
 import { CloseButton, CopyButton, Jumps, Pane, type PaneSpec } from "./parts";
 import { useSheet } from "./sheet";
 import { useProvenance } from "./sources";
@@ -76,16 +81,19 @@ interface Props {
   onInputs?(id: string): void;
   /** On the map: draw everything below this record. */
   onBelow?(id: string): void;
+  /** Walk to a Lean name in the sheet, as one history entry. */
+  onWalk?(walk: LeanStep): void;
 }
 
 const PANES: PaneSpec[] = [
-  { id: "statement", title: "In Lean" },
-  { id: "explanation", title: "In the papers" },
-  { id: "argument", title: "Uses and used by" },
-  { id: "sources", title: "Sources & checks" },
+  { id: "quote", title: "Statement" },
+  { id: "statement", title: "Lean" },
+  { id: "explanation", title: "Papers" },
+  { id: "argument", title: "Uses" },
+  { id: "sources", title: "Checks" },
 ];
 
-export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef, account, goalBody, onInputs, onBelow }: Props) {
+export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef, account, goalBody, onInputs, onBelow, onWalk }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const node = graph.nodes.get(nodeId)!;
@@ -135,6 +143,10 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
   };
   const failed = detail.status === "error" ? failureKind(detail.error) : null;
   const peek = sheet.phone && sheet.state === "peek";
+  const mark = recordMark(nodeId, node);
+  const leanTitle = node.kind === "declaration" && !recordLine(nodeId)?.short;
+  const recordedStatement = record?.statement ? String(record.statement) : null;
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   return (
     <aside
@@ -164,12 +176,21 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             <span aria-hidden="true">↓ </span>Show the map
           </button>
         )}
-        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${node.kind === "declaration" ? " lean" : ""}`}>
-          {node.kind === "declaration" ? breakable(node.label) : node.label}
+        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${leanTitle ? " lean" : ""}`}>
+          {leanTitle ? breakable(node.label) : plainLabel(nodeId, node)}
         </h2>
+        {node.kind === "declaration" && !leanTitle && (
+          <p className="panel__fullname lean" translate="no">
+            {node.declaration ?? node.label}
+          </p>
+        )}
         <div className="panel__levels">
-          <a className="panel__compare" href={routeHref({ view: "compare", node: nodeId })}>
-            Compare side by side
+          <span className="panel__mark">
+            <LeanGlyph mark={mark} label="" />
+            {markWords(mark)}
+          </span>
+          <a className="panel__quiet" href={routeHref({ view: "compare", node: nodeId })}>
+            Compare
           </a>
         </div>
         {path !== undefined && <Route path={path} nodeId={nodeId} onSelect={onSelect} onEcho={echo} />}
@@ -193,8 +214,12 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
               This site has no record with this identifier.
             </p>
           ) : null}
+          <Pane id="quote" title="Statement">
+            <Quote aligned={aligned} first={account} compact={compact} recorded={node.kind === "declaration" ? null : recordedStatement} body={goalBody} />
+          </Pane>
+
           <Pane id="statement" title="In Lean">
-            <InLean nodeId={nodeId} aligned={aligned} statement={record?.statement ? String(record.statement) : null} kind={node.kind} status={node.status} />
+            <InLean nodeId={nodeId} aligned={aligned} statement={recordedStatement} kind={node.kind} status={node.status} onWalk={onWalk} onSelect={onSelect} onEcho={echo} previewSlot={slot} />
           </Pane>
 
           <Pane id="explanation" title="In the papers">
@@ -202,7 +227,6 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
               <PaperSlices aligned={aligned} first={account} compact={compact} resetKey={nodeId} />
             ) : (
               <>
-                {goalBody}
                 <Accounts nodeId={nodeId} grouped={grouped} memberships={memberships} status={detail.status} onRetry={retry} href={href} />
               </>
             )}
@@ -230,11 +254,17 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
           </Pane>
         </div>
       </div>
+      <div ref={setSlot} className="lean-slot lean-slot--compact" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : announcement(node.label, kindWord(node.kind))}
       </p>
     </aside>
   );
+}
+
+/** A declaration's record goes by its short title; every other record by its label. */
+function plainLabel(id: string, node: { kind: string; label: string }): string {
+  return node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label;
 }
 
 // ------------------------------------------------------------------ route
@@ -251,12 +281,8 @@ function Route({
   onEcho(ids: Iterable<string> | null): void;
 }) {
   const { graph } = useEdition();
-  const [open, setOpen] = useState(false);
-  const [whole, setWhole] = useState(false);
-  useEffect(() => {
-    setOpen(false);
-    setWhole(false);
-  }, [nodeId]);
+  const [open, setOpen] = useEntryState(`route-open:${nodeId}`, false);
+  const [whole, setWhole] = useEntryState(`route-whole:${nodeId}`, false);
   if (path === null) return <p className="panel__route">No recorded route from the main result in this account</p>;
   if (path.length < 2) return null;
   const goal = path[0];
@@ -266,7 +292,7 @@ function Route({
   const listId = `route-${nodeId.replace(/[^\w-]/g, "_")}`;
   return (
     <div className="panel__route">
-      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
+      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen(!open)}>
         <span>
           One recorded route from <strong>{goalName}</strong>, in {steps} {steps === 1 ? "step" : "steps"}
         </span>
@@ -326,18 +352,28 @@ function InLean({
   statement,
   kind,
   status,
+  onWalk,
+  onSelect,
+  onEcho,
+  previewSlot,
 }: {
   nodeId: string;
   aligned: RecordAlignment | null;
   statement: string | null;
   kind: string;
   status: string;
+  onWalk?(walk: LeanStep): void;
+  onSelect(id: string): void;
+  onEcho(ids: Iterable<string> | null): void;
+  previewSlot: HTMLElement | null;
 }) {
+  // The sheet has its own papers and its own reading line, and with a host every name walks in the sheet.
+  const hosted = { noPapers: true, previewSlot, ...(onWalk ? { onName: onWalk } : {}) };
   if (aligned?.lean.length)
     return (
       <div className="panel__lean">
-        {aligned.lean.map((row) => (
-          <LazyLeanBlock key={row.name} name={row.name} relation={row.relation} note={row.note} clause={row.clause} compact />
+        {aligned.lean.map((row, i) => (
+          <LazyLeanBlock key={`${row.name}:${i}`} name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
         ))}
       </div>
     );
@@ -349,7 +385,66 @@ function InLean({
       </>
     );
   if ((recordLine(nodeId)?.lean ?? 0) > 0) return <p className="panel__state faint">Loading the Lean declarations…</p>;
-  return <p className="panel__note">No Lean declaration is linked to this record.</p>;
+  return <NoLean nodeId={nodeId} onSelect={onSelect} onEcho={onEcho} />;
+}
+
+/** A record with no Lean: said plainly, with what it rests on, so the reader can go on down. */
+function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: string): void; onEcho(ids: Iterable<string> | null): void }) {
+  const { graph } = useEdition();
+  const inputs = (graph.out.get(nodeId) ?? []).filter((e) => graph.nodes.has(e.to));
+  return (
+    <>
+      <p className="panel__lead">No Lean declaration is linked to this record.</p>
+      {inputs.length === 0 ? (
+        <p className="panel__note">It has no recorded inputs either: the argument stops here and rests on its sources, below.</p>
+      ) : (
+        <>
+          <p className="panel__note">It rests on {inputs.length === 1 ? "this record" : `these ${inputs.length} records`}:</p>
+          <ul className="rests">
+            {inputs.map((edge) => {
+              const n = graph.nodes.get(edge.to)!;
+              const mark = recordMark(edge.to, n);
+              return (
+                <li key={edge.key} onPointerEnter={() => onEcho([edge.to])} onPointerLeave={() => onEcho(null)}>
+                  <LeanGlyph mark={mark} label="" />
+                  <button type="button" className="rels__name" onClick={() => onSelect(edge.to)}>
+                    {n.label}
+                  </button>
+                  <span className="rests__words">{markWords(mark)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </>
+  );
+}
+
+/** The papers in the order a reader meets them. */
+const QUOTE_ORDER: Stage[] = ["short", "long", "expository"];
+
+/** The record's statement as a paper gives it, quoted, with the way into the paper. */
+function Quote({ aligned, first, compact, recorded, body }: { aligned: RecordAlignment | null; first?: Stage; compact?: boolean; recorded: string | null; body?: React.ReactNode }) {
+  const order = first ? [first, ...QUOTE_ORDER.filter((s) => s !== first)] : QUOTE_ORDER;
+  const slices = aligned?.statements ?? [];
+  const rank = (slice: AlignedStatement) => ROLE_ORDER.indexOf(slice.role) * 10 + order.indexOf(slice.paper);
+  const best = [...slices].sort((a, b) => rank(a) - rank(b) || a.start_byte - b.start_byte)[0];
+  if (best)
+    return (
+      <div className="panel__slice panel__quote">
+        <p className="panel__slice-head">
+          <span>
+            {PAPER_NAMES[best.paper].short}, {best.section}
+          </span>
+          <a href={statementHref(best)}>Read in context</a>
+        </p>
+        <LazyStatementSlice statement={best} compact={compact} />
+      </div>
+    );
+  if (body) return <div className="panel__quote">{body}</div>;
+  if (recorded) return <p className="panel__statement panel__quote">{recorded}</p>;
+  return <p className="panel__note">No statement is recorded for this record.</p>;
 }
 
 // ----------------------------------------------------------------- papers
@@ -377,8 +472,8 @@ function PaperSlices({
   resetKey: string;
 }) {
   const present = LENS_ORDER.filter((s) => aligned.statements.some((a) => a.paper === s));
-  const [chosen, setChosen] = useState<Stage | null>(null);
-  useEffect(() => setChosen(null), [resetKey]);
+  // The entry owns the tab, per record, so Back returns to it and a new record starts fresh.
+  const [chosen, setChosen] = useEntryState<Stage | null>(`paper-tab:${resetKey}`, null);
   const stage = chosen ?? (first && present.includes(first) ? first : present[0]);
   const slices = aligned.statements.filter((a) => a.paper === stage).sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role));
   return (
@@ -401,7 +496,7 @@ function PaperSlices({
         <p className="panel__note">No slice of the {PAPER_NAMES[stage].short.toLowerCase()} is linked to this record.</p>
       ) : (
         slices.map((slice) => (
-          <div className="panel__slice" key={slice.start_byte}>
+          <div className="panel__slice" key={`${slice.at ?? slice.start_byte}:${slice.role}`}>
             <p className="panel__slice-head">
               <span>
                 {ROLE_WORDS[slice.role]}, in {slice.section}
@@ -601,12 +696,12 @@ function Relations({
                 <span className="rels__what">
                   <button
                     type="button"
-                    className={`rels__name${n.kind === "declaration" ? " lean" : ""}`}
+                    className={`rels__name${n.kind === "declaration" && !recordLine(id)?.short ? " lean" : ""}`}
                     onClick={() => onSelect(id)}
                     onFocus={() => onEcho([id])}
                     onBlur={() => onEcho(null)}
                   >
-                    {n.label}
+                    {plainLabel(id, n)}
                   </button>
                   <span className="rels__meta">
                     {implied.has(edge.key) && <span className="faint">Not drawn on the map</span>}
@@ -754,8 +849,7 @@ const OUTCOME_NAMES: Record<string, string> = { passed: "Passed", failed: "Faile
 function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly string[] }) {
   const edition = useEdition();
   const stored = useStored();
-  const [open, setOpen] = useState<string | null>(null);
-  useEffect(() => setOpen(null), [nodeId]);
+  const [open, setOpen] = useEntryState<string | null>(`checks-open:${nodeId}`, null);
   const rows = useMemo(() => {
     const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
     const by = new Map<string, { id: string; label: string; status: string }[]>();
