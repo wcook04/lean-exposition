@@ -101,7 +101,7 @@ describe("LeanBlock's props", () => {
     const view = await render(<DeclView decl={main} module={module} shell={shell} noTerms noDependencies noPapers />);
     const actions = [...view.querySelectorAll<HTMLAnchorElement>(".lean-block__actions a")];
     expect(actions.map((a) => a.textContent)).toEqual(["Whole file", "On GitHub"]);
-    expect(actions[0].getAttribute("href")).toBe("/lean?m=OAI.M&file=1-3");
+    expect(actions[0].getAttribute("href")).toBe("/lean/?m=OAI.M&file=1-3");
     expect(actions[1].getAttribute("href")).toBe("https://github.com/o/r/blob/abc/lean/OAI/M.lean#L1-L3");
   });
 
