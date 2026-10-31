@@ -653,8 +653,8 @@ html[data-view="lean"] .app { min-height: 100dvh; }
   align-items: center;
 }
 /* A side with nothing on it gives its room to the side that has tiles. */
-.lean-hood__picture:has(.lean-hood__side--by > .lean-hood__none) { grid-template-columns: 10rem clamp(136px, 19cqw, 220px) minmax(0, 1fr); }
-.lean-hood__picture:has(.lean-hood__side--uses > .lean-hood__none) { grid-template-columns: minmax(0, 1fr) clamp(136px, 19cqw, 220px) 10rem; }
+.lean-hood__picture:not(.is-dense):has(.lean-hood__side--by > .lean-hood__none) { grid-template-columns: 10rem clamp(136px, 19cqw, 220px) minmax(0, 1fr); }
+.lean-hood__picture:not(.is-dense):has(.lean-hood__side--uses > .lean-hood__none) { grid-template-columns: minmax(0, 1fr) clamp(136px, 19cqw, 220px) 10rem; }
 .lean-hood__lines { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
 .lean-hood__lines path { fill: none; stroke: var(--rel-supports); stroke-width: 1.5; transition: stroke var(--t-hover) var(--ease-out); }
 .lean-hood__lines .lean-hood__tip { fill: var(--rel-supports); stroke: none; }
@@ -686,6 +686,13 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 .lean-hood__centre code { font-size: 14px; font-weight: 600; }
 .lean-hood__kind { font-size: var(--fs-micro); font-weight: 600; letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--ink-3); }
 .lean-hood__note { max-width: 46rem; margin: var(--space-3) 0 0; font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-3); }
+
+/* Too many to draw: the same tiles as lists that use the width, with no fan of lines. */
+.lean-hood__picture.is-dense { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--space-3); }
+.lean-hood__picture.is-dense .lean-hood__lines { display: none; }
+.lean-hood__picture.is-dense .lean-hood__centre { grid-row: 1; justify-self: start; min-width: 14rem; }
+.lean-hood__picture.is-dense .lean-hood__side { grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); align-content: start; }
+.lean-hood__picture.is-dense .lean-hood__title, .lean-hood__picture.is-dense .lean-hood__group, .lean-hood__picture.is-dense .lean-hood__none, .lean-hood__picture.is-dense .lean-action { grid-column: 1 / -1; }
 
 @container (max-width: 560px) {
   .lean-hood__picture { --hood-lines: off; grid-template-columns: minmax(0, 1fr); row-gap: var(--space-3); }

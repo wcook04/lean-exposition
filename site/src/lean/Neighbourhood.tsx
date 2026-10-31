@@ -11,6 +11,8 @@ import { Breakable } from "./ReadingStrip";
 import { findDecl, type DeclRow } from "./resolve";
 
 const SIDE_LIMIT = 12;
+/** More tiles than this would fan into one point: they are listed instead, with no lines. */
+const DRAWN_LIMIT = 8;
 
 interface Walk {
   to: string;
@@ -133,6 +135,8 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
     return { by: rowsOf(decl.used_by), statement: rowsOf(split?.statement ?? decl.uses), proof: rowsOf(split?.proof ?? []) };
   }, [decl, module, shell, split]);
 
+  const dense = Math.max(sides.by.length, sides.statement.length + sides.proof.length) > DRAWN_LIMIT;
+
   // Lines follow the tiles as they stand, including after a side opens in full.
   useLayoutEffect(() => {
     const host = root.current;
@@ -144,7 +148,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
       const y = mid.top + mid.height / 2;
       const inner = { l: mid.left, r: mid.left + mid.width };
       const next: Line[] = [];
-      if (getComputedStyle(host).getPropertyValue("--hood-lines").trim() !== "off") {
+      if (!host.classList.contains("is-dense") && getComputedStyle(host).getPropertyValue("--hood-lines").trim() !== "off") {
         host.querySelectorAll<HTMLElement>("[data-tile]").forEach((tile) => {
           const id = tile.dataset.tile as string;
           const t = place(tile, host);
@@ -170,7 +174,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
     watcher.observe(host);
     void document.fonts?.ready.then(draw);
     return () => watcher.disconnect();
-  }, [sides]);
+  }, [sides, dense]);
 
   // A step arrives: the declaration just opened is what the reader came for, so show its head.
   useLayoutEffect(() => {
@@ -210,7 +214,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
   return (
     <section className="lean-hood" aria-label={`What uses ${decl.short} and what it uses`}>
       <h2 className="lean-hood__head">What uses it and what it uses</h2>
-      <div className="lean-hood__picture" ref={root}>
+      <div className={`lean-hood__picture${dense ? " is-dense" : ""}`} ref={root}>
         <svg className="lean-hood__lines" width={size.w} height={size.h} aria-hidden="true">
           {lines.map((line) => (
             <g key={line.id} className={line.id === hot ? "is-hot" : undefined}>
@@ -239,7 +243,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
         />
       </div>
       <p className="lean-hood__note">
-        {source === "elaborated" ? `${dependencyWords(source)}.` : (shell.modules.dependency_note ?? `${dependencyWords(source)}.`)} Each arrow runs from a name into the declaration that uses it. Click a name to move to it; Back returns.
+        {source === "elaborated" ? `${dependencyWords(source)}.` : (shell.modules.dependency_note ?? `${dependencyWords(source)}.`)} {dense ? "" : "Each arrow runs from a name into the declaration that uses it. "}Click a name to move to it; Back returns.
       </p>
     </section>
   );

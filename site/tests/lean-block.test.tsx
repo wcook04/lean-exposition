@@ -55,6 +55,30 @@ describe("LeanBlock's props", () => {
     expect(view.querySelector(".lean-fold")?.textContent).toContain("Proof");
   });
 
+  it("moves the nearest scroller to lit lines, unless told to stay quiet", async () => {
+    const tall = { ...module, source: `${"-- filler\n".repeat(40)}theorem far : True := trivial` };
+    const far = decl({ name: "OAI.far", short: "far", line: 41, signature_end_line: 41, end_line: 41 });
+    const mount = async (quiet: boolean) => {
+      const box = document.createElement("div");
+      box.style.overflowY = "auto";
+      document.body.append(box);
+      Object.defineProperty(box, "scrollHeight", { value: 900 });
+      Object.defineProperty(box, "clientHeight", { value: 200 });
+      box.getBoundingClientRect = () => ({ top: 0, bottom: 200, height: 200 }) as DOMRect;
+      const inner = createRoot(box);
+      Element.prototype.getBoundingClientRect = function () { return this === box ? ({ top: 0, bottom: 200, height: 200 } as DOMRect) : ({ top: 600, bottom: 620, height: 20 } as DOMRect); };
+      await act(async () => inner.render(<DeclView decl={far} module={tall} shell={shell} lines={[41, 41]} quietLines={quiet} noTerms noDependencies noPapers />));
+      const top = box.scrollTop;
+      await act(async () => inner.unmount());
+      box.remove();
+      return top;
+    };
+    const original = Element.prototype.getBoundingClientRect;
+    expect(await mount(true)).toBe(0);
+    expect(await mount(false)).toBeGreaterThan(0);
+    Element.prototype.getBoundingClientRect = original;
+  });
+
   it("reports a name to onName and stays on the page", async () => {
     const onName = vi.fn();
     const view = await render(<DeclView decl={main} module={module} shell={shell} onName={onName} noTerms noDependencies noPapers />);

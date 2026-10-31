@@ -513,7 +513,7 @@ function DeclPage({ decl, module, shell, slot }: { decl: LeanDeclaration; module
         <Papers decl={decl} shell={shell} onPoint={onPoint} />
         <section className="lean-decl__lean" aria-label="The Lean">
           <h2>The Lean</h2>
-          <LeanBlock name={decl.name} module={module.module} noHead noPapers noDependencies lines={lit} previewSlot={slot} />
+          <LeanBlock name={decl.name} module={module.module} noHead noPapers noDependencies pointed={lit} previewSlot={slot} />
         </section>
       </div>
       {row && <Neighbourhood key={decl.name} decl={decl} module={module} shell={shell} split={split} />}

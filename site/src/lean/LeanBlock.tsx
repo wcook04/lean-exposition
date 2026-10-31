@@ -27,6 +27,8 @@ import type { LeanWalk } from "./walk";
 
 export type LineRange = readonly [first: number, last: number];
 
+type LineRanges = LineRange | readonly LineRange[];
+
 export interface LeanBlockProps {
   /** Full declaration name. */
   name: string;
@@ -51,7 +53,11 @@ export interface LeanBlockProps {
   /** The statement alone, for a cell of Compare's table: no caveat, proof or actions. */
   bare?: boolean;
   /** Source lines to light, first and last inclusive. A range past the statement opens the proof. */
-  lines?: LineRange | readonly LineRange[];
+  lines?: LineRanges;
+  /** Light `lines` without moving the scroller, for a host with several blocks in one column. */
+  quietLines?: boolean;
+  /** Lines lit by pointing: lit where they show, and nothing opens or scrolls. */
+  pointed?: LineRanges;
   /** Walk in place: a plain click on a name reports here and the page stays. Without it a name is a link. */
   onName?(walk: LeanWalk): void;
   /** Fill the host's height: the head and the reading line stay, and the code scrolls between them. */
@@ -394,6 +400,8 @@ export interface DeclViewProps {
   below?: ReactNode;
   bare?: boolean;
   lines?: LeanBlockProps["lines"];
+  quietLines?: boolean;
+  pointed?: LeanBlockProps["pointed"];
   onName?(walk: LeanWalk): void;
   fill?: boolean;
   previewSlot?: HTMLElement | null;
@@ -401,7 +409,7 @@ export interface DeclViewProps {
   noHead?: boolean;
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
   const [proofChosen, setShowProof] = useState<boolean | null>(null);
   const store = useMemo(readingStore, []);
   const root = useRef<HTMLElement>(null);
@@ -415,7 +423,9 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const clauseInProof = Boolean(clause && foldLines > 0 && !lines.slice(decl.line - 1, statementEnd).join("\n").includes(clause) && lines.slice(statementEnd, decl.end_line).join("\n").includes(clause));
   const litInProof = foldLines > 0 && ranges.some(([, last]) => last > statementEnd);
   const showProof = proofChosen ?? (Boolean(proofOpen) || ((clauseInProof || litInProof) && !bare));
-  const isLit = useMemo(() => (ranges.length ? (line: number) => ranges.some(([first, last]) => line >= first && line <= last) : undefined), [rangesKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  const lit = [...ranges, ...rangesOf(pointed)];
+  const litKey = lit.map(([a, b]) => `${a}-${b}`).join(",");
+  const isLit = useMemo(() => (lit.length ? (line: number) => lit.some(([first, last]) => line >= first && line <= last) : undefined), [litKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { statement, scope, tokens } = useMemo(() => {
     const scope = makeScope(decl, module, shell.index, shell.terms);
@@ -445,10 +455,10 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
 
   // A range that changes is what the reader is now looking at; pointing and scrolling never reach here.
   useEffect(() => {
-    if (!rangesKey) return;
+    if (!rangesKey || quietLines) return;
     const first = root.current?.querySelector<HTMLElement>(".lean-line.is-lit");
     if (first) showLine(first);
-  }, [rangesKey, proof]);
+  }, [rangesKey, proof, quietLines]);
 
   const parent = (decl as LeanDeclaration & { parent?: string }).parent;
   const Title = depth > 0 ? "h3" : "h2";
@@ -546,7 +556,7 @@ function useMemoStable<A extends unknown[]>(fn: (...args: A) => void): (...args:
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare, lines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -557,5 +567,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, proofOpen,
   if (!shell || loaded.status !== "ready") return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
-  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
+  return <DeclView key={`${loaded.module.module}:${name}`} decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} lines={lines} quietLines={quietLines} pointed={pointed} onName={onName} fill={fill} previewSlot={previewSlot} noPapers={noPapers} noHead={noHead} />;
 }
