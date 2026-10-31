@@ -238,9 +238,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1120px)");
   // From 1280px the paper moves left and the argument map stands beside it, the
-  // reader's remembered choice. Up to 1500px the outline folds to give them the room.
+  // reader's remembered choice. Below 1680px the outline folds, so the graph fits its pane.
   const paneRoom = useMedia("(min-width: 1280px)");
-  const outlineRoom = useMedia("(min-width: 1501px)");
+  const outlineRoom = useMedia("(min-width: 1680px)");
   const phone = useMedia("(max-width: 700px)");
   const [mapShown, setMapShown] = useState(readMapShown);
   const paneOn = paneRoom && mapShown;
@@ -311,7 +311,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const [inspect, setInspect] = useState<InspectorTarget | null>(null);
   const [chooser, setChooser] = useState<string | null>(null);
   const [sectionsOpen, setSectionsOpen] = useState(false);
-  /** Up to 1500px the sections stand on the right page, where they cover no text. */
+  /** Below 1680px the sections stand on the right page, where they cover no text. */
   const [sectionsSide, setSectionsSide] = useState(false);
   const [visit, setVisit] = useState<VisitOrigin | null>(() => visitOrigin());
   const visitRef = useRef(visit);
@@ -1308,8 +1308,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     if (!a) {
       if (target.closest?.("button")) return;
       const mark = target.closest?.<HTMLElement>("[data-t]");
+      // The browser counts a click soon after the last as a double click, wherever the words have
+      // moved to. It only selects a word while the first click is still waiting.
+      const waiting = pinTimer.current !== 0;
       window.clearTimeout(pinTimer.current);
-      if (!mark || event.detail > 1) return;
+      pinTimer.current = 0;
+      if (!mark || (event.detail > 1 && waiting)) return;
       // A drag or a selection is reading, not asking.
       const down = downAt.current;
       const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
@@ -1319,7 +1323,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (t === null) return;
       // The second click of a double click selects a word; wait to see that it does not come.
       if ((event.nativeEvent as PointerEvent).pointerType === "touch") openStatement(t);
-      else pinTimer.current = window.setTimeout(() => openStatement(t), 210);
+      else
+        pinTimer.current = window.setTimeout(() => {
+          pinTimer.current = 0;
+          openStatement(t);
+        }, 210);
       return;
     }
     const href = a.getAttribute("href") ?? "";

@@ -1,7 +1,7 @@
 /* The right page (MapPane.tsx). From 1280px the reader stops centring: the paper at its
-   measure (at least half the window's width from 1280 to 1500px, where the outline folds
+   measure (at least half the window's width from 1280 to 1679px, where the outline folds
    into "Sections"), then the right page to the window's edge, full height under the top
-   bar. Above 1500px the outline returns and the paper yields to keep the page at 600px.
+   bar. From 1680px the outline returns, which leaves the graph the width it needs.
    The graph stands above the Lean; from 860px of page they stand side by side, the Lean
    next to the paper. Below 1280px it opens as a sheet. */
 

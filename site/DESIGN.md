@@ -543,7 +543,7 @@ the same place on a first load and a reload. No selector may put the whole paper
 on a root element: one change of hover then walks all of it (`html.is-reading` exists for this).
 
 The outline counts the statements with Lean in each section, and searches the paper's
-text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
+text, including what has not rendered yet. Below 1680px it stands on the right page, where it
 covers no text. A passage's steps and links open from "This passage" under the graph, and the
 first screen's one instruction sits in the strip. On a phone there is one row of chrome, which
 goes while reading down and comes back going up, and a tapped statement moves above the sheet.
@@ -706,8 +706,8 @@ something else.
 
 | Width | Map | Inspector | Reader |
 | --- | --- | --- | --- |
-| ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
-| 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
+| ≥ 1680px | Canvas with foot bar | Right column, full height | Outline, paper, map |
+| 1280–1679px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
 | 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the right page as a sheet |
 | 901–1119px | Canvas | Right column | Paper; sections and passage context as sheets; the right page as a side sheet |
 | 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets; the right page as a side sheet |

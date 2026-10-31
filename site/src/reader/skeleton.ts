@@ -13,7 +13,7 @@ const STYLE = `.reader-shape{display:grid;grid-template-columns:minmax(0,var(--r
 @media (max-width:700px){.reader-shape{padding-inline:20px}}
 @media (min-width:1280px){.reader-shape{grid-template-columns:minmax(0,min(var(--reader-measure),50vw)) minmax(0,1fr);justify-content:start;padding-left:32px;padding-right:0}
 .reader-shape__side{display:block;position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));margin-left:16px;border-left:1px solid var(--rule)}}
-@media (min-width:1501px){.reader-shape{grid-template-columns:var(--reader-outline) minmax(0,var(--reader-measure)) minmax(600px,1fr)}
+@media (min-width:1680px){.reader-shape{grid-template-columns:var(--reader-outline) minmax(0,var(--reader-measure)) minmax(600px,1fr)}
 .reader-shape__outline{display:block}}
 @media (min-width:1921px){.reader-shape{--reader-measure:clamp(680px,calc(680px + (100vw - 1920px)*.117),755px)}}
 @media (min-width:2100px){.reader-shape{grid-template-columns:var(--reader-outline) minmax(0,var(--reader-measure)) minmax(600px,1040px);justify-content:center}}`;
