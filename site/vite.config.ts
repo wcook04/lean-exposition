@@ -414,13 +414,13 @@ gives the exact scope of the Lean and the recorded checks.
 | --- | --- |
 | [Exposition](https://wcook04.github.io/lean-exposition-site/read/expository/) | An explanation beginning with a calculation for two spins |
 | [Short paper](https://wcook04.github.io/lean-exposition-site/read/short/) | The precise mathematical statement and its proof |
-| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Detailed calculations, source references and remaining steps for the separate quantum-circuit claim |
+| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Detailed calculations, source references and remaining steps for OpenAI's separate claim about the limiting energies of quantum circuits |
 | [Argument map](https://wcook04.github.io/lean-exposition-site/map/) · [Compare](https://wcook04.github.io/lean-exposition-site/compare/) | The recorded proof steps and their passages in each paper |
 | [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The named statements in the Lean code and recorded check results |
 | [About](https://wcook04.github.io/lean-exposition-site/about/) | A paper explaining how the website connects the papers to the proof steps |
 
 A statement with a dark tick opens its Lean beside the paper.
-The papers and companion are also available in [PDF](pdf/).
+The three explanations and the paper under About are also available in [PDF](pdf/).
 [Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
 lists the same OpenAI manuscripts and Lean files.
 
@@ -443,7 +443,7 @@ local development and contribution instructions live in that source repository.
 | --- | --- |
 | [read/](read/) | The three paper readers |
 | [edition/](edition/) | Copies of the papers, proof-step data and check results used by the site |
-| [pdf/](pdf/) | Downloadable papers and architectural companion |
+| [pdf/](pdf/) | The three explanations and the paper about the website, as PDFs |
 | [assets/](assets/) · [stills/](stills/) | Built application files and website screenshots |
 
 Will Cook directs this project. His other projects and videos are linked below.

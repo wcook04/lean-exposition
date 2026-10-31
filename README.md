@@ -1,5 +1,7 @@
 # Lean Exposition
 
+[Will Cook’s home page: all projects and videos](https://wcook04.github.io/)
+
 Lean Exposition lets you read a mathematical paper beside the proof written in Lean, a language in which a computer checks each step of a mathematical argument. Click a linked statement in the paper to open the corresponding Lean code.
 
 **[Open Theorem 1 with its Lean proof](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result).** No installation is needed. Statements with a dark tick have a link to the code. You can also [explore the proof steps](https://wcook04.github.io/lean-exposition-site/map/) or [read the recorded check results](https://wcook04.github.io/lean-exposition-site/checks/).
