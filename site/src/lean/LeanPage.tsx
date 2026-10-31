@@ -129,7 +129,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
       <header className="lean-intro">
         <h1>OpenAI's Lean source</h1>
         <p>
-          This is OpenAI's Lean, unchanged, at commit{" "}
+          This is OpenAI's Lean at commit{" "}
           <a href={revisionUrl} target="_blank" rel="noreferrer">
             <code>{modules.revision.slice(0, 7)}</code>
           </a>{" "}
