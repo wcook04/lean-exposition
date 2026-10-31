@@ -132,10 +132,12 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
 
   const drawings = useMemo(() => {
     const within = (stage: Stage) => new Set(nodes.filter((n) => n.id === goal || lensRole(n, stage) === "direct").map((n) => n.id));
-    const whole = drawingOf(graph, goal, null);
+    // The Lean level draws the same steps as the long record, so it shares that drawing:
+    // its cards stay where they are and only their marks change.
+    const long = drawingOf(graph, goal, within("long"));
     return {
-      lean: whole,
-      long: drawingOf(graph, goal, within("long")),
+      lean: long,
+      long,
       short: drawingOf(graph, goal, within("short")),
       expository: drawingOf(graph, goal, within("expository")),
     } satisfies Record<LevelId, Drawing>;
