@@ -172,17 +172,70 @@ function recordIndexModule(): Plugin {
   };
 }
 
-/** The code each route needs at once, named by chunk. */
+/** The chunks each route opens with. What they import starts with them. */
 const ROUTE_CODE: Record<string, string[]> = {
-  map: ["MapPage", "ArgumentTree", "RecordPanel", "TheoremPlate", "layout", "treeModel"],
-  compare: ["ComparePage", "StatementSlice", "documents", "katex", "LeanBlock", "tokenize"],
-  lean: ["LeanPage", "LeanBlock", "tokenize"],
+  map: ["MapPage"],
+  compare: ["ComparePage", "StatementSlice", "LeanBlock"],
+  lean: ["LeanPage"],
   checks: ["ChecksPage"],
-  "read/long": ["ReaderPage", "documents", "katex"],
-  "read/short": ["ReaderPage", "documents", "katex"],
-  "read/expository": ["ReaderPage", "documents", "katex"],
+  about: ["AboutPage"],
+  "read/long": ["ReaderPage"],
+  "read/short": ["ReaderPage"],
+  "read/expository": ["ReaderPage"],
 };
-const chunkFiles = new Map<string, string>();
+
+interface BuiltChunk {
+  file: string;
+  entry: boolean;
+  imports: string[];
+  css: string[];
+}
+const chunksByName = new Map<string, BuiltChunk>();
+const chunksByFile = new Map<string, BuiltChunk>();
+
+/**
+ * A route's code, with everything it imports and their stylesheets. Without these links the
+ * page's chunks would start only once the edition has arrived, one wait after the other;
+ * with them, code and data download together.
+ */
+function routeCode(route: string, base: string): string[] {
+  const seen = new Set<BuiltChunk>();
+  const css = new Set<string>();
+  const visit = (chunk: BuiltChunk | undefined) => {
+    if (!chunk || chunk.entry || seen.has(chunk)) return;
+    seen.add(chunk);
+    chunk.css.forEach((file) => css.add(file));
+    chunk.imports.forEach((file) => visit(chunksByFile.get(file)));
+  };
+  (ROUTE_CODE[route] ?? []).forEach((name) => visit(chunksByName.get(name)));
+  // A chunk that holds only CSS loses its script when the bundle is written. Its stylesheet stays.
+  const scripts = [...seen].filter((chunk) => existsSync(resolve("dist", chunk.file)));
+  return [
+    ...scripts.map((chunk) => `<link rel="modulepreload" crossorigin href="${base}${chunk.file}" />`),
+    ...[...css].map((file) => `<link rel="preload" as="style" crossorigin href="${base}${file}" />`),
+  ];
+}
+
+/** The edition files a route asks for first, named by the edition's own index. */
+function routeData(route: string, base: string): string[] {
+  const path = resolve("public/edition/index.json");
+  if (!existsSync(path)) return [];
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  const responses: Record<string, string> = index.responses ?? {};
+  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?"));
+  const stage = route.match(/^read\/(.+)$/)?.[1];
+  const files = [
+    responses[""],
+    responses["/overview"],
+    graph && responses[graph],
+    index.summaries_by_table?.nodes,
+    ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
+    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`]] : []),
+    ...(route === "compare" ? [responses["/alignment"]] : []),
+    ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
+  ];
+  return files.filter(Boolean).map((file) => `<link rel="preload" href="${base}edition/${file}" as="fetch" crossorigin />`);
+}
 
 const typeset = (source: string) => katex.renderToString(source, { throwOnError: true, output: "html", strict: "error" });
 
@@ -217,7 +270,12 @@ function firstScreen(base: string): Plugin {
       },
     },
     generateBundle(_options, bundle) {
-      for (const [file, item] of Object.entries(bundle)) if (item.type === "chunk") chunkFiles.set(item.name, file);
+      for (const [file, item] of Object.entries(bundle)) {
+        if (item.type !== "chunk") continue;
+        const chunk = { file, entry: item.isEntry, imports: item.imports, css: [...(item.viteMetadata?.importedCss ?? [])] };
+        chunksByName.set(item.name, chunk);
+        chunksByFile.set(file, chunk);
+      }
     },
     closeBundle() {
       const home = resolve("dist/index.html");
@@ -314,9 +372,7 @@ export default defineConfig(({ mode }) => {
         const shell = resolve(out, ".route-shell.html");
         for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          const preload = (ROUTE_CODE[route] ?? [])
-            .flatMap((name) => (chunkFiles.has(name) ? [`<link rel="modulepreload" crossorigin href="${base}${chunkFiles.get(name)}" />`] : []))
-            .join("");
+          const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
           writeFileSync(resolve(out, route, "index.html"), readFileSync(shell, "utf8").replace("</head>", `${preload}</head>`));
         }
         copyFileSync(shell, resolve(out, "404.html"));

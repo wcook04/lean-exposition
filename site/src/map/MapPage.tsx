@@ -26,10 +26,14 @@ import { LensControl } from "./LensControl";
 import { WalkBar, useWalk } from "./WalkBar";
 import { levelCounts, levelRecords, lensSentence } from "./levels";
 import { shortTitle as recordTitle } from "../compare/useAlignment";
+import { startLeanViewer } from "../lean/lazy";
 import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
 import { readScene, sceneWriter, type MapScene } from "./scene";
 import "./map-page.css";
+
+// The theorem's sheet opens with the map on anything wider than a phone, with its Lean first.
+if (window.matchMedia?.("(min-width: 701px)").matches) startLeanViewer();
 
 type MapRoute = Extract<Route, { view: "map" }>;
 type Mode = MapScene["mode"];
