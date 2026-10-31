@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { ApiError, documentBytes, get, onEditionChanged, openEdition } from "../api/client";
+import { loadTies } from "../api/lean";
 import type {
   EdgeRecord,
   EvidenceRecord,
@@ -82,10 +83,13 @@ interface Stored {
   evidence: EvidenceRecord[];
 }
 
+/** A static edition has startup forms without what no page reads; live APIs keep their full routes. */
+const startupForms = import.meta.env.VITE_STATIC_EDITION === "true";
+
 function loadCore(): Promise<Core> {
   return Promise.all([
-    get<Overview>("/overview"),
-    get<GraphMap>("/graph", { view: "arguments", representation: "map", scope: "corpus", assumptions: "true" }),
+    get<Overview>("/overview", startupForms ? { representation: "reader" } : {}),
+    get<GraphMap>("/graph", { view: "arguments", representation: startupForms ? "reader_map" : "map", scope: "corpus", assumptions: "true" }),
     get<{ items: SummaryCard[] }>("/records", { table: "nodes", representation: "summary", limit: PAGE_SIZE }),
     allRecords<NodeRecord>("nodes"),
     allRecords<SourceRecord>("sources"),
@@ -127,9 +131,9 @@ function enrich(graph: ArgGraph, core: Core, stored: Stored): void {
   graph.cites.splice(0, graph.cites.length, ...full.cites);
 }
 
-/** Start fetching what the reader of one account needs first: its bytes and structure. */
-function primePaper(stage: Stage): void {
-  void loadPaper(stage).catch(() => undefined);
+/** Start fetching what the reader of one account needs first: its bytes, structure and ties. */
+function primePaper(stage: Stage): Promise<unknown> {
+  return Promise.all([loadPaper(stage), loadTies(stage).catch(() => null)]).catch(() => undefined);
 }
 
 /** The whole edition in one promise (core and stored records), for tests and tools. */
@@ -143,8 +147,10 @@ export async function loadEdition(): Promise<Edition> {
  * Loading contract:
  * 1. Discovery pins the edition (manifest hash); every later request carries it.
  * 2. In parallel: the core (overview, corpus map, node summaries, node and
- *    source records), the stored tables (edges, evidence), and, when the page
- *    opened on an account (`paperFirst`), that account's bytes and structure.
+ *    source records) and the stored tables (edges, evidence). When the page
+ *    opened on an account (`paperFirst`), that account's bytes, structure and
+ *    ties go with the core, and the stored tables, which a paper's text does
+ *    not need, wait for them.
  *    Record tables are paged in parallel once their first page gives a total.
  * 3. Children render as soon as the core is ready, with `context: "loading"`.
  * 4. When edges and evidence arrive, warrants are attached to the same graph
@@ -169,9 +175,9 @@ export function EditionProvider({
     openEdition().then(
       ({ snapshot, discovery }) => {
         if (!alive) return;
-        if (paperFirst) primePaper(paperFirst);
+        const paper = paperFirst ? primePaper(paperFirst) : null;
         const core = loadCore();
-        const stored = loadStored();
+        const stored = paper ? paper.then(loadStored) : loadStored();
         let ready: { graph: ArgGraph; core: Core } | null = null;
         let storedValue: Stored | null = null;
         core.then(

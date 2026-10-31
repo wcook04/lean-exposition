@@ -73,7 +73,7 @@ export interface PaperSummary {
 }
 
 export interface Overview {
-  graph: { id: string; notes: string[] };
+  graph: { id: string };
   node_status_counts: Record<string, number>;
   record_counts: Record<string, number>;
   relation_counts: Record<string, number>;

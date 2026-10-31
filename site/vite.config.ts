@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, type Plugin } from "vite";
+import { createServer, defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import katex from "katex";
 import { copyFileSync, createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -6,7 +6,7 @@ import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
-import { readerSkeletonHtml } from "./src/reader/skeleton.ts";
+import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
@@ -266,19 +266,70 @@ function routeData(route: string, base: string): string[] {
   if (!existsSync(path)) return [];
   const index = JSON.parse(readFileSync(path, "utf8"));
   const responses: Record<string, string> = index.responses ?? {};
-  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?"));
+  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?") && key.includes("representation=reader_map"));
   const stage = route.match(/^read\/(.+)$/)?.[1];
   const files = [
     responses[""],
-    responses["/overview"],
+    responses["/overview?representation=reader"],
     graph && responses[graph],
     index.summaries_by_table?.nodes,
-    ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
+    ...(stage ? ["nodes", "sources"] : ["nodes", "sources", "edges", "evidence"]).map((table) => index.records_by_table?.[table]),
     ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];
   return files.filter(Boolean).map((file) => `<link rel="preload" href="${base}edition/${file}" as="fetch" crossorigin />`);
+}
+
+/** The maths on a paper's first screen is drawn in these, and hidden until they arrive. */
+function routeFonts(route: string, base: string): string[] {
+  if (!route.startsWith("read/")) return [];
+  return readdirSync(resolve("dist/assets"))
+    .filter((name) => /^KaTeX_(Main-Regular|Math-Italic)-.*\.woff2$/.test(name))
+    .map((name) => `<link rel="preload" href="${base}assets/${name}" as="font" type="font/woff2" crossorigin />`);
+}
+
+/**
+ * Each paper's first screen, through the page's own engine. It needs a DOM to sanitise, and the
+ * bundler's handling of `import.meta.env` and the virtual modules, so it runs in a dev server
+ * of its own. An edition that is not there leaves the empty shape.
+ */
+async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record<string, string>> {
+  const path = resolve("public/edition/index.json");
+  if (!existsSync(path)) return {};
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  const edition = (name: string) => readFileSync(resolve("public/edition", name));
+  const body = (name: string | undefined) => (name ? JSON.parse(edition(name).toString("utf8")) : null);
+  // @ts-expect-error jsdom has no types here, and these two lines are all that touch it.
+  const { JSDOM } = await import("jsdom");
+  const { window } = new JSDOM("<!doctype html>");
+  const globals = globalThis as { window?: unknown; document?: unknown };
+  globals.window = window;
+  globals.document = window.document;
+  const { closeBundle: _pdfs, configureServer: _serve, ...pdfs } = paperPdfs();
+  const server = await createServer({
+    configFile: false,
+    base,
+    logLevel: "error",
+    appType: "custom",
+    server: { middlewareMode: true, hmr: false, ws: false },
+    optimizeDeps: { noDiscovery: true },
+    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
+  });
+  try {
+    const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
+    const screens: Record<string, string> = {};
+    for (const stage of Object.keys(index.documents)) {
+      const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
+      const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
+      screens[stage] = readerFirstScreenHtml(account, parts);
+    }
+    return screens;
+  } finally {
+    await server.close();
+    delete globals.window;
+    delete globals.document;
+  }
 }
 
 const typeset = (source: string) => katex.renderToString(source, { throwOnError: true, output: "html", strict: "error" });
@@ -431,15 +482,17 @@ export default defineConfig(({ mode }) => {
     base,
     plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
-      closeBundle() {
+      async closeBundle() {
         const out = resolve("dist");
         const shell = resolve(out, ".route-shell.html");
+        const screens = await paperFirstScreens(base, facts);
         for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
-          // A paper's first paint is already the shape of the page, so nothing moves when it arrives.
-          const page = route.startsWith("read/")
-            ? readFileSync(shell, "utf8").replace('class="app__main"></main>', `class="app__main">${readerSkeletonHtml()}</main>`)
+          const preload = [...routeFonts(route, base), ...routeCode(route, base), ...routeData(route, base)].join("");
+          // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.
+          const stage = route.match(/^read\/(.+)$/)?.[1];
+          const page = stage
+            ? readFileSync(shell, "utf8").replace("<html ", '<html data-view="read" ').replace('class="app__main"></main>', () => `class="app__main">${screens[stage] ?? readerSkeletonHtml()}</main>`)
             : readFileSync(shell, "utf8");
           writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
         }
@@ -459,7 +512,9 @@ export default defineConfig(({ mode }) => {
     }] : [])],
     server: { port: 5173, strictPort: true, proxy },
     preview: { port: 4173, strictPort: true, proxy },
-    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900 },
+    // A font is fetched only if a page uses its characters. Inlined, its bytes would sit in the
+    // stylesheet that every page waits for.
+    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900, assetsInlineLimit: (file) => (/\.(woff2?|ttf)$/.test(file) ? false : undefined) },
     test: {
       environment: "jsdom",
       include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],

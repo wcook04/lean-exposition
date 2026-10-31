@@ -18,9 +18,10 @@ want to explore it:
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The graph is on the page facing the paper and moves to the statement you are reading. Pointing at a marked statement lights its card and names it; clicking opens
-  its Lean over the graph, and clicking a card also takes the paper to the statement.
-  Back takes you to your place.
+  The pane facing the paper has two modes, Graph and Lean. In Graph the graph moves to the statement
+  you are reading, and pointing at a marked statement lights its card and names it. Clicking a
+  statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
+  Lean yourself keeps the Lean on the statement you are reading.
   Beside any passage you can list the steps linked to it and open passages in the other papers that are linked to the same steps.
 - **The Lean index.** OpenAI's source, every module and declaration, at the back of
   the book: plain titles first, each central name explained in the papers' notation,
@@ -87,6 +88,15 @@ The Lean index and record alignment have fixed paths (`lean/modules.json`,
 and change no paper file. An alignment row that fails is printed and left out, so a
 reading edition survives a file still being written;
 `lean-exposition check-alignment examples/qaoa-sk/alignment` is the strict check.
+
+`alignment.json` stays whole for anyone reading the edition. The site mostly reads it in
+parts, which only the static edition has: `alignment/core.json` holds every record's Lean
+and every statement's place, `alignment/<paper>.json` what that paper's statements add
+(their words, their Lean rows and any note), and `/alignment/record?id=…` one record whole.
+The core and the three paper files together are exactly `alignment.json`, which
+`tests/static-edition.test.ts` checks. The startup forms
+`/overview?representation=reader` and `/graph?…representation=reader_map` leave out fields
+no page reads and name them in `omitted_fields`. The full responses stay published.
 
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and

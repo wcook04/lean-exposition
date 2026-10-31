@@ -32,7 +32,7 @@ import { declTitle } from "../model/declTitle";
 import { useLeanGraph } from "./useLeanGraph";
 import { leanWidth, neighbourhood } from "../model/leanGraph";
 import { useEntryState } from "../app/trail";
-import { useAlignment } from "../compare/useAlignment";
+import { fullAlignmentResource, useAlignment } from "../compare/useAlignment";
 import type { LeanStep } from "../panels/model";
 import { shortTitle as recordTitle } from "../compare/useAlignment";
 import { startLeanViewer } from "../lean/lazy";
@@ -192,6 +192,16 @@ export function MapPage({ route }: { route: MapRoute }) {
   const leanGraph = useLeanGraph({ enabled: leanOn, graph, goal, records: leanRecords });
   const leanReady = leanOn && leanGraph.status === "ready" ? leanGraph : null;
   const alignment = useAlignment();
+  // The panel opens on one record's statements. A reader who starts choosing will choose others.
+  useEffect(() => {
+    const start = () => void fullAlignmentResource();
+    window.addEventListener("pointerdown", start, { once: true, passive: true });
+    window.addEventListener("keydown", start, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", start);
+      window.removeEventListener("keydown", start);
+    };
+  }, []);
   const leanCounts = useMemo(() => (alignment ? leanLevelCounts(graph, reach(scopedGraph(graph, goal), goal), alignment) : null), [alignment, graph, goal]);
   const outsideScope = !!route.lens && !stepNotDrawn && selectionIds.some((id) => !within?.has(id) || !scopedReach.has(id));
 

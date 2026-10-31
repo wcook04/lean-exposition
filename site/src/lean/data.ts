@@ -6,8 +6,8 @@ import {
   loadLeanModule,
   loadLeanModules,
   loadLeanNames,
-  type Alignment,
   type AlignedStatement,
+  type AlignmentCore,
   type DictionaryTerm,
   type LeanDeclaration,
   type LeanKind,
@@ -15,6 +15,7 @@ import {
   type LeanModuleRow,
   type LeanModules,
   type LeanRelation,
+  type StatementPlace,
 } from "../api/lean";
 import { alignmentResource, shortTitle, useAlignment } from "../compare/useAlignment";
 import { buildIndex, type LeanIndex } from "./resolve";
@@ -41,9 +42,9 @@ export interface LinkedRecord {
   clause?: string;
 }
 
-/** Where a paper states a declaration: an exact slice, and the record that ties it. */
+/** Where a paper states a declaration: an exact slice, and the record that ties it. Its words come with the whole alignment. */
 export interface PaperStatement {
-  statement: AlignedStatement;
+  statement: StatementPlace | AlignedStatement;
   /** The record whose slice this is; absent for a dictionary entry's quotation. */
   record?: string;
 }
@@ -61,14 +62,14 @@ export interface LeanShell {
 }
 
 const pathsMemo = new WeakMap<LeanModules, Map<string, LeanModuleRow>>();
-const termsMemo = new WeakMap<Alignment, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]>; statements: Map<string, PaperStatement[]>; plain: ReadonlyMap<string, string> }>();
+const termsMemo = new WeakMap<AlignmentCore, { terms: Map<string, DictionaryTerm>; linked: Map<string, LinkedRecord[]>; statements: Map<string, PaperStatement[]>; plain: ReadonlyMap<string, string> }>();
 const emptyAlignment = { terms: new Map<string, DictionaryTerm>(), linked: new Map<string, LinkedRecord[]>(), statements: new Map<string, PaperStatement[]>(), plain: new Map<string, string>() };
 
 const RELATION_ORDER: LeanRelation[] = ["states", "defines", "contains", "part", "proof"];
 const PAPER_ORDER = ["short", "long", "expository"];
 const ROLE_ORDER = ["statement", "definition", "derivation", "explanation", "example", "mention"];
 
-function statementsOf(alignment: Alignment): Map<string, PaperStatement[]> {
+function statementsOf(alignment: AlignmentCore): Map<string, PaperStatement[]> {
   const found = new Map<string, { row: PaperStatement; rank: number }[]>();
   const add = (name: string, row: PaperStatement, rank: number) => {
     const rows = found.get(name);
@@ -97,7 +98,7 @@ function statementsOf(alignment: Alignment): Map<string, PaperStatement[]> {
   return out;
 }
 
-function alignmentMaps(alignment: Alignment | null) {
+function alignmentMaps(alignment: AlignmentCore | null) {
   if (!alignment) return emptyAlignment;
   let maps = termsMemo.get(alignment);
   if (!maps) {
@@ -115,6 +116,9 @@ function alignmentMaps(alignment: Alignment | null) {
   }
   return maps;
 }
+
+/** The statements of each declaration, from an alignment that has their words. */
+export const quotedStatements = (alignment: AlignmentCore) => alignmentMaps(alignment).statements;
 
 function pathsOf(modules: LeanModules) {
   let paths = pathsMemo.get(modules);
