@@ -25,7 +25,7 @@ const PUBLIC_OBSERVATIONS = [{
   name: "full-support-build-extraction-observation-20261026.json",
 }];
 
-function publicObservations(): Plugin {
+function publicObservations(build = false): Plugin {
   return {
     name: "public-observations",
     configureServer(server) {
@@ -38,6 +38,7 @@ function publicObservations(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist", "verification");
       mkdirSync(out, { recursive: true });
       for (const item of PUBLIC_OBSERVATIONS) copyFileSync(resolve(item.file), resolve(out, item.name));
@@ -96,7 +97,7 @@ export function firstPage(stage: string, pdf: Buffer): FirstPage | null {
 }
 
 /** Serves the PDFs under /pdf/ in development, copies them into every build, and exports their page counts and first pages. */
-function paperPdfs(): Plugin {
+function paperPdfs(build = false): Plugin {
   const id = "virtual:paper-pdfs";
   return {
     name: "paper-pdfs",
@@ -122,6 +123,7 @@ function paperPdfs(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist");
       for (const p of Object.values(PAPER_PDFS)) {
         // The aliases retain the papers' relative cross-PDF targets without
@@ -339,7 +341,7 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
  * the theorem and the bar paint before any script or data arrives, and they reach readers
  * and crawlers that run no script. Pages other than the front page get the frame only.
  */
-function firstScreen(base: string, facts: SiteFacts): Plugin {
+function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   const id = "virtual:front-hero";
   const hero = heroHtml(heroLinks(base, facts.theorem1), typeset);
   const frame = frameHtml(base);
@@ -373,6 +375,7 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
       }
     },
     closeBundle() {
+      if (!build) return;
       const home = resolve("dist/index.html");
       if (!existsSync(home)) return;
       const html = readFileSync(home, "utf8");
@@ -385,38 +388,66 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
 }
 
 // The public repository that receives the static build has no other README.
-const SITE_README = `# Why the Sherrington–Kirkpatrick order parameter has no gaps
+const SITE_README = `# Lean Exposition website
 
-This repository holds the built reading website published at
-https://wcook04.github.io/lean-exposition-site/.
+Read a mathematical paper with the exact Lean statement beside the paragraph
+that describes it. Lean is a language for writing statements and proofs that a
+computer can check. The papers and their links to the Lean are drafts awaiting
+mathematical review.
 
-The website presents one theorem about the zero-temperature
-Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
-increases across every interval in [0, 1). It has three papers on
-the proof (an exposition, a short paper and a long record), each readable on
-the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
-Lean beside the text, and the site also has an argument map of the steps the
-proof uses, an index of the Lean, and the test runs recorded for them. The architectural companion explains
-why these papers share one graph; read it on the About page or in
-\`pdf/architecture.pdf\`.
+**[Open Theorem 1 with its Lean](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)** · [Website](https://wcook04.github.io/lean-exposition-site/) · [Source and tools](https://github.com/wcook04/lean-exposition) · [Will Cook's projects](https://wcook04.github.io/)
 
-The mathematics comes from OpenAI's mathematics release, family 281:
-https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
+[![The short paper with Theorem 1 highlighted beside its Lean statement.](stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)
 
-Plectis Atlas has a page for the same family:
-https://wcook04.github.io/plectis-atlas/families/281.html
+The website contains three explanations of a theorem about interacting spins
+in the Sherrington–Kirkpatrick model. Start with the exposition for a two-spin
+example, or the short paper for the specialist statement and proof.
+The mathematics comes from
+[OpenAI's mathematics release, example 281](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md).
+These are drafts explaining existing results; mathematical and reader review
+remain open. The [source repository](https://github.com/wcook04/lean-exposition#the-worked-example)
+gives the exact scope of the Lean and the recorded checks.
 
-Will Cook made this website as part of Plectis, his projects on researching
-mathematics with AI and on tools that help people follow what AI produces:
-https://wcook04.github.io/practical-formal-verification/
-His videos are on YouTube: https://www.youtube.com/@willcook2004
+## Read and explore
 
-Source, papers, tools and contribution instructions:
-https://github.com/wcook04/lean-exposition
+| Start with | What you can inspect |
+| --- | --- |
+| [Exposition](https://wcook04.github.io/lean-exposition-site/read/expository/) | An explanation beginning with a calculation for two spins |
+| [Short paper](https://wcook04.github.io/lean-exposition-site/read/short/) | The precise mathematical statement and its proof |
+| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Detailed calculations, source references and remaining steps for the separate quantum-circuit claim |
+| [Argument map](https://wcook04.github.io/lean-exposition-site/map/) · [Compare](https://wcook04.github.io/lean-exposition-site/compare/) | The recorded proof steps and their passages in each paper |
+| [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The named statements in the Lean code and recorded check results |
+| [About](https://wcook04.github.io/lean-exposition-site/about/) | A paper explaining how the website connects the papers to the proof steps |
 
-This repository receives the generated website from the source repository’s
-main-branch build workflow. Make changes in the source repository; the workflow
-publishes the resulting files here.
+A statement with a dark tick opens its Lean beside the paper.
+The papers and companion are also available in [PDF](pdf/).
+[Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
+lists the same OpenAI manuscripts and Lean files.
+
+## Videos
+
+[How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw)
+starts with four magnets and explains the mathematical question.
+[Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
+walks through this website.
+
+## Source and generated files
+
+This repository contains the built website, not the tools that produce it.
+Make changes in [lean-exposition](https://github.com/wcook04/lean-exposition).
+Its [main-branch build workflow](https://github.com/wcook04/lean-exposition/blob/main/.github/workflows/pages.yml)
+replaces this repository's files with the built website. Installation,
+local development and contribution instructions live in that source repository.
+
+| Generated path | Contents |
+| --- | --- |
+| [read/](read/) | The three paper readers |
+| [edition/](edition/) | Copies of the papers, proof-step data and check results used by the site |
+| [pdf/](pdf/) | Downloadable papers and architectural companion |
+| [assets/](assets/) · [stills/](stills/) | Built application files and website screenshots |
+
+Will Cook directs this project. His other projects and videos are linked below.
+[Projects](https://wcook04.github.io/) · [Videos](https://www.youtube.com/@willcook2004)
 `;
 
 const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";
@@ -472,15 +503,16 @@ All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: 
 // The site reads one captured edition from the read-only web API.
 // During development and preview, /api is proxied to a local
 // `lean-exposition serve` process so the page and the API share an origin.
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const api = env.LEAN_EXPOSITION_API ?? "http://127.0.0.1:8000";
   const proxy = { "/api": { target: api, changeOrigin: false } };
   const base = env.VITE_BASE_PATH ?? "/";
   const facts = siteFacts();
+  const build = command === "build";
   return {
     base,
-    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(build), publicObservations(build), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts, build), ...(build && env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       async closeBundle() {
         const out = resolve("dist");

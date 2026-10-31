@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Capture trimmed test fixtures from a running `lean-exposition serve`.
 //
-//   node scripts/capture-fixtures.mjs [http://127.0.0.1:8000]
+//   node scripts/capture-fixtures.mjs [http://127.0.0.1:8000] [--out <directory>]
 //
 // The fixtures keep the fields the site reads, so layout and reader tests run
 // without a server. Map links keep every semantic field the API serves
@@ -13,9 +13,19 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { parseArgs } from "node:util";
 
-const origin = process.argv[2] ?? "http://127.0.0.1:8000";
-const out = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "tests", "fixtures");
+const { values, positionals } = parseArgs({
+  allowPositionals: true,
+  options: { out: { type: "string" }, help: { type: "boolean" } },
+});
+if (values.help) {
+  console.log("Usage: node scripts/capture-fixtures.mjs [http://127.0.0.1:8000] [--out <directory>]\nServe the bundle with --lean-tree and --alignment to capture its paper ties too.");
+  process.exit(0);
+}
+if (positionals.length > 1) throw new Error("Expected at most one server origin; use --out for the output directory");
+const origin = positionals[0] ?? "http://127.0.0.1:8000";
+const out = values.out ?? path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "tests", "fixtures");
 
 async function get(route, params = {}) {
   const url = new URL(`/api/v1${route}`, origin);
@@ -33,8 +43,10 @@ const graph = (await (await get("/graph", pinned({ view: "arguments", representa
 const summaries = (await (await get("/records", pinned({ table: "nodes", representation: "summary", limit: 200 }))).json()).data;
 const overview = (await (await get("/overview", pinned())).json()).data;
 
-await mkdir(out, { recursive: true });
-const write = (name, value) => writeFile(path.join(out, name), JSON.stringify(value, null, 1) + "\n");
+// Fetch the whole edition before replacing files, so a missing alignment route
+// cannot leave new paper bytes beside old tie offsets.
+const captured = new Map();
+const write = (name, value) => captured.set(name, JSON.stringify(value, null, 1) + "\n");
 
 await write("graph-map.json", {
   manifest_sha256: manifest,
@@ -75,6 +87,9 @@ for (const stage of ["long", "short", "expository"]) {
     reading_links: structure.reading_links,
   });
   const bytes = new Uint8Array(await (await get(`/papers/${stage}/document`, pinned())).arrayBuffer());
-  await writeFile(path.join(out, `document-${stage}.md`), bytes);
+  captured.set(`document-${stage}.md`, bytes);
+  await write(`ties-${stage}.json`, (await (await get(`/ties/${stage}`, pinned())).json()).data);
 }
+await mkdir(out, { recursive: true });
+await Promise.all([...captured].map(([name, bytes]) => writeFile(path.join(out, name), bytes)));
 console.log(`Captured fixtures for manifest ${manifest} into ${out}`);

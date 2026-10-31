@@ -7,12 +7,14 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
 
 ## Write and review
 
+- [Workflow](workflow.md): why there are three papers, how to apply the tool and
+  methods to another result, and how to package and serve the papers.
 - [Authoring guide](authoring.md): connect passages to claims, assumptions and
   sources, then use the [review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills)
   to repair the account and test lessons for the next problem.
 - [Review one explanation](reader-review.md): freeze an edition, ask a bounded
   reader question and preserve the response through later revisions.
-- [Authoring transitions](../skills/README.md): four local skills for source
+- [Writing methods](../skills/README.md): four local skills for source
   recording, detailed reconstruction, expert selection and exposition.
 - [Erdős examples](erdos-method-transfer.md): concrete writing methods illustrated
   by eight problem corpora.
