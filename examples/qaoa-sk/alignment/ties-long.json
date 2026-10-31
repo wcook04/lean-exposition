@@ -1425,8 +1425,19 @@
       "role": "explanation",
       "from": "**Shape inequalities on a plateau.** Fix the height $c>0$",
       "to": "chosen as one compatible sequence.",
-      "lean": [],
-      "note": "Not in the Lean: it keeps no plateau. Grid approximants are sampled at the floor of t and continuity at t passes to the limit."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positiveCoeff_bound",
+          "relation": "part",
+          "note": "Support model. The terminal parameter bounds every step coefficient and grows with n. Steps are grid samples of γ, so none is held at c."
+        },
+        {
+          "name": "OAI.SKValue.logCoshTerminal_backwardShape",
+          "relation": "part",
+          "note": "Scalar model. The log-cosh terminal has the backward shape when c≤M, which is why M must bound the coefficients."
+        }
+      ],
+      "note": "The Lean keeps no plateau: grid approximants are sampled at the floor of t and continuity passes to the limit. The terminal bound is there."
     },
     {
       "record": "support.first_variation",
@@ -1510,7 +1521,10 @@
           "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual"
         },
         {
-          "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant"
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant",
+          "relation": "part",
+          "clause": "HasDerivAt (deriv (curvatureMoment W γ)) (stripThird W γ T c t) t",
+          "note": "Third time derivative on a constant interval equals stripThird. The Lean does not keep the value c."
         }
       ]
     },
@@ -2284,8 +2298,19 @@
       "role": "explanation",
       "from": "There is also a global alternative to compact mass removal.",
       "to": "density of $\\mu$ has been assumed.",
-      "lean": [],
-      "note": "Lean takes the compact removal route only; this global scaling proof is not formalised."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+          "relation": "part",
+          "note": "Support model. Atom addition gives G≥0, as the sentence says. The scaling step after it is not in the Lean."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos",
+          "relation": "part",
+          "note": "Support model. A continuous nonnegative function with nonpositive integral vanishes on the support, the last step here. The Lean feeds it compact removal."
+        }
+      ],
+      "note": "Lean takes the compact removal route only; this global scaling proof is not formalised. The steps it shares with that route are in the Lean."
     },
     {
       "record": "support.optimality_criterion",
@@ -2626,8 +2651,19 @@
       "role": "statement",
       "from": "The comparison arguments take place on unbounded spatial domains",
       "to": "so\nthe boundary estimates must precede the signs.",
-      "lean": [],
-      "note": "Not in the Lean: its comparisons assume only boundedness, so no boundary estimate precedes the signs."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Parabolic.nonnegative_fullLine_bounded",
+          "relation": "part",
+          "note": "Support model. Comparison on the whole line. A lower bound and drift growth replace tail estimates, so no such estimate precedes the signs."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Parabolic.nonnegative_halfLine_bounded",
+          "relation": "part",
+          "note": "Support model. The half-line form, which also needs a sign at x=0."
+        }
+      ],
+      "note": "The comparisons on unbounded domains are in the Lean. They need no tail estimates."
     },
     {
       "record": "support.step_tails",
@@ -2768,8 +2804,8 @@
             112,
             114
           ],
-          "note": "From oddness and a positive derivative.",
-          "relation": "part"
+          "relation": "states",
+          "note": "From oddness and a positive derivative."
         }
       ]
     },
@@ -3124,8 +3160,29 @@
       "role": "explanation",
       "from": "Reflection extends these signs.",
       "to": "not an omitted boundary of the integration.",
-      "lean": [],
-      "note": "Not in the Lean: it does not extend the quotients across zero. It integrates on x>0, where the flux vanishes at zero, then doubles."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.quotientExtension_continuous",
+          "relation": "part",
+          "note": "Support model. A quotient by r extends continuously across zero, using dslope. Evenness of the extension and j(0)=0, S₁(0)=0 are not stated."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.BackwardShape.dslope_nonzero",
+          "relation": "part",
+          "note": "Support model. The simple zero of r: its slope quotient never vanishes, so the division is sound."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_flux_continuous",
+          "relation": "part",
+          "note": "Support model. The certificate flux is continuous at zero, so zero is no omitted boundary of the half-line integral."
+        },
+        {
+          "name": "OAI.SKValue.ExpGrowth.div_odd_monotone",
+          "relation": "part",
+          "note": "Scalar model. Division by the same simple zero: its proof takes the limit g'(0)/r'(0) at zero and keeps exponential growth."
+        }
+      ],
+      "note": "The support model extends the quotients across zero with dslope, then integrates on x>0, where the flux vanishes at zero, and doubles."
     },
     {
       "record": "support.flux_identity",
@@ -6412,13 +6469,14 @@
       "to": "all 22 positive remainder\ncoefficients.",
       "lean": [
         {
+          "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+          "relation": "states",
+          "note": "The full expansion, closed by ring, so the remainder's coefficients match exactly."
+        },
+        {
           "name": "OAI.ZeroTemperatureSK.Certificate.remainder",
-          "lines": [
-            37,
-            45
-          ],
-          "note": "The 22 monomials.",
-          "relation": "defines"
+          "relation": "defines",
+          "note": "The 22 monomials."
         }
       ]
     },
@@ -7798,6 +7856,15 @@
       "to": "relative-slope comparison, and $L=-rs_{xx}\\ge0$ from forward concavity.",
       "lean": [
         {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs",
+          "lines": [
+            181,
+            188
+          ],
+          "relation": "part",
+          "note": "All seven signs on the positive half-line, taking forward concavity and the ratio bound as hypotheses, which the next tabs supply."
+        },
+        {
           "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio"
         },
         {
@@ -7903,8 +7970,19 @@
       "role": "derivation",
       "from": "**Proof.** Fix $t<T<T'<1$ and a shrinking interval",
       "to": "\\tag{4.3}\n$$",
-      "lean": [],
-      "note": "Not in the Lean: its approximant is positiveCoeff, the grid sample of γ plus the mesh, with no plateau, no clipping and no bound (4.3)."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positiveGamma_L1",
+          "relation": "proof",
+          "note": "Support model. Step coefficients tending to γ in L¹, built as grid sample plus mesh: no plateau, no clipping, no bound (4.3)."
+        },
+        {
+          "name": "OAI.SKValue.OrderParameter.splitError_tendsto",
+          "relation": "proof",
+          "note": "Scalar model. The same L¹ limit for a grid cut at t, with no plateau there either."
+        }
+      ],
+      "note": "The Lean's approximant is simpler, so this construction is not there. The L¹ limit is."
     },
     {
       "record": "support.positive_curvature",
@@ -9078,7 +9156,32 @@
       "to": "for those objects before applying its fixed-strip helper.",
       "lean": [
         {
-          "name": "OAI.SKValue.scalar_value_target"
+          "name": "OAI.SKValue.scalar_value_target",
+          "lines": [
+            13,
+            14
+          ],
+          "relation": "states",
+          "note": "The first named declaration: this implication, with the conclusion unfolded in ScalarValueConclusion."
+        },
+        {
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "lines": [
+            17,
+            19
+          ],
+          "relation": "states",
+          "note": "The second named declaration, for the same minimiser and supplied diffusion, with 0<T<1."
+        },
+        {
+          "name": "OAI.SKValue.sourceStripRegularity",
+          "relation": "proof",
+          "note": "The compact-strip bounds the implementation derives, for any order parameter."
+        },
+        {
+          "name": "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact",
+          "relation": "proof",
+          "note": "The unit curvature moment, from contact."
         },
         {
           "name": "OAI.SKValue.ScalarValueConclusion",
@@ -9098,7 +9201,32 @@
       "to": "for those objects before applying its fixed-strip helper.",
       "lean": [
         {
-          "name": "OAI.SKValue.scalar_value_target"
+          "name": "OAI.SKValue.scalar_value_target",
+          "lines": [
+            13,
+            14
+          ],
+          "relation": "states",
+          "note": "The first named declaration: this implication, with the conclusion unfolded in ScalarValueConclusion."
+        },
+        {
+          "name": "OAI.SKValue.finite_gaussian_target",
+          "lines": [
+            17,
+            19
+          ],
+          "relation": "states",
+          "note": "The second named declaration, for the same minimiser and supplied diffusion, with 0<T<1."
+        },
+        {
+          "name": "OAI.SKValue.sourceStripRegularity",
+          "relation": "proof",
+          "note": "The compact-strip bounds the implementation derives, for any order parameter."
+        },
+        {
+          "name": "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact",
+          "relation": "proof",
+          "note": "The unit curvature moment, from contact."
         },
         {
           "name": "OAI.SKValue.ScalarValueConclusion",

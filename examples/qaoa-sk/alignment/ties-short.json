@@ -247,8 +247,8 @@
             26,
             27
           ],
-          "note": "The increment identity, in ENNReal.",
-          "relation": "part"
+          "relation": "states",
+          "note": "The increment identity, in ENNReal."
         }
       ]
     },
@@ -410,6 +410,15 @@
             47
           ],
           "relation": "defines"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.value_coefficient_stability",
+          "lines": [
+            85,
+            87
+          ],
+          "relation": "part",
+          "note": "Stability in the coefficient, with constant 3/2 in L1 on [t,1]. The terminal value is fixed at |x| here."
         }
       ]
     },
@@ -721,8 +730,8 @@
             121,
             125
           ],
-          "note": "Lean states a right derivative at every time, for every spatial derivative order.",
-          "relation": "proof"
+          "relation": "proof",
+          "note": "Right derivative at every time, for each spatial order. At order zero compactValueRate is the PDE right side."
         }
       ]
     },
@@ -1330,7 +1339,8 @@
             169,
             185
           ],
-          "relation": "part"
+          "relation": "states",
+          "note": "The coefficient vanishes on the initial gap when zero lies outside the support."
         }
       ]
     },
@@ -1811,7 +1821,8 @@
             131,
             134
           ],
-          "relation": "part"
+          "relation": "part",
+          "note": "Lean has no γ′. On a constant interval the q″ expression differentiates to the q‴ expression, so the identity's γ′ term never arises."
         }
       ]
     },
@@ -2205,8 +2216,19 @@
       "role": "explanation",
       "from": "The last inequality couples the backward gradient to the forward\ndensity;",
       "to": "separate monotonicity and concavity do not supply it.",
-      "lean": [],
-      "note": "Not in the Lean: a remark. The joint sign is hypothesis hQ of gaussian_shape_coercivity; nothing shows the separate shapes fail to imply it."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio",
+          "relation": "part",
+          "note": "Support model. Proves the coupled sign r s'-s r'≥0 on finite steps. That separate shapes cannot supply it is not stated."
+        },
+        {
+          "name": "OAI.SKValue.ForwardShape",
+          "relation": "part",
+          "note": "Scalar model. The same sign is the field coupled, carried beside slope and concavity through heat steps and jumps."
+        }
+      ],
+      "note": "The coupled sign is proved in the Lean and supplied to gaussian_shape_coercivity as hQ. That the separate shapes do not imply it is not shown."
     },
     {
       "record": "support.forward_shapes",
@@ -3743,8 +3765,8 @@
             42,
             50
           ],
-          "note": "Needs q(t)=t: the Itô step gives ½∫γq, here ½∫tγ.",
-          "relation": "part"
+          "relation": "states",
+          "note": "Given strip regularity and q(t)=t: the Itô step gives ½∫γq, here ½∫tγ."
         },
         {
           "name": "OAI.SKValue.IsDiffusion.parisi_first_value",
@@ -4532,7 +4554,8 @@
             35,
             36
           ],
-          "relation": "states"
+          "relation": "part",
+          "note": "The full-support implementation's main theorem. That it uses Lean and mathlib is a fact about its source, which no theorem states."
         },
         {
           "name": "OAI.SKValue.value_consequences",
@@ -4541,7 +4564,8 @@
             16,
             24
           ],
-          "relation": "states"
+          "relation": "part",
+          "note": "The scalar implementation's main theorem. Its toolchain is likewise a fact about the source."
         }
       ]
     },

@@ -169,8 +169,14 @@
       "role": "explanation",
       "from": "A **probability density** assigns probability by area.",
       "to": "\\Pr(a\\le Z\\le b)=\\int_a^b\\varphi(z)\\,dz.\n$$",
-      "lean": [],
-      "note": "Not in the Lean: textbook background. The couplings use mathlib's gaussianReal 0 1, and no declaration restates this density."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.heatKernel_formula",
+          "relation": "part",
+          "note": "Support model. The density for variance t; t=1 is this φ. Positivity, total integral and the interval formula come from mathlib's gaussianReal."
+        }
+      ],
+      "note": "Textbook background. The couplings use mathlib's gaussianReal 0 1, and the Lean writes the density formula for its heat kernel."
     },
     {
       "record": "support.zero_candidate_descent",
@@ -2169,8 +2175,14 @@
       "role": "derivation",
       "from": "Now fix a general minimiser $\\gamma$",
       "to": "by the same\nfactor.",
-      "lean": [],
-      "note": "Not in the Lean: the support proof never scales γ. It removes μ restricted to a compact set instead, in contactPotential_compact_mass_removal."
+      "lean": [
+        {
+          "name": "OAI.SKValue.OrderParameter.mix",
+          "relation": "part",
+          "note": "Scalar model. With η=OrderParameter.zero this makes (1-ε)γ admissible. The Lean never takes that η; its contact proof removes mass."
+        }
+      ],
+      "note": "The support proof does not scale γ. It removes μ restricted to a compact set, in contactPotential_compact_mass_removal."
     },
     {
       "record": "support.contact",
@@ -2314,8 +2326,9 @@
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.zero_on_support_of_compact_mass_removal",
+          "relation": "part",
           "clause": "∀ t, InSupport μ t → G t = 0",
-          "note": "The implication runs one way: support gives G=0, with no converse."
+          "note": "Contact on the support, one way, with no converse. That support alone forbids removing an atom is the paper's remark, with no Lean statement."
         }
       ]
     },
@@ -2549,8 +2562,24 @@
       "role": "derivation",
       "from": "If $r=0$, this mass is an atom at zero.",
       "to": "atom at zero.",
-      "lean": [],
-      "note": "Not in the Lean: it never speaks of an atom at zero. It only rules out c>0 with zero outside the support."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap",
+          "relation": "part",
+          "note": "Support model, contrapositive: zero outside the support and a mass-free (0,b) force γ=0 there. So positive height puts mass at zero."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.parameterMeasure",
+          "relation": "part",
+          "note": "Support model. The Stieltjes measure is built with the atom γ(0)δ at zero."
+        },
+        {
+          "name": "OAI.SKValue.IsMinimizer.contact_origin_of_positive",
+          "relation": "part",
+          "note": "Scalar model. When γ(0)>0 the truncated mass has an atom at zero, and contact follows there."
+        }
+      ],
+      "note": "The Lean puts an explicit atom γ(0)δ₀ at zero and uses it when the initial height is positive."
     },
     {
       "record": "support.no_bounded_gap",
@@ -3016,8 +3045,14 @@
       "role": "explanation",
       "from": "Although the forward path is Brownian here, the backward value receives",
       "to": "$\\Phi_\\gamma(s,\\cdot)$ from the later coefficient.",
-      "lean": [],
-      "note": "Not in the Lean: a remark. Its value is defined from the whole coefficient, so later values enter only through that definition."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.value_integral_rate",
+          "relation": "part",
+          "note": "Support model. The value at a comes from the value at b and the rate. The initial gap's Brownian path is not stated."
+        }
+      ],
+      "note": "A remark on the initial gap. The general backward relation is in the Lean."
     },
     {
       "record": "support.no_initial_gap",
@@ -3279,7 +3314,7 @@
       "from": "What changes if strict convexity",
       "to": "is weakened to convexity?",
       "lean": [],
-      "note": "Not in the Lean: a question outside its hypotheses. no_gap_of_strictConvex_derivative assumes strict convexity and says nothing about convexity alone."
+      "note": "Not in the Lean: a question about one calculus example. no_gap_of_strictConvex_derivative assumes strict convexity; the scalar model's positive_hump_impossible assumes plain convexity and different data."
     },
     {
       "record": "support.endpoint_chord_area",
@@ -3527,8 +3562,19 @@
       "role": "explanation",
       "from": "With the spatial derivatives $u$ and $a$ defined in Section 3.3,",
       "to": "-\\tfrac12\\gamma(t)v^2h\\right\\}+o(h).\n$$",
-      "lean": [],
-      "note": "Not in the Lean: this formal recursion is a heuristic. Lean verifies the PDE's solution from above and below on constant-coefficient steps instead."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.expected_verification_step",
+          "relation": "proof",
+          "note": "Support model. One step for a smooth PDE solution: any bounded control gains at most an h^(3/2) error. Here the PDE is the hypothesis."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.expected_feedback_step",
+          "relation": "proof",
+          "note": "Support model. The feedback choice v=u attains the step up to verificationError, on a constant-coefficient step."
+        }
+      ],
+      "note": "The paper's recursion is formal. The Lean assumes the PDE and proves the one-step bounds from it."
     },
     {
       "record": "support.regularity",
@@ -3654,8 +3700,14 @@
       "role": "explanation",
       "from": "The noise term has mean zero because its coefficient is nonanticipating",
       "to": "bounded on each strip ending before one.",
-      "lean": [],
-      "note": "Not in the Lean: no noise term arises, because it differentiates the expectation directly, in stripQ_hasDerivWithinAt_right."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.integral_adapted_mul_increment",
+          "relation": "proof",
+          "note": "Support model. Step form: a past-measurable factor times a Brownian increment has mean zero. There is no Itô integral; stripQ_hasDerivWithinAt_right rests on this."
+        }
+      ],
+      "note": "The Lean has no Itô integral. The mean-zero step appears one increment at a time, inside stripQ_hasDerivWithinAt_right."
     },
     {
       "record": "support.moment_identity",
@@ -3934,8 +3986,19 @@
       "role": "example",
       "from": "For a small example of this operation",
       "to": "$\\mathbb E[2-2Z^2]=0$.",
-      "lean": [],
-      "note": "Not in the Lean: this example. It never takes this F; its density derivative is gaussianLogDensity_derivative."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.standardGaussian_stein",
+          "relation": "contains",
+          "note": "Support model. Stein's identity for general g, under integrability. Taking g(y)=2y gives E[2Z²]=E[2], a case the Lean does not write out."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.hasDerivAt_standardGaussianPDF",
+          "relation": "states",
+          "note": "Support model. The standard density satisfies φ'(x)=-xφ(x), so its logarithmic derivative is -x."
+        }
+      ],
+      "note": "The Lean states the general identity. This F is one case of it, which the Lean does not write out."
     },
     {
       "record": "support.flux_identity",
@@ -3952,8 +4015,14 @@
       "role": "example",
       "from": "The boundary term vanishes because a",
       "to": "tends to zero.",
-      "lean": [],
-      "note": "Not in the Lean: this example. The general tail lemma is gaussian_expBound_tendsto_zero, for functions of exponential growth."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_expBound_tendsto_zero",
+          "relation": "part",
+          "note": "Support model. exp(-dx²)g(x) tends to 0 at +∞ for exponentially bounded g, which covers polynomials. Only the +∞ side is stated."
+        }
+      ],
+      "note": "The general tail limit is in the Lean. This example's boundary term is not named there."
     },
     {
       "record": "support.flux_identity",
@@ -4285,7 +4354,7 @@
       "from": "**[Question 3](#question-3).** A strictly convex $f'$ lies below its endpoint chord.",
       "to": "endpoint chord.",
       "lean": [],
-      "note": "Not in the Lean: lt_on_openSegment puts f' below the larger endpoint slope only, which is too weak for these tilted data."
+      "note": "Not in the Lean as a step: strict convexity is the hypothesis hconvex, and the proof uses only lt_on_openSegment, too weak for these tilted data."
     },
     {
       "record": "support.endpoint_chord_area",
@@ -4303,7 +4372,7 @@
       "from": "The argument needs a strict loss of area; the",
       "to": "convenient, not essential.",
       "lean": [],
-      "note": "Not in the Lean: its theorem does use the common bound, through max_le hda hdb, and has no version without it."
+      "note": "Not in the Lean: a calculus remark. no_gap_of_strictConvex_derivative uses the common bound through max_le hda hdb; the scalar positive_hump_impossible takes no endpoint slope bound."
     },
     {
       "record": "support.endpoint_chord_area",
@@ -4375,8 +4444,14 @@
       "role": "explanation",
       "from": "Subtract the present value, divide by $h$, and Taylor-expand.",
       "to": "+\\sup_{|v|\\le1}\\gamma(t)(v\\Phi_x-v^2/2).\n$$",
-      "lean": [],
-      "note": "Not in the Lean: the Taylor step is a heuristic. Its PDE has the supremum already evaluated, as c/2 times the squared gradient."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.WeakIto.expected_brownian_step",
+          "relation": "proof",
+          "note": "Support model. Taylor step for a Brownian increment: mean zero, variance h, error h^(3/2). The PDE itself is a hypothesis in the Lean."
+        }
+      ],
+      "note": "The Taylor step is in the Lean. Its PDE has the supremum already evaluated, as c/2 times the squared gradient."
     },
     {
       "record": "support.integrated_coercivity",
@@ -4412,7 +4487,7 @@
       "from": "With non-strict convexity the data are possible:",
       "to": "four endpoint values.",
       "lean": [],
-      "note": "Not in the Lean: a calculus example. The Lean assumes strict convexity and has no counterpart for this function."
+      "note": "Not in the Lean: a calculus example. no_gap_of_strictConvex_derivative assumes strict convexity, and no declaration mentions this function."
     },
     {
       "record": "lean.full_support",
@@ -5168,6 +5243,15 @@
         },
         {
           "name": "OAI.ZeroTemperatureSK.approxValue_derivative_uniform"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.value_integral_rate",
+          "lines": [
+            92,
+            94
+          ],
+          "relation": "part",
+          "note": "Lean's form of the PDE: integrated in time between a≤b<1, so it asks nothing at jumps of γ."
         }
       ]
     },
@@ -5177,8 +5261,19 @@
       "role": "example",
       "from": "For a small example of this operation, let $Z$ be standard normal and",
       "to": "expectation; it supplies none of the SK-specific sign estimates.",
-      "lean": [],
-      "note": "Not in the Lean: this Gaussian example. Its flux identity is cert_flux_derivative, for the certificate polynomial F₂ only."
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.standardGaussian_stein",
+          "relation": "part",
+          "note": "Support model. Gaussian integration by parts for general g; g(y)=2y gives the zero-mean step. The Lean never takes that g or this sign change."
+        },
+        {
+          "name": "OAI.SKValue.integral_flux_zero",
+          "relation": "part",
+          "note": "Scalar model. A general zero-flux lemma: an integrable derivative of an integrable function integrates to zero."
+        }
+      ],
+      "note": "The example is not in the Lean. Gaussian integration by parts and a general zero-flux lemma are."
     },
     {
       "record": "scalar.integrated_coercivity",
