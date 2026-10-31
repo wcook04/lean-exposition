@@ -572,13 +572,16 @@ the pointer leaves. It covers no text and moves nothing in the paper. An inset i
 where it is, and Back, Escape, a second click or Close puts the page back to the pixel. Each open is
 one history entry at the same address, and the entry remembers what stands, so Forward and a reload
 bring it back. While a reference is open the right page goes on following the paper; there is
-one view of it at a time. A jump is a history entry too, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+one view of it at a time. A card just opened takes an amber outline and wash that settle within a second, because the page has
+not moved; with reduced motion it opens without them. A jump is a history entry too, and the Back on the strip names the place left, "Back to Short paper §2". A reference
 inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
 usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
 
 Text stays byte for byte: marks go in at render time, and `tests/references.test.ts` checks every
 row against the paper's bytes and the rendered page, and fails on a candidate no row has decided. A
 row whose words have moved gives no link at all, because a wrong link is worse than none.
+`scripts/check-reference-cards.py <site-url>` is the real-input check: ten rounds of open, Escape,
+scroll and click on each paper, on the kind of spot a tester picks, and a card must open every time.
 
 ## Checks
 
