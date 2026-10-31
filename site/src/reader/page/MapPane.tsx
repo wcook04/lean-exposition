@@ -539,7 +539,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             </p>
             {pin && !expanded ? (
               <button type="button" className="map-pane__keep" onClick={onRelease}>
-                Let go of this statement
+                Close this statement
               </button>
             ) : (
               <>

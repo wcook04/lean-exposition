@@ -215,10 +215,10 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
     <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
       {!slot && (
         <header className="lean-page__head">
-          {(
+          {open.via !== "pin" && (
             <p className="lean-page__state" role="status">
               <span className="lean-page__dot" aria-hidden="true" />
-              {open.via === "point" ? "Pointing at" : open.via === "pin" ? "Open until you let go" : "Changes as you scroll"}
+              {open.via === "point" ? "Pointing at" : "Changes as you scroll"}
             </p>
           )}
           <div className="lean-page__names">
@@ -232,7 +232,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
           </div>
           {open.via === "pin" && onFollowText && !slot && (
             <button type="button" className="lean-page__quiet" onClick={onFollowText}>
-              Let go of this statement
+              Follow the text
             </button>
           )}
           <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>
