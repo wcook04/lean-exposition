@@ -69,7 +69,7 @@ function isLevel(value: string): value is Level {
 }
 
 /** The kinds of result search lists, each one table of the edition. */
-export const SEARCH_TYPES = ["records", "sections", "passages", "citations", "sources", "checks"] as const;
+export const SEARCH_TYPES = ["records", "statements", "sections", "text", "passages", "citations", "sources", "checks"] as const;
 export type SearchType = (typeof SEARCH_TYPES)[number];
 
 function isSearchType(value: string | null): value is SearchType {

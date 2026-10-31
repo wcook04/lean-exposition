@@ -159,6 +159,7 @@
   color: var(--formal);
 }
 
+.palette__notation { margin-left: var(--space-2); font-family: var(--font-serif); font-size: 1rem; font-weight: 400; }
 .palette__title--serif {
   font-family: var(--font-serif);
   font-size: 1.0625rem;

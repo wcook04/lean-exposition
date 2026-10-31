@@ -26,6 +26,8 @@ export function hostLean(show: Host): () => void {
   };
 }
 
+export const hasLeanHost = () => host !== null;
+
 /** Show a declaration in the registered host. False when there is none or it declined. */
 export function showInHost(walk: LeanWalk): boolean {
   return host ? host(walk) !== false : false;

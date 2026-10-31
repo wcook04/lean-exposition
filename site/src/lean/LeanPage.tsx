@@ -99,6 +99,9 @@ function treeOf(shell: LeanShell, prefix: string): Tree {
   };
 }
 
+/** The record a theorem states, by the paper's name for it. */
+const stated = (shell: LeanShell, name: string) => (shell.linked.get(name) ?? []).find((row) => row.relation === "states" && !row.id.startsWith("lean."))?.title ?? lastPart(name);
+
 function Start({ href, name, title, children }: { href: string; name: string; title: string; children: ReactNode }) {
   return (
     <li>
@@ -151,7 +154,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
           <ul>
             {main && (
               <Start href={declHref(main)} name={main.short} title="The main theorem">
-                {shell.linked.get(main.name)?.[0]?.title ?? "The full support theorem"}, in <code>SKSupport/Main.lean</code>.
+                {stated(shell, main.name)}, in <code>SKSupport/Main.lean</code>.
               </Start>
             )}
             {minimizer && (
@@ -161,7 +164,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
             )}
             {value && (
               <Start href={declHref(value)} name={value.short} title="The second main theorem">
-                {shell.linked.get(value.name)?.[0]?.title ?? "The value result"}, in <code>SKValue/Main.lean</code>.
+                {stated(shell, value.name)}, in <code>SKValue/Main.lean</code>.
               </Start>
             )}
             <Start href={routeHref({ view: "lean", module: CHALLENGE_FILE })} name="SKFullSupport.lean" title="The Comparator challenge file">

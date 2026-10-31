@@ -1,5 +1,5 @@
 // The full results page for one query: every match of one kind, best first
-// (rank.ts), with the matching Lean declarations beside them. The address holds
+// (rank.ts), with the matching Lean declarations beside them, an exact name first. The address holds
 // the exact query, the kind and the page, so Back from an opened result returns
 // here, to the same page.
 
@@ -11,6 +11,8 @@ import { navigate, routeHref, type Route, type SearchType } from "../app/router"
 import { destination, destinationWords, directHref, LeanResultBody, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES } from "./results";
 import { rankedSearch } from "./rank";
 import { leanNames, searchLean, type LeanHit } from "./leanNames";
+import { searchPapers, searchStatements } from "./corpus";
+import { alignmentResource } from "../compare/useAlignment";
 import "./search.css";
 
 /** Results per page; well inside the API's page limit. */
@@ -24,11 +26,19 @@ const LEAN_SHOWN = 8;
 
 /** Every match of every kind, ranked. Nothing is requested until a query is typed. */
 function useRanked(q: string) {
-  return useResource(q ? `search-ranked:${q}` : null, () => rankedSearch(q, SEARCH_TABLES.map((t) => t.table)));
+  return useResource(q ? `search-ranked:${q}` : null, () =>
+    Promise.all([rankedSearch(q, SEARCH_TABLES.map((t) => t.table)), searchStatements(q), searchPapers(q).catch(() => [])]).then(([ranked, statements, text]) => new Map(ranked).set("statements", statements).set("paper", text)),
+  );
 }
 
 function useLean(q: string) {
-  return useResource(q ? `search-lean:${q}` : null, () => leanNames().then((index) => (index ? searchLean(index, q) : null)));
+  return useResource(q ? `search-lean:${q}` : null, () =>
+    Promise.all([leanNames(), alignmentResource()]).then(([index, alignment]) => {
+      if (!index) return null;
+      const linked = new Set(Object.values(alignment?.records ?? {}).flatMap((record) => record.lean.map((row) => row.name)));
+      return searchLean(index, q, { terms: new Map(alignment?.dictionary.map((term) => [term.name, term])), rests: (name) => linked.has(name) });
+    }),
+  );
 }
 
 /** The 1-based page holding results `from`…`to` and the page count, from a total. */
@@ -70,7 +80,7 @@ export function SearchPage({ route }: { route: SearchRoute }) {
               Results for <q>{q}</q>
             </>
           ) : (
-            "Search records, passages and Lean"
+            "Search the Lean, the records and the papers"
           )}
         </h1>
         <SearchForm q={route.q} />
@@ -94,8 +104,8 @@ export function SearchPage({ route }: { route: SearchRoute }) {
           <div className="search-body__main">
           {grand === 0 && (
             <p className="search-page__status" role="status">
-              No record, section heading or linked passage contains all of these words, as whole words or the starts of words.
-              Other text in the papers is not searched. Try fewer words, or another spelling.
+              Nothing in the records or the papers contains all of these words, as whole words or the starts of words. Try fewer
+              words, or another spelling.
             </p>
           )}
           {grand > 0 && <nav className="search-kinds" aria-label="Kinds of result">
@@ -141,7 +151,6 @@ export function SearchPage({ route }: { route: SearchRoute }) {
               {win.pages > 1 && <Pager route={route} type={type} page={win.page} pages={win.pages} />}
               <p className="search-page__foot">
                 Results come first when the words occur in a title, then when they occur close together and in the order typed.
-                Other text in the papers is not searched.
               </p>
             </section>
           )}
