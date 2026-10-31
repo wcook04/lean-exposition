@@ -152,7 +152,7 @@ describe("axioms and sorry", () => {
   it("gives Lean's report when the edition has one", async () => {
     const reported = { ...main, axioms: ["propext", "Classical.choice", "Quot.sound"] } as LeanDeclaration;
     const view = await render(<LeanFacts decl={reported} module={module} />);
-    expect(view.textContent).toBe("Lean reports that it rests on the axioms propext, Classical.choice and Quot.sound.");
+    expect(view.textContent).toBe("Lean reports that it depends on the axioms propext, Classical.choice and Quot.sound.");
   });
 });
 

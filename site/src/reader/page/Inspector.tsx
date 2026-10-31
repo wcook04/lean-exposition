@@ -147,7 +147,7 @@ function PassageView({
         </>
       )}
       {anchor && ids.length === 0 && <p className="inspector__message">No step is linked to this passage.</p>}
-      {!anchor && !outside && <p className="inspector__message">This part of the paper is not inside a passage that is linked to records.</p>}
+      {!anchor && !outside && <p className="inspector__message">This place in the paper is not inside a passage that is linked to steps.</p>}
       {outside && (
         <>
           <h3 className="inspector__label">{anchor ? "The step you opened from this passage" : "The step you opened"}</h3>
@@ -221,7 +221,7 @@ function Relations({ id, graph, onSelect, onFull }: { id: string; graph: ArgGrap
       {usedBy.length ? <ul>{usedBy.map((e) => line(e, e.from))}</ul> : <p className="relations__none">Nothing is recorded as using it.</p>}
       <div className="relations__actions">
         <button type="button" className="control" onClick={onFull}>
-          Show the full record
+          Show all of this step
         </button>
         <a className="relations__map" href={routeHref({ view: "map", node: id })}>
           Open in the argument map →
@@ -262,7 +262,7 @@ function SelectionView({
   const matches = result.status === "ready" ? result.value.papers.flatMap((p) => p.matches) : [];
   return (
     <>
-      <p className="inspector__note">Steps are linked to whole passages, not to single words. Every passage that your selection touches is listed, with the records linked to it.</p>
+      <p className="inspector__note">Steps are linked to whole passages, not to single words. Every passage that your selection touches is listed, with the steps linked to it.</p>
       {result.status === "loading" && <p className="inspector__message faint">Loading the passages…</p>}
       {result.status === "error" && (
         <p className="inspector__message" role="alert">
@@ -270,7 +270,7 @@ function SelectionView({
         </p>
       )}
       {result.status === "ready" && matches.length === 0 && (
-        <p className="inspector__message">Your selection does not touch any passage that is linked to records. {result.value.coverage.empty_result_meaning ?? ""}</p>
+        <p className="inspector__message">Your selection does not touch any passage that is linked to steps. {result.value.coverage.empty_result_meaning ?? ""}</p>
       )}
       {matches.map((m) => {
         const ids = [...new Set([...m.direct_claim_ids, ...m.direct_assumption_ids])];

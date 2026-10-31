@@ -15,11 +15,11 @@ export type Standing = "failed" | "partly" | "passed" | "unrun" | "none";
 export const STANDING_ORDER: Standing[] = ["failed", "partly", "passed", "unrun", "none"];
 
 const STANDING_HEADS: Record<Standing, string> = {
-  failed: "A check on the step failed",
-  partly: "Some checks passed",
-  passed: "Every check passed",
-  unrun: "Checks written, none passed",
-  none: "No check recorded",
+  failed: "A run on the step failed",
+  partly: "Some runs passed",
+  passed: "Every run passed",
+  unrun: "Runs planned, none passed",
+  none: "No run recorded",
 };
 
 /** Checks that test a statement or its proof. Source-file checks compare a file's bytes, so they do not place a record. */
@@ -46,7 +46,7 @@ export function plainTitle(title: string, linked: string | undefined): { title: 
 export function tileWords(statuses: readonly string[]): string {
   const counts: Record<string, number> = {};
   for (const s of statuses) counts[s] = (counts[s] ?? 0) + 1;
-  return statuses.length ? countsInWords(counts) : "No check recorded";
+  return statuses.length ? countsInWords(counts) : "No run recorded";
 }
 
 export function RecordList() {
@@ -80,10 +80,9 @@ export function RecordList() {
 
   return (
     <section className="checks__band rlist" aria-labelledby="rlist-title">
-      <h2 id="rlist-title">Each step and its checks</h2>
+      <h2 id="rlist-title">Each step and what ran on it</h2>
       <p className="checks__intro">
-        All {graph.order.length} steps, by the checks on their statement or proof. Source-file checks compare file bytes
-        and are left out. Open a step to compare it across the Lean and the papers.
+        All {graph.order.length} steps, by what ran on their statement or proof. File hash comparisons are left out, because they compare bytes only. Open a step to compare it across the Lean and the papers.
       </p>
       {groups.map((group) => (
         <div key={group.standing} className={`rlist__group${group.tiles.length < 10 && group.standing !== "none" ? " is-few" : ""}${group.standing === "failed" ? " is-failed" : ""}`}>

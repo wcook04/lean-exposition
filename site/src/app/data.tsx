@@ -37,7 +37,7 @@ export interface Edition {
   context: "loading" | "ready" | "error";
   /** Why the stored edges and evidence could not be read, when `context` is "error". */
   contextError?: unknown;
-  /** The full check records (with the records each concerns), once the stored tables have arrived. */
+  /** The full run records (with the records each concerns), once the stored tables have arrived. */
   evidence?: EvidenceRecord[];
 }
 

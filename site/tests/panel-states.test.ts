@@ -21,19 +21,19 @@ describe("account state table", () => {
   });
 
   it("distinguishes direct links, use without a link and outside the selection", () => {
-    expect(accountStateLine(accountState("ready", 2, ["mapped_claim"]))).toBe("2 passages are linked directly to this record");
-    expect(accountStateLine(accountState("ready", 1, ["mapped_claim"]))).toBe("1 passage is linked directly to this record");
+    expect(accountStateLine(accountState("ready", 2, ["mapped_claim"]))).toBe("2 passages are linked directly to this step");
+    expect(accountStateLine(accountState("ready", 1, ["mapped_claim"]))).toBe("1 passage is linked directly to this step");
     expect(accountStateLine(accountState("ready", 0, ["recorded_prerequisite"]))).toBe(
-      "No passage is linked directly to this record. These passages are linked to results that use it.",
+      "No passage is linked directly to this step. These passages are linked to results that use it.",
     );
-    expect(accountStateLine(accountState("ready", 0, []))).toBe("No passage in this account is linked to this record, and the recorded argument for the account’s main results does not use it.");
+    expect(accountStateLine(accountState("ready", 0, []))).toBe("No passage in this paper is linked to this step, and the recorded argument for the paper’s main results does not use it.");
     for (const s of [accountState("ready", 0, []), accountState("ready", 0, ["recorded_prerequisite"])]) {
       expect(accountStateLine(s)).not.toMatch(/proves|does not discuss|uses it\.$/);
     }
   });
 
   it("labels step passages per account", () => {
-    expect(stepBasisLabel("both")).toBe("Both records linked");
+    expect(stepBasisLabel("both")).toBe("Both steps linked");
     expect(stepBasisLabel("consumer")).toBe("Linked to the conclusion only");
     expect(stepBasisLabel("none")).toBeNull();
   });
@@ -53,7 +53,7 @@ describe("applied theorem view", () => {
 
   it("keeps the shared objects, the supplier and the remaining premise", () => {
     const v = applicationView(stored)!;
-    expect(v.status).toBe("No program has checked this authored application of the theorem");
+    expect(v.status).toBe("No program has tested this authored application of the theorem");
     expect(v.shared.map((s) => s.name)).toEqual(["W", "X", "gamma"]);
     expect(v.premises).toEqual([{ premise: "assumptions.value_diffusion", names: ["W", "gamma", "X"], rationale: "r", supplier: "scalar.source_diffusion_exists" }]);
     expect(v.remaining).toEqual(["assumptions.value_minimizer"]);
@@ -78,7 +78,7 @@ describe("applied theorem view", () => {
   });
 
   it("never upgrades the recorded status", () => {
-    expect(applicationView({ status: null })!.status).toBe("No program has checked this authored application of the theorem");
+    expect(applicationView({ status: null })!.status).toBe("No program has tested this authored application of the theorem");
     expect(applicationView({ status: "authored" })!.status).not.toMatch(/checked$|verified|proved/i);
     expect(sharedObjects([{ name: "x", value: "y" }])).toEqual([{ name: "x", value: "y" }]);
     expect(applicationView()).toBeNull();

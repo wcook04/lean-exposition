@@ -73,7 +73,7 @@ describe("addresses that name nothing", () => {
   it("says so once, and only for what is missing", () => {
     expect(addressProblem({ view: "map", node: "nope" }, has)).toContain("No step named “nope”");
     expect(addressProblem({ view: "map", node: "real" }, has)).toBeNull();
-    expect(addressProblem({ view: "read", stage: "short", node: "nope" }, has)).toContain("Here is the paper");
+    expect(addressProblem({ view: "read", stage: "short", node: "nope" }, has)).toContain("This is the paper");
     expect(addressProblem({ view: "read", stage: "short", at: "banana" }, has)).toContain("No place “banana”");
   });
 

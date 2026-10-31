@@ -20,7 +20,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   comparator: {
     title: "Comparator",
-    question: "Whether Comparator, a program that compares a Lean proof with a separately written statement of the theorem, accepts the proof as proving that statement using only the permitted axioms.",
+    question: "Whether Comparator accepts the proof as proving the separately written statement, using only the permitted axioms.",
   },
   extraction: {
     title: "Dependency extraction",
@@ -32,7 +32,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   platform: {
     title: "Platform label",
-    question: "What an outside platform reports about a statement. This is that platform’s label, not a proof check run for these steps.",
+    question: "What an outside platform reports about a statement. This is that platform’s label, and no proof was run for these steps.",
   },
 };
 
@@ -172,7 +172,7 @@ export function kindHeadline(kind: string, counts: Record<string, number>): stri
   return `${lead} (${countsInWords(counts)})`;
 }
 
-/** "View 12 check records" style count, and the line the theorem plate shows. */
+/** "View 12 run records" style count, and the line the theorem plate shows. */
 export interface GoalCheckLine {
   line: string;
   total: number;
@@ -184,7 +184,7 @@ const PLATE_ORDER = ["comparator", "lean_build", "extraction", "semantic_review"
 
 /**
  * The most informative short line about a record's checks, for the theorem
- * plate, with the number of check records attached. `evidenceIds` defaults to
+ * plate, with the number of run records attached. `evidenceIds` defaults to
  * the ids on the node's own record (ArgNode.evidenceIds).
  * E.g. { line: "No Comparator acceptance recorded", total: 12 }.
  */
@@ -193,7 +193,7 @@ export function goalCheckLine(edition: Edition, nodeId: string, evidenceIds?: re
   const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
   const records = ids.map((id) => cards.get(id)).filter((c): c is NonNullable<typeof c> => !!c);
   const total = records.length;
-  if (total === 0) return { line: "No check records", total };
+  if (total === 0) return { line: "No run records", total };
   const by = outcomeCounts(records);
   const kind = PLATE_ORDER.find((k) => by.has(k)) ?? [...by.keys()][0];
   const counts = by.get(kind)!;
@@ -226,10 +226,10 @@ export const OUTCOME_NAMES: Record<string, string> = {
 
 /** What each outcome means, in plain words, for the page's key. */
 export const OUTCOME_MEANINGS: { status: string; meaning: string }[] = [
-  { status: "passed", meaning: "The checking program ran and reported success on the inputs it examined." },
-  { status: "failed", meaning: "A run is recorded and it ended in failure. Where it stopped is written in the check record." },
-  { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the checking program never started." },
-  { status: "not_run", meaning: "The check is described and planned, but no run of it is recorded." },
+  { status: "passed", meaning: "The program ran and reported success on the inputs it examined." },
+  { status: "failed", meaning: "A run is recorded and it ended in failure. Where it stopped is written in the run record." },
+  { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the program never started." },
+  { status: "not_run", meaning: "A run is described and planned, and none is recorded." },
 ];
 
 export interface EvidenceCard {
@@ -307,9 +307,9 @@ export function failureLine(card: Pick<EvidenceCard, "id" | "label">, record?: {
   return date ? `${date}. ${what}` : what;
 }
 
-/** "1 check record" or "8 check records". */
+/** "1 run record" or "8 run records". */
 export function recordsWord(n: number): string {
-  return `${n} ${n === 1 ? "check record" : "check records"}`;
+  return `${n} ${n === 1 ? "run record" : "run records"}`;
 }
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -363,7 +363,7 @@ export function inStatedTimeOrder<T extends { details?: string | null }>(records
 }
 
 const KIND_NOUNS: Record<string, string> = {
-  source_hash: "source-file checks",
+  source_hash: "source-file comparisons",
   lean_build: "Lean build records",
   comparator: "Comparator records",
   extraction: "dependency extraction records",
@@ -393,7 +393,7 @@ export function standingSentence(group: Pick<KindGroup, "kind" | "title" | "coun
   if (passed === total) {
     const lead = total === 1 ? `The one ${singular(name)} passed.` : `All ${total} ${name} passed.`;
     if (group.kind === "source_hash")
-      return `${lead} In each, the SHA-256 hash and length of a named file matched the values recorded for it, so the file has the recorded bytes. These checks do not examine whether the mathematics in the files is correct.`;
+      return `${lead} In each, the SHA-256 hash and length of a named file matched the values recorded for it, so the file has the recorded bytes. These comparisons do not examine whether the mathematics in the files is correct.`;
     return lead;
   }
   if (passed === 0 && notRun === total)

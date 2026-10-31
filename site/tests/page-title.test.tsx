@@ -24,12 +24,12 @@ describe("page title after navigation", () => {
     document.body.append(host);
     root = createRoot(host);
     const cases: [Route, string][] = [
-      [{ view: "checks" }, "Recorded checks"],
+      [{ view: "checks" }, "What ran"],
       [{ view: "read", stage: "short" }, "Short paper"],
       [{ view: "about" }, "About"],
       [{ view: "map", node: "full_support" }, "Full support"],
       [{ view: "map" }, "Argument map"],
-      [{ view: "checks", node: "full_support" }, "Checks: Full support"],
+      [{ view: "checks", node: "full_support" }, "What ran on Full support"],
       [{ view: "read", stage: "expository", node: "full_support" }, "Exposition"],
       [{ view: "missing", path: "/missing" }, "Page not found"],
     ];
@@ -38,6 +38,6 @@ describe("page title after navigation", () => {
       expect(document.title).toBe(`${title} · Lean Exposition`);
     }
     await act(async () => root!.render(<PageTitle route={{ view: "home" }} />));
-    expect(document.title).toBe("Why the SK order parameter has no gaps");
+    expect(document.title).toBe("Why the Sherrington–Kirkpatrick order parameter has no gaps");
   });
 });

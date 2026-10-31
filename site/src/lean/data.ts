@@ -248,8 +248,8 @@ export const kindWord = (kind: LeanKind) => KIND_WORDS[kind] ?? kind;
 
 export const RELATION_WORDS: Record<LeanRelation, string> = {
   states: "States this result",
-  contains: "A stronger statement, with this result as one part",
-  part: "States one part of this result",
+  contains: "A stronger statement that includes this result",
+  part: "States some of this result",
   proof: "Proves this step, in a different form",
   defines: "Defines this object",
 };

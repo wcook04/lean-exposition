@@ -334,19 +334,19 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
 }
 
 // The public repository that receives the static build has no other README.
-const SITE_README = `# Why the SK order parameter has no gaps
+const SITE_README = `# Why the Sherrington–Kirkpatrick order parameter has no gaps
 
 This repository holds the built reading website published at
 https://wcook04.github.io/lean-exposition-site/.
 
 The website presents one theorem about the zero-temperature
 Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
-increases across every interval in [0, 1). It has three written accounts of
+increases across every interval in [0, 1). It has three papers on
 the proof (an exposition, a short paper and a long record), each readable on
 the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
 Lean beside the text, and the site also has an argument map of the steps the
-proof uses, an index of the Lean, and the checks recorded for them. The architectural companion explains
-why these accounts share one record; read it on the About page or in
+proof uses, an index of the Lean, and the test runs recorded for them. The architectural companion explains
+why these papers share one graph; read it on the About page or in
 \`pdf/architecture.pdf\`.
 
 The mathematics comes from OpenAI's mathematics release, family 281:
@@ -376,7 +376,7 @@ const ROUTE_TITLES: Record<string, string> = {
   map: "Argument map",
   compare: "Compare side by side",
   lean: "Lean index",
-  checks: "Recorded checks",
+  checks: "What ran",
   about: "About",
   search: "Search",
   "read/long": "Long record",
@@ -387,27 +387,27 @@ const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/tit
 
 // For readers that fetch text rather than run the page. It describes the same files the
 // browser reads, and no page loads it.
-const llmsTxt = (facts: SiteFacts) => `# Why the SK order parameter has no gaps
+const llmsTxt = (facts: SiteFacts) => `# Why the Sherrington–Kirkpatrick order parameter has no gaps
 
-> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} records joins them.
+> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} steps joins them. The data calls a step a record.
 
-Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are authored pointers: agents read both sides, and a program confirms only that each one still lands.
+Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are pointers written by AI agents after reading both sides. No independent mathematician has reviewed them, and a program confirms only that both ends of each one still exist.
 ${facts.build && facts.extraction ? `
-Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator has accepted neither main statement, and the scalar value result has no successful build on record.
+Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator, a program that compares a Lean proof with a separately written statement, has accepted neither main statement, and the scalar value result has no successful build on record.
 ` : ""}
 ## Read
 
 - [Exposition](${SITE_URL}pdf/exposition.pdf): objects and ideas, from a calculation with two spins
 - [Short paper](${SITE_URL}pdf/short-paper.pdf): the result and proof for specialists
 - [Long record](${SITE_URL}pdf/long-record.pdf): each step with its source, continuing to the QAOA circuits
-- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the accounts share one record
+- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the papers share one graph
 
 ## Data
 
 All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
 
 - The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
-- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer that landed, not a check that two texts mean the same thing.
+- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer. No program tests whether the two texts mean the same thing.
 - The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
 - The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
 - The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite
