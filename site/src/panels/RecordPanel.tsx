@@ -91,7 +91,7 @@ const PANES: PaneSpec[] = [
   { id: "statement", title: "Lean" },
   { id: "explanation", title: "Papers" },
   { id: "argument", title: "Uses" },
-  { id: "sources", title: "Checks" },
+  { id: "sources", title: "What ran" },
 ];
 
 export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef, account, goalBody, onInputs, onBelow, onWalk }: Props) {
@@ -284,7 +284,7 @@ function Route({
   const { graph } = useEdition();
   const [open, setOpen] = useEntryState(`route-open:${nodeId}`, false);
   const [whole, setWhole] = useEntryState(`route-whole:${nodeId}`, false);
-  if (path === null) return <p className="panel__route">No recorded route from the main result in this account</p>;
+  if (path === null) return <p className="panel__route">No recorded route from the main result in this paper</p>;
   if (path.length < 2) return null;
   const goal = path[0];
   const goalName = graph.regions.find((r) => r.goal === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
@@ -397,10 +397,10 @@ function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: str
     <>
       <p className="panel__lead">No Lean declaration is linked to this step.</p>
       {inputs.length === 0 ? (
-        <p className="panel__note">It has no recorded inputs either: the argument stops here and rests on its sources, below.</p>
+        <p className="panel__note">It has no recorded inputs either, so the argument stops here and depends on its sources, listed below.</p>
       ) : (
         <>
-          <p className="panel__note">It rests on {inputs.length === 1 ? "this step" : `these ${inputs.length} steps`}:</p>
+          <p className="panel__note">It uses {inputs.length === 1 ? "this step" : `these ${inputs.length} steps`}:</p>
           <ul className="rests">
             {inputs.map((edge) => {
               const n = graph.nodes.get(edge.to)!;
@@ -647,7 +647,7 @@ function Argument({
       {(cites.to.length > 0 || cites.from.length > 0) && (
         <div className="panel__cites">
           <p className="panel__group">
-            Citations <span className="faint">(links for navigation, not part of the argument)</span>
+            Citations <span className="faint">(links for navigation, outside the argument)</span>
           </p>
           <CiteList title="Cites" ids={cites.to} onSelect={onSelect} onEcho={onEcho} />
           <CiteList title="Cited by" ids={cites.from} onSelect={onSelect} onEcho={onEcho} />
@@ -877,9 +877,9 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
 
   return (
     <div className="checks">
-      <p className="panel__group">Recorded checks</p>
+      <p className="panel__group">Recorded runs</p>
       {rows.length === 0 ? (
-        <p className="panel__note">No check is recorded for this step.</p>
+        <p className="panel__note">No run is recorded for this step.</p>
       ) : (
         <ul className="checks__rows">
           {rows.map((row) => {
@@ -905,7 +905,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
                 </div>
                 {lead !== title && <p className="checks__lead">{lead}</p>}
                 <button type="button" className="linklike checks__toggle" aria-expanded={isOpen} aria-controls={histId} onClick={() => setOpen(isOpen ? null : row.kind)}>
-                  {isOpen ? "Hide the check records" : row.records.length === 1 ? "Show the check record" : `Show the ${row.records.length} check records`}
+                  {isOpen ? "Hide the run records" : row.records.length === 1 ? "Show the run record" : `Show the ${row.records.length} run records`}
                 </button>
                 {isOpen && (
                   <ol className="checks__history" id={histId}>
@@ -929,7 +929,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
       )}
       <p className="panel__more">
         <a href={routeHref({ view: "checks", node: nodeId })}>
-          What each check examined <span aria-hidden="true">→</span>
+          What each run examined <span aria-hidden="true">→</span>
         </a>
       </p>
     </div>

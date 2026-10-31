@@ -29,6 +29,8 @@ export type Route =
       anchor?: string;
       /** The exact source to land on: a line ("120"), lines ("120-134") or a byte range ("b4521-5120"). */
       at?: string;
+      /** The right pane is in Lean mode. */
+      lean?: boolean;
       node?: string;
       beside?: { stage: Stage; anchor: string };
       /** The Lean declaration open beside the paper, with its module where a name is declared twice. */
@@ -142,6 +144,7 @@ export function parseRoute(url: URL): Route {
       stage: read[1],
       anchor: hash,
       at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
+      lean: q.get("v") === "lean" || undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
       decl: q.get("d") ?? undefined,
@@ -210,6 +213,7 @@ export function routeHref(route: Route): string {
     case "read": {
       if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
+      if (route.lean) q.set("v", "lean");
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);
@@ -331,7 +335,7 @@ export function placeOf(route: Route): string {
     case "read":
       return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
     case "checks":
-      return "Checks";
+      return "What ran";
     case "compare":
       return "Compare";
     case "lean":

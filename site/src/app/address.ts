@@ -13,11 +13,11 @@ export function atFits(at: string, bytes: number, lines: number): boolean {
 }
 
 export function addressProblem(route: Route, hasStep: (id: string) => boolean, paper?: { bytes: number; lines: number }): string | null {
-  if (route.view === "map" && route.node && !hasStep(route.node)) return `No step named “${route.node}” on this map. Here is the whole argument.`;
-  if (route.view === "compare" && route.node && !hasStep(route.node)) return `No step named “${route.node}”. Here is the table of every step.`;
+  if (route.view === "map" && route.node && !hasStep(route.node)) return `No step named “${route.node}” on this map. This is the whole argument.`;
+  if (route.view === "compare" && route.node && !hasStep(route.node)) return `No step named “${route.node}”. This is the table of every step.`;
   if (route.view === "read") {
-    if (route.node && !hasStep(route.node)) return `No step named “${route.node}”. Here is the paper.`;
-    if (route.at && (paper ? !atFits(route.at, paper.bytes, paper.lines) : !AT.test(route.at))) return `No place “${route.at}” in this paper. Here is the paper.`;
+    if (route.node && !hasStep(route.node)) return `No step named “${route.node}”. This is the paper.`;
+    if (route.at && (paper ? !atFits(route.at, paper.bytes, paper.lines) : !AT.test(route.at))) return `No place “${route.at}” in this paper. This is the paper.`;
   }
   return null;
 }

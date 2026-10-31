@@ -28,10 +28,10 @@ html[data-view="home"] .topbar {
 }
 
 .front__title {
-  max-width: 11em;
+  max-width: 13.5em;
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(2.125rem, 1.2rem + 2.3vw, 3rem);
+  font-size: clamp(2rem, 1.1rem + 2vw, 2.5rem);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.015em;

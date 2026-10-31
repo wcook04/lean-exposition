@@ -48,7 +48,7 @@ export function SimplifiedMap({ graph, hidden, onChoose }: { graph: ArgGraph; hi
       {open && (
         <div id={id} className="sim__pop" role="dialog" aria-label="Recorded links not drawn on the map">
           <p className="sim__note">
-            A line of recorded support between two records is left out when a longer chain of recorded support already joins
+            A line of recorded support between two steps is left out when a longer chain of recorded support already joins
             them. Explicit assumptions and recorded Lean correspondences are always drawn.
           </p>
           {ORDER.map((kind) => {

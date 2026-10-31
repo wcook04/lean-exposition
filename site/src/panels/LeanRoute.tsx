@@ -30,7 +30,7 @@ export function LeanRoute({ edgeKey, onWalk }: { edgeKey: string; onWalk?(walk: 
         <>
           <p className="panel__note">
             {route.length === 1
-              ? "One declaration in OpenAI’s Lean carries both steps."
+              ? "One declaration in OpenAI’s Lean holds both steps."
               : "In OpenAI’s Lean, each declaration here names the next in its source, from the result down to what it uses."}
           </p>
           <ol className="step__leanchain">

@@ -83,7 +83,7 @@ export function stepPassages(consumer: readonly AlignedPassage[], prerequisite: 
 
 /** The label above a step's related passages in one account. */
 export function stepBasisLabel(basis: "both" | "consumer" | "none" | undefined): string | null {
-  if (basis === "both") return "Both records linked";
+  if (basis === "both") return "Both steps linked";
   if (basis === "consumer") return "Linked to the conclusion only";
   return null;
 }
@@ -128,11 +128,11 @@ export function accountStateLine(state: AccountState): string {
     case "error":
       return "The linked passages could not be loaded.";
     case "direct":
-      return state.count === 1 ? "1 passage is linked directly to this record" : `${state.count} passages are linked directly to this record`;
+      return state.count === 1 ? "1 passage is linked directly to this step" : `${state.count} passages are linked directly to this step`;
     case "used":
-      return "No passage is linked directly to this record. These passages are linked to results that use it.";
+      return "No passage is linked directly to this step. These passages are linked to results that use it.";
     case "outside":
-      return "No passage in this account is linked to this record, and the recorded argument for the account’s main results does not use it.";
+      return "No passage in this paper is linked to this step, and the recorded argument for the paper’s main results does not use it.";
   }
 }
 
@@ -158,9 +158,9 @@ export function treatmentWords(
 
 /** The status of a record in a few words, for the identity row. */
 export function statusWords(status: string, kind: string): string {
-  if (kind === "declaration" && status === "unverified") return "No completed Lean proof check is recorded for this declaration.";
+  if (kind === "declaration" && status === "unverified") return "No completed run of Lean’s proof checker is recorded for this declaration.";
   const words: Record<string, string> = {
-    unverified: "Not independently checked",
+    unverified: "Not independently reviewed",
     open: "Unresolved",
     kernel_checked: "Accepted by the Lean kernel",
     conditional: "Conditional on its stated assumptions",
@@ -221,7 +221,7 @@ export const COVERAGE_WORDS: Record<keyof Coverage, string> = {
 };
 
 export function coverageScope(total: number): string {
-  return `Across all ${total} records`;
+  return `Across all ${total} steps`;
 }
 
 /** The first sentence of a recorded text, for a one-line gist. */
@@ -327,7 +327,7 @@ function sourceSpan(raw: unknown): SourceSpan | null {
 /** "authored" → "… this authored application …"; the status is the record's, never upgraded. */
 function applicationStatus(status: string | null | undefined): string {
   const word = status ? status.replace(/_/g, " ") : "authored";
-  return `No program has checked this ${word} application of the theorem`;
+  return `No program has tested this ${word} application of the theorem`;
 }
 
 /**
@@ -412,9 +412,9 @@ export function excerptLength(blocks: readonly ExcerptBlock[], budget = 300): nu
 /** How a Lean declaration relates to a record, in the words the Lean views use. */
 export const RELATION_WORDS = {
   states: "States this result",
-  contains: "Contains this result as one part",
-  part: "States one part of this result",
-  proof: "Carries this proof step",
+  contains: "Includes this result",
+  part: "States some of this result",
+  proof: "Has this proof step",
   defines: "Defines this object",
 } as const;
 

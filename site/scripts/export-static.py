@@ -20,7 +20,12 @@ from lean_exposition.web import API_VERSION, ROUTES, STAGES, TABLES, Parameters,
 # claims and assumptions of each whole passage. The tests hold these fields to the
 # client's reads and to the server's own full responses.
 QUERY_MATCH_FIELDS = ("stage", "anchor", "direct_claim_ids", "direct_assumption_ids")
-ROUTE_MAPS = ("/papers/query", "/papers/reading", "/record", "/lean/module")
+ROUTE_MAPS = ("/papers/query", "/papers/reading", "/record", "/lean/module", "/alignment/record")
+# What only a reader of that statement's paper needs. The rest of a statement says where it
+# is and which Lean it names, which is enough to mark it and to link to it from elsewhere.
+STATEMENT_DETAIL = ("markdown", "lean", "note")
+# Every page starts from the map and the overview, and none reads these.
+MAP_OMITTED = ("condensation", "requested_roots", "seed_node_ids", "seed_record_refs", "selected_record_refs")
 
 
 def node_query(result):
@@ -50,6 +55,24 @@ def record_detail(result, documents):
             raise SystemExit(f"Passage text differs from its paper bytes: {row['passage_ref']}")
         rows.append({key: value for key, value in row.items() if key != "text"})
     return {**result, "aligned_passages": rows}
+
+
+def alignment_core(alignment):
+    """The alignment without the statements' own text, which every page's marks and links read."""
+    def place(row):
+        kept = {key: value for key, value in row.items() if key not in STATEMENT_DETAIL}
+        return {**kept, "lean": [{"name": lean["name"]} for lean in row["lean"]]} if "lean" in row else kept
+    return {**alignment, "representation": "alignment_core", "records": {
+        record: {**body, "statements": [place(row) for row in body["statements"]]}
+        for record, body in alignment["records"].items()}}
+
+
+def alignment_paper(alignment, stage):
+    """Each record's statements in one paper, in the core's order: only what the core left out."""
+    return {"representation": "alignment_paper", "paper": stage, "records": {
+        record: rows for record, body in alignment["records"].items()
+        if (rows := [{key: row[key] for key in STATEMENT_DETAIL if key in row}
+                     for row in body["statements"] if row["paper"] == stage])}}
 
 
 def encoded(value):
@@ -117,6 +140,17 @@ def export(bundle, out, *, lean_tree=None, alignment=None, oracle=Path("build/ed
     for route in ("", "/overview"):
         capture(route)
     capture("/graph", view="arguments", representation="map", scope="corpus", assumptions="true")
+    # What every page loads at startup, without what no page reads. The full responses stay
+    # published and remain what the live API serves.
+    overview = data("/overview")
+    record(key_of("/overview", representation="reader"), write({
+        **overview, "graph": {key: value for key, value in overview["graph"].items() if key != "notes"},
+        "representation": "reader_overview", "omitted_fields": ["graph.notes"]}))
+    map_params = dict(view="arguments", scope="corpus", assumptions="true")
+    corpus_map = data("/graph", representation="map", **map_params)
+    record(key_of("/graph", representation="reader_map", **map_params), write({
+        **{key: value for key, value in corpus_map.items() if key not in MAP_OMITTED},
+        "representation": "reader_map", "omitted_fields": list(MAP_OMITTED)}))
     records = {}
     for table in TABLES:
         records[table] = complete("/records", table=table)["items"]
@@ -173,9 +207,16 @@ def export(bundle, out, *, lean_tree=None, alignment=None, oracle=Path("build/ed
             name = module["name"]
             record(key_of("/lean/module", name=name), named(f"lean/module/{name}.json", data("/lean/module", name=name)))
     if alignment is not None:
-        index["responses"]["/alignment"] = named("alignment.json", data("/alignment"))
+        whole = data("/alignment")
+        index["responses"]["/alignment"] = named("alignment.json", whole)
+        # A reader needs one paper's statements, so a page loads the core and that paper.
+        index["responses"]["/alignment/core"] = named("alignment/core.json", alignment_core(whole))
         for stage in STAGES:
+            index["responses"][f"/alignment/{stage}"] = named(f"alignment/{stage}.json", alignment_paper(whole, stage))
             index["responses"][f"/ties/{stage}"] = named(f"ties/{stage}.json", data(f"/ties/{stage}"))
+        # One record whole, for the panel that opens on it.
+        for id_, row in whole["records"].items():
+            record(key_of("/alignment/record", id=id_), write(row))
     index["route_maps"] = {route: write(routes[route]) for route in sorted(routes)}
     # Python owns the indexed fields, row order and Unicode folding rules.
     index["search"] = write({"rows": app._search,

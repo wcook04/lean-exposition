@@ -1,7 +1,7 @@
 /* The right page (MapPane.tsx). From 1280px the reader stops centring: the paper at its
-   measure (at least half the window's width from 1280 to 1500px, where the outline folds
+   measure (at least half the window's width from 1280 to 1679px, where the outline folds
    into "Sections"), then the right page to the window's edge, full height under the top
-   bar. Above 1500px the outline returns and the paper yields to keep the page at 600px.
+   bar. From 1680px the outline returns, which leaves the graph the width it needs.
    The graph stands above the Lean; from 860px of page they stand side by side, the Lean
    next to the paper. Below 1280px it opens as a sheet. */
 
@@ -47,6 +47,52 @@
   border-left: 1px solid var(--rule);
   overflow: hidden;
   container: right-page / inline-size;
+}
+
+/* The pane's one row, the same in both modes: the toggle, what is being argued, the ways out. */
+.map-pane__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-2) 0 var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.mode-toggle {
+  flex: none;
+  display: inline-flex;
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-s);
+}
+
+.mode-toggle button {
+  min-width: 52px;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+.mode-toggle button + button {
+  border-left: 1px solid var(--rule-control);
+}
+
+.mode-toggle button:hover {
+  color: var(--ink);
+}
+
+.mode-toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--ground);
 }
 
 .map-pane__pages {
@@ -124,7 +170,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: calc(var(--lean-share) * 100%);
+  height: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
   box-shadow: 0 -1px 0 var(--rule-strong);
 }
 
@@ -138,7 +184,7 @@
   left: 0;
   right: 0;
   /* At rest it lies at the foot of the graph, just above the line that names what is lit. */
-  bottom: max(47px, calc(var(--lean-share) * 100%));
+  bottom: max(47px, min(calc(var(--lean-share) * 100%), calc(100% - 11px)));
   display: grid;
   place-items: center;
   height: 11px;
@@ -181,31 +227,24 @@
 }
 
 /* The Lean open: head and foot give way without changing the canvas's size or camera. */
-.map-pane--open .map-pane__row--trail,
-.map-pane--open .map-pane__foot,
-.map-pane--kept .map-pane__foot {
+.map-pane--open .map-pane__head,
+.map-pane--open .map-pane__foot {
   visibility: hidden;
 }
 
 @container right-page (max-width: 859.98px) {
-  .map-pane--open .map-pane__head {
-    visibility: hidden;
-  }
   .map-pane--open .map-pane__body {
     z-index: 3;
   }
 }
 
-.map-pane--kept .map-pane__body {
-  flex: 1;
-}
 
 @container right-page (min-width: 860px) {
   /* Side by side, with the Lean next to the paper it answers. */
   .lean-page {
     top: 0;
     right: auto;
-    width: calc(var(--lean-share) * 100%);
+    width: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
     height: auto;
     box-shadow: 1px 0 0 var(--rule-strong);
   }
@@ -213,7 +252,7 @@
     top: 0;
     right: auto;
     bottom: 0;
-    left: calc(var(--lean-share) * 100%);
+    left: min(calc(var(--lean-share) * 100%), calc(100% - 11px));
     width: 11px;
     height: auto;
     border-top: 0;
@@ -557,6 +596,26 @@
   cursor: pointer;
 }
 
+.lean-page__quiet {
+  flex: none;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.lean-page__quiet:hover {
+  color: var(--ink);
+}
+
 .lean-page__action:hover,
 .lean-page__action[aria-pressed="true"] {
   color: var(--ink);
@@ -857,9 +916,14 @@
   cursor: pointer;
 }
 
-.right-sheet .map-pane__head,
+.right-sheet .map-pane__bar,
 .right-sheet .lean-page__head {
   padding-right: 44px;
+}
+
+/* A phone has the toggle in its one row, and the sheet is Lean mode. */
+.right-sheet--phone .map-pane__bar {
+  display: none;
 }
 
 /* A phone has no room for a band of graph: an open step fills the sheet. */

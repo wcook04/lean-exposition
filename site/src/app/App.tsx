@@ -119,23 +119,23 @@ function Page({ route, onSearch }: { route: Route; onSearch(): void }) {
         <div className="page-message">
           <h1>No page at this address</h1>
           <p>
-            Nothing on this site is at <code translate="no">{route.path}</code>. A link from an older edition may have moved. These pages are here:
+            This site has no page at <code translate="no">{route.path}</code>. These are the pages it has:
           </p>
           <ul className="page-message__routes">
             <li>
-              <a href={routeHref({ view: "read", stage: "short" })}>The short paper</a> <span>states the theorem and proves it</span>
+              <a href={routeHref({ view: "read", stage: "short" })}>The short paper</a> <span>the theorem and its proof</span>
             </li>
             <li>
-              <a href={routeHref({ view: "read", stage: "expository" })}>The exposition</a> <span>explains the ideas with worked examples</span>
+              <a href={routeHref({ view: "read", stage: "expository" })}>The exposition</a> <span>the ideas, with worked examples</span>
             </li>
             <li>
-              <a href={routeHref({ view: "read", stage: "long" })}>The long record</a> <span>reconstructs each step and names its source</span>
+              <a href={routeHref({ view: "read", stage: "long" })}>The long record</a> <span>each step, with its source</span>
             </li>
             <li>
-              <a href={routeHref({ view: "map" })}>The argument map</a> <span>draws the proof, from the theorem down</span>
+              <a href={routeHref({ view: "map" })}>The argument map</a> <span>the proof as a drawing, from the theorem down</span>
             </li>
             <li>
-              <a href={routeHref({ view: "compare" })}>Compare</a> <span>sets each step’s statements side by side</span>
+              <a href={routeHref({ view: "compare" })}>Compare</a> <span>each step’s statements side by side</span>
             </li>
             <li>
               <a href={routeHref({ view: "home" })}>The front page</a>
@@ -157,8 +157,7 @@ function EditionBanner() {
   return (
     <div className="edition-banner" role="alert">
       <span>
-        The server has started serving a different edition, that is, a different fixed set of steps and papers. This page
-        still shows the earlier edition.
+        The server has started serving a different edition, that is, a different fixed set of steps and papers. This page still has the earlier edition.
       </span>
       <button type="button" className="control" onClick={() => window.location.reload()}>
         Reload to read the new edition
@@ -234,8 +233,7 @@ function LinkedEditionNotice() {
       <span>
         The link you followed was copied from edition <code translate="no">{linked.slice(0, EDITION_PREFIX)}</code> of the
         steps and papers. The server is serving edition{" "}
-        <code translate="no">{snapshot.manifest_sha256.slice(0, EDITION_PREFIX)}</code>, so this page shows that edition, not the
-        one the link was copied from.
+        <code translate="no">{snapshot.manifest_sha256.slice(0, EDITION_PREFIX)}</code>, so this page has that edition, not the one the link was copied from.
       </span>
       <button type="button" className="control" onClick={() => setDismissed(true)}>
         Close this notice

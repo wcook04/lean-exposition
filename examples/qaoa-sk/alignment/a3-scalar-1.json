@@ -112,7 +112,7 @@
      "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
      "name": "ground_state_parisi_target",
      "relation": "part",
-     "note": "Equality at a given minimizer, proved in the scalar model. Taking the infimum and attainment stay outside it.",
+     "note": "Equality at a given minimiser, proved in the scalar model. Taking the infimum and attainment stay outside it.",
      "clause": "groundStateValue=parisi W γ"
     },
     {
@@ -433,14 +433,14 @@
      "file": "OAI/Probability/SKValue/Gaussian/CoordinateDependsBefore.lean",
      "name": "normalized_family_orthonormal",
      "relation": "part",
-     "note": "Orthonormality of the normalized increments, for any predictable coefficients with positive second moments.",
+     "note": "Orthonormality of the normalised increments, for any predictable coefficients with positive second moments.",
      "clause": "∀ i j : Fin N,\n      (∫ z, normalizedIncrement (H i) (coordinate N i) (gaussianProduct (Fin (N+1))) z *\n        normalizedIncrement (H j) (coordinate N j) (gaussianProduct (Fin (N+1))) z\n        ∂gaussianProduct (Fin (N+1))) = if i=j then 1 else 0"
     },
     {
      "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
      "name": "finite_gaussian_target",
      "relation": "part",
-     "note": "Its first clause gives eventual positivity of active normalizers. Uniform convergence of c_j to 1 is not stated here.",
+     "note": "Its first clause gives eventual positivity of active normalisers. Uniform convergence of c_j to 1 is not stated here.",
      "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j)",
      "clause_file": "OAI/Probability/SKValue/Model.lean",
      "clause_name": "FiniteGaussianConclusion"
@@ -704,7 +704,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "name": "FiniteGaussianConclusion",
      "relation": "defines",
-     "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit."
+     "note": "The three clauses: normaliser positivity, mesh limit and endpoint limit."
     },
     {
      "file": "OAI/Probability/SKValue/Main.lean",
@@ -829,7 +829,7 @@
      "file": "OAI/Probability/SKValue/Model.lean",
      "name": "FiniteGaussianConclusion",
      "relation": "defines",
-     "note": "The three clauses: normalizer positivity, mesh limit and endpoint limit."
+     "note": "The three clauses: normaliser positivity, mesh limit and endpoint limit."
     }
    ],
    "statements": [
@@ -916,7 +916,7 @@
      "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
      "name": "IsDiffusion.finite_gaussian_fixed_strip",
      "relation": "part",
-     "note": "Premises hX, hT and hT1. No minimizer appears among its hypotheses.",
+     "note": "Premises hX, hT and hT1. No minimiser appears among its hypotheses.",
      "clause": "(hX : IsDiffusion W γ X) {T K L D Lu La : ℝ}\n    (hT : 0<T) (hT1 : T<1)"
     },
     {

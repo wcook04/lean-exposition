@@ -35,7 +35,7 @@ const RECORD_MEANINGS: { table: string; noun: string; meaning: string }[] = [
   { table: "edges", noun: "links", meaning: "each saying that one step is used in the argument for another, that a Lean declaration corresponds to a result, or that one step cites another" },
   { table: "citations", noun: "citations", meaning: "links from a step to a place in a source" },
   { table: "sources", noun: "sources", meaning: "papers and files, identified by address and, for files, by a hash of their bytes" },
-  { table: "evidence", noun: "check records", meaning: "checks, including those planned but not run" },
+  { table: "evidence", noun: "run records", meaning: "runs, including those planned but not started" },
 ];
 
 const STATE_WORDS: Record<string, string> = {
@@ -55,7 +55,7 @@ const COMPANION = "companion";
 const RELATED_FILMS: { film: FamilyFilm; shows: string }[] = [
   { film: familyFilm("mathematics"), shows: "A walkthrough of his work on one Erdős problem, from the question to the formal proof." },
   { film: familyFilm("mathematics-overview"), shows: "A tour of the maths map, including the long record and the papers for problem #257." },
-  { film: familyFilm("atlas"), shows: "One result followed through Plectis Atlas, its claims compared with the checked statement." },
+  { film: familyFilm("atlas"), shows: "One result followed through Plectis Atlas, its claims compared with the formal statement." },
 ];
 const INTRODUCTION = familyFilm("introduction");
 const WALKTHROUGH = familyFilm("interfaces");
@@ -127,13 +127,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <header className="about__intro">
         <h1>About this site</h1>
         <p className="about__lede">
-          This site holds three papers on one theorem from OpenAI’s mathematics release
-          {goalLabel ? (
-            <>
-              , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
-            </>
-          ) : null}{" "}
-          with OpenAI’s Lean beside the text. You read a paper as you would any paper, and a statement with a dark tick in the margin opens its Lean.
+          This site holds three papers on one theorem about the Sherrington–Kirkpatrick (SK) spin glass, from OpenAI’s mathematics release, with OpenAI’s proof beside the text. That proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. You read a paper as you would any paper, and a statement with a dark tick in the margin opens its Lean.
         </p>
       </header>
 
@@ -144,7 +138,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <ol className="about__routes">
           <li>
             <a href={routeHref({ view: "read", stage: "short" })}>The papers</a>
-            <span>Start here. A statement with a dark tick opens its Lean beside the text, and the graph of the proof follows as you scroll.</span>
+            <span>Start here. A statement with a dark tick opens its Lean beside the text, and a graph of the proof beside the paper moves to the statement you are reading.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>
@@ -152,10 +146,10 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
           <li>
             <a href={routeHref({ view: "map" })}>The argument map</a>
-            <span>The proof as a drawing, from the theorem down. Each paper shows the part you are reading beside the text.</span>
+            <span>The proof as a drawing, from the theorem down. Beside each paper the site draws the steps of the section you are reading.</span>
           </li>
           <li>
-            <a href={routeHref({ view: "checks" })}>The checks</a>
+            <a href={routeHref({ view: "checks" })}>What ran</a>
             <span>What passed, what failed and what was never run.{mostNotRun ? " Most have not been run." : ""}</span>
           </li>
           <li>
@@ -185,13 +179,13 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             <ul>
               <li>A thin tick in a paper’s margin marks a statement tied to the argument. The tick is darker when the tie has Lean.</li>
               <li>The highlighter marks the statement you are on, in the same ink as the Lean lines it maps to.</li>
-              <li>On a graph, a green card is a step stated and proved in Lean, or defined there. A paler green card has part of that.</li>
+              <li>On a graph, a green card is a step stated and proved in Lean, or defined there. A paler green card has some of that.</li>
             </ul>
             <h3>What a click does</h3>
             <ul>
               <li>Scrolling needs no click. The statement at the reading line takes the highlighter, and the graph and the Lean beside the paper move to it.</li>
               <li>Pointing at a marked statement or a Lean name lights it everywhere and previews it. Nothing moves.</li>
-              <li>Clicking a statement pins it: its Lean opens at the exact lines and the paper stays where it is.</li>
+              <li>Clicking a statement keeps it open: its Lean opens at the exact lines and the paper stays where it is.</li>
               <li>Clicking a reference opens it in place under the paragraph, with a link to go there.</li>
               <li>Every jump has a named Back, which is the browser’s own Back button.</li>
             </ul>
@@ -211,16 +205,13 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__what" aria-labelledby="about-what">
         <h2 id="about-what">What this site is</h2>
         <p>
-          The result has three written accounts. The <a href={routeHref({ view: "read", stage: "expository" })}>exposition</a>{" "}
-          explains the ideas with worked examples. The <a href={routeHref({ view: "read", stage: "short" })}>short paper</a>{" "}
-          states the result and proves it for readers who know the field. The{" "}
-          <a href={routeHref({ view: "read", stage: "long" })}>long record</a> reconstructs each step of the argument and names
-          the source each step comes from.
+          There are three papers on the result. The <a href={routeHref({ view: "read", stage: "expository" })}>exposition</a>{" "}
+          has the ideas, with worked examples. The <a href={routeHref({ view: "read", stage: "short" })}>short paper</a>{" "}
+          has the result and its proof, for readers who know the field. The{" "}
+          <a href={routeHref({ view: "read", stage: "long" })}>long record</a> has each step of the argument with the source it comes from.
         </p>
         <p>
-          Each step of the argument is one entry in a graph: a claim, an assumption, or a declaration in Lean, a language in
-          which a computer can check proofs. Links between steps say which steps the argument for a result uses. Statements
-          in the three accounts are tied to the steps they state, explain or use
+          Each step of the argument is one entry in a graph: a claim, an assumption, or a declaration in Lean. Links between steps say which steps the argument for a result uses. Statements in the three papers are tied to the steps they state, explain or use
           {ties ? (
             <>
               : <span className="num">{ties.statements.toLocaleString("en-GB")}</span> marked statements, <span className="num">{ties.withLean}</span> of them with Lean, joined to steps by{" "}
@@ -283,22 +274,21 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               <span className="rel-sample rel-sample--lit" />
             </span>
             <span>
-              Amber outlines the step or link you have selected, and the keyboard focus. When you trace what a step rests
-              on, its grey lines turn amber; assumption tags and Lean lines on the traced route keep their own colours and
+              Amber outlines the step or link you have selected, and the keyboard focus. When you trace what a step depends on, its grey lines turn amber; assumption tags and Lean lines on the traced route keep their own colours and
               are drawn brighter.
             </span>
           </li>
         </ul>
         <p className="about__keynote">
           The <a href={routeHref({ view: "map" })}>argument map</a>’s Key button says the rest in words, with its keyboard
-          controls. On the checks page each outcome is written as a word, and only a failed outcome is shown in colour.
+          controls. On the What ran page each outcome is written as a word, and only a failed outcome is shown in colour.
         </p>
       </section>
 
       <section className="about__serves" id="edition" aria-labelledby="serves">
         <h2 id="serves">The edition you are reading</h2>
         <p>
-          The steps and the three accounts belong to one captured edition, a fixed set of files identified below. The
+          The steps and the three papers belong to one captured edition, a fixed set of files identified below. The
           published website includes that capture. When run against the local read-only server, the site pins requests to
           the same edition and asks you to reload if the server changes it. The architectural companion and downloadable
           PDFs are copied separately from the same source checkout when the website is built.
@@ -321,7 +311,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </dd>
           </div>
           <div>
-            <dt>Accounts</dt>
+            <dt>Papers</dt>
             <dd>
               <ul>
                 {papers.map((p) => (
@@ -334,7 +324,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </dd>
           </div>
           <div>
-            <dt>Records</dt>
+            <dt>Counts</dt>
             <dd>
               <ul>
                 {RECORD_MEANINGS.filter((r) => overview.record_counts[r.table] !== undefined).map((r) => (
@@ -358,8 +348,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__companion" aria-labelledby="companion-title">
         <h2 id="companion-title">The architectural companion</h2>
         <p className="about__open-note">
-          A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
-          steps, and on how those steps and links are made.
+          A longer paper, written for this project, on why the result is written up as three papers linked to one set of steps, and on how those steps and links are made.
         </p>
         <div className="about__copies">
           <button
@@ -389,20 +378,18 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h2 id="made-by-title">Who made this site</h2>
         <p>
           {AUTHOR} made this site with AI agents, which wrote its code, its steps and its ties under his direction. The
-          theorem and the Lean proof are OpenAI’s, and the earlier results are credited in the papers. The site is one part of{" "}
+          theorem and the Lean proof are OpenAI’s, and the earlier results are credited in the papers. The site belongs to{" "}
           <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help people
           follow what AI produces. His own research is on Erdős problems, questions posed by the mathematician Paul Erdős.
         </p>
         <p>
-          Two of his other projects sit closest to this one. His <Out href={LINKS.mathsMap}>maths map</Out> on Plectis lets
-          you see how the proofs, papers and explanations of his Erdős problem research connect. On{" "}
+          Two of his other projects are the closest to this one. On his <Out href={LINKS.mathsMap}>maths map</Out> on Plectis you can see how the proofs, papers and explanations of his Erdős problem research connect. On{" "}
           <Out href={LINKS.atlas}>Plectis Atlas</Out>, the results in OpenAI’s mathematics release are set beside the outside
           reports that assess them, and family 281, the result explained here, has <Out href={LINKS.atlasFamily}>its own page</Out>.
-          Here that one result is taken further: an argument map of its proof, and three written accounts of it, each linked
-          to the map.
+          This site covers that one result in more depth, with an argument map of its proof and three papers on it, each linked to the map.
         </p>
         <p>
-          Two films accompany this result: one shows how to use this site, and one explains the mathematics. His
+          Two videos go with this result: in one he goes through how to use this site, and in the other he explains the mathematics. His
           walkthrough of Erdős problem #257 is linked below.
         </p>
         <div className="about__films">
@@ -423,7 +410,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           <Out href={LINKS.contact}>contact page on Plectis</Out>; he posts updates on <Out href={LINKS.x}>X</Out>.
         </p>
         <p className="about__start">
-          New to his work? Start here: <FilmLink film={INTRODUCTION} />
+          An introduction to his work: <FilmLink film={INTRODUCTION} />
         </p>
         <SisterSites className="about__sisters" />
       </section>

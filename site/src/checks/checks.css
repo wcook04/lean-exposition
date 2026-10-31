@@ -927,3 +927,12 @@
     border: 0;
   }
 }
+
+.standing-terms {
+  max-width: 62rem;
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-ui);
+  line-height: 1.45;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}

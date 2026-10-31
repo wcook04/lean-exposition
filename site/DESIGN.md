@@ -469,18 +469,27 @@ page.
 
 ## The reader
 
-A reader reads the paper, as they always have. The graph is a sidecar: full height on the
-page facing the paper, it comes along as they scroll, and it can be closed. One line under
-it names what is lit in plain words and says whether it has Lean. Clicking a statement or a
-highlighted card opens the raw Lean, which rises from the card over the graph and leaves a band
-of it above, or stands beside it from 860px of page. It is headed by the step's plain title
-with the raw name small beside it, then a link to where each paper states it, and Compare. The
-graph underneath keeps its size and camera; only a transform lifts the card clear, so closing
-leaves it exactly as it was. A handle sets the height, and it is remembered.
+A reader reads the paper, as they always have. The pane beside it has two modes and one toggle,
+`Graph | Lean`, in the same place in both. The strip's "Hide pane" hides the whole pane in either.
 
-The Lean closed is the default. A reader who wants it beside their reading can choose "Keep the
-Lean open" or draw the handle up from the foot of the graph; it then follows the text, and that
-is remembered in this browser. Below 1280px the same page is a sheet opened on demand. It is
+**Graph mode** is a sidecar: the graph, following the reading, with one line under it naming what is
+lit in plain words and saying whether it has Lean. Clicking a statement or a highlighted card goes
+to Lean mode on that statement, as one history entry.
+
+**Lean mode** gives the pane to the Lean. An opened statement rises from its card and stays put
+while the reader scrolls, headed by its plain title with the raw name small beside it, then a link
+to where each paper states it, and Compare; "Follow the text" lets go of it. The toggle's Lean,
+with nothing opened, is immediate detail: the Lean follows the text. A statement with no Lean shows
+its note, or "No Lean linked". A handle draws the graph back above the Lean, side by side from 860px
+of pane, and the size is remembered.
+
+Every way back lands in the same place. Back, the site's Back, `[`, Escape, Close and the toggle's
+Graph all return to Graph mode with the same camera, paper position and highlight, because closing
+what a click opened is the browser's own Back: there is never a dead Back behind it. The graph
+underneath keeps its size and camera throughout. Close and Escape step one level, from an opened
+statement to what was there before it; the toggle goes straight to Graph. The mode is in the
+address (`v=lean`), survives a reload and carries to the next paper. `g` switches it. Below 1280px
+the same pane is a sheet; on a phone the toggle is on the one row and the sheet is Lean mode. It is
 never modal: the paper stays where it is and can still be scrolled.
 
 Four verbs run the page.
@@ -495,11 +504,11 @@ Four verbs run the page.
   previews it. Moving away restores. A card does the same in the other direction. An untied
   paragraph names its passage's records in that line and moves nothing. Pointing never
   pushes history.
-- **Open.** A click pins and raises the Lean, and only then does the statement take the full
-  highlighter. A step with no Lean does not open: the line under the graph says so. A click is one history entry, `?n=<record>&l=<slice>`,
+- **Open.** A click opens the Lean, and only then does the statement take the full highlighter.
+  From Graph mode a step with no Lean does not open: the note stands under the statement. A click is one history entry, `?n=<record>&l=<slice>`,
   and the paper does not move. A card pins too, and the paper goes to the statement while the
-  graph stays. A name in the Lean walks in place, as its own entry. A pin ends when the reader
-  scrolls the statement away, on Escape, or on Back. A drag or a double click that selects text
+  graph stays. A name in the Lean walks in place, as its own entry. A pin lasts until Escape,
+  Close, Back or "Follow the text". A drag or a double click that selects text
   never pins.
 - **Back.** The browser's own, named in the strip.
 
@@ -534,7 +543,7 @@ the same place on a first load and a reload. No selector may put the whole paper
 on a root element: one change of hover then walks all of it (`html.is-reading` exists for this).
 
 The outline counts the statements with Lean in each section, and searches the paper's
-text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
+text, including what has not rendered yet. Below 1680px it stands on the right page, where it
 covers no text. A passage's steps and links open from "This passage" under the graph, and the
 first screen's one instruction sits in the strip. On a phone there is one row of chrome, which
 goes while reading down and comes back going up, and a tapped statement moves above the sheet.
@@ -689,6 +698,25 @@ something else.
   That delay was most of the wait on every page. Pages, the Lean viewer, the typesetter and
   the reader's map pane go through `code()` (`src/app/code.ts`), which answers at once when the
   module is here, and `main.tsx` starts the opened page's code before anything renders.
+- **A paper's words are in its HTML.** The build runs each paper's opening through the page's
+  own engine (`src/reader/firstScreen.ts`) and writes it into the paper's HTML in the shape of
+  the page, so the text paints with the stylesheet, before any script. React keeps showing the
+  same markup until the paper is ready (`ReaderSkeleton`), and it sits where the page will put
+  it, to the pixel from 700px up. A page that opens anywhere but the top (a hash, a query, a
+  history entry to restore) swaps it for the empty shape before anything paints. Check with
+  scripts off and with fonts blocked after changing the reader's first screen or its measures.
+- **The stylesheet every page waits for holds no font bytes.** Fonts are never inlined
+  (`assetsInlineLimit`): a subset as a data URL is paid for by every page whether it uses those
+  characters or not. Scaled system faces (`tokens.css`) stand in until the fonts land, so no
+  line breaks differently when they do.
+- **A page loads the shallowest alignment that serves it.** `useAlignment` gives the core:
+  every record's Lean and every statement's place. A panel adds the one record it opens on
+  (`useRecordAlignment`), and a paper's reader adds that paper's statements
+  (`paperAlignmentResource`). Only a page that quotes all three papers takes the whole
+  (`useFullAlignment`), and a cold one fetches the single file, which is smaller than its parts.
+  TypeScript enforces this: the core's statements have no `markdown`.
+- **Every page starts from what pages read.** The map and the overview have startup forms
+  without the fields nothing reads, and on a paper the edges and evidence wait for the paper.
 - **Every preload must be used.** A link to a file nothing fetches is a wasted download, and a
   stylesheet preload needs `crossorigin` to match the request Vite makes for it. After
   changing what a route loads, check the console for preload warnings at laptop and phone width.
@@ -697,8 +725,8 @@ something else.
 
 | Width | Map | Inspector | Reader |
 | --- | --- | --- | --- |
-| ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
-| 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
+| ≥ 1680px | Canvas with foot bar | Right column, full height | Outline, paper, map |
+| 1280–1679px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
 | 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the right page as a sheet |
 | 901–1119px | Canvas | Right column | Paper; sections and passage context as sheets; the right page as a side sheet |
 | 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets; the right page as a side sheet |

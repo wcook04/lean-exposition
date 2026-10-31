@@ -6,12 +6,26 @@
    (https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md):
    warm paper and violet ink by day, violet ground and bone ink at night. */
 
+/* A paper's first screen paints before its fonts land. These system faces, scaled to the same
+   line widths, keep every line break when the fonts swap in. */
+@font-face {
+  font-family: "STIX fallback";
+  src: local("Times New Roman"), local("Times");
+  size-adjust: 105%;
+}
+
+@font-face {
+  font-family: "Source Sans fallback";
+  src: local("Arial"), local("Helvetica");
+  size-adjust: 93.2%;
+}
+
 :root {
   color-scheme: light;
 
   /* Three voices: mathematics and titles, controls, Lean. */
-  --font-serif: "STIX Two Text", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --font-sans: "Source Sans 3 Variable", "Source Sans 3", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "STIX Two Text", "STIX fallback", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "Source Sans 3 Variable", "Source Sans 3", "Source Sans fallback", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Type scale. Nothing a reader must read renders below --fs-sm on screen. */
