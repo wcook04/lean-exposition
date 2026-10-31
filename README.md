@@ -110,7 +110,7 @@ records preserve those distinctions.
 
 ## Videos
 
-The website and the commands above need no video. In [How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw), Will Cook starts with four magnets and explains the mathematical question. In [Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng), he goes through the website. In [Introduction V3](https://www.youtube.com/watch?v=MBmVMMogXTA), he explains how his projects fit together.
+In [How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw), Will Cook starts with four magnets and explains the mathematical question. In [Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng), he goes through the website. In [Introduction V3](https://www.youtube.com/watch?v=MBmVMMogXTA), he explains how his projects fit together.
 
 ## Development and licence
 
