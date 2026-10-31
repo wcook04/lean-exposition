@@ -8,10 +8,12 @@ import { describe, expect, it } from "vitest";
 import type { Stage } from "../src/api/types";
 import { prepareDocument, type PreparedDocument } from "../src/reader/engine";
 import {
+  citedView,
   equationId,
   labelIds,
   leanModuleOf,
   linkReferences,
+  locatorWords,
   MARK_CAPACITY,
   markReferences,
   opensInPlace,
@@ -298,6 +300,31 @@ describe("what a reference shows", () => {
     expect(view.body).toContain("OpenAI (2026a)");
     expect(view.href).toContain("main.pdf");
     expect(opensInPlace(row)).toBe(true);
+  });
+
+  it("keeps the theorem number on a citation's card", () => {
+    const at = index("short");
+    const row = at.rows.find((r) => r.kind === "citation" && r.quote.startsWith("[Auffinger, Chen and Zeng (2020), Theorem 1]"))!;
+    const view = refView(at, row);
+    expect(view.card).toBe(true);
+    expect(view.locator).toBe("Theorem 1");
+    expect(view.body).toContain("The SK model is");
+    expect(view.entry).toBe(at.table.sources.ACZ.entry![0]);
+  });
+
+  it("names the place without the name the entry gives", () => {
+    expect(locatorWords("Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)")).toBe("Proposition 1, equation (5)");
+    expect(locatorWords("El Alaoui, Montanari and Sellke, preprint v1, Lemmas 6.5 and 6.13")).toBe("Lemmas 6.5 and 6.13");
+    expect(locatorWords("their Theorem 2")).toBe("Theorem 2");
+    expect(locatorWords("Lemma 4.1 and Table 1")).toBe("Lemma 4.1 and Table 1");
+  });
+
+  it("finds a citation quoted inside a statement by its address", () => {
+    const at = index("short");
+    const view = citedView(at, at.table.sources.FS.href, "OpenAI (2026a), Theorem 1.1");
+    expect(view?.locator).toBe("Theorem 1.1");
+    expect(view?.body).toContain("OpenAI (2026a)");
+    expect(citedView(at, "https://example.org/", "x")).toBeNull();
   });
 
   it("jumps for a section and opens the other paper beside this one", () => {
