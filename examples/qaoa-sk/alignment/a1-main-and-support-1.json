@@ -150,7 +150,7 @@
           "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
           "name": "ground_state_parisi_target",
           "relation": "part",
-          "note": "Third clause. It needs only the minimiser and constructs the diffusion internally.",
+          "note": "Third clause. It assumes only the minimiser and constructs the diffusion internally.",
           "clause": "groundStateValue=parisi W γ"
         }
       ],
@@ -467,7 +467,7 @@
           "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
           "name": "parameterMeasure_isStieltjes",
           "relation": "part",
-          "note": "Existence, by the constructed measure. Closed relative support is not part of this declaration.",
+          "note": "Existence, by the constructed measure. This declaration does not state closed relative support.",
           "clause": "IsStieltjesMeasure γ (parameterMeasure γ)"
         },
         {
@@ -571,7 +571,7 @@
           "file": "OAI/Probability/SKSupport/Diffusion/DiffusionStability.lean",
           "name": "positivePath_error",
           "relation": "part",
-          "note": "Not part of existence or uniqueness. Stability bound between a finite-step path and the diffusion, used in the plateau limit."
+          "note": "A stability bound between a finite-step path and the diffusion, used in the plateau limit. It states neither existence nor uniqueness."
         }
       ],
       "statements": [
@@ -854,7 +854,7 @@
           "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
           "name": "certificate_growth",
           "relation": "part",
-          "note": "Exponential bounds on F2 and its divergence, the tail input actually used. The paper's tail expansions of l and s are not stated."
+          "note": "Exponential bounds on F2 and its divergence, the tail estimates used in the Lean. The paper's tail expansions of l and s are not stated."
         },
         {
           "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
@@ -1010,7 +1010,7 @@
           "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
           "name": "gaussian_shape_coercivity",
           "relation": "proof",
-          "note": "Support model: its proof integrates the divergence over the half-line and gets zero, the step the Lean actually takes here.",
+          "note": "Support model: its proof integrates the divergence over the half-line and obtains zero, which is the step in the Lean here.",
           "clause": "(∫ x in Ioi (0:ℝ), certDivergence r s ρ x)=0"
         },
         {

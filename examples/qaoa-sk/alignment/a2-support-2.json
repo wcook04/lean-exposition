@@ -22,7 +22,7 @@
      "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
      "name": "gaussian_shape_coercivity",
      "relation": "proof",
-     "note": "The half-line integration with reflection that the finite-data theorem actually calls."
+     "note": "The half-line integration with reflection that the finite-data theorem calls."
     }
    ],
    "statements": [
@@ -274,7 +274,7 @@
      "file": "OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean",
      "name": "minimizer_no_terminal_plateau",
      "relation": "states",
-     "note": "Same conclusion for the Lean minimizer, covering c=0."
+     "note": "Same conclusion for the Lean minimiser, covering c=0."
     },
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
@@ -392,7 +392,7 @@
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "full_support_of_contact_and_gap_curvature",
      "relation": "proof",
-     "note": "Its proof handles this case by supplying q(0)=0 at the left end of the gap."
+     "note": "Its proof covers this case by supplying q(0)=0 at the left end of the gap."
     }
    ],
    "statements": [
@@ -519,7 +519,7 @@
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Its second clause gives strict increase for a minimizer.",
+     "note": "Its second clause gives strict increase for a minimiser.",
      "clause": "StrictMonoOn (extend γ.val) (Ico (0:ℝ) 1)"
     }
    ],
@@ -653,7 +653,7 @@
      "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
      "name": "contactPotential_nonneg",
      "relation": "part",
-     "note": "G is nonnegative at a minimizer. The converse direction of the criterion has no Lean declaration.",
+     "note": "G is nonnegative at a minimiser. The converse direction of the criterion has no Lean declaration.",
      "clause": "0 ≤ contactPotential W γ s"
     },
     {
@@ -838,7 +838,7 @@
      "file": "OAI/Probability/SKValue/Variation/MinimizerContact.lean",
      "name": "IsMinimizer.contactPotential_zero",
      "relation": "part",
-     "note": "Scalar model: the nearest Lean to this route. Curvature and q<=1 rule out positive G, giving contact on (0,1), and support is never mentioned."
+     "note": "Scalar model: the nearest Lean statement to this route. Curvature and q<=1 rule out positive G, giving contact on (0,1), and support is never mentioned."
     }
    ],
    "statements": [
