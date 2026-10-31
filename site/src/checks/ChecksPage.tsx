@@ -24,7 +24,7 @@ import {
   type EvidenceCard,
   type KindGroup,
 } from "./summary";
-import { RecordTiles } from "./RecordTiles";
+import { RecordList } from "./RecordTiles";
 import "./checks.css";
 
 const PAGE = 25;
@@ -75,12 +75,16 @@ export function rowNote(kind: string, counts: Record<string, number>): string | 
   if (!total || counts.passed) return null;
   if (kind === "comparator") return "No successful Comparator result is recorded.";
   if (kind === "semantic_review" && counts.not_run === total)
-    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it rests on. Open them to read them.";
+    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it rests on.";
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
 }
 
-/** The edition-level note, said once: how many checks ran and what review means here. */
+/**
+ * The edition-level note, said once. The table gives each kind's counts and what it tests,
+ * and the opening paragraph says when no review has passed; this adds the whole, and what
+ * an outcome is.
+ */
 export function editionNote(cards: readonly EvidenceCard[]): string {
   const total = cards.length;
   const notRun = cards.filter((c) => c.status === "not_run").length;
@@ -90,11 +94,10 @@ export function editionNote(cards: readonly EvidenceCard[]): string {
     notRun * 2 > total
       ? `Most recorded checks on this site have not been run (${notRun} of ${total}).`
       : `${notRun} of the ${total} recorded checks on this site have not been run.`;
-  const review =
-    reviewed === 0
-      ? "In a correspondence review, a reviewer compares a recorded statement or explanation with its source. No correspondence review is recorded as passed, so no recorded explanation of why one record is used for another has been independently reviewed."
-      : `In a correspondence review, a reviewer compares a recorded statement or explanation with its source. ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`;
-  return `${lead} ${review} Each outcome is the result written in one check record, for that check alone. An outcome is not a judgement on whether the mathematics is correct.`;
+  const review = reviewed
+    ? ` ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`
+    : "";
+  return `${lead}${review} Each outcome is the result written in one check record, for that check alone, and is not a judgement on whether the mathematics is correct.`;
 }
 
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
@@ -153,21 +156,20 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
           <p className="checks__edition">
             A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
               Support observation from 26 October 2026
-            </a> records a completed build and scoped dependency extraction. That extracted graph remains partial and has
-            not been incorporated into this edition’s curated graph. Its retained receipt is listed under source-file checks;
-            it does not change the extraction outcomes above or establish Comparator acceptance.
+            </a> records a completed build and a scoped dependency extraction. Its graph is partial and is not part of this
+            edition, so it does not change the outcomes above or establish Comparator acceptance.
           </p>
         )}
         </div>
       </section>
 
-      {target.type !== "node" && <RecordTiles />}
+      {target.type !== "node" && <RecordList />}
 
       <section className="checks__band" aria-labelledby="formal">
         <h2 id="formal">The main statements in Lean</h2>
         <p className="checks__intro">
-          The records include {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`},
-          each a statement written in Lean, listed with the claims recorded as corresponding to it.
+          {declarations.length === 1 ? "One Lean declaration" : `${declarations.length} Lean declarations`}, each with the claims
+          recorded as corresponding to it.
         </p>
         <div className="formal-list">
           {declarations.map((id) => (
@@ -323,10 +325,8 @@ function CheckTable({
   pointers?: boolean;
 }) {
   const shown = rows.filter((r) => r.group.cards.length > 0);
-  const empty = rows.filter((r) => r.group.cards.length === 0);
   return (
-    <>
-      <table className="checktable">
+    <table className="checktable">
         <caption className="visually-hidden">{caption}</caption>
         <thead>
           <tr>
@@ -346,14 +346,7 @@ function CheckTable({
           <KindRow key={row.group.kind} row={row} target={target && target.kind === row.group.kind ? target : null} paged={!!paged} />
         ))}
         {pointers && <PointerRow />}
-      </table>
-      {pointers &&
-        empty.map((row) => (
-          <p key={row.group.kind} className="checktable__absent">
-            There are no {row.group.title.toLowerCase()} records. {row.group.question}
-          </p>
-        ))}
-    </>
+    </table>
   );
 }
 
@@ -391,11 +384,11 @@ function PointerRow() {
           Lean and paper links
         </th>
         <td className="checkrow__examined" data-label="What it tests">
-          Whether each authored link from a record still lands: every quoted passage is found in its paper and every named
-          declaration in its Lean file. A program tests this each time the site’s data is built.
+          Whether each authored link still lands: every quoted passage is found in its paper and every named declaration
+          in its Lean file.
           <span className="checkrow__note">
-            {links ? `${links.lean} links to Lean and ${links.papers} to the papers. ` : ""}This is the site’s own test, not a
-            stored check record. No one has reviewed whether the mathematics on the two sides of a link matches.
+            {links ? `${links.lean} links to Lean and ${links.papers} to the papers. ` : ""}The site’s own test at each build,
+            not a stored check record. No one has reviewed whether the mathematics on the two sides of a link matches.
           </span>
         </td>
         <td className="checktable__n num" data-label="Passed">

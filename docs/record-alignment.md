@@ -115,6 +115,16 @@ central name means in the papers:
 
 `lean-exposition check-alignment examples/qaoa-sk/alignment` resolves every row
 against the Lean index and the three papers and fails on a missing record, a
-missing declaration, an unresolved or ambiguous quotation, unbalanced mathematics
-or an oversized slice. A pass means the pointers land. It says nothing about
-whether the mathematics matches: that remains a reading, recorded here as authored.
+missing declaration, a clause outside its declaration, an unresolved or ambiguous
+quotation, unbalanced mathematics or an oversized slice. A pass means the pointers
+land. It says nothing about whether the mathematics matches: that remains a reading,
+recorded here as authored.
+
+## Steps through the Lean
+
+`/alignment` also carries `steps`, keyed like an edge (`from→to→kind`). Where a curated
+support edge joins two records with Lean links, `route` is the shortest chain of names
+in the source from a consumer's declaration to a prerequisite's, or null when none was
+found within eight steps. A route shows where the Lean makes that use. A null route
+shows nothing: the source scan misses names reached through tactics or notation, and
+the site says nothing about the step in that case.

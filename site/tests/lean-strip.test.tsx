@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import type { LeanModules } from "../src/api/lean";
 import type { LeanShell } from "../src/lean/data";
 import { LINK_CAVEAT, RELATION_WORDS, dependencyWords, kindWord } from "../src/lean/data";
-import { ReadingStrip } from "../src/lean/ReadingStrip";
+import { barPlace, ReadingLine } from "../src/lean/ReadingStrip";
 import { buildIndex, type DeclRow } from "../src/lean/resolve";
 
 const row: DeclRow = { name: "OAI.X.OrderParameter", short: "OrderParameter", kind: "structure", module: "OAI.X.Model", line: 17, endLine: 22 };
@@ -33,24 +33,37 @@ async function render(node: React.ReactNode): Promise<HTMLDivElement> {
   return host;
 }
 
-describe("the reading strip", () => {
-  it("says how to use it before a name is read", async () => {
-    const view = await render(<ReadingStrip target={null} shell={shell} />);
-    expect(view.querySelector('[role="status"]')?.textContent).toMatch(/Point at a name/);
-  });
-
-  it("gives a dictionary term as notation, words, kind and place", async () => {
+describe("the reading line", () => {
+  it("gives a dictionary term as notation and words", async () => {
     const term = { name: row.name, module: row.module, line: 17, tex: "\\mathcal U", words: "The admissible class." };
-    const container = await render(<ReadingStrip target={{ kind: "decl", row, term }} shell={shell} />);
+    const container = await render(<ReadingLine target={{ kind: "decl", row, term }} shell={shell} />);
     expect(container.querySelector(".katex")).not.toBeNull();
     expect(container.textContent).toContain("The admissible class.");
-    expect(container.textContent).toContain("Structure in OAI/X/Model.lean, line 17");
   });
 
-  it("says From Mathlib and links the search", async () => {
-    const view = await render(<ReadingStrip target={{ kind: "mathlib", name: "Set.Ico" }} shell={shell} />);
+  it("gives a name with no words its kind and place", async () => {
+    const container = await render(<ReadingLine target={{ kind: "decl", row }} shell={shell} />);
+    expect(container.textContent).toContain("Structure in Model.lean, line 17");
+  });
+
+  it("says From Mathlib and leaves the link to the name itself", async () => {
+    const view = await render(<ReadingLine target={{ kind: "mathlib", name: "Set.Ico" }} shell={shell} />);
     expect(view.textContent).toContain("From Mathlib");
-    expect(view.querySelector("a")?.getAttribute("href")).toBe("https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Set.Ico");
+    expect(view.querySelector("a")).toBeNull();
+  });
+
+  it("keeps a long name whole in its text while allowing breaks only at its parts", async () => {
+    const long = { ...row, short: "contactPotential_hasDerivAt" };
+    const view = await render(<ReadingLine target={{ kind: "decl", row: long }} shell={shell} />);
+    const name = view.querySelector(".lean-break")!;
+    expect(name.textContent).toBe("contactPotential_hasDerivAt");
+    expect([...name.querySelectorAll(":scope > span")].map((part) => part.textContent)).toEqual(["contactPotential_", "hasDerivAt"]);
+  });
+
+  it("sits at the column's foot, and moves to its head rather than cover the name", () => {
+    const column = { left: 300, top: 52, width: 700, bottom: 790 };
+    expect(barPlace(column, { bottom: 400 }, 31)).toEqual({ left: 300, width: 700, top: 759, edge: "bottom" });
+    expect(barPlace(column, { bottom: 757 }, 31)).toEqual({ left: 300, width: 700, top: 52, edge: "top" });
   });
 });
 

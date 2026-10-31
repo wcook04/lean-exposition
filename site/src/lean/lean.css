@@ -1,4 +1,4 @@
-/* Lean as a reader sees it: code tokens, the reading strip, blocks and the /lean page.
+/* Lean as a reader sees it: code tokens, the reading line, blocks and the /lean page.
    Colours are the site's palette tokens, so both schemes follow. No amber in the code
    at rest: amber marks only the name being read and keyboard focus. */
 
@@ -88,64 +88,61 @@
   outline-offset: 1px;
 }
 
-/* --------------------------------------------------------- reading strip */
+/* ---------------------------------------------------------- reading line */
 
-.lean-strip {
-  height: 72px;
-  overflow-y: auto;
-  padding: 6px var(--space-3);
+/* A name's parts stay whole; a part breaks at its camel-case words only when it cannot fit. */
+.lean-break { overflow-wrap: normal; }
+.lean-break > span { display: inline-block; max-width: 100%; }
+
+/* One status line for the page, over the foot of the column. It takes no pointer. */
+.lean-bar {
+  position: fixed;
+  z-index: 60;
+  display: none;
+  box-sizing: border-box;
+  container-type: inline-size;
+  padding: 0 var(--space-4);
   background: var(--surface);
-  border: 1px solid var(--rule);
-  border-top: 0;
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  border-top: 1px solid var(--rule-strong);
   font-size: var(--fs-sm);
-  line-height: var(--lh-ui);
+  line-height: 20px;
   color: var(--ink-2);
+  pointer-events: none;
 }
-.lean-strip p { margin: 0; }
-.lean-strip--sticky {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-}
-.lean-strip__head {
+.lean-bar.is-on { display: block; }
+.lean-bar[data-edge="top"] { border-top: 0; border-bottom: 1px solid var(--rule-strong); }
+.lean-bar__line {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--space-3);
   align-items: baseline;
-}
-.lean-strip__head > span { overflow-wrap: anywhere; color: var(--ink-3); }
-.lean-strip__name {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-  overflow-wrap: anywhere;
-}
-.lean-strip__body {
-  display: flex;
   gap: var(--space-3);
-  align-items: baseline;
-  margin-top: 2px !important;
-  color: var(--ink);
-  font-size: var(--fs-ui);
+  padding: 5px 0;
 }
-.lean-strip__body a { color: var(--ink); }
-.lean-strip__sig {
-  margin-top: 2px !important;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--ink-2);
-  overflow-wrap: anywhere;
-}
-.lean-strip__sig code { font: inherit; }
-.lean-strip__idle { color: var(--ink-3); }
-.lean-notation {
-  flex: none;
+.lean-bar .lean-break {
+  flex: 0 1 auto;
+  min-width: 0;
   max-width: 45%;
-  font-size: 1.0625rem;
+  font: 600 13px/20px var(--font-mono);
+  font-variant-ligatures: none;
   color: var(--ink);
 }
+.lean-bar__words {
+  flex: 1 1 0;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  color: var(--ink);
+}
+.lean-bar__words code { font: 0.93em var(--font-mono); font-variant-ligatures: none; }
+.lean-bar__words--sig { color: var(--ink-2); overflow-wrap: anywhere; }
+.lean-bar__words .lean-notation { margin-right: var(--space-2); }
+.lean-bar__place { flex: none; color: var(--ink-3); }
+@container (max-width: 640px) {
+  .lean-bar__place { display: none; }
+}
+.lean-notation { font-size: 1rem; line-height: 1; color: var(--ink); }
 
 /* ----------------------------------------------------------------- block */
 
@@ -199,7 +196,6 @@
   color: var(--ink);
 }
 .lean-block__proof { animation: lean-arrive var(--t-reveal) var(--ease-out); }
-.lean-block__proof .lean-code { border-radius: var(--radius-s) var(--radius-s) 0 0; }
 .lean-block__actions {
   display: flex;
   flex-wrap: wrap;
@@ -208,7 +204,6 @@
 }
 .is-compact .lean-block__name { font-size: 14px; }
 .lean-block.is-compact .lean-block__head { margin-bottom: var(--space-2); }
-.is-compact .lean-strip { height: 50px; padding: 4px var(--space-2); }
 .is-compact .lean-block__title, .lean-block.is-row .lean-block__title {
   display: flex;
   flex-wrap: wrap;
@@ -277,6 +272,13 @@
   font-weight: 600;
   color: var(--ink);
 }
+/* Said once on a page: a later or nested list of names stays silent. */
+.lean-terms__hint { margin-left: var(--space-2); font-weight: 400; color: var(--ink-3); }
+.lean-nest .lean-terms__hint,
+:has(.lean-terms__hint) ~ * .lean-terms__hint { display: none; }
+@media (hover: none) {
+  .lean-terms__hint { display: none; }
+}
 .lean-terms__list { margin: 0; }
 .lean-terms__row {
   display: grid;
@@ -310,7 +312,7 @@
   text-decoration: none;
 }
 .lean-deps li a:hover code { text-decoration: underline; text-underline-offset: 3px; }
-.lean-deps li code { font: 13px/1.5 var(--font-mono); font-variant-ligatures: none; overflow-wrap: anywhere; min-width: 0; }
+.lean-deps li code { font: 13px/1.5 var(--font-mono); font-variant-ligatures: none; min-width: 0; }
 .lean-deps__kind { font-size: var(--fs-sm); color: var(--ink-3); }
 .lean-deps__record { flex-basis: 100%; font-size: var(--fs-sm); color: var(--ink-2); }
 
@@ -322,8 +324,6 @@
   .lean-terms__row { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .lean-line { grid-template-columns: 3.5ch minmax(0, 1fr); column-gap: 1ch; }
   .lean-line__c { padding-left: calc((min(var(--i, 0), 6) + 2) * 1ch); text-indent: -2ch; }
-  .lean-strip__body { flex-direction: column; gap: 2px; }
-  .lean-notation { max-width: 100%; }
 }
 
 .lean-nest {
@@ -398,17 +398,8 @@ html[data-view="lean"] .app { min-height: 100dvh; }
   padding: var(--space-5) var(--space-4) var(--space-6);
   border-left: 1px solid var(--rule);
 }
-.lean-side header { margin-bottom: var(--space-3); }
+.lean-side > .lean-block__name { margin: 0 0 var(--space-3); }
 .lean-side__hint { margin: 0; font-size: var(--fs-sm); color: var(--ink-2); }
-
-.lean-strip--page {
-  flex: none;
-  height: 72px;
-  border: 0;
-  border-top: 1px solid var(--rule-strong);
-  border-radius: 0;
-  padding: var(--space-2) clamp(var(--space-4), 2.4vw, var(--space-6));
-}
 
 .lean-intro { margin-bottom: var(--space-5); }
 .lean-intro h1, .lean-modhead h1 {
@@ -439,7 +430,14 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 [data-decl] + [data-decl] { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--rule); }
 .lean-block.is-row .lean-block__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-3); margin-bottom: var(--space-2); }
 .lean-block.is-row .lean-block__name { font-size: 14px; }
-.lean-block.is-row.is-selected { box-shadow: -8px 0 0 -6px var(--lit); }
+.lean-block.is-row.is-selected { position: relative; }
+.lean-block.is-row.is-selected::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 calc(-1 * var(--space-3));
+  width: 2px;
+  background: var(--lit);
+}
 
 .lean-how, .lean-folders { margin-top: var(--space-6); }
 .lean-how h2, .lean-folders h2 {
@@ -543,14 +541,13 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 .lean-hits code { display: block; font: 13px/1.45 var(--font-mono); font-variant-ligatures: none; overflow-wrap: anywhere; }
 .lean-hits span { font-size: var(--fs-sm); color: var(--ink-3); overflow-wrap: anywhere; }
 
-/* Phones: one column that scrolls as a page, with the strip held at the foot. */
+/* Phones: one column that scrolls as a page. */
 .lean-top { padding: var(--space-3) var(--space-4) 0; display: grid; gap: var(--space-2); }
 .lean-select { display: block; font-size: var(--fs-sm); font-weight: 600; color: var(--ink); }
 .lean-select span { display: block; margin-bottom: var(--space-1); }
 .lean-select select { min-height: var(--target); font-size: var(--fs-base); }
 @media (max-width: 759px) {
   .lean-filter input { min-height: var(--target); font-size: var(--fs-base); }
-  .lean-strip--page { position: sticky; bottom: 0; height: auto; min-height: 40px; max-height: 40vh; background: var(--surface); }
   .lean-scroll { padding: var(--space-4) var(--space-4) var(--space-6); }
   .lean-intro h1 { font-size: var(--fs-title); }
   .lean-modhead h1 { font-size: var(--fs-h3); }
@@ -563,7 +560,7 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 
 .lean-tree a:focus-visible, .lean-tree button:focus-visible, .lean-fold:focus-visible, .lean-action:focus-visible,
 .lean-nest__back:focus-visible, .lean-deps a:focus-visible, .lean-terms a:focus-visible, .lean-hits a:focus-visible,
-.lean-block__name a:focus-visible, .lean-folders a:focus-visible, .lean-records a:focus-visible, .lean-strip a:focus-visible {
+.lean-block__name a:focus-visible, .lean-folders a:focus-visible, .lean-records a:focus-visible {
   outline: var(--focus-ring);
   outline-offset: 2px;
 }
@@ -573,7 +570,7 @@ html[data-view="lean"] .app { min-height: 100dvh; }
   .lean-fold::before, .lean-n { transition: none; }
 }
 
-.lean-terms__row code, .lean-block__relation code, .lean-strip__body code, .lean-records code {
+.lean-terms__row code, .lean-block__relation code, .lean-records code {
   font: 0.93em var(--font-mono);
   font-variant-ligatures: none;
 }
@@ -593,10 +590,13 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 .lean-hood__picture {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(148px, 22cqw, 240px) minmax(0, 1fr);
-  column-gap: clamp(36px, 7cqw, 88px);
+  grid-template-columns: minmax(0, 1fr) clamp(136px, 19cqw, 220px) minmax(0, 1fr);
+  column-gap: clamp(28px, 5cqw, 64px);
   align-items: center;
 }
+/* A side with nothing on it gives its room to the side that has tiles. */
+.lean-hood__picture:has(.lean-hood__side--by > .lean-hood__none) { grid-template-columns: 10rem clamp(136px, 19cqw, 220px) minmax(0, 1fr); }
+.lean-hood__picture:has(.lean-hood__side--uses > .lean-hood__none) { grid-template-columns: minmax(0, 1fr) clamp(136px, 19cqw, 220px) 10rem; }
 .lean-hood__lines { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
 .lean-hood__lines path { fill: none; stroke: var(--rel-supports); stroke-width: 1.5; transition: stroke var(--t-hover) var(--ease-out); }
 .lean-hood__lines .lean-hood__tip { fill: var(--rel-supports); stroke: none; }
@@ -619,7 +619,7 @@ html[data-view="lean"] .app { min-height: 100dvh; }
   text-decoration: none;
   line-height: 1.3;
 }
-.lean-tile code, .lean-hood__centre code { font: 13px/1.35 var(--font-mono); font-variant-ligatures: none; overflow-wrap: break-word; }
+.lean-tile code, .lean-hood__centre code { font: 13px/1.35 var(--font-mono); font-variant-ligatures: none; }
 .lean-tile:hover { border-color: var(--rule-control); }
 .lean-tile:focus-visible, .lean-hood__centre:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 .lean-tile__kind { font-size: var(--fs-sm); color: var(--ink-3); }

@@ -93,6 +93,7 @@ class Sidecars(unittest.TestCase):
         row = result["records"]["support.moment_saturation"]
         self.assertEqual(row["lean"][0]["name"], "OAI.ZeroTemperatureSK.full_support")
         self.assertEqual(result["dictionary"], [])
+        self.assertIn("steps", result)
 
     def test_a_failing_alignment_row_is_reported_and_left_out(self):
         bad = self.parent / "bad"

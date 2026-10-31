@@ -17,10 +17,10 @@ want to explore it:
   drawn as tags on the results that assume them. A switch narrows the map to the
   records one paper discusses. On a phone the same argument is an outline you
   scroll.
-- **Compare.** One step of the argument across every level, side by side: its
-  Lean declaration, then its statement in the long record, the short paper and
-  the exposition, walking through the proof with the arrow keys. A second view
-  sets two papers side by side, aligned by the records they share.
+- **Compare.** The proof as a table. Each row is one step and each column is a
+  level, so a step's Lean declaration sits beside its exact statement in the long
+  record, the short paper and the exposition. Choose which levels show, and open
+  any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
   The map sits beside the paper and follows what you read; choosing a card moves
   the paper to its passage and opens the card's Lean and statements in place.
@@ -213,7 +213,7 @@ the promised explanation.
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
 | `src/home/` | The front page at "/": the first screen as plain HTML (`heroMarkup.ts`), the levels band with the argument narrowing (`LevelsBand.tsx`), the mathematics and the recorded checks |
-| `src/compare/` | Compare: one step across its levels and two papers aligned by shared records, the record alignment's hook and the slice renderer |
+| `src/compare/` | Compare: the table of every step at each level (`table.ts`, `StepTable.tsx`), one step in full (`StepBench.tsx`), the record alignment's hook and the slice renderer |
 | `src/lean/` | The Lean viewer (`LeanBlock`), its tokenizer and data hooks, and the Lean browser at "/lean" |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
 | `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |

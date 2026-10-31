@@ -9,9 +9,8 @@ import {
   defaultColumns,
   filterByLevel,
   filterOutline,
-  levelVerb,
+  pressLevel,
   leanAbsence,
-  statementsOf,
   toggleLevel,
   walk,
   walkListed,
@@ -92,16 +91,6 @@ describe("the level filter", () => {
   });
 });
 
-describe("column heads", () => {
-  it("say what each level does, strongest role first", () => {
-    const record: RecordAlignment = { short: "", lean: [{ ...lean, relation: "proof" }], statements: [slice("short", "mention", 10, 5), slice("short", "derivation", 10, 50)] };
-    expect(levelVerb(record, "short")).toBe("Derives it");
-    expect(statementsOf(record, "short").map((s) => s.role)).toEqual(["derivation", "mention"]);
-    expect(levelVerb(record, "lean")).toBe("Carries a proof step");
-    expect(levelVerb(record, "expository")).toBeNull();
-  });
-});
-
 describe("collapsing levels", () => {
   const state = (slots: ReturnType<typeof arrangeLevels>) => Object.fromEntries(slots.map((s) => [s.level, s.state]));
 
@@ -115,17 +104,27 @@ describe("collapsing levels", () => {
     expect(slots.every((s) => s.state === "column" || s.state === "empty")).toBe(true);
   });
 
-  it("gives a level with nothing a strip, so there is no blank column", () => {
+  it("gives a level with nothing no column", () => {
     expect(state(arrangeLevels(noLean, 1920))).toEqual({ lean: "empty", long: "column", short: "empty", expository: "empty" });
   });
 
-  it("at three columns folds the level with the least to say, and keeps it reachable", () => {
+  it("at three columns leaves out the level with the least to say, and keeps it one press away", () => {
     expect(state(arrangeLevels(full, 1440))).toEqual({ lean: "column", long: "column", short: "column", expository: "folded" });
   });
 
-  it("follows a reader's choice exactly, and says when a chosen level has nothing", () => {
-    const slots = arrangeLevels(noLean, 1440, ["long", "short"]);
-    expect(state(slots)).toEqual({ long: "column", short: "empty" });
+  it("follows a reader's choice exactly, and a chosen level with nothing gets no column", () => {
+    expect(state(arrangeLevels(noLean, 1440, ["long", "short"]))).toEqual({ lean: "empty", long: "column", short: "empty", expository: "empty" });
+    expect(state(arrangeLevels(full, 1920, ["long"]))).toEqual({ lean: "folded", long: "column", short: "folded", expository: "folded" });
+  });
+
+  it("pressing a level changes what is shown and keeps a choice for records that have it", () => {
+    expect(pressLevel(arrangeLevels(full, 1440), undefined, "expository")).toEqual(["lean", "long", "short", "expository"]);
+    expect(pressLevel(arrangeLevels(full, 1440), undefined, "lean")).toEqual(["long", "short"]);
+    expect(pressLevel(arrangeLevels(noLean, 1440, ["lean", "long"]), ["lean", "long"], "short")).toEqual(["lean", "long", "short"]);
+  });
+
+  it("will not hide the last column", () => {
+    expect(pressLevel(arrangeLevels(noLean, 1440), undefined, "long")).toEqual(["long"]);
   });
 
   it("sets aside a choice that would leave the bench empty", () => {

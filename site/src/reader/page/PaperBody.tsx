@@ -687,6 +687,9 @@ function breakSize(size: Natural, available: number): number {
   return Math.max(Math.floor((available / size.widest) * 1000) / 1000, PIECE_FLOOR);
 }
 
+/** How far from the screen a formula is fitted, so it is ready before it arrives. */
+const FIT_MARGIN = "900px 0px";
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
@@ -733,18 +736,39 @@ export function markWideMaths(root: HTMLElement): () => void {
   const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
   boxes.forEach((b) => b.addEventListener("scroll", onScroll, { passive: true }));
   const observer = new ResizeObserver((entries) => entries.forEach((e) => update(e.target as HTMLElement)));
-  boxes.forEach((b) => observer.observe(b));
-  boxes.forEach((box) => update(box));
+  const fitted = new Set<HTMLElement>();
+  const fit = (box: HTMLElement) => {
+    fitted.add(box);
+    observer.observe(box);
+    update(box);
+  };
+  // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
+  const near =
+    typeof IntersectionObserver === "undefined"
+      ? null
+      : new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              near?.unobserve(entry.target);
+              fit(entry.target as HTMLElement);
+            }
+          },
+          // scrollMargin reaches the same way through a scrolling column or sheet.
+          { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
+        );
+  boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
   // KaTeX's fonts can arrive after the first measurement; measure again once they have.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
       if (!live) return;
-      boxes.forEach((b) => natural.delete(b));
-      boxes.forEach((box) => update(box, true));
+      fitted.forEach((b) => natural.delete(b));
+      fitted.forEach((box) => update(box, true));
     });
   }
   return () => {
     live = false;
+    near?.disconnect();
     observer.disconnect();
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));
     cues.forEach((cue) => cue.remove());

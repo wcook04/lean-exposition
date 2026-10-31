@@ -1,10 +1,11 @@
 // Lean source as numbered lines, with every name that resolves as a real link. Pointer
-// and keyboard report the name to the reading strip; nothing floats over the code.
+// and keyboard report the name to the one reading line, and report when it is let go.
 // Tab reaches one name in a block and the arrow keys walk the rest, so a long proof does
 // not cost a reader hundreds of tab stops.
 
-import { memo, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import { memo, useEffect, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { routeHref } from "../app/router";
+import { ensureReadingBar } from "./ReadingStrip";
 import { mathlibUrl, resolveName, type NameTarget, type Scope } from "./resolve";
 import { tokenLines, type LeanToken } from "./tokenize";
 
@@ -73,7 +74,8 @@ export function buildCode(tokens: LeanToken[], firstLine: number, scope: Scope, 
 export interface CodeViewProps {
   code: BuiltCode;
   label: string;
-  onRead(target: NameTarget): void;
+  /** The name now being read, or null when none is. */
+  onRead(target: NameTarget | null, element: HTMLElement | null): void;
   /** Called on a plain click. Prevent the event's default to stay on the page. */
   onOpen(target: NameTarget, element: HTMLElement, event: MouseEvent): void;
 }
@@ -95,14 +97,35 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: 
     lit.current?.classList.remove("is-read");
     hit.element.classList.add("is-read");
     lit.current = hit.element;
-    onRead(hit.target);
+    onRead(hit.target, hit.element);
   };
+  // Letting go of a name returns to one still held by the other input, else to nothing.
+  const settle = (held: Element | null | undefined) => {
+    const hit = held ? nameAt(held) : null;
+    if (hit) return read(hit);
+    lit.current?.classList.remove("is-read");
+    lit.current = null;
+    onRead(null, null);
+  };
+  useEffect(() => {
+    ensureReadingBar();
+    return () => {
+      if (lit.current) onRead(null, null);
+    };
+    // Only leaving the page matters here: `onRead` is stable where it counts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const onFocus = (event: FocusEvent) => {
     const hit = nameAt(event.target);
     if (!hit) return;
     root.current?.querySelector('a[data-t][tabindex="0"]')?.setAttribute("tabindex", "-1");
     hit.element.setAttribute("tabindex", "0");
     read(hit);
+  };
+  const onBlur = () => settle(root.current?.querySelector("a[data-t]:hover"));
+  const onPointerOut = (event: PointerEvent) => {
+    if (!nameAt(event.target) || nameAt(event.relatedTarget)?.element === nameAt(event.target)?.element) return;
+    settle(root.current?.querySelector("a[data-t]:focus-visible"));
   };
   const onKeyDown = (event: KeyboardEvent) => {
     const hit = nameAt(event.target);
@@ -120,7 +143,7 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: 
 
   let first = true;
   return (
-    <div className="lean-code" role="group" aria-label={label} ref={root} onPointerOver={(e: PointerEvent) => read(nameAt(e.target))} onFocus={onFocus} onKeyDown={onKeyDown}
+    <div className="lean-code" role="group" aria-label={label} ref={root} onPointerOver={(e: PointerEvent) => read(nameAt(e.target))} onPointerOut={onPointerOut} onFocus={onFocus} onBlur={onBlur} onKeyDown={onKeyDown}
       onClick={(event) => {
         const hit = nameAt(event.target);
         if (!hit || event.metaKey || event.ctrlKey || event.shiftKey) return;
@@ -146,7 +169,7 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: 
               const tabIndex = first ? 0 : -1;
               first = false;
               return (
-                <a key={k} className={part.className} data-t={part.target} href={hrefOf(code.targets[part.target])} tabIndex={tabIndex} data-external={code.targets[part.target].kind === "mathlib" ? "" : undefined}>
+                <a key={k} className={part.className} data-t={part.target} href={hrefOf(code.targets[part.target])} tabIndex={tabIndex} {...(code.targets[part.target].kind === "mathlib" ? { "data-external": "", target: "_blank", rel: "noreferrer" } : null)}>
                   {part.text}
                 </a>
               );

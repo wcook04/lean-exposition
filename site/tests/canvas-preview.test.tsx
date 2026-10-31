@@ -7,6 +7,12 @@ import { graphFixture } from "./fixtures";
 import { ArgumentTree, type MapViewHandle } from "../src/map/ArgumentTree";
 import { reach } from "../src/map/treeModel";
 
+// Cards here draw their authored labels, so a test can change what a title says.
+vi.mock("../src/compare/useAlignment", async (original) => ({
+  ...(await original<typeof import("../src/compare/useAlignment")>()),
+  shortTitle: (_id: string, label: string) => label,
+}));
+
 let root: Root;
 let container: HTMLDivElement;
 const graph = graphFixture();

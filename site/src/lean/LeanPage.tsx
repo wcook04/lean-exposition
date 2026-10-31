@@ -3,11 +3,11 @@ import type { LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
 import { navigate, routeHref, type Route } from "../app/router";
 import { declIn, kindWord, LINK_CAVEAT, MAIN_THEOREM, RELATION_WORDS, useLeanModule, useLeanShell, type LeanShell } from "./data";
 import { folderLabel, FOLDER_WORDS } from "./folders";
-import { DeclView, LeanBlock, SharedStrip, Terms, useStatementTargets } from "./LeanBlock";
+import { DeclView, LeanBlock, Terms, useStatementTargets } from "./LeanBlock";
 import "./lean.css";
 import { Neighbourhood } from "./Neighbourhood";
-import { PathText, Prose, StripBody } from "./ReadingStrip";
-import { findDecl, type DeclRow, type NameTarget } from "./resolve";
+import { Breakable, PathText, Prose } from "./ReadingStrip";
+import { findDecl, type DeclRow } from "./resolve";
 
 const count = (n: number) => n.toLocaleString("en-GB");
 
@@ -246,16 +246,6 @@ function ModuleSelect({ shell, current }: { shell: LeanShell; current?: string }
   );
 }
 
-function PageStrip({ shell, register }: { shell: LeanShell; register(set: (target: NameTarget) => void): void }) {
-  const [target, setTarget] = useState<NameTarget | null>(null);
-  useEffect(() => register(setTarget), [register]);
-  return (
-    <div className="lean-strip lean-strip--page" role="status" aria-label="Reading the name in focus">
-      <StripBody target={target} shell={shell} />
-    </div>
-  );
-}
-
 const Rows = memo(function Rows({ module, shell, selected, inline }: { module: LeanModule; shell: LeanShell; selected?: string; inline: boolean }) {
   return (
     <>
@@ -352,15 +342,9 @@ function Selected({ decl, shell, module }: { decl: LeanDeclaration | undefined; 
   }
   return (
     <>
-      <header>
-        <p className="lean-block__kind">{kindWord(decl.kind)}</p>
-        <h2 className="lean-block__name">
-          <code>{decl.short}</code>
-        </h2>
-        <p className="lean-block__path">
-          <PathText path={module.path} />
-        </p>
-      </header>
+      <h2 className="lean-block__name">
+        <Breakable name={decl.short} />
+      </h2>
       <Records decl={decl} shell={shell} />
       <SideNames decl={decl} module={module} shell={shell} />
     </>
@@ -385,14 +369,6 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   const threeZones = useMedia("(min-width: 1180px)");
   const hasTree = useMedia("(min-width: 760px)");
   const scroller = useRef<HTMLDivElement>(null);
-  const setStrip = useRef<(target: NameTarget) => void>(() => undefined);
-  const stripContext = useMemo(() => (target: NameTarget) => setStrip.current(target), []);
-  const register = useMemo(
-    () => (set: (target: NameTarget) => void) => {
-      setStrip.current = set;
-    },
-    [],
-  );
 
   if (state.status === "missing") return <Message>This edition does not include the Lean source.</Message>;
   if (!shell) return <Message>Loading the Lean source</Message>;
@@ -425,12 +401,9 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
         </div>
       )}
       <div className="lean-centre">
-        <SharedStrip.Provider value={landing ? null : stripContext}>
-          <div className="lean-scroll" ref={scroller} tabIndex={-1}>
-            {main}
-          </div>
-          {!landing && <PageStrip shell={shell} register={register} />}
-        </SharedStrip.Provider>
+        <div className="lean-scroll" ref={scroller} tabIndex={-1}>
+          {main}
+        </div>
       </div>
       {threeZones && (
         <aside className="lean-side" aria-label="The selected declaration">

@@ -27,14 +27,14 @@ html[data-view="home"] {
 
 .front__pair {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
   align-items: start;
 }
 
 /* The second pair puts its figure first, so the two bands do not repeat one shape. */
 .front__pair--flip {
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .front__pair--flip .front__fig {
@@ -78,9 +78,9 @@ html[data-view="home"] {
 }
 
 .front__fig figcaption {
-  max-width: 34em;
+  max-width: 38em;
   margin: 14px auto 0;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-ui);
   line-height: 1.5;
   color: var(--ink-2);
   text-wrap: pretty;

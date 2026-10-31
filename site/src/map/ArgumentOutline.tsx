@@ -4,13 +4,16 @@
 // account scope), so a row is the same record, joined by the same relation, as
 // the card on the map.
 //
+// It reads like a table of contents: a row is a record's name, the whole row opens
+// the record and unfolds what it uses, and the chevron beside it only unfolds.
+//
 // The argument is not a tree. A record used by several others appears once per
 // use; its inputs are listed under one of them only (its "home", the first
 // consumer met walking down from the top), and every other occurrence says who
 // else uses it instead of repeating the subtree.
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import type { ArgEdge, ArgGraph, ArgNode } from "../model/graph";
+import type { ArgEdge, ArgGraph } from "../model/graph";
 import { pathFromGoal, reach, usesOf } from "./treeModel";
 import "./outline.css";
 
@@ -84,12 +87,11 @@ interface Props {
   /** The exact theorem, behind a disclosure. */
   statement?: ReactNode;
   onSelect(id: string): void;
-  onEdgeSelect(key: string): void;
   /** How much of the list's bottom a phone sheet covers. */
   bottomInset?: number;
 }
 
-export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selected, selectedEdge, statement, onSelect, onEdgeSelect, bottomInset = 0 }: Props) {
+export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selected, selectedEdge, statement, onSelect, bottomInset = 0 }: Props) {
   // The route from the goal down to the record whose inputs are listed (the goal itself at first).
   const [trail, setTrail] = useState<string[]>([goal]);
   const [open, setOpen] = useState<Set<string>>(() => new Set());
@@ -157,7 +159,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
     const row = rootRef.current?.querySelector<HTMLElement>(`[data-occ="${CSS.escape(focusOcc)}"]`);
     if (row) {
       row.scrollIntoView({ block: "nearest" });
-      row.querySelector<HTMLElement>(".orow__inspect")?.focus({ preventScroll: true });
+      row.querySelector<HTMLElement>(".orow__open")?.focus({ preventScroll: true });
     }
     setFocusOcc(null);
   }, [focusOcc, open, trail]);
@@ -177,13 +179,6 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
     requestAnimationFrame(() => listHeadRef.current?.focus());
   };
 
-  const explore = () => {
-    const head = listHeadRef.current;
-    if (!head) return;
-    head.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    head.focus({ preventScroll: true });
-  };
-
   const renderRows = (parent: string, path: string[], depth: number): ReactNode => (
     <ul className="outline__list" role="list">
       {outlineChildren(graph, parent, within).map((edge) => {
@@ -194,36 +189,38 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
         const isHome = home.get(edge.to) === parent;
         const n = outlineChildren(graph, edge.to, within).length;
         const expanded = open.has(key);
+        const canOpen = isHome && n > 0;
+        const inline = canOpen && depth < MAX_DEPTH;
         return (
           <li key={key} className="orow" data-occ={key} data-outline-id={edge.to} data-depth={depth}>
-            <Row
-              graph={graph}
-              node={node}
-              edge={edge}
-              parent={graph.nodes.get(parent)!}
-              selected={selected === edge.to}
-              stepSelected={selectedEdge === edge.key}
-              onSelect={onSelect}
-              onEdgeSelect={onEdgeSelect}
-            >
-              {!isHome ? (
-                <AlsoUsed graph={graph} id={edge.to} home={home.get(edge.to)} others={otherConsumers(graph, edge.to, argument, parent)} onReveal={() => reveal(edge.to)} />
-              ) : n > 0 ? (
+            <div className={`orow__body${selected === edge.to || selectedEdge === edge.key ? " is-selected" : ""}`}>
+              {canOpen && (
                 <button
                   type="button"
                   className="orow__inputs"
-                  aria-expanded={depth < MAX_DEPTH ? expanded : false}
+                  aria-expanded={inline ? expanded : false}
                   aria-label={`${expanded ? "Hide" : "Show"} the ${n === 1 ? "record" : `${n} records`} that ${node.label} uses directly`}
-                  onClick={() => (depth < MAX_DEPTH ? toggle(key) : focusBranch(rowPath))}
+                  onClick={() => (inline ? toggle(key) : focusBranch(rowPath))}
                 >
                   <Chevron open={expanded} />
-                  <span className="num">{n}</span> {n === 1 ? "input" : "inputs"}
                 </button>
-              ) : (
-                <span className="orow__leaf">{node.kind === "assumption" ? "Assumed" : "No recorded inputs"}</span>
               )}
-            </Row>
-            {isHome && expanded && depth < MAX_DEPTH && renderRows(edge.to, rowPath, depth + 1)}
+              <button
+                type="button"
+                className="orow__open"
+                aria-pressed={selected === edge.to}
+                aria-label={`${node.label}. ${RELATION_WORDS[edge.kind] ?? edge.kind}, ${kindWord(node.kind).toLowerCase()}. Open the record`}
+                onClick={() => {
+                  if (inline && (!expanded || selected === edge.to)) toggle(key);
+                  onSelect(edge.to);
+                }}
+              >
+                <span className={`orow__title${node.kind === "declaration" ? " lean" : ""}`}>{node.label}</span>
+                {node.kind !== "claim" && <span className="orow__kind caps">{kindWord(node.kind)}</span>}
+              </button>
+              {!isHome && <AlsoUsed graph={graph} id={edge.to} home={home.get(edge.to)} others={otherConsumers(graph, edge.to, argument, parent)} onReveal={() => reveal(edge.to)} />}
+            </div>
+            {inline && expanded && renderRows(edge.to, rowPath, depth + 1)}
           </li>
         );
       })}
@@ -233,23 +230,13 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
   return (
     <div className="outline" ref={rootRef}>
       <header className="outline__goal">
-        <p className="outline__meta">
-          <span className="caps">{kindWord(goalNode.kind)}</span>
-          <span className="outline__src" data-slot={goalNode.origin.slot}>
-            <span className="src-sq" aria-hidden="true" />
-            {goalNode.origin.place ?? goalNode.origin.label}
-          </span>
-        </p>
-        <h2 className="outline__title">{goalNode.label}</h2>
+        <p className="caps">{kindWord(goalNode.kind)}</p>
+        <h2 className="outline__title">
+          <button type="button" className="outline__open-goal" aria-pressed={selected === goal} aria-label={`${goalNode.label}. Open the record`} onClick={() => onSelect(goal)}>
+            {goalNode.label}
+          </button>
+        </h2>
         <p className="outline__scope">{scope}</p>
-        <div className="outline__actions">
-          <button type="button" className="outline__explore" onClick={explore} disabled={!inputs.length}>
-            {`Go to the ${outlineChildren(graph, goal, within).length} records it uses`}
-          </button>
-          <button type="button" className="control outline__inspect-goal" aria-pressed={selected === goal} onClick={() => onSelect(goal)}>
-            Open record
-          </button>
-        </div>
         {statement && (
           <details className="outline__statement">
             <summary>Statement of the result</summary>
@@ -290,74 +277,17 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
         <h3 id="outline-inputs-head" className="outline__inputs-head" ref={listHeadRef} tabIndex={-1}>
           {trail.length > 1 ? (
             <>
-              Records used directly by <span className="outline__inputs-of">{topNode.label}</span>
+              Records used directly by{" "}
+              <button type="button" className="linklike outline__inputs-of" onClick={() => onSelect(top)} aria-label={`Open the record ${topNode.label}`}>
+                {topNode.label}
+              </button>
             </>
           ) : (
-            <>
-              <span className="num">{inputs.length}</span> {inputs.length === 1 ? "record" : "records"} used directly
-            </>
+            "Records used directly"
           )}
         </h3>
-        {trail.length > 1 && (
-          <p className="outline__inputs-note">
-            <button type="button" className="control orow__inspect" onClick={() => onSelect(top)} aria-label={`Open the record ${topNode.label}`}>
-              Open this record
-            </button>
-          </p>
-        )}
         {inputs.length ? renderRows(top, [top], 1) : <p className="outline__empty">No recorded inputs.</p>}
       </section>
-    </div>
-  );
-}
-
-function Row({
-  node,
-  edge,
-  parent,
-  selected,
-  stepSelected,
-  onSelect,
-  onEdgeSelect,
-  children,
-}: {
-  graph: ArgGraph;
-  node: ArgNode;
-  edge: ArgEdge;
-  parent: ArgNode;
-  selected: boolean;
-  stepSelected: boolean;
-  onSelect(id: string): void;
-  onEdgeSelect(key: string): void;
-  children: ReactNode;
-}) {
-  const word = RELATION_WORDS[edge.kind] ?? edge.kind;
-  return (
-    <div className={`orow__body${node.kind === "assumption" ? " orow__body--assumption" : ""}${selected ? " is-selected" : ""}`}>
-      <button
-        type="button"
-        className={`orow__rel${stepSelected ? " is-selected" : ""}`}
-        aria-pressed={stepSelected}
-        aria-label={`${word}: ${parent.label} ${edge.kind === "assumes" ? "assumes" : edge.kind === "formalizes" ? "corresponds in Lean to" : "uses"} ${node.label}. Open this step`}
-        onClick={() => onEdgeSelect(edge.key)}
-      >
-        <span className={`rel-sample rel-sample--${edge.kind}${stepSelected ? " rel-sample--lit" : ""}`} aria-hidden="true" />
-        {word}
-      </button>
-      <p className="outline__meta">
-        <span className="caps">{kindWord(node.kind)}</span>
-        <span className="outline__src" data-slot={node.origin.slot}>
-          <span className="src-sq" aria-hidden="true" />
-          {node.origin.place ?? node.origin.label}
-        </span>
-      </p>
-      <p className={`orow__title${node.kind === "declaration" ? " lean" : ""}`}>{node.label}</p>
-      <div className="orow__actions">
-        {children}
-        <button type="button" className="control orow__inspect" aria-pressed={selected} aria-label={`Open the record ${node.label}`} onClick={() => onSelect(node.id)}>
-          Open record
-        </button>
-      </div>
     </div>
   );
 }
@@ -377,7 +307,7 @@ function AlsoUsed({ graph, id, home, others, onReveal }: { graph: ArgGraph; id: 
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true">
-      <path d={open ? "M2 6.5 L5 3.5 L8 6.5" : "M2 3.5 L5 6.5 L8 3.5"} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={open ? "M2 3.5 L5 6.5 L8 3.5" : "M3.5 2 L6.5 5 L3.5 8"} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

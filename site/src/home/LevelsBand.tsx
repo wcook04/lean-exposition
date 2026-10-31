@@ -24,10 +24,10 @@ import { METRICS_COMPACT, type EngineEdge, type Size } from "../map/engine/types
 
 type LevelId = "lean" | Stage;
 
-const TILE: Size = { w: 136, h: 46 };
-const ROOT: Size = { w: 248, h: 46 };
+const TILE: Size = { w: 136, h: 40 };
+const ROOT: Size = { w: 248, h: 42 };
 /** The map's compact spacing with no arrowheads, drawn tight enough to read as one figure. */
-const SPACING = { ...METRICS_COMPACT, arrow: 0, gapMin: 32, trackSp: 6, padTop: 12, padBottom: 8 };
+const SPACING = { ...METRICS_COMPACT, arrow: 0, gapMin: 24, trackSp: 5, padTop: 10, padBottom: 6 };
 
 interface Tile {
   id: string;
@@ -167,9 +167,9 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       if (!entry.isIntersecting) return;
       observer.disconnect();
       const step = (next: LevelId, after: number) => timers.push(window.setTimeout(() => chose.current || setLevel(next), after));
-      step("short", 800);
-      step("expository", 2000);
-    }, { threshold: 0.3 });
+      step("short", 1500);
+      step("expository", 3000);
+    }, { threshold: 0.5 });
     observer.observe(el);
     return () => {
       observer.disconnect();

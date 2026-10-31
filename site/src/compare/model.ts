@@ -2,7 +2,7 @@
 // which rows the outline lists and in what order, what each level does with a record,
 // and which levels get a column at a given width.
 
-import type { RecordAlignment, StatementRole, LeanRelation } from "../api/lean";
+import type { RecordAlignment, StatementRole } from "../api/lean";
 import type { Stage } from "../api/types";
 import type { ArgGraph } from "../model/graph";
 import { LEVELS, type Level } from "../app/router";
@@ -103,30 +103,10 @@ const ROLE_VERBS: Record<StatementRole, string> = {
 
 export const roleWords = (role: StatementRole) => ROLE_VERBS[role];
 
-const LEAN_ORDER: LeanRelation[] = ["states", "defines", "contains", "part", "proof"];
-
-const LEAN_VERBS: Record<LeanRelation, string> = {
-  states: "States it",
-  defines: "Defines it",
-  contains: "Contains it in a wider statement",
-  part: "States a part of it",
-  proof: "Carries a proof step",
-};
-
 export function statementsOf(record: RecordAlignment, stage: Stage) {
   return record.statements
     .filter((s) => s.paper === stage)
     .sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte);
-}
-
-/** What a level does with a record, strongest first; null when it has nothing. */
-export function levelVerb(record: RecordAlignment, level: Level): string | null {
-  if (level === "lean") {
-    const relation = LEAN_ORDER.find((r) => record.lean.some((row) => row.relation === r));
-    return relation ? LEAN_VERBS[relation] : null;
-  }
-  const first = statementsOf(record, level)[0];
-  return first ? ROLE_VERBS[first.role] : null;
 }
 
 /** How much a level has to show, in characters, a declaration counting as a short paragraph. */
@@ -153,27 +133,25 @@ export const STACK_BELOW = 1000;
 
 export type Slot =
   | { level: Level; state: "column"; weight: number }
-  /** The level has nothing for this record. */
+  /** The level has nothing for this record: never a column, and disabled in the level row. */
   | { level: Level; state: "empty" }
-  /** The level has something, but the width left it out; its strip opens it. */
+  /** The level has something, but is not shown; pressing its word shows it. */
   | { level: Level; state: "folded" };
 
 /**
- * One slot per level, most formal first. A reader's own choice is followed exactly,
- * except that a chosen level with nothing becomes a strip. Without a choice the levels
- * with most to say get the columns the width allows, and the rest stay reachable as
- * strips. Widths follow what each column holds.
+ * One slot per level, most formal first. A reader's own choice is followed exactly.
+ * Without a choice, or when the choice has nothing for this record, the levels with
+ * most to say get the columns the width allows. Widths follow what each column holds.
  */
 export function arrangeLevels(record: RecordAlignment, width: number, chosen?: readonly Level[]): Slot[] {
   const has = (level: Level) => amount(record, level) > 0;
-  const column = (level: Level): Slot => ({ level, state: "column", weight: columnWeight(amount(record, level)) });
-  // A choice with nothing for this record would leave the bench empty, so it is set aside here.
-  if (chosen?.some(has)) {
-    return LEVELS.filter((level) => chosen.includes(level)).map((level) => (has(level) ? column(level) : { level, state: "empty" }));
-  }
   const ranked = LEVELS.filter(has).sort((a, b) => strength(record, b) - strength(record, a) || LEVELS.indexOf(a) - LEVELS.indexOf(b));
-  const shown = new Set(ranked.slice(0, defaultColumns(width)));
-  return LEVELS.map((level) => (shown.has(level) ? column(level) : { level, state: has(level) ? "folded" : "empty" }));
+  // A choice with nothing for this record would leave the bench empty, so it is set aside here.
+  const shown = new Set(chosen?.some(has) ? chosen.filter(has) : ranked.slice(0, defaultColumns(width)));
+  return LEVELS.map((level) => {
+    if (!has(level)) return { level, state: "empty" };
+    return shown.has(level) ? { level, state: "column", weight: columnWeight(amount(record, level)) } : { level, state: "folded" };
+  });
 }
 
 /** Between one and two shares, growing slowly with the text. */
@@ -214,6 +192,17 @@ export function storeLevels(levels: readonly Level[] | undefined): void {
   } catch {
     // The choice still lives in the address.
   }
+}
+
+/**
+ * The choice after pressing a level's word. Levels chosen earlier that have nothing for
+ * this record stay chosen, for the records that do, and the last column cannot be hidden.
+ */
+export function pressLevel(slots: readonly Slot[], chosen: readonly Level[] | undefined, level: Level): Level[] {
+  const columns = slots.filter((s) => s.state === "column").map((s) => s.level);
+  if (columns.length === 1 && columns[0] === level) return chosen ? [...chosen] : columns;
+  const waiting = (chosen ?? []).filter((l) => slots.find((s) => s.level === l)?.state === "empty");
+  return toggleLevel([...columns, ...waiting], level);
 }
 
 /** A level toggled on or off, keeping the levels' order. At least one stays on. */

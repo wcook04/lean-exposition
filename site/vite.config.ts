@@ -172,6 +172,18 @@ function recordIndexModule(): Plugin {
   };
 }
 
+/** The code each route needs at once, named by chunk. */
+const ROUTE_CODE: Record<string, string[]> = {
+  map: ["MapPage", "ArgumentTree", "RecordPanel", "TheoremPlate", "layout", "treeModel"],
+  compare: ["ComparePage", "StatementSlice", "documents", "katex", "LeanBlock", "tokenize"],
+  lean: ["LeanPage", "LeanBlock", "tokenize"],
+  checks: ["ChecksPage"],
+  "read/long": ["ReaderPage", "documents", "katex"],
+  "read/short": ["ReaderPage", "documents", "katex"],
+  "read/expository": ["ReaderPage", "documents", "katex"],
+};
+const chunkFiles = new Map<string, string>();
+
 const typeset = (source: string) => katex.renderToString(source, { throwOnError: true, output: "html", strict: "error" });
 
 /**
@@ -203,6 +215,9 @@ function firstScreen(base: string): Plugin {
           .replace("</head>", `${preload}</head>`)
           .replace('<div id="root"></div>', `<div id="root"><!--first-screen-->${shell(`<div class="front">${hero}</div>`)}<!--/first-screen--></div>`);
       },
+    },
+    generateBundle(_options, bundle) {
+      for (const [file, item] of Object.entries(bundle)) if (item.type === "chunk") chunkFiles.set(item.name, file);
     },
     closeBundle() {
       const home = resolve("dist/index.html");
@@ -251,7 +266,7 @@ publishes the resulting files here.
 `;
 
 const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";
-const SITE_PAGES = ["", "map", "compare", "compare/papers", "lean", "read/expository", "read/short", "read/long", "checks", "about"];
+const SITE_PAGES = ["", "map", "compare", "lean", "read/expository", "read/short", "read/long", "checks", "about"];
 
 // For readers that fetch text rather than run the page. It describes the same files the
 // browser reads, and no page loads it.
@@ -297,9 +312,12 @@ export default defineConfig(({ mode }) => {
       closeBundle() {
         const out = resolve("dist");
         const shell = resolve(out, ".route-shell.html");
-        for (const route of ["map", "compare", "compare/papers", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
+        for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          copyFileSync(shell, resolve(out, route, "index.html"));
+          const preload = (ROUTE_CODE[route] ?? [])
+            .flatMap((name) => (chunkFiles.has(name) ? [`<link rel="modulepreload" crossorigin href="${base}${chunkFiles.get(name)}" />`] : []))
+            .join("");
+          writeFileSync(resolve(out, route, "index.html"), readFileSync(shell, "utf8").replace("</head>", `${preload}</head>`));
         }
         copyFileSync(shell, resolve(out, "404.html"));
         rmSync(shell);

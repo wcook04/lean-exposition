@@ -1,12 +1,13 @@
 // The declaration among its neighbours: what uses it on the left, what it uses on the
 // right, with real lines. An arrow runs from a name into the declaration that uses it,
-// as lines run on the argument map. Walking moves the chosen tile to the centre and the
-// old centre to its side, so the reader sees where they went; Back walks home.
+// as lines run on the argument map. Walking opens the chosen declaration at its head;
+// Back walks home.
 
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { LeanDeclaration } from "../api/lean";
 import { navigate, routeHref } from "../app/router";
 import { dependencyWords, fetchModule, kindWord, type LeanShell } from "./data";
+import { Breakable } from "./ReadingStrip";
 import { findDecl, type DeclRow } from "./resolve";
 
 const SIDE_LIMIT = 12;
@@ -38,20 +39,6 @@ function place(element: HTMLElement, host: HTMLElement) {
     top += at.offsetTop;
   }
   return { left, top, width: element.offsetWidth, height: element.offsetHeight };
-}
-
-/** A long name may break after an underscore or dot, or between the words of a camel-case name. */
-function Breakable({ name }: { name: string }) {
-  return (
-    <code>
-      {name.split(/(?<=[_.])|(?<=[a-z])(?=[A-Z])/).map((part, k) => (
-        <span key={k}>
-          {k > 0 && <wbr />}
-          {part}
-        </span>
-      ))}
-    </code>
-  );
 }
 
 interface Line {
@@ -168,7 +155,7 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
     return () => watcher.disconnect();
   }, [sides]);
 
-  // A step arrives: bring the picture into its column, then show the move.
+  // A step arrives: the declaration just opened is what the reader came for, so show its head.
   useLayoutEffect(() => {
     const step = walking;
     const host = root.current;
@@ -176,15 +163,9 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
     if (!step || !host || !middle || step.to !== decl.name) return;
     walking = null;
     if (performance.now() - step.at > 4000) return;
-    host.closest<HTMLElement>("[data-decl]")?.scrollIntoView({ block: "start" });
-    const scroller = host.closest<HTMLElement>(".lean-scroll");
-    if (scroller && scroller.scrollHeight > scroller.clientHeight) {
-      const view = scroller.getBoundingClientRect();
-      const box = (host.parentElement ?? host).getBoundingClientRect();
-      const over = box.bottom - view.bottom + 12;
-      if (over > 0) scroller.scrollTop += Math.min(over, box.top - view.top - 8);
-    }
-    middle.focus({ preventScroll: true });
+    const head = host.closest<HTMLElement>("[data-decl]");
+    head?.scrollIntoView({ block: "start" });
+    (head?.querySelector<HTMLElement>(".lean-block__name a") ?? middle).focus({ preventScroll: true });
     if (reduced()) return;
     moveFrom(middle, step.toRect);
     const before = host.querySelector<HTMLElement>(`[data-name="${CSS.escape(step.from)}"]`);

@@ -3,9 +3,11 @@
 // the exposition each do with the chosen record, with what it uses and is used by,
 // so the reader can walk the argument in either direction.
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { AlignedStatement, RecordAlignment } from "../api/lean";
+import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
+import { statedIn } from "../app/papers";
 import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
 import { kindName } from "../map/labels";
 import { mainGoal, sectionLabel, startingGoals } from "../map/TheoremPlate";
@@ -17,6 +19,7 @@ import { statementHref } from "../reader/links";
 import { onIdle } from "./idle";
 import { LazyStatementSlice, primeSlices } from "./lazy";
 import { ModeSwitch } from "./ModeSwitch";
+import { PickMenu } from "./PickMenu";
 import {
   LEVEL_NAMES,
   LEVEL_FILTERS,
@@ -27,31 +30,20 @@ import {
   filterByLevel,
   filterOutline,
   leanAbsence,
-  levelVerb,
   roleWords,
   statementsOf,
+  pressLevel,
   storeLevels,
   storedLevels,
-  toggleLevel,
   walkListed,
   type LevelFilter,
   type OutlineRow,
   type Slot,
 } from "./model";
-import { recordLine, shortTitle, useAlignment } from "./useAlignment";
+import { shortTitle, useAlignment } from "./useAlignment";
+import { useWidth } from "./useWidth";
 
 type CompareRoute = Extract<Route, { view: "compare" }>;
-
-/** The window's width, followed live. */
-function useWidth(): number {
-  const [width, setWidth] = useState(() => window.innerWidth);
-  useEffect(() => {
-    const onResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return width;
-}
 
 export function StepBench({ route }: { route: CompareRoute }) {
   const edition = useEdition();
@@ -97,14 +89,12 @@ export function StepBench({ route }: { route: CompareRoute }) {
 
   const record = alignment?.records[node] ?? null;
   const slots = useMemo(() => (record ? arrangeLevels(record, width, chosen) : []), [record, width, chosen]);
-  const shownLevels = slots.filter((s) => s.state !== "folded").map((s) => s.level);
 
-  const chooseLevels = (levels: Level[]) => {
+  const toggle = (level: Level) => {
+    const levels = pressLevel(slots, chosen, level);
     storeLevels(levels);
     navigate({ view: "compare", node, levels }, { replace: true });
   };
-  const toggle = (level: Level) => chooseLevels(toggleLevel(chosen ?? slots.filter((s) => s.state === "column").map((s) => s.level), level));
-  const unfold = (level: Level) => chooseLevels(toggleLevel(slots.filter((s) => s.state === "column").map((s) => s.level), level));
 
   // Walking: arrows, or j and k. Inside a column the arrows scroll it, as they would anywhere.
   const railRef = useRef<HTMLOListElement>(null);
@@ -114,6 +104,7 @@ export function StepBench({ route }: { route: CompareRoute }) {
       const step = event.key === "ArrowDown" || event.key === "j" ? 1 : event.key === "ArrowUp" || event.key === "k" ? -1 : 0;
       if (!step) return;
       const target = event.target as HTMLElement;
+      if (target.closest?.('[role="menu"]')) return;
       const typing = target.matches?.("input, textarea, select, [contenteditable]");
       const letter = event.key === "j" || event.key === "k";
       if (typing && (letter || !target.matches('input[type="search"]'))) return;
@@ -147,37 +138,35 @@ export function StepBench({ route }: { route: CompareRoute }) {
   const previous = walkListed(outline, listed, node, -1);
   const next = walkListed(outline, listed, node, 1);
   const filterName = LEVEL_FILTERS.find((f) => f.id === levelFilter)!.label.toLowerCase();
-  const filters = <LevelFilters outline={outline} graph={scoped} value={levelFilter} onChange={setLevelFilter} />;
+  const filters = <LevelFilter outline={outline} graph={scoped} value={levelFilter} onChange={setLevelFilter} />;
   const href = (id: string) => routeHref({ view: "compare", node: id, levels: route.levels });
 
   return (
     <div className={`bench${stacked ? " bench--stacked" : ""}`}>
       {stacked ? (
         <div className="bench-pick">
-          <ModeSwitch mode="steps" node={route.node} />
+          <ModeSwitch mode="step" step={node} levels={route.levels} />
           <GoalMenu goals={goals} goal={goal} onPick={(id) => { setPicked(id); go(id); }} />
           {filters}
-          <label className="bench-field">
-            <span>Step</span>
-            <select value={stepAt >= 0 ? node : ""} onChange={(e) => go(e.target.value)}>
-              {stepAt < 0 && <option value="">Outside this argument</option>}
-              {listed.map((row, i) => (
-                <option key={row.id} value={row.id}>
-                  {i + 1}. {titleOf(row.id)}
-                </option>
-              ))}
-            </select>
-          </label>
+          <PickMenu
+            label="Step"
+            showLabel
+            options={[...(stepAt < 0 ? [{ id: node, title: "Outside this argument" }] : []), ...listed.map((row, i) => ({ id: row.id, title: `${i + 1}. ${titleOf(row.id)}` }))]}
+            value={node}
+            onPick={(id) => go(id)}
+          />
         </div>
       ) : (
         <nav className="bench-rail" aria-label="The steps of the argument">
-          <ModeSwitch mode="steps" node={route.node} />
+          <ModeSwitch mode="step" step={node} levels={route.levels} />
           <GoalMenu goals={goals} goal={goal} onPick={(id) => { setPicked(id); go(id); }} />
-          {filters}
-          <label className="bench-field">
-            <span className="visually-hidden">Filter the steps</span>
-            <input type="search" placeholder="Filter the steps" value={query} onChange={(e) => setQuery(e.target.value)} />
-          </label>
+          <div className="bench-find">
+            <label className="bench-search">
+              <span className="visually-hidden">Filter the steps</span>
+              <input type="search" placeholder="Filter the steps" value={query} onChange={(e) => setQuery(e.target.value)} />
+            </label>
+            {filters}
+          </div>
           <ol className="bench-rail__list" ref={railRef}>
             {visible.map((row) => (
               <RailRow key={row.id} row={row} title={titleOf(row.id)} current={row.id === node} href={href(row.id)} filtered={!!query} />
@@ -188,14 +177,14 @@ export function StepBench({ route }: { route: CompareRoute }) {
       )}
 
       <section className="bench-main" aria-label="This step at each level">
-        <StepHead graph={graph} node={node} title={graph.nodes.get(node)?.label ?? node} titleOf={titleOf} href={href} shown={shownLevels} onToggle={toggle} hasRecord={!!record} stacked={stacked} />
+        <StepHead graph={graph} node={node} title={graph.nodes.get(node)?.label ?? node} titleOf={titleOf} href={href} slots={slots} onToggle={toggle} stacked={stacked} />
         {!alignment && <p className="bench-note">Loading where each level states this step…</p>}
         {alignment && !record && (
           <p className="bench-note">
             No level is linked to this record in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
           </p>
         )}
-        {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} id={node} record={record} slots={slots} onUnfold={unfold} />)}
+        {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} record={record} slots={slots} />)}
         <footer className="bench-foot">
           <a className="bench-foot__link" href={previous ? href(previous.id) : undefined} aria-disabled={!previous} rel="prev">
             {previous ? <><span aria-hidden="true">↑ </span><span className="bench-foot__word">Previous: </span>{titleOf(previous.id)}</> : "First step"}
@@ -210,31 +199,26 @@ export function StepBench({ route }: { route: CompareRoute }) {
   );
 }
 
-function GoalMenu({ goals, goal, onPick }: { goals: { id: string; title: string }[]; goal: string; onPick(id: string): void }) {
-  return (
-    <label className="bench-field">
-      <span>Argument for</span>
-      <select value={goal} onChange={(e) => onPick(e.target.value)}>
-        {goals.map((g) => (
-          <option key={g.id} value={g.id}>
-            {g.title}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
+function GoalMenu({ goals, goal, onPick }: { goals: { id: string; title: string; stages: Stage[] }[]; goal: string; onPick(id: string): void }) {
+  return <PickMenu label="Argument for" showLabel variant="goal" options={goals.map((g) => ({ id: g.id, title: g.title, where: g.stages.length ? statedIn(g.stages) : undefined }))} value={goal} onPick={onPick} />;
 }
 
 /** The whole argument or one paper's part of it, each with how many steps that is. */
-function LevelFilters({ outline, graph, value, onChange }: { outline: OutlineRow[]; graph: ArgGraph; value: LevelFilter; onChange(filter: LevelFilter): void }) {
+function LevelFilter({ outline, graph, value, onChange }: { outline: OutlineRow[]; graph: ArgGraph; value: LevelFilter; onChange(filter: LevelFilter): void }) {
+  const options = LEVEL_FILTERS.map((filter) => ({ id: filter.id, title: filter.label, count: filterByLevel(outline, filter.id, graph).length }));
+  const now = options.find((o) => o.id === value)!;
   return (
-    <div className="bench-filters" role="group" aria-label="Show the steps each level discusses">
-      {LEVEL_FILTERS.map((filter) => (
-        <button key={filter.id} type="button" className="bench-filter" aria-pressed={value === filter.id} onClick={() => onChange(filter.id)}>
-          {filter.label} <span className="bench-filter__count">{filterByLevel(outline, filter.id, graph).length}</span>
-        </button>
-      ))}
-    </div>
+    <PickMenu
+      label="Show the steps each level discusses"
+      options={options}
+      value={value}
+      current={
+        <>
+          {now.title} <span className="pick__count">{now.count}</span>
+        </>
+      }
+      onPick={(id) => onChange(id as LevelFilter)}
+    />
   );
 }
 
@@ -242,8 +226,7 @@ function RailRow({ row, title, current, href, filtered }: { row: OutlineRow; tit
   return (
     <li>
       <a className="bench-row" href={href} aria-current={current ? "step" : undefined} style={{ paddingLeft: `${8 + (filtered ? 0 : Math.min(row.depth, 5)) * 8}px` }}>
-        <span className="bench-row__title">{title}</span>
-        {!!recordLine(row.id)?.lean && <span className="bench-row__lean">Lean</span>}
+        {title}
       </a>
     </li>
   );
@@ -262,112 +245,102 @@ interface HeadProps {
   title: string;
   titleOf(id: string): string;
   href(id: string): string;
-  shown: Level[];
+  slots: Slot[];
   onToggle(level: Level): void;
-  hasRecord: boolean;
   stacked: boolean;
 }
 
-function StepHead({ graph, node, title, titleOf, href, shown, onToggle, hasRecord, stacked }: HeadProps) {
+function StepHead({ graph, node, title, titleOf, href, slots, onToggle, stacked }: HeadProps) {
   const { usedBy, uses, assumes } = useMemo(() => neighbours(graph, node), [graph, node]);
   const kind = graph.nodes.get(node)?.kind ?? "claim";
+  const limit = stacked ? 2 : 3;
   return (
     <header className="bench-head">
       <div className="bench-head__top">
-        <div className="bench-head__kind">
-          <p className="caps">{kindName(kind)}</p>
-          {assumes.length > 0 && <ChipRow label="Assumes" ids={assumes} titleOf={titleOf} href={href} tags />}
-        </div>
+        <h1 className="bench-head__title">
+          {title}
+          {kind !== "claim" && <span className="caps bench-head__kind">{kindName(kind)}</span>}
+        </h1>
         <div className="bench-head__tools">
-          {hasRecord && !stacked && (
-            <div className="bench-toggles" role="group" aria-label="Levels shown">
-              {LEVELS.map((level) => (
-                <button key={level} type="button" className="bench-toggle" aria-pressed={shown.includes(level)} onClick={() => onToggle(level)}>
-                  {LEVEL_NAMES[level]}
-                </button>
-              ))}
-            </div>
-          )}
-          <a className="control" href={routeHref({ view: "map", node })}>
+          {slots.length > 0 && !stacked && <LevelRow id={node} slots={slots} onToggle={onToggle} />}
+          <a className="bench-head__map" href={routeHref({ view: "map", node })}>
             Show on the map
           </a>
         </div>
       </div>
-      <h1 className="bench-head__title">{title}</h1>
-      <ChipRow label="Used by" empty="Nothing in the record uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={stacked ? 2 : 5} />
-      <ChipRow label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={stacked ? 2 : 5} />
+      <RelationLine label="Used by" empty="Nothing in the record uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
+      <div className="bench-rels">
+        <RelationLine label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={limit} />
+        {assumes.length > 0 && <RelationLine label="Assumes" ids={assumes} titleOf={titleOf} href={href} limit={limit} assumptions />}
+      </div>
     </header>
   );
 }
 
-/** A row of chips. What does not fit on the row is one press away, and the row says how many. */
-function ChipRow({ label, empty, ids, titleOf, href, tags, limit = 5 }: { label: string; empty?: string; ids: string[]; titleOf(id: string): string; href(id: string): string; tags?: boolean; limit?: number }) {
+/** The levels as pressable words. A level with nothing for this record cannot be pressed, and says so. */
+function LevelRow({ id, slots, onToggle }: { id: string; slots: Slot[]; onToggle(level: Level): void }) {
+  return (
+    <div className="compare-words" role="group" aria-label="Levels shown">
+      {slots.map(({ level, state }) => (
+        <button key={level} type="button" aria-pressed={state === "column"} disabled={state === "empty"} title={state === "empty" ? (level === "lean" ? leanAbsence(id) : absentWords(level)) : undefined} onClick={() => onToggle(level)}>
+          {LEVEL_NAMES[level]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Names on one quiet line, joined as a sentence. What does not fit is one press away, in place. */
+function RelationLine({ label, empty, ids, titleOf, href, limit, assumptions }: { label: string; empty?: string; ids: string[]; titleOf(id: string): string; href(id: string): string; limit: number; assumptions?: boolean }) {
   const [open, setOpen] = useState(false);
   useEffect(() => setOpen(false), [ids]);
   const cut = !open && ids.length > limit + 1;
   const shown = cut ? ids.slice(0, limit) : ids;
   return (
-    <div className="bench-chips">
-      <span className="bench-chips__label">{label}</span>
-      {!ids.length && <span className="bench-chips__empty">{empty}</span>}
-      {shown.map((id) => (
-        <a key={id} className={tags ? "bench-chip bench-chip--tag" : "bench-chip"} href={href(id)}>
-          {titleOf(id)}
-        </a>
-      ))}
-      {cut && (
-        <button type="button" className="bench-chip bench-chip--more" onClick={() => setOpen(true)}>
-          and {ids.length - limit} more
-        </button>
+    <p className={`bench-rel${assumptions ? " bench-rel--assumes" : ""}`}>
+      <span className="bench-rel__label">{label}</span>
+      <span className="bench-rel__names">
+        {!ids.length && empty}
+        {shown.map((id, i) => (
+          <Fragment key={id}>
+            {i > 0 && (!cut && i === shown.length - 1 ? " and " : ", ")}
+            <a href={href(id)}>{titleOf(id)}</a>
+          </Fragment>
+        ))}
+        {cut && (
+          <>
+            {" "}
+            <button type="button" className="bench-more" onClick={() => setOpen(true)}>
+              and {ids.length - limit} more
+            </button>
+          </>
+        )}
+      </span>
+    </p>
+  );
+}
+
+function Columns({ record, slots }: { record: RecordAlignment; slots: Slot[] }) {
+  return (
+    <div className="bench-levels">
+      {slots.map((slot) =>
+        slot.state === "column" ? (
+          <section key={slot.level} className="bench-col" style={{ flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
+            <ColumnHead level={slot.level} />
+            <div className="bench-col__scroll" tabIndex={0} data-scrolls="" aria-label={`${LEVEL_NAMES[slot.level]}, its text for this step`}>
+              <LevelBody record={record} level={slot.level} />
+            </div>
+          </section>
+        ) : null,
       )}
     </div>
   );
 }
 
-function Columns({ id, record, slots, onUnfold }: { id: string; record: RecordAlignment; slots: Slot[]; onUnfold(level: Level): void }) {
-  return (
-    <div className="bench-levels">
-      {slots.map((slot) => {
-        if (slot.state === "column") {
-          return (
-            <section key={slot.level} className="bench-col" style={{ flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
-              <ColumnHead record={record} level={slot.level} />
-              <div className="bench-col__scroll" tabIndex={0} data-scrolls="" aria-label={`${LEVEL_NAMES[slot.level]}, its text for this step`}>
-                <LevelBody record={record} level={slot.level} />
-              </div>
-            </section>
-          );
-        }
-        if (slot.state === "folded") {
-          return (
-            <button key={slot.level} type="button" className="bench-strip bench-strip--folded" onClick={() => onUnfold(slot.level)}>
-              <span>Show the {LEVEL_NAMES[slot.level].toLowerCase()}</span>
-            </button>
-          );
-        }
-        if (slot.level === "lean") {
-          return (
-            <div key={slot.level} className="bench-absent">
-              <p className="bench-absent__title">{absentWords("lean")}</p>
-              <p>{leanAbsence(id)}</p>
-            </div>
-          );
-        }
-        return (
-          <div key={slot.level} className="bench-strip">
-            <span>{absentWords(slot.level)}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function ColumnHead({ record, level }: { record: RecordAlignment; level: Level }) {
+function ColumnHead({ level }: { level: Level }) {
   return (
     <header className="bench-col__head">
       <h2>{LEVEL_NAMES[level]}</h2>
-      <p>{levelVerb(record, level)}</p>
     </header>
   );
 }
@@ -442,7 +415,7 @@ function StackedLevels({ id, record, slots }: { id: string; record: RecordAlignm
       {LEVELS.map((level) =>
         has(level) ? (
           <section key={level} className="bench-stack__level" data-level={level} aria-label={LEVEL_NAMES[level]}>
-            <ColumnHead record={record} level={level} />
+            <ColumnHead level={level} />
             <LevelBody record={record} level={level} />
           </section>
         ) : (

@@ -506,12 +506,6 @@
   font-weight: 600;
 }
 
-.checktable__absent {
-  margin-top: var(--space-3);
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
 .checkrow > tr:first-child > * {
   padding: var(--space-4) var(--space-3) var(--space-4) 0;
   vertical-align: top;
@@ -554,9 +548,21 @@
   color: var(--ink);
 }
 
-.checkrow__toggle {
-  min-width: 7.4rem;
+/* A word in the row, not a button box beside the figures. */
+.checkrow__toggle.control {
+  min-width: 6.5rem;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  justify-content: flex-start;
   white-space: nowrap;
+}
+
+.checkrow__toggle.control:hover {
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .checkrow > tr:first-child > .checkrow__left-out {
@@ -621,65 +627,78 @@
   color: var(--formal);
 }
 
-/* Each record: a labelled tile, its checks in words. */
-.rtiles__group {
+/* Each record on one line: title, then its outcomes in words. No boxes. */
+.rlist__group {
   margin-top: var(--space-5);
 }
 
-.rtiles__group h3 {
+.rlist__group h3 {
   font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--ink);
 }
 
-.rtiles__group ul {
+.rlist__group.is-failed h3 {
+  color: var(--fail);
+}
+
+.rlist__group ul {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
-  gap: var(--space-2);
+  columns: 21rem;
+  column-gap: var(--space-6);
   margin: var(--space-2) 0 0;
   padding: 0;
 }
 
-.rtile {
+.rlist__group.is-few ul {
+  columns: 30rem;
+}
+
+.rlist__group li {
+  break-inside: avoid;
+}
+
+.rline {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  gap: var(--space-1);
-  height: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-  background: var(--surface);
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 3px 0;
+  border-top: 1px solid var(--rule);
   color: var(--ink);
   text-decoration: none;
-  transition: border-color var(--t-hover) var(--ease-out);
 }
 
-.rtile:hover {
-  border-color: var(--rule-strong);
+.rline:hover .rline__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.rtile__title {
+.rline__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: var(--font-serif);
   font-size: var(--fs-ui);
-  line-height: var(--lh-snug);
-  overflow-wrap: anywhere;
+  line-height: 20px;
 }
 
-.rtile__title.lean {
+.rline__title.lean {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--formal);
 }
 
-.rtile__words {
+.rline__words {
+  flex: none;
   font-size: var(--fs-sm);
-  line-height: var(--lh-snug);
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
   color: var(--ink-2);
 }
 
-.rtile__words .is-failed {
+.rline__words .is-failed {
   color: var(--fail);
   font-weight: 600;
 }

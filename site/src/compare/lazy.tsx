@@ -1,12 +1,17 @@
-// The statement slice, loaded when first shown. The placeholder is the slice's own
-// text, dimmed, so a page holds its words and its height while the typesetter arrives.
+// The statement slice, loaded when first shown. The placeholder is the slice's own text,
+// kept invisible: it holds the height while the typesetter arrives, and raw TeX never shows.
 
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, type ComponentType } from "react";
 import type { AlignedStatement } from "../api/lean";
 import type { StatementSliceProps } from "./StatementSlice";
 import "./slice.css";
 
-const load = () => import("./StatementSlice");
+let ready: ComponentType<StatementSliceProps> | null = null;
+const load = () =>
+  import("./StatementSlice").then((m) => {
+    ready = m.StatementSlice;
+    return m;
+  });
 const Slice = lazy(() => load().then((m) => ({ default: m.StatementSlice })));
 
 export function RawSlice({ markdown, compact }: { markdown: string; compact?: boolean }) {
@@ -18,11 +23,19 @@ export function RawSlice({ markdown, compact }: { markdown: string; compact?: bo
 }
 
 export function LazyStatementSlice(props: StatementSliceProps) {
+  // Code that has arrived skips the boundary: React holds a revealed one back for about 300ms.
+  const [Ready] = useState(() => ready);
+  if (Ready) return <Ready {...props} />;
   return (
     <Suspense fallback={<RawSlice markdown={props.statement.markdown} compact={props.compact} />}>
       <Slice {...props} />
     </Suspense>
   );
+}
+
+/** Start the typesetter now, so it is ready when the first statements are. */
+export function startTypesetter(): void {
+  void load();
 }
 
 /** Typeset slices ahead of time, on idle, from any page. */

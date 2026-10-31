@@ -8,6 +8,11 @@
   -webkit-hyphens: manual;
 }
 
+.slice.prose > :first-child,
+.slice.prose > p.run-in:first-child {
+  margin-top: 0;
+}
+
 .slice.prose > :last-child {
   margin-bottom: 0;
 }
@@ -22,7 +27,7 @@
   font-family: var(--font-serif);
   font-size: var(--fs-card);
   line-height: 1.55;
-  color: var(--ink-3);
+  visibility: hidden;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

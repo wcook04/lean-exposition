@@ -2,19 +2,19 @@
   "schema_version": "1.0",
   "records": {
     "full_support": {
-      "short": "Minimisers have full support",
+      "short": "Full support of SK minimisers",
       "lean": [
-        {
-          "file": "OAI/Probability/SKSupport/Model.lean",
-          "name": "FullSupportConclusion",
-          "relation": "defines",
-          "note": "The five clauses: measure, diffusion, full support, strict increase, both moments for every associated diffusion."
-        },
         {
           "file": "OAI/Probability/SKSupport/Main.lean",
           "name": "full_support",
           "relation": "states",
           "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "FullSupportConclusion",
+          "relation": "defines",
+          "note": "The five clauses: measure, diffusion, full support, strict increase, both moments for every associated diffusion."
         }
       ],
       "statements": [

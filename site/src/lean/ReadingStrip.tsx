@@ -1,10 +1,13 @@
-// The fixed place under the code where a name is read. Its height is reserved, so
-// pointing at a name moves nothing, and it never covers the code.
+// The one line where a name is read, like an editor's status bar. It lies over the foot of
+// the scrolling column, so pointing at a name moves nothing; when idle it is empty and
+// invisible. There is one for the whole page, however many blocks are on it, and when the
+// name is near the foot it moves to the top of the column so it never covers that name.
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createRoot } from "react-dom/client";
 import { texHtml } from "../figures/tex";
 import { declIn, fetchModule, kindWord, moduleIfLoaded, sourceLines, type LeanShell } from "./data";
-import { mathlibUrl, type DeclRow, type NameTarget } from "./resolve";
+import type { DeclRow, NameTarget } from "./resolve";
 import type { DictionaryTerm } from "../api/lean";
 
 /** Prose with the `backticked` names of the source notes set as code. */
@@ -68,62 +71,152 @@ function useModuleArrival(module: string | undefined): void {
   }, [module]);
 }
 
-function DeclReading({ row, term, shell, compact }: { row: DeclRow; term?: DictionaryTerm; shell: LeanShell; compact?: boolean }) {
+/** A long name may break after a dot or an underscore, and between camel-case words only when a part cannot fit. */
+export function Breakable({ name }: { name: string }) {
+  return (
+    <code className="lean-break">
+      {name.split(/(?<=[_.])/).map((part, k) => (
+        <span key={k}>
+          {part.split(/(?<=[a-z0-9])(?=[A-Z])/).flatMap((word, j) => (j ? [<wbr key={j} />, word] : [word]))}
+        </span>
+      ))}
+    </code>
+  );
+}
+
+function DeclReading({ row, term, shell }: { row: DeclRow; term?: DictionaryTerm; shell: LeanShell }) {
   useModuleArrival(row.module);
-  const full = shell.paths.get(row.module)?.path ?? row.module;
-  const path = compact ? full.slice(full.lastIndexOf("/") + 1) : full;
-  const signature = term?.words ? null : firstSignatureLine(row);
+  const file = (shell.paths.get(row.module)?.path ?? row.module).split("/").pop();
+  const signature = firstSignatureLine(row);
   return (
     <>
-      <p className="lean-strip__head">
-        <code className="lean-strip__name">{row.short}</code>
-        <span>
-          {kindWord(row.kind)} in <PathText path={path} />, line {row.line}
-        </span>
-      </p>
+      <Breakable name={row.short} />
       {term?.words ? (
-        <p className="lean-strip__body">
+        <span className="lean-bar__words">
           <Notation term={term} />
-          <span>
-            <Prose text={term.words} />
+          <Prose text={term.words} />
+        </span>
+      ) : (
+        <>
+          <span className="lean-bar__words lean-bar__words--sig">{signature && <code>{signature}</code>}</span>
+          <span className="lean-bar__place">
+            {kindWord(row.kind)} in {file}, line {row.line}
           </span>
-        </p>
-      ) : signature ? (
-        <p className="lean-strip__sig">
-          <code>{signature}</code>
-        </p>
-      ) : null}
+        </>
+      )}
     </>
   );
 }
 
-export function StripBody({ target, shell, compact }: { target: NameTarget | null; shell: LeanShell; compact?: boolean }) {
-  if (!target) {
-    return <p className="lean-strip__idle">Point at a name to read it here. Click to open it.</p>;
-  }
-  if (target.kind === "decl") return <DeclReading row={target.row} term={target.term} shell={shell} compact={compact} />;
+/** What the line says about a name. */
+export function ReadingLine({ target, shell }: { target: NameTarget; shell: LeanShell }) {
+  if (target.kind === "decl") return <DeclReading row={target.row} term={target.term} shell={shell} />;
   return (
     <>
-      <p className="lean-strip__head">
-        <code className="lean-strip__name">{target.name}</code>
-        <span>From Mathlib</span>
-      </p>
-      <p className="lean-strip__body">
-        <span>
-          {target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}{" "}
-          <a href={mathlibUrl(target.name)} target="_blank" rel="noreferrer">
-            Look it up in the Mathlib documentation
-          </a>
-        </span>
-      </p>
+      <Breakable name={target.name} />
+      <span className="lean-bar__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</span>
+      <span className="lean-bar__place">From Mathlib</span>
     </>
   );
 }
 
-export function ReadingStrip({ target, shell, sticky, compact }: { target: NameTarget | null; shell: LeanShell; sticky?: boolean; compact?: boolean }) {
+interface Reading {
+  target: NameTarget;
+  element: HTMLElement;
+  shell: LeanShell;
+}
+
+/** Moving from one name to the next passes over nothing, so the line does not blink. */
+const LINGER = 140;
+
+let reading: Reading | null = null;
+let timer = 0;
+const listeners = new Set<() => void>();
+const publish = (next: Reading | null) => {
+  reading = next;
+  listeners.forEach((listen) => listen());
+};
+
+export function readName(target: NameTarget, element: HTMLElement, shell: LeanShell): void {
+  window.clearTimeout(timer);
+  publish({ target, element, shell });
+}
+
+export function clearName(): void {
+  window.clearTimeout(timer);
+  timer = window.setTimeout(() => publish(null), LINGER);
+}
+
+/** The column the line belongs to: the name's nearest tall scroller, or else the page. */
+function columnOf(element: HTMLElement): HTMLElement | null {
+  for (let at = element.parentElement; at && at !== document.body; at = at.parentElement) {
+    const { overflowY } = getComputedStyle(at);
+    if ((overflowY === "auto" || overflowY === "scroll") && at.clientHeight >= 240) return at;
+  }
+  return null;
+}
+
+/** The line's place: along the column's foot, or its head when the foot would cover the name. */
+export function barPlace(column: { left: number; top: number; width: number; bottom: number }, name: { bottom: number }, height: number, gap = 6) {
+  const atTop = name.bottom + gap > column.bottom - height;
+  return { left: column.left, width: column.width, top: atTop ? column.top : column.bottom - height, edge: atTop ? "top" : "bottom" };
+}
+
+function place(bar: HTMLElement, element: HTMLElement): void {
+  const column = columnOf(element);
+  const box = column?.getBoundingClientRect();
+  const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--bar-h")) || 0;
+  const frame = column && box
+    ? { left: box.left + column.clientLeft, top: Math.max(box.top, 0), width: column.clientWidth, bottom: Math.min(box.top + column.clientTop + column.clientHeight, window.innerHeight) }
+    : { left: 0, top: head, width: document.documentElement.clientWidth, bottom: window.innerHeight };
+  const at = barPlace(frame, element.getBoundingClientRect(), bar.offsetHeight);
+  bar.style.left = `${at.left}px`;
+  bar.style.top = `${at.top}px`;
+  bar.style.width = `${at.width}px`;
+  bar.style.paddingInline = column ? getComputedStyle(column).paddingLeft : "";
+  bar.dataset.edge = at.edge;
+}
+
+function ReadingBar() {
+  const now = useSyncExternalStore(
+    (listen) => {
+      listeners.add(listen);
+      return () => listeners.delete(listen);
+    },
+    () => reading,
+  );
+  const bar = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const node = bar.current;
+    if (!node || !now) return;
+    const again = () => {
+      if (now.element.isConnected) place(node, now.element);
+    };
+    again();
+    window.addEventListener("scroll", again, { capture: true, passive: true });
+    window.addEventListener("resize", again);
+    const watcher = new ResizeObserver(again);
+    watcher.observe(node);
+    return () => {
+      window.removeEventListener("scroll", again, { capture: true });
+      window.removeEventListener("resize", again);
+      watcher.disconnect();
+    };
+  }, [now]);
   return (
-    <div className={`lean-strip${sticky ? " lean-strip--sticky" : ""}`} role="status" aria-label="Reading the name in focus">
-      <StripBody target={target} shell={shell} compact={compact} />
+    <div className={`lean-bar${now ? " is-on" : ""}`} ref={bar} role="status" aria-label="The name being read">
+      <div className="lean-bar__line">{now && <ReadingLine target={now.target} shell={now.shell} />}</div>
     </div>
   );
+}
+
+let mounted = false;
+
+/** Put the one line on the page, ready and empty, the first time any code appears. */
+export function ensureReadingBar(): void {
+  if (mounted) return;
+  mounted = true;
+  const host = document.createElement("div");
+  document.body.append(host);
+  createRoot(host).render(<ReadingBar />);
 }

@@ -89,6 +89,9 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
   const app = edge.application ? applicationView(edge.application, edge.application.record) : null;
   const href = passageHref ?? ((stage: Stage, anchor: string) => routeHref({ view: "read", stage, anchor, node: consumer.id }));
   const label = (id: string) => graph.nodes.get(id)?.label ?? id;
+  // That no one has reviewed an explanation is true of nearly every step, so it waits with
+  // the other notes on the record; a review that has an outcome stays in the header.
+  const reviewed = w && ["passed", "failed", "unavailable"].includes(w.status);
   const peek = sheet.phone && sheet.state === "peek";
   const panes: PaneSpec[] = [
     ...(app ? [{ id: "use", title: "How it is applied" }] : []),
@@ -135,7 +138,7 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
         <h2 id="step-title" ref={headingRef} tabIndex={-1} className="step__title">
           {link(edge.from)} <span className="step__verb">{stepVerb(edge.kind)}</span> {link(edge.to)}
         </h2>
-        <p className="panel__status">{w ? warrantStatus(w.status) : "No recorded explanation for this step"}</p>
+        {(!w || reviewed) && <p className="panel__status">{w ? warrantStatus(w.status) : "No recorded explanation for this step"}</p>}
         {peek && (
           <div className="panel__peek">
             <button ref={sheet.readRef} type="button" className="panel__action panel__action--primary" onClick={() => sheet.open()}>
@@ -248,17 +251,15 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
 
           <Pane id="explanation" title="Recorded explanation">
             {w ? <p className="panel__statement step__warrant">{w.text}</p> : <p className="panel__note">No separate explanation is recorded for this step.</p>}
-            {w?.sources && (
-              <p className="panel__scope">
-                <span className="panel__scope-lead">Sources</span> {w.sources}
-              </p>
+            {w && (
+              <details className="panel__origin">
+                <summary>Where this comes from</summary>
+                {!reviewed && <p>{warrantStatus(w.status)}.</p>}
+                {w.sharedWith > 1 && <p>The same recorded explanation is attached to {w.sharedWith} links, so it was not written for this step alone.</p>}
+                {w.sources && <p>As recorded: {w.sources}</p>}
+                {w.scope && <p>What it covers: {w.scope}</p>}
+              </details>
             )}
-            {w?.scope && (
-              <p className="panel__scope">
-                <span className="panel__scope-lead">Scope</span> {w.scope}
-              </p>
-            )}
-            {w && w.sharedWith > 1 && <p className="panel__note">The same recorded explanation is attached to {w.sharedWith} links, so it was not written for this step alone.</p>}
           </Pane>
 
           <Pane id="passages" title="Related passages">

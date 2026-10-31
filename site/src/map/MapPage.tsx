@@ -1,8 +1,8 @@
-// The map page: the bar that says what is drawn (goal, level, view), one line
-// saying how much of the argument that level uses, the argument itself (the
-// canvas, or the outline of the same argument), a foot bar with the branch
-// controls and, under a paper's lens, the walk through its passages, and the
-// record sheet as a full-height column beside them.
+// The map page: the bar that says what is drawn (goal, level, view), under a
+// paper's lens one line about what that lens does to the drawing, the argument
+// itself (the canvas, or the outline of the same argument), a foot bar with the
+// branch controls and, under a paper's lens, the walk through its passages, and
+// the record sheet as a full-height column beside them.
 //
 // What is selected lives in the URL (none, one record, or one step). How it was
 // being looked at (camera, unfolded branches, steps or overview) lives in the
@@ -25,6 +25,7 @@ import { KeyPopover } from "./MapKey";
 import { LensControl } from "./LensControl";
 import { WalkBar, useWalk } from "./WalkBar";
 import { levelCounts, levelRecords, lensSentence } from "./levels";
+import { shortTitle as recordTitle } from "../compare/useAlignment";
 import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
 import { readScene, sceneWriter, type MapScene } from "./scene";
@@ -141,8 +142,8 @@ export function MapPage({ route }: { route: MapRoute }) {
     return requestedGoal;
   }, [selectionIds, requestedGoal, goals, graph]);
   const goalTitle = allGoals.find((g) => g.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
-  const goalFullTitle = graph.nodes.get(goal)?.label ?? goalTitle;
-  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: graph.nodes.get(g.id)?.label ?? g.title })), [goals, graph]);
+  const goalFullTitle = recordTitle(goal, graph.nodes.get(goal)?.label ?? goalTitle);
+  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: recordTitle(g.id, graph.nodes.get(g.id)?.label ?? g.title) })), [goals, graph]);
   const goalReach = useMemo(() => reach(graph, goal), [graph, goal]);
   // Through a paper's lens the records it leaves out close up, so everything it uses stays connected.
   const argument = useMemo(() => {
@@ -239,8 +240,8 @@ export function MapPage({ route }: { route: MapRoute }) {
         if (display === "outline") {
           const el =
             id === goal
-              ? document.querySelector<HTMLElement>(".outline__inspect-goal")
-              : document.querySelector<HTMLElement>(`.outline [data-outline-id="${CSS.escape(id)}"] .orow__inspect`);
+              ? document.querySelector<HTMLElement>(".outline__open-goal")
+              : document.querySelector<HTMLElement>(`.outline [data-outline-id="${CSS.escape(id)}"] .orow__open`);
           if (el) {
             el.focus();
             return;
@@ -442,12 +443,7 @@ export function MapPage({ route }: { route: MapRoute }) {
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
         <KeyPopover onNotesHost={setNotesHost} />
       </div>
-      <div className="map-sub">
-        <p className="map-sub__line">
-          {scopeLine} {route.lens && display === "map" ? "A line may pass over records it leaves out." : "Each line runs from a record up to the result that uses it."}
-        </p>
-        <p ref={captionRef} className="map-sub__caption" hidden />
-      </div>
+      {route.lens && display === "map" && <p className="map-sub">{scopeLine} A line may pass over records it leaves out.</p>}
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (
@@ -476,6 +472,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             )}
           </p>
         )}
+        {display === "map" && <p ref={captionRef} className="map-caption" hidden />}
         {display === "map" ? (
           <ArgumentTree
             ref={treeRef}
@@ -518,7 +515,6 @@ export function MapPage({ route }: { route: MapRoute }) {
             selectedEdge={edgeKey}
             statement={<TheoremBody goal={goal} />}
             onSelect={(id) => select(id, id)}
-            onEdgeSelect={(key) => selectEdge(key)}
             bottomInset={sheetInset}
           />
         )}

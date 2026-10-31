@@ -401,6 +401,11 @@
   box-shadow: none;
 }
 
+/* A Lean declaration is told from a claim by its name's face and the colour of its Lean line. */
+.card[data-kind="declaration"] {
+  border-color: var(--rel-formalizes);
+}
+
 .card:hover,
 .card.is-hover {
   border-color: color-mix(in oklab, var(--ink-3) 70%, var(--card-border));
@@ -811,12 +816,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 30px;
-  padding: 0 12px;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: var(--surface);
-  box-shadow: 0 2px 8px -4px rgb(0 0 0 / 0.15);
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
   font: 400 var(--fs-sm) var(--font-sans);
   color: var(--ink-2);
   cursor: pointer;
@@ -825,7 +828,6 @@
 .sim__button:hover,
 .sim__button[aria-expanded="true"] {
   color: var(--ink);
-  border-color: var(--rule-strong);
 }
 
 .sim__button:focus-visible {
@@ -915,60 +917,6 @@
   color: var(--ink-3);
 }
 
-/* The relation under the pointer. Hoverable: the pointer can move onto it. */
-
-.edge-tip {
-  position: absolute;
-  z-index: 6;
-  max-width: 320px;
-  padding: 9px 12px 8px;
-  background: var(--surface);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-sheet);
-  display: grid;
-  gap: 5px;
-  cursor: auto;
-  animation: tree-pop-in var(--t-reveal) var(--ease-out);
-}
-
-.edge-tip p {
-  margin: 0;
-}
-
-.edge-tip__kind {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.edge-tip__kind .rel-sample {
-  width: 20px;
-}
-
-.edge-tip__rel {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--ink);
-}
-
-.edge-tip__warrant {
-  font-family: var(--font-serif);
-  font-size: 0.9375rem;
-  line-height: 1.4;
-  color: var(--ink);
-}
-
-.edge-tip__hint {
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
-}
-
-.edge-tip--compact {
-  max-width: 260px;
-}
-
 /* ---- Reduced motion: the same end state, no travel ---------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -978,8 +926,7 @@
   .tree--entering .card,
   .tree--entering .tree__heads,
   .tree--entering .enter-cover,
-  .sim__pop,
-  .edge-tip {
+  .sim__pop {
     transition: none;
     animation: none;
   }

@@ -1,4 +1,4 @@
-// About: how to use the site, one line for each of its five routes, then what the site
+// About: one line for each of the site's routes, then what the site
 // is, a key to the map's drawing, the edition it serves (with edition-pinned link and
 // citation), the architectural companion on request, and who made it. The companion is
 // not served by the API; it is read from the repository at build time, so it always
@@ -128,7 +128,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
             </>
           ) : null}{" "}
-          at every level from its Lean source to a plain exposition. Five routes take you through it.
+          at every level from its Lean source to a plain exposition.
         </p>
       </header>
 
@@ -139,23 +139,23 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <ol className="about__routes">
           <li>
             <a href={routeHref({ view: "map" })}>The argument map</a>
-            <span>Start here to see the proof: the theorem at the top, and each result it uses beneath it. Click a record to open everything below it.</span>
+            <span>The proof as a drawing, from the theorem down. Start here.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>
-            <span>Put one record’s Lean and its statement in each paper side by side, or line up two papers by the records they share.</span>
+            <span>Every step of the proof in a table: its Lean and its statement in each paper, side by side.</span>
           </li>
           <li>
-            <a href={routeHref({ view: "read", stage: "expository" })}>The reader beside the map</a>
-            <span>Read a paper with the map following along: each passage lights the records it discusses.</span>
+            <a href={routeHref({ view: "read", stage: "expository" })}>The reader</a>
+            <span>A paper with the map following along, passage by passage.</span>
           </li>
           <li>
             <a href={routeHref({ view: "lean" })}>The Lean browser</a>
             <span>
-              Read OpenAI’s Lean source by file and declaration
+              OpenAI’s source
               {leanRows ? (
                 <>
-                  : <span className="num">{leanRows.length}</span> modules holding{" "}
+                  : <span className="num">{leanRows.length}</span> modules,{" "}
                   <span className="num">{leanRows.reduce((n, m) => n + m.declarations, 0).toLocaleString("en-GB")}</span> declarations
                 </>
               ) : null}
@@ -164,11 +164,11 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
           <li>
             <a href={routeHref({ view: "checks" })}>The checks</a>
-            <span>See what each program ran on, what passed, what failed and what was never run.{mostNotRun ? " Most checks have not been run." : ""}</span>
+            <span>What passed, what failed and what was never run.{mostNotRun ? " Most have not been run." : ""}</span>
           </li>
         </ol>
         <p className="about__watch">
-          To see all five in use, watch <FilmLink film={WALKTHROUGH} />.
+          To see them in use, watch <FilmLink film={WALKTHROUGH} />.
         </p>
       </section>
 
@@ -243,30 +243,8 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
         </ul>
         <p className="about__keynote">
-          A word in small capitals on each card names the kind of record: claim, assumption, main result or Lean declaration.
-          Only assumption cards have a dashed border. When you choose an account above the map, each card carries one of three
-          marks: the record has a passage of its own in that account, the account uses it without a passage of its
-          own, or the account does not use it.
-        </p>
-        <p className="about__keynote">
-          The map has three views. Steps opens the main result at reading size. Overview fits the whole argument on the
-          screen; as you zoom out, each card first shows only its title and then becomes a small tile in its source’s colour,
-          which keeps its title for as long as the tile has room for it. Outline shows the same argument as a list you scroll.
-          Scrolling up or down zooms in and out around the pointer, and dragging moves the map.
-        </p>
-        <p className="about__keynote">
-          Clicking a card opens its record in a panel, opens every record below it, and moves the map so that the card and
-          all of those records are in view. Clicking an empty part of the map closes the panel and puts the map back as it
-          was. Resting the pointer on a card draws the records below it at half strength until the pointer leaves. The
-          card’s “Inputs” button, or the Space key, draws only the records it uses directly, and the arrow keys move between
-          cards. Pointing at a line shows a short description of that step, and
-          selecting the line opens the step. “Show all branches” and “Collapse branches”, at the bottom right of the map, open
-          or close every branch at once.
-        </p>
-        <p className="about__keynote">
-          The key row under the <a href={routeHref({ view: "map" })}>argument map</a>’s header shows the colours, lines and
-          marks in short; the Key button shows or hides it. On the checks page each outcome is written as a word, and only a
-          failed outcome is shown in colour.
+          The <a href={routeHref({ view: "map" })}>argument map</a>’s Key button says the rest in words, with its keyboard
+          controls. On the checks page each outcome is written as a word, and only a failed outcome is shown in colour.
         </p>
       </section>
 

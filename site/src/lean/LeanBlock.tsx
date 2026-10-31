@@ -1,4 +1,4 @@
-import { createContext, memo, useCallback, useContext, useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import "katex/dist/katex.min.css";
 import { leanSourceUrl, type LeanDeclaration, type LeanModule, type LeanRelation } from "../api/lean";
 import { routeHref } from "../app/router";
@@ -16,7 +16,7 @@ import {
   type LeanShell,
 } from "./data";
 import "./lean.css";
-import { Notation, PathText, Prose, ReadingStrip } from "./ReadingStrip";
+import { Breakable, clearName, Notation, PathText, Prose, readName } from "./ReadingStrip";
 import { collectLocals, findDecl, makeScope, resolveName, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
 import { tokenize, type LeanToken } from "./tokenize";
 
@@ -41,6 +41,8 @@ export interface LeanBlockProps {
   clause?: string;
   /** Shown after the block's actions. */
   below?: ReactNode;
+  /** The statement alone, for a cell of Compare's table: no caveat, proof or actions. */
+  bare?: boolean;
 }
 
 /** A conclusion or hypothesis this short is shown under the statement. */
@@ -53,9 +55,6 @@ const MAX_DEPTH = 3;
 /** A definition this short is read whole; a longer one folds like a proof. */
 const SHORT_DEFINITION = 12;
 const LIST_LIMIT = 8;
-
-/** The page's one reading strip, when blocks in a list share it. */
-export const SharedStrip = createContext<((target: NameTarget) => void) | null>(null);
 
 const lineWord = (n: number) => `${n.toLocaleString("en-GB")} ${n === 1 ? "line" : "lines"}`;
 
@@ -166,7 +165,9 @@ export function Terms({ targets, onOpen }: { targets: NameTarget[]; onOpen(row: 
   if (!terms.length) return null;
   return (
     <section className="lean-terms" aria-label="Names in this statement">
-      <p className="lean-terms__title">Names in this statement</p>
+      <p className="lean-terms__title">
+        Names in this statement <span className="lean-terms__hint">Point at a name to read it.</span>
+      </p>
       <dl className="lean-terms__list">
         {terms.map(({ row, term }) => (
           <div key={row.name} className="lean-terms__row">
@@ -240,7 +241,7 @@ function DependencyList({ title, names, decl, shell, onOpen }: { title: string; 
                   onOpen(row, event.currentTarget);
                 }}
               >
-                <code>{row.short}</code>
+                <Breakable name={row.short} />
                 <span className="lean-deps__kind">{kindWord(row.kind)}</span>
                 {record && <span className="lean-deps__record">In the argument: {record.title}</span>}
               </a>
@@ -285,12 +286,10 @@ export interface DeclViewProps {
   noTerms?: boolean;
   clause?: string;
   below?: ReactNode;
+  bare?: boolean;
 }
 
-export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below }: DeclViewProps) {
-  const shared = useContext(SharedStrip);
-  const [statementRead, setStatementRead] = useState<NameTarget | null>(null);
-  const [proofRead, setProofRead] = useState<NameTarget | null>(null);
+export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare }: DeclViewProps) {
   const [proofChosen, setShowProof] = useState(Boolean(proofOpen));
   const [opened, setOpened] = useState<Opened | null>(null);
 
@@ -299,7 +298,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const statementEnd = statementLastLine(decl, readsWhole(decl));
   const foldLines = decl.end_line - statementEnd;
   const clauseInProof = Boolean(clause && foldLines > 0 && !lines.slice(decl.line - 1, statementEnd).join("\n").includes(clause) && lines.slice(statementEnd, decl.end_line).join("\n").includes(clause));
-  const showProof = proofChosen || clauseInProof;
+  const showProof = proofChosen || (clauseInProof && !bare);
 
   const { statement, scope, tokens } = useMemo(() => {
     const scope = makeScope(decl, module, shell.index, shell.terms);
@@ -318,16 +317,11 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
 
   const allTargets = useMemo(() => [...statement.targets, ...where.flatMap((body) => body.code.targets)], [statement, where]);
 
-  const readStatement = useCallback((target: NameTarget) => (shared ?? setStatementRead)(target), [shared]);
-  const readProof = useCallback((target: NameTarget) => (shared ?? setProofRead)(target), [shared]);
+  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? readName(target, element, shell) : clearName()), [shell]);
 
   const open = (next: Opened["row"], slot: Opened["slot"], from: HTMLElement | null) => setOpened({ row: next, slot, from });
   const onOpenIn = (slot: Opened["slot"]) => (target: NameTarget, element: HTMLElement, event: MouseEvent) => {
-    if (target.kind === "mathlib") {
-      event.preventDefault();
-      return;
-    }
-    if (depth >= MAX_DEPTH) return;
+    if (target.kind === "mathlib" || depth >= MAX_DEPTH) return;
     event.preventDefault();
     open(target.row, slot, element);
   };
@@ -369,10 +363,10 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
                   row.onSelect();
                 }}
               >
-                <code>{decl.short}</code>
+                <Breakable name={decl.short} />
               </a>
             ) : (
-              <code>{decl.short}</code>
+              <Breakable name={decl.short} />
             )}
           </Title>
         </div>
@@ -393,13 +387,13 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
                 </>
               )}
             </p>
-            <p className="lean-block__caveat">{LINK_CAVEAT}</p>
+            {!bare && <p className="lean-block__caveat">{LINK_CAVEAT}</p>}
           </>
         )}
       </header>
       {decl.doc && <p className="lean-block__doc">{decl.doc}</p>}
 
-      <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={readStatement} onOpen={onOpenStatement} />
+      <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpenStatement} />
       {where.map((body) => (
         <section className="lean-where" key={body.row.name} aria-label={`Where ${body.row.short} says`}>
           <p className="lean-where__label">
@@ -409,27 +403,25 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
               in {(shell.paths.get(body.row.module)?.path ?? body.row.module).split("/").pop()}, line {body.row.line}
             </span>
           </p>
-          <CodeView code={body.code} label={`Definition of ${body.row.short}`} onRead={readStatement} onOpen={onOpenStatement} />
+          <CodeView code={body.code} label={`Definition of ${body.row.short}`} onRead={read} onOpen={onOpenStatement} />
         </section>
       ))}
-      {!shared && <ReadingStrip target={statementRead} shell={shell} compact={compact} />}
       {nest("statement")}
-      {selected && !noTerms && <Terms targets={allTargets} onOpen={(next, from) => open(next, "statement", from)} />}
+      {selected && !noTerms && !bare && <Terms targets={allTargets} onOpen={(next, from) => open(next, "statement", from)} />}
 
-      {foldLines > 0 && (
+      {foldLines > 0 && !bare && (
         <button type="button" className="lean-fold" aria-expanded={showProof} onClick={() => setShowProof(!proofChosen)}>
           {foldWord}, {lineWord(foldLines)}
         </button>
       )}
       {proof && (
         <div className="lean-block__proof">
-          <CodeView code={proof} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={readProof} onOpen={onOpenProof} />
-          {!shared && <ReadingStrip target={proofRead} shell={shell} sticky compact={compact} />}
+          <CodeView code={proof} label={`${foldWord} of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpenProof} />
         </div>
       )}
       {nest("proof")}
 
-      {selected && (
+      {selected && !bare && (
         <p className="lean-block__actions">
           <a className="lean-action" href={repoUrl} target="_blank" rel="noreferrer">
             Open in OpenAI's repository
@@ -437,7 +429,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
           <CopyName name={decl.name} />
         </p>
       )}
-      {selected && !noDependencies && <Dependencies decl={decl} shell={shell} onOpen={(next, from) => open(next, "relations", from)} />}
+      {selected && !noDependencies && !bare && <Dependencies decl={decl} shell={shell} onOpen={(next, from) => open(next, "relations", from)} />}
       {nest("relations")}
       {selected && below}
     </article>
@@ -452,7 +444,7 @@ function useMemoStable<A extends unknown[]>(fn: (...args: A) => void): (...args:
 }
 
 /** One Lean declaration: its statement, readable names, its proof on demand and where it comes from. */
-export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below }: LeanBlockProps) {
+export function LeanBlock({ name, module: moduleName, relation, note, proofOpen, compact, depth, noDependencies, noTerms, clause, below, bare }: LeanBlockProps) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
   const row = shell ? findDecl(shell.index, name, moduleName) : undefined;
@@ -463,5 +455,5 @@ export function LeanBlock({ name, module: moduleName, relation, note, proofOpen,
   if (!shell || loaded.status !== "ready") return <div className={`lean-wait${compact ? " is-compact" : ""}`}>Loading the Lean source</div>;
   const decl = declIn(loaded.module, name);
   if (!decl) return <p className="lean-note">No declaration named <code>{name}</code> in {loaded.module.module}.</p>;
-  return <DeclView decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} />;
+  return <DeclView decl={decl} module={loaded.module} shell={shell} relation={relation} note={note} proofOpen={proofOpen} compact={compact} depth={depth} noDependencies={noDependencies} noTerms={noTerms} clause={clause} below={below} bare={bare} />;
 }

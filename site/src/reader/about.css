@@ -134,7 +134,7 @@
   color: inherit;
 }
 
-/* The five routes: the name is the link, one line says what it does. */
+/* The routes: the name is the link, one line says what it does. */
 .about__use {
   margin-top: var(--space-5);
 }
@@ -151,7 +151,7 @@
   grid-template-columns: 11.5rem minmax(0, 1fr);
   gap: var(--space-4);
   align-items: baseline;
-  padding: var(--space-3) 0;
+  padding: var(--space-2) 0;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -405,11 +405,7 @@
 }
 
 .about__start {
-  margin-top: var(--space-5);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-  background: var(--surface);
+  margin-top: var(--space-4);
 }
 
 .about__start .about__len {

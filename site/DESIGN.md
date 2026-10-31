@@ -314,6 +314,59 @@ On phones the sheet peeks with the title and two actions; reading it opens a
 full-screen view that holds focus until it is closed, and closing returns focus
 to whatever opened it.
 
+## Compare
+
+"/compare" is the table the site is built on. Rows are the steps of the argument and columns
+are the levels, so the words side by side are always about the same thing. A cell is that
+step's exact statement at that level, typeset as the reader typesets it, with "Read in
+context" leading into the paper or the Lean. Whole passages are never paired: two passages
+that share a record can be making different arguments, and side by side they look like
+unrelated text.
+
+- **All steps** is the first view. The levels are four pressable words, and the width sets
+  how many start on: the Lean, the short paper and the exposition on a laptop, all four on a
+  monitor. The rows are the steps every level shown has, so each row compares something, with
+  the rest one link away. The main result comes first, then the first paper's reading order,
+  so its column reads down as the paper does. A record for a Lean declaration is not a row,
+  because the Lean has a column. Two steps whose cells start with the same words share a row.
+  A cell shows the strongest thing that level says, and a bare mention does not count. A row's
+  title stays in view while its cells are read; j and k move between rows.
+- **One step** is one row in full, reached from a row's title. The rail lists the steps of the
+  argument. Each level gets a scrolling column with everything it says about the step, and
+  "Uses" and "Used by" walk the argument in either direction. On a phone the levels stack,
+  with tabs to jump between them.
+
+Going between the two keeps the step. Pressing a level keeps the row in view.
+
+## The Lean browser
+
+"/lean" makes the Lean readable by someone who does not write it. The folders are on the
+left with a name filter, the module's source is in the middle, and the selected declaration
+is on the right with its linked records. Below the source, the neighbourhood shows what uses
+the declaration and what it uses. Reading aids sit with the code: "How to read Lean" for the
+notation and "What each folder holds" for the library. Where the alignment names a clause,
+`LeanBlock` shows it inside its declaration, under "Where FullSupportConclusion says".
+
+The dependency edges come from the source text and say so (`dependency_source`,
+`dependency_note`), because a text parser can miss or misattribute a use. A link from a
+record to a declaration is a reading link, and the page never calls two statements
+equivalent.
+
+## The reader
+
+From 1280px the map sits beside the paper: the paper's own narrower graph, with the records
+of the passage being read lit. It follows block by block, and its goal stays still while the
+reader scrolls. The pane's trail says which section this is and how many of the paper's
+records have come so far. A statement link (`?l=`) lands on the exact line and marks it. A
+formula is fitted as it comes near the screen, because each measurement forces a layout.
+
+## Checks
+
+"/checks" opens with one paragraph saying what is established, then a table by kind of check
+with the number passed, failed, unavailable and not run in columns of their own. Outcomes are
+never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
+success badge. With a record chosen (`?n=`), the page starts with the checks attached to it.
+
 ## Motion
 
 | Change | Behaviour | Time |
@@ -362,10 +415,11 @@ Never suggest otherwise with colour, icons or wording.
 
 | Width | Map | Inspector | Reader |
 | --- | --- | --- | --- |
-| ≥ 1360px | Canvas with foot bar | Right column, full height | Outline, paper, optional inspector |
-| 1100–1359px | Canvas | Right column | Outline or inspector beside the paper |
-| 901–1099px | Canvas | Right column | Paper; sections and passage context as sheets |
-| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets |
+| ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
+| 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
+| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the map as a sheet |
+| 901–1119px | Canvas | Right column | Paper; sections, passage context and map as sheets |
+| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections, passage context and map as sheets |
 | ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar |
 
 Phones use 16px gutters and `--target` (44px) for primary touch targets. No

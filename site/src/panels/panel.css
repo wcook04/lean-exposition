@@ -99,6 +99,11 @@
   font-weight: 600;
 }
 
+/* True of every record, so it says nothing about this one. A status that differs stays. */
+.panel__id .panel__status--unverified {
+  display: none;
+}
+
 .panel__close {
   position: absolute;
   top: 50%;
@@ -583,6 +588,31 @@
   margin-right: 4px;
   font-weight: 600;
   color: var(--ink);
+}
+
+/* Where a step's explanation comes from: one quiet line until it is asked for. */
+.panel__origin {
+  margin-top: 10px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--ink-3);
+}
+
+.panel__origin summary {
+  width: fit-content;
+  min-height: 28px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+
+.panel__origin summary:hover {
+  color: var(--ink);
+}
+
+.panel__origin p {
+  margin: 6px 0 0;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
 }
 
 .panel__more-scope {

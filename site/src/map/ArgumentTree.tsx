@@ -25,7 +25,7 @@ import { zoom as d3zoom, zoomIdentity, type ZoomBehavior, type ZoomTransform } f
 import type { Stage } from "../api/types";
 import { closure, type ArgEdge, type ArgGraph, type ArgNode } from "../model/graph";
 import type { Trace } from "../app/router";
-import { kindName } from "./labels";
+import { kindName, relationPhrase } from "./labels";
 import { createPortal } from "react-dom";
 import { shortTitle as tileTitle } from "../compare/useAlignment";
 import { hasLean } from "./levels";
@@ -43,7 +43,6 @@ import type { MapScene } from "./canvas/scene";
 import { useReducedMotion } from "./canvas/useReducedMotion";
 import { SIDES, beyond, chipAt, chipText, freeSpot, panToward, sameBeyond, screenRects, type Beyond, type Side } from "./canvas/chips";
 import { traceTiming } from "./canvas/trace";
-import { EdgeTip, type TipState } from "./canvas/EdgeTip";
 import { SimplifiedMap } from "./canvas/SimplifiedMap";
 import "./tree.css";
 
@@ -145,7 +144,7 @@ export interface TreeProps {
   sectionOf?: ReadonlyMap<string, string> | null;
   /** Where the list of links the map leaves out goes; without it the list is not shown. */
   notesHost?: HTMLElement | null;
-  /** A line outside the canvas that shows the full title of a shortened tile under the pointer or focus. */
+  /** A quiet line in a free corner of the canvas: the full title of a shortened tile, or the relation under the pointer. */
   captionRef?: RefObject<HTMLElement | null>;
 }
 
@@ -258,7 +257,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const [hover, setHover] = useState<string | null>(null);
   const [focusId, setFocusId] = useState<string | null>(null);
   const [moving, setMoving] = useState(false);
-  const [tip, setTip] = useState<TipState | null>(null);
   const [hoverEdge, setHoverEdge] = useState<string | null>(null);
   const reduced = useReducedMotion();
   const reducedRef = useRef(reduced);
@@ -1998,65 +1996,68 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     allHome.current = null;
   }, [goal]);
 
-  /** Under the pointer or focus: the full title of a shortened tile, on a line outside the canvas. */
-  const showCaption = (lid: string | null) => {
+  /** One quiet line on the canvas, in the first corner where it covers no card. */
+  const showCaption = (text: string) => {
     const el = props.captionRef?.current;
+    const wrap = wrapRef.current;
     if (!el) return;
-    const text = lid && repRef.current === "compact" && shortened.current.has(lid) ? cardEls.current.get(lid)?.dataset.full : "";
-    el.textContent = text || "";
+    el.textContent = text;
     el.hidden = !text;
+    if (!text || !wrap) return;
+    const area = wrap.getBoundingClientRect();
+    const w = el.offsetWidth;
+    const h = el.offsetHeight;
+    const cards = [...cardEls.current.values()].map((c) => c.getBoundingClientRect());
+    const clear = (x: number, y: number) => cards.every((c) => c.right < x || c.left > x + w || c.bottom < y || c.top > y + h);
+    const [left, right] = [area.left + 24, area.right - 24 - w];
+    const [top, bottom] = [area.top + 12, area.bottom - 12 - h - insets.bottom + 20];
+    const corners: [string, number, number][] = [
+      ["top-left", left, top],
+      ["top-right", right, top],
+      ["bottom-left", left, bottom],
+      ["bottom-right", right, bottom],
+    ];
+    el.dataset.at = (corners.find(([, x, y]) => clear(x, y)) ?? corners[0])[0];
+  };
+  /** Under the pointer or focus, a shortened tile says its full title. */
+  const captionTile = (lid: string | null) => {
+    const full = lid && repRef.current === "compact" && shortened.current.has(lid) ? cardEls.current.get(lid)?.dataset.full : "";
+    showCaption(full || "");
   };
   const setHovered = (lid: string | null) => {
     setHover(lid);
-    showCaption(lid);
+    captionTile(lid);
     onHover?.(lid ? recordOf(lid) : null);
   };
   const hoverRec = hover ? recordOf(hover) : null;
 
-  // Edge hover: a short delay in; leaving waits a moment so the pointer can reach the tooltip.
-  const tipTimer = useRef(0);
-  const tipLeave = useRef(0);
-  const pointerAt = (event: React.PointerEvent) => {
-    const rect = wrapRef.current!.getBoundingClientRect();
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
-  };
-  const enterEdge = (key: string, event: React.PointerEvent) => {
-    window.clearTimeout(tipLeave.current);
+  // A line under the pointer lights, and the caption names it. Nothing opens over the map.
+  const nameOf = (id: string) => fullGraph.nodes.get(id)?.label ?? id;
+  const enterEdge = (key: string) => {
     setHoverEdge(key);
-    if (!key.startsWith("bus:") && !edgeByKey.has(edgeKeyOf(key))) return;
-    const at = pointerAt(event);
-    window.clearTimeout(tipTimer.current);
-    tipTimer.current = window.setTimeout(() => setTip((t) => (t && t.key === key ? t : { key, ...at })), 120);
+    if (key.startsWith("bus:")) {
+      const parent = key.slice(4);
+      const n = built.skeleton.filter((e) => e.from === parent && e.kind === "supports").length;
+      showCaption(`${nameOf(recordOf(parent))} uses ${n === 1 ? "one record" : `${n} records`} directly`);
+      return;
+    }
+    const e = edgeByKey.get(edgeKeyOf(key));
+    // A line that closes up a lens is no recorded relation, so there is nothing to name.
+    showCaption(e ? relationPhrase(e.kind, nameOf(e.from), nameOf(e.to)) : "");
   };
   const leaveEdge = () => {
-    window.clearTimeout(tipTimer.current);
-    window.clearTimeout(tipLeave.current);
-    tipLeave.current = window.setTimeout(() => {
-      setTip(null);
-      setHoverEdge(null);
-    }, 220);
+    setHoverEdge(null);
+    showCaption("");
   };
-  useEffect(
-    () => () => {
-      window.clearTimeout(tipTimer.current);
-      window.clearTimeout(tipLeave.current);
-    },
-    [],
-  );
   // Premise tags: pointing at one names the relation and tints every tag of the same assumption.
   const [hoverTag, setHoverTag] = useState<string | null>(null);
-  const enterTag = (e: ArgEdge, el: HTMLElement, delay = 120) => {
-    window.clearTimeout(tipLeave.current);
-    window.clearTimeout(tipTimer.current);
+  const enterTag = (e: ArgEdge) => {
     setHoverTag(e.to);
-    const wrap = wrapRef.current!.getBoundingClientRect();
-    const r = el.getBoundingClientRect();
-    const at = { key: e.key, x: r.right - wrap.left, y: r.top + r.height / 2 - wrap.top };
-    tipTimer.current = window.setTimeout(() => setTip(at), delay);
+    showCaption(relationPhrase(e.kind, nameOf(e.from), nameOf(e.to)));
   };
   const leaveTag = () => {
     setHoverTag(null);
-    leaveEdge();
+    showCaption("");
   };
   const tagClass = (e: ThroughEdge) => {
     const parts = ["tag"];
@@ -2067,20 +2068,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (litIds?.has(e.to)) parts.push("is-passage");
     return parts.join(" ");
   };
-
-  // Escape closes the tooltip before anything else on the page.
-  useEffect(() => {
-    if (!tip) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      event.preventDefault();
-      event.stopPropagation();
-      setTip(null);
-      setHoverEdge(null);
-    };
-    window.addEventListener("keydown", onKey, true);
-    return () => window.removeEventListener("keydown", onKey, true);
-  }, [tip]);
 
   // ---- Light ------------------------------------------------------------------------
 
@@ -2226,7 +2213,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const bounds = layoutBounds(layout);
 
   const cardIds = [...layout.boxes.keys(), ...[...exitShown].filter((id) => !layout.boxes.has(id))];
-  const tipEdge = tip && !moving ? tip : null;
 
   // Relations in the drawn scope that the simplified drawing leaves out.
   const hiddenEdges = useMemo(() => [...built.implied].map((k) => edgeByKey.get(k)).filter((e): e is ArgEdge => !!e), [built.implied, edgeByKey]);
@@ -2367,10 +2353,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                   key={pe.key}
                   ref={pathRef(`hit:${pe.key}`)}
                   className="hit"
-                  onPointerEnter={(event) => enterEdge(pe.key, event)}
+                  onPointerEnter={() => enterEdge(pe.key)}
                   onPointerLeave={leaveEdge}
                   onClick={(event) => {
                     event.stopPropagation();
+                    showCaption("");
                     // A line that closes up a lens is no recorded step: it opens the record that uses.
                     if (onEdgeSelect && edgeByKey.has(edgeKeyOf(pe.key))) onEdgeSelect(edgeKeyOf(pe.key));
                     else onSelect(recordOf(pe.from));
@@ -2382,10 +2369,11 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 key={parent}
                 ref={pathRef(`hitstem:${parent}`)}
                 className="hit"
-                onPointerEnter={(event) => enterEdge(`bus:${parent}`, event)}
+                onPointerEnter={() => enterEdge(`bus:${parent}`)}
                 onPointerLeave={leaveEdge}
                 onClick={(event) => {
                   event.stopPropagation();
+                  showCaption("");
                   onSelect(recordOf(parent));
                 }}
               />
@@ -2404,8 +2392,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const tab = lid === roving ? 0 : -1;
           const lean = hasLean(id, node);
           const section = lens ? props.sectionOf?.get(id) : undefined;
-          const tile = isRoot ? node.label : tileTitle(id, node.label);
-          const tileLean = node.kind === "declaration" && tile === node.label;
+          const tileLean = node.kind === "declaration";
+          const tile = tileLean ? node.label.slice(node.label.lastIndexOf(".") + 1) : tileTitle(id, node.label);
           const usedBy = built.shared.get(id) ?? 0;
           return (
             <div
@@ -2431,9 +2419,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               onKeyDown={(event) => onCardKey(lid, event)}
               onFocus={() => {
                 setFocusId(lid);
-                showCaption(lid);
+                captionTile(lid);
               }}
-              onBlur={() => showCaption(null)}
+              onBlur={() => showCaption("")}
               onPointerEnter={() => setHovered(lid)}
               onPointerLeave={() => setHovered(null)}
             >
@@ -2465,13 +2453,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                         aria-label={`Explicit assumption: ${node.label} assumes ${graph.nodes.get(e.to)?.label ?? e.to}. Open the step.`}
                         onClick={(event) => {
                           event.stopPropagation();
+                          showCaption("");
                           if (onEdgeSelect && edgeByKey.has(e.key)) onEdgeSelect(e.key);
                           else onSelect(e.to);
                         }}
-                        title={graph.nodes.get(e.to)?.label ?? e.to}
-                        onPointerEnter={(event) => enterTag(e, event.currentTarget)}
+                        onPointerEnter={() => enterTag(e)}
                         onPointerLeave={leaveTag}
-                        onFocus={(event) => enterTag(e, event.currentTarget, 0)}
+                        onFocus={() => enterTag(e)}
                         onBlur={leaveTag}
                       >
                         {tagTitle(tags, e, (x) => tileTitle(x, graph.nodes.get(x)?.label ?? x))}
@@ -2521,7 +2509,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               </div>
               <div className="card__compact" aria-hidden="true">
                 {isRoot && <span className="card__cmain">Main result</span>}
-                <span className={`card__ctitle${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={node.label} camel /> : isRoot ? <WholeWords text={node.label} /> : tile}</span>
+                <span className={`card__ctitle${tileLean ? " lean" : ""}`}>{tileLean ? <LeanName name={tile} camel /> : isRoot ? <WholeWords text={tile} /> : tile}</span>
                 {section && <span className="card__csec">{section}</span>}
                 {isRoot && rootExcerpt && (
                   <div ref={statementRef} className="card__cstatement">
@@ -2589,18 +2577,6 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         onChip={chipClick}
         onChoose={(key) => (onEdgeSelect ? onEdgeSelect(key) : onSelect(edgeByKey.get(key)?.from ?? null))}
       />
-      {tipEdge && (
-        <EdgeTip
-          tip={tipEdge}
-          graph={fullGraph}
-          edge={tipEdge.key.startsWith("bus:") ? null : (edgeByKey.get(edgeKeyOf(tipEdge.key)) ?? null)}
-          bus={tipEdge.key.startsWith("bus:") ? { parent: recordOf(tipEdge.key.slice(4)), count: built.skeleton.filter((e) => e.from === tipEdge.key.slice(4) && e.kind === "supports").length } : null}
-          wrap={wrapRef.current}
-          compact={compact}
-          onEnter={() => window.clearTimeout(tipLeave.current)}
-          onLeave={leaveEdge}
-        />
-      )}
     </div>
   );
 });

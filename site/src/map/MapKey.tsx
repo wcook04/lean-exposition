@@ -66,7 +66,7 @@ export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | nu
           <p className="map-keypop__h">Lines</p>
           <ul className="map-keypop__channels">
             <li>
-              <Sample kind="supports" /> A record used in the argument for the result above it.
+              <Sample kind="supports" /> Each line runs from a record up to the result that uses it.
             </li>
             <li>
               <Sample kind="formalizes" head={false} /> A Lean declaration recorded for that result.

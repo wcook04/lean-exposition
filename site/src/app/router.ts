@@ -29,12 +29,14 @@ export type Route =
   | { view: "checks"; node?: string }
   | {
       view: "compare";
-      /** The record compared across its levels. */
+      /** The record read across its levels. Without one, the table of every step. */
       node?: string;
-      /** Two papers aligned by the records they share, instead of one record across its levels. */
-      papers?: { a: Stage; b: Stage };
+      /** The table, opened at this record. */
+      at?: string;
       /** Which levels show, in order, when the reader has chosen. */
       levels?: Level[];
+      /** The table with the steps only some of the levels have, as well as those all of them have. */
+      any?: boolean;
     }
   | { view: "lean"; module?: string; decl?: string }
   | { view: "about"; anchor?: string }
@@ -123,14 +125,9 @@ export function parseRoute(url: URL): Route {
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
-  if (path === "/compare/papers") {
-    const a = q.get("a");
-    const b = q.get("b");
-    return { view: "compare", node: q.get("n") ?? undefined, papers: { a: isStage(a) ? a : "short", b: isStage(b) ? b : "expository" } };
-  }
   if (path === "/compare") {
     const levels = q.get("levels")?.split(",").filter(isLevel);
-    return { view: "compare", node: q.get("n") ?? undefined, levels: levels?.length ? levels : undefined };
+    return { view: "compare", node: q.get("n") ?? undefined, at: q.get("at") ?? undefined, levels: levels?.length ? levels : undefined, any: q.get("in") === "any" || undefined };
   }
   if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined };
   if (path === "/about") return { view: "about", anchor: hash };
@@ -194,14 +191,12 @@ export function routeHref(route: Route): string {
       if (route.node) q.set("n", route.node);
       return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
     case "compare": {
-      if (route.papers) {
-        q.set("a", route.papers.a);
-        q.set("b", route.papers.b);
-      }
       if (route.node) q.set("n", route.node);
+      if (route.at) q.set("at", route.at);
       if (route.levels) q.set("levels", route.levels.join(","));
+      if (route.any) q.set("in", "any");
       const s = q.toString();
-      return `${BASE}/compare${route.papers ? "/papers" : ""}${s ? `?${s}` : ""}`;
+      return `${BASE}/compare${s ? `?${s}` : ""}`;
     }
     case "lean": {
       if (route.module) q.set("m", route.module);

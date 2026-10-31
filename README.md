@@ -194,9 +194,9 @@ the data; a frontend can choose its own graph renderer and reading interface.
 
 The repository's own [reading website](site/README.md) is one such frontend.
 It shows the main theorem with the recorded argument beneath it and lets you
-unfold any result into what it uses. **Compare** puts one step side by side at
-every level, from the Lean declaration through the long record and short paper
-to the exposition, and aligns any two papers by the records they share. The
+unfold any result into what it uses. **Compare** is the proof as a table: each
+row is one step, set side by side at every level from the Lean declaration
+through the long record and short paper to the exposition. The
 reader keeps the map beside the paper as you scroll, and the Lean browser opens
 OpenAI's source with each central name explained in the papers' notation. It
 runs against a local `serve` process or as a static edition; its guide gives the

@@ -9,7 +9,7 @@
 // From 1280px the argument map stands beside the paper unless the reader turned
 // it off; narrower, it opens as a sheet from a button.
 
-import { startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { lazy, startTransition, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { AlignedStatement, Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
@@ -26,7 +26,7 @@ import { Visit } from "./page/Visit";
 import { Modal } from "./page/Modal";
 import { OutlineColumn, PdfLink, Sections, SectionsPopover } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
-import { MapPane, type PaneHover } from "./page/MapPane";
+import type { PaneHover } from "./page/MapPane";
 import { RecordDock, type OpenRecord } from "./page/RecordDock";
 import {
   chainOf,
@@ -68,6 +68,9 @@ import {
 } from "./page/position";
 import "./reader-content.css";
 import "./reader-page.css";
+
+// The pane and the map engine arrive after the paper has painted.
+const MapPane = lazy(() => import("./page/MapPane").then((m) => ({ default: m.MapPane })));
 
 type ReadRoute = Extract<Route, { view: "read" }>;
 
@@ -1122,25 +1125,29 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       {paneOn && (
         <div className="reader__map">
           {paneReady && (
-            <MapPane
-              {...paneProps}
-              inert={!!route.beside}
-              onHide={hideMap}
-              overlay={
-                inspecting ? (
-                  <aside className="reader__inspector reader__inspector--over" aria-label="Records linked to this passage">
-                    {inspector}
-                  </aside>
-                ) : undefined
-              }
-            />
+            <Suspense fallback={null}>
+              <MapPane
+                {...paneProps}
+                inert={!!route.beside}
+                onHide={hideMap}
+                overlay={
+                  inspecting ? (
+                    <aside className="reader__inspector reader__inspector--over" aria-label="Records linked to this passage">
+                      {inspector}
+                    </aside>
+                  ) : undefined
+                }
+              />
+            </Suspense>
           )}
         </div>
       )}
 
       {!paneOn && mapSheet && (
         <Modal title="Argument map" placement={phone ? "sheet" : "side-end"} className="modal--map" onClose={() => setMapSheet(false)}>
-          <MapPane {...paneProps} inModal onHide={hideMap} />
+          <Suspense fallback={null}>
+            <MapPane {...paneProps} inModal onHide={hideMap} />
+          </Suspense>
         </Modal>
       )}
 

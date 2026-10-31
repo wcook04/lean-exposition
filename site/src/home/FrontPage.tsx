@@ -331,8 +331,9 @@ function CheckTable() {
       </table>
       <p className="checktable__note">
         A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a Lean
-        project compiles. This site also links records to {links} Lean declarations by reading the sources. A program confirms
-        that each link still lands, and no one has reviewed whether the two statements match.
+        project compiles. AI agents also linked the records to {links} Lean declarations by reading the sources, and a second
+        pass re-read those links. A program confirms that each one still lands. No independent review of whether the two
+        statements match has been done.
       </p>
     </>
   );

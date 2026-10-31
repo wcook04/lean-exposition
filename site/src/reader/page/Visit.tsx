@@ -73,7 +73,7 @@ export function Visit({ target, origin, originLabel, compare, structures, onRetu
             Continue reading the {PAPER_NAMES[target.stage].short.toLowerCase()} from here
           </button>
           {origin && origin.stage !== target.stage && (
-            <a className="visit__comparepapers" href={routeHref({ view: "compare", papers: { a: origin.stage, b: target.stage } })}>
+            <a className="visit__comparepapers" href={routeHref({ view: "compare", levels: [origin.stage, target.stage] })}>
               Compare these two papers
             </a>
           )}

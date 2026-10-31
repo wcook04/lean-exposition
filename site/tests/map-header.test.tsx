@@ -74,11 +74,15 @@ const keyButton = () => [...container.querySelectorAll<HTMLButtonElement>("butto
 describe("the map header", () => {
   beforeEach(() => localStorage.clear());
 
-  it("says what a line means in one sentence, with the rest behind the Key", () => {
+  it("gives the canvas the page under the header, with what lines mean behind the Key", () => {
     open({ view: "map" });
-    expect(container.querySelector("#map-key-row")).toBeNull();
-    expect(container.querySelector(".map-sub__line")!.textContent).toContain("Each line runs from a record up to the result that uses it.");
+    expect(container.querySelector(".map-sub")).toBeNull();
     expect(keyButton()).toBeDefined();
+  });
+
+  it("keeps one line under the header only while a paper's lens changes what a line means", () => {
+    open({ view: "map", lens: "short" });
+    expect(container.querySelector(".map-sub")!.textContent).toContain("A line may pass over records it leaves out.");
   });
 
   it("names the main result in the title button and lists the main results as radio items", () => {
@@ -98,7 +102,6 @@ describe("the map header", () => {
     expect(radios.map((r) => r.textContent?.replace(/\s*\d+$/, ""))).toEqual(["All", "Long record", "Short paper", "Exposition"]);
     expect(radios[0].getAttribute("aria-checked")).toBe("true");
     expect(container.querySelector(".dock")).toBeNull();
-    expect(container.querySelector(".map-sub__line")!.textContent).toMatch(/^This argument uses \d+ of the \d+ records on this site\. /);
   });
 
   it("keeps the branch controls in a bar of their own, outside the canvas, for the view they change", () => {

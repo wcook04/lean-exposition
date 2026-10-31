@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "records": {
   "support.integrated_coercivity": {
-   "short": "Integrated lower bound, smooth profiles",
+   "short": "Integrated lower bound",
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",

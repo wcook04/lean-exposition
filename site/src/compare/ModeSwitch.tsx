@@ -1,15 +1,14 @@
-import type { Stage } from "../api/types";
-import { routeHref } from "../app/router";
+import { routeHref, type Level } from "../app/router";
 
-/** The two ways of reading the table. Both are plain links, so either can be opened on its own. */
-export function ModeSwitch({ mode, papers, node }: { mode: "steps" | "papers"; papers?: { a: Stage; b: Stage }; node?: string }) {
+/** The table, or one of its rows in full. Both are plain links, and each leads to the same step. */
+export function ModeSwitch({ mode, step, levels }: { mode: "table" | "step"; step?: string; levels?: Level[] }) {
   return (
-    <nav className="compare-mode" aria-label="How to compare">
-      <a href={routeHref({ view: "compare", node })} aria-current={mode === "steps" ? "page" : undefined}>
-        One step, all levels
+    <nav className="compare-words compare-mode" aria-label="How much to compare">
+      <a href={routeHref({ view: "compare", at: step, levels })} aria-current={mode === "table" ? "page" : undefined}>
+        All steps
       </a>
-      <a href={routeHref({ view: "compare", node, papers: papers ?? { a: "short", b: "expository" } })} aria-current={mode === "papers" ? "page" : undefined}>
-        Two papers
+      <a href={routeHref({ view: "compare", node: step, levels })} aria-current={mode === "step" ? "page" : undefined}>
+        One step
       </a>
     </nav>
   );

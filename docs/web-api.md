@@ -129,7 +129,7 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/lean/modules` | Lean revision, base link, toolchain, counts and modules by folder, without source |
 | `/lean/names` | One compact row per Lean declaration: name, kind, module index, first and last line |
 | `/lean/module?name=…` | One Lean module with its source and declarations |
-| `/alignment` | Where each record is stated in Lean and in each paper, and the dictionary of Lean names |
+| `/alignment` | Where each record is stated in Lean and in each paper, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
 
 Record tables are `nodes`, `edges`, `sources`, `citations` and `evidence`.
 Relation families are `declarations`, `arguments`, `citations`, `platform` and
