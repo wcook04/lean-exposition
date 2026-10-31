@@ -503,6 +503,14 @@ and a test holds it there. A statement tick sits in the left margin, darker wher
 step has Lean, drawn from where the words actually fell. The thread crosses only the empty
 gutter and goes whenever an end leaves the screen.
 
+A long paper stays smooth under a fast wheel because the slow work happens before the reader
+arrives. When the page is still, idle time works outwards from the reader: it renders a part,
+lays it out and fits its formulas (`PaperBody`). Far text is still not painted. Each part
+reserves a height from its source lines before any of that, the same height before and after
+its text arrives, so the scrollbar holds steady from the first paint and an address lands at
+the same place on a first load and a reload. No selector may put the whole paper under `:has()`
+on a root element: one change of hover then walks all of it (`html.is-reading` exists for this).
+
 The outline counts the statements with Lean in each section, and searches the paper's
 text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
 covers no text. A passage's steps and links open from "This passage" under the graph, and the

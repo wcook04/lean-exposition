@@ -36,7 +36,7 @@ import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { PaneHover } from "./page/MapPane";
 import { RightSheet } from "./page/RightSheet";
-import { FOLLOW_HOLD, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
+import { FOLLOW_HOLD, leanPage, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { statementFor, statementOf, stepFrom, type TieModel } from "./ties";
@@ -268,6 +268,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }).current;
   const statements = useMemo(() => new Statements(ties, doc.parts), [ties, doc]);
   useEffect(() => () => statements.dispose(), [statements]);
+
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    root.classList.add("is-reading");
+    return () => root.classList.remove("is-reading");
+  }, []);
 
   const bodyRef = useRef<BodyHandle>(null);
   const paperRef = useRef<HTMLDivElement>(null);
@@ -630,7 +636,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const t = pinRef.current?.tie ?? current.current;
     const first = t !== null ? statements.first(t) : null;
     const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
-    const page = document.querySelector(".lean-page");
+    const page = leanPage.current;
     const pane = page?.getBoundingClientRect();
     const target = (page?.querySelector(LEAN_TARGET) ?? null)?.getBoundingClientRect();
     const box = first?.getClientRects()[0];

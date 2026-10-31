@@ -452,16 +452,14 @@ export function sectionNumber(title: string): string {
 // ------------------------------------------------------------- rendering
 
 /**
- * A placeholder height for a part not yet rendered, from its byte length.
- * Calibrated against the rendered papers at the desktop measure; the page
- * keeps the reading position fixed when the real height arrives.
+ * The height to reserve for a part that has not been laid out, at the desktop measure. Source
+ * lines predict it where bytes do not: a display formula takes many short lines and a reference
+ * one long one. Calibrated on all three papers. The page keeps the reading position fixed when
+ * the real height arrives.
  */
-export function estimateHeight(part: PreparedPart, columnWidth = 592): number {
+export function estimateHeight(part: PreparedPart): number {
   if (part.blank) return 0;
-  const bytes = part.span.end - part.span.start;
-  const perLine = Math.max(30, columnWidth / 8.6);
-  const lines = bytes / perLine;
-  return Math.round(lines * 29 * 0.78 + part.headings.length * 56 + part.figures.length * 320 + 16);
+  return Math.round((part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20);
 }
 
 /** Parts in order of how soon a reader will reach them, nearest first. */
