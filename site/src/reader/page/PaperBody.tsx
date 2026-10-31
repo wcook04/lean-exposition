@@ -100,7 +100,9 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   // place when anything above it changes height (a part rendered, a figure
   // mounted, a route line arriving), so the text under the reader's eyes
   // never moves.
-  const anchor = useRef<{ el: Element; top: number } | null>(null);
+  // `scroll` is where the page stood when `top` was read: only a change of layout moves the
+  // page back, never a scroll that arrived in the same frame as a change of height.
+  const anchor = useRef<{ el: Element; top: number; scroll: number } | null>(null);
   // A jump's target stays the anchor until the reader scrolls by hand.
   const pinned = useRef(false);
   // The size of each part as the resize observer last reported it.
@@ -148,7 +150,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         }
       }
     }
-    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top } : null;
+    anchor.current = held ? { el: held, top: held.getBoundingClientRect().top, scroll: window.scrollY } : null;
   }, []);
 
   useImperativeHandle(
@@ -169,7 +171,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       reanchor,
       hold: (el) => {
         reanchor(true);
-        anchor.current = { el, top: el.getBoundingClientRect().top };
+        anchor.current = { el, top: el.getBoundingClientRect().top, scroll: window.scrollY };
         pinned.current = true;
       },
       };
@@ -230,11 +232,11 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       for (const entry of entries) sizes.current.set(entry.target, entry.target.getBoundingClientRect().height);
       const held = anchor.current;
       if (held && held.el.isConnected) {
-        const delta = held.el.getBoundingClientRect().top - held.top;
+        const delta = held.el.getBoundingClientRect().top + window.scrollY - held.top - held.scroll;
         if (Math.abs(delta) >= 0.5) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
       }
       if (pinned.current && held?.el.isConnected) {
-        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top };
+        anchor.current = { el: held.el, top: held.el.getBoundingClientRect().top, scroll: window.scrollY };
       } else {
         // Delivered entries already update every changed part's cached size.
         // Reading all the other parts again makes each background insertion

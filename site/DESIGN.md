@@ -360,6 +360,34 @@ reader scrolls. The pane's trail says which section this is and how many of the 
 records have come so far. A statement link (`?l=`) lands on the exact line and marks it. A
 formula is fitted as it comes near the screen, because each measurement forces a layout.
 
+### References
+
+Every reference in the three papers is a real link, 639 in all: 117 in the short paper, 442
+in the long record and 80 in the exposition. What each one points to was decided by reading
+its sentence and is kept as data, one table per paper, in
+`examples/qaoa-sk/alignment/references-<paper>.json`, keyed by byte range. A pattern cannot
+decide it. Most numbered results these papers name belong to OpenAI's manuscripts or to other
+cited papers, whose numbers collide with the papers' own: "(6.1)" in the long record is its own
+equation in one sentence and Basso et al.'s in another. The rows that stay plain (126, such as
+the locators inside a reference-list entry) are in the table too, with the reason.
+
+| Kind | Short | Long | Exposition | A click |
+| --- | --- | --- | --- | --- |
+| Citation, with its locator | 61 | 212 | 35 | Opens the list entry and the locator in place, with "Open source" |
+| Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
+| Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
+| Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
+| Section of the long record | 1 | 0 | 0 | Opens beside the paper |
+
+Pointing or focusing shows the target on the right page after 150ms. It covers no text and moves
+nothing. An inset is part of the page: it pushes only what is below it, the reader's line stays
+where it is, and Escape, a second click or Close puts the page back. Opening one adds no history;
+a jump does. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
+
+Text stays byte for byte: marks go in at render time, and `tests/references.test.ts` checks every
+row against the paper's bytes and the rendered page, and fails on a candidate no row has decided. A
+row whose words have moved gives no link at all, because a wrong link is worse than none.
+
 ## Checks
 
 "/checks" opens with one paragraph saying what is established, then a table by kind of check

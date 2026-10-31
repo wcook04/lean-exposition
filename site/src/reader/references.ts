@@ -244,6 +244,9 @@ export interface RefView {
   span: [number, number] | null;
 }
 
+const manuscriptNote = (quote: string, name: string) =>
+  /\d/.test(quote) ? `${quote} of ${name}, in that source's numbering.` : `The ${quote} of ${name}.`;
+
 /** Everything a preview or an inset shows for one row. */
 export function refView(index: RefIndex, row: RefRow): RefView {
   const { targets, sources } = index.table;
@@ -253,7 +256,7 @@ export function refView(index: RefIndex, row: RefRow): RefView {
     return {
       title: source?.name ?? row.quote,
       body,
-      note: row.kind === "manuscript" ? `${row.quote} is in ${source?.name ?? "the cited source"}, in that source's numbering.` : null,
+      note: row.kind === "manuscript" ? manuscriptNote(row.quote, source?.name ?? "the cited source") : null,
       locator: row.kind === "citation" ? (row.locator ?? null) : null,
       href: source?.href ?? null,
       go: null,

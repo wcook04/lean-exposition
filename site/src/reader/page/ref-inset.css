@@ -151,3 +151,8 @@
 .ref-preview__text.prose > :last-child {
   margin-bottom: 0;
 }
+
+/* A figure in an inset is a reminder of it, small enough to keep its controls on the screen. */
+.ref-inset__text .paper-figure__art {
+  max-width: min(100%, 400px);
+}

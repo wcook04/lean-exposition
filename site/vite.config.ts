@@ -189,7 +189,9 @@ export function referenceModule(stage: string): string {
   const references = (table.references as Record<string, unknown>[])
     .filter((row) => row.kind !== "plain")
     .map(({ before: _before, cited_as: _cited, ...row }) => row);
-  return `export default ${JSON.stringify({ paper: table.paper, targets: table.targets, sources: table.sources, references })};`;
+  const used = (field: string, all: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(all).filter(([key]) => references.some((row) => row[field] === key && row.kind !== "other_paper")));
+  return `export default ${JSON.stringify({ paper: table.paper, targets: used("target", table.targets), sources: used("source", table.sources), references })};`;
 }
 
 function referenceTables(): Plugin {
@@ -208,9 +210,10 @@ const ROUTE_CODE: Record<string, string[]> = {
   lean: ["LeanPage"],
   checks: ["ChecksPage"],
   about: ["AboutPage"],
-  "read/long": ["ReaderPage"],
-  "read/short": ["ReaderPage"],
-  "read/expository": ["ReaderPage"],
+  // Each paper's reference table is its own chunk, named for the paper, and the paper waits for it.
+  "read/long": ["ReaderPage", "long"],
+  "read/short": ["ReaderPage", "short"],
+  "read/expository": ["ReaderPage", "expository"],
 };
 
 interface BuiltChunk {

@@ -282,16 +282,19 @@ export function useReferences(stage: string, doc: PreparedDocument, body: RefObj
       const item: Open = { id, row, link, slot, view, html: bodyHtml(doc, stage, view.body), focusFirst, nudge: 0, scrollAfter: window.scrollY };
       flushSync(() => setOpen((list) => [...list, item]));
       // An inset opened near the foot of the window is brought into view, as far as the link allows.
-      const over = slot.getBoundingClientRect().bottom - window.innerHeight + 16;
+      const foot = document.querySelector(".reader-bar")?.getBoundingClientRect().top ?? window.innerHeight;
+      const over = slot.getBoundingClientRect().bottom - foot + 16;
       const room = link.getBoundingClientRect().top - top() - 8;
       const nudge = Math.max(0, Math.min(over, room));
       if (nudge > 0) {
         window.scrollBy({ top: nudge, behavior: "instant" as ScrollBehavior });
         item.nudge = nudge;
       }
+      // What the paper holds in place is now this position, so the nudge stays.
+      body.current?.reanchor(true);
       item.scrollAfter = window.scrollY;
     },
-    [close, doc, index, stage, top],
+    [body, close, doc, index, stage, top],
   );
 
   // Escape closes the inset last opened; a dialog on top keeps its own Escape.
