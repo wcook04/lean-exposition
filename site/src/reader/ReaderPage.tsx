@@ -361,29 +361,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const y = () => scrollForPosition(el, position, line);
       window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
       body.hold(el);
-      // Parts around it and their mathematics are still settling: stay on the line
-      // until they have, and go back to it once when late fonts reflow the text.
+      // Parts around it and their mathematics are still settling, and those above go on
+      // rendering in idle time: stay on the line through them, and go back to it once
+      // if late fonts reflow the text. A browser that scrolls in whole pixels would
+      // otherwise lose a little at each one.
       restoring.current?.();
-      const settled = () => body.reanchor(true);
-      const fonts = document.fonts;
-      const refit = () => (restoring.current = restoreScroll({ window: y }, { onDone: settled }));
-      const stop = restoreScroll(
-        { window: y },
-        {
-          // Parts above go on rendering in idle time. Stay on the line through them: a browser
-          // that scrolls in whole pixels would otherwise lose a little at each one.
-          limit: 20000,
-          onDone: () => {
-            settled();
-            fonts?.addEventListener("loadingdone", refit, { once: true });
-            window.setTimeout(() => fonts?.removeEventListener("loadingdone", refit), 3000);
-          },
-        },
-      );
-      restoring.current = () => {
-        stop();
-        fonts?.removeEventListener("loadingdone", refit);
-      };
+      restoring.current = restoreScroll({ window: y }, { limit: 20000, refit: true, onDone: () => body.reanchor(true) });
       return true;
     },
     [doc, stage, edition, readingTop],

@@ -509,6 +509,33 @@ describe("restoreScroll", () => {
     el.remove();
   });
 
+  it("puts the place back when late fonts arrive, and never after the reader has moved", async () => {
+    const listeners = new Set<() => void>();
+    const fonts = {
+      addEventListener: (_: string, fn: () => void) => listeners.add(fn),
+      removeEventListener: (_: string, fn: () => void) => listeners.delete(fn),
+    };
+    const had = Object.getOwnPropertyDescriptor(document, "fonts");
+    Object.defineProperty(document, "fonts", { configurable: true, value: fonts });
+    const el = scroller(900);
+    const done = vi.fn();
+    const stop = restoreScroll({ inner: { ".panel__body@0": [400, 0] } }, { onDone: done, settle: 20, limit: 400, refit: true });
+    await vi.waitFor(() => expect(done).toHaveBeenCalledTimes(1));
+    el.scrollTop = 410;
+    [...listeners].forEach((fn) => fn());
+    expect(el.scrollTop).toBe(400);
+    await vi.waitFor(() => expect(done).toHaveBeenCalledTimes(2));
+    window.dispatchEvent(new Event("wheel"));
+    expect(listeners.size).toBe(0);
+    el.scrollTop = 700;
+    [...listeners].forEach((fn) => fn());
+    expect(el.scrollTop).toBe(700);
+    stop();
+    el.remove();
+    if (had) Object.defineProperty(document, "fonts", had);
+    else delete (document as { fonts?: unknown }).fonts;
+  });
+
   it("gives way the moment the reader scrolls", async () => {
     const el = scroller(100);
     const done = vi.fn();

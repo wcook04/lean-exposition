@@ -42,6 +42,8 @@ const ENTRY_NAME = "scroll";
 const SETTLE = 1200;
 /** The longest a restore waits for late content; the reader's own input ends it sooner. */
 const LIMIT = 5000;
+/** How long after settling late fonts may still move the text. */
+const REFIT = 3000;
 const INPUT = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
 
 function find(id: string): HTMLElement | null {
@@ -61,24 +63,39 @@ export function snapshotScroll(withWindow: boolean): KeptScroll {
   return { ...(withWindow ? { window: Math.round(window.scrollY) } : {}), inner };
 }
 
-/** Put a saved place back. Returns a function that stops trying. */
-export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limit?: number; settle?: number } = {}): () => void {
+/**
+ * Put a saved place back. Returns a function that stops trying. With `refit`, the
+ * place is put back once more if late fonts reflow the text, for a few seconds after
+ * it has settled. The reader's own input ends all of it, at any stage: scrolling
+ * brings new fonts into use, and a refit then would pull the page out of their hand.
+ */
+export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limit?: number; settle?: number; refit?: boolean } = {}): () => void {
   const limit = options.limit ?? LIMIT;
   const settle = options.settle ?? SETTLE;
-  const begun = performance.now();
-  let still = begun;
+  const fonts = options.refit ? document.fonts : undefined;
+  let begun = 0;
+  let still = 0;
   let frame = 0;
-  let done = false;
+  let watch: ReturnType<typeof setTimeout> | undefined;
   let tall = -1;
+  let ended = false;
 
-  const finish = (settled: boolean) => {
-    if (done) return;
-    done = true;
+  const end = () => {
+    if (ended) return;
+    ended = true;
     cancelAnimationFrame(frame);
-    for (const type of INPUT) window.removeEventListener(type, stopped, { capture: true });
-    if (settled) options.onDone?.();
+    clearTimeout(watch);
+    fonts?.removeEventListener("loadingdone", begin);
+    for (const type of INPUT) window.removeEventListener(type, end, { capture: true });
   };
-  const stopped = () => finish(false);
+
+  const settled = () => {
+    options.onDone?.();
+    if (ended) return;
+    if (!fonts) return end();
+    fonts.addEventListener("loadingdone", begin, { once: true });
+    watch = setTimeout(end, REFIT);
+  };
 
   const step = () => {
     let waiting = false;
@@ -115,13 +132,19 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
     tall = height;
     const now = performance.now();
     if (moved || waiting) still = now;
-    if (now - still >= settle || now - begun >= limit) finish(true);
+    if (now - still >= settle || now - begun >= limit) settled();
     else frame = requestAnimationFrame(step);
   };
 
-  for (const type of INPUT) window.addEventListener(type, stopped, { passive: true, capture: true });
-  step();
-  return () => finish(false);
+  function begin() {
+    clearTimeout(watch);
+    begun = still = performance.now();
+    step();
+  }
+
+  for (const type of INPUT) window.addEventListener(type, end, { passive: true, capture: true });
+  begin();
+  return end;
 }
 
 /**
