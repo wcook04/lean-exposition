@@ -25,7 +25,7 @@ const PUBLIC_OBSERVATIONS = [{
   name: "full-support-build-extraction-observation-20261026.json",
 }];
 
-function publicObservations(): Plugin {
+function publicObservations(build = false): Plugin {
   return {
     name: "public-observations",
     configureServer(server) {
@@ -38,6 +38,7 @@ function publicObservations(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist", "verification");
       mkdirSync(out, { recursive: true });
       for (const item of PUBLIC_OBSERVATIONS) copyFileSync(resolve(item.file), resolve(out, item.name));
@@ -96,7 +97,7 @@ export function firstPage(stage: string, pdf: Buffer): FirstPage | null {
 }
 
 /** Serves the PDFs under /pdf/ in development, copies them into every build, and exports their page counts and first pages. */
-function paperPdfs(): Plugin {
+function paperPdfs(build = false): Plugin {
   const id = "virtual:paper-pdfs";
   return {
     name: "paper-pdfs",
@@ -122,6 +123,7 @@ function paperPdfs(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist");
       for (const p of Object.values(PAPER_PDFS)) {
         // The aliases retain the papers' relative cross-PDF targets without
@@ -339,7 +341,7 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
  * the theorem and the bar paint before any script or data arrives, and they reach readers
  * and crawlers that run no script. Pages other than the front page get the frame only.
  */
-function firstScreen(base: string, facts: SiteFacts): Plugin {
+function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   const id = "virtual:front-hero";
   const hero = heroHtml(heroLinks(base, facts.theorem1), typeset);
   const frame = frameHtml(base);
@@ -373,6 +375,7 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
       }
     },
     closeBundle() {
+      if (!build) return;
       const home = resolve("dist/index.html");
       if (!existsSync(home)) return;
       const html = readFileSync(home, "utf8");
@@ -497,15 +500,16 @@ All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: 
 // The site reads one captured edition from the read-only web API.
 // During development and preview, /api is proxied to a local
 // `lean-exposition serve` process so the page and the API share an origin.
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const api = env.LEAN_EXPOSITION_API ?? "http://127.0.0.1:8000";
   const proxy = { "/api": { target: api, changeOrigin: false } };
   const base = env.VITE_BASE_PATH ?? "/";
   const facts = siteFacts();
+  const build = command === "build";
   return {
     base,
-    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(build), publicObservations(build), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts, build), ...(build && env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       async closeBundle() {
         const out = resolve("dist");

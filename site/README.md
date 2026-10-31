@@ -197,10 +197,33 @@ npm run typecheck
 npm test
 ```
 
-The tests read fixtures captured from a running server in `tests/fixtures/`, so
-they need no server. After you reassemble the bundle, recapture them with
-`node scripts/capture-fixtures.mjs http://127.0.0.1:8000`. Check visual changes
-in a browser at desktop and phone widths, in both colour schemes.
+The tests read one captured edition in `tests/fixtures/`, so they need no
+server. Its paper copies belong with their captured structures and tie offsets;
+do not replace them by reading directly from the current manuscripts.
+After [assembling the authored bundle](../papers/README.md#assemble-the-authored-bundle),
+start its server from the repository root:
+
+```sh
+lean-exposition serve build/qaoa-sk-authored --port 8000 \
+  --lean-tree examples/qaoa-sk/upstream/lean \
+  --alignment examples/qaoa-sk/alignment
+```
+
+In a second terminal, from the repository root, capture both the website's
+responses (including paper ties) and the backend's closure oracle:
+
+```sh
+node site/scripts/capture-fixtures.mjs http://127.0.0.1:8000
+python site/scripts/capture-closures.py
+```
+
+To inspect a candidate without replacing maintained fixtures, pass
+`--out build/fixture-candidate` to the first command and
+`--out build/fixture-candidate/closures.json` to the second. They must read
+the same assembled graph. Review their changes and run `npm test` from `site/`.
+Check visual changes in a browser at desktop and phone widths, in both colour
+schemes. For the real-input reference-card check, see
+[the design guide](DESIGN.md#references).
 
 After a paper or reader change, exercise a companion link in the built site under
 its deployed base path. Confirm that the opened view contains the intended
