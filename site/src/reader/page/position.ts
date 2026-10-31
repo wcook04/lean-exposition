@@ -9,7 +9,7 @@
 // reader left, separately from Back and from closing the visit.
 
 import type { Stage } from "../../api/types";
-import { arrivedBy, entryKey } from "../../app/trail";
+import { arrivedBy, entryKey, readEntryOf, writeEntry } from "../../app/trail";
 
 export interface ReadingPosition {
   /** The edition the offsets were measured in; another edition's position is not reused. */
@@ -19,6 +19,11 @@ export interface ReadingPosition {
   /** A stable name for the part: its passage anchor or first heading id. */
   partId?: string;
   offset: number;
+  /**
+   * The line in the window the offset was measured from. Coming back, the same
+   * text lands on the same line even if the strip above the paper has changed height.
+   */
+  top?: number;
 }
 
 export interface VisitOrigin {
@@ -31,7 +36,7 @@ export interface VisitOrigin {
   label: string;
 }
 
-const PREFIX = "lx-read:";
+const ENTRY_NAME = "reading";
 
 function state(): Record<string, unknown> {
   return (window.history.state ?? {}) as Record<string, unknown>;
@@ -69,23 +74,14 @@ export function restoreKey(): string | null {
   return typeof r === "string" ? r : null;
 }
 
-export function savePosition(key: string, position: ReadingPosition): void {
-  try {
-    sessionStorage.setItem(PREFIX + key, JSON.stringify(position));
-  } catch {
-    /* Storage can be unavailable (private windows); Back then opens at the anchor. */
-  }
+/** Keep the reading position in the entry on screen. */
+export function savePosition(position: ReadingPosition): void {
+  writeEntry(ENTRY_NAME, position);
 }
 
 export function loadPosition(key: string): ReadingPosition | null {
-  try {
-    const raw = sessionStorage.getItem(PREFIX + key);
-    if (!raw) return null;
-    const value = JSON.parse(raw) as ReadingPosition;
-    return typeof value.part === "number" && typeof value.offset === "number" ? value : null;
-  } catch {
-    return null;
-  }
+  const value = readEntryOf<ReadingPosition>(key, ENTRY_NAME);
+  return value && typeof value.part === "number" && typeof value.offset === "number" ? value : null;
 }
 
 /**
