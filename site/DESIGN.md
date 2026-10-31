@@ -22,6 +22,7 @@ holds the rules every page follows. The values live in
    | What kind of record is it? | A word in small capitals: CLAIM, ASSUMPTION, LEAN DECLARATION, MAIN RESULT. Assumptions alone get a dashed border. |
    | How does a step use it? | The line's colour and pattern together, with the relation named in words wherever it is inspected. |
    | How does an account treat it? | A shape and a word: ● own passage, ○ used without a passage of its own, ⊟ outside the account's selection. |
+   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and two ink bars inside it: left for a Lean statement, right for a Lean proof, long for the whole, short for a part. The same mark and its words in the sheet and the outline. |
    | What am I looking at? | Amber. Selection, a lit support route and keyboard focus. Nothing else is amber. |
    | What did a check record? | The outcome in words: passed, failed, unavailable, not run. Only a recorded failure is coloured. |
 
@@ -92,9 +93,8 @@ always shows words. There are no blank tiles and no marks without text.
 
 A tile uses the record's short title (`shortTitle`, from the build-time record
 index) and falls back to its label. A title that still cannot fit is cut after a
-whole word. Under the pointer or focus, a shortened title shows whole on the line
-under the header, which it covers for that moment: it never covers a card and
-never moves the canvas. A tile shows nothing of the card beneath it.
+whole word. Under the pointer or keyboard focus, a tile's full title and its Lean mark in
+words show in the strip under the canvas. A tile shows nothing of the card beneath it.
 
 **The floor.** Step by step stops at `k = 0.5`, the side pane at `0.6`, and Whole argument at
 `11/13`, the scale at which 13px world text is 11px on screen. If the drawing is
@@ -108,14 +108,45 @@ step** opens at `k = 1` with the plate and the first row and shows what is unfol
 Whole argument draws every branch without changing what is unfolded, so Step by step
 comes back exactly as it was.
 
+**Lean marks** come from the alignment and from nothing else (`model/leanStatus.ts`). `states`
+and `contains` give both bars whole; `part` gives short bars; `proof` gives a long right bar,
+because a Lean proof carries the step in a different form; `defines` alone gives a box with a
+left bar and nothing to prove. "Proved" means a theorem or lemma in OpenAI's source with no
+`sorry` in its text, which all 162 rows keep today; whether a build ran stays in each record's
+checks. The bars are ink, because a fill or a coloured border would read as the reader pane's
+trail, and amber means what you are looking at. The relations ship in the record index, so the
+marks are there at first paint.
+
+**The strip** under the canvas is a row of its own: the key a newcomer needs, always on the
+page, and Fit. What the pointer rests on is named there for that moment, in place of the key,
+so a caption can never cover a target, and it goes when the pointer goes.
+
+**The Lean graph** is the fourth view (`?v=lean`): the declarations the argument's records link
+(65 for Full support), drawn by the same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`).
+It loads on first use, about 120 modules of 349. A box is a definition or structure, a rounded
+shape a theorem or lemma. A solid line is a use in the proof, a dashed line a use in the
+statement, a thin dotted line a use reached only through helpers no record links; the caption
+names them. Half the declarations are joined only through helpers, so they stay collapsed
+rather than absent. The lines come from `uses` in the Lean index and say so on the strip: a text
+scan today, and the compiler's report when `dependency_source` says `elaborated`. Statement
+against proof is whether the name is written in the statement's lines. A use a longer chain
+already says is not drawn, and the Key counts those. What nothing drawn uses hangs from the
+goal by a dashed line, which says only that the argument links it. Under a paper's lens the
+numbers count declarations, and the line above the lens says so. A card opens the sheet at that
+declaration; the camera goes further out here than on the argument (`k = 0.5`), where a name
+shortens and the strip has it whole.
+
 **The goal's plate** is at most 200px tall: the title, one sentence of the theorem
 and the ways on. The full theorem and its Lean are in the record sheet.
 
 **Navigation.** Two fingers on a trackpad and a wheel pan. A pinch, or Ctrl or ⌘
-with the wheel, zooms about the pointer; + and − zoom too. Dragging pans from
+with the wheel, zooms about the pointer; + and − zoom too. Shift with an arrow key pans, and
+0 or Fit shows the whole drawing as large as it fits. Dragging pans from
 anywhere, cards included, and nothing on the canvas selects as text; a press that
-moves less than 5px is a click. Panning stops while part of the drawing is on the
-canvas. ↑ goes to the result that uses the selected record, ↓ to its first input
+moves less than 5px is a click. The camera cannot lose the drawing (`clampView`): one larger
+than the canvas always fills it but for 40% on one side, one that fits can move a little and
+never more than half of it leaves, and a lens, a sheet or a smaller window that leaves the camera
+past the new edge brings it back. ↑ goes to the result that uses the selected record, ↓ to its first input
 (opening it if it is folded), ← and → among the inputs beside it; each move keeps
 the selection on screen by the smallest pan. Enter opens the selected record's
 inputs and Esc clears the selection. When a card cannot show every input,
@@ -124,8 +155,8 @@ chips at the canvas edge say how many records lie beyond it.
 **The level lens.** All, Long record, Short paper, Exposition, each with the number
 of records of this argument it uses, counted from the records its own passages
 discuss (`mapped_*` roles; every paper also lists the prerequisites of those
-records, so bare membership would count all of them). One sentence under the
-header says it in words. The levels are not nested: the exposition uses records
+records, so bare membership would count all of them). A small line above the lens says
+what its numbers count. The levels are not nested: the exposition uses records
 the short paper does not, so nothing may say one contains another. Choosing a
 level is the unfold motion: records outside it leave, and the rest close up. A
 line then joins a record to the nearest records it uses in that paper, and may pass
@@ -223,10 +254,10 @@ Records that have inputs of their own are never copied.
 - **Title block.** "Argument for" in small sans over the main result's full title
   in serif, which opens the menu of main results, each with the accounts that
   state it. Below 1100px it shows the short name ("Full support").
-- **On the right:** the level lens, the view switch (Whole argument, Step by step, Outline;
-  pressing the current view frames it again) and Key.
-- **The line under the header.** One sentence on how much of the argument the level
-  uses and what a line means. The drawing needs no legend on screen. Key says the rest
+- **On the right:** the level lens, the view switch (Whole argument, Step by step, Outline,
+  Lean graph; pressing the current view frames it again) and Key.
+- **The line under the header.** Under a paper's lens, one sentence on how much of the
+  argument the level uses and what a line means. The strip gives the key. Key says the rest
   in words, lists the links the map leaves out, gives the keys and "How the map is
   drawn".
 - **The foot bar.** Only when it has something to do, in a row of its own under the
@@ -297,16 +328,22 @@ Selecting a record or a step opens the record sheet: a full-height reading colum
 (`--panel-w`) on the right on desktop, a sheet on phones. It is the drill-down from
 a card, and its first screen answers "what is this, and how is it stated?":
 
-- **Record:** kind, source and title, then the filled action "Compare side by
-  side"; **In Lean**, a `LeanBlock` for each linked declaration; **In the papers**,
+- **Record:** kind, source and title, the Lean mark in words and "Compare"; then, under five
+  short jumps (Statement, Lean, Papers, Uses, Checks), **the statement** quoted from the
+  strongest slice with "Read in context"; **In Lean**, a `LeanBlock` for each linked
+  declaration with its relation, exact lines and `Proof ▶`; **In the papers**,
   tabs for the long record, the short paper and the exposition, each with that
   paper's exact slices as the reader typesets them and "Read in context", then the
   plain recorded statement behind a quiet "As recorded" line; **Uses and used by**,
   rows that move the selection, with "Open everything below"; assumptions; sources
-  and checks. Where the alignment has no slices, the record's passages stand in. It
-  starts on the lens's paper.
+  and checks. The statement and the start of the Lean are on the first screen at 1280×690.
+  Where the alignment has no slices, the record's passages stand in. It starts on the lens's
+  paper. A record with no Lean says so and lists what it rests on, with each input's mark.
+- **Declaration:** the same sheet at one Lean name, with a named Back. Every name in a sheet
+  walks here in place, and each walk is one history entry (`?d=`).
 - **Step:** the relation in words ("*Consumer* uses *prerequisite*", with its
-  type) → for an applied theorem, the objects held fixed, each premise and its
+  type) → the chain of Lean names between the two records, each a walk, or a plain sentence
+  that none was found and what that does not show → for an applied theorem, the objects held fixed, each premise and its
   recorded supplier, and what is still assumed → the recorded explanation →
   related passages in each account.
 
