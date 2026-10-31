@@ -24,6 +24,12 @@ export interface ReadingPosition {
    * text lands on the same line even if the strip above the paper has changed height.
    */
   top?: number;
+  /**
+   * The block of the part's text under that line, and how far into it. A part can
+   * run to thousands of pixels and its height settle late; the block cannot move
+   * under the reader's eyes that way.
+   */
+  block?: { index: number; offset: number };
 }
 
 export interface VisitOrigin {
@@ -100,6 +106,24 @@ export function partOfPosition(
     if (found) return found.index;
   }
   return position.part >= 0 && position.part < here.parts.length ? position.part : null;
+}
+
+/** The block of a part's text at a line of the window. */
+export function blockAtLine(part: Element, line: number): ReadingPosition["block"] {
+  const text = part.querySelector(":scope > .part__text");
+  const blocks = text ? Array.from(text.children) : [];
+  for (let index = 0; index < blocks.length; index++) {
+    const box = blocks[index].getBoundingClientRect();
+    if (box.bottom > line) return { index, offset: line - box.top };
+  }
+  return undefined;
+}
+
+/** The window's scroll that puts a saved position back on its line, as the part now lays out. */
+export function scrollForPosition(part: Element, position: ReadingPosition, line: number): number {
+  const block = position.block && part.querySelector(":scope > .part__text")?.children[position.block.index];
+  const top = block ? block.getBoundingClientRect().top + position.block!.offset : part.getBoundingClientRect().top + position.offset;
+  return top + window.scrollY - line;
 }
 
 export function partIdOf(part: { anchor?: string; headings: { id: string }[] }): string | undefined {

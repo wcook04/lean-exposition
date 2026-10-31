@@ -34,8 +34,12 @@ export const SCROLLERS = [
 ];
 
 const ENTRY_NAME = "scroll";
-/** How long a place must hold still, in ms, before the loop stops. */
-const SETTLE = 240;
+/**
+ * How long a place must hold still, in ms, before the loop stops. Generous: the
+ * cost is a few reads a frame, and a section that arrives above a restored
+ * place would otherwise carry it off (the browser anchors to whatever is on screen).
+ */
+const SETTLE = 1200;
 /** The longest a restore waits for late content; the reader's own input ends it sooner. */
 const LIMIT = 5000;
 const INPUT = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
@@ -65,6 +69,7 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
   let still = begun;
   let frame = 0;
   let done = false;
+  let tall = -1;
 
   const finish = (settled: boolean) => {
     if (done) return;
@@ -104,6 +109,9 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
         moved = true;
       }
     }
+    const height = document.documentElement.scrollHeight + Object.keys(kept.inner ?? {}).reduce((sum, id) => sum + (find(id)?.scrollHeight ?? 0), 0);
+    if (height !== tall) moved = true;
+    tall = height;
     const now = performance.now();
     if (moved || waiting) still = now;
     if (now - still >= settle || now - begun >= limit) finish(true);

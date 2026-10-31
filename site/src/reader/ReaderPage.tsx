@@ -32,8 +32,10 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { PaneHover } from "./page/MapPane";
 import { RecordDock, type OpenRecord } from "./page/RecordDock";
 import {
+  bestSlice,
   chainOf,
   companionAnchor,
+  firstPassageFor,
   outlineOf,
   paperTrail,
   passageOf,
@@ -57,6 +59,7 @@ import {
   type Structures,
 } from "./page/model";
 import {
+  blockAtLine,
   existingHistoryKey,
   historyKey,
   loadPosition,
@@ -65,6 +68,7 @@ import {
   patchHistoryState,
   restoreKey,
   savePosition,
+  scrollForPosition,
   visitOrigin,
   type ReadingPosition,
   type VisitOrigin,
@@ -307,7 +311,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const part = partAt(body, doc.parts.length, top + 1);
     const el = body.partElement(part);
     if (!el) return null;
-    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: top - el.getBoundingClientRect().top, top };
+    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: top - el.getBoundingClientRect().top, top, block: blockAtLine(el, top) };
   }, [doc, stage, edition, readingTop]);
 
   const saveNow = useCallback(() => {
@@ -330,7 +334,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const el = body.partElement(part);
       if (!el) return false;
       const line = position.top ?? readingTop();
-      const y = () => el.getBoundingClientRect().top + window.scrollY - line + position.offset;
+      const y = () => scrollForPosition(el, position, line);
       window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
       body.hold(el);
       // Parts around it and their mathematics are still settling: stay on the line
@@ -342,7 +346,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const stop = restoreScroll(
         { window: y },
         {
-          settle: 400,
           onDone: () => {
             settled();
             fonts?.addEventListener("loadingdone", refit, { once: true });
@@ -691,6 +694,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // Only when the passage being read changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [followAnchor]);
+
+  // An address naming a record and no place in the paper opens at that record's
+  // statement, once the alignment says where it is, unless the reader has moved on.
+  const coldRecord = useRef(!initial.saved && !route.at && !route.anchor && !!route.node);
+  useEffect(() => {
+    if (!coldRecord.current || !route.node || !alignment) return;
+    coldRecord.current = false;
+    if (window.scrollY > 8) return;
+    const slice = bestSlice(alignment, stage, route.node);
+    const anchor = slice?.anchor ?? firstPassageFor(structure, [route.node]) ?? undefined;
+    if (slice || anchor) navigate({ ...here, at: slice ? sliceAt(slice) : undefined, anchor }, { replace: true });
+  }, [alignment, here, route.node, stage, structure]);
 
   const openInspector = useCallback((anchor: string | null, opener: HTMLElement | null) => {
     inspectOpener.current = opener;
