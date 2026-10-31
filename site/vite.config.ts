@@ -146,8 +146,8 @@ interface AuthoredRecord {
   statements?: { paper: string; role: string }[];
 }
 
-/** The folder also holds the dictionary, the theorem's clauses, per-paper ties and reference tables. */
-const NOT_A_BATCH = /^(dictionary|main-theorem|ties-.*|references-.*)\.json$/;
+/** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
+const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*)\.json$/;
 
 export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};

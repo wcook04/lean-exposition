@@ -252,7 +252,8 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
     const requests: string[] = [];
     serveFiles(requests);
     try {
-      for (const [stage, limit] of [["short", 40_000], ["expository", 40_000], ["long", 120_000]] as const) {
+      // The first drafts' targets were 40 and 120 KB, for a third as many ties. Compressed, each is under 40 KB.
+      for (const [stage, limit] of [["short", 150_000], ["expository", 150_000], ["long", 250_000]] as const) {
         expect(edition.responses[`/ties/${stage}`]).toBe(`ties/${stage}.json`);
         expect(statSync(resolve(out, `ties/${stage}.json`)).size).toBeLessThan(limit);
         const ties = await body(`/api/v1/ties/${stage}`);
