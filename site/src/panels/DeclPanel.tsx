@@ -2,8 +2,9 @@
 // name in any sheet walks to. The declaration itself comes first, then what it is linked to
 // in the argument. Each walk is one history entry, so Back returns to the sheet it left.
 
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { routeHref } from "../app/router";
+import { useBack } from "../app/trail";
 import { useAlignment } from "../compare/useAlignment";
 import { LazyLeanBlock } from "../lean/lazy";
 import type { LeanStep } from "./model";
@@ -52,8 +53,10 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
   }, [linked, leaving, onEcho]);
 
   const peek = sheet.phone && sheet.state === "peek";
+  const back = useBack();
   // The name and the way to the Lean browser are in this sheet's head.
-  const walking = { onName: onWalk, noHead: true };
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  const walking = { onName: onWalk, noHead: true, previewSlot: slot };
 
   return (
     <aside ref={rootRef} className={`panel panel--decl${leaving ? " panel--leaving" : ""}${sheet.dragging ? " panel--dragging" : ""}`} aria-labelledby="decl-title" style={sheet.style} {...sheet.attrs}>
@@ -66,6 +69,11 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
         {sheet.modal && (
           <button type="button" className="panel__back" onClick={sheet.toPeek}>
             <span aria-hidden="true">↓ </span>Show the map
+          </button>
+        )}
+        {back && (
+          <button type="button" className="panel__walkback" onClick={back.back}>
+            <span aria-hidden="true">← </span>Back to {back.label}
           </button>
         )}
         <h2 id="decl-title" ref={headingRef} tabIndex={-1} className="panel__title lean">
@@ -131,6 +139,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
           </section>
         </div>
       </div>
+      <div ref={setSlot} className="lean-slot" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : `Selected Lean declaration: ${short}.`}
       </p>

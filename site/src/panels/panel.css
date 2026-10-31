@@ -1421,6 +1421,40 @@
   color: var(--ink);
 }
 
+/* The sheet's way back, where the eye already is: the browser's own Back, with a name. */
+/* The Lean's reading line is the sheet's last row, shown while a name is being read. It
+   narrows the column from below, so nothing moves and nothing is covered. */
+.panel > .lean-slot {
+  height: 54px;
+  margin: 0;
+  flex: none;
+  padding: 5px var(--space-5);
+}
+
+.panel > .lean-slot:empty {
+  display: none;
+}
+
+.panel__walkback {
+  display: block;
+  max-width: 100%;
+  margin: 0 0 4px;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.panel__walkback:hover {
+  color: var(--ink);
+}
+
 .panel__linked {
   min-width: 0;
   font-size: var(--fs-sm);

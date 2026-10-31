@@ -144,6 +144,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
   const peek = sheet.phone && sheet.state === "peek";
   const mark = recordMark(nodeId, node);
   const recordedStatement = record?.statement ? String(record.statement) : null;
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   return (
     <aside
@@ -211,7 +212,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
           </Pane>
 
           <Pane id="statement" title="In Lean">
-            <InLean nodeId={nodeId} aligned={aligned} statement={recordedStatement} kind={node.kind} status={node.status} onWalk={onWalk} onSelect={onSelect} onEcho={echo} />
+            <InLean nodeId={nodeId} aligned={aligned} statement={recordedStatement} kind={node.kind} status={node.status} onWalk={onWalk} onSelect={onSelect} onEcho={echo} previewSlot={slot} />
           </Pane>
 
           <Pane id="explanation" title="In the papers">
@@ -246,6 +247,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
           </Pane>
         </div>
       </div>
+      <div ref={setSlot} className="lean-slot" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : announcement(node.label, kindWord(node.kind))}
       </p>
@@ -345,6 +347,7 @@ function InLean({
   onWalk,
   onSelect,
   onEcho,
+  previewSlot,
 }: {
   nodeId: string;
   aligned: RecordAlignment | null;
@@ -354,9 +357,10 @@ function InLean({
   onWalk?(walk: LeanStep): void;
   onSelect(id: string): void;
   onEcho(ids: Iterable<string> | null): void;
+  previewSlot: HTMLElement | null;
 }) {
-  // The sheet has its own papers, and with a host every name walks in the sheet.
-  const hosted = { noPapers: true, ...(onWalk ? { onName: onWalk } : {}) };
+  // The sheet has its own papers and its own reading line, and with a host every name walks in the sheet.
+  const hosted = { noPapers: true, previewSlot, ...(onWalk ? { onName: onWalk } : {}) };
   if (aligned?.lean.length)
     return (
       <div className="panel__lean">
