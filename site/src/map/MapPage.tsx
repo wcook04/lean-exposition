@@ -54,7 +54,9 @@ const WALK_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
 const LEAN_TILE_W = 168;
 /** On a laptop the sheet takes a third of the width: slimmer tiles keep the widest rank on the canvas. */
 const LAPTOP_TILE_W = 174;
-const LEAN_TILE_H = 58;
+const LEAN_TILE_H = 66;
+/** Far enough out to see the whole shape on a monitor; titles shorten there and the strip has them whole. */
+const LEAN_MIN_K = 0.5;
 
 const INTRO_KEY = "lx-map-intro";
 const DISPLAY_KEY = "lx-map-display";
@@ -517,7 +519,7 @@ export function MapPage({ route }: { route: MapRoute }) {
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
         <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
-        <KeyPopover onNotesHost={setNotesHost} />
+        <KeyPopover onNotesHost={setNotesHost} lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : undefined} />
       </div>
       {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over records it leaves out.`}</p>}
 
@@ -570,6 +572,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             statusOf={leanReady.markOf}
             tileWidth={LEAN_TILE_W}
             tileHeight={LEAN_TILE_H}
+            minScale={LEAN_MIN_K}
             onSceneSettled={onSceneSettled}
           />
         ) : display === "map" ? (

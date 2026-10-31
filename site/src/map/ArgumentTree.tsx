@@ -159,6 +159,8 @@ export interface TreeProps {
    * proof on the right). Without it, cards are drawn as they always were.
    */
   statusOf?(id: string, node: ArgNode): LeanMark | null;
+  /** Let the camera go below the scale where every tile holds its whole title; a title then shortens, and the caption has it whole. */
+  minScale?: number;
   /** Off, a record many results use stays one card with a line from each, as a dependency graph draws it. */
   copyLeaves?: boolean;
 }
@@ -281,6 +283,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   onSettledRef.current = props.onSceneSettled;
   const captionRefRef = useRef(props.captionRef);
   captionRefRef.current = props.captionRef;
+  const minKRef = useRef(1);
   const compactRef = useRef(compact);
   compactRef.current = compact;
   const onUserMoveRef = useRef(props.onUserMove);
@@ -429,7 +432,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const id = recordOf(lid);
       const node = graph.nodes.get(id) ?? fullGraph.nodes.get(id)!;
       const isRoot = lid === goal;
-      if (dense) return isRoot ? { w: DENSE_ROOT_W, h: DENSE_ROOT_H } : { w: props.tileWidth ?? DENSE_W, h: props.tileHeight ?? (lens ? DENSE_H_SECTION : DENSE_H) };
+      if (dense) return isRoot ? { w: DENSE_ROOT_W, h: props.tileHeight ? props.tileHeight + 30 : DENSE_ROOT_H } : { w: props.tileWidth ?? DENSE_W, h: props.tileHeight ?? (lens ? DENSE_H_SECTION : DENSE_H) };
       const h = heights.get(lid);
       if (h === undefined) provisional = true;
       if (lid !== id) return { w: compact ? 184 : 176, h: h ?? (compact ? 54 : 96) };
@@ -1196,7 +1199,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
 
   const floor = compact ? COMPACT_FLOOR : STEPS_FLOOR;
   /** The camera never goes below the scale at which a tile still shows its words. */
-  const minK = floorK(dense, compact);
+  const minK = props.minScale ?? floorK(dense, compact);
+  minKRef.current = minK;
 
   /** Reading scale for a box: k = 1, or down to the floor if that fits the box across; never lower. */
   const readingK = (b: Bounds, max = STEPS_K) => {
@@ -1425,7 +1429,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   getSceneRef.current = getScene;
 
   function restoredView(scene: MapScene, l: Layout): View {
-    const k = Math.max(floorK(scene.mode === "overview" && !compact, compact), scene.camera.k);
+    const k = Math.max(props.minScale ?? floorK(scene.mode === "overview" && !compact, compact), scene.camera.k);
     const aid = scene.anchor ? (l.boxes.has(scene.anchor.id) ? scene.anchor.id : pick(l, recordOf(scene.anchor.id))) : null;
     const a = aid ? l.boxes.get(aid) : undefined;
     if (a && scene.anchor) return { k, x: scene.anchor.x - a.x * k, y: scene.anchor.y - a.y * k };
@@ -1562,7 +1566,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const vp = viewport();
         const px = vp.insets.left + (vp.width - vp.insets.left - vp.insets.right) / 2;
         const py = vp.insets.top + (vp.height - vp.insets.top - vp.insets.bottom) / 2;
-        const k = Math.max(floorK(denseRef.current, compact), Math.min(MAX_K, v.k * factor));
+        const k = Math.max(minKRef.current, Math.min(MAX_K, v.k * factor));
         userMovedSinceAsk.current = true;
         const next = { k, x: px - ((px - v.x) / v.k) * k, y: py - ((py - v.y) / v.k) * k };
         moveCamera(boundsRef.current ? clampView(next, boundsRef.current, vp) : next, true, CAMERA_MS);
@@ -1663,7 +1667,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const wrap = wrapRef.current!;
     const world = worldRef.current!;
     const behaviour = d3zoom<HTMLDivElement, unknown>()
-      .scaleExtent([floorK(denseRef.current, compact), MAX_K])
+      .scaleExtent([minKRef.current, MAX_K])
       // A press that moves less than this is still a click: it opens what it is on.
       .clickDistance(5)
       // The drawing cannot leave the canvas (clampView), by a drag or a zoom about the pointer.

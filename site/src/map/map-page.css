@@ -830,3 +830,14 @@
     padding: 0 10px;
   }
 }
+
+@media (max-width: 700px) {
+  .map-strip {
+    padding-left: var(--space-4);
+  }
+
+  .map-legend {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}

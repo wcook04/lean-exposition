@@ -52,7 +52,8 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
   }, [linked, leaving, onEcho]);
 
   const peek = sheet.phone && sheet.state === "peek";
-  const walking = { onName: onWalk, noHead: false };
+  // The name and the way to the Lean browser are in this sheet's head.
+  const walking = { onName: onWalk, noHead: true };
 
   return (
     <aside ref={rootRef} className={`panel panel--decl${leaving ? " panel--leaving" : ""}${sheet.dragging ? " panel--dragging" : ""}`} aria-labelledby="decl-title" style={sheet.style} {...sheet.attrs}>
@@ -74,8 +75,22 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
           {name}
         </p>
         <div className="panel__levels">
+          {linked.length > 0 && (
+            <span className="panel__linked">
+              Linked from{" "}
+              {linked.slice(0, 2).map((row, i) => (
+                <span key={`${row.id}:${row.relation}`}>
+                  {i > 0 && ", "}
+                  <button type="button" className="linklike" onClick={() => onSelect(row.id)}>
+                    {row.title}
+                  </button>
+                </span>
+              ))}
+              {linked.length > 2 && `, and ${linked.length - 2} more`}
+            </span>
+          )}
           <a className="panel__quiet" href={routeHref({ view: "lean", decl: name, module })}>
-            Open in the Lean browser
+            Lean browser
           </a>
         </div>
         {peek && (

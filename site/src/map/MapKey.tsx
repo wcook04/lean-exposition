@@ -8,11 +8,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { routeHref } from "../app/router";
 import { LeanGlyph } from "./LeanGlyph";
 import { Sample } from "./Sample";
+import { usesSource } from "./MapStrip";
 
 export { Sample };
 
 /** The Key: everything the map's marks mean, in words. */
-export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | null): void }) {
+export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElement | null): void; lean?: { source?: string; note?: string; leftOut?: number } }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const close = useCallback(() => setOpen(false), []);
@@ -73,6 +74,26 @@ export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | nu
             </li>
             <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each record's checks.</li>
           </ul>
+          {lean && (
+            <>
+              <p className="map-keypop__h">Lean graph</p>
+              <ul className="map-keypop__channels">
+                <li>
+                  <Sample kind="supports" /> The proof uses the declaration below.
+                </li>
+                <li>
+                  <Sample kind="lean_type_dependency" /> The statement uses it: its name is written in the statement's lines.
+                </li>
+                <li>
+                  <Sample kind="lean_via" /> Reached only through helpers no record links. Point at the line to see how many.
+                </li>
+                <li>
+                  {usesSource(lean.source)}. {lean.note}
+                </li>
+                {!!lean.leftOut && <li>{lean.leftOut} uses are not drawn, because a longer chain already says them. Each declaration's sheet lists all of its uses.</li>}
+              </ul>
+            </>
+          )}
           <p className="map-keypop__h">Lines</p>
           <ul className="map-keypop__channels">
             <li>

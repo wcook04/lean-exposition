@@ -415,7 +415,7 @@
 }
 
 /* A Lean declaration is told from a claim by its name's face and the colour of its Lean line. */
-.card[data-kind="declaration"] {
+.card[data-kind="declaration"]:not([data-shape]) {
   border-color: var(--rel-formalizes);
 }
 
@@ -699,6 +699,10 @@
 }
 
 /* A Lean name is not a word: it may break after its dots and underscores (LeanName). */
+.card__ctitle.lean[data-short] {
+  overflow-wrap: anywhere;
+}
+
 .card__ctitle.lean {
   font-family: var(--font-mono);
   font-size: calc(var(--title, 12px) / var(--k));
