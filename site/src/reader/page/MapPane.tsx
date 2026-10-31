@@ -498,7 +498,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
         </span>
         {paused && !following && (
           <button type="button" className="map-pane__follow map-pane__follow--resume" onClick={toggleFollowing}>
-            Follow the text again
+            Move the graph with the text again
           </button>
         )}
         <a
@@ -539,7 +539,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             </p>
             {pin && !expanded ? (
               <button type="button" className="map-pane__keep" onClick={onRelease}>
-                Follow the text
+                Close this statement
               </button>
             ) : (
               <>

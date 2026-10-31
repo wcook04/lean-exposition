@@ -88,9 +88,9 @@ export function rowsSentence(levels: readonly Level[], count: number, any = fals
   const steps = `${count} ${count === 1 ? "step" : "steps"}`;
   const lead = count === 1 ? `${steps} appears` : `${steps} appear`;
   if (levels.length === 1) return `${lead} in ${IN_WORDS[levels[0]]}.`;
-  if (any) return `${lead} in at least one of these levels.`;
+  if (any) return `${lead} in at least one column shown.`;
   if (levels.length === 2) return `${lead} in both ${IN_WORDS[levels[0]]} and ${IN_WORDS[levels[1]]}.`;
-  return `${lead} at ${COUNT_WORDS[levels.length]} levels.`;
+  return `${lead} in ${COUNT_WORDS[levels.length]} columns shown.`;
 }
 
 /** Where the rows' order comes from, in words. */

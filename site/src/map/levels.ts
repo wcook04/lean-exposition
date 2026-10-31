@@ -44,9 +44,9 @@ export function levelCounts(graph: ArgGraph, argument: ReadonlySet<string>): Lev
 
 /** The one line under the header. */
 export function lensSentence(counts: LevelCounts, lens: Stage | undefined): string {
-  if (!lens) return `This argument uses ${counts.all} of the ${counts.total} steps on this site.`;
+  if (!lens) return `This argument has ${counts.all} of the ${counts.total} steps on this site.`;
   const name = ACCOUNT_IN_PROSE[lens];
-  return `${name.charAt(0).toUpperCase()}${name.slice(1)} uses ${counts[lens]} of the ${counts.all} steps in this argument.`;
+  return `${name.charAt(0).toUpperCase()}${name.slice(1)} discusses ${counts[lens]} of the ${counts.all} steps in this argument.`;
 }
 
 /** How many distinct declarations this argument links, and how many of them each level's records link. */
@@ -62,7 +62,7 @@ export function leanLevelCounts(graph: ArgGraph, argument: ReadonlySet<string>, 
 
 export function leanSentence(counts: Pick<LevelCounts, "all" | Stage>, lens: Stage): string {
   const name = ACCOUNT_IN_PROSE[lens];
-  return `The steps ${name} uses link ${counts[lens]} of this argument's ${counts.all} Lean declarations.`;
+  return `The steps ${name} discusses are linked to ${counts[lens]} of this argument's ${counts.all} Lean declarations.`;
 }
 
 /** Whether Lean has declarations linked to this record: a declaration, or a record the alignment links. */

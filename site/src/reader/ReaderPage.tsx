@@ -1552,7 +1552,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           </a>
         )}
         <div className="reader-strip" ref={stripRef}>
-          <BackControl className="reader-strip__back" />
+          <ReaderBack signals={signals} outline={outline} stage={stage} open={!!route.node} />
           {mid && !outlineColumn && (
             <button type="button" className="sections-toggle" aria-pressed={sectionsSide} onClick={() => setSectionsSide(!sectionsSide)}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -1876,4 +1876,12 @@ function PassageDetails({ signals, doc, structure, graph, onOpen }: { signals: R
       This passage
     </button>
   );
+}
+
+/** Back, in words that say what it does when the name of the place is where the reader already is. */
+function ReaderBack({ signals, outline, stage, open }: { signals: ReaderSignals; outline: OutlineEntry[]; stage: Stage; open: boolean }) {
+  const chain = chainOf(outline, useSignal(signals.heading));
+  const last = chain[chain.length - 1];
+  const here = `${PAPER_NAMES[stage].short}${last ? ` ${sectionNumber(last.title)}` : ""}`;
+  return <BackControl className="reader-strip__back" words={(label) => (label !== here ? `Back to ${label}` : open ? "Close statement" : "Back to your last place")} />;
 }

@@ -138,7 +138,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   const shown = records.filter((id) => graph.nodes.has(id));
   return (
     <>
-      <p className="lean-page__plain">No sentence at the reading line is tied to the Lean. Steps in this passage:</p>
+      <p className="lean-page__plain">No Lean is linked to the sentence you are reading. Steps in this passage:</p>
       <ul className="lean-page__topics">
         {shown.map((id) => (
           <li key={id}>
@@ -218,7 +218,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
           {open.via !== "pin" && (
             <p className="lean-page__state" role="status">
               <span className="lean-page__dot" aria-hidden="true" />
-              {open.via === "point" ? "Pointing at" : "Following the text"}
+              {open.via === "point" ? "Pointing at" : "Changes as you scroll"}
             </p>
           )}
           <div className="lean-page__names">

@@ -188,13 +188,13 @@ export function StepTable({ route }: { route: CompareRoute }) {
           </header>
           {records && (
             <p className="table-line">
-              <span className="table-line__terms">A step is one claim, assumption or result in the proof that minimisers of the Sherrington–Kirkpatrick (SK) model have full support. The Lean column is OpenAI’s proof in Lean, a programming language for proofs.</span>{" "}
+              <span className="table-line__terms">A step is one claim, assumption or result in the proof that minimisers of the Sherrington–Kirkpatrick (SK) model have full support. The Lean column is OpenAI’s proof in Lean, a programming language for proofs. That Lean has two separate models, the support model for full support and the value model for the value theorem.</span>{" "}
               {rowsSentence(levels, listed.length, wide)} {orderWords(levels)}{" "}
               {someHave &&
                 (wide ? (
-                  <a href={routeHref({ view: "compare", levels: route.levels })}>Only the {every.length} at every level shown</a>
+                  <a href={routeHref({ view: "compare", levels: route.levels })}>Show only the {every.length} in every column</a>
                 ) : (
-                  <a href={routeHref({ view: "compare", levels: route.levels, any: true })}>Add the {anyRows.length - every.length} at only some of them</a>
+                  <a href={routeHref({ view: "compare", levels: route.levels, any: true })}>Also show the {anyRows.length - every.length} missing from a column</a>
                 ))}
               {levels.includes("lean") && <span className="table-line__caveat">{LINK_CAVEAT}</span>}
             </p>
@@ -244,7 +244,8 @@ const TableRow = memo(function TableRow({ id, titles, record, levels, href, root
         <h2 className="trow__title">
           {titles.map((title, i) => (
             <Fragment key={title.id}>
-              {i > 0 && <span className="trow__and"> and </span>}
+                            {i === 1 && <span className="trow__and">. The same statements are linked to </span>}
+              {i > 1 && <span className="trow__and"> and </span>}
               <a href={title.href}>{title.title}</a>
             </Fragment>
           ))}
@@ -275,7 +276,7 @@ function Cell({ id, level, record, href }: { id: string; level: Level; record: R
           foot={(here) => (
             <p className="tcell__foot">
               <a href={routeHref({ view: "lean", module: here.module, decl: here.name })}>Read in context</a>
-              <More count={record.lean.length - 1} href={href} />
+              <More count={record.lean.length - 1} noun="declaration" href={href} />
             </p>
           )}
         />
@@ -295,14 +296,14 @@ function Cell({ id, level, record, href }: { id: string; level: Level; record: R
       {first.note && <p className="bench-slice__note">{first.note}</p>}
       <p className="tcell__foot">
         <a href={statementHref(first, id)}>Read in context</a>
-        <More count={others.length} href={href} />
+        <More count={others.length} noun="statement" href={href} />
       </p>
     </section>
   );
 }
 
-function More({ count, href }: { count: number; href: string }) {
-  return count > 0 ? <a href={href}>and {count} more</a> : null;
+function More({ count, noun, href }: { count: number; noun: string; href: string }) {
+  return count > 0 ? <a href={href}>and {count} more {noun}{count === 1 ? "" : "s"}</a> : null;
 }
 
 function Absent({ level }: { level: Level }) {

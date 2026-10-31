@@ -202,7 +202,7 @@ export function Terms({ targets, onWalk }: { targets: NameTarget[]; onWalk?(row:
   return (
     <section className="lean-terms" aria-label="Names in this statement">
       <p className="lean-terms__title">
-        Names in this statement <span className="lean-terms__hint">Point at a name to read it.</span>
+        Names in this statement <span className="lean-terms__hint"><span className="hint-point">Point at a name to read it.</span><span className="hint-tap">Tap a name to open it.</span></span>
       </p>
       <dl className="lean-terms__list">
         {terms.map(({ row, term }) => (
@@ -369,7 +369,7 @@ export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: Lea
     if (decl.name === SITE_FACTS.extraction?.root && !SITE_FACTS.extraction.hasSorry) {
       return (
         <>
-          Lean’s extraction lists {SITE_FACTS.extraction.axioms.map((axiom, k) => (
+          A program run inside Lean lists {SITE_FACTS.extraction.axioms.map((axiom, k) => (
             <span key={axiom}>
               {k > 0 && ", "}
               <code>{axiom}</code>

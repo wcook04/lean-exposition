@@ -84,7 +84,7 @@ export function FrontPage() {
             <h3 className="asked__q">Can a minimising order parameter stay flat on some interval below one?</h3>
             <div className="asked__a">
               <p>
-                <Rich src="No. Every minimiser increases across every interval in $[0,1)$, and its derivative is positive between $0$ and $1$. OpenAI (2026a) proved both; H.‑B. Chen (2026) had already proved that there are no flat stretches, by a different method." />
+                <Rich src="No. Every minimiser increases across every interval in $[0,1)$, and its derivative is positive between $0$ and $1$. OpenAI (2026a) proved both in a manuscript, and the Lean has the increase but not the derivative. H.‑B. Chen (2026) had already proved that there are no flat stretches, by a different method." />
               </p>
               <p className="asked__where">
                 Explained in all three papers:{" "}
@@ -138,8 +138,7 @@ export function FrontPage() {
             {SITE_FACTS.build && SITE_FACTS.extraction && (
               <>
                 On {SITE_FACTS.build.date}, Lean {SITE_FACTS.build.toolchain.split(":").pop()?.replace(/^v/, "")} compiled the
-                full-support tree without an error, and Lean’s extraction lists {SITE_FACTS.extraction.axioms.length} axioms for the
-                theorem and no <code>sorry</code>.{" "}
+                full-support tree without an error, and a program run inside Lean lists {SITE_FACTS.extraction.axioms.length} axioms for the theorem and no <code>sorry</code>.{" "}
               </>
             )}
             Comparator tests a proof against a separately written statement; it has accepted neither statement, and the second
@@ -395,7 +394,7 @@ function CheckTable() {
           </>
         )}
         {leanLinks && <>They made {leanLinks.links} links from steps to Lean, reaching {leanLinks.declarations} declarations. </>}
-        {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. In a random {audit.sampled} read blind afterwards, {audit.right} were right, {audit.loose} loose and {audit.wrong} wrong, and those were corrected too.</>}
+        {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. A separate AI agent then read {audit.sampled} statements drawn at random from those with Lean: {audit.right} were right, {audit.loose} right but loosely worded and {audit.wrong} wrong, and those were corrected too. The other statements with Lean were not read a second time.</>}
         A program confirms that both ends of each one still exist. No independent mathematician has reviewed them.
       </p>
     </>

@@ -181,7 +181,7 @@ describe("MapPane", async () => {
     const before = world.style.transform;
     act(() => void tree.dispatchEvent(new WheelEvent("wheel", { deltaY: 30, bubbles: true, cancelable: true })));
     expect(world.style.transform).not.toBe(before);
-    expect(resume()!.textContent).toBe("Follow the text again");
+    expect(resume()!.textContent).toBe("Move the graph with the text again");
     act(() => resume()!.click());
     expect(resume()).toBeNull();
     const beforeDrag = world.style.transform;

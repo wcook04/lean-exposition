@@ -76,7 +76,8 @@ export interface HeroLinks {
   theorem: string;
   map: string;
   /** The step that records that the two Lean models are not connected. */
-  models: string;
+    models: string;
+  about: string;
 }
 
 /** `theorem1` is the statement's place in the short paper, from the alignment (the build derives it). */
@@ -87,7 +88,8 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   compare: `${base}compare`,
   theorem: `${base}compare?n=full_support`,
   map: `${base}map`,
-  models: `${base}map?n=${MODELS_STEP}`,
+    models: `${base}map?n=${MODELS_STEP}`,
+  about: `${base}about#made-by`,
 });
 
 /** The hero, typeset with `tex`, a function from TeX source to KaTeX HTML. */
@@ -101,10 +103,11 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
   return `<section class="front__hero" aria-labelledby="front-title">
 <div class="front__intro">
 <h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
-<p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
-<p class="front__site">OpenAI released a proof written in Lean, a programming language whose compiler rejects a proof with a wrong step. Read a paper here as you would any paper. Click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
+<p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A gap is an interval on which an order parameter stays flat. A minimising order parameter has none: it increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
+<p class="front__site">OpenAI’s proof of the increase is written in Lean, a programming language whose compiler rejects a proof with a wrong step; the positive derivative is proved in OpenAI’s manuscript and is not in the Lean. In a paper here, click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
 <p class="front__tertiary"><a href="${links.beside}">Theorem 1 with its Lean open</a><a href="${links.compare}">Compare Lean and papers</a><a href="${links.map}">The argument map</a></p>
+<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s.</p>
 </div>
 <figure class="rosetta">
 <table class="rosetta__table">

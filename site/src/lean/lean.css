@@ -121,8 +121,11 @@
 /* In the top bar: empty at rest, and one name and one line of signature while pointing. */
 .lean-block .lean-slot--bar, .lean-slot.lean-slot--bar { flex: 1; height: 52px; margin: 0; padding: 5px 0 0 var(--space-4); background: none; border-top: 0; }
 .lean-slot--bar:empty::before { content: none; }
-@media (hover: none) {
+.hint-tap { display: none; }
+@media (hover: none), (max-width: 759px) {
   .lean-slot:empty { display: none; }
+  .hint-point { display: none; }
+  .hint-tap { display: inline; }
 }
 .lean-read__top { display: flex; align-items: baseline; gap: var(--space-3); margin: 0; min-width: 0; white-space: nowrap; }
 .lean-read .lean-break { flex: none; max-width: 45%; overflow: hidden; text-overflow: ellipsis; font: 600 13px/20px var(--font-mono); font-variant-ligatures: none; color: var(--ink); }
@@ -315,7 +318,7 @@
 /* Said once on a page: a later or nested list of names stays silent. */
 .lean-terms__hint { margin-left: var(--space-2); font-weight: 400; color: var(--ink-3); }
 :has(.lean-terms__hint) ~ * .lean-terms__hint { display: none; }
-@media (hover: none) {
+@media not all {
   .lean-terms__hint { display: none; }
 }
 .lean-terms__list { margin: 0; }

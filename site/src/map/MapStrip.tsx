@@ -45,15 +45,16 @@ export function MapStrip({ lean, captionRef, onFit, onNear }: { lean?: StripLean
         ) : (
           <ul className="map-legend" aria-label="Key to the argument">
             <li>
-              <LeanGlyph fill="whole" /> Proved in Lean
+              <LeanGlyph fill="whole" /> Linked Lean proved
             </li>
             <li>
-              <LeanGlyph fill="part" /> Some of it in Lean
+              <LeanGlyph fill="part" /> Some of it linked
             </li>
             <li>
-              <LeanGlyph fill="none" /> Not in Lean
+              <LeanGlyph fill="none" /> No Lean linked
             </li>
             <li>A box is a definition</li>
+            <li>An AI agent made each link</li>
           </ul>
         )}
       </div>

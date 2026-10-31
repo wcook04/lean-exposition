@@ -59,15 +59,15 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
           <p className="map-keypop__h">Lean</p>
           <ul className="map-keypop__channels">
             <li>
-              <LeanGlyph fill="whole" /> Green: the Lean states and proves it, or defines it. A proof here is a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
+              <LeanGlyph fill="whole" /> Green: an AI agent linked this step to Lean that states and proves it, or defines it. Lean proves the linked declaration, and the link is the agent’s reading. A proof here is a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
             </li>
             <li>
-              <LeanGlyph fill="part" /> Pale green: some of it is in Lean, or a Lean proof has the step in a different form.
+              <LeanGlyph fill="part" /> Pale green: the linked Lean has some of it, or a Lean proof has the step in a different form.
             </li>
             <li>
               <LeanGlyph fill="none" /> Plain: no declaration is linked.
             </li>
-            <li>A box is a definition and a rounded shape a result. Each step's sheet says its status in words.</li>
+            <li>A box is a definition and a rounded shape a result. In the Lean the order parameter γ is called the coefficient. Each step's sheet says its status in words.</li>
             <li>An AI agent read each link, and no program tests whether the two sides say the same thing. Whether a build ran is in each step's run records.</li>
           </ul>
           {lean && (

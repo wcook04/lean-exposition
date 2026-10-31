@@ -8,8 +8,8 @@ import { LENS_ORDER, type LevelCounts } from "./levels";
 export type LensUnit = "records" | "declarations";
 
 const COUNTS: Record<LensUnit, string> = {
-  records: "Steps of this argument each level uses",
-  declarations: "Lean declarations each level links",
+  records: "Steps of this argument in each paper",
+  declarations: "Lean declarations linked from each paper",
 };
 
 export function LensControl({ lens, counts, unit = "records", onLens }: { lens?: Stage; counts: Pick<LevelCounts, "all" | Stage>; unit?: LensUnit; onLens(stage: Stage | undefined): void }) {

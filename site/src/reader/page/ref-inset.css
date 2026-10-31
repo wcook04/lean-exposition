@@ -10,6 +10,12 @@
   text-underline-offset: 0.18em;
 }
 
+/* The pointer's room runs through the leading: a click between the two lines of a wrapped link
+   is a click on the link. Padding on an inline box moves no line and paints nothing. */
+.reader .paper.prose a[data-ref] {
+  padding-block: 0.32em;
+}
+
 .reader .paper.prose a[data-ref]:hover {
   text-decoration-style: solid;
   text-decoration-color: currentColor;
@@ -119,6 +125,26 @@
 
 .ref-inset__close {
   margin-left: auto;
+}
+
+/* A card that has just opened says so: the page has not moved, and the eye is on the sentence. */
+.ref-inset[data-fresh] {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  animation: ref-inset-cue 900ms ease-out backwards;
+}
+
+@keyframes ref-inset-cue {
+  from {
+    outline-color: var(--lit-line);
+    background-color: color-mix(in oklab, var(--lit-line) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ref-inset[data-fresh] {
+    animation: none;
+  }
 }
 
 /* A source's card: the entry from the paper's own list, set small on a well of its own. */

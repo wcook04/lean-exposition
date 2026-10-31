@@ -78,6 +78,8 @@ interface InsetProps {
   view: RefView;
   html: string | null;
   focusFirst: boolean;
+  /** Opened by the reader just now, not brought back by Forward or a reload. */
+  fresh: boolean;
   onLean(record: string, at: string | undefined): void;
   onClose(): void;
 }
@@ -104,7 +106,7 @@ function Card({ view, html }: { view: RefView; html: string | null }) {
   );
 }
 
-function RefInset({ id, stage, doc, index, view, html, focusFirst, onLean, onClose }: InsetProps) {
+function RefInset({ id, stage, doc, index, view, html, focusFirst, fresh, onLean, onClose }: InsetProps) {
   const box = useRef<HTMLDivElement>(null);
   const text = useRef<HTMLDivElement>(null);
   const [record, setRecord] = useState<RecordSlice | null>(null);
@@ -156,7 +158,7 @@ function RefInset({ id, stage, doc, index, view, html, focusFirst, onLean, onClo
   const module = view.href ? leanModuleOf(view.href) : null;
   const list = view.entry !== null ? listAnchor(doc, view.entry) : null;
   return (
-    <div ref={box} id={id} className={`ref-inset${view.card ? " ref-inset--card" : ""}`} role="region" aria-label={view.title}>
+    <div ref={box} id={id} className={`ref-inset${view.card ? " ref-inset--card" : ""}`} data-fresh={fresh ? "" : undefined} role="region" aria-label={view.title}>
       {view.card ? (
         <Card view={view} html={html} />
       ) : (
@@ -218,6 +220,7 @@ interface Open {
   view: RefView;
   html: string | null;
   focusFirst: boolean;
+  fresh: boolean;
   /** How far opening scrolled the page to show the inset, and where that left it. */
   nudge: number;
   scrollAfter: number;
@@ -338,7 +341,7 @@ export function useReferences(
       link.setAttribute("aria-expanded", "true");
       link.setAttribute("aria-controls", id);
       const view = refView(index, row);
-      const item: Open = { id, row, link, slot, view, html: bodyHtml(doc, stage, view.body), focusFirst, nudge: 0, scrollAfter: window.scrollY };
+      const item: Open = { id, row, link, slot, view, html: bodyHtml(doc, stage, view.body), focusFirst, fresh: bring, nudge: 0, scrollAfter: window.scrollY };
       flushSync(() => setOpen((list) => [...list, item]));
       if (bring) {
         // An inset opened near the foot of the window is brought into view, as far as the link allows.
@@ -531,7 +534,7 @@ export function useReferences(
     () =>
       open.map((item) =>
         createPortal(
-          <RefInset id={item.id} stage={stage} doc={doc} index={index!} view={item.view} html={item.html} focusFirst={item.focusFirst} onLean={onLean} onClose={() => dismiss(item)} />,
+          <RefInset id={item.id} stage={stage} doc={doc} index={index!} view={item.view} html={item.html} focusFirst={item.focusFirst} fresh={item.fresh} onLean={onLean} onClose={() => dismiss(item)} />,
           item.slot,
           item.id,
         ),

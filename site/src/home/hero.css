@@ -283,3 +283,17 @@ html[data-view="home"] .topbar {
     margin-top: 8px;
   }
 }
+
+.front .front__made {
+  max-width: 37em;
+  margin: 10px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.front__made a {
+  color: inherit;
+  text-underline-offset: 3px;
+}

@@ -136,7 +136,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
       <header className="lean-intro">
         <h1>Lean index</h1>
         <p>
-          The index at the back of the book, for anyone who wants the files and declarations themselves. To read the mathematics,{" "}
+          The index at the back of the book, for anyone who wants the files and declarations themselves. In this Lean the order parameter γ is called the coefficient. To read the mathematics,{" "}
           <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
         </p>
         <p>
@@ -174,7 +174,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
               </Start>
             )}
             {value && (
-              <Start href={declHref(value)} name={value.short} title="The second main theorem">
+              <Start href={declHref(value)} name={value.short} title="The value theorem">
                 {stated(shell, value.name)}, in <code>SKValue/Main.lean</code>.
               </Start>
             )}

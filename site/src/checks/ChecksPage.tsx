@@ -86,7 +86,8 @@ export function rowNote(kind: string, counts: Record<string, number>): string | 
   if (!total || counts.passed) return null;
   if (kind === "comparator") return "No successful Comparator result is recorded.";
   if (kind === "semantic_review" && counts.not_run === total)
-    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it depends on.";
+    return "All written, none read by a second reader. Each is an authored explanation of one step, with the source lines it depends on.";
+    if (kind === "extraction") return "No successful run is among these records. The extraction that finished, on 26 October 2026, is in the first table.";
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
 }
@@ -143,9 +144,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         <header className="checks__first">
           <h1>What ran on this proof, and what did not</h1>
           <p className="standing-terms">
-            OpenAI’s proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. Comparator is a program that compares a Lean proof with a separately
-            written statement. The main theorem here is the full-support theorem for the Sherrington–Kirkpatrick (SK) spin glass. A step
-            is one claim, assumption or Lean declaration in its argument, a tie joins a statement in a paper to a step, and a run record
+            OpenAI’s proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. Comparator is a program that compares a Lean proof with a separately written statement. An extraction is a program run inside Lean that lists what a compiled theorem uses and which axioms it depends on. The main theorem here is the full-support theorem for the Sherrington–Kirkpatrick (SK) spin glass. A step is one claim, assumption or Lean declaration in its argument, a tie joins a statement in a paper to a step, and a run record
             says what ran or was planned and with what outcome.
           </p>
           <Standing groups={groups} />
@@ -174,9 +173,9 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         <p className="checks__edition">{editionNote(cards)}</p>
         {supportObservation && (
           <p className="checks__edition">
-            A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
-              Support observation from 26 October 2026
-            </a> describes a completed build and a scoped dependency extraction. Its graph is partial and is not in this edition, so it does not change the outcomes above or establish Comparator acceptance.
+            The build and the extraction of 26 October 2026 are described in <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
+              one published file
+            </a>. That extraction covers the main theorem only, and its graph is partial and is not in this edition, so it changes no outcome above and says nothing about Comparator.
           </p>
         )}
         </div>
@@ -407,7 +406,7 @@ function PointerRow() {
         <td className="checkrow__examined" data-label="What it tests">
           Whether both ends of each authored link still exist: every quoted passage is found in its paper and every named declaration in its Lean file.
           <span className="checkrow__note">
-            {links ? `${links.lean} links from steps to Lean declarations and ${links.papers} ties from statements in the papers to steps. ` : ""}The site runs this test at each build and stores no run record for it.
+            {links ? `${links.lean} links from steps to Lean declarations and ${links.papers} ties from statements in the papers to steps. ` : ""}A program runs this test at each build and stores no run record for it.
           </span>
         </td>
         <td className="checktable__n num" data-label="Passed">
