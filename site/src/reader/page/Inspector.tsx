@@ -214,7 +214,7 @@ function Relations({ id, graph, onSelect, onFull }: { id: string; graph: ArgGrap
       <h4 className="relations__label">
         Uses <span className="num">{uses.length}</span>
       </h4>
-      {uses.length ? <ul>{uses.map((e) => line(e, e.to))}</ul> : <p className="relations__none">No recorded inputs.</p>}
+      {uses.length ? <ul>{uses.map((e) => line(e, e.to))}</ul> : <p className="relations__none">The argument as written stops here.</p>}
       <h4 className="relations__label">
         Used by <span className="num">{usedBy.length}</span>
       </h4>
