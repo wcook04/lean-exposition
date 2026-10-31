@@ -18,9 +18,10 @@ want to explore it:
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The graph is on the page facing the paper and moves to the statement you are reading. Pointing at a marked statement lights its card and names it; clicking opens
-  its Lean over the graph, and clicking a card also takes the paper to the statement.
-  Back takes you to your place.
+  The pane facing the paper has two modes, Graph and Lean. In Graph the graph moves to the statement
+  you are reading, and pointing at a marked statement lights its card and names it. Clicking a
+  statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
+  Lean yourself keeps the Lean on the statement you are reading.
   Beside any passage you can list the steps linked to it and open passages in the other papers that are linked to the same steps.
 - **The Lean index.** OpenAI's source, every module and declaration, at the back of
   the book: plain titles first, each central name explained in the papers' notation,

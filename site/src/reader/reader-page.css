@@ -1,7 +1,7 @@
 /* The paper reader. Tokens only. The paper keeps its measure
    (--reader-measure); context takes room only when it is asked for.
-     >= 1501px  outline · paper · map (map-pane.css)
-     1280–1500  paper · map, the outline as "Sections"
+     >= 1680px  outline · paper · map (map-pane.css)
+     1280–1679  paper · map, the outline as "Sections"
      With the map turned off, or below 1280:
      >= 1360px  outline · paper · inspector (when open)
      1120–1359  outline · paper, or paper · inspector (the outline becomes "Sections")
@@ -532,7 +532,7 @@ html.is-reading {
   display: none;
 }
 
-/* Up to 1500px the sections stand on the right page, and their list scrolls on its own. */
+/* Below 1680px the sections stand on the right page, and their list scrolls on its own. */
 .sections-side {
   display: flex;
   flex-direction: column;
@@ -620,6 +620,9 @@ html.is-reading {
   .reader-strip:has(.back-control) .crumbs,
   .reader-strip:has(.back-control) .reader-strip__steps span {
     display: none;
+  }
+  .reader-strip .mode-toggle button {
+    min-width: 44px;
   }
   .reader--narrow .reader__paper {
     padding-bottom: var(--space-8);
