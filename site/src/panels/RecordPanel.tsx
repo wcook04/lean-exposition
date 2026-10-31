@@ -361,8 +361,8 @@ function InLean({
   if (aligned?.lean.length)
     return (
       <div className="panel__lean">
-        {aligned.lean.map((row) => (
-          <LazyLeanBlock key={row.name} name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
+        {aligned.lean.map((row, i) => (
+          <LazyLeanBlock key={`${row.name}:${i}`} name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
         ))}
       </div>
     );
@@ -485,7 +485,7 @@ function PaperSlices({
         <p className="panel__note">No slice of the {PAPER_NAMES[stage].short.toLowerCase()} is linked to this record.</p>
       ) : (
         slices.map((slice) => (
-          <div className="panel__slice" key={slice.start_byte}>
+          <div className="panel__slice" key={`${slice.at ?? slice.start_byte}:${slice.role}`}>
             <p className="panel__slice-head">
               <span>
                 {ROLE_WORDS[slice.role]}, in {slice.section}

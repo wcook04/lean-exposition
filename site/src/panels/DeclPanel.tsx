@@ -80,7 +80,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
             <span className="panel__linked">
               Linked from{" "}
               {linked.slice(0, 2).map((row, i) => (
-                <span key={`${row.id}:${row.relation}`}>
+                <span key={`${row.id}:${i}`}>
                   {i > 0 && ", "}
                   <button type="button" className="linklike" onClick={() => onSelect(row.id)}>
                     {row.title}
@@ -115,8 +115,8 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
               <p className="panel__note">No record of the argument is linked to this declaration. It is a helper between the ones that are.</p>
             ) : (
               <ul className="rels">
-                {linked.map((row) => (
-                  <li key={`${row.id}:${row.relation}`} className="rels__decl" onPointerEnter={() => onEcho?.(new Set([row.id]))} onPointerLeave={() => onEcho?.(new Set(linked.map((r) => r.id)))}>
+                {linked.map((row, i) => (
+                  <li key={`${row.id}:${i}`} className="rels__decl" onPointerEnter={() => onEcho?.(new Set([row.id]))} onPointerLeave={() => onEcho?.(new Set(linked.map((r) => r.id)))}>
                     <span className="rels__what">
                       <button type="button" className="rels__name" onClick={() => onSelect(row.id)}>
                         {row.title}
