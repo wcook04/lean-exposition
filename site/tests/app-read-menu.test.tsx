@@ -60,7 +60,7 @@ describe("Read menu", () => {
     document.body.append(host);
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
-    expect(host.querySelector('[aria-label="Search records and passages"]')).not.toBeNull();
+    expect(host.querySelector('[aria-label="Search the papers, the records and the Lean"]')).not.toBeNull();
     expect(host.querySelector('button[aria-label="Menu"]')).not.toBeNull();
     expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Map");
   });

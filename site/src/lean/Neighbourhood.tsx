@@ -51,7 +51,7 @@ interface Line {
   tip: string;
 }
 
-function Tile({ row, record, side, onWalk, onHover }: { row: DeclRow; record?: string; side: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
+function Tile({ row, record, plain, side, onWalk, onHover }: { row: DeclRow; record?: string; plain?: string; side: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
   const id = `${side}:${row.name}`;
   return (
     <a
@@ -72,6 +72,7 @@ function Tile({ row, record, side, onWalk, onHover }: { row: DeclRow; record?: s
         onWalk(row, event.currentTarget);
       }}
     >
+      {plain && <strong className="lean-tile__plain">{plain}</strong>}
       <Breakable name={row.short} />
       <span className={record ? "lean-tile__record" : "lean-tile__kind"}>{record ?? kindWord(row.kind)}</span>
     </a>
@@ -91,7 +92,7 @@ function Group({ title, side, rows, shell, from, onWalk, onHover }: { title?: st
         </p>
       )}
       {shown.map((row) => (
-        <Tile key={`${row.module}:${row.name}`} row={row} side={side} record={shell.linked.get(row.name)?.[0]?.title} onWalk={onWalk} onHover={onHover} />
+        <Tile key={`${row.module}:${row.name}`} row={row} plain={shell.plain.get(row.name)} side={side} record={shell.linked.get(row.name)?.[0]?.title} onWalk={onWalk} onHover={onHover} />
       ))}
       {more > 0 && (
         <button type="button" className="lean-action" onClick={() => setAll(true)}>
@@ -227,6 +228,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
         <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} from={decl.name} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
         <div className="lean-hood__centre" ref={centre} tabIndex={-1} aria-current="true">
           <span className="lean-hood__kind">{kindWord(decl.kind)}</span>
+          {shell.plain.get(decl.name) && <strong className="lean-tile__plain">{shell.plain.get(decl.name)}</strong>}
           <Breakable name={decl.short} />
           {record && <span className="lean-tile__record">{record}</span>}
         </div>

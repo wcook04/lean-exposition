@@ -28,7 +28,7 @@ export function PageTitle({ route }: { route: Route }) {
       title = label ? `Compare: ${label}` : "Compare side by side";
       break;
     case "lean":
-      title = route.decl ?? route.module ?? "The Lean source";
+      title = route.decl?.split(".").pop() ?? route.module?.split(".").pop() ?? (route.index ? "Declarations the papers rest on" : "Lean index");
       break;
     case "about":
       title = "About";

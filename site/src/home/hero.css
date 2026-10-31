@@ -97,7 +97,10 @@ html[data-view="home"] .topbar {
 }
 
 .front__tertiary {
-  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin: 14px 0 0;
   font-size: var(--fs-ui);
   color: var(--ink-2);
 }

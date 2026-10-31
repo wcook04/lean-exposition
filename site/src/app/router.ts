@@ -306,13 +306,13 @@ export function placeOf(route: Route): string {
     case "map":
       return "the map";
     case "read":
-      return route.decl?.split(".").pop() ?? { long: "Long paper", short: "Short paper", expository: "Exposition" }[route.stage];
+      return route.decl?.split(".").pop() ?? { long: "the long record", short: "the short paper", expository: "the exposition" }[route.stage];
     case "checks":
       return "Checks";
     case "compare":
       return "Compare";
     case "lean":
-      return route.decl?.split(".").pop() ?? "the Lean";
+      return route.decl?.split(".").pop() ?? "the Lean index";
     case "about":
       return "About";
     case "search":

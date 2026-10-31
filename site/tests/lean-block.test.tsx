@@ -16,6 +16,7 @@ const main = decl({});
 const helper = decl({ name: "OAI.helper", short: "helper", line: 6, signature_end_line: 6, end_line: 6, uses: ["OAI.Thing"], used_by: ["OAI.main"] });
 const module: LeanModule = { module: "OAI.M", path: "OAI/M.lean", sha256: "", imports: [], source, declarations: [main, helper] };
 const shell: LeanShell = {
+  plain: new Map(),
   modules: { base_url: "https://github.com/o/r/blob/abc/lean/", revision: "abcdef1234", dependency_source: "source_text" } as LeanModules,
   index: buildIndex({ modules: ["OAI.M"], names: [["OAI.main", "theorem", 0, 1, 3], ["OAI.Thing", "def", 0, 5, 5], ["OAI.helper", "theorem", 0, 6, 6]] }),
   paths: new Map([["OAI.M", { module: "OAI.M", path: "OAI/M.lean", lines: 6, declarations: 3, sha256: "" }]]),

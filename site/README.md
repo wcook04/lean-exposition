@@ -26,10 +26,12 @@ want to explore it:
   the paper to its passage and opens the card's Lean and statements in place.
   Beside any passage you can list the records linked to it and open passages in
   the other accounts that are linked to the same records.
-- **The Lean.** OpenAI's source, every module and declaration, with each central
-  name explained in the papers' notation and the names each declaration mentions.
-- **The checks.** For each kind of check, what it tests and the outcome of each
-  recorded run: passed, failed, unavailable or not run.
+- **The Lean index.** OpenAI's source, every module and declaration, at the back of
+  the book: plain titles first, each central name explained in the papers' notation,
+  and the names each declaration mentions.
+- **The checks.** What compiled, which axioms, any `sorry`, what Comparator has and
+  has not done, and what people or agents read. Then, for each kind of check, what
+  it tests and the outcome of each recorded run: passed, failed, unavailable or not run.
 - **The architectural companion.** The About page includes the paper on why
   several accounts share one record, with a link to its standalone PDF.
 - **The papers and PDFs.** The front page's levels band (the Read menu's "All papers
