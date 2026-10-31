@@ -188,6 +188,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
           </header>
           {records && (
             <p className="table-line">
+              <span className="table-line__terms">A step is one claim, assumption or result in the proof that minimisers of the Sherrington–Kirkpatrick (SK) model have full support. The Lean column is OpenAI’s proof in Lean, a programming language for proofs.</span>{" "}
               {rowsSentence(levels, listed.length, wide)} {orderWords(levels)}{" "}
               {someHave &&
                 (wide ? (
@@ -204,7 +205,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
             ))}
           </div>
         </div>
-        {!records && <p className="bench-note">{loaded ? "This edition does not say where each level states each step." : "Loading where each level states each step…"}</p>}
+        {!records && <p className="bench-note">{loaded ? "This copy of the site does not say where each level states each step." : "Loading where each level states each step…"}</p>}
         {records && !rows.length && <p className="bench-note">{query ? "No step has those words in its title." : "No step appears at every level shown."}</p>}
         {records &&
           rows.map((row) => (

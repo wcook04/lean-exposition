@@ -29,7 +29,7 @@ export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, st
   { type: "passages", table: "passages", noun: ["linked passage", "linked passages"] },
   { type: "citations", table: "citations", noun: ["citation", "citations"] },
   { type: "sources", table: "sources", noun: ["source", "sources"] },
-  { type: "checks", table: "evidence", noun: ["check record", "check records"] },
+  { type: "checks", table: "evidence", noun: ["run record", "run records"] },
 ];
 
 export function tableOf(type: SearchType): string {
@@ -47,7 +47,7 @@ export function nounFor(type: SearchType, n: number): string {
 
 /** What search does, said the same way in the palette and on the results page. */
 export const SEARCH_HELP =
-  "Search finds Lean names and what the papers call them, the records of the argument, the exact statements in the papers, section headings and the full text of the three papers. Every word you type must appear, as a whole word or the start of one. It does not look for words with related meanings.";
+  "Search finds Lean names and what the papers call them, the steps of the argument, the exact statements in the papers, section headings and the full text of the three papers. Every word you type must appear, as a whole word or the start of one. It does not look for words with related meanings.";
 
 /** A Lean declaration as a result: the name, what the papers call it, and what and where it is. */
 export function LeanResultBody({ hit, beside }: { hit: LeanHit; beside?: boolean }) {
@@ -104,15 +104,15 @@ export function destinationWords(item: SearchItem): string {
     case "passages":
       return `Opens the ${paper.toLowerCase()} at this passage`;
     case "evidence":
-      return "Opens on the checks page";
+      return "Opens on the What ran page";
     case "edges":
-      return "Opens the record that uses it on the argument map";
+      return "Opens the step that uses it on the argument map";
     case "statements":
       return `Opens the ${paper.toLowerCase()} at this statement`;
     case "paper":
       return `Opens the ${paper.toLowerCase()} at this paragraph`;
     default:
-      return "Opens the record that uses it";
+      return "Opens the step that uses it";
   }
 }
 
@@ -274,7 +274,7 @@ function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: P
     title = (record?.title as string | undefined) ?? title;
     const owner = detail.status === "ready" ? ownerNode(detail.value, graph) : null;
     const ownerLabel = owner ? graph.nodes.get(owner)!.label : null;
-    meta = !ownerLabel ? "Citation" : ownerLabel === title ? "Citation for the record of the same name" : `Citation for ${ownerLabel}`;
+    meta = !ownerLabel ? "Citation" : ownerLabel === title ? "Citation for the step of the same name" : `Citation for ${ownerLabel}`;
   } else if (item.table === "sources") {
     const path = record?.path as string | undefined;
     title = path ? path.slice(path.lastIndexOf("/") + 1) : title;
@@ -283,7 +283,7 @@ function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: P
     title = (record?.tool as string | undefined) ?? title;
     const kind = CHECK_KINDS[String(record?.kind ?? "")]?.title;
     const status = OUTCOME_NAMES[String(record?.status ?? "")];
-    meta = ["Check record", kind, status?.toLowerCase()].filter(Boolean).join(", ");
+    meta = ["Run record", kind, status?.toLowerCase()].filter(Boolean).join(", ");
   } else if (item.table === "edges") {
     meta = "Recorded link";
   }

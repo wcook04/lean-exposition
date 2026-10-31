@@ -282,10 +282,10 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, onWalk, passageH
                 step?.basis.get(stage) === "both"
                   ? "Each passage here is linked to both steps. That alone does not show that the passage contains this step of the argument."
                   : step?.basis.get(stage) === "consumer"
-                    ? `No passage in this account is linked to both steps. The passages here are linked to “${consumer.label}” but not to “${prerequisite.label}”.`
+                    ? `No passage in this paper is linked to both steps. The passages listed here are linked to “${consumer.label}” but not to “${prerequisite.label}”.`
                     : undefined
               }
-              empty={() => `No passage in this account is linked to “${consumer.label}”.`}
+              empty={() => `No passage in this paper is linked to “${consumer.label}”.`}
             />
           </Pane>
         </div>

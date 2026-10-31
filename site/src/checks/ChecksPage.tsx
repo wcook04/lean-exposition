@@ -86,7 +86,7 @@ export function rowNote(kind: string, counts: Record<string, number>): string | 
   if (!total || counts.passed) return null;
   if (kind === "comparator") return "No successful Comparator result is recorded.";
   if (kind === "semantic_review" && counts.not_run === total)
-    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it rests on.";
+    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it depends on.";
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
 }
@@ -103,12 +103,12 @@ export function editionNote(cards: readonly EvidenceCard[]): string {
   const reviewed = reviews.filter((c) => c.status === "passed").length;
   const lead =
     notRun * 2 > total
-      ? `Most recorded checks on this site have not been run (${notRun} of ${total}).`
-      : `${notRun} of the ${total} recorded checks on this site have not been run.`;
+      ? `Most run records on this site describe a run that has not happened (${notRun} of ${total}).`
+      : `${notRun} of the ${total} run records on this site describe a run that has not happened.`;
   const review = reviewed
     ? ` ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`
     : "";
-  return `${lead}${review} Each outcome is the result written in one check record, for that check alone, and is not a judgement on whether the mathematics is correct.`;
+  return `${lead}${review} Each outcome is the result written in one run record, for that run alone, and is no judgement on whether the mathematics is correct.`;
 }
 
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
@@ -133,7 +133,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         <header className="checks__head">
           <div className="checks__lead">
             <h1>
-              Checks recorded for <span className={subject.kind === "declaration" && !plainOf(subject.label) ? "lean" : undefined}>{plainOf(subject.label) ?? subject.label}</span>
+              What ran on <span className={subject.kind === "declaration" && !plainOf(subject.label) ? "lean" : undefined}>{plainOf(subject.label) ?? subject.label}</span>
             </h1>
             <Established cards={cards} />
           </div>
@@ -142,23 +142,29 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
       ) : (
         <header className="checks__first">
           <h1>What ran on this proof, and what did not</h1>
+          <p className="standing-terms">
+            OpenAI’s proof is written in Lean, a programming language whose compiler rejects a proof with a wrong step. Comparator is a program that compares a Lean proof with a separately
+            written statement. The main theorem here is the full-support theorem for the Sherrington–Kirkpatrick (SK) spin glass. A step
+            is one claim, assumption or Lean declaration in its argument, a tie joins a statement in a paper to a step, and a run record
+            says what ran or was planned and with what outcome.
+          </p>
           <Standing groups={groups} />
         </header>
       )}
 
       {target.type === "unknown" && (
         <p className="checks__notice" role="status">
-          No step or check on this site has the identifier <code className="lean">{target.id}</code>. All the checks are listed below.
+          No step or run record on this site has the identifier <code className="lean">{target.id}</code>. All the run records are listed below.
         </p>
       )}
 
       {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
 
       <section className="checks__band" aria-labelledby="by-kind">
-        <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "Every check, by kind"}</h2>
+        <h2 id="by-kind">{subject ? "All run records on this site, by kind" : "Every run record, by kind"}</h2>
         {!subject && <OutcomeKey wide />}
         <CheckTable
-          caption="All recorded checks on this site, by kind"
+          caption="All run records on this site, by kind"
           rows={groups.map((g) => ({ group: g, examined: null }))}
           target={target.type === "evidence" ? target : null}
           paged
@@ -170,8 +176,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
           <p className="checks__edition">
             A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
               Support observation from 26 October 2026
-            </a> records a completed build and a scoped dependency extraction. Its graph is partial and is not part of this
-            edition, so it does not change the outcomes above or establish Comparator acceptance.
+            </a> describes a completed build and a scoped dependency extraction. Its graph is partial and is not in this edition, so it does not change the outcomes above or establish Comparator acceptance.
           </p>
         )}
         </div>
@@ -223,19 +228,19 @@ function Established({ cards }: { cards: EvidenceCard[] }) {
     <p className="checks__lede">
       {record ? (
         <>
-          Lean, a language in which a computer checks each step of a proof, compiled{" "}
+          Lean compiled{" "}
           {module ? <code className="lean" translate="no">{module}</code> : "the Lean file"}
           {subject ? <>, the module recorded for {plainOf(subject.label) ?? <span className="lean" translate="no">{subject.label}</span>},</> : null} without an error
           {version ? ` on version ${version}` : ""}
-          {date ? `; the record of that build is dated ${date.text}` : ""}.{" "}
+          {date ? `; the run record of that build is dated ${date.text}` : ""}.{" "}
         </>
       ) : passedBuilds.length === 0 ? (
-        <>No Lean build, the step in which a computer checks each line of a proof, is recorded as passed. </>
+        <>No Lean build is recorded as passed. </>
       ) : null}
       {hashes && hashes.cards.length > 0 && <>The cited files match their recorded hashes in {countsInWords(hashes.counts)} checks. </>}
       {comparator && comparator.cards.length > 0 && (
         <>
-          Comparator, a program that compares a Lean proof with a separately written statement of the theorem, has{" "}
+          Comparator has{" "}
           {comparator.counts.passed ? `${comparator.counts.passed} passed` : "no successful result"}: of its{" "}
           {recordsWord(comparator.cards.length)}, {countsInWords(comparator.counts)}.{" "}
         </>
@@ -286,15 +291,15 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
 
   return (
     <section className="checks__band subject is-selected" aria-labelledby="subject-checks">
-      <h2 id="subject-checks">Checks attached to this {node.kind === "declaration" ? "Lean declaration" : node.kind === "goal" ? "result" : node.kind}</h2>
+      <h2 id="subject-checks">Run records attached to this {node.kind === "declaration" ? "Lean declaration" : node.kind === "goal" ? "result" : node.kind}</h2>
       <p className="checks__intro">
         {detail.status === "loading" && "Loading the step…"}
         {detail.status === "error" && <span className="checks__error">{describeError(detail.error).title}.</span>}
         {record && cards.length === 0 && (
           <>
-            No check is recorded for this {node.kind === "assumption" ? "assumption" : "step"} itself. Its status is{" "}
+            No run is recorded for this {node.kind === "assumption" ? "assumption" : "step"} itself. Its status is{" "}
             {node.status === "unverified"
-              ? "unverified, which means it was stated from the sources and has not been independently checked"
+              ? "unverified, which means it was stated from the sources and no one independent has reviewed it"
               : node.status.replace(/_/g, " ")}
             .{" "}
           </>
@@ -309,7 +314,7 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
       </p>
       {groups.length > 0 && (
         <CheckTable
-          caption={`Checks attached to ${plainOf(node.label) ?? node.label}, by kind`}
+          caption={`Run records attached to ${plainOf(node.label) ?? node.label}, by kind`}
           rows={groups.map((g) => ({ group: g, examined: null }))}
           target={null}
         />
@@ -346,7 +351,7 @@ function CheckTable({
         <caption className="visually-hidden">{caption}</caption>
         <thead>
           <tr>
-            <th scope="col">Check</th>
+            <th scope="col">Kind of test</th>
             <th scope="col">What it tests</th>
             {COUNT_COLUMNS.map((c) => (
               <th key={c} scope="col" className="checktable__n">
@@ -354,7 +359,7 @@ function CheckTable({
               </th>
             ))}
             <th scope="col">
-              <span className="visually-hidden">Records</span>
+              <span className="visually-hidden">Run records</span>
             </th>
           </tr>
         </thead>
@@ -384,7 +389,7 @@ function CountCells({ counts }: { counts: Record<string, number> }) {
 /**
  * The links between records, Lean and the papers. They are authored; the export keeps a
  * link only if it lands, so the edition holds no count of failures to report here.
- * This is a row of the site's own, computed from the alignment, not a stored check record.
+ * This is a row of the site's own, computed from the alignment, not a stored run record.
  */
 function PointerRow() {
   const alignment = useAlignment();
@@ -400,18 +405,16 @@ function PointerRow() {
           Lean and paper links
         </th>
         <td className="checkrow__examined" data-label="What it tests">
-          Whether each authored link still lands: every quoted passage is found in its paper and every named declaration
-          in its Lean file.
+          Whether both ends of each authored link still exist: every quoted passage is found in its paper and every named declaration in its Lean file.
           <span className="checkrow__note">
-            {links ? `${links.lean} links from steps to Lean declarations and ${links.papers} ties from statements in the papers to steps. ` : ""}The site’s own test at each build,
-            not a stored check record. No one has reviewed whether the mathematics on the two sides of a link matches.
+            {links ? `${links.lean} links from steps to Lean declarations and ${links.papers} ties from statements in the papers to steps. ` : ""}The site runs this test at each build and stores no run record for it.
           </span>
         </td>
         <td className="checktable__n num" data-label="Passed">
           {links ? links.lean + links.papers : ""}
         </td>
         <td colSpan={3} className="checkrow__left-out">
-          A link that does not land is left out of the site.
+          A link with a missing end is left out of the site.
         </td>
         <td className="checkrow__details" />
       </tr>
@@ -433,7 +436,7 @@ function FailureNotes({ group }: { group: KindGroup }) {
             </li>
           ))}
         </ul>
-        <p>A failed build is not a rejection of the proof. These runs stopped before any comparison, and their records say that no mathematical rejection was observed.</p>
+        <p>A failed build is not a rejection of the proof. These runs stopped before any comparison, and their run records say that no mathematical rejection was observed.</p>
       </td>
     </tr>
   );
@@ -470,7 +473,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
           {group.title}
         </th>
         <td className="checkrow__examined" data-label="What it tests">
-          {group.question || <span className="faint">Not stated in the check records.</span>}
+          {group.question || <span className="faint">Not stated in the run records.</span>}
           {row.examined && <span className="checkrow__subjects">{row.examined}</span>}
           {note && <span className="checkrow__note">{note}</span>}
         </td>
@@ -489,7 +492,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
           {open && (
             <>
               {evidence.status === "error" && <p className="checks__error">{describeError(evidence.error).title}.</p>}
-              {evidence.status !== "ready" && evidence.status !== "error" && <p className="faint">Loading the check records…</p>}
+              {evidence.status !== "ready" && evidence.status !== "error" && <p className="faint">Loading the run records…</p>}
               {ordered && (
                 <>
                   {ordered.dated.length > 0 && (
@@ -501,7 +504,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
                   )}
                   {ordered.undated.length > 0 && (
                     <>
-                      {ordered.dated.length > 0 && <p className="ledger__break">Check records with no date, in their stored order</p>}
+                      {ordered.dated.length > 0 && <p className="ledger__break">Run records with no date, in their stored order</p>}
                       <ol className="ledger">
                         {ordered.undated.map((r) => (
                           <EvidenceRow key={r.card.id} card={r.card} record={r.record} selected={target?.id === r.card.id} />
@@ -589,7 +592,7 @@ function FormalStatement({ id, selected }: { id: string; selected: boolean }) {
       {record && (
         <p className="formal__checks">
           {count === 0 ? (
-            "No check is recorded for this declaration on its own."
+            "No run is recorded for this declaration on its own."
           ) : selected ? (
             <>Its {recordsWord(count)} are listed at the top of this page.</>
           ) : (
@@ -657,14 +660,14 @@ function EvidenceRow({
       <div className="ev__body">
         <p className="ev__tool">
           {showKind && <span className="ev__kind">{kindTitle}. </span>}
-          {record ? record.tool ?? "No tool is named in the record." : <span className="faint">Loading the record…</span>}
+          {record ? record.tool ?? "No tool is named in the run record." : <span className="faint">Loading the run record…</span>}
         </p>
         {record && (
           <>
             <p className="ev__meta">
-              {date && <span className="ev__date">The date given in the record is {date.text}. </span>}
+              {date && <span className="ev__date">The date given in the run record is {date.text}. </span>}
               {subjects.length === 0 ? (
-                "No statement is named as the subject of this check."
+                "No statement is named as the subject of this run."
               ) : (
                 <>
                   It concerns{" "}
@@ -702,7 +705,7 @@ function EvidenceRow({
             )}
             {expanded && record.source_ids && record.source_ids.length > 0 && (
               <p className="ev__extra ev__sources">
-                <span className="ev__label">Sources named in the record. </span>
+                <span className="ev__label">Sources named in the run record. </span>
                 {record.source_ids.map((s, i) => (
                   <span key={s}>
                     {i > 0 && ", "}
@@ -715,7 +718,7 @@ function EvidenceRow({
             )}
             {record.receipt_path && (!compact || expanded) && (
               <p className="ev__receipt">
-                The output saved for this check is in the repository file{" "}
+                The output saved for this run is in the repository file{" "}
                 <code className="lean" translate="no">{record.receipt_path}</code>, which this site does not serve.
                 {expanded && record.receipt_sha256 && (
                   <>
@@ -733,7 +736,7 @@ function EvidenceRow({
               )}
               {canExpand && (
                 <button type="button" className="ev__more" aria-expanded={expanded} onClick={() => setExpanded((e) => !e)}>
-                  {expanded ? "Show less" : "Show the full record"}
+                  {expanded ? "Show less" : "Show the full run record"}
                 </button>
               )}
             </p>

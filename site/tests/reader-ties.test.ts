@@ -258,7 +258,7 @@ describe("the model", () => {
       passages: [],
     });
     expect(leanTruth(told, 0, null).words).toBe("Has Lean");
-    expect(leanTruth(told, 1, null).words).toBe("Lean covers part of this");
+    expect(leanTruth(told, 1, null).words).toBe("The Lean has some of this");
     expect(leanTruth(told, 2, null).words).toBe("Not in the Lean: its theorems take a minimiser as the hypothesis.");
     expect(leanTruth(told, 3, null).words).toBe("No Lean linked.");
   });

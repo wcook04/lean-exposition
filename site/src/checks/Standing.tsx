@@ -1,6 +1,6 @@
 // The first screen of Checks, for a reader who knows Lean: what ran, what came back and what
 // that leaves open, one row for each thing such a reader asks. Build and axiom facts are read
-// at build time from the published observation (siteFacts.ts), outcomes from the check records,
+// at build time from the published observation (siteFacts.ts), outcomes from the run records,
 // so a row can never say more than its source. The checker is named in every row.
 
 import type { ReactNode } from "react";
@@ -105,13 +105,13 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
                 )}
               </>
             }
-            open="The scan reads text and proves nothing. Lean’s list covers the main theorem only."
+            open="The scan reads text only. Lean’s list covers the main theorem only."
           />
           <Row
             name="Comparator"
             did={
               <>
-                No accepted run{comparator ? <>: of {comparator.cards.length} check records, {countsInWords(comparator.counts)}</> : null}. The two failed runs stopped on a missing compiled file, before any comparison. The last attempt, on 25 October 2026, ended with no result.
+                No accepted run{comparator ? <>: of {comparator.cards.length} run records, {countsInWords(comparator.counts)}</> : null}. The two failed runs stopped on a missing compiled file, before any comparison. The last attempt, on 25 October 2026, ended with no result.
               </>
             }
             open="Comparator has neither accepted nor rejected either theorem. No proof has been compared with its separately written statement."
@@ -144,16 +144,16 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
           />
           {ties && (
             <Row
-              name="Read, not machine-checked"
+              name="Read by an AI agent"
               did={
                 <>
                   AI agents marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean, by reading both sides. That makes {ties.total.toLocaleString("en-GB")} ties, because one statement can tie to several steps.{" "}
-                  {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. Another tried to disprove each statement saying it had no Lean, and changed {audit.absencesChanged} of {audit.absencesChecked}. Another re-read a random {audit.sampled}, unmarked: {audit.right} right, {audit.loose} loose, {audit.wrong} wrong. Those were corrected. </>}A program confirms only that each tie still lands.
+                  {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. Another agent tried to disprove each statement saying it had no Lean, and changed {audit.absencesChanged} of {audit.absencesChecked}. Another agent re-read a random {audit.sampled}, unmarked: {audit.right} right, {audit.loose} loose, {audit.wrong} wrong. Those were corrected. </>}A program confirms only that both ends of each tie still exist.
                 </>
               }
               open={
                 <>
-                  No independent mathematician has reviewed the ties, and no program checks that the two sides say the same thing.{audit ? " The audit’s ledger is not public." : ""}{reviews?.cards.length ? <> None of the {reviews.cards.length} written correspondence reviews has been run.</> : null}
+                  No independent mathematician has reviewed the ties, and no program tests whether the two sides say the same thing.{audit ? " The audit’s ledger is not public." : ""}{reviews?.cards.length ? <> None of the {reviews.cards.length} written correspondence reviews has been run.</> : null}
                 </>
               }
             />

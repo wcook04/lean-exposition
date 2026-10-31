@@ -277,7 +277,7 @@ export function neighbourhood(graph: LeanGraph, goal: string, focus: readonly st
   for (const id of keep) {
     if (id === goal || held.has(id)) continue;
     const tile = graph.nodes.get(id)?.tile ?? id;
-    edges.push({ key: `${goal}→${id}→formalizes`, from: goal, to: id, kind: "formalizes", linkIds: [], scoped: false, semanticClass: "formalizes", note: `${tile}: what uses it is not drawn here. Fit shows the whole graph` });
+    edges.push({ key: `${goal}→${id}→formalizes`, from: goal, to: id, kind: "formalizes", linkIds: [], scoped: false, semanticClass: "formalizes", note: `${tile}: what uses it is not drawn here. Fit draws the whole graph` });
   }
   const members = [...graph.order.filter((id) => keep.has(id))];
   const out = new Map(members.map((id) => [id, [] as ArgEdge[]]));

@@ -30,6 +30,6 @@ describe("the first screen", () => {
 
   it("draws the same five jobs as the top bar", () => {
     const html = frameHtml("/");
-    for (const job of ["Read", "Map", "Compare", "Checks", "Lean index"]) expect(html).toContain(`>${job}</a>`);
+    for (const job of ["Read", "Map", "Compare", "What ran", "Lean index"]) expect(html).toContain(`>${job}</a>`);
   });
 });

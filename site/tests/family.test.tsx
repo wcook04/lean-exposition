@@ -178,7 +178,7 @@ describe("the sister sites", () => {
     const links = [...nav.querySelectorAll<HTMLAnchorElement>(".fam-sites__list a")];
     expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
       ...FAMILY.sites.map((s) => [s.short, s.url]),
-      ["All websites and films", "https://wcook04.github.io/"],
+      ["All websites and videos", "https://wcook04.github.io/"],
     ]);
     expect(links.filter((a) => a.getAttribute("aria-current") === "page").map((a) => a.textContent)).toEqual([familySite(THIS_SITE_ID).short]);
   });
@@ -205,7 +205,7 @@ describe("the header's lockup", () => {
     expect(home.getAttribute("href")).toBe("https://wcook04.github.io/");
     expect(home.getAttribute("rel")).toBe("author");
     const plait = home.querySelector("img")!;
-    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and films");
+    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and videos");
     expect(plait.getAttribute("src")).toMatch(/^\/(lean-exposition-site\/)?plectis\.svg$/);
     expect(lockup.querySelector(".fam-lockup__rule")!.getAttribute("aria-hidden")).toBe("true");
     const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
@@ -214,7 +214,7 @@ describe("the header's lockup", () => {
     expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
     expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
-    expect(jobs).toEqual(["Read", "Map", "Compare", "Checks", "Lean index"]);
+    expect(jobs).toEqual(["Read", "Map", "Compare", "What ran", "Lean index"]);
     expect(host.querySelector<HTMLAnchorElement>(".readmenu a[href='/#papers']")!.textContent).toContain("All papers and PDFs");
   });
 
