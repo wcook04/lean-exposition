@@ -210,6 +210,8 @@ export function MapPage({ route }: { route: MapRoute }) {
     writeSession(DISPLAY_KEY, d);
   };
   const laptop = useMedia("(max-width: 1400px)");
+  // A short window (a laptop at 200%) gives the drawing the room: no sheet until something is chosen.
+  const short = useMedia("(max-height: 520px)");
   const [notesHost, setNotesHost] = useState<HTMLElement | null>(null);
   const initialScene = useRef<MapScene | null>(null);
   if (initialScene.current === null) initialScene.current = readScene(has) ?? ({} as MapScene);
@@ -343,7 +345,7 @@ export function MapPage({ route }: { route: MapRoute }) {
   useEffect(() => {
     if (!firstView.current) return;
     firstView.current = false;
-    if (!phone && display === "map" && !route.node && !route.edge && !route.decl && !initialScene.current?.camera) go({ node: goal }, true);
+    if (!phone && !short && display === "map" && !route.node && !route.edge && !route.decl && !initialScene.current?.camera) go({ node: goal }, true);
     // Only the page's first render decides this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -540,6 +542,7 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   return (
     <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`} data-keeps-brackets={(display === "map" && !leanOn && walk.passages.length > 0) || undefined}>
+      <h1 className="visually-hidden">Argument for {goalFullTitle}</h1>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
         <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
@@ -656,6 +659,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             {leanReady.graph.shelf.map((d) => (
               <button key={d.name} type="button" className={`linklike${chosenDecl === d.name ? " is-chosen" : ""}`} title={d.name} onClick={() => walkDecl(d)}>
                 {d.title}
+                {d.model && <span className="lean-shelf__model"> ({d.model})</span>}
               </button>
             ))}
           </div>

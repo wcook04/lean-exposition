@@ -708,7 +708,8 @@
   font-weight: 600;
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  color: var(--ink-3);
+  /* On the green fill --ink-3 falls under 4.5:1; --ink-2 keeps it in both schemes. */
+  color: var(--ink-2);
 }
 
 .card--root .card__cmain {

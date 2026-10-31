@@ -625,7 +625,7 @@ The interface names relations and states by what was recorded.
 | No successful Comparator result is recorded | no Comparator run is recorded (when one failed) |
 | Review record: passed | independently reviewed |
 | One recorded route from Full support | (a breadcrumb that looks like history) |
-| No recorded inputs | starting point, axiom (a record boundary is not a foundation) |
+| The argument as written stops here (inputs are authored links); "None found", with what the scan misses, for a Lean declaration's uses | No recorded inputs, starting point, axiom |
 | Back to Exposition §5.3 | Back (when the origin is a graph path) |
 
 Most recorded checks are "not run"; no warrant has been independently reviewed.

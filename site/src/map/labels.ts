@@ -14,6 +14,13 @@ export function kindName(kind: string): string {
   }
 }
 
+/**
+ * A step with no inputs. Its links are authored by reading the papers, so this says where they
+ * stop and nothing about what the mathematics needs. An assumption is what the argument takes as given.
+ */
+export const noInputsWords = (kind: string) =>
+  kind === "assumption" ? "Nothing: the argument takes this as given." : "The argument as written stops here. That says where its links were drawn, and nothing about what the mathematics needs.";
+
 /** A relation's name in the interface (DESIGN.md, Relations). */
 export function relationName(kind: string): string {
   switch (kind) {
