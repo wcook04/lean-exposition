@@ -18,6 +18,8 @@ describe("check rows keep outcomes distinct", () => {
     expect(rowNote("comparator", { passed: 1, failed: 1 })).toBeNull();
     expect(rowNote("lean_build", { not_run: 2 })).toBeNull();
     expect(rowNote("extraction", { unavailable: 1, not_run: 1 })).toBe("No successful run is recorded.");
+    expect(rowNote("semantic_review", { not_run: 207 })).toMatch(/^All written, none independently run\./);
+    expect(rowNote("semantic_review", { not_run: 3, passed: 1 })).toBeNull();
   });
 
   it("states the edition's position once, from the counts", () => {
@@ -28,7 +30,6 @@ describe("check rows keep outcomes distinct", () => {
     ];
     const note = editionNote(cards);
     expect(note).toContain("Most recorded checks on this site have not been run (6 of 8).");
-    expect(note).toContain("no recorded explanation of why one record is used for another has been independently reviewed");
     expect(note).not.toMatch(/%|verified/);
     const reviewed = editionNote([card("semantic_review", "passed", 0), card("lean_build", "not_run", 0), card("comparator", "failed", 1)]);
     expect(reviewed).toContain("the reviewer is not recorded as independent");

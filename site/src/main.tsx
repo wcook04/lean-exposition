@@ -16,6 +16,7 @@ import "./styles/family.css";
 import "./reader/reader-content.css";
 import "./figures/figures.css";
 import "./app/app.css";
+import "./home/hero.css";
 
 import { App } from "./app/App";
 

@@ -99,6 +99,11 @@
   font-weight: 600;
 }
 
+/* True of every record, so it says nothing about this one. A status that differs stays. */
+.panel__id .panel__status--unverified {
+  display: none;
+}
+
 .panel__close {
   position: absolute;
   top: 50%;
@@ -583,6 +588,31 @@
   margin-right: 4px;
   font-weight: 600;
   color: var(--ink);
+}
+
+/* Where a step's explanation comes from: one quiet line until it is asked for. */
+.panel__origin {
+  margin-top: 10px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--ink-3);
+}
+
+.panel__origin summary {
+  width: fit-content;
+  min-height: 28px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+
+.panel__origin summary:hover {
+  color: var(--ink);
+}
+
+.panel__origin p {
+  margin: 6px 0 0;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
 }
 
 .panel__more-scope {
@@ -1219,4 +1249,132 @@
       opacity: 0;
     }
   }
+}
+
+/* ---- The record sheet's drill-down ------------------------------------------------- */
+
+.panel__levels {
+  margin-top: 10px;
+}
+
+.panel__compare {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-m);
+  background: var(--ink);
+  color: var(--raised);
+  font: 600 var(--fs-sm) var(--font-sans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.panel__compare:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: 2px;
+}
+
+.panel__lean {
+  display: grid;
+  gap: 14px;
+}
+
+.panel__tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.panel__tab {
+  height: 34px;
+  margin-bottom: -1px;
+  padding: 0 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--ink-2);
+  font: 500 var(--fs-ui) var(--font-sans);
+  cursor: pointer;
+}
+
+.panel__tab:hover {
+  color: var(--ink);
+}
+
+.panel__tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  font-weight: 600;
+}
+
+.panel__tab:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: -2px;
+}
+
+.panel__slice + .panel__slice {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.panel__slice-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 6px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.panel__slice-head a {
+  flex: none;
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.panel__recorded {
+  margin-top: 14px;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.panel__recorded summary {
+  cursor: pointer;
+}
+
+.panel__open {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* How the Lean makes a step: the names in order, each one a link. */
+.step__leanroute {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--space-4);
+}
+
+.step__leanchain {
+  display: grid;
+  gap: 4px;
+  margin: var(--space-2) 0 0;
+  padding: 0 0 0 var(--space-3);
+  list-style: none;
+  border-left: 1px solid var(--rule-strong);
+}
+
+.step__leanchain a {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.step__leanroute .panel__group {
+  margin-top: var(--space-2);
 }

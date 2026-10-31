@@ -4,17 +4,23 @@ import { routeHref, useLinkInterception, useRoute, type Route } from "./router";
 import { TopBar } from "./TopBar";
 import { PageTitle } from "./PageTitle";
 import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
-import { MapPage } from "../map/MapPage";
 
-const FrontPage = lazy(() => import("../home/FrontPage").then((m) => ({ default: m.FrontPage })));
-const ReaderPage = lazy(() => import("../reader/ReaderPage").then((m) => ({ default: m.ReaderPage })));
-const ChecksPage = lazy(() => import("../checks/ChecksPage").then((m) => ({ default: m.ChecksPage })));
-const AboutPage = lazy(() => import("../reader/AboutPage").then((m) => ({ default: m.AboutPage })));
-const SearchPage = lazy(() => import("../search/SearchPage").then((m) => ({ default: m.SearchPage })));
+import { FrontHero } from "../home/FrontHero";
+import { PAGES, usePrefetchOnIntent } from "./prefetch";
+
+const FrontPage = lazy(() => PAGES.home().then((m) => ({ default: m.FrontPage })));
+const MapPage = lazy(() => PAGES.map().then((m) => ({ default: m.MapPage })));
+const ReaderPage = lazy(() => PAGES.read().then((m) => ({ default: m.ReaderPage })));
+const ChecksPage = lazy(() => PAGES.checks().then((m) => ({ default: m.ChecksPage })));
+const ComparePage = lazy(() => PAGES.compare().then((m) => ({ default: m.ComparePage })));
+const LeanPage = lazy(() => PAGES.lean().then((m) => ({ default: m.LeanPage })));
+const AboutPage = lazy(() => PAGES.about().then((m) => ({ default: m.AboutPage })));
+const SearchPage = lazy(() => PAGES.search().then((m) => ({ default: m.SearchPage })));
 const SearchPalette = lazy(() => import("../search/SearchPalette").then((m) => ({ default: m.SearchPalette })));
 
 export function App() {
   useLinkInterception();
+  usePrefetchOnIntent();
   const route = useRoute();
   const [searching, setSearching] = useState(false);
 
@@ -54,7 +60,7 @@ export function App() {
         <EditionBanner />
         <LinkedEditionNotice />
         <main id="main" className="app__main" tabIndex={-1}>
-          <Suspense fallback={<Skeleton view={route.view} />}>
+          <Suspense fallback={route.view === "home" ? <FrontHero /> : <Skeleton view={route.view} />}>
             <Page route={route} />
           </Suspense>
         </main>
@@ -78,6 +84,10 @@ function Page({ route }: { route: Route }) {
       return <ReaderPage route={route} />;
     case "checks":
       return <ChecksPage route={route} />;
+    case "compare":
+      return <ComparePage route={route} />;
+    case "lean":
+      return <LeanPage route={route} />;
     case "about":
       return <AboutPage route={route} />;
     case "search":
@@ -203,7 +213,8 @@ function LinkedEditionNotice() {
 }
 
 function BootScreen({ state, retry, view }: { state: { status: string; error?: unknown }; retry: () => void; view: Route["view"] }) {
-  if (state.status === "loading") return <Skeleton view={view} />;
+  // The front page's first screen needs no data: it stays exactly as the HTML drew it.
+  if (state.status === "loading") return view === "home" ? <FrontHero /> : <Skeleton view={view} />;
   const { title, detail } = describeError(state.error);
   return (
     <div className="boot boot--error" role="alert">

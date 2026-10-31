@@ -75,6 +75,10 @@
   display: none;
 }
 
+.palette__hint[hidden] {
+  display: none;
+}
+
 .palette__hint {
   padding: var(--space-2) var(--space-4);
   font-size: var(--fs-sm);
@@ -158,6 +162,19 @@
 .palette__title--serif {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
+}
+
+.palette__full {
+  font-family: var(--font-serif);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+.palette__full.lean {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
 }
 
 .palette__meta {
@@ -262,9 +279,46 @@
 
 .search-page {
   width: 100%;
-  max-width: 48rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: var(--space-7) var(--space-5) var(--space-8);
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.search-page__head {
+  max-width: 48rem;
+}
+
+/* Results beside the Lean names, so a query's two kinds of answer show together. */
+.search-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.search-lean {
+  margin-top: var(--space-6);
+  padding-top: 11px;
+}
+
+.search-lean .palette__title.lean {
+  font-size: 0.8125rem;
+}
+
+.search-lean__more {
+  margin-top: var(--space-3);
+}
+
+.search-page__foot {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+@media (max-width: 1000px) {
+  .search-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .search-page__head h1 {

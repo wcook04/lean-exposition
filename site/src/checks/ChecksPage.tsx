@@ -1,34 +1,39 @@
-// The ledger of every recorded check in the edition, as rows per kind of
-// check: Check / What it examined / Recorded outcome / Details. Each kind
-// answers a different question, so outcomes are never merged across kinds,
-// and passed, failed, unavailable and not run always stay distinct. Only a
-// recorded failure is coloured; there is no percentage and no success badge.
+// The ledger of every recorded check in the edition. It opens with one paragraph
+// saying what is established, then a table by kind of check with the number passed,
+// failed, unavailable and not run in columns of their own. Outcomes are never merged
+// across kinds. Only a recorded failure is coloured; there is no percentage and no
+// success badge. Every number is computed from the edition or read from a record.
 
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Route } from "../app/router";
 import { routeHref } from "../app/router";
 import { describeError, useEdition, useRecord } from "../app/data";
 import type { ArgGraph } from "../model/graph";
+import { useAlignment } from "../compare/useAlignment";
 import { useEvidence, type EvidenceRecord } from "./evidence";
 import {
   CHECK_KINDS,
+  countsInWords,
+  failureLine,
   groupByKind,
   inStatedTimeOrder,
   OUTCOME_MEANINGS,
   OUTCOME_NAMES,
   recordsWord,
-  STATUS_WORDS,
   statedDate,
   type EvidenceCard,
   type KindGroup,
 } from "./summary";
-import { CheckMap } from "./CheckMap";
+import { RecordList } from "./RecordTiles";
 import "./checks.css";
 
 const PAGE = 25;
 /** Kinds with more records than this are shown in pages of PAGE. */
 const PAGED_OVER = 40;
 const STATUS_ORDER = ["failed", "unavailable", "not_run", "passed"];
+/** The outcome columns of the table, in the order a reader takes them. */
+const COUNT_COLUMNS = ["passed", "failed", "unavailable", "not_run"] as const;
+const COLUMN_NAMES: Record<string, string> = { passed: "Passed", failed: "Failed", unavailable: "Unavailable", not_run: "Not run" };
 
 type Target =
   | { type: "none" }
@@ -67,13 +72,19 @@ export function outcomeParts(counts: Record<string, number>): { status: string; 
  */
 export function rowNote(kind: string, counts: Record<string, number>): string | null {
   const total = Object.values(counts).reduce((s, n) => s + n, 0);
-  if (!total || counts.passed) return kind === "source_hash" && counts.passed ? "These checks compare each named file’s hash with its recorded hash and examine nothing else." : null;
+  if (!total || counts.passed) return null;
   if (kind === "comparator") return "No successful Comparator result is recorded.";
+  if (kind === "semantic_review" && counts.not_run === total)
+    return "All written, none independently run. Each is an authored explanation of one step, with the source lines it rests on.";
   if (counts.failed || counts.unavailable) return "No successful run is recorded.";
   return null;
 }
 
-/** The edition-level note, said once: how many checks ran and what review means here. */
+/**
+ * The edition-level note, said once. The table gives each kind's counts and what it tests,
+ * and the opening paragraph says when no review has passed; this adds the whole, and what
+ * an outcome is.
+ */
 export function editionNote(cards: readonly EvidenceCard[]): string {
   const total = cards.length;
   const notRun = cards.filter((c) => c.status === "not_run").length;
@@ -83,11 +94,10 @@ export function editionNote(cards: readonly EvidenceCard[]): string {
     notRun * 2 > total
       ? `Most recorded checks on this site have not been run (${notRun} of ${total}).`
       : `${notRun} of the ${total} recorded checks on this site have not been run.`;
-  const review =
-    reviewed === 0
-      ? "In a correspondence review, a reviewer compares a recorded statement or explanation with its source. No correspondence review is recorded as passed, so no recorded explanation of why one record is used for another has been independently reviewed."
-      : `In a correspondence review, a reviewer compares a recorded statement or explanation with its source. ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`;
-  return `${lead} ${review} Each outcome is the result written in one check record, for that check alone. An outcome is not a judgement on whether the mathematics is correct.`;
+  const review = reviewed
+    ? ` ${reviewed} correspondence ${reviewed === 1 ? "review is" : "reviews are"} recorded as passed, and the reviewer is not recorded as independent.`
+    : "";
+  return `${lead}${review} Each outcome is the result written in one check record, for that check alone, and is not a judgement on whether the mathematics is correct.`;
 }
 
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
@@ -108,31 +118,19 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
   return (
     <div className="checks">
       <header className="checks__head">
-        <p className="caps">Checks</p>
-        <h1>
-          {subject ? (
-            <>
-              Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
-            </>
-          ) : (
-            "Recorded checks"
-          )}
-        </h1>
-        <p className="checks__lede">
-          A check is a recorded test of one thing, for example whether a cited file still has its recorded hash or whether a
-          Lean project compiles. For each kind of check, the table lists what that kind examines and how many of its check
-          records give each outcome (passed, failed, unavailable or not run).
-        </p>
-        <p className="checks__edition">{editionNote(cards)}</p>
-        {supportObservation && (
-          <p className="checks__edition">
-            A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
-              Support observation from 26 October 2026
-            </a> records a completed build and scoped dependency extraction. That extracted graph remains partial and has
-            not been incorporated into this edition’s curated graph. Its retained receipt is listed under source-file checks;
-            it does not change the extraction outcomes below or establish Comparator acceptance.
-          </p>
-        )}
+        <div className="checks__lead">
+          <h1>
+            {subject ? (
+              <>
+                Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
+              </>
+            ) : (
+              "What has been checked"
+            )}
+          </h1>
+          <Established cards={cards} />
+        </div>
+        <OutcomeKey />
       </header>
 
       {target.type === "unknown" && (
@@ -143,46 +141,104 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
 
       {target.type === "node" && <SubjectChecks id={target.id} formal={target.formal} />}
 
-      {target.type !== "node" && <CheckMap />}
-
       <section className="checks__band" aria-labelledby="by-kind">
-        <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "All checks, by kind"}</h2>
-        <p className="checks__intro">
-          There are {recordsWord(cards.length)} in all. The button in a row’s Details column lists that row’s records, each
-          with what was run or planned, which statements it concerns, and its outcome.
-        </p>
+        <h2 id="by-kind">{subject ? "All checks on this site, by kind" : "Every check, by kind"}</h2>
         <CheckTable
           caption="All recorded checks on this site, by kind"
           rows={groups.map((g) => ({ group: g, examined: null }))}
           target={target.type === "evidence" ? target : null}
           paged
+          pointers
         />
-        <OutcomeKey />
+        <div className="checks__notes">
+        <p className="checks__edition">{editionNote(cards)}</p>
+        {supportObservation && (
+          <p className="checks__edition">
+            A separate <a href={`${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`}>
+              Support observation from 26 October 2026
+            </a> records a completed build and a scoped dependency extraction. Its graph is partial and is not part of this
+            edition, so it does not change the outcomes above or establish Comparator acceptance.
+          </p>
+        )}
+        </div>
       </section>
 
+      {target.type !== "node" && <RecordList />}
+
       <section className="checks__band" aria-labelledby="formal">
-        <h2 id="formal">Formal statements in Lean</h2>
+        <h2 id="formal">The main statements in Lean</h2>
         <p className="checks__intro">
-          The records include {declarations.length === 1 ? "one Lean declaration" : `${declarations.length} Lean declarations`}. A
-          Lean declaration is a statement written in Lean, a language in which a computer can check proofs. Each declaration
-          below is listed with the claims recorded as corresponding to it.
+          {declarations.length === 1 ? "One Lean declaration" : `${declarations.length} Lean declarations`}, each with the claims
+          recorded as corresponding to it.
         </p>
-        {declarations.map((id) => (
-          <FormalStatement
-            key={id}
-            id={id}
-            selected={target.type === "node" && (target.id === id || target.formal === id)}
-          />
-        ))}
+        <div className="formal-list">
+          {declarations.map((id) => (
+            <FormalStatement
+              key={id}
+              id={id}
+              selected={target.type === "node" && (target.id === id || target.formal === id)}
+            />
+          ))}
+        </div>
       </section>
     </div>
   );
 }
 
+/**
+ * The opening paragraph: what the one passed build examined, then what has no result.
+ * Its facts come from the records' own text, its counts from the edition. While the
+ * build's record loads, the counts alone stand in, so nothing is said that is not yet read.
+ */
+function Established({ cards }: { cards: EvidenceCard[] }) {
+  const { graph } = useEdition();
+  const groups = useMemo(() => groupByKind(cards), [cards]);
+  const of = (kind: string) => groups.find((g) => g.kind === kind);
+  const passedBuilds = useMemo(() => cards.filter((c) => c.kind === "lean_build" && c.status === "passed"), [cards]);
+  const evidence = useEvidence(useMemo(() => passedBuilds.map((c) => c.ref), [passedBuilds]));
+  const record = evidence.status === "ready" && passedBuilds[0] ? evidence.records.get(passedBuilds[0].ref) : undefined;
+  const module = /\bOAI(?:\.\w+)+/.exec(record?.details ?? "")?.[0];
+  const version = /(\d+\.\d+\.\d+)/.exec(record?.tool ?? "")?.[1];
+  const date = statedDate(record?.details);
+  const subject = record?.subject_ids?.[0] ? graph.nodes.get(record.subject_ids[0]) : undefined;
+  const comparator = of("comparator");
+  const reviews = of("semantic_review");
+  const hashes = of("source_hash");
+  return (
+    <p className="checks__lede">
+      {record ? (
+        <>
+          Lean, a language in which a computer checks each step of a proof, compiled{" "}
+          {module ? <code className="lean" translate="no">{module}</code> : "the Lean file"}
+          {subject ? <>, the module recorded for <span className="lean" translate="no">{subject.label}</span>,</> : null} without an error
+          {version ? ` on version ${version}` : ""}
+          {date ? `; the record of that build is dated ${date.text}` : ""}.{" "}
+        </>
+      ) : passedBuilds.length === 0 ? (
+        <>No Lean build, the step in which a computer checks each line of a proof, is recorded as passed. </>
+      ) : null}
+      {hashes && hashes.cards.length > 0 && <>The cited files match their recorded hashes in {countsInWords(hashes.counts)} checks. </>}
+      {comparator && comparator.cards.length > 0 && (
+        <>
+          Comparator, a program that compares a Lean proof with a separately written statement of the theorem, has{" "}
+          {comparator.counts.passed ? `${comparator.counts.passed} passed` : "no successful result"}: of its{" "}
+          {recordsWord(comparator.cards.length)}, {countsInWords(comparator.counts)}.{" "}
+        </>
+      )}
+      {reviews && reviews.cards.length > 0 && !reviews.counts.passed && (
+        <>
+          The {reviews.cards.length} correspondence reviews, which compare a recorded step with its source, are written but none
+          has been independently run, so no one has confirmed that the papers and the Lean say the same thing.
+        </>
+      )}
+    </p>
+  );
+}
+
 function OutcomeKey() {
   return (
-    <details className="outcome-key">
-      <summary>What each outcome means</summary>
+    <section className="outcome-key" aria-labelledby="outcome-key">
+      <h2 id="outcome-key">What each outcome means</h2>
       <dl className="outcomes">
         {OUTCOME_MEANINGS.map((o) => (
           <div key={o.status} className="outcomes__row">
@@ -193,7 +249,7 @@ function OutcomeKey() {
           </div>
         ))}
       </dl>
-    </details>
+    </section>
   );
 }
 
@@ -238,7 +294,7 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
       {groups.length > 0 && (
         <CheckTable
           caption={`Checks attached to ${node.label}, by kind`}
-          rows={groups.map((g) => ({ group: g, examined: null, subjectView: true }))}
+          rows={groups.map((g) => ({ group: g, examined: null }))}
           target={null}
         />
       )}
@@ -252,8 +308,6 @@ interface Row {
   group: KindGroup;
   /** A line under the kind's question; null for none. */
   examined: string | null;
-  /** Rows for one subject open their history when it holds a recorded failure. */
-  subjectView?: boolean;
 }
 
 function CheckTable({
@@ -261,32 +315,111 @@ function CheckTable({
   rows,
   target,
   paged,
+  pointers,
 }: {
   caption: string;
   rows: Row[];
   target: Extract<Target, { type: "evidence" }> | null;
   paged?: boolean;
+  /** Add the row for the site's own check of its Lean and paper links. */
+  pointers?: boolean;
 }) {
+  const shown = rows.filter((r) => r.group.cards.length > 0);
   return (
     <table className="checktable">
-      <caption className="visually-hidden">{caption}</caption>
-      <thead>
-        <tr>
-          <th scope="col">Check</th>
-          <th scope="col">What it examined</th>
-          <th scope="col">Recorded outcome</th>
-          <th scope="col">Details</th>
-        </tr>
-      </thead>
-      {rows.map((row) => (
-        <KindRow
-          key={row.group.kind}
-          row={row}
-          target={target && target.kind === row.group.kind ? target : null}
-          paged={!!paged}
-        />
-      ))}
+        <caption className="visually-hidden">{caption}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Check</th>
+            <th scope="col">What it tests</th>
+            {COUNT_COLUMNS.map((c) => (
+              <th key={c} scope="col" className="checktable__n">
+                {COLUMN_NAMES[c]}
+              </th>
+            ))}
+            <th scope="col">
+              <span className="visually-hidden">Records</span>
+            </th>
+          </tr>
+        </thead>
+        {shown.map((row) => (
+          <KindRow key={row.group.kind} row={row} target={target && target.kind === row.group.kind ? target : null} paged={!!paged} />
+        ))}
+        {pointers && <PointerRow />}
     </table>
+  );
+}
+
+function CountCells({ counts }: { counts: Record<string, number> }) {
+  return (
+    <>
+      {COUNT_COLUMNS.map((c) => {
+        const n = counts[c] ?? 0;
+        return (
+          <td key={c} className={`checktable__n num${n === 0 ? " is-zero" : ""}${c === "failed" && n > 0 ? " is-failed" : ""}`} data-label={COLUMN_NAMES[c]}>
+            {n}
+          </td>
+        );
+      })}
+    </>
+  );
+}
+
+/**
+ * The links between records, Lean and the papers. They are authored; the export keeps a
+ * link only if it lands, so the edition holds no count of failures to report here.
+ * This is a row of the site's own, computed from the alignment, not a stored check record.
+ */
+function PointerRow() {
+  const alignment = useAlignment();
+  const links = useMemo(() => {
+    if (!alignment) return null;
+    const rows = Object.values(alignment.records);
+    return { lean: rows.reduce((s, r) => s + r.lean.length, 0), papers: rows.reduce((s, r) => s + r.statements.length, 0) };
+  }, [alignment]);
+  return (
+    <tbody className="checkrow checkrow--pointers">
+      <tr>
+        <th scope="row" className="checkrow__kind">
+          Lean and paper links
+        </th>
+        <td className="checkrow__examined" data-label="What it tests">
+          Whether each authored link still lands: every quoted passage is found in its paper and every named declaration
+          in its Lean file.
+          <span className="checkrow__note">
+            {links ? `${links.lean} links to Lean and ${links.papers} to the papers. ` : ""}The site’s own test at each build,
+            not a stored check record. No one has reviewed whether the mathematics on the two sides of a link matches.
+          </span>
+        </td>
+        <td className="checktable__n num" data-label="Passed">
+          {links ? links.lean + links.papers : ""}
+        </td>
+        <td colSpan={3} className="checkrow__left-out">
+          A link that does not land is left out of the site.
+        </td>
+        <td className="checkrow__details" />
+      </tr>
+    </tbody>
+  );
+}
+
+function FailureNotes({ group }: { group: KindGroup }) {
+  const failed = useMemo(() => group.cards.filter((c) => c.status === "failed"), [group]);
+  const evidence = useEvidence(useMemo(() => failed.map((c) => c.ref), [failed]));
+  return (
+    <tr className="checkrow__failures">
+      <td colSpan={7}>
+        <ul>
+          {failed.map((c) => (
+            <li key={c.id}>
+              <Outcome status="failed" />
+              <span>{failureLine(c, evidence.status === "ready" ? evidence.records.get(c.ref) : undefined)}</span>
+            </li>
+          ))}
+        </ul>
+        <p>A failed build is not a rejection of the proof. These runs stopped before any comparison, and their records say that no mathematical rejection was observed.</p>
+      </td>
+    </tr>
   );
 }
 
@@ -295,8 +428,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
   const uid = useId();
   const total = group.cards.length;
   const paged = allowPaging && total > PAGED_OVER;
-  // A recorded failure is never hidden behind a click on a subject's own rows.
-  const [open, setOpen] = useState(!!target || (!!row.subjectView && !!group.counts.failed));
+  const [open, setOpen] = useState(!!target);
   const [shown, setShown] = useState(paged ? PAGE : total);
   useEffect(() => {
     if (!target) return;
@@ -316,43 +448,28 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
   const note = rowNote(group.kind, group.counts);
 
   return (
-    <tbody id={`kind-${group.kind}`} className={`checkrow${group.counts.failed ? " checkrow--failed" : ""}`}>
+    <tbody id={`kind-${group.kind}`} className="checkrow">
       <tr>
         <th scope="row" className="checkrow__kind">
           {group.title}
         </th>
-        <td className="checkrow__examined" data-label="What it examined">
+        <td className="checkrow__examined" data-label="What it tests">
           {group.question || <span className="faint">Not stated in the check records.</span>}
           {row.examined && <span className="checkrow__subjects">{row.examined}</span>}
-        </td>
-        <td className="checkrow__outcome" data-label="Recorded outcome">
-          {total === 0 ? (
-            <span className="faint">There are no check records of this kind.</span>
-          ) : (
-            <ul className="checkrow__counts">
-              {outcomeParts(group.counts).map(({ status, n }) => (
-                <li key={status}>
-                  <Outcome status={status} count={n} />
-                </li>
-              ))}
-            </ul>
-          )}
           {note && <span className="checkrow__note">{note}</span>}
         </td>
-        <td className="checkrow__details" data-label="Details">
-          {total > 0 && (
-            <button type="button" className="control checkrow__toggle" aria-expanded={open} aria-controls={historyId} onClick={() => setOpen((o) => !o)}>
-              <Chevron open={open} />
-              {open ? "Hide" : total === 1 ? "Show the record" : `Show all ${total}`}
-              <span className="visually-hidden">
-                {open ? ` the ${group.title} records` : total === 1 ? ` of ${group.title}` : ` ${group.title} records`}
-              </span>
-            </button>
-          )}
+        <CountCells counts={group.counts} />
+        <td className="checkrow__details">
+          <button type="button" className="control checkrow__toggle" aria-expanded={open} aria-controls={historyId} onClick={() => setOpen((o) => !o)}>
+            <Chevron open={open} />
+            {open ? "Hide" : total === 1 ? "Open" : `Open all ${total}`}
+            <span className="visually-hidden">{` ${group.title} records`}</span>
+          </button>
         </td>
       </tr>
+      {group.counts.failed > 0 && <FailureNotes group={group} />}
       <tr className="checkrow__history" id={historyId} hidden={!open}>
-        <td colSpan={4}>
+        <td colSpan={7}>
           {open && (
             <>
               {evidence.status === "error" && <p className="checks__error">{describeError(evidence.error).title}.</p>}
@@ -603,17 +720,11 @@ function EvidenceRow({
   );
 }
 
-function Outcome({ status, count }: { status: string; count?: number }) {
+function Outcome({ status }: { status: string }) {
   return (
     <span className={`outcome outcome--${status}`}>
       <span className="outcome__mark" aria-hidden="true" />
-      {count === undefined ? (
-        OUTCOME_NAMES[status] ?? status.replace(/_/g, " ")
-      ) : (
-        <>
-          <span className="num">{count}</span> {STATUS_WORDS[status] ?? status.replace(/_/g, " ")}
-        </>
-      )}
+      {OUTCOME_NAMES[status] ?? status.replace(/_/g, " ")}
     </span>
   );
 }

@@ -1,18 +1,19 @@
-// Search across the edition: records on the map, paper headings and mapped
-// passages. The server matches the exact words typed (case-folded, every
-// word required); results are grouped by what they open, not ranked by
-// meaning. Follows the WAI-ARIA combobox pattern with a grouped listbox.
+// Search across the edition: records on the map, paper headings, mapped passages
+// and Lean declaration names. Every word typed is required, as a whole word or the
+// start of one; each group is ordered by title matches and by how close together
+// the words occur (rank.ts). Follows the WAI-ARIA combobox pattern with a grouped listbox.
 // The palette shows the first few of each kind; a truncated group ends in
 // "See all N matching …", which opens the full results page for the query.
 
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import "katex/dist/katex.min.css";
-import { query } from "../api/client";
-import type { Page, SearchItem } from "../api/types";
+import type { SearchItem } from "../api/types";
 import { describeError, useEdition } from "../app/data";
 import { navigate, routeHref, type SearchType } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
-import { destination, nounFor, ResultBody, SEARCH_HELP, typeOfTable } from "./results";
+import { destination, LeanResultBody, nounFor, ResultBody, SEARCH_HELP, typeOfTable } from "./results";
+import { rankedSearch } from "./rank";
+import { leanNames, searchLean, type LeanHit } from "./leanNames";
 import "./search.css";
 
 const DEBOUNCE = 180;
@@ -28,9 +29,11 @@ const TABLES: { table: string; limit: number }[] = [
   { table: "evidence", limit: 3 },
 ];
 
-type GroupId = "start" | "map" | "sections" | "passages" | "other";
+const LEAN_LIMIT = 4;
 
-const GROUP_TABLES: Record<Exclude<GroupId, "start">, string[]> = {
+type GroupId = "start" | "map" | "sections" | "passages" | "lean" | "other";
+
+const GROUP_TABLES: Record<Exclude<GroupId, "start" | "lean">, string[]> = {
   map: ["nodes"],
   sections: ["sections"],
   passages: ["passages"],
@@ -42,6 +45,7 @@ const GROUP_TITLES: Record<GroupId, string> = {
   map: "Records on the argument map",
   sections: "Sections",
   passages: "Passages",
+  lean: "Lean declarations",
   other: "Citations, sources and check records",
 };
 
@@ -49,6 +53,7 @@ interface Option {
   key: string;
   group: GroupId;
   item?: SearchItem;
+  leanHit?: LeanHit;
   /** Fixed content for starting points. */
   title?: string;
   meta?: string;
@@ -60,7 +65,8 @@ interface Option {
 
 interface Results {
   q: string;
-  byTable: Map<string, Page<SearchItem>>;
+  byTable: Map<string, { items: SearchItem[]; total: number }>;
+  lean: LeanHit[];
 }
 
 type Phase = { status: "idle" } | { status: "loading" } | { status: "ready" } | { status: "error"; message: string };
@@ -104,14 +110,14 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
     const controller = new AbortController();
     setPhase({ status: "loading" });
     const timer = window.setTimeout(() => {
-      Promise.all(
-        TABLES.map(({ table, limit }) =>
-          query<Page<SearchItem>>("/search", { q, table, limit }, controller.signal).then((r) => [table, r.data] as const),
-        ),
-      ).then(
-        (pairs) => {
+      Promise.all([rankedSearch(q, TABLES.map((t) => t.table), controller.signal), leanNames()]).then(
+        ([ranked, names]) => {
           if (controller.signal.aborted) return;
-          setResults({ q, byTable: new Map(pairs) });
+          const byTable = new Map(TABLES.map(({ table, limit }) => {
+            const all = ranked.get(table) ?? [];
+            return [table, { items: all.slice(0, limit), total: all.length }] as const;
+          }));
+          setResults({ q, byTable, lean: names ? searchLean(names, q) : [] });
           setPhase({ status: "ready" });
           setActive(0);
         },
@@ -154,7 +160,16 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   const options = useMemo<Option[]>(() => {
     if (!results) return text.trim() ? [] : starts;
     const out: Option[] = [];
-    for (const [group, tables] of Object.entries(GROUP_TABLES) as [Exclude<GroupId, "start">, string[]][]) {
+    const lean = () => {
+      for (const hit of results.lean.slice(0, LEAN_LIMIT)) {
+        out.push({ key: `lean:${hit.module}:${hit.name}`, group: "lean", leanHit: hit, href: routeHref({ view: "lean", module: hit.module, decl: hit.name }) });
+      }
+      if (results.lean.length > LEAN_LIMIT) {
+        out.push({ key: "more:lean", group: "lean", more: true, title: `See all ${results.lean.length} matching Lean declarations`, href: routeHref({ view: "search", q: results.q }) });
+      }
+    };
+    for (const [group, tables] of Object.entries(GROUP_TABLES) as [Exclude<GroupId, "start" | "lean">, string[]][]) {
+      if (group === "other") lean();
       let shown = 0;
       let total = 0;
       let first: SearchType | null = null;
@@ -180,7 +195,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   }, [results, starts, text]);
 
   const groups = useMemo(() => {
-    const order: GroupId[] = ["start", "map", "sections", "passages", "other"];
+    const order: GroupId[] = ["start", "map", "sections", "passages", "lean", "other"];
     return order
       .map((id) => ({ id, options: options.filter((o) => o.group === id) }))
       .filter((g) => g.options.length > 0);
@@ -201,6 +216,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
     t.sections = sum(["sections"]);
     t.passages = sum(["passages"]);
     t.other = sum(["citations", "sources", "evidence"]);
+    t.lean = { shown: Math.min(LEAN_LIMIT, results.lean.length), total: results.lean.length };
     return t;
   }, [results]);
 
@@ -276,13 +292,12 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
   else if (results && options.length === 0)
     status = (
       <>
-        No record, section heading or linked passage contains all of the words <q>{results.q}</q>. Search covers only
-        records, section headings and passages linked to records, so other text in the papers is not searched. Try fewer
-        words, or another spelling.
+        No record, section heading, linked passage or Lean name contains all of the words <q>{results.q}</q>, as whole
+        words or the starts of words. Other text in the papers is not searched. Try fewer words, or another spelling.
       </>
     );
   else if (results) {
-    const total = [...results.byTable.values()].reduce((s, p) => s + p.total, 0);
+    const total = [...results.byTable.values()].reduce((s, p) => s + p.total, results.lean.length);
     status = (
       <>
         {total} {total === 1 ? "match" : "matches"} in all.{" "}
@@ -341,7 +356,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
             <span className="palette__close-word">Close</span>
           </button>
         </div>
-        <p id={`${uid}-hint`} className="palette__hint">
+        <p id={`${uid}-hint`} className="palette__hint" hidden={!!text.trim()}>
           {SEARCH_HELP}
         </p>
 
@@ -377,6 +392,8 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
                           {option.title}
                           <span aria-hidden="true"> →</span>
                         </span>
+                      ) : option.leanHit ? (
+                        <LeanResultBody hit={option.leanHit} />
                       ) : option.item ? (
                         <ResultBody item={option.item} opening={opening === option.key} />
                       ) : (

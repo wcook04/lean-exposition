@@ -10,7 +10,7 @@ const calls = vi.hoisted(() => ({
   edition: {} as { graph?: unknown },
 }));
 
-vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition }));
+vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition, loadPaperStructure: () => new Promise(() => {}) }));
 vi.mock("../src/app/router", () => ({ navigate: calls.navigate }));
 vi.mock("../src/app/theme", () => ({ prefersReducedMotion: () => true }));
 vi.mock("../src/panels/accountStore", () => ({ chooseAccount: vi.fn() }));
@@ -18,27 +18,17 @@ vi.mock("../src/panels/presence", () => ({ usePresence: (value: string | undefin
 vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: () => null }));
 vi.mock("../src/panels/EdgePanel", () => ({ EdgePanel: () => null }));
 vi.mock("../src/map/MapKey", () => ({
-  KeyRow: ({ id, hidden }: { id: string; hidden?: boolean }) => <section id={id} hidden={hidden} />,
-  SourceSwatches: () => null,
+  KeyPopover: () => <button>Key</button>,
 }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  GoalPlate: () => null,
   StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },
     { id: "scalar_value", title: "Value identities", stages: ["long"] },
   ],
-}));
-vi.mock("../src/panels/AccountSwitch", () => ({
-  AccountSwitch: ({ onLens }: { onLens: (stage: "long") => void }) => (
-    <button onClick={() => onLens("long")}>Choose long from bar</button>
-  ),
-}));
-vi.mock("../src/ribbons/ReadingsDock", () => ({
-  ReadingsDock: ({ onLens }: { onLens: (stage: "long") => void }) => (
-    <button onClick={() => onLens("long")}>Choose long from dock</button>
-  ),
 }));
 vi.mock("../src/map/ArgumentTree", async () => {
   const { forwardRef, useImperativeHandle } = await import("react");
@@ -50,7 +40,7 @@ vi.mock("../src/map/ArgumentTree", async () => {
   };
 });
 
-import { KEY_ROW_KEY, MapPage } from "../src/map/MapPage";
+import { MapPage } from "../src/map/MapPage";
 
 type MapRoute = Extract<Route, { view: "map" }>;
 let root: Root;
@@ -84,18 +74,15 @@ const keyButton = () => [...container.querySelectorAll<HTMLButtonElement>("butto
 describe("the map header", () => {
   beforeEach(() => localStorage.clear());
 
-  it("shows the key row by default and remembers the reader's choice to hide it", () => {
+  it("gives the canvas the page under the header, with what lines mean behind the Key", () => {
     open({ view: "map" });
-    expect(keyButton().getAttribute("aria-expanded")).toBe("true");
-    expect(container.querySelector("#map-key-row")!.hasAttribute("hidden")).toBe(false);
-    act(() => keyButton().click());
-    expect(keyButton().getAttribute("aria-expanded")).toBe("false");
-    expect(container.querySelector("#map-key-row")!.hasAttribute("hidden")).toBe(true);
-    expect(localStorage.getItem(KEY_ROW_KEY)).toBe("hidden");
-    act(() => root.unmount());
-    root = createRoot(container);
-    open({ view: "map" });
-    expect(keyButton().getAttribute("aria-expanded")).toBe("false");
+    expect(container.querySelector(".map-sub")).toBeNull();
+    expect(keyButton()).toBeDefined();
+  });
+
+  it("keeps one line under the header only while a paper's lens changes what a line means", () => {
+    open({ view: "map", lens: "short" });
+    expect(container.querySelector(".map-sub")!.textContent).toContain("A line may pass over records it leaves out.");
   });
 
   it("names the main result in the title button and lists the main results as radio items", () => {
@@ -107,6 +94,22 @@ describe("the map header", () => {
     expect(items.map((i) => i.getAttribute("data-goal"))).toEqual(["full_support", "scalar_value"]);
     expect(items[0].getAttribute("aria-checked")).toBe("true");
     expect(items[1].textContent).toContain("In the long record");
+  });
+
+  it("offers the levels as a segmented control, with no dock and no account menu", () => {
+    open({ view: "map" });
+    const radios = [...container.querySelectorAll('.map-lens [role="radio"]')];
+    expect(radios.map((r) => r.textContent?.replace(/\s*\d+$/, ""))).toEqual(["All", "Long record", "Short paper", "Exposition"]);
+    expect(radios[0].getAttribute("aria-checked")).toBe("true");
+    expect(container.querySelector(".dock")).toBeNull();
+  });
+
+  it("keeps the branch controls in a bar of their own, outside the canvas, for the view they change", () => {
+    open({ view: "map" });
+    expect(container.querySelector(".map-foot")).toBeNull();
+    act(() => [...container.querySelectorAll<HTMLButtonElement>(".map-views button")].find((b) => b.textContent === "Step by step")!.click());
+    expect(container.querySelector(".map-foot .map-controls")).not.toBeNull();
+    expect(container.querySelector(".map-page__main .map-controls")).toBeNull();
   });
 
   it("has no Show overview control", () => {

@@ -17,8 +17,28 @@ export type Route =
       /** A selected step between two records: an `ArgEdge.key`. */
       edge?: string;
     }
-  | { view: "read"; stage: Stage; anchor?: string; node?: string; beside?: { stage: Stage; anchor: string } }
+  | {
+      view: "read";
+      stage: Stage;
+      anchor?: string;
+      /** The exact source to land on: a line ("120"), lines ("120-134") or a byte range ("b4521-5120"). */
+      at?: string;
+      node?: string;
+      beside?: { stage: Stage; anchor: string };
+    }
   | { view: "checks"; node?: string }
+  | {
+      view: "compare";
+      /** The record read across its levels. Without one, the table of every step. */
+      node?: string;
+      /** The table, opened at this record. */
+      at?: string;
+      /** Which levels show, in order, when the reader has chosen. */
+      levels?: Level[];
+      /** The table with the steps only some of the levels have, as well as those all of them have. */
+      any?: boolean;
+    }
+  | { view: "lean"; module?: string; decl?: string }
   | { view: "about"; anchor?: string }
   | {
       view: "search";
@@ -30,6 +50,14 @@ export type Route =
       page?: number;
     }
   | { view: "missing"; path: string };
+
+/** The levels of the funnel, from the Lean down to the exposition. */
+export const LEVELS = ["lean", "long", "short", "expository"] as const;
+export type Level = (typeof LEVELS)[number];
+
+function isLevel(value: string): value is Level {
+  return (LEVELS as readonly string[]).includes(value);
+}
 
 /** The kinds of result search lists, each one table of the edition. */
 export const SEARCH_TYPES = ["records", "sections", "passages", "citations", "sources", "checks"] as const;
@@ -57,6 +85,8 @@ function fragmentOf(url: URL): string | undefined {
     return raw;
   }
 }
+
+const AT_PARAM = /^(?:\d+(?:-\d+)?|b\d+-\d+)$/;
 
 export function parseRoute(url: URL): Route {
   let path = url.pathname;
@@ -89,11 +119,17 @@ export function parseRoute(url: URL): Route {
       view: "read",
       stage: read[1],
       anchor: hash,
+      at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
     };
   }
   if (path === "/checks") return { view: "checks", node: q.get("n") ?? undefined };
+  if (path === "/compare") {
+    const levels = q.get("levels")?.split(",").filter(isLevel);
+    return { view: "compare", node: q.get("n") ?? undefined, at: q.get("at") ?? undefined, levels: levels?.length ? levels : undefined, any: q.get("in") === "any" || undefined };
+  }
+  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined };
   if (path === "/about") return { view: "about", anchor: hash };
   if (path === "/search") {
     const type = q.get("type");
@@ -145,6 +181,7 @@ export function routeHref(route: Route): string {
       return `${BASE}/map${s ? `?${s}` : ""}`;
     }
     case "read": {
+      if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       const s = q.toString();
@@ -153,6 +190,20 @@ export function routeHref(route: Route): string {
     case "checks":
       if (route.node) q.set("n", route.node);
       return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
+    case "compare": {
+      if (route.node) q.set("n", route.node);
+      if (route.at) q.set("at", route.at);
+      if (route.levels) q.set("levels", route.levels.join(","));
+      if (route.any) q.set("in", "any");
+      const s = q.toString();
+      return `${BASE}/compare${s ? `?${s}` : ""}`;
+    }
+    case "lean": {
+      if (route.module) q.set("m", route.module);
+      if (route.decl) q.set("d", route.decl);
+      const s = q.toString();
+      return `${BASE}/lean${s ? `?${s}` : ""}`;
+    }
     case "about":
       return `${BASE}/about${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     case "search": {

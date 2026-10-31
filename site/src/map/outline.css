@@ -1,7 +1,8 @@
 /* The argument as a list. Native scrolling, reading-size titles, 44px targets on
-   touch. Rows indent 16px per level for three levels, then the list refocuses. */
+   touch. Rows indent under their parent for three levels, then the list refocuses. */
 
-.outline {
+.map-page__main > .outline {
+  display: block;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -16,28 +17,13 @@
 
 .outline__goal {
   display: grid;
-  gap: 10px;
-  padding: 20px 22px 18px;
-  background: var(--raised);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-card);
-  box-shadow: var(--card-shadow);
-}
-
-.outline__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 12px;
-  margin: 0;
-}
-
-.outline__src {
-  display: inline-flex;
-  align-items: center;
   gap: 6px;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.outline__goal p {
+  margin: 0;
 }
 
 .outline__title {
@@ -50,47 +36,37 @@
   text-wrap: balance;
 }
 
+.outline__open-goal {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-wrap: balance;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--t-hover) var(--ease-out);
+}
+
+.outline__open-goal:hover {
+  text-decoration-color: var(--ink-3);
+}
+
+.outline__open-goal[aria-pressed="true"] {
+  text-decoration-color: var(--lit);
+}
+
 .outline__scope {
-  margin: 0;
   font-size: var(--fs-sm);
   color: var(--ink-2);
 }
 
-.outline__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.outline__explore {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--target);
-  padding: 0 18px;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-m);
-  background: var(--ink);
-  color: var(--ground);
-  font-size: var(--fs-base);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.outline__explore:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.outline__inspect-goal {
-  min-height: var(--target);
-}
-
 .outline__statement {
-  margin-top: 4px;
-  border-top: 1px solid var(--rule);
-  padding-top: 10px;
+  margin-top: 2px;
 }
 
 .outline__statement > summary {
@@ -178,15 +154,14 @@
 }
 
 .outline__inputs {
-  margin-top: 28px;
+  margin-top: 18px;
 }
 
 .outline__inputs-head {
-  margin: 0 0 4px;
-  font-family: var(--font-serif);
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  color: var(--ink);
+  margin: 0 0 6px;
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--ink-2);
   scroll-margin-top: 16px;
 }
 
@@ -199,8 +174,8 @@
   outline-offset: 4px;
 }
 
-.outline__inputs-note {
-  margin: 8px 0 0;
+.outline__inputs-of {
+  color: var(--ink);
 }
 
 .outline__empty {
@@ -215,143 +190,156 @@
   list-style: none;
 }
 
+/* Children line up under their parent's title; a hairline holds them together. */
 .outline__list .outline__list {
-  margin-left: 16px;
-  padding-left: 0;
+  margin-left: 13px;
+  padding: 0 0 0 13px;
   border-left: 1px solid var(--rule);
 }
 
 .orow {
-  border-top: 1px solid var(--rule);
   scroll-margin-bottom: calc(16px + var(--sheet-inset, 0px));
 }
 
-.outline__list .outline__list .orow:first-child {
-  border-top: 0;
-}
-
+/* The chevron has its own column, empty on a row with nothing to unfold, so every title
+   starts at the same place. The open button is stretched over the whole row, and the
+   row's two small controls sit above it. */
 .orow__body {
+  position: relative;
   display: grid;
-  gap: 6px;
-  padding: 14px 4px 14px 12px;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: baseline;
   border-radius: var(--radius-s);
   transition: background-color var(--t-hover) var(--ease-out);
 }
 
-.orow__body.is-selected {
-  background: var(--lit-wash);
-  box-shadow: inset 3px 0 0 var(--lit);
-}
-
-.orow__rel {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 28px;
-  margin: -4px 0 0 -6px;
-  padding: 0 6px;
-  border: 0;
-  border-radius: var(--radius-s);
-  background: none;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-  cursor: pointer;
-}
-
-.orow__rel:hover {
-  color: var(--ink);
+.orow__body:hover {
   background: color-mix(in oklab, var(--ink) 5%, transparent);
 }
 
-.orow__rel.is-selected {
-  color: var(--ink);
+.orow__body.is-selected {
   background: var(--lit-wash);
-  box-shadow: inset 0 0 0 1px var(--lit);
+  box-shadow: inset 2px 0 0 var(--lit);
+}
+
+.orow__inputs {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.orow__inputs:hover,
+.orow__inputs[aria-expanded="true"] {
+  color: var(--ink);
+}
+
+.orow__open {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  padding: 7px 8px 7px 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.orow__open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-s);
+}
+
+.orow__open:focus-visible {
+  outline: none;
+}
+
+.orow__open:focus-visible::after {
+  outline: var(--focus-ring);
+  outline-offset: -2px;
 }
 
 .orow__title {
-  margin: 0;
+  min-width: 0;
   font-family: var(--font-serif);
-  font-size: var(--fs-read);
-  line-height: 1.35;
-  color: var(--ink);
+  font-size: var(--fs-card);
+  line-height: 1.32;
   overflow-wrap: anywhere;
 }
 
 .orow__title.lean {
   font-family: var(--font-mono);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
-.orow__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  margin-top: 2px;
+.orow[data-depth="1"] > .orow__body .orow__title {
+  font-size: 1.125rem;
 }
 
-.orow__inputs {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
-  padding: 0 12px;
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-m);
-  background: var(--raised);
-  color: var(--ink);
-  font-size: var(--fs-ui);
-  cursor: pointer;
+.orow[data-depth="1"] > .orow__body .orow__title.lean {
+  font-size: 0.875rem;
 }
 
-.orow__inputs:hover {
-  border-color: var(--ink-3);
-}
-
-.orow__inputs[aria-expanded="true"] {
-  background: color-mix(in oklab, var(--ink) 6%, var(--raised));
-}
-
-.orow__leaf {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--fs-sm);
+.orow__kind {
+  flex: none;
   color: var(--ink-3);
 }
 
 .orow__also {
-  min-height: 36px;
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  justify-self: start;
+  margin: -4px 8px 7px 0;
   font-size: var(--fs-sm);
-  color: var(--ink-2);
+  color: var(--ink-3);
   text-align: left;
+  text-decoration-color: transparent;
 }
 
-.orow__inspect {
-  min-height: 36px;
-}
-
-.orow__body--assumption {
-  /* Assumptions alone carry a dashed edge. */
-  box-shadow: inset 2px 0 0 transparent;
-  border-left: 1.5px dashed var(--rule-strong);
+.orow__also:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
 }
 
 @media (max-width: 700px) {
-  .outline {
+  .map-page__main > .outline {
     padding: 16px 16px calc(40px + var(--sheet-inset, 0px));
   }
-  .outline__goal {
-    padding: 16px;
-  }
-  .orow__inputs,
-  .orow__inspect,
-  .orow__also,
-  .orow__rel {
-    min-height: var(--target);
-  }
   .orow__body {
-    padding: 12px 0 14px 10px;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+  .orow__open {
+    flex-wrap: wrap;
+    gap: 0 12px;
+    min-height: var(--target);
+    align-items: center;
+    padding-block: 8px;
+  }
+  .orow__also {
+    min-height: 32px;
+    margin-bottom: 4px;
+  }
+  .outline__list .outline__list {
+    margin-left: 18px;
+    padding-left: 4px;
   }
 }

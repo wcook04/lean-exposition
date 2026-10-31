@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import { search, selectionMatches, staticRequest, type SearchIndex, type StaticIndex } from "../src/api/static";
@@ -107,56 +107,140 @@ describe("reader structure compatibility", () => {
   });
 });
 
+describe("on-demand route maps", () => {
+  it("finds a response through its route's map without loading other maps", async () => {
+    vi.resetModules();
+    const { staticRequest: request } = await import("../src/api/static");
+    const index = { version: 2, api_version: "1.3", snapshot: { manifest_sha256: "pin" }, documents: {},
+      responses: { "/overview": "overview.json" }, route_maps: { "/record": "records-map.json", "/papers/query": "query-map.json" } };
+    const values: Record<string, unknown> = { "index.json": index, "overview.json": { a: 1 },
+      "records-map.json": { "/record?ref=r": "r.json" }, "r.json": { ref: "r" } };
+    const requested: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      const name = url.split("/edition/")[1];
+      requested.push(name);
+      return Response.json(values[name]);
+    }));
+    try {
+      expect((await (await request("/api/v1/overview")).json()).data).toEqual({ a: 1 });
+      expect(requested).not.toContain("records-map.json");
+      expect((await (await request("/api/v1/record?ref=r&manifest=pin")).json()).data).toEqual({ ref: "r" });
+      expect((await request("/api/v1/record?ref=missing")).status).toBe(404);
+      expect(requested).not.toContain("query-map.json");
+    } finally { vi.unstubAllGlobals(); }
+  });
+});
+
 // The normal frontend suite stays usable without Python. The deployment job
 // always exports first and sets REQUIRE_STATIC_PARITY to enforce this gate.
 const out = resolve("public/edition");
-const present = existsSync(resolve(out, "index.json"));
+const oracle = resolve("../build/edition-oracle");
+const present = existsSync(resolve(out, "index.json")) && existsSync(resolve(oracle, "parity.json"));
 if (process.env.REQUIRE_STATIC_PARITY && !present) throw new Error("Export the bundle before static parity tests.");
 describe.skipIf(!present)("exported edition against the Python server", () => {
   const read = (name: string) => JSON.parse(readFileSync(resolve(out, name), "utf8"));
+  const expected = (name: string) => JSON.parse(readFileSync(resolve(oracle, name), "utf8"));
+  const index = () => read("index.json") as StaticIndex;
+  const serveFiles = (requests: string[] = []) => vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+    requests.push(url);
+    return new Response(readFileSync(resolve(out, url.split("/edition/")[1])));
+  }));
+  const body = async (url: string) => (await (await staticRequest(url)).json()).data;
+  const allKeys = () => [...Object.keys(index().responses),
+    ...Object.values(index().route_maps ?? {}).flatMap((file) => Object.keys(read(file)))];
+
   it("matches the server's literal search, pagination, excerpts and highlights", () => {
-    const index = read("index.json") as StaticIndex;
-    const searchIndex = read(index.search) as SearchIndex;
-    for (const { params, expected } of read("parity.json")) {
-      expect(search(searchIndex, new URLSearchParams(params), index.snapshot.manifest_sha256)).toEqual(expected);
+    const searchIndex = read(index().search) as SearchIndex;
+    for (const { params, expected: result } of expected("parity.json")) {
+      expect(search(searchIndex, new URLSearchParams(params), index().snapshot.manifest_sha256)).toEqual(result);
     }
   });
-  it("exports each table without changing any records or summaries", () => {
-    const index = read("index.json") as StaticIndex;
-    for (const [fullFile, tableFiles] of [[index.records, index.records_by_table], [index.summaries, index.summaries_by_table]] as const) {
-      expect(tableFiles).toBeDefined();
-      const full = read(fullFile);
-      expect(Object.keys(tableFiles!).sort()).toEqual(Object.keys(full).sort());
-      for (const [table, file] of Object.entries(tableFiles!)) expect(read(file)).toEqual(full[table]);
+  it("publishes per-table files and no whole-edition copies", () => {
+    const edition = index();
+    expect(edition.records).toBeUndefined();
+    expect(edition.summaries).toBeUndefined();
+    for (const files of [edition.records_by_table, edition.summaries_by_table]) {
+      expect(Object.keys(files!).sort()).toEqual(["citations", "edges", "evidence", "nodes", "sources"]);
     }
   });
   it("retains all paper content and coverage in the smaller reader structures", () => {
-    const index = read("index.json") as StaticIndex;
     for (const stage of ["long", "short", "expository"]) {
       const route = `/papers/${stage}/structure`;
-      const full = read(index.responses[route]);
-      const reader = read(index.responses[`${route}?representation=reader`]);
+      const full = expected(`structure-${stage}.json`);
+      const reader = read(index().responses[`${route}?representation=reader`]);
       const { correspondence_links: _links, support_record_refs: _refs, representation: _representation,
         representation_version: _version, ...retained } = full;
       expect(reader).toEqual({ ...retained, representation: "reader_structure", representation_version: "1.0",
         omitted_fields: ["correspondence_links", "support_record_refs"] });
       expect(JSON.stringify(reader).length).toBeLessThan(JSON.stringify(full).length);
+      expect(index().responses[route]).toBeUndefined();
     }
+  });
+  it("keeps every field the reader reads from a paper query", () => {
+    const map = read(index().route_maps!["/papers/query"]);
+    for (const { key, kind, full } of expected("query-samples.json")) {
+      const trimmed = read(map[key]);
+      expect(trimmed.papers.map((p: any) => p.stage)).toEqual(full.papers.map((p: any) => p.stage));
+      if (kind === "node") {
+        expect(trimmed.papers.map((p: any) => p.matches)).toEqual(full.papers.map((p: any) => p.matches.map((m: any) => ({
+          anchor: m.anchor, witnesses: m.witnesses.slice(0, 1).map((w: any) => ({ root_node_id: w.root_node_id })) }))));
+      } else {
+        expect(trimmed.coverage).toEqual(full.coverage);
+        expect(trimmed.papers.map((p: any) => p.matches)).toEqual(full.papers.map((p: any) => p.matches.map((m: any) => ({
+          stage: m.stage, anchor: m.anchor, direct_claim_ids: m.direct_claim_ids, direct_assumption_ids: m.direct_assumption_ids }))));
+      }
+    }
+  });
+  it("holds the trimmed paper queries well under 15 MB", () => {
+    const map = read(index().route_maps!["/papers/query"]) as Record<string, string>;
+    const bytes = [...new Set(Object.values(map))].reduce((sum, file) => sum + statSync(resolve(out, file)).size, 0);
+    expect(bytes).toBeLessThan(15e6);
+  });
+  it("restores passage text so record responses equal the server's", async () => {
+    serveFiles();
+    try {
+      for (const { key, full } of expected("record-samples.json")) expect(await body(`/api/v1${key}`)).toEqual(full);
+    } finally { vi.unstubAllGlobals(); }
+  });
+  it("loads only the startup files on a first visit to the map", async () => {
+    const requests: string[] = [];
+    serveFiles(requests);
+    try {
+      await body("/api/v1");
+      await Promise.all(["/overview", "/graph?assumptions=true&representation=map&scope=corpus&view=arguments",
+        "/records?limit=200&representation=summary&table=nodes", ...["nodes", "sources", "edges", "evidence"].map((t) => `/records?limit=200&offset=0&table=${t}`)]
+        .map((path) => staticRequest(`/api/v1${path}`)));
+      const names = new Set(requests.map((url) => url.split("/edition/")[1]));
+      const maps = Object.values(index().route_maps!);
+      expect(maps.filter((file) => names.has(file))).toEqual([]);
+      expect([...names].filter((file) => file.startsWith("lean/") || file === "alignment.json")).toEqual([]);
+      expect(statSync(resolve(out, "index.json")).size).toBeLessThan(10_000);
+    } finally { vi.unstubAllGlobals(); }
+  });
+  it("serves the Lean and alignment sidecars at fixed paths", async () => {
+    const edition = index();
+    if (!edition.responses["/lean/modules"]) return;
+    expect(edition.responses["/lean/modules"]).toBe("lean/modules.json");
+    serveFiles();
+    try {
+      const modules = await body("/api/v1/lean/modules");
+      const names = await body("/api/v1/lean/names");
+      expect(names.names.length).toBe(modules.counts.declarations);
+      const main = await body("/api/v1/lean/module?name=OAI.Probability.SKSupport.Main");
+      expect(main.declarations.find((row: any) => row.short === "full_support").line).toBe(35);
+      expect((await staticRequest("/api/v1/lean/module?name=OAI.Nothing")).status).toBe(404);
+      expect((await staticRequest("/api/v1/lean/modules?manifest=wrong")).status).toBe(409);
+    } finally { vi.unstubAllGlobals(); }
   });
   it("serves all recorded data from static files and enforces edition pins", async () => {
     const requests: string[] = [];
-    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
-      requests.push(url);
-      const name = url.split("/edition/")[1];
-      return new Response(readFileSync(resolve(out, name)));
-    }));
+    serveFiles(requests);
     try {
       const discovery = await (await staticRequest("/api/v1")).json();
       const pin = discovery.snapshot.manifest_sha256;
       const response = await staticRequest(`/api/v1/records?table=nodes&limit=3&offset=1&manifest=${pin}`);
       expect((await response.json()).data.items).toHaveLength(3);
-      const index = read("index.json") as StaticIndex;
-      for (const key of Object.keys(index.responses)) expect((await staticRequest(`/api/v1${key}`)).status).toBe(200);
+      for (const key of allKeys()) expect((await staticRequest(`/api/v1${key}`)).status).toBe(200);
       expect((await staticRequest("/api/v1/overview?manifest=wrong")).status).toBe(409);
       expect(requests.every((url) => url.includes("/edition/"))).toBe(true);
     } finally { vi.unstubAllGlobals(); }

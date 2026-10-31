@@ -1,0 +1,1092 @@
+{
+  "schema_version": "1.0",
+  "records": {
+    "full_support": {
+      "short": "Full support of SK minimisers",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Main.lean",
+          "name": "full_support",
+          "relation": "states",
+          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "FullSupportConclusion",
+          "relation": "defines",
+          "note": "The five clauses: measure, diffusion, full support, strict increase, both moments for every associated diffusion."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Theorem 5.1 (full support).** In the pure zero-field SK model with",
+          "to": "$0\\le t<1$."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "**Theorem 1 (full support; quantitative proof following",
+          "to": "\\qquad \\mathbb E[a(t,X_t)^2]=1.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "**Source theorem ([OpenAI (2026a), Theorem 1.1][support-manuscript]).**",
+          "to": "\\mathbb E[a(t,X_t)^2]=1.\n$$"
+        }
+      ]
+    },
+    "lean.full_support": {
+      "short": "Lean full-support theorem",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Main.lean",
+          "name": "full_support",
+          "relation": "states",
+          "note": "This is the implementing declaration itself."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "FullSupportConclusion",
+          "relation": "defines",
+          "note": "The proposition the theorem concludes."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The first formal statement assumes a Brownian system and an admissible",
+          "to": "additional regularity or minimizer-existence assumptions."
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "OpenAI's retained [full-support formal statement][support-challenge]",
+          "to": "minimiser, and constructs its associated diffusion."
+        },
+        {
+          "paper": "expository",
+          "role": "explanation",
+          "from": "The Lean [implementation][support-proof],",
+          "to": "statement assumes a minimiser; it does not prove the external Parisi formula or attainment."
+        }
+      ]
+    },
+    "scalar_value": {
+      "short": "Parisi value identities",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Main.lean",
+          "name": "value_consequences",
+          "relation": "states",
+          "note": "Three conjuncts: scalar value, finite Gaussian convergence, and ground-state value equals Parisi value."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "ScalarValueConclusion",
+          "relation": "defines",
+          "note": "Gives the limit, the martingale, its spin-valued endpoint U, and the value identities."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "FiniteGaussianConclusion",
+          "relation": "defines",
+          "note": "Gives positive normalisers, the coefficient-sum limit at fixed T, and the limit as T tends to one."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 6.1 (terminal value).**",
+          "to": "attained Parisi formula in addition to the support theorem."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 7.1 (finite Gaussian approximation).**",
+          "to": "The limits are taken in that order."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "Let $U$ be the almost-sure and",
+          "to": "\\tag{10}\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "needed by the circuit construction is the adjacent pairing",
+          "to": "\\tag{11}\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "Further martingale arguments recover the ground-state value from the",
+          "to": "used here."
+        }
+      ]
+    },
+    "lean.value_consequences": {
+      "short": "Lean scalar-value theorem",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Main.lean",
+          "name": "value_consequences",
+          "relation": "states",
+          "note": "This is the implementing declaration itself. Its middle clause is finite_gaussian_target."
+        },
+        {
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "name": "scalar_value_target",
+          "relation": "part",
+          "note": "First clause, for a minimiser and a supplied diffusion.",
+          "clause": "ScalarValueConclusion W γ X"
+        },
+        {
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "name": "ground_state_parisi_target",
+          "relation": "part",
+          "note": "Third clause. It needs only the minimiser and constructs the diffusion internally.",
+          "clause": "groundStateValue=parisi W γ"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The second formal statement has three clauses.",
+          "to": "convergence clause establishes existence of the finite-spin limit."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The third declaration, `ground_state_parisi_target`, assumes a minimizer",
+          "to": "clauses constructs a minimizer."
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "[scalar formal statement][value-challenge] covers value identities and",
+          "to": "Parisi values from a minimiser, constructing the diffusion internally."
+        },
+        {
+          "paper": "expository",
+          "role": "explanation",
+          "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+          "to": "concern the value identity and finite Gaussian approximation."
+        }
+      ]
+    },
+    "qaoa_thermodynamic_first": {
+      "short": "QAOA approaches the SK optimum",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The source target is $\\lim_{p\\to\\infty}Q_p=P_*$. Its needed lower",
+          "to": "\\ge P_*-\\varepsilon.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "[OpenAI (2026b), Theorem 1.1][Q] proves that for",
+          "to": "$C_{n,J}$."
+        },
+        {
+          "paper": "short",
+          "role": "derivation",
+          "from": "The deduction of near-optimality is now explicit:",
+          "to": "$v(W)>P_*-\\varepsilon$ before $n$ tends to infinity."
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "The separate circuit theorem in [OpenAI (2026b)][qaoa-manuscript]",
+          "to": "the order of limits. It requires additional arguments beyond full support."
+        }
+      ]
+    },
+    "assumptions.full_support_minimizer": {
+      "short": "Admissible minimiser premise",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "OrderParameter",
+          "relation": "defines",
+          "note": "Nonnegative, monotone, right-continuous and integrable on [0,1)."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "IsMinimizer",
+          "relation": "defines",
+          "note": "Minimal among order parameters, with the Parisi value computed on the given Brownian system."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "BrownianSystem",
+          "relation": "defines",
+          "note": "A probability law and a real Brownian process on the sample space."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "Let $\\mathcal U$ consist of nonnegative, nondecreasing, right-continuous",
+          "to": "Support is relative to [0,1)."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Its quantifiers are",
+          "to": "it supplies both witnesses on the given Brownian system."
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "Let $\\mathcal U$ consist of the nonnegative, nondecreasing,",
+          "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "asserts the support and moment conclusions conditional on an admissible",
+          "to": "minimiser, and constructs its associated diffusion."
+        },
+        {
+          "paper": "expository",
+          "role": "definition",
+          "from": "In general, an admissible **order parameter** is a function",
+          "to": "and has finite integral."
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "statement assumes a minimiser; it does not prove",
+          "to": "attainment."
+        }
+      ]
+    },
+    "assumptions.value_minimizer": {
+      "short": "Scalar minimiser premise",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "OrderParameter",
+          "relation": "defines",
+          "note": "Coefficient on the real line; the conditions apply on [0,1) and integrability on (0,1]."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "IsMinimizer",
+          "relation": "defines",
+          "note": "Same form as the support model, with this model's own functional."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "BrownianSpace",
+          "relation": "defines",
+          "note": "Bundles the sample space with the law, unlike the support model's BrownianSystem."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "Its formal statement is separate\nand retains the minimizer and diffusion hypotheses where needed.",
+          "to": "needed."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "No diffusion is required from the caller",
+          "to": "clauses constructs a minimizer."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "**Value and minimizer.** Equality of the payoff sets gives equality of their",
+          "to": "competitor."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "[scalar formal statement][value-challenge] covers value identities and",
+          "to": "for those clauses."
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
+          "to": "concern the value identity and finite Gaussian approximation."
+        }
+      ]
+    },
+    "assumptions.value_diffusion": {
+      "short": "Scalar diffusion premise",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "IsDiffusion",
+          "relation": "defines",
+          "note": "Stopped process adapted, almost surely continuous on [0,1], and solving the integral equation there."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Main.lean",
+          "name": "value_consequences",
+          "relation": "contains",
+          "note": "The premise sits in its first two clauses. The second also takes 0<T and T<1. The third omits it."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "Write $u=\\Phi_x$, $a=\\Phi_{xx}$, and",
+          "to": "$dX_t=\\gamma(t)u(t,X_t)\\,dt+dB_t$, $X_0=0$."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The second formal statement has three clauses.",
+          "to": "Gaussian normalizers and convergence of the finite coefficient sum."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Its proof chooses",
+          "to": "diffusion."
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "Brownian motion and define the diffusion $X$ and its self-consistency function $q$ by",
+          "to": "q(t)=\\mathbb E[u(t,X_t)^2].\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "Its third clause identifies the ground-state and",
+          "to": "Parisi values from a minimiser, constructing the diffusion internally."
+        },
+        {
+          "paper": "expository",
+          "role": "definition",
+          "from": "Following it generates the state",
+          "to": "This is the **associated diffusion**."
+        }
+      ]
+    },
+    "assumptions.qaoa_model_and_limits": {
+      "short": "QAOA model and limit order",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "The cost and mixer are",
+          "to": "\\qquad B_n=\\sum_iX_i.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "A depth-$p$ state, with $p$ counting cost–mixer pairs, is",
+          "to": "\\qquad Q_p=\\sup_{\\boldsymbol\\gamma,\\boldsymbol\\beta\\in\\mathbb R^p}v_p.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "Let $\\widehat Z_i,\\widehat X_i$ be Pauli operators, and define the cost",
+          "to": "\\langle\\psi_{n,J}(W)|C_{n,J}|\\psi_{n,J}(W)\\rangle.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "definition",
+          "from": "For each unordered pair choose an independent standard Gaussian",
+          "to": "J_{ij}\\sigma_i\\sigma_j.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "develops its circuit construction and",
+          "to": "the order of limits."
+        }
+      ]
+    },
+    "support.near_ground_pairs": {
+      "short": "Near-ground pairs at any overlap",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For every fixed $r\\in[0,1)$ and $\\varepsilon,\\eta>0$,",
+          "to": "\\ge1-Ke^{-n/K},\\qquad n\\ge1.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The covariance normalization needs one small adjustment.",
+          "to": "this also removes the auxiliary Gaussian from the probability statement."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "For each fixed $\\rho\\in[0,1)$ and $\\delta,\\eta>0$, with probability",
+          "to": "using the Gaussian normalisation above."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "A separate theorem\nof [Auffinger–Chen–Zeng, Proposition 1, equation (5)][acz] applies at",
+          "to": "\\qquad H_n(\\sigma)/n,\\ H_n(\\tau)/n\\ge P_*-\\eta.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "example",
+          "from": "For example, fix an energy loss $\\eta>0$ per spin and take",
+          "to": "between $0.24$ and $0.26$."
+        }
+      ]
+    },
+    "support.stieltjes_measure": {
+      "short": "Stieltjes measure with initial mass",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "IsStieltjesMeasure",
+          "relation": "defines",
+          "note": "The convention itself: mass of [0,t] equals gamma(t)."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+          "name": "parameterMeasure_isStieltjes",
+          "relation": "part",
+          "note": "Existence, by the constructed measure. Closed relative support is not part of this declaration.",
+          "clause": "IsStieltjesMeasure γ (parameterMeasure γ)"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+          "name": "parameterMeasure",
+          "relation": "defines",
+          "note": "The Stieltjes measure of the coefficient plus an atom of size gamma(0) at zero."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "Their Stieltjes measures satisfy",
+          "to": "Support is relative to [0,1)."
+        },
+        {
+          "paper": "short",
+          "role": "definition",
+          "from": "Define the locally finite Stieltjes",
+          "to": "to one. All support statements use the relative topology of $[0,1)$."
+        },
+        {
+          "paper": "expository",
+          "role": "definition",
+          "from": "**Stieltjes measure** records the increments:",
+          "to": "They are finite on each $[0,T]$ with $T<1$."
+        }
+      ]
+    },
+    "support.regularity": {
+      "short": "Compact-strip regularity",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Regularity/Regularity.lean",
+          "name": "value_uniform_derivative_bounds",
+          "relation": "part",
+          "note": "Bounded positive-order spatial derivatives on each strip. Evenness, convexity and Lipschitz bounds are separate declarations.",
+          "clause": "∃ C : ℝ, 0 ≤ C ∧ ∀ t ∈ Icc (0:ℝ) T, ∀ x,\n      |iteratedDeriv (m+1) (value W γ t) x| ≤ C"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Regularity/JointRegularity.lean",
+          "name": "value_derivative_continuousOn",
+          "relation": "part",
+          "note": "Joint continuity of each spatial derivative on the strip.",
+          "clause": "ContinuousOn (fun p : ℝ × ℝ => iteratedDeriv m (value W γ p.1) p.2)\n      (Icc (0:ℝ) T ×ˢ Set.univ)"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Regularity/JointRegularity.lean",
+          "name": "approxValue_derivative_uniform",
+          "relation": "part",
+          "note": "Uniform derivative convergence for one finite-step family with log-cosh terminal value, rather than general L1 approximation.",
+          "clause": "TendstoUniformlyOn (fun n (p : ℝ × ℝ) => iteratedDeriv m (approxValue γ n p.1) p.2)\n      (fun p => iteratedDeriv m (value W γ p.1) p.2) atTop (Icc (0:ℝ) T ×ˢ Set.univ)"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 2.1 (compact-strip regularity).**",
+          "to": "\\le |x|+\\sqrt{2(1-t)/\\pi}+\\frac12\\int_t^1\\gamma(s)\\,ds.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "For an admissible coefficient, $\\Phi$ is even, convex and one-Lipschitz",
+          "to": "has jumps (see [OpenAI (2026a), Lemmas 2.1–2.2][FS])."
+        },
+        {
+          "paper": "expository",
+          "role": "derivation",
+          "from": "First consider the value as a function of the starting state",
+          "to": "best endpoint payoffs; taking the supremum preserves that upper bound."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "For each fixed $T<1$, the required spatial derivatives are bounded on",
+          "to": "bounds up to time one."
+        }
+      ]
+    },
+    "support.diffusion": {
+      "short": "Controlled diffusion exists uniquely",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Diffusion/CompactDrift.lean",
+          "name": "diffusion_isDiffusion",
+          "relation": "part",
+          "note": "Existence: the constructed process satisfies the diffusion predicate on the given Brownian system.",
+          "clause": "IsDiffusion W γ (diffusion W γ)"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
+          "name": "diffusion_uniqueness",
+          "relation": "part",
+          "note": "Every associated diffusion agrees almost surely with the constructed one for all t up to 1.",
+          "clause": "∀ᵐ ω ∂W.law, ∀ t : ℝ≥0, t ≤ 1 → X t ω = diffusion W γ t ω"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Diffusion/DiffusionStability.lean",
+          "name": "positivePath_error",
+          "relation": "proof",
+          "note": "Coupling bound for one finite-step approximating path, with the error given by coefficient and gradient differences."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Finally, couple all feedback diffusions with the same Brownian motion.",
+          "to": " \\longrightarrow0.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "conclusion is universal over every diffusion satisfying the specified",
+          "to": "one null set."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "The SDE has a unique strong solution. All",
+          "to": "ending before one, unless an endpoint limit is justified explicitly."
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "Lemma 2.2 couples the diffusions using",
+          "to": "$\\sup_{s\\leq T}|X_s^\\delta-X_s|\\to0$."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "Following it generates the state",
+          "to": "gives its existence and uniqueness for a fixed Brownian motion."
+        }
+      ]
+    },
+    "support.moment_identity": {
+      "short": "Derivative of the gradient moment",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
+          "name": "squareMoment_hasDerivWithinAt",
+          "relation": "part",
+          "note": "The derivative formula on [0,1). The derivative is taken within t>=0, so it is one-sided only at zero.",
+          "clause": "HasDerivWithinAt (squareMoment W γ (diffusion W γ)) (curvatureMoment W γ t) (Ici (0:ℝ)) t"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
+          "name": "squareMoment_eq_integral_curvatureMoment",
+          "relation": "part",
+          "note": "Integrated moment identity below time one. The stochastic-integral form of the gradient is not stated here.",
+          "clause": "squareMoment W γ (diffusion W γ) t = ∫ s in (0:ℝ)..t, curvatureMoment W γ s"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Moments/PerturbationLimits.lean",
+          "name": "squareMoment_bounds",
+          "relation": "part",
+          "note": "Nonnegativity and the bound by one. The value at zero is squareMoment_zero.",
+          "clause": "0 ≤ squareMoment W γ (diffusion W γ) t ∧ |squareMoment W γ (diffusion W γ) t| ≤ 1"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Fix any $\\gamma\\in\\mathcal U$, without yet assuming that it minimises",
+          "to": "admissible coefficient. They do not yet say that $q(t)=t$."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "Fix a minimiser. Itô's formula cancels the drift of $u(t,X_t)$:",
+          "to": "In particular $q'$ is continuous across coefficient jumps."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "The analytic facts needed in the proof are",
+          "to": "\\qquad q'(t)=\\mathbb E[a(t,X_t)^2].\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "derivation",
+          "from": "Itô's rule is the chain rule for Brownian paths.",
+          "to": "which gives the asserted derivative."
+        }
+      ]
+    },
+    "support.first_variation": {
+      "short": "One-sided first variation",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Support/VariationIntegrals.lean",
+          "name": "parisi_chord_derivative",
+          "relation": "proof",
+          "note": "Limit along sampled chord steps towards another order parameter, a weaker form than the real-parameter right derivative."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/VariationIntegrals.lean",
+          "name": "minimizer_variational_inequality",
+          "relation": "part",
+          "note": "At a minimiser the chord integral is nonnegative, for directions beta minus gamma.",
+          "clause": "0 ≤ ∫ s in (0:ℝ)..1, (extend β.val s-extend γ.val s)*(squareMoment W γ (diffusion W γ) s-s)"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "$|\\eta(t)|$. Dominated convergence, followed by subtraction of the linear",
+          "to": "constraints."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The choice of diffusion",
+          "to": "\\mathbb E[u(t,Y_t^\\varepsilon)^2]\\,dt.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "There is one useful distinction between the manuscript's first variation",
+          "to": "not an additional formally named theorem."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "The one-sided variation formula gives the rate of change of the functional",
+          "to": "$\\varepsilon\\geq0$ (see [OpenAI (2026a), Lemma 6.1][FS])."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "Precisely, let $\\eta\\in L^1(0,1)$, meaning",
+          "to": "=\\frac12\\int_0^1\\eta(t)(q(t)-t)\\,dt.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "explanation",
+          "from": "Here $q$ belongs to the unperturbed candidate $\\gamma$.",
+          "to": "control."
+        }
+      ]
+    },
+    "support.contact": {
+      "short": "Potential vanishes on support",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+          "name": "contactPotential_nonneg",
+          "relation": "part",
+          "note": "G is nonnegative at every time below one, from adding a point mass.",
+          "clause": "0 ≤ contactPotential W γ s"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+          "name": "contactPotential_compact_mass_removal",
+          "relation": "proof",
+          "note": "The integral of G over a compact set is at most zero."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+          "name": "zero_on_support_of_compact_mass_removal",
+          "relation": "proof",
+          "note": "Generic step: a continuous nonnegative G with those compact integrals vanishes on the support."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Proposition 3.1 (variational contact).**",
+          "to": "and vanishes on $S=\\operatorname{supp}\\mu_\\gamma$."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Since $G\\ge0$, its integral on every compact $K$ is zero.",
+          "to": "G(s)=0\\qquad(s\\in S).\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "first-order cost is therefore a tail integral:",
+          "to": "G(s):=\\int_s^1(q(t)-t)\\,dt\\geq0.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "derivation",
+          "from": "let $\\nu=\\mu_\\gamma|_K$ for a compact $K\\subset[0,1)$.",
+          "to": "$S=\\operatorname{supp}\\mu_\\gamma$."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "$G(s)/2$ is the marginal cost of placing mass at $s$. At a minimiser,",
+          "to": "$G(s)\\ge0$ for every $s<1$."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "Since $G\\ge0$, its integral must be zero.",
+          "to": "nonnegative function touches zero there."
+        },
+        {
+          "paper": "expository",
+          "role": "example",
+          "from": "Suppose temporarily that this two-weight candidate minimised",
+          "to": "the two-weight candidate attains the minimum."
+        }
+      ]
+    },
+    "support.contact_derivatives": {
+      "short": "Contact and slope bounds",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+          "name": "minimizer_contact",
+          "relation": "part",
+          "note": "At every support point, including zero: q(t)=t and slope at most one.",
+          "clause": "∀ t, SupportDeterministic.InSupport μ t →\n      squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t ≤ 1"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
+          "name": "contactPotential_hasDerivAt",
+          "relation": "part",
+          "note": "G'(s)=s-q(s) for 0<s<1. The second derivative of G is not stated as a formula here.",
+          "clause": "HasDerivAt (contactPotential W γ) (s-squareMoment W γ (diffusion W γ) s) s"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "At $s\\in S\\cap(0,1)$, the function $G$ has an interior minimum of",
+          "to": "$G(0)=0$ has been obtained or used."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "At a support point $s>0$, $G$ has a minimum. Hence",
+          "to": "same slope bound at zero."
+        },
+        {
+          "paper": "expository",
+          "role": "statement",
+          "from": "We need information about $q$ at the ends of a possible gap.",
+          "to": "an atom at zero."
+        }
+      ]
+    },
+    "support.step_tails": {
+      "short": "Finite-step density and tails",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Density/DensityFubini.lean",
+          "name": "finiteDensity",
+          "relation": "defines",
+          "note": "Density at grid times on a uniform mesh, with the Gaussian factor written explicitly."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
+          "name": "finite_density_identity",
+          "relation": "part",
+          "note": "Identifies finiteDensity as the law of the feedback diffusion at grid times. The differentiated tail expansions are not stated.",
+          "clause": "(∫ w, g ((finiteFeedback hf hLip c h N 0).solution W.driver ((i:ℝ≥0)*h) w) ∂W.law)=\n      ∫ x, finiteDensity c h f N i x*g x"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
+          "name": "forwardBoundary",
+          "relation": "defines",
+          "note": "Recursive forward factor, whose step subtracts the height change times the backward value, the jump rule."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Take $0=t_0<\\cdots<t_N=1$,",
+          "to": "The functions $r$ and $s$ are odd."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The comparison arguments take place on unbounded spatial domains, so",
+          "to": "$s_{xx}=O(e^{-\\kappa x})$."
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "Begin with a positive nondecreasing finite-step coefficient",
+          "to": "Comparison with $f_t=h_tg+hg_t$ yields $g_t=g_{xx}/2$."
+        }
+      ]
+    },
+    "support.backward_shapes": {
+      "short": "Backward shape signs",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
+          "name": "BackwardShape",
+          "relation": "defines",
+          "note": "Odd, v>0, w<=0, rH<=0 and r^2 H_x>=0, the last two as Burgers rate and Wronskian."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
+          "name": "finiteHead_backward_shape",
+          "relation": "part",
+          "note": "Within a step on a uniform mesh. Quotient extension at zero is not included.",
+          "clause": "BackwardShape (fun x => (c i:ℝ)*deriv (finiteValue c h (softAbs M) (N+1) i t) x)"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
+          "name": "BackwardShape.rescale",
+          "relation": "part",
+          "note": "Multiplying by a factor in (0,1] preserves the signs.",
+          "clause": "BackwardShape (fun x => α*r x)"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "previous comparisons give",
+          "to": "relative-slope comparison, and $L=-rs_{xx}\\ge0$ from forward concavity."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Twice differentiating gives",
+          "to": "at zero."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "For the second comparison, $wH\\ge0$ and",
+          "to": "Thus both signs survive every jump."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "For $s=-\\partial_x\\log g$,",
+          "to": "$H:=w/(2r)+v\\leq0$ is nondecreasing."
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "The quotients $w/r$ and $s/r$ extend smoothly through zero because",
+          "to": "and $r_x(0)>0$."
+        }
+      ]
+    },
+    "support.forward_shapes": {
+      "short": "Forward score signs",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
+          "name": "finite_forward_ratio",
+          "relation": "part",
+          "note": "The Wronskian r s_x - s r_x is nonnegative for x>=0. It equals r times j.",
+          "clause": "0 ≤ ratioWronskian (backwardSegment c h (softAbs M) N i)\n      (forwardScore ((i:ℝ)*h) (forwardBoundary c h (softAbs M) N i)) t x"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Parabolic/ForwardSigns.lean",
+          "name": "deriv_ge_inverse",
+          "relation": "proof",
+          "note": "Comparison step for s_x>=1/t on one smooth segment, given the sign at the segment's start."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Parabolic/ForwardSigns.lean",
+          "name": "second_nonpos",
+          "relation": "proof",
+          "note": "Comparison step for s_xx<=0 on x>=0, given the sign at the segment's start."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "previous comparisons give",
+          "to": "relative-slope comparison, and $L=-rs_{xx}\\ge0$ from forward concavity."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "For the forward score use $a_s=s_x$, temporarily distinguishing it",
+          "to": "The backward signs and $\\delta\\ge0$ preserve the forward signs."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "A further comparison, not concavity alone, is needed.",
+          "to": "$j(0)=0$; reflection gives $j\\ge0$ everywhere."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "For $s=-\\partial_x\\log g$,",
+          "to": "The joint sign therefore survives coefficient jumps as well."
+        }
+      ]
+    },
+    "support.flux_identity": {
+      "short": "Zero expected divergence",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
+          "name": "cert_flux_derivative",
+          "relation": "part",
+          "note": "The divergence identity for the certificate polynomial F2 only, at points where r is nonzero.",
+          "clause": "HasDerivAt (certFlux r s ρ) (certDivergence r s ρ x) x"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
+          "name": "cert_halfLine_signs",
+          "relation": "part",
+          "note": "All seven signs at x>0. Lean works on the half-line and reflects, with no extension through zero.",
+          "clause": "0 ≤ certR r x ∧ 0 ≤ certK r s x ∧ 0 ≤ certV r x ∧ 0 ≤ certJ r s x ∧\n    0 ≤ certB r x-2*certV r x ∧ 0 ≤ certL r s x ∧\n    0 ≤ certZ r x+certB r x*certV r x-2*certR r x*certB r x"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
+          "name": "certificate_growth",
+          "relation": "proof",
+          "note": "Exponential bounds on F2 and its divergence, which give decay against the Gaussian density."
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "In this certificate only,",
+          "to": "because $B=-2H$ and $S_1=2rH_x$."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For $\\mathcal D=r\\partial_x$, direct differentiation gives",
+          "to": "$\\mathbb E_f\\mathcal W(F)=0$."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "The factorisation of the density gives $f_x/f=r-s$.",
+          "to": "against $f(x)\\,dx$."
+        },
+        {
+          "paper": "expository",
+          "role": "explanation",
+          "from": "The operation can be written directly for the positive density $f_t$;",
+          "to": "=\\int_{\\mathbb R}(Ff_t)'(x)\\,dx=0.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "example",
+          "from": "For a small example of this operation, let $Z$ be standard normal and",
+          "to": "expectation; it supplies none of the SK-specific sign estimates."
+        }
+      ]
+    },
+    "support.rational_certificate": {
+      "short": "Exact rational certificate",
+      "lean": [
+        {
+          "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+          "name": "rational_identity",
+          "relation": "part",
+          "note": "The polynomial identity for real variables, proved by ring.",
+          "clause": "z^2 - 12*R*v*b^2 + 6*v^4 =\n      (z+Q R K v b)^2 + (z+b*v-2*R*b)*T R v j +\n      weightedSquares R K v b (b-2*v) j + WF₂ R K v b j z L +\n      L*(x₀*v^2+h*b*v) + remainder R K v (b-2*v) j"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+          "name": "remainder_lower_bound",
+          "relation": "part",
+          "note": "With nonnegative variables, the remainder is at least the v^4 coefficient times v^4.",
+          "clause": "(1661507 / 1521000000 : ℝ) * v^4 ≤ remainder R K v B j"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
+          "name": "coercivity_constant",
+          "relation": "part",
+          "note": "That coefficient exceeds 1/1000.",
+          "clause": "(1 / 1000 : ℝ) < 1661507 / 1521000000"
+        }
+      ],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Exact expansion, with $b=B+2v$, gives",
+          "to": "+\\mathcal W(F_2)+L(x_0v^2+h_0bv)+P_{\\rm rem}.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "Define\n\n$$\nQ=Avb+",
+          "to": "+x_0v^2j+yv^3+mKv^2+n_0Rv^2.\n\\end{aligned}\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "All square prefactors $Rj,RB,Kv,vB,1$ are nonnegative",
+          "to": "\\ge\\frac1{1000}\\mathbb E_fv^4.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "[OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$",
+          "to": "\\kappa=\\frac{1661507}{1521000000}>\\frac1{1000}.\n$$"
+        },
+        {
+          "paper": "expository",
+          "role": "mention",
+          "from": "A rational polynomial identity gives the second inequality by writing",
+          "to": "the remainder as a sum of nonnegative terms."
+        }
+      ]
+    }
+  }
+}

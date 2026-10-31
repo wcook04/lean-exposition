@@ -1,4 +1,4 @@
-// Link classification and local companion resolution.
+// Links into the papers: exact statement links, link classification and local companion resolution.
 //
 // Rule (docs/web-api.md, "Resolve captured companion links"): a relative href
 // is resolved against the current document's logical directory with POSIX
@@ -6,6 +6,17 @@
 // logical path. Query strings are never silently dropped (they leave the link
 // unresolved), parent components may not escape the logical root, and no stage
 // is guessed from file names.
+
+import type { AlignedStatement } from "../api/lean";
+import { routeHref } from "../app/router";
+
+/** The value of the reader's `l` parameter for a slice: its byte range, resolved against the paper on arrival. */
+export const sliceAt = (slice: Pick<AlignedStatement, "start_byte" | "end_byte">): string => `b${slice.start_byte}-${slice.end_byte}`;
+
+/** The link to a statement in context: the reader lands on exactly its blocks and marks them. */
+export function statementHref(statement: AlignedStatement): string {
+  return routeHref({ view: "read", stage: statement.paper, anchor: statement.anchor ?? undefined, at: sliceAt(statement) });
+}
 
 export type LinkTarget =
   | { kind: "fragment"; href: string }

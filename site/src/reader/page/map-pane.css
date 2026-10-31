@@ -1,13 +1,19 @@
-/* The argument map beside the paper (MapPane.tsx). From 1480px the reader
-   stops centring: outline at a 32px gutter, the paper at its measure, a 48px
-   gap, then the map pane to the right edge, full height under the top bar.
-   Below 1480px nothing here applies. */
+/* The argument map beside the paper (MapPane.tsx). From 1280px the reader stops
+   centring: the paper at its measure (at least half the window's width from 1280
+   to 1500px, where the outline folds into "Sections"), then the map pane to the
+   right edge, full height under the top bar. Above 1500px the outline returns and
+   the paper yields to keep the pane at 600px. Below 1280px nothing here applies:
+   the map opens as a sheet. */
 
 .reader.reader--follow {
-  grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
+  grid-template-columns: minmax(0, min(var(--reader-measure), 50vw)) minmax(0, 1fr);
   justify-content: start;
   padding-left: 32px;
   padding-right: 0;
+}
+
+.reader.reader--follow.reader--outlined {
+  grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
 }
 
 .reader__map {
@@ -37,11 +43,6 @@
 .map-pane__head {
   position: relative;
   z-index: 3;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px var(--space-3);
-  min-height: 44px;
   flex: none;
   padding: 6px var(--space-2) 6px var(--space-4);
   border-bottom: 1px solid var(--rule);
@@ -51,24 +52,48 @@
   color: var(--ink-2);
 }
 
-.map-pane__kind {
-  flex: none;
+.map-pane__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  min-height: 32px;
+}
+
+.map-pane__row--trail {
+  flex-wrap: wrap;
+  gap: 2px var(--space-3);
+  min-height: 24px;
   color: var(--ink-3);
 }
 
-/* The goal's name and the state line are shown whole: when the row is too narrow they wrap. */
+/* The goal's name, one line: the map under it starts at the records. */
 .map-pane__goal {
-  flex: 0 1 auto;
+  flex: 1 1 0;
   min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-family: var(--font-serif);
-  font-size: var(--fs-ui);
+  font-size: var(--fs-base);
+  font-weight: 500;
   color: var(--ink);
 }
 
+.map-pane__progress {
+  flex: none;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
 .map-pane__state {
-  flex: 1 1 12em;
+  flex: 0 1 auto;
   min-width: 0;
-  color: var(--ink-3);
+  color: var(--ink-2);
+}
+
+.map-pane__state:empty {
+  display: none;
 }
 
 .map-pane__follow {
@@ -77,9 +102,9 @@
   align-items: center;
   gap: 7px;
   flex: none;
-  min-height: 30px;
+  min-height: 28px;
   padding: 0 var(--space-2);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-control);
   border-radius: var(--radius-s);
   background: transparent;
   color: var(--ink-2);
@@ -88,13 +113,12 @@
   transition:
     color var(--t-hover) var(--ease-out),
     border-color var(--t-hover) var(--ease-out),
-    background-color var(--t-hover) var(--ease-out),
-    box-shadow var(--t-hover) var(--ease-out);
+    background-color var(--t-hover) var(--ease-out);
 }
 
 .map-pane__follow:hover {
   color: var(--ink);
-  border-color: var(--rule-strong);
+  border-color: var(--ink-3);
 }
 
 .map-pane__dot {
@@ -109,15 +133,27 @@
 
 .map-pane__follow[aria-pressed="true"] {
   color: var(--ink);
-  border-color: var(--lit-line);
-  background: var(--lit-wash);
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--lit-line) 25%, transparent), 0 0 12px -3px var(--lit-glow);
 }
 
 .map-pane__follow[aria-pressed="true"] .map-pane__dot {
-  border-color: var(--lit);
-  background: var(--lit);
-  box-shadow: 0 0 7px var(--lit-glow);
+  border-color: var(--ink-2);
+  background: var(--ink-2);
+}
+
+/* Paused: the one control that resumes, in ink. */
+.map-pane__follow--resume {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.map-pane__follow--resume:hover {
+  border-color: var(--ink);
+  color: var(--ground);
+}
+
+.map-pane__follow--resume .map-pane__dot {
+  border-color: var(--ground);
 }
 
 .map-pane__open {
@@ -137,8 +173,8 @@
 .map-pane__hide {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   flex: none;
   padding: 0;
   border: 0;
@@ -244,7 +280,14 @@
   gap: 6px;
   min-height: 30px;
   flex: none;
+  margin-left: auto;
   font-size: var(--fs-sm);
+}
+
+.reader-strip__map[aria-pressed="true"] {
+  color: var(--ink);
+  border-color: var(--ink-3);
+  background: var(--sunk);
 }
 
 /* A card chosen in the map: its passage's margin mark flashes amber once. */
@@ -267,6 +310,7 @@
     transition: none;
   }
   .map-pane__notice,
+  .record-dock--docked,
   .reader__map .reader__inspector--over {
     animation: none;
   }
@@ -292,14 +336,13 @@
   color: var(--ink);
 }
 
-/* What amber and faded mean on this map. */
+/* What the tints on this map mean; the same order as the path through the paper. */
 .map-pane__legend {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 8px;
-  margin: var(--space-2) var(--space-4) 0;
-  font-family: var(--font-sans);
+  gap: 2px 6px;
+  margin-left: auto;
   font-size: var(--fs-xs);
   color: var(--ink-3);
 }
@@ -312,9 +355,13 @@
   background: var(--raised);
 }
 
-.map-pane__swatch + .map-pane__swatch,
-.map-pane__legend .map-pane__swatch--faded {
-  margin-left: 10px;
+.map-pane__swatch:not(:first-child) {
+  margin-left: 8px;
+}
+
+.map-pane__swatch--passed {
+  background: var(--trail-passed);
+  border-color: var(--trail-passed-line);
 }
 
 .map-pane__swatch--lit {
@@ -323,5 +370,196 @@
 }
 
 .map-pane__swatch--faded {
-  filter: saturate(0.3) opacity(0.45);
+  border-style: dotted;
+  background: transparent;
+}
+
+/* The note about undrawn links and the assumption tags belong to the full map: here
+   a tile is its name, with nothing over its text. The sheet lists a record's assumptions. */
+.map-pane .sim,
+.map-pane .tag {
+  display: none;
+}
+
+/* ---- The reading trail on the map ------------------------------------------------ */
+
+.map-pane,
+.reader-strip {
+  --trail-passed: color-mix(in oklab, var(--rel-formalizes) 32%, var(--raised));
+  --trail-passed-line: color-mix(in oklab, var(--rel-formalizes) 55%, var(--card-border));
+}
+
+.map-pane .card[data-trail="passed"]:not(.is-selected) {
+  background: var(--trail-passed);
+  border-color: var(--trail-passed-line);
+}
+
+.map-pane .card[data-trail="here"]:not(.is-selected) {
+  border-color: var(--lit-line);
+  box-shadow: 0 0 0 1px var(--lit-line);
+}
+
+/* ---- The record sheet, docked under the map -------------------------------------- */
+
+.record-dock {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface);
+}
+
+.record-dock--docked {
+  --dock-share: 0.5;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--dock-share) * 100%);
+  border-top: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-sheet);
+  animation: map-pane-rise var(--t-reveal) var(--ease-out) backwards;
+}
+
+.record-dock__handle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 14px;
+  margin-top: -1px;
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.record-dock__handle span {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.record-dock__handle:hover span,
+.record-dock.is-dragging .record-dock__handle span {
+  background: var(--ink-3);
+}
+
+.record-dock__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px var(--space-4);
+  min-height: 32px;
+  padding: 0 var(--space-2) var(--space-1) var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+}
+
+.record-dock__map {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+}
+
+.record-dock__map:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+.visit__comparepapers {
+  flex: none;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+}
+
+.visit__comparepapers:hover {
+  text-decoration-color: currentColor;
+}
+
+.record-dock__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  margin-left: auto;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  cursor: pointer;
+}
+
+.record-dock__close:hover {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
+.record-dock__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.record-dock .panel {
+  position: static;
+  width: auto;
+  height: auto;
+  max-height: none;
+  padding: 0 var(--space-4) var(--space-5);
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.record-dock .panel__title {
+  font-size: var(--fs-h3);
+}
+
+@keyframes map-pane-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* ---- The map as a sheet ----------------------------------------------------------- */
+
+.modal--map .modal__box {
+  height: 100%;
+}
+
+.modal--map .modal__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+}
+
+.modal--map .map-pane {
+  border-left: 0;
+}
+
+/* Wide enough for labelled tiles; a phone's sheet takes the whole width anyway. */
+.modal--map.modal--side-end {
+  width: min(720px, 92vw);
+  max-width: none;
+}
+
+.modal--record.modal--side-end {
+  width: min(560px, 92vw);
+  max-width: none;
+}
+
+.modal--record .modal__body {
+  padding: 0;
 }

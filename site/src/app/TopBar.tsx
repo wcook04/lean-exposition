@@ -1,8 +1,8 @@
-// The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), four jobs
-// (Argument map, Read, Papers, Checks), About as a quieter link, search and the
+// The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), five jobs
+// (Map, Compare, Read, Lean, Checks), About as a quieter link, search and the
 // scheme. Read is a menu button listing the three accounts with the job each one
-// does; Papers goes to the front page's shelf of the four papers and their PDFs. On
-// phones the same items sit behind one menu button so the bar never clips.
+// does, then the front page's shelf of papers and PDFs. On phones the same items
+// sit behind one menu button so the bar never clips.
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { Stage } from "../api/types";
@@ -24,14 +24,18 @@ export const ACCOUNT_JOBS: Record<Stage, string> = {
   long: "reconstructs each step and names its source",
 };
 
-type Job = "argument" | "read" | "checks" | "about" | null;
+type Job = "argument" | "compare" | "read" | "lean" | "checks" | "about" | null;
 
 function jobOf(route: Route): Job {
   switch (route.view) {
     case "map":
       return "argument";
+    case "compare":
+      return "compare";
     case "read":
       return "read";
+    case "lean":
+      return "lean";
     case "checks":
       return "checks";
     case "about":
@@ -82,10 +86,15 @@ export function TopBar({ route, onSearch }: Props) {
       </span>
       <nav className="topnav" aria-label="Main">
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-          Argument map
+          Map
         </a>
-        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} />
-        <PapersLink className="topnav__job" route={route} />
+        <a className="topnav__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
+          Compare
+        </a>
+        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
+        <a className="topnav__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+          Lean
+        </a>
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
           Checks
         </a>
@@ -117,7 +126,7 @@ export function TopBar({ route, onSearch }: Props) {
  * account, ↑ on the last; ↑ ↓ Home End move; a letter jumps to the account it
  * starts; Escape closes and returns focus to the button; Tab closes and moves on.
  */
-function ReadMenu({ current, stage, drafts }: { current: boolean; stage: Stage | null; drafts: Partial<Record<Stage, string>> }) {
+function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: Stage | null; drafts: Partial<Record<Stage, string>>; route: Route }) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -157,7 +166,7 @@ function ReadMenu({ current, stage, drafts }: { current: boolean; stage: Stage |
   };
 
   const onMenuKey = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    const items = itemsRef.current.filter((x): x is HTMLAnchorElement => !!x);
+    const items = [...event.currentTarget.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]')];
     const index = items.indexOf(document.activeElement as HTMLAnchorElement);
     const move = (to: number) => {
       event.preventDefault();
@@ -228,6 +237,7 @@ function ReadMenu({ current, stage, drafts }: { current: boolean; stage: Stage |
             <span className="readmenu__job">{ACCOUNT_JOBS[s]}</span>
           </a>
         ))}
+        <PapersLink className="readmenu__item readmenu__item--all" route={route} menu />
       </div>
     </div>
   );
@@ -290,7 +300,12 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
           <ul className="phonemenu__list">
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-                Argument map
+                Map
+              </a>
+            </li>
+            <li>
+              <a className="phonemenu__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
+                Compare
               </a>
             </li>
             <li>
@@ -313,6 +328,11 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
             </li>
             <li>
               <PapersLink className="phonemenu__job" route={route} onGo={() => setOpen(false)} />
+            </li>
+            <li>
+              <a className="phonemenu__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+                Lean
+              </a>
             </li>
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
@@ -342,10 +362,12 @@ export const PAPERS_ANCHOR = "papers";
  * PDF. On the front page itself the link scrolls to the shelf even when the address
  * already names it.
  */
-function PapersLink({ className, route, onGo }: { className: string; route: Route; onGo?: () => void }) {
+function PapersLink({ className, route, onGo, menu }: { className: string; route: Route; onGo?: () => void; menu?: boolean }) {
   return (
     <a
       className={className}
+      role={menu ? "menuitem" : undefined}
+      tabIndex={menu ? -1 : undefined}
       href={routeHref({ view: "home", anchor: PAPERS_ANCHOR })}
       onClick={(event) => {
         onGo?.();
@@ -357,7 +379,14 @@ function PapersLink({ className, route, onGo }: { className: string; route: Rout
         shelf.scrollIntoView({ block: "start" });
       }}
     >
-      Papers
+      {menu ? (
+        <>
+          <span className="readmenu__name">All papers and PDFs</span>
+          <span className="readmenu__job">every account on one shelf, with its first page</span>
+        </>
+      ) : (
+        "Papers"
+      )}
     </a>
   );
 }

@@ -8,11 +8,13 @@ import { useEdition, useRecord } from "../app/data";
 import { routeHref, type SearchType } from "../app/router";
 import { PAPER_NAMES } from "../app/papers";
 import { kindName } from "../map/labels";
+import { shortTitle } from "../compare/useAlignment";
 import { CHECK_KINDS, OUTCOME_NAMES } from "../checks/summary";
 import { loadDocument, sectionTitleOf, useDocument } from "../reader/documents";
 import { renderTex } from "../reader/math";
 import type { ArgGraph } from "../model/graph";
 import { prepareExcerpt, type PreparedExcerpt } from "./excerpt";
+import { markedPieces, type LeanHit } from "./leanNames";
 
 /** The API table behind each kind of result, in the order results are listed. */
 export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, string] }[] = [
@@ -39,7 +41,21 @@ export function nounFor(type: SearchType, n: number): string {
 
 /** What search does, said the same way in the palette and on the results page. */
 export const SEARCH_HELP =
-  "Search finds the records (claims, sources, citations and check records), section headings and linked passages that contain every word you type, spelled as you type it. It does not search the rest of the papers’ text, and it does not look for words with related meanings.";
+  "Search finds the records (claims, sources, citations and check records), section headings, linked passages and Lean declaration names that contain every word you type, as whole words or the starts of words. It does not search the rest of the papers’ text, and it does not look for words with related meanings.";
+
+/** A Lean declaration as a result: its name with the matches marked, and where it lives. */
+export function LeanResultBody({ hit }: { hit: LeanHit }) {
+  return (
+    <>
+      <span className="palette__title lean" translate="no">
+        {markedPieces(hit.name, hit.marks).map((piece, i) => (piece.mark ? <mark key={i}>{piece.text}</mark> : <span key={i}>{piece.text}</span>))}
+      </span>
+      <span className="palette__meta">
+        Lean {hit.kind} in {hit.module}
+      </span>
+    </>
+  );
+}
 
 /** Where a result will open, in words, before it is opened. */
 export function destinationWords(item: SearchItem): string {
@@ -135,12 +151,15 @@ function NodeResult({ item, excerpt, opening }: { item: SearchItem; excerpt: Pre
   const node = graph.nodes.get(id);
   const label = node?.label ?? item.label ?? id;
   const inLabel = excerpt?.field === "label";
+  const short = shortTitle(id, label);
+  const marked = inLabel && excerpt ? <Excerpt excerpt={{ ...excerpt, cutStart: false, cutEnd: false }} /> : label;
   return (
     <>
-      <span className={`palette__title${node?.kind === "declaration" ? " lean" : ""}`} data-region={node?.region}>
+      <span className={`palette__title${node?.kind === "declaration" && short === label ? " lean" : ""}`} data-region={node?.region}>
         {node && <span className="region-dot" aria-hidden="true" />}
-        {inLabel && excerpt ? <Excerpt excerpt={{ ...excerpt, cutStart: false, cutEnd: false }} /> : label}
+        {short === label ? marked : short}
       </span>
+      {short !== label && <span className={`palette__full${node?.kind === "declaration" ? " lean" : ""}`}>{marked}</span>}
       <span className="palette__meta">
         {node ? kindName(node.kind) : "Record"}
         {node && graph.regions.find((r) => r.id === node.region) && <> in {graph.regions.find((r) => r.id === node.region)!.title}</>}

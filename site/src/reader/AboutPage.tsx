@@ -1,15 +1,17 @@
-// About: a short authored introduction to what the site is, a small key to
-// its visual language, the edition it serves (with edition-pinned link and
-// citation), and the architectural companion paper on request. The paper is
-// not served by the API; it is read from the repository at build time, so it
-// always matches the checkout the site was built from.
+// About: one line for each of the site's routes, then what the site
+// is, a key to the map's drawing, the edition it serves (with edition-pinned link and
+// citation), the architectural companion on request, and who made it. The companion is
+// not served by the API; it is read from the repository at build time, so it always
+// matches the checkout the site was built from.
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import source from "../../../papers/architecture/paper.md?raw";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { Route } from "../app/router";
 import { routeHref } from "../app/router";
-import { useEdition } from "../app/data";
+import { useEdition, useResource } from "../app/data";
+import { loadLeanModules } from "../api/lean";
+import { useAlignment } from "../compare/useAlignment";
 import { citationText, copyText, editionLink } from "../app/cite";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { AUTHOR, LINKS } from "../app/author";
@@ -52,6 +54,7 @@ const RELATED_FILMS: { film: FamilyFilm; shows: string }[] = [
   { film: familyFilm("atlas"), shows: "One result followed through Plectis Atlas, its claims compared with the checked statement." },
 ];
 const INTRODUCTION = familyFilm("introduction");
+const WALKTHROUGH = familyFilm("interfaces");
 
 /** A released film as a line of the list: its title, opening YouTube, and its length. */
 function FilmLink({ film }: { film: FamilyFilm }) {
@@ -70,6 +73,11 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
   const checks = map.records.evidence;
   const mostNotRun = checks.filter((c) => c.status === "not_run").length * 2 > checks.length;
   const prose = useRef<HTMLDivElement>(null);
+  // Both sidecars load only on this page, and their counts simply stay away if an edition has none.
+  const alignment = useAlignment();
+  const lean = useResource("about-lean-modules", () => loadLeanModules().catch(() => null));
+  const leanRows = lean.status === "ready" && lean.value ? lean.value.folders.flatMap((f) => f.modules) : null;
+  const leanLinks = alignment ? Object.values(alignment.records).reduce((n, r) => n + r.lean.length, 0) : null;
   // A link into the companion (any fragment other than the edition facts) opens it.
   const [companion, setCompanion] = useState(!!route.anchor && route.anchor !== "edition");
 
@@ -114,30 +122,77 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <header className="about__intro">
         <h1>About this site</h1>
         <p className="about__lede">
-          This site presents one mathematical result
+          This site explains one theorem from OpenAI’s mathematics release
           {goalLabel ? (
             <>
               , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
             </>
           ) : null}{" "}
-          and three written accounts of it. The <a href={routeHref({ view: "read", stage: "expository" })}>exposition</a>{" "}
+          at every level from its Lean source to a plain exposition.
+        </p>
+      </header>
+
+      <section className="about__use" aria-labelledby="about-use">
+        <h2 id="about-use" className="visually-hidden">
+          How to use this site
+        </h2>
+        <ol className="about__routes">
+          <li>
+            <a href={routeHref({ view: "map" })}>The argument map</a>
+            <span>The proof as a drawing, from the theorem down. Start here.</span>
+          </li>
+          <li>
+            <a href={routeHref({ view: "compare" })}>Compare</a>
+            <span>Every step of the proof in a table: its Lean and its statement in each paper, side by side.</span>
+          </li>
+          <li>
+            <a href={routeHref({ view: "read", stage: "expository" })}>The reader</a>
+            <span>A paper with the map following along, passage by passage.</span>
+          </li>
+          <li>
+            <a href={routeHref({ view: "lean" })}>The Lean browser</a>
+            <span>
+              OpenAI’s source
+              {leanRows ? (
+                <>
+                  : <span className="num">{leanRows.length}</span> modules,{" "}
+                  <span className="num">{leanRows.reduce((n, m) => n + m.declarations, 0).toLocaleString("en-GB")}</span> declarations
+                </>
+              ) : null}
+              .
+            </span>
+          </li>
+          <li>
+            <a href={routeHref({ view: "checks" })}>The checks</a>
+            <span>What passed, what failed and what was never run.{mostNotRun ? " Most have not been run." : ""}</span>
+          </li>
+        </ol>
+        <p className="about__watch">
+          To see them in use, watch <FilmLink film={WALKTHROUGH} />.
+        </p>
+      </section>
+
+      <section className="about__what" aria-labelledby="about-what">
+        <h2 id="about-what">What this site is</h2>
+        <p>
+          The result has three written accounts. The <a href={routeHref({ view: "read", stage: "expository" })}>exposition</a>{" "}
           explains the ideas with worked examples. The <a href={routeHref({ view: "read", stage: "short" })}>short paper</a>{" "}
           states the result and proves it for readers who know the field. The{" "}
           <a href={routeHref({ view: "read", stage: "long" })}>long record</a> reconstructs each step of the argument and names
           the source each step comes from.
         </p>
-        <p className="about__lede">
+        <p>
           Each step of the argument is stored as a record: a claim, an assumption, or a declaration in Lean, a language in
           which a computer can check proofs. Links between records say which records the argument for a result uses. Passages
-          in the three accounts are linked to the records they discuss, so from a passage you can open its records, and from
-          a record you can open the passages about it.
+          in the three accounts are linked to the records they discuss
+          {leanLinks !== null ? (
+            <>
+              , and <span className="num">{leanLinks}</span> authored links join records to Lean declarations
+            </>
+          ) : null}
+          . The site adds layout and wording; the records say what was recorded and no more.
         </p>
-        <p className="about__lede">
-          Some records have <a href={routeHref({ view: "checks" })}>checks</a> attached, for example whether a cited file still
-          has its recorded hash, or whether a Lean project compiles. Each check has a recorded outcome: passed, failed,
-          unavailable or not run.{mostNotRun ? " Most checks on this site have not been run." : ""}
-        </p>
-      </header>
+      </section>
 
       <section className="about__key" aria-labelledby="about-key">
         <h2 id="about-key">How the argument map is drawn</h2>
@@ -188,30 +243,8 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           </li>
         </ul>
         <p className="about__keynote">
-          A word in small capitals on each card names the kind of record: claim, assumption, main result or Lean declaration.
-          Only assumption cards have a dashed border. When you choose an account under “Records used by”, each card carries one
-          of three marks: the record has a passage of its own in that account, the account uses it without a passage of its
-          own, or the account does not use it.
-        </p>
-        <p className="about__keynote">
-          The map has three views. Steps opens the main result at reading size. Overview fits the whole argument on the
-          screen; as you zoom out, each card first shows only its title and then becomes a small tile in its source’s colour,
-          which keeps its title for as long as the tile has room for it. Outline shows the same argument as a list you scroll.
-          Scrolling up or down zooms in and out around the pointer, and dragging moves the map.
-        </p>
-        <p className="about__keynote">
-          Clicking a card opens its record in a panel, opens every record below it, and moves the map so that the card and
-          all of those records are in view. Clicking an empty part of the map closes the panel and puts the map back as it
-          was. Resting the pointer on a card draws the records below it at half strength until the pointer leaves. The
-          card’s “Inputs” button, or the Space key, draws only the records it uses directly, and the arrow keys move between
-          cards. Pointing at a line shows a short description of that step, and
-          selecting the line opens the step. “Show all branches” and “Collapse branches”, at the bottom right of the map, open
-          or close every branch at once.
-        </p>
-        <p className="about__keynote">
-          The key row under the <a href={routeHref({ view: "map" })}>argument map</a>’s header shows the colours, lines and
-          marks in short; the Key button shows or hides it. On the checks page each outcome is written as a word, and only a
-          failed outcome is shown in colour.
+          The <a href={routeHref({ view: "map" })}>argument map</a>’s Key button says the rest in words, with its keyboard
+          controls. On the checks page each outcome is written as a word, and only a failed outcome is shown in colour.
         </p>
       </section>
 
@@ -276,9 +309,11 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       </section>
 
       <section className="about__companion" aria-labelledby="companion-title">
-        <h2 id="companion-title" className="visually-hidden">
-          The architectural companion
-        </h2>
+        <h2 id="companion-title">The architectural companion</h2>
+        <p className="about__open-note">
+          A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
+          records, and on how those records and links are made.
+        </p>
         <div className="about__copies">
           <button
             type="button"
@@ -293,10 +328,6 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             Open the companion PDF, <span className="num">{PAPER_PDFS.architecture.pages} pages</span>
           </a>
         </div>
-        <p className="about__open-note">
-          A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
-          records, and on how those records and links are made.
-        </p>
         <div id={COMPANION} hidden={!companion}>
           <header className="about__head">
             <h1>{title}</h1>

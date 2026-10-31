@@ -1,4 +1,4 @@
-/* The architecture companion: one reading column in the papers' own type. */
+/* About: the routes first, then what the site is; prose in one reading column. */
 
 .about {
   width: 100%;
@@ -134,6 +134,70 @@
   color: inherit;
 }
 
+/* The routes: the name is the link, one line says what it does. */
+.about__use {
+  margin-top: var(--space-5);
+}
+
+.about__routes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.about__routes li {
+  display: grid;
+  grid-template-columns: 11.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.about__routes a {
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  color: var(--ink);
+}
+
+.about__routes li > span {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.about__watch {
+  margin-top: var(--space-4);
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+}
+
+.about__watch a {
+  color: var(--ink);
+}
+
+.about__watch .about__len {
+  margin-left: var(--space-2);
+}
+
+.about__what {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+}
+
+.about__what p + p {
+  margin-top: var(--space-3);
+}
+
+.about__what a {
+  color: var(--ink);
+}
+
 .about__key {
   margin-top: var(--space-7);
   padding-top: var(--space-5);
@@ -141,6 +205,8 @@
 }
 
 .about__key h2,
+.about__what h2,
+.about__companion h2,
 .about__serves h2 {
   font-family: var(--font-serif);
   font-size: var(--fs-h3);
@@ -264,6 +330,10 @@
 }
 
 @media (max-width: 640px) {
+  .about__routes li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
   .about__keylist li {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-1);
@@ -335,11 +405,7 @@
 }
 
 .about__start {
-  margin-top: var(--space-5);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-  background: var(--surface);
+  margin-top: var(--space-4);
 }
 
 .about__start .about__len {

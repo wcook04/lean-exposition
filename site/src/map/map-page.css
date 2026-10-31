@@ -1,6 +1,7 @@
-/* The header on top, the key row under it (in the flow, so the canvas gives it
-   room); below them the argument (canvas or outline) with the dock under it,
-   and, while something is inspected, the inspector as a full-height column. */
+/* The header on top, and under a paper's lens one line beneath it (in the flow, so
+   the canvas gives it room); below them the argument (canvas or outline) with the
+   foot bar under it, and, while something is inspected, the record sheet as a
+   full-height column. */
 .map-page {
   flex: 1;
   min-height: 0;
@@ -21,7 +22,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note):not(.map-controls) {
+.map-page__main > :not(.map-note, .map-caption) {
   flex: 1;
   min-height: 0;
 }
@@ -35,16 +36,6 @@
   bottom: auto;
   min-height: 0;
   height: auto;
-}
-
-.map-page > .dock {
-  position: relative;
-  grid-column: 1;
-  grid-row: 4;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  min-width: 0;
 }
 
 /* A slim note over the canvas when the selection is not drawn as asked. */
@@ -100,7 +91,7 @@
   grid-row: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto auto;
-  grid-template-areas: "title views acct key";
+  grid-template-areas: "title lens views key";
   align-items: center;
   column-gap: 24px;
   min-height: 64px;
@@ -298,59 +289,104 @@
   }
 }
 
-/* Records used by: a picker that opens the account switch. */
-.acct-picker {
-  grid-area: acct;
+/* The level lens: the same pill as the view switch. */
+.map-lens {
+  grid-area: lens;
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--rule);
   min-width: 0;
 }
 
-.acct-picker__label {
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
-  white-space: nowrap;
-}
-
-.acct-picker__button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 32px;
+.map-lens button {
+  position: relative;
+  height: 30px;
   padding: 0 12px;
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-m);
-  background: var(--raised);
-  color: var(--ink);
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink-2);
   font-size: var(--fs-ui);
   white-space: nowrap;
   cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out);
 }
 
-.acct-picker__button:hover {
-  border-color: var(--ink-3);
+.map-lens button:hover,
+.map-lens button[aria-checked="true"] {
+  color: var(--ink);
 }
 
-.acct-picker__pop {
+.map-lens button[aria-checked="true"] {
+  font-weight: 600;
+}
+
+.map-lens__n {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.map-lens button[aria-checked="true"] .map-lens__n {
+  color: var(--ink-2);
+}
+
+/* Key: a popover that says everything the marks mean. */
+.map-keypop {
+  grid-area: key;
+  justify-self: end;
+  position: relative;
+}
+
+.map-keypop__panel {
   position: absolute;
   z-index: 30;
   top: calc(100% + 8px);
   right: 0;
-  max-width: calc(100vw - 32px);
-  padding: 12px;
+  width: min(460px, calc(100vw - 32px));
+  max-height: min(76dvh, 640px);
+  overflow: auto;
+  padding: 14px 16px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: var(--radius-l);
   box-shadow: var(--shadow-sheet);
+  font-size: var(--fs-sm);
   animation: keypop-in var(--t-reveal) var(--ease-out) both;
 }
 
-/* Key: a toggle for the key row. */
+.map-keypop__panel a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.map-keypop__h {
+  margin: 12px 0 5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.map-keypop__h:first-child {
+  margin-top: 0;
+}
+
+/* A row with a sample: the samples in one column, the words in the next. */
+.map-keypop__channels li:has(> .map-key__sample, > .keyrow__tag, > .keyrow__clone) {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: start;
+}
+
+.map-keypop__channels li > .keyrow__tag,
+.map-keypop__channels li > .keyrow__clone {
+  margin-top: 2px;
+}
+
 .map-head__key {
-  grid-area: key;
-  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -383,17 +419,13 @@
   }
 }
 
-/* ---- The key row: in the flow under the header, wrapping when narrow. ---- */
+/* ---- The line under the header, under a paper's lens only. ---- */
 
-.keyrow {
+.map-sub {
   grid-column: 1;
   grid-row: 2;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 28px;
-  min-width: 0;
-  padding: 9px var(--space-5);
+  margin: 0;
+  padding: 8px var(--space-5);
   background: var(--ground);
   border-bottom: 1px solid var(--rule);
   font-size: var(--fs-sm);
@@ -401,31 +433,40 @@
   color: var(--ink-2);
 }
 
-.keyrow[hidden] {
+/* ---- The caption: a shortened tile's full title, or the line under the pointer. It sits
+   in a corner of the canvas where it covers no card (showCaption) and takes no pointer. ---- */
+
+.map-caption {
+  position: absolute;
+  z-index: 7;
+  max-width: min(46%, 520px);
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.map-caption[hidden] {
   display: none;
 }
 
-.keyrow__sources,
-.keyrow__marks {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 18px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.map-caption[data-at^="top"] {
+  top: 12px;
 }
 
-.keyrow__marks li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.map-caption[data-at^="bottom"] {
+  bottom: calc(12px + var(--sheet-inset, 0px));
 }
 
-.keyrow__marks .map-key__sample {
-  flex: none;
-  width: 36px;
-  overflow: visible;
+.map-caption[data-at$="left"] {
+  left: 24px;
+}
+
+.map-caption[data-at$="right"] {
+  right: 24px;
+  text-align: right;
 }
 
 /* An assumption tag, as the map draws one on a result, without its name. */
@@ -460,53 +501,71 @@
   background: color-mix(in oklab, var(--src-1) 35%, var(--card));
 }
 
-.keyrow__more a {
+/* ---- The foot bar: its own row, so nothing in it can cover a card. ---- */
+
+.map-foot {
+  grid-column: 1;
+  grid-row: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+}
+
+.map-controls {
+  flex: none;
+  display: flex;
+  gap: 2px;
+}
+
+.walkbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: var(--fs-sm);
+}
+
+.walkbar__step {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.walkbar__step:disabled {
+  color: var(--ink-3);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.walkbar__place {
+  min-width: 0;
+  margin: 0 4px;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.walkbar a {
+  flex: none;
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--rule-strong);
   text-underline-offset: 3px;
-}
-
-.keyrow__more a:hover {
-  text-decoration-color: currentColor;
-}
-
-.map-key__sources {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.map-key__sources li {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.map-key__swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  background: color-mix(in oklab, var(--cat, var(--src-0)) var(--mark-mix), var(--ground));
-  border: 1px solid color-mix(in oklab, var(--cat, var(--src-0)) 85%, var(--ground));
-}
-
-/* ---- Branch buttons on the canvas, bottom right above the dock. ---- */
-
-.map-controls {
-  position: absolute;
-  z-index: 8;
-  right: 16px;
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  background: var(--surface);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-l);
-  box-shadow: var(--shadow-sheet);
 }
 
 .map-controls__button {
@@ -597,19 +656,15 @@
     column-gap: 16px;
     padding: 6px var(--space-4);
   }
-  .acct-picker__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
   .map-views button {
     padding: 0 11px;
   }
-  .keyrow {
+  .map-sub,
+  .map-foot {
     padding-inline: var(--space-4);
+  }
+  .map-lens button {
+    padding: 0 8px;
   }
 }
 
@@ -637,150 +692,38 @@
   }
 }
 
-/* Phones: two rows (title and Key; view and account), touch-sized. */
+/* Phones: three rows (title and Key; level; view), touch-sized. */
 @media (max-width: 43.75em) {
   .map-head {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "title key"
-      "views acct";
+      "lens lens"
+      "views views";
     row-gap: 6px;
     column-gap: 8px;
     padding: 6px var(--space-4) 8px;
   }
   .goal-menu__button,
-  .map-head__key,
-  .acct-picker__button {
+  .map-head__key {
     min-height: var(--target);
   }
-  .map-head__key {
+  .map-keypop {
     margin-right: -8px;
   }
-  .map-views {
+  .map-views,
+  .map-lens {
     min-width: 0;
+    overflow-x: auto;
   }
-  .map-views button {
+  .map-views button,
+  .map-lens button {
     flex: 1 1 auto;
     min-width: 0;
     height: 38px;
-    padding: 0 10px;
+    padding: 0 8px;
   }
   .map-controls__button {
     height: 38px;
-  }
-}
-
-/* Narrow phones and large text: the view and the account each take a row. */
-@media (max-width: 23.75em) {
-  .map-head {
-    grid-template-areas:
-      "title key"
-      "views views"
-      "acct acct";
-  }
-  .acct-picker {
-    justify-self: start;
-  }
-  .acct-picker__pop {
-    left: 0;
-    right: auto;
-  }
-  .map-controls__button {
-    padding: 0 8px;
-  }
-}
-
-/* Account switch: all records, or one account's. The caption counts coverage. */
-
-.acct-switch {
-  position: relative;
-  flex: none;
-  display: grid;
-  gap: 3px;
-}
-
-.acct-switch__group {
-  display: inline-flex;
-  padding: 2px;
-  gap: 2px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
-}
-
-.acct-switch__item {
-  padding: 3px 9px;
-  border: 0;
-  border-radius: calc(var(--radius-m) - 2px);
-  background: none;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color var(--t-press) var(--ease-out);
-}
-
-.acct-switch__item:hover {
-  background: color-mix(in oklab, var(--ink) 5%, transparent);
-}
-
-.acct-switch__item[aria-checked="true"] {
-  background: var(--lit-wash);
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--lit);
-}
-
-.acct-switch__caption {
-  font-size: var(--fs-xs);
-  color: var(--ink-3);
-  white-space: nowrap;
-}
-
-.acct-switch__pop {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 6px);
-  left: 0;
-  width: 360px;
-  max-height: 320px;
-  overflow: auto;
-  padding: 10px 12px;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-sheet);
-  white-space: normal;
-}
-
-.acct-switch__pop ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-
-.acct-switch__pop li {
-  display: grid;
-  gap: 1px;
-}
-
-.acct-switch__name {
-  justify-self: start;
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  line-height: 1.3;
-  color: var(--ink);
-  text-align: left;
-}
-
-.acct-switch__why {
-  font-size: var(--fs-xs);
-  color: var(--ink-2);
-}
-
-@media (max-width: 900px) {
-  .acct-switch__group {
-    overflow-x: auto;
-    max-width: 100%;
   }
 }

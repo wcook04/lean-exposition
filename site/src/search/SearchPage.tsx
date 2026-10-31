@@ -1,14 +1,16 @@
-// The full results page for one query: every match of one kind, in the API's
-// bounded pages. The address holds the exact query, the kind and the page,
-// so Back from an opened result returns here, to the same page.
+// The full results page for one query: every match of one kind, best first
+// (rank.ts), with the matching Lean declarations beside them. The address holds
+// the exact query, the kind and the page, so Back from an opened result returns
+// here, to the same page.
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import "katex/dist/katex.min.css";
-import { get } from "../api/client";
-import type { Page, SearchItem } from "../api/types";
+import type { SearchItem } from "../api/types";
 import { describeError, useEdition, useResource } from "../app/data";
 import { navigate, routeHref, type Route, type SearchType } from "../app/router";
-import { destination, destinationWords, directHref, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES, tableOf } from "./results";
+import { destination, destinationWords, directHref, LeanResultBody, nounFor, ResultBody, SEARCH_HELP, SEARCH_TABLES } from "./results";
+import { rankedSearch } from "./rank";
+import { leanNames, searchLean, type LeanHit } from "./leanNames";
 import "./search.css";
 
 /** Results per page; well inside the API's page limit. */
@@ -18,19 +20,15 @@ const MAX_TOKENS = 16;
 
 type SearchRoute = Extract<Route, { view: "search" }>;
 
-/** How many matches each kind has: one request per table, one item each. */
-function useCounts(q: string) {
-  return useResource(q ? `search-counts:${q}` : null, () =>
-    Promise.all(
-      SEARCH_TABLES.map(({ type, table }) => get<Page<SearchItem>>("/search", { q, table, limit: 1 }).then((r) => [type, r.data.total] as const)),
-    ).then((pairs) => new Map<SearchType, number>(pairs)),
-  );
+const LEAN_SHOWN = 8;
+
+/** Every match of every kind, ranked. Nothing is requested until a query is typed. */
+function useRanked(q: string) {
+  return useResource(q ? `search-ranked:${q}` : null, () => rankedSearch(q, SEARCH_TABLES.map((t) => t.table)));
 }
 
-function usePageOf(q: string, type: SearchType | null, page: number) {
-  const offset = (page - 1) * PER_PAGE;
-  const key = q && type ? `search:${q}:${type}:${offset}` : null;
-  return useResource(key, () => get<Page<SearchItem>>("/search", { q, table: tableOf(type!), limit: PER_PAGE, offset }).then((r) => r.data));
+function useLean(q: string) {
+  return useResource(q ? `search-lean:${q}` : null, () => leanNames().then((index) => (index ? searchLean(index, q) : null)));
 }
 
 /** The 1-based page holding results `from`…`to` and the page count, from a total. */
@@ -44,14 +42,16 @@ export function SearchPage({ route }: { route: SearchRoute }) {
   const q = route.q.trim();
   const tokens = q ? q.split(/\s+/) : [];
   const tooLong = tokens.length > MAX_TOKENS || q.length > MAX_CHARS;
-  const counts = useCounts(tooLong ? "" : q);
-  const ready = counts.status === "ready" ? counts.value : null;
+  const ranked = useRanked(tooLong ? "" : q);
+  const lean = useLean(tooLong ? "" : q);
+  const leanHits = lean.status === "ready" ? lean.value : null;
+  const ready = ranked.status === "ready" ? new Map<SearchType, SearchItem[]>(SEARCH_TABLES.map((t) => [t.type, ranked.value.get(t.table) ?? []])) : null;
   // Without a kind in the address, list the first kind that has matches.
-  const type: SearchType | null = route.type ?? (ready ? (SEARCH_TABLES.find((t) => (ready.get(t.type) ?? 0) > 0)?.type ?? null) : null);
-  const total = type && ready ? ready.get(type) ?? 0 : 0;
+  const type: SearchType | null = route.type ?? (ready ? (SEARCH_TABLES.find((t) => (ready.get(t.type)?.length ?? 0) > 0)?.type ?? null) : null);
+  const listed = type && ready ? ready.get(type) ?? [] : [];
+  const total = listed.length;
   const win = pageWindow(total, route.page ?? 1);
-  const results = usePageOf(tooLong ? "" : q, type, win.page);
-  const grand = ready ? [...ready.values()].reduce((s, n) => s + n, 0) : 0;
+  const grand = ready ? [...ready.values()].reduce((s, list) => s + list.length, 0) : 0;
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   const resultsKey = `${q}|${type}|${win.page}`;
@@ -64,18 +64,17 @@ export function SearchPage({ route }: { route: SearchRoute }) {
   return (
     <div className="search-page">
       <header className="search-page__head">
-        <p className="caps">Search</p>
         <h1 ref={headingRef} tabIndex={-1}>
           {q ? (
             <>
               Results for <q>{q}</q>
             </>
           ) : (
-            "Search records and passages"
+            "Search records, passages and Lean"
           )}
         </h1>
         <SearchForm q={route.q} />
-        <p className="search-page__help">{SEARCH_HELP}</p>
+        {!q && <p className="search-page__help">{SEARCH_HELP}</p>}
       </header>
 
       {tooLong && (
@@ -83,27 +82,26 @@ export function SearchPage({ route }: { route: SearchRoute }) {
           Search takes at most {MAX_TOKENS} words and {MAX_CHARS} characters. Remove some words.
         </p>
       )}
-      {counts.status === "error" && <ErrorNote error={counts.error} />}
-      {q && !tooLong && counts.status === "loading" && (
+      {ranked.status === "error" && <ErrorNote error={ranked.error} />}
+      {q && !tooLong && ranked.status === "loading" && (
         <p className="search-page__status" role="status">
           Searching…
         </p>
       )}
 
-      {ready && grand === 0 && (
-        <p className="search-page__status" role="status">
-          No record, section heading or linked passage contains all of these words. Search covers only records, section
-          headings and passages linked to records, so other text in the papers is not searched. Try fewer words, or another
-          spelling.
-        </p>
-      )}
-
-      {ready && grand > 0 && (
-        <>
-          <nav className="search-kinds" aria-label="Kinds of result">
+      {ready && (
+        <div className="search-body">
+          <div className="search-body__main">
+          {grand === 0 && (
+            <p className="search-page__status" role="status">
+              No record, section heading or linked passage contains all of these words, as whole words or the starts of words.
+              Other text in the papers is not searched. Try fewer words, or another spelling.
+            </p>
+          )}
+          {grand > 0 && <nav className="search-kinds" aria-label="Kinds of result">
             <ul>
               {SEARCH_TABLES.map((t) => {
-                const n = ready.get(t.type) ?? 0;
+                const n = ready.get(t.type)?.length ?? 0;
                 return (
                   <li key={t.type}>
                     {n > 0 ? (
@@ -119,9 +117,9 @@ export function SearchPage({ route }: { route: SearchRoute }) {
                 );
               })}
             </ul>
-          </nav>
+          </nav>}
 
-          {type && (
+          {grand > 0 && type && (
             <section className="search-results" aria-labelledby="search-results-title">
               <h2 id="search-results-title" className="search-results__title">
                 {total} matching {nounFor(type, total)}
@@ -133,27 +131,57 @@ export function SearchPage({ route }: { route: SearchRoute }) {
                 )}
               </h2>
               {total === 0 && <p className="search-page__status">No {nounFor(type, 0)} match these words.</p>}
-              {results.status === "error" && <ErrorNote error={results.error} />}
-              {results.status === "loading" && total > 0 && (
-                <p className="search-page__status" role="status">
-                  Loading results {win.from}–{win.to}…
-                </p>
-              )}
-              {results.status === "ready" && (
-                <ol className="search-results__list" start={win.from}>
-                  {results.value.items.map((item) => (
-                    <li key={item.ref}>
-                      <Result item={item} />
-                    </li>
-                  ))}
-                </ol>
-              )}
+              <ol className="search-results__list" start={win.from}>
+                {listed.slice(win.from > 0 ? win.from - 1 : 0, win.to).map((item) => (
+                  <li key={item.ref}>
+                    <Result item={item} />
+                  </li>
+                ))}
+              </ol>
               {win.pages > 1 && <Pager route={route} type={type} page={win.page} pages={win.pages} />}
+              <p className="search-page__foot">
+                Results come first when the words occur in a title, then when they occur close together and in the order typed.
+                Other text in the papers is not searched.
+              </p>
             </section>
           )}
-        </>
+          </div>
+          <LeanResults hits={leanHits} loading={lean.status === "loading"} />
+        </div>
       )}
     </div>
+  );
+}
+
+function LeanResults({ hits, loading }: { hits: LeanHit[] | null; loading: boolean }) {
+  const [all, setAll] = useState(false);
+  useEffect(() => setAll(false), [hits]);
+  const shown = hits ? (all ? hits : hits.slice(0, LEAN_SHOWN)) : [];
+  return (
+    <section className="search-lean" aria-labelledby="search-lean-title">
+      <h2 id="search-lean-title" className="search-results__title">
+        {hits ? `${hits.length} Lean ${hits.length === 1 ? "declaration" : "declarations"}` : "Lean declarations"}
+      </h2>
+      {loading && <p className="search-page__status">Searching the Lean names…</p>}
+      {!loading && !hits && <p className="search-page__status">This edition has no Lean index.</p>}
+      {hits && hits.length === 0 && <p className="search-page__status">No Lean declaration name contains these words.</p>}
+      {shown.length > 0 && (
+        <ol className="search-results__list">
+          {shown.map((hit) => (
+            <li key={`${hit.module}:${hit.name}`}>
+              <a className="search-result" href={routeHref({ view: "lean", module: hit.module, decl: hit.name })}>
+                <LeanResultBody hit={hit} />
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
+      {hits && hits.length > LEAN_SHOWN && (
+        <button type="button" className="control search-lean__more" aria-expanded={all} onClick={() => setAll((a) => !a)}>
+          {all ? `Show the first ${LEAN_SHOWN}` : `Show all ${hits.length}`}
+        </button>
+      )}
+    </section>
   );
 }
 

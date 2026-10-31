@@ -10,6 +10,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import type { Stage } from "../../api/types";
 import { describeError, useEdition } from "../../app/data";
 import { PAPER_NAMES } from "../../app/papers";
+import { routeHref } from "../../app/router";
 import { sectionLabel } from "../../map/TheoremPlate";
 import { useDocument } from "../documents";
 import { mountFigures } from "../mount";
@@ -71,6 +72,11 @@ export function Visit({ target, origin, originLabel, compare, structures, onRetu
           <button type="button" className="control control--plain" onClick={() => onPromote(target.stage, target.anchor)}>
             Continue reading the {PAPER_NAMES[target.stage].short.toLowerCase()} from here
           </button>
+          {origin && origin.stage !== target.stage && (
+            <a className="visit__comparepapers" href={routeHref({ view: "compare", levels: [origin.stage, target.stage] })}>
+              Compare these two papers
+            </a>
+          )}
           <button type="button" className="visit__close" aria-label="Close this passage and stay at your place in the paper" onClick={onClose}>
             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
               <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -1,0 +1,274 @@
+/* The front page's first screen: the title and its routes beside the theorem, clause by
+   clause, Lean on the left and the mathematics on the right. It loads with the first
+   stylesheet, because the HTML paints it before any script runs. */
+
+:root {
+  --front-max-outer: 1360px;
+}
+
+.front {
+  --front-max: 1360px;
+  width: 100%;
+  max-width: calc(var(--front-max) + 2 * var(--space-5));
+  margin-inline: auto;
+  padding: 0 var(--space-5);
+}
+
+/* On wide windows the page's container is centred, so the bar's lockup stands on its left edge. */
+html[data-view="home"] .topbar {
+  padding-inline: max(var(--space-5), calc((100% - var(--front-max-outer)) / 2));
+}
+
+.front__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
+  align-items: start;
+  gap: 48px;
+  padding: 44px 0 28px;
+}
+
+.front__title {
+  max-width: 11em;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.125rem, 1.2rem + 2.3vw, 3rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.front .front__lede {
+  max-width: 31em;
+  margin: 18px 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  line-height: 1.46;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.front .front__site {
+  max-width: 37em;
+  margin: 12px 0 0;
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.front__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 0;
+}
+
+.front__primary,
+.front__secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 20px;
+  border-radius: var(--radius-m);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
+}
+
+.front__primary {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.front__secondary {
+  border: 1px solid var(--rule-control);
+  color: var(--ink);
+}
+
+.front__primary:hover {
+  background: color-mix(in oklab, var(--ink) 86%, var(--ground));
+}
+
+.front__secondary:hover {
+  border-color: var(--ink-2);
+}
+
+.front__tertiary {
+  margin: 12px 0 0;
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+}
+
+.front__tertiary a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+/* The theorem, clause by clause. The two columns are the point of the site in one picture:
+   the same statement, read across. */
+.rosetta {
+  margin: 4px 0 0;
+  min-width: 0;
+}
+
+.rosetta__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.rosetta__table th {
+  padding: 0 16px 8px 0;
+  border-bottom: 1px solid var(--rule-strong);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  color: var(--ink-2);
+}
+
+.rosetta__table th:first-child {
+  width: 52%;
+}
+
+.rosetta__table th + th {
+  padding-left: 20px;
+}
+
+.rosetta__row td {
+  padding: 11px 16px 10px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+
+.rosetta__row td + td {
+  padding-left: 20px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rosetta__row:hover td {
+    background: color-mix(in oklab, var(--surface) 62%, transparent);
+  }
+}
+
+.rosetta__lean code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.lean-t--op {
+  color: var(--ink-3);
+}
+
+.lean-t--type {
+  color: var(--rel-formalizes-lit);
+}
+
+.lean-t--name {
+  color: var(--ink);
+}
+
+.rosetta__math {
+  font-family: var(--font-serif);
+  color: var(--ink);
+}
+
+.rosetta__formula {
+  display: block;
+  width: fit-content;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--t-hover) var(--ease-out);
+}
+
+.rosetta__formula:hover {
+  color: var(--lit);
+}
+
+.rosetta__words {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.rosetta__foot {
+  margin-top: 12px;
+  font-size: var(--fs-ui);
+}
+
+.front__films {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 48px;
+  min-height: 112px;
+  padding: 4px 0 28px;
+}
+
+.rosetta__foot a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 43.75em) {
+  .front__films {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 68.75em) {
+  .front__hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 36px 0 24px;
+  }
+}
+
+@media (max-width: 37.5em) {
+  .front {
+    padding: 0 var(--space-4);
+  }
+
+  .rosetta__table,
+  .rosetta__table tbody,
+  .rosetta__row,
+  .rosetta__row td {
+    display: block;
+    width: 100%;
+  }
+
+  .rosetta__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .rosetta__row {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .rosetta__row td,
+  .rosetta__row td + td {
+    padding: 0;
+    border: 0;
+  }
+
+  .rosetta__row td + td {
+    margin-top: 8px;
+  }
+}

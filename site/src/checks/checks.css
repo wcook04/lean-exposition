@@ -4,7 +4,7 @@
 
 .checks {
   width: 100%;
-  max-width: 50rem;
+  max-width: 76rem;
   margin: 0 auto;
   padding: var(--space-7) var(--space-5) var(--space-8);
 }
@@ -17,12 +17,26 @@
   letter-spacing: -0.01em;
 }
 
+/* The established paragraph beside the meaning of each outcome. */
+.checks__head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+
 .checks__lede {
-  margin-top: var(--space-3);
-  max-width: 38rem;
+  margin-top: var(--space-4);
+  font-family: var(--font-serif);
   font-size: var(--fs-read);
-  line-height: 1.5;
-  color: var(--ink-2);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.checks__lede code.lean,
+.checks__lede .lean {
+  font-size: 0.8em;
+  color: var(--formal);
 }
 
 .checks__band {
@@ -52,18 +66,19 @@
 }
 
 /* Said once for the whole edition: how much was run, and what review means. */
-.checks__edition {
-  margin-top: var(--space-4);
-  max-width: 40rem;
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--rule-strong);
-  font-size: var(--fs-ui);
-  line-height: var(--lh-ui);
-  color: var(--ink);
+.checks__notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
 }
 
-.checks__head .caps {
-  margin-bottom: var(--space-2);
+.checks__edition {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
 }
 
 .checks__head h1 .lean {
@@ -103,12 +118,15 @@
 
 /* ---------------------------------------------------------- formal statements */
 
-.formal {
-  padding: var(--space-6) 0 var(--space-5);
+.formal-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-6);
 }
 
-.formal + .formal {
-  border-top: 1px solid var(--rule);
+.formal {
+  min-width: 0;
+  padding: var(--space-5) 0;
 }
 
 .formal__name {
@@ -189,8 +207,8 @@
 
 .outcomes__row {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: var(--space-4);
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-3);
   align-items: baseline;
 }
 
@@ -441,7 +459,7 @@
 
 .checktable {
   width: 100%;
-  margin-top: var(--space-4);
+  margin-top: var(--space-2);
   border-collapse: collapse;
   font-size: var(--fs-ui);
   line-height: var(--lh-snug);
@@ -457,27 +475,50 @@
 }
 
 .checktable thead th:nth-child(1) {
-  width: 22%;
-}
-
-.checktable thead th:nth-child(3) {
-  width: 24%;
+  width: 15%;
 }
 
 .checktable thead th:last-child {
   width: 1%;
   padding-right: 0;
+}
+
+/* The four outcome columns: figures that line up and read down a column. */
+.checktable .checktable__n {
+  width: 6.2rem;
+  text-align: right;
   white-space: nowrap;
 }
 
+.checktable td.checktable__n {
+  font-size: var(--fs-h3);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink);
+}
+
+.checktable td.checktable__n.is-zero {
+  color: var(--ink-3);
+  font-size: var(--fs-base);
+}
+
+.checktable td.checktable__n.is-failed {
+  color: var(--fail);
+  font-weight: 600;
+}
+
 .checkrow > tr:first-child > * {
-  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  padding: var(--space-4) var(--space-3) var(--space-4) 0;
   vertical-align: top;
   text-align: left;
 }
 
+.checkrow > tr:first-child > .checktable__n {
+  text-align: right;
+}
+
 .checkrow > tr:first-child > :last-child {
   padding-right: 0;
+  padding-left: var(--space-4);
 }
 
 .checkrow + .checkrow > tr:first-child > * {
@@ -501,31 +542,58 @@
   color: var(--ink-3);
 }
 
-.checkrow__counts {
+.checkrow__note {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--ink);
+}
+
+/* A word in the row, not a button box beside the figures. */
+.checkrow__toggle.control {
+  min-width: 6.5rem;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.checkrow__toggle.control:hover {
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.checkrow > tr:first-child > .checkrow__left-out {
+  padding-left: var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+/* A recorded failure in words, under its row, across the table. */
+.checkrow__failures > td {
+  padding: 0 0 var(--space-4);
+}
+
+.checkrow__failures ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 2px;
+  gap: var(--space-2);
 }
 
-.checkrow__counts .outcome {
-  font-weight: 500;
+.checkrow__failures li {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-3);
 }
 
-.checkrow__counts .outcome--failed {
-  font-weight: 600;
-}
-
-.checkrow__note {
-  display: block;
+.checkrow__failures p {
   margin-top: var(--space-2);
-  font-size: var(--fs-sm);
+  margin-left: calc(6.5rem + var(--space-3));
   color: var(--ink);
-}
-
-.checkrow__toggle {
-  white-space: nowrap;
 }
 
 .checkrow__history > td {
@@ -542,17 +610,12 @@
 }
 
 .outcome-key {
-  margin-top: var(--space-5);
+  padding-top: var(--space-2);
+}
+
+.outcome-key h2 {
   font-size: var(--fs-ui);
-}
-
-.outcome-key summary {
-  cursor: pointer;
-  color: var(--ink-2);
-  width: max-content;
-}
-
-.outcome-key summary:hover {
+  font-weight: 600;
   color: var(--ink);
 }
 
@@ -564,8 +627,95 @@
   color: var(--formal);
 }
 
-/* Phones: each kind becomes a block; the column names become small labels. */
-@media (max-width: 700px) {
+/* Each record on one line: title, then its outcomes in words. No boxes. */
+.rlist__group {
+  margin-top: var(--space-5);
+}
+
+.rlist__group h3 {
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.rlist__group.is-failed h3 {
+  color: var(--fail);
+}
+
+.rlist__group ul {
+  list-style: none;
+  columns: 21rem;
+  column-gap: var(--space-6);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+.rlist__group.is-few ul {
+  columns: 30rem;
+}
+
+.rlist__group li {
+  break-inside: avoid;
+}
+
+.rline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 3px 0;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.rline:hover .rline__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rline__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-size: var(--fs-ui);
+  line-height: 20px;
+}
+
+.rline__title.lean {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--formal);
+}
+
+.rline__words {
+  flex: none;
+  font-size: var(--fs-sm);
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.rline__words .is-failed {
+  color: var(--fail);
+  font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+  .checks__head,
+  .checks__notes,
+  .formal-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .checks__head {
+    gap: var(--space-5);
+  }
+}
+
+/* Below laptop width: each kind becomes a block; the counts sit in a row of labelled figures. */
+@media (max-width: 860px) {
   .checktable thead {
     display: none;
   }
@@ -578,7 +728,7 @@
   }
   .checkrow > tr:first-child {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-2) var(--space-3);
     padding: var(--space-4) 0;
   }
@@ -586,33 +736,31 @@
     border-top: 1px solid var(--rule);
   }
   .checkrow > tr:first-child > *,
-  .checkrow + .checkrow > tr:first-child > * {
+  .checkrow + .checkrow > tr:first-child > *,
+  .checkrow > tr:first-child > :last-child {
     padding: 0;
     border-top: 0;
+    text-align: left;
   }
-  .checkrow__kind {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .checkrow__details {
-    grid-column: 2;
-    grid-row: 1;
-  }
+  .checkrow__kind,
   .checkrow__examined,
-  .checkrow__outcome {
+  .checkrow__left-out,
+  .checkrow__details {
     grid-column: 1 / -1;
   }
-  .checkrow__examined::before,
-  .checkrow__outcome::before {
+  .checkrow__details {
+    order: 9;
+  }
+  .checkrow > tr:first-child > .checktable__n {
+    width: auto;
+    text-align: left;
+  }
+  .checktable__n::before {
     content: attr(data-label);
     display: block;
-    margin-bottom: 2px;
     font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--ink-3);
-  }
-  .checkrow__details::before {
-    content: none;
+    font-weight: 400;
+    color: var(--ink-2);
   }
   .checkrow__history[hidden] {
     display: none;
@@ -620,161 +768,11 @@
   .checkrow__history > td {
     padding: 0 0 var(--space-4) var(--space-3);
   }
-}
-
-/* ---- What has been checked, at a glance ---------------------------------------------
-   Wider than the reading column: the argument drawing beside one square per check record.
-   One shading throughout; only a recorded failure is coloured. */
-.checkmap {
-  position: relative;
-  left: 50%;
-  width: min(1180px, calc(100vw - 48px));
-  transform: translateX(-50%);
-}
-
-.checkmap__pair {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-6);
-  margin-top: var(--space-5);
-  align-items: start;
-}
-
-.checkmap__fig {
-  margin: 0;
-}
-
-.checkmap__fig figcaption {
-  margin-top: var(--space-3);
-  font-size: var(--fs-sm);
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.checkmap__argument {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 620px;
-}
-
-.checkmap__tile rect {
-  stroke-width: 1.4;
-  vector-effect: non-scaling-stroke;
-  transition: stroke var(--t-hover) var(--ease-out);
-}
-
-.checkmap__tile.ck--none rect { fill: var(--sunk); stroke: var(--rule); }
-.checkmap__tile.ck--unrun rect { fill: var(--ground); stroke: var(--ink-2); }
-.checkmap__tile.ck--partly rect { fill: var(--ground); stroke: var(--ink-2); }
-.checkmap__tile.ck--partly rect.ck-half { fill: url(#ck-half); stroke: none; }
-.ck-half__ink { fill: var(--ink-2); }
-.checkmap__tile.ck--passed rect { fill: var(--ink-2); stroke: var(--ink-2); }
-.checkmap__tile.ck--failed rect { fill: var(--fail); stroke: var(--fail); }
-
-.checkmap__tile:hover rect:first-of-type,
-.checkmap__tile:focus-visible rect:first-of-type {
-  stroke: var(--lit);
-  stroke-width: 3;
-}
-
-.checkmap__tile:focus-visible {
-  outline: none;
-}
-
-.checkmap__kinds {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.checkmap__kindname {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-  margin: 0 0 6px;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.checkmap__kindname a {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.checkmap__squares {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-}
-
-.checkmap__square,
-.checkmap__swatch {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  border-radius: 2px;
-  flex: none;
-}
-
-.checkmap__square:hover {
-  outline: 2px solid var(--lit);
-  outline-offset: 1px;
-}
-
-/* Outcomes of single checks (squares) and standings of records (swatches for the drawing). */
-.checkmap .ck--passed:not(.checkmap__tile) { background: var(--ink-2); }
-.checkmap .ck--failed:not(.checkmap__tile) { background: var(--fail); }
-.checkmap .ck--unavailable:not(.checkmap__tile) {
-  background: repeating-linear-gradient(45deg, var(--ink-3) 0 1.5px, transparent 1.5px 4px);
-  box-shadow: inset 0 0 0 1px var(--ink-3);
-}
-.checkmap .ck--not_run:not(.checkmap__tile),
-.checkmap .ck--unrun:not(.checkmap__tile) { box-shadow: inset 0 0 0 1px var(--ink-2); }
-.checkmap .ck--partly:not(.checkmap__tile) {
-  background: repeating-linear-gradient(45deg, var(--ink-2) 0 2px, transparent 2px 4px);
-  box-shadow: inset 0 0 0 1px var(--ink-2);
-}
-.checkmap .ck--none:not(.checkmap__tile) { background: var(--sunk); box-shadow: inset 0 0 0 1px var(--rule); }
-
-.checkmap__swatch {
-  width: 14px;
-  height: 10px;
-}
-
-.checkmap__swatch--square {
-  width: 11px;
-  height: 11px;
-}
-
-.checkmap__key {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin: var(--space-3) 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--fs-sm);
-  color: var(--ink-2);
-}
-
-.checkmap__key li {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.checkmap__key .num {
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-@media (max-width: 900px) {
-  .checkmap__pair {
+  .checkrow__failures li {
     grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
   }
-}
-
-@media (forced-colors: active) {
-  .checkmap .ck--passed:not(.checkmap__tile),
-  .checkmap .ck--failed:not(.checkmap__tile) { background: CanvasText; }
+  .checkrow__failures p {
+    margin-left: 0;
+  }
 }

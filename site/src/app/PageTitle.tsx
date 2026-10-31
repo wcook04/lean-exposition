@@ -24,6 +24,12 @@ export function PageTitle({ route }: { route: Route }) {
     case "checks":
       title = label ? `Checks: ${label}` : "Recorded checks";
       break;
+    case "compare":
+      title = label ? `Compare: ${label}` : "Compare side by side";
+      break;
+    case "lean":
+      title = route.decl ?? route.module ?? "The Lean source";
+      break;
     case "about":
       title = "About";
       break;

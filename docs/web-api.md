@@ -54,8 +54,9 @@ sources are the latest upstream versions.
 ## Response and edition contract
 
 JSON success responses have `api_version`, `snapshot` and `data`. API version
-`1.2` retains the `/api/v1` routes, default full representations and opt-in
-summary, map and matches representations, and adds passage reading guidance.
+`1.3` retains the `/api/v1` routes, default full representations and opt-in
+summary, map and matches representations, keeps passage reading guidance and adds
+the optional [Lean and alignment sidecars](#serve-the-lean-index-and-record-alignment).
 JSON is compact UTF-8;
 clients must parse fields rather than depend on whitespace or earlier ETags.
 Exact document routes still return the original captured bytes. `snapshot`
@@ -125,6 +126,10 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/search?q=curvature` | Paged literal-token search across records, heading titles and mapped passage text |
 | `/corpus` | Complete existing corpus projection for a client that wants one capture |
 | `/documents/graph.json` | Exact graph bytes; discovery lists the other seven allowlisted contract documents |
+| `/lean/modules` | Lean revision, base link, toolchain, counts and modules by folder, without source |
+| `/lean/names` | One compact row per Lean declaration: name, kind, module index, first and last line |
+| `/lean/module?name=…` | One Lean module with its source and declarations |
+| `/alignment` | Where each record is stated in Lean and in each paper, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
 
 Record tables are `nodes`, `edges`, `sources`, `citations` and `evidence`.
 Relation families are `declarations`, `arguments`, `citations`, `platform` and
@@ -218,6 +223,44 @@ retain their original directions during incoming traversal. Connection outcomes
 are `reached` or `not_reached_within_query`. The latter does not assert global
 unreachability: inspect the original neighborhood frontier, query bounds and
 paper restriction. A witness is one recorded route, not logical sufficiency.
+
+## Serve the Lean index and record alignment
+
+Two read-only sidecars can sit beside a captured edition:
+
+```sh
+lean-exposition serve build/qaoa-sk-authored \
+  --lean-tree examples/qaoa-sk/upstream/lean \
+  --alignment examples/qaoa-sk/alignment
+```
+
+`--lean-tree` takes a Lean tree or a JSON file from
+`lean-exposition lean-index <tree> --out index.json`; `create_app(...)` takes the
+same values as `lean_index=` and `alignment=`. Without them, the four routes answer
+**404**. Neither sidecar enters the bundle: `check-bundle`, the manifest hash and
+every other response stay the same. Discovery's `sidecars` object records whether
+each is available and its SHA-256, the hash of its canonical JSON.
+
+The index is read from source text with no Lean toolchain, and covers every
+module under `OAI/` and `ComparatorChallenges/`. Structure fields and constructors
+are declarations of kind `def` named `Structure.field`, with `parent` set. An
+anonymous instance has a stable synthetic name and `synthetic: true`. `uses` lists
+indexed names found in a declaration's text, resolved through its namespaces,
+`open`s and the module's imports; `used_by` is the reverse. Generalized field
+notation resolves only when the last component is unique in the index, apart from
+common names such as `add` or `le`. When a name exists in two modules, `uses_modules`
+says which one a use means. `dependency_source: "source_text"` tells a reader that
+these are reading aids: a name reached through notation, a tactic or elaboration is
+absent, and a shadowed name can appear. `lean-index --extraction <report.json>` replaces both
+lists with elaborated dependencies for the declarations a report covers and
+records `dependency_source: "elaborated"` on each. Line links are
+`<base_url><path>#L<a>-L<b>`.
+
+A partial alignment directory is valid: `/alignment` covers the records authored so
+far. When serving, a failing row is left out and listed in the application's
+`alignment_errors`. `lean-exposition check-alignment <dir>` is strict and exits
+nonzero on any failure. [Record alignment](record-alignment.md) owns the format.
+Neither sidecar checks that a Lean statement and a paper statement are equivalent.
 
 ## Resolve a text selection
 
@@ -422,7 +465,8 @@ bound supplementary context or frontier size. Use paged records, relations,
 sections and passages when a full projection is too large, and retain frontier
 and application qualifications when displaying traversal results.
 
-Only the captured eight files are accessible. Source and receipt locators are
+Only the captured eight files are accessible, with the two optional sidecars
+above. Source and receipt locators are
 returned as recorded data; the server does not follow them, browse a directory,
 run Lean, fetch a URL, or serve arbitrary repository files. PDFs and other
 companions are outside this bundle contract. A future PDF reader needs a
