@@ -94,7 +94,7 @@ describe("LeanBlock's props", () => {
     const click = new MouseEvent("click", { bubbles: true, cancelable: true });
     await act(async () => void nameLink(view, "Thing").dispatchEvent(click));
     expect(click.defaultPrevented).toBe(false);
-    expect(nameLink(view, "Thing").getAttribute("href")).toContain("/lean?m=OAI.M&d=OAI.Thing");
+    expect(nameLink(view, "Thing").getAttribute("href")).toContain("/lean/?m=OAI.M&d=OAI.Thing");
   });
 
   it("links source to the commit-pinned line range", async () => {

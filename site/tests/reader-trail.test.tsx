@@ -84,7 +84,7 @@ describe("a slice of a paper", () => {
 
   it("builds a link in context and resolves it to source lines", () => {
     const href = statementHref(slice({ paper: "short", anchor: "main-result", start_byte: 100, end_byte: 251 }));
-    expect(href).toContain("/read/short?l=b100-251#main-result");
+    expect(href).toContain("/read/short/?l=b100-251#main-result");
     expect(resolveAt(doc, "b100-251")).toEqual({ start: 11, end: 26 });
     expect(resolveAt(doc, "120")).toEqual({ start: 120, end: 120 });
     expect(resolveAt(doc, "120-134")).toEqual({ start: 120, end: 134 });

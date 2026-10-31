@@ -569,6 +569,15 @@ written through the mirror.
 | A tab, the scroll, the camera or a filter changes | No entry; the current one is rewritten |
 | Following and pointing | No entry |
 
+`history.state` can be lost: a redirect drops it, and Firefox drops it on a plain
+reload. So every address the site writes is the exact form the host serves, with
+the slash after a page's directory, and a reload never redirects. And sessionStorage
+keeps a copy of each entry under its key, with who it is and which entry the tab is
+on, so a load that finds no state looks itself up and carries on as the same entry.
+When the browser calls such a load a new navigation, it counts as a reload only
+within 30 seconds of leaving and at the same address. Every read and write of
+sessionStorage may fail, and the page then works from `history.state` and memory.
+
 The control reads "Back to Short paper §1", "Back to the map" or "Back to
 `minimizer_contact`". It sits in the top bar on every page but the reader, where it
 is in the reader's strip, and takes the place of the site's name on a phone. It

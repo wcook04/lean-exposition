@@ -1,7 +1,7 @@
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { navigate, parseRoute, walkEntry } from "../src/app/router";
+import { canonicalPath, navigate, parseRoute, routeHref, walkEntry } from "../src/app/router";
 import { snapshotScroll, restoreScroll, SCROLLERS } from "../src/app/restore";
 import { useKeptCamera } from "../src/map/scene";
 import { arrive, arrivedBy, entryKey, leaveAs, namePlace, onLeave, pushEntry, readEntry, readEntryOf, replaceEntry, useBack, useEntryState, writeEntry } from "../src/app/trail";
@@ -90,11 +90,11 @@ describe("leaving", () => {
   it("after a reload reads from the mirror what history.state could not be given", async () => {
     const first = window.history.state;
     pushEntry(url("/about"));
-    const second = window.history.state;
+    const second = JSON.parse(JSON.stringify(window.history.state));
     const off = onLeave(() => writeEntry("y", 300));
     popTo(first, "/");
     off();
-    expect(second.lxEntry).toBeUndefined();
+    expect(second.lxEntry?.y).toBeUndefined();
     window.history.replaceState(second, "", "/about");
     vi.resetModules();
     const reloaded = await import("../src/app/trail");
@@ -212,6 +212,155 @@ describe("a walk between Lean names", () => {
     navigate({ view: "compare" });
     walkEntry({ name: "A.x", module: "A" });
     expect(parseRoute(new URL(window.location.href))).toEqual({ view: "lean", module: "A", decl: "A.x" });
+  });
+});
+
+describe("a load that has lost history.state", () => {
+  /** What the page left behind, then a new page load at `path` with no state. */
+  async function reload(path: string, options: { type?: string; ago?: number } = {}) {
+    if (options.ago !== undefined) {
+      const live = JSON.parse(sessionStorage.getItem("lx-live")!);
+      sessionStorage.setItem("lx-live", JSON.stringify({ ...live, at: Date.now() - options.ago }));
+    }
+    window.history.replaceState(null, "", path);
+    vi.resetModules();
+    const timing = vi.spyOn(performance, "getEntriesByType").mockReturnValue(options.type ? [{ type: options.type } as unknown as PerformanceEntry] : []);
+    const trail = await import("../src/app/trail");
+    timing.mockRestore();
+    return trail;
+  }
+
+  // The mirror's debounce. A synthetic pagehide would also reach the trail of each earlier
+  // simulated load, which a real page never has.
+  const settled = () => new Promise((resolve) => setTimeout(resolve, 260));
+
+  function leaveAPage() {
+    navigate({ view: "read", stage: "short" });
+    navigate({ view: "read", stage: "long", node: "a.b" });
+    writeEntry("reading", { part: 3 });
+    pushEntry(url(window.location.href));
+    return window.location.pathname + window.location.search;
+  }
+
+  it("is the same entry after a reload, with its depth, its way back and its values", async () => {
+    const path = leaveAPage();
+    const { key, depth, previous } = { key: entryKey(), depth: window.history.state.lxDepth, previous: window.history.state.lxPrevious };
+    writeEntry("reading", { part: 7 });
+    await settled();
+    const trail = await reload(path, { type: "reload" });
+    expect(trail.entryKey()).toBe(key);
+    expect(window.history.state).toMatchObject({ lxKey: key, lxDepth: depth, lxPrevious: previous });
+    expect(trail.readEntry("reading")).toEqual({ part: 7 });
+    expect(trail.arrivedBy()).toBe("load");
+  });
+
+  it("does the same when the browser calls the reload a new navigation, as Firefox does", async () => {
+    const path = leaveAPage();
+    const key = entryKey();
+    await settled();
+    const trail = await reload(path, { type: "navigate" });
+    expect(trail.entryKey()).toBe(key);
+  });
+
+  it("does not take a much later visit to the same address for a reload", async () => {
+    const path = leaveAPage();
+    const key = entryKey();
+    await settled();
+    const trail = await reload(path, { type: "navigate", ago: 60_000 });
+    expect(trail.entryKey()).not.toBe(key);
+    expect(window.history.state.lxDepth).toBe(0);
+  });
+
+  it("does not take another address for this entry", async () => {
+    leaveAPage();
+    const key = entryKey();
+    await settled();
+    const trail = await reload("/about/", { type: "reload" });
+    expect(trail.entryKey()).not.toBe(key);
+  });
+
+  it("treats the host's slash as the same place", async () => {
+    navigate("/read/short?l=12");
+    const key = entryKey();
+    await settled();
+    const trail = await reload("/read/short/?l=12", { type: "reload" });
+    expect(trail.entryKey()).toBe(key);
+  });
+
+  it("finds a Back or Forward entry by its address", async () => {
+    navigate({ view: "compare" });
+    const key = entryKey();
+    navigate({ view: "about" });
+    await settled();
+    const trail = await reload("/compare/", { type: "back_forward" });
+    expect(trail.entryKey()).toBe(key);
+  });
+
+  it("restores what else stood in history.state, a visit's origin", async () => {
+    navigate({ view: "read", stage: "short" });
+    window.history.replaceState({ ...window.history.state, lxVisit: { key: "k", label: "§4" } }, "");
+    const path = window.location.pathname;
+    writeEntry("tab", "papers");
+    await settled();
+    await reload(path, { type: "reload" });
+    expect(window.history.state.lxVisit).toEqual({ key: "k", label: "§4" });
+  });
+
+  it("works with sessionStorage unusable, and starts a new entry", async () => {
+    navigate({ view: "compare" });
+    const path = window.location.pathname;
+    const read = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("denied");
+    });
+    const write = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("denied");
+    });
+    const trail = await reload(path, { type: "reload" });
+    expect(typeof trail.entryKey()).toBe("string");
+    trail.writeEntry("tab", "papers");
+    expect(trail.readEntry("tab")).toBe("papers");
+    expect(() => window.dispatchEvent(new Event("pagehide"))).not.toThrow();
+    read.mockRestore();
+    write.mockRestore();
+  });
+
+  it("names an unkeyed Back by its address, and a fragment link as one step on", () => {
+    navigate({ view: "compare" });
+    const compare = entryKey();
+    navigate({ view: "about" });
+    const depth = window.history.state.lxDepth;
+    popTo(null, "/compare/");
+    expect(entryKey()).toBe(compare);
+    expect(arrivedBy()).toBe("pop");
+    popTo(null, "/compare/#x");
+    expect(entryKey()).not.toBe(compare);
+    expect(arrivedBy()).toBe("push");
+    expect(window.history.state.lxDepth).toBe(depth);
+  });
+});
+
+describe("addresses in the host's exact form", () => {
+  it("writes each page as the directory it is", () => {
+    expect(routeHref({ view: "map", node: "a" })).toBe("/map/?n=a");
+    expect(routeHref({ view: "read", stage: "short", anchor: "x" })).toBe("/read/short/#x");
+    expect(routeHref({ view: "lean", decl: "A.b" })).toBe("/lean/?d=A.b");
+    expect(routeHref({ view: "about" })).toBe("/about/");
+    expect(routeHref({ view: "home" })).toBe("/");
+  });
+
+  it("turns any address it is given into that form, and leaves the rest alone", () => {
+    expect(canonicalPath("/read/short")).toBe("/read/short/");
+    expect(canonicalPath("/read/short/")).toBe("/read/short/");
+    expect(canonicalPath("/compare")).toBe("/compare/");
+    expect(canonicalPath("/")).toBe("/");
+    expect(canonicalPath("/read/nothing")).toBe("/read/nothing");
+    expect(canonicalPath("/pdf/short.pdf")).toBe("/pdf/short.pdf");
+    navigate("/compare?n=a#x");
+    expect(window.location.pathname + window.location.search + window.location.hash).toBe("/compare/?n=a#x");
+  });
+
+  it("parses the slashed form as the same route", () => {
+    expect(parseRoute(new URL("https://example.test/read/short/?l=1#a"))).toMatchObject({ view: "read", stage: "short", at: "1", anchor: "a" });
   });
 });
 

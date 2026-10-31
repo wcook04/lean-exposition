@@ -143,7 +143,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
 
   useEffect(() => {
     if (!open || focusOnOpen === null) return;
-    itemsRef.current[focusOnOpen]?.focus();
+    itemsRef.current[focusOnOpen]?.focus({ preventScroll: true });
     setFocusOnOpen(null);
   }, [open, focusOnOpen]);
 
@@ -177,7 +177,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     const index = items.indexOf(document.activeElement as HTMLAnchorElement);
     const move = (to: number) => {
       event.preventDefault();
-      items[(to + items.length) % items.length]?.focus();
+      items[(to + items.length) % items.length]?.focus({ preventScroll: true });
     };
     if (event.key === "ArrowDown") move(index + 1);
     else if (event.key === "ArrowUp") move(index - 1);
@@ -186,7 +186,7 @@ function ReadMenu({ current, stage, drafts, route }: { current: boolean; stage: 
     else if (event.key === "Escape") {
       event.preventDefault();
       setOpen(false);
-      buttonRef.current?.focus();
+      buttonRef.current?.focus({ preventScroll: true });
     } else if (event.key === "Tab") setOpen(false);
     else if (event.key.length === 1 && /\S/.test(event.key)) {
       const letter = event.key.toLowerCase();
@@ -300,7 +300,7 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
           if (event.key === "Escape") {
             event.preventDefault();
             setOpen(false);
-            buttonRef.current?.focus();
+            buttonRef.current?.focus({ preventScroll: true });
           }
         }}
       >

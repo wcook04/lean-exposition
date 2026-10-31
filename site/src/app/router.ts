@@ -203,7 +203,7 @@ export function routeHref(route: Route): string {
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
-      return `${BASE}/map${s ? `?${s}` : ""}`;
+      return `${BASE}/map/${s ? `?${s}` : ""}`;
     }
     case "read": {
       if (route.at) q.set("l", route.at);
@@ -212,18 +212,18 @@ export function routeHref(route: Route): string {
       if (route.decl) q.set("d", route.decl);
       if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
-      return `${BASE}/read/${route.stage}${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
+      return `${BASE}/read/${route.stage}/${s ? `?${s}` : ""}${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     }
     case "checks":
       if (route.node) q.set("n", route.node);
-      return `${BASE}/checks${q.toString() ? `?${q}` : ""}`;
+      return `${BASE}/checks/${q.toString() ? `?${q}` : ""}`;
     case "compare": {
       if (route.node) q.set("n", route.node);
       if (route.at) q.set("at", route.at);
       if (route.levels) q.set("levels", route.levels.join(","));
       if (route.any) q.set("in", "any");
       const s = q.toString();
-      return `${BASE}/compare${s ? `?${s}` : ""}`;
+      return `${BASE}/compare/${s ? `?${s}` : ""}`;
     }
     case "lean": {
       if (route.module) q.set("m", route.module);
@@ -231,19 +231,38 @@ export function routeHref(route: Route): string {
       if (route.folder) q.set("f", route.folder);
       if (route.index) q.set("list", route.index);
       const s = q.toString();
-      return `${BASE}/lean${s ? `?${s}` : ""}`;
+      return `${BASE}/lean/${s ? `?${s}` : ""}`;
     }
     case "about":
-      return `${BASE}/about${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
+      return `${BASE}/about/${route.anchor ? `#${encodeURIComponent(route.anchor)}` : ""}`;
     case "search": {
       q.set("q", route.q);
       if (route.type) q.set("type", route.type);
       if (route.page && route.page > 1) q.set("p", String(route.page));
-      return `${BASE}/search?${q}`;
+      return `${BASE}/search/?${q}`;
     }
     case "missing":
       return route.path;
   }
+}
+
+/**
+ * The exact address the host serves. Each page is a directory there, so a path
+ * without its slash is redirected, and a redirect loses `history.state`. Every
+ * address the site writes has the slash, so a reload never redirects.
+ */
+export function canonicalPath(pathname: string): string {
+  const path = pathname.replace(/\/+$/, "");
+  if (path === BASE) return `${BASE}/`;
+  const page = BASE && path.startsWith(`${BASE}/`) ? path.slice(BASE.length) : path;
+  return /^\/(?:map|compare|lean|checks|about|search|read\/(?:long|short|expository))$/.test(page) ? `${path}/` : pathname;
+}
+
+// An address that reached us in another form (a server with no redirect, an old link).
+if (canonicalPath(window.location.pathname) !== window.location.pathname) {
+  const here = new URL(window.location.href);
+  here.pathname = canonicalPath(here.pathname);
+  replaceEntry(here);
 }
 
 let current = parseRoute(new URL(window.location.href));
@@ -268,6 +287,7 @@ window.addEventListener("popstate", () => {
 export function navigate(to: Route | string, options: { replace?: boolean } = {}): void {
   const href = typeof to === "string" ? to : routeHref(to);
   const next = new URL(href, window.location.href);
+  next.pathname = canonicalPath(next.pathname);
   if (next.href === window.location.href) return;
   if (options.replace) replaceEntry(next);
   else pushEntry(next);

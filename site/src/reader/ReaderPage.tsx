@@ -370,6 +370,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const stop = restoreScroll(
         { window: y },
         {
+          // Parts above go on rendering in idle time. Stay on the line through them: a browser
+          // that scrolls in whole pixels would otherwise lose a little at each one.
+          limit: 20000,
           onDone: () => {
             settled();
             fonts?.addEventListener("loadingdone", refit, { once: true });
