@@ -577,6 +577,8 @@ def _tie(record_id, row, names=()):
     name = None if lean is None else lean["clause_in"] if exact else lean["name"]
     return {"record": record_id, "role": row["role"], "lean": lean is not None,
             "from_record": lean is not None and row["lean_source"] == "record",
+            **({"relation": lean["relation"]} if lean is not None and lean.get("relation") else {}),
+            **({"note": row["note"]} if lean is None and row.get("note") else {}),
             "name": name, **({"plain": names[name]} if name in names else {}),
             "module": None if lean is None else lean["clause_module"] if exact else lean["module"],
             "lines": None if lean is None else lean["clause_lines"] if exact else lean["lines"],

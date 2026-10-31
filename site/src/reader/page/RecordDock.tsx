@@ -211,7 +211,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
             </p>
           )}
           <div className="lean-page__names">
-            {plain && <h3 className="lean-page__title">{plain}</h3>}
+            {plain && (
+              <h3 className="lean-page__title" tabIndex={-1}>
+                {plain}
+              </h3>
+            )}
             {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
           {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
           </div>

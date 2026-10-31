@@ -459,6 +459,17 @@ class RealFiles(unittest.TestCase):
         self.assertEqual(len(rows), len(example["statements"]))
         self.assertTrue(all(lean["lines"] for row_ in rows for lean in row_["lean"]))
 
+    def test_a_tie_says_how_its_lean_stands_and_why_it_has_none(self):
+        row = {"anchor": None, "at": "b0-1", "role": "statement", "lean_source": "statement"}
+        lean = {"name": "n", "module": "m", "lines": [1, 2], "relation": "part"}
+        tied = alignment._tie("r", {**row, "lean": [lean]})
+        self.assertEqual(tied["relation"], "part")
+        self.assertNotIn("note", tied)
+        bare = alignment._tie("r", {**row, "lean": [], "note": "Not in the Lean."})
+        self.assertEqual(bare["note"], "Not in the Lean.")
+        self.assertNotIn("relation", bare)
+        self.assertNotIn("note", alignment._tie("r", {**row, "lean": [lean], "note": "An aside."}))
+
     def test_tie_index_holds_its_promises_on_the_real_papers(self):
         directory = ROOT / "examples/qaoa-sk/alignment"
         if not directory.is_dir():

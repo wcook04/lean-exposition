@@ -491,7 +491,17 @@ Four verbs run the page.
   never pins.
 - **Back.** The browser's own, named in the strip.
 
-`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases.
+`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases. The
+statements share one tab stop, which the keys and the reading line move, with a role and a name.
+From the keyboard, Enter takes focus into the Lean and closing brings it back to the statement.
+
+Labels say what is so: "Has Lean", "Lean covers part of this" where the first row is `part`, and
+for a statement with `"lean": []` its authors' note, as written, or "No Lean linked". Such a
+statement opens nothing: the note stands under its last words as well as under the graph.
+
+A paper's HTML opens with the page's shape (`reader/skeleton.ts`), so the first paint does not
+move. From 1920px the type and the measure grow together, to 20px at 2560.
+
 Where several statements open on the same words, a step stops there once, and the Lean
 page lists the others under "The same words also tie to".
 

@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { ReaderSkeleton } from "../reader/skeletonView";
 import { lazyCode } from "./code";
 import { describeError, EditionProvider, useEdition, useEditionChanged, useEditionRetry } from "./data";
 import { routeHref, useLinkInterception, useRoute, type Route } from "./router";
@@ -198,21 +199,7 @@ function MapGate({ route }: { route: Extract<Route, { view: "map" }> }) {
  * the site loops); the words for assistive technology say what is happening.
  */
 function Skeleton({ view, title }: { view: Route["view"]; title?: string }) {
-  if (view === "read") {
-    return (
-      <div className="skeleton skeleton--paper" aria-busy="true">
-        <p className="visually-hidden" role="status">
-          Loading the paper…
-        </p>
-        <span className="skeleton__bar skeleton__bar--caps" />
-        <span className="skeleton__bar skeleton__bar--title" />
-        <span className="skeleton__bar skeleton__bar--title skeleton__bar--short" />
-        {[100, 96, 98, 92, 60, 0, 100, 94, 97, 88, 99, 45].map((w, i) =>
-          w ? <span key={i} className="skeleton__bar skeleton__bar--line" style={{ width: `${w}%` }} /> : <span key={i} className="skeleton__gap" />,
-        )}
-      </div>
-    );
-  }
+  if (view === "read") return <ReaderSkeleton />;
   return (
     <div className={`skeleton${view === "map" ? " skeleton--plate" : ""}`} aria-busy="true">
       <p className="visually-hidden" role="status">
