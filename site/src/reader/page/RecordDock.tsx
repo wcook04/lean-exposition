@@ -77,9 +77,8 @@ const lastName = (name: string) => name.slice(name.lastIndexOf(".") + 1);
 
 /** A declaration's name in words: the authored one, else its record's title, else its last part with spaces. */
 export function plainName(alignment: Alignment | null, name: string): string {
-  const authored = (alignment as { names?: Record<string, string | { title?: string; plain?: string }> } | null)?.names?.[name];
-  if (typeof authored === "string") return authored;
-  if (authored?.title || authored?.plain) return (authored.title ?? authored.plain)!;
+  const authored = alignment?.names?.[name];
+  if (authored) return authored;
   const record = recordOfDecl(alignment, name);
   if (record) return shortTitle(record, alignment!.records[record].short || record);
   return lastName(name).replace(/_/g, " ");
@@ -232,7 +231,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
               {rows.map((item, i) => (
                 <li key={`${item.module}:${item.name}`}>
                   <button type="button" aria-pressed={i === Math.min(chosen, rows.length - 1)} title={item.name} onClick={() => setChosen(i)}>
-                    {plainName(alignment, item.name) === plain ? lastName(item.name) : plainName(alignment, item.name)}
+                    {item.plain ?? plainName(alignment, item.name)}
                   </button>
                 </li>
               ))}

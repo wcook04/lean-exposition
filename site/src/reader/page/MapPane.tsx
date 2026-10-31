@@ -20,6 +20,7 @@ import { PAPER_NAMES } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
+import { recordMark } from "../../map/leanMarks";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
 import { passageTopics, statementFor, type TieModel } from "../ties";
 import { passageOf, passageRecords, trailAt, trailWords, type OutlineEntry, type PaperTrail, type Structures } from "./model";
@@ -427,6 +428,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
         persist={false}
         mode="overview"
         tileWidth={PANE_TILE_W}
+        statusOf={recordMark}
         litIds={settledLit}
         previewIds={hovered}
         coverage={coverage}
