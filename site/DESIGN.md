@@ -294,6 +294,9 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   "Read the exposition". Below them, quieter, are Theorem 1 with its Lean open (an address
   built from the alignment, `heroLinks`), Compare and the map. The graph and the Lean come
   along beside the paper; they are never the way in.
+- **A real still follows the films.** `public/stills/` holds a capture of Theorem 1 open on its
+  Lean, in both schemes, taken from a production build at 1440x790. Retake it when the reader
+  changes visibly (`loading="lazy"`, so the scheme not in use is never fetched).
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
@@ -404,7 +407,8 @@ with a cue and Expand.
 trees, for anyone who wants the files and declarations themselves. It is quiet and last in the
 top bar, and its first lines send a reader to a paper. A plain title comes first wherever the
 alignment's `names` has one, as the heading of a declaration's page, in lists and on tiles, with
-the Lean name small beside it. The first screen says what the tree is and what was checked, in the words of the Checks page, and
+the Lean name small beside it. A pointed name is read in the top bar's free space, which is
+empty at rest, so nothing on the page waits for a hover and pointing moves nothing. The first screen says what the tree is and what was checked, in the words of the Checks page, and
 offers `full_support`, `IsMinimizer`, `value_consequences`, the Comparator challenge file and the
 declarations the papers rest on, beside the main theorem itself. The folders stay on the left
 with a find box: Enter opens the first result, which is the exact name, then names that start

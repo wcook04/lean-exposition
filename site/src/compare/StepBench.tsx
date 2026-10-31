@@ -182,7 +182,7 @@ export function StepBench({ route }: { route: CompareRoute }) {
         {!alignment && <p className="bench-note">Loading where each level states this step…</p>}
         {alignment && !record && (
           <p className="bench-note">
-            No level is linked to this record in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
+            No level is linked to this step in this edition. <a href={routeHref({ view: "map", node })}>See it on the map</a>.
           </p>
         )}
         {record && (stacked ? <StackedLevels key={node} id={node} record={record} slots={slots} /> : <Columns key={node} id={node} record={record} slots={slots} />)}
@@ -269,7 +269,7 @@ function StepHead({ graph, node, title, titleOf, href, slots, onToggle, stacked 
           </a>
         </div>
       </div>
-      <RelationLine label="Used by" empty="Nothing in the record uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
+      <RelationLine label="Used by" empty="Nothing in the argument uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
       <div className="bench-rels">
         <RelationLine label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={limit} />
         {assumes.length > 0 && <RelationLine label="Assumes" ids={assumes} titleOf={titleOf} href={href} limit={limit} assumptions />}

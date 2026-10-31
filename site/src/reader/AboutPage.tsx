@@ -30,9 +30,9 @@ import "./reader-content.css";
 import "./about.css";
 
 const RECORD_MEANINGS: { table: string; noun: string; meaning: string }[] = [
-  { table: "nodes", noun: "records", meaning: "claims, assumptions, main results and Lean declarations" },
-  { table: "edges", noun: "links", meaning: "each saying that one record is used in the argument for another, that a Lean declaration corresponds to a result, or that one record cites another" },
-  { table: "citations", noun: "citations", meaning: "links from a record to a place in a source" },
+  { table: "nodes", noun: "steps", meaning: "claims, assumptions, main results and Lean declarations" },
+  { table: "edges", noun: "links", meaning: "each saying that one step is used in the argument for another, that a Lean declaration corresponds to a result, or that one step cites another" },
+  { table: "citations", noun: "citations", meaning: "links from a step to a place in a source" },
   { table: "sources", noun: "sources", meaning: "papers and files, identified by address and, for files, by a hash of their bytes" },
   { table: "evidence", noun: "check records", meaning: "checks, including those planned but not run" },
 ];
@@ -184,7 +184,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             <ul>
               <li>A thin tick in a paper’s margin marks a statement tied to the argument. The tick is darker when the tie has Lean.</li>
               <li>The highlighter marks the statement you are on, in the same ink as the Lean lines it maps to.</li>
-              <li>On a graph, a green card is a record stated and proved in Lean, or defined there. A paler green card has part of that.</li>
+              <li>On a graph, a green card is a step stated and proved in Lean, or defined there. A paler green card has part of that.</li>
             </ul>
             <h3>What a click does</h3>
             <ul>
@@ -217,9 +217,9 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           the source each step comes from.
         </p>
         <p>
-          Each step of the argument is stored as a record: a claim, an assumption, or a declaration in Lean, a language in
-          which a computer can check proofs. Links between records say which records the argument for a result uses. Statements
-          in the three accounts are tied to the records they state, explain or use
+          Each step of the argument is one entry in a graph: a claim, an assumption, or a declaration in Lean, a language in
+          which a computer can check proofs. Links between steps say which steps the argument for a result uses. Statements
+          in the three accounts are tied to the steps they state, explain or use
           {ties ? (
             <>
               : <span className="num">{ties.total.toLocaleString("en-GB")}</span> ties, <span className="num">{ties.lean}</span> of them with Lean
@@ -227,7 +227,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           ) : null}
           {leanLinks !== null ? (
             <>
-              . Another <span className="num">{leanLinks}</span> authored links join records to Lean declarations
+              . Another <span className="num">{leanLinks}</span> authored links join steps to Lean declarations
             </>
           ) : null}
           {SITE_FACTS.references ? (
@@ -236,7 +236,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </>
           ) : null}
           . People or agents read both sides of each tie; no program has compared what they mean. The site adds layout and
-          wording; the records say what was recorded and no more.
+          wording; it says what was recorded and no more.
         </p>
       </section>
 
@@ -253,7 +253,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               <span className="src-sq" data-slot={0} aria-hidden="true" />
             </span>
             <span>
-              Each record has a small coloured square and the name of the source it comes from. Records from the same source
+              Each step has a small coloured square and the name of the source it comes from. Steps from the same source
               have the same colour.
             </span>
           </li>
@@ -263,7 +263,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               <span className="rel-sample rel-sample--formalizes" />
             </span>
             <span>
-              A line joins a record to a result whose argument uses it, with the arrowhead at the result. A grey, solid line
+              A line joins a step to a result whose argument uses it, with the arrowhead at the result. A grey, solid line
               is a recorded use. A cyan, dashed line joins a result to the Lean declaration recorded as corresponding to it.
             </span>
           </li>
@@ -273,7 +273,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </span>
             <span>
               An assumption is a violet tag with a dotted border, shown on each result that assumes it. When several results
-              use a record that has no recorded inputs of its own, the record is drawn under each of them, with a coloured
+              use a step that has no recorded inputs of its own, the step is drawn under each of them, with a coloured
               band along the bottom of each copy.
             </span>
           </li>
@@ -282,7 +282,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               <span className="rel-sample rel-sample--lit" />
             </span>
             <span>
-              Amber outlines the record or link you have selected, and the keyboard focus. When you trace what a record rests
+              Amber outlines the step or link you have selected, and the keyboard focus. When you trace what a step rests
               on, its grey lines turn amber; assumption tags and Lean lines on the traced route keep their own colours and
               are drawn brighter.
             </span>
@@ -297,7 +297,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__serves" id="edition" aria-labelledby="serves">
         <h2 id="serves">The edition you are reading</h2>
         <p>
-          The records and the three accounts belong to one captured edition, a fixed set of files identified below. The
+          The steps and the three accounts belong to one captured edition, a fixed set of files identified below. The
           published website includes that capture. When run against the local read-only server, the site pins requests to
           the same edition and asks you to reload if the server changes it. The architectural companion and downloadable
           PDFs are copied separately from the same source checkout when the website is built.
@@ -326,7 +326,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
                 {papers.map((p) => (
                   <li key={p.stage}>
                     <a href={routeHref({ view: "read", stage: p.stage })}>{PAPER_NAMES[p.stage].short}</a>: {words(p.state)},{" "}
-                    {words(p.review_state)}; {p.passages} passages linked to records, in {p.sections} sections.
+                    {words(p.review_state)}; {p.passages} passages linked to steps, in {p.sections} sections.
                   </li>
                 ))}
               </ul>
@@ -358,7 +358,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h2 id="companion-title">The architectural companion</h2>
         <p className="about__open-note">
           A longer paper, written for this project, on why the result is written up as three accounts linked to one set of
-          records, and on how those records and links are made.
+          steps, and on how those steps and links are made.
         </p>
         <div className="about__copies">
           <button
@@ -387,7 +387,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__made" id="made-by" aria-labelledby="made-by-title">
         <h2 id="made-by-title">Who made this site</h2>
         <p>
-          {AUTHOR} made this site with AI agents, which wrote its code, its records and its ties under his direction. The
+          {AUTHOR} made this site with AI agents, which wrote its code, its steps and its ties under his direction. The
           theorem and the Lean proof are OpenAI’s, and the earlier results are credited in the papers. The site is one part of{" "}
           <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help people
           follow what AI produces. His own research is on Erdős problems, questions posed by the mathematician Paul Erdős.

@@ -22,6 +22,7 @@ import {
 } from "./data";
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
+import { SITE_FACTS } from "virtual:site-facts";
 import { useAlignment } from "../compare/useAlignment";
 import { declTitle } from "../model/declTitle";
 import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
@@ -355,6 +356,19 @@ export function LeanFacts({ decl, module }: { decl: LeanDeclaration; module: Lea
       .filter((token) => token.kind !== "comment" && token.kind !== "doc" && token.kind !== "string")
       .map((token) => token.text)
       .join("");
+    // The published extraction covers one theorem; the edition itself carries no axiom report.
+    if (decl.name === SITE_FACTS.extraction?.root && !SITE_FACTS.extraction.hasSorry) {
+      return (
+        <>
+          Lean’s extraction lists {SITE_FACTS.extraction.axioms.map((axiom, k) => (
+            <span key={axiom}>
+              {k > 0 && ", "}
+              <code>{axiom}</code>
+            </span>
+          ))} for this theorem, and no <code>sorryAx</code>. <a href={routeHref({ view: "checks" })}>What ran</a>
+        </>
+      );
+    }
     return SORRY.test(code) ? (
       <>
         A text scan finds <code>sorry</code> in this declaration. This edition has no report from Lean on its axioms.

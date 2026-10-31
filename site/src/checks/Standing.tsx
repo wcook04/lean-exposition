@@ -111,7 +111,7 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
             name="Comparator"
             did={
               <>
-                No accepted run{comparator ? <>: of {comparator.cards.length} records, {countsInWords(comparator.counts)}</> : null}. The two failed runs stopped on a missing compiled file, before any comparison. The last attempt, on 25 October 2026, ended with no result.
+                No accepted run{comparator ? <>: of {comparator.cards.length} check records, {countsInWords(comparator.counts)}</> : null}. The two failed runs stopped on a missing compiled file, before any comparison. The last attempt, on 25 October 2026, ended with no result.
               </>
             }
             open="Comparator has neither accepted nor rejected either theorem. No proof has been compared with its separately written statement."

@@ -44,6 +44,14 @@ type Target =
   | { type: "evidence"; id: string; kind: string; index: number }
   | { type: "unknown"; id: string };
 
+/** The plain title of a declaration, by full name, once the alignment has arrived. */
+function usePlain(): (name: string) => string | undefined {
+  const alignment = useAlignment();
+  return (name) => alignment?.names?.[name];
+}
+
+const shortName = (name: string) => name.slice(name.lastIndexOf(".") + 1);
+
 function resolveTarget(n: string | undefined, graph: ArgGraph, cards: EvidenceCard[]): Target {
   if (!n) return { type: "none" };
   const node = graph.nodes.get(n);
@@ -105,6 +113,7 @@ export function editionNote(cards: readonly EvidenceCard[]): string {
 
 export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }> }) {
   const { graph, map } = useEdition();
+  const plainOf = usePlain();
   const cards = map.records.evidence as EvidenceCard[];
   const groups = useMemo(() => groupByKind(cards), [cards]);
   const target = useMemo(() => resolveTarget(route.node, graph, cards), [route.node, graph, cards]);
@@ -124,7 +133,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
         <header className="checks__head">
           <div className="checks__lead">
             <h1>
-              Checks recorded for <span className={subject.kind === "declaration" ? "lean" : undefined}>{subject.label}</span>
+              Checks recorded for <span className={subject.kind === "declaration" && !plainOf(subject.label) ? "lean" : undefined}>{plainOf(subject.label) ?? subject.label}</span>
             </h1>
             <Established cards={cards} />
           </div>
@@ -139,7 +148,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
 
       {target.type === "unknown" && (
         <p className="checks__notice" role="status">
-          No record on this site has the identifier <code className="lean">{target.id}</code>. All the checks are listed below.
+          No step or check on this site has the identifier <code className="lean">{target.id}</code>. All the checks are listed below.
         </p>
       )}
 
@@ -197,6 +206,7 @@ export function ChecksPage({ route }: { route: Extract<Route, { view: "checks" }
  */
 function Established({ cards }: { cards: EvidenceCard[] }) {
   const { graph } = useEdition();
+  const plainOf = usePlain();
   const groups = useMemo(() => groupByKind(cards), [cards]);
   const of = (kind: string) => groups.find((g) => g.kind === kind);
   const passedBuilds = useMemo(() => cards.filter((c) => c.kind === "lean_build" && c.status === "passed"), [cards]);
@@ -215,7 +225,7 @@ function Established({ cards }: { cards: EvidenceCard[] }) {
         <>
           Lean, a language in which a computer checks each step of a proof, compiled{" "}
           {module ? <code className="lean" translate="no">{module}</code> : "the Lean file"}
-          {subject ? <>, the module recorded for <span className="lean" translate="no">{subject.label}</span>,</> : null} without an error
+          {subject ? <>, the module recorded for {plainOf(subject.label) ?? <span className="lean" translate="no">{subject.label}</span>},</> : null} without an error
           {version ? ` on version ${version}` : ""}
           {date ? `; the record of that build is dated ${date.text}` : ""}.{" "}
         </>
@@ -262,6 +272,7 @@ function OutcomeKey({ wide }: { wide?: boolean }) {
 
 function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
   const { graph, map } = useEdition();
+  const plainOf = usePlain();
   const node = graph.nodes.get(id)!;
   const detail = useRecord(node.ref);
   const record = detail.status === "ready" ? detail.value.record : null;
@@ -277,11 +288,11 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
     <section className="checks__band subject is-selected" aria-labelledby="subject-checks">
       <h2 id="subject-checks">Checks attached to this {node.kind === "declaration" ? "Lean declaration" : node.kind === "goal" ? "result" : node.kind}</h2>
       <p className="checks__intro">
-        {detail.status === "loading" && "Loading the record…"}
+        {detail.status === "loading" && "Loading the step…"}
         {detail.status === "error" && <span className="checks__error">{describeError(detail.error).title}.</span>}
         {record && cards.length === 0 && (
           <>
-            No check is recorded for this {node.kind === "assumption" ? "assumption" : "record"} itself. The record’s status is{" "}
+            No check is recorded for this {node.kind === "assumption" ? "assumption" : "step"} itself. Its status is{" "}
             {node.status === "unverified"
               ? "unverified, which means it was stated from the sources and has not been independently checked"
               : node.status.replace(/_/g, " ")}
@@ -291,14 +302,14 @@ function SubjectChecks({ id, formal }: { id: string; formal?: string }) {
         {record && cards.length > 0 && <>The counts below refer only to the {recordsWord(cards.length)} attached to it. </>}
         {formalNode && (
           <>
-            Its formal statement in Lean is <a className="lean" href={`#${formal}`}>{formalNode.label}</a>.{" "}
+            Its formal statement in Lean is <a className={plainOf(formalNode.label) ? undefined : "lean"} href={`#${formal}`}>{plainOf(formalNode.label) ?? formalNode.label}</a>.{" "}
           </>
         )}
         <a href={routeHref({ view: "map", node: id })}>Open it on the argument map</a>
       </p>
       {groups.length > 0 && (
         <CheckTable
-          caption={`Checks attached to ${node.label}, by kind`}
+          caption={`Checks attached to ${plainOf(node.label) ?? node.label}, by kind`}
           rows={groups.map((g) => ({ group: g, examined: null }))}
           target={null}
         />
@@ -525,6 +536,7 @@ function KindRow({ row, target, paged: allowPaging }: { row: Row; target: Extrac
 function FormalStatement({ id, selected }: { id: string; selected: boolean }) {
   const { graph } = useEdition();
   const node = graph.nodes.get(id)!;
+  const plain = usePlain()(node.label);
   const detail = useRecord(node.ref);
   const record = detail.status === "ready" ? detail.value.record : null;
   const claims = (graph.in.get(id) ?? []).filter((e) => e.kind === "formalizes").map((e) => e.from);
@@ -532,9 +544,15 @@ function FormalStatement({ id, selected }: { id: string; selected: boolean }) {
 
   return (
     <article id={id} className={`formal${selected ? " is-selected" : ""}`} aria-labelledby={`formal-${id}`}>
-      <h3 id={`formal-${id}`} className="formal__name lean" translate="no">
-        {node.label}
-      </h3>
+      {plain ? (
+        <h3 id={`formal-${id}`} className="formal__plain">
+          {plain} <code className="lean" translate="no">{shortName(node.label)}</code>
+        </h3>
+      ) : (
+        <h3 id={`formal-${id}`} className="formal__name lean" translate="no">
+          {node.label}
+        </h3>
+      )}
       <p className="formal__of">
         {claims.length === 0 ? (
           "No claim is recorded as corresponding to this declaration."
@@ -600,6 +618,7 @@ function EvidenceRow({
   compact?: boolean;
 }) {
   const { graph } = useEdition();
+  const plainOf = usePlain();
   // A recorded failure shows its whole record: date, inputs and where it stopped.
   const [expanded, setExpanded] = useState(card.status === "failed");
   const [clipped, setClipped] = useState(false);
@@ -655,8 +674,8 @@ function EvidenceRow({
                       <span key={s}>
                         {i > 0 && (i === visibleSubjects.length - 1 && hidden === 0 ? " and " : ", ")}
                         {n ? (
-                          <a href={routeHref({ view: "map", node: s })} className={n.kind === "declaration" ? "lean" : undefined}>
-                            {n.label}
+                          <a href={routeHref({ view: "map", node: s })} className={n.kind === "declaration" && !plainOf(n.label) ? "lean" : undefined}>
+                            {plainOf(n.label) ?? n.label}
                           </a>
                         ) : (
                           <code className="lean">{s}</code>

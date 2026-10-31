@@ -36,7 +36,7 @@ describe("Read menu", () => {
     await act(async () => key(button, "ArrowDown"));
     const items = [...host.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]')];
     expect(button.getAttribute("aria-expanded")).toBe("true");
-    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long recordDraft", "All papers and PDFs"]);
+    expect(items.map((i) => i.querySelector(".readmenu__name")!.textContent)).toEqual(["Exposition", "Short paper", "Long record, draft", "All papers and PDFs"]);
     expect(items[1].getAttribute("aria-current")).toBe("page");
     expect(document.activeElement).toBe(items[0]);
 
@@ -60,7 +60,7 @@ describe("Read menu", () => {
     document.body.append(host);
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
-    expect(host.querySelector('[aria-label="Search the papers, the records and the Lean"]')).not.toBeNull();
+    expect(host.querySelector('[aria-label="Search the papers, the steps and the Lean"]')).not.toBeNull();
     expect(host.querySelector('button[aria-label="Menu"]')).not.toBeNull();
     expect(host.querySelector('a[aria-current="page"]')!.textContent).toBe("Map");
   });

@@ -64,7 +64,8 @@ export function FrontPage() {
         <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
       </div>
 
-      {/* READER STILL: a real capture of a paper beside its Lean goes here, from the merged build. */}
+      <ReaderStill />
+
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
       {/* What was asked and proved, for any mathematical reader. Each answer and attribution
@@ -175,7 +176,7 @@ export function FrontPage() {
             about them.
           </li>
           <li>
-            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, argument records and software, with
+            <Out href={SOURCE_REPOSITORY}>The source repository</Out> holds the papers, the steps of the argument and the software, with
             instructions for running the tools and building this website. The{" "}
             <a href={routeHref({ view: "about", anchor: "companion" })}>architectural companion</a> (
             <a href={`${import.meta.env.BASE_URL}${PAPER_PDFS.architecture.path}`} target="_blank" rel="noopener">
@@ -203,6 +204,54 @@ export function FrontPage() {
         <SisterSites />
       </footer>
     </div>
+  );
+}
+
+const STILL_BASE = `${import.meta.env.BASE_URL}stills/reader-theorem-1`;
+const STILL_ALT = "The short paper open at Theorem 1, with the theorem highlighted. Beside it are the theorem’s card on the graph of the proof and OpenAI’s Lean for it, with the lines that state it lit.";
+
+/** A real capture of the reader, in the reader's scheme: the hidden one is never fetched (`loading="lazy"`). */
+function ReaderStill() {
+  const place = SITE_FACTS.theorem1;
+  const open = routeHref({ view: "read", stage: "short", at: place?.at, node: place ? "full_support" : undefined, anchor: place?.anchor ?? undefined });
+  const ties = SITE_FACTS.ties;
+  return (
+    <section className="front__band front__pair readerstill" aria-labelledby="front-reading">
+      <div className="front__prose">
+        <h2 id="front-reading" className="front__bandtitle">
+          A paper beside its Lean
+        </h2>
+        <p>
+          The picture shows Theorem 1 of the short paper, clicked. The Lean opens at the lines that state it, and the paper stays where it is.
+        </p>
+        {ties && (
+          <p>
+            The three papers have {ties.total.toLocaleString("en-GB")} marked statements, {ties.lean} of them with Lean. AI agents read both sides of each mark; no program has compared what they mean.
+          </p>
+        )}
+        <p>
+          <a href={open}>Open this statement</a>
+        </p>
+      </div>
+      <figure className="front__fig">
+        <a href={open} className="readerstill__link" aria-label="Open Theorem 1 of the short paper with its Lean">
+          {(["light", "dark"] as const).map((scheme) => (
+            <img
+              key={scheme}
+              className={`readerstill__img readerstill__img--${scheme}`}
+              src={`${STILL_BASE}-${scheme}-1440.webp`}
+              srcSet={`${STILL_BASE}-${scheme}-1440.webp 1440w, ${STILL_BASE}-${scheme}-2880.webp 2880w`}
+              sizes="(min-width: 68.75em) 66vw, 100vw"
+              alt={STILL_ALT}
+              width={1440}
+              height={790}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </a>
+      </figure>
+    </section>
   );
 }
 
@@ -344,11 +393,11 @@ function CheckTable() {
         {SITE_FACTS.ties ? (
           <>
             AI agents also tied {SITE_FACTS.ties.total.toLocaleString("en-GB")} statements in the papers to the argument by reading
-            both sides, {SITE_FACTS.ties.lean} of them to Lean, and linked the records to {links} Lean declarations. An agent then
+            both sides, {SITE_FACTS.ties.lean} of them to Lean, and linked the steps to {links} Lean declarations. An agent then
             re-read {TIE_AUDIT.sampled} of the ties and corrected the {TIE_AUDIT.wrong} it found wrong.
           </>
         ) : (
-          <>AI agents also linked the records to {links} Lean declarations by reading the sources.</>
+          <>AI agents also linked the steps to {links} Lean declarations by reading the sources.</>
         )}{" "}
         A program confirms that each one still lands. No independent review of whether the two statements match has been done.
       </p>
