@@ -60,6 +60,8 @@ const LAPTOP_TILE_W = 174;
 const LEAN_TILE_H = 58;
 /** Far enough out to see the whole shape on a monitor; titles shorten there and the strip has them whole. */
 const LEAN_MIN_K = 0.3;
+/** A phone reads a part at a time and pans: the whole graph is no use at that width. */
+const LEAN_PHONE_K = 0.75;
 /** Below this the whole graph is a shape rather than something to read, so the view opens on the part around the step. */
 const LEAN_READ_K = 0.72;
 
@@ -596,7 +598,7 @@ export function MapPage({ route }: { route: MapRoute }) {
             copyLeaves={false}
             tileWidth={LEAN_TILE_W}
             tileHeight={LEAN_TILE_H}
-            minScale={LEAN_MIN_K}
+            minScale={phone ? LEAN_PHONE_K : LEAN_MIN_K}
             worldText
             onSceneSettled={onSceneSettled}
           />

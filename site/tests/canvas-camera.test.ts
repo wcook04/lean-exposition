@@ -39,7 +39,7 @@ describe("edge chips", () => {
   });
   it("words the count", () => {
     expect(chipText("right", 3)).toBe("3 steps ▸");
-    expect(chipText("left", 1)).toBe("◂ 1 steps");
+    expect(chipText("left", 1)).toBe("◂ 1 step");
   });
 });
 

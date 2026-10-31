@@ -826,6 +826,13 @@
     padding-left: var(--space-4);
   }
 
+  .lean-shelf {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-inline: var(--space-4);
+    white-space: nowrap;
+  }
+
   .map-legend {
     overflow-x: auto;
     scrollbar-width: none;
