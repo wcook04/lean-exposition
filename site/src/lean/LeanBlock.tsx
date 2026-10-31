@@ -533,8 +533,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         </header>
       )}
       {fill ? <div className="lean-block__scroll">{body}</div> : body}
-      {!row && !bare && <ReadingFoot store={store} slot={previewSlot} />}
-      {(row || bare) && previewSlot && <ReadingFoot store={store} slot={previewSlot} />}
+      {(!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
     </article>
   );
 });

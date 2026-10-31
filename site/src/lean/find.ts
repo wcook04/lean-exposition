@@ -25,6 +25,9 @@ export function matchName(lowerName: string, lowerShort: string, query: string):
 /** The Comparator challenge files repeat names from the proof trees, and rank after them. */
 export const isChallengeCopy = (module: string) => module.startsWith("ComparatorChallenges");
 
+/** Between two proof trees that share a name, the main theorem's tree comes first. */
+export const inMainTree = (module: string) => module.includes(".SKSupport");
+
 export interface Nameable {
   name: string;
   short: string;
@@ -41,6 +44,7 @@ export function compareNames(a: Nameable & { tier: number }, b: Nameable & { tie
     Number(b.short === typed || b.name === typed) - Number(a.short === typed || a.name === typed) ||
     Number(rests(b.name)) - Number(rests(a.name)) ||
     Number(isChallengeCopy(a.module)) - Number(isChallengeCopy(b.module)) ||
+    Number(inMainTree(b.module)) - Number(inMainTree(a.module)) ||
     a.short.length - b.short.length ||
     a.name.localeCompare(b.name) ||
     a.module.localeCompare(b.module)

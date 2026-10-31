@@ -2,7 +2,7 @@
 // never at startup, and an edition without the Lean index simply has no such results.
 
 import { loadLeanNames, type DictionaryTerm, type LeanKind, type LeanNames } from "../api/lean";
-import { isChallengeCopy, matchName } from "../lean/find";
+import { inMainTree, isChallengeCopy, matchName } from "../lean/find";
 
 export interface LeanHit {
   name: string;
@@ -101,7 +101,7 @@ export function searchLean(index: LeanNames, q: string, { terms, rests }: LeanSe
     const short = name.slice(name.lastIndexOf(".") + 1);
     found.push({
       hit: { name, short, kind, module, marks: byName ? hits.flat().sort((a, b) => a[0] - b[0]) : [], term, tier: byName ? tierOf(folded, short.toLowerCase(), tokens) : IN_WORDS },
-      score: (byName ? score(name, short, hits) : 0) + (rests?.(name) ? 200 : 0),
+      score: (byName ? score(name, short, hits) : 0) + (rests?.(name) ? 200 : 0) + (inMainTree(module) ? 5 : 0),
     });
   }
   return found.sort((a, b) => a.hit.tier - b.hit.tier || b.score - a.score || a.hit.name.localeCompare(b.hit.name)).map((f) => f.hit);

@@ -116,6 +116,9 @@
 .lean-block:not(.is-fill) > .lean-slot { position: sticky; bottom: 0; z-index: 2; }
 .lean-slot:empty::before { content: "Point at a name to read its signature here."; color: var(--ink-3); }
 .lean-block.is-compact .lean-slot { height: 54px; margin-top: var(--space-2); padding-block: 5px; }
+/* A cell of Compare's table has room under its code, and nothing to teach at rest. */
+.lean-block.is-bare .lean-slot { height: 46px; margin-top: var(--space-1); padding: 3px 0 0; background: none; border-top: 0; }
+.lean-block.is-bare .lean-slot:empty::before { content: none; }
 .lean-slot--page { margin: 0; padding-inline: clamp(var(--space-4), 2.4vw, var(--space-6)); }
 @media (hover: none) {
   .lean-slot:empty { display: none; }
@@ -446,7 +449,7 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 .lean-rest__name { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: baseline; text-decoration: none; }
 .lean-rest__name code { font: 13px/1.5 var(--font-mono); font-variant-ligatures: none; }
 .lean-rest__name:hover code { text-decoration: underline; text-underline-offset: 3px; }
-.lean-rest__name span:last-child { color: var(--ink-3); }
+.lean-rest__name > span { color: var(--ink-3); }
 @media (max-width: 759px) {
   .lean-rest li { grid-template-columns: minmax(0, 1fr); }
 }

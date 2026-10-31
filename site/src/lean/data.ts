@@ -70,8 +70,10 @@ function statementsOf(alignment: Alignment): Map<string, PaperStatement[]> {
   const found = new Map<string, { row: PaperStatement; rank: number }[]>();
   const add = (name: string, row: PaperStatement, rank: number) => {
     const rows = found.get(name);
-    if (!rows) found.set(name, [{ row, rank }]);
-    else if (!rows.some((r) => r.row.statement.paper === row.statement.paper && r.row.statement.start_byte === row.statement.start_byte)) rows.push({ row, rank });
+    if (!rows) return void found.set(name, [{ row, rank }]);
+    const same = rows.find((r) => r.row.statement.paper === row.statement.paper && r.row.statement.start_byte === row.statement.start_byte);
+    if (same) same.rank = Math.min(same.rank, rank);
+    else rows.push({ row, rank });
   };
   for (const [id, record] of Object.entries(alignment.records)) {
     for (const lean of record.lean) {
