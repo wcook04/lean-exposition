@@ -351,3 +351,15 @@ describe("rendering helpers", () => {
     expect(html).toContain('data-id="curvature-algebra"');
   });
 });
+
+describe("searching a paper", () => {
+  it("holds every block's words, formulas as their source, on its own line", () => {
+    const d = doc("short");
+    const blocks = d.textBlocks();
+    expect(blocks.length).toBeGreaterThan(40);
+    const hit = blocks.find((b) => b.text.includes("Stieltjes"))!;
+    expect(hit.line).toBeGreaterThan(1);
+    expect(hit.text).not.toMatch(/[\uE000-\uF8FF]/);
+    expect(d.textBlocks()).toBe(blocks);
+  });
+});

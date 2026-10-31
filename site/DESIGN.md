@@ -354,11 +354,44 @@ equivalent.
 
 ## The reader
 
-From 1280px the map sits beside the paper: the paper's own narrower graph, with the records
-of the passage being read lit. It follows block by block, and its goal stays still while the
-reader scrolls. The pane's trail says which section this is and how many of the paper's
-records have come so far. A statement link (`?l=`) lands on the exact line and marks it. A
-formula is fitted as it comes near the screen, because each measurement forces a layout.
+Two pages, like an open book: the paper on the left, the proof on the right. The right
+page holds the graph above the Lean, with a handle between them; from 860px of page the
+two stand side by side with the Lean next to the paper. Either can be closed, and the
+split and the choice are remembered. Below 1280px the same page is a sheet opened on
+demand. It is never modal: the paper stays where it is and can still be scrolled.
+
+Four verbs run the page.
+
+- **Follow.** One reading line, 30% of the way down the paper, picks the statement under
+  it, or the nearest within a third of the page, the one just read winning a near tie.
+  The statement takes the highlighter at once. Once it has held the line for 200ms, and
+  the page is no longer flying past, its card lights and its Lean fills the Lean page.
+  The address keeps up by replacing the entry once the reader stops.
+- **Point.** A statement under the pointer or focus takes a soft wash and its card lights
+  at once; after a 150ms dwell the Lean page previews it. Moving away restores. A card
+  does the same in the other direction. An untied paragraph names its passage's records
+  in the Lean page's state line and moves nothing. Pointing never pushes history.
+- **Open.** A click pins: one history entry, `?n=<record>&l=<slice>`, and the paper does
+  not move. A card pins too, and the paper goes to the statement while the graph stays.
+  A pin ends when the reader scrolls the statement away, on Escape, or on Back. The Lean
+  page's first line always says which state it is in. A drag or a double click that selects
+  text never pins.
+- **Back.** The browser's own, named in the strip.
+
+`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases.
+Where several statements open on the same words, a step stops there once, and the Lean
+page lists the others under "The same words also tie to".
+
+Scrolling writes attributes and signals, never React state on the page (`page/statements.ts`,
+`page/signal.ts`). Marks reach the text as zero-width private-use characters put in before
+parsing and turned into `.tie` spans once a part's HTML is whole (`ties.ts`); with every
+segment marked, each paper's HTML is byte for byte the same once the spans are taken out,
+and a test holds it there. A statement tick sits in the left margin, darker where the
+step has Lean, drawn from where the words actually fell. The thread crosses only the empty
+gutter and goes whenever an end leaves the screen.
+
+The outline counts the statements with Lean in each section, and searches the paper's
+text, including what has not rendered yet.
 
 ## Checks
 
@@ -436,10 +469,10 @@ something else.
 | --- | --- | --- | --- |
 | ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
 | 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
-| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the map as a sheet |
-| 901–1119px | Canvas | Right column | Paper; sections, passage context and map as sheets |
-| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections, passage context and map as sheets |
-| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar |
+| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the right page as a sheet |
+| 901–1119px | Canvas | Right column | Paper; sections and passage context as sheets; the right page as a side sheet |
+| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets; the right page as a side sheet |
+| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar; a tap opens the Lean in a bottom sheet |
 
 Phones use 16px gutters and `--target` (44px) for primary touch targets. No
 ordinary page scrolls sideways; a wide formula scrolls inside its own box with a

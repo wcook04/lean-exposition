@@ -417,7 +417,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
           onRelease={onRelease}
           onPick={(id) => onRecord?.(id)}
           onPoint={onPoint}
-          onClose={closeLean}
+          onClose={inModal ? undefined : closeLean}
+          inSheet={inModal}
           passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
         />
       )}

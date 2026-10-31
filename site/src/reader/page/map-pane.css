@@ -435,6 +435,18 @@
   color: var(--ink);
 }
 
+@container right-page (max-width: 520px) {
+  .lean-page__head {
+    flex-wrap: wrap;
+  }
+  .lean-page__state {
+    flex-basis: 100%;
+  }
+  .right-sheet .lean-page__state {
+    flex-basis: calc(100% - 44px);
+  }
+}
+
 .lean-page__dot {
   flex: none;
   width: 8px;

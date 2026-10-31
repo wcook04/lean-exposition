@@ -38,6 +38,8 @@ interface Props {
   onPick(id: string): void;
   onPoint(tie: number | null, record?: string): void;
   onClose?(): void;
+  /** In a sheet, closing is letting go. */
+  inSheet?: boolean;
   passageHref(stage: Stage, anchor: string): string;
 }
 
@@ -201,7 +203,7 @@ function stateWords(view: LeanView, label: string, topics: string[] | undefined)
   return <>Following the text</>;
 }
 
-export function LeanDock({ view, ties, stage, alignment, caption, captionRecords, slot, onRelease, onPick, onPoint, onClose, passageHref }: Props) {
+export function LeanDock({ view, ties, stage, alignment, caption, captionRecords, slot, onRelease, onPick, onPoint, onClose, inSheet, passageHref }: Props) {
   const { graph } = useEdition();
   const body = useRef<HTMLDivElement>(null);
   const [fullFor, setFullFor] = useState<string | null>(null);
@@ -229,9 +231,11 @@ export function LeanDock({ view, ties, stage, alignment, caption, captionRecords
                 Whole record
               </button>
             )}
-            <button type="button" className="lean-page__action" onClick={onRelease}>
-              Follow the text
-            </button>
+            {!inSheet && (
+              <button type="button" className="lean-page__action" onClick={onRelease}>
+                Follow the text
+              </button>
+            )}
           </>
         )}
         {onClose && (

@@ -22,8 +22,9 @@ want to explore it:
   record, the short paper and the exposition. Choose which levels show, and open
   any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  The map sits beside the paper and follows what you read; choosing a card moves
-  the paper to its passage and opens the card's Lean and statements in place.
+  The graph and the Lean stand on the page facing the paper and follow the statement
+  you are reading. Pointing at a marked statement previews its Lean, clicking pins it,
+  and clicking a card takes the paper to the statement; Back returns to your place.
   Beside any passage you can list the records linked to it and open passages in
   the other accounts that are linked to the same records.
 - **The Lean.** OpenAI's source, every module and declaration, with each central

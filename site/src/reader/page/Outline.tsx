@@ -41,15 +41,11 @@ function Snippet({ text, at, length }: { text: string; at: number; length: numbe
   );
 }
 
-/** Search within this paper, including what has not rendered yet. `/` starts it. */
-function PaperSearch({ doc, onLine, onQuery, focusKey }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void; focusKey?: number }) {
-  const input = useRef<HTMLInputElement>(null);
+/** Search within this paper, including what has not rendered yet. `/` stays the site's search. */
+function PaperSearch({ doc, onLine, onQuery }: { doc: PreparedDocument; onLine(line: number): void; onQuery(active: boolean): void }) {
   const [query, setQuery] = useState("");
   const needle = query.trim().toLowerCase();
   useEffect(() => onQuery(!!needle), [needle, onQuery]);
-  useEffect(() => {
-    if (focusKey) input.current?.focus();
-  }, [focusKey]);
   const found = useMemo(() => {
     if (needle.length < 2) return [];
     const hits: { block: TextBlock; at: number }[] = [];
@@ -63,10 +59,9 @@ function PaperSearch({ doc, onLine, onQuery, focusKey }: { doc: PreparedDocument
   return (
     <div className="paper-search" role="search">
       <input
-        ref={input}
         type="search"
         value={query}
-        placeholder="Search this paper  ( / )"
+        placeholder="Search this paper"
         aria-label="Search this paper"
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={(event) => {
@@ -116,18 +111,6 @@ export function PdfLink({ pdf }: { pdf: NonNullable<AccountHead["pdf"]> }) {
 
 export function OutlineColumn(props: Props & { head: AccountHead }) {
   const listRef = useRef<HTMLOListElement>(null);
-  const [focusKey, setFocusKey] = useState(0);
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const typing = (event.target as HTMLElement).closest?.("input, textarea");
-      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey) {
-        event.preventDefault();
-        setFocusKey((n) => n + 1);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
   // Keep the current entry in view inside the column, without moving the page.
   useEffect(() => {
     const list = listRef.current;
@@ -154,19 +137,19 @@ export function OutlineColumn(props: Props & { head: AccountHead }) {
           </p>
         )}
       </div>
-      <Sections {...props} listRef={listRef} focusKey={focusKey} />
+      <Sections {...props} listRef={listRef} />
     </nav>
   );
 }
 
-export function Sections({ entries, current, counts, doc, onJump, onLine, listRef, focusKey }: Props & { listRef?: React.RefObject<HTMLOListElement | null>; focusKey?: number }) {
+export function Sections({ entries, current, counts, doc, onJump, onLine, listRef }: Props & { listRef?: React.RefObject<HTMLOListElement | null> }) {
   const open = useMemo(() => new Set(chainOf(entries, current).map((e) => e.id)), [entries, current]);
   const shown = entries.filter((e) => e.level < 4 || (e.parent && open.has(e.parent)));
   const [searching, setSearching] = useState(false);
   const any = !!counts && [...counts.values()].some((c) => c.lean);
   return (
     <>
-    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} focusKey={focusKey} />}
+    {doc && onLine && <PaperSearch doc={doc} onLine={onLine} onQuery={setSearching} />}
     <ol className="outline__list" ref={listRef} hidden={searching}>
       {shown.map((entry) => (
         <li key={entry.id} className={`outline__item outline__item--l${entry.level}${open.has(entry.id) ? " outline__item--open" : ""}`}>
@@ -197,22 +180,8 @@ export function Sections({ entries, current, counts, doc, onJump, onLine, listRe
 /** The sections behind a "Sections" control: a non-modal popover beside the paper. */
 export function SectionsPopover(props: Props) {
   const [open, setOpen] = useState(false);
-  const [focusKey, setFocusKey] = useState(0);
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
-  // Slash starts a search, as on most reading sites.
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const typing = (event.target as HTMLElement).closest?.("input, textarea");
-      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey) {
-        event.preventDefault();
-        setOpen(true);
-        setFocusKey((n) => n + 1);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
   useEffect(() => {
     if (!open) return;
     const onDown = (event: PointerEvent) => {
@@ -248,7 +217,6 @@ export function SectionsPopover(props: Props) {
       <div id={id} className="sections-popover" hidden={!open}>
         <Sections
           {...props}
-          focusKey={focusKey}
           onJump={(target) => {
             setOpen(false);
             props.onJump(target);
