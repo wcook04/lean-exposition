@@ -7,7 +7,14 @@ import type { Stage } from "../api/types";
 import { PAPER_NAMES } from "../app/papers";
 import { LENS_ORDER, type LevelCounts } from "./levels";
 
-export function LensControl({ lens, counts, onLens }: { lens?: Stage; counts: LevelCounts; onLens(stage: Stage | undefined): void }) {
+const COUNTS: Record<LensUnit, string> = {
+  records: "Records of this argument each level uses",
+  declarations: "Lean declarations each level links",
+};
+
+export type LensUnit = "records" | "declarations";
+
+export function LensControl({ lens, counts, unit = "records", onLens }: { lens?: Stage; counts: Pick<LevelCounts, "all" | Stage>; unit?: LensUnit; onLens(stage: Stage | undefined): void }) {
   const group = useRef<HTMLDivElement>(null);
   const [thumb, setThumb] = useState<{ x: number; w: number } | null>(null);
   useLayoutEffect(() => {
@@ -27,13 +34,16 @@ export function LensControl({ lens, counts, onLens }: { lens?: Stage; counts: Le
     ...LENS_ORDER.map((id) => ({ id, label: PAPER_NAMES[id].short, n: counts[id] })),
   ];
   return (
-    <div className="map-lens" role="radiogroup" aria-label="Records used by each level" ref={group}>
+    <div className="map-lensbox">
+      <span className="map-lensbox__label">{COUNTS[unit]}</span>
+    <div className="map-lens" role="radiogroup" aria-label={COUNTS[unit]} ref={group}>
       {thumb && <span className="map-views__thumb" aria-hidden="true" style={{ transform: `translateX(${thumb.x}px)`, width: thumb.w }} />}
       {choices.map((c) => (
         <button key={c.label} type="button" role="radio" aria-checked={lens === c.id} onClick={() => onLens(c.id)}>
           {c.label} <span className="map-lens__n">{c.n}</span>
         </button>
       ))}
+    </div>
     </div>
   );
 }

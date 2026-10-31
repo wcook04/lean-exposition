@@ -270,13 +270,14 @@
   display: none;
 }
 
+/* Five short words: the row fits the narrowest column and scrolls for nothing. */
 .jumps {
   position: sticky;
   top: 0;
   z-index: 2;
   display: flex;
-  gap: 18px;
-  padding-top: 6px;
+  gap: 16px;
+  padding-top: 2px;
   border-bottom: 1px solid var(--rule);
   background: var(--surface);
   overflow-x: auto;
@@ -1377,4 +1378,107 @@
 
 .step__leanroute .panel__group {
   margin-top: var(--space-2);
+}
+
+/* The first screen of a sheet: the mark in words, the quoted statement, then the Lean. */
+.panel__levels:has(.panel__mark, .panel__linked) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+/* The sheet's title already says what this is; the jumps name the section. */
+.pane[data-section="quote"] {
+  padding-top: 12px;
+}
+
+.pane[data-section="quote"] > .pane__h {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.panel__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.panel__quiet {
+  flex: none;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.panel__quiet:hover {
+  color: var(--ink);
+}
+
+/* The Lean's reading line is the sheet's last row, shown while a name is being read. It
+   narrows the column from below, so nothing moves and nothing is covered. */
+.panel > .lean-slot {
+  flex: none;
+  margin: 0;
+  padding: 5px var(--space-5);
+}
+
+.panel > .lean-slot:empty {
+  display: none;
+}
+
+.panel__linked {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.panel__fullname {
+  margin: 2px 0 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+
+/* A long theorem keeps the Lean on the first screen; the whole text is under Papers. */
+.panel__quote {
+  max-height: min(34vh, 300px);
+  overflow-y: auto;
+}
+
+.panel__lead {
+  margin: 0 0 8px;
+  font-size: var(--fs-base);
+  color: var(--ink);
+}
+
+.rests {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rests li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.rests__words {
+  grid-column: 2;
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.rels__decl {
+  display: block;
 }

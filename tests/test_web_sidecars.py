@@ -138,6 +138,26 @@ class Sidecars(unittest.TestCase):
         self.assertEqual(ties["ties"][0]["module"], "OAI.Probability.SKSupport.Main")
         self.assertEqual(self.data("/api/v1/ties/long", app)["ties"], [])
 
+    def test_plain_names_reach_the_alignment_and_the_ties(self):
+        directory = self.parent / "named"
+        directory.mkdir()
+        (directory / "one.json").write_text(json.dumps({"schema_version": "1.0", "records": {
+            "support.moment_saturation": {"short": "Both moments", "lean": [
+                {"file": "OAI/Probability/SKSupport/Main.lean", "name": "minimizer_full_support_actual",
+                 "relation": "contains"}],
+                "statements": [{"paper": "short", "role": "statement", "from": "For the solution of the displayed SDE",
+                                "to": "=1.\n$$"}]}}}), encoding="utf-8")
+        title = "Full support for minimisers"
+        name = "OAI.ZeroTemperatureSK.minimizer_full_support_actual"
+        (directory / "names.json").write_text(json.dumps({"schema": 1, "names": {name: title}}), encoding="utf-8")
+        app = web.create_app(self.root, lean_index=lean_index.build_index(TREE), alignment=directory)
+        self.assertEqual(app.alignment_errors, [])
+        result = self.data("/api/v1/alignment", app)
+        self.assertEqual(result["names"], {name: title})
+        self.assertEqual(result["records"]["support.moment_saturation"]["lean"][0]["plain"], title)
+        self.assertEqual(self.data("/api/v1/ties/short", app)["ties"][0]["plain"], title)
+        self.assertEqual(self.data("/api/v1/alignment")["names"], {})
+
     def test_a_failing_alignment_row_is_reported_and_left_out(self):
         bad = self.parent / "bad"
         bad.mkdir()

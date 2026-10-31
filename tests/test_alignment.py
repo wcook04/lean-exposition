@@ -1,4 +1,5 @@
 """Record alignment: authored pointers against real and adversarial bytes."""
+import gzip
 import json
 import re
 import shutil
@@ -253,7 +254,19 @@ class StatementLean(unittest.TestCase):
         self.fails("note must be text", {"name": "N.thing", "note": "word " * 26})
         self.fails("unknown relation", {"name": "N.thing", "relation": "proves"})
         self.fails("unknown", {"name": "N.thing", "extra": 1})
-        self.fails("must be a nonempty list")
+        with self.assertRaisesRegex(ContractError, r"lean: must be a list; \[\] says"):
+            resolve({"r": row(statements=[{**STATEMENT, "lean": "none"}])})
+
+    def test_an_empty_list_says_there_is_no_lean_and_never_falls_back(self):
+        out = self.narrowed()
+        self.assertEqual((out["lean"], out["lean_source"]), ([], "statement"))
+        record = {"statements": [out]}
+        tie = alignment.tie_index(LONG, {"r": record}, "long")["ties"][0]
+        self.assertEqual((tie["lean"], tie["from_record"], tie["name"], tie["lines"]), (False, False, None, None))
+
+    def test_a_failed_list_is_not_a_claim_of_no_lean(self):
+        out = resolve({"r": row(statements=[{**STATEMENT, "lean": [{"name": "N.absent"}]}])}, strict=False)
+        self.assertEqual(out[0]["records"]["r"]["statements"][0]["lean_source"], "record")
 
     def test_a_clause_needs_source_to_land(self):
         index = {"modules": [{key: value for key, value in INDEX["modules"][0].items() if key != "source"}]}
@@ -295,6 +308,11 @@ class TiesFiles(unittest.TestCase):
     def test_a_tie_without_lean_uses_the_records_rows(self):
         rows = self.tied([self.TIE])[0]["records"]["r"]["statements"]
         self.assertEqual((rows[1]["lean_source"], rows[1]["lean"][0]["name"]), ("record", "N.thing"))
+
+    def test_a_tie_can_say_it_has_no_lean_even_over_a_batch_row(self):
+        tie = {**STATEMENT, "record": "r", "lean": []}
+        rows = self.tied([tie])[0]["records"]["r"]["statements"]
+        self.assertEqual((len(rows), rows[0]["lean"], rows[0]["lean_source"]), (1, [], "statement"))
 
     def test_the_same_slice_as_a_batch_row_narrows_it_in_place(self):
         tie = {**STATEMENT, "record": "r", "lean": [{"name": "N.thing", "lines": [5, 5]}]}
@@ -402,8 +420,13 @@ class TieIndex(unittest.TestCase):
 
     def test_a_tie_without_lean_keeps_the_shape(self):
         index, _ = self.ties("Alpha.\n", ("r", "Alpha.", {"lean": False, "role": "mention", "anchor": "p"}))
-        self.assertEqual(index["ties"], [{"record": "r", "role": "mention", "lean": False, "name": None, "module": None,
-                                          "lines": None, "anchor": "p", "at": "b0-6"}])
+        self.assertEqual(index["ties"], [{"record": "r", "role": "mention", "lean": False, "from_record": False,
+                                          "name": None, "module": None, "lines": None, "anchor": "p", "at": "b0-6"}])
+
+    def test_a_tie_says_when_its_lean_is_the_records(self):
+        fallback = alignment._tie("r", statement(b"", 0, 1))
+        own = alignment._tie("r", {**statement(b"", 0, 1), "lean_source": "statement"})
+        self.assertEqual((fallback["from_record"], own["from_record"]), (True, False))
 
     def test_passages_fall_back_with_their_records_and_any_slice_inside(self):
         paper = "Alpha.\n\nBeta.\n"
@@ -430,8 +453,9 @@ class RealFiles(unittest.TestCase):
             alignment.check_alignment(directory, lean_tree=ROOT / "examples/qaoa-sk/upstream/lean",
                                       graph=ROOT / "examples/qaoa-sk/evidence-graph.json", papers=papers, out=out)
             resolved = json.loads(out.read_text())
+        # The example replaces ties-short.json in this copy; other papers keep their own ties.
         rows = [row_ for row_ in resolved["records"][example["statements"][0]["record"]]["statements"]
-                if row_["lean_source"] == "statement"]
+                if row_["lean_source"] == "statement" and row_["paper"] == "short"]
         self.assertEqual(len(rows), len(example["statements"]))
         self.assertTrue(all(lean["lines"] for row_ in rows for lean in row_["lean"]))
 
@@ -447,7 +471,9 @@ class RealFiles(unittest.TestCase):
             with self.subTest(stage=stage):
                 content = path.read_bytes()
                 index = alignment.tie_index(content, records, stage)
-                self.assertLess(len(json.dumps(index, ensure_ascii=False).encode()), 120_000)
+                encoded = json.dumps(index, ensure_ascii=False, separators=(",", ":")).encode()
+                self.assertLess(len(encoded), 250_000)
+                self.assertLess(len(gzip.compress(encoded)), 40_000)
                 math = [(len(content.decode()[:a].encode()), len(content.decode()[:b].encode()))
                         for a, b, _ in alignment._math_spans(content.decode())]
                 covered, previous = bytearray(len(content)), 0
@@ -505,6 +531,53 @@ class RealFiles(unittest.TestCase):
                                    "--graph", str(ROOT / "examples/qaoa-sk/evidence-graph.json"),
                                    *sum((["--paper", stage, str(path)] for stage, path
                                          in alignment.default_papers(directory).items()), [])]), 1)
+
+
+class PlainNames(unittest.TestCase):
+    NAMES = {"N.thing": "A plain title", "N.Box": "The box"}
+
+    def named(self, names=None, schema=1, strict=True, statements=(STATEMENT,)):
+        body = json.dumps({"schema": schema, "names": self.NAMES if names is None else names})
+        return resolve({"r": row(statements=statements)}, extra={"names.json": body}, strict=strict)
+
+    def test_titles_reach_the_map_the_rows_and_the_ties(self):
+        statements = [STATEMENT, {**STATEMENT, "from": "Unique end", "to": "tail.", "lean": [{"name": "N.Box"}]}]
+        resolved = self.named(statements=statements)[0]
+        self.assertEqual(resolved["names"], {"N.Box": "The box", "N.thing": "A plain title"})
+        record = resolved["records"]["r"]
+        self.assertEqual(record["lean"][0]["plain"], "A plain title")
+        self.assertEqual([item["lean"][0]["plain"] for item in record["statements"]], ["A plain title", "The box"])
+        ties = alignment.tie_index(LONG, resolved["records"], "long", names=resolved["names"])["ties"]
+        self.assertEqual([tie["plain"] for tie in ties], ["A plain title", "The box"])
+
+    def test_a_title_is_left_off_where_none_exists_and_the_file_may_be_absent(self):
+        resolved = self.named({"N.Box": "The box"})[0]
+        self.assertNotIn("plain", resolved["records"]["r"]["lean"][0])
+        self.assertNotIn("plain", alignment.tie_index(LONG, resolved["records"], "long", names=resolved["names"])["ties"][0])
+        absent = resolve({"r": row()})[0]
+        self.assertEqual(absent["names"], {})
+        self.assertNotIn("plain", absent["records"]["r"]["lean"][0])
+
+    def test_a_tie_takes_the_title_of_the_declaration_it_names(self):
+        row_ = {**statement(b"", 0, 1), "lean": [{"name": "A", "module": "M", "lines": [1, 2], "clause_in": "B",
+                                                  "clause_module": "N", "clause_lines": [8, 9], "plain": "Of A"}]}
+        self.assertEqual(alignment._tie("r", row_, {"A": "Of A", "B": "Of B"})["plain"], "Of B")
+
+    def test_rejects_what_cannot_be_a_title(self):
+        for pattern, names, schema in (("N.absent: not a declaration in the Lean index", {"N.absent": "Two words"}, 1),
+                                       ("thing: not a declaration", {"thing": "Two words"}, 1),
+                                       ("title has 1 words", {"N.thing": "One"}, 1),
+                                       ("title has 7 words", {"N.thing": "one two three four five six seven"}, 1),
+                                       ("title has 0 words", {"N.thing": 3}, 1),
+                                       ("expected schema 1", {}, 2)):
+            with self.assertRaisesRegex(ContractError, pattern):
+                self.named(names, schema)
+        with self.assertRaisesRegex(ContractError, "names.json: not valid JSON"):
+            resolve({"r": row()}, extra={"names.json": "{"})
+
+    def test_lenient_mode_leaves_out_only_the_bad_title(self):
+        resolved, errors = self.named({"N.absent": "Two words", "N.Box": "The box"}, strict=False)
+        self.assertEqual((resolved["names"], len(errors)), ({"N.Box": "The box"}, 1))
 
 
 class LeanStepTests(unittest.TestCase):

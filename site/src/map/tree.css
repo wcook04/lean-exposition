@@ -62,6 +62,19 @@
   stroke-dasharray: calc(6px / var(--k)) calc(4px / var(--k));
 }
 
+/* The Lean graph. As in a blueprint: a solid line for a use in the proof (the `supports` line),
+   a dashed one for a use in the statement. A use through helpers is dotted and thin. */
+.link--lean_type_dependency {
+  stroke-dasharray: calc(5px / var(--k)) calc(3.5px / var(--k));
+}
+
+.link--lean_via {
+  stroke-width: calc(1.25px / var(--k));
+  stroke-linecap: round;
+  stroke-dasharray: 0 calc(3.5px / var(--k));
+  stroke: var(--edge-strong);
+}
+
 /* Each line sits on a casing in the ground colour, so a line passing under another shows a gap: a crossing, never a junction. */
 .casing {
   fill: none;
@@ -402,8 +415,32 @@
 }
 
 /* A Lean declaration is told from a claim by its name's face and the colour of its Lean line. */
-.card[data-kind="declaration"] {
+.card[data-kind="declaration"]:not([data-shape]) {
   border-color: var(--rel-formalizes);
+}
+
+/* What the Lean holds of a record (model/leanStatus.ts), as a blueprint shows it: the shape
+   says definition or result, and a soft green says it is in Lean, much paler for a part of
+   it. A card with no Lean stays plain. The sheet and the outline say the same in words, so
+   nothing rests on the colour alone. Amber still means what you are looking at. */
+.tree .card[data-shape="box"],
+.tree[data-dense] .card[data-shape="box"] {
+  border-radius: calc(1.5px / var(--k));
+}
+
+.tree .card[data-shape="round"],
+.tree[data-dense] .card[data-shape="round"] {
+  border-radius: calc(13px / var(--k));
+}
+
+.card[data-lean="whole"] {
+  background: var(--lean-fill);
+  border-color: var(--lean-fill-line);
+}
+
+.card[data-lean="part"] {
+  background: var(--lean-fill-part);
+  border-color: color-mix(in oklab, var(--lean-fill-line) 55%, var(--card-border));
 }
 
 .card:hover,
@@ -439,6 +476,16 @@
   background: color-mix(in oklab, var(--card) 45%, var(--ground));
   border-color: color-mix(in oklab, var(--card-border) 55%, var(--ground));
   box-shadow: none;
+}
+
+/* Receding keeps the status: a quiet card must never read as one with no Lean. */
+.card.is-quiet[data-lean="whole"] {
+  background: color-mix(in oklab, var(--lean-fill) 60%, var(--ground));
+  border-color: color-mix(in oklab, var(--lean-fill-line) 50%, var(--ground));
+}
+
+.card.is-quiet[data-lean="part"] {
+  background: color-mix(in oklab, var(--lean-fill-part) 60%, var(--ground));
 }
 
 .card.is-quiet .card__title {
@@ -642,6 +689,10 @@
 }
 
 /* A Lean name is not a word: it may break after its dots and underscores (LeanName). */
+.card__ctitle.lean[data-short] {
+  overflow-wrap: anywhere;
+}
+
 .card__ctitle.lean {
   font-family: var(--font-mono);
   font-size: calc(var(--title, 12px) / var(--k));
@@ -1189,6 +1240,11 @@
   height: 5px;
   border-radius: 0 0 calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px);
   background: color-mix(in oklab, var(--cat, var(--src-0)) 35%, var(--card));
+}
+
+/* With the Lean's fill on, a copy needs no second colour at its foot. */
+.card--clone[data-lean]::after {
+  display: none;
 }
 
 .card--clone .card__title {

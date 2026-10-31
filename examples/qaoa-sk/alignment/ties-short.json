@@ -1621,13 +1621,18 @@
       "to": "with the spatial factors evaluated at $(t,X_t)$.",
       "lean": [
         {
+          "name": "OAI.ZeroTemperatureSK.stripThird",
+          "relation": "defines",
+          "note": "Lean's name for C, taken with c=γ(t). It is an expected field on a strip; the next row expands it."
+        },
+        {
           "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
           "lines": [
             36,
             39
           ],
-          "note": "C with c frozen at γ(t), jets 2,3,4 being a,b,d. Lean has no separate name for it.",
-          "relation": "defines"
+          "relation": "part",
+          "note": "The expansion: jets 2,3,4 are a,b,d, and c is free."
         },
         {
           "name": "OAI.ZeroTemperatureSK.actualJet",
@@ -1689,8 +1694,8 @@
             12,
             17
           ],
-          "note": "The Value files prove this at every t in (0,1), with no continuity hypothesis, using the right-continuous value.",
-          "relation": "contains"
+          "note": "Scalar model, no transport to the support model: every t in (0,1), no continuity hypothesis, c right-continuous. Jets carry c, so divide by c².",
+          "relation": "states"
         }
       ]
     },
@@ -1941,13 +1946,13 @@
       "to": "law of $X_t$ is zero.",
       "lean": [
         {
-          "name": "OAI.ZeroTemperatureSK.Certificate.integrated_coercivity_of_flux",
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
           "lines": [
-            182,
-            183
+            135,
+            140
           ],
-          "note": "hzero: the flux derivative integrates to zero.",
-          "relation": "proof"
+          "relation": "proof",
+          "note": "hiZero: the flux derivative integrates to zero on the half-line. This is the route full_support uses."
         }
       ]
     },
@@ -2324,7 +2329,7 @@
           "name": "OAI.ZeroTemperatureSK.Certificate.hasDerivAt_flux",
           "lines": [
             127,
-            142
+            141
           ],
           "relation": "part"
         },
@@ -4815,16 +4820,14 @@
             81,
             88
           ],
-          "relation": "defines"
+          "relation": "defines",
+          "note": "The support statement: five clauses, none on density or circuits."
         },
         {
-          "name": "OAI.SKValue.FiniteGaussianConclusion",
+          "name": "OAI.SKValue.value_consequences",
           "file": "ComparatorChallenges/SKValue.lean",
-          "lines": [
-            155,
-            161
-          ],
-          "relation": "defines"
+          "relation": "states",
+          "note": "The scalar statement: three clauses, none on density or circuits."
         }
       ]
     },
@@ -4961,6 +4964,173 @@
           ],
           "note": "The same between grid times.",
           "relation": "defines"
+        }
+      ]
+    },
+    {
+      "record": "assumptions.full_support_minimizer",
+      "paper": "short",
+      "role": "definition",
+      "from": "Let $\\mathcal U$ consist of the nonnegative, nondecreasing,",
+      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter",
+          "file": "OAI/Probability/SKSupport/Model.lean"
+        }
+      ]
+    },
+    {
+      "record": "support.backward_shapes",
+      "paper": "short",
+      "role": "statement",
+      "from": "For $s=-\\partial_x\\log g$,",
+      "to": "$H:=w/(2r)+v\\leq0$ is nondecreasing.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.BackwardShape"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.BackwardShape.rescale"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.SmoothForward.deriv_ge_inverse",
+          "relation": "part",
+          "note": "The bound s_x≥1/t."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.SmoothForward.second_nonpos",
+          "relation": "part",
+          "note": "Concavity of s on the half-line."
+        }
+      ]
+    },
+    {
+      "record": "support.contact",
+      "paper": "short",
+      "role": "statement",
+      "from": "first-order cost is therefore a tail integral:",
+      "to": "G(s):=\\int_s^1(q(t)-t)\\,dt\\geq0.\n$$",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential",
+          "relation": "defines",
+          "note": "G."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg"
+        }
+      ]
+    },
+    {
+      "record": "support.diffusion",
+      "paper": "short",
+      "role": "statement",
+      "from": "The SDE has a unique strong solution. All",
+      "to": "ending before one, unless an endpoint limit is justified explicitly.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_isDiffusion"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
+        }
+      ]
+    },
+    {
+      "record": "support.first_variation",
+      "paper": "short",
+      "role": "statement",
+      "from": "The one-sided variation formula gives the rate of change of the functional",
+      "to": "$\\varepsilon\\geq0$ (see [OpenAI (2026a), Lemma 6.1][FS]).",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative"
+        }
+      ]
+    },
+    {
+      "record": "support.flux_identity",
+      "paper": "short",
+      "role": "statement",
+      "from": "The factorisation of the density gives $f_x/f=r-s$.",
+      "to": "against $f(x)\\,dx$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.cert_flux_derivative"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+          "lines": [
+            131,
+            140
+          ],
+          "relation": "proof",
+          "note": "Lean integrates on x>0: the flux vanishes at zero because r does, and at infinity by Gaussian tails."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.Heat.certificate_growth"
+        }
+      ]
+    },
+    {
+      "record": "support.positive_curvature",
+      "paper": "short",
+      "role": "statement",
+      "from": "**Lemma 2 (constant-interval curvature;",
+      "to": "If $c=0$, then $q''(t)=\\mathbb E[\\Phi_{xxx}(t,X_t)^2]>0$.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.positive_gap_curvature"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.stripThird_coercive"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
+          "relation": "part",
+          "note": "The case c=0: positivity of q″ on the interval."
+        }
+      ]
+    },
+    {
+      "record": "support.full_relative_support_curvature",
+      "paper": "short",
+      "role": "explanation",
+      "from": "**Proof of Theorem 1, assuming Lemma 2.**",
+      "to": "contact condition.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+          "clause": "μ.support=univ",
+          "note": "Same conclusion. SKSupport excludes terminal plateaus by the square-root defect, not by this chord route."
+        },
+        {
+          "name": "OAI.SKValue.IsMinimizer.contactPotential_zero",
+          "relation": "proof",
+          "note": "The scalar model takes the chord route: slope convexity and q≤1 exclude a positive hump of G, even reaching one."
+        }
+      ]
+    },
+    {
+      "record": "assumptions.value_diffusion",
+      "paper": "short",
+      "role": "explanation",
+      "from": "Its third clause identifies the ground-state and",
+      "to": "Parisi values from a minimiser, constructing the diffusion internally.",
+      "lean": [
+        {
+          "name": "OAI.SKValue.ground_state_parisi_target",
+          "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+          "lines": [
+            25,
+            27
+          ],
+          "relation": "proof",
+          "note": "The third clause: only the minimiser is assumed, and its proof supplies the diffusion."
         }
       ]
     }

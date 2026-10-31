@@ -20,7 +20,9 @@ import type {
 } from "../api/types";
 
 export type LinkKind = "supports" | "formalizes" | "assumes"
-  | "lean_type_dependency" | "lean_value_dependency" | "lean_structural_dependency";
+  | "lean_type_dependency" | "lean_value_dependency" | "lean_structural_dependency"
+  /** In the Lean graph: a use reached through helpers nobody linked. */
+  | "lean_via";
 
 const LEAN_KINDS: readonly LinkKind[] = ["lean_type_dependency", "lean_value_dependency", "lean_structural_dependency"];
 
@@ -50,6 +52,10 @@ export interface ArgNode {
   papers: Partial<Record<Stage, { roles: string[]; direct: number }>>;
   /** The evidence (check) records the node's own record cites; absent when node records were not loaded. */
   evidenceIds?: string[];
+  /** In the Lean graph: what a tile shows, whether that is plain words or a raw name, and what the caption adds. */
+  tile?: string;
+  tilePlain?: boolean;
+  leanNote?: string;
 }
 
 export interface ArgEdge {
@@ -68,6 +74,8 @@ export interface ArgEdge {
    * Traversal discharges them for this use only (see argumentContexts).
    */
   application?: EdgeApplication;
+  /** In the Lean graph: what the line says, for the caption. */
+  note?: string;
 }
 
 /** An evidence record's account of one step, split into its parts. */
@@ -163,6 +171,8 @@ export interface ArgGraph {
   goals: string[];
   cyclic: Set<string>;
   boundaries: Map<string, string>;
+  /** Every edge is drawn as given: the Lean graph has no recorded applications to project. */
+  plain?: boolean;
 }
 
 /** Short names for the regions, keyed by goal id. Falls back to the goal label. */

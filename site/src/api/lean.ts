@@ -82,6 +82,8 @@ export interface AlignedLean {
   end_line: number;
   relation: LeanRelation;
   note: string;
+  /** The declaration's plain title, where one is authored. */
+  plain?: string;
   /** The lines to light, inside this declaration: the clause if it sits here, else the statement. Every row an edition delivers has them. */
   lines?: LineRange;
   /** A theorem's body, where it runs past the statement. Definitions have none. */
@@ -141,6 +143,8 @@ export interface DictionaryTerm {
 export interface Alignment {
   records: Record<string, RecordAlignment>;
   dictionary: DictionaryTerm[];
+  /** Plain titles of declarations, by full name, where authored. A title says what to call it, not what it proves. */
+  names?: Record<string, string>;
   /** For a step between two records with Lean links, keyed by `ArgEdge.key`: the chain of names found in the source, or null. */
   steps?: Record<string, { route: string[] | null }>;
 }
@@ -153,6 +157,8 @@ export interface Tie {
   lean: boolean;
   /** The most direct declaration; the rest are on the statement with this `at` in the alignment. */
   name: string | null;
+  /** That declaration's plain title, where one is authored. */
+  plain?: string;
   module: string | null;
   lines: LineRange | null;
   anchor: string | null;

@@ -248,7 +248,8 @@ class WebApplication:
             self._ties = {stage: tie_index(papers[stage], self._alignment["records"], stage, [
                 (row["content_span"]["start_byte"], row["content_span"]["end_byte"],
                  [*row["claim_ids"], *row["assumption_ids"]], row["anchor"])
-                for row in self._papers[stage]["paper"]["passages"]]) for stage in STAGES}
+                for row in self._papers[stage]["paper"]["passages"]],
+                self._alignment["names"]) for stage in STAGES}
         self._sidecars = {
             "lean_index": ({"available": False} if self._lean is None else {
                 "available": True, "sha256": digest(canonical(self._lean)),

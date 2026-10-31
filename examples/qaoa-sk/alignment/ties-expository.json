@@ -1485,6 +1485,11 @@
             126
           ],
           "note": "0≤q and |q|≤1."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.curvatureMoment_continuousOn_unit",
+          "relation": "part",
+          "note": "q′ is continuous on [0,1), so q is C¹."
         }
       ]
     },
@@ -1927,7 +1932,7 @@
             170,
             172
           ],
-          "note": "Lean does no rescaling. Later uses take β=γ+ν's cumulative function directly, at ε₀=1."
+          "note": "Lean does no rescaling. Later uses take β=addCDF or removeCDF of a finite measure directly, at ε₀=1."
         }
       ]
     },
@@ -2589,7 +2594,8 @@
             366,
             368
           ],
-          "note": "Lean says this with the mean value theorem: some point has slope exactly one."
+          "note": "Lean says this with the mean value theorem: some point has slope exactly one.",
+          "relation": "proof"
         }
       ]
     },
@@ -2763,7 +2769,8 @@
             361,
             368
           ],
-          "note": "Lean's contradiction: the mean value theorem gives slope one somewhere, against q'<1."
+          "note": "Lean's contradiction: the mean value theorem gives slope one somewhere, against q'<1.",
+          "relation": "proof"
         }
       ],
       "note": "Lean uses the mean value theorem where the paper integrates."
@@ -2782,7 +2789,8 @@
             364,
             365
           ],
-          "note": "The same clash, for any a<b. This candidate is not in Lean."
+          "note": "The same clash, for any a<b. This candidate is not in Lean.",
+          "relation": "part"
         }
       ]
     },
@@ -2989,7 +2997,8 @@
         {
           "name": "OAI.ZeroTemperatureSK.stripSecond_zero_pos",
           "clause": "(ht : 0 < (t:ℝ))",
-          "note": "Positive time is a hypothesis here. In Lean it comes from diffusion_interval_pos: X_0 is a point mass."
+          "note": "Positive time is a hypothesis here. In Lean it comes from diffusion_interval_pos: X_0 is a point mass.",
+          "relation": "part"
         }
       ]
     },
@@ -3120,7 +3129,7 @@
       "from": "We have",
       "to": "strictly convex on $(r,1)$.",
       "after": "positive, by the same mass argument as in Section 5.3. ",
-      "note": "The Lean terminal proof uses none of these three facts."
+      "note": "SKSupport's terminal proof uses none of these three facts. The scalar contact proof uses slope convexity and q≤1."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -3165,7 +3174,7 @@
           "note": "G(b)<0 at that nearby b, against contactPotential_nonneg. Lean does not reach the left end r."
         }
       ],
-      "note": "Same conclusion, different proof: the Lean follows the source's terminal estimate rather than this chord barrier."
+      "note": "Same conclusion, different proof: SKSupport follows the source's terminal estimate rather than this chord barrier."
     },
     {
       "record": "support.terminal_defect",
@@ -3434,7 +3443,7 @@
       "role": "explanation",
       "from": "We will show that $q$ stays below the diagonal throughout the gap,",
       "to": "The proof has two steps.",
-      "note": "The Lean also finds q below t, but only near one, by a different estimate."
+      "note": "SKSupport also finds q below t, but only near one, by a different estimate."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -4390,7 +4399,14 @@
       "role": "example",
       "from": "That chord has mean height",
       "to": "prescribed values.",
-      "note": "No Lean counterpart: f'(5)=3/2 is outside the Lean theorem's hypotheses."
+      "note": "No Lean counterpart: f'(5)=3/2 is outside the Lean theorem's hypotheses.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hda : q' a ≤ 1) (hdb : q' b ≤ 1)",
+          "note": "These hypotheses fail here: f'(5)=3/2. The example itself has no Lean counterpart."
+        }
+      ]
     },
     {
       "record": "support.endpoint_chord_area",
@@ -4412,7 +4428,14 @@
       "role": "example",
       "from": "With the right slope changed to $2$, the chord has mean $5/4$,",
       "to": "cannot supply enough area.",
-      "note": "No Lean counterpart: a calculus example."
+      "note": "No Lean counterpart: a calculus example.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+          "clause": "(hda : q' a ≤ 1) (hdb : q' b ≤ 1)",
+          "note": "These hypotheses fail here: f'(5)=2. The example itself has no Lean counterpart."
+        }
+      ]
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -4420,7 +4443,7 @@
       "role": "example",
       "from": "**[Question 4](#question-4).** Set $h=q'-1$.",
       "to": "contradict the conditions on a minimiser.",
-      "note": "This repeats the chord proof of Section 5.4, which the Lean does not use."
+      "note": "This repeats the chord proof of Section 5.4, which SKSupport does not use and the scalar contact proof does."
     },
     {
       "record": "support.terminal_chord_barrier",
@@ -4568,6 +4591,40 @@
             88
           ],
           "note": "Its clauses: existence of μ and X, full support, strict increase, the two moments. Nothing further."
+        }
+      ]
+    },
+    {
+      "record": "assumptions.full_support_minimizer",
+      "paper": "expository",
+      "role": "definition",
+      "from": "In general, an admissible **order parameter** is a function",
+      "to": "and has finite integral.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.OrderParameter",
+          "file": "OAI/Probability/SKSupport/Model.lean"
+        }
+      ]
+    },
+    {
+      "record": "support.diffusion",
+      "paper": "expository",
+      "role": "statement",
+      "from": "Following it generates the state",
+      "to": "gives its existence and uniqueness for a fixed Brownian motion.",
+      "lean": [
+        {
+          "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "relation": "defines",
+          "note": "The integral equation, path continuity and start at zero."
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_isDiffusion"
+        },
+        {
+          "name": "OAI.ZeroTemperatureSK.diffusion_uniqueness"
         }
       ]
     }

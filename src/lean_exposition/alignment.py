@@ -18,6 +18,8 @@ from .lean_index import canonical, load_index
 
 ALIGNMENT_SCHEMA_VERSION = "1.0"
 TIES_SCHEMA = 1
+NAMES_SCHEMA = 1
+NAMES_FILE = "names.json"
 RELATIONS = {"states", "contains", "part", "proof", "defines"}
 ROLES = {"statement", "definition", "explanation", "derivation", "example", "mention"}
 MAX_SLICE_CHARACTERS = 1800
@@ -242,6 +244,30 @@ def _narrowed(item, rows, names, sources):
             **({"clause": clause} if clause is not None else {})}
 
 
+def _plain_names(path, known, errors):
+    """Plain titles of declarations from an optional file; a bad entry is reported and left out."""
+    if not path.is_file():
+        return {}
+    try:
+        data = json.loads(path.read_bytes())
+    except ValueError as exc:
+        errors.append(f"{path.name}: not valid JSON: {exc}")
+        return {}
+    if not isinstance(data, dict) or data.get("schema") != NAMES_SCHEMA or not isinstance(data.get("names"), dict):
+        errors.append(f"{path.name}: expected schema {NAMES_SCHEMA} and a names object")
+        return {}
+    plain = {}
+    for name, title in data["names"].items():
+        words = len(title.split()) if type(title) is str else 0
+        if name not in known:
+            errors.append(f"{path.name}:{name}: not a declaration in the Lean index")
+        elif not 2 <= words <= 6:
+            errors.append(f"{path.name}:{name}: title has {words} words, expected two to six")
+        else:
+            plain[name] = title
+    return dict(sorted(plain.items()))
+
+
 def _check_keys(row, required, optional, where, errors):
     if not isinstance(row, dict):
         errors.append(f"{where}: must be an object")
@@ -257,7 +283,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
 
     A partial directory is valid. With `strict=False` a failing row is left out and
     its error returned, so a reading edition survives a file still being written.
-    `ties-<paper>.json` files add statements to records after the batch files.
+    `ties-<paper>.json` files add statements to records after the batch files, and an
+    optional `names.json` gives declarations plain titles.
     """
     directory = Path(directory)
     if not directory.is_dir():
@@ -282,8 +309,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             return None
         narrowed = []
         if "lean" in item:
-            if type(item["lean"]) is not list or not item["lean"]:
-                errors.append(f"{at}.lean: must be a nonempty list; leave it out to use the record's rows")
+            if type(item["lean"]) is not list:
+                errors.append(f"{at}.lean: must be a list; [] says this statement has no Lean of its own")
             for n, row in enumerate(item["lean"] if type(item["lean"]) is list else ()):
                 where = f"{at}.lean[{n}]"
                 if _check_keys(row, {"name"}, {"file", "lines", "clause", "note", "relation"}, where, errors):
@@ -291,16 +318,18 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                         narrowed.append(_narrowed(row, lean, names, sources))
                     except ValueError as exc:
                         errors.append(f"{where}: {exc}")
+        # An empty list is a claim of its own; only a list left out, or one that failed, falls back.
+        own = bool(narrowed) or item.get("lean") == []
         try:
             return {"paper": item["paper"], "role": item["role"], **prepared[item["paper"]].locate(item),
-                    "lean": narrowed or lean, "lean_source": "statement" if narrowed else "record",
+                    "lean": narrowed if own else lean, "lean_source": "statement" if own else "record",
                     **({"note": item["note"]} if "note" in item else {})}
         except ValueError as exc:
             errors.append(f"{at}: {exc}")
             return None
 
     for path in sorted(directory.glob("*.json")):
-        if path.name.startswith("ties-"):
+        if path.name.startswith("ties-") or path.name == NAMES_FILE:
             continue
         try:
             data = json.loads(path.read_bytes())
@@ -412,9 +441,14 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 row["statements"][same[0]] = resolved
             else:
                 row["statements"].append(resolved)
+    plain = _plain_names(directory / NAMES_FILE, names, errors)
+    for record in records.values():
+        for row in (*record["lean"], *(line for item in record["statements"] for line in item["lean"])):
+            if row["name"] in plain:
+                row["plain"] = plain[row["name"]]
     if errors and strict:
         raise ContractError(f"{len(errors)} alignment error(s):\n" + "\n".join(errors))
-    return {"records": dict(sorted(records.items())), "dictionary": dictionary}, errors
+    return {"records": dict(sorted(records.items())), "dictionary": dictionary, "names": plain}, errors
 
 
 def _math_close(text, start, display):
@@ -536,31 +570,34 @@ def _outward(left, right, inline, starts):
     return left, right
 
 
-def _tie(record_id, row):
+def _tie(record_id, row, names=()):
     """What a statement offers a reader at a glance; the first Lean row is the most direct."""
     lean = row["lean"][0] if row["lean"] else None
     exact = lean is not None and "clause_in" in lean and "clause_lines" in lean
+    name = None if lean is None else lean["clause_in"] if exact else lean["name"]
     return {"record": record_id, "role": row["role"], "lean": lean is not None,
-            "name": None if lean is None else lean["clause_in"] if exact else lean["name"],
+            "from_record": lean is not None and row["lean_source"] == "record",
+            "name": name, **({"plain": names[name]} if name in names else {}),
             "module": None if lean is None else lean["clause_module"] if exact else lean["module"],
             "lines": None if lean is None else lean["clause_lines"] if exact else lean["lines"],
             "anchor": row["anchor"], "at": row["at"]}
 
 
-def tie_index(content, records, stage, passages=()):
+def tie_index(content, records, stage, passages=(), names=()):
     """Every statement slice of one paper, cut to where a reader can mark it.
 
     `segments` never overlap. Each stays inside one block and keeps its math whole, and
     any display a slice touches is tied whole. A segment lists its ties with Lean first,
     then the narrowest. `passages` take `(start, end, record ids, anchor)` and fall back
-    for text with no slice. Each entry is a pointer that landed, not a mathematical check.
+    for text with no slice, and `names` gives a tie its declaration's plain title. Each
+    entry is a pointer that landed, not a mathematical check.
     """
     text = content.decode("utf-8")
     bytes_at = [0, *accumulate(len(c.encode("utf-8")) for c in text)]
     rows = {(row["start_byte"], row["end_byte"], record_id): row for record_id, record in records.items()
             for row in record["statements"] if row["paper"] == stage}
     keys = sorted(rows)
-    ties = [_tie(key[2], rows[key]) for key in keys]
+    ties = [_tie(key[2], rows[key], names) for key in keys]
     pieces, inline = _pieces(text)
     starts = [left for left, _ in inline]
     piece_starts = [piece[0] for piece in pieces]
@@ -666,8 +703,13 @@ def check_alignment(directory, *, lean_tree=None, graph=None, papers=None, out=N
             "unaligned_records": sorted(ids - resolved["records"].keys()),
             "lean_rows": sum(len(row["lean"]) for row in resolved["records"].values()),
             "statements": len(statements),
-            "statements_naming_lean": sum(row["lean_source"] == "statement" for row in statements),
+            "statements_naming_lean": sum(row["lean_source"] == "statement" and bool(row["lean"]) for row in statements),
+            "statements_with_no_lean_of_their_own": sum(row["lean_source"] == "statement" and not row["lean"]
+                                                        for row in statements),
+            "statements_showing_the_records_lean": sum(row["lean_source"] == "record" and bool(row["lean"])
+                                                       for row in statements),
             "tie_segments": {stage: len(tie_index(content, resolved["records"], stage)["segments"])
                              for stage, content in contents.items()},
             "dictionary_terms": len(resolved["dictionary"]),
+            "plain_names": len(resolved["names"]),
             "meaning": "Every pointer lands. Whether the statements match remains a reading."}
