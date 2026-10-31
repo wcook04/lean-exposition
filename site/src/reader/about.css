@@ -245,11 +245,6 @@
   min-height: 1.2em;
 }
 
-.about__sample .src-sq {
-  width: 11px;
-  height: 11px;
-}
-
 .about__sample--lines {
   flex-direction: column;
   align-items: flex-start;

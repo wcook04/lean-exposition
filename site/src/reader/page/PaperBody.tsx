@@ -595,6 +595,7 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
       return;
     }
     if (unbreakable(math)) return keepWhole(box);
+    if (staysOnOneLine(box)) return fitOneLine(box, scale);
     // Too wide even beside a small number: the number takes its own line under
     // the formula, and the formula breaks between relation signs.
     const tagged = breakSize(size, available);
@@ -615,6 +616,7 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
     return;
   }
   if (unbreakable(math)) return keepWhole(box);
+  if (staysOnOneLine(box)) return fitOneLine(box, scale);
   const wrap = breakSize(size, available);
   box.style.fontSize = `${wrap}em`;
   box.dataset.fit = "wrap";
@@ -623,6 +625,14 @@ function fitDisplay(box: HTMLElement, natural: WeakMap<HTMLElement, Natural>): v
 
 /** A cases or aligned block has rows and a brace: breaking it inline tears them apart. */
 const unbreakable = (math: HTMLElement) => !!math.querySelector(".mtable");
+
+/** A slice in a narrow cell keeps each display on one line: it shrinks a little further and scrolls there, and never breaks at its relation signs. */
+const staysOnOneLine = (box: HTMLElement) => !!box.closest(".slice");
+
+function fitOneLine(box: HTMLElement, scale: number): void {
+  box.style.fontSize = `${Math.max(TAGGED_FLOOR, Math.floor(scale * 1000) / 1000)}em`;
+  box.dataset.fit = "scaled";
+}
 
 /** Such a block keeps its shape at the smallest fitted size, and scrolls in its own box. */
 function keepWhole(box: HTMLElement): void {

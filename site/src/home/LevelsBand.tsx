@@ -224,7 +224,6 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       <div className="levels__body">
         <ol className="levels__rail">
           {rows.map((row) => {
-            const share = row.id === "lean" ? counts.lean / total : counts[row.id] / total;
             const pdf = row.stage ? PAPER_PDFS[row.stage] : null;
             const page = pdf?.firstPage;
             return (
@@ -258,12 +257,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
                 <div className="levels__text">
                   <h3 className="levels__name">{row.name}</h3>
                   <p className="levels__who">{row.who}</p>
-                  <p className="levels__count">
-                    <span className="levels__bar" aria-hidden="true">
-                      <span style={{ width: `${Math.round(share * 100)}%` }} />
-                    </span>
-                    {row.count}
-                  </p>
+                  <p className="levels__count">{row.count}</p>
                   <p className="levels__links">
                     <a href={row.read}>
                       {row.readWord}

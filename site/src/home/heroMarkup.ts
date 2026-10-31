@@ -74,7 +74,6 @@ export interface HeroLinks {
   beside: string;
   compare: string;
   theorem: string;
-  map: string;
   /** The step that records that the two Lean models are not connected. */
     models: string;
   about: string;
@@ -87,7 +86,6 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   beside: theorem1 ? `${base}read/short?l=${theorem1.at}&n=full_support${theorem1.anchor ? `#${theorem1.anchor}` : ""}` : `${base}read/short`,
   compare: `${base}compare`,
   theorem: `${base}compare?n=full_support`,
-  map: `${base}map`,
     models: `${base}map?n=${MODELS_STEP}`,
   about: `${base}about#made-by`,
 });
@@ -104,9 +102,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 <div class="front__intro">
 <h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A gap is an interval on which an order parameter stays flat. A minimising order parameter has none: it increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
-<p class="front__site">OpenAI’s proof of the increase is written in Lean, a programming language whose compiler rejects a proof with a wrong step; the positive derivative is proved in OpenAI’s manuscript and is not in the Lean. In a paper here, click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
-<p class="front__tertiary"><a href="${links.beside}">Theorem 1 with its Lean open</a><a href="${links.compare}">Compare Lean and papers</a><a href="${links.map}">The argument map</a></p>
 <p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s.</p>
 </div>
 <figure class="rosetta">
@@ -117,8 +113,15 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 ${rows}
 </tbody>
 </table>
-<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a><p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p></figcaption>
+<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a></figcaption>
 </figure>
+</section>
+<section class="front__guide" aria-label="How to read a paper here, and what the Lean covers">
+<div class="front__guide-read">
+<p class="front__site">OpenAI’s proof of the increase is written in Lean, a programming language whose compiler rejects a proof with a wrong step; the positive derivative is proved in OpenAI’s manuscript and is not in the Lean. In a paper here, click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
+<p class="front__guide-link"><a href="${links.beside}">Theorem 1 with its Lean open</a></p>
+</div>
+<p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p>
 </section>`;
 }
 

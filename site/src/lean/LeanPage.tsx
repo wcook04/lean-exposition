@@ -513,7 +513,7 @@ function DeclPage({ decl, module, shell, slot }: { decl: LeanDeclaration; module
         <p className="lean-decl__full">
           <code>{decl.name}</code>
           <span>
-            {" "}
+            {", in "}
             <PathText path={path} />, lines {decl.line} to {decl.end_line}
           </span>
         </p>

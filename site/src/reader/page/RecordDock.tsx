@@ -15,6 +15,7 @@ import { useEdition } from "../../app/data";
 import { navigate, routeHref, type Trace } from "../../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { shortTitle } from "../../compare/useAlignment";
+import { useBarLine, useBarLineShown } from "../../lean/barLine";
 import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
@@ -163,6 +164,11 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
 export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFollowText, onPick, onPoint, onName, from, passageHref }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
+  const scroller = useRef<HTMLDivElement>(null);
+  // A pointed name is read in the top bar; where the bar has no room, in a row under the column.
+  const barLine = useBarLine();
+  const barShown = useBarLineShown();
+  const [foot, setFoot] = useState<HTMLElement | null>(null);
   const [full, setFull] = useState(false);
   const [chosen, setChosen] = useState(0);
   const tie = open.tie !== null ? ties.index.ties[open.tie] : null;
@@ -210,6 +216,12 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [from]);
 
+  // The whole column is one scroller, so a new declaration starts at its top.
+  const showing = `${row?.module ?? open.declModule ?? ""}:${name}:${full}`;
+  useLayoutEffect(() => {
+    if (scroller.current) scroller.current.scrollTop = 0;
+  }, [showing]);
+
   const empty = !record && !name;
   return (
     <div className="lean-page" data-via={open.via} ref={page} role="region" aria-label={plain ? `The Lean of ${plain}` : "The Lean"}>
@@ -217,7 +229,6 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
         <header className="lean-page__head">
           {open.via !== "pin" && (
             <p className="lean-page__state" role="status">
-              <span className="lean-page__dot" aria-hidden="true" />
               {open.via === "point" ? "Pointing at" : "Changes as you scroll"}
             </p>
           )}
@@ -245,7 +256,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
           {slot}
         </div>
       ) : (
-        <>
+        <div ref={scroller} className="lean-page__scroll" data-keep>
           {record && (
             <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at}>
               {open.via === "pin" && graph.nodes.has(record) && (
@@ -266,7 +277,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
               ))}
             </ul>
           )}
-          <div className={`lean-page__body${full || !name ? " lean-page__body--read" : ""}`} data-keep>
+          <div className="lean-page__body">
             {full && record ? (
               <RecordPanel
                 key={record}
@@ -295,17 +306,18 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onFoll
                 clause={row?.clause}
                 lines={row?.lines}
                 compact
-                fill
                 onName={onName}
                 noPapers
+                previewSlot={barLine && barShown ? barLine : foot}
                 below={open.tie !== null ? <AlsoHere tie={open.tie} ties={ties} onPick={onPick} onPoint={onPoint} /> : undefined}
               />
             ) : alignment ? (
               <p className="lean-page__plain">{open.tie !== null ? leanTruth(ties, open.tie, alignment).words : "No Lean linked."}</p>
             ) : null}
           </div>
-        </>
+        </div>
       )}
+      {!slot && <div ref={setFoot} className="lean-slot lean-slot--compact lean-page__foot" />}
     </div>
   );
 }

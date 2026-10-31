@@ -293,9 +293,11 @@ function DependencyList({ title, names, decl, shell, onWalk }: { title: string; 
           return (
             <li key={`${row.module}:${row.name}`}>
               <a href={declHref(row)} title={row.name} onClick={onWalk && plainClick(() => onWalk(row))}>
-                {plain ? <span className="lean-deps__plain">{plain}</span> : <Breakable name={row.short} />}
-                <span className="lean-deps__kind">{kindWord(row.kind)}</span>
-                {record && record.title !== plain && <span className="lean-deps__record">In the argument: {record.title}</span>}
+                <span className="lean-deps__name">{plain ?? <Breakable name={row.short} />}</span>
+                <span className="lean-deps__meta">
+                  {kindWord(row.kind)}
+                  {record && record.title !== plain ? `, ${record.title}` : ""}
+                </span>
               </a>
             </li>
           );
@@ -324,12 +326,10 @@ export function Dependencies({ decl, module, shell, onWalk }: { decl: LeanDeclar
   const uses = useMemo(() => usesOf(decl, module), [decl, module]);
   return (
     <div className="lean-deps">
-      <p className="lean-deps__source">{dependencyWords(decl.dependency_source ?? shell.modules.dependency_source)}.</p>
-      <div className="lean-deps__columns">
-        <DependencyList title="Uses in its statement" names={uses.statement} decl={decl} shell={shell} onWalk={onWalk} />
-        {uses.proof.length > 0 && <DependencyList title="Uses in its proof" names={uses.proof} decl={decl} shell={shell} onWalk={onWalk} />}
-        <DependencyList title="Used by" names={decl.used_by} decl={decl} shell={shell} onWalk={onWalk} />
-      </div>
+      <p className="lean-deps__source">{dependencyWords(decl.dependency_source ?? shell.modules.dependency_source)}. After each name come its kind and the step of the argument it belongs to, where it has one.</p>
+      <DependencyList title="Names its statement uses" names={uses.statement} decl={decl} shell={shell} onWalk={onWalk} />
+      {uses.proof.length > 0 && <DependencyList title="Names its proof uses" names={uses.proof} decl={decl} shell={shell} onWalk={onWalk} />}
+      <DependencyList title="Declarations that use it" names={decl.used_by} decl={decl} shell={shell} onWalk={onWalk} />
     </div>
   );
 }

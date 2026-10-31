@@ -352,23 +352,8 @@
   border-color: var(--ink-3);
 }
 
-.map-pane__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink-3);
-  transition:
-    background-color var(--t-state) var(--ease-out),
-    border-color var(--t-state) var(--ease-out);
-}
-
 .map-pane__follow[aria-pressed="true"] {
   color: var(--ink);
-}
-
-.map-pane__follow[aria-pressed="true"] .map-pane__dot {
-  border-color: var(--ink-2);
-  background: var(--ink-2);
 }
 
 /* Paused: the one control that resumes, in ink. */
@@ -381,10 +366,6 @@
 .map-pane__follow--resume:hover {
   border-color: var(--ink);
   color: var(--ground);
-}
-
-.map-pane__follow--resume .map-pane__dot {
-  border-color: var(--ground);
 }
 
 .map-pane__open {
@@ -543,18 +524,6 @@
   font-size: var(--fs-sm);
   color: var(--ink-2);
   white-space: nowrap;
-}
-
-.lean-page__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink-3);
-}
-
-.lean-page[data-via="follow"] .lean-page__dot {
-  border-color: var(--ink-2);
-  background: var(--ink-2);
 }
 
 .lean-page__names {
@@ -730,9 +699,7 @@
 .lean-page__rows {
   flex: none;
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  white-space: nowrap;
+  flex-wrap: wrap;
   gap: 2px var(--space-3);
   margin: 0;
   padding: 0 var(--space-4) var(--space-1);
@@ -760,16 +727,34 @@
   border-bottom-color: var(--lit-line);
 }
 
-.lean-page__body {
+/* Everything under the pane's title scrolls as one column, with its bar at the pane's edge. */
+.lean-page__scroll {
   flex: 1;
   min-height: 0;
-  padding: 0 var(--space-4) var(--space-2);
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lean-page__body {
+  padding: 0 var(--space-4) var(--space-4);
 }
 
 .lean-page__body--read {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: var(--space-2);
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* Shown only while a name is read, where the top bar has no room for it. */
+.lean-page__foot {
+  margin: 0;
+  padding-inline: var(--space-4);
+}
+
+.lean-page__foot:empty {
+  display: none;
 }
 
 .lean-page__plain {

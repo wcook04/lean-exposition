@@ -395,8 +395,7 @@ function SourceDestination({ nodeId }: { nodeId: string }) {
   const url = webUrl(origin.url);
   const name = `${origin.label}${origin.place && origin.family !== "lean" ? `, ${origin.place}` : ""}`;
   return (
-    <p className="acct__source" data-slot={origin.slot}>
-      <span className="src-sq" aria-hidden="true" />
+    <p className="acct__source">
       {url ? (
         <a href={url} data-external rel="noopener" target="_blank">
           {name} <span aria-hidden="true">↗</span>

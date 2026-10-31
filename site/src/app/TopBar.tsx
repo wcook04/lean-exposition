@@ -104,8 +104,8 @@ export function TopBar({ route, onSearch }: Props) {
         </a>
       </nav>
       {route.view !== "read" && <BackControl />}
-      {/* The Lean index and Compare read a pointed name here, so nothing on the page waits for a hover. */}
-      {(route.view === "lean" || route.view === "compare") && <div id={BAR_LINE} className="topbar__line" />}
+      {/* The Lean read in a paper, the Lean index and Compare read a pointed name here, so nothing on the page waits for a hover. */}
+      {(route.view === "read" || route.view === "lean" || route.view === "compare") && <div id={BAR_LINE} className="topbar__line" />}
       <div className="topbar__tools">
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About

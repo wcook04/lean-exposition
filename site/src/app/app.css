@@ -202,9 +202,6 @@ html[data-view="map"] .app {
 }
 
 .readmenu__name {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
   font-family: var(--font-serif);
   font-size: var(--fs-card);
   line-height: var(--lh-snug);

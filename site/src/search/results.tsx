@@ -201,7 +201,6 @@ function NodeResult({ item, excerpt, opening }: { item: SearchItem; excerpt: Pre
   return (
     <>
       <span className={`palette__title${node?.kind === "declaration" && short === label ? " lean" : ""}`} data-region={node?.region}>
-        {node && <span className="region-dot" aria-hidden="true" />}
         {short === label ? marked : short}
       </span>
       {short !== label && <span className={`palette__full${node?.kind === "declaration" ? " lean" : ""}`}>{marked}</span>}
@@ -320,17 +319,29 @@ function ExcerptLine({ excerpt }: { excerpt: PreparedExcerpt }) {
   );
 }
 
+const PUNCTUATION = /^[,.;:)]+/;
+
 function Excerpt({ excerpt }: { excerpt: PreparedExcerpt }) {
   return (
     <>
       {excerpt.cutStart && "…"}
       {excerpt.segments.map((s, i) => {
+        const after = excerpt.segments[i + 1];
         if (s.kind === "math") {
           const html = renderTex(s.tex, false).html;
-          const inner = <span className="palette__math" dangerouslySetInnerHTML={{ __html: html }} />;
+          // Punctuation stays on its formula's line.
+          const stop = after?.kind === "text" ? PUNCTUATION.exec(after.text)?.[0] : undefined;
+          const inner = (
+            <span className={stop ? "palette__nobreak" : undefined}>
+              <span className="palette__math" dangerouslySetInnerHTML={{ __html: html }} />
+              {stop}
+            </span>
+          );
           return s.mark ? <mark key={i}>{inner}</mark> : <span key={i}>{inner}</span>;
         }
-        return s.mark ? <mark key={i}>{s.text}</mark> : <span key={i}>{s.text}</span>;
+        const before = excerpt.segments[i - 1];
+        const text = before?.kind === "math" ? s.text.replace(PUNCTUATION, "") : s.text;
+        return s.mark ? <mark key={i}>{text}</mark> : <span key={i}>{text}</span>;
       })}
       {excerpt.cutEnd && "…"}
     </>

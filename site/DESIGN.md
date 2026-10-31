@@ -18,11 +18,11 @@ holds the rules every page follows. The values live in
 
    | Question | Channel |
    | --- | --- |
-   | Where does this record come from? | A small square in its source colour, beside the source's name on a card and in the corner of a tile. |
+   | Where does this record come from? | The source name in words, on its sheet. |
    | What kind of record is it? | A word in small capitals: CLAIM, ASSUMPTION, LEAN DECLARATION, MAIN RESULT. Assumptions alone get a dashed border. |
    | How does a step use it? | The line's colour and pattern together, with the relation named in words wherever it is inspected. |
    | How does an account treat it? | A shape and a word: ● own passage, ○ used without a passage of its own, ⊟ outside the account's selection. |
-   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and a soft fill: green when it is in Lean, much paler for a part of it, plain for none. The sheet and the outline carry the same fill and say it in words, so nothing rests on the colour alone. |
+   | What does the Lean hold of it? | The card's shape (a box for a definition, a rounded shape for a result) and a soft fill: green when it is in Lean, much paler for a part of it, plain for none. The outline carries the same fill and the sheet says it in words, so nothing rests on the colour alone. |
    | What am I looking at? | Amber. Selection, a lit support route and keyboard focus. Nothing else is amber. |
    | What did a check record? | The outcome in words: passed, failed, unavailable, not run. Only a recorded failure is coloured. |
 

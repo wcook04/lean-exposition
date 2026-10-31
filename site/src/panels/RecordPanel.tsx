@@ -21,7 +21,6 @@ import { statementHref } from "../reader/links";
 import { LENS_ORDER } from "../map/levels";
 import { recordMark } from "../map/leanMarks";
 import { noInputsWords } from "../map/labels";
-import { LeanGlyph } from "../map/LeanGlyph";
 import { markWords } from "../model/leanStatus";
 import type { LeanStep } from "./model";
 import { PAPER_NAMES } from "../app/papers";
@@ -162,8 +161,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
       <header className="panel__head">
         <div className="panel__id">
           <span className="caps">{kindWord(node.kind)}</span>
-          <span className="panel__src" data-slot={origin.slot} title={origin.locator ?? undefined}>
-            <span className="src-sq" aria-hidden="true" />
+          <span className="panel__src" title={origin.locator ?? undefined}>
             <span className="panel__src-name">
               {origin.label}
               {origin.place && origin.family !== "lean" && `, ${origin.place}`}
@@ -187,7 +185,6 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         )}
         <div className="panel__levels">
           <span className="panel__mark">
-            <LeanGlyph mark={mark} label="" />
                         {markWords(mark)}
             {mark.statement !== "none" || mark.proof !== "none" ? ". An AI agent made this link" : ""}
           </span>
@@ -408,7 +405,6 @@ function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: str
               const mark = recordMark(edge.to, n);
               return (
                 <li key={edge.key} onPointerEnter={() => onEcho([edge.to])} onPointerLeave={() => onEcho(null)}>
-                  <LeanGlyph mark={mark} label="" />
                   <button type="button" className="rels__name" onClick={() => onSelect(edge.to)}>
                     {n.label}
                   </button>
@@ -767,8 +763,7 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
   const revision = source?.revision ?? null;
   return (
     <div className="prov">
-      <p className="prov__source" data-slot={origin.slot}>
-        <span className="src-sq" aria-hidden="true" />
+      <p className="prov__source">
         <span>
           {origin.label}
           {origin.place && origin.family !== "lean" && <span className="muted">, {origin.place}</span>}
