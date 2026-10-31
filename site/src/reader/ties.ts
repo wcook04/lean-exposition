@@ -15,43 +15,14 @@
 // The passage-level fallback lives here too: any paragraph with no exact slice can still
 // say what its passage discusses.
 
-import { get } from "../api/client";
-import type { StatementRole } from "../api/lean";
+import { loadTies as fetchTies, type StatementRole, type TieIndex, type TieSegment } from "../api/lean";
 import type { Stage } from "../api/types";
 
-export type LineRange = [first: number, last: number];
-
-/** One marked statement. A landed pointer, never a check that the two texts mean the same. */
-export interface Tie {
-  record: string;
-  role: StatementRole;
-  /** Whether the statement has any Lean. The other Lean fields are null when it has none. */
-  lean: boolean;
-  /** The most direct declaration. */
-  name: string | null;
-  module: string | null;
-  lines: LineRange | null;
-  anchor: string | null;
-  /** The slice's address, `b<start>-<end>`. */
-  at: string;
-}
-
-export type TieSegment = [startByte: number, endByte: number, ties: number[]];
-export type TiePassage = [startByte: number, endByte: number, records: string[], anchor: string];
-
-export interface TieIndex {
-  segments: TieSegment[];
-  ties: Tie[];
-  passages: TiePassage[];
-  meaning: string;
-}
+export type { Tie, TieIndex, TiePassage, TieSegment } from "../api/lean";
 
 /** The paper's index, or null for an edition without one: such a paper still reads in full. */
 export function loadTies(stage: Stage): Promise<TieIndex | null> {
-  return get<TieIndex>(`/ties/${stage}`).then(
-    (r) => r.data,
-    () => null,
-  );
+  return fetchTies(stage).catch(() => null);
 }
 
 // ---- Marks ------------------------------------------------------------------------------
@@ -84,11 +55,6 @@ const BLOCK_PREFIX = new RegExp(`^([ \\t]*)(${MARK}+)((?:#{1,6}[ \\t]+|[-*+][ \\
 
 /** Text a mark must never enter: a TeX figure, whose source is hashed and drawn, not read. */
 const TEX_BLOCK = /\\begin\{figure\*?\}[\s\S]*?\\end\{figure\*?\}|^(`{3,}|~{3,})[ \t]*\{=latex\}[^\n]*\n[\s\S]*?^\1[ \t]*$/gm;
-
-export interface PartMarks {
-  /** Segment number, then its bytes inside the part. */
-  from: { segment: number; start: number; end: number }[];
-}
 
 /** The segments that fall inside these bytes, in document order. */
 export function segmentsIn(segments: readonly TieSegment[], start: number, end: number): { segment: number; start: number; end: number }[] {

@@ -143,7 +143,7 @@ md.core.ruler.after("inline", "tie_marks", (state) => {
     });
   }
 });
-md.renderer.rules.tie_mark = (tokens, idx) => tokens[idx].meta.mark as string;
+md.renderer.rules.tie_mark = (tokens, idx) => (tokens[idx].meta as { mark: string }).mark;
 
 // Pandoc's `smart` extension converts quotes, dashes and ellipses but not
 // (c), (r), (tm) or +-. Keep markdown-it's smartquotes, replace the rest.
