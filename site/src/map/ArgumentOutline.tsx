@@ -16,6 +16,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { ArgEdge, ArgGraph } from "../model/graph";
 import { pathFromGoal, reach, usesOf } from "./treeModel";
 import { recordMark } from "./leanMarks";
+import { noInputsWords } from "./labels";
 import { recordLine } from "../compare/useAlignment";
 import { LeanGlyph } from "./LeanGlyph";
 import { markWords } from "../model/leanStatus";
@@ -295,7 +296,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
             "Steps used directly"
           )}
         </h3>
-        {inputs.length ? renderRows(top, [top], 1) : <p className="outline__empty">No recorded inputs.</p>}
+        {inputs.length ? renderRows(top, [top], 1) : <p className="outline__empty">{noInputsWords(topNode.kind)}</p>}
       </section>
     </div>
   );

@@ -162,7 +162,7 @@ const phrase = (use: LeanUse, tile: (name: string) => string): string => {
 
 export interface LeanGraph extends ArgGraph {
   /** Definitions: nearly every result uses them, so they sit on a shelf under the drawing, in plain words. */
-  shelf: { name: string; module: string; title: string }[];
+  shelf: { name: string; module: string; title: string; model?: string }[];
   /** Uses found that the drawing leaves out, because a longer chain says the same or they would close a cycle. */
   leftOut: number;
   /** How many linked declarations the index could not find. */
@@ -199,8 +199,13 @@ export function buildLeanGraph(input: LeanInput): LeanGraph {
   }
   // A definition is not drawn: a walk passes through it like a helper, and it goes on the shelf.
   const results = new Map([...present].filter(([name, module]) => RESULT_KINDS.has(facts(name, module)!.kind)));
-  const shelf = [...present].filter(([name]) => !results.has(name)).map(([name, module]) => ({ name, module, title: tiles.get(name)! }));
+  const shelf: LeanGraph["shelf"] = [...present].filter(([name]) => !results.has(name)).map(([name, module]) => ({ name, module, title: tiles.get(name)! }));
   for (const { name } of shelf) nodes.delete(name);
+  // Two models can each define the same object: the shelf says which.
+  for (const item of shelf) {
+    if (shelf.filter((other) => other.title === item.title).length < 2) continue;
+    item.model = /SKValue/.test(item.module) ? "value model" : /SKSupport/.test(item.module) ? "support model" : undefined;
+  }
   const ids = [...results.keys()];
   const all = leanUses({ linked: results, facts });
   const { kept, left } = simplifyUses(ids, all);

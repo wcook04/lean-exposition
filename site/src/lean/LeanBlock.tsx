@@ -276,7 +276,7 @@ function DependencyList({ title, names, decl, shell, onWalk }: { title: string; 
       <p className="lean-deps__title">
         {title} <span className="lean-deps__count">{rows.length.toLocaleString("en-GB")}</span>
       </p>
-      {rows.length === 0 && <p className="lean-deps__none">None found.</p>}
+      {rows.length === 0 && <p className="lean-deps__none">{shell.modules.dependency_source === "elaborated" ? "None found." : "None found. The scan misses names reached through tactics or notation."}</p>}
       <ul>
         {shown.map((row) => {
           const record = shell.linked.get(row.name)?.[0];

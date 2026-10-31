@@ -139,3 +139,19 @@ describe("the part of the graph around a step", () => {
     expect(part.nodes.has("top")).toBe(true);
   });
 });
+
+describe("the definitions under the drawing", () => {
+  it("says which model defines a title that repeats", () => {
+    const def = (name: string, module: string) => ({ ...fact(name, []), kind: "def", module });
+    const graph = buildLeanGraph({
+      goal: "goal",
+      goalLabel: "G",
+      linked: new Map([["a.IsMin", "OAI.Probability.SKSupport.Model"], ["b.IsMin", "OAI.Probability.SKValue.Model"], ["c", "OAI.Probability.SKValue.Model"]]),
+      main: [],
+      facts: table(def("a.IsMin", "OAI.Probability.SKSupport.Model"), def("b.IsMin", "OAI.Probability.SKValue.Model"), def("c", "OAI.Probability.SKValue.Model")),
+      titleOf: (name) => (name.endsWith("IsMin") ? "γ minimises" : "Other"),
+      origin,
+    });
+    expect(graph.shelf.map((d) => d.model)).toEqual(["support model", "value model", undefined]);
+  });
+});

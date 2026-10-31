@@ -271,7 +271,7 @@ function StepHead({ graph, node, title, titleOf, href, slots, onToggle, stacked 
       </div>
       <RelationLine label="Used by" empty="Nothing in the argument uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
       <div className="bench-rels">
-        <RelationLine label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={limit} />
+        <RelationLine label="Uses" empty="The argument as written stops here." ids={uses} titleOf={titleOf} href={href} limit={limit} />
         {assumes.length > 0 && <RelationLine label="Assumes" ids={assumes} titleOf={titleOf} href={href} limit={limit} assumptions />}
       </div>
     </header>
