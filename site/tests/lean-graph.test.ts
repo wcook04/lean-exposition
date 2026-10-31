@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildLeanGraph, leanUses, linkedDeclarations, namedIn, simplifyUses, tileNames, type LeanFacts } from "../src/model/leanGraph";
+import { buildLeanGraph, leanUses, linkedDeclarations, namedIn, neighbourhood, simplifyUses, tileNames, type LeanFacts } from "../src/model/leanGraph";
 import { declTitle } from "../src/model/declTitle";
 import type { Origin } from "../src/model/graph";
 
@@ -107,5 +107,35 @@ describe("a declaration's plain title", () => {
     expect(graph.nodes.get("ns.raw")).toMatchObject({ tile: "raw", tilePlain: false });
     const via = graph.edges.find((e) => e.kind === "lean_via");
     expect(via?.note).toBe("Derivative bound reaches raw through one helper");
+  });
+});
+
+describe("the part of the graph around a step", () => {
+  const build = () =>
+    buildLeanGraph({
+      goal: "goal",
+      goalLabel: "G",
+      linked: new Map([["top", "M"], ["mid", "M"], ["low", "M"], ["deep", "M"], ["Def", "M"]]),
+      main: ["top"],
+      facts: table(fact("top", ["mid", "Def"]), fact("mid", ["low"]), fact("low", ["deep"]), fact("deep", []), { ...fact("Def", []), kind: "structure" }),
+      origin,
+    });
+
+  it("puts definitions on the shelf, not on the drawing", () => {
+    const graph = build();
+    expect(graph.nodes.has("Def")).toBe(false);
+    expect(graph.shelf.map((d) => d.name)).toEqual(["Def"]);
+  });
+
+  it("keeps the step with what uses it and what it uses, joined to the goal", () => {
+    const part = neighbourhood(build(), "goal", ["low"]);
+    expect([...part.nodes.keys()].sort()).toEqual(["deep", "goal", "low", "mid"]);
+    expect(part.out.get("goal")?.map((e) => e.to)).toEqual(["mid"]);
+    expect(part.out.get("low")?.map((e) => e.to)).toEqual(["deep"]);
+  });
+
+  it("falls back to the goal for a name that is not drawn", () => {
+    const part = neighbourhood(build(), "goal", ["Def"]);
+    expect(part.nodes.has("top")).toBe(true);
   });
 });

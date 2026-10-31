@@ -309,7 +309,7 @@ export function identifierDate(id: string): string | null {
 /** One sentence on a recorded failure: when, then what happened, in plain words or the record's own. */
 export function failureLine(card: Pick<EvidenceCard, "id" | "label">, record?: { details?: string; tool?: string }): string {
   const date = statedDate(record?.details)?.text ?? identifierDate(card.id);
-  const what = FAILURE_WORDS[card.id] ?? record?.details ?? record?.tool ?? card.label;
+  const what = FAILURE_WORDS[card.id] ?? plainDetails(record?.details) ?? record?.tool ?? card.label;
   return date ? `${date}. ${what}` : what;
 }
 
@@ -406,4 +406,9 @@ export function standingSentence(group: Pick<KindGroup, "kind" | "title" | "coun
     return total === 1 ? `The one ${singular(name)} has not been run.` : `None of the ${total} ${name} has been run.`;
   if (passed === 0) return `No ${KIND_RUN[group.kind] ?? group.title.toLowerCase()} run has passed. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
   return `${passed} of ${recordsWord(total)} passed. The outcomes of all ${total} are ${countsInWords(group.counts)}.`;
+}
+
+/** A check's recorded details keep their tool settings; a reader gets the setting in words. */
+function plainDetails(details: string | undefined): string | undefined {
+  return details?.replace(/enable_nanoda=false/g, "Nanoda, a second proof checker, switched off");
 }

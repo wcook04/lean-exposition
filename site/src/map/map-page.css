@@ -22,7 +22,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note, .map-strip) {
+.map-page__main > :not(.map-note, .map-strip, .lean-shelf) {
   flex: 1;
   min-height: 0;
 }
@@ -289,24 +289,18 @@
   }
 }
 
-/* The level lens: the same pill as the view switch. */
+/* The level lens: plain words with their numbers. The one chosen is underlined. */
 .map-lens {
-  position: relative;
   display: flex;
-  align-items: center;
-  padding: 3px;
-  border-radius: 10px;
-  background: var(--sunk);
-  box-shadow: inset 0 0 0 1px var(--rule);
+  align-items: baseline;
+  gap: 16px;
   min-width: 0;
 }
 
 .map-lens button {
-  position: relative;
-  height: 30px;
-  padding: 0 12px;
+  padding: 3px 0;
   border: 0;
-  border-radius: 7px;
+  border-bottom: 2px solid transparent;
   background: none;
   color: var(--ink-2);
   font-size: var(--fs-ui);
@@ -321,16 +315,12 @@
 }
 
 .map-lens button[aria-checked="true"] {
-  font-weight: 600;
+  border-bottom-color: var(--ink);
 }
 
 .map-lens__n {
   font-variant-numeric: tabular-nums;
-  color: var(--ink-3);
-}
-
-.map-lens button[aria-checked="true"] .map-lens__n {
-  color: var(--ink-2);
+  color: inherit;
 }
 
 /* Key: a popover that says everything the marks mean. */
@@ -751,9 +741,6 @@
   .map-foot {
     padding-inline: var(--space-4);
   }
-  .map-lens button {
-    padding: 0 8px;
-  }
 }
 
 @media (max-width: 900px) {
@@ -804,12 +791,15 @@
     min-width: 0;
     overflow-x: auto;
   }
-  .map-views button,
-  .map-lens button {
+  .map-views button {
     flex: 1 1 auto;
     min-width: 0;
     height: 38px;
     padding: 0 8px;
+  }
+  .map-lens button {
+    flex: none;
+    min-height: 32px;
   }
   .map-controls__button {
     height: 38px;
@@ -822,8 +812,8 @@
     column-gap: 14px;
   }
 
-  .map-lens button {
-    padding: 0 8px;
+  .map-lens {
+    gap: 12px;
   }
 
   .map-views button {
@@ -840,4 +830,30 @@
     overflow-x: auto;
     scrollbar-width: none;
   }
+}
+
+.map-legend__place {
+  color: var(--ink);
+}
+
+/* Definitions: nearly every result uses them, so they are a list under the drawing. */
+.lean-shelf {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 6px var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+.lean-shelf__head {
+  color: var(--ink-3);
+}
+
+.lean-shelf .is-chosen {
+  color: var(--lit);
 }

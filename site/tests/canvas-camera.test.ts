@@ -38,8 +38,8 @@ describe("edge chips", () => {
     expect(boxInView({ x0: 940, y0: 100, x1: 1200, y1: 150 }, vp, v)).toBe(true);
   });
   it("words the count", () => {
-    expect(chipText("right", 3)).toBe("3 records ▸");
-    expect(chipText("left", 1)).toBe("◂ 1 record");
+    expect(chipText("right", 3)).toBe("3 steps ▸");
+    expect(chipText("left", 1)).toBe("◂ 1 steps");
   });
 });
 

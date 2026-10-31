@@ -50,11 +50,11 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
         <div className="map-keypop__panel" role="dialog" aria-label="Key to the argument map">
           <p className="map-keypop__h">Records</p>
           <ul className="map-keypop__channels">
-            <li>Each box is one record: a claim, an assumption or a Lean declaration. Select one to read it in Lean and in each paper.</li>
+            <li>Each box is one step: a claim, an assumption or a Lean declaration. Select one to read it in Lean and in each paper.</li>
             <li>
               <span className="keyrow__tag" aria-hidden="true" /> An assumption is a tag on each result that assumes it.
             </li>
-            <li>A record many results use, with nothing drawn below it, is drawn again under each of them.</li>
+            <li>A step many results use, with nothing drawn below it, is drawn again under each of them.</li>
           </ul>
           <p className="map-keypop__h">Lean</p>
           <ul className="map-keypop__channels">
@@ -67,8 +67,8 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
             <li>
               <LeanGlyph fill="none" /> Plain: no declaration is linked.
             </li>
-            <li>A box is a definition and a rounded shape a result. Each record's sheet says its status in words.</li>
-            <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each record's checks.</li>
+            <li>A box is a definition and a rounded shape a result. Each step's sheet says its status in words.</li>
+            <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each step's checks.</li>
           </ul>
           {lean && (
             <>
@@ -81,11 +81,12 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
                   <Sample kind="lean_type_dependency" /> The statement uses it: its name is written in the statement's lines.
                 </li>
                 <li>
-                  <Sample kind="lean_via" /> Reached only through helpers no record links. Point at the line to see how many.
+                  <Sample kind="lean_via" /> Reached only through helpers no step links. Point at the line to see how many.
                 </li>
                 <li>
                   {usesSource(lean.source)}. {lean.note}
                 </li>
+                <li>Definitions are listed under the drawing: nearly every result uses them. Each sheet lists all of a declaration's uses.</li>
                 {!!lean.leftOut && <li>{lean.leftOut} uses are not drawn, because a longer chain already says them. Each declaration's sheet lists all of its uses.</li>}
               </ul>
             </>
@@ -93,12 +94,12 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
           <p className="map-keypop__h">Lines</p>
           <ul className="map-keypop__channels">
             <li>
-              <Sample kind="supports" /> Each line runs from a record up to the result that uses it.
+              <Sample kind="supports" /> Each line runs from a step up to the result that uses it.
             </li>
             <li>
               <Sample kind="formalizes" head={false} /> A Lean declaration recorded for that result.
             </li>
-            <li>Under a paper's lens, a line may pass over records that paper leaves out.</li>
+            <li>Under a paper's lens, a line may pass over steps that paper leaves out.</li>
           </ul>
           <p className="map-keypop__h">Moving around</p>
           <ul className="map-keypop__channels">

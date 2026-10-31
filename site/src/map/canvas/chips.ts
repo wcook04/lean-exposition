@@ -82,7 +82,7 @@ export function panToward(side: Side, ids: readonly string[], boxes: ReadonlyMap
 }
 
 export function chipText(side: Side, n: number): string {
-  const words = `${n} ${n === 1 ? "record" : "records"}`;
+  const words = `${n} ${n === 1 ? "step" : "steps"}`;
   if (side === "left") return `◂ ${words}`;
   if (side === "right") return `${words} ▸`;
   if (side === "up") return `▴ ${words}`;

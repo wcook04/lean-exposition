@@ -165,7 +165,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             <span className="src-sq" aria-hidden="true" />
             <span className="panel__src-name">
               {origin.label}
-              {origin.place && `, ${origin.place}`}
+              {origin.place && origin.family !== "lean" && `, ${origin.place}`}
             </span>
           </span>
           <span className={`panel__status panel__status--${node.status}`}>{statusWords(node.status, "record")}</span>
@@ -197,7 +197,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         {peek && (
           <div className="panel__peek">
             <button ref={sheet.readRef} type="button" className="panel__action panel__action--primary" onClick={() => sheet.open()}>
-              Read the record
+              Read the step
             </button>
             <button type="button" className="panel__action" onClick={() => sheet.open("sources")}>
               Sources &amp; checks
@@ -211,7 +211,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         <div className="panel__content" key={`b:${nodeId}`}>
           {failed === "missing" ? (
             <p className="panel__error" role="alert">
-              This site has no record with this identifier.
+              This site has no step with this identifier.
             </p>
           ) : null}
           <Pane id="quote" title="Statement">
@@ -394,12 +394,12 @@ function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: str
   const inputs = (graph.out.get(nodeId) ?? []).filter((e) => graph.nodes.has(e.to));
   return (
     <>
-      <p className="panel__lead">No Lean declaration is linked to this record.</p>
+      <p className="panel__lead">No Lean declaration is linked to this step.</p>
       {inputs.length === 0 ? (
         <p className="panel__note">It has no recorded inputs either: the argument stops here and rests on its sources, below.</p>
       ) : (
         <>
-          <p className="panel__note">It rests on {inputs.length === 1 ? "this record" : `these ${inputs.length} records`}:</p>
+          <p className="panel__note">It rests on {inputs.length === 1 ? "this step" : `these ${inputs.length} steps`}:</p>
           <ul className="rests">
             {inputs.map((edge) => {
               const n = graph.nodes.get(edge.to)!;
@@ -444,7 +444,7 @@ function Quote({ aligned, first, compact, recorded, body }: { aligned: RecordAli
     );
   if (body) return <div className="panel__quote">{body}</div>;
   if (recorded) return <p className="panel__statement panel__quote">{recorded}</p>;
-  return <p className="panel__note">No statement is recorded for this record.</p>;
+  return <p className="panel__note">No statement is recorded for this step.</p>;
 }
 
 // ----------------------------------------------------------------- papers
@@ -493,7 +493,7 @@ function PaperSlices({
         ))}
       </div>
       {slices.length === 0 ? (
-        <p className="panel__note">No slice of the {PAPER_NAMES[stage].short.toLowerCase()} is linked to this record.</p>
+        <p className="panel__note">No slice of the {PAPER_NAMES[stage].short.toLowerCase()} is linked to this step.</p>
       ) : (
         slices.map((slice) => (
           <div className="panel__slice" key={`${slice.at ?? slice.start_byte}:${slice.role}`}>
@@ -524,11 +524,11 @@ function AsRecorded({
   state: "loading" | "error" | "ready";
   onRetry(): void;
 }) {
-  if (state === "loading") return <p className="panel__state faint">Loading the record…</p>;
+  if (state === "loading") return <p className="panel__state faint">Loading the step…</p>;
   if (state === "error")
     return (
       <p className="panel__state" role="alert">
-        The record could not be loaded.{" "}
+        The step could not be loaded.{" "}
         <button type="button" className="control panel__retry" onClick={onRetry}>
           Retry
         </button>
@@ -605,7 +605,7 @@ function Argument({
         </div>
       )}
       <Relations
-        title="Records it uses directly"
+        title="Steps it uses directly"
         edges={prerequisites}
         end="to"
         implied={implied}
@@ -614,7 +614,7 @@ function Argument({
         onEcho={onEcho}
         onEdge={onEdge}
       />
-      <Relations title="Records that use it directly" edges={uses} end="from" implied={implied} empty="No record is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
+      <Relations title="Steps that use it directly" edges={uses} end="from" implied={implied} empty="No step is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
       {assumptions.length > 0 && <Relations title="Assumptions" edges={assumptions} end="to" implied={implied} empty="" onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />}
       <div className="panel__trace" role="group" aria-label="Highlight on the map">
         <button
@@ -626,7 +626,7 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={restsOn.size <= 1}
         >
-          All records it uses (<span className="num">{restsOn.size - 1}</span>)
+          All steps it uses (<span className="num">{restsOn.size - 1}</span>)
         </button>
         <button
           type="button"
@@ -637,11 +637,11 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={feeds.size <= 1}
         >
-          All records that use it (<span className="num">{feeds.size - 1}</span>)
+          All steps that use it (<span className="num">{feeds.size - 1}</span>)
         </button>
       </div>
       <p className="panel__note">
-        Each button highlights on the map every record reached through recorded links, directly or through other records.
+        Each button highlights on the map every step reached through recorded links, directly or through other records.
       </p>
       {(cites.to.length > 0 || cites.from.length > 0) && (
         <div className="panel__cites">
@@ -748,6 +748,12 @@ function CiteList({ title, ids, onSelect, onEcho }: { title: string; ids: string
 
 // ------------------------------------------------------- sources and checks
 
+/** A check's identifier as words: its date is shown beside it. */
+function plainCheck(label: string): string {
+  const words = label.replace(/_\d{8}$/, "").replace(/_/g, " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: string; sourceId?: string; citationIds?: string[]; declaration?: string }) {
   const { graph } = useEdition();
   const node = graph.nodes.get(nodeId)!;
@@ -763,7 +769,7 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
         <span className="src-sq" aria-hidden="true" />
         <span>
           {origin.label}
-          {origin.place && <span className="muted">, {origin.place}</span>}
+          {origin.place && origin.family !== "lean" && <span className="muted">, {origin.place}</span>}
         </span>
       </p>
       {origin.locator && <p className="prov__locator">{origin.locator}</p>}
@@ -793,9 +799,9 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
               </dd>
             </>
           )}
-          <dt>Record</dt>
+          <dt>Step</dt>
           <dd>
-            <code>{nodeId}</code> <CopyButton text={nodeId} what="record id" />
+            <code>{nodeId}</code> <CopyButton text={nodeId} what="step id" />
           </dd>
           {declaration && (
             <>
@@ -872,7 +878,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
     <div className="checks">
       <p className="panel__group">Recorded checks</p>
       {rows.length === 0 ? (
-        <p className="panel__note">No check is recorded for this record.</p>
+        <p className="panel__note">No check is recorded for this step.</p>
       ) : (
         <ul className="checks__rows">
           {rows.map((row) => {
@@ -908,7 +914,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
                       return (
                         <li key={r.id}>
                           <span className={`outcome outcome--${r.status}`}>{OUTCOME_NAMES[r.status] ?? r.status.replace(/_/g, " ")}</span>
-                          <span className="checks__label">{r.label}</span>
+                          <span className="checks__label">{plainCheck(r.label)}</span>
                           {date && <span className="faint">{date.text}</span>}
                         </li>
                       );

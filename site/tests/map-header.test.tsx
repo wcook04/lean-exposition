@@ -82,7 +82,7 @@ describe("the map header", () => {
 
   it("keeps one line under the header only while a paper's lens changes what a line means", () => {
     open({ view: "map", lens: "short" });
-    expect(container.querySelector(".map-sub")!.textContent).toContain("A line may pass over records it leaves out.");
+    expect(container.querySelector(".map-sub")!.textContent).toContain("A line may pass over steps it leaves out.");
   });
 
   it("names the main result in the title button and lists the main results as radio items", () => {

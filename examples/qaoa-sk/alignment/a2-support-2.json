@@ -411,7 +411,7 @@
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Its first clause. The Lean type Time is [0,1), so support equal to univ is the relative statement.",
+     "note": "Its first clause. The Lean type Time is [0,1), so support on the whole of Time is the relative statement.",
      "clause": "μ.support=univ"
     },
     {

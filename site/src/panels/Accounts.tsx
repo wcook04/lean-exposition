@@ -393,7 +393,7 @@ function SourceDestination({ nodeId }: { nodeId: string }) {
   const origin = graph.nodes.get(nodeId)!.origin;
   if (origin.family === "none") return null;
   const url = webUrl(origin.url);
-  const name = `${origin.label}${origin.place ? `, ${origin.place}` : ""}`;
+  const name = `${origin.label}${origin.place && origin.family !== "lean" ? `, ${origin.place}` : ""}`;
   return (
     <p className="acct__source" data-slot={origin.slot}>
       <span className="src-sq" aria-hidden="true" />

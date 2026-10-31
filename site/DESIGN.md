@@ -126,24 +126,32 @@ page, and Fit. What the pointer rests on is named there for that moment, in plac
 so a caption can never cover a target, and it goes when the pointer goes.
 
 **The Lean graph** is a secondary view (`?v=lean`), a sidecar for those who want it; the argument
-stays the default. It draws the declarations the argument's records link (65 for Full support)
-with the same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`). A card shows plain words
-(`model/declTitle.ts`): the authored title, then the short title of the record that links it most
-directly, then the dictionary's words, and the raw name only where none exists. The raw name is
-small under the sheet's heading and in the code, never on a card with a title.
-It loads on first use, about 120 modules of 349. A box is a definition or structure, a rounded
-shape a theorem or lemma. A solid line is a use in the proof, a dashed line a use in the
-statement, a thin dotted line a use reached only through helpers no record links; the caption
-names them. Half the declarations are joined only through helpers, so they stay collapsed
-rather than absent. The lines come from `uses` in the Lean index and say so on the strip: a text
-scan today, and the compiler's report when `dependency_source` says `elaborated`. Statement
-against proof is whether the name is written in the statement's lines. A use a longer chain
-already says is not drawn, and the Key counts those. What nothing drawn uses hangs from the
-goal by a dashed line, which says only that the argument links it. Under a paper's lens the
-numbers count declarations, and the line above the lens says so. A card opens the sheet at that
-declaration; the camera goes further out here than on the argument (`k = 0.5`), where a title
-shortens and the strip has it whole. Helpers with no plain title stay collapsed behind their
-line, which says how many there are.
+stays the default. It draws the results (theorems and lemmas) behind the argument's steps with the
+same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`), one card each, 53 for Full support.
+The 12 definitions nearly every result uses are a list of plain titles under the drawing, because
+as cards they bury the shape of the proof. It loads on first use, about 120 modules of 349.
+
+Nothing opens off screen. Where the whole graph can be read at once (a monitor), it opens whole.
+Otherwise it opens on the part around the step you came from: that step's results, what uses them
+and what they use. Clicking a card moves that part to it. Fit shows every result, and "Around this
+step" returns. The sheet stays closed until a declaration is chosen, so the drawing has the width,
+and the drawing refits while the reader has not moved it. A title has one size in the drawing and
+zooms with it (`worldText`), so it is never cut; at Fit on a laptop the whole is a shape to read
+closer in, with the title in the strip under the pointer.
+
+A card shows plain words (`model/declTitle.ts`): the authored title, then the short title of the
+step that links it most directly, then the dictionary's words, and the raw name only where none
+exists. The raw name is small under the sheet's heading and in the code. A solid line is a use in
+the proof, a dashed line a use in the statement, a thin dotted line a use reached only through
+helpers no step links; the caption names them. Half the declarations are joined only through
+helpers, so they stay collapsed rather than absent. The lines come from `uses` in the Lean index
+and say so on the strip: a text scan today, and the compiler's report when `dependency_source`
+says `elaborated`. Statement against proof is whether the name is written in the statement's
+lines. A use a longer chain already says is not drawn, and the Key counts those. What nothing drawn
+uses hangs from the goal by a dashed line, which says only that the argument links it. Under a paper's lens the
+numbers count declarations, results and definitions together, and the line above the lens says so. A card opens the sheet at that
+declaration. Helpers with no plain title stay collapsed behind their line, which says how many
+there are.
 
 **The goal's plate** is at most 200px tall: the title, one sentence of the theorem
 and the ways on. The full theorem and its Lean are in the record sheet.
@@ -161,8 +169,8 @@ the selection on screen by the smallest pan. Enter opens the selected record's
 inputs and Esc clears the selection. When a card cannot show every input,
 chips at the canvas edge say how many records lie beyond it.
 
-**The level lens.** All, Long record, Short paper, Exposition, each with the number
-of records of this argument it uses, counted from the records its own passages
+**The level lens.** Plain words: All, Long record, Short paper, Exposition, each with the
+number of steps of this argument it uses, the chosen one underlined, counted from the records its own passages
 discuss (`mapped_*` roles; every paper also lists the prerequisites of those
 records, so bare membership would count all of them). A small line above the lens says
 what its numbers count. The levels are not nested: the exposition uses records
