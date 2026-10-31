@@ -1,11 +1,10 @@
 // Lean source as numbered lines, with every name that resolves as a real link. Pointer
-// and keyboard report the name to the one reading line, and report when it is let go.
+// and keyboard report the name to the block's reading line, and report when it is let go.
 // Tab reaches one name in a block and the arrow keys walk the rest, so a long proof does
 // not cost a reader hundreds of tab stops.
 
 import { memo, useEffect, useRef, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { routeHref } from "../app/router";
-import { ensureReadingBar } from "./ReadingStrip";
 import { mathlibUrl, resolveName, type NameTarget, type Scope } from "./resolve";
 import { tokenLines, type LeanToken } from "./tokenize";
 
@@ -78,13 +77,15 @@ export interface CodeViewProps {
   onRead(target: NameTarget | null, element: HTMLElement | null): void;
   /** Called on a plain click. Prevent the event's default to stay on the page. */
   onOpen(target: NameTarget, element: HTMLElement, event: MouseEvent): void;
+  /** Whether a source line is lit. */
+  lit?: (line: number) => boolean;
 }
 
 function hrefOf(target: NameTarget): string {
   return target.kind === "decl" ? routeHref({ view: "lean", module: target.row.module, decl: target.row.name }) : mathlibUrl(target.name);
 }
 
-export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: CodeViewProps) {
+export const CodeView = memo(function CodeView({ code, label, onRead, onOpen, lit: isLit }: CodeViewProps) {
   const root = useRef<HTMLDivElement>(null);
   const lit = useRef<HTMLElement | null>(null);
 
@@ -108,7 +109,6 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: 
     onRead(null, null);
   };
   useEffect(() => {
-    ensureReadingBar();
     return () => {
       if (lit.current) onRead(null, null);
     };
@@ -151,7 +151,7 @@ export const CodeView = memo(function CodeView({ code, label, onRead, onOpen }: 
       }}
     >
       {code.lines.map((line) => (
-        <div className="lean-line" key={line.n}>
+        <div className={`lean-line${isLit?.(line.n) ? " is-lit" : ""}`} data-line={line.n} key={line.n}>
           <span className="lean-line__n" aria-hidden="true">
             {line.n}
           </span>

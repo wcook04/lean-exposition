@@ -381,17 +381,45 @@ Going between the two keeps the step. Pressing a level keeps the row in view.
 
 ## The Lean browser
 
-"/lean" makes the Lean readable by someone who does not write it. The folders are on the
-left with a name filter, the module's source is in the middle, and the selected declaration
-is on the right with its linked records. Below the source, the neighbourhood shows what uses
-the declaration and what it uses. Reading aids sit with the code: "How to read Lean" for the
-notation and "What each folder holds" for the library. Where the alignment names a clause,
-`LeanBlock` shows it inside its declaration, under "Where FullSupportConclusion says".
+"/lean" is OpenAI's Lean at a pinned commit, in two proof trees, for someone who reads Lean. The
+first screen says what the tree is and what was checked, in the words of the Checks page, and
+offers `full_support`, `IsMinimizer`, `value_consequences`, the Comparator challenge file and the
+declarations the papers rest on, beside the main theorem itself. The folders stay on the left
+with a find box: Enter opens the first result, which is the exact name, then names that start
+with what was typed, then names that hold it (`lean/find.ts`).
+
+Every declaration has its own address (`?m=&d=`). Its page says first where the papers state it,
+quoted with "Read in context", then the Lean, facing it from 880px of column width; then what
+uses it and what it uses, split into its statement and its proof. Eight or fewer neighbours are
+drawn with lines; more are listed, because a fan of lines into one point says nothing. A module
+page lists its declarations in source order and shows the way up; a folder has its own page.
+
+**`LeanBlock`** is the one view of a declaration on every page: signature first, `Proof ▶` for the
+rest, `source` to the commit-pinned line range, axioms and `sorry` said once with where the
+statement comes from (Lean's report, or a text scan, by name). Every identifier is a link: to its
+declaration's page, or to Mathlib's search page, because a name written after `open` is not a full
+name and doc-gen's `find` address would give a 404. `onName` makes a click walk in place. `lines`
+lights exact lines and may open the proof and move the nearest scroller; `pointed` lights without
+moving anything; `quietLines` keeps `lines` from moving the scroller. `compact fill` works at
+340px tall.
+
+**The reading line.** Pointing at a name or focusing it shows its signature, its docstring and the
+paper's notation in one row of fixed height, at the foot of the block or in the host's
+`previewSlot`, so pointing moves nothing and covers nothing. A signature printed by Lean replaces
+the source text when an edition has one.
 
 The dependency edges come from the source text and say so (`dependency_source`,
-`dependency_note`), because a text parser can miss or misattribute a use. A link from a
-record to a declaration is a reading link, and the page never calls two statements
-equivalent.
+`dependency_note`), because a text parser can miss or misattribute a use. A link from a record to
+a declaration is a reading link, and the page never calls two statements equivalent.
+
+## Search
+
+"/" opens search everywhere. It is built on the first query, never at startup, from the names,
+the alignment and the three papers' Markdown, cut at blank lines with exact bytes. An exact
+declaration name comes before everything; Enter opens the first result. A result says what it
+is and where it stands. A hit in a paper goes there as an ordinary entry, with Back; a Lean hit
+opens in the page that registered with `hostLean` (`lean/walk.ts`), and otherwise on its own
+page.
 
 ## The reader
 

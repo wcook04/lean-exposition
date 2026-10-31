@@ -134,9 +134,10 @@ export function resolveName(text: string, scope: Scope): NameTarget | null {
   return isLibraryShaped(text) ? { kind: "mathlib", name: text } : null;
 }
 
-const mathlibSearch = "https://leanprover-community.github.io/mathlib4_docs/find/?pattern=";
+const MATHLIB_DOCS = "https://leanprover-community.github.io/mathlib4_docs/";
 
-export const mathlibUrl = (name: string) => `${mathlibSearch}${encodeURIComponent(name)}`;
+/** Mathlib's documentation for a name as written here. The source opens namespaces, so a name may be short of its full form; doc-gen's search finds those, where its `find` address would give a 404. */
+export const mathlibUrl = (name: string) => `${MATHLIB_DOCS}search.html?q=${encodeURIComponent(name)}`;
 
 /** Binders recorded by the tokenizer, added to `into`. */
 export function collectLocals(tokens: readonly LeanToken[], into: Map<string, string | undefined>): void {
@@ -158,6 +159,22 @@ export function variablesOf(module: string, source: string): Map<string, string 
 
 export function makeScope(decl: LeanDeclaration, module: { module: string; source: string }, index: LeanIndex, terms: Map<string, DictionaryTerm>): Scope {
   return { self: decl.name, namespace: decl.namespace, module: module.module, uses: decl.uses, locals: new Map(variablesOf(module.module, module.source)), index, terms };
+}
+
+/**
+ * Which uses appear in the statement and which only in the proof, read from the tokens of
+ * the statement. Compiled data says this itself; this is the reading from the source text.
+ */
+export function splitUses(uses: readonly string[], statement: readonly LeanToken[]): { statement: string[]; proof: string[] } {
+  const named = new Set<string>();
+  for (const token of statement) {
+    if (token.kind !== "name" && token.kind !== "type") continue;
+    for (const part of token.text.split(".")) named.add(part);
+  }
+  const inStatement: string[] = [];
+  const inProof: string[] = [];
+  for (const use of uses) (named.has(use.slice(use.lastIndexOf(".") + 1)) ? inStatement : inProof).push(use);
+  return { statement: inStatement, proof: inProof };
 }
 
 const OPENERS = new Set(["(", "{", "[", "⦃", "⟨"]);

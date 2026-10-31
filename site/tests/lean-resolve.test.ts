@@ -53,7 +53,7 @@ describe("name resolution", () => {
     expect(resolveName("Real.toNNReal", scope)).toEqual({ kind: "mathlib", name: "Real.toNNReal" });
     expect(resolveName("integral_congr_ae", scope)).toEqual({ kind: "mathlib", name: "integral_congr_ae" });
     expect(resolveName("ℝ", scope)).toMatchObject({ kind: "mathlib", name: "Real" });
-    expect(mathlibUrl("Set.Ico")).toBe("https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Set.Ico");
+    expect(mathlibUrl("Set.Ico")).toBe("https://leanprover-community.github.io/mathlib4_docs/search.html?q=Set.Ico");
   });
 
   it("does not guess at short unknown words", () => {
