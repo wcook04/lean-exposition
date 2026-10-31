@@ -15,7 +15,7 @@ import { LazyLeanBlock } from "../../lean/lazy";
 import { statementHref } from "../links";
 import { sectionLabel } from "../../map/TheoremPlate";
 import { RecordPanel } from "../../panels/RecordPanel";
-import { ROLE_WORDS, statementFor, type TieModel } from "../ties";
+import { ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
 
 /** What the Lean page is showing and why. */
 export type LeanView =
@@ -46,7 +46,14 @@ function leanRows(alignment: Alignment | null, record: string, at: string | null
   const row = alignment?.records[record];
   if (!row) return [];
   const statement = at ? row.statements.find((s) => s.at === at) : undefined;
-  return statement?.lean?.length ? statement.lean : row.lean;
+  const rows: StatementLean[] = statement?.lean?.length ? statement.lean : row.lean;
+  const seen = new Set<string>();
+  return rows.filter((item) => {
+    const key = `${item.module}:${item.name}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function placeOf(statement: AlignedStatement): string {
@@ -58,7 +65,13 @@ function placeOf(statement: AlignedStatement): string {
 function Elsewhere({ stage, record, at, alignment, none }: { stage: Stage; record: string; at: string | null; alignment: Alignment | null; none?: string }) {
   const rows = (alignment?.records[record]?.statements ?? []).filter((s) => s.at !== at && s.role !== "mention");
   const order = [stage, ...STAGE_ORDER.filter((s) => s !== stage)];
-  const shown = order.flatMap((paper) => rows.filter((s) => s.paper === paper).slice(0, 2));
+  const seen = new Set<string>();
+  const shown = order.flatMap((paper) => rows.filter((s) => s.paper === paper).slice(0, 2)).filter((s) => {
+    const key = `${s.paper}${s.at}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
   if (!shown.length) return none ? <p className="lean-page__note">{none}</p> : null;
   return (
     <div className="lean-page__places">
@@ -90,7 +103,25 @@ function shortName(name: string, all: readonly { name: string }[]): string {
   return name;
 }
 
-function Statement({ view, ties, stage, alignment, full }: { view: Extract<LeanView, { kind: "statement" | "record" }>; ties: TieModel; stage: Stage; alignment: Alignment | null; full: ReactNode }) {
+/** Other steps tied to the same words. Pointing lights them, choosing pins them. */
+function AlsoHere({ tie, ties, onPick, onPoint }: { tie: number; ties: TieModel; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
+  const { graph } = useEdition();
+  const others = [...new Set(sameWords(ties, tie).map((t) => ties.index.ties[t].record))].filter((id) => id !== ties.index.ties[tie].record && graph.nodes.has(id));
+  if (!others.length) return null;
+  return (
+    <p className="lean-page__also">
+      <span>The same words also tie to</span>
+      {others.slice(0, 4).map((id) => (
+        <button key={id} type="button" onClick={() => onPick(id)} onPointerEnter={() => onPoint(statementFor(ties, id), id)} onPointerLeave={() => onPoint(null)}>
+          {shortTitle(id, graph.nodes.get(id)!.label)}
+        </button>
+      ))}
+      {others.length > 4 && <span>and {others.length - 4} more</span>}
+    </p>
+  );
+}
+
+function Statement({ view, ties, stage, alignment, full, onPick, onPoint }: { view: Extract<LeanView, { kind: "statement" | "record" }>; ties: TieModel; stage: Stage; alignment: Alignment | null; full: ReactNode; onPick(id: string): void; onPoint(tie: number | null, record?: string): void }) {
   const { graph } = useEdition();
   const tie = view.kind === "statement" ? ties.index.ties[view.tie] : null;
   const at = tie?.at ?? null;
@@ -108,6 +139,7 @@ function Statement({ view, ties, stage, alignment, full }: { view: Extract<LeanV
     <>
       <h3 className="lean-page__title">{label}</h3>
       {tie && <p className="lean-page__role">{ROLE_WORDS[tie.role]} here</p>}
+      {view.kind === "statement" && <AlsoHere tie={view.tie} ties={ties} onPick={onPick} onPoint={onPoint} />}
       {!tie && <p className="lean-page__note">This paper has no statement of this step.</p>}
       {list.length > 1 && (
         <ul className="lean-page__rows" aria-label="Lean declarations of this step">
@@ -219,6 +251,8 @@ export function LeanDock({ view, ties, stage, alignment, caption, captionRecords
                 ties={ties}
                 stage={stage}
                 alignment={alignment}
+                onPick={onPick}
+                onPoint={onPoint}
                 full={
                   full ? (
                     <RecordPanel

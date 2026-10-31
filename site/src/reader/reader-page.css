@@ -475,6 +475,23 @@ html:has(.reader) {
   outline-offset: 2px;
 }
 
+/* The thread across the gutter. Fixed to the window; it only ever crosses empty space. */
+.reader-thread {
+  position: fixed;
+  z-index: 5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.reader-thread path {
+  fill: none;
+  stroke: var(--lit-line);
+  stroke-width: 1.25;
+  opacity: 0.7;
+}
+
 /* One plain line at the top of a paper: what the marks are for. */
 .paper-hint {
   margin: 0 0 var(--space-5);

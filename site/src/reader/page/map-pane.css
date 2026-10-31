@@ -350,42 +350,11 @@
   }
 }
 
-/* What the tints on this map mean; the same order as the path through the paper. */
+/* One line says what the strengths mean. */
 .map-pane__legend {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px 6px;
   margin-left: auto;
   font-size: var(--fs-xs);
   color: var(--ink-3);
-}
-
-.map-pane__swatch {
-  width: 14px;
-  height: 10px;
-  border-radius: 2px;
-  border: 1px solid var(--card-border);
-  background: var(--raised);
-}
-
-.map-pane__swatch:not(:first-child) {
-  margin-left: 8px;
-}
-
-.map-pane__swatch--passed {
-  background: var(--trail-passed);
-  border-color: var(--trail-passed-line);
-}
-
-.map-pane__swatch--lit {
-  border-color: var(--lit-line);
-  box-shadow: 0 0 0 1px var(--lit-line);
-}
-
-.map-pane__swatch--faded {
-  border-style: dotted;
-  background: transparent;
 }
 
 /* The note about undrawn links and the assumption tags belong to the full map: here
@@ -397,15 +366,11 @@
 
 /* ---- The reading trail on the map ------------------------------------------------ */
 
-.map-pane,
-.reader-strip {
-  --trail-passed: color-mix(in oklab, var(--rel-formalizes) 32%, var(--raised));
-  --trail-passed-line: color-mix(in oklab, var(--rel-formalizes) 55%, var(--card-border));
-}
-
-.map-pane .card[data-trail="passed"]:not(.is-selected) {
-  background: var(--trail-passed);
-  border-color: var(--trail-passed-line);
+/* The graph fills in as the reader reads: no colour of its own, so a card's fill can say
+   what the Lean says. Ahead is lighter ink, passed is full strength, here is the amber
+   outline, and records this paper does not discuss stay the faintest (.is-elsewhere). */
+.map-pane .card[data-trail="ahead"]:not(.is-elsewhere):not(.card--root) {
+  opacity: 0.62;
 }
 
 .map-pane .card[data-trail="here"]:not(.is-selected) {
@@ -415,7 +380,6 @@
 
 .map-pane .card[data-trail="pinned"] {
   border-color: var(--lit-line);
-  background: var(--lit-wash);
   box-shadow: 0 0 0 2px var(--lit-line);
 }
 
@@ -553,6 +517,34 @@
   margin: 2px 0 var(--space-2);
   font-size: var(--fs-sm);
   color: var(--ink-3);
+}
+
+.lean-page__also {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}
+
+.lean-page__also button {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.lean-page__also button:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
 }
 
 .lean-page__plain {

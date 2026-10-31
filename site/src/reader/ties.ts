@@ -211,7 +211,12 @@ export interface TieModel {
   segmentsOf: number[][];
   /** Statements in paper order, those with marked text only. */
   order: number[];
-  /** Each statement's place in `order`, or -1. */
+  /**
+   * Where stepping stops: one statement for each place a statement starts. Many slices
+   * can open on the same words, and a step must always move.
+   */
+  stops: number[];
+  /** Each statement's place among the stops, or -1. */
   place: number[];
   /** `record|at` to statement. */
   byKey: Map<string, number>;
@@ -229,8 +234,13 @@ export function tieModel(index: TieIndex | null): TieModel {
   source.segments.forEach(([, , members], segment) => members.forEach((t) => segmentsOf[t]?.push(segment)));
   const order = source.ties.map((_, t) => t).filter((t) => segmentsOf[t].length);
   order.sort((a, b) => segmentsOf[a][0] - segmentsOf[b][0] || segmentsOf[a].length - segmentsOf[b].length || a - b);
+  const stops: number[] = [];
   const place = source.ties.map(() => -1);
-  order.forEach((t, i) => (place[t] = i));
+  source.segments.forEach(([, , members], segment) => {
+    const opening = members.find((t) => segmentsOf[t][0] === segment);
+    if (opening !== undefined) stops.push(opening);
+    for (const t of members) if (segmentsOf[t][0] === segment) place[t] = stops.length - 1;
+  });
   const byKey = new Map<string, number>();
   const byRecord = new Map<string, number[]>();
   source.ties.forEach((tie, t) => byKey.set(`${tie.record}|${tie.at}`, t));
@@ -240,17 +250,18 @@ export function tieModel(index: TieIndex | null): TieModel {
     else byRecord.set(source.ties[t].record, [t]);
   }
   const segmentLean = source.segments.map(([, , members]) => members.some((t) => source.ties[t]?.lean));
-  return { index: source, segmentsOf, order, place, byKey, byRecord, segmentLean };
+  return { index: source, segmentsOf, order, stops, place, byKey, byRecord, segmentLean };
 }
 
-/**
- * The statement a segment stands for. The one already on stays on while its words do,
- * so that scrolling through an overlap does not flicker between two records.
- */
-export function statementOf(model: TieModel, segment: number, held: number | null): number | null {
-  const members = model.index.segments[segment]?.[2];
-  if (!members?.length) return null;
-  return held !== null && members.includes(held) ? held : members[0];
+/** The statement a segment stands for: its first tie, which has Lean if any does, and is the narrowest. */
+export function statementOf(model: TieModel, segment: number): number | null {
+  return model.index.segments[segment]?.[2][0] ?? null;
+}
+
+/** The other statements on the same words, for "Also here". */
+export function sameWords(model: TieModel, t: number): number[] {
+  const members = model.index.segments[model.segmentsOf[t]?.[0]]?.[2] ?? [];
+  return members.filter((other) => other !== t);
 }
 
 /** Where a record opens in this paper: exactly this slice, else its first statement with Lean, else its first. */
@@ -265,11 +276,13 @@ export function statementFor(model: TieModel, record: string | undefined, at?: s
   return rows.find((t) => model.index.ties[t].lean) ?? rows[0];
 }
 
-/** The next statement after `from` in reading order, by a step of +1 or -1. */
-export function stepFrom(model: TieModel, from: number | null, step: 1 | -1): number | null {
-  if (!model.order.length) return null;
-  if (from === null || model.place[from] < 0) return step > 0 ? model.order[0] : model.order[model.order.length - 1];
-  return model.order[model.place[from] + step] ?? null;
+/** The next stop after this segment, by a step of +1 or -1; from nothing, the first or the last. */
+export function stepFrom(model: TieModel, segment: number | null, step: 1 | -1): number | null {
+  const firstSegment = (t: number) => model.segmentsOf[t][0];
+  if (segment === null) return model.stops[step > 0 ? 0 : model.stops.length - 1] ?? null;
+  if (step > 0) return model.stops.find((t) => firstSegment(t) > segment) ?? null;
+  for (let i = model.stops.length - 1; i >= 0; i--) if (firstSegment(model.stops[i]) < segment) return model.stops[i];
+  return null;
 }
 
 /** The records a passage discusses, whether or not any sentence of it is tied exactly. */

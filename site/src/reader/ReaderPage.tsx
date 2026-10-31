@@ -171,6 +171,10 @@ function blocksOf(part: HTMLElement | null | undefined, last: number, lines: { s
 const READING_LINE = 0.3;
 /** How far from the reading line a statement still counts as what is being read. */
 const LINE_REACH = 0.32;
+/** Further than this share of the window in one hold is flying, not reading. */
+const FLYING = 0.5;
+/** What the thread reaches on the Lean page: the lit lines where they are drawn, else the step's title. */
+const LEAN_TARGET = "[data-lit], .lean-clause, .lean-page__title";
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
@@ -564,12 +568,42 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const handMoved = useRef(false);
   /** The statement under the reading line, on the page at once. */
   const current = useRef<number | null>(null);
+  const currentSegment = useRef<number | null>(null);
   /** Stepped to by keys: the line leaves it alone until the reader scrolls by hand. */
   const stepped = useRef(false);
   const pointed = useRef<number | null>(null);
   const pointAtRef = useRef<(t: number | null, record?: string) => void>(() => undefined);
   const movedAt = useRef(0);
   const update = useRef<() => void>(() => undefined);
+  const thread = useRef<SVGPathElement>(null);
+
+  /**
+   * The thread: a short line across the gutter from the statement to the Lean beside it. It
+   * only ever crosses the empty gutter, so it can touch no card and no text, and it goes
+   * whenever either end is off the screen. Drawn from what is on screen, with no state.
+   */
+  const drawThread = useCallback(() => {
+    const path = thread.current;
+    if (!path) return;
+    const t = pinRef.current?.tie ?? current.current;
+    const first = t !== null ? statements.first(t) : null;
+    const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
+    const page = document.querySelector(".lean-page");
+    const pane = page?.getBoundingClientRect();
+    const target = (page?.querySelector(LEAN_TARGET) ?? null)?.getBoundingClientRect();
+    const box = first?.getClientRects()[0];
+    const top = readingTop();
+    if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || page?.closest(".map-pane__pages")?.querySelector(".lean-page") !== page || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
+      if (path.getAttribute("d")) path.setAttribute("d", "");
+      return;
+    }
+    const y0 = box.top + box.height / 2;
+    const y1 = target.top + Math.min(target.height, 22) / 2;
+    const x0 = paper.right + 4;
+    const x1 = pane.left - 1;
+    const mid = (x0 + x1) / 2;
+    path.setAttribute("d", `M${x0.toFixed(1)} ${y0.toFixed(1)}C${mid.toFixed(1)} ${y0.toFixed(1)} ${mid.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`);
+  }, [statements, readingTop]);
 
   useEffect(() => {
     pinSeen.current = false;
@@ -638,7 +672,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       signals.part.set(part);
       if (!stepped.current) {
         const segment = statements.atLine(line, (window.innerHeight - top) * LINE_REACH, atLine);
-        current.current = segment === null ? null : statementOf(ties, segment, current.current);
+        currentSegment.current = segment;
+        current.current = segment === null ? null : statementOf(ties, segment);
         if (!pinRef.current) statements.light("on", current.current);
       }
       const passage = passageAt(body, line);
@@ -647,7 +682,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         settled = key;
         window.clearTimeout(holdTimer);
         const held = current.current;
-        holdTimer = window.setTimeout(() => settle(held, passage), FOLLOW_HOLD);
+        // A long statement can hold the line while the page flies past: wait for the page too.
+        let from = window.scrollY;
+        const hold = () => {
+          const moved = Math.abs(window.scrollY - from);
+          from = window.scrollY;
+          if (moved > window.innerHeight * FLYING) holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
+          else settle(held, passage);
+        };
+        holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
       }
       const held = pinRef.current?.tie ?? null;
       if (held !== null) {
@@ -668,6 +711,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       if (window.scrollY < 8) heading = null;
       signals.heading.set(heading);
+      drawThread();
     };
     update.current = () => {
       if (!frame) frame = requestAnimationFrame(run);
@@ -712,7 +756,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, release]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, release, drawThread]);
+
+  // The Lean page changes and scrolls on its own; the thread keeps up.
+  useEffect(() => {
+    const redraw = () => requestAnimationFrame(drawThread);
+    const off = signals.follow.subscribe(() => window.setTimeout(redraw, 120));
+    const onInner = (event: Event) => (event.target as Element).closest?.(".lean-page") && redraw();
+    window.addEventListener("scroll", onInner, { capture: true, passive: true });
+    return () => {
+      off();
+      window.removeEventListener("scroll", onInner, { capture: true });
+    };
+  }, [signals, drawThread]);
 
   const trail = useMemo(() => paperTrail(structure), [structure]);
 
@@ -925,7 +981,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const mark = target.closest?.<HTMLElement>("[data-t]");
     if (mark) {
       signals.caption.set(null);
-      pointAt(statementOf(ties, Number(mark.dataset.t), current.current));
+      pointAt(statementOf(ties, Number(mark.dataset.t)));
       return;
     }
     pointAt(null);
@@ -940,7 +996,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const onPaperFocus = (event: React.FocusEvent) => {
     const mark = (event.target as Element).closest?.<HTMLElement>("[data-t]");
-    if (mark) pointAt(statementOf(ties, Number(mark.dataset.t), current.current));
+    if (mark) pointAt(statementOf(ties, Number(mark.dataset.t)));
   };
 
   // ---- Keys ----------------------------------------------------------------------------
@@ -950,12 +1006,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     (by: 1 | -1) => {
       // Between statements the step starts from where the reader is, not from the paper's start.
       const at = signals.part.get();
-      const from = current.current;
-      const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.order.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.order].reverse().find((t) => statements.partOf(t) < at) ?? null);
+      const from = currentSegment.current;
+      const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
       if (next === null) return;
       if (pinRef.current) release();
       stepped.current = true;
       current.current = next;
+      currentSegment.current = ties.segmentsOf[next][0];
       statements.light("on", next);
       update.current();
       void landSlice(ties.index.ties[next].at, { node: ties.index.ties[next].record, smooth: true }).then(() => {
@@ -1025,7 +1082,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const moved = !!down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 5;
       const selection = window.getSelection();
       if (moved || (selection && !selection.isCollapsed && selection.toString().trim())) return;
-      const t = statementOf(ties, Number(mark.dataset.t), pinRef.current?.tie ?? current.current);
+      const t = statementOf(ties, Number(mark.dataset.t));
       if (t === null) return;
       // The second click of a double click selects a word; wait to see that it does not come.
       if ((event.nativeEvent as PointerEvent).pointerType === "touch") openStatement(t);
@@ -1223,7 +1280,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <div className="reader-strip" ref={stripRef}>
           {mid && !outlineColumn && <Heading signals={signals}>{(current) => <SectionsPopover {...sectionsProps} current={current} />}</Heading>}
           <Crumbs signals={signals} outline={outline} name={names.short} stage={stage} phone={phone} onTop={toTop} onJump={(id) => jumpWithHistory(id, true)} />
-          {ties.order.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
+          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} onStep={step} />}
           {mid && (
             <button
               type="button"
@@ -1267,7 +1324,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             {notice}
           </p>
         )}
-        {ties.order.length > 0 && (
+        {ties.stops.length > 0 && (
           <p className="paper-hint">
             {phone ? "Tap" : "Click"} any marked statement to see its Lean. <span className="paper-hint__more">A tick in the margin marks a statement tied to a step of the proof, darker where the step has Lean.{!phone && " Press j and k to step through them."}</span>
           </p>
@@ -1302,6 +1359,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         <aside className="reader__inspector" aria-label="Records linked to this passage" inert={route.beside ? true : undefined}>
           {inspector}
         </aside>
+      )}
+
+      {paneOn && (
+        <svg className="reader-thread" aria-hidden="true">
+          <path ref={thread} />
+        </svg>
       )}
 
       {paneOn && (
@@ -1479,7 +1542,7 @@ function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties:
         {arrow("M7.5 2.5L4 6l3.5 3.5")}
       </button>
       <span className="num" aria-live="polite">
-        {place >= 0 ? `${place + 1} of ${ties.order.length}` : `${ties.order.length} statements`}
+        {place >= 0 ? `${place + 1} of ${ties.stops.length}` : `${ties.stops.length} statements`}
       </span>
       <button type="button" aria-label="Next tied statement" title="Next tied statement (j)" onClick={() => onStep(1)}>
         {arrow("M4.5 2.5L8 6l-3.5 3.5")}

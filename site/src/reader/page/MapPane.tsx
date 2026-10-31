@@ -3,8 +3,9 @@
 // It opens with every branch drawn, records this paper discusses at full strength and the
 // rest quieter, and it follows the reader: as a statement settles under the reading line its
 // card lights, the camera moves only if the card has left the view, and its Lean fills the
-// Lean page. Records already passed stay tinted. Panning or zooming pauses the camera. Under
-// 1280px the same page opens as a sheet.
+// Lean page. The graph fills in as the reader goes: cards ahead are in lighter ink, cards
+// passed at full strength (`data-trail`). Panning or zooming pauses the camera. Under 1280px
+// the same page opens as a sheet.
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 import type { Alignment } from "../../api/lean";
@@ -158,7 +159,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const writeTrail = useCallback(() => {
     bodyRef.current?.querySelectorAll<HTMLElement>(".card[data-record]").forEach((card) => {
       const id = card.dataset.record!;
-      const state = pinned === id ? "pinned" : litIds?.has(id) ? "here" : passedIds.has(id) ? "passed" : "";
+      const state = pinned === id ? "pinned" : litIds?.has(id) ? "here" : passedIds.has(id) ? "passed" : "ahead";
       if ((card.dataset.trail ?? "") !== state) card.dataset.trail = state;
     });
   }, [litIds, passedIds, pinned]);
@@ -380,16 +381,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             </div>
             <div className="map-pane__row map-pane__row--trail">
               {progress && <span className="map-pane__progress">{progress}</span>}
-              <span className="map-pane__legend">
-                <span className="map-pane__swatch map-pane__swatch--passed" aria-hidden="true" />
-                Passed
-                <span className="map-pane__swatch map-pane__swatch--lit" aria-hidden="true" />
-                Here
-                <span className="map-pane__swatch" aria-hidden="true" />
-                Ahead
-                <span className="map-pane__swatch map-pane__swatch--faded" aria-hidden="true" />
-                Not in the {PAPER_NAMES[stage].short.toLowerCase()}
-              </span>
+              <span className="map-pane__legend">The graph fills in as you read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.</span>
             </div>
           </header>
           <div className="map-pane__body" ref={bodyRef}>

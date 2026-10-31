@@ -644,6 +644,18 @@ function breakSize(size: Natural, available: number): number {
 /** How far from the screen a formula is fitted, so it is ready before it arrives. */
 const FIT_MARGIN = "900px 0px";
 
+/** Formulas waiting to be fitted, across all parts: a few each frame, so scrolling never waits for a stack of them. */
+const fitQueue: (() => void)[] = [];
+let fitFrame = 0;
+const FIT_BUDGET_MS = 5;
+
+function drainFits() {
+  fitFrame = 0;
+  const until = performance.now() + FIT_BUDGET_MS;
+  while (fitQueue.length && performance.now() < until) fitQueue.shift()!();
+  if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);
+}
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
@@ -705,7 +717,9 @@ export function markWideMaths(root: HTMLElement): () => void {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
               near?.unobserve(entry.target);
-              fit(entry.target as HTMLElement);
+              const box = entry.target as HTMLElement;
+              fitQueue.push(() => live && fit(box));
+              fitFrame ||= requestAnimationFrame(drainFits);
             }
           },
           // scrollMargin reaches the same way through a scrolling column or sheet.

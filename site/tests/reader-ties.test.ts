@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import type { TieIndex } from "../src/api/lean";
 import type { PaperStructure, Stage } from "../src/api/types";
 import { prepareDocument } from "../src/reader/engine";
-import { markSource, passageTopics, segmentsIn, statementFor, statementOf, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
+import { markSource, passageTopics, sameWords, segmentsIn, statementFor, statementOf, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
 import { documentFixture, fixture, structureFixture } from "./fixtures";
 
 const PATHS: Record<Stage, string> = { long: "long/reasoning-record.md", short: "short/paper.md", expository: "expository/main.md" };
@@ -188,6 +188,7 @@ describe.each(STAGES)("the %s paper with all its ties", (stage) => {
   it("gives every statement a place in reading order", () => {
     const model = tieModel(index);
     expect(model.order.length).toBe(index.ties.length);
+    expect(new Set(model.stops.map((t) => model.segmentsOf[t][0])).size).toBe(model.stops.length);
     const starts = model.order.map((t) => index.segments[model.segmentsOf[t][0]][0]);
     expect(starts).toEqual([...starts].sort((a, b) => a - b));
   });
@@ -205,10 +206,11 @@ describe("the model", () => {
   };
   const model = tieModel(index);
 
-  it("keeps the statement that is on while its words last", () => {
-    expect(statementOf(model, 1, null)).toBe(0);
-    expect(statementOf(model, 1, 1)).toBe(1);
-    expect(statementOf(model, 2, 0)).toBe(1);
+  it("takes a segment's first tie, and names the others on the same words", () => {
+    expect(statementOf(model, 1)).toBe(0);
+    expect(statementOf(model, 2)).toBe(1);
+    expect(sameWords(model, 1)).toEqual([0]);
+    expect(sameWords(model, 0)).toEqual([]);
   });
 
   it("finds a record's statement by slice, else by Lean", () => {
@@ -222,6 +224,13 @@ describe("the model", () => {
     expect(stepFrom(model, 0, 1)).toBe(1);
     expect(stepFrom(model, 1, 1)).toBeNull();
     expect(stepFrom(model, null, -1)).toBe(1);
+    expect(stepFrom(model, 1, -1)).toBe(0);
+  });
+
+  it("stops once where several statements open on the same words, so a step always moves", () => {
+    const same = tieModel({ ...index, segments: [[0, 5, [0, 1]], [6, 9, [1]]] });
+    expect(same.stops).toEqual([0]);
+    expect(same.place).toEqual([0, 0]);
   });
 
   it("answers for a paragraph with no slice from its passage", () => {
