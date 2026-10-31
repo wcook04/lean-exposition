@@ -6,16 +6,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { routeHref } from "../app/router";
+import { LeanGlyph } from "./LeanGlyph";
+import { Sample } from "./Sample";
 
-/** A short piece of one kind of line, drawn with the map's own classes at the map's reading scale. */
-export function Sample({ kind, head = true, className }: { kind: "supports" | "assumes" | "formalizes"; head?: boolean; className?: string }) {
-  return (
-    <svg className={`map-key__sample${className ? ` ${className}` : ""}`} viewBox="0 0 48 16" width="48" height="16" aria-hidden="true" style={{ ["--k" as string]: 1 }}>
-      <path className={`link link--${kind}`} d={head ? "M3 8H37" : "M3 8H46"} />
-      {head && <path className={`head head--${kind}`} d="M46 8 L36 4.4 L36 11.6 Z" />}
-    </svg>
-  );
-}
+export { Sample };
 
 /** The Key: everything the map's marks mean, in words. */
 export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | null): void }) {
@@ -63,6 +57,22 @@ export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | nu
               <span className="keyrow__clone" aria-hidden="true" /> A band along the foot marks a record drawn again under each result that uses it.
             </li>
           </ul>
+          <p className="map-keypop__h">Lean</p>
+          <ul className="map-keypop__channels">
+            <li>
+              <LeanGlyph mark={{ shape: "box" }} /> A box is a definition, a rounded shape a result.
+            </li>
+            <li>
+              <LeanGlyph mark={{ shape: "round", statement: "whole" }} /> The left bar is a Lean statement of it.
+            </li>
+            <li>
+              <LeanGlyph mark={{ shape: "round", proof: "whole" }} /> The right bar is a Lean proof: a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
+            </li>
+            <li>
+              <LeanGlyph mark={{ shape: "round", statement: "part", proof: "part" }} /> A short bar means part of it. With no bars, no declaration is linked.
+            </li>
+            <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each record's checks.</li>
+          </ul>
           <p className="map-keypop__h">Lines</p>
           <ul className="map-keypop__channels">
             <li>
@@ -75,7 +85,7 @@ export function KeyPopover({ onNotesHost }: { onNotesHost(host: HTMLElement | nu
           </ul>
           <p className="map-keypop__h">Moving around</p>
           <ul className="map-keypop__channels">
-            <li>Scroll to pan, or drag from anywhere. Pinch, or Ctrl or ⌘ with the wheel, zooms. The + and − keys zoom too.</li>
+            <li>Scroll to pan, or drag from anywhere. Pinch, or Ctrl or ⌘ with the wheel, zooms. The + and − keys zoom too, Shift with an arrow key pans, and 0 fits the whole map.</li>
             <li>↑ goes to the result that uses this one, ↓ to its first input, ← and → to the inputs beside it. Enter opens its inputs and Esc clears the selection.</li>
             <li>With a paper chosen, [ and ] step through its passages.</li>
           </ul>

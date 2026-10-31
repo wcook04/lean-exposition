@@ -19,12 +19,19 @@ import { lensArgument, pathFromGoal, reach, scopedGraph, usesOf } from "./treeMo
 import { GoalPlate, StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
 import { RecordPanel } from "../panels/RecordPanel";
 import { EdgePanel } from "../panels/EdgePanel";
+import { DeclPanel } from "../panels/DeclPanel";
 import { usePresence } from "../panels/presence";
 import { chooseAccount } from "../panels/accountStore";
 import { KeyPopover } from "./MapKey";
+import { MapStrip } from "./MapStrip";
 import { LensControl } from "./LensControl";
 import { WalkBar, useWalk } from "./WalkBar";
-import { levelCounts, levelRecords, lensSentence } from "./levels";
+import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence } from "./levels";
+import { recordMark } from "./leanMarks";
+import { useLeanGraph } from "./useLeanGraph";
+import { useAlignment } from "../compare/useAlignment";
+import { namePlace } from "../app/trail";
+import type { LeanStep } from "../panels/model";
 import { shortTitle as recordTitle } from "../compare/useAlignment";
 import { startLeanViewer } from "../lean/lazy";
 import type { WalkKey } from "./walk";
@@ -43,9 +50,15 @@ type TreeHandle = MapViewHandle;
 
 const WALK_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
 
+/** Lean names break at their underscores, so a narrower tile than a record's holds them and the ranks stay on a monitor. */
+const LEAN_TILE_W = 168;
+/** On a laptop the sheet takes a third of the width: slimmer tiles keep the widest rank on the canvas. */
+const LAPTOP_TILE_W = 174;
+const LEAN_TILE_H = 58;
+
 const INTRO_KEY = "lx-map-intro";
 const DISPLAY_KEY = "lx-map-display";
-type View = "steps" | "overview" | "outline";
+type View = "steps" | "overview" | "outline" | "lean";
 
 function useMedia(query: string): boolean {
   const [match, setMatch] = useState(() => typeof window !== "undefined" && !!window.matchMedia?.(query).matches);
@@ -126,6 +139,8 @@ export function MapPage({ route }: { route: MapRoute }) {
   const selected = !edgeKey && route.node && graph.nodes.has(route.node) ? route.node : undefined;
   const requestedGoal = route.goal && graph.nodes.has(route.goal) ? route.goal : fallbackGoal;
   const selectionIds = useMemo(() => (edgeObj ? [edgeObj.from, edgeObj.to] : selected ? [selected] : []), [edgeObj, selected]);
+  // In the Lean graph, what is selected is a declaration or the goal; the record stays in the URL.
+  const chosenDecl = route.decl;
   // The goal drawn: the one asked for, unless it does not draw the selection; then the
   // smallest starting goal that draws all of it, then any recorded goal that does.
   const goal = useMemo(() => {
@@ -157,6 +172,18 @@ export function MapPage({ route }: { route: MapRoute }) {
   const scopedReach = useMemo(() => reach(argument, goal, within), [argument, goal, within]);
   const counts = useMemo(() => levelCounts(graph, reach(scopedGraph(graph, goal), goal)), [graph, goal]);
   const stepNotDrawn = !!edgeObj && !(goalReach.has(edgeObj.from) && goalReach.has(edgeObj.to));
+
+  // ---- The Lean graph: the declarations this argument links, with their uses -------------
+
+  const leanOn = !!route.lean;
+  const leanRecords = useMemo(() => {
+    const all = reach(scopedGraph(graph, goal), goal);
+    return within ? new Set([...all].filter((id) => within.has(id) || id === goal)) : all;
+  }, [graph, goal, within]);
+  const leanGraph = useLeanGraph({ enabled: leanOn, graph, goal, records: leanRecords });
+  const leanReady = leanOn && leanGraph.status === "ready" ? leanGraph : null;
+  const alignment = useAlignment();
+  const leanCounts = useMemo(() => (alignment ? leanLevelCounts(graph, reach(scopedGraph(graph, goal), goal), alignment) : null), [alignment, graph, goal]);
   const outsideScope = !!route.lens && !stepNotDrawn && selectionIds.some((id) => !within?.has(id) || !scopedReach.has(id));
 
   // ---- View: steps, overview or outline -----------------------------------------------
@@ -173,6 +200,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     setChosenDisplay(d);
     writeSession(DISPLAY_KEY, d);
   };
+  const laptop = useMedia("(max-width: 1400px)");
   const [notesHost, setNotesHost] = useState<HTMLElement | null>(null);
   const initialScene = useRef<MapScene | null>(null);
   if (initialScene.current === null) initialScene.current = readScene(has) ?? ({} as MapScene);
@@ -204,7 +232,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (!scene || display !== "map" || !treeRef.current) return;
     restoreRef.current = null;
     treeRef.current.restoreScene(scene);
-  }, [restoreTick, display]);
+  }, [restoreTick, display, !!leanReady]);
 
   // Which branches are open, as the tree last reported it; the canvas buttons use it to say when they would change nothing.
   const [openIds, setOpenIds] = useState<ReadonlySet<string> | null>(null);
@@ -220,9 +248,14 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const go = useCallback(
     (patch: Partial<MapRoute>, replace = false) => {
-      const next: MapRoute = { view: "map", node: route.node, trace: route.trace, lens: route.lens, goal: route.goal, edge: route.edge, ...patch };
+      const next: MapRoute = { view: "map", node: route.node, trace: route.trace, lens: route.lens, goal: route.goal, edge: route.edge, lean: route.lean, decl: route.decl, declModule: route.declModule, ...patch };
       if (!next.node) next.trace = undefined;
       if (patch.node) next.edge = patch.edge;
+      // Choosing a record or a step closes the declaration open in the sheet.
+      if ((patch.node || patch.edge) && !("decl" in patch)) {
+        next.decl = undefined;
+        next.declModule = undefined;
+      }
       if (next.goal === fallbackGoal) next.goal = undefined;
       // The entry being left keeps the scene it showed, so Back can return to it.
       if (!replace) writer.flush(treeRef.current?.getScene() ?? null);
@@ -256,6 +289,12 @@ export function MapPage({ route }: { route: MapRoute }) {
     });
   };
   const closeSelection = () => {
+    if (route.decl) {
+      const name = route.decl;
+      go({ decl: undefined, declModule: undefined });
+      if (!route.node) returnFocus([name]);
+      return;
+    }
     const ids = edgeObj ? [edgeObj.from] : [selected];
     if (edgeObj) go({ edge: undefined });
     else go({ node: undefined });
@@ -268,6 +307,15 @@ export function MapPage({ route }: { route: MapRoute }) {
     }
     if (opener !== undefined && !selected && !edgeKey) openerRef.current = opener;
     go({ node: id, edge: undefined, trace: undefined });
+  };
+  /** One step to a declaration in the sheet: one history entry, and the sheet walks in place. */
+  const walkDecl = (walk: LeanStep) => go({ decl: walk.name, declModule: walk.module, edge: undefined });
+  /** A card of the Lean graph: a declaration, or the goal's record. */
+  const selectLean = (id: string | null) => {
+    if (id === null) {
+      if (route.decl || route.node) go({ decl: undefined, declModule: undefined, node: undefined });
+    } else if (id === goal) go({ node: goal, decl: undefined, declModule: undefined });
+    else go({ decl: id, declModule: undefined, node: undefined, edge: undefined, trace: undefined });
   };
   const selectEdge = (key: string | null) => {
     if (key === null) {
@@ -299,7 +347,7 @@ export function MapPage({ route }: { route: MapRoute }) {
       if (document.querySelector("[data-modal-open]")) return;
       const { route: r, closeSelection: close } = routeRef.current;
       if (r.trace && r.node) go({ trace: undefined });
-      else if (r.edge || r.node) close();
+      else if (r.decl || r.edge || r.node) close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -319,10 +367,11 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // ---- Inspector ----------------------------------------------------------------------
 
-  const panelKey = edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
+  const panelKey = chosenDecl ? `d:${chosenDecl}` : edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
   const shown = usePresence(panelKey);
   const shownNode = shown.value?.startsWith("n:") ? shown.value.slice(2) : undefined;
   const shownEdge = shown.value?.startsWith("e:") ? shown.value.slice(2) : undefined;
+  const shownDecl = shown.value?.startsWith("d:") ? shown.value.slice(2) : undefined;
   const panelOpen = !!shown.value;
   // On a phone the panel is a bottom sheet over the canvas; the camera keeps
   // the selection above it.
@@ -356,7 +405,7 @@ export function MapPage({ route }: { route: MapRoute }) {
       window.removeEventListener("resize", measure);
     };
   }, [panelOpen, shown.value]);
-  const noteShown = outsideScope || stepNotDrawn;
+  const noteShown = (outsideScope || stepNotDrawn) && !leanOn;
   const insets: Insets = useMemo(() => ({ top: noteShown ? 64 : 20, left: 20, right: 20, bottom: 20 + sheetInset }), [sheetInset, noteShown]);
 
   // What "Show all branches" and "Collapse branches" would change.
@@ -371,6 +420,12 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // One recorded route from the goal; under a lens, through the records that paper uses. Null when there is none.
   const crumbs = useMemo(() => (shownNode ? pathFromGoal(argument, goal, shownNode, within) : null), [argument, goal, shownNode, within]);
+
+  // In the Lean graph, the declarations of the record open in the sheet are lit.
+  const litDecls = useMemo(() => {
+    if (!leanOn || !route.node || route.node === goal || route.decl) return null;
+    return new Set(alignment?.records[route.node]?.lean.map((row) => row.name) ?? []);
+  }, [leanOn, route.node, route.decl, goal, alignment]);
 
   // ---- Paper walk ---------------------------------------------------------------------
 
@@ -391,8 +446,8 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // ---- Keys: walking the graph, zooming, stepping through a paper ---------------------
 
-  const keysRef = useRef({ selected, stepWalk, go });
-  keysRef.current = { selected, stepWalk, go };
+  const keysRef = useRef({ selected, stepWalk, go, leanOn, selectLean });
+  keysRef.current = { selected, stepWalk, go, leanOn, selectLean };
   const displayRef = useRef(display);
   displayRef.current = display;
   useEffect(() => {
@@ -402,11 +457,17 @@ export function MapPage({ route }: { route: MapRoute }) {
       const tree = treeRef.current;
       const k = keysRef.current;
       if (!tree) return;
-      if (WALK_KEYS.has(event.key)) {
+      if (WALK_KEYS.has(event.key) && event.shiftKey) {
+        event.preventDefault();
+        const step = 96;
+        tree.panBy(event.key === "ArrowLeft" ? step : event.key === "ArrowRight" ? -step : 0, event.key === "ArrowUp" ? step : event.key === "ArrowDown" ? -step : 0);
+      } else if (WALK_KEYS.has(event.key)) {
         event.preventDefault();
         const id = tree.walk(event.key as WalkKey);
-        if (id) k.go({ node: id, edge: undefined, trace: undefined }, true);
-      } else if (event.key === "+" || event.key === "=") tree.zoomBy(1.2);
+        if (id && k.leanOn) k.selectLean(id);
+        else if (id) k.go({ node: id, edge: undefined, trace: undefined }, true);
+      } else if (event.key === "0") tree.fit();
+      else if (event.key === "+" || event.key === "=") tree.zoomBy(1.2);
       else if (event.key === "-" || event.key === "_") tree.zoomBy(1 / 1.2);
       else if (event.key === "[") k.stepWalk(-1);
       else if (event.key === "]") k.stepWalk(1);
@@ -421,12 +482,23 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const scopeLine = lensSentence(counts, route.lens);
 
+  // The place being left, for the Back control on the next page.
+  const placeRef = useRef<string | null>(null);
+  placeRef.current = chosenDecl ? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1) : selected ? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected) : leanOn ? "the Lean graph" : "the map";
+  useEffect(() => namePlace(() => placeRef.current), []);
+
   const chooseView = (v: View) => {
     // Pressing the view already shown frames it again: Steps around the selection, Overview the whole argument.
     if (viewPressed(v)) {
       if (v !== "outline") treeRef.current?.fitAll();
       return;
     }
+    if (v === "lean") {
+      chooseDisplay("map");
+      return go({ lean: true });
+    }
+    // Leaving the Lean graph goes back to the record it was opened from.
+    if (leanOn) go({ lean: undefined, decl: undefined, declModule: undefined, node: route.node ?? goal });
     if (v === "outline") return chooseDisplay("outline");
     if (display !== "map") {
       // The tree mounts afresh; give it this entry's remembered camera.
@@ -437,17 +509,17 @@ export function MapPage({ route }: { route: MapRoute }) {
     chooseDisplay("map");
     setMode(v);
   };
-  const viewPressed = (v: View) => (v === "outline" ? display === "outline" : display === "map" && mode === v);
+  const viewPressed = (v: View) => (v === "lean" ? leanOn && display === "map" : leanOn ? false : v === "outline" ? display === "outline" : display === "map" && mode === v);
 
   return (
     <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`}>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
-        <LensControl lens={route.lens} counts={counts} onLens={changeLens} />
+        <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
         <KeyPopover onNotesHost={setNotesHost} />
       </div>
-      {route.lens && display === "map" && <p className="map-sub">{scopeLine} A line may pass over records it leaves out.</p>}
+      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over records it leaves out.`}</p>}
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (
@@ -476,9 +548,33 @@ export function MapPage({ route }: { route: MapRoute }) {
             )}
           </p>
         )}
-        {display === "map" && <p ref={captionRef} className="map-caption" hidden />}
-        {display === "map" ? (
+        {display === "map" && leanOn && !leanReady ? (
+          <p className="map-loading" role="status">
+            {leanGraph.status === "failed" ? "The Lean index could not be loaded." : "Reading the Lean modules this argument uses…"}
+          </p>
+        ) : display === "map" && leanReady ? (
           <ArgumentTree
+            key={`lean:${route.lens ?? ""}`}
+            ref={treeRef}
+            graph={leanReady.graph}
+            goal={goal}
+            selected={chosenDecl && leanReady.graph.nodes.has(chosenDecl) ? chosenDecl : !chosenDecl && selected === goal ? goal : undefined}
+            insets={insets}
+            onSelect={selectLean}
+            onTrace={() => undefined}
+            litIds={litDecls}
+            captionRef={captionRef}
+            mode="overview"
+            lens={undefined}
+            persist={false}
+            statusOf={leanReady.markOf}
+            tileWidth={LEAN_TILE_W}
+            tileHeight={LEAN_TILE_H}
+            onSceneSettled={onSceneSettled}
+          />
+        ) : display === "map" ? (
+          <ArgumentTree
+            key="argument"
             ref={treeRef}
             graph={graph}
             goal={goal}
@@ -507,6 +603,8 @@ export function MapPage({ route }: { route: MapRoute }) {
             onModeChange={setMode}
             previewIds={preview}
             onSceneSettled={onSceneSettled}
+            statusOf={recordMark}
+            tileWidth={laptop ? LAPTOP_TILE_W : undefined}
           />
         ) : (
           <ArgumentOutline
@@ -522,9 +620,16 @@ export function MapPage({ route }: { route: MapRoute }) {
             bottomInset={sheetInset}
           />
         )}
+        {display === "map" && (
+          <MapStrip
+            lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : leanOn ? {} : undefined}
+            captionRef={captionRef}
+            onFit={() => treeRef.current?.fit()}
+          />
+        )}
       </div>
 
-      {display === "map" && (route.lens || !overview) && (
+      {display === "map" && !leanOn && (route.lens || !overview) && (
         <div className="map-foot" style={{ marginBottom: sheetInset }}>
           {route.lens ? <WalkBar stage={route.lens} passages={walk.passages} at={walkAt} onStep={stepWalk} /> : <span />}
           {!overview && <div className="map-controls" role="group" aria-label="Branches of the argument">
@@ -556,6 +661,17 @@ export function MapPage({ route }: { route: MapRoute }) {
         </div>
       )}
 
+      {shownDecl && (
+        <DeclPanel
+          name={shownDecl}
+          module={route.declModule}
+          leaving={shown.leaving}
+          onClose={closeSelection}
+          onSelect={(id) => select(id)}
+          onWalk={walkDecl}
+          onEcho={setPreview}
+        />
+      )}
       {shownNode && (
         <RecordPanel
           nodeId={shownNode}
@@ -567,6 +683,7 @@ export function MapPage({ route }: { route: MapRoute }) {
           onTrace={(t) => go({ trace: t })}
           onEcho={setPreview}
           onEdge={(key) => selectEdge(key)}
+          onWalk={walkDecl}
           account={route.lens}
           goalBody={shownNode === goal ? <TheoremBody goal={goal} /> : undefined}
           onInputs={display === "map" && !overview ? (id) => treeRef.current?.toggleInputs(id) : undefined}
@@ -579,6 +696,7 @@ export function MapPage({ route }: { route: MapRoute }) {
           leaving={shown.leaving}
           onClose={closeSelection}
           onSelect={(id) => select(id)}
+          onWalk={walkDecl}
           onEcho={setPreview}
         />
       )}
@@ -729,6 +847,7 @@ function ViewSwitch({ pressed, onView }: { pressed(v: View): boolean; onView(v: 
     { id: "overview", label: "Whole argument" },
     { id: "steps", label: "Step by step" },
     { id: "outline", label: "Outline" },
+    { id: "lean", label: "Lean graph" },
   ];
   const current = views.find((v) => pressed(v.id))?.id;
   const [thumb, setThumb] = useState<{ x: number; w: number } | null>(null);

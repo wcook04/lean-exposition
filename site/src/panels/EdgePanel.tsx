@@ -9,6 +9,7 @@ import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { routeHref } from "../app/router";
 import { Accounts } from "./Accounts";
+import type { LeanStep } from "./model";
 import { LeanRoute } from "./LeanRoute";
 import type { EchoHandler } from "./RecordPanel";
 import { NO_REMAINING, applicationView, relationName, stepBasisLabel, stepPassages, stepVerb, warrantStatus } from "./model";
@@ -22,13 +23,15 @@ interface Props {
   onClose(): void;
   onSelect(id: string): void;
   onEcho?: EchoHandler;
+  /** Walk to a Lean name in the sheet, as one history entry. */
+  onWalk?(walk: LeanStep): void;
   passageHref?: (stage: Stage, anchor: string) => string;
   leaving?: boolean;
   /** Mark the panel's root element, e.g. for the page to restore focus or measure it. */
   panelRef?: React.Ref<HTMLElement>;
 }
 
-export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, leaving, panelRef }: Props) {
+export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, onWalk, passageHref, leaving, panelRef }: Props) {
   const { graph } = useEdition();
   const edge = graph.edges.find((e) => e.key === edgeKey);
   const rootRef = useRef<HTMLElement | null>(null);
@@ -154,7 +157,7 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
       <div className="panel__body" ref={bodyRef} hidden={peek || undefined}>
         <Jumps panes={panes} root={rootRef} resetKey={edgeKey} />
         <div className="panel__content" key={`b:${edgeKey}`}>
-          <LeanRoute edgeKey={edgeKey} />
+          <LeanRoute edgeKey={edgeKey} onWalk={onWalk} />
           {app && (
             <Pane id="use" title="How the theorem is applied in this step">
               <p className="panel__note step__app-status">{app.status}</p>

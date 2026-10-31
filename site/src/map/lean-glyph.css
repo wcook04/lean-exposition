@@ -1,0 +1,51 @@
+/* A tile the size of a word: the shape and the two bars of tree.css at a fixed scale. */
+.lean-glyph {
+  position: relative;
+  flex: none;
+  display: inline-block;
+  width: 28px;
+  height: 17px;
+  vertical-align: -4px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-sizing: border-box;
+}
+
+.lean-glyph[data-shape="box"] {
+  border-radius: 1px;
+}
+
+.lean-glyph[data-shape="round"] {
+  border-radius: 8px;
+}
+
+.lean-glyph[data-s="whole"]::before,
+.lean-glyph[data-s="part"]::before,
+.lean-glyph[data-p="whole"]::after,
+.lean-glyph[data-p="part"]::after {
+  content: "";
+  position: absolute;
+  width: 2.5px;
+  border-radius: 1px;
+  background: var(--formal);
+}
+
+.lean-glyph::before {
+  left: 3px;
+}
+
+.lean-glyph::after {
+  right: 3px;
+}
+
+.lean-glyph[data-s="whole"]::before,
+.lean-glyph[data-p="whole"]::after {
+  top: 3px;
+  bottom: 3px;
+}
+
+.lean-glyph[data-s="part"]::before,
+.lean-glyph[data-p="part"]::after {
+  top: 5.5px;
+  bottom: 5.5px;
+}

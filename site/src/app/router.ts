@@ -17,6 +17,11 @@ export type Route =
       goal?: string;
       /** A selected step between two records: an `ArgEdge.key`. */
       edge?: string;
+      /** The Lean graph of this argument in place of the argument. */
+      lean?: boolean;
+      /** The Lean declaration open in the sheet, with its module where a name is declared twice. */
+      decl?: string;
+      declModule?: string;
     }
   | {
       view: "read";
@@ -110,6 +115,9 @@ export function parseRoute(url: URL): Route {
       lens: isStage(lens) ? lens : undefined,
       goal: q.get("g") ?? undefined,
       edge: edgeKeyFromParam(q.get("e")),
+      lean: q.get("v") === "lean" || undefined,
+      decl: q.get("d") ?? undefined,
+      declModule: q.get("dm") ?? undefined,
     };
   }
   const read = path.match(/^\/read\/([a-z]+)$/);
@@ -178,6 +186,9 @@ export function routeHref(route: Route): string {
       if (route.trace) q.set("t", route.trace);
       if (route.lens) q.set("lens", route.lens);
       if (route.edge) q.set("e", edgeParam(route.edge));
+      if (route.lean) q.set("v", "lean");
+      if (route.decl) q.set("d", route.decl);
+      if (route.declModule) q.set("dm", route.declModule);
       const s = q.toString();
       return `${BASE}/map${s ? `?${s}` : ""}`;
     }

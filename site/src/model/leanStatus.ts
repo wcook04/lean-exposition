@@ -48,6 +48,6 @@ export function markWords(mark: LeanMark): string {
   if (statement === "none" && proof === "none") return "No Lean linked";
   if (shape === "box") return proof === "none" ? "Defined in Lean" : "Defined in Lean, with part of it proved";
   if (statement === "whole") return proof === "whole" ? "Stated and proved in Lean" : proof === "part" ? "Stated in Lean, proved in part" : "Stated in Lean, no proof";
-  if (statement === "part") return proof === "whole" ? "Stated in part in Lean, and its step is proved there" : "Stated and proved in part in Lean";
+  if (statement === "part") return proof === "whole" ? "Part stated in Lean, step proved there" : "Part stated and proved in Lean";
   return proof === "whole" ? "Its step is proved in Lean, in a different form" : "Proved in part in Lean";
 }

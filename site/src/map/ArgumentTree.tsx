@@ -140,6 +140,8 @@ export interface TreeProps {
   coverage?: ReadonlySet<string> | null;
   /** The dense layout's tile width, for a narrower canvas that should hold the whole argument. */
   tileWidth?: number;
+  /** The dense layout's tile height, for names that need a third line. */
+  tileHeight?: number;
   /** Remember unfolded branches for the session (default). Off for a map that follows something else. */
   persist?: boolean;
   /** The reader moved the map themselves: a pan, a zoom, an unfold or an edge chip. */
@@ -157,6 +159,8 @@ export interface TreeProps {
    * proof on the right). Without it, cards are drawn as they always were.
    */
   statusOf?(id: string, node: ArgNode): LeanMark | null;
+  /** Off, a record many results use stays one card with a line from each, as a dependency graph draws it. */
+  copyLeaves?: boolean;
 }
 
 const STORE = "lx-tree-expanded:";
@@ -420,12 +424,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     // Assumptions are premise tags on their consumers, not nodes; a shared record
     // with nothing drawn below it is drawn under each of its consumers (a clone).
     const scope = layoutScope(goal, visible, skel.edges, (id) => graph.nodes.get(id)?.kind === "assumption");
-    const split = splitSharedLeaves(goal, scope.nodes, scope.edges);
+    const split = props.copyLeaves === false ? { nodes: scope.nodes, edges: scope.edges, shared: new Map<string, number>() } : splitSharedLeaves(goal, scope.nodes, scope.edges);
     const size = (lid: string): Size => {
       const id = recordOf(lid);
       const node = graph.nodes.get(id) ?? fullGraph.nodes.get(id)!;
       const isRoot = lid === goal;
-      if (dense) return isRoot ? { w: DENSE_ROOT_W, h: DENSE_ROOT_H } : { w: props.tileWidth ?? DENSE_W, h: lens ? DENSE_H_SECTION : DENSE_H };
+      if (dense) return isRoot ? { w: DENSE_ROOT_W, h: DENSE_ROOT_H } : { w: props.tileWidth ?? DENSE_W, h: props.tileHeight ?? (lens ? DENSE_H_SECTION : DENSE_H) };
       const h = heights.get(lid);
       if (h === undefined) provisional = true;
       if (lid !== id) return { w: compact ? 184 : 176, h: h ?? (compact ? 54 : 96) };
@@ -2075,7 +2079,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     }
     const e = edgeByKey.get(edgeKeyOf(key));
     // A line that closes up a lens is no recorded relation, so there is nothing to name.
-    showCaption(e ? relationPhrase(e.kind, nameOf(e.from), nameOf(e.to)) : "");
+    showCaption(e ? (e.note ?? relationPhrase(e.kind, nameOf(e.from), nameOf(e.to))) : "");
   };
   const leaveEdge = () => {
     setHoverEdge(null);
@@ -2432,7 +2436,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const lean = hasLean(id, node);
           const section = lens ? props.sectionOf?.get(id) : undefined;
           const tileLean = node.kind === "declaration";
-          const tile = tileLean ? node.label.slice(node.label.lastIndexOf(".") + 1) : tileTitle(id, node.label);
+          const tile = tileLean ? (node.tile ?? node.label.slice(node.label.lastIndexOf(".") + 1)) : tileTitle(id, node.label);
           const usedBy = built.shared.get(id) ?? 0;
           const mark = props.statusOf?.(id, node) ?? null;
           return (

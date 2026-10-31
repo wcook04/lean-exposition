@@ -343,3 +343,14 @@
     padding-left: 4px;
   }
 }
+
+/* What the Lean holds of the record, with the map's own mark. */
+.orow__lean {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 3px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
