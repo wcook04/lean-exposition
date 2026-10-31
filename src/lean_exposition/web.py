@@ -18,12 +18,12 @@ from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from wsgiref.simple_server import make_server
 
 from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
-from .alignment import lean_steps, resolve_alignment
+from .alignment import lean_steps, resolve_alignment, tie_index
 from .consumer import ConsumerSession
 from .contracts import ContractError, digest
 from .lean_index import canonical, load_index, module_view, modules_view, names_view
 
-API_VERSION = "1.3"
+API_VERSION = "1.4"
 COMPANION_RESOLVER_VERSION = "0.1.0"
 API_ROOT = "/api/v1"
 TABLES = ("nodes", "edges", "sources", "citations", "evidence")
@@ -123,6 +123,8 @@ ROUTES = {
     "/lean/names": ("One compact row for every indexed Lean declaration", ()),
     "/lean/module": ("One Lean module with its source and declarations", ("name",)),
     "/alignment": ("Where each record is stated, in Lean and in each paper", ()),
+    **{f"/ties/{stage}": (f"The marked statements of the {stage} paper, compact enough for first paint", ())
+       for stage in STAGES},
 }
 
 
@@ -235,7 +237,7 @@ class WebApplication:
         self._lean = (None if lean_index is None else
                       lean_index if isinstance(lean_index, dict) else load_index(lean_index))
         self._lean_modules = {row["name"] for row in self._lean["modules"]} if self._lean else set()
-        self._alignment, self.alignment_errors = None, []
+        self._alignment, self._ties, self.alignment_errors = None, None, []
         if alignment is not None:
             papers = {stage: self._files[f"papers/{stage}.md"] for stage in STAGES}
             ids = {row["record"]["id"] for row in self._corpus["records"]["nodes"]}
@@ -243,6 +245,10 @@ class WebApplication:
                 alignment, self._lean, papers, ids, strict=False)
             edges = [row["record"] for row in self._corpus["records"]["edges"]]
             self._alignment["steps"] = lean_steps(self._alignment, self._lean, edges)
+            self._ties = {stage: tie_index(papers[stage], self._alignment["records"], stage, [
+                (row["content_span"]["start_byte"], row["content_span"]["end_byte"],
+                 [*row["claim_ids"], *row["assumption_ids"]], row["anchor"])
+                for row in self._papers[stage]["paper"]["passages"]]) for stage in STAGES}
         self._sidecars = {
             "lean_index": ({"available": False} if self._lean is None else {
                 "available": True, "sha256": digest(canonical(self._lean)),
@@ -251,7 +257,9 @@ class WebApplication:
             "alignment": ({"available": False} if self._alignment is None else {
                 "available": True, "sha256": digest(canonical(self._alignment)),
                 "records": len(self._alignment["records"]),
-                "dictionary_terms": len(self._alignment["dictionary"])})}
+                "dictionary_terms": len(self._alignment["dictionary"])}),
+            "ties": ({"available": False} if self._ties is None else {
+                "available": True, "sha256": digest(canonical(self._ties))})}
 
     def _href(self, route, **query):
         encoded = urlencode({"manifest": self.manifest_sha256, **query}, doseq=True)
@@ -532,6 +540,10 @@ class WebApplication:
             if self._alignment is None:
                 raise APIError(404, "alignment_unavailable", "This edition is served without a record alignment.")
             return self._alignment
+        if route.startswith("/ties/"):
+            if self._ties is None:
+                raise APIError(404, "alignment_unavailable", "This edition is served without a record alignment.")
+            return self._ties[route.removeprefix("/ties/")]
         if route == "/overview":
             return {"graph": self._corpus["graph"], "coverage": self._corpus["coverage"],
                     "record_counts": self._corpus["coverage"]["record_counts"],
