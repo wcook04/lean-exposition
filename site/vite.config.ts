@@ -146,20 +146,31 @@ interface AuthoredRecord {
   statements?: { paper: string; role: string }[];
 }
 
+/** The folder also holds the dictionary, the theorem's clauses, per-paper ties and reference tables. */
+const NOT_A_BATCH = /^(dictionary|main-theorem|ties-.*|references-.*)\.json$/;
+
 export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};
   if (!existsSync(resolve(dir))) return out;
-  for (const name of readdirSync(resolve(dir)).sort()) {
-    if (!name.endsWith(".json") || name === "dictionary.json" || name === "main-theorem.json") continue;
+  const names = readdirSync(resolve(dir)).sort();
+  const level = (levels: Record<string, string>, paper: string, role: string) => {
+    if (ROLE_STRENGTH.indexOf(role) > ROLE_STRENGTH.indexOf(levels[paper] ?? "")) levels[paper] = role;
+  };
+  for (const name of names) {
+    if (!name.endsWith(".json") || NOT_A_BATCH.test(name)) continue;
     const { records } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { records: Record<string, AuthoredRecord> };
     for (const [id, row] of Object.entries(records)) {
       const levels: Record<string, string> = {};
-      for (const { paper, role } of row.statements ?? []) {
-        if (ROLE_STRENGTH.indexOf(role) > ROLE_STRENGTH.indexOf(levels[paper] ?? "")) levels[paper] = role;
-      }
+      for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
       const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
       out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, relations, levels };
     }
+  }
+  // Statements added paper by paper count towards their records' levels.
+  for (const name of names) {
+    if (!/^ties-.*\.json$/.test(name)) continue;
+    const { statements } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { statements: { record: string; paper: string; role: string }[] };
+    for (const { record, paper, role } of statements) if (out[record]) level(out[record].levels, paper, role);
   }
   return out;
 }
