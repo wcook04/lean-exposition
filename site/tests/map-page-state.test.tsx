@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Route } from "../src/app/router";
 import type { ArgGraph } from "../src/model/graph";
 import { reach } from "../src/map/treeModel";
+import { entryKey, pushEntry, readEntry, readEntryOf, writeEntry } from "../src/app/trail";
 import { graphFixture } from "./fixtures";
 
 const calls = vi.hoisted(() => ({
@@ -188,24 +189,27 @@ describe("remembered scene", () => {
     const length = window.history.length;
     open({ view: "map" });
     act(() => (calls.treeProps.onSceneSettled as (s: unknown) => void)(scene));
-    expect(window.history.state.mapScene).toBeUndefined();
+    expect(readEntry("mapScene")).toBeUndefined();
     act(() => vi.advanceTimersByTime(250));
-    expect(window.history.state).toEqual({ readerKey: "keep-me", mapScene: scene });
+    expect(readEntry("mapScene")).toEqual(scene);
+    act(() => vi.advanceTimersByTime(250));
+    expect(window.history.state).toMatchObject({ readerKey: "keep-me", lxEntry: { mapScene: scene } });
     expect(window.history.length).toBe(length);
   });
 
-  it("writes the scene being left before a selection pushes a new entry", () => {
+  it("writes the scene being left before any link pushes a new entry", () => {
     calls.getScene.mockReturnValue(scene);
     open({ view: "map" });
-    act(() => (calls.treeProps.onSelect as (id: string) => void)("support.diffusion"));
-    expect(window.history.state.mapScene).toEqual(scene);
-    expect(calls.navigate).toHaveBeenLastCalledWith(expect.objectContaining({ node: "support.diffusion" }), { replace: false });
+    const leaving = entryKey();
+    pushEntry(new URL("/compare", window.location.href));
+    expect(readEntryOf(leaving, "mapScene")).toEqual(scene);
+    expect(readEntry("mapScene")).toBeUndefined();
   });
 
   it("restores the entry's scene on Back", () => {
     open({ view: "map", node: "support.diffusion" });
     expect(calls.restoreScene).not.toHaveBeenCalled();
-    window.history.replaceState({ mapScene: scene }, "", "/");
+    writeEntry("mapScene", scene);
     act(() => {
       window.dispatchEvent(new PopStateEvent("popstate"));
     });
@@ -214,13 +218,13 @@ describe("remembered scene", () => {
   });
 
   it("restores a remembered scene when the page mounts in that entry", () => {
-    window.history.replaceState({ mapScene: scene }, "", "/");
+    writeEntry("mapScene", scene);
     open({ view: "map" });
     expect(calls.restoreScene).toHaveBeenCalledWith(scene);
   });
 
   it("ignores a scene that names records outside this edition", () => {
-    window.history.replaceState({ mapScene: { ...scene, expanded: ["no.such.record"] } }, "", "/");
+    writeEntry("mapScene", { ...scene, expanded: ["no.such.record"] });
     open({ view: "map" });
     expect(calls.restoreScene).not.toHaveBeenCalled();
   });

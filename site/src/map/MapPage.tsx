@@ -29,6 +29,7 @@ import { shortTitle as recordTitle } from "../compare/useAlignment";
 import { startLeanViewer } from "../lean/lazy";
 import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
+import { onLeave } from "../app/trail";
 import { readScene, sceneWriter, type MapScene } from "./scene";
 import "./map-page.css";
 
@@ -183,6 +184,8 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const writer = useMemo(() => sceneWriter(), []);
   useEffect(() => () => writer.cancel(), [writer]);
+  // Every way of leaving keeps the scene: this page's own links, plain links, Back and reload.
+  useEffect(() => onLeave(() => writer.flush(treeRef.current?.getScene() ?? null)), [writer]);
   const restoreRef = useRef<MapScene | null>(initialScene.current?.camera ? initialScene.current : null);
   const [restoreTick, setRestoreTick] = useState(0);
   useEffect(() => {
@@ -224,11 +227,9 @@ export function MapPage({ route }: { route: MapRoute }) {
       if (!next.node) next.trace = undefined;
       if (patch.node) next.edge = patch.edge;
       if (next.goal === fallbackGoal) next.goal = undefined;
-      // The entry being left keeps the scene it showed, so Back can return to it.
-      if (!replace) writer.flush(treeRef.current?.getScene() ?? null);
       navigate(next, { replace });
     },
-    [route, fallbackGoal, writer],
+    [route, fallbackGoal],
   );
 
   // Focus: closing the inspector returns to what opened it.

@@ -55,7 +55,14 @@ export function Jumps({ panes, root, resetKey }: { panes: PaneSpec[]; root: RefO
       setCurrent(on);
     };
     target.addEventListener("scroll", measure, { passive: true });
-    return () => target.removeEventListener("scroll", measure);
+    // Sections arrive after the first paint, and a restored scroll may land before them.
+    const content = el.querySelector("[data-section]")?.parentElement;
+    const grows = content && typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    if (content) grows?.observe(content);
+    return () => {
+      target.removeEventListener("scroll", measure);
+      grows?.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetKey, root]);
 

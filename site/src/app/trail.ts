@@ -44,6 +44,7 @@ let defaultLabel: (href: string) => string = () => "the previous page";
 let timer: ReturnType<typeof setTimeout> | null = null;
 let dirty = false;
 let liveDepth = 0;
+let leaving = false;
 
 function newKey(): string {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
@@ -127,7 +128,9 @@ function notify(): void {
 }
 
 function leave(): void {
-  // A leaving page may name itself, and may write what it wants kept.
+  // A leaving page may name itself, and may write what it wants kept. On a pop
+  // history.state has already moved on, so writes must keep to the entry on screen.
+  leaving = true;
   hooks.forEach((hook) => {
     try {
       hook();
@@ -135,6 +138,7 @@ function leave(): void {
       console.error(error);
     }
   });
+  leaving = false;
   const label = pendingLabel ?? pageLabel?.() ?? defaultLabel(liveHref);
   pendingLabel = null;
   if (liveKey && label) {
@@ -145,6 +149,7 @@ function leave(): void {
 }
 
 function ensureCurrent(): void {
+  if (leaving) return;
   if (typeof historyState()[KEY] !== "string") stamp(0, null);
   if (historyState()[KEY] !== liveKey) adopt("load");
 }
@@ -211,6 +216,11 @@ export function readEntry<T>(name: string): T | undefined {
   return valuesOf(liveKey)[name] as T | undefined;
 }
 
+/** A value saved in another entry, by its key: "Return to …" reads the origin's position. */
+export function readEntryOf<T>(key: string, name: string): T | undefined {
+  return valuesOf(key)[name] as T | undefined;
+}
+
 export function writeEntry(name: string, value: unknown): void {
   ensureCurrent();
   const values = valuesOf(liveKey);
@@ -258,6 +268,27 @@ function backLabel(): string | null {
   return typeof label === "string" ? label : "the previous page";
 }
 
+/** The key of the entry on screen, as a React value: it changes on every arrival. */
+export function useEntryKey(): string {
+  return useSyncExternalStore(subscribe, entryKey);
+}
+
+/**
+ * A piece of view state that belongs to the history entry: a tab, an open panel.
+ * Back and Forward restore it because the entry owns it. `initial` must be a
+ * primitive or a stable object; a saved object keeps its identity until written.
+ */
+export function useEntryState<T>(name: string, initial: T): [T, (value: T) => void] {
+  const value = useSyncExternalStore(subscribe, () => readEntry<T>(name) ?? initial);
+  return [
+    value,
+    (next: T) => {
+      writeEntry(name, next);
+      notify();
+    },
+  ];
+}
+
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
   return () => {
@@ -284,6 +315,9 @@ function onHide(): void {
 
 if (typeof window !== "undefined") {
   ensureCurrent();
+  // The browser's own restoration lands before the page has its height and cannot
+  // know inner scrollers. There is one restore path: this one.
+  if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
   window.addEventListener("pagehide", onHide);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") onHide();

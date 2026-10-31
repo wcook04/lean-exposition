@@ -8,6 +8,7 @@ import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
 
 import { FrontHero } from "../home/FrontHero";
 import { PAGES, usePrefetchOnIntent } from "./prefetch";
+import { useKeptPlace } from "./restore";
 
 const FrontPage = lazyCode(PAGES.home, (m) => m.FrontPage);
 const MapPage = lazyCode(PAGES.map, (m) => m.MapPage);
@@ -24,6 +25,7 @@ export function App() {
   usePrefetchOnIntent();
   const route = useRoute();
   const [searching, setSearching] = useState(false);
+  useKeptPlace(route.view);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -33,6 +35,10 @@ export function App() {
       if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")) {
         event.preventDefault();
         setSearching(true);
+      } else if (event.key === "[" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        // Beside Alt-Left, which is the browser's own. The control's name says where it goes.
+        event.preventDefault();
+        document.querySelector<HTMLElement>(".back-control")?.click();
       }
     };
     window.addEventListener("keydown", onKey);
