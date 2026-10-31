@@ -21,6 +21,7 @@ import { alignmentResource } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
 import { PaperBody, PassageBarContext, type BodyHandle, type Links, type PassageBar } from "./page/PaperBody";
+import { RefPreviewHost } from "./page/RefInset";
 import { Inspector, type InspectorTarget } from "./page/Inspector";
 import { Chooser } from "./page/Chooser";
 import { Visit } from "./page/Visit";
@@ -1144,6 +1145,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               />
             </Suspense>
           )}
+          <RefPreviewHost />
         </div>
       )}
 

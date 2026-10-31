@@ -183,6 +183,24 @@ function recordIndexModule(): Plugin {
   };
 }
 
+/** The fields of the reviewed reference tables a reader's page uses. */
+export function referenceModule(stage: string): string {
+  const table = JSON.parse(readFileSync(resolve(ALIGNMENT, `references-${stage}.json`), "utf8"));
+  const references = (table.references as Record<string, unknown>[])
+    .filter((row) => row.kind !== "plain")
+    .map(({ before: _before, cited_as: _cited, ...row }) => row);
+  return `export default ${JSON.stringify({ paper: table.paper, targets: table.targets, sources: table.sources, references })};`;
+}
+
+function referenceTables(): Plugin {
+  const prefix = "virtual:paper-references/";
+  return {
+    name: "paper-references",
+    resolveId: (source) => (source.startsWith(prefix) ? `\0${source}` : null),
+    load: (resolved) => (resolved.startsWith(`\0${prefix}`) ? referenceModule(resolved.slice(prefix.length + 1)) : null),
+  };
+}
+
 /** The chunks each route opens with. What they import starts with them. */
 const ROUTE_CODE: Record<string, string[]> = {
   map: ["MapPage"],
@@ -376,7 +394,7 @@ export default defineConfig(({ mode }) => {
   const base = env.VITE_BASE_PATH ?? "/";
   return {
     base,
-    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), firstScreen(base), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), firstScreen(base), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       closeBundle() {
         const out = resolve("dist");

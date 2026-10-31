@@ -180,7 +180,7 @@
     {"start_byte": 42975, "end_byte": 43005, "quote": "[OpenAI (2026b), §§2–5][Q]", "before": "ation; a consequence of\n", "kind": "citation", "source": "Q", "locator": "OpenAI (2026b), §§2–5", "cited_as": "OpenAI (2026b), §§2–5"},
     {"start_byte": 43338, "end_byte": 43376, "quote": "[OpenAI (2026b), §2 and Lemma 3.1][Q]", "before": "ssian\nrepresentation of ", "kind": "citation", "source": "Q", "locator": "OpenAI (2026b), §2 and Lemma 3.1", "cited_as": "OpenAI (2026b), §2 and Lemma 3.1"},
     {"start_byte": 43422, "end_byte": 43460, "quote": "[Boulebnane et al. (2026)][spin-boson]", "before": "in–boson description of ", "kind": "citation", "source": "spin-boson", "cited_as": "Boulebnane et al. (2026)"},
-    {"start_byte": 44670, "end_byte": 44675, "quote": "§8.1", "before": "general construction in ", "kind": "other_paper", "paper": "long", "target": "rooted-energy"},
+    {"start_byte": 44670, "end_byte": 44675, "quote": "§8.1", "before": "general construction in ", "kind": "other_paper", "paper": "long", "target": "rooted-energy", "title": "§8.1 Rooted realisation and the observable it preserves"},
     {"start_byte": 46214, "end_byte": 46218, "quote": "(11)", "before": "iser-dependent limit in\n", "kind": "equation", "target": "eq-11"},
     {"start_byte": 46484, "end_byte": 46497, "quote": "Proposition 5", "before": "Construction underlying ", "kind": "label", "target": "prop-5"},
     {"start_byte": 46501, "end_byte": 46531, "quote": "[OpenAI (2026b), §§3–5][Q]", "before": "rlying Proposition 5.**\n", "kind": "citation", "source": "Q", "locator": "OpenAI (2026b), §§3–5", "cited_as": "OpenAI (2026b), §§3–5"},

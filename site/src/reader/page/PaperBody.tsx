@@ -13,6 +13,7 @@ import type { Stage } from "../../api/types";
 import type { ArgGraph } from "../../model/graph";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { mountFigures } from "../mount";
+import { useReferences } from "./RefInset";
 import { authoredRoutes, chipSplit, chipTitle, estimateHeight, idleOrder, leanRecord, linkedCount, passageOf, passageRecords, type Structures } from "./model";
 
 export interface Links {
@@ -75,6 +76,7 @@ const cancelIdle = (id: number) => {
 
 export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props, ref) {
   const { stage, doc, structures, graph, initial, topInset, inspected, onInspect, onSameTopic } = props;
+  const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
@@ -151,7 +153,8 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
 
   useImperativeHandle(
     ref,
-    () => ({
+    () => {
+      const value: BodyHandle = {
       ensure: (parts) =>
         new Promise<void>((resolve) => {
           const wanted = parts.filter((i) => i >= 0 && i < doc.parts.length);
@@ -169,9 +172,13 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
         anchor.current = { el, top: el.getBoundingClientRect().top };
         pinned.current = true;
       },
-    }),
+      };
+      handle.current = value;
+      return value;
+    },
     [add, doc, reanchor],
   );
+  const references = useReferences(stage, doc, handle, useCallback(() => topRef.current, []));
 
   // Resolve waiters once their parts are in the DOM and laid out.
   useLayoutEffect(() => {
@@ -284,7 +291,15 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   }, [doc, add]);
 
   return (
-    <div className="paper prose" data-stage={stage}>
+    <div
+      className="paper prose"
+      data-stage={stage}
+      onClick={references.onClick}
+      onPointerOver={references.onPointerOver}
+      onPointerOut={references.onPointerOut}
+      onFocus={references.onFocus}
+      onBlur={references.onBlur}
+    >
       {doc.parts.map((part) => (
         <Part
           key={part.index}
@@ -300,6 +315,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
           register={register}
         />
       ))}
+      {references.portals}
     </div>
   );
 });

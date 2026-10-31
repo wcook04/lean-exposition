@@ -31,3 +31,8 @@ declare module "virtual:record-index" {
 declare module "virtual:front-hero" {
   export const HERO_HTML: string;
 }
+
+declare module "virtual:paper-references/*" {
+  const table: unknown;
+  export default table;
+}
