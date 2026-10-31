@@ -236,20 +236,6 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         <h2 id="about-key">How the argument map is drawn</h2>
         <ul className="about__keylist">
           <li>
-            <span className="about__sample">
-              {graph.origins
-                .filter((o) => o.slot > 0)
-                .map((o) => (
-                  <span key={o.family} className="src-sq" data-slot={o.slot} aria-hidden="true" />
-                ))}
-              <span className="src-sq" data-slot={0} aria-hidden="true" />
-            </span>
-            <span>
-              Each step has a small coloured square and the name of the source it comes from. Steps from the same source
-              have the same colour.
-            </span>
-          </li>
-          <li>
             <span className="about__sample about__sample--lines" aria-hidden="true">
               <span className="rel-sample" />
               <span className="rel-sample rel-sample--formalizes" />

@@ -4,7 +4,13 @@
   box-sizing: border-box;
 }
 
+/* One quiet scrollbar for every scroller, day and night. An element that wants none says so. */
+* {
+  scrollbar-width: thin;
+}
+
 html {
+  scrollbar-color: var(--rule-strong) transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--topbar-h) + 16px);
@@ -175,15 +181,6 @@ button {
 }
 
 /* Region identity: a dot in the region's ink, always beside a word. */
-.region-dot {
-  display: inline-block;
-  width: 0.62em;
-  height: 0.62em;
-  border-radius: 50%;
-  background: var(--region, var(--ink-3));
-  flex: none;
-}
-
 [data-region="support"] {
   --region: var(--region-support);
   --field: var(--field-support);
@@ -210,15 +207,7 @@ button {
   color: var(--ink-3);
 }
 
-/* Where a record comes from: a small square in its source colour, always beside the source's name. */
-.src-sq {
-  display: inline-block;
-  width: 0.62em;
-  height: 0.62em;
-  border-radius: 2px;
-  background: var(--cat, var(--src-0));
-  flex: none;
-}
+/* A source colour, for the strips and the front page figure. */
 [data-slot="1"] {
   --cat: var(--src-1);
 }

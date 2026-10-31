@@ -528,7 +528,19 @@ html.is-reading {
   color: var(--ink);
 }
 
-.reader-strip:has(.reader-strip__hint) .crumbs ol {
+.reader-strip:has(.reader-strip__hint):not(:has(.back-control)) .crumbs ol {
+  display: none;
+}
+
+/* One line always: with a named Back in the strip the hint gives way to the paper's name. */
+.reader-strip__hint {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reader-strip:has(.back-control) .reader-strip__hint {
   display: none;
 }
 
@@ -606,6 +618,12 @@ html.is-reading {
 @media (max-width: 700px) {
   html[data-view="read"] {
     --reader-top: 0px;
+  }
+  .reader-strip__hint {
+    display: none;
+  }
+  .reader-strip:has(.reader-strip__hint) .crumbs ol {
+    display: flex;
   }
   html[data-view="read"] .topbar {
     position: static;

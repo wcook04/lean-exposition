@@ -182,8 +182,7 @@ function RecordRow({ id, graph, selected, onSelect }: { id: string; graph: ArgGr
     >
       <span className="record-row__meta">
         <span className="caps">{kindName(n.kind)}</span>
-        <span className="record-row__source" data-slot={n.origin.slot}>
-          <span className="src-sq" aria-hidden="true" />
+        <span className="record-row__source">
           {n.origin.label}
         </span>
       </span>

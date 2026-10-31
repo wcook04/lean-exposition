@@ -22,9 +22,12 @@ html[data-view="home"] .topbar {
 .front__hero {
   display: grid;
   grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
-  align-items: start;
+  align-content: center;
+  align-items: center;
   gap: 48px;
-  padding: 44px 0 28px;
+  box-sizing: border-box;
+  min-height: min(calc(100svh - var(--topbar-h)), 46rem);
+  padding: 44px 0;
 }
 
 .front__title {
@@ -51,7 +54,7 @@ html[data-view="home"] .topbar {
 
 .front .front__site {
   max-width: 37em;
-  margin: 12px 0 0;
+  margin: 0;
   font-size: var(--fs-base);
   line-height: 1.5;
   color: var(--ink-2);
@@ -96,33 +99,12 @@ html[data-view="home"] .topbar {
   border-color: var(--ink-2);
 }
 
-.front__tertiary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin: 14px 0 0;
-  font-size: var(--fs-ui);
-  color: var(--ink-2);
-}
-
-.front__tertiary a {
-  color: inherit;
-  text-underline-offset: 3px;
-}
-
 /* The theorem, clause by clause. The two columns are the point of the site in one picture:
    the same statement, read across. */
-.rosetta__models {
-  margin: 8px 0 0;
-  font-size: var(--fs-sm);
-  line-height: 1.4;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
 .rosetta {
-  margin: 4px 0 0;
+  position: relative;
   min-width: 0;
+  margin: 0;
 }
 
 .rosetta__table {
@@ -149,7 +131,7 @@ html[data-view="home"] .topbar {
 }
 
 .rosetta__row td {
-  padding: 11px 16px 10px 0;
+  padding: 9px 16px 8px 0;
   border-bottom: 1px solid var(--rule);
   vertical-align: baseline;
   transition: background-color var(--t-hover) var(--ease-out);
@@ -205,19 +187,60 @@ html[data-view="home"] .topbar {
   color: var(--lit);
 }
 
+/* A row names itself in the empty line under the table while it is pointed at or focused, so
+   nothing moves. Touch has no pointing, so there the words stand under each formula. */
 .rosetta__words {
-  display: block;
-  margin-top: 3px;
+  position: absolute;
+  inset: auto 0 2.125rem 0;
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.35;
   color: var(--ink-2);
-  text-wrap: pretty;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-hover) var(--ease-out);
+}
+
+.rosetta__row:hover .rosetta__words,
+.rosetta__row:focus-within .rosetta__words {
+  opacity: 1;
 }
 
 .rosetta__foot {
-  margin-top: 12px;
+  margin-top: 2.75rem;
   font-size: var(--fs-ui);
+}
+
+/* Beneath the first screen: how to read a paper here, and what the Lean covers. */
+.front__guide {
+  display: grid;
+  grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
+  gap: 48px;
+  padding: 28px 0 44px;
+}
+
+.front__guide-link {
+  margin: 12px 0 0;
+  font-size: var(--fs-ui);
+}
+
+.front__guide-link a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.front .rosetta__models {
+  max-width: 37em;
+  margin: 0;
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.rosetta__models a {
+  color: inherit;
+  text-underline-offset: 3px;
 }
 
 .front__films {
@@ -225,7 +248,7 @@ html[data-view="home"] .topbar {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px 48px;
   min-height: 112px;
-  padding: 4px 0 28px;
+  padding: 0 0 44px;
 }
 
 .rosetta__foot a {
@@ -240,9 +263,14 @@ html[data-view="home"] .topbar {
 }
 
 @media (max-width: 68.75em) {
-  .front__hero {
+  .front__hero,
+  .front__guide {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
+  }
+
+  .front__hero {
+    min-height: 0;
     padding: 36px 0 24px;
   }
 }
@@ -284,9 +312,23 @@ html[data-view="home"] .topbar {
   }
 }
 
+@media (hover: none), (max-width: 37.5em) {
+  .rosetta__words {
+    position: static;
+    display: block;
+    margin-top: 3px;
+    opacity: 1;
+    text-wrap: pretty;
+  }
+
+  .rosetta__foot {
+    margin-top: 16px;
+  }
+}
+
 .front .front__made {
   max-width: 37em;
-  margin: 10px 0 0;
+  margin: 14px 0 0;
   font-size: var(--fs-sm);
   line-height: 1.4;
   color: var(--ink-2);

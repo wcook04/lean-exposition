@@ -205,6 +205,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* In a narrow cell the words under the formula say it scrolls. */
+.slice .math-display {
+  scrollbar-width: none;
+}
+
 .prose span.math-display {
   margin: var(--space-3) 0;
 }

@@ -78,15 +78,7 @@
 }
 
 .panel__src {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   min-width: 0;
-}
-
-.panel__src .src-sq {
-  width: 9px;
-  height: 9px;
 }
 
 .panel__status {
@@ -1403,9 +1395,6 @@
 }
 
 .panel__mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
   min-width: 0;
   font-size: var(--fs-sm);
   color: var(--ink-2);
@@ -1448,8 +1437,6 @@
 
 /* A long theorem keeps the Lean on the first screen; the whole text is under Papers. */
 .panel__quote {
-  max-height: min(34vh, 300px);
-  overflow-y: auto;
 }
 
 .panel__lead {
@@ -1465,16 +1452,12 @@
 }
 
 .rests li {
-  display: grid;
-  grid-template-columns: 26px minmax(0, 1fr);
-  column-gap: 10px;
-  align-items: baseline;
   padding: 7px 0;
   border-top: 1px solid var(--rule);
 }
 
 .rests__words {
-  grid-column: 2;
+  display: block;
   font-size: var(--fs-sm);
   color: var(--ink-3);
 }

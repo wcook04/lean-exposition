@@ -149,11 +149,6 @@
   overflow-wrap: anywhere;
 }
 
-.palette__title .region-dot {
-  margin-right: 7px;
-  transform: translateY(-1px);
-}
-
 .palette__title.lean {
   font-size: 0.875rem;
   color: var(--formal);
@@ -210,6 +205,10 @@
   color: var(--ink);
   border-radius: 2px;
   box-shadow: 0 0 0 1px var(--lit-wash);
+}
+
+.palette__nobreak {
+  white-space: nowrap;
 }
 
 .palette__math .katex {

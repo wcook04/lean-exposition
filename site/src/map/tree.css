@@ -274,11 +274,6 @@
   text-align: right;
 }
 
-.card__src .src-sq {
-  flex: none;
-  align-self: center;
-}
-
 .card__srcname {
   overflow-wrap: anywhere;
 }
