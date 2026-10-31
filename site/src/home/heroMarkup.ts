@@ -107,7 +107,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 <p class="front__site">OpenAI’s proof of the increase is written in Lean, a programming language whose compiler rejects a proof with a wrong step; the positive derivative is proved in OpenAI’s manuscript and is not in the Lean. In a paper here, click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
 <p class="front__tertiary"><a href="${links.beside}">Theorem 1 with its Lean open</a><a href="${links.compare}">Compare Lean and papers</a><a href="${links.map}">The argument map</a></p>
-<p class="front__made">Made by <a href="${links.about}">Will Cook</a>, with AI agents writing the drafts and the code under his direction. The theorem and the Lean proof are OpenAI’s.</p>
+<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s.</p>
 </div>
 <figure class="rosetta">
 <table class="rosetta__table">

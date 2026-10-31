@@ -68,7 +68,7 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
-  if (state) parts.push(state === "draft" ? `Draft, written by AI agents under ${AUTHOR}’s direction.` : `${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
+  if (state) parts.push(state === "draft" ? `Draft by ${AUTHOR}, made using AI.` : `${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
   // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
   if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");

@@ -81,10 +81,10 @@
           "href": "https://wcook04.github.io/lean-exposition-site/#papers"
         }
       ],
-      "purpose": "One result about the Sherrington–Kirkpatrick model of magnets, explained three ways and linked to a map of the argument and its Lean statements.",
-      "status": "The three accounts are drafts. The site shows their reviews and what each check covers.",
+      "purpose": "Three papers on one result about the Sherrington–Kirkpatrick model of magnets. A graph of the argument moves as you read, and clicking a statement opens its Lean.",
+      "status": "The three papers are drafts, and AI agents linked them to the Lean. The site lists what ran and what each run covers.",
       "capture": "assets/sites/lean-exposition",
-      "capture_caption": "The front page of the SK exposition, with its main theorem.",
+      "capture_caption": "The short paper at Theorem 1, beside the graph of its argument.",
       "films": [
         "interfaces",
         "sk-no-gap"
@@ -104,7 +104,7 @@
           "href": "https://wcook04.github.io/proof-reader/#/contextual-embeddings"
         }
       ],
-      "purpose": "Read any paper with public Lean as you would read any paper: a graph of the proof follows as you scroll, and a statement opens the authors’ Lean at the exact lines.",
+      "purpose": "A paper whose proof is public in Lean, set to read like any paper. A graph of the proof moves as you scroll, and clicking a statement opens the authors’ Lean at the exact lines.",
       "status": "The first paper is Contextual Embeddings by Frohlich, Foster, Kavvos and Wang. The links were made with AI and have not been reviewed by the authors.",
       "capture": "assets/sites/proof-reader",
       "capture_caption": "Contextual Embeddings on the left page, with the graph of its Lean proof and the exact lines on the right.",
@@ -274,7 +274,7 @@
       "id": "proof-reader",
       "name": "proof-reader",
       "href": "https://github.com/wcook04/proof-reader",
-      "description": "Plug in any paper with public Lean as a folder: the text is checked against the PDF word for word and the Lean is the authors’ own."
+      "description": "Add a paper with public Lean as a folder. A program compares the text with the PDF word for word, and the Lean is the authors’ own."
     },
     {
       "id": "plectis-atlas",
