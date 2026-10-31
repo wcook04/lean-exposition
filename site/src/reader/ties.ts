@@ -264,7 +264,7 @@ export function sameWords(model: TieModel, t: number): number[] {
   return members.filter((other) => other !== t);
 }
 
-/** Where a record opens in this paper: exactly this slice, else its first statement with Lean, else its first. */
+/** An exact slice wins; otherwise open an authored statement before a passing mention. */
 export function statementFor(model: TieModel, record: string | undefined, at?: string): number | null {
   if (!record) return null;
   if (at) {
@@ -273,7 +273,8 @@ export function statementFor(model: TieModel, record: string | undefined, at?: s
   }
   const rows = model.byRecord.get(record);
   if (!rows?.length) return null;
-  return rows.find((t) => model.index.ties[t].lean) ?? rows[0];
+  const stated = rows.filter((t) => model.index.ties[t].role === "statement");
+  return stated.find((t) => model.index.ties[t].lean) ?? stated[0] ?? rows.find((t) => model.index.ties[t].lean) ?? rows[0];
 }
 
 /** The next stop after this segment, by a step of +1 or -1; from nothing, the first or the last. */
