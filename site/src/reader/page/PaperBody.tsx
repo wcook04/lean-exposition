@@ -430,7 +430,7 @@ function PassageTools({
     <>
       {records.length > 0 && (
         <button type="button" className="passage-tools__records" aria-pressed={lit} onClick={(event) => onInspect(anchor, event.currentTarget)}>
-          {records.length === 1 ? "1 record" : `${records.length} records`} in this passage
+          {records.length === 1 ? "1 step" : `${records.length} steps`} in this passage
         </button>
       )}
       <button type="button" className="passage-tools__topic" aria-haspopup="dialog" onClick={(event) => onSameTopic(anchor, event.currentTarget)}>

@@ -169,6 +169,18 @@ html:has(.reader) {
 
 /* --------------------------------------------- the location strip (sticky) */
 
+.reader-strip__back {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 24ch;
+}
+
+/* The strip keeps the section's name: Sections shrinks to its icon first. */
+.reader-strip:has(.back-control) .sections-toggle {
+  gap: 0;
+  font-size: 0;
+}
+
 .reader-strip__steps {
   display: inline-flex;
   align-items: center;
@@ -243,6 +255,15 @@ html:has(.reader) {
   content: "/";
   margin: 0 0.5em;
   color: var(--rule-strong);
+}
+
+/* With a named Back in the strip the section stands alone: its name is what must stay. */
+.reader-strip:has(.back-control) .crumbs li:not(.crumbs__here) {
+  display: none;
+}
+
+.reader-strip:has(.back-control) .crumbs li + li::before {
+  content: none;
 }
 
 /* The current passage wraps onto a second line before anything is cut. */
@@ -412,8 +433,9 @@ html:has(.reader) {
 /* A tied statement. At rest the paper reads as a paper: a thin tick in the margin, darker
    where the step has Lean, and nothing on the words. */
 :root {
-  /* The highlighter: the statement being read, and the Lean lines it maps to. */
-  --highlighter: color-mix(in oklab, var(--lit-line) 20%, transparent);
+  /* The highlighter: a pinned statement, and the Lean lines it maps to. Reading is calmer. */
+  --highlighter: color-mix(in oklab, var(--lit-line) 22%, transparent);
+  --highlighter-soft: color-mix(in oklab, var(--lit-line) 10%, transparent);
   --tie-wash: color-mix(in oklab, var(--ink) 7%, transparent);
 }
 
@@ -431,19 +453,22 @@ html:has(.reader) {
   left: 0;
   width: 2px;
   border-radius: 1px;
-  background: var(--rule-strong);
+  background: var(--rule);
   transition: background-color var(--t-hover) var(--ease-out);
 }
 
 .tick[data-lean] {
-  background: color-mix(in oklab, var(--ink-3) 70%, var(--rule-strong));
+  background: color-mix(in oklab, var(--ink-3) 45%, var(--rule-strong));
 }
 
 .tick[data-point] {
   background: var(--ink);
 }
 
-.tick[data-on],
+.tick[data-on] {
+  background: var(--lit-line);
+}
+
 .tick[data-pin] {
   width: 3px;
   background: var(--lit-line);
@@ -461,7 +486,16 @@ html:has(.reader) {
   background-color: var(--tie-wash);
 }
 
-.paper .tie[data-on],
+.paper .tie[data-on] {
+  background-color: var(--highlighter-soft);
+}
+
+/* A display is a block of ink: following, it takes only an underline's worth. */
+.paper .math-display.tie[data-on] {
+  background-color: transparent;
+  box-shadow: inset 0 -2px 0 var(--highlighter);
+}
+
 .paper .tie[data-pin] {
   background-color: var(--highlighter);
 }

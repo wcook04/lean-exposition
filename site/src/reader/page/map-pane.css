@@ -416,7 +416,8 @@
 /* The note about undrawn links and the assumption tags belong to the full map: here
    a tile is its name, with nothing over its text. The sheet lists a record's assumptions. */
 .map-pane .sim,
-.map-pane .tag {
+.map-pane .tag,
+.map-pane .tree__note {
   display: none;
 }
 

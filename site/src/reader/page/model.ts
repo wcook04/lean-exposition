@@ -336,11 +336,11 @@ export function trailAt(trail: PaperTrail, anchor: string | null, current: reado
 }
 
 /**
- * "§3 of 8, 14 of 37 records so far". Only numbered top-level sections count; in
+ * "§3 of 8, 14 of 37 steps so far". Only numbered top-level sections count; in
  * text before the first of them, or after the last, the section is named instead.
  */
 export function trailWords(outline: OutlineEntry[], part: number, place: Pick<TrailPlace, "seen" | "total">): string {
-  const records = place.total ? `${place.seen} of ${place.total} records so far` : "";
+  const records = place.total ? `${place.seen} of ${place.total} steps so far` : "";
   const tops = outline.filter((e) => e.parent === null);
   const numbered = tops.filter((e) => /^\d/.test(e.title));
   let at: OutlineEntry | undefined;

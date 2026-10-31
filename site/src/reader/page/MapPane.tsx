@@ -192,6 +192,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const [kept, setKept] = useState({ bottom: 0, left: 0 });
   const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 12 + kept.bottom, right: 16 }), [kept]);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const framedFrom = useRef<ReturnType<MapViewHandle["getScene"]> | null>(null);
 
   // How far the Lean rises, remembered. It is a layer over the graph: the canvas beneath keeps
   // its size and its camera. Only a transform carries the card into the part left showing, and
@@ -244,12 +245,16 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     if (!expanded) {
       if (canvasRef.current) canvasRef.current.style.transform = "";
       setFrom(null);
+      // A card that had to be framed to open: the camera goes back to where the reader left it.
+      if (framedFrom.current) treeRef.current?.restoreScene(framedFrom.current);
+      framedFrom.current = null;
       return;
     }
     const card = openRecord ? (bodyRef.current?.querySelector<HTMLElement>(`.card[data-record="${CSS.escape(openRecord)}"]`) ?? null) : null;
     setFrom(card);
     if (card && !inViewRef.current([openRecord!])) {
       // Off the view: frame it first, and only then lift it clear of the Lean.
+      framedFrom.current ??= treeRef.current?.getScene() ?? null;
       treeRef.current?.focusIds([openRecord!]);
       const t = window.setTimeout(place, 380);
       return () => window.clearTimeout(t);
@@ -539,12 +544,14 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   function lineFor(): { via: string; words: string } {
     const named = (id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id);
     const hasLean = (id: string, t: number | null) => (t !== null ? ties.index.ties[t].lean : !!recordLine(id)?.lean);
-    if (pointed) return { via: "point", words: `${named(pointed.record)}. ${hasLean(pointed.record, pointed.tie) ? "Has Lean: click to open it." : "No Lean linked."}` };
+    // What is not drawn is said here, so that no note ever covers a card.
+    const drawn = (id: string) => (reachOf(goal).has(id) ? "" : " Not in the argument drawn here.");
+    if (pointed) return { via: "point", words: `${named(pointed.record)}. ${hasLean(pointed.record, pointed.tie) ? "Has Lean: click to open it." : "No Lean linked."}${drawn(pointed.record)}` };
     if (caption) {
       const topics = passageTopics(ties, caption).filter((id) => graph.nodes.has(id));
       if (topics.length) return { via: "point", words: `No exact tie in this paragraph. Its passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     }
-    if (followRecord) return { via: "follow", words: `Reading: ${named(followRecord)}. ${ties.index.ties[follow.tie!].lean ? "Has Lean: click the statement or its card." : "No Lean linked."}` };
+    if (followRecord) return { via: "follow", words: `Reading: ${named(followRecord)}. ${ties.index.ties[follow.tie!].lean ? "Has Lean: click the statement or its card." : "No Lean linked."}${drawn(followRecord)}` };
     const topics = passageTopics(ties, anchor).filter((id) => graph.nodes.has(id));
     if (topics.length) return { via: "follow", words: `No exact statement here. This passage discusses ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     return { via: "follow", words: "Nothing in this stretch of the paper is tied to the Lean." };

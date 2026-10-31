@@ -1,4 +1,4 @@
-// "Records linked to this passage": the inspector a reader opens beside the paper. It lists
+// "Steps linked to this passage": the inspector a reader opens beside the paper. It lists
 // every record mapped to the whole passage (claims first, then assumptions),
 // independently of any goal; choosing one shows its recorded relations as a
 // short list, with the full record and the argument map one step further.
@@ -53,7 +53,7 @@ export function Inspector(props: Props) {
 
   if (full && node && graph.nodes.has(node)) {
     return (
-      <section className="inspector inspector--record" aria-label="Full record">
+      <section className="inspector inspector--record" aria-label="The whole step">
         <div className="inspector__bar">
           <button type="button" className="control control--plain inspector__back" onClick={() => setFull(false)}>
             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -78,7 +78,7 @@ export function Inspector(props: Props) {
 
   const anchor = target.kind === "passage" ? target.anchor : null;
   const title = anchor ? sectionTitleIn(structures[stage], anchor) : null;
-  const heading = target.kind === "selection" ? (target.passages === 1 ? "Records linked to this passage" : `Records linked to these ${target.passages} passages`) : "Records linked to this passage";
+  const heading = target.kind === "selection" ? (target.passages === 1 ? "Steps linked to this passage" : `Steps linked to these ${target.passages} passages`) : "Steps linked to this passage";
 
   return (
     <section className="inspector" aria-labelledby={inModal ? undefined : "inspector-title"} aria-label={inModal ? heading : undefined}>
@@ -134,8 +134,8 @@ function PassageView({
       </div>
       {anchor && ids.length > 0 && (
         <>
-          <h3 className="inspector__label">Records linked to this whole passage</h3>
-          <p className="inspector__note">A record is one claim, assumption, main result or Lean declaration in the argument that the argument map draws.</p>
+          <h3 className="inspector__label">Steps linked to this whole passage</h3>
+          <p className="inspector__note">A step is one claim, assumption, main result or Lean declaration in the argument that the argument map draws.</p>
           <ul className="records">
             {ids.map((id) => (
               <li key={id}>
@@ -146,11 +146,11 @@ function PassageView({
           </ul>
         </>
       )}
-      {anchor && ids.length === 0 && <p className="inspector__message">No record is linked to this passage.</p>}
+      {anchor && ids.length === 0 && <p className="inspector__message">No step is linked to this passage.</p>}
       {!anchor && !outside && <p className="inspector__message">This part of the paper is not inside a passage that is linked to records.</p>}
       {outside && (
         <>
-          <h3 className="inspector__label">{anchor ? "Record you opened from this passage" : "The record you opened"}</h3>
+          <h3 className="inspector__label">{anchor ? "The step you opened from this passage" : "The step you opened"}</h3>
           <ul className="records">
             <li>
               <RecordRow id={outside} graph={graph} selected onSelect={onSelect} />
@@ -169,7 +169,7 @@ function RecordRow({ id, graph, selected, onSelect }: { id: string; graph: ArgGr
     return (
       <div className="record-row record-row--missing">
         <span className="record-row__title">{id}</span>
-        <span className="record-row__note">No record on this site has this identifier.</span>
+        <span className="record-row__note">No step on this site has this identifier.</span>
       </div>
     );
   }
@@ -218,7 +218,7 @@ function Relations({ id, graph, onSelect, onFull }: { id: string; graph: ArgGrap
       <h4 className="relations__label">
         Used by <span className="num">{usedBy.length}</span>
       </h4>
-      {usedBy.length ? <ul>{usedBy.map((e) => line(e, e.from))}</ul> : <p className="relations__none">No record is recorded as using it.</p>}
+      {usedBy.length ? <ul>{usedBy.map((e) => line(e, e.from))}</ul> : <p className="relations__none">Nothing is recorded as using it.</p>}
       <div className="relations__actions">
         <button type="button" className="control" onClick={onFull}>
           Show the full record
@@ -262,7 +262,7 @@ function SelectionView({
   const matches = result.status === "ready" ? result.value.papers.flatMap((p) => p.matches) : [];
   return (
     <>
-      <p className="inspector__note">Records are linked to whole passages, not to single words. Every passage that your selection touches is listed, with the records linked to it.</p>
+      <p className="inspector__note">Steps are linked to whole passages, not to single words. Every passage that your selection touches is listed, with the records linked to it.</p>
       {result.status === "loading" && <p className="inspector__message faint">Loading the passages…</p>}
       {result.status === "error" && (
         <p className="inspector__message" role="alert">

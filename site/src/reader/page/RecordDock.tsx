@@ -206,7 +206,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
         </div>
         {open.via === "pin" && !!record && !slot && graph.nodes.has(record) && (
           <button type="button" className="lean-page__action" aria-pressed={full} onClick={() => setFull(!full)}>
-            Whole record
+            Everything on this step
           </button>
         )}
         <button type="button" className="lean-page__action" aria-keyshortcuts="Escape" onClick={onRelease}>

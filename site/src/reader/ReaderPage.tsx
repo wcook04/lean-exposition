@@ -630,9 +630,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const box = first?.getClientRects()[0];
     const top = readingTop();
     if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
-      if (path.getAttribute("d")) path.setAttribute("d", "");
+      // Gone, not empty: a window-sized layer would cost every frame of scrolling.
+      if (path.getAttribute("d")) {
+        path.setAttribute("d", "");
+        path.ownerSVGElement!.style.display = "none";
+      }
       return;
     }
+    path.ownerSVGElement!.style.display = "";
     const y0 = box.top + box.height / 2;
     const y1 = target.top + Math.min(target.height, 22) / 2;
     const x0 = paper.right + 4;
@@ -1333,6 +1338,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             <button
               type="button"
               className="control reader-strip__map"
+              aria-label={paneRoom ? "The proof beside the paper" : "Open the proof"}
               aria-pressed={paneRoom ? paneOn : undefined}
               onClick={paneRoom ? toggleMap : () => setSheetOpen(true)}
             >
@@ -1340,7 +1346,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
                 <path d="M7 1.5v11" stroke="currentColor" strokeWidth="1.3" />
               </svg>
-              {paneRoom ? "Proof beside the paper" : "Open the proof"}
+              <span className="reader-strip__word">Proof</span>
             </button>
           )}
           {visit && !route.beside && (
@@ -1398,19 +1404,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             onMouseDown={(event) => event.preventDefault()}
             onClick={askSelection}
           >
-            {action.passages === 1 ? "Records linked to this passage" : `Records linked to these ${action.passages} passages`}
+            {action.passages === 1 ? "Steps linked to this passage" : `Steps linked to these ${action.passages} passages`}
           </button>
         )}
       </div>
 
       {columnInspector && (
-        <aside className="reader__inspector" aria-label="Records linked to this passage" inert={route.beside ? true : undefined}>
+        <aside className="reader__inspector" aria-label="Steps linked to this passage" inert={route.beside ? true : undefined}>
           {inspector}
         </aside>
       )}
 
       {paneOn && (
-        <svg className="reader-thread" aria-hidden="true">
+        <svg className="reader-thread" aria-hidden="true" style={{ display: "none" }}>
           <path ref={thread} />
         </svg>
       )}
@@ -1454,7 +1460,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
       {!mid && inspect && (
         <Modal
-          title={inspect.kind === "selection" ? (inspect.passages === 1 ? "Records linked to this passage" : `Records linked to these ${inspect.passages} passages`) : "Records linked to this passage"}
+          title={inspect.kind === "selection" ? (inspect.passages === 1 ? "Steps linked to this passage" : `Steps linked to these ${inspect.passages} passages`) : "Steps linked to this passage"}
           placement={phone ? "sheet" : "side-end"}
           className="modal--inspector"
           onClose={closeInspector}
@@ -1590,7 +1596,7 @@ function StepControls({ signals, ties, onStep }: { signals: ReaderSignals; ties:
         {arrow("M7.5 2.5L4 6l3.5 3.5")}
       </button>
       <span className="num" aria-live="polite">
-        {place >= 0 ? `${place + 1} of ${ties.stops.length}` : `${ties.stops.length} statements`}
+        {place >= 0 ? `Statement ${place + 1} of ${ties.stops.length}` : `${ties.stops.length} statements`}
       </span>
       <button type="button" aria-label="Next tied statement" title="Next tied statement (j)" onClick={() => onStep(1)}>
         {arrow("M4.5 2.5L8 6l-3.5 3.5")}
