@@ -30,13 +30,12 @@ import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence 
 import { recordMark } from "./leanMarks";
 import { useLeanGraph } from "./useLeanGraph";
 import { useAlignment } from "../compare/useAlignment";
-import { namePlace } from "../app/trail";
 import type { LeanStep } from "../panels/model";
 import { shortTitle as recordTitle } from "../compare/useAlignment";
 import { startLeanViewer } from "../lean/lazy";
 import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
-import { onLeave } from "../app/trail";
+import { namePlace, onLeave } from "../app/trail";
 import { readScene, sceneWriter, type MapScene } from "./scene";
 import "./map-page.css";
 

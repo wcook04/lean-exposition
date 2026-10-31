@@ -270,12 +270,8 @@ function Route({
   onEcho(ids: Iterable<string> | null): void;
 }) {
   const { graph } = useEdition();
-  const [open, setOpen] = useState(false);
-  const [whole, setWhole] = useState(false);
-  useEffect(() => {
-    setOpen(false);
-    setWhole(false);
-  }, [nodeId]);
+  const [open, setOpen] = useEntryState(`route-open:${nodeId}`, false);
+  const [whole, setWhole] = useEntryState(`route-whole:${nodeId}`, false);
   if (path === null) return <p className="panel__route">No recorded route from the main result in this account</p>;
   if (path.length < 2) return null;
   const goal = path[0];
@@ -285,7 +281,7 @@ function Route({
   const listId = `route-${nodeId.replace(/[^\w-]/g, "_")}`;
   return (
     <div className="panel__route">
-      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
+      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen(!open)}>
         <span>
           One recorded route from <strong>{goalName}</strong>, in {steps} {steps === 1 ? "step" : "steps"}
         </span>
@@ -842,8 +838,7 @@ const OUTCOME_NAMES: Record<string, string> = { passed: "Passed", failed: "Faile
 function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly string[] }) {
   const edition = useEdition();
   const stored = useStored();
-  const [open, setOpen] = useState<string | null>(null);
-  useEffect(() => setOpen(null), [nodeId]);
+  const [open, setOpen] = useEntryState<string | null>(`checks-open:${nodeId}`, null);
   const rows = useMemo(() => {
     const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
     const by = new Map<string, { id: string; label: string; status: string }[]>();

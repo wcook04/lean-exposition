@@ -343,7 +343,7 @@ a card, and its first screen answers "what is this, and how is it stated?":
   and checks. The statement and the start of the Lean are on the first screen at 1280×690.
   Where the alignment has no slices, the record's passages stand in. It starts on the lens's
   paper. A record with no Lean says so and lists what it rests on, with each input's mark.
-- **Declaration:** the same sheet at one Lean name, with a named Back. Every name in a sheet
+- **Declaration:** the same sheet at one Lean name. Every name in a sheet
   walks here in place, and each walk is one history entry (`?d=`).
 - **Step:** the relation in words ("*Consumer* uses *prerequisite*", with its
   type) → the chain of Lean names between the two records, each a walk, or a plain sentence
