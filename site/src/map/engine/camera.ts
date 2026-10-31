@@ -61,6 +61,30 @@ export function ensureVisible(b: Bounds, vp: Viewport, view: View, minScale: num
   return fit;
 }
 
+/** How far past the view's edge a drawing wider than the view may be dragged, as a share of the view. */
+export const CLAMP_SLACK = 0.4;
+
+/**
+ * The nearest view that keeps the drawing on the canvas. A drawing that fits stays inside
+ * the view; one that does not always fills at least the rest of the view past the slack,
+ * so neither a drag nor a zoom about the pointer can lose it.
+ */
+export function clampView(view: View, b: Bounds, vp: Viewport, slack = CLAMP_SLACK): View {
+  const { insets } = vp;
+  const axis = (at: number, lo: number, hi: number, from: number, to: number) => {
+    const size = (to - from) * view.k;
+    const room = Math.max(1, hi - lo);
+    const min = size <= room ? lo - from * view.k : hi - room * slack - to * view.k;
+    const max = size <= room ? hi - to * view.k : lo + room * slack - from * view.k;
+    return min <= max ? Math.max(min, Math.min(max, at)) : (min + max) / 2;
+  };
+  return {
+    x: axis(view.x, insets.left, vp.width - insets.right, b.x0, b.x1),
+    y: axis(view.y, insets.top, vp.height - insets.bottom, b.y0, b.y1),
+    k: view.k,
+  };
+}
+
 /** Interpolate views through their centres and log-scale, so zooms feel even. */
 export function lerpView(a: View, b: View, t: number, vp: Viewport): View {
   const cx = vp.width / 2;

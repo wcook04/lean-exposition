@@ -35,11 +35,13 @@ import { transitiveReduction } from "./engine/skeleton";
 import { edgeKeyOf, layoutScope, recordOf, splitSharedLeaves } from "./engine/occurrences";
 import { layoutBounds, layoutTree } from "./engine/layout";
 import { arrowHead, polygonPath, roundedPath, route, type Plan, type Pt, type Routed } from "./engine/router";
-import { ensureVisible, fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
+import { clampView, ensureVisible, fitBounds, frameBox, revealBox, travelMs, zoomPath, type Bounds, type View, type Viewport } from "./engine/camera";
 import { CAMERA_MS, MOVE_MS, easeMove, lerp } from "./engine/motion";
 import { METRICS, METRICS_COMPACT, METRICS_DENSE, type EngineEdge, type Layout, type Rect, type Size } from "./engine/types";
 import { COMPACT_FLOOR, DENSE_H, DENSE_H_SECTION, DENSE_MIN_K, DENSE_ROOT_H, DENSE_ROOT_W, DENSE_TILE, DENSE_W, LEAN_BREAK, MAX_K, REF_PX, STEPS_FLOOR, STEPS_K, TILE, fitPlate, fitTitle, floorK, repFor, titlePieces, type MapMode, type MeasuredTitle, type Rep, type TitleKind } from "./canvas/representation";
 import type { MapScene } from "./canvas/scene";
+import type { LeanMark } from "../model/leanStatus";
+import { markWords } from "../model/leanStatus";
 import { useReducedMotion } from "./canvas/useReducedMotion";
 import { SIDES, beyond, chipAt, chipText, freeSpot, panToward, sameBeyond, screenRects, type Beyond, type Side } from "./canvas/chips";
 import { traceTiming } from "./canvas/trace";
@@ -58,6 +60,10 @@ export interface Insets {
 
 export interface MapViewHandle {
   fitAll(animate?: boolean): void;
+  /** The whole drawing, as large as it fits, never below the scale where tiles hold their words. */
+  fit(animate?: boolean): void;
+  /** Move the camera by screen pixels, stopping where the drawing would leave the canvas. */
+  panBy(dx: number, dy: number): void;
   fitNodes(ids: Iterable<string>, animate?: boolean): void;
   zoomBy(factor: number): void;
   focusNode(id: string): void;
@@ -146,6 +152,11 @@ export interface TreeProps {
   notesHost?: HTMLElement | null;
   /** A quiet line in a free corner of the canvas: the full title of a shortened tile, or the relation under the pointer. */
   captionRef?: RefObject<HTMLElement | null>;
+  /**
+   * What the Lean holds of a record: the card's shape and its two bars (statement on the left,
+   * proof on the right). Without it, cards are drawn as they always were.
+   */
+  statusOf?(id: string, node: ArgNode): LeanMark | null;
 }
 
 const STORE = "lx-tree-expanded:";
@@ -264,6 +275,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const repRef = useRef<Rep>("card");
   const onSettledRef = useRef(props.onSceneSettled);
   onSettledRef.current = props.onSceneSettled;
+  const captionRefRef = useRef(props.captionRef);
+  captionRefRef.current = props.captionRef;
+  const compactRef = useRef(compact);
+  compactRef.current = compact;
   const onUserMoveRef = useRef(props.onUserMove);
   onUserMoveRef.current = props.onUserMove;
   const persist = props.persist ?? true;
@@ -952,6 +967,15 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           return;
         }
       }
+      // A lens, a sheet or a smaller window can leave the camera past the new edge of the drawing.
+      if (!compactRef.current && !focusHeld.current && boundsRef.current) {
+        const cur = viewRef.current;
+        const c = clampView(cur, boundsRef.current, viewport());
+        if (Math.abs(c.x - cur.x) > 1 || Math.abs(c.y - cur.y) > 1) {
+          moveCamera(c, true, CAMERA_MS);
+          return;
+        }
+      }
       const scene = getSceneRef.current();
       // Keyed by the entry too: the same scene still has to be written into a new history entry.
       const key = `${window.location.href}|${JSON.stringify(scene)}`;
@@ -1499,6 +1523,25 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const anchor = (selected && pick(l, selected)) || goal;
         moveCamera(frameBox(box, viewport(), { min: k, max: k, anchor: boxOf(l, anchor, 24), top: true }), animate);
       },
+      fit: (animate = true) => {
+        const l = builtRef.current.layout;
+        const b = layoutBounds(l);
+        const pad = 16;
+        focusHeld.current = false;
+        userMovedSinceAsk.current = true;
+        pendingCamera.current = null;
+        const box = { x0: b.x0 - pad, y0: b.y0 - pad, x1: b.x1 + pad, y1: b.y1 + pad };
+        moveCamera(frameBox(box, viewport(), { min: minK, max: dense ? 1.15 : STEPS_K, anchor: boxOf(l, (selected && pick(l, selected)) || goal, 24), top: true }), animate, CAMERA_MS);
+      },
+      panBy: (dx, dy) => {
+        const v = targetView();
+        const b = boundsRef.current;
+        const next = { k: v.k, x: v.x + dx, y: v.y + dy };
+        userMovedSinceAsk.current = true;
+        focusHeld.current = false;
+        onUserMoveRef.current?.();
+        moveCamera(b ? clampView(next, b, viewport()) : next, true, CAMERA_MS);
+      },
       fitNodes: (ids, animate = true) => {
         const list = [...ids];
         const fn = (l: Layout) => {
@@ -1517,7 +1560,8 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         const py = vp.insets.top + (vp.height - vp.insets.top - vp.insets.bottom) / 2;
         const k = Math.max(floorK(denseRef.current, compact), Math.min(MAX_K, v.k * factor));
         userMovedSinceAsk.current = true;
-        moveCamera({ k, x: px - ((px - v.x) / v.k) * k, y: py - ((py - v.y) / v.k) * k }, true, CAMERA_MS);
+        const next = { k, x: px - ((px - v.x) / v.k) * k, y: py - ((py - v.y) / v.k) * k };
+        moveCamera(boundsRef.current ? clampView(next, boundsRef.current, vp) : next, true, CAMERA_MS);
       },
       focusNode: (id) => {
         const lid = pick(builtRef.current.layout, id);
@@ -1618,15 +1662,12 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       .scaleExtent([floorK(denseRef.current, compact), MAX_K])
       // A press that moves less than this is still a click: it opens what it is on.
       .clickDistance(5)
-      // Panning stops while part of the drawing is still on the canvas.
+      // The drawing cannot leave the canvas (clampView), by a drag or a zoom about the pointer.
       .constrain((t: ZoomTransform) => {
         const b = boundsRef.current;
         if (!b) return t;
-        const { width, height } = sizeRef.current;
-        const keep = 96;
-        const dx = Math.min(0, width - keep - (b.x0 * t.k + t.x)) || Math.max(0, keep - (b.x1 * t.k + t.x));
-        const dy = Math.min(0, height - keep - (b.y0 * t.k + t.y)) || Math.max(0, keep - (b.y1 * t.k + t.y));
-        return dx || dy ? t.translate(dx / t.k, dy / t.k) : t;
+        const c = clampView(t, b, viewport());
+        return c.x === t.x && c.y === t.y ? t : t.translate((c.x - t.x) / t.k, (c.y - t.y) / t.k);
       })
       .filter((event: Event) => {
         if (event.type === "dblclick" || event.type === "wheel") return false;
@@ -1676,6 +1717,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const onWheel = (event: WheelEvent) => {
       if ((event.target as Element).closest?.(".tree__ui")) return;
       event.preventDefault();
+      // The drawing moves under the pointer: what was named is no longer what it rests on.
+      const caption = captionRefRef.current?.current;
+      if (caption) caption.hidden = true;
       const t = viewRef.current;
       const unit = event.deltaMode === 1 ? 16 : 1;
       // Two fingers on a trackpad or a wheel pan, as they scroll any page. A pinch arrives with
@@ -1996,33 +2040,21 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     allHome.current = null;
   }, [goal]);
 
-  /** One quiet line on the canvas, in the first corner where it covers no card. */
+  /** One quiet line in the strip under the canvas: it covers nothing and goes when the pointer does. */
   const showCaption = (text: string) => {
     const el = props.captionRef?.current;
-    const wrap = wrapRef.current;
     if (!el) return;
     el.textContent = text;
     el.hidden = !text;
-    if (!text || !wrap) return;
-    const area = wrap.getBoundingClientRect();
-    const w = el.offsetWidth;
-    const h = el.offsetHeight;
-    const cards = [...cardEls.current.values()].map((c) => c.getBoundingClientRect());
-    const clear = (x: number, y: number) => cards.every((c) => c.right < x || c.left > x + w || c.bottom < y || c.top > y + h);
-    const [left, right] = [area.left + 24, area.right - 24 - w];
-    const [top, bottom] = [area.top + 12, area.bottom - 12 - h - insets.bottom + 20];
-    const corners: [string, number, number][] = [
-      ["top-left", left, top],
-      ["top-right", right, top],
-      ["bottom-left", left, bottom],
-      ["bottom-right", right, bottom],
-    ];
-    el.dataset.at = (corners.find(([, x, y]) => clear(x, y)) ?? corners[0])[0];
   };
-  /** Under the pointer or focus, a shortened tile says its full title. */
+  /** Under the pointer or keyboard focus, a tile says its full title and what the Lean holds of it. */
   const captionTile = (lid: string | null) => {
-    const full = lid && repRef.current === "compact" && shortened.current.has(lid) ? cardEls.current.get(lid)?.dataset.full : "";
-    showCaption(full || "");
+    if (!lid || repRef.current !== "compact") return showCaption("");
+    const el = cardEls.current.get(lid);
+    const id = recordOf(lid);
+    const node = fullGraph.nodes.get(id);
+    const mark = node && props.statusOf?.(id, node);
+    showCaption([el?.dataset.full, node?.leanNote, mark && markWords(mark)].filter(Boolean).join(". "));
   };
   const setHovered = (lid: string | null) => {
     setHover(lid);
@@ -2261,6 +2293,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       className={`tree${compact ? " tree--compact" : ""}${rootW < 700 ? " tree--narrow" : ""}${moving ? " tree--moving" : ""}${traced ? " tree--traced" : ""}${entering ? " tree--entering" : ""}${!framed && !compact ? " tree--unframed" : ""}${baseDim ? " tree--dim" : ""}${reduced ? " tree--reduced" : ""}`}
       data-mode={mode}
       data-dense={dense || undefined}
+      onPointerLeave={() => {
+        setHover(null);
+        setHoverEdge(null);
+        setHoverTag(null);
+        showCaption("");
+        onHover?.(null);
+      }}
       onClick={(event) => {
         if ((event.target as Element).closest?.(".card, button, a, .hit, .tree__ui")) return;
         if (selected) onSelect(null);
@@ -2395,6 +2434,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
           const tileLean = node.kind === "declaration";
           const tile = tileLean ? node.label.slice(node.label.lastIndexOf(".") + 1) : tileTitle(id, node.label);
           const usedBy = built.shared.get(id) ?? 0;
+          const mark = props.statusOf?.(id, node) ?? null;
           return (
             <div
               key={lid}
@@ -2406,10 +2446,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               data-kind={node.kind}
               data-full={node.label}
               data-section={section ?? undefined}
+              data-shape={mark?.shape}
+              data-lean-statement={mark && mark.statement !== "none" ? mark.statement : undefined}
+              data-lean-proof={mark && mark.proof !== "none" ? mark.proof : undefined}
               className={cardClass(lid, node, leaf)}
               style={{ width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
-              aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} records that use it` : ""}${lean ? ", linked to Lean" : ""}`}
+              aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} records that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
               title={clone ? node.label : undefined}
               onClick={(event) => {
                 if ((event.target as Element).closest?.(".card__inputs, .card__usedby, .tag, a")) return;
@@ -2417,9 +2460,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                 onSelect(id);
               }}
               onKeyDown={(event) => onCardKey(lid, event)}
-              onFocus={() => {
+              onFocus={(event) => {
                 setFocusId(lid);
-                captionTile(lid);
+                // A click also focuses the card; only the keyboard's focus names it, because a pointer that left must take the name with it.
+                if ((event.target as HTMLElement).matches?.(":focus-visible")) captionTile(lid);
               }}
               onBlur={() => showCaption("")}
               onPointerEnter={() => setHovered(lid)}
