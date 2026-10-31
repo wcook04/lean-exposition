@@ -570,6 +570,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // A pin from a sentence, or the address keeping up with the reader: the paper stays.
     const own = selfAt.current === route.at;
     selfAt.current = null;
+    // A jump puts the reader somewhere new: the line is theirs again.
+    if (!own) stepped.current = false;
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
     if (atChanged || own) void landSlice(route.at, { scroll: paperMoves, smooth: !fromPop, node: route.node });
     if (saved) {
@@ -1130,6 +1132,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const target = event.target as Element;
     const a = target.closest?.("a");
     if (event.button !== 0) return;
+    if (target.closest?.(".ref-inset")) return;
     if (!a) {
       if (target.closest?.("button")) return;
       const mark = target.closest?.<HTMLElement>("[data-t]");
@@ -1331,6 +1334,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         className="reader__paper"
         ref={paperRef}
         onClick={onPaperClick}
+        onClickCapture={(event) => {
+          // A reference opens or closes under the paragraph: the statement being read stays
+          // the statement being read until the reader scrolls. Its own handler stops the event.
+          if ((event.target as Element).closest?.("a[data-ref], .ref-inset")) stepped.current = true;
+        }}
         onPointerDown={(event) => (downAt.current = { x: event.clientX, y: event.clientY })}
         onPointerOver={onPaperPointer}
         onPointerLeave={onPaperLeave}

@@ -453,12 +453,13 @@ html:has(.reader) {
   left: 0;
   width: 2px;
   border-radius: 1px;
-  background: var(--rule);
+  background: var(--rule-strong);
   transition: background-color var(--t-hover) var(--ease-out);
 }
 
+/* Lean is what a reader looks for: plain at a glance, and still only a hairline. */
 .tick[data-lean] {
-  background: color-mix(in oklab, var(--ink-3) 45%, var(--rule-strong));
+  background: color-mix(in oklab, var(--ink-3) 82%, var(--rule-strong));
 }
 
 .tick[data-point] {

@@ -156,9 +156,23 @@ describe("the Lean page", async () => {
   it("says where each paper states the step, each a link with the exact landing, then Compare", () => {
     show({ record, tie: 0 });
     const crumbs = [...container.querySelectorAll<HTMLAnchorElement>(".lean-crumbs a")];
-    expect(crumbs.map((a) => a.textContent)).toEqual(["Short paper §2", "Long record §5.3", "Compare"]);
+    expect(crumbs.map((a) => a.textContent)).toEqual(["Short paper §2", "Long record §5.3, same step", "Compare"]);
     expect(crumbs[1].getAttribute("href")).toContain("l=");
     expect(crumbs[2].getAttribute("href")).toContain("/compare");
+  });
+
+  it("sends a reader to the slice that names the open declaration, not just the step's best", async () => {
+    const { paperTarget } = await import("../src/reader/page/model");
+    const named = slice({ paper: "long", at: "b50-60", role: "explanation", lean: [lean], lean_source: "statement", start_byte: 50 });
+    const wide = slice({ paper: "long", at: "b9-12", role: "statement", lean: [lean], lean_source: "record", start_byte: 9 });
+    const elsewhere = slice({ paper: "expository", at: "b70-80", role: "mention", lean: [lean], lean_source: "statement", start_byte: 70 });
+    const data: Alignment = { dictionary: [], records: { a: { short: "", lean: [lean], statements: [wide, named] }, b: { short: "", lean: [], statements: [elsewhere] } } };
+    expect(paperTarget(data, "long", "a", lean.name)).toMatchObject({ record: "a", near: false, slice: { at: "b50-60" } });
+    expect(paperTarget(data, "expository", "a", lean.name)).toMatchObject({ record: "b", near: false, slice: { at: "b70-80" } });
+    const other: Alignment = { ...data, records: { a: data.records.a } };
+    expect(paperTarget(other, "long", "a", "OAI.not.named")).toMatchObject({ near: true, slice: { at: "b9-12" } });
+    expect(paperTarget(other, "expository", "a", lean.name)).toBeNull();
+    expect(paperTarget(other, "long", "a", null)).toMatchObject({ near: false, slice: { at: "b9-12" } });
   });
 
   it("offers each declaration of a step, one at a time", () => {
@@ -210,6 +224,7 @@ describe("the Lean page", async () => {
     expect(clampDock(0.1)).toBe(DOCK_MIN);
     expect(clampDock(0.95)).toBe(DOCK_MAX);
     expect(readDockShare()).toBe(0.75);
+    expect(1 - readDockShare(false, false, 734)).toBeLessThan(96 / 734);
     expect(readDockShare(false, true)).toBe(0.5);
     localStorage.setItem("lx-reader-lean", "0.61");
     expect(readDockShare()).toBe(0.61);

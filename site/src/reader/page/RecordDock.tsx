@@ -18,10 +18,9 @@ import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { shortTitle } from "../../compare/useAlignment";
 import { LazyLeanBlock } from "../../lean/lazy";
 import type { LeanWalk } from "../../lean/walk";
-import { statementHref } from "../links";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
-import { bestSlice, sectionNumber } from "./model";
+import { paperTarget, sectionNumber } from "./model";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
 export interface LeanOpen {
@@ -85,18 +84,26 @@ export function plainName(alignment: Alignment | null, name: string): string {
 }
 
 /** Short paper §2, Long record §5.3, Exposition §4, Compare: where each paper states this, each a link. */
-export function PaperCrumbs({ record, row, stage, alignment }: { record: string; row: RecordAlignment | undefined; stage: Stage; alignment: Alignment | null }) {
+export function PaperCrumbs({ record, row, stage, alignment, decl, at }: { record: string; row: RecordAlignment | undefined; stage: Stage; alignment: Alignment | null; decl: string | null; at: string | null }) {
   const order = [stage, ...STAGE_ORDER.filter((s) => s !== stage)];
   const places = order.flatMap((paper) => {
-    const slice = bestSlice(alignment, paper, record);
-    return slice ? [{ paper, slice }] : [];
+    // In this paper the open statement is itself the place.
+    const here = paper === stage && at ? row?.statements.find((s) => s.paper === paper && s.at === at) : undefined;
+    const target = here ? { record, slice: here, near: false } : paperTarget(alignment, paper, record, decl);
+    return target ? [{ paper, ...target }] : [];
   });
   return (
     <nav className="lean-crumbs" aria-label="Where the papers state this">
-      {places.map(({ paper, slice }) => (
-        <a key={paper} href={statementHref(slice)} title={slice.section || undefined}>
+      {places.map(({ paper, record: id, slice, near }) => (
+        <a
+          key={paper}
+          href={routeHref({ view: "read", stage: paper, anchor: slice.anchor ?? undefined, at: slice.at, node: id })}
+          aria-current={paper === stage && slice.at === at ? "location" : undefined}
+          title={near ? "This paper states the step. It does not name this declaration at that place." : slice.section || undefined}
+        >
           {PAPER_NAMES[paper].short}
           {slice.section ? ` ${sectionNumber(slice.section)}` : ""}
+          {near && <span className="lean-crumbs__near">, same step</span>}
         </a>
       ))}
       {row && <a href={routeHref({ view: "compare", node: record })}>Compare</a>}
@@ -221,7 +228,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
         </div>
       ) : (
         <>
-          {record && <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} />}
+          {record && <PaperCrumbs record={record} row={alignment?.records[record]} stage={stage} alignment={alignment} decl={name} at={at} />}
           {tie && open.tie !== null && (
             <div className="lean-page__lead">
               <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>
@@ -285,7 +292,9 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
 
 const SHARE_KEY = "lx-reader-lean";
 export const DOCK_MIN = 0.3;
-export const DOCK_MAX = 0.88;
+export const DOCK_MAX = 0.92;
+/** The band of graph left above the Lean by default, in pixels. */
+const BAND = 92;
 
 export function clampDock(share: number): number {
   return Math.min(DOCK_MAX, Math.max(DOCK_MIN, share));
@@ -294,12 +303,12 @@ export function clampDock(share: number): number {
 const shareKey = (side: boolean, kept: boolean) => `${SHARE_KEY}${side ? "-side" : ""}${kept ? "-kept" : ""}`;
 
 /**
- * The remembered size. A click raises the Lean over most of the page; kept open beside
- * the reading, it takes half, so the graph above it stays useful. Side by side, a little
- * over half of the width.
+ * The remembered size. A click raises the Lean over all but a slim band of graph, which keeps
+ * the place; kept open beside the reading, it takes half, so the graph above it stays useful.
+ * Side by side, a little over half of the width.
  */
-export function readDockShare(side = false, kept = false): number {
-  const fallback = side ? 0.54 : kept ? 0.5 : 0.75;
+export function readDockShare(side = false, kept = false, height = 0): number {
+  const fallback = side ? 0.54 : kept ? 0.5 : height ? Math.min(DOCK_MAX, Math.max(0.75, 1 - BAND / height)) : 0.75;
   try {
     const value = Number(localStorage.getItem(shareKey(side, kept)));
     return value ? clampDock(value) : fallback;

@@ -274,6 +274,36 @@ export function bestSlice(alignment: Alignment | null, stage: Stage, id: string)
   return [...slices].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0] ?? null;
 }
 
+export interface PaperTarget {
+  /** The step the landing belongs to, which pins there. */
+  record: string;
+  slice: AlignedStatement;
+  /** The paper states the step, and does not name this declaration at that place. */
+  near: boolean;
+}
+
+/**
+ * Where to send a reader from an open declaration to another paper. Chosen by the Lean:
+ * first a slice that itself names this declaration, in this step and then in any step; then
+ * a slice of this step whose Lean includes it; then the step's best statement, said to be
+ * only that. A landing on unrelated words is the one thing this must never do.
+ */
+export function paperTarget(alignment: Alignment | null, paper: Stage, record: string, decl: string | null): PaperTarget | null {
+  const best = (rows: AlignedStatement[]) => [...rows].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0];
+  const own = (alignment?.records[record]?.statements ?? []).filter((s) => s.paper === paper);
+  if (decl) {
+    const names = (s: AlignedStatement) => s.lean?.some((row) => row.name === decl);
+    const stated = own.filter((s) => s.lean_source === "statement" && names(s));
+    if (stated.length) return { record, slice: best(stated), near: false };
+    for (const [id, row] of Object.entries(alignment?.records ?? {})) {
+      const found = row.statements.filter((s) => s.paper === paper && s.lean_source === "statement" && names(s));
+      if (found.length) return { record: id, slice: best(found), near: false };
+    }
+  }
+  const slice = bestSlice(alignment, paper, record);
+  return slice ? { record, slice, near: !!decl } : null;
+}
+
 export { sliceAt, statementHref } from "../links";
 
 /** The source lines an `l` value names in this document. */

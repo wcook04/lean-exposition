@@ -32,6 +32,8 @@ import "./map-pane.css";
 
 /** From this page width the Lean stands beside the graph, next to the paper. */
 const SIDE_BY_SIDE = 860;
+/** How much of the page a preview under the pointer takes. */
+const PREVIEW_SHARE = 0.42;
 /** --t-state: the canvas crossfades when the main result changes. */
 const CROSSFADE_MS = 160;
 
@@ -95,6 +97,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   const slot = preview ?? leanSlot;
   const openRecord = pin?.record ?? (decl ? recordOfDecl(alignment, decl) : null);
   const expanded = !!pin || !!decl || !!slot;
+  /** A reference under the pointer: it comes and goes, so it takes a modest part of the page. */
+  const previewOnly = !!preview && !pin && !decl && !leanSlot;
   // A sheet shows what was asked for; keeping the Lean open is for the page beside the paper.
   const [keep, setKeepState] = useState(() => !inModal && readKeepLean());
   const setKeep = useCallback((open: boolean) => {
@@ -206,9 +210,9 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const root = rootRef.current;
       if (!root) return;
       const side = root.clientWidth >= SIDE_BY_SIDE;
-      root.style.setProperty("--lean-share", String(value ?? (keep || expanded ? readDockShare(side, keptOnly) : 0)));
+      root.style.setProperty("--lean-share", String(value ?? (previewOnly ? PREVIEW_SHARE : keep || expanded ? readDockShare(side, keptOnly, root.clientHeight) : 0)));
     },
-    [keep, expanded, keptOnly],
+    [keep, expanded, keptOnly, previewOnly],
   );
   const measureKept = useCallback(() => {
     const pages = rootRef.current?.querySelector<HTMLElement>(".map-pane__pages");
@@ -237,8 +241,10 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       const left = l.right + 8;
       if (c.left < left || c.right > b.right - 8) canvas.style.transform = `translateX(${Math.round((left + b.right) / 2 - (c.left + c.right) / 2)}px)`;
     } else {
-      const bottom = l.top - 8;
-      if (c.top < b.top + 4 || c.bottom > bottom) canvas.style.transform = `translateY(${Math.round((b.top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
+      // The head gives way while the Lean is open, so the band is all graph.
+      const top = rootRef.current!.getBoundingClientRect().top + 2;
+      const bottom = l.top - 12;
+      if (c.top < top || c.bottom > bottom) canvas.style.transform = `translateY(${Math.round((top + bottom) / 2 - (c.top + c.bottom) / 2)}px)`;
     }
   }, [openRecord, expanded]);
 
@@ -276,7 +282,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     const side = isSide();
     // At rest the handle lies at the foot of the graph: drawing it up keeps the Lean open.
     const rest = !keep && !expanded;
-    let value = rest ? 0 : readDockShare(side, keptOnly);
+    let value = rest ? 0 : readDockShare(side, keptOnly, root.clientHeight);
     let raised = false;
     const startY = event.clientY;
     const startX = event.clientX;
@@ -326,7 +332,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       if (step > 0) setKeep(true);
       return;
     }
-    const next = clampDock(readDockShare(side, keptOnly) + step);
+    const next = clampDock(readDockShare(side, keptOnly, rootRef.current?.clientHeight) + step);
     saveDockShare(next, side, keptOnly);
     applyShare(next);
     measureKept();
@@ -505,7 +511,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             )}
           </div>
         </div>
-        {(!inModal || leanShown) && (
+        {!previewOnly && (!inModal || leanShown) && (
           <div
             className="map-pane__handle"
             role="separator"

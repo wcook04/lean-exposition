@@ -258,9 +258,9 @@ export function useReferences(
       const view = refView(index, row);
       const item: Open = { id, row, link, slot, view, html: bodyHtml(doc, stage, view.body), focusFirst, nudge: 0, scrollAfter: window.scrollY };
       flushSync(() => setOpen((list) => [...list, item]));
-      // An inset opened near the foot of the window is brought into view, as far as the link allows.
+      // The reading position holds. Only an inset whose first lines would fall below the window is brought up.
       const foot = document.querySelector(".reader-bar")?.getBoundingClientRect().top ?? window.innerHeight;
-      const over = slot.getBoundingClientRect().bottom - foot + 16;
+      const over = slot.getBoundingClientRect().top + 72 - foot;
       const room = link.getBoundingClientRect().top - top() - 8;
       const nudge = Math.max(0, Math.min(over, room));
       if (nudge > 0) {
