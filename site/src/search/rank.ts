@@ -181,7 +181,7 @@ export function scoreText(table: string, folded: string, tokens: readonly string
 
 // ------------------------------------------------------------- the published text
 
-interface IndexRow {
+export interface IndexRow {
   ref: string;
   table: string;
   label?: string | null;
