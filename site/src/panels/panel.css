@@ -1421,6 +1421,18 @@
   color: var(--ink);
 }
 
+/* The Lean's reading line is the sheet's last row, shown while a name is being read. It
+   narrows the column from below, so nothing moves and nothing is covered. */
+.panel > .lean-slot {
+  flex: none;
+  margin: 0;
+  padding: 5px var(--space-5);
+}
+
+.panel > .lean-slot:empty {
+  display: none;
+}
+
 .panel__linked {
   min-width: 0;
   font-size: var(--fs-sm);

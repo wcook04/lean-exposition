@@ -335,7 +335,7 @@ export function MapPage({ route }: { route: MapRoute }) {
   useEffect(() => {
     if (!firstView.current) return;
     firstView.current = false;
-    if (!phone && display === "map" && !route.node && !route.edge && !initialScene.current?.camera) go({ node: goal }, true);
+    if (!phone && display === "map" && !route.node && !route.edge && !route.decl && !initialScene.current?.camera) go({ node: goal }, true);
     // Only the page's first render decides this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

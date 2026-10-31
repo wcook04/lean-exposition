@@ -134,7 +134,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
           </section>
         </div>
       </div>
-      <div ref={setSlot} className="lean-slot" />
+      <div ref={setSlot} className="lean-slot lean-slot--compact" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : `Selected Lean declaration: ${plain ?? short}.`}
       </p>

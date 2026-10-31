@@ -254,7 +254,7 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
           </Pane>
         </div>
       </div>
-      <div ref={setSlot} className="lean-slot" />
+      <div ref={setSlot} className="lean-slot lean-slot--compact" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : announcement(node.label, kindWord(node.kind))}
       </p>

@@ -125,8 +125,12 @@ index, so the fills are there at first paint.
 page, and Fit. What the pointer rests on is named there for that moment, in place of the key,
 so a caption can never cover a target, and it goes when the pointer goes.
 
-**The Lean graph** is the fourth view (`?v=lean`): the declarations the argument's records link
-(65 for Full support), drawn by the same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`).
+**The Lean graph** is a secondary view (`?v=lean`), a sidecar for those who want it; the argument
+stays the default. It draws the declarations the argument's records link (65 for Full support)
+with the same engine (`model/leanGraph.ts`, `map/useLeanGraph.ts`). A card shows plain words
+(`model/declTitle.ts`): the authored title, then the short title of the record that links it most
+directly, then the dictionary's words, and the raw name only where none exists. The raw name is
+small under the sheet's heading and in the code, never on a card with a title.
 It loads on first use, about 120 modules of 349. A box is a definition or structure, a rounded
 shape a theorem or lemma. A solid line is a use in the proof, a dashed line a use in the
 statement, a thin dotted line a use reached only through helpers no record links; the caption
@@ -137,8 +141,9 @@ against proof is whether the name is written in the statement's lines. A use a l
 already says is not drawn, and the Key counts those. What nothing drawn uses hangs from the
 goal by a dashed line, which says only that the argument links it. Under a paper's lens the
 numbers count declarations, and the line above the lens says so. A card opens the sheet at that
-declaration; the camera goes further out here than on the argument (`k = 0.5`), where a name
-shortens and the strip has it whole.
+declaration; the camera goes further out here than on the argument (`k = 0.5`), where a title
+shortens and the strip has it whole. Helpers with no plain title stay collapsed behind their
+line, which says how many there are.
 
 **The goal's plate** is at most 200px tall: the title, one sentence of the theorem
 and the ways on. The full theorem and its Lean are in the record sheet.
