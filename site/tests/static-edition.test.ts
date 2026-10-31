@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it, vi } from "vitest";
+import { withPapers } from "../src/api/lean";
 import { search, selectionMatches, staticRequest, type SearchIndex, type StaticIndex } from "../src/api/static";
 
 describe("static reader algorithms", () => {
@@ -221,7 +222,7 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
     serveFiles(requests);
     try {
       await body("/api/v1");
-      await Promise.all(["/overview", "/graph?assumptions=true&representation=map&scope=corpus&view=arguments",
+      await Promise.all(["/overview?representation=reader", "/graph?assumptions=true&representation=reader_map&scope=corpus&view=arguments",
         "/records?limit=200&representation=summary&table=nodes", ...["nodes", "sources", "edges", "evidence"].map((t) => `/records?limit=200&offset=0&table=${t}`)]
         .map((path) => staticRequest(`/api/v1${path}`)));
       const names = new Set(requests.map((url) => url.split("/edition/")[1]));
@@ -274,6 +275,49 @@ describe.skipIf(!present)("exported edition against the Python server", () => {
       expect((await staticRequest("/api/v1/ties/other")).status).toBe(404);
       expect((await staticRequest("/api/v1/ties/short?manifest=wrong")).status).toBe(409);
     } finally { vi.unstubAllGlobals(); }
+  });
+  it("splits the alignment so that a paper's reader fetches that paper, and the parts are exactly the whole", async () => {
+    const edition = index();
+    if (!edition.responses["/alignment/core"]) return;
+    const whole = read("alignment.json");
+    const core = read("alignment/core.json");
+    const papers = ["long", "short", "expository"].map((stage) => read(`alignment/${stage}.json`));
+    for (const record of Object.values<any>(core.records)) {
+      for (const slice of record.statements) {
+        expect(slice).not.toHaveProperty("markdown");
+        expect(slice).not.toHaveProperty("note");
+        for (const row of slice.lean ?? []) expect(Object.keys(row)).toEqual(["name"]);
+      }
+    }
+    const { representation: _core, ...merged } = withPapers(core, papers);
+    expect(merged).toEqual(whole);
+    // The words of one paper come only with that paper.
+    const short = withPapers(core, papers.filter((paper) => paper.paper === "short"));
+    for (const [id, record] of Object.entries<any>(short.records)) {
+      record.statements.forEach((slice: any, at: number) => {
+        if (slice.paper === "short") expect(slice).toEqual(whole.records[id].statements[at]);
+        else expect(slice).not.toHaveProperty("markdown");
+      });
+    }
+    serveFiles();
+    try {
+      for (const id of Object.keys(whole.records).slice(0, 8)) expect(await body(`/api/v1/alignment/record?id=${encodeURIComponent(id)}`)).toEqual(whole.records[id]);
+      expect((await staticRequest("/api/v1/alignment/record?id=nothing")).status).toBe(404);
+    } finally { vi.unstubAllGlobals(); }
+  });
+  it("starts from the map and the overview without what no page reads", () => {
+    const { responses } = index();
+    const full = read(responses["/graph?assumptions=true&representation=map&scope=corpus&view=arguments"]);
+    const reader = read(responses["/graph?assumptions=true&representation=reader_map&scope=corpus&view=arguments"]);
+    expect(reader.omitted_fields.every((field: string) => field in full && !(field in reader))).toBe(true);
+    const { omitted_fields: _omitted, ...kept } = reader;
+    expect(kept).toEqual({ ...Object.fromEntries(Object.entries(full).filter(([field]) => !reader.omitted_fields.includes(field))), representation: "reader_map" });
+    expect(full.representation).toBe("map");
+    const overview = read(responses["/overview"]);
+    const small = read(responses["/overview?representation=reader"]);
+    expect("notes" in small.graph).toBe(false);
+    expect(small.graph.id).toBe(overview.graph.id);
+    expect(small.papers).toEqual(overview.papers);
   });
   it("carries exact Lean lines on every aligned row and statement", () => {
     if (!index().responses["/alignment"]) return;

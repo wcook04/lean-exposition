@@ -7,7 +7,7 @@ import type { SearchItem, Stage } from "../api/types";
 import { loadPaper } from "../app/data";
 import { STAGE_ORDER } from "../app/papers";
 import { routeHref } from "../app/router";
-import { alignmentResource } from "../compare/useAlignment";
+import { fullAlignmentResource } from "../compare/useAlignment";
 import { holdsWord, rankRows, type IndexRow } from "./rank";
 
 export interface CorpusRow extends IndexRow {
@@ -77,7 +77,7 @@ let statements: Promise<CorpusRow[]> | null = null;
 let papers: Promise<CorpusRow[]> | null = null;
 
 function statementsResource(): Promise<CorpusRow[]> {
-  statements ??= alignmentResource().then((alignment) => (alignment ? statementRows(alignment) : []));
+  statements ??= fullAlignmentResource().then((alignment) => (alignment ? statementRows(alignment) : []));
   return statements;
 }
 

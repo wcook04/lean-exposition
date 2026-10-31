@@ -133,6 +133,11 @@ lists routes, query parameters, exact document hashes and configured limits.
 | `/alignment` | Where each record is stated in Lean and in each paper, with exact Lean lines for each row and statement, the dictionary of Lean names, and the chain of names behind each step between Lean-linked records |
 | `/ties/long` | One paper's marked statements, compact enough for first paint; `short` and `expository` work likewise |
 
+The static reading edition also carries `/alignment/core`, `/alignment/long` (and `short`,
+`expository`) and `/alignment/record?id=…`, so that a page can load part of `/alignment`, and
+smaller startup forms of `/overview` and `/graph`. Those exist only there; this server answers
+the routes above, and the site falls back to them.
+
 Record tables are `nodes`, `edges`, `sources`, `citations` and `evidence`.
 Relation families are `declarations`, `arguments`, `citations`, `platform` and
 `provenance`. Paged resources accept `offset` (default 0) and `limit` (default 50,

@@ -181,11 +181,16 @@ export async function staticRequest(url: string): Promise<Response> {
   }
   const normalized = new URLSearchParams(params);
   normalized.delete("offset"); normalized.delete("limit");
-  // Older captured editions retain the complete structure at the original
-  // route; a new reader can still open them without the optional projection.
+  // Older captured editions retain the complete responses at the original
+  // routes; a new reader can still open them without the optional projections.
   const readerStructure = /^\/papers\/(long|short|expository)\/structure$/.test(route)
     && normalized.size === 1 && normalized.get("representation") === "reader";
-  const file = await responseFile(index, route, key(route, normalized)) ?? (readerStructure ? index.responses[route] : undefined);
+  const representation = normalized.get("representation");
+  const fullMap = new URLSearchParams(normalized);
+  fullMap.set("representation", "map");
+  const full = readerStructure || (route === "/overview" && representation === "reader") ? route
+    : route === "/graph" && representation === "reader_map" ? key(route, fullMap) : undefined;
+  const file = await responseFile(index, route, key(route, normalized)) ?? (full ? index.responses[full] : undefined);
   if (!file) return Response.json({ error: { code: "not_found", message: "This request is not part of the captured reading website." } }, { status: 404 });
   const data = await withPassageText(index, await load<Row>(file));
   return envelope(Array.isArray(data.items) && "total" in data ? { ...data, ...page(data.items, params, route, index.snapshot.manifest_sha256) } : data);

@@ -24,7 +24,7 @@ import { entryKey, namePlace, onLeave } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import type { ArgGraph } from "../model/graph";
 import type { PreparedDocument } from "./engine";
-import { alignmentResource, shortTitle } from "../compare/useAlignment";
+import { paperAlignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
 import { loadDocument, useDocument, type LoadedDocument } from "./documents";
 import { PaperBody, type BodyHandle, type Links } from "./page/PaperBody";
@@ -39,7 +39,7 @@ import { RightSheet } from "./page/RightSheet";
 import { FOLLOW_HOLD, leanPage, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
-import { ReaderSkeleton } from "./skeletonView";
+import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
 import { leanTruth, statementFor, statementOf, stepFrom, type TieModel } from "./ties";
 import {
   chainOf,
@@ -81,6 +81,8 @@ import {
 } from "./page/position";
 import "./reader-content.css";
 import "./reader-page.css";
+// It sets the columns the page opens in, so it cannot wait for the pane's own code.
+import "./page/map-pane.css";
 
 // The pane and the map engine arrive after the paper has painted.
 const mapPane = code(() => import("./page/MapPane"));
@@ -223,6 +225,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const { graph, snapshot } = useEdition();
   const edition = snapshot.cache_key;
   const { doc, paper, ties } = loaded;
+  useFirstScreenDone();
   const stage = route.stage;
   const structure = paper.structure;
   const wide = useMedia("(min-width: 1360px)");
@@ -251,7 +254,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     () =>
       whenIdle(() => {
         startTransition(() => setPaneReady(true));
-        void alignmentResource().then(setAlignment);
+        void paperAlignmentResource(route.stage).then(setAlignment);
       }, 500),
     [],
   );

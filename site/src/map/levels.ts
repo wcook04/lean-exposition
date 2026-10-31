@@ -7,7 +7,7 @@
 import type { PaperStructure, Stage } from "../api/types";
 import type { ArgGraph, ArgNode } from "../model/graph";
 import { ACCOUNT_IN_PROSE } from "../app/papers";
-import type { Alignment } from "../api/lean";
+import type { AlignmentCore } from "../api/lean";
 import { passageRecords, sectionTitleIn } from "../reader/page/model";
 import { recordLine } from "../compare/useAlignment";
 
@@ -50,7 +50,7 @@ export function lensSentence(counts: LevelCounts, lens: Stage | undefined): stri
 }
 
 /** How many distinct declarations this argument links, and how many of them each level's records link. */
-export function leanLevelCounts(graph: ArgGraph, argument: ReadonlySet<string>, alignment: Pick<Alignment, "records">): Pick<LevelCounts, "all" | Stage> {
+export function leanLevelCounts(graph: ArgGraph, argument: ReadonlySet<string>, alignment: Pick<AlignmentCore, "records">): Pick<LevelCounts, "all" | Stage> {
   const names = (keep: (id: string) => boolean) => {
     const set = new Set<string>();
     for (const id of argument) if (keep(id)) for (const row of alignment.records[id]?.lean ?? []) set.add(row.name);
