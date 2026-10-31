@@ -6,6 +6,7 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { LeanDeclaration, LeanModule } from "../api/lean";
 import { navigate, routeHref } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { dependencyWords, fetchModule, kindWord, type LeanShell } from "./data";
 import { Breakable } from "./ReadingStrip";
 import { findDecl, type DeclRow } from "./resolve";
@@ -77,8 +78,8 @@ function Tile({ row, record, side, onWalk, onHover }: { row: DeclRow; record?: s
   );
 }
 
-function Group({ title, side, rows, shell, onWalk, onHover }: { title?: string; side: string; rows: DeclRow[]; shell: LeanShell; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
-  const [all, setAll] = useState(false);
+function Group({ title, side, rows, shell, from, onWalk, onHover }: { title?: string; side: string; rows: DeclRow[]; shell: LeanShell; from: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
+  const [all, setAll] = useEntryState(`lean-hood:${from}:${side}`, false);
   const shown = all ? rows : rows.slice(0, SIDE_LIMIT);
   const more = rows.length - shown.length;
   if (!rows.length) return null;
@@ -101,7 +102,7 @@ function Group({ title, side, rows, shell, onWalk, onHover }: { title?: string; 
   );
 }
 
-function Side({ title, side, groups, shell, empty, onWalk, onHover }: { title: string; side: "by" | "uses"; groups: { title?: string; id: string; rows: DeclRow[] }[]; shell: LeanShell; empty: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
+function Side({ title, side, groups, shell, from, empty, onWalk, onHover }: { title: string; side: "by" | "uses"; groups: { title?: string; id: string; rows: DeclRow[] }[]; shell: LeanShell; from: string; empty: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
   const total = groups.reduce((sum, group) => sum + group.rows.length, 0);
   return (
     <section className={`lean-hood__side lean-hood__side--${side}`} aria-label={title}>
@@ -110,7 +111,7 @@ function Side({ title, side, groups, shell, empty, onWalk, onHover }: { title: s
       </p>
       {total === 0 && <p className="lean-hood__none">{empty}</p>}
       {groups.map((group) => (
-        <Group key={group.id} title={groups.filter((g) => g.rows.length).length > 1 ? group.title : undefined} side={`${side}-${group.id}`} rows={group.rows} shell={shell} onWalk={onWalk} onHover={onHover} />
+        <Group key={group.id} title={groups.filter((g) => g.rows.length).length > 1 ? group.title : undefined} side={`${side}-${group.id}`} rows={group.rows} shell={shell} from={from} onWalk={onWalk} onHover={onHover} />
       ))}
     </section>
   );
@@ -223,7 +224,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
             </g>
           ))}
         </svg>
-        <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
+        <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} from={decl.name} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
         <div className="lean-hood__centre" ref={centre} tabIndex={-1} aria-current="true">
           <span className="lean-hood__kind">{kindWord(decl.kind)}</span>
           <Breakable name={decl.short} />
@@ -237,6 +238,7 @@ export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclar
             { id: "proof", title: "In its proof", rows: sides.proof },
           ]}
           shell={shell}
+          from={decl.name}
           empty="It names nothing else in OpenAI's source."
           onWalk={walk}
           onHover={setHot}

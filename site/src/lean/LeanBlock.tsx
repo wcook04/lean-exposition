@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState, type MouseEven
 import "katex/dist/katex.min.css";
 import { leanSourceUrl, type LeanDeclaration, type LeanModule, type LeanRelation } from "../api/lean";
 import { routeHref } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { statementHref } from "../reader/links";
 import { buildCode, CodeView, type BuiltCode } from "./CodeView";
@@ -255,7 +256,7 @@ export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; mod
 }
 
 function DependencyList({ title, names, decl, shell, onWalk }: { title: string; names: readonly string[]; decl: LeanDeclaration; shell: LeanShell; onWalk?(row: DeclRow): void }) {
-  const [all, setAll] = useState(false);
+  const [all, setAll] = useEntryState(`lean-list:${decl.name}:${title}`, false);
   const near = (decl as { module?: string }).module;
   const rows = useMemo(() => {
     const found = names.flatMap((name) => {
@@ -410,7 +411,8 @@ export interface DeclViewProps {
 }
 
 export const DeclView = memo(function DeclView({ decl, module, shell, relation, note, proofOpen, compact, depth = 0, row, noDependencies, noTerms, clause, below, bare, lines: litLines, quietLines, pointed, onName, fill, previewSlot, noPapers, noHead }: DeclViewProps) {
-  const [proofChosen, setShowProof] = useState<boolean | null>(null);
+  // Open or folded belongs to the history entry, so Back finds the proof as it was left.
+  const [proofChosen, setShowProof] = useEntryState<boolean | null>(`lean-proof:${module.module}:${decl.name}`, null);
   const store = useMemo(readingStore, []);
   const root = useRef<HTMLElement>(null);
 
@@ -542,7 +544,13 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
           )}
         </header>
       )}
-      {fill ? <div className="lean-block__scroll">{body}</div> : body}
+      {fill ? (
+        <div className="lean-block__scroll" data-keep="">
+          {body}
+        </div>
+      ) : (
+        body
+      )}
       {(!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
     </article>
   );

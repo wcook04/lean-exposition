@@ -7,7 +7,7 @@ import { memo, useCallback, useEffect, useId, useMemo, useRef, useState, type Re
 import type { AlignedStatement, LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { navigate, routeHref, type Route } from "../app/router";
-import { namePlace } from "../app/trail";
+import { arrivedBy, namePlace, useEntryState } from "../app/trail";
 import { useCheckedWords } from "./checked";
 import { LazyStatementSlice } from "../compare/lazy";
 import { statementHref } from "../reader/links";
@@ -191,12 +191,22 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
 
 // ------------------------------------------------------------------ the tree
 
+/** The folders last open, which a new entry starts from; Back keeps each entry's own. */
+let foldersOpen: string[] = [];
+
 function TreeNav({ shell, current, landing, index, folder }: { shell: LeanShell; current?: string; landing: boolean; index: boolean; folder?: string }) {
   const folders = shell.modules.folders;
   const currentFolder = folder ?? (current ? folders.find((f) => f.modules.some((m) => m.module === current))?.path : undefined);
-  const [open, setOpen] = useState<Set<string>>(new Set(currentFolder ? [currentFolder] : []));
+  const [list, setList] = useEntryState<string[]>("lean-folders", foldersOpen);
+  const setOpen = (next: string[]) => {
+    foldersOpen = next;
+    setList(next);
+  };
+  const open = new Set(list);
   useEffect(() => {
-    if (currentFolder) setOpen((was) => (was.has(currentFolder) ? was : new Set(was).add(currentFolder)));
+    if (currentFolder && !open.has(currentFolder)) setOpen([...list, currentFolder]);
+    // Only arriving somewhere new opens a folder; closing the current one stays closed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFolder]);
   return (
     <nav className="lean-tree" aria-label="Folders and modules">
@@ -220,13 +230,7 @@ function TreeNav({ shell, current, landing, index, folder }: { shell: LeanShell;
                 type="button"
                 className="lean-tree__folder"
                 aria-expanded={isOpen}
-                onClick={() =>
-                  setOpen((was) => {
-                    const next = new Set(was);
-                    if (!next.delete(entry.path)) next.add(entry.path);
-                    return next;
-                  })
-                }
+                onClick={() => setOpen(isOpen ? list.filter((path) => path !== entry.path) : [...list, entry.path])}
               >
                 <span>{folderLabel(entry.path)}</span>
                 <span className="lean-tree__n">{count(total)}</span>
@@ -539,7 +543,7 @@ function ModuleView({ module, shell, slot, scroller }: { module: LeanModule; she
   const row = shell.paths.get(module.module);
   const imports = module.imports.filter((name) => shell.paths.has(name));
   useEffect(() => {
-    scroller.current?.scrollTo(0, 0);
+    if (arrivedBy() === "push") scroller.current?.scrollTo(0, 0);
   }, [module.module, scroller]);
   return (
     <>
@@ -709,7 +713,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
 
   // A new declaration starts at its head, unless Back is restoring a place.
   useEffect(() => {
-    if (decl && !history.state?.lxEntry?.scroll) scroller.current?.scrollTo(0, 0);
+    if (decl && arrivedBy() === "push") scroller.current?.scrollTo(0, 0);
   }, [decl]);
 
   if (state.status === "missing") return <Message>This edition does not include the Lean source.</Message>;
