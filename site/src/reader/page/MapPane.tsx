@@ -16,6 +16,7 @@ import { navigate, routeHref } from "../../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "../../map/ArgumentTree";
 import { mainGoal, startingGoals } from "../../map/TheoremPlate";
+import { useKeptCamera } from "../../map/scene";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { useReducedMotion } from "../../map/canvas/useReducedMotion";
 import { bestSlice, firstPassageFor, type Structures } from "./model";
@@ -86,6 +87,7 @@ export const MapPane = memo(function MapPane({
   const { graph } = edition;
   const reduced = useReducedMotion();
   const treeRef = useRef<MapViewHandle>(null);
+  useKeptCamera(treeRef, useCallback((id: string) => graph.nodes.has(id), [graph]));
   const bodyRef = useRef<HTMLDivElement>(null);
 
   // ---- Which main result -------------------------------------------------------------

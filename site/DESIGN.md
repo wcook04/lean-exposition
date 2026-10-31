@@ -367,6 +367,43 @@ with the number passed, failed, unavailable and not run in columns of their own.
 never merged across kinds. Only a recorded failure is coloured, and there is no percentage or
 success badge. With a record chosen (`?n=`), the page starts with the checks attached to it.
 
+## Going back
+
+From anywhere on the site a reader can go back to exactly where they were: the
+same page, scroll position, selected card, map camera and lens, open tab and panel
+scroll. Back, Forward and reload all do this, and the visible control is the
+browser's own Back, so the two cannot disagree.
+
+The URL holds what is selected and can be shared. The history entry holds how it
+was being looked at: scroll, tab, camera, a filter typed. `app/trail.ts` keeps one
+record per entry, in `history.state` and mirrored in sessionStorage, because on a
+pop `history.state` has already moved on and the entry being left can only be
+written through the mirror.
+
+| Action | History |
+|---|---|
+| The page, a pinned record, a passage, a Lean declaration or a search query changes | One new entry, with an address |
+| A tab, the scroll, the camera or a filter changes | No entry; the current one is rewritten |
+| Following and pointing | No entry |
+
+The control reads "Back to Short paper §1", "Back to the map" or "Back to
+`minimizer_contact`". It sits in the top bar on every page but the reader, where it
+is in the reader's strip, and takes the place of the site's name on a phone. It
+appears only when there is somewhere in this site to go back to. The key is `[`;
+Alt and Left is the browser's own. A page names itself once with `namePlace`, so no
+link needs special handling.
+
+A place in a paper names the part and the block under the reading line, and never a
+raw page position, because placeholders above it change height as parts render. It
+holds to within half a pixel, as rounding let a save and restore creep by one.
+`restoreScroll` is the one way a place is put back, for the window and every inner
+scroller: it keeps setting the place while content arrives, for up to five seconds,
+and stops the moment the reader touches the wheel, the keyboard or the screen.
+
+A step between Lean names is one entry through `walkEntry`, which adds `&d=` and
+`&dm=` on a page that shows Lean in place and goes to the declaration's own page
+otherwise.
+
 ## Motion
 
 | Change | Behaviour | Time |
