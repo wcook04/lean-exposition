@@ -190,10 +190,11 @@ describe.each(STAGES)("the %s paper as rendered", (stage) => {
   });
 
   it("gives each target an element to land on", () => {
+    const ids = new Set(Array.from(box.querySelectorAll("[id]"), (el) => el.id));
     for (const row of doc.refs!.rows) {
       if (row.kind === "manuscript" || row.kind === "citation" || row.kind === "other_paper") continue;
       expect(doc.anchorIndex.has(row.target!), row.target).toBe(true);
-      expect(box.querySelector(`[id="${row.target}"]`), row.target).not.toBeNull();
+      expect(ids.has(row.target!), row.target).toBe(true);
     }
   });
 
