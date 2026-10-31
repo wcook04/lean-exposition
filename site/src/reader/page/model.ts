@@ -7,6 +7,7 @@ import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
 import { tieCounts, type TieCount, type TieModel } from "../ties";
+import { AUTHOR } from "../../app/author";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -67,7 +68,7 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
-  if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
+  if (state) parts.push(state === "draft" ? `Draft, written by AI agents under ${AUTHOR}’s direction.` : `${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
   // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
   if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");
@@ -367,11 +368,11 @@ export function trailAt(trail: PaperTrail, anchor: string | null, current: reado
 }
 
 /**
- * "§3 of 8, 14 of 37 steps so far". Only numbered top-level sections count; in
+ * "Section 3 of 8. You have reached 14 of this paper's 37 steps.". Only numbered top-level sections count; in
  * text before the first of them, or after the last, the section is named instead.
  */
 export function trailWords(outline: OutlineEntry[], part: number, place: Pick<TrailPlace, "seen" | "total">): string {
-  const records = place.total ? `${place.seen} of ${place.total} steps so far` : "";
+  const records = place.total ? `You have reached ${place.seen} of this paper’s ${place.total} steps.` : "";
   const tops = outline.filter((e) => e.parent === null);
   const numbered = tops.filter((e) => /^\d/.test(e.title));
   let at: OutlineEntry | undefined;
@@ -380,10 +381,10 @@ export function trailWords(outline: OutlineEntry[], part: number, place: Pick<Tr
     at = entry;
   }
   let where = "";
-  if (at && /^\d/.test(at.title)) where = `${sectionNumber(at.title)} of ${numbered.length}`;
+  if (at && /^\d/.test(at.title)) where = `${sectionNumber(at.title).replace("§", "Section ")} of ${numbered.length}`;
   else if (at) where = at.title;
-  else if (numbered.length) where = `Before §1 of ${numbered.length}`;
-  return [where, records].filter(Boolean).join(", ");
+  else if (numbered.length) where = `Before section 1 of ${numbered.length}`;
+  return [where && `${where}.`, records].filter(Boolean).join(" ");
 }
 
 /** How many passages the "Linked passages" chooser offers for this one. */

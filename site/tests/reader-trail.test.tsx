@@ -42,9 +42,9 @@ describe("the reading trail", () => {
     const entry = (title: string, part: number, parent: string | null = null): OutlineEntry => ({ id: title, title, level: parent ? 3 : 2, part, parent });
     const outline = [entry("Abstract", 0), entry("1 One", 2), entry("2 Two", 6), entry("2.1 Inner", 7, "2 Two"), entry("3 Three", 9), entry("References", 12)];
     const place = { seen: 14, total: 37 };
-    expect(trailWords(outline, 7, place)).toBe("§2 of 3, 14 of 37 steps so far");
-    expect(trailWords(outline, 0, place)).toBe("Abstract, 14 of 37 steps so far");
-    expect(trailWords(outline, 13, place)).toBe("References, 14 of 37 steps so far");
+    expect(trailWords(outline, 7, place)).toBe("Section 2 of 3. You have reached 14 of this paper’s 37 steps.");
+    expect(trailWords(outline, 0, place)).toBe("Abstract. You have reached 14 of this paper’s 37 steps.");
+    expect(trailWords(outline, 13, place)).toBe("References. You have reached 14 of this paper’s 37 steps.");
     expect(trailWords([], 0, { seen: 0, total: 0 })).toBe("");
   });
 });
@@ -207,7 +207,7 @@ describe("the Lean page", async () => {
 
   it("kept open, says it is following, and answers between statements", () => {
     show({ via: "follow", record, tie: 0 });
-    expect(container.querySelector(".lean-page__state")!.textContent).toBe("Following the text");
+    expect(container.querySelector(".lean-page__state")!.textContent).toBe("Changes as you scroll");
     show({ via: "follow", topics: [record] });
     expect(container.textContent).toContain("Steps in this passage");
     expect(container.querySelectorAll(".lean-page__topics button").length).toBe(1);

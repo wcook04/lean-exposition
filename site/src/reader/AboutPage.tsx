@@ -183,7 +183,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
             </ul>
             <h3>What a click does</h3>
             <ul>
-              <li>Scrolling needs no click. The statement at the reading line takes the highlighter, and the graph and the Lean beside the paper move to it.</li>
+              <li>Scrolling needs no click. The statement about a third of the way down the window takes the highlighter, and the graph and the Lean beside the paper move to it.</li>
               <li>Pointing at a marked statement or a Lean name lights it everywhere and previews it. Nothing moves.</li>
               <li>Clicking a statement keeps it open: its Lean opens at the exact lines and the paper stays where it is.</li>
               <li>Clicking a reference opens it in place under the paragraph, with a link to go there.</li>

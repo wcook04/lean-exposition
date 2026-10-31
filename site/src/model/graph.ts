@@ -175,6 +175,9 @@ export interface ArgGraph {
   plain?: boolean;
 }
 
+/** The site writes British spelling; a Lean name is left exactly as written. */
+export const britishLabel = (label: string) => label.replace(/inimiz/g, "inimis");
+
 /** Short names for the regions, keyed by goal id. Falls back to the goal label. */
 const REGION_TITLES: Record<string, string> = {
   full_support: "Full support",
@@ -230,7 +233,7 @@ export function buildGraph(
       id: card.id,
       ref: card.ref,
       kind: normalizeKind(card.kind),
-      label: card.label,
+      label: card.kind === "declaration" ? card.label : britishLabel(card.label),
       status: card.status,
       declaration: record?.declaration ?? card.declaration,
       passedExtraction: extractedSubjects.has(card.id),
