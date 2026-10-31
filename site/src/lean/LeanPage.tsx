@@ -6,7 +6,7 @@
 // it and where to begin. A plain title comes first wherever one exists, the Lean name small
 // beside it.
 
-import { memo, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { AlignedStatement, LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { navigate, routeHref, type Route } from "../app/router";
@@ -724,6 +724,12 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
       }),
     [decl, route.module, route.folder, route.index, shell],
   );
+
+  // PageTitle cannot see the alignment, so the page names its tab once the plain title is known.
+  const plainTitle = decl ? shell?.plain.get(decl.name) : undefined;
+  useLayoutEffect(() => {
+    if (plainTitle) document.title = `${plainTitle} · Lean Exposition`;
+  }, [plainTitle]);
 
   // A new declaration starts at its head, unless Back is restoring a place.
   useEffect(() => {

@@ -1,4 +1,5 @@
-// About: one line for each of the site's routes, then what the site
+// About: one line for each of the site's routes, how to use the site (marks, clicks, keys,
+// feedback), then what the site
 // is, a key to the map's drawing, the edition it serves (with edition-pinned link and
 // citation), the architectural companion on request, and who made it. The companion is
 // not served by the API; it is read from the repository at build time, so it always
@@ -7,6 +8,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import source from "../../../papers/architecture/paper.md?raw";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { SITE_FACTS } from "virtual:site-facts";
 import type { Route } from "../app/router";
 import { routeHref } from "../app/router";
 import { useEdition, useResource } from "../app/data";
@@ -19,6 +21,7 @@ import { familyFilm, minutesOf, type FamilyFilm } from "../app/family";
 import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { Out } from "../app/Out";
+import { KeyList } from "../app/KeysHelp";
 import { prepareDocument } from "./engine";
 import { prefixPaths } from "./links";
 import { documentPaths } from "./documents";
@@ -72,6 +75,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
   const { snapshot, overview, graph, map } = useEdition();
   const checks = map.records.evidence;
   const mostNotRun = checks.filter((c) => c.status === "not_run").length * 2 > checks.length;
+  const ties = SITE_FACTS.ties;
   const prose = useRef<HTMLDivElement>(null);
   // Both sidecars load only on this page, and their counts simply stay away if an edition has none.
   const alignment = useAlignment();
@@ -122,13 +126,13 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <header className="about__intro">
         <h1>About this site</h1>
         <p className="about__lede">
-          This site explains one theorem from OpenAI’s mathematics release
+          This site holds three papers on one theorem from OpenAI’s mathematics release
           {goalLabel ? (
             <>
               , <a href={routeHref({ view: "map", node: goal })}>{goalLabel}</a>,
             </>
           ) : null}{" "}
-          at every level from its Lean source to a plain exposition.
+          with OpenAI’s Lean beside the text. You read a paper as you would any paper, and every marked statement opens its Lean.
         </p>
       </header>
 
@@ -138,21 +142,25 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         </h2>
         <ol className="about__routes">
           <li>
-            <a href={routeHref({ view: "map" })}>The argument map</a>
-            <span>The proof as a drawing, from the theorem down. Start here.</span>
+            <a href={routeHref({ view: "read", stage: "short" })}>The papers</a>
+            <span>Start here. Each marked statement opens its Lean beside the text, and the graph of the proof follows as you scroll.</span>
           </li>
           <li>
             <a href={routeHref({ view: "compare" })}>Compare</a>
             <span>Every step of the proof in a table: its Lean and its statement in each paper, side by side.</span>
           </li>
           <li>
-            <a href={routeHref({ view: "read", stage: "expository" })}>The reader</a>
-            <span>A paper with the map following along, passage by passage.</span>
+            <a href={routeHref({ view: "map" })}>The argument map</a>
+            <span>The proof as a drawing, from the theorem down. A smaller part of it runs beside each paper.</span>
           </li>
           <li>
-            <a href={routeHref({ view: "lean" })}>The Lean browser</a>
+            <a href={routeHref({ view: "checks" })}>The checks</a>
+            <span>What passed, what failed and what was never run.{mostNotRun ? " Most have not been run." : ""}</span>
+          </li>
+          <li>
+            <a href={routeHref({ view: "lean" })}>The Lean index</a>
             <span>
-              OpenAI’s source
+              OpenAI’s source, for those who want the files themselves
               {leanRows ? (
                 <>
                   : <span className="num">{leanRows.length}</span> modules,{" "}
@@ -162,14 +170,41 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
               .
             </span>
           </li>
-          <li>
-            <a href={routeHref({ view: "checks" })}>The checks</a>
-            <span>What passed, what failed and what was never run.{mostNotRun ? " Most have not been run." : ""}</span>
-          </li>
         </ol>
         <p className="about__watch">
           To see them in use, watch <FilmLink film={WALKTHROUGH} />.
         </p>
+      </section>
+
+      <section className="about__using" id="using" aria-labelledby="using-title">
+        <h2 id="using-title">How to use this site</h2>
+        <div className="about__usegrid">
+          <div>
+            <h3>What the marks mean</h3>
+            <ul>
+              <li>A thin tick in a paper’s margin marks a statement tied to the argument. The tick is darker when the tie has Lean.</li>
+              <li>The highlighter marks the statement you are on, in the same ink as the Lean lines it maps to.</li>
+              <li>On a graph, a green card is a record stated and proved in Lean, or defined there. A paler green card has part of that.</li>
+            </ul>
+            <h3>What a click does</h3>
+            <ul>
+              <li>Scrolling needs no click. The statement at the reading line takes the highlighter, and the right page follows it.</li>
+              <li>Pointing at a marked statement or a Lean name lights it everywhere and previews it. Nothing moves.</li>
+              <li>Clicking a statement pins it: its Lean opens at the exact lines and the paper stays where it is.</li>
+              <li>Clicking a reference opens it in place under the paragraph, with a link to go there.</li>
+              <li>Every jump has a named Back, which is the browser’s own Back button.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Keys</h3>
+            <KeyList />
+            <h3>Feedback</h3>
+            <p>
+              If a tie is wrong or a click loses your place, <Out href="https://github.com/wcook04/lean-exposition/issues">open an issue on the repository</Out> or write through the{" "}
+              <Out href={LINKS.contact}>contact page on Plectis</Out>. The address in your browser names the exact statement, so paste it in.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="about__what" aria-labelledby="about-what">
@@ -183,14 +218,25 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
         </p>
         <p>
           Each step of the argument is stored as a record: a claim, an assumption, or a declaration in Lean, a language in
-          which a computer can check proofs. Links between records say which records the argument for a result uses. Passages
-          in the three accounts are linked to the records they discuss
-          {leanLinks !== null ? (
+          which a computer can check proofs. Links between records say which records the argument for a result uses. Statements
+          in the three accounts are tied to the records they state, explain or use
+          {ties ? (
             <>
-              , and <span className="num">{leanLinks}</span> authored links join records to Lean declarations
+              : <span className="num">{ties.total.toLocaleString("en-GB")}</span> ties, <span className="num">{ties.lean}</span> of them with Lean
             </>
           ) : null}
-          . The site adds layout and wording; the records say what was recorded and no more.
+          {leanLinks !== null ? (
+            <>
+              . Another <span className="num">{leanLinks}</span> authored links join records to Lean declarations
+            </>
+          ) : null}
+          {SITE_FACTS.references ? (
+            <>
+              , and <span className="num">{SITE_FACTS.references}</span> references in the papers open in place
+            </>
+          ) : null}
+          . People or agents read both sides of each tie; no program has compared what they mean. The site adds layout and
+          wording; the records say what was recorded and no more.
         </p>
       </section>
 
@@ -341,9 +387,10 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
       <section className="about__made" id="made-by" aria-labelledby="made-by-title">
         <h2 id="made-by-title">Who made this site</h2>
         <p>
-          {AUTHOR} made this site. It is one part of <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching
-          mathematics with AI and on tools that help people follow what AI produces. His own research is on Erdős problems,
-          questions posed by the mathematician Paul Erdős.
+          {AUTHOR} made this site with AI agents, which wrote its code, its records and its ties under his direction. The
+          theorem and the Lean proof are OpenAI’s, and the earlier results are credited in the papers. The site is one part of{" "}
+          <Out href={LINKS.plectis}>Plectis</Out>, his projects on researching mathematics with AI and on tools that help people
+          follow what AI produces. His own research is on Erdős problems, questions posed by the mathematician Paul Erdős.
         </p>
         <p>
           Two of his other projects sit closest to this one. His <Out href={LINKS.mathsMap}>maths map</Out> on Plectis lets

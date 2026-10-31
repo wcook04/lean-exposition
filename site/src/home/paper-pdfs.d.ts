@@ -29,6 +29,11 @@ declare module "virtual:record-index" {
   export const RECORD_INDEX: Record<string, RecordLine>;
 }
 
+// What the site states about itself, read at build time (siteFacts.ts).
+declare module "virtual:site-facts" {
+  export const SITE_FACTS: import("./siteFacts").SiteFacts;
+}
+
 // The first screen's HTML, typeset at build time.
 declare module "virtual:front-hero" {
   export const HERO_HTML: string;

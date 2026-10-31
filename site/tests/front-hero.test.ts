@@ -23,12 +23,13 @@ describe("the first screen", () => {
 
   it("links with the site's base path, and gives every clause a row", () => {
     const html = heroHtml(heroLinks("/lean-exposition-site/"), (tex) => `<i>${tex}</i>`);
+    expect(html).toContain('href="/lean-exposition-site/read/short"');
     expect(html).toContain('href="/lean-exposition-site/read/expository"');
     expect(html.match(/class="rosetta__row"/g)).toHaveLength(HERO_ROWS.length);
   });
 
   it("draws the same five jobs as the top bar", () => {
     const html = frameHtml("/");
-    for (const job of ["Map", "Compare", "Read", "Lean", "Checks"]) expect(html).toContain(`>${job}</a>`);
+    for (const job of ["Read", "Map", "Compare", "Checks", "Lean index"]) expect(html).toContain(`>${job}</a>`);
   });
 });

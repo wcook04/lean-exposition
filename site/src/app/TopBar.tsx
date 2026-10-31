@@ -1,6 +1,6 @@
 // The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), five jobs
-// (Map, Compare, Read, Lean, Checks), About as a quieter link, search and the
-// scheme. Read is a menu button listing the three accounts with the job each one
+// (Read first, then Map, Compare, Checks and a quiet Lean index), About as a quieter link, search and
+// the scheme. Read is a menu button listing the three accounts with the job each one
 // does, then the front page's shelf of papers and PDFs. On phones the same items
 // sit behind one menu button so the bar never clips.
 
@@ -86,18 +86,18 @@ export function TopBar({ route, onSearch }: Props) {
         </a>
       </span>
       <nav className="topnav" aria-label="Main">
+        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
         <a className="topnav__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
           Map
         </a>
         <a className="topnav__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
           Compare
         </a>
-        <ReadMenu current={job === "read"} stage={readStage} drafts={drafts} route={route} />
-        <a className="topnav__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
-          Lean
-        </a>
         <a className="topnav__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
           Checks
+        </a>
+        <a className="topnav__job topnav__job--quiet" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+          Lean index
         </a>
       </nav>
       {route.view !== "read" && <BackControl />}
@@ -105,7 +105,7 @@ export function TopBar({ route, onSearch }: Props) {
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About
         </a>
-        <button type="button" className="control control--plain search-trigger" aria-label="Search records and passages" onClick={onSearch}>
+        <button type="button" className="control control--plain search-trigger" aria-label="Search the papers, the records and the Lean" onClick={onSearch}>
           <SearchIcon />
           <span className="search-trigger__word" aria-hidden="true">
             Search
@@ -301,16 +301,6 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
         <nav aria-label="Main">
           <ul className="phonemenu__list">
             <li>
-              <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
-                Map
-              </a>
-            </li>
-            <li>
-              <a className="phonemenu__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
-                Compare
-              </a>
-            </li>
-            <li>
               <span className="phonemenu__job phonemenu__job--head" id={`${id}-read`} aria-current={job === "read" ? "true" : undefined}>
                 Read
               </span>
@@ -332,13 +322,23 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
               <PapersLink className="phonemenu__job" route={route} onGo={() => setOpen(false)} />
             </li>
             <li>
-              <a className="phonemenu__job" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
-                Lean
+              <a className="phonemenu__job" href={routeHref({ view: "map" })} aria-current={job === "argument" ? "page" : undefined}>
+                Map
+              </a>
+            </li>
+            <li>
+              <a className="phonemenu__job" href={routeHref({ view: "compare" })} aria-current={job === "compare" ? "page" : undefined}>
+                Compare
               </a>
             </li>
             <li>
               <a className="phonemenu__job" href={routeHref({ view: "checks" })} aria-current={job === "checks" ? "page" : undefined}>
                 Checks
+              </a>
+            </li>
+            <li>
+              <a className="phonemenu__job phonemenu__job--quiet" href={routeHref({ view: "lean" })} aria-current={job === "lean" ? "page" : undefined}>
+                Lean index
               </a>
             </li>
             <li>

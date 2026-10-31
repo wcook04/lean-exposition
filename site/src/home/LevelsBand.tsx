@@ -7,6 +7,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
+import { SITE_FACTS } from "virtual:site-facts";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { prefersReducedMotion } from "../app/theme";
@@ -197,14 +198,14 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       who: "OpenAI’s statements and proofs, written for a computer to check.",
       count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} records`,
       read: routeHref({ view: "lean" }),
-      readWord: "Browse the Lean",
+      readWord: "Open the Lean index",
     },
     ...STAGES.map((stage) => ({
       id: stage,
       stage,
       name: PAPER_NAMES[stage].short,
       who: PAPER_NAMES[stage].reader,
-      count: `${counts[stage]} of the ${total} records`,
+      count: `${counts[stage]} of the ${total} records${SITE_FACTS.ties ? `, ${SITE_FACTS.ties.papers[stage].total} marked statements, ${SITE_FACTS.ties.papers[stage].lean} with Lean` : ""}`,
       read: routeHref({ view: "read", stage }),
       readWord: "Read it here",
     })),

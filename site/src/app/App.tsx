@@ -19,12 +19,14 @@ const LeanPage = lazyCode(PAGES.lean, (m) => m.LeanPage);
 const AboutPage = lazyCode(PAGES.about, (m) => m.AboutPage);
 const SearchPage = lazyCode(PAGES.search, (m) => m.SearchPage);
 const SearchPalette = lazy(() => import("../search/SearchPalette").then((m) => ({ default: m.SearchPalette })));
+const KeysHelp = lazy(() => import("./KeysHelp").then((m) => ({ default: m.KeysHelp })));
 
 export function App() {
   useLinkInterception();
   usePrefetchOnIntent();
   const route = useRoute();
   const [searching, setSearching] = useState(false);
+  const [helping, setHelping] = useState(false);
   useKeptPlace(route.view);
 
   useEffect(() => {
@@ -35,6 +37,9 @@ export function App() {
       if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")) {
         event.preventDefault();
         setSearching(true);
+      } else if (event.key === "?" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        setHelping(true);
       } else if (event.key === "[" && !event.metaKey && !event.ctrlKey && !event.altKey) {
         // Beside Alt-Left, which is the browser's own. The control's name says where it goes.
         event.preventDefault();
@@ -68,7 +73,7 @@ export function App() {
         <LinkedEditionNotice />
         <main id="main" className="app__main" tabIndex={-1}>
           <Suspense fallback={route.view === "home" ? <FrontHero /> : <Skeleton view={route.view} />}>
-            <Page route={route} />
+            <Page route={route} onSearch={() => setSearching(true)} />
           </Suspense>
         </main>
         {searching && (
@@ -76,12 +81,17 @@ export function App() {
             <SearchPalette onClose={() => setSearching(false)} />
           </Suspense>
         )}
+        {helping && (
+          <Suspense fallback={null}>
+            <KeysHelp onClose={() => setHelping(false)} />
+          </Suspense>
+        )}
       </EditionProvider>
     </div>
   );
 }
 
-function Page({ route }: { route: Route }) {
+function Page({ route, onSearch }: { route: Route; onSearch(): void }) {
   switch (route.view) {
     case "home":
       return <FrontPage />;
@@ -104,8 +114,32 @@ function Page({ route }: { route: Route }) {
         <div className="page-message">
           <h1>No page at this address</h1>
           <p>
-            Go to the <a href={routeHref({ view: "home" })}>front page</a> or the <a href={routeHref({ view: "map" })}>argument map</a>,
-            or use search to find a result, a section or a passage.
+            Nothing on this site is at <code translate="no">{route.path}</code>. A link from an older edition may have moved. These pages are here:
+          </p>
+          <ul className="page-message__routes">
+            <li>
+              <a href={routeHref({ view: "read", stage: "short" })}>The short paper</a> <span>states the theorem and proves it</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "read", stage: "expository" })}>The exposition</a> <span>explains the ideas with worked examples</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "read", stage: "long" })}>The long record</a> <span>reconstructs each step and names its source</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "map" })}>The argument map</a> <span>draws the proof, from the theorem down</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "compare" })}>Compare</a> <span>sets each step’s statements side by side</span>
+            </li>
+            <li>
+              <a href={routeHref({ view: "home" })}>The front page</a>
+            </li>
+          </ul>
+          <p>
+            <button type="button" className="control" onClick={onSearch}>
+              Search for a result, a section or a passage
+            </button>
           </p>
         </div>
       );
