@@ -6,8 +6,9 @@
 import type { ReactNode } from "react";
 import { SITE_FACTS } from "virtual:site-facts";
 import { routeHref } from "../app/router";
+import { MODELS_STEP } from "../app/caveat";
 import { MAIN_THEOREM, VALUE_THEOREM } from "../lean/data";
-import { countsInWords, TIE_AUDIT, type KindGroup } from "./summary";
+import { countsInWords, type KindGroup } from "./summary";
 
 const observation = `${import.meta.env.BASE_URL}verification/full-support-build-extraction-observation-20261026.json`;
 const base = "https://github.com/openai/math/tree/";
@@ -35,7 +36,7 @@ function Row({ name, did, open }: { name: string; did: ReactNode; open: ReactNod
 
 /** The page's lead when the published observation is present; null sends the page to its plain paragraph. */
 export function Standing({ groups }: { groups: KindGroup[] }) {
-  const { build, extraction, scan, ties, lean } = SITE_FACTS;
+  const { build, extraction, scan, ties, lean, audit } = SITE_FACTS;
   if (!build || !extraction) return null;
   const comparator = groups.find((group) => group.kind === "comparator");
   const reviews = groups.find((group) => group.kind === "semantic_review");
@@ -43,7 +44,6 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
   const jobs = /\((\d+) jobs\)/.exec(build.finalLine)?.[1];
   const elaborated = lean?.dependencySource === "elaborated";
   const sorryCount = scan?.sorry.reduce((n, row) => n + row.count, 0) ?? 0;
-  const percent = ((TIE_AUDIT.wrong / TIE_AUDIT.sampled) * 100).toFixed(1);
   return (
     <div className="standing-wrap">
       <table className="standing">
@@ -91,7 +91,7 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
                 {scan?.axiomDeclarations === 0 && "A text scan finds no axiom declaration in OpenAI’s source."}
               </>
             }
-            open="These are the three axioms OpenAI’s Comparator setup permits. No list is recorded for the second main theorem."
+            open="OpenAI’s Comparator setup permits these axioms. No list is recorded for the second main theorem."
           />
           <Row
             name={"Any sorry"}
@@ -117,6 +117,19 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
             open="Comparator has neither accepted nor rejected either theorem. No proof has been compared with its separately written statement."
           />
           <Row
+            name="Two Lean models"
+            did={
+              <>
+                The main theorem is in OpenAI’s full-support model, and <a href={leanHref(VALUE_THEOREM)}>the second main theorem</a> is in a separate value model. Each defines its own objects.
+              </>
+            }
+            open={
+              <>
+                No Lean theorem connects them, so <a href={routeHref({ view: "map", node: MODELS_STEP })}>combining them in Lean needs that connection first</a>. It is not a missing premise in the manuscript proof.
+              </>
+            }
+          />
+          <Row
             name="Dependencies"
             did={
               elaborated ? (
@@ -134,12 +147,13 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
               name="Read, not machine-checked"
               did={
                 <>
-                  AI agents tied {ties.total.toLocaleString("en-GB")} statements in the papers to the argument by reading both sides, {ties.lean} of them to Lean. An agent re-read {TIE_AUDIT.sampled}: {TIE_AUDIT.wrong} were wrong ({percent} per cent) and were corrected. A program confirms only that each tie still lands.
+                  AI agents marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean, by reading both sides. That makes {ties.total.toLocaleString("en-GB")} ties, because one statement can tie to several steps.{" "}
+                  {audit && <>An AI agent re-read {audit.sampled} ties: {audit.wrong} were wrong ({((audit.wrong / audit.sampled) * 100).toFixed(1)} per cent) and were corrected. </>}A program confirms only that each tie still lands.
                 </>
               }
               open={
                 <>
-                  No program compares what the two sides mean. That audit’s ledger is not public, no independent mathematician has reviewed the ties{reviews?.cards.length ? <>, and none of the {reviews.cards.length} written correspondence reviews has been run</> : null}.
+                  No independent mathematician has reviewed the ties, and no program checks that the two sides say the same thing.{audit ? " The audit’s ledger is not public." : ""}{reviews?.cards.length ? <> None of the {reviews.cards.length} written correspondence reviews has been run.</> : null}
                 </>
               }
             />

@@ -342,7 +342,7 @@ The website presents one theorem about the zero-temperature
 Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
 increases across every interval in [0, 1). It has three written accounts of
 the proof (an exposition, a short paper and a long record), each readable on
-the site or as a PDF in \`pdf/\`. Each marked statement in a paper opens its
+the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
 Lean beside the text, and the site also has an argument map of the steps the
 proof uses, an index of the Lean, and the checks recorded for them. The architectural companion explains
 why these accounts share one record; read it on the About page or in
@@ -388,7 +388,7 @@ const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/tit
 // browser reads, and no page loads it.
 const llmsTxt = (facts: SiteFacts) => `# Why the SK order parameter has no gaps
 
-> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of 131 records joins them.
+> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} records joins them.
 
 Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are authored pointers: agents read both sides, and a program confirms only that each one still lands.
 ${facts.build && facts.extraction ? `
@@ -406,7 +406,7 @@ Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\
 All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
 
 - The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
-- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.total.toLocaleString("en-GB")} ties, ${facts.ties.lean} with Lean)` : ""}. A tie is a pointer that landed, not a check that two texts mean the same thing.
+- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer that landed, not a check that two texts mean the same thing.
 - The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
 - The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
 - The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite

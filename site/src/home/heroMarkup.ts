@@ -5,6 +5,8 @@
 // by tests/front-hero.test.ts: every Lean fragment is an exact substring of the statement
 // in OpenAI's Comparator challenge, and every formula is Theorem 1 of the short paper.
 
+import { MODELS_STEP } from "../app/caveat.ts";
+
 export interface HeroRow {
   /** Exact text of the Lean statement. */
   lean: string;
@@ -73,6 +75,8 @@ export interface HeroLinks {
   compare: string;
   theorem: string;
   map: string;
+  /** The step that records that the two Lean models are not connected. */
+  models: string;
 }
 
 /** `theorem1` is the statement's place in the short paper, from the alignment (the build derives it). */
@@ -83,6 +87,7 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   compare: `${base}compare`,
   theorem: `${base}compare?n=full_support`,
   map: `${base}map`,
+  models: `${base}map?n=${MODELS_STEP}`,
 });
 
 /** The hero, typeset with `tex`, a function from TeX source to KaTeX HTML. */
@@ -97,7 +102,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 <div class="front__intro">
 <h1 id="front-title" class="front__title">Why the SK order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick spin glass as a minimum over nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
-<p class="front__site">OpenAI released a proof written in Lean, a language a computer can check. Read a paper here as you would any paper. Click a marked statement and its Lean opens beside the text, and the graph of the proof follows as you scroll.</p>
+<p class="front__site">OpenAI released a proof written in Lean, a language a computer can check. Read a paper here as you would any paper. Click a statement with a dark tick in the margin and its Lean opens beside the text, and the graph of the proof follows as you scroll.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
 <p class="front__tertiary"><a href="${links.beside}">Theorem 1 with its Lean open</a><a href="${links.compare}">Compare Lean and papers</a><a href="${links.map}">The argument map</a></p>
 </div>
@@ -109,7 +114,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 ${rows}
 </tbody>
 </table>
-<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a></figcaption>
+<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a><p class="rosetta__models">This Lean is OpenAI’s full-support model. Its value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p></figcaption>
 </figure>
 </section>`;
 }

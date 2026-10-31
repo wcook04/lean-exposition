@@ -134,7 +134,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
         <h1>Lean index</h1>
         <p>
           The index at the back of the book, for anyone who wants the files and declarations themselves. To read the mathematics,{" "}
-          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: each marked statement there opens its Lean beside the text.
+          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
         </p>
         <p>
           This is OpenAI's Lean at commit{" "}

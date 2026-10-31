@@ -215,11 +215,13 @@ that remains a reading, recorded here as authored.
 
 ## What a reader may conclude
 
-A tie says that a person or agent read a slice of a paper and a piece of Lean and
-pointed one at the other, and that both ends still exist in the pinned bytes.
+An AI agent read the two and linked them. No independent mathematician has reviewed this,
+and no program checks that they say the same thing. A tie says that the agent read a slice
+of a paper and a piece of Lean and pointed one at the other, and that both ends still exist
+in the pinned bytes.
 
 A reader may conclude that the quoted text is in the paper at that byte range, that the
-named lines are in the pinned Lean at that line range, and that someone recorded a
+named lines are in the pinned Lean at that line range, and that an agent recorded a
 connection between them, with the stated relation and note.
 
 A reader may not conclude that the two statements are equivalent, that the Lean proves

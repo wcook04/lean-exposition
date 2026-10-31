@@ -403,7 +403,7 @@ function PointerRow() {
           Whether each authored link still lands: every quoted passage is found in its paper and every named declaration
           in its Lean file.
           <span className="checkrow__note">
-            {links ? `${links.lean} links to Lean and ${links.papers} to the papers. ` : ""}The site’s own test at each build,
+            {links ? `${links.lean} links from steps to Lean declarations and ${links.papers} ties from statements in the papers to steps. ` : ""}The site’s own test at each build,
             not a stored check record. No one has reviewed whether the mathematics on the two sides of a link matches.
           </span>
         </td>
