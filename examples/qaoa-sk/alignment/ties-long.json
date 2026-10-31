@@ -364,7 +364,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_contact",
           "relation": "part",
-          "note": "On the support, q(t)=t and q'(t)≤1, the contact the gap argument uses. The rows after it carry G."
+          "note": "On the support, q(t)=t and q'(t)≤1, the contact the gap argument uses. The rows after it contain G."
         },
         {
           "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
@@ -428,7 +428,7 @@
             17,
             21
           ],
-          "note": "Both clauses take one minimizer and one diffusion together.",
+          "note": "Both clauses take one minimiser and one diffusion together.",
           "relation": "contains"
         }
       ]
@@ -468,7 +468,7 @@
             175,
             178
           ],
-          "note": "Lean records a Lipschitz bound in time, which is stronger than local absolute continuity.",
+          "note": "Lean states a Lipschitz bound in time, which is stronger than local absolute continuity.",
           "relation": "part"
         }
       ],
@@ -511,7 +511,7 @@
         },
         {
           "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant",
-          "note": "The second one."
+          "note": "The second differentiation."
         }
       ]
     },
@@ -656,7 +656,7 @@
             170,
             172
           ],
-          "note": "Where IsMinimizer first enters."
+          "note": "IsMinimizer first appears here."
         },
         {
           "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
@@ -675,7 +675,7 @@
       "role": "explanation",
       "from": "The imported ground-state formula supplies two facts",
       "to": "construction in the proof of Lemma 3.",
-      "note": "Lean has no attainment: it proves the formula for a given minimizer and never constructs one."
+      "note": "Lean has no attainment: it proves the formula for a given minimiser and never constructs one."
     },
     {
       "record": "assumptions.full_support_minimizer",
@@ -691,7 +691,7 @@
             35,
             36
           ],
-          "note": "The minimizer is the hypothesis hmin.",
+          "note": "The minimiser is the hypothesis hmin.",
           "relation": "contains"
         }
       ]
@@ -740,7 +740,7 @@
       "role": "derivation",
       "from": "Hence $L_n-\\mathbb E L_n\\to0$ in probability.",
       "to": "has the same limit.",
-      "note": "Lean needs no concentration: its P_* is the limit of expectations, which it proves exists by subadditivity."
+      "note": "Lean uses no concentration: its P_* is the limit of expectations, which it proves exists by subadditivity."
     },
     {
       "record": "scalar.source_spin_sequence_limit",
@@ -998,7 +998,7 @@
           "relation": "proof"
         }
       ],
-      "note": "For convexity the support Lean uses the control formula, not preservation by the heat step."
+      "note": "For convexity the support model uses the control formula, not preservation by the heat step."
     },
     {
       "record": "support.regularity",
@@ -1045,7 +1045,7 @@
           "relation": "proof"
         }
       ],
-      "note": "Lean does not show attainment: it gets within ε by elementary Euler feedback controls."
+      "note": "Lean does not show attainment: it comes within ε by elementary Euler feedback controls."
     },
     {
       "record": "support.regularity",
@@ -1556,7 +1556,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
           "relation": "states",
-          "note": "Nonnegativity at a minimizer."
+          "note": "Nonnegativity at a minimiser."
         },
         {
           "name": "OAI.ZeroTemperatureSK.contactPotential",
@@ -1632,7 +1632,7 @@
             38,
             41
           ],
-          "note": "Its use at time zero.",
+          "note": "Applied at time zero.",
           "relation": "proof"
         }
       ]
@@ -1749,7 +1749,7 @@
             12,
             23
           ],
-          "note": "The chord between two order parameters is one: every field is checked.",
+          "note": "The chord between two order parameters is one: every field is proved.",
           "relation": "part"
         }
       ]
@@ -1885,7 +1885,7 @@
             107,
             109
           ],
-          "note": "Its use on the terminal term.",
+          "note": "Applied to the terminal term.",
           "relation": "proof"
         }
       ]
@@ -2008,7 +2008,7 @@
           "note": "Fubini for a finite measure against a tail integral. The weighted identity for μ itself is not in the Lean."
         }
       ],
-      "note": "Lean needs Fubini only for finite measures, so the weighted identity for μ itself does not appear."
+      "note": "Lean uses Fubini only for finite measures, so the weighted identity for μ itself does not appear."
     },
     {
       "record": "support.contact",
@@ -2105,7 +2105,7 @@
             21,
             26
           ],
-          "note": "The competitor; its fields are the checks made here.",
+          "note": "The competitor; its fields are the conditions listed in this sentence.",
           "relation": "defines"
         }
       ]
@@ -2288,7 +2288,7 @@
             84,
             92
           ],
-          "note": "G≥0, compact removal, q(0)=0 and both derivatives feed contact_conditions, which gives the conclusion."
+          "note": "G≥0, compact removal, q(0)=0 and both derivatives are the inputs to contact_conditions, which gives the conclusion."
         }
       ]
     },
@@ -2307,10 +2307,10 @@
         {
           "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos",
           "relation": "part",
-          "note": "Support model. A continuous nonnegative function with nonpositive integral vanishes on the support, the last step here. The Lean feeds it compact removal."
+          "note": "Support model. A continuous nonnegative function with nonpositive integral vanishes on the support, the last step here. The Lean applies it to compact removal."
         }
       ],
-      "note": "Lean takes the compact removal route only; this global scaling proof is not formalised. The steps it shares with that route are in the Lean."
+      "note": "Lean uses only compact removal; this global scaling proof is not formalised. The steps it shares with compact removal are in the Lean."
     },
     {
       "record": "support.optimality_criterion",
@@ -2375,7 +2375,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.finite_feedback_coercivity",
           "relation": "part",
-          "note": "The finite-step stage, for positive monotone steps and the feedback diffusion. Only the resulting inequality is stated; the correction sits in the proof."
+          "note": "The finite-step stage, for positive monotone steps and the feedback diffusion. Only the resulting inequality is stated; the correction is in the proof."
         }
       ],
       "note": "Lean uses equal mesh widths: the steps are the cells of length h."
@@ -2489,7 +2489,7 @@
             131,
             134
           ],
-          "note": "The second one.",
+          "note": "The second differentiation.",
           "relation": "proof"
         },
         {
@@ -2498,7 +2498,7 @@
           "relation": "proof"
         }
       ],
-      "note": "Lean reaches classical derivatives from continuous right derivatives, so it needs no zero-mean local martingale."
+      "note": "Lean proves classical derivatives from continuous right derivatives, so it uses no zero-mean local martingale."
     },
     {
       "record": "support.raw_curvature_negative_absolute_terminal",
@@ -2506,7 +2506,7 @@
       "role": "example",
       "from": "There is a concrete obstruction to reading the last display pointwise.",
       "to": "-\\frac{19}{8}<0.\n$$",
-      "note": "No Lean: the formal proof needs only the integrated inequality, so this pointwise obstruction is not formalised."
+      "note": "Not in the Lean: the formal proof uses only the integrated inequality, so this pointwise obstruction is not formalised."
     },
     {
       "record": "support.step_tails",
@@ -2622,7 +2622,7 @@
             162,
             167
           ],
-          "note": "The recursion that carries the jump.",
+          "note": "The recursion that includes the jump.",
           "relation": "defines"
         }
       ]
@@ -2640,7 +2640,7 @@
             78,
             80
           ],
-          "note": "s is odd; oddness of r is part of BackwardShape.",
+          "note": "s is odd; BackwardShape includes oddness of r.",
           "relation": "part"
         }
       ]
@@ -2663,7 +2663,7 @@
           "note": "Support model. The half-line form, which also needs a sign at x=0."
         }
       ],
-      "note": "The comparisons on unbounded domains are in the Lean. They need no tail estimates."
+      "note": "The comparisons on unbounded domains are in the Lean. Their proofs use no tail estimates."
     },
     {
       "record": "support.step_tails",
@@ -2672,7 +2672,7 @@
       "from": "The errors may be differentiated any fixed finite number of times;",
       "to": "$s_{xx}=O(e^{-\\kappa x})$.",
       "lean": [],
-      "note": "Not in the Lean: it has no differentiated tail estimates. Exponential bounds against Gaussian decay do that work."
+      "note": "Not in the Lean: it has no differentiated tail estimates. The proof uses exponential bounds against Gaussian decay instead."
     },
     {
       "record": "support.backward_shapes",
@@ -2984,7 +2984,7 @@
             124,
             127
           ],
-          "note": "The signs survive subtracting δΦ from the datum.",
+          "note": "Subtracting δΦ from the datum preserves the signs.",
           "relation": "part"
         },
         {
@@ -3306,7 +3306,7 @@
             25,
             25
           ],
-          "note": "F₂, with its b-part split off as F₁.",
+          "note": "F₂, with its terms in b split off as F₁.",
           "relation": "defines"
         }
       ]
@@ -3547,7 +3547,7 @@
       "role": "explanation",
       "from": "When $\\gamma$ is smooth near $t$, Itô's formula gives",
       "to": "q'''(t)+2\\gamma'(t)\\mathbb E a^3=\\mathcal C_\\gamma(t).\n\\tag{4.2}\n$$",
-      "note": "Lean has no γ′ term, so identity (4.2) is not stated. Both trees reach only the frozen-coefficient case.",
+      "note": "Lean has no γ′ term, so identity (4.2) is not stated. Both models reach only the frozen-coefficient case.",
       "lean": [
         {
           "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
@@ -3558,7 +3558,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant",
           "relation": "part",
-          "note": "SKSupport: q‴ on a constant interval, where γ′=0."
+          "note": "Support model: q‴ on a constant interval, where γ′=0."
         },
         {
           "name": "OAI.SKValue.IsDiffusion.curvatureSlope_hasDerivAt",
@@ -3758,7 +3758,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
           "relation": "part",
-          "note": "Its use on the interval.",
+          "note": "Applied on the interval.",
           "lines": [
             59,
             61
@@ -3809,7 +3809,7 @@
           "relation": "proof"
         }
       ],
-      "note": "Lean needs less than a density: positive probability of every interval, proved for all t>0."
+      "note": "Lean uses less than a density: positive probability of every interval, proved for all t>0."
     },
     {
       "record": "support.zero_curvature",
@@ -3942,7 +3942,7 @@
             131,
             146
           ],
-          "note": "The set |X_s|<1 has positive mass; the constant K carries the kernel lower bound.",
+          "note": "The set |X_s|<1 has positive mass; the constant K contains the kernel lower bound.",
           "relation": "proof"
         },
         {
@@ -4026,11 +4026,11 @@
             55,
             78
           ],
-          "note": "The positive integral of t−q gives G(b)<0, against contactPotential_nonneg.",
+          "note": "The positive integral of t−q gives G(b)<0, contradicting contactPotential_nonneg.",
           "relation": "proof"
         }
       ],
-      "note": "Lean needs only the sign of q−t near one, not the explicit (1−s′)^{3/2} estimate."
+      "note": "Lean uses only the sign of q−t near one, not the explicit (1−s′)^{3/2} estimate."
     },
     {
       "record": "support.no_terminal_gap",
@@ -4055,7 +4055,7 @@
       "role": "explanation",
       "from": "**A shorter qualitative exclusion.** The existing curvature input also",
       "to": "excludes a terminal support gap without estimating its boundary layer.",
-      "note": "SKSupport takes the quantitative route; the scalar model formalises this chord exclusion.",
+      "note": "The support model uses the quantitative route; the scalar model formalises this chord exclusion.",
       "lean": [
         {
           "name": "OAI.SKValue.IsMinimizer.contactPotential_zero",
@@ -4065,7 +4065,7 @@
         {
           "name": "OAI.SKValue.endpoint_condition",
           "relation": "proof",
-          "note": "q≤1 stands in for right contact when b=1."
+          "note": "q≤1 replaces right contact when b=1."
         }
       ]
     },
@@ -4308,7 +4308,7 @@
             30,
             33
           ],
-          "note": "Its use."
+          "note": "The theorem whose proof applies it."
         }
       ]
     },
@@ -4692,7 +4692,7 @@
         {
           "name": "OAI.SKValue.FiniteGaussianConclusion",
           "relation": "defines",
-          "note": "Eventually in N, all normalizers are positive.",
+          "note": "Eventually in N, all normalisers are positive.",
           "lines": [
             157,
             157
@@ -5023,7 +5023,7 @@
             84,
             94
           ],
-          "note": "Both, with error the squared residual."
+          "note": "Both expansions, with error the squared residual."
         }
       ]
     },
@@ -5186,7 +5186,7 @@
       "from": "These are deductions from the compact-strip bounds and stochastic",
       "to": "not quantitative clauses of the selected Lean statement.",
       "lean": [],
-      "note": "Not in the Lean: a remark about it. finite_gaussian_target and its conclusion carry no rate."
+      "note": "Not in the Lean: a remark. finite_gaussian_target and its conclusion state no rate."
     },
     {
       "record": "scalar.formal_contact_input",
@@ -5310,7 +5310,7 @@
             110,
             116
           ],
-          "note": "The hump lemma that consumes these points.",
+          "note": "The hump lemma that uses these points.",
           "relation": "proof"
         }
       ]
@@ -5424,7 +5424,7 @@
             48,
             57
           ],
-          "note": "The general predictable fact."
+          "note": "The general inequality for predictable coefficients."
         },
         {
           "name": "OAI.SKValue.IsDiffusion.groundState_eq_parisi_of_contact",
@@ -5715,7 +5715,7 @@
             59,
             60
           ],
-          "note": "The normalization.",
+          "note": "The normalisation.",
           "relation": "proof"
         },
         {
@@ -5727,7 +5727,7 @@
           "note": "The bound, in terms of groundStateSequence."
         }
       ],
-      "note": "Lean proves the normalization by equal Gaussian increment distances, not through the off-diagonal matrix entries."
+      "note": "Lean proves the normalisation by equal Gaussian increment distances, not through the off-diagonal matrix entries."
     },
     {
       "record": "scalar.source_finite_adaptive_lower",
@@ -5941,7 +5941,7 @@
             63,
             72
           ],
-          "note": "The specialization.",
+          "note": "The specialisation.",
           "relation": "proof"
         },
         {
@@ -5999,7 +5999,7 @@
             41,
             47
           ],
-          "note": "parisi_value_assembly identifies the limit; le_antisymm closes."
+          "note": "parisi_value_assembly identifies the limit; le_antisymm ends the proof."
         }
       ]
     },
@@ -6102,7 +6102,7 @@
             35,
             36
           ],
-          "note": "The statement this link names."
+          "note": "The exact support statement: full_support."
         }
       ]
     },
@@ -6586,7 +6586,7 @@
       "to": "formal statement.",
       "after": "Full support does not by itself prove that the Stieltjes measure has a density.",
       "lean": [],
-      "note": "Not in the Lean: a remark about it. FullSupportConclusion has no density clause."
+      "note": "Not in the Lean: a remark. FullSupportConclusion has no density clause."
     },
     {
       "record": "full_support",
@@ -6604,7 +6604,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
           "relation": "defines",
-          "note": "Full support for each Stieltjes measure; the minimizer is the hypothesis of full_support.",
+          "note": "Full support for each Stieltjes measure; the minimiser is the hypothesis of full_support.",
           "lines": [
             84,
             84
@@ -6635,7 +6635,7 @@
             382,
             388
           ],
-          "note": "Contact at the ends against curvature inside."
+          "note": "Contact at the ends contradicts the curvature inside."
         }
       ]
     },
@@ -6717,7 +6717,7 @@
             35,
             36
           ],
-          "note": "The first."
+          "note": "The first of the two formal statements."
         },
         {
           "name": "OAI.SKValue.value_consequences",
@@ -6726,7 +6726,7 @@
             16,
             23
           ],
-          "note": "The second.",
+          "note": "The second of the two formal statements.",
           "relation": "part"
         }
       ]
@@ -6888,7 +6888,7 @@
             135,
             139
           ],
-          "note": "The transfer.",
+          "note": "The transfer to the original coefficient.",
           "relation": "part"
         }
       ]
@@ -6932,7 +6932,7 @@
             165,
             181
           ],
-          "note": "The abstract flux lemma; §12.1 notes it is not the supplier used.",
+          "note": "The abstract flux lemma; §12.1 states that the proof does not use it.",
           "relation": "part"
         },
         {
@@ -6950,7 +6950,7 @@
             135,
             139
           ],
-          "note": "The transfer.",
+          "note": "The transfer to the original coefficient.",
           "relation": "proof"
         }
       ]
@@ -7064,7 +7064,7 @@
           "relation": "part"
         }
       ],
-      "note": "Lean has the finite-step sign but no terminal normalization: Proposition 6.2 is not formalised."
+      "note": "Lean has the finite-step sign but no terminal normalisation: Proposition 6.2 is not formalised."
     },
     {
       "record": "scalar.shifted_gaussian_limit",
@@ -7175,7 +7175,7 @@
           "name": "OAI.ZeroTemperatureSK.IsStieltjesMeasure",
           "file": "OAI/Probability/SKSupport/Model.lean",
           "relation": "defines",
-          "note": "The convention: mass of [0,t] equals γ(t), so an atom of size γ(0) sits at zero."
+          "note": "The convention: mass of [0,t] equals γ(t), so an atom of size γ(0) is at zero."
         }
       ]
     },
@@ -7325,7 +7325,7 @@
         {
           "name": "OAI.SKValue.IsDiffusion.literal_coercivity",
           "relation": "states",
-          "note": "Scalar model, no transport to the support model: every t in (0,1), no continuity hypothesis, c right-continuous. Jets carry c, so divide by c²."
+          "note": "Scalar model, no transport to the support model: every t in (0,1), no continuity hypothesis, c right-continuous. Jets contain c, so divide by c²."
         },
         {
           "name": "OAI.ZeroTemperatureSK.actual_coercivity",
@@ -7333,7 +7333,7 @@
           "note": "The retained support declaration still assumes continuity at t, as this passage says."
         }
       ],
-      "note": "The argument here is ordinary. Lean reaches this inequality only in the scalar model, by a different route."
+      "note": "Lean proves this inequality only in the scalar model, by a different route."
     },
     {
       "record": "scalar.source_spin_sequence_limit",
@@ -7357,7 +7357,7 @@
         {
           "name": "OAI.SKValue.groundStateValue",
           "relation": "defines",
-          "note": "Scalar model: P_* as limUnder of that sequence, which carries meaning once the limit exists.",
+          "note": "Scalar model: P_* as limUnder of that sequence, which is meaningful once the limit exists.",
           "file": "OAI/Probability/SKValue/Model.lean"
         },
         {
@@ -7427,7 +7427,7 @@
         {
           "name": "OAI.SKValue.ground_state_parisi_target",
           "relation": "part",
-          "note": "Equality at a given minimizer, proved in the scalar model. Taking the infimum and attainment stay outside it.",
+          "note": "Equality at a given minimiser, proved in the scalar model. Taking the infimum and attainment stay outside it.",
           "clause": "groundStateValue=parisi W γ"
         },
         {
@@ -7698,7 +7698,7 @@
       "from": "The converse concerns $G$ built from the PDE and diffusion of the same",
       "to": "coefficient is constant, established next.",
       "lean": [],
-      "note": "Not in the Lean: this remarks on the scope of the converse, which has no declaration there."
+      "note": "Not in the Lean: a remark on the scope of the converse, which has no Lean declaration."
     },
     {
       "record": "scalar.constant_curvature",
@@ -7802,7 +7802,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.Heat.ForwardDatumShape.jump",
           "relation": "part",
-          "note": "The signs survive subtracting δΦ from the datum."
+          "note": "Subtracting δΦ from the datum preserves the signs."
         }
       ]
     },
@@ -8134,7 +8134,7 @@
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
           "relation": "proof",
-          "note": "Its proof turns q<t near one into G(b)<0, against contactPotential_nonneg."
+          "note": "Its proof turns q<t near one into G(b)<0, contradicting contactPotential_nonneg."
         },
         {
           "name": "OAI.ZeroTemperatureSK.SupportDeterministic.support_cofinal_of_no_terminal_plateau"
@@ -8187,7 +8187,7 @@
         {
           "name": "OAI.SKValue.endpoint_condition",
           "relation": "proof",
-          "note": "Scalar model: q≤1 stands in for right contact when b=1."
+          "note": "Scalar model: q≤1 replaces right contact when b=1."
         },
         {
           "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",

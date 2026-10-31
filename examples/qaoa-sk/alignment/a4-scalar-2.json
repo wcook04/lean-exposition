@@ -69,7 +69,7 @@
           "file": "OAI/Probability/SKValue/Control/Regularity.lean",
           "name": "sourceStripRegularity",
           "relation": "states",
-          "note": "Holds for every Brownian space and coefficient, with no minimizer or diffusion premise."
+          "note": "Holds for every Brownian space and coefficient, with no minimiser or diffusion premise."
         },
         {
           "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
@@ -195,7 +195,7 @@
           "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
           "name": "groundStateValue_le_parisi",
           "relation": "states",
-          "note": "For every coefficient, with no minimizer or diffusion premise."
+          "note": "For every coefficient, with no minimiser or diffusion premise."
         },
         {
           "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
@@ -261,7 +261,7 @@
           "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
           "name": "IsDiffusion.finite_gaussian_of_contact",
           "relation": "contains",
-          "note": "Same conclusion with gradient contact as premise; this is where the suppliers are unpacked.",
+          "note": "Same conclusion with gradient contact as premise; this proof derives the strip bounds and the unit moment.",
           "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j) ∧\n  Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ))",
           "clause_file": "OAI/Probability/SKValue/Model.lean",
           "clause_name": "FiniteGaussianConclusion"
@@ -326,7 +326,7 @@
           "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
           "name": "IsMinimizer.ground_state_parisi_of_diffusion",
           "relation": "states",
-          "note": "Exact premises: a minimizer and a supplied diffusion."
+          "note": "Exact premises: a minimiser and a supplied diffusion."
         },
         {
           "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",

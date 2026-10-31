@@ -1,4 +1,4 @@
-// What has been checked, in the words of the Checks page, built from the same records and
+// What ran, in the words of the What ran page, built from the same records and
 // the same counting. The Lean page's first screen says it once and links to the page itself.
 
 import { useMemo, type ReactNode } from "react";
@@ -27,14 +27,14 @@ export function useCheckedWords(): ReactNode {
           Lean compiled {module ? <code>{module}</code> : "the Lean file"}
           {subject ? <>, the module recorded for <code>{subject.label}</code>,</> : null} without an error
           {version ? ` on version ${version}` : ""}
-          {date ? `; the record of that build is dated ${date.text}` : ""}.{" "}
+          {date ? `; the run record of that build is dated ${date.text}` : ""}.{" "}
         </>
       ) : passed.length === 0 ? (
         <>No Lean build is recorded as passed. </>
       ) : null}
       {comparator && comparator.cards.length > 0 && (
         <>
-          Comparator, a program that compares a Lean proof with a separately written statement of the theorem, has {comparator.counts.passed ? `${comparator.counts.passed} passed` : "no successful result"}: of its {recordsWord(comparator.cards.length)}, {countsInWords(comparator.counts)}.{" "}
+          Comparator has {comparator.counts.passed ? `${comparator.counts.passed} passed` : "no successful result"}: of its {recordsWord(comparator.cards.length)}, {countsInWords(comparator.counts)}.{" "}
         </>
       )}
       {reviews && reviews.cards.length > 0 && !reviews.counts.passed && <>The {reviews.cards.length} correspondence reviews are written but none has been independently run, so no one has confirmed that the papers and the Lean say the same thing. </>}

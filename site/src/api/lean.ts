@@ -3,6 +3,11 @@
 // the alignment says where each record is stated, in Lean and in each paper. Neither
 // is part of the startup data: pages load them when a reader first needs them. The tie
 // index is the small part of the alignment a reader needs to mark one paper.
+//
+// A static edition also splits the alignment: a core that says where every statement is
+// and which Lean it names, and one file for each paper with what that paper's statements
+// say. The core and the paper files together are exactly `/alignment`, and one record can be
+// asked for whole.
 
 import { get } from "./client";
 import type { Stage } from "./types";
@@ -128,6 +133,28 @@ export interface RecordAlignment {
   statements: AlignedStatement[];
 }
 
+/** A statement as the core gives it: its place and the names of its Lean, not its words. */
+export type StatementPlace = Omit<AlignedStatement, "markdown" | "lean" | "note"> & { lean?: { name: string }[] };
+
+export interface RecordCore {
+  short: string;
+  lean: AlignedLean[];
+  statements: StatementPlace[];
+}
+
+/** Every record's Lean, the place of every statement, the dictionary, the plain names and the steps. */
+export interface AlignmentCore extends Omit<Alignment, "records"> {
+  records: Record<string, RecordCore>;
+  /** Set on a static edition's core, which needs its paper files to make `/alignment`. */
+  representation?: "alignment_core";
+}
+
+/** What a paper's statements add to the core, each record's rows in the core's order. */
+export interface AlignmentPaper {
+  paper: Stage;
+  records: Record<string, Pick<AlignedStatement, "markdown" | "lean" | "note">[]>;
+}
+
 export interface DictionaryTerm {
   /** Full Lean name, or `Structure.field` for a field. */
   name: string;
@@ -187,7 +214,23 @@ export const loadLeanModules = () => get<LeanModules>("/lean/modules").then((r) 
 export const loadLeanNames = () => get<LeanNames>("/lean/names").then((r) => r.data);
 export const loadLeanModule = (name: string) => get<LeanModule>("/lean/module", { name }).then((r) => r.data);
 export const loadAlignment = () => get<Alignment>("/alignment").then((r) => r.data);
+export const loadAlignmentCore = () => get<AlignmentCore>("/alignment/core").then((r) => r.data);
+export const loadAlignmentRecord = (id: string) => get<RecordAlignment>("/alignment/record", { id }).then((r) => r.data);
+export const loadAlignmentPaper = (stage: Stage) => get<AlignmentPaper>(`/alignment/${stage}`).then((r) => r.data);
 export const loadTies = (stage: Stage) => get<TieIndex>(`/ties/${stage}`).then((r) => r.data);
+
+/** The core with the words of these papers' statements put back. With all three it equals `/alignment`. */
+export function withPapers<T extends AlignmentCore>(core: T, papers: readonly AlignmentPaper[]): T {
+  const stages = new Set(papers.map((paper) => paper.paper));
+  const records = Object.fromEntries(
+    Object.entries(core.records).map(([id, record]) => {
+      const left = new Map(papers.map((paper) => [paper.paper, [...(paper.records[id] ?? [])]]));
+      const statements = record.statements.map((row) => (stages.has(row.paper) ? { ...row, ...left.get(row.paper)!.shift() } : row));
+      return [id, { ...record, statements }];
+    }),
+  );
+  return { ...core, records };
+}
 
 /** A line link into OpenAI's repository at the pinned revision. */
 export function leanSourceUrl(modules: Pick<LeanModules, "base_url">, path: string, line: number, endLine?: number): string {

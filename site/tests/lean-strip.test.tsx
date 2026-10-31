@@ -64,8 +64,8 @@ describe("the reading line", () => {
 
 describe("the wording", () => {
   it("names each relation and never claims equivalence", () => {
-    expect(RELATION_WORDS.part).toBe("States one part of this result");
-    expect(LINK_CAVEAT).toBe("An AI agent read the two and linked them. No independent mathematician has reviewed this, and no program checks that they say the same thing.");
+    expect(RELATION_WORDS.part).toBe("States some of this result");
+    expect(LINK_CAVEAT).toBe("An AI agent read each statement and its Lean and linked them. No independent mathematician has reviewed these links, and no program tests whether the two say the same thing.");
     expect(dependencyWords("source_text")).toBe("Names found in the source text");
     expect(kindWord("def")).toBe("Definition");
   });

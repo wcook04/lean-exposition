@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, type Plugin } from "vite";
+import { createServer, defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import katex from "katex";
 import { copyFileSync, createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -6,7 +6,7 @@ import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
-import { readerSkeletonHtml } from "./src/reader/skeleton.ts";
+import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
@@ -266,19 +266,70 @@ function routeData(route: string, base: string): string[] {
   if (!existsSync(path)) return [];
   const index = JSON.parse(readFileSync(path, "utf8"));
   const responses: Record<string, string> = index.responses ?? {};
-  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?"));
+  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?") && key.includes("representation=reader_map"));
   const stage = route.match(/^read\/(.+)$/)?.[1];
   const files = [
     responses[""],
-    responses["/overview"],
+    responses["/overview?representation=reader"],
     graph && responses[graph],
     index.summaries_by_table?.nodes,
-    ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
+    ...(stage ? ["nodes", "sources"] : ["nodes", "sources", "edges", "evidence"]).map((table) => index.records_by_table?.[table]),
     ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];
   return files.filter(Boolean).map((file) => `<link rel="preload" href="${base}edition/${file}" as="fetch" crossorigin />`);
+}
+
+/** The maths on a paper's first screen is drawn in these, and hidden until they arrive. */
+function routeFonts(route: string, base: string): string[] {
+  if (!route.startsWith("read/")) return [];
+  return readdirSync(resolve("dist/assets"))
+    .filter((name) => /^KaTeX_(Main-Regular|Math-Italic)-.*\.woff2$/.test(name))
+    .map((name) => `<link rel="preload" href="${base}assets/${name}" as="font" type="font/woff2" crossorigin />`);
+}
+
+/**
+ * Each paper's first screen, through the page's own engine. It needs a DOM to sanitise, and the
+ * bundler's handling of `import.meta.env` and the virtual modules, so it runs in a dev server
+ * of its own. An edition that is not there leaves the empty shape.
+ */
+async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record<string, string>> {
+  const path = resolve("public/edition/index.json");
+  if (!existsSync(path)) return {};
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  const edition = (name: string) => readFileSync(resolve("public/edition", name));
+  const body = (name: string | undefined) => (name ? JSON.parse(edition(name).toString("utf8")) : null);
+  // @ts-expect-error jsdom has no types here, and these two lines are all that touch it.
+  const { JSDOM } = await import("jsdom");
+  const { window } = new JSDOM("<!doctype html>");
+  const globals = globalThis as { window?: unknown; document?: unknown };
+  globals.window = window;
+  globals.document = window.document;
+  const { closeBundle: _pdfs, configureServer: _serve, ...pdfs } = paperPdfs();
+  const server = await createServer({
+    configFile: false,
+    base,
+    logLevel: "error",
+    appType: "custom",
+    server: { middlewareMode: true, hmr: false, ws: false },
+    optimizeDeps: { noDiscovery: true },
+    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
+  });
+  try {
+    const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
+    const screens: Record<string, string> = {};
+    for (const stage of Object.keys(index.documents)) {
+      const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
+      const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
+      screens[stage] = readerFirstScreenHtml(account, parts);
+    }
+    return screens;
+  } finally {
+    await server.close();
+    delete globals.window;
+    delete globals.document;
+  }
 }
 
 const typeset = (source: string) => katex.renderToString(source, { throwOnError: true, output: "html", strict: "error" });
@@ -334,19 +385,19 @@ function firstScreen(base: string, facts: SiteFacts): Plugin {
 }
 
 // The public repository that receives the static build has no other README.
-const SITE_README = `# Why the SK order parameter has no gaps
+const SITE_README = `# Why the Sherrington–Kirkpatrick order parameter has no gaps
 
 This repository holds the built reading website published at
 https://wcook04.github.io/lean-exposition-site/.
 
 The website presents one theorem about the zero-temperature
 Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
-increases across every interval in [0, 1). It has three written accounts of
+increases across every interval in [0, 1). It has three papers on
 the proof (an exposition, a short paper and a long record), each readable on
 the site or as a PDF in \`pdf/\`. A statement with a dark tick in a paper opens its
 Lean beside the text, and the site also has an argument map of the steps the
-proof uses, an index of the Lean, and the checks recorded for them. The architectural companion explains
-why these accounts share one record; read it on the About page or in
+proof uses, an index of the Lean, and the test runs recorded for them. The architectural companion explains
+why these papers share one graph; read it on the About page or in
 \`pdf/architecture.pdf\`.
 
 The mathematics comes from OpenAI's mathematics release, family 281:
@@ -376,7 +427,7 @@ const ROUTE_TITLES: Record<string, string> = {
   map: "Argument map",
   compare: "Compare side by side",
   lean: "Lean index",
-  checks: "Recorded checks",
+  checks: "What ran",
   about: "About",
   search: "Search",
   "read/long": "Long record",
@@ -387,27 +438,27 @@ const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/tit
 
 // For readers that fetch text rather than run the page. It describes the same files the
 // browser reads, and no page loads it.
-const llmsTxt = (facts: SiteFacts) => `# Why the SK order parameter has no gaps
+const llmsTxt = (facts: SiteFacts) => `# Why the Sherrington–Kirkpatrick order parameter has no gaps
 
-> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} records joins them.
+> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} steps joins them. The data calls a step a record.
 
-Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are authored pointers: agents read both sides, and a program confirms only that each one still lands.
+Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are pointers written by AI agents after reading both sides. No independent mathematician has reviewed them, and a program confirms only that both ends of each one still exist.
 ${facts.build && facts.extraction ? `
-Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator has accepted neither main statement, and the scalar value result has no successful build on record.
+Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator, a program that compares a Lean proof with a separately written statement, has accepted neither main statement, and the scalar value result has no successful build on record.
 ` : ""}
 ## Read
 
 - [Exposition](${SITE_URL}pdf/exposition.pdf): objects and ideas, from a calculation with two spins
 - [Short paper](${SITE_URL}pdf/short-paper.pdf): the result and proof for specialists
 - [Long record](${SITE_URL}pdf/long-record.pdf): each step with its source, continuing to the QAOA circuits
-- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the accounts share one record
+- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the papers share one graph
 
 ## Data
 
 All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
 
 - The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
-- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer that landed, not a check that two texts mean the same thing.
+- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer. No program tests whether the two texts mean the same thing.
 - The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
 - The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
 - The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite
@@ -431,15 +482,17 @@ export default defineConfig(({ mode }) => {
     base,
     plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
-      closeBundle() {
+      async closeBundle() {
         const out = resolve("dist");
         const shell = resolve(out, ".route-shell.html");
+        const screens = await paperFirstScreens(base, facts);
         for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          const preload = [...routeCode(route, base), ...routeData(route, base)].join("");
-          // A paper's first paint is already the shape of the page, so nothing moves when it arrives.
-          const page = route.startsWith("read/")
-            ? readFileSync(shell, "utf8").replace('class="app__main"></main>', `class="app__main">${readerSkeletonHtml()}</main>`)
+          const preload = [...routeFonts(route, base), ...routeCode(route, base), ...routeData(route, base)].join("");
+          // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.
+          const stage = route.match(/^read\/(.+)$/)?.[1];
+          const page = stage
+            ? readFileSync(shell, "utf8").replace("<html ", '<html data-view="read" ').replace('class="app__main"></main>', () => `class="app__main">${screens[stage] ?? readerSkeletonHtml()}</main>`)
             : readFileSync(shell, "utf8");
           writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
         }
@@ -459,7 +512,9 @@ export default defineConfig(({ mode }) => {
     }] : [])],
     server: { port: 5173, strictPort: true, proxy },
     preview: { port: 4173, strictPort: true, proxy },
-    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900 },
+    // A font is fetched only if a page uses its characters. Inlined, its bytes would sit in the
+    // stylesheet that every page waits for.
+    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900, assetsInlineLimit: (file) => (/\.(woff2?|ttf)$/.test(file) ? false : undefined) },
     test: {
       environment: "jsdom",
       include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],

@@ -48,7 +48,7 @@ export function MapStrip({ lean, captionRef, onFit, onNear }: { lean?: StripLean
               <LeanGlyph fill="whole" /> Proved in Lean
             </li>
             <li>
-              <LeanGlyph fill="part" /> Part of it in Lean
+              <LeanGlyph fill="part" /> Some of it in Lean
             </li>
             <li>
               <LeanGlyph fill="none" /> Not in Lean

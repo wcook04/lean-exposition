@@ -55,9 +55,9 @@ describe("panel wording", () => {
   });
 
   it("says how an account relates to a result without a passage", () => {
-    expect(relationLine("short", ["recorded_prerequisite"])).toBe("No passage is linked directly to this record.");
-    expect(relationLine("short", [])).toBe("No passage in this account is linked to this record, and the recorded argument for the account’s main results does not use it.");
-    expect(relationLine("long", undefined)).toBe("No passage in this account is linked to this record, and the recorded argument for the account’s main results does not use it.");
+    expect(relationLine("short", ["recorded_prerequisite"])).toBe("No passage is linked directly to this step.");
+    expect(relationLine("short", [])).toBe("No passage in this paper is linked to this step, and the recorded argument for the paper’s main results does not use it.");
+    expect(relationLine("long", undefined)).toBe("No passage in this paper is linked to this step, and the recorded argument for the paper’s main results does not use it.");
   });
 
   it("never shows internal field names", () => {

@@ -46,7 +46,7 @@ export function Visit({ target, origin, originLabel, compare, structures, onRetu
     if (shared)
       return {
         word: "Linked to the same step",
-        rationale: `Both passages are linked to “${graph.nodes.get(shared)?.label ?? shared}”. Being linked to the same step does not mean that the two passages make the same argument.`,
+        rationale: `Both passages are linked to “${graph.nodes.get(shared)?.label ?? shared}”. Two passages linked to the same step can still contain different arguments.`,
       };
     return null;
   }, [origin, target, structures, graph]);

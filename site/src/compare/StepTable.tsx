@@ -16,7 +16,7 @@ import { LazyStatementSlice, primeSlices } from "./lazy";
 import { ModeSwitch } from "./ModeSwitch";
 import { LEVEL_NAMES, STACK_BELOW, absentWords, filterOutline, roleWords, storeLevels, storedLevels, toggleLevel } from "./model";
 import { defaultLevels, holdHeight, orderWords, rowFor, rowsSentence, sayings, tableRows, type TableRow as Row } from "./table";
-import { alignmentResource, shortTitle, useAlignment } from "./useAlignment";
+import { fullAlignmentResource, shortTitle, useFullAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
 import { WalkingLean } from "./WalkingLean";
 
@@ -33,7 +33,7 @@ type CompareRoute = Extract<Route, { view: "compare" }>;
 export function StepTable({ route }: { route: CompareRoute }) {
   const edition = useEdition();
   const { graph } = edition;
-  const alignment = useAlignment();
+  const alignment = useFullAlignment();
   const width = useWidth();
   const records = alignment?.records;
   // The Lean's own records are what its column shows, so a row is always a step of the argument.
@@ -157,7 +157,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    void alignmentResource().then(() => setLoaded(true));
+    void fullAlignmentResource().then(() => setLoaded(true));
   }, []);
 
   const columns = { "--cols": levels.length } as CSSProperties;
@@ -188,6 +188,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
           </header>
           {records && (
             <p className="table-line">
+              <span className="table-line__terms">A step is one claim, assumption or result in the proof that minimisers of the Sherrington–Kirkpatrick (SK) model have full support. The Lean column is OpenAI’s proof in Lean, a programming language for proofs.</span>{" "}
               {rowsSentence(levels, listed.length, wide)} {orderWords(levels)}{" "}
               {someHave &&
                 (wide ? (
@@ -204,7 +205,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
             ))}
           </div>
         </div>
-        {!records && <p className="bench-note">{loaded ? "This edition does not say where each level states each step." : "Loading where each level states each step…"}</p>}
+        {!records && <p className="bench-note">{loaded ? "This copy of the site does not say where each level states each step." : "Loading where each level states each step…"}</p>}
         {records && !rows.length && <p className="bench-note">{query ? "No step has those words in its title." : "No step appears at every level shown."}</p>}
         {records &&
           rows.map((row) => (

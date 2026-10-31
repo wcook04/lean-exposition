@@ -5,7 +5,7 @@ import { PAPER_NAMES } from "./papers";
 import type { Route } from "./router";
 
 /** The edition's title, as the front page and index.html give it. */
-export const EDITION_TITLE = "Why the SK order parameter has no gaps";
+export const EDITION_TITLE = "Why the Sherrington–Kirkpatrick order parameter has no gaps";
 
 export function PageTitle({ route }: { route: Route }) {
   const { graph } = useEdition();
@@ -22,14 +22,14 @@ export function PageTitle({ route }: { route: Route }) {
       title = PAPER_NAMES[route.stage].short;
       break;
     case "checks":
-      title = label ? `Checks: ${label}` : "Recorded checks";
+      title = label ? `What ran on ${label}` : "What ran";
       break;
     case "compare":
       title = label ? `Compare: ${label}` : "Compare side by side";
       break;
     case "lean":
       // A name in the address may not exist, so LeanPage names the tab once it has checked.
-      title = route.index ? "Declarations the papers rest on" : "Lean index";
+      title = route.index ? "Declarations linked to the papers" : "Lean index";
       break;
     case "about":
       title = "About";

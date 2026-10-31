@@ -54,7 +54,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
   }, [linked, leaving, onEcho]);
 
   const peek = sheet.phone && sheet.state === "peek";
-  // The name and the way to the Lean browser are in this sheet's head.
+  // The name and the way to the Lean index are in this sheet's head.
   const [slot, setSlot] = useState<HTMLElement | null>(null);
   const walking = { onName: onWalk, noHead: true, previewSlot: slot };
 
@@ -93,7 +93,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
             </span>
           )}
           <a className="panel__quiet" href={routeHref({ view: "lean", decl: name, module })}>
-            Lean browser
+            Lean index
           </a>
         </div>
         {peek && (
@@ -130,7 +130,7 @@ export function DeclPanel({ name, module, leaving, onClose, onSelect, onWalk, on
                 ))}
               </ul>
             )}
-            {linked.length > 0 && <p className="panel__note">Linked by reading the source. Not checked as equivalent.</p>}
+            {linked.length > 0 && <p className="panel__note">An AI agent linked these by reading the source. No program tests whether they are equivalent.</p>}
           </section>
         </div>
       </div>

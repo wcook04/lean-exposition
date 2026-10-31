@@ -6,7 +6,8 @@ import type { Stage } from "../api/types";
 import { discoveryInfo } from "../api/client";
 import { loadPaper, type PaperData } from "../app/data";
 import { prepareDocument, type PreparedDocument } from "./engine";
-import { loadReferenceTable } from "./references";
+import type { TieIndex } from "../api/lean";
+import { loadReferenceTable, type ReferenceTable } from "./references";
 import { loadTies, tieModel, type TieModel } from "./ties";
 
 export interface LoadedDocument {
@@ -30,18 +31,23 @@ export function documentPaths(): Record<string, string> {
 
 const prepared = new Map<Stage, Promise<LoadedDocument>>();
 
+/** A paper's bytes, parts, ties and reference table as the page renders them. The build's first screen uses this too. */
+export function preparePaper(paper: PaperData, index: TieIndex | null, referenceTable: ReferenceTable | null): PreparedDocument {
+  const paths = documentPaths();
+  const stage = paper.stage;
+  const parts = paper.structure.paper.document_parts.map((part) => ({
+    kind: part.kind,
+    span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
+    passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
+  }));
+  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable });
+}
+
 export function loadDocument(stage: Stage): Promise<LoadedDocument> {
   let pending = prepared.get(stage);
   if (!pending) {
     pending = Promise.all([loadPaper(stage), loadTies(stage), loadReferenceTable(stage)]).then(([paper, index, referenceTable]) => {
-      const paths = documentPaths();
-      const parts = paper.structure.paper.document_parts.map((part) => ({
-        kind: part.kind,
-        span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
-        passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
-      }));
-      const doc = prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable });
-      return { paper, doc, ties: tieModel(index) };
+      return { paper, doc: preparePaper(paper, index, referenceTable), ties: tieModel(index) };
     });
     pending.catch(() => prepared.delete(stage));
     prepared.set(stage, pending);

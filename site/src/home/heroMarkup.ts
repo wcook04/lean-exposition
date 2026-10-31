@@ -100,9 +100,9 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
   ).join("\n");
   return `<section class="front__hero" aria-labelledby="front-title">
 <div class="front__intro">
-<h1 id="front-title" class="front__title">Why the SK order parameter has no gaps</h1>
-<p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick spin glass as a minimum over nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
-<p class="front__site">OpenAI released a proof written in Lean, a language a computer can check. Read a paper here as you would any paper. Click a statement with a dark tick in the margin and its Lean opens beside the text, and the graph of the proof follows as you scroll.</p>
+<h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
+<p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
+<p class="front__site">OpenAI released a proof written in Lean, a programming language whose compiler rejects a proof with a wrong step. Read a paper here as you would any paper. Click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
 <p class="front__tertiary"><a href="${links.beside}">Theorem 1 with its Lean open</a><a href="${links.compare}">Compare Lean and papers</a><a href="${links.map}">The argument map</a></p>
 </div>
@@ -114,7 +114,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 ${rows}
 </tbody>
 </table>
-<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a><p class="rosetta__models">This Lean is OpenAI’s full-support model. Its value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p></figcaption>
+<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a><p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p></figcaption>
 </figure>
 </section>`;
 }
@@ -122,5 +122,5 @@ ${rows}
 /** The frame as plain HTML, the same markup TopBar renders, so the bar is there before the scripts. */
 export function frameHtml(base: string): string {
   const job = (href: string, name: string, quiet = false) => `<a class="topnav__job${quiet ? " topnav__job--quiet" : ""}" href="${base}${href}">${name}</a>`;
-  return `<header class="topbar"><span class="fam-lockup"><a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and films"><img src="${base}plectis.svg" alt="Will Cook: all websites and films" width="26" height="26" /></a><span class="fam-lockup__rule" aria-hidden="true"></span><a class="fam-lockup__site" href="${base}" aria-label="Lean Exposition, front page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"></path><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"></path><circle cx="16" cy="14" r="3"></circle></svg><span class="fam-lockup__name" translate="no">Lean Exposition</span></a></span><nav class="topnav" aria-label="Main">${job("read/short", "Read")}${job("map", "Map")}${job("compare", "Compare")}${job("checks", "Checks")}${job("lean", "Lean index", true)}</nav></header>`;
+  return `<header class="topbar"><span class="fam-lockup"><a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="${base}plectis.svg" alt="Will Cook: all websites and videos" width="26" height="26" /></a><span class="fam-lockup__rule" aria-hidden="true"></span><a class="fam-lockup__site" href="${base}" aria-label="Lean Exposition, front page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"></path><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"></path><circle cx="16" cy="14" r="3"></circle></svg><span class="fam-lockup__name" translate="no">Lean Exposition</span></a></span><nav class="topnav" aria-label="Main">${job("read/short", "Read")}${job("map", "Map")}${job("compare", "Compare")}${job("checks", "What ran")}${job("lean", "Lean index", true)}</nav></header>`;
 }

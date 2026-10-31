@@ -7,51 +7,37 @@
 
 The worked example is a theorem about the Sherrington–Kirkpatrick model without an
 external field: every minimiser of the zero-temperature Parisi functional has full
-support on [0,1). Starting from the Lean proof published with OpenAI's QAOA / SK
-result, it gives three papers whose statements open the Lean they rest on.
+support on [0,1). Starting from the Lean proof OpenAI published with this result, the project gives three papers whose marked statements open their Lean.
 
-[Lean](https://lean-lang.org/) is a language and proof assistant that checks
-precisely stated mathematical arguments. A checked proof gives a reader something
-valuable to inspect, but understanding it still takes work: what is the question,
-which idea makes the proof work, and why does the result matter?
+[Lean](https://lean-lang.org/) is a programming language and proof assistant whose compiler rejects a proof with a wrong step. A reader of a compiled proof still has to work out what the question is, which idea makes the proof work and why the result matters.
 
-lean-exposition helps authors turn a selected result and its supporting sources
+With lean-exposition, authors turn a selected result and its supporting sources
 into three complementary documents: a detailed reasoning record, a focused
-research paper, and an explanation for readers learning the subject. Each keeps
-a route back to the statements, assumptions and sources it uses. You can read
+research paper, and an explanation for readers learning the subject. Each links back to the statements, assumptions and sources it uses. You can read
 the [worked papers](#read-the-worked-example) without installing anything.
 
 ## Read a paper beside its Lean
 
 On the [website](https://wcook04.github.io/lean-exposition-site/read/short/) you
-read a paper as you would read any paper, and a graph of its argument follows
-beside it. Click a marked statement and its Lean opens at the exact lines, with
-links to the same step in the other papers. Back returns you to the sentence you
-left.
+read a paper as you would read any paper, with a graph of its argument beside it that moves as you scroll. Click a statement with a dark tick and its Lean opens at the exact lines, with
+links to the same step in the other papers. Back takes you to the sentence you left.
 
 [![A paper on the left with Theorem 1 highlighted, and on the right the Lean statement it refers to, opened under the graph of the argument.](site/public/stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/)
 
 An AI agent read each sentence and its Lean and linked the two. No independent
-mathematician has reviewed these links and no program checks that they say the
-same thing, and the page says so beside each one.
+mathematician has reviewed these links and no program tests whether they say the same thing, and the site says so beside each link.
 
 ## Why this project exists
 
-As more mathematics is developed with AI and formal proof tools, the amount of
-checkable material can grow faster than people's ability to understand it.
-A long list of definitions and lemmas rarely tells a mathematician which idea
-deserves their attention. A short summary can hide the very condition on which
-an argument depends.
+As more mathematics is developed with AI and formal proof tools, the amount of machine-checked material can grow faster than people can understand it.
+A mathematician rarely learns from a long list of definitions and lemmas which idea deserves attention. A short summary can leave out the condition on which an argument depends.
 
 Different readers need different accounts of the same mathematics. A specialist
 wants the result, its relation to the literature and the main proof. Someone
 learning the subject needs the objects introduced, examples they can calculate,
-and an explanation of why each step is useful. Someone checking a difficult step
-needs enough detail to reconstruct it.
+and an explanation of why each step is useful. Someone examining a difficult step needs enough detail to reconstruct it.
 
-The aim is to make all three accounts useful while keeping their mathematical
-claims consistent. The project combines writing methods, tools for tracking
-sources and checks, and worked drafts that show how the methods can be applied.
+The aim is to make all three accounts useful while keeping their mathematical claims consistent. The project has writing methods, tools that record sources and test runs, and worked drafts in which the methods are applied.
 
 ## Three documents, three jobs
 
@@ -61,8 +47,7 @@ sources and checks, and worked drafts that show how the methods can be applied.
 | **Short research paper** | See the main result and proof in the language of the relevant literature, with routes to the details. |
 | **Expository paper** | Learn a selected result through definitions, examples and the ideas behind the proof, with prerequisites stated at the outset. |
 
-These are different writing tasks, not fixed page counts. An exposition may draw
-directly on the detailed record and original sources. Shortening an argument
+These are different writing tasks with no fixed page counts. An exposition may use the detailed record and original sources. Shortening an argument
 must preserve the conditions under which it is valid.
 
 ## Read the worked example
@@ -75,7 +60,7 @@ Optimization Algorithm (QAOA)** is a quantum algorithm for seeking good solution
 to optimisation problems.
 
 The example starts from the manuscripts and Lean sources accompanying OpenAI's
-[QAOA / SK result](https://lowrank.github.io/latent-seminar/OpenAI-Math/281-qaoa-sk-parisi-support).
+[QAOA and SK result](https://lowrank.github.io/latent-seminar/OpenAI-Math/281-qaoa-sk-parisi-support).
 The broader manuscript studies whether this algorithm can approach the model's
 best attainable energy. Our drafts concentrate on a mathematical ingredient:
 the function used to calculate that value. Under the stated hypotheses, an optimal
@@ -98,12 +83,11 @@ These are drafts of explanations of existing results; mathematical and reader
 review remain open. The retained Lean interfaces cover the full-support and
 scalar-value statements, not the whole QAOA convergence claim. The
 [source guide](examples/qaoa-sk/README.md) identifies their exact scope and
-recorded check status. See the [papers guide](papers/README.md) to assemble the
+recorded test runs. See the [papers guide](papers/README.md) to assemble the
 three drafts into one portable bundle.
 
 The separate [architectural companion](papers/architecture/README.md) ·
-[PDF](papers/architecture/paper.pdf) explains why the three accounts exist, how their shared graph supports
-different reading routes, and how to follow a short claim to its assumptions,
+[PDF](papers/architecture/paper.pdf) gives the reasons for the three accounts, how a reader can take different routes through their shared graph, and how to follow a short claim to its assumptions,
 detailed argument and original or formal sources.
 
 ### YouTube walkthroughs
@@ -120,20 +104,17 @@ fit together. All websites, code and videos are on [my home page](https://wcook0
 
 Start with one result you want to explain and identify the sources and arguments
 it depends on. Record those relationships in an **evidence graph**: a structured
-file connecting mathematical claims to their assumptions, citations and recorded
-checks. It gives the writer a source map and lets a reviewer follow a passage
-back to its support.
+file connecting mathematical claims to their assumptions, citations and recorded test runs. With it a writer has a map of the sources and a reviewer can follow a passage back to its support.
 
 Each paper also has a [graph view](docs/bundle-consumers.md#view-one-paper-as-a-graph):
 its sections and passages in reading order, connected to their recorded claims,
-sources and checks. The three papers share the same underlying evidence, so an
+sources and test runs. The three papers share the same underlying evidence, so an
 application can move between a passage, its support and another account of the
 same result. A [whole-corpus view](docs/bundle-consumers.md#view-the-whole-recorded-corpus)
-keeps one shared record pool and lets an application look up which papers and
-passages use each record. Papers can select different goals while retaining
+holds one shared pool of records, so an application can look up which papers and passages use each record. Papers can select different goals while retaining
 their necessary assumptions and sources. A [record-neighbourhood query](docs/bundle-consumers.md#start-at-any-record-and-follow-its-neighbourhood)
 starts from a source, citation, evidence record or claim, follows typed links
-in either direction, and shows where the selected view stops. Exact text
+in either direction, and reports where the selected view stops. Exact text
 selections can also find mapped passages and their support. The local API
 supplies these operations for readers, agents and frontends, including the
 repository's reading website.
@@ -149,22 +130,20 @@ call these steps **authoring transitions**: record the sources, reconstruct the
 argument, select the expert paper and teach a result to a stated audience.
 Four local transition skills guide those decisions. Their
 [review-and-refinement loop](docs/authoring.md#use-and-improve-the-transition-skills)
-turns a checked revision into a bounded lesson for the next problem: repair the
+turns a tested revision into a bounded lesson for the next problem: repair the
 paper, test what generalises, and improve the responsible skill. The complete
 working method lives here; the [Erdős examples](docs/erdos-method-transfer.md)
 record its bootstrap rather than a dependency on another repository.
 
 The software is a local Python command-line tool. It collects exact source
-versions, extracts dependencies from Lean projects, checks the graph and packages
-authored papers with their source mappings. A human or an AI assistant supplies
+versions, extracts dependencies from Lean projects, validates the graph and packages authored papers with their source mappings. A human or an AI assistant supplies
 the mathematics and prose. The `scaffold` command creates empty writing templates;
 `assemble` packages documents that have already been written.
 
 Review has two distinct questions: does the writing faithfully describe the
 mathematics, and can its intended reader follow it? Use answers to revise both
 the document and the writing method. The [reader-review guide](docs/reader-review.md)
-shows how to run one bounded session against an exact edition. Automated checks catch missing references
-and changed text; they cannot answer those questions for the reader.
+describes how to run one bounded session against an exact edition. Automated tests find missing references and changed text and cannot answer those two questions.
 
 ## First run
 
@@ -181,7 +160,7 @@ lean-exposition inspect examples/minimal/evidence-graph.json
 After installation, these two commands work offline without Lean. They read a
 saved extraction of a small proof: from “P and Q”, conclude “Q and P”. The JSON
 output shows the selected result, its helper lemma and the recorded build and
-extraction checks. Imported definitions remain explicitly outside the inspected
+extraction runs. Imported definitions remain explicitly outside the inspected
 module. The [minimal example](examples/minimal/README.md) explains how to rerun
 the extraction with the pinned Lean toolchain.
 
@@ -226,8 +205,7 @@ Two read-only sidecars make that comparison exact. The
 with its text and the names it mentions, and the
 [record alignment](docs/record-alignment.md) points each record to its Lean
 declarations, to the exact slice of each paper that states it, and to the
-sentences and Lean lines tied together inside that slice. Both are checked for
-landing in pinned bytes; neither says the mathematics matches.
+sentences and Lean lines tied together inside that slice. A program confirms that both ends of each exist in the pinned bytes; neither says the mathematics matches.
 
 ## Sources and verification
 
@@ -237,12 +215,12 @@ or a public theorem on [Prove2Me](docs/prove2me.md).
 
 The Prove2Me adapter preserves public theorem identifiers, decomposition links
 and platform status. Its intake is partial: it does not download proof bodies
-or turn a platform's “Proved” label into a local proof check.
+or turn a platform's “Proved” label into a local proof run.
 
 For local sources, the [verification guide](docs/verification.md) explains Lean
 builds, dependency extraction and the optional Comparator tool. The saved minimal
 example has an actual build and extraction. The larger QAOA / SK graph is curated
-from source. It retains planned checks and a separate startup-unavailable attempt;
+from source. It retains planned runs and a separate startup-unavailable attempt;
 later invocations built and exported the full-support and scalar-value
 challenges before their solution builds failed. No accepted research replay or elaborated research extraction
 is established by those records. A source hash,
@@ -258,7 +236,7 @@ records preserve those distinctions.
 | [docs/](docs/) · [documentation guide](docs/README.md) | Authoring, architecture, verification, integration and research references |
 | [skills/](skills/) · [writing methods](skills/README.md) | Four reusable methods for moving from sources to mathematical writing |
 | [src/lean_exposition/](src/lean_exposition/) | Python CLI, read-only [web backend](src/lean_exposition/web.py), consumer library, packaged schemas and templates |
-| [site/](site/) · [site guide](site/README.md) | The reading website: the argument map, side-by-side Compare, the papers beside the map, the Lean browser and the recorded checks, all read from the web API |
+| [site/](site/) · [site guide](site/README.md) | The reading website: the argument map, side-by-side Compare, the papers beside the map, the Lean index and the recorded checks, all read from the web API |
 | [lean/](lean/) | Lean extractor entry and integration guide |
 | [tests/](tests/) | Regression tests for evidence, source intake, packaging and layout |
 | [scripts/](scripts/) | Repository layout/link checks, the [web benchmark](scripts/benchmark_web.py) and the [paper bookmark filter](scripts/paper_anchors.lua) |
@@ -280,7 +258,7 @@ Run `python scripts/check_layout.py`, `python scripts/check_links.py` and
 `python -m unittest discover -s tests -v` after a change. Use
 `python scripts/check_layout.py --index` to check the staged tree before committing.
 
-Will Cook made this project as part of [Plectis](https://wcook04.github.io/practical-formal-verification/),
+Will Cook made this project for [Plectis](https://wcook04.github.io/practical-formal-verification/),
 his projects on researching mathematics with AI and on tools that help people
 follow what AI produces. His videos, including walkthroughs of results, are on
 [YouTube](https://www.youtube.com/@willcook2004).
