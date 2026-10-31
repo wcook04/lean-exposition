@@ -30,6 +30,8 @@ import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence 
 import { recordMark } from "./leanMarks";
 import { declTitle } from "../model/declTitle";
 import { useLeanGraph } from "./useLeanGraph";
+import { leanWidth, neighbourhood } from "../model/leanGraph";
+import { useEntryState } from "../app/trail";
 import { useAlignment } from "../compare/useAlignment";
 import type { LeanStep } from "../panels/model";
 import { shortTitle as recordTitle } from "../compare/useAlignment";
@@ -55,9 +57,13 @@ const WALK_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
 const LEAN_TILE_W = 168;
 /** On a laptop the sheet takes a third of the width: slimmer tiles keep the widest rank on the canvas. */
 const LAPTOP_TILE_W = 174;
-const LEAN_TILE_H = 66;
+const LEAN_TILE_H = 58;
 /** Far enough out to see the whole shape on a monitor; titles shorten there and the strip has them whole. */
-const LEAN_MIN_K = 0.5;
+const LEAN_MIN_K = 0.3;
+/** A phone reads a part at a time and pans: the whole graph is no use at that width. */
+const LEAN_PHONE_K = 0.75;
+/** Below this the whole graph is a shape rather than something to read, so the view opens on the part around the step. */
+const LEAN_READ_K = 0.72;
 
 const INTRO_KEY = "lx-map-intro";
 const DISPLAY_KEY = "lx-map-display";
@@ -317,8 +323,10 @@ export function MapPage({ route }: { route: MapRoute }) {
   const selectLean = (id: string | null) => {
     if (id === null) {
       if (route.decl || route.node) go({ decl: undefined, declModule: undefined, node: undefined });
-    } else if (id === goal) go({ node: goal, decl: undefined, declModule: undefined });
-    else go({ decl: id, declModule: undefined, node: undefined, edge: undefined, trace: undefined });
+    } else if (id === goal) {
+      const main = alignment?.records[goal]?.lean.find((row) => row.relation === "states");
+      if (main) go({ decl: main.name, declModule: main.module });
+    } else go({ decl: id, declModule: undefined, node: undefined, edge: undefined, trace: undefined });
   };
   const selectEdge = (key: string | null) => {
     if (key === null) {
@@ -370,7 +378,8 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // ---- Inspector ----------------------------------------------------------------------
 
-  const panelKey = chosenDecl ? `d:${chosenDecl}` : edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
+  // The Lean graph needs the width: only a declaration opens the sheet there.
+  const panelKey = chosenDecl ? `d:${chosenDecl}` : leanOn ? undefined : edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
   const shown = usePresence(panelKey);
   const shownNode = shown.value?.startsWith("n:") ? shown.value.slice(2) : undefined;
   const shownEdge = shown.value?.startsWith("e:") ? shown.value.slice(2) : undefined;
@@ -424,11 +433,26 @@ export function MapPage({ route }: { route: MapRoute }) {
   // One recorded route from the goal; under a lens, through the records that paper uses. Null when there is none.
   const crumbs = useMemo(() => (shownNode ? pathFromGoal(argument, goal, shownNode, within) : null), [argument, goal, shownNode, within]);
 
-  // In the Lean graph, the declarations of the record open in the sheet are lit.
+  // In the Lean graph, the declarations of the step you came from are lit, and it opens around them.
   const litDecls = useMemo(() => {
     if (!leanOn || !route.node || route.node === goal || route.decl) return null;
     return new Set(alignment?.records[route.node]?.lean.map((row) => row.name) ?? []);
   }, [leanOn, route.node, route.decl, goal, alignment]);
+  // The whole graph where it can be read at once; else the part around the step, and Fit shows all.
+  const [leanChoice, setLeanChoice] = useEntryState<boolean | null>("lean-whole", null);
+  const wholeReadable = useMemo(() => (leanReady ? window.innerWidth / leanWidth(leanReady.graph, goal, LEAN_TILE_W) >= LEAN_READ_K : false), [leanReady, goal]);
+  const leanWhole = leanChoice ?? wholeReadable;
+  const leanFocus = useMemo(() => (route.decl ? [route.decl] : litDecls ? [...litDecls] : [goal]), [route.decl, litDecls, goal]);
+  const drawnLean = useMemo(() => (leanReady ? (leanWhole ? leanReady.graph : neighbourhood(leanReady.graph, goal, leanFocus)) : null), [leanReady, leanWhole, goal, leanFocus]);
+  const leanPlace = drawnLean && leanReady ? `${drawnLean.nodes.size - 1} of ${leanReady.graph.nodes.size - 1} results, around ${route.decl ? (drawnLean.nodes.get(route.decl)?.label ?? "this declaration") : route.node && route.node !== goal ? "this step" : "the main result"}` : undefined;
+  // What is drawn changed: frame it. A remembered camera has already been put back.
+  const leanFrame = useRef<unknown>(null);
+  useEffect(() => {
+    const first = leanFrame.current === null;
+    if (!drawnLean || drawnLean === leanFrame.current) return;
+    leanFrame.current = drawnLean;
+    if (!first) requestAnimationFrame(() => treeRef.current?.fit());
+  }, [drawnLean]);
 
   // ---- Paper walk ---------------------------------------------------------------------
 
@@ -515,14 +539,14 @@ export function MapPage({ route }: { route: MapRoute }) {
   const viewPressed = (v: View) => (v === "lean" ? leanOn && display === "map" : leanOn ? false : v === "outline" ? display === "outline" : display === "map" && mode === v);
 
   return (
-    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`}>
+    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`} data-keeps-brackets={(display === "map" && !leanOn && walk.passages.length > 0) || undefined}>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
         <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
         <KeyPopover onNotesHost={setNotesHost} lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : undefined} />
       </div>
-      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over records it leaves out.`}</p>}
+      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over steps it leaves out.`}</p>}
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (
@@ -542,10 +566,10 @@ export function MapPage({ route }: { route: MapRoute }) {
             ) : (
               <>
                 <span>
-                  This {edgeObj ? "step" : "record"} is not among the records the {accountWord(route.lens!).toLowerCase()} uses.
+                  This step is not among the steps the {accountWord(route.lens!).toLowerCase()} uses.
                 </span>{" "}
                 <button type="button" className="linklike" onClick={() => changeLens(undefined)}>
-                  Show all records
+                  Show all steps
                 </button>
               </>
             )}
@@ -559,9 +583,9 @@ export function MapPage({ route }: { route: MapRoute }) {
           <ArgumentTree
             key={`lean:${route.lens ?? ""}`}
             ref={treeRef}
-            graph={leanReady.graph}
+            graph={drawnLean!}
             goal={goal}
-            selected={chosenDecl && leanReady.graph.nodes.has(chosenDecl) ? chosenDecl : !chosenDecl && selected === goal ? goal : undefined}
+            selected={chosenDecl && drawnLean?.nodes.has(chosenDecl) ? chosenDecl : undefined}
             insets={insets}
             onSelect={selectLean}
             onTrace={() => undefined}
@@ -571,9 +595,11 @@ export function MapPage({ route }: { route: MapRoute }) {
             lens={undefined}
             persist={false}
             statusOf={leanReady.markOf}
+            copyLeaves={false}
             tileWidth={LEAN_TILE_W}
             tileHeight={LEAN_TILE_H}
-            minScale={LEAN_MIN_K}
+            minScale={phone ? LEAN_PHONE_K : LEAN_MIN_K}
+            worldText
             onSceneSettled={onSceneSettled}
           />
         ) : display === "map" ? (
@@ -624,11 +650,22 @@ export function MapPage({ route }: { route: MapRoute }) {
             bottomInset={sheetInset}
           />
         )}
+        {display === "map" && leanReady && leanReady.graph.shelf.length > 0 && (
+          <div className="lean-shelf" role="group" aria-label="Definitions these results use">
+            <span className="lean-shelf__head">Definitions</span>
+            {leanReady.graph.shelf.map((d) => (
+              <button key={d.name} type="button" className={`linklike${chosenDecl === d.name ? " is-chosen" : ""}`} title={d.name} onClick={() => walkDecl(d)}>
+                {d.title}
+              </button>
+            ))}
+          </div>
+        )}
         {display === "map" && (
           <MapStrip
-            lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : leanOn ? {} : undefined}
+            lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut, place: leanWhole ? undefined : leanPlace } : leanOn ? {} : undefined}
             captionRef={captionRef}
-            onFit={() => treeRef.current?.fit()}
+            onFit={() => (leanOn && !leanWhole ? setLeanChoice(true) : treeRef.current?.fit())}
+            onNear={leanOn && leanWhole ? () => setLeanChoice(false) : undefined}
           />
         )}
       </div>
@@ -671,7 +708,7 @@ export function MapPage({ route }: { route: MapRoute }) {
           module={route.declModule}
           leaving={shown.leaving}
           onClose={closeSelection}
-          onSelect={(id) => select(id)}
+          onSelect={(id) => (leanOn ? go({ lean: undefined, decl: undefined, declModule: undefined, node: id }) : select(id))}
           onWalk={walkDecl}
           onEcho={setPreview}
         />

@@ -41,6 +41,8 @@ export function App() {
         event.preventDefault();
         setHelping(true);
       } else if (event.key === "[" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        // A page that steps through something with [ and ] keeps the key.
+        if (document.querySelector("[data-keeps-brackets]")) return;
         // Beside Alt-Left, which is the browser's own. The control's name says where it goes.
         event.preventDefault();
         document.querySelector<HTMLElement>(".back-control")?.click();

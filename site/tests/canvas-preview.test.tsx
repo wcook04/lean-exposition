@@ -60,7 +60,7 @@ describe("preview never commits", () => {
     expect(cards()).toEqual(before);
     expect(container.querySelector(`.card[data-record="${drawn}"]`)!.className).toContain("is-preview");
     expect({ ...sessionStorage }).toEqual(stored);
-    expect(container.querySelector(".tree__note")!.textContent).toContain("1 linked record is not in the argument for this main result");
+    expect(container.querySelector(".tree__note")!.textContent).toContain("1 linked step is not in the argument for this main result");
     draw(null);
     await act(() => new Promise((r) => setTimeout(r, 10)));
     expect(container.querySelector(".tree__note")).toBeNull();

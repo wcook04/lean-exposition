@@ -204,7 +204,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
                   type="button"
                   className="orow__inputs"
                   aria-expanded={inline ? expanded : false}
-                  aria-label={`${expanded ? "Hide" : "Show"} the ${n === 1 ? "record" : `${n} records`} that ${node.label} uses directly`}
+                  aria-label={`${expanded ? "Hide" : "Show"} the ${n === 1 ? "step" : `${n} steps`} that ${node.label} uses directly`}
                   onClick={() => (inline ? toggle(key) : focusBranch(rowPath))}
                 >
                   <Chevron open={expanded} />
@@ -214,7 +214,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
                 type="button"
                 className="orow__open"
                 aria-pressed={selected === edge.to}
-                aria-label={`${node.label}. ${RELATION_WORDS[edge.kind] ?? edge.kind}, ${kindWord(node.kind).toLowerCase()}. ${markWords(mark)}. Open the record`}
+                aria-label={`${node.label}. ${RELATION_WORDS[edge.kind] ?? edge.kind}, ${kindWord(node.kind).toLowerCase()}. ${markWords(mark)}. Open the step`}
                 onClick={() => {
                   if (inline && (!expanded || selected === edge.to)) toggle(key);
                   onSelect(edge.to);
@@ -241,7 +241,7 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
       <header className="outline__goal">
         <p className="caps">{kindWord(goalNode.kind)}</p>
         <h2 className="outline__title">
-          <button type="button" className="outline__open-goal" aria-pressed={selected === goal} aria-label={`${goalNode.label}. Open the record`} onClick={() => onSelect(goal)}>
+          <button type="button" className="outline__open-goal" aria-pressed={selected === goal} aria-label={`${goalNode.label}. Open the step`} onClick={() => onSelect(goal)}>
             {goalNode.label}
           </button>
         </h2>
@@ -286,13 +286,13 @@ export function ArgumentOutline({ graph, goal, goalTitle, scope, within, selecte
         <h3 id="outline-inputs-head" className="outline__inputs-head" ref={listHeadRef} tabIndex={-1}>
           {trail.length > 1 ? (
             <>
-              Records used directly by{" "}
-              <button type="button" className="linklike outline__inputs-of" onClick={() => onSelect(top)} aria-label={`Open the record ${topNode.label}`}>
+              Steps used directly by{" "}
+              <button type="button" className="linklike outline__inputs-of" onClick={() => onSelect(top)} aria-label={`Open the step ${topNode.label}`}>
                 {topNode.label}
               </button>
             </>
           ) : (
-            "Records used directly"
+            "Steps used directly"
           )}
         </h3>
         {inputs.length ? renderRows(top, [top], 1) : <p className="outline__empty">No recorded inputs.</p>}

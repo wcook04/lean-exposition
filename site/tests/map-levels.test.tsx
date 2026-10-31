@@ -21,8 +21,8 @@ describe("the level lens", () => {
 
   it("states the count in a sentence and never claims one level contains another", () => {
     const counts = { all: 30, total: 131, long: 30, short: 23, expository: 21 };
-    expect(lensSentence(counts, undefined)).toBe("This argument uses 30 of the 131 records on this site.");
-    expect(lensSentence(counts, "expository")).toBe("The exposition uses 21 of the 30 records in this argument.");
+    expect(lensSentence(counts, undefined)).toBe("This argument uses 30 of the 131 steps on this site.");
+    expect(lensSentence(counts, "expository")).toBe("The exposition uses 21 of the 30 steps in this argument.");
   });
 
   it("does not assume the levels nest", () => {

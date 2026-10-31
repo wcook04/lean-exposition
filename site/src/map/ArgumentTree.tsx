@@ -159,6 +159,8 @@ export interface TreeProps {
    * Lean, much paler for a part. Without it, cards are drawn as they always were.
    */
   statusOf?(id: string, node: ArgNode): LeanMark | null;
+  /** Tile titles keep one size in the drawing, so they zoom with it and are never cut. */
+  worldText?: boolean;
   /** Let the camera go below the scale where every tile holds its whole title; a title then shortens, and the caption has it whole. */
   minScale?: number;
   /** Off, a record many results use stays one card with a line from each, as a dependency graph draws it. */
@@ -284,6 +286,10 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const captionRefRef = useRef(props.captionRef);
   captionRefRef.current = props.captionRef;
   const minKRef = useRef(1);
+  /** The reader has panned or zoomed since the last Fit. */
+  const handMoved = useRef(false);
+  const worldTextRef = useRef(props.worldText);
+  worldTextRef.current = props.worldText;
   const compactRef = useRef(compact);
   compactRef.current = compact;
   const onUserMoveRef = useRef(props.onUserMove);
@@ -565,6 +571,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   /** The plate's first sentence: its height on screen at STATEMENT_W wide, 0 until measured. */
   const statementH = useRef(0);
   const applyLines = useCallback(() => {
+    if (worldTextRef.current) return;
     const k = viewRef.current.k;
     const rep = repRef.current;
     const layout = builtRef.current.layout;
@@ -1239,7 +1246,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       const b = layoutBounds(l);
       const box = { x0: b.x0 - 16, y0: b.y0 - 16, x1: b.x1 + 16, y1: b.y1 + 16 };
       // As large as fits, never below the 11px floor: what does not fit then pans.
-      if (denseRef.current) return frameBox(box, viewport(), { min: DENSE_MIN_K, max: 1.15, anchor: boxOf(l, goalRef.current), top: true });
+      if (denseRef.current) return frameBox(box, viewport(), { min: Math.min(DENSE_MIN_K, minKRef.current), max: 1.15, anchor: boxOf(l, goalRef.current), top: true });
       return fitBounds(box, viewport(), { max: 1, min: floorK(false, compact) });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1532,6 +1539,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         moveCamera(frameBox(box, viewport(), { min: k, max: k, anchor: boxOf(l, anchor, 24), top: true }), animate);
       },
       fit: (animate = true) => {
+        handMoved.current = false;
         const l = builtRef.current.layout;
         const b = layoutBounds(l);
         const pad = 16;
@@ -1685,6 +1693,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       })
       .on("zoom", (event: { transform: ZoomTransform; sourceEvent?: Event | null }) => {
         if (event.sourceEvent) {
+          handMoved.current = true;
           userMoved.current = true;
           userMovedSinceAsk.current = true;
           focusHeld.current = false;
@@ -1725,6 +1734,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     const onWheel = (event: WheelEvent) => {
       if ((event.target as Element).closest?.(".tree__ui")) return;
       event.preventDefault();
+      handMoved.current = true;
       // The drawing moves under the pointer: what was named is no longer what it rests on.
       const caption = captionRefRef.current?.current;
       if (caption) caption.hidden = true;
@@ -1833,6 +1843,13 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, goal, rootH, rootW, paneH, insets.bottom, insets.top, firstRowKey, holdOver, built.provisional]);
+
+  // With fixed titles the drawing stays framed as the canvas changes, until the reader moves it.
+  useEffect(() => {
+    if (!props.worldText || handMoved.current || !framedRef.current || !ready) return;
+    (ref as RefObject<MapViewHandle | null> | null)?.current?.fit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paneW, paneH, insets.bottom, ready]);
 
   // A held focus re-centres when the canvas is resized or an inspector opens or closes over it.
   useEffect(() => {
@@ -2078,7 +2095,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (key.startsWith("bus:")) {
       const parent = key.slice(4);
       const n = built.skeleton.filter((e) => e.from === parent && e.kind === "supports").length;
-      showCaption(`${nameOf(recordOf(parent))} uses ${n === 1 ? "one record" : `${n} records`} directly`);
+      showCaption(`${nameOf(recordOf(parent))} uses ${n === 1 ? "one step" : `${n} steps`} directly`);
       return;
     }
     const e = edgeByKey.get(edgeKeyOf(key));
@@ -2301,6 +2318,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
       className={`tree${compact ? " tree--compact" : ""}${rootW < 700 ? " tree--narrow" : ""}${moving ? " tree--moving" : ""}${traced ? " tree--traced" : ""}${entering ? " tree--entering" : ""}${!framed && !compact ? " tree--unframed" : ""}${baseDim ? " tree--dim" : ""}${reduced ? " tree--reduced" : ""}`}
       data-mode={mode}
       data-dense={dense || undefined}
+      data-world-text={props.worldText || undefined}
       onPointerLeave={() => {
         setHover(null);
         setHoverEdge(null);
@@ -2456,7 +2474,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
               className={cardClass(lid, node, leaf)}
               style={{ width: layout.boxes.get(lid)?.w ?? shown.current.get(lid)?.rect.w ?? 176, height: dense ? layout.boxes.get(lid)?.h : undefined, ["--rank" as string]: layout.rank.get(lid) ?? 0, ["--enter-i" as string]: enterOrder.get(lid) ?? 0 }}
               role="group"
-              aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} records that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
+              aria-label={`${node.label}, ${kindName(node.kind)}${clone ? `, drawn once under each of the ${usedBy} steps that use it` : ""}${mark ? `, ${markWords(mark)}` : lean ? ", linked to Lean" : ""}`}
               title={clone ? node.label : undefined}
               onClick={(event) => {
                 if ((event.target as Element).closest?.(".card__inputs, .card__usedby, .tag, a")) return;
@@ -2542,7 +2560,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
                         type="button"
                         className="card__usedby"
                         tabIndex={tab}
-                        aria-label={`Used by ${usedBy} records on this map. Open ${node.label}`}
+                        aria-label={`Used by ${usedBy} steps on this map. Open ${node.label}`}
                         onClick={(event) => {
                           event.stopPropagation();
                           onSelect(id);
@@ -2665,7 +2683,7 @@ const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
         className={`tree__ui tree__chip tree__chip--${side}`}
         style={chipStyle(side, insets, chips.at[side]!)}
         onClick={() => onChip(side)}
-        aria-label={`Show ${count} more ${count === 1 ? "record" : "records"} ${side === "up" ? "above" : side === "down" ? "below" : `to the ${side}`}`}
+        aria-label={`Show ${count} more ${count === 1 ? "step" : "steps"} ${side === "up" ? "above" : side === "down" ? "below" : `to the ${side}`}`}
       >{chipText(side, count)}</button>;
     })}
     {showNotes && <div
@@ -2675,7 +2693,7 @@ const MapEdgeControls = forwardRef<{ update(chips: ChipState): void }, {
       onClick={(event) => event.stopPropagation()}
     >
       {outsideCount > 0 && <p className="tree__note" role="status">
-        {outsideCount === 1 ? "1 linked record is not in the argument for this main result" : `${outsideCount} linked records are not in the argument for this main result`}
+        {outsideCount === 1 ? "1 linked step is not in the argument for this main result" : `${outsideCount} linked steps are not in the argument for this main result`}
       </p>}
     </div>}
   </>;

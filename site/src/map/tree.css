@@ -782,6 +782,34 @@
   border-style: dashed;
 }
 
+/* The Lean graph's tiles: a title has one size in the drawing and zooms with it, so it is
+   never cut. Fit shows the whole shape, and closer in it reads. */
+.tree[data-world-text][data-dense] .card__compact {
+  gap: 1px;
+  padding: 4px 10px;
+}
+
+.tree[data-world-text] .card__ctitle {
+  max-width: 100%;
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.22;
+}
+
+.tree[data-world-text] .card__ctitle.lean {
+  overflow-wrap: anywhere;
+  font-size: 11.5px;
+}
+
+.tree[data-world-text] .card--root .card__ctitle {
+  font-size: 22px;
+  max-width: none;
+}
+
+.tree[data-world-text] .card__cmain {
+  font-size: 11px;
+}
+
 /* ---- Screen-space layer ---------------------------------------------------------------- */
 
 .tree__ui {
