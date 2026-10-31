@@ -4,7 +4,7 @@
 // Back walks home.
 
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { LeanDeclaration } from "../api/lean";
+import type { LeanDeclaration, LeanModule } from "../api/lean";
 import { navigate, routeHref } from "../app/router";
 import { dependencyWords, fetchModule, kindWord, type LeanShell } from "./data";
 import { Breakable } from "./ReadingStrip";
@@ -75,16 +75,18 @@ function Tile({ row, record, side, onWalk, onHover }: { row: DeclRow; record?: s
   );
 }
 
-function Side({ title, side, rows, shell, empty, onWalk, onHover }: { title: string; side: "by" | "uses"; rows: DeclRow[]; shell: LeanShell; empty: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
+function Group({ title, side, rows, shell, onWalk, onHover }: { title?: string; side: string; rows: DeclRow[]; shell: LeanShell; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
   const [all, setAll] = useState(false);
   const shown = all ? rows : rows.slice(0, SIDE_LIMIT);
   const more = rows.length - shown.length;
+  if (!rows.length) return null;
   return (
-    <section className={`lean-hood__side lean-hood__side--${side}`} aria-label={title}>
-      <p className="lean-hood__title">
-        {title} <span>{rows.length.toLocaleString("en-GB")}</span>
-      </p>
-      {rows.length === 0 && <p className="lean-hood__none">{empty}</p>}
+    <>
+      {title && (
+        <p className="lean-hood__group">
+          {title} <span>{rows.length.toLocaleString("en-GB")}</span>
+        </p>
+      )}
       {shown.map((row) => (
         <Tile key={`${row.module}:${row.name}`} row={row} side={side} record={shell.linked.get(row.name)?.[0]?.title} onWalk={onWalk} onHover={onHover} />
       ))}
@@ -93,11 +95,26 @@ function Side({ title, side, rows, shell, empty, onWalk, onHover }: { title: str
           and {more.toLocaleString("en-GB")} more
         </button>
       )}
+    </>
+  );
+}
+
+function Side({ title, side, groups, shell, empty, onWalk, onHover }: { title: string; side: "by" | "uses"; groups: { title?: string; id: string; rows: DeclRow[] }[]; shell: LeanShell; empty: string; onWalk(row: DeclRow, element: HTMLElement): void; onHover(id: string | null): void }) {
+  const total = groups.reduce((sum, group) => sum + group.rows.length, 0);
+  return (
+    <section className={`lean-hood__side lean-hood__side--${side}`} aria-label={title}>
+      <p className="lean-hood__title">
+        {title} <span>{total.toLocaleString("en-GB")}</span>
+      </p>
+      {total === 0 && <p className="lean-hood__none">{empty}</p>}
+      {groups.map((group) => (
+        <Group key={group.id} title={groups.filter((g) => g.rows.length).length > 1 ? group.title : undefined} side={`${side}-${group.id}`} rows={group.rows} shell={shell} onWalk={onWalk} onHover={onHover} />
+      ))}
     </section>
   );
 }
 
-export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; module: string; shell: LeanShell }) {
+export function Neighbourhood({ decl, module, shell, split }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell; split?: { statement: readonly string[]; proof: readonly string[] } }) {
   const root = useRef<HTMLDivElement>(null);
   const centre = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<Line[]>([]);
@@ -107,14 +124,14 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
   const sides = useMemo(() => {
     const rowsOf = (names: readonly string[]) => {
       const rows = names.flatMap((name) => {
-        const row = name === decl.name ? undefined : findDecl(shell.index, name, module);
+        const row = name === decl.name ? undefined : findDecl(shell.index, name, module.module);
         return row ? [row] : [];
       });
       const rank = (row: DeclRow) => (shell.linked.has(row.name) ? 0 : shell.terms.has(row.name) ? 1 : 2);
       return rows.sort((a, b) => rank(a) - rank(b) || a.short.localeCompare(b.short));
     };
-    return { by: rowsOf(decl.used_by), uses: rowsOf(decl.uses) };
-  }, [decl, module, shell]);
+    return { by: rowsOf(decl.used_by), statement: rowsOf(split?.statement ?? decl.uses), proof: rowsOf(split?.proof ?? []) };
+  }, [decl, module, shell, split]);
 
   // Lines follow the tiles as they stand, including after a side opens in full.
   useLayoutEffect(() => {
@@ -132,7 +149,7 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
           const id = tile.dataset.tile as string;
           const t = place(tile, host);
           const ty = t.top + t.height / 2;
-          if (id.startsWith("by:")) {
+          if (id.startsWith("by")) {
             const x1 = inner.l;
             const x2 = t.left + t.width + 7;
             const c = (x1 + x2) / 2;
@@ -192,7 +209,7 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
   const source = decl.dependency_source ?? shell.modules.dependency_source;
   return (
     <section className="lean-hood" aria-label={`What uses ${decl.short} and what it uses`}>
-      <p className="lean-terms__title">How {decl.short} connects</p>
+      <h2 className="lean-hood__head">What uses it and what it uses</h2>
       <div className="lean-hood__picture" ref={root}>
         <svg className="lean-hood__lines" width={size.w} height={size.h} aria-hidden="true">
           {lines.map((line) => (
@@ -202,13 +219,24 @@ export function Neighbourhood({ decl, module, shell }: { decl: LeanDeclaration; 
             </g>
           ))}
         </svg>
-        <Side title="Used by" side="by" rows={sides.by} shell={shell} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
+        <Side title="Used by" side="by" groups={[{ id: "all", rows: sides.by }]} shell={shell} empty="Nothing in OpenAI's source names it." onWalk={walk} onHover={setHot} />
         <div className="lean-hood__centre" ref={centre} tabIndex={-1} aria-current="true">
           <span className="lean-hood__kind">{kindWord(decl.kind)}</span>
           <Breakable name={decl.short} />
           {record && <span className="lean-tile__record">{record}</span>}
         </div>
-        <Side title="Uses" side="uses" rows={sides.uses} shell={shell} empty="It names nothing else in OpenAI's source." onWalk={walk} onHover={setHot} />
+        <Side
+          title="Uses"
+          side="uses"
+          groups={[
+            { id: "statement", title: "In its statement", rows: sides.statement },
+            { id: "proof", title: "In its proof", rows: sides.proof },
+          ]}
+          shell={shell}
+          empty="It names nothing else in OpenAI's source."
+          onWalk={walk}
+          onHover={setHot}
+        />
       </div>
       <p className="lean-hood__note">
         {source === "elaborated" ? `${dependencyWords(source)}.` : (shell.modules.dependency_note ?? `${dependencyWords(source)}.`)} Each arrow runs from a name into the declaration that uses it. Click a name to move to it; Back returns.

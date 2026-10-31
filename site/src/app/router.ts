@@ -39,7 +39,15 @@ export type Route =
       /** The table with the steps only some of the levels have, as well as those all of them have. */
       any?: boolean;
     }
-  | { view: "lean"; module?: string; decl?: string }
+  | {
+      view: "lean";
+      module?: string;
+      decl?: string;
+      /** A folder of the tree, as its path. */
+      folder?: string;
+      /** The list of declarations linked to the papers. */
+      index?: "papers";
+    }
   | { view: "about"; anchor?: string }
   | {
       view: "search";
@@ -130,7 +138,7 @@ export function parseRoute(url: URL): Route {
     const levels = q.get("levels")?.split(",").filter(isLevel);
     return { view: "compare", node: q.get("n") ?? undefined, at: q.get("at") ?? undefined, levels: levels?.length ? levels : undefined, any: q.get("in") === "any" || undefined };
   }
-  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined };
+  if (path === "/lean") return { view: "lean", module: q.get("m") ?? undefined, decl: q.get("d") ?? undefined, folder: q.get("f") ?? undefined, index: q.get("list") === "papers" ? "papers" : undefined };
   if (path === "/about") return { view: "about", anchor: hash };
   if (path === "/search") {
     const type = q.get("type");
@@ -202,6 +210,8 @@ export function routeHref(route: Route): string {
     case "lean": {
       if (route.module) q.set("m", route.module);
       if (route.decl) q.set("d", route.decl);
+      if (route.folder) q.set("f", route.folder);
+      if (route.index) q.set("list", route.index);
       const s = q.toString();
       return `${BASE}/lean${s ? `?${s}` : ""}`;
     }

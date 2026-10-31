@@ -1,12 +1,12 @@
-// The one line where a name is read, like an editor's status bar. It lies over the foot of
-// the scrolling column, so pointing at a name moves nothing; when idle it is empty and
-// invisible. There is one for the whole page, however many blocks are on it, and when the
-// name is near the foot it moves to the top of the column so it never covers that name.
+// The line where a name is read, like an editor's status bar: signature, docstring and the
+// paper's notation for the name under the pointer or keyboard focus. It sits in a row of its
+// own at the foot of the block, or in a slot its host gives it, and that row keeps its height
+// whether or not a name is being read. So pointing moves nothing and covers nothing.
 
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
-import { createRoot } from "react-dom/client";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { texHtml } from "../figures/tex";
-import { declIn, fetchModule, kindWord, moduleIfLoaded, sourceLines, type LeanShell } from "./data";
+import { compiled, declIn, docLine, fetchModule, kindWord, moduleIfLoaded, signatureText, type LeanShell } from "./data";
 import type { DeclRow, NameTarget } from "./resolve";
 import type { DictionaryTerm } from "../api/lean";
 
@@ -46,10 +46,13 @@ export function Notation({ term }: { term: DictionaryTerm | undefined }) {
   return <span className="lean-notation" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-function firstSignatureLine(row: DeclRow): string | null {
+/** What is known of a declaration once its module is here. */
+function factsOf(row: DeclRow) {
   const module = moduleIfLoaded(row.module);
   const decl = module && declIn(module, row.name);
-  return module && decl ? (sourceLines(module)[decl.line - 1]?.trim() ?? null) : null;
+  if (!module || !decl) return null;
+  const facts = compiled(decl);
+  return { signature: facts.type ? `${row.short} : ${facts.type}` : signatureText(module, decl), doc: docLine(decl.doc), printed: Boolean(facts.type) };
 }
 
 /** Fetch the module after a rest of 150ms on a name, then show what arrived. */
@@ -87,23 +90,24 @@ export function Breakable({ name }: { name: string }) {
 function DeclReading({ row, term, shell }: { row: DeclRow; term?: DictionaryTerm; shell: LeanShell }) {
   useModuleArrival(row.module);
   const file = (shell.paths.get(row.module)?.path ?? row.module).split("/").pop();
-  const signature = firstSignatureLine(row);
+  const facts = factsOf(row);
+  const words = term?.words ?? facts?.doc;
   return (
     <>
-      <Breakable name={row.short} />
-      {term?.words ? (
-        <span className="lean-bar__words">
-          <Notation term={term} />
-          <Prose text={term.words} />
-        </span>
-      ) : (
-        <>
-          <span className="lean-bar__words lean-bar__words--sig">{signature && <code>{signature}</code>}</span>
-          <span className="lean-bar__place">
-            {kindWord(row.kind)} in {file}, line {row.line}
+      <p className="lean-read__top">
+        <Breakable name={row.short} />
+        <Notation term={term} />
+        {words && (
+          <span className="lean-read__words">
+            <Prose text={words} />
           </span>
-        </>
-      )}
+        )}
+        <span className="lean-read__place">
+          {kindWord(row.kind)} in {file}, line {row.line}
+          {facts?.printed ? ", as Lean prints it" : ""}
+        </span>
+      </p>
+      <code className="lean-read__sig">{facts?.signature ?? " "}</code>
     </>
   );
 }
@@ -113,110 +117,70 @@ export function ReadingLine({ target, shell }: { target: NameTarget; shell: Lean
   if (target.kind === "decl") return <DeclReading row={target.row} term={target.term} shell={shell} />;
   return (
     <>
-      <Breakable name={target.name} />
-      <span className="lean-bar__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</span>
-      <span className="lean-bar__place">From Mathlib</span>
+      <p className="lean-read__top">
+        <Breakable name={target.name} />
+        <span className="lean-read__words">{target.words ?? "Defined outside OpenAI's source, in Mathlib or Lean's core library."}</span>
+        <span className="lean-read__place">From Mathlib</span>
+      </p>
+      <span className="lean-read__note">Click to find it in Mathlib's documentation, in a new tab.</span>
     </>
   );
 }
 
-interface Reading {
+export interface Reading {
   target: NameTarget;
-  element: HTMLElement;
   shell: LeanShell;
 }
 
 /** Moving from one name to the next passes over nothing, so the line does not blink. */
 const LINGER = 140;
 
-let reading: Reading | null = null;
-let timer = 0;
-const listeners = new Set<() => void>();
-const publish = (next: Reading | null) => {
-  reading = next;
-  listeners.forEach((listen) => listen());
-};
-
-export function readName(target: NameTarget, element: HTMLElement, shell: LeanShell): void {
-  window.clearTimeout(timer);
-  publish({ target, element, shell });
+export interface ReadingStore {
+  now(): Reading | null;
+  subscribe(listen: () => void): () => void;
+  read(reading: Reading): void;
+  clear(): void;
 }
 
-export function clearName(): void {
-  window.clearTimeout(timer);
-  timer = window.setTimeout(() => publish(null), LINGER);
-}
-
-/** The column the line belongs to: the name's nearest tall scroller, or else the page. */
-function columnOf(element: HTMLElement): HTMLElement | null {
-  for (let at = element.parentElement; at && at !== document.body; at = at.parentElement) {
-    const { overflowY } = getComputedStyle(at);
-    if ((overflowY === "auto" || overflowY === "scroll") && at.clientHeight >= 240) return at;
-  }
-  return null;
-}
-
-/** The line's place: along the column's foot, or its head when the foot would cover the name. */
-export function barPlace(column: { left: number; top: number; width: number; bottom: number }, name: { bottom: number }, height: number, gap = 6) {
-  const atTop = name.bottom + gap > column.bottom - height;
-  return { left: column.left, width: column.width, top: atTop ? column.top : column.bottom - height, edge: atTop ? "top" : "bottom" };
-}
-
-function place(bar: HTMLElement, element: HTMLElement): void {
-  const column = columnOf(element);
-  const box = column?.getBoundingClientRect();
-  const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--bar-h")) || 0;
-  const frame = column && box
-    ? { left: box.left + column.clientLeft, top: Math.max(box.top, 0), width: column.clientWidth, bottom: Math.min(box.top + column.clientTop + column.clientHeight, window.innerHeight) }
-    : { left: 0, top: head, width: document.documentElement.clientWidth, bottom: window.innerHeight };
-  const at = barPlace(frame, element.getBoundingClientRect(), bar.offsetHeight);
-  bar.style.left = `${at.left}px`;
-  bar.style.top = `${at.top}px`;
-  bar.style.width = `${at.width}px`;
-  bar.style.paddingInline = column ? getComputedStyle(column).paddingLeft : "";
-  bar.dataset.edge = at.edge;
-}
-
-function ReadingBar() {
-  const now = useSyncExternalStore(
-    (listen) => {
+/** One block's reading, kept apart from the block so that pointing does not render the code again. */
+export function readingStore(): ReadingStore {
+  let reading: Reading | null = null;
+  let timer = 0;
+  const listeners = new Set<() => void>();
+  const publish = (next: Reading | null) => {
+    reading = next;
+    listeners.forEach((listen) => listen());
+  };
+  return {
+    now: () => reading,
+    subscribe(listen) {
       listeners.add(listen);
       return () => listeners.delete(listen);
     },
-    () => reading,
-  );
-  const bar = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => {
-    const node = bar.current;
-    if (!node || !now) return;
-    const again = () => {
-      if (now.element.isConnected) place(node, now.element);
-    };
-    again();
-    window.addEventListener("scroll", again, { capture: true, passive: true });
-    window.addEventListener("resize", again);
-    const watcher = new ResizeObserver(again);
-    watcher.observe(node);
-    return () => {
-      window.removeEventListener("scroll", again, { capture: true });
-      window.removeEventListener("resize", again);
-      watcher.disconnect();
-    };
-  }, [now]);
+    read(next) {
+      window.clearTimeout(timer);
+      publish(next);
+    },
+    clear() {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => publish(null), LINGER);
+    },
+  };
+}
+
+function Line({ store }: { store: ReadingStore }) {
+  const now = useSyncExternalStore(store.subscribe, store.now);
+  if (!now) return null;
   return (
-    <div className={`lean-bar${now ? " is-on" : ""}`} ref={bar} role="status" aria-label="The name being read">
-      <div className="lean-bar__line">{now && <ReadingLine target={now.target} shell={now.shell} />}</div>
+    <div className="lean-read" role="status">
+      <ReadingLine target={now.target} shell={now.shell} />
     </div>
   );
 }
 
-let mounted = false;
-
-/** Put the one line on the page, ready and empty, the first time any code appears. */
-export function ensureReadingBar(): void {
-  if (mounted) return;
-  mounted = true;
-  const host = document.createElement("div");
-  document.body.append(host);
-  createRoot(host).render(<ReadingBar />);
+/** The block's reading row, or the same line in the host's slot. */
+export function ReadingFoot({ store, slot }: { store: ReadingStore; slot?: HTMLElement | null }) {
+  const line = useMemo(() => <Line store={store} />, [store]);
+  if (slot) return createPortal(line, slot);
+  return <div className="lean-slot">{line}</div>;
 }
