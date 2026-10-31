@@ -142,14 +142,14 @@ const ROLE_STRENGTH = ["mention", "example", "explanation", "derivation", "defin
 
 interface AuthoredRecord {
   short?: string;
-  lean?: unknown[];
+  lean?: { relation?: string }[];
   statements?: { paper: string; role: string }[];
 }
 
 /** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
 const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*)\.json$/;
 
-export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; levels: Record<string, string> }> {
+export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
   const out: ReturnType<typeof recordIndex> = {};
   if (!existsSync(resolve(dir))) return out;
   const names = readdirSync(resolve(dir)).sort();
@@ -162,7 +162,8 @@ export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; le
     for (const [id, row] of Object.entries(records)) {
       const levels: Record<string, string> = {};
       for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
-      out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, levels };
+      const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
+      out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, relations, levels };
     }
   }
   // Statements added paper by paper count towards their records' levels.

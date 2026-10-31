@@ -22,7 +22,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note, .map-caption) {
+.map-page__main > :not(.map-note, .map-strip) {
   flex: 1;
   min-height: 0;
 }
@@ -291,7 +291,6 @@
 
 /* The level lens: the same pill as the view switch. */
 .map-lens {
-  grid-area: lens;
   position: relative;
   display: flex;
   align-items: center;
@@ -433,18 +432,45 @@
   color: var(--ink-2);
 }
 
-/* ---- The caption: a shortened tile's full title, or the line under the pointer. It sits
-   in a corner of the canvas where it covers no card (showCaption) and takes no pointer. ---- */
+/* ---- The strip under the canvas: the key, or for a moment the name of what the pointer
+   rests on, and Fit. A row of its own, so nothing in it can cover a card. ---- */
+
+.map-strip {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 var(--space-3) 0 var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+  margin-bottom: var(--sheet-inset, 0px);
+}
+
+.map-strip__text {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
 
 .map-caption {
   position: absolute;
-  z-index: 7;
-  max-width: min(46%, 520px);
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: 0.9375rem;
-  line-height: 1.3;
+  background: var(--ground);
+  font-size: var(--fs-sm);
+  line-height: 1.2;
   color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pointer-events: none;
 }
 
@@ -452,21 +478,83 @@
   display: none;
 }
 
-.map-caption[data-at^="top"] {
-  top: 12px;
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.map-caption[data-at^="bottom"] {
-  bottom: calc(12px + var(--sheet-inset, 0px));
+.map-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.map-caption[data-at$="left"] {
-  left: 24px;
+.map-legend .map-key__sample {
+  width: 36px;
+  height: 12px;
 }
 
-.map-caption[data-at$="right"] {
-  right: 24px;
-  text-align: right;
+.map-legend__source {
+  color: var(--ink-3);
+}
+
+.map-fit {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+
+.map-fit:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.map-fit:focus-visible {
+  outline: 2px solid var(--lit);
+  outline-offset: 1px;
+}
+
+.map-loading {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
+}
+
+/* The lens says what its numbers count, in the same small line as "Argument for". */
+.map-lensbox {
+  grid-area: lens;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.map-lensbox__label {
+  font-size: var(--fs-xs);
+  line-height: 1.2;
+  color: var(--ink-3);
+  white-space: nowrap;
 }
 
 /* An assumption tag, as the map draws one on a result, without its name. */
@@ -725,5 +813,31 @@
   }
   .map-controls__button {
     height: 38px;
+  }
+}
+
+/* A laptop: the header's parts close up so the main result keeps its title. */
+@media (max-width: 1400px) {
+  .map-head {
+    column-gap: 14px;
+  }
+
+  .map-lens button {
+    padding: 0 8px;
+  }
+
+  .map-views button {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .map-strip {
+    padding-left: var(--space-4);
+  }
+
+  .map-legend {
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 }
