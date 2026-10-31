@@ -148,7 +148,7 @@ export function Standing({ groups }: { groups: KindGroup[] }) {
               did={
                 <>
                   AI agents marked {ties.statements.toLocaleString("en-GB")} statements in the papers, {ties.withLean} of them with Lean, by reading both sides. That makes {ties.total.toLocaleString("en-GB")} ties, because one statement can tie to several steps.{" "}
-                  {audit && <>AI agents then read all {audit.read} statements with Lean against the source and changed {audit.changed}. Another tried to disprove each statement saying it had no Lean, and changed {audit.absencesChanged} of {audit.absencesChecked}. Another re-read a random {audit.sampled}, unmarked: {audit.right} right, {audit.loose} loose, {audit.wrong} wrong. Those were corrected. </>}A program confirms only that each tie still lands.
+                  {audit && <>AI agents then read the {audit.read} ties that had Lean against the source and changed {audit.changed}. Another tried to disprove each statement saying it had no Lean, and changed {audit.absencesChanged} of {audit.absencesChecked}. Another re-read a random {audit.sampled}, unmarked: {audit.right} right, {audit.loose} loose, {audit.wrong} wrong. Those were corrected. </>}A program confirms only that each tie still lands.
                 </>
               }
               open={
