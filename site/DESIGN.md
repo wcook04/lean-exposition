@@ -445,11 +445,83 @@ page.
 
 ## The reader
 
-From 1280px the map sits beside the paper: the paper's own narrower graph, with the records
-of the passage being read lit. It follows block by block, and its goal stays still while the
-reader scrolls. The pane's trail says which section this is and how many of the paper's
-records have come so far. A statement link (`?l=`) lands on the exact line and marks it. A
-formula is fitted as it comes near the screen, because each measurement forces a layout.
+A reader reads the paper, as they always have. The graph is a sidecar: full height on the
+page facing the paper, it comes along as they scroll, and it can be closed. One line under
+it names what is lit in plain words and says whether it has Lean. Clicking a statement or a
+highlighted card opens the raw Lean, which rises from the card over the graph and leaves a band
+of it above, or stands beside it from 860px of page. It is headed by the step's plain title
+with the raw name small beside it, then a link to where each paper states it, and Compare. The
+graph underneath keeps its size and camera; only a transform lifts the card clear, so closing
+leaves it exactly as it was. A handle sets the height, and it is remembered.
+
+The Lean closed is the default. A reader who wants it beside their reading can choose "Keep the
+Lean open" or draw the handle up from the foot of the graph; it then follows the text, and that
+is remembered in this browser. Below 1280px the same page is a sheet opened on demand. It is
+never modal: the paper stays where it is and can still be scrolled.
+
+Four verbs run the page.
+
+- **Follow.** One reading line, 30% of the way down the paper, picks the statement under
+  it, or the nearest within a third of the page, the one just read winning a near tie.
+  The statement takes the highlighter at once. Once it has held the line for 200ms, and
+  the page is no longer flying past, its card lights and the line under the graph names
+  it. The address keeps up by replacing the entry once the reader stops.
+- **Point.** A statement under the pointer or focus takes a soft wash and its card lights
+  at once; after a 150ms dwell the line under the graph names it, and a Lean kept open
+  previews it. Moving away restores. A card does the same in the other direction. An untied
+  paragraph names its passage's records in that line and moves nothing. Pointing never
+  pushes history.
+- **Open.** A click pins and raises the Lean: one history entry, `?n=<record>&l=<slice>`,
+  and the paper does not move. A card pins too, and the paper goes to the statement while the
+  graph stays. A name in the Lean walks in place, as its own entry. A pin ends when the reader
+  scrolls the statement away, on Escape, or on Back. A drag or a double click that selects text
+  never pins.
+- **Back.** The browser's own, named in the strip.
+
+`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases.
+Where several statements open on the same words, a step stops there once, and the Lean
+page lists the others under "The same words also tie to".
+
+Scrolling writes attributes and signals, never React state on the page (`page/statements.ts`,
+`page/signal.ts`). Marks reach the text as zero-width private-use characters put in before
+parsing and turned into `.tie` spans once a part's HTML is whole (`ties.ts`); with every
+segment marked, each paper's HTML is byte for byte the same once the spans are taken out,
+and a test holds it there. A statement tick sits in the left margin, darker where the
+step has Lean, drawn from where the words actually fell. The thread crosses only the empty
+gutter and goes whenever an end leaves the screen.
+
+The outline counts the statements with Lean in each section, and searches the paper's
+text, including what has not rendered yet.
+
+### References
+
+Every reference in the three papers is a real link, 639 in all: 117 in the short paper, 442
+in the long record and 80 in the exposition. What each one points to was decided by reading
+its sentence and is kept as data, one table per paper, in
+`examples/qaoa-sk/alignment/references-<paper>.json`, keyed by byte range. A pattern cannot
+decide it. Most numbered results these papers name belong to OpenAI's manuscripts or to other
+cited papers, whose numbers collide with the papers' own: "(6.1)" in the long record is its own
+equation in one sentence and Basso et al.'s in another. The rows that stay plain (126, such as
+the locators inside a reference-list entry) are in the table too, with the reason.
+
+| Kind | Short | Long | Exposition | A click |
+| --- | --- | --- | --- | --- |
+| Citation, with its locator | 61 | 212 | 35 | Opens the list entry and the locator in place, with "Open source" |
+| Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
+| Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
+| Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
+| Section of the long record | 1 | 0 | 0 | Opens beside the paper |
+
+Pointing or focusing shows the target on the right page after 150ms, in place of the Lean until
+the pointer leaves. It covers no text and moves nothing in the paper. An inset is part of the page: it pushes only what is below it, the reader's line stays
+where it is, and Escape, a second click or Close puts the page back. Opening one adds no history;
+a jump does, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
+usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
+
+Text stays byte for byte: marks go in at render time, and `tests/references.test.ts` checks every
+row against the paper's bytes and the rendered page, and fails on a candidate no row has decided. A
+row whose words have moved gives no link at all, because a wrong link is worse than none.
 
 ## Checks
 
@@ -568,10 +640,10 @@ something else.
 | --- | --- | --- | --- |
 | ≥ 1501px | Canvas with foot bar | Right column, full height | Outline, paper, map |
 | 1280–1500px | Canvas with foot bar | Right column | Paper and map; the outline as "Sections" |
-| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the map as a sheet |
-| 901–1119px | Canvas | Right column | Paper; sections, passage context and map as sheets |
-| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections, passage context and map as sheets |
-| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar |
+| 1120–1279px | Canvas | Right column | Outline or inspector beside the paper; the right page as a sheet |
+| 901–1119px | Canvas | Right column | Paper; sections and passage context as sheets; the right page as a side sheet |
+| 701–900px | Canvas | Bottom sheet, full-screen reading | Paper; sections and passage context as sheets; the right page as a side sheet |
+| ≤ 700px | Outline list by default; map on request | Bottom sheet, full-screen reading | Paper only, bottom bar; a tap opens the Lean in a bottom sheet |
 
 Phones use 16px gutters and `--target` (44px) for primary touch targets. No
 ordinary page scrolls sideways; a wide formula scrolls inside its own box with a

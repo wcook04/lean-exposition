@@ -194,6 +194,26 @@ function siteFactsModule(facts: SiteFacts): Plugin {
   };
 }
 
+/** The fields of the reviewed reference tables a reader's page uses. */
+export function referenceModule(stage: string): string {
+  const table = JSON.parse(readFileSync(resolve(ALIGNMENT, `references-${stage}.json`), "utf8"));
+  const references = (table.references as Record<string, unknown>[])
+    .filter((row) => row.kind !== "plain")
+    .map(({ before: _before, cited_as: _cited, ...row }) => row);
+  const used = (field: string, all: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(all).filter(([key]) => references.some((row) => row[field] === key && row.kind !== "other_paper")));
+  return `export default ${JSON.stringify({ paper: table.paper, targets: used("target", table.targets), sources: used("source", table.sources), references })};`;
+}
+
+function referenceTables(): Plugin {
+  const prefix = "virtual:paper-references/";
+  return {
+    name: "paper-references",
+    resolveId: (source) => (source.startsWith(prefix) ? `\0${source}` : null),
+    load: (resolved) => (resolved.startsWith(`\0${prefix}`) ? referenceModule(resolved.slice(prefix.length + 1)) : null),
+  };
+}
+
 /** The chunks each route opens with. What they import starts with them. */
 const ROUTE_CODE: Record<string, string[]> = {
   map: ["MapPage"],
@@ -201,9 +221,10 @@ const ROUTE_CODE: Record<string, string[]> = {
   lean: ["LeanPage"],
   checks: ["ChecksPage"],
   about: ["AboutPage"],
-  "read/long": ["ReaderPage"],
-  "read/short": ["ReaderPage"],
-  "read/expository": ["ReaderPage"],
+  // Each paper's reference table is its own chunk, named for the paper, and the paper waits for it.
+  "read/long": ["ReaderPage", "long"],
+  "read/short": ["ReaderPage", "short"],
+  "read/expository": ["ReaderPage", "expository"],
 };
 
 interface BuiltChunk {
@@ -252,7 +273,7 @@ function routeData(route: string, base: string): string[] {
     graph && responses[graph],
     index.summaries_by_table?.nodes,
     ...["nodes", "sources", "edges", "evidence"].map((table) => index.records_by_table?.[table]),
-    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`]] : []),
+    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
     ...(route === "compare" ? [responses["/alignment"]] : []),
     ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
   ];
@@ -407,7 +428,7 @@ export default defineConfig(({ mode }) => {
   const facts = siteFacts();
   return {
     base,
-    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    plugins: [react(), paperPdfs(), publicObservations(), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts), ...(env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
       closeBundle() {
         const out = resolve("dist");

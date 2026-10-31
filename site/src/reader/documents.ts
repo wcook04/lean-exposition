@@ -6,10 +6,14 @@ import type { Stage } from "../api/types";
 import { discoveryInfo } from "../api/client";
 import { loadPaper, type PaperData } from "../app/data";
 import { prepareDocument, type PreparedDocument } from "./engine";
+import { loadReferenceTable } from "./references";
+import { loadTies, tieModel, type TieModel } from "./ties";
 
 export interface LoadedDocument {
   paper: PaperData;
   doc: PreparedDocument;
+  /** What the paper's words are tied to. Arrives with the paper, so the marks are there at first paint. */
+  ties: TieModel;
 }
 
 const DEFAULT_PATHS: Record<Stage, string> = {
@@ -29,15 +33,15 @@ const prepared = new Map<Stage, Promise<LoadedDocument>>();
 export function loadDocument(stage: Stage): Promise<LoadedDocument> {
   let pending = prepared.get(stage);
   if (!pending) {
-    pending = loadPaper(stage).then((paper) => {
+    pending = Promise.all([loadPaper(stage), loadTies(stage), loadReferenceTable(stage)]).then(([paper, index, referenceTable]) => {
       const paths = documentPaths();
       const parts = paper.structure.paper.document_parts.map((part) => ({
         kind: part.kind,
         span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
         passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
       }));
-      const doc = prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths });
-      return { paper, doc };
+      const doc = prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, referenceTable });
+      return { paper, doc, ties: tieModel(index) };
     });
     pending.catch(() => prepared.delete(stage));
     prepared.set(stage, pending);
