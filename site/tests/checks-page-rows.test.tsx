@@ -18,6 +18,8 @@ describe("check rows keep outcomes distinct", () => {
     expect(rowNote("comparator", { passed: 1, failed: 1 })).toBeNull();
     expect(rowNote("lean_build", { not_run: 2 })).toBeNull();
     expect(rowNote("extraction", { unavailable: 1, not_run: 1 })).toBe("No successful run is recorded.");
+    expect(rowNote("semantic_review", { not_run: 207 })).toMatch(/^All written, none independently run\./);
+    expect(rowNote("semantic_review", { not_run: 3, passed: 1 })).toBeNull();
   });
 
   it("states the edition's position once, from the counts", () => {

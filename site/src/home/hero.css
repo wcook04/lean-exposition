@@ -181,9 +181,17 @@ html[data-view="home"] .topbar {
 
 .rosetta__formula {
   display: block;
+  width: fit-content;
   font-size: 1.0625rem;
   line-height: 1.35;
   white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--t-hover) var(--ease-out);
+}
+
+.rosetta__formula:hover {
+  color: var(--lit);
 }
 
 .rosetta__words {

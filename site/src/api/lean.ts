@@ -28,6 +28,8 @@ export interface LeanModules {
   toolchain: string;
   /** How `uses` and `used_by` were obtained; the site says so wherever it shows them. */
   dependency_source: "source_text" | "elaborated";
+  /** What that way of finding names can miss, in words. */
+  dependency_note?: string;
   counts: Record<string, number>;
   folders: LeanFolder[];
 }
@@ -76,6 +78,8 @@ export interface AlignedLean {
   end_line: number;
   relation: LeanRelation;
   note: string;
+  /** An exact substring of the declaration's source, or of a definition shown under it. */
+  clause?: string;
 }
 
 export type StatementRole = "statement" | "definition" | "explanation" | "derivation" | "example" | "mention";
@@ -116,6 +120,8 @@ export interface DictionaryTerm {
 export interface Alignment {
   records: Record<string, RecordAlignment>;
   dictionary: DictionaryTerm[];
+  /** For a step between two records with Lean links, keyed by `ArgEdge.key`: the chain of names found in the source, or null. */
+  steps?: Record<string, { route: string[] | null }>;
 }
 
 /** Whether this edition carries the sidecars. An edition without them still reads in full. */

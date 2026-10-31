@@ -5,16 +5,16 @@
       "short": "Minimisers have full support",
       "lean": [
         {
-          "file": "OAI/Probability/SKSupport/Main.lean",
-          "name": "full_support",
-          "relation": "states",
-          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion."
-        },
-        {
           "file": "OAI/Probability/SKSupport/Model.lean",
           "name": "FullSupportConclusion",
           "relation": "defines",
           "note": "The five clauses: measure, diffusion, full support, strict increase, both moments for every associated diffusion."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Main.lean",
+          "name": "full_support",
+          "relation": "states",
+          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion."
         }
       ],
       "statements": [
@@ -143,13 +143,15 @@
           "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
           "name": "scalar_value_target",
           "relation": "part",
-          "note": "First clause, for a minimiser and a supplied diffusion."
+          "note": "First clause, for a minimiser and a supplied diffusion.",
+          "clause": "ScalarValueConclusion W γ X"
         },
         {
           "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
           "name": "ground_state_parisi_target",
           "relation": "part",
-          "note": "Third clause. It needs only the minimiser and constructs the diffusion internally."
+          "note": "Third clause. It needs only the minimiser and constructs the diffusion internally.",
+          "clause": "groundStateValue=parisi W γ"
         }
       ],
       "statements": [
@@ -456,22 +458,23 @@
       "short": "Stieltjes measure with initial mass",
       "lean": [
         {
+          "file": "OAI/Probability/SKSupport/Model.lean",
+          "name": "IsStieltjesMeasure",
+          "relation": "defines",
+          "note": "The convention itself: mass of [0,t] equals gamma(t)."
+        },
+        {
           "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
           "name": "parameterMeasure_isStieltjes",
           "relation": "part",
-          "note": "Existence, by the constructed measure. Closed relative support is not part of this declaration."
+          "note": "Existence, by the constructed measure. Closed relative support is not part of this declaration.",
+          "clause": "IsStieltjesMeasure γ (parameterMeasure γ)"
         },
         {
           "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
           "name": "parameterMeasure",
           "relation": "defines",
           "note": "The Stieltjes measure of the coefficient plus an atom of size gamma(0) at zero."
-        },
-        {
-          "file": "OAI/Probability/SKSupport/Model.lean",
-          "name": "IsStieltjesMeasure",
-          "relation": "defines",
-          "note": "The convention itself: mass of [0,t] equals gamma(t)."
         }
       ],
       "statements": [
@@ -502,19 +505,22 @@
           "file": "OAI/Probability/SKSupport/Regularity/Regularity.lean",
           "name": "value_uniform_derivative_bounds",
           "relation": "part",
-          "note": "Bounded positive-order spatial derivatives on each strip. Evenness, convexity and Lipschitz bounds are separate declarations."
+          "note": "Bounded positive-order spatial derivatives on each strip. Evenness, convexity and Lipschitz bounds are separate declarations.",
+          "clause": "∃ C : ℝ, 0 ≤ C ∧ ∀ t ∈ Icc (0:ℝ) T, ∀ x,\n      |iteratedDeriv (m+1) (value W γ t) x| ≤ C"
         },
         {
           "file": "OAI/Probability/SKSupport/Regularity/JointRegularity.lean",
           "name": "value_derivative_continuousOn",
           "relation": "part",
-          "note": "Joint continuity of each spatial derivative on the strip."
+          "note": "Joint continuity of each spatial derivative on the strip.",
+          "clause": "ContinuousOn (fun p : ℝ × ℝ => iteratedDeriv m (value W γ p.1) p.2)\n      (Icc (0:ℝ) T ×ˢ Set.univ)"
         },
         {
           "file": "OAI/Probability/SKSupport/Regularity/JointRegularity.lean",
           "name": "approxValue_derivative_uniform",
           "relation": "part",
-          "note": "Uniform derivative convergence for one finite-step family with log-cosh terminal value, rather than general L1 approximation."
+          "note": "Uniform derivative convergence for one finite-step family with log-cosh terminal value, rather than general L1 approximation.",
+          "clause": "TendstoUniformlyOn (fun n (p : ℝ × ℝ) => iteratedDeriv m (approxValue γ n p.1) p.2)\n      (fun p => iteratedDeriv m (value W γ p.1) p.2) atTop (Icc (0:ℝ) T ×ˢ Set.univ)"
         }
       ],
       "statements": [
@@ -551,13 +557,15 @@
           "file": "OAI/Probability/SKSupport/Diffusion/CompactDrift.lean",
           "name": "diffusion_isDiffusion",
           "relation": "part",
-          "note": "Existence: the constructed process satisfies the diffusion predicate on the given Brownian system."
+          "note": "Existence: the constructed process satisfies the diffusion predicate on the given Brownian system.",
+          "clause": "IsDiffusion W γ (diffusion W γ)"
         },
         {
           "file": "OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
           "name": "diffusion_uniqueness",
           "relation": "part",
-          "note": "Every associated diffusion agrees almost surely with the constructed one for all t up to 1."
+          "note": "Every associated diffusion agrees almost surely with the constructed one for all t up to 1.",
+          "clause": "∀ᵐ ω ∂W.law, ∀ t : ℝ≥0, t ≤ 1 → X t ω = diffusion W γ t ω"
         },
         {
           "file": "OAI/Probability/SKSupport/Diffusion/DiffusionStability.lean",
@@ -604,21 +612,24 @@
       "lean": [
         {
           "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
-          "name": "squareMoment_eq_integral_curvatureMoment",
+          "name": "squareMoment_hasDerivWithinAt",
           "relation": "part",
-          "note": "Integrated moment identity below time one. The stochastic-integral form of the gradient is not stated here."
+          "note": "The derivative formula on [0,1). The derivative is taken within t>=0, so it is one-sided only at zero.",
+          "clause": "HasDerivWithinAt (squareMoment W γ (diffusion W γ)) (curvatureMoment W γ t) (Ici (0:ℝ)) t"
         },
         {
           "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
-          "name": "squareMoment_hasDerivWithinAt",
+          "name": "squareMoment_eq_integral_curvatureMoment",
           "relation": "part",
-          "note": "The derivative formula on [0,1). The derivative is taken within t>=0, so it is one-sided only at zero."
+          "note": "Integrated moment identity below time one. The stochastic-integral form of the gradient is not stated here.",
+          "clause": "squareMoment W γ (diffusion W γ) t = ∫ s in (0:ℝ)..t, curvatureMoment W γ s"
         },
         {
           "file": "OAI/Probability/SKSupport/Moments/PerturbationLimits.lean",
           "name": "squareMoment_bounds",
           "relation": "part",
-          "note": "Nonnegativity and the bound by one. The value at zero is squareMoment_zero."
+          "note": "Nonnegativity and the bound by one. The value at zero is squareMoment_zero.",
+          "clause": "0 ≤ squareMoment W γ (diffusion W γ) t ∧ |squareMoment W γ (diffusion W γ) t| ≤ 1"
         }
       ],
       "statements": [
@@ -661,7 +672,8 @@
           "file": "OAI/Probability/SKSupport/Support/VariationIntegrals.lean",
           "name": "minimizer_variational_inequality",
           "relation": "part",
-          "note": "At a minimiser the chord integral is nonnegative, for directions beta minus gamma."
+          "note": "At a minimiser the chord integral is nonnegative, for directions beta minus gamma.",
+          "clause": "0 ≤ ∫ s in (0:ℝ)..1, (extend β.val s-extend γ.val s)*(squareMoment W γ (diffusion W γ) s-s)"
         }
       ],
       "statements": [
@@ -710,7 +722,8 @@
           "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
           "name": "contactPotential_nonneg",
           "relation": "part",
-          "note": "G is nonnegative at every time below one, from adding a point mass."
+          "note": "G is nonnegative at every time below one, from adding a point mass.",
+          "clause": "0 ≤ contactPotential W γ s"
         },
         {
           "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
@@ -777,13 +790,15 @@
           "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
           "name": "minimizer_contact",
           "relation": "part",
-          "note": "At every support point, including zero: q(t)=t and slope at most one."
+          "note": "At every support point, including zero: q(t)=t and slope at most one.",
+          "clause": "∀ t, SupportDeterministic.InSupport μ t →\n      squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t ≤ 1"
         },
         {
           "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
           "name": "contactPotential_hasDerivAt",
           "relation": "part",
-          "note": "G'(s)=s-q(s) for 0<s<1. The second derivative of G is not stated as a formula here."
+          "note": "G'(s)=s-q(s) for 0<s<1. The second derivative of G is not stated as a formula here.",
+          "clause": "HasDerivAt (contactPotential W γ) (s-squareMoment W γ (diffusion W γ) s) s"
         }
       ],
       "statements": [
@@ -820,7 +835,8 @@
           "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
           "name": "finite_density_identity",
           "relation": "part",
-          "note": "Identifies finiteDensity as the law of the feedback diffusion at grid times. The differentiated tail expansions are not stated."
+          "note": "Identifies finiteDensity as the law of the feedback diffusion at grid times. The differentiated tail expansions are not stated.",
+          "clause": "(∫ w, g ((finiteFeedback hf hLip c h N 0).solution W.driver ((i:ℝ≥0)*h) w) ∂W.law)=\n      ∫ x, finiteDensity c h f N i x*g x"
         },
         {
           "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
@@ -854,22 +870,24 @@
       "short": "Backward shape signs",
       "lean": [
         {
-          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
-          "name": "finiteHead_backward_shape",
-          "relation": "part",
-          "note": "Within a step on a uniform mesh. Quotient extension at zero is not included."
-        },
-        {
           "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
           "name": "BackwardShape",
           "relation": "defines",
           "note": "Odd, v>0, w<=0, rH<=0 and r^2 H_x>=0, the last two as Burgers rate and Wronskian."
         },
         {
+          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
+          "name": "finiteHead_backward_shape",
+          "relation": "part",
+          "note": "Within a step on a uniform mesh. Quotient extension at zero is not included.",
+          "clause": "BackwardShape (fun x => (c i:ℝ)*deriv (finiteValue c h (softAbs M) (N+1) i t) x)"
+        },
+        {
           "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
           "name": "BackwardShape.rescale",
           "relation": "part",
-          "note": "Multiplying by a factor in (0,1] preserves the signs."
+          "note": "Multiplying by a factor in (0,1] preserves the signs.",
+          "clause": "BackwardShape (fun x => α*r x)"
         }
       ],
       "statements": [
@@ -912,7 +930,8 @@
           "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
           "name": "finite_forward_ratio",
           "relation": "part",
-          "note": "The Wronskian r s_x - s r_x is nonnegative for x>=0. It equals r times j."
+          "note": "The Wronskian r s_x - s r_x is nonnegative for x>=0. It equals r times j.",
+          "clause": "0 ≤ ratioWronskian (backwardSegment c h (softAbs M) N i)\n      (forwardScore ((i:ℝ)*h) (forwardBoundary c h (softAbs M) N i)) t x"
         },
         {
           "file": "OAI/Probability/SKSupport/Parabolic/ForwardSigns.lean",
@@ -961,13 +980,15 @@
           "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
           "name": "cert_flux_derivative",
           "relation": "part",
-          "note": "The divergence identity for the certificate polynomial F2 only, at points where r is nonzero."
+          "note": "The divergence identity for the certificate polynomial F2 only, at points where r is nonzero.",
+          "clause": "HasDerivAt (certFlux r s ρ) (certDivergence r s ρ x) x"
         },
         {
           "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
           "name": "cert_halfLine_signs",
           "relation": "part",
-          "note": "All seven signs at x>0. Lean works on the half-line and reflects, with no extension through zero."
+          "note": "All seven signs at x>0. Lean works on the half-line and reflects, with no extension through zero.",
+          "clause": "0 ≤ certR r x ∧ 0 ≤ certK r s x ∧ 0 ≤ certV r x ∧ 0 ≤ certJ r s x ∧\n    0 ≤ certB r x-2*certV r x ∧ 0 ≤ certL r s x ∧\n    0 ≤ certZ r x+certB r x*certV r x-2*certR r x*certB r x"
         },
         {
           "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
@@ -1016,19 +1037,22 @@
           "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
           "name": "rational_identity",
           "relation": "part",
-          "note": "The polynomial identity for real variables, proved by ring."
+          "note": "The polynomial identity for real variables, proved by ring.",
+          "clause": "z^2 - 12*R*v*b^2 + 6*v^4 =\n      (z+Q R K v b)^2 + (z+b*v-2*R*b)*T R v j +\n      weightedSquares R K v b (b-2*v) j + WF₂ R K v b j z L +\n      L*(x₀*v^2+h*b*v) + remainder R K v (b-2*v) j"
         },
         {
           "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
           "name": "remainder_lower_bound",
           "relation": "part",
-          "note": "With nonnegative variables, the remainder is at least the v^4 coefficient times v^4."
+          "note": "With nonnegative variables, the remainder is at least the v^4 coefficient times v^4.",
+          "clause": "(1661507 / 1521000000 : ℝ) * v^4 ≤ remainder R K v B j"
         },
         {
           "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
           "name": "coercivity_constant",
           "relation": "part",
-          "note": "That coefficient exceeds 1/1000."
+          "note": "That coefficient exceeds 1/1000.",
+          "clause": "(1 / 1000 : ℝ) < 1661507 / 1521000000"
         }
       ],
       "statements": [

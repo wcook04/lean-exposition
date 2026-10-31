@@ -18,7 +18,7 @@ from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from wsgiref.simple_server import make_server
 
 from .bundle import BUNDLE_FILES, STAGES, BundleCapture, load_bundle
-from .alignment import resolve_alignment
+from .alignment import lean_steps, resolve_alignment
 from .consumer import ConsumerSession
 from .contracts import ContractError, digest
 from .lean_index import canonical, load_index, module_view, modules_view, names_view
@@ -241,6 +241,8 @@ class WebApplication:
             ids = {row["record"]["id"] for row in self._corpus["records"]["nodes"]}
             self._alignment, self.alignment_errors = resolve_alignment(
                 alignment, self._lean, papers, ids, strict=False)
+            edges = [row["record"] for row in self._corpus["records"]["edges"]]
+            self._alignment["steps"] = lean_steps(self._alignment, self._lean, edges)
         self._sidecars = {
             "lean_index": ({"available": False} if self._lean is None else {
                 "available": True, "sha256": digest(canonical(self._lean)),

@@ -18,7 +18,7 @@ const calls = vi.hoisted(() => ({
   edition: {} as { graph?: unknown },
 }));
 
-vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition }));
+vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition, loadPaperStructure: () => new Promise(() => {}) }));
 vi.mock("../src/app/router", () => ({ navigate: calls.navigate }));
 vi.mock("../src/app/theme", () => ({ prefersReducedMotion: () => true }));
 vi.mock("../src/panels/accountStore", () => ({ chooseAccount: vi.fn() }));
@@ -35,23 +35,16 @@ vi.mock("../src/panels/EdgePanel", () => ({
     return null;
   },
 }));
-vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, SourceSwatches: () => null }));
+vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, KeyPopover: () => null, SourceSwatches: () => null }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  GoalPlate: () => null,
   StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },
     { id: "scalar_value", title: "Value identities", stages: ["long"] },
   ],
-}));
-vi.mock("../src/panels/AccountSwitch", () => ({ AccountSwitch: () => null }));
-vi.mock("../src/ribbons/ReadingsDock", () => ({
-  ReadingsDock: ({ onPreview }: { onPreview: (ids: ReadonlySet<string> | null) => void }) => (
-    <button onPointerEnter={() => onPreview(new Set(["support.diffusion"]))} onClick={() => onPreview(new Set(["support.diffusion"]))}>
-      Preview from dock
-    </button>
-  ),
 }));
 vi.mock("../src/map/ArgumentTree", async () => {
   const { forwardRef, useImperativeHandle } = await import("react");
@@ -185,18 +178,6 @@ describe("selection", () => {
     press("Escape");
     expect(calls.navigate.mock.calls.at(-1)![0]).toMatchObject({ edge: undefined });
     expect(calls.focusCard).toHaveBeenCalledWith("full_support");
-  });
-});
-
-describe("preview", () => {
-  it("passes dock attention to the tree as a transient preview, without navigating", () => {
-    open({ view: "map" });
-    const button = [...container.querySelectorAll("button")].find((b) => b.textContent === "Preview from dock")!;
-    act(() => button.click());
-    expect([...(calls.treeProps.previewIds as Set<string>)]).toEqual(["support.diffusion"]);
-    expect(calls.treeProps.echo).toBeUndefined();
-    expect(calls.navigate).not.toHaveBeenCalled();
-    expect(window.history.state?.mapScene).toBeUndefined();
   });
 });
 

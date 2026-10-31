@@ -1,6 +1,6 @@
-/* The header on top, the key row under it (in the flow, so the canvas gives it
-   room); below them the argument (canvas or outline) with the dock under it,
-   and, while something is inspected, the inspector as a full-height column. */
+/* The header on top, one line under it (in the flow, so the canvas gives it room);
+   below them the argument (canvas or outline) with the foot bar under it, and,
+   while something is inspected, the record sheet as a full-height column. */
 .map-page {
   flex: 1;
   min-height: 0;
@@ -21,7 +21,7 @@
 }
 
 .map-page__main > .tree,
-.map-page__main > :not(.map-note):not(.map-controls) {
+.map-page__main > :not(.map-note) {
   flex: 1;
   min-height: 0;
 }
@@ -35,16 +35,6 @@
   bottom: auto;
   min-height: 0;
   height: auto;
-}
-
-.map-page > .dock {
-  position: relative;
-  grid-column: 1;
-  grid-row: 4;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  min-width: 0;
 }
 
 /* A slim note over the canvas when the selection is not drawn as asked. */
@@ -100,7 +90,7 @@
   grid-row: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto auto;
-  grid-template-areas: "title views acct key";
+  grid-template-areas: "title lens views key";
   align-items: center;
   column-gap: 24px;
   min-height: 64px;
@@ -298,59 +288,107 @@
   }
 }
 
-/* Records used by: a picker that opens the account switch. */
-.acct-picker {
-  grid-area: acct;
+/* The level lens: the same pill as the view switch. */
+.map-lens {
+  grid-area: lens;
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--rule);
   min-width: 0;
 }
 
-.acct-picker__label {
-  font-size: var(--fs-sm);
-  color: var(--ink-3);
-  white-space: nowrap;
-}
-
-.acct-picker__button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 32px;
+.map-lens button {
+  position: relative;
+  height: 30px;
   padding: 0 12px;
-  border: 1px solid var(--rule-control);
-  border-radius: var(--radius-m);
-  background: var(--raised);
-  color: var(--ink);
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink-2);
   font-size: var(--fs-ui);
   white-space: nowrap;
   cursor: pointer;
+  transition: color var(--t-hover) var(--ease-out);
 }
 
-.acct-picker__button:hover {
-  border-color: var(--ink-3);
+.map-lens button:hover,
+.map-lens button[aria-checked="true"] {
+  color: var(--ink);
 }
 
-.acct-picker__pop {
+.map-lens button[aria-checked="true"] {
+  font-weight: 600;
+}
+
+.map-lens__n {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.map-lens button[aria-checked="true"] .map-lens__n {
+  color: var(--ink-2);
+}
+
+/* Key: a popover that says everything the marks mean. */
+.map-keypop {
+  grid-area: key;
+  justify-self: end;
+  position: relative;
+}
+
+.map-keypop__panel {
   position: absolute;
   z-index: 30;
   top: calc(100% + 8px);
   right: 0;
-  max-width: calc(100vw - 32px);
-  padding: 12px;
+  width: min(460px, calc(100vw - 32px));
+  max-height: min(76dvh, 640px);
+  overflow: auto;
+  padding: 14px 16px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: var(--radius-l);
   box-shadow: var(--shadow-sheet);
+  font-size: var(--fs-sm);
   animation: keypop-in var(--t-reveal) var(--ease-out) both;
 }
 
-/* Key: a toggle for the key row. */
+.map-keypop__panel a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
+
+.map-keypop__h {
+  margin: 12px 0 5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.map-keypop__h:first-child {
+  margin-top: 0;
+}
+
+.map-keypop__channels .map-key__sample,
+.map-keypop__channels .keyrow__tag,
+.map-keypop__channels .keyrow__clone,
+.map-keypop__channels .pip {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.map-keypop__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 8px;
+  color: var(--ink-2);
+}
+
 .map-head__key {
-  grid-area: key;
-  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -383,22 +421,66 @@
   }
 }
 
-/* ---- The key row: in the flow under the header, wrapping when narrow. ---- */
+/* ---- The line under the header: how much the level uses, then the key. It never wraps:
+   the key's items wrap out of sight, whole, when the line has no room for them, and the
+   Key popover has them all. A shortened tile's full title lies over it while pointed at,
+   so hovering never moves the canvas. ---- */
 
-.keyrow {
+.map-sub {
   grid-column: 1;
   grid-row: 2;
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 6px 28px;
+  gap: 28px;
   min-width: 0;
-  padding: 9px var(--space-5);
+  height: 34px;
+  padding: 0 var(--space-5);
+  overflow: hidden;
   background: var(--ground);
   border-bottom: 1px solid var(--rule);
   font-size: var(--fs-sm);
   line-height: 1.3;
   color: var(--ink-2);
+}
+
+.map-sub__line {
+  flex: none;
+  margin: 0;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.map-sub__caption {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 var(--space-5);
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.map-sub__caption[hidden] {
+  display: none;
+}
+
+.keyrow {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 20px;
+  min-width: 0;
+  height: 33px;
+  overflow: hidden;
 }
 
 .keyrow[hidden] {
@@ -410,16 +492,27 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 18px;
+  gap: 0 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.keyrow__sources {
+  height: 33px;
+}
+
+.keyrow__marks {
+  height: 33px;
+  overflow: hidden;
+}
+
 .keyrow__marks li {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  height: 33px;
+  white-space: nowrap;
 }
 
 .keyrow__marks .map-key__sample {
@@ -460,17 +553,6 @@
   background: color-mix(in oklab, var(--src-1) 35%, var(--card));
 }
 
-.keyrow__more a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--rule-strong);
-  text-underline-offset: 3px;
-}
-
-.keyrow__more a:hover {
-  text-decoration-color: currentColor;
-}
-
 .map-key__sources {
   display: flex;
   flex-wrap: wrap;
@@ -494,19 +576,71 @@
   border: 1px solid color-mix(in oklab, var(--cat, var(--src-0)) 85%, var(--ground));
 }
 
-/* ---- Branch buttons on the canvas, bottom right above the dock. ---- */
+/* ---- The foot bar: its own row, so nothing in it can cover a card. ---- */
+
+.map-foot {
+  grid-column: 1;
+  grid-row: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 var(--space-5);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+}
 
 .map-controls {
-  position: absolute;
-  z-index: 8;
-  right: 16px;
+  flex: none;
   display: flex;
   gap: 2px;
-  padding: 3px;
-  background: var(--surface);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-l);
-  box-shadow: var(--shadow-sheet);
+}
+
+.walkbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: var(--fs-sm);
+}
+
+.walkbar__step {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--rule-control);
+  border-radius: var(--radius-m);
+  background: none;
+  color: var(--ink);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.walkbar__step:disabled {
+  color: var(--ink-3);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.walkbar__place {
+  min-width: 0;
+  margin: 0 4px;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.walkbar a {
+  flex: none;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
 }
 
 .map-controls__button {
@@ -597,19 +731,16 @@
     column-gap: 16px;
     padding: 6px var(--space-4);
   }
-  .acct-picker__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
   .map-views button {
     padding: 0 11px;
   }
-  .keyrow {
+  .map-sub,
+  .map-sub__caption,
+  .map-foot {
     padding-inline: var(--space-4);
+  }
+  .map-lens button {
+    padding: 0 8px;
   }
 }
 
@@ -637,56 +768,51 @@
   }
 }
 
-/* Phones: two rows (title and Key; view and account), touch-sized. */
+/* Phones: three rows (title and Key; level; view), touch-sized. */
 @media (max-width: 43.75em) {
   .map-head {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "title key"
-      "views acct";
+      "lens lens"
+      "views views";
     row-gap: 6px;
     column-gap: 8px;
     padding: 6px var(--space-4) 8px;
   }
   .goal-menu__button,
-  .map-head__key,
-  .acct-picker__button {
+  .map-head__key {
     min-height: var(--target);
   }
-  .map-head__key {
+  .map-keypop {
     margin-right: -8px;
   }
-  .map-views {
+  .map-views,
+  .map-lens {
     min-width: 0;
+    overflow-x: auto;
   }
-  .map-views button {
+  .map-views button,
+  .map-lens button {
     flex: 1 1 auto;
     min-width: 0;
     height: 38px;
-    padding: 0 10px;
+    padding: 0 8px;
   }
   .map-controls__button {
     height: 38px;
   }
-}
-
-/* Narrow phones and large text: the view and the account each take a row. */
-@media (max-width: 23.75em) {
-  .map-head {
-    grid-template-areas:
-      "title key"
-      "views views"
-      "acct acct";
+  .map-sub {
+    height: auto;
+    min-height: 34px;
+    padding-block: 6px;
   }
-  .acct-picker {
-    justify-self: start;
+  .map-sub__line {
+    white-space: normal;
+    flex: 1;
   }
-  .acct-picker__pop {
-    left: 0;
-    right: auto;
-  }
-  .map-controls__button {
-    padding: 0 8px;
+  .keyrow {
+    display: none;
   }
 }
 

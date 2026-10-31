@@ -5,14 +5,16 @@
 // The drawing is plain DOM and CSS transitions over the engine's boxes, so it adds no
 // work to the page beyond its layouts, which are computed once.
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
+import { prefersReducedMotion } from "../app/theme";
 import { routeHref } from "../app/router";
 import { PAPER_NAMES } from "../app/papers";
 import { lensRole, type ArgGraph } from "../model/graph";
 import { recordLine, shortTitle } from "../compare/useAlignment";
+import { levelCounts } from "../map/levels";
 import { reach, scopedGraph, usesOf, visibleEdges, visibleSet } from "../map/treeModel";
 import { transitiveReduction } from "../map/engine/skeleton";
 import { layoutScope, recordOf, splitSharedLeaves } from "../map/engine/occurrences";
@@ -52,10 +54,10 @@ interface Drawing {
  * two kept records stay joined when a chain of skipped records connects them: the drawing
  * shows the paper's own narrower graph, with the step it skipped closed up.
  */
-function contract(visible: ReadonlySet<string>, edges: readonly EngineEdge[], keep: ReadonlySet<string>): { visible: Set<string>; edges: EngineEdge[] } {
+function contract(visible: ReadonlySet<string>, edges: readonly EngineEdge[], keep: ReadonlySet<string>, assumption: (id: string) => boolean): { visible: Set<string>; edges: EngineEdge[] } {
   const out = new Map<string, string[]>();
   for (const e of edges) out.set(e.from, [...(out.get(e.from) ?? []), e.to]);
-  const kept = new Set([...visible].filter((id) => keep.has(id)));
+  const kept = new Set([...visible].filter((id) => keep.has(id) && !assumption(id)));
   const joined: EngineEdge[] = [];
   for (const from of kept) {
     const seen = new Set<string>();
@@ -76,7 +78,8 @@ function drawingOf(full: ArgGraph, goal: string, keep: ReadonlySet<string> | nul
   const all = new Set([...reach(graph, goal)].filter((id) => id !== goal && usesOf(graph, id).length));
   const whole = visibleSet(graph, goal, all);
   const wholeEdges = visibleEdges(graph, goal, whole, all);
-  const { visible, edges } = keep ? contract(whole, wholeEdges, keep) : { visible: whole, edges: wholeEdges };
+  const isAssumption = (id: string) => graph.nodes.get(id)?.kind === "assumption";
+  const { visible, edges } = keep ? contract(whole, wholeEdges, keep, isAssumption) : { visible: whole, edges: wholeEdges };
   const skeleton = transitiveReduction(visible, edges);
   const scope = layoutScope(goal, visible, skeleton.edges, (id) => graph.nodes.get(id)?.kind === "assumption");
   const split = splitSharedLeaves(goal, scope.nodes, scope.edges);
@@ -149,6 +152,30 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
 
   const stageRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  // The page's one orchestrated moment: on first sight the argument closes up from the
+  // long record to the exposition, once. A reader's own choice ends it at once.
+  const chose = useRef(false);
+  const choose = (next: LevelId) => {
+    chose.current = true;
+    setLevel(next);
+  };
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el || typeof IntersectionObserver === "undefined" || prefersReducedMotion()) return;
+    const timers: number[] = [];
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      const step = (next: LevelId, after: number) => timers.push(window.setTimeout(() => chose.current || setLevel(next), after));
+      step("short", 800);
+      step("expository", 2000);
+    }, { threshold: 0.3 });
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, []);
   useLayoutEffect(() => {
     const el = stageRef.current;
     if (!el) return;
@@ -159,8 +186,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
     return () => observer.disconnect();
   }, [widest.w]);
 
-  const drawnRecords = new Set([...current.tiles.values()].map((t) => t.id)).size;
-  const wholeRecords = new Set([...widest.tiles.values()].map((t) => t.id)).size;
+  const argumentSize = useMemo(() => levelCounts(graph, reach(scopedGraph(graph, goal), goal)), [graph, goal]);
   const leftover = (widest.w - current.w) / 2;
   const offset = (t: Tile, d: Drawing) => ({ x: t.x - d.x + (d === widest ? 0 : leftover), y: t.y - d.y });
 
@@ -168,7 +194,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
     {
       id: "lean",
       name: "The Lean proof",
-      who: "OpenAI’s statements and proofs, which a computer checks line by line.",
+      who: "OpenAI’s statements and proofs, written for a computer to check.",
       count: `${plural(leanModules, "source file")}, linked to ${counts.lean} of the ${total} records`,
       read: routeHref({ view: "lean" }),
       readWord: "Browse the Lean",
@@ -191,7 +217,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
       </h2>
       <p className="front__text">
         The argument is one graph of {total} records: claims, assumptions and Lean declarations, joined by what uses what. Each
-        paper keeps a narrower part of that graph for a wider reader. Point at a level to see what it keeps, and open any step
+        paper keeps a narrower part of that graph for a wider reader. Choose a level to see what it keeps, and open any step
         to compare it across the levels.
       </p>
       <div className="levels__body">
@@ -205,10 +231,10 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
                 key={row.id}
                 className={`levels__row${level === row.id ? " is-chosen" : ""}`}
                 onPointerEnter={(event) => {
-                  if (event.pointerType === "mouse") setLevel(row.id);
+                  if (event.pointerType === "mouse") choose(row.id);
                 }}
-                onFocusCapture={() => setLevel(row.id)}
-                onClick={() => setLevel(row.id)}
+                onFocusCapture={() => choose(row.id)}
+                onClick={() => choose(row.id)}
               >
                 <div className="levels__sheet" aria-hidden="true">
                   {page ? (
@@ -261,7 +287,7 @@ export function LevelsBand({ id, leanModules }: { id: string; leanModules: numbe
               <>The argument for the main theorem. Marked steps are linked to Lean declarations.</>
             ) : (
               <>
-                {PAPER_NAMES[level].short}: {drawnRecords} of the {wholeRecords} records in the argument for the main theorem.
+                {PAPER_NAMES[level].short}: {argumentSize[level]} of the {argumentSize.all} records in the argument for the main theorem.
               </>
             )}
           </figcaption>

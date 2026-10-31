@@ -66,16 +66,16 @@
       "short": "Concrete strip regularity",
       "lean": [
         {
-          "file": "OAI/Probability/SKValue/Control/Regularity.lean",
-          "name": "sourceStripRegularity",
-          "relation": "states",
-          "note": "Holds for every Brownian space and coefficient, with no minimizer or diffusion premise."
-        },
-        {
           "file": "OAI/Probability/SKValue/Control/StripRegularity.lean",
           "name": "SourceStripRegularity",
           "relation": "defines",
           "note": "Lists the bounds: value and gradient strips, curvature bound, joint Lipschitz bounds, with constants chosen per cutoff T."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Control/Regularity.lean",
+          "name": "sourceStripRegularity",
+          "relation": "states",
+          "note": "Holds for every Brownian space and coefficient, with no minimizer or diffusion premise."
         }
       ],
       "statements": [
@@ -131,13 +131,15 @@
           "file": "OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
           "name": "diffusionProcess_isDiffusion",
           "relation": "part",
-          "note": "The concrete process satisfies the diffusion predicate."
+          "note": "The concrete process satisfies the diffusion predicate.",
+          "clause": "IsDiffusion W γ (diffusionProcess W γ)"
         },
         {
           "file": "OAI/Probability/SKValue/Processes/DiffusionExistence.lean",
           "name": "exists_diffusion",
           "relation": "part",
-          "note": "The existence consequence."
+          "note": "The existence consequence.",
+          "clause": "∃X:ℝ → W.Ω → ℝ,IsDiffusion W γ X"
         }
       ],
       "statements": [
@@ -199,7 +201,8 @@
           "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
           "name": "expectedMaximum_le_parisi",
           "relation": "part",
-          "note": "The finite-spin bound for each positive n, before passing to the limit."
+          "note": "The finite-spin bound for each positive n, before passing to the limit.",
+          "clause": "SKValueG.expectedMaximum n≤(n : ℝ)*parisi W γ"
         }
       ],
       "statements": [
@@ -240,22 +243,28 @@
       "short": "Fixed-strip mesh limit",
       "lean": [
         {
+          "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+          "name": "IsDiffusion.finite_gaussian_fixed_strip",
+          "relation": "proof",
+          "note": "Helper with exactly these two conclusions, taking every strip bound as a premise."
+        },
+        {
           "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
           "name": "finite_gaussian_target",
           "relation": "contains",
-          "note": "Its conclusion also adds the terminal limit to the ground-state value."
+          "note": "Its conclusion also adds the terminal limit to the ground-state value.",
+          "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j) ∧\n  Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ))",
+          "clause_file": "OAI/Probability/SKValue/Model.lean",
+          "clause_name": "FiniteGaussianConclusion"
         },
         {
           "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
           "name": "IsDiffusion.finite_gaussian_of_contact",
           "relation": "contains",
-          "note": "Same conclusion with gradient contact as premise; this is where the suppliers are unpacked."
-        },
-        {
-          "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
-          "name": "IsDiffusion.finite_gaussian_fixed_strip",
-          "relation": "proof",
-          "note": "Helper with exactly these two conclusions, taking every strip bound as a premise."
+          "note": "Same conclusion with gradient contact as premise; this is where the suppliers are unpacked.",
+          "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j) ∧\n  Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ))",
+          "clause_file": "OAI/Probability/SKValue/Model.lean",
+          "clause_name": "FiniteGaussianConclusion"
         }
       ],
       "statements": [
@@ -466,7 +475,7 @@
       ]
     },
     "scalar.minimizer_coefficient_budget": {
-      "short": "Minimizer coefficient budget",
+      "short": "Minimiser coefficient budget",
       "lean": [],
       "statements": [
         {
@@ -532,7 +541,7 @@
       ]
     },
     "scalar.finite_maximum_unique_modulo_flip": {
-      "short": "Finite maximizer unique up to flip",
+      "short": "Finite maximiser unique up to flip",
       "lean": [],
       "statements": [
         {

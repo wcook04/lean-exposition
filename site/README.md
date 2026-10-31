@@ -14,17 +14,27 @@ want to explore it:
   recorded argument uses beneath it. Selecting "Inputs" on a card draws the
   records that card uses. A line runs from a record to the result that uses it,
   and each line opens the recorded explanation of that step. Assumptions are
-  drawn as tags on the results that assume them. On a phone the same argument is
-  an outline you scroll.
+  drawn as tags on the results that assume them. A switch narrows the map to the
+  records one paper discusses. On a phone the same argument is an outline you
+  scroll.
+- **Compare.** One step of the argument across every level, side by side: its
+  Lean declaration, then its statement in the long record, the short paper and
+  the exposition, walking through the proof with the arrow keys. A second view
+  sets two papers side by side, aligned by the records they share.
 - **The papers.** The exposition, the short paper and the long reasoning record.
+  The map sits beside the paper and follows what you read; choosing a card moves
+  the paper to its passage and opens the card's Lean and statements in place.
   Beside any passage you can list the records linked to it and open passages in
   the other accounts that are linked to the same records.
+- **The Lean.** OpenAI's source, every module and declaration, with each central
+  name explained in the papers' notation and the names each declaration mentions.
 - **The checks.** For each kind of check, what it tests and the outcome of each
   recorded run: passed, failed, unavailable or not run.
 - **The architectural companion.** The About page includes the paper on why
   several accounts share one record, with a link to its standalone PDF.
-- **The papers.** The front page's shelf (the header's "Papers") shows each paper's
-  first page, who it is for, and links to read it here or open its PDF.
+- **The papers and PDFs.** The front page's levels band (the Read menu's "All papers
+  and PDFs") shows each paper's first page, who it is for, and links to read it here
+  or open its PDF.
 - **The videos.** [How to use this site](https://www.youtube.com/watch?v=sYMDcT7vyng),
   near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=IUAhxUriDVw),
   at the end of its layers. Both open on YouTube.
@@ -202,7 +212,9 @@ the promised explanation.
 | Folder | What it does |
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
-| `src/home/` | The front page at "/": what the site holds, the main result's statement, the shelf of papers (`PaperShelf.tsx`), the three accounts with their strips, the argument drawn by the map's engine, and the recorded checks |
+| `src/home/` | The front page at "/": the first screen as plain HTML (`heroMarkup.ts`), the levels band with the argument narrowing (`LevelsBand.tsx`), the mathematics and the recorded checks |
+| `src/compare/` | Compare: one step across its levels and two papers aligned by shared records, the record alignment's hook and the slice renderer |
+| `src/lean/` | The Lean viewer (`LeanBlock`), its tokenizer and data hooks, and the Lean browser at "/lean" |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
 | `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |

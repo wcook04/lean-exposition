@@ -8,13 +8,15 @@
      "file": "OAI/Probability/SKSupport/Density/FiniteDensity.lean",
      "name": "finite_density_coercivity",
      "relation": "part",
-     "note": "The inequality with constant 1/1000 for concrete finite-step data. The sharper constant does not appear in its statement."
+     "note": "The inequality with constant 1/1000 for concrete finite-step data. The sharper constant does not appear in its statement.",
+     "clause": "(1/1000:ℝ)*(∫ x, finiteDensity c h (softAbs M) N i x*quarticMoment r x) ≤\n      ∫ x, finiteDensity c h (softAbs M) N i x*coercivePolynomial r x"
     },
     {
      "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
      "name": "integrated_coercivity_of_flux",
      "relation": "part",
-     "note": "The sharper constant 1661507/1521000000, with signs and vanishing flux as hypotheses. The finite-data proof does not call this whole-line form."
+     "note": "The sharper constant 1661507/1521000000, with signs and vanishing flux as hypotheses. The finite-data proof does not call this whole-line form.",
+     "clause": "(1661507 / 1521000000 : ℝ) * (∫ t, ρ t * (v t)^4) ≤\n      ∫ t, ρ t * ((z t)^2-12*R t*v t*(b t)^2+6*(v t)^4)"
     },
     {
      "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
@@ -54,16 +56,18 @@
    "short": "Plateau-preserving approximation",
    "lean": [
     {
-     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
-     "name": "curvatureMoment_deriv_hasDerivAt_on_constant",
-     "relation": "part",
-     "note": "Third time derivative on a constant interval equals stripThird. The approximation step has no counterpart here."
-    },
-    {
      "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
      "name": "stripThird_eq_actual",
      "relation": "part",
-     "note": "Expands stripThird as the expected polynomial, in unscaled derivatives, so the identity is divided by c squared."
+     "note": "Expands stripThird as the expected polynomial, in unscaled derivatives, so the identity is divided by c squared.",
+     "clause": "stripThird W γ T c t = ∫ ξ, (actualJet W γ t 4 ξ)^2-\n      12*c*actualJet W γ t 2 ξ*(actualJet W γ t 3 ξ)^2+6*c^2*(actualJet W γ t 2 ξ)^4 ∂W.law"
+    },
+    {
+     "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
+     "name": "curvatureMoment_deriv_hasDerivAt_on_constant",
+     "relation": "part",
+     "note": "Third time derivative on a constant interval equals stripThird. The approximation step has no counterpart here.",
+     "clause": "HasDerivAt (deriv (curvatureMoment W γ)) (stripThird W γ T c t) t"
     }
    ],
    "statements": [
@@ -112,13 +116,15 @@
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "positive_gap_curvature",
      "relation": "part",
-     "note": "Gives positivity of the second derivative of q′ on the interval. The quantitative bound is not in its statement."
+     "note": "Gives positivity of the second derivative of q′ on the interval. The quantitative bound is not in its statement.",
+     "clause": "∀ t ∈ Ioo a b, 0 < (deriv^[2] (curvatureMoment W γ)) t"
     },
     {
      "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
      "name": "stripThird_coercive",
      "relation": "part",
-     "note": "The fourth-moment lower bound, multiplied through by c squared, at a continuity point."
+     "note": "The fourth-moment lower bound, multiplied through by c squared, at a continuity point.",
+     "clause": "(1/1000:ℝ)*(γ.val t)^4*(∫ ξ, (actualJet W γ t 2 ξ)^4 ∂W.law) ≤\n      (γ.val t)^2 * stripThird W γ T (γ.val t) t"
     }
    ],
    "statements": [
@@ -155,19 +161,22 @@
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "zero_gap_curvature",
      "relation": "part",
-     "note": "Gives positivity of the derivative of q′ on the interval."
+     "note": "Gives positivity of the derivative of q′ on the interval.",
+     "clause": "∀ t ∈ Ioo a b, 0 < deriv (curvatureMoment W γ) t"
     },
     {
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "curvatureMoment_hasDerivAt_on_constant",
      "relation": "part",
-     "note": "With stripSecond_eq_actual at c=0, this supplies the identity with the third spatial derivative."
+     "note": "With stripSecond_eq_actual at c=0, this supplies the identity with the third spatial derivative.",
+     "clause": "HasDerivAt (curvatureMoment W γ) (stripSecond W γ T c t) t"
     },
     {
      "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
      "name": "stripSecond_eq_actual",
      "relation": "part",
-     "note": "Expands stripSecond as an expectation; at c=0 only the squared third derivative remains."
+     "note": "Expands stripSecond as an expectation; at c=0 only the squared third derivative remains.",
+     "clause": "stripSecond W γ T c t = ∫ ξ, (actualJet W γ t 3 ξ)^2-2*c*(actualJet W γ t 2 ξ)^3 ∂W.law"
     }
    ],
    "statements": [
@@ -241,7 +250,7 @@
    ]
   },
   "support.no_terminal_gap": {
-   "short": "No terminal plateau at minimizer",
+   "short": "No terminal plateau at minimiser",
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Support/NoTerminalPlateau.lean",
@@ -253,7 +262,8 @@
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "support_cofinal_of_no_terminal_plateau",
      "relation": "part",
-     "note": "Turns the exclusion into support points beyond every time, which rules out empty support."
+     "note": "Turns the exclusion into support points beyond every time, which rules out empty support.",
+     "clause": "∃ B ∈ μ.support, x < B"
     }
    ],
    "statements": [
@@ -351,7 +361,8 @@
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "zero_on_initial_support_gap",
      "relation": "part",
-     "note": "The coefficient vanishes on the initial gap when zero lies outside the support."
+     "note": "The coefficient vanishes on the initial gap when zero lies outside the support.",
+     "clause": "∀ t ∈ Ioo 0 b, γ t = 0"
     },
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
@@ -400,7 +411,8 @@
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Its first clause. The Lean type Time is [0,1), so support equal to univ is the relative statement."
+     "note": "Its first clause. The Lean type Time is [0,1), so support equal to univ is the relative statement.",
+     "clause": "μ.support=univ"
     },
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
@@ -412,7 +424,8 @@
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
      "name": "exists_support_gap",
      "relation": "part",
-     "note": "Produces, from a missing point with support to its right, a gap of the required kind."
+     "note": "Produces, from a missing point with support to its right, a gap of the required kind.",
+     "clause": "∃ a b : ℝ, 0 ≤ a ∧ a < b ∧ b < 1 ∧ (a = 0 ∨ InSupport μ a) ∧\n      InSupport μ b ∧ ∀ t ∈ Ioo a b, ¬ InSupport μ t"
     }
    ],
    "statements": [
@@ -479,7 +492,8 @@
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Its second clause gives strict increase for a minimizer."
+     "note": "Its second clause gives strict increase for a minimizer.",
+     "clause": "StrictMonoOn (extend γ.val) (Ico (0:ℝ) 1)"
     }
    ],
    "statements": [
@@ -508,15 +522,19 @@
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Main.lean",
-     "name": "full_support",
+     "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Its last clause gives both identities for every associated diffusion on the given Brownian system."
+     "note": "Its last clause gives both identities for the constructed diffusion.",
+     "clause": "∀ t ∈ Ico (0:ℝ) 1, squareMoment W γ (diffusion W γ) t=t ∧ curvatureMoment W γ t=1"
     },
     {
      "file": "OAI/Probability/SKSupport/Main.lean",
-     "name": "minimizer_full_support_actual",
+     "name": "full_support",
      "relation": "contains",
-     "note": "Its last clause gives both identities for the constructed diffusion."
+     "note": "Its last clause gives both identities for every associated diffusion on the given Brownian system.",
+     "clause": "∀ X : ℝ≥0 → Ω → ℝ, IsDiffusion W γ X → ∀ t : Time,\n    squareMoment W γ X t = (t : ℝ) ∧\n    (∫ ω, (curvature W γ t (X (Real.toNNReal t) ω))^2 ∂W.law) = 1",
+     "clause_file": "OAI/Probability/SKSupport/Model.lean",
+     "clause_name": "FullSupportConclusion"
     },
     {
      "file": "OAI/Probability/SKSupport/Diffusion/Uniqueness.lean",
@@ -608,7 +626,8 @@
      "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
      "name": "contactPotential_nonneg",
      "relation": "part",
-     "note": "G is nonnegative at a minimizer. The converse direction of the criterion has no Lean declaration."
+     "note": "G is nonnegative at a minimizer. The converse direction of the criterion has no Lean declaration.",
+     "clause": "0 ≤ contactPotential W γ s"
     },
     {
      "file": "OAI/Probability/SKSupport/Support/Closure.lean",
@@ -743,7 +762,7 @@
    ]
   },
   "support.zero_candidate_descent": {
-   "short": "Zero coefficient is not minimizing",
+   "short": "Zero coefficient is not minimising",
    "lean": [],
    "statements": [
     {
@@ -779,7 +798,8 @@
      "file": "OAI/Probability/SKSupport/Main.lean",
      "name": "minimizer_full_support_actual",
      "relation": "contains",
-     "note": "Same conclusion. The Lean proof excludes terminal plateaus through the square-root defect, so it does not follow this chord route."
+     "note": "Same conclusion. The Lean proof excludes terminal plateaus through the square-root defect, so it does not follow this chord route.",
+     "clause": "μ.support=univ"
     }
    ],
    "statements": [

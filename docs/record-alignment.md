@@ -64,6 +64,11 @@ qualified name from the namespaces around it.
 applies. A link says where a reader should look. It is not a check that the two
 statements are equivalent, and the site never presents it as one.
 
+A `contains` or `part` row may add `clause`, the shortest span of the
+declaration's own statement that is the record's claim, copied byte for byte so
+the site can highlight it. When that span lives in the body of a definition named
+by the statement, also give that definition as `clause_file` and `clause_name`.
+
 ### `statements`
 
 Where each paper gives the record. `from` and `to` are exact substrings of the

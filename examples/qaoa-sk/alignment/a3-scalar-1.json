@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "records": {
   "scalar.paper_admissible": {
-   "short": "Admissible coefficient and normalization",
+   "short": "Admissible coefficient and normalisation",
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Model.lean",
@@ -57,7 +57,7 @@
    ]
   },
   "scalar.paper_minimizer": {
-   "short": "Minimizer hypothesis",
+   "short": "Minimiser hypothesis",
    "lean": [
     {
      "file": "OAI/Probability/SKSupport/Model.lean",
@@ -106,13 +106,15 @@
      "file": "OAI/Probability/SKValue/GroundState/WeakGuerra.lean",
      "name": "groundStateValue_le_parisi",
      "relation": "part",
-     "note": "The upper bound for every order parameter, proved in the scalar model."
+     "note": "The upper bound for every order parameter, proved in the scalar model.",
+     "clause": "groundStateValue≤parisi W γ"
     },
     {
      "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
      "name": "ground_state_parisi_target",
      "relation": "part",
-     "note": "Equality at a given minimizer, proved in the scalar model. Taking the infimum and attainment stay outside it."
+     "note": "Equality at a given minimizer, proved in the scalar model. Taking the infimum and attainment stay outside it.",
+     "clause": "groundStateValue=parisi W γ"
     }
    ],
    "statements": [
@@ -203,13 +205,15 @@
      "file": "OAI/Probability/SKSupport/Density/Certificate.lean",
      "name": "coercivity_constant_integral",
      "relation": "part",
-     "note": "The final step from 1661507/1521000000 down to 1/1000."
+     "note": "The final step from 1661507/1521000000 down to 1/1000.",
+     "clause": "(1 / 1000 : ℝ) * (∫ t, ρ t * (v t)^4)"
     },
     {
      "file": "OAI/Probability/SKValue/Coercivity/IntegratedCoercivity.lean",
      "name": "integrated_coercivity",
      "relation": "part",
-     "note": "Scalar model: the 1/1000 bound only, assuming directly that the correction integrates to zero."
+     "note": "Scalar model: the 1/1000 bound only, assuming directly that the correction integrates to zero.",
+     "clause": "(1/1000:ℝ)*(∫ x,v x^4*f x)≤∫ x,(z x^2-12*v x*w x^2+6*v x^4)*f x"
     }
    ],
    "statements": [
@@ -246,13 +250,15 @@
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "positive_gap_curvature",
      "relation": "part",
-     "note": "Case c>0. curvatureMoment is q', so two derivatives give q'''. This declaration states strict positivity only."
+     "note": "Case c>0. curvatureMoment is q', so two derivatives give q'''. This declaration states strict positivity only.",
+     "clause": "∀ t ∈ Ioo a b, 0 < (deriv^[2] (curvatureMoment W γ)) t"
     },
     {
      "file": "OAI/Probability/SKSupport/Support/GapCurvature.lean",
      "name": "zero_gap_curvature",
      "relation": "part",
-     "note": "Case c=0: the derivative of curvatureMoment is q'', positive on the interval. The identity for q'' is elsewhere."
+     "note": "Case c=0: the derivative of curvatureMoment is q'', positive on the interval. The identity for q'' is elsewhere.",
+     "clause": "∀ t ∈ Ioo a b, 0 < deriv (curvatureMoment W γ) t"
     },
     {
      "file": "OAI/Probability/SKSupport/Moments/Curvature.lean",
@@ -335,16 +341,19 @@
    "short": "Terminal martingale value formulas",
    "lean": [
     {
-     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
-     "name": "scalar_value_target",
-     "relation": "contains",
-     "note": "Conclusion also gives convergence of the finite-spin values and the martingale property. Scalar model, with diffusion supplied by the caller."
-    },
-    {
      "file": "OAI/Probability/SKValue/Model.lean",
      "name": "ScalarValueConclusion",
      "relation": "defines",
      "note": "The full conjunction: finite-spin limit, terminal variable U with its limits, and the three value identities."
+    },
+    {
+     "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
+     "name": "scalar_value_target",
+     "relation": "contains",
+     "note": "Conclusion also gives convergence of the finite-spin values and the martingale property. Scalar model, with diffusion supplied by the caller.",
+     "clause": "∃ U : W.Ω → ℝ,\n    Martingale (gradientStopped W γ X U) W.filtration W.μ ∧\n    (∀ᵐ ω ∂W.μ, |U ω| ≤ 1 ∧ (U ω)^2 = 1 ∧\n      Tendsto (fun t ↦ gradient W γ t (X t ω)) (𝓝[<] (1 : ℝ)) (𝓝 (U ω))) ∧\n    Tendsto (fun t ↦ ∫ ω, (gradient W γ t (X t ω) - U ω)^2 ∂W.μ)\n      (𝓝[<] (1 : ℝ)) (𝓝 (0 : ℝ)) ∧\n    groundStateValue = (∫ ω, |X 1 ω| ∂W.μ) - ∫ t in (0 : ℝ)..1, t * γ.coeff t ∧\n    groundStateValue = ∫ ω, U ω * W.B 1 ω ∂W.μ ∧\n    groundStateValue = ∫ t in (0 : ℝ)..1, ∫ ω, curvature W γ t (X t ω) ∂W.μ ∧\n    IntervalIntegrable (fun t ↦ ∫ ω, curvature W γ t (X t ω) ∂W.μ) volume 0 1",
+     "clause_file": "OAI/Probability/SKValue/Model.lean",
+     "clause_name": "ScalarValueConclusion"
     },
     {
      "file": "OAI/Probability/SKValue/Evolution/IntegralPrimitiveTerminal.lean",
@@ -393,25 +402,30 @@
    ]
   },
   "scalar.euler_normalization": {
-   "short": "Euler convergence, normalized directions",
+   "short": "Euler convergence, normalised directions",
    "lean": [
     {
      "file": "OAI/Probability/SKValue/Gaussian/CoupledCoordinates.lean",
      "name": "coupled_euler_L2_convergence",
      "relation": "part",
-     "note": "The convergence of expected squared maximum error, for Euler driven by Brownian increments under strip hypotheses."
+     "note": "The convergence of expected squared maximum error, for Euler driven by Brownian increments under strip hypotheses.",
+     "clause": "Tendsto (fun N ↦ ∫ ω, (meshMaxError T X (coupledEuler T γ u B) N ω)^2 ∂μ)\n      atTop (𝓝 (0 : ℝ))"
     },
     {
      "file": "OAI/Probability/SKValue/Gaussian/CoordinateDependsBefore.lean",
      "name": "normalized_family_orthonormal",
      "relation": "part",
-     "note": "Orthonormality of the normalized increments, for any predictable coefficients with positive second moments."
+     "note": "Orthonormality of the normalized increments, for any predictable coefficients with positive second moments.",
+     "clause": "∀ i j : Fin N,\n      (∫ z, normalizedIncrement (H i) (coordinate N i) (gaussianProduct (Fin (N+1))) z *\n        normalizedIncrement (H j) (coordinate N j) (gaussianProduct (Fin (N+1))) z\n        ∂gaussianProduct (Fin (N+1))) = if i=j then 1 else 0"
     },
     {
      "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
      "name": "finite_gaussian_target",
      "relation": "part",
-     "note": "Its first clause gives eventual positivity of active normalizers. Uniform convergence of c_j to 1 is not stated here."
+     "note": "Its first clause gives eventual positivity of active normalizers. Uniform convergence of c_j to 1 is not stated here.",
+     "clause": "(∀ᶠ N in atTop, ∀ j < N, 0 < normalizer W γ T N j)",
+     "clause_file": "OAI/Probability/SKValue/Model.lean",
+     "clause_name": "FiniteGaussianConclusion"
     }
    ],
    "statements": [
@@ -442,7 +456,8 @@
      "file": "OAI/Probability/SKValue/Equations/GradientErrorConstant.lean",
      "name": "gaussian_rounding_mean",
      "relation": "part",
-     "note": "The one-variable fact: for |a| at most 1, the rounded sign has mean a."
+     "note": "The one-variable fact: for |a| at most 1, the rounded sign has mean a.",
+     "clause": "∫ z, Real.sign (a+2*cdf (gaussianReal 0 1) z-1) ∂gaussianReal 0 1 = a"
     },
     {
      "file": "OAI/Probability/SKValue/Model.lean",
@@ -479,19 +494,22 @@
      "file": "OAI/Probability/SKValue/Processes/MeshRaw.lean",
      "name": "mesh_coefficient_errors",
      "relation": "part",
-     "note": "Both squared ell-2 errors are bounded by gradientMeshError, on a fixed strip with positive active moments."
+     "note": "Both squared ell-2 errors are bounded by gradientMeshError, on a fixed strip with positive active moments.",
+     "clause": "(∑ j : Fin N, (meshA T N γ u j-Real.sqrt (stepSize T N)/\n      predictableNormalizer (meshRaw T N γ u j) (gaussianProduct (Fin (N+1))))^2)≤\n      gradientMeshError T N γ u"
     },
     {
      "file": "OAI/Probability/SKValue/Equations/GradientErrorConstant.lean",
      "name": "gradientMeshError_tendsto_zero",
      "relation": "part",
-     "note": "That error tends to zero as the mesh refines, which supplies the o(1)."
+     "note": "That error tends to zero as the mesh refines, which supplies the o(1).",
+     "clause": "Tendsto (fun N ↦ gradientMeshError T N γ u) atTop (𝓝 0)"
     },
     {
      "file": "OAI/Probability/SKValue/Processes/MeshRaw.lean",
      "name": "mesh_coefficients_norms",
      "relation": "part",
-     "note": "The B vector has ell-2 norm at most 1, and the last coordinate B_{N+1} is at most 1 in absolute value."
+     "note": "The B vector has ell-2 norm at most 1, and the last coordinate B_{N+1} is at most 1 in absolute value.",
+     "clause": "(∑ j : Fin N, (meshB T N γ u j)^2)≤1 ∧ |meshB T N γ u N|≤1"
     }
    ],
    "statements": [
@@ -519,22 +537,25 @@
    "short": "Shifted Gaussian coefficient limit",
    "lean": [
     {
+     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
+     "name": "IsDiffusion.finite_gaussian_fixed_strip",
+     "relation": "proof",
+     "note": "The fixed-T mesh limit with strip bounds and the unit curvature moment as hypotheses."
+    },
+    {
      "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",
      "name": "finite_gaussian_target",
      "relation": "contains",
-     "note": "The second clause is the mesh limit. The third clause is the endpoint limit to the ground-state value."
+     "note": "The second clause is the mesh limit. The third clause is the endpoint limit to the ground-state value.",
+     "clause": "Tendsto (shiftedCoefficientSum W γ T) atTop\n    (𝓝 (∫ t in (0 : ℝ)..T, ∫ ω, curvature W γ t (X t ω) ∂W.μ)) ∧\n  Tendsto (fun S ↦ ∫ t in (0 : ℝ)..S, ∫ ω, curvature W γ t (X t ω) ∂W.μ)\n    (𝓝[<] (1 : ℝ)) (𝓝 groundStateValue)",
+     "clause_file": "OAI/Probability/SKValue/Model.lean",
+     "clause_name": "FiniteGaussianConclusion"
     },
     {
      "file": "OAI/Probability/SKValue/Model.lean",
      "name": "shiftedCoefficientSum",
      "relation": "defines",
      "note": "The shifted sum of A_j B_{j+1}, with A_0=0, over j from 0 to N."
-    },
-    {
-     "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
-     "name": "IsDiffusion.finite_gaussian_fixed_strip",
-     "relation": "proof",
-     "note": "The fixed-T mesh limit with strip bounds and the unit curvature moment as hypotheses."
     }
    ],
    "statements": [
@@ -577,7 +598,8 @@
      "file": "OAI/Probability/SKValue/Variation/ContactAssembly.lean",
      "name": "IsDiffusion.strip_value_le_groundState",
      "relation": "part",
-     "note": "Only the left inequality, assuming contact. The bound by 1-T has no Lean statement."
+     "note": "Only the left inequality, assuming contact. The bound by 1-T has no Lean statement.",
+     "clause": "(∫ t in (0 : ℝ)..T,∫ ω,curvature W γ t (X t ω) ∂W.μ)≤groundStateValue"
     }
    ],
    "statements": [
@@ -620,7 +642,8 @@
      "file": "OAI/Probability/SKValue/Main.lean",
      "name": "value_consequences",
      "relation": "contains",
-     "note": "Its first clause."
+     "note": "Its first clause.",
+     "clause": "IsMinimizer W γ → IsDiffusion W γ X → ScalarValueConclusion W γ X"
     }
    ],
    "statements": [
@@ -669,7 +692,8 @@
      "file": "OAI/Probability/SKValue/Main.lean",
      "name": "value_consequences",
      "relation": "contains",
-     "note": "Its second clause."
+     "note": "Its second clause.",
+     "clause": "0 < T → T < 1 → IsMinimizer W γ → IsDiffusion W γ X →\n      FiniteGaussianConclusion W γ X T"
     }
    ],
    "statements": [
@@ -712,7 +736,8 @@
      "file": "OAI/Probability/SKValue/Main.lean",
      "name": "value_consequences",
      "relation": "contains",
-     "note": "Its third clause."
+     "note": "Its third clause.",
+     "clause": "IsMinimizer W γ → groundStateValue = parisi W γ"
     }
    ],
    "statements": [
@@ -867,7 +892,8 @@
      "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
      "name": "IsDiffusion.finite_gaussian_fixed_strip",
      "relation": "contains",
-     "note": "Premises hX, hT and hT1. No minimizer appears among its hypotheses."
+     "note": "Premises hX, hT and hT1. No minimizer appears among its hypotheses.",
+     "clause": "(hX : IsDiffusion W γ X) {T K L D Lu La : ℝ}\n    (hT : 0<T) (hT1 : T<1)"
     },
     {
      "file": "OAI/Probability/SKValue/Model.lean",
@@ -892,7 +918,8 @@
      "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
      "name": "IsDiffusion.finite_gaussian_fixed_strip",
      "relation": "contains",
-     "note": "Premises hg, hD, hLu, hLa, ha, huLip and haLip."
+     "note": "Premises hg, hD, hLu, hLa, ha, huLip and haLip.",
+     "clause": "(hg : GradientStrip T γ.coeff (gradient W γ) K L)\n    (hD : 0≤D) (hLu : 0≤Lu) (hLa : 0≤La)\n    (ha : ∀ t∈Icc (0 : ℝ) T, ∀ x, |curvature W γ t x|≤D)\n    (huLip : ∀ s∈Icc (0 : ℝ) T, ∀ t∈Icc (0 : ℝ) T, ∀ x y,\n      |gradient W γ s x-gradient W γ t y|≤Lu*(|s-t|+|x-y|))\n    (haLip : ∀ s∈Icc (0 : ℝ) T, ∀ t∈Icc (0 : ℝ) T, ∀ x y,\n      |curvature W γ s x-curvature W γ t y|≤La*(|s-t|+|x-y|))"
     },
     {
      "file": "OAI/Probability/SKValue/Equations/GradientStrip.lean",
@@ -929,7 +956,8 @@
      "file": "OAI/Probability/SKValue/Processes/FiniteGaussianFixedStrip.lean",
      "name": "IsDiffusion.finite_gaussian_fixed_strip",
      "relation": "contains",
-     "note": "Premise hmom."
+     "note": "Premise hmom.",
+     "clause": "(hmom : ∀ t∈Icc (0 : ℝ) T, (∫ ω, (curvature W γ t (X t ω))^2 ∂W.μ)=1)"
     },
     {
      "file": "OAI/Probability/SKValue/Processes/GradientSquareIntegral.lean",

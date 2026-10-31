@@ -115,6 +115,21 @@ def _find(modules, file, name):
     return module, found[0]
 
 
+def _clause(modules, item):
+    """The authored quotation of a lean row and, if it lives in a definition, where."""
+    keys = {"clause", "clause_file", "clause_name"} & item.keys()
+    if not keys:
+        return {}
+    clause = item.get("clause")
+    if type(clause) is not str or not clause:
+        raise ValueError("clause must be nonempty text")
+    if keys == {"clause"}:
+        return {"clause": clause}
+    if keys != {"clause", "clause_file", "clause_name"}:
+        raise ValueError("clause_file and clause_name go together, with clause")
+    return {"clause": clause, "clause_in": _find(modules, item["clause_file"], item["clause_name"])[1]["name"]}
+
+
 def _check_keys(row, required, optional, where, errors):
     if not isinstance(row, dict):
         errors.append(f"{where}: must be an object")
@@ -166,7 +181,8 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
             lean, statements = [], []
             for n, item in enumerate(row["lean"]):
                 at = f"{where}.lean[{n}]"
-                if not _check_keys(item, {"file", "name", "relation"}, {"note"}, at, errors):
+                if not _check_keys(item, {"file", "name", "relation"},
+                                   {"note", "clause", "clause_file", "clause_name"}, at, errors):
                     continue
                 note = item.get("note", "")
                 if item["relation"] not in RELATIONS:
@@ -178,8 +194,13 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
                 except ValueError as exc:
                     errors.append(f"{at}: {exc}")
                     continue
-                lean.append({"name": target["name"], "module": module, "line": target["line"],
-                             "end_line": target["end_line"], "relation": item["relation"], "note": note})
+                resolved = {"name": target["name"], "module": module, "line": target["line"],
+                            "end_line": target["end_line"], "relation": item["relation"], "note": note}
+                try:
+                    resolved.update(_clause(modules, item))
+                except ValueError as exc:
+                    errors.append(f"{at}: {exc}")
+                lean.append(resolved)
             for n, item in enumerate(row["statements"]):
                 at = f"{where}.statements[{n}]"
                 if not _check_keys(item, {"paper", "role", "from", "to"}, {"after", "note"}, at, errors):
@@ -216,6 +237,54 @@ def resolve_alignment(directory, index, papers, record_ids, *, strict=True):
     if errors and strict:
         raise ContractError(f"{len(errors)} alignment error(s):\n" + "\n".join(errors))
     return {"records": dict(sorted(records.items())), "dictionary": dictionary}, errors
+
+
+def lean_steps(alignment, index, edges, *, max_depth=8):
+    """Follow each curated step through the Lean source, where both records have Lean links.
+
+    A step records that one result uses another. When declarations are linked to both,
+    the shortest chain of names from a consumer's declaration to a prerequisite's says
+    where the Lean makes that use. `route` is null when no chain was found within
+    `max_depth`; names reached only through tactics or notation are not in the source
+    scan, so a missing chain does not show that the step is absent.
+    """
+    # The Comparator challenge restates names from the proof tree, so a name can have two rows.
+    uses = {}
+    for module in index["modules"]:
+        for row in module["declarations"]:
+            uses.setdefault(row["name"], []).extend(row.get("uses", ()))
+    records = alignment["records"]
+    steps = {}
+    for edge in edges:
+        if edge.get("kind") != "supports":
+            continue
+        starts = [row["name"] for row in records.get(edge["from"], {}).get("lean", ()) if row["relation"] != "defines"]
+        targets = {row["name"] for row in records.get(edge["to"], {}).get("lean", ())}
+        if not starts or not targets:
+            continue
+        route = None
+        if targets & set(starts):
+            route = [next(name for name in starts if name in targets)]
+        else:
+            parent = dict.fromkeys(starts)
+            frontier = list(parent)
+            for _ in range(max_depth):
+                following = []
+                for name in frontier:
+                    for used in uses.get(name, ()):
+                        if used not in parent:
+                            parent[used] = name
+                            following.append(used)
+                hit = next((name for name in following if name in targets), None)
+                if hit is not None:
+                    route = [hit]
+                    while parent[route[-1]] is not None:
+                        route.append(parent[route[-1]])
+                    route.reverse()
+                    break
+                frontier = following
+        steps[f"{edge['from']}→{edge['to']}→{edge['kind']}"] = {"route": route}
+    return dict(sorted(steps.items()))
 
 
 def default_papers(directory):

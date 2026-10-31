@@ -152,5 +152,42 @@ class RealFiles(unittest.TestCase):
                                          in alignment.default_papers(directory).items()), [])]), 1)
 
 
+class LeanStepTests(unittest.TestCase):
+    INDEX = {"modules": [
+        {"name": "OAI.A", "declarations": [
+            {"name": "top", "uses": ["middle"]}, {"name": "middle", "uses": ["leaf"]}, {"name": "leaf", "uses": []},
+            {"name": "alone", "uses": []}]},
+        {"name": "Challenge", "declarations": [{"name": "top", "uses": []}]}]}
+    ALIGNMENT = {"records": {
+        "consumer": {"lean": [{"name": "top", "relation": "states"}]},
+        "used": {"lean": [{"name": "leaf", "relation": "part"}]},
+        "unreached": {"lean": [{"name": "alone", "relation": "states"}]},
+        "only_defined": {"lean": [{"name": "top", "relation": "defines"}]},
+        "no_lean": {"lean": []}}}
+
+    def steps(self, *edges):
+        rows = [{"from": a, "to": b, "kind": "supports"} for a, b in edges]
+        return alignment.lean_steps(self.ALIGNMENT, self.INDEX, rows)
+
+    def test_a_step_follows_names_through_the_source(self):
+        step = self.steps(("consumer", "used"))["consumer→used→supports"]
+        self.assertEqual(step["route"], ["top", "middle", "leaf"])
+
+    def test_a_name_restated_elsewhere_keeps_its_proof_references(self):
+        index = {"modules": list(reversed(self.INDEX["modules"]))}
+        steps = alignment.lean_steps(self.ALIGNMENT, index, [{"from": "consumer", "to": "used", "kind": "supports"}])
+        self.assertEqual(steps["consumer→used→supports"]["route"], ["top", "middle", "leaf"])
+
+    def test_no_chain_is_reported_and_no_lean_is_left_out(self):
+        steps = self.steps(("consumer", "unreached"), ("consumer", "no_lean"), ("only_defined", "used"))
+        self.assertEqual(steps, {"consumer→unreached→supports": {"route": None}})
+
+    def test_shared_declaration_is_a_route_of_one(self):
+        alignment_ = {"records": {"a": {"lean": [{"name": "top", "relation": "contains"}]},
+                                  "b": {"lean": [{"name": "top", "relation": "part"}]}}}
+        steps = alignment.lean_steps(alignment_, self.INDEX, [{"from": "a", "to": "b", "kind": "supports"}])
+        self.assertEqual(steps["a→b→supports"]["route"], ["top"])
+
+
 if __name__ == "__main__":
     unittest.main()

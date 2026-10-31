@@ -5,7 +5,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { graphFixture } from "./fixtures";
 import { ArgumentTree, type MapViewHandle } from "../src/map/ArgumentTree";
-import { neededExpansion, reach, scopedGraph } from "../src/map/treeModel";
+import { reach } from "../src/map/treeModel";
 
 let root: Root;
 let container: HTMLDivElement;
@@ -42,25 +42,21 @@ const records = () => [...container.querySelectorAll<HTMLElement>(".card")].map(
 const claimsBelow = (drawn: string[]) => [...reach(graph, goal)].filter((id) => !drawn.includes(id) && graph.nodes.get(id)!.kind !== "assumption");
 
 describe("preview never commits", () => {
-  it("opens exactly the routes to previewed records, saves nothing, and folds them again afterwards", async () => {
+  it("tints drawn records, notes the ones this argument cannot draw, and unfolds nothing", async () => {
     draw(null);
     const before = cards();
     const stored = { ...sessionStorage };
+    const drawn = before.find((id) => id !== goal)!;
     const deep = claimsBelow(before).slice(0, 3);
     const outside = [...graph.nodes.keys()].find((id) => !reach(graph, goal).has(id) && graph.nodes.get(id)!.kind !== "assumption")!;
-    draw(new Set([...deep, outside]));
+    draw(new Set([drawn, ...deep, outside]));
     await act(() => new Promise((r) => setTimeout(r, 260)));
-    for (const id of deep) expect(records()).toContain(id);
-    const open = [...container.querySelectorAll<HTMLElement>(".card__inputs[aria-expanded='true']")].map((b) => b.closest<HTMLElement>(".card")!.dataset.record!).sort();
-    expect(open).toEqual([...neededExpansion(scopedGraph(graph, goal), goal, deep)].sort());
-    for (const id of deep) expect(container.querySelector(`.card[data-record="${id}"]`)!.className).toContain("is-passage");
+    expect(cards()).toEqual(before);
+    expect(container.querySelector(`.card[data-record="${drawn}"]`)!.className).toContain("is-preview");
     expect({ ...sessionStorage }).toEqual(stored);
-    // Only a record this argument cannot draw is noted.
     expect(container.querySelector(".tree__note")!.textContent).toContain("1 linked record is not in the argument for this main result");
     draw(null);
-    await act(() => new Promise((r) => setTimeout(r, 320)));
     await act(() => new Promise((r) => setTimeout(r, 10)));
-    expect(container.querySelectorAll(".card__inputs[aria-expanded='true']").length).toBe(0);
     expect(container.querySelector(".tree__note")).toBeNull();
   });
 
@@ -110,9 +106,9 @@ describe("camera display work", () => {
     });
   }
 
-  function wheel(deltaX: number, deltaY: number) {
+  function wheel(deltaX: number, deltaY: number, ctrlKey = false) {
     act(() => container.querySelector(".tree")!.dispatchEvent(new WheelEvent("wheel", {
-      deltaX, deltaY, clientX: 200, clientY: 150, bubbles: true, cancelable: true,
+      deltaX, deltaY, clientX: 200, clientY: 150, ctrlKey, bubbles: true, cancelable: true,
     })));
   }
 
@@ -130,18 +126,16 @@ describe("camera display work", () => {
     const titleQueries = vi.spyOn(card, "querySelector");
     const heights = vi.spyOn(card, "offsetHeight", "get");
 
-    wheel(10000, 0);
-    wheel(10000, 0);
+    wheel(100, 0);
+    wheel(100, 0);
     const camera = ref.current!.getScene().camera;
-    expect(camera.x).toBeCloseTo(-20000);
+    expect(camera.x).toBeCloseTo(-200);
     expect(camera.y).toBe(0);
     expect(camera.k).toBe(1);
-    expect(worldX()).toBeCloseTo(beforeX - 20000);
+    expect(worldX()).toBeCloseTo(beforeX - 200);
     nextFrame();
 
-    // The chip membership changed across the viewport, but its state belongs
-    // to the small control layer: the card measurement effect never reruns.
-    expect(container.querySelector(".tree__chip--down")).toBeNull();
+    // Chip state belongs to the small control layer: the card measurement effect never reruns.
     expect(titleQueries).not.toHaveBeenCalled();
     expect(heights).not.toHaveBeenCalled();
     expect(cards()).toEqual(beforeCards);
@@ -159,8 +153,8 @@ describe("camera display work", () => {
     const title = card.querySelector<HTMLElement>(".card__ctitle")!;
     const titleReads = vi.spyOn(title, "textContent", "get");
     const titleQueries = vi.spyOn(card, "querySelector");
-    wheel(0, -10);
-    wheel(0, -10);
+    wheel(0, -10, true);
+    wheel(0, -10, true);
     const camera = ref.current!.getScene().camera;
     expect(camera.k).toBeGreaterThan(1);
     const tree = container.querySelector<HTMLElement>(".tree")!;
@@ -176,13 +170,15 @@ describe("camera display work", () => {
     expect(ref.current!.getScene().camera).toEqual(camera);
 
     const before = cards();
-    for (const [k, representation] of [[0.35, "mark"], [0.65, "compact"], [1, "card"]] as const) {
+    for (const [k, representation] of [[0.55, "compact"], [0.65, "compact"], [1, "card"]] as const) {
       act(() => ref.current!.restoreScene({ camera: { x: 10, y: 20, k }, expanded: [], mode: "steps" }));
       const readsAfterRepresentationCommit = titleReads.mock.calls.length;
       nextFrame();
-      // The representation commit already fitted this exact scale. Its pending
-      // camera frame must not read and fit every title a second time.
-      expect(titleReads).toHaveBeenCalledTimes(readsAfterRepresentationCommit);
+      // A change of scale fits the titles once, in that frame, with no render of its own.
+      expect(titleReads.mock.calls.length).toBeLessThanOrEqual(readsAfterRepresentationCommit + 1);
+      const readsAfterFrame = titleReads.mock.calls.length;
+      nextFrame();
+      expect(titleReads).toHaveBeenCalledTimes(readsAfterFrame);
       expect(container.querySelector<HTMLElement>(".tree")!.dataset.rep).toBe(representation);
       expect(cards()).toEqual(before);
       expect(container.querySelectorAll(".card__open").length).toBe(before.length);
@@ -197,7 +193,7 @@ describe("camera display work", () => {
     const originalFonts = Object.getOwnPropertyDescriptor(document, "fonts");
     const fonts = new EventTarget();
     Object.defineProperty(document, "fonts", { configurable: true, value: fonts });
-    const localGraph = graphFixture();
+    let localGraph = graphFixture();
     const ref = createRef<MapViewHandle>();
     const render = () => act(() => root.render(<ArgumentTree ref={ref} graph={localGraph} goal={goal} insets={insets} onSelect={() => {}} onTrace={() => {}} />));
     try {
@@ -212,7 +208,7 @@ describe("camera display work", () => {
 
       const styles = vi.spyOn(window, "getComputedStyle");
       // The same box can retain its dimensions when its authored label changes.
-      localGraph.nodes.get(goal)!.label += " with its updated title";
+      localGraph = { ...localGraph, nodes: new Map(localGraph.nodes).set(goal, { ...localGraph.nodes.get(goal)!, label: `${localGraph.nodes.get(goal)!.label} with its updated title` }) };
       render();
       expect(title.textContent).toContain("with its updated title");
       expect(styles.mock.calls.some(([el]) => el === title)).toBe(true);

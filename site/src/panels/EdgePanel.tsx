@@ -9,6 +9,7 @@ import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { routeHref } from "../app/router";
 import { Accounts } from "./Accounts";
+import { LeanRoute } from "./LeanRoute";
 import type { EchoHandler } from "./RecordPanel";
 import { NO_REMAINING, applicationView, relationName, stepBasisLabel, stepPassages, stepVerb, warrantStatus } from "./model";
 import { CloseButton, Jumps, Pane, type PaneSpec } from "./parts";
@@ -150,6 +151,7 @@ export function EdgePanel({ edgeKey, onClose, onSelect, onEcho, passageHref, lea
       <div className="panel__body" ref={bodyRef} hidden={peek || undefined}>
         <Jumps panes={panes} root={rootRef} resetKey={edgeKey} />
         <div className="panel__content" key={`b:${edgeKey}`}>
+          <LeanRoute edgeKey={edgeKey} />
           {app && (
             <Pane id="use" title="How the theorem is applied in this step">
               <p className="panel__note step__app-status">{app.status}</p>

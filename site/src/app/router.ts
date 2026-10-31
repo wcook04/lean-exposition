@@ -17,7 +17,15 @@ export type Route =
       /** A selected step between two records: an `ArgEdge.key`. */
       edge?: string;
     }
-  | { view: "read"; stage: Stage; anchor?: string; node?: string; beside?: { stage: Stage; anchor: string } }
+  | {
+      view: "read";
+      stage: Stage;
+      anchor?: string;
+      /** The exact source to land on: a line ("120"), lines ("120-134") or a byte range ("b4521-5120"). */
+      at?: string;
+      node?: string;
+      beside?: { stage: Stage; anchor: string };
+    }
   | { view: "checks"; node?: string }
   | {
       view: "compare";
@@ -76,6 +84,8 @@ function fragmentOf(url: URL): string | undefined {
   }
 }
 
+const AT_PARAM = /^(?:\d+(?:-\d+)?|b\d+-\d+)$/;
+
 export function parseRoute(url: URL): Route {
   let path = url.pathname;
   if (BASE && path.startsWith(BASE)) path = path.slice(BASE.length) || "/";
@@ -107,6 +117,7 @@ export function parseRoute(url: URL): Route {
       view: "read",
       stage: read[1],
       anchor: hash,
+      at: AT_PARAM.test(q.get("l") ?? "") ? q.get("l")! : undefined,
       node: q.get("n") ?? undefined,
       beside: isStage(bStage) && bAnchor.length ? { stage: bStage, anchor: bAnchor.join(":") } : undefined,
     };
@@ -173,6 +184,7 @@ export function routeHref(route: Route): string {
       return `${BASE}/map${s ? `?${s}` : ""}`;
     }
     case "read": {
+      if (route.at) q.set("l", route.at);
       if (route.node) q.set("n", route.node);
       if (route.beside) q.set("beside", `${route.beside.stage}:${route.beside.anchor}`);
       const s = q.toString();

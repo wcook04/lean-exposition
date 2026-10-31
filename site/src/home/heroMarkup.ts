@@ -12,6 +12,8 @@ export interface HeroRow {
   tex: string;
   /** What a reader who knows no Lean needs in order to match the two. */
   words: string;
+  /** The record that opens when the clause is chosen. */
+  record: string;
 }
 
 export const HERO_ROWS: HeroRow[] = [
@@ -19,26 +21,31 @@ export const HERO_ROWS: HeroRow[] = [
     lean: "(hmin : IsMinimizer W γ)",
     tex: "\\gamma\\in\\mathcal U\\text{ minimises }\\mathcal P",
     words: "The hypothesis. That a minimiser exists is a separate input.",
+    record: "assumptions.full_support_minimizer",
   },
   {
     lean: "μ.support = Set.univ",
     tex: "\\operatorname{supp}\\mu_\\gamma=[0,1)",
     words: "Full support. In Lean, Set.univ is all of Time, the interval [0, 1).",
+    record: "support.full_relative_support",
   },
   {
     lean: "∀ a b : Time, a < b → γ.val a < γ.val b",
     tex: "\\gamma(t_2)>\\gamma(t_1)\\quad(0\\leq t_1<t_2<1)",
     words: "Strict increase, the same inequality written the other way round.",
+    record: "support.strict_increase",
   },
   {
     lean: "squareMoment W γ X t = (t : ℝ)",
     tex: "q(t)=t",
     words: "The square moment of the gradient along the diffusion equals time.",
+    record: "support.moment_saturation",
   },
   {
     lean: "(∫ ω, (curvature W γ t (X (Real.toNNReal t) ω))^2 ∂W.law) = 1",
     tex: "\\mathbb E[a(t,X_t)^2]=1",
     words: "The curvature moment, with the expectation written as an integral.",
+    record: "support.moment_saturation",
   },
 ];
 
@@ -77,14 +84,14 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
   const rows = HERO_ROWS.map(
     (row) => `<tr class="rosetta__row">
 <td class="rosetta__lean"><code translate="no">${leanHtml(row.lean)}</code></td>
-<td class="rosetta__math"><span class="rosetta__formula">${tex(row.tex)}</span><span class="rosetta__words">${escapeHtml(row.words)}</span></td>
+<td class="rosetta__math"><a class="rosetta__formula" href="${links.compare}?n=${row.record}" aria-label="Compare this clause across the levels">${tex(row.tex)}</a><span class="rosetta__words">${escapeHtml(row.words)}</span></td>
 </tr>`,
   ).join("\n");
   return `<section class="front__hero" aria-labelledby="front-title">
 <div class="front__intro">
 <h1 id="front-title" class="front__title">Why the SK order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick spin glass as a minimum over nondecreasing functions, called order parameters. A minimising order parameter increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
-<p class="front__site">OpenAI released a proof written in Lean, a language a computer can check. Here the same argument runs from that Lean through three papers, with every step tied to its statement at each level.</p>
+<p class="front__site">OpenAI released a proof written in Lean, a language a computer can check. Here the same argument runs from that Lean through three papers, and any step can be compared across them.</p>
 <p class="front__actions"><a class="front__primary" href="${links.exposition}">Read the exposition</a><a class="front__secondary" href="${links.compare}">Compare Lean and papers</a></p>
 <p class="front__tertiary"><a href="${links.map}">Open the argument map</a></p>
 </div>

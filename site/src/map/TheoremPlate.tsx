@@ -209,6 +209,33 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
 }
 
 /**
+ * The map's compact plate under the goal's title: one sentence of the theorem and the
+ * ways on. The full theorem and its Lean live in the sheet, which the button opens (a
+ * click on the plate selects the goal).
+ */
+export function GoalPlate({ goal }: { goal: string }) {
+  const statement = useStatement(goal, true);
+  const html = useMemo(() => (statement?.html ? plainExcerpt(statement.html) : ""), [statement]);
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <div className="goal-plate">
+      {html ? <div ref={ref} className="prose goal-plate__sentence" dangerouslySetInnerHTML={{ __html: html }} /> : null}
+      <div className="goal-plate__actions">
+        <button type="button" className="goal-plate__primary">
+          Full statement and Lean
+        </button>
+        {statement && statement.readIn.length > 0 && <span>Read it in</span>}
+        {statement?.readIn.map((r) => (
+          <a key={r.stage} href={routeHref({ view: "read", stage: r.stage, anchor: r.anchor })}>
+            {PAPER_NAMES[r.stage].short} {sectionMark(r.section)}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
  * The theorem's first sentence alone, for the plate's compact form on the map. That
  * form takes no pointer or focus, so links become plain text; ids are dropped so they
  * never repeat the full plate's.

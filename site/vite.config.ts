@@ -193,7 +193,11 @@ function firstScreen(base: string): Plugin {
       handler(html, context) {
         // Keep the fonts of the first screen from swapping in late.
         const fonts = Object.keys(context.bundle ?? {}).filter((name) => /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$/.test(name));
-        const preload = fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`).join("");
+        const preload = [
+          ...fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`),
+          // Every page starts from the edition's index.
+          ...(process.env.VITE_STATIC_EDITION === "true" ? [`<link rel="preload" href="${base}edition/index.json" as="fetch" crossorigin />`] : []),
+        ].join("");
         return html
           .replace('<html lang="en">', '<html lang="en" data-view="home">')
           .replace("</head>", `${preload}</head>`)

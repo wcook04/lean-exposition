@@ -12,7 +12,7 @@ export interface CheckKindInfo {
 export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   source_hash: {
     title: "Source files",
-    question: "Whether each cited file still has exactly the bytes recorded for it, compared by hash. This check does not examine the mathematics in the files.",
+    question: "Whether each cited file still has exactly the bytes recorded for it, compared by hash. It does not read the mathematics in the files.",
   },
   lean_build: {
     title: "Lean build",
@@ -28,7 +28,7 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   semantic_review: {
     title: "Correspondence review",
-    question: "Whether a reviewer found that a recorded statement says the same thing as the paper or source it was taken from.",
+    question: "Whether a second reader, comparing a recorded step with the paper or source it was taken from, finds that they say the same thing.",
   },
   platform: {
     title: "Platform label",
@@ -284,6 +284,27 @@ export function countsInWords(counts: Record<string, number>): string {
   if (parts.length === 0) return "none";
   if (parts.length === 1) return parts[0];
   return `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
+}
+
+/** Plain words for the recorded failures: what stopped, in the record's own terms. */
+const FAILURE_WORDS: Record<string, string> = {
+  full_support_solution_build_failure_20261023:
+    "Comparator stopped while building the proof of the Full support theorem, because a compiled file the proof imports (AbsIncrement) was missing.",
+  scalar_value_solution_build_failure_20261024:
+    "Comparator stopped while building the proof of the scalar value theorem, because a compiled file the proof imports (IntegralPositiveMulGaussian) was missing.",
+};
+
+/** The date a record carries at the end of its identifier, read only for a dated failure. */
+export function identifierDate(id: string): string | null {
+  const m = /_(\d{4})(\d{2})(\d{2})$/.exec(id);
+  return m ? statedDate(`${m[1]}-${m[2]}-${m[3]}`)?.text ?? null : null;
+}
+
+/** One sentence on a recorded failure: when, then what happened, in plain words or the record's own. */
+export function failureLine(card: Pick<EvidenceCard, "id" | "label">, record?: { details?: string; tool?: string }): string {
+  const date = statedDate(record?.details)?.text ?? identifierDate(card.id);
+  const what = FAILURE_WORDS[card.id] ?? record?.details ?? record?.tool ?? card.label;
+  return date ? `${date}. ${what}` : what;
 }
 
 /** "1 check record" or "8 check records". */

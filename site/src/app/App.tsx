@@ -6,19 +6,21 @@ import { PageTitle } from "./PageTitle";
 import { EDITION_PREFIX, linkedEdition, sameEdition } from "./cite";
 
 import { FrontHero } from "../home/FrontHero";
+import { PAGES, usePrefetchOnIntent } from "./prefetch";
 
-const FrontPage = lazy(() => import("../home/FrontPage").then((m) => ({ default: m.FrontPage })));
-const MapPage = lazy(() => import("../map/MapPage").then((m) => ({ default: m.MapPage })));
-const ReaderPage = lazy(() => import("../reader/ReaderPage").then((m) => ({ default: m.ReaderPage })));
-const ChecksPage = lazy(() => import("../checks/ChecksPage").then((m) => ({ default: m.ChecksPage })));
-const ComparePage = lazy(() => import("../compare/ComparePage").then((m) => ({ default: m.ComparePage })));
-const LeanPage = lazy(() => import("../lean/LeanPage").then((m) => ({ default: m.LeanPage })));
-const AboutPage = lazy(() => import("../reader/AboutPage").then((m) => ({ default: m.AboutPage })));
-const SearchPage = lazy(() => import("../search/SearchPage").then((m) => ({ default: m.SearchPage })));
+const FrontPage = lazy(() => PAGES.home().then((m) => ({ default: m.FrontPage })));
+const MapPage = lazy(() => PAGES.map().then((m) => ({ default: m.MapPage })));
+const ReaderPage = lazy(() => PAGES.read().then((m) => ({ default: m.ReaderPage })));
+const ChecksPage = lazy(() => PAGES.checks().then((m) => ({ default: m.ChecksPage })));
+const ComparePage = lazy(() => PAGES.compare().then((m) => ({ default: m.ComparePage })));
+const LeanPage = lazy(() => PAGES.lean().then((m) => ({ default: m.LeanPage })));
+const AboutPage = lazy(() => PAGES.about().then((m) => ({ default: m.AboutPage })));
+const SearchPage = lazy(() => PAGES.search().then((m) => ({ default: m.SearchPage })));
 const SearchPalette = lazy(() => import("../search/SearchPalette").then((m) => ({ default: m.SearchPalette })));
 
 export function App() {
   useLinkInterception();
+  usePrefetchOnIntent();
   const route = useRoute();
   const [searching, setSearching] = useState(false);
 
