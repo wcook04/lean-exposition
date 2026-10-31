@@ -16,6 +16,8 @@ import { describeError, loadPaperStructure, useEdition, useResource } from "../a
 import { navigate, routeHref, type Route } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
+import { restoreScroll } from "../app/restore";
+import { namePlace, onLeave } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import { alignmentResource } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
@@ -30,8 +32,10 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import type { PaneHover } from "./page/MapPane";
 import { RecordDock, type OpenRecord } from "./page/RecordDock";
 import {
+  bestSlice,
   chainOf,
   companionAnchor,
+  firstPassageFor,
   outlineOf,
   paperTrail,
   passageOf,
@@ -55,6 +59,7 @@ import {
   type Structures,
 } from "./page/model";
 import {
+  blockAtLine,
   existingHistoryKey,
   historyKey,
   loadPosition,
@@ -63,6 +68,7 @@ import {
   patchHistoryState,
   restoreKey,
   savePosition,
+  scrollForPosition,
   visitOrigin,
   type ReadingPosition,
   type VisitOrigin,
@@ -305,13 +311,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const part = partAt(body, doc.parts.length, top + 1);
     const el = body.partElement(part);
     if (!el) return null;
-    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: Math.round(top - el.getBoundingClientRect().top) };
+    return { edition, stage, part, partId: partIdOf(doc.parts[part]), offset: top - el.getBoundingClientRect().top, top, block: blockAtLine(el, top) };
   }, [doc, stage, edition, readingTop]);
 
-  const saveNow = useCallback((key = keyRef.current) => {
+  const saveNow = useCallback(() => {
     const position = measurePosition();
-    if (position && key) savePosition(key, position);
+    if (position) savePosition(position);
   }, [measurePosition]);
+
+  // Whatever the way of leaving: a link, Back, a reload.
+  useEffect(() => onLeave(saveNow), [saveNow]);
+
+  const restoring = useRef<(() => void) | null>(null);
+  useEffect(() => () => restoring.current?.(), []);
 
   const restorePosition = useCallback(
     async (position: ReadingPosition) => {
@@ -321,9 +333,30 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       await body.ensure([part - 1, part, part + 1]);
       const el = body.partElement(part);
       if (!el) return false;
-      const y = el.getBoundingClientRect().top + window.scrollY - readingTop() + position.offset;
-      window.scrollTo({ top: Math.max(0, y), behavior: "instant" as ScrollBehavior });
-      body.reanchor(true);
+      const line = position.top ?? readingTop();
+      const y = () => scrollForPosition(el, position, line);
+      window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
+      body.hold(el);
+      // Parts around it and their mathematics are still settling: stay on the line
+      // until they have, and go back to it once when late fonts reflow the text.
+      restoring.current?.();
+      const settled = () => body.reanchor(true);
+      const fonts = document.fonts;
+      const refit = () => (restoring.current = restoreScroll({ window: y }, { onDone: settled }));
+      const stop = restoreScroll(
+        { window: y },
+        {
+          onDone: () => {
+            settled();
+            fonts?.addEventListener("loadingdone", refit, { once: true });
+            window.setTimeout(() => fonts?.removeEventListener("loadingdone", refit), 3000);
+          },
+        },
+      );
+      restoring.current = () => {
+        stop();
+        fonts?.removeEventListener("loadingdone", refit);
+      };
       return true;
     },
     [doc, stage, edition, readingTop],
@@ -442,8 +475,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   // Open at the saved line, the anchor, or the top.
   useLayoutEffect(() => {
-    const previous = window.history.scrollRestoration;
-    window.history.scrollRestoration = "manual";
     // The page holds the reading position itself (PaperBody); the browser's
     // own scroll anchoring would pick nodes in the sticky columns and add to it.
     const root = document.documentElement;
@@ -461,8 +492,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     if (restoreKey()) patchHistoryState({ lxRestore: undefined });
     lastHref.current = window.location.href;
     return () => {
-      saveNow();
-      window.history.scrollRestoration = previous;
       root.style.overflowAnchor = previousAnchor;
     };
     // Once per mounted paper.
@@ -479,7 +508,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const previousKey = keyRef.current;
     const existing = existingHistoryKey();
     const fromPop = !!existing && existing !== previousKey;
-    if (fromPop && previousKey) saveNow(previousKey);
     keyRef.current = historyKey();
     setVisit(visitOrigin());
     const anchorChanged = route.anchor !== lastAnchor.current;
@@ -627,6 +655,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [structure, stage],
   );
 
+  // The Back control on the next page names the section the reader left.
+  const placeAnchor = useRef(currentAnchor);
+  placeAnchor.current = currentAnchor;
+  useEffect(() => namePlace(() => placeLabel(placeAnchor.current)), [placeLabel]);
+
   const originHere = useCallback(
     (anchor: string | undefined): VisitOrigin => ({ key: keyRef.current, stage, anchor, label: placeLabel(anchor) }),
     [stage, placeLabel],
@@ -661,6 +694,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // Only when the passage being read changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [followAnchor]);
+
+  // An address naming a record and no place in the paper opens at that record's
+  // statement, once the alignment says where it is, unless the reader has moved on.
+  const coldRecord = useRef(!initial.saved && !route.at && !route.anchor && !!route.node);
+  useEffect(() => {
+    if (!coldRecord.current || !route.node || !alignment) return;
+    coldRecord.current = false;
+    if (window.scrollY > 8) return;
+    const slice = bestSlice(alignment, stage, route.node);
+    const anchor = slice?.anchor ?? firstPassageFor(structure, [route.node]) ?? undefined;
+    if (slice || anchor) navigate({ ...here, at: slice ? sliceAt(slice) : undefined, anchor }, { replace: true });
+  }, [alignment, here, route.node, stage, structure]);
 
   const openInspector = useCallback((anchor: string | null, opener: HTMLElement | null) => {
     inspectOpener.current = opener;

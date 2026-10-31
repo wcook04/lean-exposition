@@ -9,6 +9,7 @@ import type { Stage } from "../api/types";
 import { useEdition } from "../app/data";
 import { statedIn } from "../app/papers";
 import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { kindName } from "../map/labels";
 import { mainGoal, sectionLabel, startingGoals } from "../map/TheoremPlate";
 import { goalFor, reach, scopedGraph, usesOf } from "../map/treeModel";
@@ -68,13 +69,13 @@ export function StepBench({ route }: { route: CompareRoute }) {
   const scoped = useMemo(() => scopedGraph(graph, goal), [graph, goal]);
   const outline = useMemo(() => argumentOutline(scoped, goal), [scoped, goal]);
   const node = asked ?? goal;
-  const [levelFilter, setLevelFilter] = useState<LevelFilter>("all");
+  const [levelFilter, setLevelFilter] = useEntryState<LevelFilter>("bench-level", "all");
   const listed = useMemo(() => filterByLevel(outline, levelFilter, scoped), [outline, levelFilter, scoped]);
   const stepAt = listed.findIndex((row) => row.id === node);
 
   const titleOf = useCallback((id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id), [graph]);
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useEntryState("bench-filter", "");
   const visible = useMemo(() => filterOutline(listed, query, (id) => `${titleOf(id)} ${graph.nodes.get(id)?.label ?? ""}`), [listed, query, titleOf, graph]);
 
   // The levels the reader chose: the address first, then what they chose last time.

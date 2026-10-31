@@ -271,7 +271,7 @@ export function placeOf(route: Route): string {
     case "compare":
       return "Compare";
     case "lean":
-      return route.decl ?? "the Lean";
+      return route.decl?.split(".").pop() ?? "the Lean";
     case "about":
       return "About";
     case "search":

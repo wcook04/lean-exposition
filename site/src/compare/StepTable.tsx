@@ -7,6 +7,7 @@ import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 import type { RecordAlignment } from "../api/lean";
 import { useEdition } from "../app/data";
 import { LEVELS, navigate, routeHref, type Level, type Route } from "../app/router";
+import { useEntryState } from "../app/trail";
 import { LINK_CAVEAT } from "../lean/data";
 import { LazyLeanBlock } from "../lean/lazy";
 import { sectionLabel, mainGoal } from "../map/TheoremPlate";
@@ -52,7 +53,7 @@ export function StepTable({ route }: { route: CompareRoute }) {
 
   const titleOf = useCallback((id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id), [graph]);
   const rowTitle = useCallback((row: Row) => [row.id, ...row.also].map(titleOf).join(" "), [titleOf]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useEntryState("table-filter", "");
   const rows = useMemo(() => filterOutline(listed, query, (id) => rowTitle(rowFor(listed, id)!)), [listed, query, rowTitle]);
 
   const scroller = useRef<HTMLDivElement>(null);
