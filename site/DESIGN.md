@@ -698,6 +698,25 @@ something else.
   That delay was most of the wait on every page. Pages, the Lean viewer, the typesetter and
   the reader's map pane go through `code()` (`src/app/code.ts`), which answers at once when the
   module is here, and `main.tsx` starts the opened page's code before anything renders.
+- **A paper's words are in its HTML.** The build runs each paper's opening through the page's
+  own engine (`src/reader/firstScreen.ts`) and writes it into the paper's HTML in the shape of
+  the page, so the text paints with the stylesheet, before any script. React keeps showing the
+  same markup until the paper is ready (`ReaderSkeleton`), and it sits where the page will put
+  it, to the pixel from 700px up. A page that opens anywhere but the top (a hash, a query, a
+  history entry to restore) swaps it for the empty shape before anything paints. Check with
+  scripts off and with fonts blocked after changing the reader's first screen or its measures.
+- **The stylesheet every page waits for holds no font bytes.** Fonts are never inlined
+  (`assetsInlineLimit`): a subset as a data URL is paid for by every page whether it uses those
+  characters or not. Scaled system faces (`tokens.css`) stand in until the fonts land, so no
+  line breaks differently when they do.
+- **A page loads the shallowest alignment that serves it.** `useAlignment` gives the core:
+  every record's Lean and every statement's place. A panel adds the one record it opens on
+  (`useRecordAlignment`), and a paper's reader adds that paper's statements
+  (`paperAlignmentResource`). Only a page that quotes all three papers takes the whole
+  (`useFullAlignment`), and a cold one fetches the single file, which is smaller than its parts.
+  TypeScript enforces this: the core's statements have no `markdown`.
+- **Every page starts from what pages read.** The map and the overview have startup forms
+  without the fields nothing reads, and on a paper the edges and evidence wait for the paper.
 - **Every preload must be used.** A link to a file nothing fetches is a wasted download, and a
   stylesheet preload needs `crossorigin` to match the request Vite makes for it. After
   changing what a route loads, check the console for preload warnings at laptop and phone width.

@@ -14,7 +14,7 @@ import { routeHref } from "../app/router";
 export const sliceAt = (slice: Pick<AlignedStatement, "start_byte" | "end_byte">): string => `b${slice.start_byte}-${slice.end_byte}`;
 
 /** The link to a statement in context: the reader lands on exactly its blocks and marks them. With a record, it opens that tie. */
-export function statementHref(statement: AlignedStatement, record?: string): string {
+export function statementHref(statement: Pick<AlignedStatement, "paper" | "anchor" | "start_byte" | "end_byte">, record?: string): string {
   return routeHref({ view: "read", stage: statement.paper, anchor: statement.anchor ?? undefined, at: sliceAt(statement), node: record });
 }
 

@@ -14,8 +14,9 @@ import { navigate, routeHref, type Route } from "../app/router";
 import { arrivedBy, namePlace, useEntryState } from "../app/trail";
 import { useCheckedWords } from "./checked";
 import { LazyStatementSlice } from "../compare/lazy";
+import { useFullAlignment } from "../compare/useAlignment";
 import { statementHref } from "../reader/links";
-import { CHALLENGE_FILE, declIn, sourceLines, kindWord, LINK_CAVEAT, MAIN_THEOREM, MINIMIZER, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, VALUE_CHALLENGE_FILE, VALUE_THEOREM, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
+import { CHALLENGE_FILE, declIn, sourceLines, kindWord, LINK_CAVEAT, MAIN_THEOREM, MINIMIZER, quotedStatements, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, VALUE_CHALLENGE_FILE, VALUE_THEOREM, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
 import { rankNames } from "./find";
 import { folderLabel, FOLDER_WORDS } from "./folders";
 import { CopyName, DeclView, LeanBlock, SourceLink, usesOf } from "./LeanBlock";
@@ -407,13 +408,14 @@ function linesFor(statement: AlignedStatement, name: string): readonly [number, 
 
 function Quote({ row, name, onPoint }: { row: PaperStatement; name: string; onPoint(lines: readonly [number, number] | undefined): void }) {
   const { statement } = row;
-  const lines = linesFor(statement, name);
+  const quoted = "markdown" in statement ? statement : null;
+  const lines = quoted ? linesFor(quoted, name) : undefined;
   return (
     <section className="lean-quote" aria-label={`${PAPER_NAMES[statement.paper].short}, ${statement.section}`} onPointerEnter={() => onPoint(lines)} onPointerLeave={() => onPoint(undefined)}>
       <p className="lean-quote__where">
         <strong>{PAPER_NAMES[statement.paper].short}</strong> {statement.section}
       </p>
-      <LazyStatementSlice statement={statement} compact />
+      {quoted && <LazyStatementSlice statement={quoted} compact />}
       <a className="lean-quote__go" href={statementHref(statement)} onFocus={() => onPoint(lines)} onBlur={() => onPoint(undefined)}>
         Read in context
       </a>
@@ -449,7 +451,8 @@ function RecordRow({ record, recordStatements }: { record: LinkedRecord; recordS
 }
 
 function Papers({ decl, shell, onPoint }: { decl: LeanDeclaration; shell: LeanShell; onPoint(lines: readonly [number, number] | undefined): void }) {
-  const all = shell.statements?.get(decl.name) ?? [];
+  const full = useFullAlignment();
+  const all = (full ? quotedStatements(full) : shell.statements)?.get(decl.name) ?? [];
   const records = shell.linked.get(decl.name) ?? [];
   const first = STAGE_ORDER.flatMap((stage) => all.find((row) => row.statement.paper === stage) ?? []).sort((a, b) => all.indexOf(a) - all.indexOf(b));
   return (

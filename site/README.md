@@ -89,6 +89,15 @@ and change no paper file. An alignment row that fails is printed and left out, s
 reading edition survives a file still being written;
 `lean-exposition check-alignment examples/qaoa-sk/alignment` is the strict check.
 
+`alignment.json` stays whole for anyone reading the edition. The site mostly reads it in
+parts, which only the static edition has: `alignment/core.json` holds every record's Lean
+and every statement's place, `alignment/<paper>.json` what that paper's statements add
+(their words, their Lean rows and any note), and `/alignment/record?id=…` one record whole.
+The core and the three paper files together are exactly `alignment.json`, which
+`tests/static-edition.test.ts` checks. The startup forms
+`/overview?representation=reader` and `/graph?…representation=reader_map` leave out fields
+no page reads and name them in `omitted_fields`. The full responses stay published.
+
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and
 `site/dist/` are generated output and stay out of the source repository.

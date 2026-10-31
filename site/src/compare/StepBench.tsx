@@ -40,7 +40,7 @@ import {
   type OutlineRow,
   type Slot,
 } from "./model";
-import { shortTitle, useAlignment } from "./useAlignment";
+import { shortTitle, useFullAlignment } from "./useAlignment";
 import { useWidth } from "./useWidth";
 import { WalkingLean } from "./WalkingLean";
 
@@ -49,7 +49,7 @@ type CompareRoute = Extract<Route, { view: "compare" }>;
 export function StepBench({ route }: { route: CompareRoute }) {
   const edition = useEdition();
   const { graph } = edition;
-  const alignment = useAlignment();
+  const alignment = useFullAlignment();
   const width = useWidth();
   const stacked = width < STACK_BELOW;
 
