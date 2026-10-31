@@ -6,6 +6,7 @@
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { Stage } from "../api/types";
+import { BackControl } from "./BackControl";
 import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
@@ -99,6 +100,7 @@ export function TopBar({ route, onSearch }: Props) {
           Checks
         </a>
       </nav>
+      {route.view !== "read" && <BackControl />}
       <div className="topbar__tools">
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About
