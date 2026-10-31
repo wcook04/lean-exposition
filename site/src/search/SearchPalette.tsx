@@ -13,9 +13,10 @@ import type { SearchItem } from "../api/types";
 import { describeError, useEdition } from "../app/data";
 import { navigate, routeHref, type SearchType } from "../app/router";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
-import { destination, LeanResultBody, nounFor, opensBeside, ResultBody, SEARCH_HELP, typeOfTable } from "./results";
+import { destination, LeanResultBody, mainStep, nounFor, opensBeside, ResultBody, SEARCH_HELP, stepTitles, typeOfTable } from "./results";
+import { bestMatches, leanShaped, plainSteps } from "./order";
 import { rankedSearch } from "./rank";
-import { leanNames, searchLean, type LeanHit } from "./leanNames";
+import { leanNames, searchLean, searchModules, type LeanHit, type ModuleHit } from "./leanNames";
 import { searchPapers, searchStatements } from "./corpus";
 import { alignmentResource } from "../compare/useAlignment";
 import { showInHost } from "../lean/walk";
@@ -35,16 +36,16 @@ const TABLES: { table: string; limit: number }[] = [
 
 const LEAN_LIMIT = 4;
 
-type GroupId = "start" | "map" | "statements" | "sections" | "text" | "lean" | "other";
+type GroupId = "start" | "best" | "map" | "statements" | "sections" | "text" | "lean" | "other";
 
 const GROUP_TABLES: Partial<Record<GroupId, string[]>> = {
-  map: ["nodes"],
   sections: ["sections"],
   other: ["citations", "sources", "evidence"],
 };
 
 const GROUP_TITLES: Record<GroupId, string> = {
   start: "Places to start",
+  best: "Best match",
   map: "Steps on the argument map",
   statements: "Statements in the papers",
   sections: "Section headings",
@@ -54,6 +55,7 @@ const GROUP_TITLES: Record<GroupId, string> = {
 };
 
 const PAPER_LIMIT = 3;
+const STEP_LIMIT = 4;
 
 interface Option {
   key: string;
@@ -73,13 +75,13 @@ interface Results {
   q: string;
   byTable: Map<string, { items: SearchItem[]; total: number }>;
   lean: LeanHit[];
+  modules: ModuleHit[];
+  /** Every matching step, best first. */
+  steps: SearchItem[];
   statements: SearchItem[];
   /** Null until the papers' text has been read. */
   text: SearchItem[] | null;
 }
-
-/** Whether the words typed are a declaration's name: the name then comes before everything. */
-const exactName = (results: Results) => results.lean[0]?.tier === 0;
 
 type Phase = { status: "idle" } | { status: "loading" } | { status: "ready" } | { status: "error"; message: string };
 
@@ -131,7 +133,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
           }));
           const terms = new Map(alignment?.dictionary.map((term) => [term.name, term]));
           const linked = new Set(Object.values(alignment?.records ?? {}).flatMap((record) => record.lean.map((row) => row.name)));
-          setResults({ q, byTable, lean: names ? searchLean(names, q, { terms, rests: (name) => linked.has(name) }) : [], statements, text: null });
+          setResults({ q, byTable, lean: names ? searchLean(names, q, { terms, rests: (name) => linked.has(name) }) : [], modules: names ? searchModules(names, q) : [], steps: ranked.get("nodes") ?? [], statements, text: null });
           setPhase({ status: "ready" });
           setActive(0);
           // The papers' text arrives after the rest, and joins the list without moving what is above it.
@@ -205,20 +207,39 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         out.push({ key: `more:${group}`, group, more: true, title: `See all ${total} matching ${noun}`, href: routeHref({ view: "search", q: results.q, type: first }) });
       }
     };
-    const paper = (group: GroupId, items: readonly SearchItem[], type: SearchType) => {
-      for (const item of items.slice(0, PAPER_LIMIT)) out.push({ key: item.ref, group, item });
-      if (items.length > PAPER_LIMIT) out.push({ key: `more:${group}`, group, more: true, title: `See all ${items.length} matching ${nounFor(type, items.length)}`, href: routeHref({ view: "search", q: results.q, type }) });
+    const paper = (group: GroupId, items: readonly SearchItem[], type: SearchType, skip: readonly SearchItem[]) => {
+      const rest = items.filter((item) => !skip.includes(item));
+      for (const item of rest.slice(0, PAPER_LIMIT)) out.push({ key: item.ref, group, item });
+      if (rest.length > PAPER_LIMIT) out.push({ key: `more:${group}`, group, more: true, title: `See all ${items.length} matching ${nounFor(type, items.length)}`, href: routeHref({ view: "search", q: results.q, type }) });
     };
-    const exact = exactName(results);
-    if (exact) lean();
-    tables("map", GROUP_TABLES.map!);
-    paper("statements", results.statements, "statements");
+    const steps = stepTitles(graph, mainStep(overview, graph));
+    const best = bestMatches({ q: results.q, steps: results.steps, statements: results.statements, text: results.text ?? [] }, steps);
+    for (const item of best) out.push({ key: `best:${item.ref}`, group: "best", item });
+
+    // Raw Lean names come last, unless what was typed is itself a Lean name.
+    const leanFirst = leanShaped(results.q);
+    const modules = () => {
+      for (const hit of results.modules.slice(0, 3)) {
+        out.push({ key: `module:${hit.module}`, group: "lean", title: hit.file, lean: true, meta: hit.challenge ? "The Comparator challenge file" : `Lean module, ${hit.module}`, href: routeHref({ view: "lean", module: hit.module }) });
+      }
+    };
+    if (leanFirst) {
+      modules();
+      lean();
+    }
+    paper("statements", results.statements, "statements", best);
+    const plainRows = plainSteps(results.steps, steps).filter((item) => !best.includes(item));
+    for (const item of plainRows.slice(0, STEP_LIMIT)) out.push({ key: `nodes:${item.ref}`, group: "map", item });
+    if (plainRows.length > STEP_LIMIT) out.push({ key: "more:map", group: "map", more: true, title: `See all ${results.steps.length} matching ${nounFor("records", results.steps.length)}`, href: routeHref({ view: "search", q: results.q, type: "records" }) });
     tables("sections", GROUP_TABLES.sections!);
-    paper("text", results.text ?? [], "text");
-    if (!exact) lean();
+    paper("text", results.text ?? [], "text", best);
     tables("other", GROUP_TABLES.other!);
+    if (!leanFirst) {
+      modules();
+      lean();
+    }
     return out;
-  }, [results, starts, text]);
+  }, [results, starts, text, graph, overview]);
 
   const groups = useMemo(() => {
     const seen: GroupId[] = [];
@@ -237,7 +258,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
         },
         { shown: 0, total: 0 },
       );
-    t.map = sum(["nodes"]);
+    t.map = { shown: Math.min(STEP_LIMIT, results.steps.length), total: results.steps.length };
     t.sections = sum(["sections"]);
     t.other = sum(["citations", "sources", "evidence"]);
     t.lean = { shown: Math.min(LEAN_LIMIT, results.lean.length), total: results.lean.length };
@@ -328,7 +349,7 @@ export function SearchPalette({ onClose }: { onClose: () => void }) {
       </>
     );
   else if (results) {
-    const total = [...results.byTable.values()].reduce((s, p) => s + p.total, results.lean.length + results.statements.length + (results.text?.length ?? 0));
+    const total = [...results.byTable.values()].reduce((s, p) => s + p.total, results.lean.length + results.modules.length + results.statements.length + (results.text?.length ?? 0));
     status = (
       <>
         {total} {total === 1 ? "match" : "matches"} in all.{" "}

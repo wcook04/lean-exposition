@@ -492,6 +492,11 @@ html[data-view="compare"] .app {
   border-left: 1px solid var(--rule);
 }
 
+/* Lean wraps by the line: its column keeps a measure, whatever the other columns hold. */
+.bench-col--lean {
+  flex: 0 0 clamp(460px, 44%, 640px);
+}
+
 .bench-levels > :first-child {
   border-left: 0;
 }
@@ -820,6 +825,14 @@ html[data-view="compare"] .app {
 .trow__cells {
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+}
+
+/* Lean's column is the wider one, so code wraps at the line and not at each token. */
+@media (min-width: 1000px) {
+  .table-scroll[data-lean] .table-names,
+  .table-scroll[data-lean] .trow__cells {
+    grid-template-columns: minmax(420px, 1.35fr) repeat(calc(var(--cols) - 1), minmax(0, 1fr));
+  }
 }
 
 .table-names {

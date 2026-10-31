@@ -3,6 +3,7 @@
 
 import { loadLeanNames, type DictionaryTerm, type LeanKind, type LeanNames } from "../api/lean";
 import { inMainTree, isChallengeCopy, matchName } from "../lean/find";
+import { holdsWord, spellings } from "./rank";
 
 export interface LeanHit {
   name: string;
@@ -41,9 +42,11 @@ function endsPart(name: string, end: number): boolean {
 function partHits(name: string, folded: string, token: string): [number, number][] {
   const out: [number, number][] = [];
   const whole = Array.from(token).length <= 2;
-  for (let at = folded.indexOf(token); at >= 0; at = folded.indexOf(token, at + 1)) {
-    const end = at + token.length;
-    if (startsPart(name, at) && (!whole || endsPart(name, end))) out.push([at, end]);
+  for (const form of spellings(token)) {
+    for (let at = folded.indexOf(form); at >= 0; at = folded.indexOf(form, at + 1)) {
+      const end = at + form.length;
+      if (startsPart(name, at) && (!whole || endsPart(name, end))) out.push([at, end]);
+    }
   }
   return out;
 }
@@ -62,7 +65,8 @@ function score(name: string, short: string, hits: [number, number][][]): number 
 }
 
 function tierOf(folded: string, shortFolded: string, tokens: readonly string[]): number {
-  const tiers = [tokens.join("_"), tokens.join("")].map((joined) => matchName(folded, shortFolded, joined));
+  const forms = [tokens, tokens.map((token) => spellings(token).at(-1) as string)];
+  const tiers = forms.flatMap((words) => [words.join("_"), words.join("")]).map((joined) => matchName(folded, shortFolded, joined));
   return Math.min(...tiers.map((tier) => tier ?? SCATTERED));
 }
 
@@ -95,7 +99,7 @@ export function searchLean(index: LeanNames, q: string, { terms, rests }: LeanSe
     if (isChallengeCopy(module) && inTree.has(name)) continue;
     const folded = name.toLowerCase();
     const term = terms?.get(name);
-    const hits = tokens.every((t) => folded.includes(t)) ? tokens.map((t) => partHits(name, folded, t)) : null;
+    const hits = tokens.every((t) => holdsWord(folded, t)) ? tokens.map((t) => partHits(name, folded, t)) : null;
     const byName = hits !== null && !hits.some((h) => h.length === 0);
     if (!byName && !(term && termSays(term, tokens))) continue;
     const short = name.slice(name.lastIndexOf(".") + 1);
@@ -105,6 +109,25 @@ export function searchLean(index: LeanNames, q: string, { terms, rests }: LeanSe
     });
   }
   return found.sort((a, b) => a.hit.tier - b.hit.tier || b.score - a.score || a.hit.name.localeCompare(b.hit.name)).map((f) => f.hit);
+}
+
+export interface ModuleHit {
+  module: string;
+  /** The file, as a reader knows it. */
+  file: string;
+  challenge: boolean;
+}
+
+/** Modules whose file name is what was typed, or starts with it. */
+export function searchModules(index: LeanNames, q: string): ModuleHit[] {
+  const typed = q.trim().toLowerCase().replace(/\.lean$/, "");
+  if (typed.length < 3 || /\s/.test(typed)) return [];
+  const hits = index.modules.flatMap((module) => {
+    const file = module.slice(module.lastIndexOf(".") + 1);
+    const lower = file.toLowerCase();
+    return lower === typed || lower.startsWith(typed) ? [{ module, file: `${file}.lean`, challenge: isChallengeCopy(module), exact: lower === typed }] : [];
+  });
+  return hits.sort((a, b) => Number(b.exact) - Number(a.exact) || Number(b.challenge) - Number(a.challenge) || a.file.localeCompare(b.file)).map(({ exact: _exact, ...hit }) => hit);
 }
 
 /** The name in pieces, each marked or not, for highlighting. */

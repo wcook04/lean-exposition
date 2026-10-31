@@ -326,7 +326,7 @@ function Columns({ id, record, slots }: { id: string; record: RecordAlignment; s
     <div className="bench-levels">
       {slots.map((slot) =>
         slot.state === "column" ? (
-          <section key={slot.level} className="bench-col" style={{ flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
+          <section key={slot.level} className={`bench-col${slot.level === "lean" ? " bench-col--lean" : ""}`} style={slot.level === "lean" ? undefined : { flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
             <ColumnHead level={slot.level} />
             <div className="bench-col__scroll" tabIndex={0} data-scrolls="" aria-label={`${LEVEL_NAMES[slot.level]}, its text for this step`}>
               <LevelBody id={id} record={record} level={slot.level} />

@@ -24,6 +24,31 @@ function lower(text: string): string {
 
 const WORD = /[\p{L}\p{N}]/u;
 
+/** Stems that take -ise in British spelling and -ize in American. */
+const IZE = /(minim|maxim|optim|normal|regular|general|character|stabil|real|organ|recogn|parametr|discret|symmetr|factor|local|penal|central|summar|util|uniform|marginal)(is|iz)/;
+const PAIRS: [string, string][] = [["neighbour", "neighbor"], ["colour", "color"], ["behaviour", "behavior"], ["centre", "center"], ["fibre", "fiber"], ["analyse", "analyze"], ["modelling", "modeling"], ["labelled", "labeled"]];
+
+/** A word and its other spelling, British or American, so either finds both. */
+export function spellings(token: string): string[] {
+  const forms = new Set([token]);
+  const stem = IZE.exec(token);
+  if (stem) {
+    forms.add(token.replace(IZE, "$1is"));
+    forms.add(token.replace(IZE, "$1iz"));
+  }
+  for (const [british, american] of PAIRS) {
+    if (token.includes(british)) forms.add(token.replace(british, american));
+    if (token.includes(american)) forms.add(token.replace(american, british));
+  }
+  return [...forms];
+}
+
+/** One spelling for comparing whole titles. */
+export const canonicalWord = (word: string) => spellings(word).sort()[0];
+
+/** Whether a text holds a word in either spelling; a cheap test before the real one. */
+export const holdsWord = (text: string, token: string) => spellings(token).some((form) => text.includes(form));
+
 /** A token this short, or made of digits, would otherwise match inside "atom" or "25". */
 function wholeWordOnly(token: string): boolean {
   return Array.from(token).length <= 2 || /^[\p{N}.,/]+$/u.test(token);
@@ -60,13 +85,15 @@ export function wordHits(text: string, tokens: readonly string[], skip: readonly
   const hits: Hit[] = [];
   tokens.forEach((token, index) => {
     const whole = wholeWordOnly(token);
-    for (let at = text.indexOf(token); at >= 0; at = text.indexOf(token, at + 1)) {
-      const end = at + token.length;
-      if (!startsWord(text, at)) continue;
-      const isWhole = endsWord(text, end);
-      if (whole && !isWhole) continue;
-      if (skip.some(([a, b]) => at >= a && at < b)) continue;
-      hits.push({ token: index, start: at, end, whole: isWhole });
+    for (const form of spellings(token)) {
+      for (let at = text.indexOf(form); at >= 0; at = text.indexOf(form, at + 1)) {
+        const end = at + form.length;
+        if (!startsWord(text, at)) continue;
+        const isWhole = endsWord(text, end);
+        if (whole && !isWhole) continue;
+        if (skip.some(([a, b]) => at >= a && at < b)) continue;
+        hits.push({ token: index, start: at, end, whole: isWhole });
+      }
     }
     const word = NUMBER_WORDS[token];
     if (!word) return;
@@ -265,7 +292,7 @@ export function rankRows(rows: readonly IndexRow[], q: string, fold: Fold = lowe
   const found: { table: string; item: () => SearchItem; score: number; i: number }[] = [];
   rows.forEach((row, i) => {
     const folded = fold(row.text);
-    if (!tokens.every((t) => folded.includes(t))) return;
+    if (!tokens.every((t) => holdsWord(folded, t))) return;
     const scored = scoreText(row.table, folded, tokens);
     if (scored) found.push({ table: row.table, item: () => itemFrom(row, folded, scored), score: scored.score, i });
   });
