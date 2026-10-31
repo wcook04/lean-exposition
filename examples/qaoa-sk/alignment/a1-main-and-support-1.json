@@ -8,7 +8,7 @@
           "file": "OAI/Probability/SKSupport/Main.lean",
           "name": "full_support",
           "relation": "states",
-          "note": "Conditional on a minimiser. Every minimising order parameter on the given Brownian system satisfies the conclusion."
+          "note": "Support model, conditional on a minimiser: every minimising order parameter on the given Brownian system satisfies the conclusion."
         },
         {
           "file": "OAI/Probability/SKSupport/Model.lean",
@@ -81,8 +81,8 @@
         {
           "file": "OAI/Probability/SKValue/Main.lean",
           "name": "value_consequences",
-          "relation": "states",
-          "note": "Three conjuncts: scalar value, finite Gaussian convergence, and ground-state value equals Parisi value."
+          "relation": "contains",
+          "note": "Scalar model. Three conjuncts: scalar value, finite Gaussian convergence, and ground-state value equals Parisi value."
         },
         {
           "file": "OAI/Probability/SKValue/Model.lean",
@@ -218,13 +218,13 @@
           "file": "OAI/Probability/SKSupport/Model.lean",
           "name": "OrderParameter",
           "relation": "defines",
-          "note": "Nonnegative, monotone, right-continuous and integrable on [0,1)."
+          "note": "Support model: nonnegative, monotone, right-continuous and integrable on [0,1)."
         },
         {
           "file": "OAI/Probability/SKSupport/Model.lean",
           "name": "IsMinimizer",
           "relation": "defines",
-          "note": "Minimal among order parameters, with the Parisi value computed on the given Brownian system."
+          "note": "Support model: minimal among order parameters, with the Parisi value computed on the given Brownian system."
         },
         {
           "file": "OAI/Probability/SKSupport/Model.lean",
@@ -277,15 +277,15 @@
       "lean": [
         {
           "file": "OAI/Probability/SKValue/Model.lean",
-          "name": "OrderParameter",
-          "relation": "defines",
-          "note": "Coefficient on the real line; the conditions apply on [0,1) and integrability on (0,1]."
-        },
-        {
-          "file": "OAI/Probability/SKValue/Model.lean",
           "name": "IsMinimizer",
           "relation": "defines",
           "note": "Same form as the support model, with this model's own functional."
+        },
+        {
+          "file": "OAI/Probability/SKValue/Model.lean",
+          "name": "OrderParameter",
+          "relation": "defines",
+          "note": "Coefficient on the real line; the conditions apply on [0,1) and integrability on (0,1]."
         },
         {
           "file": "OAI/Probability/SKValue/Model.lean",
@@ -334,13 +334,13 @@
           "file": "OAI/Probability/SKValue/Model.lean",
           "name": "IsDiffusion",
           "relation": "defines",
-          "note": "Stopped process adapted, almost surely continuous on [0,1], and solving the integral equation there."
+          "note": "Scalar model: stopped process adapted, almost surely continuous on [0,1], and solving the integral equation there."
         },
         {
           "file": "OAI/Probability/SKValue/Main.lean",
           "name": "value_consequences",
-          "relation": "contains",
-          "note": "The premise sits in its first two clauses. The second also takes 0<T and T<1. The third omits it."
+          "relation": "part",
+          "note": "Uses this premise as a hypothesis of its first two clauses, with 0<T and T<1 in the second. The third omits it."
         }
       ],
       "statements": [
@@ -570,8 +570,8 @@
         {
           "file": "OAI/Probability/SKSupport/Diffusion/DiffusionStability.lean",
           "name": "positivePath_error",
-          "relation": "proof",
-          "note": "Coupling bound for one finite-step approximating path, with the error given by coefficient and gradient differences."
+          "relation": "part",
+          "note": "Not part of existence or uniqueness. Stability bound between a finite-step path and the diffusion, used in the plateau limit."
         }
       ],
       "statements": [
@@ -630,6 +630,12 @@
           "relation": "part",
           "note": "Nonnegativity and the bound by one. The value at zero is squareMoment_zero.",
           "clause": "0 ≤ squareMoment W γ (diffusion W γ) t ∧ |squareMoment W γ (diffusion W γ) t| ≤ 1"
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Moments/StripSquareMoment.lean",
+          "name": "squareMoment_zero",
+          "relation": "part",
+          "note": "q(0)=0 for the constructed diffusion."
         }
       ],
       "statements": [
@@ -665,7 +671,7 @@
         {
           "file": "OAI/Probability/SKSupport/Support/VariationIntegrals.lean",
           "name": "parisi_chord_derivative",
-          "relation": "proof",
+          "relation": "part",
           "note": "Limit along sampled chord steps towards another order parameter, a weaker form than the real-parameter right derivative."
         },
         {
@@ -719,6 +725,12 @@
       "short": "Potential vanishes on support",
       "lean": [
         {
+          "file": "OAI/Probability/SKSupport/Support/Closure.lean",
+          "name": "zero_on_support_of_compact_mass_removal",
+          "relation": "proof",
+          "note": "Generic step: a continuous nonnegative G with those compact integrals vanishes on the support."
+        },
+        {
           "file": "OAI/Probability/SKSupport/Support/ContactPotential.lean",
           "name": "contactPotential_nonneg",
           "relation": "part",
@@ -730,12 +742,6 @@
           "name": "contactPotential_compact_mass_removal",
           "relation": "proof",
           "note": "The integral of G over a compact set is at most zero."
-        },
-        {
-          "file": "OAI/Probability/SKSupport/Support/Closure.lean",
-          "name": "zero_on_support_of_compact_mass_removal",
-          "relation": "proof",
-          "note": "Generic step: a continuous nonnegative G with those compact integrals vanishes on the support."
         }
       ],
       "statements": [
@@ -843,6 +849,24 @@
           "name": "forwardBoundary",
           "relation": "defines",
           "note": "Recursive forward factor, whose step subtracts the height change times the backward value, the jump rule."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
+          "name": "certificate_growth",
+          "relation": "part",
+          "note": "Exponential bounds on F2 and its divergence, the tail input actually used. The paper's tail expansions of l and s are not stated."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/GaussianTails.lean",
+          "name": "gaussian_expBound_tendsto_zero",
+          "relation": "part",
+          "note": "An exponentially bounded function times a Gaussian factor tends to zero at plus infinity, which removes the flux at the far end."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Foundations/SoftAbs.lean",
+          "name": "softAbs",
+          "relation": "defines",
+          "note": "The smooth terminal value log(2 cosh Mx)/M."
         }
       ],
       "statements": [
@@ -870,17 +894,17 @@
       "short": "Backward shape signs",
       "lean": [
         {
+          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
+          "name": "finiteHead_backward_shape",
+          "relation": "part",
+          "note": "Within a step on a uniform mesh. Backward signs only: the forward s claims and the quotient extension at zero are not here.",
+          "clause": "BackwardShape (fun x => (c i:ℝ)*deriv (finiteValue c h (softAbs M) (N+1) i t) x)"
+        },
+        {
           "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
           "name": "BackwardShape",
           "relation": "defines",
           "note": "Odd, v>0, w<=0, rH<=0 and r^2 H_x>=0, the last two as Burgers rate and Wronskian."
-        },
-        {
-          "file": "OAI/Probability/SKSupport/Backward/GaussianBackwardShapes.lean",
-          "name": "finiteHead_backward_shape",
-          "relation": "part",
-          "note": "Within a step on a uniform mesh. Quotient extension at zero is not included.",
-          "clause": "BackwardShape (fun x => (c i:ℝ)*deriv (finiteValue c h (softAbs M) (N+1) i t) x)"
         },
         {
           "file": "OAI/Probability/SKSupport/Backward/BackwardRescale.lean",
@@ -977,10 +1001,23 @@
       "short": "Zero expected divergence",
       "lean": [
         {
+          "file": "OAI/Probability/SKValue/Coercivity/ZeroFlux.lean",
+          "name": "integral_W_zero",
+          "relation": "states",
+          "note": "Scalar model only: the whole-line integral of W(F2) against f is zero, under growth hypotheses. The support model has no declaration for this."
+        },
+        {
+          "file": "OAI/Probability/SKSupport/Density/GaussianLogDensity.lean",
+          "name": "gaussian_shape_coercivity",
+          "relation": "proof",
+          "note": "Support model: its proof integrates the divergence over the half-line and gets zero, the step the Lean actually takes here.",
+          "clause": "(∫ x in Ioi (0:ℝ), certDivergence r s ρ x)=0"
+        },
+        {
           "file": "OAI/Probability/SKSupport/Density/FiniteForwardRatio.lean",
           "name": "cert_flux_derivative",
           "relation": "part",
-          "note": "The divergence identity for the certificate polynomial F2 only, at points where r is nonzero.",
+          "note": "Support model: the divergence identity for F2, where r is nonzero. The zero integral is a proof step of gaussian_shape_coercivity; only scalar integral_W_zero states it.",
           "clause": "HasDerivAt (certFlux r s ρ) (certDivergence r s ρ x) x"
         },
         {

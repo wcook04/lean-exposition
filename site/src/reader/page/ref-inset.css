@@ -25,6 +25,11 @@
   content: none;
 }
 
+/* The strip keeps the height it has with a Back in it: the first open must not move the paper. */
+.reader .reader-strip {
+  min-height: 45px;
+}
+
 /* ---- Where a jump lands ------------------------------------------------------------ */
 
 .reader .paper.prose [data-landed] {
@@ -114,6 +119,36 @@
 
 .ref-inset__close {
   margin-left: auto;
+}
+
+/* A source's card: the entry from the paper's own list, set small on a well of its own. */
+.ref-inset--card {
+  padding: var(--space-2) var(--space-3);
+  border-left: 0;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.ref-inset--card .ref-inset__text {
+  font-size: 15px;
+  line-height: 1.46;
+  color: var(--ink-2);
+}
+
+.ref-inset--nested {
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--rule);
+}
+
+/* What the source is cited for stays in sight: its theorem number, its page. */
+.ref-inset__locator,
+.ref-preview__locator {
+  margin: 0 0 2px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
 /* ---- The preview, which stands in for the Lean on the right page. --------------------- */

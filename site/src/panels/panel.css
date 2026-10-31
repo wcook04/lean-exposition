@@ -1482,3 +1482,27 @@
 .rels__decl {
   display: block;
 }
+
+/* A short window: the peek keeps the name and the way in, and the map keeps the height. */
+@media (max-height: 520px) and (max-width: 900px) {
+  .panel[data-sheet="peek"] .panel__levels,
+  .panel[data-sheet="peek"] .panel__route {
+    display: none;
+  }
+
+  .panel[data-sheet="peek"] .panel__title {
+    font-size: 1.125rem;
+  }
+
+  .panel[data-sheet="peek"] .panel__head {
+    padding-bottom: 8px;
+  }
+
+  .panel[data-sheet="peek"] .panel__peek {
+    margin-top: 6px;
+  }
+
+  .panel[data-sheet="peek"] .panel__action {
+    min-height: 34px;
+  }
+}

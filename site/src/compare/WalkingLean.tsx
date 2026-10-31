@@ -5,6 +5,7 @@
 import type { ReactNode } from "react";
 import type { AlignedLean } from "../api/lean";
 import { useEntryState } from "../app/trail";
+import { useBarLine } from "../lean/barLine";
 import { LazyLeanBlock } from "../lean/lazy";
 import type { LeanWalk } from "../lean/walk";
 import { useAlignment } from "./useAlignment";
@@ -27,6 +28,7 @@ export function WalkingLean({ row, place, bare, foot }: Props) {
   const here = path[path.length - 1];
   const before = path[path.length - 2]?.name ?? row.name;
   const walk = (next: LeanWalk) => setPath([...path, next]);
+  const previewSlot = useBarLine();
   return (
     <>
       {here && (
@@ -35,9 +37,9 @@ export function WalkingLean({ row, place, bare, foot }: Props) {
         </button>
       )}
       {here ? (
-        <LazyLeanBlock key={here.name} name={here.name} module={here.module} compact bare={bare} onName={walk} />
+        <LazyLeanBlock key={here.name} name={here.name} module={here.module} compact bare={bare} onName={walk} previewSlot={previewSlot} />
       ) : (
-        <LazyLeanBlock name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} lines={row.lines} quietLines compact bare={bare} onName={walk} />
+        <LazyLeanBlock name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} lines={row.lines} quietLines compact bare={bare} onName={walk} previewSlot={previewSlot} />
       )}
       {foot?.(here ?? row)}
     </>

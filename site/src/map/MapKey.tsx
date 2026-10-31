@@ -68,7 +68,7 @@ export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElemen
               <LeanGlyph fill="none" /> Plain: no declaration is linked.
             </li>
             <li>A box is a definition and a rounded shape a result. Each step's sheet says its status in words.</li>
-            <li>Links are read by people or agents and not checked as equivalent. Whether a build ran is in each step's checks.</li>
+            <li>An AI agent read each link. No program checks that the two sides say the same thing. Whether a build ran is in each step's checks.</li>
           </ul>
           {lean && (
             <>

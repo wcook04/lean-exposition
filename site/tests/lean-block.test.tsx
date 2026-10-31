@@ -97,10 +97,12 @@ describe("LeanBlock's props", () => {
     expect(nameLink(view, "Thing").getAttribute("href")).toContain("/lean/?m=OAI.M&d=OAI.Thing");
   });
 
-  it("links source to the commit-pinned line range", async () => {
+  it("offers the whole file here first, and GitHub's pinned line range second", async () => {
     const view = await render(<DeclView decl={main} module={module} shell={shell} noTerms noDependencies noPapers />);
-    const source = [...view.querySelectorAll("a")].find((a) => a.textContent === "source")!;
-    expect(source.getAttribute("href")).toBe("https://github.com/o/r/blob/abc/lean/OAI/M.lean#L1-L3");
+    const actions = [...view.querySelectorAll<HTMLAnchorElement>(".lean-block__actions a")];
+    expect(actions.map((a) => a.textContent)).toEqual(["Whole file", "On GitHub"]);
+    expect(actions[0].getAttribute("href")).toBe("/lean?m=OAI.M&file=1-3");
+    expect(actions[1].getAttribute("href")).toBe("https://github.com/o/r/blob/abc/lean/OAI/M.lean#L1-L3");
   });
 
   it("puts the head and reading line around a scrolling middle when filling", async () => {

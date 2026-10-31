@@ -132,6 +132,10 @@ part of that Lean this one slice means:
 With only `name`, a declaration on the record keeps its row, and any other declaration
 points at its whole statement.
 
+A tie carries the first row's `relation`, so the reader can say "Lean covers part of this" for
+`part` and "Has Lean" otherwise, and a statement with `"lean": []` carries its `note`, which the
+reader shows as written where it would have said why there is no Lean.
+
 Leaving `lean` out shows the record's rows, which is a fallback: those rows are about the
 record, and nobody has said they are what this slice means. `"lean": []` says this slice
 has no Lean of its own. Use it for a passage the Lean does not contain, such as an argument
@@ -215,11 +219,13 @@ that remains a reading, recorded here as authored.
 
 ## What a reader may conclude
 
-A tie says that a person or agent read a slice of a paper and a piece of Lean and
-pointed one at the other, and that both ends still exist in the pinned bytes.
+An AI agent read the two and linked them. No independent mathematician has reviewed this,
+and no program checks that they say the same thing. A tie says that the agent read a slice
+of a paper and a piece of Lean and pointed one at the other, and that both ends still exist
+in the pinned bytes.
 
 A reader may conclude that the quoted text is in the paper at that byte range, that the
-named lines are in the pinned Lean at that line range, and that someone recorded a
+named lines are in the pinned Lean at that line range, and that an agent recorded a
 connection between them, with the stated relation and note.
 
 A reader may not conclude that the two statements are equivalent, that the Lean proves

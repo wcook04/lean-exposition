@@ -1,6 +1,9 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { tieModel } from "../src/reader/ties";
 import { heroHtml, heroLinks } from "../src/home/heroMarkup";
-import { siteFacts, withoutComments } from "../src/home/siteFacts";
+import { siteFacts, tieStops, withoutComments } from "../src/home/siteFacts";
 
 describe("what the site states about itself", () => {
   const facts = siteFacts();
@@ -11,6 +14,35 @@ describe("what the site states about itself", () => {
     expect(facts.extraction?.root).toBe("OAI.ZeroTemperatureSK.full_support");
     expect(facts.extraction?.axioms.sort()).toEqual(["Classical.choice", "Quot.sound", "propext"]);
     expect(facts.extraction?.hasSorry).toBe(false);
+  });
+
+  it("counts marked statements as the reader's stepper does", () => {
+    const edition = resolve("public/edition");
+    const responses = JSON.parse(readFileSync(resolve(edition, "index.json"), "utf8")).responses;
+    let total = 0;
+    for (const stage of ["short", "long", "expository"] as const) {
+      const body = JSON.parse(readFileSync(resolve(edition, responses[`/ties/${stage}`]), "utf8"));
+      const index = body.data ?? body;
+      expect(tieStops(index).statements).toBe(tieModel(index).stops.length);
+      expect(facts.ties?.papers[stage].statements).toBe(tieModel(index).stops.length);
+      total += index.ties.length;
+    }
+    expect(facts.ties?.total).toBe(total);
+  });
+
+  it("places Theorem 1 by its own words, whatever the order of the alignment's rows", () => {
+    const edition = resolve("public/edition");
+    const responses = JSON.parse(readFileSync(resolve(edition, "index.json"), "utf8")).responses;
+    const body = JSON.parse(readFileSync(resolve(edition, responses["/alignment"]), "utf8"));
+    const rows = (body.data ?? body).records.full_support.statements as { at: string; paper: string; markdown: string }[];
+    const named = rows.find((row) => row.paper === "short" && row.at === facts.theorem1?.at);
+    expect(named?.markdown).toMatch(/^\*\*Theorem 1/);
+  });
+
+  it("counts links to Lean from the alignment", () => {
+    expect(facts.leanLinks!.declarations).toBeLessThanOrEqual(facts.leanLinks!.links);
+    expect(facts.steps).toBeGreaterThan(0);
+    expect(facts.audit?.sampled).toBeGreaterThan(0);
   });
 
   it("finds sorry only where a Comparator challenge stands in for a proof", () => {
@@ -24,7 +56,7 @@ describe("what the site states about itself", () => {
 
   it("leaves a sentence out rather than state a number it cannot read", () => {
     const empty = siteFacts("/no/such/place", "/no/such/place");
-    expect(empty).toMatchObject({ ties: null, references: null, lean: null, theorem1: null, build: null, extraction: null, scan: null });
+    expect(empty).toMatchObject({ ties: null, steps: null, leanLinks: null, audit: null, references: null, lean: null, theorem1: null, build: null, extraction: null, scan: null });
   });
 });
 

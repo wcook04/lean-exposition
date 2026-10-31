@@ -27,9 +27,14 @@ export class Statements {
   private frame = 0;
   private widths = new Map<number, number>();
 
+  /** The one tab stop among the statements. */
+  private stop: number | null = null;
+
   constructor(
     private model: TieModel,
     parts: readonly PreparedPart[],
+    /** What a screen reader hears at the tab stop. */
+    private label: (t: number) => string = () => "Open this statement",
   ) {
     let at = 0;
     this.partOfSegment = model.index.segments.map(([start]) => {
@@ -81,6 +86,43 @@ export class Statements {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
     }
+    if (this.stop !== null && this.partOf(this.stop) === part) this.markStop(this.stop, true);
+  }
+
+  /** One tab stop, which keys and the reading line move. It stays where it was between statements. */
+  rove(t: number) {
+    if (this.stop === t) return;
+    if (this.stop !== null) this.markStop(this.stop, false);
+    this.stop = t;
+    this.markStop(t, true);
+  }
+
+  private markStop(t: number, on: boolean) {
+    const el = this.first(t);
+    if (!el) return;
+    if (on) {
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("role", "button");
+      el.setAttribute("aria-label", this.label(t));
+    } else if (document.activeElement !== el) {
+      // The element being read aloud keeps its place until focus moves on.
+      el.removeAttribute("tabindex");
+      el.removeAttribute("role");
+      el.removeAttribute("aria-label");
+    }
+  }
+
+  /** A line under a statement's last words, for what has no Lean to open. Returns its removal. */
+  noteUnder(t: number, text: string): () => void {
+    const spans = this.spans(t);
+    const block = spans[spans.length - 1]?.closest("p, li, td, blockquote, figcaption, .math-display");
+    if (!block) return () => undefined;
+    const note = document.createElement("p");
+    note.className = "tie-note";
+    note.setAttribute("role", "status");
+    note.textContent = text;
+    block.after(note);
+    return () => note.remove();
   }
 
   private queue(part: number) {
@@ -163,10 +205,7 @@ export class Statements {
     if (was !== null) this.write(kind, was, false);
     this.lit[kind] = t;
     if (t !== null) this.write(kind, t, true);
-    if (kind === "on") {
-      if (was !== null) this.first(was)?.removeAttribute("tabindex");
-      if (t !== null) this.first(t)?.setAttribute("tabindex", "0");
-    }
+    if (kind !== "point" && t !== null) this.rove(t);
   }
 
   /** The statement's marks on the page, in reading order; empty while its parts wait to render. */

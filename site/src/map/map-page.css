@@ -741,6 +741,20 @@
   .map-foot {
     padding-inline: var(--space-4);
   }
+  /* The header's controls stack rather than overprint: the lens takes a row of its own. */
+  .map-head {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "title views key"
+      "lens lens lens";
+    row-gap: 4px;
+  }
+  .map-lensbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 14px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -863,4 +877,28 @@
 
 .lean-shelf .is-chosen {
   color: var(--lit);
+}
+
+.lean-shelf__model {
+  color: var(--ink-3);
+}
+
+/* A short window, such as a laptop at 200%: the words that only label give way to the drawing. */
+@media (max-height: 520px) {
+  .goal-menu__label,
+  .map-lensbox__label {
+    display: none;
+  }
+
+  .map-head {
+    min-height: 0;
+    padding-block: 2px;
+  }
+
+  .lean-shelf {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block: 3px;
+    white-space: nowrap;
+  }
 }

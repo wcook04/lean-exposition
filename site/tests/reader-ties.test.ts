@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import type { TieIndex } from "../src/api/lean";
 import type { PaperStructure, Stage } from "../src/api/types";
 import { prepareDocument } from "../src/reader/engine";
-import { markSource, passageTopics, sameWords, segmentsIn, statementFor, statementOf, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
+import { leanTruth, markSource, passageTopics, sameWords, segmentsIn, statementFor, statementOf, stepFrom, tieCounts, tieModel, wrapTies, openMark, closeMark } from "../src/reader/ties";
 import { documentFixture, fixture, structureFixture } from "./fixtures";
 
 const PATHS: Record<Stage, string> = { long: "long/reasoning-record.md", short: "short/paper.md", expository: "expository/main.md" };
@@ -243,6 +243,24 @@ describe("the model", () => {
     expect(counts.get("s1")).toEqual({ lean: 1, all: 2 });
     expect(counts.get("s1.1")).toEqual({ lean: 0, all: 1 });
     expect(counts.get("s2")).toEqual({ lean: 0, all: 0 });
+  });
+
+  it("says what is so about the Lean: all of it, part of it, or the authors' note", () => {
+    const told = tieModel({
+      meaning: "",
+      segments: [[0, 5, [0]], [6, 9, [1]], [10, 12, [2]], [13, 14, [3]]],
+      ties: [
+        { record: "a", role: "statement", lean: true, relation: "states", name: "A", module: "M", lines: [1, 2], anchor: "p", at: "b0-5" },
+        { record: "b", role: "statement", lean: true, relation: "part", name: "B", module: "M", lines: [1, 2], anchor: "p", at: "b6-9" },
+        { record: "c", role: "statement", lean: false, note: "Not in the Lean: its theorems take a minimiser as the hypothesis.", name: null, module: null, lines: null, anchor: "p", at: "b10-12" },
+        { record: "d", role: "statement", lean: false, name: null, module: null, lines: null, anchor: "p", at: "b13-14" },
+      ],
+      passages: [],
+    });
+    expect(leanTruth(told, 0, null).words).toBe("Has Lean");
+    expect(leanTruth(told, 1, null).words).toBe("Lean covers part of this");
+    expect(leanTruth(told, 2, null).words).toBe("Not in the Lean: its theorems take a minimiser as the hypothesis.");
+    expect(leanTruth(told, 3, null).words).toBe("No Lean linked.");
   });
 
   it("copes with an edition that has no index", () => {

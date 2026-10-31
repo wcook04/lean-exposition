@@ -2,7 +2,7 @@
 // and the full results page. The kind of result is always said in words.
 
 import { useMemo } from "react";
-import type { RecordDetail, SearchItem, Stage } from "../api/types";
+import type { Overview, RecordDetail, SearchItem, Stage } from "../api/types";
 import { get } from "../api/client";
 import { useEdition, useRecord } from "../app/data";
 import { routeHref, type SearchType } from "../app/router";
@@ -14,6 +14,7 @@ import { loadDocument, sectionTitleOf, useDocument } from "../reader/documents";
 import { renderTex } from "../reader/math";
 import type { ArgGraph } from "../model/graph";
 import { prepareExcerpt, type PreparedExcerpt } from "./excerpt";
+import type { StepTitles } from "./order";
 import { markedPieces, type LeanHit } from "./leanNames";
 import { kindWord } from "../lean/data";
 import { isChallengeCopy } from "../lean/find";
@@ -21,8 +22,8 @@ import { hasLeanHost } from "../lean/walk";
 
 /** The API table behind each kind of result, in the order results are listed. */
 export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, string] }[] = [
-  { type: "records", table: "nodes", noun: ["record on the map", "records on the map"] },
   { type: "statements", table: "statements", noun: ["statement in the papers", "statements in the papers"] },
+  { type: "records", table: "nodes", noun: ["step on the map", "steps on the map"] },
   { type: "sections", table: "sections", noun: ["section heading", "section headings"] },
   { type: "text", table: "paper", noun: ["place in the papers' text", "places in the papers' text"] },
   { type: "passages", table: "passages", noun: ["linked passage", "linked passages"] },
@@ -67,6 +68,25 @@ export function LeanResultBody({ hit, beside }: { hit: LeanHit; beside?: boolean
       {hit.term?.words && <span className="palette__excerpt">{hit.term.words.replace(/`/g, "")}</span>}
     </>
   );
+}
+
+/** How search knows the steps of the argument, from the edition's graph. */
+export function stepTitles(graph: ArgGraph, main: string | null): StepTitles {
+  return {
+    main,
+    titles(id) {
+      const node = graph.nodes.get(id);
+      return node ? [node.label, shortTitle(id, node.label)] : [];
+    },
+    idOf: (item) => idFromRef(item.ref, "nodes"),
+    isDeclaration: (id) => graph.nodes.get(id)?.kind === "declaration",
+  };
+}
+
+/** The main result the long record names, as the search's first place. */
+export function mainStep(overview: Overview, graph: ArgGraph): string | null {
+  const long = overview.papers.find((paper) => paper.stage === "long");
+  return (long?.paper_scope.selected_goal_ids ?? graph.goals).find((goal) => graph.nodes.has(goal)) ?? null;
 }
 
 /** Whether a Lean result would open beside what is being read. */

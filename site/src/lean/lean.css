@@ -113,7 +113,6 @@
   line-height: 20px;
   color: var(--ink-2);
 }
-.lean-block:not(.is-fill) > .lean-slot { position: sticky; bottom: 0; z-index: 2; }
 .lean-slot:empty::before { content: "Point at a name to read its signature here."; color: var(--ink-3); }
 .lean-block.is-compact .lean-slot, .lean-slot--compact { height: 54px; margin-top: var(--space-2); padding-block: 5px; }
 /* A cell of Compare's table has room under its code, and nothing to teach at rest. */
@@ -195,6 +194,8 @@
   line-height: var(--lh-ui);
   color: var(--ink);
 }
+.lean-block__model { margin: 0 0 var(--space-2); font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-2); }
+.lean-block__model a { color: inherit; text-underline-offset: 3px; }
 .lean-block__caveat {
   margin: 2px 0 0;
   font-size: var(--fs-sm);
@@ -215,8 +216,11 @@
   gap: 0 var(--space-3);
   margin: 0;
 }
-.lean-block__head { position: relative; }
-.lean-block__head > .lean-block__actions { position: absolute; top: 0; right: 0; }
+.lean-block__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-3); align-items: baseline; }
+.lean-block__head > :not(.lean-block__title, .lean-block__actions) { grid-column: 1 / -1; }
+@container (max-width: 420px) {
+  .lean-block__head { grid-template-columns: minmax(0, 1fr); }
+}
 .lean-block__facts, .lean-block__papers { margin: var(--space-2) 0 0; font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-2); }
 .lean-block__facts code { font: 0.93em var(--font-mono); font-variant-ligatures: none; }
 .lean-block__papers span:first-child { color: var(--ink-3); }
@@ -229,7 +233,6 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0 var(--space-2);
-  padding-right: 9rem;
 }
 /* Filling a host: head and reading line hold still, and all else scrolls between them. */
 .lean-block.is-fill { display: flex; flex-direction: column; height: 100%; min-height: 0; }
@@ -242,7 +245,9 @@
 /* The caveat is said once in a column or page: a block that follows another block
    carrying it stays silent, whatever wraps the two. */
 :has(.lean-block__caveat) ~ * .lean-block__caveat,
-:has(.lean-block__caveat) ~ .lean-block__caveat {
+:has(.lean-block__caveat) ~ .lean-block__model { margin: 0 0 var(--space-2); font-size: var(--fs-sm); line-height: var(--lh-ui); color: var(--ink-2); }
+.lean-block__model a { color: inherit; text-underline-offset: 3px; }
+.lean-block__caveat {
   display: none;
 }
 
@@ -291,6 +296,14 @@
   align-items: center;
 }
 .lean-action:hover { text-decoration-color: var(--ink); }
+.lean-action--quiet { color: var(--ink-3); }
+
+/* A module's two views, and its whole source as one run of numbered lines. */
+.lean-views { display: flex; gap: var(--space-3); margin-top: var(--space-2); font-size: var(--fs-ui); }
+.lean-views a { display: inline-flex; align-items: center; min-height: 28px; color: var(--ink-2); text-decoration: none; border-bottom: 2px solid transparent; }
+.lean-views a:hover { color: var(--ink); }
+.lean-views a[aria-current] { color: var(--ink); font-weight: 600; border-bottom-color: var(--lit); }
+.lean-views a:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
 
 .lean-terms { margin-top: var(--space-3); }
 .lean-terms__title, .lean-deps__title {
@@ -396,6 +409,8 @@ html[data-view="lean"] .app { min-height: 100dvh; }
 }
 .lean-side__hint { margin: 0; font-size: var(--fs-sm); color: var(--ink-2); }
 
+.lean-address { margin: 0 0 var(--space-3); font-size: var(--fs-ui); color: var(--ink-2); overflow-wrap: anywhere; }
+.lean-address code { font: 0.93em var(--font-mono); font-variant-ligatures: none; }
 .lean-intro { margin-bottom: var(--space-4); }
 .lean-intro code { font: 0.9em var(--font-mono); font-variant-ligatures: none; }
 .lean-intro__checked { font-size: var(--fs-ui) !important; }

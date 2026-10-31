@@ -63,12 +63,13 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
   return stage === here ? where : `${PAPER_NAMES[stage].short}, ${where}`;
 }
 
-/** "Draft; review needs revision." from the structure's state and review state. */
+/** "Draft. No independent mathematician has accepted it yet." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
   if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
-  if (review) parts.push(`Review recorded as ${review === "needs_revision" ? "needing revision" : words(review)}.`);
+  // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
+  if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");
 }
 
@@ -452,16 +453,14 @@ export function sectionNumber(title: string): string {
 // ------------------------------------------------------------- rendering
 
 /**
- * A placeholder height for a part not yet rendered, from its byte length.
- * Calibrated against the rendered papers at the desktop measure; the page
- * keeps the reading position fixed when the real height arrives.
+ * The height to reserve for a part that has not been laid out, at the desktop measure. Source
+ * lines predict it where bytes do not: a display formula takes many short lines and a reference
+ * one long one. Calibrated on all three papers. The page keeps the reading position fixed when
+ * the real height arrives.
  */
-export function estimateHeight(part: PreparedPart, columnWidth = 592): number {
+export function estimateHeight(part: PreparedPart): number {
   if (part.blank) return 0;
-  const bytes = part.span.end - part.span.start;
-  const perLine = Math.max(30, columnWidth / 8.6);
-  const lines = bytes / perLine;
-  return Math.round(lines * 29 * 0.78 + part.headings.length * 56 + part.figures.length * 320 + 16);
+  return Math.round((part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20);
 }
 
 /** Parts in order of how soon a reader will reach them, nearest first. */

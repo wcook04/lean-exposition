@@ -155,6 +155,10 @@ export interface Tie {
   role: StatementRole;
   /** Whether the statement has any Lean. The other Lean fields are null when it has none. */
   lean: boolean;
+  /** How the first Lean row stands to the statement: `part` means it covers only part of it. */
+  relation?: LeanRelation;
+  /** Where a statement has no Lean, what its authors say about that. */
+  note?: string;
   /** The most direct declaration; the rest are on the statement with this `at` in the alignment. */
   name: string | null;
   /** That declaration's plain title, where one is authored. */

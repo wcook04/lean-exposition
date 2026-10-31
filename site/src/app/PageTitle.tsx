@@ -28,7 +28,8 @@ export function PageTitle({ route }: { route: Route }) {
       title = label ? `Compare: ${label}` : "Compare side by side";
       break;
     case "lean":
-      title = route.decl?.split(".").pop() ?? route.module?.split(".").pop() ?? (route.index ? "Declarations the papers rest on" : "Lean index");
+      // A name in the address may not exist, so LeanPage names the tab once it has checked.
+      title = route.index ? "Declarations the papers rest on" : "Lean index";
       break;
     case "about":
       title = "About";

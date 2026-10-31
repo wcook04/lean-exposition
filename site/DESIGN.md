@@ -308,7 +308,9 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and
-  the sentence is left out.
+  the sentence is left out. Each count says what it counts. A marked statement is one stop of
+  the reader's stepper, a tie joins a statement to one step, and a link joins a step to a Lean
+  declaration. The audit's numbers are in `examples/qaoa-sk/verification/tie-audit.json`.
 - **The first screen is HTML.** The build types the hero and the bar into `index.html`
   (`firstScreen` in `vite.config.ts`), with the theorem already typeset, so it paints before
   any script or data, and reaches readers and crawlers that run no script. React takes over
@@ -429,7 +431,8 @@ drawn with lines; more are listed, because a fan of lines into one point says no
 page lists its declarations in source order and shows the way up; a folder has its own page.
 
 **`LeanBlock`** is the one view of a declaration on every page: signature first, `Proof ▶` for the
-rest, `source` to the commit-pinned line range, axioms and `sorry` said once with where the
+rest, "Whole file" to the module's source on this site with the declaration's lines lit and Back
+returning, GitHub's commit-pinned line range as a quiet second, axioms and `sorry` said once with where the
 statement comes from (Lean's report, or a text scan, by name). Every identifier is a link: to its
 declaration's page, or to Mathlib's search page, because a name written after `open` is not a full
 name and doc-gen's `find` address would give a 404. `onName` makes a click walk in place. `lines`
@@ -438,19 +441,28 @@ moving anything; `quietLines` keeps `lines` from moving the scroller. `compact f
 340px tall.
 
 **The reading line.** Pointing at a name or focusing it shows its signature, its docstring and the
-paper's notation in one row of fixed height, at the foot of the block or in the host's
-`previewSlot`, so pointing moves nothing and covers nothing. A signature printed by Lean replaces
+paper's notation in one row of fixed height: in the top bar on the Lean pages and Compare, in the
+host's `previewSlot`, or at the foot of the block in flow. It is never sticky, so it can never sit
+over the code. Lean's column in Compare keeps a measure of 460 to 640px; on a laptop narrower
+than 1400px that leaves one paper beside it by default. A signature printed by Lean replaces
 the source text when an edition has one.
 
 The dependency edges come from the source text and say so (`dependency_source`,
 `dependency_note`), because a text parser can miss or misattribute a use. A link from a record to
 a declaration is a reading link, and the page never calls two statements equivalent.
 
+An address can name anything. A name this source does not hold gets one quiet line and the
+index, and the tab is named only from what exists. The map, the reader and Compare do the same
+through `app/AddressNotice.tsx`.
+
 ## Search
 
 "/" opens search everywhere. It is built on the first query, never at startup, from the names,
 the alignment and the three papers' Markdown, cut at blank lines with exact bytes. An exact
-declaration name comes before everything; Enter opens the first result. A result says what it
+theorem number or step title comes first, then the main result, then the papers' statements and
+the steps in plain words, then the papers' text. Raw Lean names come last unless what was typed
+has the shape of a Lean name (`search/order.ts`). British and American spellings find each
+other. Enter opens the first result. A result says what it
 is and where it stands. A hit in a paper goes there as an ordinary entry, with Back; a Lean hit
 opens in the page that registered with `hostLean` (`lean/walk.ts`), and otherwise on its own
 page.
@@ -491,7 +503,17 @@ Four verbs run the page.
   never pins.
 - **Back.** The browser's own, named in the strip.
 
-`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases.
+`j` and `k` or the strip's arrows step between statements, Enter pins and Escape releases. The
+statements share one tab stop, which the keys and the reading line move, with a role and a name.
+From the keyboard, Enter takes focus into the Lean and closing brings it back to the statement.
+
+Labels say what is so: "Has Lean", "Lean covers part of this" where the first row is `part`, and
+for a statement with `"lean": []` its authors' note, as written, or "No Lean linked". Such a
+statement opens nothing: the note stands under its last words as well as under the graph.
+
+A paper's HTML opens with the page's shape (`reader/skeleton.ts`), so the first paint does not
+move. From 1920px the type and the measure grow together, to 20px at 2560.
+
 Where several statements open on the same words, a step stops there once, and the Lean
 page lists the others under "The same words also tie to".
 
@@ -502,6 +524,14 @@ segment marked, each paper's HTML is byte for byte the same once the spans are t
 and a test holds it there. A statement tick sits in the left margin, darker where the
 step has Lean, drawn from where the words actually fell. The thread crosses only the empty
 gutter and goes whenever an end leaves the screen.
+
+A long paper stays smooth under a fast wheel because the slow work happens before the reader
+arrives. When the page is still, idle time works outwards from the reader: it renders a part,
+lays it out and fits its formulas (`PaperBody`). Far text is still not painted. Each part
+reserves a height from its source lines before any of that, the same height before and after
+its text arrives, so the scrollbar holds steady from the first paint and an address lands at
+the same place on a first load and a reload. No selector may put the whole paper under `:has()`
+on a root element: one change of hover then walks all of it (`html.is-reading` exists for this).
 
 The outline counts the statements with Lean in each section, and searches the paper's
 text, including what has not rendered yet. Up to 1500px it stands on the right page, where it
@@ -522,7 +552,7 @@ the locators inside a reference-list entry) are in the table too, with the reaso
 
 | Kind | Short | Long | Exposition | A click |
 | --- | --- | --- | --- | --- |
-| Citation, with its locator | 61 | 212 | 35 | Opens the list entry and the locator in place, with "Open source" |
+| Citation, with its locator | 61 | 212 | 35 | Opens a card in place: the theorem or page cited, the entry from the paper's own reference list, "Open source" and "Go to the reference list" |
 | Result, equation or figure of this paper | 39 | 23 | 10 | Opens it in place, typeset as in the paper, with "Go to Lemma 2" and "See its Lean" where it has Lean |
 | Result of another source | 9 | 53 | 1 | Opens in place, saying whose numbering it is, with "Open source" |
 | Section of this paper | 7 | 154 | 34 | Jumps, with a Back |
@@ -530,8 +560,10 @@ the locators inside a reference-list entry) are in the table too, with the reaso
 
 Pointing or focusing shows the target on the right page after 150ms, in place of the Lean until
 the pointer leaves. It covers no text and moves nothing in the paper. An inset is part of the page: it pushes only what is below it, the reader's line stays
-where it is, and Escape, a second click or Close puts the page back. Opening one adds no history;
-a jump does, and the Back on the strip names the place left, "Back to Short paper §2". A reference
+where it is, and Back, Escape, a second click or Close puts the page back to the pixel. Each open is
+one history entry at the same address, and the entry remembers what stands, so Forward and a reload
+bring it back. While a reference is open the right page goes on following the paper; there is
+one view of it at a time. A jump is a history entry too, and the Back on the strip names the place left, "Back to Short paper §2". A reference
 inside a tied statement is a link of its own, and a click anywhere else in the statement pins it as
 usual. Ids are stable: `thm-1`, `lem-2`, `prop-4.1`, `proof-thm-1`, `eq-4.1`, `fig-1`.
 
@@ -636,7 +668,7 @@ The interface names relations and states by what was recorded.
 | No successful Comparator result is recorded | no Comparator run is recorded (when one failed) |
 | Review record: passed | independently reviewed |
 | One recorded route from Full support | (a breadcrumb that looks like history) |
-| No recorded inputs | starting point, axiom (a record boundary is not a foundation) |
+| The argument as written stops here (inputs are authored links); "None found", with what the scan misses, for a Lean declaration's uses | No recorded inputs, starting point, axiom |
 | Back to Exposition §5.3 | Back (when the origin is a graph path) |
 
 Most recorded checks are "not run"; no warrant has been independently reviewed.

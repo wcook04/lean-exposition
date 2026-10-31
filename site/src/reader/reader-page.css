@@ -51,8 +51,10 @@
   }
 }
 
-/* Headings land below the top bar and the location strip. */
-html:has(.reader) {
+/* Headings land below the top bar and the location strip. A class the reader sets, not
+   html:has(.reader): that puts every element of a long paper under a :has() on the root,
+   and one change of hover then walks the whole document again. */
+html.is-reading {
   scroll-padding-top: calc(var(--topbar-h) + 44px + var(--space-3));
 }
 
@@ -530,9 +532,50 @@ html:has(.reader) {
   display: none;
 }
 
-/* Up to 1500px the sections stand on the right page. */
+/* Up to 1500px the sections stand on the right page, and their list scrolls on its own. */
 .sections-side {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
   padding-top: var(--space-2);
+}
+
+.sections-side .outline__list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A large window reads larger: the type and the measure grow together, so a line holds the
+   same words, from 18px at 1920 to 20px at 2560. Nothing below 1920 changes. */
+@media (min-width: 1921px) {
+  .reader {
+    --fs-read: clamp(18px, calc(18px + (100vw - 1920px) / 320), 20px);
+    --reader-measure: clamp(680px, calc(680px + (100vw - 1920px) * 0.117), 755px);
+  }
+}
+
+/* Beside the page's own: fixed, because the paper column is a positioned box. */
+.reader__paper > .skip-link {
+  position: fixed;
+}
+
+/* What is known about a statement with no Lean, under its last words. */
+.tie-note {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--lit-line);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--ink-2);
+  hyphens: manual;
+  text-align: start;
 }
 
 .sections-side__head {
@@ -633,7 +676,7 @@ html:has(.reader) {
 
 /* ---------------------------------------------------------------- outline */
 
-.outline__title {
+.outline__name {
   min-width: 0;
 }
 
@@ -650,6 +693,18 @@ html:has(.reader) {
 .outline__item a {
   display: flex;
   align-items: baseline;
+}
+
+.outline__key button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
 }
 
 .outline__key {

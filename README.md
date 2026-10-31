@@ -5,6 +5,11 @@
 
 **From formal proofs to mathematics people can understand.**
 
+The worked example is a theorem about the Sherrington–Kirkpatrick model without an
+external field: every minimiser of the zero-temperature Parisi functional has full
+support on [0,1). Starting from the Lean proof published with OpenAI's QAOA / SK
+result, it gives three papers whose statements open the Lean they rest on.
+
 [Lean](https://lean-lang.org/) is a language and proof assistant that checks
 precisely stated mathematical arguments. A checked proof gives a reader something
 valuable to inspect, but understanding it still takes work: what is the question,
@@ -15,6 +20,20 @@ into three complementary documents: a detailed reasoning record, a focused
 research paper, and an explanation for readers learning the subject. Each keeps
 a route back to the statements, assumptions and sources it uses. You can read
 the [worked papers](#read-the-worked-example) without installing anything.
+
+## Read a paper beside its Lean
+
+On the [website](https://wcook04.github.io/lean-exposition-site/read/short/) you
+read a paper as you would read any paper, and a graph of its argument follows
+beside it. Click a marked statement and its Lean opens at the exact lines, with
+links to the same step in the other papers. Back returns you to the sentence you
+left.
+
+[![A paper on the left with Theorem 1 highlighted, and on the right the Lean statement it refers to, opened under the graph of the argument.](site/public/stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/)
+
+An AI agent read each sentence and its Lean and linked the two. No independent
+mathematician has reviewed these links and no program checks that they say the
+same thing, and the page says so beside each one.
 
 ## Why this project exists
 
@@ -193,21 +212,22 @@ queries let a frontend load detail as readers select it. The backend supplies
 the data; a frontend can choose its own graph renderer and reading interface.
 
 The repository's own [reading website](site/README.md) is one such frontend.
-It shows the main theorem with the recorded argument beneath it and lets you
-unfold any result into what it uses. **Compare** is the proof as a table: each
-row is one step, set side by side at every level from the Lean declaration
-through the long record and short paper to the exposition. The
-reader keeps the map beside the paper as you scroll, and the Lean browser opens
-OpenAI's source with each central name explained in the papers' notation. It
-runs against a local `serve` process or as a static edition; its guide gives the
-commands.
+The papers come first: a graph follows the sentence you are reading, and any
+marked statement opens its Lean. **Map** draws the whole argument, with the main
+theorem at the top and any result unfolding into what it uses. **Compare** is the
+proof as a table: each row is one step, set side by side at every level from the
+Lean declaration through the long record and short paper to the exposition. The
+Lean index at the back opens OpenAI's source with each central name explained in
+the papers' notation. It runs against a local `serve` process or as a static
+edition; its guide gives the commands.
 
 Two read-only sidecars make that comparison exact. The
 [Lean index](docs/web-api.md) lists every declaration of the vendored source
 with its text and the names it mentions, and the
 [record alignment](docs/record-alignment.md) points each record to its Lean
-declarations and to the exact slice of each paper that states it. Both are
-checked for landing in pinned bytes; neither says the mathematics matches.
+declarations, to the exact slice of each paper that states it, and to the
+sentences and Lean lines tied together inside that slice. Both are checked for
+landing in pinned bytes; neither says the mathematics matches.
 
 ## Sources and verification
 

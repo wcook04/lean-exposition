@@ -21,6 +21,7 @@ import type { LeanWalk } from "../../lean/walk";
 import { RecordPanel } from "../../panels/RecordPanel";
 import { ROLE_WORDS, sameWords, statementFor, type TieModel } from "../ties";
 import { paperTarget, sectionNumber } from "./model";
+import { leanPage } from "./rightPage";
 
 /** What is open: a step, its statement here when it has one, or a declaration walked to. */
 export interface LeanOpen {
@@ -184,6 +185,14 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
   const name = open.decl ?? row?.name ?? null;
   const plain = record ? shortTitle(record, graph.nodes.get(record)?.label ?? alignment?.records[record]?.short ?? record) : name ? plainName(alignment, name) : "";
 
+  useLayoutEffect(() => {
+    const el = page.current;
+    leanPage.current = el;
+    return () => {
+      if (leanPage.current === el) leanPage.current = null;
+    };
+  }, []);
+
   // The Lean rises out of the card: it opens from the card's box to its own.
   const opening = useRef(true);
   useLayoutEffect(() => {
@@ -211,7 +220,11 @@ export function LeanDock({ open, ties, stage, alignment, slot, onRelease, onPick
             </p>
           )}
           <div className="lean-page__names">
-            {plain && <h3 className="lean-page__title">{plain}</h3>}
+            {plain && (
+              <h3 className="lean-page__title" tabIndex={-1}>
+                {plain}
+              </h3>
+            )}
             {name && <code className="lean-page__raw" title={name}>{lastName(name)}</code>}
           {tie && <span className="lean-page__role">{ROLE_WORDS[tie.role]} here</span>}
           </div>

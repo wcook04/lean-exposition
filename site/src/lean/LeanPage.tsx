@@ -6,23 +6,25 @@
 // it and where to begin. A plain title comes first wherever one exists, the Lean name small
 // beside it.
 
-import { memo, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import type { AlignedStatement, LeanDeclaration, LeanFolder, LeanModule } from "../api/lean";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
-import { BAR_LINE } from "../app/TopBar";
+import { useBarLine } from "./barLine";
 import { navigate, routeHref, type Route } from "../app/router";
 import { arrivedBy, namePlace, useEntryState } from "../app/trail";
 import { useCheckedWords } from "./checked";
 import { LazyStatementSlice } from "../compare/lazy";
 import { statementHref } from "../reader/links";
-import { CHALLENGE_FILE, declIn, kindWord, LINK_CAVEAT, MAIN_THEOREM, MINIMIZER, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, VALUE_CHALLENGE_FILE, VALUE_THEOREM, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
+import { CHALLENGE_FILE, declIn, sourceLines, kindWord, LINK_CAVEAT, MAIN_THEOREM, MINIMIZER, RELATION_WORDS, sectionPlace, useLeanModule, useLeanShell, VALUE_CHALLENGE_FILE, VALUE_THEOREM, type LeanShell, type LinkedRecord, type PaperStatement } from "./data";
 import { rankNames } from "./find";
 import { folderLabel, FOLDER_WORDS } from "./folders";
 import { CopyName, DeclView, LeanBlock, SourceLink, usesOf } from "./LeanBlock";
 import "./lean.css";
 import { Neighbourhood } from "./Neighbourhood";
-import { Breakable, Notation, PathText, Prose } from "./ReadingStrip";
-import { findDecl, type DeclRow } from "./resolve";
+import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
+import { buildCode, CodeView, type BuiltCode } from "./CodeView";
+import { collectLocals, findDecl, makeScope, type DeclRow, type NameTarget } from "./resolve";
+import { tokenize } from "./tokenize";
 
 const count = (n: number) => n.toLocaleString("en-GB");
 
@@ -134,7 +136,7 @@ function Landing({ shell, slot }: { shell: LeanShell; slot: HTMLElement | null }
         <h1>Lean index</h1>
         <p>
           The index at the back of the book, for anyone who wants the files and declarations themselves. To read the mathematics,{" "}
-          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: each marked statement there opens its Lean beside the text.
+          <a href={routeHref({ view: "read", stage: "short" })}>open a paper</a>: a statement with a dark tick there opens its Lean beside the text.
         </p>
         <p>
           This is OpenAI's Lean at commit{" "}
@@ -570,6 +572,7 @@ function ModuleView({ module, shell, slot, scroller }: { module: LeanModule; she
           {count(module.declarations.length)} declarations in {count(row?.lines ?? 0)} lines, in source order, with each proof on the declaration's own page.
           {module.module.startsWith("ComparatorChallenges") ? ` ${FOLDER_WORDS.ComparatorChallenges}` : ""}
         </p>
+        <ModuleViews module={module.module} file={false} />
         {imports.length > 0 && (
           <p className="lean-modhead__imports">
             Imports{" "}
@@ -585,6 +588,99 @@ function ModuleView({ module, shell, slot, scroller }: { module: LeanModule; she
         )}
       </header>
       <Rows module={module} shell={shell} slot={slot} />
+    </>
+  );
+}
+
+function ModuleViews({ module, file }: { module: string; file: boolean }) {
+  return (
+    <nav className="lean-views" aria-label="How to read this module">
+      <a href={routeHref({ view: "lean", module })} aria-current={file ? undefined : "page"} onClick={replaceClick}>
+        Declarations
+      </a>
+      <a href={routeHref({ view: "lean", module, file: "all" })} aria-current={file ? "page" : undefined} onClick={replaceClick}>
+        Whole file
+      </a>
+    </nav>
+  );
+}
+
+/** A tab keeps the entry: choosing how to read a module is a refinement of the same place. */
+function replaceClick(event: React.MouseEvent<HTMLAnchorElement>) {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  const url = new URL(event.currentTarget.href);
+  navigate(url.pathname + url.search, { replace: true });
+}
+
+/** A declaration's lines, or the source between them, each read with what it can resolve. */
+function buildFile(module: LeanModule, shell: LeanShell): BuiltCode {
+  const lines = sourceLines(module);
+  const code: BuiltCode = { lines: [], targets: [], marked: false };
+  const add = (built: BuiltCode) => {
+    const base = code.targets.length;
+    code.targets.push(...built.targets);
+    for (const line of built.lines) code.lines.push({ ...line, parts: line.parts.map((part) => (part.target === undefined ? part : { ...part, target: part.target + base })) });
+  };
+  const decls = [...module.declarations].sort((a, b) => a.line - b.line);
+  const empty = decls[0] && makeScope({ ...decls[0], uses: [], name: "" }, module, shell.index, shell.terms);
+  const plain = (first: number, last: number) => {
+    if (first > last) return;
+    add(buildCode(tokenize(lines.slice(first - 1, last).join("\n"), { signature: false }), first, empty ?? makeScope(module.declarations[0], module, shell.index, shell.terms)));
+  };
+  let at = 1;
+  for (const decl of decls) {
+    if (decl.line < at) continue;
+    plain(at, decl.line - 1);
+    const scope = makeScope(decl, module, shell.index, shell.terms);
+    const tail = Math.min(decl.signature_end_line, decl.end_line);
+    const head = tokenize(lines.slice(decl.line - 1, tail).join("\n"));
+    collectLocals(head, scope.locals);
+    add(buildCode(head, decl.line, scope));
+    if (decl.end_line > tail) {
+      const body = tokenize(lines.slice(tail, decl.end_line).join("\n"), { signature: false });
+      collectLocals(body, scope.locals);
+      add(buildCode(body, tail + 1, scope));
+    }
+    at = decl.end_line + 1;
+  }
+  if (decls.length) plain(at, lines.length);
+  else code.lines = lines.map((text, k) => ({ n: k + 1, indent: 0, parts: [{ text, className: "" }] }));
+  return code;
+}
+
+function FileView({ module, shell, slot, file, scroller }: { module: LeanModule; shell: LeanShell; slot: HTMLElement | null; file: string; scroller: React.RefObject<HTMLDivElement | null> }) {
+  const code = useMemo(() => buildFile(module, shell), [module, shell]);
+  const range = /^(\d+)(?:-(\d+))?$/.exec(file);
+  const first = range ? Number(range[1]) : 0;
+  const last = range ? Number(range[2] ?? range[1]) : 0;
+  const lit = useCallback((line: number) => line >= first && line <= last, [first, last]);
+  const store = useMemo(readingStore, []);
+  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell }) : store.clear()), [store, shell]);
+  const open = useCallback(() => undefined, []);
+  const path = shell.paths.get(module.module)?.path ?? module.path;
+  useEffect(() => {
+    if (arrivedBy() !== "push") return;
+    const host = scroller.current;
+    const line = first ? host?.querySelector<HTMLElement>(`[data-line="${first}"]`) : null;
+    if (!host) return;
+    if (!line) return host.scrollTo(0, 0);
+    host.scrollTop += line.getBoundingClientRect().top - host.getBoundingClientRect().top - 72;
+  }, [first, module.module, scroller]);
+  return (
+    <>
+      <header className="lean-modhead">
+        <Crumbs shell={shell} module={module.module} />
+        <h1>
+          <PathText path={path} />
+        </h1>
+        <p>
+          The whole file, {count(shell.paths.get(module.module)?.lines ?? code.lines.length)} lines, at commit {shell.modules.revision.slice(0, 7)} of OpenAI's repository.
+        </p>
+        <ModuleViews module={module.module} file />
+      </header>
+      <CodeView code={code} label={`The whole of ${path}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={open} lit={range ? lit : undefined} />
+      <ReadingFoot store={store} slot={slot} />
     </>
   );
 }
@@ -699,52 +795,51 @@ function Message({ children }: { children: ReactNode }) {
   );
 }
 
+/** One quiet line for an address that names something this source does not hold. */
+function missingWords(route: Extract<Route, { view: "lean" }>, hasDecl: boolean, hasModule: boolean, hasFolder: boolean): ReactNode {
+  if (route.decl && !hasDecl) return <>No declaration named <code>{route.decl}</code> in this source{hasModule ? ". Here is the module." : ". Here is the index."}</>;
+  if (route.module && !hasModule && !hasDecl) return <>No module named <code>{route.module}</code> in this source. Here is the index.</>;
+  if (route.folder && !hasFolder) return <>No folder named <code>{route.folder}</code> in this source. Here is the index.</>;
+  return null;
+}
+
 export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> }) {
   const state = useLeanShell();
   const shell = state.status === "ready" ? state.shell : null;
-  const landing = !route.module && !route.decl && !route.folder && !route.index;
-  const row = shell && !route.module && route.decl ? findDecl(shell.index, route.decl) : undefined;
+  // An address can name anything. Only what the index holds is shown, or named in the tab.
+  const knownModule = shell && route.module && shell.paths.has(route.module) ? route.module : undefined;
+  const knownFolder = shell?.modules.folders.some((folder) => folder.path === route.folder) ? route.folder : undefined;
+  const row = shell && route.decl ? findDecl(shell.index, route.decl, knownModule) : undefined;
+  const unknown = !shell ? null : missingWords(route, Boolean(row), Boolean(knownModule), Boolean(knownFolder));
+  const opensHome = !route.index && !knownFolder && !row && !knownModule;
+  const landing = opensHome;
   const mainRow = shell && landing ? findDecl(shell.index, MAIN_THEOREM) : undefined;
-  const moduleName = route.module ?? row?.module ?? mainRow?.module;
+  const moduleName = row?.module ?? knownModule ?? mainRow?.module;
   const loaded = useLeanModule(moduleName);
   const hasTree = useMedia("(min-width: 760px)");
   const scroller = useRef<HTMLDivElement>(null);
-  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  const slot = useBarLine();
 
   const module = loaded.status === "ready" ? loaded.module : undefined;
-  const decl = module && route.decl ? declIn(module, route.decl) : undefined;
+  const decl = module && row ? declIn(module, row.name) : undefined;
 
   useEffect(
     () =>
       namePlace(() => {
         if (decl) return shell?.plain.get(decl.name) ?? decl.short;
-        if (route.module) return lastPart(route.module);
-        if (route.folder) return folderLabel(route.folder);
+        if (knownModule) return lastPart(knownModule);
+        if (knownFolder) return folderLabel(knownFolder);
         if (route.index) return "the declarations the papers rest on";
         return "the Lean index";
       }),
-    [decl, route.module, route.folder, route.index, shell],
+    [decl, knownModule, knownFolder, route.index, shell],
   );
 
-  // A pointed name is read in the top bar's free space. On a screen without one the line is not shown.
-  useLayoutEffect(() => {
-    const bar = document.getElementById(BAR_LINE);
-    if (!bar) return;
-    const line = document.createElement("div");
-    line.className = "lean-slot lean-slot--compact lean-slot--bar";
-    bar.append(line);
-    setSlot(line);
-    return () => {
-      line.remove();
-      setSlot(null);
-    };
-  }, []);
-
-  // PageTitle cannot see the alignment, so the page names its tab once the plain title is known.
-  const plainTitle = decl ? shell?.plain.get(decl.name) : undefined;
-  useLayoutEffect(() => {
-    if (plainTitle) document.title = `${plainTitle} · Lean Exposition`;
-  }, [plainTitle]);
+  // PageTitle cannot see the index, so the page names its tab, and only by what exists.
+  const tabTitle = decl ? (shell?.plain.get(decl.name) ?? decl.short) : knownModule ? lastPart(knownModule) : knownFolder ? folderLabel(knownFolder) : null;
+  useEffect(() => {
+    document.title = tabTitle ? `${tabTitle} · Lean Exposition` : "Lean index · Lean Exposition";
+  }, [tabTitle]);
 
   // A new declaration starts at its head, unless Back is restoring a place.
   useEffect(() => {
@@ -756,10 +851,10 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
 
   let main: ReactNode;
   if (route.index) main = <PapersIndex shell={shell} />;
-  else if (route.folder && !route.module) main = <FolderView shell={shell} path={route.folder} />;
+  else if (knownFolder && !knownModule) main = <FolderView shell={shell} path={knownFolder} />;
   else if (landing) main = <Landing shell={shell} slot={slot} />;
-  else if (route.decl && decl && module) main = <DeclPage decl={decl} module={module} shell={shell} slot={slot} />;
-  else if (route.decl && module) main = <p className="lean-note">No declaration named <code>{route.decl}</code> in {module.module}.</p>;
+  else if (route.file && module && knownModule) main = <FileView module={module} shell={shell} slot={slot} file={route.file} scroller={scroller} />;
+  else if (decl && module) main = <DeclPage decl={decl} module={module} shell={shell} slot={slot} />;
   else if (module) main = <ModuleView module={module} shell={shell} slot={slot} scroller={scroller} />;
   else if (loaded.status === "failed") main = <p className="lean-note">This module could not be loaded.</p>;
   else main = <p className="lean-note">Loading the module</p>;
@@ -769,7 +864,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
       {hasTree ? (
         <aside className="lean-left">
           <NameFilter shell={shell}>
-            <TreeNav shell={shell} current={module?.module && !landing ? module.module : undefined} landing={landing} index={Boolean(route.index)} folder={route.folder} />
+            <TreeNav shell={shell} current={module?.module && !landing ? module.module : undefined} landing={landing} index={Boolean(route.index)} folder={knownFolder} />
           </NameFilter>
         </aside>
       ) : (
@@ -780,6 +875,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
       )}
       <div className="lean-centre">
         <div className="lean-scroll" ref={scroller} tabIndex={-1}>
+          {unknown && <p className="lean-address" role="status">{unknown}</p>}
           {main}
         </div>
       </div>

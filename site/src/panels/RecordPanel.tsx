@@ -20,6 +20,7 @@ import { LazyLeanBlock } from "../lean/lazy";
 import { statementHref } from "../reader/links";
 import { LENS_ORDER } from "../map/levels";
 import { recordMark } from "../map/leanMarks";
+import { noInputsWords } from "../map/labels";
 import { LeanGlyph } from "../map/LeanGlyph";
 import { markWords } from "../model/leanStatus";
 import type { LeanStep } from "./model";
@@ -609,7 +610,7 @@ function Argument({
         edges={prerequisites}
         end="to"
         implied={implied}
-        empty="No recorded inputs."
+        empty={noInputsWords(graph.nodes.get(nodeId)?.kind ?? "claim")}
         onSelect={onSelect}
         onEcho={onEcho}
         onEdge={onEdge}

@@ -242,6 +242,16 @@ export interface RefView {
   go: string | null;
   /** The statement's bytes, for the tie to its record. */
   span: [number, number] | null;
+  /** A source's card rather than a statement of this paper. */
+  card: boolean;
+  /** The byte of its entry in the reference list. */
+  entry: number | null;
+}
+
+/** The place inside a citation, without the name the entry already gives: "Theorem 1". */
+export function locatorWords(cited: string): string {
+  const named = /^(?:.*?\(\d{4}[a-z]?\)|.*?\bpreprint v\d+|.*?\barXiv:[\w./-]+),\s*(\S.*)$/s.exec(cited);
+  return (named ? named[1] : cited).replace(/^their\s+/i, "");
 }
 
 const manuscriptNote = (quote: string, name: string) =>
@@ -257,17 +267,19 @@ export function refView(index: RefIndex, row: RefRow): RefView {
       title: source?.name ?? row.quote,
       body,
       note: row.kind === "manuscript" ? manuscriptNote(row.quote, source?.name ?? "the cited source") : null,
-      locator: row.kind === "citation" ? (row.locator ?? null) : null,
+      locator: row.kind === "citation" && row.locator ? locatorWords(row.locator) : null,
       href: source?.href ?? null,
       go: null,
       span: null,
+      card: true,
+      entry: source?.entry?.[0] ?? null,
     };
   }
   if (row.kind === "other_paper") {
-    return { title: row.quote, body: null, note: `Long record: ${row.title ?? row.target}`, locator: null, href: null, go: null, span: null };
+    return { title: row.quote, body: null, note: `Long record: ${row.title ?? row.target}`, locator: null, href: null, go: null, span: null, card: false, entry: null };
   }
   const target = targets[row.target ?? ""];
-  if (!target) return { title: row.quote, body: null, note: null, locator: null, href: null, go: row.target ?? null, span: null };
+  if (!target) return { title: row.quote, body: null, note: null, locator: null, href: null, go: row.target ?? null, span: null, card: false, entry: null };
   return {
     title: target.label,
     body: target.kind === "section" ? null : index.text(target.start_byte, target.end_byte),
@@ -276,7 +288,17 @@ export function refView(index: RefIndex, row: RefRow): RefView {
     href: null,
     go: row.target ?? null,
     span: [target.start_byte, target.end_byte],
+    card: false,
+    entry: null,
   };
+}
+
+/** What a citation inside an opened statement shows: its source, found by its address. */
+export function citedView(index: RefIndex, href: string, words: string): RefView | null {
+  const source = Object.entries(index.table.sources).find(([, value]) => value.href === href)?.[0];
+  if (!source) return null;
+  const located = /\d/.test(words) ? words : undefined;
+  return refView(index, { start_byte: 0, end_byte: 0, quote: words, kind: "citation", source, locator: located });
 }
 
 /** A click opens these in place. Sections jump, and another paper opens beside this one. */

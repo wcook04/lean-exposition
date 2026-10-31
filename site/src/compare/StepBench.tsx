@@ -271,7 +271,7 @@ function StepHead({ graph, node, title, titleOf, href, slots, onToggle, stacked 
       </div>
       <RelationLine label="Used by" empty="Nothing in the argument uses this step." ids={usedBy} titleOf={titleOf} href={href} limit={limit} />
       <div className="bench-rels">
-        <RelationLine label="Uses" empty="No recorded inputs." ids={uses} titleOf={titleOf} href={href} limit={limit} />
+        <RelationLine label="Uses" empty="The argument as written stops here." ids={uses} titleOf={titleOf} href={href} limit={limit} />
         {assumes.length > 0 && <RelationLine label="Assumes" ids={assumes} titleOf={titleOf} href={href} limit={limit} assumptions />}
       </div>
     </header>
@@ -326,7 +326,7 @@ function Columns({ id, record, slots }: { id: string; record: RecordAlignment; s
     <div className="bench-levels">
       {slots.map((slot) =>
         slot.state === "column" ? (
-          <section key={slot.level} className="bench-col" style={{ flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
+          <section key={slot.level} className={`bench-col${slot.level === "lean" ? " bench-col--lean" : ""}`} style={slot.level === "lean" ? undefined : { flexGrow: slot.weight }} aria-label={LEVEL_NAMES[slot.level]}>
             <ColumnHead level={slot.level} />
             <div className="bench-col__scroll" tabIndex={0} data-scrolls="" aria-label={`${LEVEL_NAMES[slot.level]}, its text for this step`}>
               <LevelBody id={id} record={record} level={slot.level} />

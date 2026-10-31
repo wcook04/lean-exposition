@@ -10,8 +10,17 @@ const STAGES = ["short", "long", "expository"] as const;
 type Stage = (typeof STAGES)[number];
 
 export interface SiteFacts {
-  /** Statements tied to the argument, and those of them with Lean, from the edition's tie indexes. */
-  ties: { total: number; lean: number; papers: Record<Stage, { total: number; lean: number }> } | null;
+  /**
+   * From the edition's tie indexes. A statement is one marked place in a paper, as the reader's
+   * stepper counts it. A tie joins a statement to one step, so one statement can have several.
+   */
+  ties: { total: number; statements: number; withLean: number; papers: Record<Stage, { statements: number; withLean: number }> } | null;
+  /** All the steps on the site. */
+  steps: number | null;
+  /** Links from a step to a Lean declaration, and the distinct declarations they reach. */
+  leanLinks: { links: number; declarations: number } | null;
+  /** The latest audit of the ties, from its summary file. */
+  audit: { date: string; read: number; changed: number; absencesChecked: number; absencesChanged: number; sampled: number; right: number; loose: number; wrong: number; reader: string } | null;
   /** Links in the papers to theorems, equations, sections and citations, from the reference tables. */
   references: number | null;
   /** Declarations with a plain title. */
@@ -31,6 +40,23 @@ const dateWords = (iso: string) => {
   const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
   return `${d} ${MONTHS[m - 1]} ${y}`;
 };
+
+type TieRows = { segments: [number, number, number[]][]; ties: { lean: boolean }[] };
+
+/** The reader's stops (tieModel in reader/ties.ts): one statement for each place a statement starts. */
+export function tieStops(index: TieRows): { statements: number; withLean: number } {
+  const first = new Map<number, number>();
+  index.segments.forEach(([, , members], segment) => members.forEach((tie) => first.has(tie) || first.set(tie, segment)));
+  let statements = 0;
+  let withLean = 0;
+  index.segments.forEach(([, , members], segment) => {
+    const opening = members.filter((tie) => first.get(tie) === segment);
+    if (!opening.length) return;
+    statements += 1;
+    if (opening.some((tie) => index.ties[tie]?.lean)) withLean += 1;
+  });
+  return { statements, withLean };
+}
 
 function editionFacts(dir: string) {
   const index = resolve(dir, "index.json");
@@ -75,16 +101,25 @@ function scanLean(root: string): SiteFacts["scan"] {
 export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
   const alignmentDir = resolve(root, "examples/qaoa-sk/alignment");
   const served = editionFacts(resolve(edition));
-  const alignment = served?.read("/alignment") as { records?: Record<string, { statements: { paper: string; role: string; at?: string; start_byte: number; end_byte: number; anchor: string | null }[] }>; names?: Record<string, string> } | null | undefined;
+  const alignment = served?.read("/alignment") as { records?: Record<string, { lean?: { name: string }[]; statements: { paper: string; role: string; markdown: string; at?: string; start_byte: number; end_byte: number; anchor: string | null }[] }>; names?: Record<string, string> } | null | undefined;
 
-  const perPaper = STAGES.map((stage) => [stage, served?.read(`/ties/${stage}`) as { ties: { lean: boolean }[] } | null | undefined] as const);
+  const perPaper = STAGES.map((stage) => [stage, served?.read(`/ties/${stage}`) as TieRows | null | undefined] as const);
+  const stops = perPaper.map(([stage, index]) => [stage, index ? tieStops(index) : null] as const);
   const ties: SiteFacts["ties"] = perPaper.every(([, index]) => index)
     ? {
         total: perPaper.reduce((n, [, index]) => n + index!.ties.length, 0),
-        lean: perPaper.reduce((n, [, index]) => n + index!.ties.filter((tie) => tie.lean).length, 0),
-        papers: Object.fromEntries(perPaper.map(([stage, index]) => [stage, { total: index!.ties.length, lean: index!.ties.filter((tie) => tie.lean).length }])) as Record<Stage, { total: number; lean: number }>,
+        statements: stops.reduce((n, [, row]) => n + row!.statements, 0),
+        withLean: stops.reduce((n, [, row]) => n + row!.withLean, 0),
+        papers: Object.fromEntries(stops) as Record<Stage, { statements: number; withLean: number }>,
       }
     : null;
+
+  const overview = served?.read("/overview") as { record_counts?: { nodes?: number } } | null | undefined;
+  const rows = alignment?.records ? Object.values(alignment.records).flatMap((record) => record.lean ?? []) : null;
+  const leanLinks = rows ? { links: rows.length, declarations: new Set(rows.map((row) => row.name)).size } : null;
+
+  const auditPath = resolve(root, "examples/qaoa-sk/verification/tie-audit.json");
+  const audit = existsSync(auditPath) ? json(auditPath) : null;
 
   const tables = existsSync(alignmentDir) ? readdirSync(alignmentDir).filter((name) => /^references-.*\.json$/.test(name)) : [];
   const references = tables.length ? tables.reduce((n, name) => n + (json(resolve(alignmentDir, name)).references?.length ?? 0), 0) : null;
@@ -94,7 +129,8 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
     ? { ...modules.counts, revision: modules.revision, toolchain: modules.toolchain, dependencySource: modules.dependency_source, dependencyNote: modules.dependency_note }
     : null;
 
-  const statement = alignment?.records?.full_support?.statements.find((s) => s.paper === "short" && s.role === "statement");
+  // Found by its own words, so a change in the order of the alignment's rows cannot move the link.
+  const statement = alignment?.records?.full_support?.statements.find((s) => s.paper === "short" && /^\*\*Theorem 1\b/.test(s.markdown));
   const theorem1 = statement ? { at: statement.at ?? `b${statement.start_byte}-${statement.end_byte}`, anchor: statement.anchor } : null;
 
   const observationPath = resolve(root, "examples/qaoa-sk/verification/full-support-build-extraction-observation-20261026.json");
@@ -126,6 +162,12 @@ export function siteFacts(root = "..", edition = "public/edition"): SiteFacts {
 
   return {
     ties,
+    steps: overview?.record_counts?.nodes ?? null,
+    leanLinks,
+    audit: audit ? {
+      date: dateWords(audit.date), read: audit.read, changed: audit.changed, absencesChecked: audit.absences_checked, absencesChanged: audit.absences_changed,
+      sampled: audit.sampled, right: audit.right, loose: audit.correct_but_loose, wrong: audit.wrong, reader: audit.reader,
+    } : null,
     references,
     plainTitles: alignment?.names ? Object.keys(alignment.names).length : null,
     lean,

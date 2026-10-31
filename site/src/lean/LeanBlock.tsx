@@ -23,6 +23,7 @@ import {
 import "./lean.css";
 import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from "./ReadingStrip";
 import { SITE_FACTS } from "virtual:site-facts";
+import { MODELS_STEP } from "../app/caveat";
 import { useAlignment } from "../compare/useAlignment";
 import { declTitle } from "../model/declTitle";
 import { collectLocals, findDecl, makeScope, resolveName, splitUses, statementShape, type DeclRow, type NameTarget, type Scope } from "./resolve";
@@ -32,6 +33,9 @@ import type { LeanWalk } from "./walk";
 export type LineRange = readonly [first: number, last: number];
 
 type LineRanges = LineRange | readonly LineRange[];
+
+/** Modules of the second model. Its objects are defined apart from the full-support model's. */
+const VALUE_MODEL = "OAI.Probability.SKValue";
 
 export interface LeanBlockProps {
   /** Full declaration name. */
@@ -248,13 +252,18 @@ export function CopyName({ name }: { name: string }) {
   );
 }
 
-/** The exact lines at the pinned commit, under the name doc-gen gives this link. */
+/** This file on this site, at this declaration; Back returns from it. GitHub is the quiet second. */
 export function SourceLink({ decl, module, shell }: { decl: LeanDeclaration; module: LeanModule; shell: LeanShell }) {
   const path = shell.paths.get(module.module)?.path ?? module.path;
   return (
-    <a className="lean-action" href={leanSourceUrl(shell.modules, path, decl.line, decl.end_line)} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}, at commit ${shell.modules.revision.slice(0, 7)} of OpenAI's repository`}>
-      source
-    </a>
+    <>
+      <a className="lean-action" href={routeHref({ view: "lean", module: module.module, file: `${decl.line}-${decl.end_line}` })}>
+        Whole file
+      </a>
+      <a className="lean-action lean-action--quiet" href={leanSourceUrl(shell.modules, path, decl.line, decl.end_line)} target="_blank" rel="noreferrer" title={`${path}, lines ${decl.line} to ${decl.end_line}, at commit ${shell.modules.revision.slice(0, 7)} of OpenAI's repository`}>
+        On GitHub
+      </a>
+    </>
   );
 }
 
@@ -276,7 +285,7 @@ function DependencyList({ title, names, decl, shell, onWalk }: { title: string; 
       <p className="lean-deps__title">
         {title} <span className="lean-deps__count">{rows.length.toLocaleString("en-GB")}</span>
       </p>
-      {rows.length === 0 && <p className="lean-deps__none">None found.</p>}
+      {rows.length === 0 && <p className="lean-deps__none">{shell.modules.dependency_source === "elaborated" ? "None found." : "None found. The scan misses names reached through tactics or notation."}</p>}
       <ul>
         {shown.map((row) => {
           const record = shell.linked.get(row.name)?.[0];
@@ -500,6 +509,11 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
         </div>
       )}
       {decl.doc && !compact && <p className="lean-block__doc">{decl.doc}</p>}
+      {!row && module.module.startsWith(VALUE_MODEL) && (
+        <p className="lean-block__model">
+          This is OpenAI’s value model. <a href={routeHref({ view: "map", node: MODELS_STEP })}>No Lean theorem connects it to the full-support model.</a>
+        </p>
+      )}
 
       <CodeView code={statement} label={`Statement of ${decl.short}. Tab reaches a name; the arrow keys move between names.`} onRead={read} onOpen={onOpen} lit={isLit} />
       {where.map((body) => (

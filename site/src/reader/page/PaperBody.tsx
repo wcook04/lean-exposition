@@ -46,12 +46,15 @@ interface Props {
   topInset: number;
 }
 
-/** Rendered text runs this much taller than a placeholder's estimate (long record, 1440px). */
-const TEXT_SCALE = 1.3;
 const NEAR_MARGIN = "1500px 0px";
 const IDLE_DELAY_MS = 1200;
+/** Laying out ahead of the reader waits until the page has been still this long. */
+const STILL_MS = 250;
+/** Fitting ahead takes this long at a time: an idle period can run to 50ms, and a task that long is one a reader can feel. */
+const AHEAD_BUDGET_MS = 10;
 
-type Idle = (cb: (deadline: { timeRemaining(): number }) => void) => number;
+type IdleDeadline = { timeRemaining(): number };
+type Idle = (cb: (deadline: IdleDeadline) => void) => number;
 const requestIdle: Idle =
   typeof window !== "undefined" && "requestIdleCallback" in window
     ? (cb) => (window as unknown as { requestIdleCallback: Idle }).requestIdleCallback(cb)
@@ -97,6 +100,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const pinned = useRef(false);
   // The size of each part as the resize observer last reported it.
   const sizes = useRef(new Map<Element, number>());
+  const scrolledAt = useRef(0);
   const reanchor = useCallback((force?: boolean, observed = false) => {
     const line = topRef.current;
     if (force) {
@@ -198,6 +202,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   useEffect(() => {
     let frame = 0;
     const onScroll = () => {
+      scrolledAt.current = performance.now();
       if (pinned.current || frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
@@ -254,17 +259,37 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     } else map.delete(index);
   }, []);
 
-  // Idle time renders the rest, nearest the reader first. The costly step
-  // (typesetting) runs inside the idle callback; React only inserts the HTML.
+  // Idle time works outwards from the reader, one part at a time: it renders the part, then
+  // lays it out and fits its formulas while the page is still. A part's first layout is the
+  // longest single task the paper has, and taking it here keeps it out of a fast scroll.
+  // Nothing moves: a part held off the screen keeps its reserved height until it comes near.
+  // The costly step (typesetting) runs inside the idle callback; React only inserts the HTML.
   useEffect(() => {
     let handle = 0;
     let stopped = false;
-    const step = (deadline: { timeRemaining(): number }) => {
+    let waiting = 0;
+    const prepared = new Set<number>();
+    const still = () => performance.now() - scrolledAt.current >= STILL_MS;
+    const step = (deadline: IdleDeadline) => {
       if (stopped) return;
       const current = renderedRef.current;
       const centre = nearestPart(elements.current, topRef.current);
-      const todo = idleOrder(doc.parts.length, centre).filter((i) => !current.has(i));
-      if (!todo.length) return;
+      const order = idleOrder(doc.parts.length, centre);
+      const next = order.find((i) => !prepared.has(i));
+      if (next === undefined) return;
+      if (current.has(next) && still()) {
+        const text = elements.current.get(next)?.querySelector<HTMLElement>(":scope > .part__text");
+        const until = performance.now() + AHEAD_BUDGET_MS;
+        if (!text || layOutAhead(text, () => performance.now() < until && deadline.timeRemaining() > 1 && still())) prepared.add(next);
+        handle = requestIdle(step);
+        return;
+      }
+      const todo = order.filter((i) => !current.has(i));
+      if (!todo.length) {
+        // All rendered, and the reader is moving: what is left waits for them to stop.
+        waiting = window.setTimeout(() => (handle = requestIdle(step)), STILL_MS);
+        return;
+      }
       const batch: number[] = [];
       while (todo.length && (batch.length === 0 || deadline.timeRemaining() > 10) && batch.length < 3) {
         const i = todo.shift()!;
@@ -278,6 +303,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
     return () => {
       stopped = true;
       window.clearTimeout(timer);
+      window.clearTimeout(waiting);
       cancelIdle(handle);
     };
   }, [doc, add]);
@@ -375,7 +401,9 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
   }, [html, statements, part.index]);
 
   const setRef = useCallback((el: HTMLElement | null) => register(part.index, el), [register, part.index]);
-  const textSize = useMemo(() => ({ "--part-h": `${Math.round(estimateHeight(part, 680) * TEXT_SCALE)}px` }) as React.CSSProperties, [part]);
+  // The same height before and after the text arrives, so rendering a part far away moves nothing.
+  const reserved = useMemo(() => estimateHeight(part), [part]);
+  const textSize = useMemo(() => ({ "--part-h": `${reserved}px` }) as React.CSSProperties, [reserved]);
 
   if (part.blank) return <div ref={setRef} data-part={part.index} className="part part--blank" />;
 
@@ -390,7 +418,7 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
       {html ? (
         <div ref={textRef} className="part__text" style={textSize} dangerouslySetInnerHTML={{ __html: html }} />
       ) : (
-        <div className="part__placeholder" style={{ height: estimateHeight(part, 680) }} aria-hidden="true" />
+        <div className="part__placeholder" style={{ height: reserved }} aria-hidden="true" />
       )}
     </section>
   );
@@ -623,6 +651,31 @@ function drainFits() {
   if (fitQueue.length) fitFrame = requestAnimationFrame(drainFits);
 }
 
+/** Each part's formulas not yet fitted; it stops when `more` says so and reports whether it finished. */
+const fitters = new WeakMap<HTMLElement, (more: () => boolean) => boolean>();
+const laidOut = new WeakSet<HTMLElement>();
+
+/**
+ * Do now what a part would otherwise need the moment it comes near. Reading a position inside
+ * it lays it out, even while it is held off the screen. That first layout is also what asks for
+ * any new KaTeX face, so its formulas are fitted on a later visit, once the fonts have settled:
+ * a width measured in a fallback font is wrong for good. Reading again leaves nothing to redo.
+ * True when the part is finished.
+ */
+function layOutAhead(text: HTMLElement, more: () => boolean): boolean {
+  const first = text.firstElementChild;
+  if (!laidOut.has(text)) {
+    laidOut.add(text);
+    first?.getBoundingClientRect();
+    return false;
+  }
+  if (document.fonts && document.fonts.status !== "loaded") return false;
+  const fitter = fitters.get(text);
+  if (fitter && !fitter(more)) return false;
+  first?.getBoundingClientRect();
+  return true;
+}
+
 export function markWideMaths(root: HTMLElement): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
@@ -685,7 +738,7 @@ export function markWideMaths(root: HTMLElement): () => void {
               if (!entry.isIntersecting) continue;
               near?.unobserve(entry.target);
               const box = entry.target as HTMLElement;
-              fitQueue.push(() => live && fit(box));
+              fitQueue.push(() => live && !fitted.has(box) && fit(box));
               fitFrame ||= requestAnimationFrame(drainFits);
             }
           },
@@ -693,6 +746,15 @@ export function markWideMaths(root: HTMLElement): () => void {
           { rootMargin: FIT_MARGIN, scrollMargin: FIT_MARGIN },
         );
   boxes.forEach((box) => (near ? near.observe(box) : fit(box)));
+  fitters.set(root, (more) => {
+    for (const box of boxes) {
+      if (fitted.has(box)) continue;
+      if (!more()) return false;
+      near?.unobserve(box);
+      fit(box);
+    }
+    return true;
+  });
   // KaTeX's fonts can arrive after the first measurement; measure again once they have.
   if (document.fonts && document.fonts.status !== "loaded") {
     void document.fonts.ready.then(() => {
@@ -703,6 +765,7 @@ export function markWideMaths(root: HTMLElement): () => void {
   }
   return () => {
     live = false;
+    fitters.delete(root);
     near?.disconnect();
     observer.disconnect();
     boxes.forEach((b) => b.removeEventListener("scroll", onScroll));

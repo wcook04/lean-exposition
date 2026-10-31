@@ -3,19 +3,26 @@
 // under the paragraph, typeset as the paper has it, with a jump for those who want to go
 // there. Sections jump, and a section of another paper opens beside this one, as any link
 // to it does. The paper keeps the reader's line: an inset pushes only what is below it,
-// and closing one puts the page back.
+// and closing one puts the page back. A citation opens as a card: the entry from the paper's
+// own reference list, the place cited, and the source. While a reference is open the right
+// page goes on following the paper.
+//
+// Each open is one history entry at the same address, and the entry remembers which insets
+// stand and where the page was. Back, Escape, Close and a second click all end in the same
+// place: the entry goes, the inset goes, and the page is back on the pixel it left.
 //
 // The paper's HTML is set once, so an inset is a slot added after the block and filled
 // through a portal, the way a passage's tools are.
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type ReactNode, type RefObject } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { routeHref } from "../../app/router";
+import { pushEntry, readEntry, writeEntry } from "../../app/trail";
 import { alignmentResource } from "../../compare/useAlignment";
 import { documentPaths } from "../documents";
 import { renderSlice, type PreparedDocument } from "../engine";
 import { mountFigures } from "../mount";
-import { leanModuleOf, opensInPlace, recordOver, refView, type RecordSlice, type RefRow, type RefView } from "../references";
+import { citedView, leanModuleOf, opensInPlace, recordOver, refView, type RecordSlice, type RefIndex, type RefRow, type RefView } from "../references";
 import { freshSlots, markWideMaths, type BodyHandle } from "./PaperBody";
 import { POINT_DWELL, previewOnRightPage } from "./rightPage";
 import "./ref-inset.css";
@@ -39,7 +46,7 @@ function RefPreviewContent({ view, html }: { view: RefView; html: string | null 
       {!html && <p className="ref-preview__title">{view.title}</p>}
       {view.note && <p className="ref-preview__note">{view.note}</p>}
       {html && <div ref={text} className="ref-preview__text prose" dangerouslySetInnerHTML={{ __html: html }} />}
-      {view.locator && <p className="ref-preview__note">Cited here as: {view.locator}</p>}
+      {view.locator && <p className="ref-preview__locator">{view.locator}</p>}
     </div>
   );
 }
@@ -66,6 +73,8 @@ function bodyHtml(doc: PreparedDocument, stage: string, body: string | null): st
 interface InsetProps {
   id: string;
   stage: string;
+  doc: PreparedDocument;
+  index: RefIndex;
   view: RefView;
   html: string | null;
   focusFirst: boolean;
@@ -73,10 +82,36 @@ interface InsetProps {
   onClose(): void;
 }
 
-function RefInset({ id, stage, view, html, focusFirst, onLean, onClose }: InsetProps) {
+/** The anchor of the heading over a reference-list entry. */
+function listAnchor(doc: PreparedDocument, byte: number): string | null {
+  for (let i = doc.parts.length - 1; i >= 0; i--) {
+    const part = doc.parts[i];
+    if (part.span.start > byte) continue;
+    const heading = part.headings.filter((h) => h.level > 1).pop();
+    if (heading) return heading.id;
+  }
+  return null;
+}
+
+/** The entry of a source, with what it is cited for above it. */
+function Card({ view, html }: { view: RefView; html: string | null }) {
+  return (
+    <>
+      {view.note && <p className="ref-inset__note">{view.note}</p>}
+      {view.locator && <p className="ref-inset__locator">{view.locator}</p>}
+      {html ? <div className="ref-inset__text" dangerouslySetInnerHTML={{ __html: html }} /> : <p className="ref-inset__title">{view.title}</p>}
+    </>
+  );
+}
+
+function RefInset({ id, stage, doc, index, view, html, focusFirst, onLean, onClose }: InsetProps) {
   const box = useRef<HTMLDivElement>(null);
   const text = useRef<HTMLDivElement>(null);
   const [record, setRecord] = useState<RecordSlice | null>(null);
+  /** A citation inside this statement, open under it. */
+  const [cited, setCited] = useState<{ href: string; view: RefView } | null>(null);
+  const citedBox = useRef<HTMLDivElement>(null);
+  useEffect(() => citedBox.current?.scrollIntoView({ block: "nearest", behavior: "instant" as ScrollBehavior }), [cited]);
 
   useEffect(() => {
     const span = view.span;
@@ -106,13 +141,43 @@ function RefInset({ id, stage, view, html, focusFirst, onLean, onClose }: InsetP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /** A statement quotes its citations: they open here, under it, and do not leave the paper. */
+  const onText = (event: ReactMouseEvent) => {
+    if (view.card || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = (event.target as Element).closest?.<HTMLAnchorElement>("a.ext");
+    const href = link?.getAttribute("href");
+    if (!link || !href) return;
+    const next = citedView(index, href, (link.textContent ?? "").replace(/\s+/g, " ").trim());
+    if (!next) return;
+    event.preventDefault();
+    setCited((open) => (open?.href === href ? null : { href, view: next }));
+  };
+
   const module = view.href ? leanModuleOf(view.href) : null;
+  const list = view.entry !== null ? listAnchor(doc, view.entry) : null;
   return (
-    <div ref={box} id={id} className="ref-inset" role="region" aria-label={view.title}>
-      {!html && <p className="ref-inset__title">{view.title}</p>}
-      {view.note && <p className="ref-inset__note">{view.note}</p>}
-      {html && <div ref={text} className="ref-inset__text" dangerouslySetInnerHTML={{ __html: html }} />}
-      {view.locator && <p className="ref-inset__note">Cited here as: {view.locator}</p>}
+    <div ref={box} id={id} className={`ref-inset${view.card ? " ref-inset--card" : ""}`} role="region" aria-label={view.title}>
+      {view.card ? (
+        <Card view={view} html={html} />
+      ) : (
+        <>
+          {!html && <p className="ref-inset__title">{view.title}</p>}
+          {view.note && <p className="ref-inset__note">{view.note}</p>}
+          {html && <div ref={text} className="ref-inset__text" onClick={onText} dangerouslySetInnerHTML={{ __html: html }} />}
+        </>
+      )}
+      {cited && (
+        <div ref={citedBox} className="ref-inset ref-inset--card ref-inset--nested">
+          <Card view={cited.view} html={bodyHtml(doc, stage, cited.view.body)} />
+          {cited.view.href && (
+            <div className="ref-inset__bar">
+              <a href={cited.view.href} className="ext" target="_blank" rel="noopener noreferrer">
+                Open source
+              </a>
+            </div>
+          )}
+        </div>
+      )}
       <div className="ref-inset__bar">
         {view.go && (
           <a href={`#${encodeURIComponent(view.go)}`} className="ref-inset__go" data-ref-go={view.go}>
@@ -128,6 +193,11 @@ function RefInset({ id, stage, view, html, focusFirst, onLean, onClose }: InsetP
         {view.href && (
           <a href={view.href} className="ext" target="_blank" rel="noopener noreferrer">
             Open source
+          </a>
+        )}
+        {list && (
+          <a href={`#${encodeURIComponent(list)}`} data-ref-go={list}>
+            Go to the reference list
           </a>
         )}
         <button type="button" className="ref-inset__close" onClick={onClose}>
@@ -152,6 +222,11 @@ interface Open {
   nudge: number;
   scrollAfter: number;
 }
+
+/** The insets standing in a history entry, by the first byte of each reference. */
+const ENTRY = "refs";
+/** Where the page stood in that entry when the next inset opened. */
+const ENTRY_TOP = "refsTop";
 
 /** The block an inset opens under. */
 function blockOf(link: HTMLElement): HTMLElement | null {
@@ -191,6 +266,10 @@ export function useReferences(
   const dwell = useRef(0);
   const counter = useRef(0);
   const pointed = useRef<HTMLElement | null>(null);
+  /** Just closed: it does not preview until the pointer or the focus has left it. */
+  const quiet = useRef<HTMLElement | null>(null);
+  /** Closed out of turn, so Back does not bring them back. */
+  const dismissed = useRef(new Set<number>());
 
   const rowOf = useCallback((link: HTMLElement) => index?.rows[Number(link.dataset.ref)], [index]);
 
@@ -205,6 +284,8 @@ export function useReferences(
       if (!row || !index) return;
       pointed.current = link;
       stopDwell();
+      // One view of a reference at a time: an open one stands under its sentence.
+      if (link === quiet.current || link.hasAttribute("aria-expanded")) return;
       dwell.current = window.setTimeout(() => {
         const view = refView(index, row);
         previewOnRightPage(<RefPreviewContent view={view} html={bodyHtml(doc, stage, view.body)} />);
@@ -215,6 +296,7 @@ export function useReferences(
 
   const leave = useCallback(() => {
     pointed.current = null;
+    quiet.current = null;
     stopDwell();
     previewOnRightPage(null);
   }, [stopDwell]);
@@ -226,6 +308,7 @@ export function useReferences(
       const { link, slot } = item;
       const before = link.getBoundingClientRect().top;
       const untouched = Math.abs(window.scrollY - item.scrollAfter) < 2;
+      const hadFocus = slot.contains(document.activeElement);
       flushSync(() => setOpen((list) => list.filter((other) => other !== item)));
       slot.remove();
       link.removeAttribute("aria-expanded");
@@ -235,18 +318,17 @@ export function useReferences(
       const undo = untouched ? -item.nudge : 0;
       if (Math.abs(moved + undo) >= 0.5) window.scrollBy({ top: moved + undo, behavior: "instant" as ScrollBehavior });
       body.current?.reanchor(true);
-      if (refocus) link.focus({ preventScroll: true });
+      if (refocus || hadFocus) {
+        quiet.current = link;
+        link.focus({ preventScroll: true });
+      }
     },
     [body],
   );
 
-  const toggle = useCallback(
-    (link: HTMLElement, row: RefRow, focusFirst: boolean) => {
-      const existing = openRef.current.find((item) => item.link === link);
-      if (existing) {
-        close(existing, true);
-        return;
-      }
+  /** Stand an inset under its reference, with no history of its own. */
+  const stand = useCallback(
+    (link: HTMLElement, row: RefRow, focusFirst: boolean, bring: boolean) => {
       const block = blockOf(link);
       if (!block || !index) return;
       const slot = document.createElement("div");
@@ -258,20 +340,104 @@ export function useReferences(
       const view = refView(index, row);
       const item: Open = { id, row, link, slot, view, html: bodyHtml(doc, stage, view.body), focusFirst, nudge: 0, scrollAfter: window.scrollY };
       flushSync(() => setOpen((list) => [...list, item]));
-      // The reading position holds. Only an inset whose first lines would fall below the window is brought up.
-      const foot = document.querySelector(".reader-bar")?.getBoundingClientRect().top ?? window.innerHeight;
-      const over = slot.getBoundingClientRect().top + 72 - foot;
-      const room = link.getBoundingClientRect().top - top() - 8;
-      const nudge = Math.max(0, Math.min(over, room));
-      if (nudge > 0) {
-        window.scrollBy({ top: nudge, behavior: "instant" as ScrollBehavior });
-        item.nudge = nudge;
+      if (bring) {
+        // An inset opened near the foot of the window is brought into view, as far as the link allows.
+        const foot = document.querySelector(".reader-bar")?.getBoundingClientRect().top ?? window.innerHeight;
+        const over = slot.getBoundingClientRect().bottom - foot + 16;
+        const room = link.getBoundingClientRect().top - top() - 8;
+        const nudge = Math.max(0, Math.min(over, room));
+        if (nudge > 0) {
+          window.scrollBy({ top: nudge, behavior: "instant" as ScrollBehavior });
+          item.nudge = nudge;
+        }
+        item.scrollAfter = window.scrollY;
       }
       // What the paper holds in place is now this position, so the nudge stays.
       body.current?.reanchor(true);
-      item.scrollAfter = window.scrollY;
     },
-    [body, close, doc, index, stage, top],
+    [body, doc, index, stage, top],
+  );
+
+  /** Take an inset away. The newest goes with its history entry; another leaves history alone. */
+  const dismiss = useCallback(
+    (item: Open) => {
+      const standing = readEntry<number[]>(ENTRY) ?? [];
+      if (standing[standing.length - 1] === item.row.start_byte) {
+        window.history.back();
+        return;
+      }
+      dismissed.current.add(item.row.start_byte);
+      writeEntry(ENTRY, standing.filter((byte) => byte !== item.row.start_byte));
+      close(item, true);
+    },
+    [close],
+  );
+
+  /** The link of a reference, drawn first if the paper has not reached it yet. */
+  const linkOf = useCallback(
+    async (at: number): Promise<HTMLElement | null> => {
+      const row = index?.rows[at];
+      if (!row) return null;
+      const part = doc.parts.findIndex((p) => row.start_byte >= p.span.start && row.start_byte < p.span.end);
+      if (part < 0) return null;
+      await body.current?.ensure([part]);
+      return body.current?.partElement(part)?.querySelector<HTMLElement>(`a[data-ref="${at}"]`) ?? null;
+    },
+    [body, doc, index],
+  );
+
+  /** Make the page show what this history entry holds. An entry that never held one changes nothing. */
+  const settle = useCallback(async () => {
+    const standing = readEntry<number[]>(ENTRY);
+    if (!standing || !index) return;
+    const wanted = standing.filter((byte) => !dismissed.current.has(byte));
+    const leaving = openRef.current.filter((item) => !wanted.includes(item.row.start_byte));
+    [...leaving].reverse().forEach((item) => close(item, false));
+    const top = readEntry<number>(ENTRY_TOP);
+    if (leaving.length && top !== undefined && Math.abs(window.scrollY - top) >= 0.5) {
+      window.scrollTo({ top, behavior: "instant" as ScrollBehavior });
+      body.current?.reanchor(true);
+    }
+    for (const byte of wanted) {
+      if (openRef.current.some((item) => item.row.start_byte === byte)) continue;
+      const at = index.rows.findIndex((row) => row.start_byte === byte);
+      const link = at >= 0 ? await linkOf(at) : null;
+      if (link && !link.hasAttribute("aria-expanded")) stand(link, index.rows[at], false, false);
+    }
+  }, [body, close, index, linkOf, stand]);
+
+  useEffect(() => {
+    const onPop = () => void settle();
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [settle]);
+
+  // On arriving, a reload among them: what this entry held.
+  useEffect(() => {
+    void settle();
+    // Once per mounted paper.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggle = useCallback(
+    (link: HTMLElement, row: RefRow, focusFirst: boolean) => {
+      const existing = openRef.current.find((item) => item.link === link);
+      if (existing) {
+        dismiss(existing);
+        return;
+      }
+      stopDwell();
+      previewOnRightPage(null);
+      dismissed.current.delete(row.start_byte);
+      const before = openRef.current.map((item) => item.row.start_byte);
+      // Written first, so that Back to this entry knows it held these and no more.
+      writeEntry(ENTRY, before);
+      writeEntry(ENTRY_TOP, window.scrollY);
+      pushEntry(new URL(window.location.href));
+      writeEntry(ENTRY, [...before, row.start_byte]);
+      stand(link, row, focusFirst, true);
+    },
+    [dismiss, stand, stopDwell],
   );
 
   // Escape closes the inset last opened; a dialog on top keeps its own Escape.
@@ -281,11 +447,11 @@ export function useReferences(
       const last = openRef.current[openRef.current.length - 1];
       if (!last) return;
       event.preventDefault();
-      close(last, true);
+      dismiss(last);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [close]);
+  }, [dismiss]);
 
   /** Mark where a jump lands, once, as the reader's eyes get there. */
   const land = useCallback(
@@ -349,7 +515,7 @@ export function useReferences(
   const onFocus = useCallback(
     (event: React.FocusEvent) => {
       const link = event.target as HTMLElement;
-      if (link.matches?.("a[data-ref]") && link.matches(":focus-visible")) point(link);
+      if (link.matches?.("a[data-ref]") && link.matches(":focus-visible") && link !== quiet.current) point(link);
     },
     [point],
   );
@@ -365,12 +531,12 @@ export function useReferences(
     () =>
       open.map((item) =>
         createPortal(
-          <RefInset id={item.id} stage={stage} view={item.view} html={item.html} focusFirst={item.focusFirst} onLean={onLean} onClose={() => close(item, true)} />,
+          <RefInset id={item.id} stage={stage} doc={doc} index={index!} view={item.view} html={item.html} focusFirst={item.focusFirst} onLean={onLean} onClose={() => dismiss(item)} />,
           item.slot,
           item.id,
         ),
       ),
-    [close, onLean, open, stage],
+    [dismiss, doc, index, onLean, open, stage],
   );
 
   return { onClick, onPointerOver, onPointerOut, onFocus, onBlur, portals };

@@ -47,6 +47,9 @@ export function previewOnRightPage(content: ReactNode | null): void {
   rightPreview.set(content ?? null);
 }
 
+/** The Lean page while it stands open. The scroll path asks on every frame, and a search walks the whole paper. */
+export const leanPage: { current: HTMLDivElement | null } = { current: null };
+
 /** How long a pointer rests before the right page previews what it is on, in ms. */
 export const POINT_DWELL = 150;
 /** How long a statement holds the reading line before the right page follows it, in ms. */
