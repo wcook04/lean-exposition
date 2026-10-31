@@ -256,7 +256,8 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
   useEffect(() => setOpen(false), [route]);
   useEffect(() => {
     if (!open) return;
-    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+    // The menu is fixed; focus must not scroll the page behind it, or the reader loses their place.
+    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus({ preventScroll: true });
     const onPointer = (event: PointerEvent) => {
       const target = event.target as Node;
       if (!panelRef.current?.contains(target) && !buttonRef.current?.contains(target)) setOpen(false);

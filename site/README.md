@@ -200,6 +200,9 @@ in a browser at desktop and phone widths, in both colour schemes.
 After a paper or reader change, exercise a companion link in the built site under
 its deployed base path. Confirm that the opened view contains the intended
 argument, not just its heading, and that returning restores the reading position.
+A new inner scroller needs a `data-keep` attribute or an entry in `SCROLLERS` in
+`src/app/restore.ts`, and a new tab or open panel uses `useEntryState` from
+`src/app/trail.ts`, so that Back restores them.
 Also open the link normally or copy its address: an in-app click handler can hide
 an invalid public URL. Check the actual paper sources for print-only layout
 commands leaking into the reader, while preserving mathematical notation and
