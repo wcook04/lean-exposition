@@ -499,17 +499,12 @@ html:has(.reader) {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-2);
-  margin: calc(-1 * var(--space-1)) 0 var(--space-3);
+  /* No negative margin: .part__text clips at its box in WebKit (content-visibility). */
+  margin: 0 0 var(--space-3);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.3;
   hyphens: manual;
-}
-
-.prose h2 + .passage-tools,
-.prose h3 + .passage-tools,
-.prose h4 + .passage-tools {
-  margin-top: calc(-1 * var(--space-1));
 }
 
 .passage-tools button {

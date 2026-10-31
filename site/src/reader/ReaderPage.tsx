@@ -171,6 +171,7 @@ function blocksOf(part: HTMLElement | null | undefined, last: number, lines: { s
 const READING_LINE = 0.3;
 /** How far from the reading line a statement still counts as what is being read. */
 const LINE_REACH = 0.32;
+const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
   const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
@@ -558,8 +559,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, [route.node, route.at, statementAt, ties]);
   const pinRef = useRef(pin);
   pinRef.current = pin;
-  /** A pin is released by scrolling away only once it has been on screen. */
+  /** A pin is released by scrolling away: the reader's own hand, after it has been on screen. */
   const pinSeen = useRef(false);
+  const handMoved = useRef(false);
   /** The statement under the reading line, on the page at once. */
   const current = useRef<number | null>(null);
   /** Stepped to by keys: the line leaves it alone until the reader scrolls by hand. */
@@ -571,6 +573,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   useEffect(() => {
     pinSeen.current = false;
+    handMoved.current = false;
     statements.light("pin", pin?.tie ?? null);
     statements.light("on", pin ? null : current.current);
     update.current();
@@ -652,7 +655,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (box) {
           const visible = box.bottom > top && box.top < window.innerHeight;
           if (visible) pinSeen.current = true;
-          else if (pinSeen.current) release();
+          else if (pinSeen.current && handMoved.current) release();
         }
       }
       let heading: string | null = null;
@@ -681,17 +684,28 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     /** The reader's own hand on the page gives the line back to the reader. */
     const onHand = () => {
       stepped.current = false;
+      handMoved.current = true;
+    };
+    const onKeyScroll = (event: KeyboardEvent) => {
+      if (SCROLL_KEYS.has(event.key)) onHand();
+    };
+    const onBar = (event: PointerEvent) => {
+      if (event.target === document.documentElement) onHand();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     window.addEventListener("wheel", onHand, { passive: true });
     window.addEventListener("touchmove", onHand, { passive: true });
+    window.addEventListener("keydown", onKeyScroll);
+    window.addEventListener("pointerdown", onBar);
     const first = window.setTimeout(run, 60);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       window.removeEventListener("wheel", onHand);
       window.removeEventListener("touchmove", onHand);
+      window.removeEventListener("keydown", onKeyScroll);
+      window.removeEventListener("pointerdown", onBar);
       cancelAnimationFrame(frame);
       window.clearTimeout(saveTimer);
       window.clearTimeout(holdTimer);
