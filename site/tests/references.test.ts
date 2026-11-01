@@ -2,6 +2,7 @@
 // checked against the paper's bytes and against the page it renders.
 
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -34,7 +35,7 @@ interface Row extends RefRow {
   before: string;
   reason?: string;
 }
-type File = Omit<ReferenceTable, "references"> & { references: Row[] };
+type File = Omit<ReferenceTable, "references"> & { paper_sha256: string; references: Row[] };
 
 const file = (stage: Stage): File => JSON.parse(readFileSync(path.join(here, `../../examples/qaoa-sk/alignment/references-${stage}.json`), "utf8"));
 const paper = (stage: Stage) => new Uint8Array(readFileSync(path.join(here, `../../papers/qaoa-sk/${PATHS[stage]}`)));
@@ -94,6 +95,7 @@ describe.each(STAGES)("the table of the %s paper", (stage) => {
   const at = (start: number, end: number) => decoder.decode(bytes.subarray(start, end));
 
   it("was reviewed against these bytes", () => {
+    expect(table.paper_sha256).toBe(createHash("sha256").update(bytes).digest("hex"));
     expect(documentFixture(stage)).toEqual(bytes);
     for (const row of table.references) {
       expect(at(row.start_byte, row.end_byte), row.quote).toBe(row.quote);

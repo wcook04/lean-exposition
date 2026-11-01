@@ -1,1 +1,7235 @@
-{"meaning":"Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading.","passages":[[168,1609,["assumptions.full_support_minimizer","full_support","scalar.paper_admissible","scalar.paper_minimizer","scalar.smooth_positive_density","support.full_relative_support_curvature"],"abstract"],[1726,5354,["assumptions.full_support_minimizer","assumptions.value_diffusion","scalar.minimizer_attainment","scalar.paper_admissible","scalar.parisi_formula","support.diffusion","support.regularity","support.stieltjes_measure"],"model"],[5407,9007,["assumptions.full_support_minimizer","full_support","scalar.minimizer_attainment","scalar.paper_admissible","scalar.paper_minimizer","scalar.smooth_positive_density","support.full_relative_support","support.full_relative_support_curvature","support.moment_saturation","support.near_ground_pairs"],"main-result"],[9141,12026,["scalar.paper_admissible","scalar.paper_minimizer","support.contact","support.contact_derivatives","support.first_variation","support.moment_identity","support.regularity"],"contact"],[12109,15908,["scalar.constant_curvature","scalar.paper_admissible","scalar.paper_minimizer","support.empty_support_chord_obstruction","support.endpoint_chord_area","support.full_relative_support","support.full_relative_support_curvature","support.moment_saturation","support.no_bounded_gap","support.no_initial_gap","support.no_terminal_gap","support.positive_curvature","support.strict_increase","support.terminal_chord_barrier","support.terminal_defect","support.zero_curvature"],"gap-proof"],[16018,27859,["scalar.integrated_coercivity","support.backward_shapes","support.diffusion","support.fixed_time_spatial_coercivity","support.flux_identity","support.forward_shapes","support.integrated_coercivity","support.plateau_transfer","support.positive_curvature","support.rational_certificate","support.raw_curvature_negative_absolute_terminal","support.step_tails","support.zero_curvature"],"curvature"],[28022,34477,["scalar.paper_admissible","scalar.paper_minimizer","scalar.smooth_positive_density","support.fixed_time_spatial_coercivity"],"density-consequence"],[34611,38585,["scalar.manuscript_terminal_value","scalar.paper_admissible","scalar.paper_minimizer","scalar.parisi_formula","scalar.separate_classical_algorithm","scalar.terminal_loss","scalar_value"],"scalar-value"],[38647,50452,["assumptions.qaoa_model_and_limits","circuit.bounded_trigonometric","circuit.finite_formula_word_approximation","circuit.fixed_word_transfer","circuit.rooted_realization","circuit.sampled_finite_instance_optimum","circuit.seed_removal","circuit.seeded_synthesis","qaoa_thermodynamic_first","scalar.conditional_rounding","scalar.correlation_vector_control","scalar.euler_normalization","scalar.paper_admissible","scalar.paper_minimizer","scalar.shifted_gaussian_limit","scalar.unshifted_gaussian_limit","scalar_value"],"qaoa-boundary"],[50562,52318,["assumptions.full_support_minimizer","assumptions.value_diffusion","assumptions.value_minimizer","full_support","lean.full_support","lean.value_consequences","scalar.formal_finite_gaussian_clause","scalar.formal_model_transport_open","scalar.formal_parisi_clause","scalar.formal_scalar_clause","scalar.lean_gaussian_target","scalar.lean_parisi_target","scalar.lean_scalar_target","scalar.paper_admissible","scalar.paper_minimizer","scalar_value"],"evidence-scope"]],"segments":[[2090,2167,[0]],[2728,3058,[1]],[3122,3279,[2,3]],[3280,3326,[4]],[3327,3378,[4]],[3379,3648,[4]],[3789,4137,[5]],[4138,4297,[5]],[4871,4956,[6]],[4957,5043,[6]],[5176,5353,[7]],[5970,6063,[8,9,10]],[6064,6117,[11,8,9,10]],[6118,6213,[8,9,10]],[6214,6274,[12,9,10]],[6275,6319,[12,9,10]],[6417,6535,[13]],[6837,7163,[14]],[9142,9532,[15]],[9794,9858,[16]],[9859,9940,[16]],[9941,9999,[16]],[10087,10244,[17]],[10245,10340,[17]],[10341,10511,[17]],[10768,10814,[18]],[10815,10853,[18]],[10923,11195,[19]],[11196,11285,[19]],[11286,11507,[19]],[11627,11677,[20]],[11678,11785,[20]],[11786,11956,[20]],[12110,12351,[21,22]],[12352,12466,[21,22]],[12467,12524,[23,21,22]],[12676,12950,[24]],[12952,13161,[25]],[13162,13199,[26,25]],[13200,13296,[26,25]],[13297,13343,[26,25]],[13344,13400,[25]],[13401,13709,[27]],[13783,13955,[28]],[13956,14026,[28]],[14027,14274,[28]],[14276,14547,[29]],[14549,14645,[30]],[14980,15125,[31]],[15589,15680,[32,33,34]],[15680,15790,[33,34]],[15791,15851,[35,34]],[15852,15907,[34]],[16435,16628,[36]],[16629,16721,[36]],[16722,16789,[36]],[17934,18065,[37]],[18066,18246,[37]],[18957,19085,[38]],[19877,20328,[39]],[20329,20463,[39]],[20464,20518,[39]],[20646,20823,[40,41]],[20824,20838,[41]],[20839,20883,[41]],[20884,21212,[41]],[21213,21298,[41]],[21299,21359,[41]],[21360,21458,[42]],[21777,21890,[43]],[21891,21936,[43]],[21937,22274,[43]],[22626,22715,[44,45,46]],[22716,22855,[44,45,46]],[23564,23644,[47,48]],[23645,23749,[47,48]],[24273,24858,[49]],[25234,25490,[50]],[25492,25636,[51]],[25637,25745,[51]],[25746,25918,[51]],[25919,26018,[51]],[26019,26182,[51]],[26183,26342,[51]],[26770,26881,[52]],[28561,28831,[53]],[28832,28980,[53]],[28981,29035,[53]],[31839,31876,[54]],[31877,31975,[54]],[31976,32052,[54]],[34669,34878,[55]],[34879,34963,[55]],[34964,35193,[55]],[35194,35268,[56,55]],[35269,35355,[56,55]],[35356,35850,[57]],[36267,36345,[58]],[36346,36401,[58]],[36976,37605,[59]],[39042,39126,[60]],[39127,39228,[60]],[39229,39478,[60]],[39479,39616,[60]],[39617,39714,[60]],[39801,40039,[61]],[40429,40676,[62]],[40677,40915,[62]],[40916,41165,[62]],[41166,41232,[63]],[41233,41377,[63]],[41378,41555,[63]],[41556,41575,[64]],[41576,41634,[65,64]],[41635,41849,[65,64]],[41850,41946,[66]],[41947,42044,[66]],[42045,42255,[66]],[42256,42538,[67,66]],[42539,42617,[66]],[42918,43220,[68]],[43221,43247,[68]],[44678,44992,[69]],[44993,45262,[69]],[45432,45517,[70]],[46458,46500,[71]],[46501,46685,[72,71]],[46686,46856,[71]],[46857,46996,[73,71]],[46997,47047,[74,71]],[47048,47107,[75,74,71]],[47108,47354,[71]],[47857,47906,[76]],[47907,47986,[76]],[47987,48221,[76]],[48935,49181,[77]],[49182,49356,[77]],[49358,49532,[78]],[49533,49614,[78]],[49615,50110,[78]],[50747,50815,[79]],[50816,50939,[80,79]],[50940,50950,[81,82,83,84]],[50951,51109,[85,81,82,83,84,86]],[51110,51229,[87,88,89,86]],[51230,51310,[90]]],"ties":[{"anchor":"model","at":"b2090-2167","lean":true,"lines":[130,130],"module":"OAI.Probability.SKValue.GroundState.WeakGuerra","name":"OAI.SKValue.groundStateValue_le_parisi","record":"scalar.parisi_formula","role":"statement"},{"anchor":"model","at":"b2728-3058","lean":true,"lines":[130,130],"module":"OAI.Probability.SKValue.GroundState.WeakGuerra","name":"OAI.SKValue.groundStateValue_le_parisi","record":"scalar.parisi_formula","role":"explanation"},{"anchor":"model","at":"b3122-3279","lean":true,"lines":[17,22],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.OrderParameter","record":"assumptions.full_support_minimizer","role":"definition"},{"anchor":"model","at":"b3122-3279","lean":true,"lines":[17,22],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.OrderParameter","record":"scalar.paper_admissible","role":"definition"},{"anchor":"model","at":"b3280-3648","lean":true,"lines":[65,66],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.IsStieltjesMeasure","record":"support.stieltjes_measure","role":"definition"},{"anchor":"model","at":"b3789-4297","lean":true,"lines":[17,22],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.OrderParameter","record":"scalar.paper_admissible","role":"definition"},{"anchor":"model","at":"b4871-5043","lean":true,"lines":[83,88],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.IsDiffusion","record":"assumptions.value_diffusion","role":"definition"},{"anchor":"model","at":"b5176-5353","lean":true,"lines":[310,310],"module":"OAI.Probability.SKSupport.Diffusion.CompactDrift","name":"OAI.ZeroTemperatureSK.diffusion_isDiffusion","record":"support.diffusion","role":"statement"},{"anchor":"main-result","at":"b5970-6213","lean":true,"lines":[21,21],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.full_relative_support","role":"statement"},{"anchor":"main-result","at":"b5970-6319","lean":true,"lines":[35,36],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.full_support","record":"full_support","role":"statement"},{"anchor":"main-result","at":"b5970-6319","lean":true,"lines":[21,21],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.full_relative_support_curvature","role":"statement"},{"anchor":"main-result","at":"b6064-6117","lean":true,"lines":[62,63],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.IsMinimizer","record":"scalar.paper_minimizer","role":"statement"},{"anchor":"main-result","at":"b6214-6319","lean":true,"lines":[22,22],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.moment_saturation","role":"statement"},{"anchor":"main-result","at":"b6417-6535","lean":false,"lines":null,"module":null,"name":null,"record":"scalar.minimizer_attainment","role":"statement"},{"anchor":"main-result","at":"b6837-7163","lean":false,"lines":null,"module":null,"name":null,"record":"support.near_ground_pairs","role":"statement"},{"anchor":"contact","at":"b9142-9532","lean":true,"lines":[108,109],"module":"OAI.Probability.SKSupport.Regularity.Regularity","name":"OAI.ZeroTemperatureSK.value_uniform_derivative_bounds","record":"support.regularity","role":"statement"},{"anchor":"contact","at":"b9794-9999","lean":true,"lines":[157,157],"module":"OAI.Probability.SKSupport.Moments.StripSquareMoment","name":"OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt","record":"support.moment_identity","role":"statement"},{"anchor":"contact","at":"b10087-10511","lean":true,"lines":[152,154],"module":"OAI.Probability.SKSupport.Support.VariationIntegrals","name":"OAI.ZeroTemperatureSK.parisi_chord_derivative","record":"support.first_variation","role":"statement"},{"anchor":"contact","at":"b10768-10853","lean":true,"lines":[58,58],"module":"OAI.Probability.SKSupport.Support.ContactPotential","name":"OAI.ZeroTemperatureSK.contactPotential_nonneg","record":"support.contact","role":"statement"},{"anchor":"contact","at":"b10923-11507","lean":true,"lines":[58,58],"module":"OAI.Probability.SKSupport.Support.ContactPotential","name":"OAI.ZeroTemperatureSK.contactPotential_nonneg","record":"support.contact","role":"derivation"},{"anchor":"contact","at":"b11627-11956","lean":true,"lines":[82,83],"module":"OAI.Probability.SKSupport.Support.ContactPotential","name":"OAI.ZeroTemperatureSK.minimizer_contact","record":"support.contact_derivatives","role":"statement"},{"anchor":"gap-proof","at":"b12110-12524","lean":true,"lines":[51,51],"module":"OAI.Probability.SKSupport.Support.GapCurvature","name":"OAI.ZeroTemperatureSK.positive_gap_curvature","record":"scalar.constant_curvature","role":"statement"},{"anchor":"gap-proof","at":"b12110-12524","lean":true,"lines":[51,51],"module":"OAI.Probability.SKSupport.Support.GapCurvature","name":"OAI.ZeroTemperatureSK.positive_gap_curvature","record":"support.positive_curvature","role":"statement"},{"anchor":"gap-proof","at":"b12467-12524","lean":true,"lines":[66,66],"module":"OAI.Probability.SKSupport.Support.GapCurvature","name":"OAI.ZeroTemperatureSK.zero_gap_curvature","record":"support.zero_curvature","role":"statement"},{"anchor":"gap-proof","at":"b12676-12950","lean":true,"lines":[21,21],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.full_relative_support_curvature","role":"explanation"},{"anchor":"gap-proof","at":"b12952-13400","lean":true,"lines":[382,388],"module":"OAI.Probability.SKSupport.Support.Closure","name":"OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_positive_constant_gap","record":"support.no_bounded_gap","role":"derivation"},{"anchor":"gap-proof","at":"b13162-13343","lean":true,"lines":[370,375],"module":"OAI.Probability.SKSupport.Support.Closure","name":"OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative","record":"support.endpoint_chord_area","role":"derivation"},{"anchor":"gap-proof","at":"b13401-13709","lean":true,"lines":[173,173],"module":"OAI.Probability.SKSupport.Support.Closure","name":"OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap","record":"support.no_initial_gap","role":"derivation"},{"anchor":"gap-proof","at":"b13783-14274","lean":false,"lines":null,"module":null,"name":null,"record":"support.terminal_chord_barrier","role":"derivation"},{"anchor":"gap-proof","at":"b14276-14547","lean":false,"lines":null,"module":null,"name":null,"record":"support.empty_support_chord_obstruction","role":"derivation"},{"anchor":"gap-proof","at":"b14549-14645","lean":true,"lines":[53,54],"module":"OAI.Probability.SKSupport.Support.NoTerminalPlateau","name":"OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau","record":"support.no_terminal_gap","role":"mention"},{"anchor":"gap-proof","at":"b14980-15125","lean":true,"lines":[124,129],"module":"OAI.Probability.SKSupport.Support.ContactPotential","name":"OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect","record":"support.terminal_defect","role":"mention"},{"anchor":"gap-proof","at":"b15589-15680","lean":true,"lines":[21,21],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.full_relative_support","role":"derivation"},{"anchor":"gap-proof","at":"b15589-15790","lean":true,"lines":[22,22],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.moment_saturation","role":"derivation"},{"anchor":"gap-proof","at":"b15589-15907","lean":true,"lines":[21,21],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.minimizer_full_support_actual","record":"support.full_relative_support_curvature","role":"derivation"},{"anchor":"gap-proof","at":"b15791-15851","lean":true,"lines":[47,48],"module":"OAI.Probability.SKSupport.Support.Closure","name":"OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support","record":"support.strict_increase","role":"statement"},{"anchor":"curvature","at":"b16435-16789","lean":true,"lines":[135,139],"module":"OAI.Probability.SKSupport.Density.SampleJets","name":"OAI.ZeroTemperatureSK.actual_coercivity","record":"support.fixed_time_spatial_coercivity","role":"statement"},{"anchor":"curvature","at":"b17934-18246","lean":true,"lines":[38,39],"module":"OAI.Probability.SKSupport.Moments.Curvature","name":"OAI.ZeroTemperatureSK.stripThird_eq_actual","record":"support.plateau_transfer","role":"statement"},{"anchor":"curvature","at":"b18957-19085","lean":false,"lines":null,"module":null,"name":null,"record":"support.raw_curvature_negative_absolute_terminal","role":"mention"},{"anchor":"curvature","at":"b19877-20518","lean":true,"lines":[130,132],"module":"OAI.Probability.SKSupport.Density.DensityFubini","name":"OAI.ZeroTemperatureSK.Heat.finiteDensity","record":"support.step_tails","role":"explanation"},{"anchor":"curvature","at":"b20646-20823","lean":true,"lines":[12,17],"module":"OAI.Probability.SKSupport.Backward.BackwardRescale","name":"OAI.ZeroTemperatureSK.Heat.BackwardShape","record":"support.backward_shapes","role":"statement"},{"anchor":"curvature","at":"b20646-21359","lean":true,"lines":[128,129],"module":"OAI.Probability.SKSupport.Density.FiniteForwardRatio","name":"OAI.ZeroTemperatureSK.Heat.finite_forward_ratio","record":"support.forward_shapes","role":"statement"},{"anchor":"curvature","at":"b21360-21458","lean":true,"lines":[12,17],"module":"OAI.Probability.SKSupport.Backward.BackwardRescale","name":"OAI.ZeroTemperatureSK.Heat.BackwardShape","record":"support.backward_shapes","role":"explanation"},{"anchor":"curvature","at":"b21777-22274","lean":true,"lines":[161,161],"module":"OAI.Probability.SKSupport.Density.FiniteForwardRatio","name":"OAI.ZeroTemperatureSK.Heat.cert_flux_derivative","record":"support.flux_identity","role":"statement"},{"anchor":"curvature","at":"b22626-22855","lean":true,"lines":[165,181],"module":"OAI.Probability.SKSupport.Density.Certificate","name":"OAI.ZeroTemperatureSK.Certificate.integrated_coercivity_of_flux","record":"scalar.integrated_coercivity","role":"derivation"},{"anchor":"curvature","at":"b22626-22855","lean":true,"lines":[115,116],"module":"OAI.Probability.SKSupport.Density.FiniteDensity","name":"OAI.ZeroTemperatureSK.Heat.finite_density_coercivity","record":"support.integrated_coercivity","role":"derivation"},{"anchor":"curvature","at":"b22626-22855","lean":true,"lines":[63,66],"module":"OAI.Probability.SKSupport.Density.Certificate","name":"OAI.ZeroTemperatureSK.Certificate.rational_identity","record":"support.rational_certificate","role":"statement"},{"anchor":"curvature","at":"b23564-23749","lean":true,"lines":[165,181],"module":"OAI.Probability.SKSupport.Density.Certificate","name":"OAI.ZeroTemperatureSK.Certificate.integrated_coercivity_of_flux","record":"scalar.integrated_coercivity","role":"statement"},{"anchor":"curvature","at":"b23564-23749","lean":true,"lines":[115,116],"module":"OAI.Probability.SKSupport.Density.FiniteDensity","name":"OAI.ZeroTemperatureSK.Heat.finite_density_coercivity","record":"support.integrated_coercivity","role":"statement"},{"anchor":"curvature","at":"b24273-24858","lean":true,"lines":[38,39],"module":"OAI.Probability.SKSupport.Moments.Curvature","name":"OAI.ZeroTemperatureSK.stripThird_eq_actual","record":"support.plateau_transfer","role":"derivation"},{"anchor":"curvature","at":"b25234-25490","lean":true,"lines":[66,66],"module":"OAI.Probability.SKSupport.Support.GapCurvature","name":"OAI.ZeroTemperatureSK.zero_gap_curvature","record":"support.zero_curvature","role":"derivation"},{"anchor":"curvature","at":"b25492-26342","lean":true,"lines":[135,139],"module":"OAI.Probability.SKSupport.Density.SampleJets","name":"OAI.ZeroTemperatureSK.actual_coercivity","record":"support.fixed_time_spatial_coercivity","role":"derivation"},{"anchor":"curvature","at":"b26770-26881","lean":true,"lines":[310,310],"module":"OAI.Probability.SKSupport.Diffusion.CompactDrift","name":"OAI.ZeroTemperatureSK.diffusion_isDiffusion","record":"support.diffusion","role":"explanation"},{"anchor":"density-consequence","at":"b28561-29035","lean":false,"lines":null,"module":null,"name":null,"record":"scalar.smooth_positive_density","role":"statement"},{"anchor":"density-consequence","at":"b31839-32052","lean":false,"lines":null,"module":null,"name":null,"record":"scalar.smooth_positive_density","role":"derivation"},{"anchor":"scalar-value","at":"b34669-35355","lean":true,"lines":[106,118],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.ScalarValueConclusion","record":"scalar.manuscript_terminal_value","role":"statement"},{"anchor":"scalar-value","at":"b35194-35355","lean":true,"lines":[16,23],"module":"OAI.Probability.SKValue.Main","name":"OAI.SKValue.value_consequences","record":"scalar_value","role":"statement"},{"anchor":"scalar-value","at":"b35356-35850","lean":true,"lines":[106,118],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.ScalarValueConclusion","record":"scalar.manuscript_terminal_value","role":"derivation"},{"anchor":"scalar-value","at":"b36267-36401","lean":true,"lines":[25,25],"module":"OAI.Probability.SKValue.Variation.ContactAssembly","name":"OAI.SKValue.IsDiffusion.strip_value_le_groundState","record":"scalar.terminal_loss","role":"statement"},{"anchor":"scalar-value","at":"b36976-37605","lean":false,"lines":null,"module":null,"name":null,"record":"scalar.separate_classical_algorithm","role":"statement"},{"anchor":"qaoa-boundary","at":"b39042-39714","lean":false,"lines":null,"module":null,"name":null,"record":"assumptions.qaoa_model_and_limits","role":"definition"},{"anchor":"qaoa-boundary","at":"b39801-40039","lean":false,"lines":null,"module":null,"name":null,"record":"qaoa_thermodynamic_first","role":"statement"},{"anchor":"qaoa-boundary","at":"b40429-41165","lean":true,"lines":[91,92],"module":"OAI.Probability.SKValue.Gaussian.CoupledCoordinates","name":"OAI.SKValue.coupled_euler_L2_convergence","record":"scalar.euler_normalization","role":"statement"},{"anchor":"qaoa-boundary","at":"b41166-41555","lean":true,"lines":[25,30],"module":"OAI.Probability.SKValue.Gaussian.CoordinateDependsBefore","name":"OAI.SKValue.finite_rounding_coefficient","record":"scalar.conditional_rounding","role":"statement"},{"anchor":"qaoa-boundary","at":"b41556-41849","lean":true,"lines":[29,41],"module":"OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip","name":"OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip","record":"scalar.shifted_gaussian_limit","role":"statement"},{"anchor":"qaoa-boundary","at":"b41576-41849","lean":true,"lines":[16,23],"module":"OAI.Probability.SKValue.Main","name":"OAI.SKValue.value_consequences","record":"scalar_value","role":"statement"},{"anchor":"qaoa-boundary","at":"b41850-42617","lean":true,"lines":[29,41],"module":"OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip","name":"OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip","record":"scalar.shifted_gaussian_limit","role":"explanation"},{"anchor":"qaoa-boundary","at":"b42256-42538","lean":true,"lines":[89,91],"module":"OAI.Probability.SKValue.Processes.MeshRaw","name":"OAI.SKValue.mesh_coefficient_errors","record":"scalar.correlation_vector_control","role":"explanation"},{"anchor":"qaoa-boundary","at":"b42918-43247","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.finite_formula_word_approximation","role":"statement"},{"anchor":"qaoa-boundary","at":"b44678-45262","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.rooted_realization","role":"statement"},{"anchor":"qaoa-boundary","at":"b45432-45517","lean":false,"lines":null,"module":null,"name":null,"record":"scalar.unshifted_gaussian_limit","role":"mention"},{"anchor":"qaoa-boundary","at":"b46458-47354","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.finite_formula_word_approximation","role":"explanation"},{"anchor":"qaoa-boundary","at":"b46501-46685","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.bounded_trigonometric","role":"mention"},{"anchor":"qaoa-boundary","at":"b46857-46996","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.seeded_synthesis","role":"mention"},{"anchor":"qaoa-boundary","at":"b46997-47107","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.seed_removal","role":"mention"},{"anchor":"qaoa-boundary","at":"b47048-47107","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.fixed_word_transfer","role":"mention"},{"anchor":"qaoa-boundary","at":"b47857-48221","lean":false,"lines":null,"module":null,"name":null,"record":"qaoa_thermodynamic_first","role":"derivation"},{"anchor":"qaoa-boundary","at":"b48935-49356","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.sampled_finite_instance_optimum","role":"statement"},{"anchor":"qaoa-boundary","at":"b49358-50110","lean":false,"lines":null,"module":null,"name":null,"record":"circuit.sampled_finite_instance_optimum","role":"derivation"},{"anchor":"evidence-scope","at":"b50747-50939","lean":true,"lines":[35,36],"module":"OAI.Probability.SKSupport.Main","name":"OAI.ZeroTemperatureSK.full_support","record":"lean.full_support","role":"explanation"},{"anchor":"evidence-scope","at":"b50816-50939","lean":true,"lines":[17,22],"module":"OAI.Probability.SKSupport.Model","name":"OAI.ZeroTemperatureSK.OrderParameter","record":"assumptions.full_support_minimizer","role":"mention"},{"anchor":"evidence-scope","at":"b50940-51109","lean":true,"lines":[17,19],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.finite_gaussian_target","record":"scalar.formal_finite_gaussian_clause","role":"mention"},{"anchor":"evidence-scope","at":"b50940-51109","lean":true,"lines":[13,14],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.scalar_value_target","record":"scalar.formal_scalar_clause","role":"mention"},{"anchor":"evidence-scope","at":"b50940-51109","lean":true,"lines":[17,19],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.finite_gaussian_target","record":"scalar.lean_gaussian_target","role":"mention"},{"anchor":"evidence-scope","at":"b50940-51109","lean":true,"lines":[13,14],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.scalar_value_target","record":"scalar.lean_scalar_target","role":"mention"},{"anchor":"evidence-scope","at":"b50951-51109","lean":true,"lines":[33,38],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.OrderParameter","record":"assumptions.value_minimizer","role":"mention"},{"anchor":"evidence-scope","at":"b50951-51229","lean":true,"lines":[16,23],"module":"OAI.Probability.SKValue.Main","name":"OAI.SKValue.value_consequences","record":"lean.value_consequences","role":"explanation"},{"anchor":"evidence-scope","at":"b51110-51229","lean":true,"lines":[83,88],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.IsDiffusion","record":"assumptions.value_diffusion","role":"explanation"},{"anchor":"evidence-scope","at":"b51110-51229","lean":true,"lines":[25,26],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.ground_state_parisi_target","record":"scalar.formal_parisi_clause","role":"mention"},{"anchor":"evidence-scope","at":"b51110-51229","lean":true,"lines":[25,26],"module":"OAI.Probability.SKValue.GroundState.MainConclusions","name":"OAI.SKValue.ground_state_parisi_target","record":"scalar.lean_parisi_target","role":"mention"},{"anchor":"evidence-scope","at":"b51230-51310","lean":true,"lines":[33,38],"module":"OAI.Probability.SKValue.Model","name":"OAI.SKValue.OrderParameter","record":"scalar.formal_model_transport_open","role":"statement"}]}
+{
+ "meaning": "Each tie is a pointer that landed. Whether the paper and the Lean say the same thing is a reading.",
+ "passages": [
+  [
+   296,
+   1737,
+   [
+    "assumptions.full_support_minimizer",
+    "full_support",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar.smooth_positive_density",
+    "scalar_value",
+    "support.full_relative_support_curvature",
+    "support.moment_saturation",
+    "support.no_bounded_gap",
+    "support.no_terminal_gap"
+   ],
+   "abstract"
+  ],
+  [
+   1854,
+   5482,
+   [
+    "assumptions.full_support_minimizer",
+    "assumptions.value_diffusion",
+    "full_support",
+    "scalar.minimizer_attainment",
+    "scalar.paper_admissible",
+    "scalar.parisi_formula",
+    "support.contact",
+    "support.diffusion",
+    "support.first_variation",
+    "support.fixed_time_spatial_coercivity",
+    "support.regularity",
+    "support.stieltjes_measure"
+   ],
+   "model"
+  ],
+  [
+   5535,
+   9135,
+   [
+    "assumptions.full_support_minimizer",
+    "full_support",
+    "scalar.minimizer_attainment",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar.smooth_positive_density",
+    "support.contact_derivatives",
+    "support.fixed_time_spatial_coercivity",
+    "support.full_relative_support",
+    "support.full_relative_support_curvature",
+    "support.moment_saturation",
+    "support.near_ground_pairs",
+    "support.no_bounded_gap",
+    "support.regularity"
+   ],
+   "main-result"
+  ],
+  [
+   9269,
+   12154,
+   [
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "support.contact",
+    "support.contact_derivatives",
+    "support.first_variation",
+    "support.moment_identity",
+    "support.regularity"
+   ],
+   "contact"
+  ],
+  [
+   12237,
+   16036,
+   [
+    "full_support",
+    "scalar.constant_curvature",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "support.empty_support_chord_obstruction",
+    "support.endpoint_chord_area",
+    "support.full_relative_support",
+    "support.full_relative_support_curvature",
+    "support.moment_saturation",
+    "support.no_bounded_gap",
+    "support.no_initial_gap",
+    "support.no_terminal_gap",
+    "support.positive_curvature",
+    "support.strict_increase",
+    "support.terminal_chord_barrier",
+    "support.terminal_defect",
+    "support.zero_curvature"
+   ],
+   "gap-proof"
+  ],
+  [
+   16146,
+   27987,
+   [
+    "scalar.integrated_coercivity",
+    "support.backward_shapes",
+    "support.diffusion",
+    "support.endpoint_chord_area",
+    "support.fixed_time_spatial_coercivity",
+    "support.flux_identity",
+    "support.forward_shapes",
+    "support.integrated_coercivity",
+    "support.plateau_transfer",
+    "support.positive_curvature",
+    "support.rational_certificate",
+    "support.raw_curvature_negative_absolute_terminal",
+    "support.step_tails",
+    "support.zero_curvature"
+   ],
+   "curvature"
+  ],
+  [
+   28150,
+   34605,
+   [
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar.smooth_positive_density",
+    "support.fixed_time_spatial_coercivity"
+   ],
+   "density-consequence"
+  ],
+  [
+   34739,
+   38713,
+   [
+    "scalar.euler_normalization",
+    "scalar.manuscript_terminal_value",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar.parisi_formula",
+    "scalar.separate_classical_algorithm",
+    "scalar.terminal_loss",
+    "scalar_value"
+   ],
+   "scalar-value"
+  ],
+  [
+   38775,
+   50580,
+   [
+    "assumptions.qaoa_model_and_limits",
+    "circuit.bounded_trigonometric",
+    "circuit.finite_formula_word_approximation",
+    "circuit.fixed_word_transfer",
+    "circuit.rooted_realization",
+    "circuit.sampled_finite_instance_optimum",
+    "circuit.seed_removal",
+    "circuit.seeded_synthesis",
+    "qaoa_thermodynamic_first",
+    "scalar.conditional_rounding",
+    "scalar.correlation_vector_control",
+    "scalar.euler_normalization",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar.shifted_gaussian_limit",
+    "scalar.unshifted_gaussian_limit",
+    "scalar_value"
+   ],
+   "qaoa-boundary"
+  ],
+  [
+   50690,
+   52446,
+   [
+    "assumptions.full_support_minimizer",
+    "assumptions.value_diffusion",
+    "assumptions.value_minimizer",
+    "full_support",
+    "lean.full_support",
+    "lean.value_consequences",
+    "scalar.formal_finite_gaussian_clause",
+    "scalar.formal_model_transport_open",
+    "scalar.formal_parisi_clause",
+    "scalar.formal_scalar_clause",
+    "scalar.lean_gaussian_target",
+    "scalar.lean_parisi_target",
+    "scalar.lean_scalar_target",
+    "scalar.paper_admissible",
+    "scalar.paper_minimizer",
+    "scalar_value",
+    "support.integrated_coercivity"
+   ],
+   "evidence-scope"
+  ]
+ ],
+ "segments": [
+  [
+   311,
+   489,
+   [
+    0
+   ]
+  ],
+  [
+   656,
+   820,
+   [
+    1
+   ]
+  ],
+  [
+   821,
+   892,
+   [
+    2
+   ]
+  ],
+  [
+   893,
+   934,
+   [
+    3
+   ]
+  ],
+  [
+   1301,
+   1341,
+   [
+    4
+   ]
+  ],
+  [
+   1855,
+   1981,
+   [
+    5
+   ]
+  ],
+  [
+   1982,
+   2069,
+   [
+    5
+   ]
+  ],
+  [
+   2070,
+   2149,
+   [
+    6
+   ]
+  ],
+  [
+   2150,
+   2217,
+   [
+    6
+   ]
+  ],
+  [
+   2218,
+   2295,
+   [
+    7
+   ]
+  ],
+  [
+   2296,
+   2406,
+   [
+    8
+   ]
+  ],
+  [
+   2474,
+   2619,
+   [
+    9
+   ]
+  ],
+  [
+   2856,
+   3186,
+   [
+    10
+   ]
+  ],
+  [
+   3187,
+   3248,
+   [
+    11
+   ]
+  ],
+  [
+   3250,
+   3407,
+   [
+    12,
+    13
+   ]
+  ],
+  [
+   3408,
+   3454,
+   [
+    14
+   ]
+  ],
+  [
+   3455,
+   3506,
+   [
+    14
+   ]
+  ],
+  [
+   3507,
+   3600,
+   [
+    15,
+    14
+   ]
+  ],
+  [
+   3601,
+   3715,
+   [
+    16,
+    14
+   ]
+  ],
+  [
+   3716,
+   3776,
+   [
+    17,
+    14
+   ]
+  ],
+  [
+   3777,
+   3915,
+   [
+    18
+   ]
+  ],
+  [
+   3917,
+   4204,
+   [
+    19
+   ]
+  ],
+  [
+   4205,
+   4265,
+   [
+    20,
+    19
+   ]
+  ],
+  [
+   4266,
+   4425,
+   [
+    20,
+    19
+   ]
+  ],
+  [
+   4426,
+   4508,
+   [
+    21
+   ]
+  ],
+  [
+   4509,
+   4624,
+   [
+    22
+   ]
+  ],
+  [
+   4625,
+   4727,
+   [
+    23
+   ]
+  ],
+  [
+   4728,
+   4890,
+   [
+    24
+   ]
+  ],
+  [
+   4891,
+   4978,
+   [
+    25
+   ]
+  ],
+  [
+   4999,
+   5084,
+   [
+    26
+   ]
+  ],
+  [
+   5085,
+   5171,
+   [
+    26
+   ]
+  ],
+  [
+   5172,
+   5240,
+   [
+    27
+   ]
+  ],
+  [
+   5241,
+   5303,
+   [
+    28
+   ]
+  ],
+  [
+   5304,
+   5341,
+   [
+    29,
+    30
+   ]
+  ],
+  [
+   5342,
+   5431,
+   [
+    31,
+    30
+   ]
+  ],
+  [
+   5432,
+   5481,
+   [
+    30
+   ]
+  ],
+  [
+   5944,
+   6096,
+   [
+    32
+   ]
+  ],
+  [
+   6098,
+   6191,
+   [
+    33,
+    34,
+    35
+   ]
+  ],
+  [
+   6192,
+   6245,
+   [
+    36,
+    33,
+    34,
+    35
+   ]
+  ],
+  [
+   6246,
+   6341,
+   [
+    33,
+    34,
+    35
+   ]
+  ],
+  [
+   6342,
+   6402,
+   [
+    37,
+    34,
+    35
+   ]
+  ],
+  [
+   6403,
+   6447,
+   [
+    37,
+    34,
+    35
+   ]
+  ],
+  [
+   6545,
+   6663,
+   [
+    38
+   ]
+  ],
+  [
+   6664,
+   6711,
+   [
+    39
+   ]
+  ],
+  [
+   6712,
+   6740,
+   [
+    40
+   ]
+  ],
+  [
+   6965,
+   7291,
+   [
+    41
+   ]
+  ],
+  [
+   7560,
+   7627,
+   [
+    42
+   ]
+  ],
+  [
+   7628,
+   7709,
+   [
+    43
+   ]
+  ],
+  [
+   7710,
+   7893,
+   [
+    44
+   ]
+  ],
+  [
+   7894,
+   7939,
+   [
+    45
+   ]
+  ],
+  [
+   9270,
+   9351,
+   [
+    46,
+    47
+   ]
+  ],
+  [
+   9352,
+   9462,
+   [
+    48,
+    47
+   ]
+  ],
+  [
+   9463,
+   9503,
+   [
+    49,
+    47
+   ]
+  ],
+  [
+   9504,
+   9614,
+   [
+    50,
+    47
+   ]
+  ],
+  [
+   9615,
+   9660,
+   [
+    47
+   ]
+  ],
+  [
+   9922,
+   9986,
+   [
+    51,
+    52
+   ]
+  ],
+  [
+   9987,
+   10068,
+   [
+    51,
+    52
+   ]
+  ],
+  [
+   10069,
+   10127,
+   [
+    53,
+    52
+   ]
+  ],
+  [
+   10128,
+   10214,
+   [
+    54
+   ]
+  ],
+  [
+   10215,
+   10372,
+   [
+    55,
+    56
+   ]
+  ],
+  [
+   10373,
+   10468,
+   [
+    55,
+    56
+   ]
+  ],
+  [
+   10469,
+   10600,
+   [
+    57,
+    56
+   ]
+  ],
+  [
+   10601,
+   10639,
+   [
+    56
+   ]
+  ],
+  [
+   10770,
+   10895,
+   [
+    58
+   ]
+  ],
+  [
+   10896,
+   10942,
+   [
+    59,
+    58
+   ]
+  ],
+  [
+   10943,
+   10981,
+   [
+    59,
+    58
+   ]
+  ],
+  [
+   10982,
+   11038,
+   [
+    60
+   ]
+  ],
+  [
+   11051,
+   11306,
+   [
+    61,
+    62
+   ]
+  ],
+  [
+   11307,
+   11323,
+   [
+    63,
+    62
+   ]
+  ],
+  [
+   11324,
+   11413,
+   [
+    63,
+    62
+   ]
+  ],
+  [
+   11414,
+   11502,
+   [
+    64,
+    62
+   ]
+  ],
+  [
+   11503,
+   11635,
+   [
+    65,
+    62
+   ]
+  ],
+  [
+   11636,
+   11753,
+   [
+    66
+   ]
+  ],
+  [
+   11755,
+   11805,
+   [
+    67,
+    68
+   ]
+  ],
+  [
+   11806,
+   11913,
+   [
+    67,
+    68
+   ]
+  ],
+  [
+   11914,
+   11992,
+   [
+    69,
+    68
+   ]
+  ],
+  [
+   11993,
+   12084,
+   [
+    70,
+    68
+   ]
+  ],
+  [
+   12085,
+   12153,
+   [
+    71
+   ]
+  ],
+  [
+   12238,
+   12392,
+   [
+    72,
+    73
+   ]
+  ],
+  [
+   12393,
+   12479,
+   [
+    74,
+    72,
+    73
+   ]
+  ],
+  [
+   12480,
+   12594,
+   [
+    74,
+    72,
+    73
+   ]
+  ],
+  [
+   12595,
+   12652,
+   [
+    75,
+    72,
+    73
+   ]
+  ],
+  [
+   12654,
+   12699,
+   [
+    76
+   ]
+  ],
+  [
+   12804,
+   12845,
+   [
+    77
+   ]
+  ],
+  [
+   12846,
+   12928,
+   [
+    78,
+    77
+   ]
+  ],
+  [
+   12929,
+   12994,
+   [
+    79,
+    77
+   ]
+  ],
+  [
+   12995,
+   13078,
+   [
+    80,
+    77
+   ]
+  ],
+  [
+   13080,
+   13148,
+   [
+    81,
+    82
+   ]
+  ],
+  [
+   13149,
+   13289,
+   [
+    83,
+    82
+   ]
+  ],
+  [
+   13290,
+   13327,
+   [
+    84,
+    85,
+    82
+   ]
+  ],
+  [
+   13328,
+   13424,
+   [
+    84,
+    85,
+    82
+   ]
+  ],
+  [
+   13425,
+   13471,
+   [
+    86,
+    85,
+    82
+   ]
+  ],
+  [
+   13472,
+   13528,
+   [
+    87,
+    82
+   ]
+  ],
+  [
+   13529,
+   13618,
+   [
+    88,
+    89
+   ]
+  ],
+  [
+   13619,
+   13703,
+   [
+    90,
+    89
+   ]
+  ],
+  [
+   13704,
+   13770,
+   [
+    91,
+    89
+   ]
+  ],
+  [
+   13771,
+   13837,
+   [
+    92,
+    89
+   ]
+  ],
+  [
+   13838,
+   13909,
+   [
+    93
+   ]
+  ],
+  [
+   13911,
+   13997,
+   [
+    94,
+    95
+   ]
+  ],
+  [
+   13998,
+   14083,
+   [
+    96,
+    95
+   ]
+  ],
+  [
+   14084,
+   14154,
+   [
+    96,
+    95
+   ]
+  ],
+  [
+   14155,
+   14310,
+   [
+    96,
+    95
+   ]
+  ],
+  [
+   14311,
+   14373,
+   [
+    97,
+    95
+   ]
+  ],
+  [
+   14374,
+   14402,
+   [
+    95
+   ]
+  ],
+  [
+   14404,
+   14675,
+   [
+    98
+   ]
+  ],
+  [
+   14677,
+   14773,
+   [
+    99
+   ]
+  ],
+  [
+   14774,
+   14842,
+   [
+    100
+   ]
+  ],
+  [
+   15108,
+   15208,
+   [
+    101,
+    102
+   ]
+  ],
+  [
+   15209,
+   15253,
+   [
+    102
+   ]
+  ],
+  [
+   15717,
+   15785,
+   [
+    103,
+    104,
+    105,
+    106
+   ]
+  ],
+  [
+   15786,
+   15808,
+   [
+    104,
+    105,
+    106
+   ]
+  ],
+  [
+   15808,
+   15809,
+   [
+    105,
+    106
+   ]
+  ],
+  [
+   15810,
+   15918,
+   [
+    107,
+    105,
+    106
+   ]
+  ],
+  [
+   15919,
+   15979,
+   [
+    108,
+    106
+   ]
+  ],
+  [
+   15980,
+   16035,
+   [
+    109,
+    106
+   ]
+  ],
+  [
+   16147,
+   16289,
+   [
+    110
+   ]
+  ],
+  [
+   16290,
+   16375,
+   [
+    110
+   ]
+  ],
+  [
+   16376,
+   16424,
+   [
+    110
+   ]
+  ],
+  [
+   16425,
+   16561,
+   [
+    111
+   ]
+  ],
+  [
+   16563,
+   16618,
+   [
+    112
+   ]
+  ],
+  [
+   16619,
+   16756,
+   [
+    113,
+    112
+   ]
+  ],
+  [
+   16757,
+   16849,
+   [
+    113,
+    112
+   ]
+  ],
+  [
+   16850,
+   16917,
+   [
+    114,
+    112
+   ]
+  ],
+  [
+   16918,
+   17228,
+   [
+    115
+   ]
+  ],
+  [
+   17229,
+   17339,
+   [
+    116
+   ]
+  ],
+  [
+   17341,
+   17413,
+   [
+    117
+   ]
+  ],
+  [
+   17414,
+   17465,
+   [
+    117
+   ]
+  ],
+  [
+   17466,
+   17492,
+   [
+    118
+   ]
+  ],
+  [
+   17637,
+   17789,
+   [
+    119
+   ]
+  ],
+  [
+   17790,
+   17833,
+   [
+    120
+   ]
+  ],
+  [
+   17834,
+   18061,
+   [
+    121
+   ]
+  ],
+  [
+   18062,
+   18135,
+   [
+    122
+   ]
+  ],
+  [
+   18136,
+   18193,
+   [
+    123,
+    122
+   ]
+  ],
+  [
+   18194,
+   18374,
+   [
+    123,
+    122
+   ]
+  ],
+  [
+   18375,
+   18465,
+   [
+    124
+   ]
+  ],
+  [
+   18507,
+   18560,
+   [
+    125
+   ]
+  ],
+  [
+   19085,
+   19213,
+   [
+    126
+   ]
+  ],
+  [
+   19447,
+   19538,
+   [
+    127
+   ]
+  ],
+  [
+   19539,
+   19603,
+   [
+    128
+   ]
+  ],
+  [
+   19604,
+   19744,
+   [
+    129
+   ]
+  ],
+  [
+   19745,
+   19861,
+   [
+    130
+   ]
+  ],
+  [
+   19862,
+   20003,
+   [
+    131
+   ]
+  ],
+  [
+   20005,
+   20273,
+   [
+    132,
+    133
+   ]
+  ],
+  [
+   20274,
+   20353,
+   [
+    134,
+    133
+   ]
+  ],
+  [
+   20354,
+   20456,
+   [
+    135,
+    133
+   ]
+  ],
+  [
+   20457,
+   20591,
+   [
+    135,
+    133
+   ]
+  ],
+  [
+   20592,
+   20646,
+   [
+    135,
+    133
+   ]
+  ],
+  [
+   20647,
+   20773,
+   [
+    136
+   ]
+  ],
+  [
+   20774,
+   20844,
+   [
+    137,
+    138,
+    139
+   ]
+  ],
+  [
+   20845,
+   20951,
+   [
+    140,
+    138,
+    139
+   ]
+  ],
+  [
+   20952,
+   20966,
+   [
+    141,
+    139
+   ]
+  ],
+  [
+   20967,
+   21011,
+   [
+    141,
+    139
+   ]
+  ],
+  [
+   21012,
+   21139,
+   [
+    142,
+    139
+   ]
+  ],
+  [
+   21140,
+   21203,
+   [
+    143,
+    139
+   ]
+  ],
+  [
+   21204,
+   21264,
+   [
+    144,
+    139
+   ]
+  ],
+  [
+   21265,
+   21340,
+   [
+    145,
+    139
+   ]
+  ],
+  [
+   21341,
+   21426,
+   [
+    145,
+    139
+   ]
+  ],
+  [
+   21427,
+   21487,
+   [
+    146,
+    139
+   ]
+  ],
+  [
+   21488,
+   21586,
+   [
+    147
+   ]
+  ],
+  [
+   21587,
+   21707,
+   [
+    148
+   ]
+  ],
+  [
+   21905,
+   21956,
+   [
+    149,
+    150
+   ]
+  ],
+  [
+   21957,
+   22018,
+   [
+    151,
+    150
+   ]
+  ],
+  [
+   22019,
+   22064,
+   [
+    151,
+    150
+   ]
+  ],
+  [
+   22065,
+   22103,
+   [
+    152,
+    150
+   ]
+  ],
+  [
+   22104,
+   22306,
+   [
+    153,
+    150
+   ]
+  ],
+  [
+   22307,
+   22342,
+   [
+    154,
+    150
+   ]
+  ],
+  [
+   22343,
+   22402,
+   [
+    150
+   ]
+  ],
+  [
+   22404,
+   22753,
+   [
+    155
+   ]
+  ],
+  [
+   22754,
+   22843,
+   [
+    156,
+    157,
+    158
+   ]
+  ],
+  [
+   22844,
+   22983,
+   [
+    156,
+    157,
+    158
+   ]
+  ],
+  [
+   22984,
+   23116,
+   [
+    159
+   ]
+  ],
+  [
+   23117,
+   23197,
+   [
+    160
+   ]
+  ],
+  [
+   23198,
+   23225,
+   [
+    161
+   ]
+  ],
+  [
+   23226,
+   23337,
+   [
+    161
+   ]
+  ],
+  [
+   23338,
+   23443,
+   [
+    162
+   ]
+  ],
+  [
+   23444,
+   23503,
+   [
+    163
+   ]
+  ],
+  [
+   23504,
+   23583,
+   [
+    164
+   ]
+  ],
+  [
+   23584,
+   23691,
+   [
+    165
+   ]
+  ],
+  [
+   23692,
+   23772,
+   [
+    166,
+    167
+   ]
+  ],
+  [
+   23773,
+   23877,
+   [
+    166,
+    167
+   ]
+  ],
+  [
+   23878,
+   23922,
+   [
+    168
+   ]
+  ],
+  [
+   23923,
+   24103,
+   [
+    169
+   ]
+  ],
+  [
+   24401,
+   24661,
+   [
+    170,
+    171
+   ]
+  ],
+  [
+   24662,
+   24810,
+   [
+    172,
+    171
+   ]
+  ],
+  [
+   24811,
+   24876,
+   [
+    171
+   ]
+  ],
+  [
+   24877,
+   24986,
+   [
+    173,
+    171
+   ]
+  ],
+  [
+   24987,
+   25015,
+   [
+    174
+   ]
+  ],
+  [
+   25016,
+   25068,
+   [
+    175
+   ]
+  ],
+  [
+   25362,
+   25421,
+   [
+    176
+   ]
+  ],
+  [
+   25422,
+   25618,
+   [
+    177,
+    176
+   ]
+  ],
+  [
+   25620,
+   25764,
+   [
+    179,
+    178
+   ]
+  ],
+  [
+   25765,
+   25873,
+   [
+    179,
+    178
+   ]
+  ],
+  [
+   25874,
+   26036,
+   [
+    179,
+    178
+   ]
+  ],
+  [
+   26037,
+   26046,
+   [
+    179
+   ]
+  ],
+  [
+   26047,
+   26146,
+   [
+    179
+   ]
+  ],
+  [
+   26147,
+   26221,
+   [
+    179
+   ]
+  ],
+  [
+   26222,
+   26310,
+   [
+    180,
+    179
+   ]
+  ],
+  [
+   26311,
+   26470,
+   [
+    180,
+    179
+   ]
+  ],
+  [
+   26491,
+   26538,
+   [
+    181
+   ]
+  ],
+  [
+   26539,
+   26616,
+   [
+    181
+   ]
+  ],
+  [
+   26617,
+   26897,
+   [
+    182
+   ]
+  ],
+  [
+   26898,
+   27009,
+   [
+    183
+   ]
+  ],
+  [
+   27010,
+   27189,
+   [
+    184
+   ]
+  ],
+  [
+   27190,
+   27326,
+   [
+    185
+   ]
+  ],
+  [
+   27327,
+   27396,
+   [
+    186
+   ]
+  ],
+  [
+   27397,
+   27509,
+   [
+    187
+   ]
+  ],
+  [
+   27654,
+   27750,
+   [
+    188
+   ]
+  ],
+  [
+   27751,
+   27868,
+   [
+    189
+   ]
+  ],
+  [
+   27869,
+   27934,
+   [
+    190
+   ]
+  ],
+  [
+   28689,
+   28959,
+   [
+    191
+   ]
+  ],
+  [
+   28960,
+   29108,
+   [
+    191
+   ]
+  ],
+  [
+   29109,
+   29163,
+   [
+    191
+   ]
+  ],
+  [
+   29165,
+   29279,
+   [
+    192
+   ]
+  ],
+  [
+   29280,
+   29406,
+   [
+    193
+   ]
+  ],
+  [
+   29407,
+   29480,
+   [
+    194
+   ]
+  ],
+  [
+   29481,
+   29515,
+   [
+    195
+   ]
+  ],
+  [
+   29516,
+   29582,
+   [
+    195
+   ]
+  ],
+  [
+   29622,
+   29719,
+   [
+    196
+   ]
+  ],
+  [
+   29720,
+   29747,
+   [
+    197
+   ]
+  ],
+  [
+   29838,
+   29864,
+   [
+    198
+   ]
+  ],
+  [
+   29887,
+   29948,
+   [
+    199
+   ]
+  ],
+  [
+   29949,
+   30020,
+   [
+    199
+   ]
+  ],
+  [
+   30021,
+   30085,
+   [
+    199
+   ]
+  ],
+  [
+   30086,
+   30235,
+   [
+    200
+   ]
+  ],
+  [
+   30236,
+   30303,
+   [
+    200
+   ]
+  ],
+  [
+   30304,
+   30351,
+   [
+    201
+   ]
+  ],
+  [
+   30352,
+   30428,
+   [
+    202
+   ]
+  ],
+  [
+   30429,
+   30480,
+   [
+    203
+   ]
+  ],
+  [
+   31095,
+   31133,
+   [
+    204
+   ]
+  ],
+  [
+   31134,
+   31257,
+   [
+    204
+   ]
+  ],
+  [
+   31258,
+   31361,
+   [
+    205
+   ]
+  ],
+  [
+   31362,
+   31457,
+   [
+    205
+   ]
+  ],
+  [
+   31522,
+   31583,
+   [
+    206
+   ]
+  ],
+  [
+   31682,
+   31745,
+   [
+    207
+   ]
+  ],
+  [
+   31796,
+   31859,
+   [
+    208
+   ]
+  ],
+  [
+   31885,
+   31966,
+   [
+    209
+   ]
+  ],
+  [
+   31967,
+   32004,
+   [
+    210
+   ]
+  ],
+  [
+   32005,
+   32103,
+   [
+    210
+   ]
+  ],
+  [
+   32104,
+   32180,
+   [
+    210
+   ]
+  ],
+  [
+   32182,
+   32314,
+   [
+    211
+   ]
+  ],
+  [
+   34797,
+   34858,
+   [
+    212,
+    213
+   ]
+  ],
+  [
+   34859,
+   34944,
+   [
+    214,
+    213
+   ]
+  ],
+  [
+   34945,
+   35006,
+   [
+    215,
+    213
+   ]
+  ],
+  [
+   35007,
+   35091,
+   [
+    215,
+    213
+   ]
+  ],
+  [
+   35092,
+   35201,
+   [
+    216,
+    213
+   ]
+  ],
+  [
+   35202,
+   35248,
+   [
+    213
+   ]
+  ],
+  [
+   35249,
+   35321,
+   [
+    217,
+    213
+   ]
+  ],
+  [
+   35322,
+   35374,
+   [
+    218,
+    219,
+    213
+   ]
+  ],
+  [
+   35375,
+   35396,
+   [
+    220,
+    219,
+    213
+   ]
+  ],
+  [
+   35397,
+   35483,
+   [
+    220,
+    219,
+    213
+   ]
+  ],
+  [
+   35484,
+   35599,
+   [
+    221,
+    222
+   ]
+  ],
+  [
+   35600,
+   35750,
+   [
+    223,
+    222
+   ]
+  ],
+  [
+   35751,
+   35837,
+   [
+    224,
+    222
+   ]
+  ],
+  [
+   35838,
+   35942,
+   [
+    225,
+    222
+   ]
+  ],
+  [
+   35943,
+   35978,
+   [
+    226,
+    222
+   ]
+  ],
+  [
+   35979,
+   36083,
+   [
+    227
+   ]
+  ],
+  [
+   36335,
+   36394,
+   [
+    228
+   ]
+  ],
+  [
+   36395,
+   36470,
+   [
+    229,
+    230
+   ]
+  ],
+  [
+   36471,
+   36473,
+   [
+    231,
+    230
+   ]
+  ],
+  [
+   36474,
+   36529,
+   [
+    231,
+    230
+   ]
+  ],
+  [
+   36530,
+   36606,
+   [
+    232
+   ]
+  ],
+  [
+   37104,
+   37733,
+   [
+    233
+   ]
+  ],
+  [
+   38402,
+   38494,
+   [
+    234
+   ]
+  ],
+  [
+   38941,
+   38974,
+   [
+    235
+   ]
+  ],
+  [
+   39170,
+   39254,
+   [
+    236
+   ]
+  ],
+  [
+   39255,
+   39356,
+   [
+    236
+   ]
+  ],
+  [
+   39357,
+   39606,
+   [
+    236
+   ]
+  ],
+  [
+   39607,
+   39744,
+   [
+    236
+   ]
+  ],
+  [
+   39745,
+   39842,
+   [
+    236
+   ]
+  ],
+  [
+   39929,
+   40167,
+   [
+    237
+   ]
+  ],
+  [
+   40557,
+   40682,
+   [
+    238,
+    239
+   ]
+  ],
+  [
+   40683,
+   40743,
+   [
+    239
+   ]
+  ],
+  [
+   40744,
+   40804,
+   [
+    240,
+    239
+   ]
+  ],
+  [
+   40805,
+   41043,
+   [
+    240,
+    239
+   ]
+  ],
+  [
+   41044,
+   41155,
+   [
+    241,
+    239
+   ]
+  ],
+  [
+   41156,
+   41253,
+   [
+    242,
+    239
+   ]
+  ],
+  [
+   41254,
+   41293,
+   [
+    239
+   ]
+  ],
+  [
+   41294,
+   41360,
+   [
+    243,
+    244
+   ]
+  ],
+  [
+   41361,
+   41505,
+   [
+    243,
+    244
+   ]
+  ],
+  [
+   41506,
+   41588,
+   [
+    245,
+    244
+   ]
+  ],
+  [
+   41589,
+   41683,
+   [
+    246,
+    244
+   ]
+  ],
+  [
+   41684,
+   41703,
+   [
+    247
+   ]
+  ],
+  [
+   41704,
+   41762,
+   [
+    248,
+    247
+   ]
+  ],
+  [
+   41763,
+   41977,
+   [
+    248,
+    247
+   ]
+  ],
+  [
+   41978,
+   42017,
+   [
+    249,
+    250
+   ]
+  ],
+  [
+   42018,
+   42074,
+   [
+    251,
+    250
+   ]
+  ],
+  [
+   42075,
+   42172,
+   [
+    251,
+    250
+   ]
+  ],
+  [
+   42173,
+   42271,
+   [
+    252,
+    250
+   ]
+  ],
+  [
+   42272,
+   42383,
+   [
+    250
+   ]
+  ],
+  [
+   42384,
+   42508,
+   [
+    253,
+    254,
+    250
+   ]
+  ],
+  [
+   42509,
+   42577,
+   [
+    255,
+    254,
+    250
+   ]
+  ],
+  [
+   42578,
+   42618,
+   [
+    256,
+    254,
+    250
+   ]
+  ],
+  [
+   42619,
+   42666,
+   [
+    257,
+    254,
+    250
+   ]
+  ],
+  [
+   42667,
+   42745,
+   [
+    258,
+    250
+   ]
+  ],
+  [
+   43046,
+   43348,
+   [
+    259
+   ]
+  ],
+  [
+   43349,
+   43375,
+   [
+    259
+   ]
+  ],
+  [
+   44806,
+   45120,
+   [
+    260
+   ]
+  ],
+  [
+   45121,
+   45390,
+   [
+    261,
+    260
+   ]
+  ],
+  [
+   45391,
+   45454,
+   [
+    262
+   ]
+  ],
+  [
+   45560,
+   45645,
+   [
+    263
+   ]
+  ],
+  [
+   46586,
+   46628,
+   [
+    264
+   ]
+  ],
+  [
+   46629,
+   46813,
+   [
+    265,
+    264
+   ]
+  ],
+  [
+   46814,
+   46984,
+   [
+    264
+   ]
+  ],
+  [
+   46985,
+   47124,
+   [
+    266,
+    264
+   ]
+  ],
+  [
+   47125,
+   47175,
+   [
+    267,
+    264
+   ]
+  ],
+  [
+   47176,
+   47235,
+   [
+    268,
+    267,
+    264
+   ]
+  ],
+  [
+   47236,
+   47482,
+   [
+    264
+   ]
+  ],
+  [
+   47985,
+   48034,
+   [
+    269,
+    270
+   ]
+  ],
+  [
+   48035,
+   48114,
+   [
+    269,
+    270
+   ]
+  ],
+  [
+   48115,
+   48213,
+   [
+    271,
+    270
+   ]
+  ],
+  [
+   48214,
+   48349,
+   [
+    270
+   ]
+  ],
+  [
+   49063,
+   49309,
+   [
+    272
+   ]
+  ],
+  [
+   49310,
+   49484,
+   [
+    272
+   ]
+  ],
+  [
+   49486,
+   49660,
+   [
+    273
+   ]
+  ],
+  [
+   49661,
+   49742,
+   [
+    273
+   ]
+  ],
+  [
+   49743,
+   49910,
+   [
+    273
+   ]
+  ],
+  [
+   49911,
+   50010,
+   [
+    274,
+    273
+   ]
+  ],
+  [
+   50011,
+   50238,
+   [
+    273
+   ]
+  ],
+  [
+   50759,
+   50873,
+   [
+    275
+   ]
+  ],
+  [
+   50875,
+   50943,
+   [
+    276,
+    277
+   ]
+  ],
+  [
+   50944,
+   51026,
+   [
+    278,
+    276,
+    277
+   ]
+  ],
+  [
+   51027,
+   51067,
+   [
+    278,
+    277
+   ]
+  ],
+  [
+   51068,
+   51078,
+   [
+    279,
+    280,
+    281,
+    282,
+    283
+   ]
+  ],
+  [
+   51079,
+   51237,
+   [
+    284,
+    279,
+    280,
+    281,
+    282,
+    283,
+    285
+   ]
+  ],
+  [
+   51238,
+   51357,
+   [
+    286,
+    287,
+    288,
+    285
+   ]
+  ],
+  [
+   51358,
+   51438,
+   [
+    289
+   ]
+  ],
+  [
+   51439,
+   51517,
+   [
+    290
+   ]
+  ],
+  [
+   51518,
+   51635,
+   [
+    291
+   ]
+  ]
+ ],
+ "ties": [
+  {
+   "anchor": "abstract",
+   "at": "b311-489",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "full_support",
+   "relation": "contains",
+   "role": "mention"
+  },
+  {
+   "anchor": "abstract",
+   "at": "b656-820",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    51,
+    51
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+   "plain": "q‴ positive on positive plateaus",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "mention"
+  },
+  {
+   "anchor": "abstract",
+   "at": "b821-892",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    53,
+    54
+   ],
+   "module": "OAI.Probability.SKSupport.Support.NoTerminalPlateau",
+   "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+   "plain": "No terminal plateau at a minimiser",
+   "record": "support.no_terminal_gap",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "abstract",
+   "at": "b893-934",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    86,
+    88
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "support.moment_saturation",
+   "relation": "contains",
+   "role": "mention"
+  },
+  {
+   "anchor": "abstract",
+   "at": "b1301-1341",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    13,
+    14
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.scalar_value_target",
+   "plain": "Scalar value at a minimiser",
+   "record": "scalar_value",
+   "relation": "contains",
+   "role": "mention"
+  },
+  {
+   "anchor": "model",
+   "at": "b1855-2069",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    92,
+    95
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.hamiltonian",
+   "plain": "SK Hamiltonian on n spins",
+   "record": "scalar.parisi_formula",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b2070-2217",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    100,
+    100
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.groundStateValue",
+   "plain": "The SK ground state value",
+   "record": "scalar.parisi_formula",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b2218-2295",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    26
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.ground_state_parisi_target",
+   "plain": "Ground state equals Parisi at minimisers",
+   "record": "scalar.parisi_formula",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "model",
+   "at": "b2296-2406",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "full_support",
+   "relation": "contains",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b2474-2619",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    65,
+    68
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b2856-3186",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    59,
+    60
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.QuadraticSK",
+   "name": "OAI.SKValueG.quadraticValue_spin",
+   "plain": "Quadratic value of the SK spins",
+   "record": "scalar.parisi_formula",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b3187-3248",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    92,
+    95
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.hamiltonian",
+   "plain": "SK Hamiltonian on n spins",
+   "record": "scalar.parisi_formula",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "model",
+   "at": "b3250-3407",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    17,
+    22
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.OrderParameter",
+   "plain": "Admissible order parameter γ",
+   "record": "assumptions.full_support_minimizer",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b3250-3407",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    17,
+    22
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.OrderParameter",
+   "plain": "Admissible order parameter γ",
+   "record": "scalar.paper_admissible",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b3408-3776",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    65,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.IsStieltjesMeasure",
+   "plain": "μ is γ's Stieltjes measure",
+   "record": "support.stieltjes_measure",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b3507-3600",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    26,
+    27
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc",
+   "plain": "γ(b) = γ(a) + μ((a,b])",
+   "record": "support.stieltjes_measure",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b3601-3715",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    110,
+    110
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.parameterMeasure",
+   "plain": "The Stieltjes measure of γ",
+   "record": "support.stieltjes_measure",
+   "relation": "defines",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b3716-3776",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    12,
+    12
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.Time",
+   "plain": "The overlap interval [0,1)",
+   "record": "support.stieltjes_measure",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b3777-3915",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    148,
+    152
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap",
+   "plain": "γ constant on a support gap",
+   "record": "support.stieltjes_measure",
+   "relation": "part",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b3917-4425",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    59,
+    60
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.parisi",
+   "plain": "The Parisi functional",
+   "record": "scalar.paper_admissible",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b4205-4425",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    59,
+    60
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.parisi",
+   "plain": "The Parisi functional",
+   "record": "scalar.paper_admissible",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b4426-4508",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    52,
+    52
+   ],
+   "module": "OAI.Probability.SKValue.Evolution.TerminalError",
+   "name": "OAI.SKValue.phi_terminal",
+   "plain": "Terminal value Φ(1,x) = |x|",
+   "record": "scalar.paper_admissible",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b4509-4624",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    43,
+    45
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.approxValue_uniform",
+   "plain": "Approximate value converges uniformly",
+   "record": "support.regularity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b4625-4727",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    49,
+    51
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.value",
+   "plain": "The value function Φ",
+   "record": "support.regularity",
+   "relation": "defines",
+   "role": "mention"
+  },
+  {
+   "anchor": "model",
+   "at": "b4728-4890",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    152,
+    154
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+   "plain": "One-sided derivative along a chord",
+   "record": "support.first_variation",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b4891-4978",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    53,
+    54
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.gradient",
+   "plain": "The gradient u = ∂ₓΦ",
+   "record": "assumptions.value_diffusion",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b4999-5171",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    68,
+    75
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.IsDiffusion",
+   "plain": "X is a diffusion for γ",
+   "record": "assumptions.value_diffusion",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "model",
+   "at": "b5172-5240",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    154,
+    154
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+   "plain": "One-sided derivative along a chord",
+   "record": "support.first_variation",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b5241-5303",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    80,
+    83
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.minimizer_contact",
+   "plain": "Contact and slope bounds",
+   "record": "support.contact",
+   "relation": "contains",
+   "role": "explanation"
+  },
+  {
+   "anchor": "model",
+   "at": "b5304-5341",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    309,
+    310
+   ],
+   "module": "OAI.Probability.SKSupport.Diffusion.CompactDrift",
+   "name": "OAI.ZeroTemperatureSK.diffusion_isDiffusion",
+   "plain": "The constructed process solves the equation",
+   "record": "support.diffusion",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "model",
+   "at": "b5304-5481",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    310,
+    310
+   ],
+   "module": "OAI.Probability.SKSupport.Diffusion.CompactDrift",
+   "name": "OAI.ZeroTemperatureSK.diffusion_isDiffusion",
+   "plain": "The constructed process solves the equation",
+   "record": "support.diffusion",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "model",
+   "at": "b5342-5431",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    15,
+    16
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.StripSquareMoment",
+   "name": "OAI.ZeroTemperatureSK.stripQ",
+   "plain": "Second moment on a strip",
+   "record": "support.diffusion",
+   "relation": "proof",
+   "role": "mention"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b5944-6096",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    65,
+    68
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6098-6341",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    84,
+    85
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "support.full_relative_support",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6098-6447",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "full_support",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6098-6447",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "support.full_relative_support_curvature",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6192-6245",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    36,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "scalar.paper_minimizer",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6342-6447",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    86,
+    88
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "support.moment_saturation",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6545-6663",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: its theorems take a minimiser as the hypothesis hmin.",
+   "record": "scalar.minimizer_attainment",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6664-6711",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    22,
+    22
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.OrderParameter",
+   "plain": "Admissible order parameter γ",
+   "record": "assumptions.full_support_minimizer",
+   "relation": "defines",
+   "role": "mention"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6712-6740",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    177,
+    178
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.gradient_zero",
+   "plain": "Gradient vanishes at x = 0",
+   "record": "support.regularity",
+   "relation": "contains",
+   "role": "mention"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b6965-7291",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "support.near_ground_pairs",
+   "role": "statement"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b7560-7627",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    437,
+    446
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b7628-7709",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    80,
+    83
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.minimizer_contact",
+   "plain": "Contact and slope bounds",
+   "record": "support.contact_derivatives",
+   "relation": "contains",
+   "role": "explanation"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b7710-7893",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    51,
+    51
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+   "plain": "q‴ positive on positive plateaus",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "main-result",
+   "at": "b7894-7939",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    462,
+    466
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_eq_one_of_full_contact",
+   "plain": "Full contact gives q′ = 1",
+   "record": "support.moment_saturation",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9270-9351",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    155,
+    156
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.value_even",
+   "plain": "The value is even in x",
+   "record": "support.regularity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9270-9660",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    108,
+    109
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds",
+   "plain": "Bounded x-derivatives of Φ on strips",
+   "record": "support.regularity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9352-9462",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    106,
+    109
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds",
+   "plain": "Bounded x-derivatives of Φ on strips",
+   "record": "support.regularity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9463-9503",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    121,
+    125
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.RightRegularity",
+   "name": "OAI.ZeroTemperatureSK.value_derivative_hasDerivWithinAt_right",
+   "plain": "Right time derivative of x-derivatives",
+   "record": "support.regularity",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9504-9614",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    26,
+    29
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.JointRegularity",
+   "name": "OAI.ZeroTemperatureSK.approxValue_derivative_uniform",
+   "plain": "Uniform derivative of the approximate value",
+   "record": "support.regularity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9922-10068",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    155,
+    157
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.StripSquareMoment",
+   "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+   "plain": "Derivative of the gradient moment",
+   "record": "support.moment_identity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b9922-10127",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    157,
+    157
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.StripSquareMoment",
+   "name": "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt",
+   "plain": "Derivative of the gradient moment",
+   "record": "support.moment_identity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10069-10127",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    142,
+    143
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.PerturbationLimits",
+   "name": "OAI.ZeroTemperatureSK.curvatureMoment_continuousOn_unit",
+   "plain": "Curvature moment continuous on [0,1)",
+   "record": "support.moment_identity",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10128-10214",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    170,
+    172
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.minimizer_variational_inequality",
+   "plain": "First-order inequality at a minimiser",
+   "record": "support.first_variation",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10215-10468",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    152,
+    154
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+   "plain": "One-sided derivative along a chord",
+   "record": "support.first_variation",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10215-10639",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    152,
+    154
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+   "plain": "One-sided derivative along a chord",
+   "record": "support.first_variation",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10469-10600",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    52,
+    52
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.ParameterChords",
+   "name": "OAI.ZeroTemperatureSK.perturbation",
+   "plain": "Chord perturbation of step n",
+   "record": "support.first_variation",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10770-10981",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    59,
+    62
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+   "plain": "G is nonnegative",
+   "record": "support.contact",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10896-10981",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    58,
+    58
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.contactPotential_nonneg",
+   "plain": "G is nonnegative",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b10982-11038",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    154,
+    154
+   ],
+   "module": "OAI.Probability.SKSupport.Support.VariationIntegrals",
+   "name": "OAI.ZeroTemperatureSK.parisi_chord_derivative",
+   "plain": "One-sided derivative along a chord",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11051-11306",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    66,
+    72
+   ],
+   "module": "OAI.Probability.SKSupport.Support.CDFParameters",
+   "name": "OAI.ZeroTemperatureSK.OrderParameter.removeCDF",
+   "plain": "Order parameter minus a dominated CDF",
+   "record": "support.contact",
+   "relation": "defines",
+   "role": "derivation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11051-11635",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    73,
+    75
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+   "plain": "∫G dμ ≤ 0 on compacts",
+   "record": "support.contact",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11307-11413",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    64,
+    71
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.contactPotential_remove",
+   "plain": "Removable mass has ∫G ≤ 0",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11414-11502",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    117,
+    119
+   ],
+   "module": "OAI.Probability.SKSupport.Support.CDFParameters",
+   "name": "OAI.ZeroTemperatureSK.finiteCDF_fubini",
+   "plain": "Fubini for a finite measure's CDF",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11503-11635",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    214,
+    228
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos",
+   "plain": "Zero on support from nonpositive integrals",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11636-11753",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    76,
+    78
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal",
+   "plain": "∫G dμ ≤ 0 on compacts",
+   "record": "support.contact",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11755-11913",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    82,
+    83
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.minimizer_contact",
+   "plain": "Contact and slope bounds",
+   "record": "support.contact_derivatives",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11755-12084",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    82,
+    83
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.minimizer_contact",
+   "plain": "Contact and slope bounds",
+   "record": "support.contact_derivatives",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11914-11992",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    307,
+    311
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.contact_conditions",
+   "plain": "Contact conditions on the support",
+   "record": "support.contact_derivatives",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b11993-12084",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    263,
+    268
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min",
+   "plain": "G's minimum gives slope ≤ 1",
+   "record": "support.contact_derivatives",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "contact",
+   "at": "b12085-12153",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    80,
+    92
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.minimizer_contact",
+   "plain": "Contact and slope bounds",
+   "record": "support.contact_derivatives",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12238-12652",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    65,
+    68
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "scalar.constant_curvature",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12238-12652",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    67,
+    68
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "support.positive_curvature",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12393-12594",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    65,
+    68
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "support.positive_curvature",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12595-12652",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    63,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
+   "plain": "q″ positive on zero plateaus",
+   "record": "support.zero_curvature",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12654-12699",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    48,
+    51
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.positive_gap_curvature",
+   "plain": "q‴ positive on positive plateaus",
+   "record": "support.positive_curvature",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12804-13078",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    437,
+    446
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.full_relative_support_curvature",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12846-12928",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    437,
+    442
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.full_relative_support_curvature",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12929-12994",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    169,
+    173
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap",
+   "plain": "γ vanishes on initial support gaps",
+   "record": "support.full_relative_support_curvature",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b12995-13078",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    137,
+    149
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.GapBoundary",
+   "name": "OAI.SKValue.endpoint_condition",
+   "plain": "Endpoint condition on a hump",
+   "record": "support.full_relative_support_curvature",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13080-13148",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    80,
+    83
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.exists_support_gap",
+   "plain": "Missing point gives a support gap",
+   "record": "support.no_bounded_gap",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13080-13528",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    382,
+    388
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_positive_constant_gap",
+   "plain": "No bounded gap at positive height",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13149-13289",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    443,
+    446
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13290-13424",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    376,
+    380
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+   "plain": "No gap with strictly convex q′",
+   "record": "support.endpoint_chord_area",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13290-13471",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    370,
+    375
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+   "plain": "No gap with strictly convex q′",
+   "record": "support.endpoint_chord_area",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13425-13471",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    361,
+    368
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+   "plain": "No gap with slope below one",
+   "record": "support.endpoint_chord_area",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13472-13528",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    366,
+    368
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one",
+   "plain": "No gap with slope below one",
+   "record": "support.no_bounded_gap",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13529-13618",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    169,
+    185
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap",
+   "plain": "γ vanishes on initial support gaps",
+   "record": "support.no_initial_gap",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13529-13837",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    173,
+    173
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap",
+   "plain": "γ vanishes on initial support gaps",
+   "record": "support.no_initial_gap",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13619-13703",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    437,
+    442
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.no_initial_gap",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13704-13770",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    400,
+    405
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_zero_constant_gap",
+   "plain": "No bounded gap at height zero",
+   "record": "support.no_initial_gap",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13771-13837",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    393,
+    399
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_zero_constant_gap",
+   "plain": "No bounded gap at height zero",
+   "record": "support.no_initial_gap",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13838-13909",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    447,
+    449
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.no_initial_gap",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13911-13997",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    53,
+    54
+   ],
+   "module": "OAI.Probability.SKSupport.Support.NoTerminalPlateau",
+   "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+   "plain": "No terminal plateau at a minimiser",
+   "record": "support.terminal_chord_barrier",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13911-14402",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "support.terminal_chord_barrier",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b13998-14310",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    110,
+    136
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.GapBoundary",
+   "name": "OAI.SKValue.positive_hump_impossible",
+   "plain": "No positive hump of G",
+   "record": "support.terminal_chord_barrier",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b14311-14373",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    15,
+    18
+   ],
+   "module": "OAI.Probability.SKSupport.Support.NoTerminalPlateau",
+   "name": "OAI.ZeroTemperatureSK.terminal_plateau_q_lt_near_one",
+   "plain": "Terminal plateau gives q(t)<t near one",
+   "record": "support.terminal_chord_barrier",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b14404-14675",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    123,
+    127
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.support_cofinal_of_no_terminal_plateau",
+   "plain": "Support points beyond every time",
+   "record": "support.empty_support_chord_obstruction",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b14677-14773",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    53,
+    54
+   ],
+   "module": "OAI.Probability.SKSupport.Support.NoTerminalPlateau",
+   "name": "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau",
+   "plain": "No terminal plateau at a minimiser",
+   "record": "support.no_terminal_gap",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b14774-14842",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    14,
+    16
+   ],
+   "module": "OAI.Probability.SKValue.Variation.MinimizerContact",
+   "name": "OAI.SKValue.IsMinimizer.contactPotential_zero",
+   "plain": "G vanishes on (0,1)",
+   "record": "support.no_terminal_gap",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15108-15208",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    127,
+    129
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect",
+   "plain": "Square-root terminal deficit",
+   "record": "support.terminal_defect",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15108-15253",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    124,
+    129
+   ],
+   "module": "OAI.Probability.SKSupport.Support.ContactPotential",
+   "name": "OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect",
+   "plain": "Square-root terminal deficit",
+   "record": "support.terminal_defect",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15717-15785",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    427,
+    432
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature",
+   "plain": "Full support from contact and curvature",
+   "record": "support.full_relative_support",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15717-15808",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    84,
+    85
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "support.full_relative_support",
+   "relation": "contains",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15717-15918",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    86,
+    88
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "support.moment_saturation",
+   "relation": "contains",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15717-16035",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "support.full_relative_support_curvature",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15810-15918",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    30,
+    33
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+   "plain": "Full support for the constructed diffusion",
+   "record": "support.moment_saturation",
+   "relation": "contains",
+   "role": "derivation"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15919-15979",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    47,
+    48
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support",
+   "plain": "Full support gives γ(a) < γ(b)",
+   "record": "support.strict_increase",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "gap-proof",
+   "at": "b15980-16035",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "full_support",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16147-16424",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    36,
+    39
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
+   "plain": "The q‴ expression as an expectation",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "definition"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16425-16561",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16563-16917",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16619-16849",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16850-16917",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    136
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b16918-17228",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17229-17339",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: it proves the fixed-time bound first, from finite-step approximants, and the plateau bound follows from it.",
+   "record": "support.fixed_time_spatial_coercivity",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17341-17465",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    41,
+    46
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.CurvatureMoment",
+   "name": "OAI.SKValue.IsDiffusion.curvatureSlope_hasDerivAt",
+   "plain": "Time derivative of the curvature slope",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17466-17492",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    131,
+    134
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.ThirdFields",
+   "name": "OAI.ZeroTemperatureSK.stripSecond_hasDerivAt_on_constant",
+   "plain": "q″ expression derivative on plateaus",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17637-17789",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    113,
+    114
+   ],
+   "module": "OAI.Probability.SKValue.Equations.CoupledComparison",
+   "name": "OAI.SKValue.spatialJet",
+   "plain": "Scaled spatial jet c ∂ₓⁿψ′",
+   "record": "support.backward_shapes",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17790-17833",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    15,
+    16
+   ],
+   "module": "OAI.Probability.SKSupport.Parabolic.ReverseBurgers",
+   "name": "OAI.ZeroTemperatureSK.Heat.ReverseBurgers",
+   "plain": "Reverse-time Burgers solution on [0,H]",
+   "record": "support.backward_shapes",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b17834-18061",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    91,
+    94
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.JetFields",
+   "name": "OAI.ZeroTemperatureSK.compactJetField_generator_one",
+   "plain": "Itô generator of the curvature a",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b18062-18374",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    38,
+    39
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_eq_actual",
+   "plain": "The q‴ expression as an expectation",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b18136-18374",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    139,
+    142
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.JetFields",
+   "name": "OAI.ZeroTemperatureSK.curvatureField_generator",
+   "plain": "Itô generator of a²",
+   "record": "support.plateau_transfer",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b18375-18465",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    75,
+    76
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.JetExpr.curvatureSlope_sourceA",
+   "plain": "Slope source, part without γ",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "example"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b18507-18560",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    190,
+    191
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.curvature_nonneg",
+   "plain": "The curvature is nonnegative",
+   "record": "support.backward_shapes",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19085-19213",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "support.raw_curvature_negative_absolute_terminal",
+   "role": "mention"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19447-19538",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    140
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.flux_identity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19539-19603",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    92,
+    94
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound",
+   "plain": "Certificate remainder is at least c·v⁴",
+   "record": "support.integrated_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19604-19744",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    106,
+    114
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.integrated_coercivity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19745-19861",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    89,
+    92
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.boundaryRatio_nonneg",
+   "plain": "Ratio sign at grid times",
+   "record": "support.integrated_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b19862-20003",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    111,
+    116
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+   "plain": "Finite-step coercivity, density form",
+   "record": "support.integrated_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20005-20273",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    111,
+    116
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+   "plain": "Finite-step coercivity, density form",
+   "record": "support.step_tails",
+   "relation": "part",
+   "role": "definition"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20005-20646",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    130,
+    132
+   ],
+   "module": "OAI.Probability.SKSupport.Density.DensityFubini",
+   "name": "OAI.ZeroTemperatureSK.Heat.finiteDensity",
+   "plain": "Finite-step density",
+   "record": "support.step_tails",
+   "relation": "defines",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20274-20353",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    136
+   ],
+   "module": "OAI.Probability.SKSupport.Density.DensityHeat",
+   "name": "OAI.ZeroTemperatureSK.Heat.varianceHeat_exp_eq_exp_log",
+   "plain": "Hopf–Cole identity for the heat flow",
+   "record": "support.step_tails",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20354-20646",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    104,
+    108
+   ],
+   "module": "OAI.Probability.SKSupport.Density.DensityFubini",
+   "name": "OAI.ZeroTemperatureSK.Heat.density_tilted_pairing",
+   "plain": "Tilted pairing against a Gaussian density",
+   "record": "support.step_tails",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20647-20773",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    130,
+    132
+   ],
+   "module": "OAI.Probability.SKSupport.Density.DensityFubini",
+   "name": "OAI.ZeroTemperatureSK.Heat.finiteDensity",
+   "plain": "Finite-step density",
+   "record": "support.step_tails",
+   "relation": "defines",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20774-20844",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    137,
+    137
+   ],
+   "module": "OAI.Probability.SKSupport.Density.RatioComparison",
+   "name": "OAI.ZeroTemperatureSK.Heat.datumScore",
+   "plain": "Score of the forward datum",
+   "record": "support.forward_shapes",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20774-20951",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    106,
+    106
+   ],
+   "module": "OAI.Probability.SKSupport.Backward.GaussianBackwardShapes",
+   "name": "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape",
+   "plain": "Backward shape within each finite step",
+   "record": "support.backward_shapes",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20774-21487",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    128,
+    129
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio",
+   "plain": "r∂ₓs − s∂ₓr ≥ 0 stepwise",
+   "record": "support.forward_shapes",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20845-20951",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    106,
+    106
+   ],
+   "module": "OAI.Probability.SKSupport.Backward.GaussianBackwardShapes",
+   "name": "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape",
+   "plain": "Backward shape within each finite step",
+   "record": "support.backward_shapes",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b20952-21011",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    128,
+    129
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio",
+   "plain": "r∂ₓs − s∂ₓr ≥ 0 stepwise",
+   "record": "support.forward_shapes",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21012-21139",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    128,
+    129
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio",
+   "plain": "r∂ₓs − s∂ₓr ≥ 0 stepwise",
+   "record": "support.forward_shapes",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21140-21203",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    189,
+    220
+   ],
+   "module": "OAI.Probability.SKSupport.Density.RatioComparison",
+   "name": "OAI.ZeroTemperatureSK.Heat.ratioWronskian_first_jump",
+   "plain": "Ratio Wronskian sign, first jump",
+   "record": "support.forward_shapes",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21204-21264",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    102,
+    110
+   ],
+   "module": "OAI.Probability.SKSupport.Density.RatioComparison",
+   "name": "OAI.ZeroTemperatureSK.Heat.ReverseBurgers.ratio_nonneg",
+   "plain": "Ratio sign on the closed interval",
+   "record": "support.forward_shapes",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21265-21426",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    166,
+    170
+   ],
+   "module": "OAI.Probability.SKSupport.Density.RatioComparison",
+   "name": "OAI.ZeroTemperatureSK.Heat.ratioWronskian_jump",
+   "plain": "Ratio Wronskian across a height jump",
+   "record": "support.forward_shapes",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21427-21487",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    116,
+    122
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.boundaryRatio_nonneg",
+   "plain": "Ratio sign at grid times",
+   "record": "support.forward_shapes",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21488-21586",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    102,
+    103
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianDecay",
+   "name": "OAI.ZeroTemperatureSK.Heat.quotientExtension_continuous",
+   "record": "support.backward_shapes",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21587-21707",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    22,
+    30
+   ],
+   "module": "OAI.Probability.SKSupport.Density.RatioComparison",
+   "name": "OAI.ZeroTemperatureSK.Heat.ReverseBurgers.ratio_nonneg_interior",
+   "plain": "Ratio sign before the endpoint",
+   "record": "support.forward_shapes",
+   "relation": "proof",
+   "role": "mention"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21905-21956",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    119,
+    121
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.flux_identity",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21905-22402",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    161,
+    161
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.cert_flux_derivative",
+   "plain": "Divergence identity for the flux",
+   "record": "support.flux_identity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b21957-22064",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    60,
+    60
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.WF₂",
+   "plain": "Weighted divergence of F₂",
+   "record": "support.flux_identity",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22065-22103",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    127,
+    141
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.hasDerivAt_flux",
+   "plain": "Derivative of the certificate flux",
+   "record": "support.flux_identity",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22104-22306",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    131,
+    140
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.flux_identity",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22307-22342",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    140
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.flux_identity",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22404-22753",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    62,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+   "plain": "The rational certificate identity",
+   "record": "support.rational_certificate",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22754-22983",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    44
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.Coercivity",
+   "name": "OAI.SKValue.Certificate.rational_identity",
+   "record": "scalar.integrated_coercivity",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22754-22983",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    107,
+    111
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity",
+   "plain": "Pointwise coercivity inequality",
+   "record": "support.integrated_coercivity",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22754-22983",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    62,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+   "plain": "The rational certificate identity",
+   "record": "support.rational_certificate",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b22984-23116",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    25
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.F₂",
+   "plain": "Certificate polynomial F₂",
+   "record": "support.rational_certificate",
+   "relation": "defines",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23117-23197",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    113,
+    122
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity",
+   "plain": "Pointwise coercivity inequality",
+   "record": "support.rational_certificate",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23198-23337",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    27,
+    27
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.P₀",
+   "plain": "Certificate term P₀",
+   "record": "support.rational_certificate",
+   "relation": "defines",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23338-23443",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    195,
+    199
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs",
+   "plain": "Seven signs on the half-line",
+   "record": "support.rational_certificate",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23444-23503",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    154,
+    160
+   ],
+   "module": "OAI.Probability.SKSupport.Density.GaussianLogDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity",
+   "plain": "Coercivity for Gaussian-weighted densities",
+   "record": "support.rational_certificate",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23504-23583",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    200,
+    206
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteForwardRatio",
+   "name": "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs",
+   "plain": "Seven signs on the half-line",
+   "record": "support.rational_certificate",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23584-23691",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    107,
+    112
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity",
+   "plain": "Pointwise coercivity inequality",
+   "record": "support.rational_certificate",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23692-23877",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    122,
+    128
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.IntegratedCoercivity",
+   "name": "OAI.SKValue.BackwardShape.integrated_certificate",
+   "record": "scalar.integrated_coercivity",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23692-23877",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    111,
+    116
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+   "plain": "Finite-step coercivity, density form",
+   "record": "support.integrated_coercivity",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23878-23922",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    111,
+    116
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+   "plain": "Finite-step coercivity, density form",
+   "record": "support.integrated_coercivity",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b23923-24103",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    62,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Density.Certificate",
+   "name": "OAI.ZeroTemperatureSK.Certificate.rational_identity",
+   "plain": "The rational certificate identity",
+   "record": "support.rational_certificate",
+   "relation": "part",
+   "role": "mention"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b24401-24661",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    97,
+    98
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.ParameterChords",
+   "name": "OAI.ZeroTemperatureSK.positiveCoeff",
+   "plain": "Positive finite-step coefficient",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b24401-24986",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b24662-24810",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    115,
+    118
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.PositiveRegularity",
+   "name": "OAI.ZeroTemperatureSK.positiveValue_derivative_uniform",
+   "plain": "Uniform derivative of the positive scheme",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b24877-24986",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    108,
+    112
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.sampleCoercive_integral_limit",
+   "plain": "Limit of the sampled coercive moment",
+   "record": "support.plateau_transfer",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b24987-25015",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    69,
+    82
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.stripThird_coercive",
+   "plain": "Coercive lower bound, q‴ expression",
+   "record": "support.positive_curvature",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b25016-25068",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    51,
+    56
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.actualQuartic_pos",
+   "plain": "Fourth curvature moment is positive",
+   "record": "support.positive_curvature",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b25362-25618",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    66,
+    66
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.zero_gap_curvature",
+   "plain": "q″ positive on zero plateaus",
+   "record": "support.zero_curvature",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b25422-25618",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    58,
+    59
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.actualThirdSquare_pos",
+   "plain": "Second moment of ∂ₓ³Φ is positive",
+   "record": "support.zero_curvature",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b25620-26036",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: it inserts no plateau, so γ_δ does not exist there. actual_coercivity reaches the fixed time through sampled grid approximants.",
+   "record": "support.fixed_time_spatial_coercivity",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b25620-26470",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b26222-26470",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    78,
+    80
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.sample_coercivity",
+   "plain": "Coercivity at sampled grid times",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b26491-26616",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    50,
+    51
+   ],
+   "module": "OAI.Probability.SKSupport.Control.ControlPayoffConvex",
+   "name": "OAI.ZeroTemperatureSK.OrderParameter.local_bound",
+   "plain": "γ bounded by its integral",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b26617-26897",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    115,
+    118
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.PositiveRegularity",
+   "name": "OAI.ZeroTemperatureSK.positiveValue_derivative_uniform",
+   "plain": "Uniform derivative of the positive scheme",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b26898-27009",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    56,
+    58
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.PositiveGradientError",
+   "name": "OAI.ZeroTemperatureSK.positivePath_uniform_error",
+   "plain": "Approximating paths converge uniformly",
+   "record": "support.diffusion",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27010-27189",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    124,
+    133
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.sampleCoercive_integral_limit",
+   "plain": "Limit of the sampled coercive moment",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27190-27326",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    64,
+    67
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.PositiveRegularity",
+   "name": "OAI.ZeroTemperatureSK.positiveValue_uniform_derivative_bounds",
+   "plain": "Uniform derivative bounds, positive scheme",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27327-27396",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    140,
+    143
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27397-27509",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    143
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27654-27750",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    370,
+    375
+   ],
+   "module": "OAI.Probability.SKSupport.Support.Closure",
+   "name": "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative",
+   "plain": "No gap with strictly convex q′",
+   "record": "support.endpoint_chord_area",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27751-27868",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    136
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "curvature",
+   "at": "b27869-27934",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    90,
+    93
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.sampleQuartic_integral_limit",
+   "plain": "Limit of the sampled quartic moment",
+   "record": "support.fixed_time_spatial_coercivity",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b28689-29163",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Neither formal statement contains this corollary. The highlights in its proof mark the steps that are in the Lean.",
+   "record": "scalar.smooth_positive_density",
+   "role": "statement"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29165-29279",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    91,
+    94
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.JetFields",
+   "name": "OAI.ZeroTemperatureSK.compactJetField_generator_one",
+   "plain": "Itô generator of the curvature a",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29280-29406",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    94,
+    96
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.ThirdFields",
+   "name": "OAI.ZeroTemperatureSK.stripA_hasDerivWithinAt_right",
+   "plain": "Right derivative of the curvature moment",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29407-29480",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    22,
+    22
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+   "plain": "Full support for the constructed diffusion",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29481-29582",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Equation (8) is outside the Lean, as is everything built on it to smoothness.",
+   "record": "scalar.smooth_positive_density",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29622-29719",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    190,
+    191
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.curvature_nonneg",
+   "plain": "The curvature is nonnegative",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29720-29747",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    13,
+    15
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.IsDiffusion.jetMoment_continuous",
+   "plain": "Jet moments are continuous",
+   "record": "scalar.smooth_positive_density",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29838-29864",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    155,
+    156
+   ],
+   "module": "OAI.Probability.SKSupport.Regularity.Regularity",
+   "name": "OAI.ZeroTemperatureSK.value_even",
+   "plain": "The value is even in x",
+   "record": "scalar.smooth_positive_density",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b29887-30085",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    11,
+    12
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.jetMoment",
+   "plain": "Moment of a polynomial in jets",
+   "record": "scalar.smooth_positive_density",
+   "relation": "defines",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b30086-30303",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    28,
+    32
+   ],
+   "module": "OAI.Probability.SKValue.Control.PolynomialGenerator",
+   "name": "OAI.SKValue.IsDiffusion.polyJet_generator",
+   "plain": "Itô formula for polynomial jets",
+   "record": "scalar.smooth_positive_density",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b30304-30351",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    28,
+    32
+   ],
+   "module": "OAI.Probability.SKValue.Control.PolynomialGenerator",
+   "name": "OAI.SKValue.IsDiffusion.polyJet_generator",
+   "plain": "Itô formula for polynomial jets",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b30352-30428",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    13,
+    21
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.IsDiffusion.jetMoment_continuous",
+   "plain": "Jet moments are continuous",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b30429-30480",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    22,
+    25
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.IsDiffusion.jetMoment_hasDerivAt",
+   "plain": "Time derivative of a jet moment",
+   "record": "scalar.smooth_positive_density",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31095-31257",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    75,
+    76
+   ],
+   "module": "OAI.Probability.SKValue.Equations.PolynomialMoment",
+   "name": "OAI.SKValue.JetExpr.curvatureSlope_sourceA",
+   "plain": "Slope source, part without γ",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31258-31457",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    41,
+    46
+   ],
+   "module": "OAI.Probability.SKValue.Coercivity.CurvatureMoment",
+   "name": "OAI.SKValue.IsDiffusion.curvatureSlope_hasDerivAt",
+   "plain": "Time derivative of the curvature slope",
+   "record": "scalar.smooth_positive_density",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31522-31583",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    42,
+    42
+   ],
+   "module": "OAI.Probability.SKSupport.Support.GapCurvature",
+   "name": "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant",
+   "plain": "Formula for q‴ on a plateau",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31682-31745",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    135,
+    139
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.actual_coercivity",
+   "plain": "Spatial coercivity at fixed time",
+   "record": "scalar.smooth_positive_density",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31796-31859",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    21,
+    21
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.minimizer_full_support_actual",
+   "plain": "Full support for the constructed diffusion",
+   "record": "scalar.smooth_positive_density",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31885-31966",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    51,
+    52
+   ],
+   "module": "OAI.Probability.SKSupport.Moments.Curvature",
+   "name": "OAI.ZeroTemperatureSK.actualQuartic_pos",
+   "plain": "Fourth curvature moment is positive",
+   "record": "scalar.smooth_positive_density",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b31967-32180",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "scalar.smooth_positive_density",
+   "role": "derivation"
+  },
+  {
+   "anchor": "density-consequence",
+   "at": "b32182-32314",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    108,
+    112
+   ],
+   "module": "OAI.Probability.SKSupport.Density.SampleJets",
+   "name": "OAI.ZeroTemperatureSK.sampleCoercive_integral_limit",
+   "plain": "Limit of the sampled coercive moment",
+   "record": "scalar.smooth_positive_density",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b34797-34858",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    49,
+    52
+   ],
+   "module": "OAI.Probability.SKValue.Variation.ContactAssembly",
+   "name": "OAI.SKValue.IsDiffusion.scalar_value_of_contact",
+   "plain": "Scalar value from contact",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b34797-35483",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    109,
+    118
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.ScalarValueConclusion",
+   "plain": "The scalar-value conclusion",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b34859-34944",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    41,
+    48
+   ],
+   "module": "OAI.Probability.SKValue.Equations.RealFiltration",
+   "name": "OAI.SKValue.IsDiffusion.unitMomentMartingale",
+   "plain": "The gradient is a unit-moment martingale",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "part",
+   "role": "definition"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b34945-35091",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    87,
+    88
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshBrownian",
+   "name": "OAI.SKValue.diffusion_gradient_isometry",
+   "plain": "Itô isometry for the gradient",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35092-35201",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    49,
+    51
+   ],
+   "module": "OAI.Probability.SKValue.Processes.UnitMomentMartingale",
+   "name": "OAI.SKValue.UnitMomentMartingale.integral_past_mul",
+   "plain": "E[fₛ fₜ] = s",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35249-35321",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    293,
+    294
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshBrownian",
+   "name": "OAI.SKValue.diffusion_gradient_brownian_covariance",
+   "plain": "Gradient covariance with Brownian motion",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35322-35374",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    109,
+    114
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.ScalarValueConclusion",
+   "plain": "The scalar-value conclusion",
+   "record": "scalar_value",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35322-35483",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    16,
+    23
+   ],
+   "module": "OAI.Probability.SKValue.Main",
+   "name": "OAI.SKValue.value_consequences",
+   "plain": "The scalar-value theorem",
+   "record": "scalar_value",
+   "relation": "contains",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35375-35483",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    116,
+    117
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.ScalarValueConclusion",
+   "plain": "The scalar-value conclusion",
+   "record": "scalar_value",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35484-35599",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    335,
+    340
+   ],
+   "module": "OAI.Probability.SKValue.Processes.UnitMomentMartingale",
+   "name": "OAI.SKValue.UnitMomentMartingale.terminal_square",
+   "plain": "U² = 1 almost surely",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35484-35978",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    109,
+    118
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.ScalarValueConclusion",
+   "plain": "The scalar-value conclusion",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35600-35750",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    97,
+    101
+   ],
+   "module": "OAI.Probability.SKValue.Equations.IntegralAbsSqrtSecond",
+   "name": "OAI.SKValue.IsDiffusion.terminal_gradient_product",
+   "plain": "U X₁ = |X₁| almost surely",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35751-35837",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    42,
+    50
+   ],
+   "module": "OAI.Probability.SKValue.Evolution.TimeWeightedIntervalIntegrable",
+   "name": "OAI.SKValue.IsDiffusion.parisi_first_value",
+   "plain": "Parisi value from E|X₁|",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35838-35942",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    94,
+    102
+   ],
+   "module": "OAI.Probability.SKValue.Evolution.L1Terminal",
+   "name": "OAI.SKValue.IsDiffusion.terminal_product_value",
+   "plain": "Expected product of U and X₁",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35943-35978",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    36,
+    47
+   ],
+   "module": "OAI.Probability.SKValue.Variation.ContactAssembly",
+   "name": "OAI.SKValue.IsDiffusion.groundState_eq_parisi_of_contact",
+   "plain": "Ground state equals Parisi, given contact",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b35979-36083",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    37,
+    52
+   ],
+   "module": "OAI.Probability.SKValue.Evolution.IntegralPrimitiveTerminal",
+   "name": "OAI.SKValue.IsDiffusion.parisi_value_assembly",
+   "plain": "Terminal formulas at the Parisi value",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b36335-36394",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    49,
+    52
+   ],
+   "module": "OAI.Probability.SKValue.Variation.ContactAssembly",
+   "name": "OAI.SKValue.IsDiffusion.scalar_value_of_contact",
+   "plain": "Scalar value from contact",
+   "record": "scalar.manuscript_terminal_value",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b36395-36470",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    77,
+    80
+   ],
+   "module": "OAI.Probability.SKValue.Control.StripRegularity",
+   "name": "OAI.SKValue.IsDiffusion.curvature_mean_integrable",
+   "plain": "Mean curvature is integrable in time",
+   "record": "scalar.terminal_loss",
+   "relation": "proof",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b36395-36529",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    25
+   ],
+   "module": "OAI.Probability.SKValue.Variation.ContactAssembly",
+   "name": "OAI.SKValue.IsDiffusion.strip_value_le_groundState",
+   "plain": "Strip integral below ground state",
+   "record": "scalar.terminal_loss",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b36471-36529",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    21,
+    25
+   ],
+   "module": "OAI.Probability.SKValue.Variation.ContactAssembly",
+   "name": "OAI.SKValue.IsDiffusion.strip_value_le_groundState",
+   "plain": "Strip integral below ground state",
+   "record": "scalar.terminal_loss",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b36530-36606",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    17,
+    19
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.finite_gaussian_target",
+   "plain": "Finite-Gaussian limit at a minimiser",
+   "record": "scalar.terminal_loss",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b37104-37733",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "scalar.separate_classical_algorithm",
+   "role": "statement"
+  },
+  {
+   "anchor": "scalar-value",
+   "at": "b38402-38494",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    41,
+    48
+   ],
+   "module": "OAI.Probability.SKValue.Equations.RealFiltration",
+   "name": "OAI.SKValue.IsDiffusion.unitMomentMartingale",
+   "plain": "The gradient is a unit-moment martingale",
+   "record": "scalar.euler_normalization",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b38941-38974",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    155,
+    161
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.FiniteGaussianConclusion",
+   "plain": "The finite-Gaussian conclusion",
+   "record": "scalar.euler_normalization",
+   "relation": "defines",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b39170-39842",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "assumptions.qaoa_model_and_limits",
+   "role": "definition"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b39929-40167",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "qaoa_thermodynamic_first",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b40557-40682",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    24,
+    24
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.stepSize",
+   "plain": "Mesh width T/N",
+   "record": "scalar.euler_normalization",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b40557-41293",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    39,
+    42
+   ],
+   "module": "OAI.Probability.SKValue.Gaussian.CoordinateDependsBefore",
+   "name": "OAI.SKValue.normalized_family_orthonormal",
+   "plain": "Normalised increments are orthonormal",
+   "record": "scalar.euler_normalization",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b40744-41043",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    14,
+    15
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.gaussianProduct",
+   "plain": "Product of standard Gaussians",
+   "record": "scalar.euler_normalization",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41044-41155",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    39,
+    39
+   ],
+   "module": "OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip",
+   "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip",
+   "plain": "Finite-Gaussian limit on a fixed strip",
+   "record": "scalar.euler_normalization",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41156-41253",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    42
+   ],
+   "module": "OAI.Probability.SKValue.Gaussian.CoordinateDependsBefore",
+   "name": "OAI.SKValue.normalized_family_orthonormal",
+   "plain": "Normalised increments are orthonormal",
+   "record": "scalar.euler_normalization",
+   "relation": "part",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41294-41505",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    136,
+    139
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.roundedSign",
+   "plain": "The rounded finite spin",
+   "record": "scalar.conditional_rounding",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41294-41683",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    30
+   ],
+   "module": "OAI.Probability.SKValue.Gaussian.CoordinateDependsBefore",
+   "name": "OAI.SKValue.finite_rounding_coefficient",
+   "plain": "Rounding preserves correlations",
+   "record": "scalar.conditional_rounding",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41506-41588",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    140,
+    141
+   ],
+   "module": "OAI.Probability.SKValue.Equations.GradientErrorConstant",
+   "name": "OAI.SKValue.standardGaussian_cdf_hasLaw_uniform",
+   "plain": "Gaussian CDF transform is uniform",
+   "record": "scalar.conditional_rounding",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41589-41683",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    30
+   ],
+   "module": "OAI.Probability.SKValue.Gaussian.CoordinateDependsBefore",
+   "name": "OAI.SKValue.finite_rounding_coefficient",
+   "plain": "Rounding preserves correlations",
+   "record": "scalar.conditional_rounding",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41684-41977",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    151,
+    153
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.shiftedCoefficientSum",
+   "plain": "Adjacent pairing of A and B",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "defines",
+   "role": "definition"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41704-41977",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    40,
+    41
+   ],
+   "module": "OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip",
+   "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip",
+   "plain": "Finite-Gaussian limit on a fixed strip",
+   "record": "scalar_value",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41978-42017",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    29,
+    41
+   ],
+   "module": "OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip",
+   "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip",
+   "plain": "Finite-Gaussian limit on a fixed strip",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "states",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b41978-42745",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    29,
+    41
+   ],
+   "module": "OAI.Probability.SKValue.Processes.FiniteGaussianFixedStrip",
+   "name": "OAI.SKValue.IsDiffusion.finite_gaussian_fixed_strip",
+   "plain": "Finite-Gaussian limit on a fixed strip",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42018-42172",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    44,
+    46
+   ],
+   "module": "OAI.Probability.SKValue.Equations.GradientErrorConstant",
+   "name": "OAI.SKValue.gradientMeshError_tendsto_zero",
+   "plain": "Gradient mesh error tends to zero",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "states",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42173-42271",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    82,
+    95
+   ],
+   "module": "OAI.Probability.SKValue.Equations.FiniteRounded",
+   "name": "OAI.SKValue.finite_coefficient_L2_errors",
+   "plain": "L² error of the rounded coefficients",
+   "record": "scalar.correlation_vector_control",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42384-42508",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    84,
+    94
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshRaw",
+   "name": "OAI.SKValue.mesh_coefficient_errors",
+   "plain": "L² errors of the mesh coefficients",
+   "record": "scalar.correlation_vector_control",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42384-42666",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    89,
+    91
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshRaw",
+   "name": "OAI.SKValue.mesh_coefficient_errors",
+   "plain": "L² errors of the mesh coefficients",
+   "record": "scalar.correlation_vector_control",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42509-42577",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    93,
+    104
+   ],
+   "module": "OAI.Probability.SKValue.Equations.ShiftedPairing",
+   "name": "OAI.SKValue.shiftedPairing_tendsto_error_zero",
+   "plain": "Shifted pairing error tends to zero",
+   "record": "scalar.correlation_vector_control",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42578-42618",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    100,
+    113
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshMeanBound",
+   "name": "OAI.SKValue.finiteGaussian_from_strip_and_moments",
+   "plain": "Finite-Gaussian limit from strip and moments",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42619-42666",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    83,
+    87
+   ],
+   "module": "OAI.Probability.SKValue.Processes.MeshMeanBound",
+   "name": "OAI.SKValue.finiteGaussian_from_strip_and_moments",
+   "plain": "Finite-Gaussian limit from strip and moments",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "proof",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b42667-42745",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    158,
+    161
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.FiniteGaussianConclusion",
+   "plain": "The finite-Gaussian conclusion",
+   "record": "scalar.shifted_gaussian_limit",
+   "relation": "part",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b43046-43375",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.finite_formula_word_approximation",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b44806-45390",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.rooted_realization",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b45121-45390",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: it has no rooted operators or energy. Only the sum S_{T,N} exists there, as shiftedCoefficientSum.",
+   "record": "circuit.rooted_realization",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b45391-45454",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: no seed appears. coefficientA sets the j=0 term to zero by definition.",
+   "record": "circuit.rooted_realization",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b45560-45645",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "scalar.unshifted_gaussian_limit",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b46586-47482",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.finite_formula_word_approximation",
+   "role": "explanation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b46629-46813",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.bounded_trigonometric",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b46985-47124",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.seeded_synthesis",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b47125-47235",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.seed_removal",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b47176-47235",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.fixed_word_transfer",
+   "role": "mention"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b47985-48114",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    158,
+    161
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.FiniteGaussianConclusion",
+   "plain": "The finite-Gaussian conclusion",
+   "record": "qaoa_thermodynamic_first",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b47985-48349",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "qaoa_thermodynamic_first",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b48115-48213",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    158,
+    161
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.FiniteGaussianConclusion",
+   "plain": "The finite-Gaussian conclusion",
+   "record": "qaoa_thermodynamic_first",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b49063-49484",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.sampled_finite_instance_optimum",
+   "role": "statement"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b49486-50238",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "record": "circuit.sampled_finite_instance_optimum",
+   "role": "derivation"
+  },
+  {
+   "anchor": "qaoa-boundary",
+   "at": "b49911-50010",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    237,
+    238
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.BlockCoeff",
+   "name": "OAI.SKValueG.groundStateSequence_tendsto",
+   "plain": "Finite-spin value converges",
+   "record": "circuit.sampled_finite_instance_optimum",
+   "relation": "part",
+   "role": "derivation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b50759-50873",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    111,
+    116
+   ],
+   "module": "OAI.Probability.SKSupport.Density.FiniteDensity",
+   "name": "OAI.ZeroTemperatureSK.Heat.finite_density_coercivity",
+   "plain": "Finite-step coercivity, density form",
+   "record": "support.integrated_coercivity",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b50875-51026",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    90,
+    92
+   ],
+   "module": "ComparatorChallenges.SKFullSupport",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "lean.full_support",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b50875-51067",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "lean.full_support",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b50944-51067",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    62,
+    63
+   ],
+   "module": "OAI.Probability.SKSupport.Model",
+   "name": "OAI.ZeroTemperatureSK.IsMinimizer",
+   "plain": "γ minimises the Parisi functional",
+   "record": "assumptions.full_support_minimizer",
+   "relation": "defines",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51068-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    163,
+    171
+   ],
+   "module": "ComparatorChallenges.SKValue",
+   "name": "OAI.SKValue.value_consequences",
+   "plain": "The scalar-value theorem",
+   "record": "lean.value_consequences",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51068-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    17,
+    19
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.finite_gaussian_target",
+   "plain": "Finite-Gaussian limit at a minimiser",
+   "record": "scalar.formal_finite_gaussian_clause",
+   "relation": "part",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51068-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    13,
+    14
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.scalar_value_target",
+   "plain": "Scalar value at a minimiser",
+   "record": "scalar.formal_scalar_clause",
+   "relation": "part",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51068-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    17,
+    19
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.finite_gaussian_target",
+   "plain": "Finite-Gaussian limit at a minimiser",
+   "record": "scalar.lean_gaussian_target",
+   "relation": "part",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51068-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    13,
+    14
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.scalar_value_target",
+   "plain": "Scalar value at a minimiser",
+   "record": "scalar.lean_scalar_target",
+   "relation": "part",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51079-51237",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    80,
+    81
+   ],
+   "module": "OAI.Probability.SKValue.Model",
+   "name": "OAI.SKValue.IsMinimizer",
+   "plain": "γ minimises the Parisi functional",
+   "record": "assumptions.value_minimizer",
+   "relation": "defines",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51079-51357",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    16,
+    23
+   ],
+   "module": "OAI.Probability.SKValue.Main",
+   "name": "OAI.SKValue.value_consequences",
+   "plain": "The scalar-value theorem",
+   "record": "lean.value_consequences",
+   "relation": "states",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51238-51357",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    27
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.ground_state_parisi_target",
+   "plain": "Ground state equals Parisi at minimisers",
+   "record": "assumptions.value_diffusion",
+   "relation": "proof",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51238-51357",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    26
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.ground_state_parisi_target",
+   "plain": "Ground state equals Parisi at minimisers",
+   "record": "scalar.formal_parisi_clause",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51238-51357",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    25,
+    26
+   ],
+   "module": "OAI.Probability.SKValue.GroundState.MainConclusions",
+   "name": "OAI.SKValue.ground_state_parisi_target",
+   "plain": "Ground state equals Parisi at minimisers",
+   "record": "scalar.lean_parisi_target",
+   "relation": "states",
+   "role": "mention"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51358-51438",
+   "from_record": false,
+   "lean": false,
+   "lines": null,
+   "module": null,
+   "name": null,
+   "note": "Not in the Lean: the support and scalar models define their objects separately, and no Lean theorem connects them.",
+   "record": "scalar.formal_model_transport_open",
+   "role": "statement"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51439-51517",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    81,
+    88
+   ],
+   "module": "ComparatorChallenges.SKFullSupport",
+   "name": "OAI.ZeroTemperatureSK.FullSupportConclusion",
+   "plain": "The full-support conclusion",
+   "record": "lean.full_support",
+   "relation": "defines",
+   "role": "explanation"
+  },
+  {
+   "anchor": "evidence-scope",
+   "at": "b51518-51635",
+   "from_record": false,
+   "lean": true,
+   "lines": [
+    35,
+    36
+   ],
+   "module": "OAI.Probability.SKSupport.Main",
+   "name": "OAI.ZeroTemperatureSK.full_support",
+   "plain": "Full support of SK minimisers",
+   "record": "lean.full_support",
+   "relation": "part",
+   "role": "explanation"
+  }
+ ]
+}

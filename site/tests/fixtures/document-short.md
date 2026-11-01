@@ -2,6 +2,9 @@
 
 *A reconstruction of OpenAI's quantitative argument · 26 October 2026*
 
+**AI assistance.** Will Cook directed the work. AI agents based on large
+language models produced and revised this manuscript.
+
 <!-- passage:abstract -->
 **Abstract.** The Stieltjes measure of every integrable minimiser of the
 zero-temperature Parisi functional for the pure, zero-field
