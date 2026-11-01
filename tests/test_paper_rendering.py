@@ -1,4 +1,4 @@
-"""Optional Pandoc checks for bookmarks in the maintained reading copies."""
+"""Paper disclosure and optional Pandoc checks for maintained reading copies."""
 import re
 import shutil
 import subprocess
@@ -7,6 +7,50 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FILTER = ROOT / "scripts/paper_anchors.lua"
+MANUSCRIPTS = (
+    "papers/architecture/paper",
+    "papers/qaoa-sk/expository/main",
+    "papers/qaoa-sk/short/paper",
+    "papers/qaoa-sk/long/reasoning-record",
+)
+AI_DISCLOSURE = (
+    "AI assistance. Will Cook directed the work. AI agents based on large "
+    "language models produced and revised this manuscript."
+)
+
+
+def _disclosure_present(text, *, first_page=False):
+    if first_page:
+        text = text.split("\f", 1)[0]
+    return AI_DISCLOSURE in " ".join(text.replace("**", "").split())
+
+
+class ManuscriptDisclosureTests(unittest.TestCase):
+    def test_all_manuscript_sources_carry_the_disclosure(self):
+        for stem in MANUSCRIPTS:
+            with self.subTest(manuscript=stem):
+                self.assertTrue(_disclosure_present((ROOT / (stem + ".md")).read_text()))
+
+    @unittest.skipUnless(shutil.which("pdftotext"), "Poppler is optional paper tooling")
+    def test_all_reading_pdfs_carry_the_disclosure_on_page_one(self):
+        for stem in MANUSCRIPTS:
+            with self.subTest(manuscript=stem):
+                text = subprocess.check_output(
+                    ["pdftotext", str(ROOT / (stem + ".pdf")), "-"], text=True)
+                self.assertTrue(_disclosure_present(text, first_page=True))
+
+    def test_missing_manuscript_disclosure_is_rejected(self):
+        source = (ROOT / "papers/qaoa-sk/short/paper.md").read_text()
+        without_note = source.replace(
+            "**AI assistance.** Will Cook directed the work. AI agents based on large\n"
+            "language models produced and revised this manuscript.\n\n", "")
+        self.assertNotEqual(source, without_note)
+        self.assertFalse(_disclosure_present(without_note))
+
+    def test_a_later_page_does_not_satisfy_first_page_disclosure(self):
+        later_note = "A paper without a first-page note.\f" + AI_DISCLOSURE
+        self.assertTrue(_disclosure_present(later_note))
+        self.assertFalse(_disclosure_present(later_note, first_page=True))
 
 
 @unittest.skipUnless(shutil.which("pandoc"), "Pandoc is optional paper tooling")
