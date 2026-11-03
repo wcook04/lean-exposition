@@ -1,6 +1,6 @@
 ---
 name: record-to-expository
-description: Teach a selected result using the Lean corpus, complete long record and short paper, choosing prerequisites, examples and proof detail for a specified reader without weakening assumptions or evidence boundaries.
+description: Teach one result from any formalised instance (Lean corpus, Comparator check, long record and short paper) to a modelled reader, frame first and then examples, choosing prerequisites and proof detail without weakening assumptions or evidence boundaries.
 ---
 
 # Research record to expository paper
@@ -56,6 +56,29 @@ If the argument is incomplete, either select an established part or make the
 unresolved step an explicit subject of the exposition. Do not introduce a new
 research claim as though explaining it made it established.
 
+## Model the reader and frame the result
+
+Before choosing examples, write down who the reader is (for instance strong
+students entering the field of the cited works), what they already know and can
+do, what they will not know, and the one point they should leave with. Use
+the same one-line reason for the result as the short paper; if the short paper
+lacks it, supply it there first.
+
+Give the frame before the examples: open with about a page that states the
+theorem in words and symbols, the one-line reason it holds (where a bound
+comes from), a few lines of history with correct credit, and a map saying
+which example illustrates which step. Then work the examples. A reader who
+meets the theorem only near the end cannot tell what each example is for.
+
+Draw the objects the reader must hold in mind (the layout of an input, a small
+instance, the critical configuration) instead of describing them only in
+prose. Put standard proofs this reader can skip (minimax, concentration,
+textbook amplification) in clearly marked boxes. Keep Lean names out of the
+reading path: link plain words to pinned lines as the
+[short-paper skill](../long-to-short/SKILL.md#reference-the-lean-and-comparator-evidence)
+describes, and collect the formal correspondences in a closing half-page.
+The register, byline and rendered-page rules there apply here too.
+
 ## Procedure
 
 1. State the mathematical question and exact result in language the reader can
@@ -69,7 +92,7 @@ research claim as though explaining it made it established.
    construction, including the checks that make the example admissible.
    When a representation is unfamiliar but its operation can be performed in a
    small case, work that case before the general notation.
-   A finite weighted sum can prepare an integral and return when the proof
+   (SK instance.) A finite weighted sum can prepare an integral and return when the proof
    counts those contributions in a different order. Keep its inputs consistent
    across those uses. It explains the operation; the general interchange still
    needs justification, and diffuse mass may need a different removal example.
@@ -128,9 +151,9 @@ research claim as though explaining it made it established.
    and citations used by the research record. Mark additional teaching examples
    and verify them. An example illustrating a theorem is not a separate proof
    of the theorem. Check its map against the example's actual hypotheses as
-   well as its words. A conditional calculation with a nonminimising coefficient
-   cannot select a minimiser-only convergence theorem merely because both use
-   the same construction.
+   well as its words. In the SK instance, a conditional calculation with a
+   nonminimising coefficient cannot select a minimiser-only convergence theorem
+   merely because both use the same construction.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
    the reader what survives, keeping the other conditions explicit. Choose a
    change that requires using the key inference, not repeating its wording.
@@ -240,3 +263,6 @@ perform. Repair its point of use, then try the explanation with a changed case.
 Separate the local choice of example from the reusable teaching decision;
 test the latter outside this problem and for an audience where it should not
 apply. Record author checks separately from actual reader responses.
+
+A revision pass refines existing passages. When a reader stalls, replace or
+reorder the passage at the point of need before adding new material.
