@@ -100,6 +100,9 @@ printed one. The full comparison, review status and run details stay in the
 long record's statement audit. The register, line-edit, byline and
 rendered-page rules there apply here too: the literature's register is the
 floor, and each revision round centres a paragraph-by-paragraph line edit.
+Run the [register stage](../register/SKILL.md) on every draft; its
+[rules](../../src/lean_exposition/resources/register/rules.json) scoped to
+`expository` add the lecture-note voice (RG-25).
 
 Rules that referees of a worked instance found missing:
 

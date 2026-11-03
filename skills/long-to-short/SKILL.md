@@ -218,7 +218,12 @@ The register of the cited literature is the floor. The target is prose a
 strong referee of that literature would admire: each sentence carries one
 mathematical step, the argument reads as a connected account, and nothing on
 the page is there for the authors' bookkeeping. Learn the moves of the best
-cited papers and make them in your own sentences.
+cited papers and make them in your own sentences. The [register
+stage](../register/SKILL.md) is the procedure: it profiles the cited papers,
+measures the draft against them and lists the
+[general register rules](../../src/lean_exposition/resources/register/rules.json)
+for this stage (`lean-exposition register rules --scope short --format markdown`),
+each with specimens from published papers.
 
 The reading copy contains no provenance notes, scratch paths, session remarks,
 relative links into unpublished folders, commit hashes, commands or workflow

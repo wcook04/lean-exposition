@@ -1,6 +1,6 @@
 # Writing methods
 
-These are four written methods for turning a mathematical result and its sources
+These are four written methods, and one stage applied to every draft, for turning a mathematical result and its sources
 into three papers: a detailed record, a short research paper and an exposition.
 A person can read and follow them, or an AI assistant can be given them as
 instructions. Follow them in the order of the table below, because each method
@@ -24,6 +24,7 @@ its relative links or copy this directory with `docs/` and the selected example.
 | Selected Lean corpus, original arguments, literature and evidence graph | Reconstruct the complete selected argument | [Graph to long record](graph-to-long/SKILL.md) |
 | All those sources plus the long record | Select a contribution for an expert and retain its decisive proof | [Long record to short paper](long-to-short/SKILL.md) |
 | All those sources plus the long record and short paper | Teach one meaningful result in a short exposition for a specified reader | [Record to exposition](record-to-expository/SKILL.md) |
+| Any draft, and every critique round | Measure the draft against its cited literature, line-edit every paragraph, re-measure and cold-read the PDF; critique packets carry the rules and measurements | [Register](register/SKILL.md) |
 
 Use the [authoring guide](../docs/authoring.md) for the shared evidence and
 review contract. These steps may expose a mathematical gap. Record that gap
@@ -159,4 +160,6 @@ categories and review status) lives in the long record's
 repository metadata. The short paper and exposition report verification in one
 ordinary paragraph with readable link text, as the literature reports a
 computation. Their register is the literature's at its best, and the aim is
-prose a strong referee would admire.
+prose a strong referee would admire. The [register stage](register/SKILL.md)
+applies this to every draft with the general rules in
+[`register/rules.json`](../src/lean_exposition/resources/register/rules.json).

@@ -1603,6 +1603,8 @@ def validate_rules(data: Dict) -> Dict:
                 problems.append("%s: specimen over %d words" % (rid, MAX_SPECIMEN_WORDS))
             if not spec.get("source"):
                 problems.append("%s: specimen without a source" % rid)
+            if re.search(r"\b(?:MATH|REF|CODE)\b|\s[.,;:)]|\(\s*\)", spec.get("quote", "")):
+                problems.append("%s: specimen carries extraction damage: %s" % (rid, spec.get("quote", "")[:40]))
         if _PRIVATE_MARKERS.search(text):
             problems.append("%s: private path or reference" % rid)
         for name in (rule.get("detector") or {}).get("features", []):
@@ -1720,3 +1722,125 @@ def build_packet_inputs(drafts: Dict[str, str], literature: Sequence[str], out: 
     return {"out": out, "files": names, "corpus_documents": len(profile["documents"]),
             "drafts": {r["stage"]: {"outside": r["summary"]["outside"], "mean_abs_d": r["summary"]["mean_abs_d"]}
                        for r in results}}
+
+
+# ==========================================================================
+# Literature probes: test a rule's move against a field's cited papers
+# ==========================================================================
+
+_DAMAGE = re.compile(
+    "\\b(?:MATH|REF|CODE)\\b|\\s[.,;:!?)]|\\(\\s*\\)|\\[\\s*\\]|---|[−∝±≈Ω~^_\\\\{}|<>=]|"
+    r"\b(?:in|by|see|of|from) [;,.)]|\bsee for\b|[a-z]{2} (?:e|t|o|tion|tions|ted|tor|ts)\b|\s{2,}")
+
+
+def clean_specimen(text: str) -> bool:
+    """A sentence fit to show writers: whole, readable and free of extraction damage.
+
+    Rejects placeholders for removed mathematics or references, punctuation left
+    stranded by a removed citation, symbols that survived extraction, split words
+    ("redu e") and sentences that do not end as sentences.
+    """
+    t = text.strip()
+    if not (6 <= len(t.split()) <= MAX_SPECIMEN_WORDS):
+        return False
+    if not (t[:1].isupper() or t[:1] in "\"'(“") or not t.rstrip("\"')”").endswith((".", "?", "!")):
+        return False
+    return not _DAMAGE.search(t)
+
+
+def _page_of(raw_lines: List[str], line: int) -> Optional[int]:
+    if not any("\f" in x for x in raw_lines):
+        return None
+    return sum(x.count("\f") for x in raw_lines[:max(line - 1, 0)]) + 1
+
+
+def _good_heading(text: str) -> bool:
+    words = re.findall(r"[A-Za-z][a-z]{2,}", text)
+    return (len(words) >= 2 or (len(words) == 1 and len(text.split()) == 1)) and len(text) <= 80 \
+        and not re.search(r"\b(?:MATH|REF)\b|\b\w \w\b|[a-z]{2} (?:e|t|o|tion|tions|ted)\b", text)
+
+
+def locate(path: str, doc: Document, sentence: Sentence) -> str:
+    """A reader-usable locator: the PDF page for page-broken text, else the section heading."""
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        raw = fh.read().split("\n")
+    page = _page_of(raw, sentence.line)
+    if page is not None:
+        return "PDF p. %d" % page
+    heading = None
+    for p in doc.paragraphs:
+        if p.kind == "heading":
+            heading = p.text
+        elif sentence in p.sentences:
+            break
+    if heading and _good_heading(heading):
+        return "section “%s”" % re.sub(r"\s*\{[^}]*\}$", "", heading)
+    return "opening pages" if sentence.index < 40 else "body text"
+
+
+def probe_rule(rule: Dict, corpus: Sequence[str], citations: Dict[str, str],
+               profile: Optional[Dict] = None, limit: int = 2, exclude: Sequence[str] = ()) -> Dict:
+    """Search one field's cited papers for the move a rule prescribes.
+
+    ``rule["probe"]`` is one of: ``{"kind": "process"}`` (the rule governs the
+    writing pass, so the field cannot refute it); ``{"kind": "feature",
+    "feature", "op", "value"}`` (the corpus median must lie on the prescribed
+    side); ``{"kind": "regex", "pattern"}`` (some cited paper makes the move);
+    ``{"kind": "headings"}``; ``{"kind": "intro_first"}`` (the opening of an
+    Introduction section). ``citations`` maps a document label to its
+    citation; only cited documents are searched. Specimens must pass
+    :func:`clean_specimen`; ``exclude`` lists quote prefixes a reviewer rejected.
+    """
+    pr = rule.get("probe") or {"kind": "process"}
+    if pr["kind"] == "process":
+        return {"holds": True, "measure": "process rule: governs the writing pass itself, in any field"}
+    docs = [(p, load_document(p)) for p in expand_paths(corpus) if _label(p) in citations]
+    res: Dict = {}
+    if pr["kind"] == "feature":
+        if profile is None:
+            profile = build_profile([p for p, _ in docs], name="probe")
+        st = profile["features"][pr["feature"]]
+        holds = st["median"] >= pr["value"] if pr["op"] == ">=" else st["median"] <= pr["value"]
+        res = {"holds": holds, "measure": "%s corpus median %.2f [IQR %.2f, %.2f]; the rule expects %s %.2f"
+               % (pr["feature"], st["median"], st["q1"], st["q3"], pr["op"], pr["value"])}
+        if not pr.get("specimen_pattern"):
+            return res
+        pattern = pr["specimen_pattern"]
+    elif pr["kind"] == "headings":
+        found = []
+        for path, doc in docs:
+            hs = [re.sub(r"^[\dA-Z]?[\d.]*\s+", "", p.text) for p in doc.paragraphs if p.kind == "heading"]
+            hs = [h for h in hs if 2 <= len(h.split()) <= 9 and _good_heading(h) and not re.search(
+                r"introduction|references|acknowledg|abstract|contents|appendix|arxiv|journal|university", h, re.I)]
+            if len(hs) >= 2:
+                found.append({"quote": "; ".join(hs[:3]), "source": citations[_label(path)], "locator": "section titles"})
+            if len(found) >= limit:
+                break
+        return {"holds": bool(found), "specimens": found,
+                "measure": "noun-phrase section titles found in %d cited papers" % len(found)}
+    else:
+        pattern = pr.get("pattern", "")
+    rx = re.compile(pattern, 0 if pr.get("case") else re.I)
+    found, hits = [], 0
+    for path, doc in docs:
+        if pr["kind"] == "intro_first":
+            matches, on = [], False
+            for p in doc.paragraphs:
+                if p.kind == "heading":
+                    on = bool(re.search(r"introduction", p.text, re.I))
+                elif on and p.sentences:
+                    matches = p.sentences[:2]
+                    break
+        else:
+            pool = doc.sentences[:pr["early"]] if pr.get("early") else doc.sentences
+            matches = [s for s in pool if rx.search(s.text)]
+        hits += bool(matches)
+        clean = [s for s in matches if clean_specimen(s.text) and not any(s.text.startswith(x) for x in exclude)]
+        if clean and len(found) < limit:
+            found.append({"quote": clean[0].text, "source": citations[_label(path)],
+                          "locator": locate(path, doc, clean[0])})
+    if pr["kind"] != "feature":
+        res = {"holds": hits > 0, "measure": ("move found in %d of %d cited papers searched" % (hits, len(docs)))
+               if hits else "move not found in the %d cited papers searched" % len(docs)}
+    res["specimens"] = found
+    return res

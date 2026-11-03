@@ -487,3 +487,49 @@ class TestNormalPaperTemplates(unittest.TestCase):
             text = self.read(stage)
             self.assertIn("EMPTY SCAFFOLD", text)
             self.assertNotIn("\u2014", text)
+
+
+class TestLiteratureProbes(unittest.TestCase):
+    def test_clean_specimen_rejects_extraction_damage(self):
+        good = "We do not know how to solve the original question implied by the problem."
+        self.assertTrue(pr.clean_specimen(good))
+        for bad in ("Huang showed that MATH has eigenvalues equal to one.",
+                    "The question was formulated by Erdos and Graham in and posed again later .",
+                    "The following lemma allows us to redu e an n-variate polynomial to one.",
+                    "We show that there exists a lacunary",
+                    "We use induction on m and the base case m = 1 is trivial here."):
+            self.assertFalse(pr.clean_specimen(bad), bad)
+
+    def test_packaged_specimens_are_clean(self):
+        for rule in pr.load_rules()["rules"]:
+            for spec in rule["specimens"]:
+                self.assertNotRegex(spec["quote"], r"\b(?:MATH|REF|CODE)\b|\s[.,;:)]")
+                self.assertNotIn("extracted", spec.get("locator", ""))
+            if not rule["specimens"]:
+                self.assertIn("specimens_note", rule)
+            self.assertIn("probe", rule)
+
+    def test_probe_rule_finds_moves_and_locates_them(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = os.path.join(tmp, "paper")
+            os.makedirs(d)
+            with open(os.path.join(d, "extracted.md"), "w", encoding="utf-8") as fh:
+                fh.write("# Introduction\n\nThe present paper is organized as follows in four short sections.\n\n"
+                         "# Open questions\n\nWe do not know how to remove the growth hypothesis from the theorem.\n")
+            cites = {"paper": "Author (2020), A paper"}
+            rule = {"probe": {"kind": "regex", "pattern": r"\bwe do not know\b"}}
+            res = pr.probe_rule(rule, [d], cites)
+            self.assertTrue(res["holds"])
+            self.assertEqual(res["specimens"][0]["source"], "Author (2020), A paper")
+            self.assertEqual(res["specimens"][0]["locator"], "section “Open questions”")
+            self.assertFalse(pr.probe_rule({"probe": {"kind": "regex", "pattern": "nonexistent move"}}, [d], cites)["holds"])
+            self.assertTrue(pr.probe_rule({"probe": {"kind": "process"}}, [d], cites)["holds"])
+            self.assertEqual(pr.probe_rule(rule, [d], cites, exclude=["We do not know"])["specimens"], [])
+
+    def test_maintenance_script_validates(self):
+        import subprocess
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        out = subprocess.run([sys.executable, os.path.join(root, "scripts", "register_rules.py"), "validate"],
+                             capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertIn("RG-01", out.stdout)

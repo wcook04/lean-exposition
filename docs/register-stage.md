@@ -113,11 +113,29 @@ conditional result naming its input beside the statement; acknowledgements and
 AI use at the end. Candidate rules are guidance for writers and reviewers; a
 candidate is adopted when readers prefer papers written with it.
 
+## Maintaining the rules
+
+`rules.json` is the source of truth and is edited by hand; nothing generates it.
+`python scripts/register_rules.py validate` checks it: unique ids, valid scopes,
+a limit for every rule, specimens of at most 25 words with no extraction damage
+(placeholders for removed mathematics or citations, stranded punctuation),
+detector features that exist, and no local paths. The package test suite runs
+the same validation.
+
+Each rule stores a `probe`, the literature test behind its `domain_test`.
+`python scripts/register_rules.py domain-test --field NAME CORPUS_DIR CITATIONS_JSON`
+re-runs every probe against a field's cited papers (a directory of
+`pdftotext` or TeX extractions, kept outside the repository with the
+citation each should carry) and prints whether each rule holds, with up to two
+candidate specimens that pass `register.clean_specimen` and their PDF page or
+section. The script writes nothing. A reviewer reads every candidate in its
+source before copying it into `specimens` or `domain_test`: the filter rejects
+damaged text, and only a reader can reject a sentence that is clean but does not
+show the move. Rules with no clean specimen say so in `specimens_note`.
+
 ## Extending the rules
 
-A lesson from a new paper or critique round goes into `register_rules.json` as
+A lesson from a new paper or critique round goes into `rules.json` as
 an instance under the general rule it refines. It becomes a new rule only when it
 changes a decision none of the existing rules covers, and it becomes general only
-after the move is found in the literature of a second field. Run
-`lean-exposition register rules` to validate the file: it rejects quotes longer
-than 25 words, em dashes in rule text, unknown detector features and local paths.
+after the move is found in the literature of a second field.

@@ -6,7 +6,8 @@
 (register skill, RG-01). No hashes, commands, receipt identifiers, build dates,
 review-status disclaimers or repository metadata appear anywhere in this file;
 they live in the repository and the long record. No em dashes and no
-"not X, but Y" framing (RG-17). -->
+"not X, but Y" framing (RG-17). The byline names the responsible author and
+the AI assistance and credits the theorem's originators (RG-24). -->
 
 ## Abstract
 

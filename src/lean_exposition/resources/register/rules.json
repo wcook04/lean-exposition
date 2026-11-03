@@ -35,22 +35,26 @@
    "rule": "Before revising, choose three or more papers the manuscript itself cites, closest to it in genre, and learn how they open, announce results, credit prior work, narrate proofs, introduce notation, organise sections and state limits. Write with those moves. Their register is the minimum; the aim is prose a strong referee in the field would single out as better written than the source it explains. Imitate moves, never text, and never imitate a named author's voice.",
    "limit": "Some features of a paper about a formal proof have no analogue in the literature (a verification paragraph, links to declarations); for those, follow the closest practice the literature has and say that it is a judgement.",
    "provenance": "operator directives, 29 September and 3 November 2026",
+   "probe": {
+    "kind": "process"
+   },
    "specimens": [],
+   "specimens_note": "Process rule: its specimens are the moves extracted from the reference papers chosen for each draft.",
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     }
    },
    "instances": [
@@ -77,22 +81,26 @@
    "rule": "Each revision round, whether after drafting or after a critique, reads every paragraph in order and records three things for it: what the paragraph is for, what is weak in it, and the rewrite. There is always something to improve in a sentence; a paragraph left unchanged needs a stated reason. Findings from reviewers are repaired inside this pass, never instead of it.",
    "limit": "The line edit changes prose only. Mathematics, hypotheses, quantifiers, citations and attribution stay fixed; a weakness in them returns to the earlier transition.",
    "provenance": "operator directive, 3 November 2026",
+   "probe": {
+    "kind": "process"
+   },
    "specimens": [],
+   "specimens_note": "Process rule: its specimens are the moves extracted from the reference papers chosen for each draft.",
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
      "holds": true,
-     "measure": "process rule: applies to the writing pass itself, independent of the field"
+     "measure": "process rule: governs the writing pass itself, in any field"
     }
    },
    "instances": []
@@ -115,26 +123,16 @@
      "abstract_words"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "early": 40,
+    "pattern": "^(?:(?:[A-Z][^.]{0,60}, )?we (?:prove|show|construct|establish|obtain|determine)|In this (?:paper|note|work),? we|Our main result)\\b"
+   },
    "specimens": [
-    {
-     "quote": "We show that",
-     "source": "Koizumi (2025), Irrationality of the reciprocal sum of doubly exponential sequences",
-     "locator": "Abstract, PDF/printed p. 1"
-    },
     {
      "quote": "We give a negative answer to a question",
      "source": "Crmarić and Kovač (2025), On the irrationality of certain super-polynomially decaying series",
      "locator": "p. 1, first sentence of the abstract"
-    },
-    {
-     "quote": "Using basic tools of mathematical analysis",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "p. 1, opening of the abstract"
-    },
-    {
-     "quote": "For a monic polynomial p of degree d we write",
-     "source": "Eremenko and Hayman (1999), On the length of lemniscates",
-     "locator": "p. 1, first paragraph after the abstract"
     },
     {
      "quote": "For integer p, |p|>1, and generic rational x and z, we establish the irrationality of the series",
@@ -155,16 +153,6 @@
      "quote": "Let θ and ρ be real numbers",
      "source": "Bugeaud and Laurent (2022), Transcendence and continued fraction expansion of Hecke-Mahler series",
      "locator": "PDF p. 1, first sentence of the abstract"
-    },
-    {
-     "quote": "Statements of the results",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "PDF p. 3, Section 2 heading"
-    },
-    {
-     "quote": "The main purpose of this manuscript",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "PDF page 2"
     },
     {
      "quote": "Our main purpose is to develop an explicit characterization",
@@ -192,38 +180,32 @@
      "locator": "abstract"
     },
     {
-     "quote": "Disproving a conjecture of Bleicher and Erdős, we show that there exists a lacunary",
+     "quote": "In any case, perhaps rather surprisingly, we show that lacunary sequences whose reciprocal sums represent all rational numbers in an interval in fact do exist.",
      "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “RATIONAL NUMBERS IN AN INTERVAL”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "Firstly, we show that there are infinitely",
-     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “FACTORS OF CONSECUTIVE INTEGERS”",
+     "locator": "PDF p. 2",
      "domain": "number_theory"
     },
     {
      "quote": "In this paper we take a step in that direction by analyzing the Quantum Approximate Optimization Algorithm as applied to a certain combinatorial optimization problem.",
      "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 2",
      "domain": "probability"
     },
     {
      "quote": "Our main result is a novel technique that allows us to evaluate the typical-instance energy of the QAOA applied to the SK model.",
      "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "opening pages",
+     "locator": "PDF p. 1",
      "domain": "probability"
-    },
-    {
-     "quote": "In this note we describe a flaw in Aaronson's and Ambainis's proof of their upper bound on cq (N, ).",
-     "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-     "locator": "opening pages",
-     "domain": "computer_science"
     },
     {
      "quote": "In this note, we describe some implications of Huang's resolution of the sensitivity conjecture to quantum query complexity.",
      "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
+     "locator": "section “Introduction”",
+     "domain": "computer_science"
+    },
+    {
+     "quote": "We construct randomized and quantum algorithms for computing modifications of Pabbaraju's function.",
+     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
      "locator": "section “Introduction”",
      "domain": "computer_science"
     }
@@ -231,20 +213,15 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 6 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "Disproving a conjecture of Bleicher and Erdős, we show that there exists a lacunary",
+       "quote": "In any case, perhaps rather surprisingly, we show that lacunary sequences whose reciprocal sums represent all rational numbers in an interval in fact do exist.",
        "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “RATIONAL NUMBERS IN AN INTERVAL”"
-      },
-      {
-       "quote": "Firstly, we show that there are infinitely",
-       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “FACTORS OF CONSECUTIVE INTEGERS”"
+       "locator": "PDF p. 2"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched",
      "our_drafts_d": {
       "short": {
        "abstract_words": 1.46
@@ -256,20 +233,20 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 4 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "In this paper we take a step in that direction by analyzing the Quantum Approximate Optimization Algorithm as applied to a certain combinatorial optimization problem.",
        "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 2"
       },
       {
        "quote": "Our main result is a novel technique that allows us to evaluate the typical-instance energy of the QAOA applied to the SK model.",
        "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "opening pages"
+       "locator": "PDF p. 1"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched",
      "our_drafts_d": {
       "short": {
        "abstract_words": 0.72
@@ -280,20 +257,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 23 of 30 cited papers searched",
      "specimens": [
-      {
-       "quote": "In this note we describe a flaw in Aaronson's and Ambainis's proof of their upper bound on cq (N, ).",
-       "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-       "locator": "opening pages"
-      },
       {
        "quote": "In this note, we describe some implications of Huang's resolution of the sensitivity conjecture to quantum query complexity.",
        "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
        "locator": "section “Introduction”"
+      },
+      {
+       "quote": "We construct randomized and quantum algorithms for computing modifications of Pabbaraju's function.",
+       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+       "locator": "section “Introduction”"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "abstract_words": -0.04
@@ -553,31 +530,14 @@
    "rule": "Open the introduction with the mathematical object, preferably in a small instance, or with the question the field asks, in one or two sentences that never mention the paper. Then define the objects needed to read the result and give the named problem with its exact relation to the result: an instance, a related target, a conditional route or a counterexample.",
    "limit": "When the problem itself is the object (a counterexample paper), the problem comes first.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13 and the quartic round 6 literature register",
+   "probe": {
+    "kind": "intro_first"
+   },
    "specimens": [
-    {
-     "quote": "We improve a result of Stewart",
-     "source": "Li and Lai (2026), The largest prime divisor of shifted factorials",
-     "locator": "PDF p. 1 / journal p. 390, abstract"
-    },
-    {
-     "quote": "Our result is as follows.",
-     "source": "Li and Lai (2026), The largest prime divisor of shifted factorials",
-     "locator": "PDF p. 2 / journal p. 391"
-    },
     {
      "quote": "The Euler phi-function",
      "source": "Martin (2006), Simultaneous inequalities among values of the Euler phi-function",
      "locator": "p. 1, first introduction sentence"
-    },
-    {
-     "quote": "Denote by",
-     "source": "Coons (2010), (Non)automaticity of number theoretic functions",
-     "locator": "p. 339, first English abstract sentence"
-    },
-    {
-     "quote": "Throughout this paper",
-     "source": "Fridy (1966), Generalized bases for the real numbers",
-     "locator": "printed p. 193, first sentence"
     },
     {
      "quote": "A series of unit fractions",
@@ -605,38 +565,32 @@
      "locator": "Section 1"
     },
     {
-     "quote": "Let MATH be an integer and MATH be a strictly increasing sequence of positive integers.",
-     "source": "Kaneko, Suzuki and Tachiya (2026), arXiv:2601.20743",
-     "locator": "section “Introduction and main results”",
+     "quote": "The story of what we call \"Chowla–Erdős method\" in the title of this paper begins with a result of Chowla dating back to 1947.",
+     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+     "locator": "PDF p. 1",
      "domain": "number_theory"
     },
     {
-     "quote": "The following question was formulated by Erdős and Graham in and posed again by Erdős several years later .",
-     "source": "Barreto, Kang, Kim, Kovač and Zhang (2026), arXiv:2601.21442",
-     "locator": "section “2. Introduction”",
-     "domain": "number_theory"
+     "quote": "The Parisi variational formula expresses this value through an order parameter encoding a hierarchy of overlap scales.",
+     "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
+     "locator": "PDF p. 1",
+     "domain": "probability"
     },
     {
      "quote": "We are at the start of an era in which quantum devices are running algorithms.",
      "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 2",
      "domain": "probability"
     },
     {
-     "quote": "The Quantum Approximate Optimization Algorithm , QAOA, consists of a shallow depth quantum circuit with p layers and 2p parameters.",
-     "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “1 Introduction”",
-     "domain": "probability"
-    },
-    {
-     "quote": "Certificate complexity MATH is one of the most fundamental combinatorial complexity measures for Boolean functions (along with block sensitivity and polynomial degree).",
-     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-     "locator": "section “Introduction”",
+     "quote": "Since the work of Simon and Shor two decades ago, we have had powerful evidence that quantum computers can achieve exponential speedups over classical computers.",
+     "source": "Aaronson and Ambainis (2015), Forrelation",
+     "locator": "PDF p. 1",
      "domain": "computer_science"
     },
     {
-     "quote": "Today's computers---both in theory (Turing machines) and practice (PCs, HPCs, laptops, tablets, smartphones, ...)---are based on classical physics.",
-     "source": "de Wolf, Quantum computing: lecture notes",
+     "quote": "Query complexity has been very useful for understanding the power of different computational models.",
+     "source": "Ambainis, Balodis, Belovs, Lee, Santha and Smotrovs (2016), Separations in query complexity based on pointer functions",
      "locator": "section “Introduction”",
      "domain": "computer_science"
     }
@@ -644,54 +598,49 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 8 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "Let MATH be an integer and MATH be a strictly increasing sequence of positive integers.",
-       "source": "Kaneko, Suzuki and Tachiya (2026), arXiv:2601.20743",
-       "locator": "section “Introduction and main results”"
-      },
-      {
-       "quote": "The following question was formulated by Erdős and Graham in and posed again by Erdős several years later .",
-       "source": "Barreto, Kang, Kim, Kovač and Zhang (2026), arXiv:2601.21442",
-       "locator": "section “2. Introduction”"
+       "quote": "The story of what we call \"Chowla–Erdős method\" in the title of this paper begins with a result of Chowla dating back to 1947.",
+       "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+       "locator": "PDF p. 1"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched"
+     ]
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
+      {
+       "quote": "The Parisi variational formula expresses this value through an order parameter encoding a hierarchy of overlap scales.",
+       "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
+       "locator": "PDF p. 1"
+      },
       {
        "quote": "We are at the start of an era in which quantum devices are running algorithms.",
        "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
-      },
-      {
-       "quote": "The Quantum Approximate Optimization Algorithm , QAOA, consists of a shallow depth quantum circuit with p layers and 2p parameters.",
-       "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “1 Introduction”"
+       "locator": "PDF p. 2"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 24 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Certificate complexity MATH is one of the most fundamental combinatorial complexity measures for Boolean functions (along with block sensitivity and polynomial degree).",
-       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-       "locator": "section “Introduction”"
+       "quote": "Since the work of Simon and Shor two decades ago, we have had powerful evidence that quantum computers can achieve exponential speedups over classical computers.",
+       "source": "Aaronson and Ambainis (2015), Forrelation",
+       "locator": "PDF p. 1"
       },
       {
-       "quote": "Today's computers---both in theory (Turing machines) and practice (PCs, HPCs, laptops, tablets, smartphones, ...)---are based on classical physics.",
-       "source": "de Wolf, Quantum computing: lecture notes",
+       "quote": "Query complexity has been very useful for understanding the power of different computational models.",
+       "source": "Ambainis, Balodis, Belovs, Lee, Santha and Smotrovs (2016), Separations in query complexity based on pointer functions",
        "locator": "section “Introduction”"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -873,21 +822,15 @@
    "rule": "State the main result after only the definitions and attributions needed to read every quantifier: the general statement before applications, the central claim as a numbered theorem, routine corollaries subordinate with their short deductions. Directly after the theorem, say in plain sentences what was known and what this paper contributes, and separate an implemented contribution from an intended later benefit.",
    "limit": "A paper whose result needs a long construction may state an informal version first and the precise theorem after the construction.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13 and the quartic round 6 literature register",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:our main (?:result|theorem)s?|the main (?:result|theorem) of this (?:paper|note)|we prove the following|our first (?:main )?result)\\b"
+   },
    "specimens": [
     {
      "quote": "Our main result is:",
      "source": "Martin (2006), Simultaneous inequalities among values of the Euler phi-function",
      "locator": "p. 1, immediately before Theorem 1"
-    },
-    {
-     "quote": "the following corollaries",
-     "source": "Yazdani (2001), Multiplicative functions and k-automatic sequences",
-     "locator": "p. 654, transition after Theorem 2"
-    },
-    {
-     "quote": "Statements of the results",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "p. 3, Section 2 heading"
     },
     {
      "quote": "The first question is where the theorem should be stated",
@@ -900,92 +843,76 @@
      "locator": "Section 1, point 5, printed p. 2 / PDF p. 4"
     },
     {
-     "quote": "Lean 4 is a reimplementation of the Lean interactive theorem prover (ITP) in Lean itself.",
-     "source": "de Moura and Ullrich (2021), The Lean 4 theorem prover and programming language",
-     "locator": "PDF p. 1, abstract"
-    },
-    {
      "quote": "The universal upper bound is known. The contribution is the family in (2), which rules out every smaller power",
      "source": "OpenAI (2026), A nearly quartic separation between randomized and quantum query complexity",
      "locator": "after Theorem 1.1"
     },
     {
-     "quote": "We remark that Corollary 5 already confirms part (c) of Theorem 1, which turned out to be the easiest part of our main result.",
+     "quote": "Now we are ready to prove our first main result by constructing the desired lacunary sequence.",
      "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “2. General necessary conditions”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "As applications of our main theorem, we give linear independence results for various kinds of Lambert",
-     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-     "locator": "opening pages",
+     "locator": "PDF p. 10",
      "domain": "number_theory"
     },
     {
      "quote": "Our main result is a novel technique that allows us to evaluate the typical-instance energy of the QAOA applied to the SK model.",
      "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "opening pages",
+     "locator": "PDF p. 1",
      "domain": "probability"
     },
     {
-     "quote": "Our main theorem, presented in Section 3, states that ADV± (f ) is a lower bound on Q (f ).",
-     "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
-     "locator": "section “1.1 Comparison with previous methods”",
+     "quote": "Then, we prove the following which is the main contribution of this work.",
+     "source": "Bansal and Sinha (2021), k-Forrelation optimally separates quantum and classical query complexity",
+     "locator": "section “Input Distribution and the Proof Outline”",
      "domain": "computer_science"
     },
     {
-     "quote": "Our first result is a tight lower bound of ~(logn) on the degree",
-     "source": "Nisan and Szegedy (1994), On the degree of Boolean functions as real polynomials",
-     "locator": "section “FUNCTIONS AS REAL POLYNOMIALS”",
+     "quote": "In this short paper, we prove the following result, establishing a sharp lower bound that matches their construction.",
+     "source": "Huang (2019), Induced subgraphs of hypercubes and a proof of the sensitivity conjecture",
+     "locator": "PDF p. 1",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 4 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "We remark that Corollary 5 already confirms part (c) of Theorem 1, which turned out to be the easiest part of our main result.",
+       "quote": "Now we are ready to prove our first main result by constructing the desired lacunary sequence.",
        "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “2. General necessary conditions”"
-      },
-      {
-       "quote": "As applications of our main theorem, we give linear independence results for various kinds of Lambert",
-       "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-       "locator": "opening pages"
+       "locator": "PDF p. 10"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched"
+     ]
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 1 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "Our main result is a novel technique that allows us to evaluate the typical-instance energy of the QAOA applied to the SK model.",
        "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "opening pages"
+       "locator": "PDF p. 1"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 14 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Our main theorem, presented in Section 3, states that ADV± (f ) is a lower bound on Q (f ).",
-       "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
-       "locator": "section “1.1 Comparison with previous methods”"
+       "quote": "Then, we prove the following which is the main contribution of this work.",
+       "source": "Bansal and Sinha (2021), k-Forrelation optimally separates quantum and classical query complexity",
+       "locator": "section “Input Distribution and the Proof Outline”"
       },
       {
-       "quote": "Our first result is a tight lower bound of ~(logn) on the degree",
-       "source": "Nisan and Szegedy (1994), On the degree of Boolean functions as real polynomials",
-       "locator": "section “FUNCTIONS AS REAL POLYNOMIALS”"
+       "quote": "In this short paper, we prove the following result, establishing a sharp lower bound that matches their construction.",
+       "source": "Huang (2019), Induced subgraphs of hypercubes and a proof of the sensitivity conjecture",
+       "locator": "PDF p. 1"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -1137,16 +1064,15 @@
    "rule": "After the main result and its antecedents, give one paragraph that connects the sections by their mathematical roles and points to the actual arguments, one clause per section.",
    "limit": "A very short paper may not need one; a long record replaces a reading guide with this paragraph.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13 and the quartic round 6 literature register",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:is organi[sz]ed as follows|the rest of (?:the|this) (?:paper|note)|in section \\w+,? we|section \\d+ (?:contains|gives|proves))\\b"
+   },
    "specimens": [
     {
      "quote": "This paper is organised as follows.",
      "source": "Li and Lai (2026), The largest prime divisor of shifted factorials",
      "locator": "PDF p. 3 / journal p. 392"
-    },
-    {
-     "quote": "Tie the concepts together with a running commentary.",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "§1, point 10, PDF p. 4, printed p. 2"
     },
     {
      "quote": "Organize first",
@@ -1164,12 +1090,6 @@
      "locator": "PDF p. 5 / printed p. 3, section 1, point 12"
     },
     {
-     "quote": "By using Pilatte's method in Section 3, we will be able to more generally MATH",
-     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “1. Introduction”",
-     "domain": "number_theory"
-    },
-    {
      "quote": "The present paper is organized as follows.",
      "source": "Kaneko, Suzuki and Tachiya (2026), arXiv:2601.20743",
      "locator": "section “Introduction and main results”",
@@ -1178,73 +1098,68 @@
     {
      "quote": "Section 2 proves the regularity and approximation facts we use, directly from the heat equation and (1.1).",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 1",
      "domain": "probability"
     },
     {
      "quote": "The paper is organized as follows.",
      "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 3",
      "domain": "probability"
     },
     {
      "quote": "The paper is organised as follows.",
      "source": "Montanaro (2010), Quantum search with advice",
-     "locator": "section “1.1 New results”",
+     "locator": "PDF p. 3",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 4 of 9 cited papers searched",
      "specimens": [
-      {
-       "quote": "By using Pilatte's method in Section 3, we will be able to more generally MATH",
-       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “1. Introduction”"
-      },
       {
        "quote": "The present paper is organized as follows.",
        "source": "Kaneko, Suzuki and Tachiya (2026), arXiv:2601.20743",
        "locator": "section “Introduction and main results”"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched"
+     ]
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "Section 2 proves the regularity and approximation facts we use, directly from the heat equation and (1.1).",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 1"
       },
       {
        "quote": "The paper is organized as follows.",
        "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 3"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 12 of 30 cited papers searched",
      "specimens": [
       {
        "quote": "The paper is organized as follows.",
        "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
-       "locator": "section “1 Introdu tion”"
+       "locator": "PDF p. 2"
       },
       {
        "quote": "The paper is organised as follows.",
        "source": "Montanaro (2010), Quantum search with advice",
-       "locator": "section “1.1 New results”"
+       "locator": "PDF p. 3"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -1344,6 +1259,11 @@
    "rule": "Introduce prior work by its authors and the precise result or construction used, where it is used, with a verb of dependence in the main clause (\"builds on\", \"proved\", \"introduced\"). Say what is inherited and what is new, state the hypotheses and normalisation under which an imported theorem holds before applying it, and distinguish neighbouring versions by their hypotheses. Give each external result a reference with its location, used consistently.",
    "limit": "A bibliographic survey paragraph remains appropriate for background the proof does not use.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13 and the quartic round 6 literature register",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?!They\\b|We\\b|It\\b|This\\b|These\\b|He\\b|She\\b|One\\b)[A-Z][a-zà-ž]+(?: and [A-Z][a-zà-ž]+)?(?: \\[\\d+\\]| \\(\\d{4}\\))? (?:proved|showed|introduced|established|obtained|gave)\\b",
+    "case": true
+   },
    "specimens": [
     {
      "quote": "We improve a result of Stewart",
@@ -1361,16 +1281,6 @@
      "locator": "p. 652, paragraph before the proof of Theorem 2"
     },
     {
-     "quote": "Previous generalizations",
-     "source": "Fridy (1966), Generalized bases for the real numbers",
-     "locator": "printed p. 193, second paragraph"
-    },
-    {
-     "quote": "a result of Chowla",
-     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-     "locator": "p. 1, first paragraph of Introduction and main results"
-    },
-    {
      "quote": "Böhmer [4] proved in 1927",
      "source": "Bugeaud and Laurent (2022), Transcendence and continued fraction expansion of Hecke-Mahler series",
      "locator": "PDF page 2, Introduction, historical comparison"
@@ -1386,19 +1296,9 @@
      "locator": "PDF p. 4, section 2, Retrieval-Augmented Language Models"
     },
     {
-     "quote": "In 2017, using Lean 3",
-     "source": "de Moura and Ullrich (2021), The Lean 4 theorem prover and programming language",
-     "locator": "Introduction, PDF p. 1"
-    },
-    {
      "quote": "Here we improve Borwein’s result.",
      "source": "Eremenko and Hayman (1999), On the length of lemniscates",
-     "locator": "introduction, PDF p. 1, extracted line 25"
-    },
-    {
-     "quote": "and apply Dirichlet’s theorem.",
-     "source": "Yazdani (2001), Multiplicative functions and k-automatic sequences",
-     "locator": "journal p. 653, proof of Theorem 2"
+     "locator": "introduction, PDF p. 1"
     },
     {
      "quote": "Our construction builds on the work of Pabbaraju, who constructed a family",
@@ -1411,82 +1311,59 @@
      "locator": "Section 1.1"
     },
     {
-     "quote": "In Erdős and Graham gave the other two concurrent definitions of irrationality sequences.",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Irrationality sequences”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "In Eppstein showed that, if a subset S of positive integers",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “1. Introduction”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "Sherrington and Kirkpatrick introduced the infinite-range Gaussian Ising spin-glass model .",
+     "quote": "At positive temperature, Zhou established an interval-support result near the critical temperature, and Lopatto established full interval support throughout the zero-field SK low-temperature phase.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 3",
      "domain": "probability"
     },
     {
-     "quote": "Huang showed that MATH has MATH eigenvalues that equal MATH and MATH eigenvalues that equal MATH .",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Proof of main result ( REF )”",
+     "quote": "Bernstein and Vazirani proved that there is an efficient universal quantum Turing machine.",
+     "source": "Bennett, Bernstein, Brassard and Vazirani (1997), Strengths and weaknesses of quantum computing",
+     "locator": "PDF p. 2",
      "domain": "computer_science"
     },
     {
-     "quote": "Beals, Buhrman, Cleve, Mosca, and de Wolf showed that for all total functions MATH , MATH .",
-     "source": "Ben-David (2016), A super-Grover separation",
-     "locator": "section “Introduction”",
+     "quote": "Gotsman and Linial proved the following remarkable equivalence using Fourier analysis.",
+     "source": "Huang (2019), Induced subgraphs of hypercubes and a proof of the sensitivity conjecture",
+     "locator": "PDF p. 3",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [
-      {
-       "quote": "In Erdős and Graham gave the other two concurrent definitions of irrationality sequences.",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Irrationality sequences”"
-      },
-      {
-       "quote": "In Eppstein showed that, if a subset S of positive integers",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “1. Introduction”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched"
+     "measure": "move found in 5 of 9 cited papers searched",
+     "specimens": []
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 2 of 4 cited papers searched",
      "specimens": [
       {
-       "quote": "Sherrington and Kirkpatrick introduced the infinite-range Gaussian Ising spin-glass model .",
+       "quote": "At positive temperature, Zhou established an interval-support result near the critical temperature, and Lopatto established full interval support throughout the zero-field SK low-temperature phase.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 3"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 19 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Huang showed that MATH has MATH eigenvalues that equal MATH and MATH eigenvalues that equal MATH .",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Proof of main result ( REF )”"
+       "quote": "Bernstein and Vazirani proved that there is an efficient universal quantum Turing machine.",
+       "source": "Bennett, Bernstein, Brassard and Vazirani (1997), Strengths and weaknesses of quantum computing",
+       "locator": "PDF p. 2"
       },
       {
-       "quote": "Beals, Buhrman, Cleve, Mosca, and de Wolf showed that for all total functions MATH , MATH .",
-       "source": "Ben-David (2016), A super-Grover separation",
-       "locator": "section “Introduction”"
+       "quote": "Gotsman and Linial proved the following remarkable equivalence using Fourier analysis.",
+       "source": "Huang (2019), Induced subgraphs of hypercubes and a proof of the sensitivity conjecture",
+       "locator": "PDF p. 3"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -1726,6 +1603,10 @@
      "note_that_rate"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:We (?:first|now|next|begin by) (?:show|prove|check|claim)|To prove|Suppose,? for (?:a )?contradiction|It remains to|We prove (?:the|this) \\w+ by)"
+   },
    "specimens": [
     {
      "quote": "We prove the identity by induction on s.",
@@ -1768,16 +1649,6 @@
      "locator": "PDF page 26, Section 7, proof of the value theorem"
     },
     {
-     "quote": "Symbols in different formulas must be separated by words.",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF page 3, Section 1, item 1"
-    },
-    {
-     "quote": "First note that no critical value can satisfy",
-     "source": "Ebenfelt, Khavinson and Shapiro (2011), Two-dimensional shapes and lemniscates",
-     "locator": "p. 3, proof of Proposition 2.1"
-    },
-    {
      "quote": "we reproduce its proof here for completeness.",
      "source": "Zudilin (2017), A determinantal approach to irrationality",
      "locator": "Section 2, PDF p. 3, before the proof of identity (3)"
@@ -1788,24 +1659,9 @@
      "locator": "Section 3, Lemma 2 proof, PDF p. 8"
     },
     {
-     "quote": "Organize first",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "section 4 heading, extracted line 257"
-    },
-    {
-     "quote": "We break the curve",
-     "source": "Eremenko and Hayman (1999), On the length of lemniscates",
-     "locator": "proof of Lemma 2, PDF p. 2, extracted line 74"
-    },
-    {
      "quote": "Think of a dialog between author and reader.",
      "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
      "locator": "PDF p. 4, printed p. 2, item 6"
-    },
-    {
-     "quote": "The writer must anticipate and avoid the reader's difficulties.",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "PDF page 6"
     },
     {
      "quote": "Motivate the reader for what follows.",
@@ -1816,16 +1672,6 @@
      "quote": "Now we complete the proof of Theorem 1.1",
      "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
      "locator": "PDF page 6"
-    },
-    {
-     "quote": "you and me together",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF page 4"
-    },
-    {
-     "quote": "a more suggestive motivation",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "Section 1, rule 4"
     },
     {
      "quote": "take the reader into your confidence.",
@@ -1848,59 +1694,48 @@
      "locator": "proof of Theorem 1"
     },
     {
-     "quote": "We first claim that the set equalities MATH hold for all sufficiently large positive integers MATH .",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Proofs of Theorems REF and REF on irrationality sequences”",
-     "domain": "number_theory"
-    },
-    {
      "quote": "It remains to produce a random variable obeying (2.1).",
      "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “2. A problem on prime factors of consecutive integers”",
+     "locator": "PDF p. 11",
      "domain": "number_theory"
     },
     {
      "quote": "It remains to prove strict positivity away from zero.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 22",
      "domain": "probability"
     },
     {
      "quote": "It remains to show that this direction acts as an independent Gaussian seed, and that the resulting identification preserves root-shift energy.",
      "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-     "locator": "section “3. At a standard stage the special insertion is transported:”",
+     "locator": "PDF p. 54",
      "domain": "probability"
     },
     {
-     "quote": "It remains to show that MATH .",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Semidefinite program version MATH .”",
+     "quote": "It remains to show that A always returns the right answer.",
+     "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
+     "locator": "PDF p. 15",
      "domain": "computer_science"
     },
     {
-     "quote": "It remains to bound the probability of returning a fixed MATH .",
-     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-     "locator": "section “Search with an unknown number of solutions”",
+     "quote": "It remains to show that Alice and Bob's output bits agree at the point where the row meets the column.",
+     "source": "de Wolf, Quantum computing: lecture notes",
+     "locator": "section “Magic square game”",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 3 of 9 cited papers searched",
      "specimens": [
-      {
-       "quote": "We first claim that the set equalities MATH hold for all sufficiently large positive integers MATH .",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Proofs of Theorems REF and REF on irrationality sequences”"
-      },
       {
        "quote": "It remains to produce a random variable obeying (2.1).",
        "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “2. A problem on prime factors of consecutive integers”"
+       "locator": "PDF p. 11"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched",
      "our_drafts_d": {
       "short": {
        "note_that_rate": -1.04
@@ -1912,20 +1747,20 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "It remains to prove strict positivity away from zero.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 22"
       },
       {
        "quote": "It remains to show that this direction acts as an independent Gaussian seed, and that the resulting identification preserves root-shift energy.",
        "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-       "locator": "section “3. At a standard stage the special insertion is transported:”"
+       "locator": "PDF p. 54"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched",
      "our_drafts_d": {
       "short": {
        "note_that_rate": -0.56
@@ -1940,20 +1775,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 19 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "It remains to show that MATH .",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Semidefinite program version MATH .”"
+       "quote": "It remains to show that A always returns the right answer.",
+       "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
+       "locator": "PDF p. 15"
       },
       {
-       "quote": "It remains to bound the probability of returning a fixed MATH .",
-       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-       "locator": "section “Search with an unknown number of solutions”"
+       "quote": "It remains to show that Alice and Bob's output bits agree at the point where the row meets the column.",
+       "source": "de Wolf, Quantum computing: lecture notes",
+       "locator": "section “Magic square game”"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "note_that_rate": -0.44
@@ -2509,6 +2344,13 @@
      "passive_share"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "we_rate",
+    "op": ">=",
+    "value": 8.0,
+    "specimen_pattern": "^We (?:now |first |then )?(?:prove|show|construct|define|choose|apply|obtain|use|fix|consider)\\b"
+   },
    "specimens": [
     {
      "quote": "The word \"we\" is often useful to avoid passive voice",
@@ -2519,31 +2361,6 @@
      "quote": "Think of a dialog between author and reader.",
      "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
      "locator": "Section 1, item 6, printed p. 2"
-    },
-    {
-     "quote": "Vary the sentence structure",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "Section 1, item 9, printed p. 2"
-    },
-    {
-     "quote": "The word “we” is often useful to avoid passive voice",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "Section 1, point 6, printed p. 2 / PDF p. 4"
-    },
-    {
-     "quote": "The word \"we\" is often useful",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "section 1, item 6, printed p. 2, extracted line 153"
-    },
-    {
-     "quote": "avoid passive voice",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF p. 4, printed p. 2, item 6"
-    },
-    {
-     "quote": "you and me together",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "Section 1, rule 6"
     },
     {
      "quote": "We identify the subsets of B",
@@ -2561,33 +2378,33 @@
      "locator": "overview"
     },
     {
-     "quote": "We choose the formulation stated by Erdős in :",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Simultaneous rationality”",
+     "quote": "We first show the second moment bound (2.8) for medium primes.",
+     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+     "locator": "PDF p. 14",
      "domain": "number_theory"
     },
     {
-     "quote": "We use induction on m ∈ N. The base case m = 1 is trivial because the segment is just in that case.",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “3. General sufficient conditions”",
+     "quote": "We prove it by splitting positive integers into dyadic blocks.",
+     "source": "Barreto, Kang, Kim, Kovač and Zhang (2026), arXiv:2601.21442",
+     "locator": "PDF p. 6",
      "domain": "number_theory"
     },
     {
-     "quote": "We use the covariance normalization MATH",
+     "quote": "We prove the needed scalar statements directly.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "opening pages",
+     "locator": "PDF p. 3",
      "domain": "probability"
     },
     {
      "quote": "We now choose the target angles and all finite probe lists so that those conditions hold.",
      "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-     "locator": "section “3. At a standard stage the special insertion is transported:”",
+     "locator": "PDF p. 56",
      "domain": "probability"
     },
     {
-     "quote": "We use this observation to settle the optimal relation between the deterministic query complexity, MATH , and quantum query complexity, MATH , for total functions.",
+     "quote": "We now define all these measures before proving this theorem.",
      "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Introduction”",
+     "locator": "section “Equivalent formulations”",
      "domain": "computer_science"
     },
     {
@@ -2600,18 +2417,18 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "we_rate corpus median 17.98 [IQR 15.82, 27.47]; the rule expects >= 8.00",
      "holds": true,
+     "measure": "we_rate corpus median 17.98 [IQR 15.82, 27.47]; the rule expects >= 8.00",
      "specimens": [
       {
-       "quote": "We choose the formulation stated by Erdős in :",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Simultaneous rationality”"
+       "quote": "We first show the second moment bound (2.8) for medium primes.",
+       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+       "locator": "PDF p. 14"
       },
       {
-       "quote": "We use induction on m ∈ N. The base case m = 1 is trivial because the segment is just in that case.",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “3. General sufficient conditions”"
+       "quote": "We prove it by splitting positive integers into dyadic blocks.",
+       "source": "Barreto, Kang, Kim, Kovač and Zhang (2026), arXiv:2601.21442",
+       "locator": "PDF p. 6"
       }
      ],
      "our_drafts_d": {
@@ -2627,18 +2444,18 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "we_rate corpus median 13.18 [IQR 4.53, 23.09]; the rule expects >= 8.00",
      "holds": true,
+     "measure": "we_rate corpus median 13.18 [IQR 4.53, 23.09]; the rule expects >= 8.00",
      "specimens": [
       {
-       "quote": "We use the covariance normalization MATH",
+       "quote": "We prove the needed scalar statements directly.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "opening pages"
+       "locator": "PDF p. 3"
       },
       {
        "quote": "We now choose the target angles and all finite probe lists so that those conditions hold.",
        "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-       "locator": "section “3. At a standard stage the special insertion is transported:”"
+       "locator": "PDF p. 56"
       }
      ],
      "our_drafts_d": {
@@ -2658,13 +2475,13 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "we_rate corpus median 18.03 [IQR 13.18, 21.95]; the rule expects >= 8.00",
      "holds": true,
+     "measure": "we_rate corpus median 18.03 [IQR 13.18, 21.95]; the rule expects >= 8.00",
      "specimens": [
       {
-       "quote": "We use this observation to settle the optimal relation between the deterministic query complexity, MATH , and quantum query complexity, MATH , for total functions.",
+       "quote": "We now define all these measures before proving this theorem.",
        "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Introduction”"
+       "locator": "section “Equivalent formulations”"
       },
       {
        "quote": "We construct randomized and quantum algorithms for computing modifications of Pabbaraju's function.",
@@ -2909,6 +2726,13 @@
      "connective_open_share"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "para_len_cv",
+    "op": ">=",
+    "value": 0.75,
+    "specimen_pattern": "^(?:Thus|Hence|Indeed|In particular|Since)\\b[^.]{20,}"
+   },
    "specimens": [
     {
      "quote": "Vary the sentence structure and the choice of words, to avoid monotony.",
@@ -2921,72 +2745,62 @@
      "locator": "printed p. 2 (PDF p. 4), §1, item 7"
     },
     {
-     "quote": "Vary the sentence structure",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF page 4, Section 1, item 9"
-    },
-    {
-     "quote": "Tie the concepts together with a running commentary.",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "Section 1, point 10, printed p. 2"
-    },
-    {
      "quote": "(Note that Simon's problem also provides a similar separation up to log factors.)",
      "source": "Aaronson, Ben-David and Kothari (2016), Separations in query complexity using cheat sheets",
      "locator": "Section 3.1"
     },
     {
-     "quote": "In particular, every sequence MATH satisfying MATH for some MATH is not a Type 2 irrationality sequence.",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Irrationality sequences”",
+     "quote": "In particular, using these techniques we are able to present a short alternative proof of Eppstein's theorem (see Theorem 12 in the appendix).",
+     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
+     "locator": "PDF p. 4",
      "domain": "number_theory"
     },
     {
-     "quote": "In particular, using these techniques we are able to present a short alternative proof of Eppstein's theorem (see Theorem 12 in the appendix).",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “1. Introduction”",
+     "quote": "In particular, axiom (i) is obeyed.",
+     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+     "locator": "PDF p. 16",
      "domain": "number_theory"
     },
     {
      "quote": "Thus its support has no gaps at any overlap scale below one.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "opening pages",
+     "locator": "PDF p. 1",
      "domain": "probability"
     },
     {
      "quote": "In particular the actual insertion directions have bounded smooth approximants.",
      "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-     "locator": "section “3. At a standard stage the special insertion is transported:”",
+     "locator": "PDF p. 52",
      "domain": "probability"
     },
     {
      "quote": "Thus the algorithm does not find it necessary to perform variable splitting.",
      "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-     "locator": "section “2. Estimation”",
+     "locator": "PDF p. 2",
      "domain": "computer_science"
     },
     {
-     "quote": "In particular, MATH if and only if MATH agrees with the Parity function, MATH , on exactly half of the inputs.",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Degree measures”",
+     "quote": "In particular, this implies that deterministic, randomized and quantum complexities are all polynomially related.",
+     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+     "locator": "section “Introduction”",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "para_len_cv corpus median 0.94 [IQR 0.80, 1.05]; the rule expects >= 0.75",
      "holds": true,
+     "measure": "para_len_cv corpus median 0.94 [IQR 0.80, 1.05]; the rule expects >= 0.75",
      "specimens": [
-      {
-       "quote": "In particular, every sequence MATH satisfying MATH for some MATH is not a Type 2 irrationality sequence.",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Irrationality sequences”"
-      },
       {
        "quote": "In particular, using these techniques we are able to present a short alternative proof of Eppstein's theorem (see Theorem 12 in the appendix).",
        "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “1. Introduction”"
+       "locator": "PDF p. 4"
+      },
+      {
+       "quote": "In particular, axiom (i) is obeyed.",
+       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+       "locator": "PDF p. 16"
       }
      ],
      "our_drafts_d": {
@@ -3010,18 +2824,18 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "para_len_cv corpus median 1.35 [IQR 1.21, 1.46]; the rule expects >= 0.75",
      "holds": true,
+     "measure": "para_len_cv corpus median 1.35 [IQR 1.21, 1.46]; the rule expects >= 0.75",
      "specimens": [
       {
        "quote": "Thus its support has no gaps at any overlap scale below one.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "opening pages"
+       "locator": "PDF p. 1"
       },
       {
        "quote": "In particular the actual insertion directions have bounded smooth approximants.",
        "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-       "locator": "section “3. At a standard stage the special insertion is transported:”"
+       "locator": "PDF p. 52"
       }
      ],
      "our_drafts_d": {
@@ -3053,18 +2867,18 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "para_len_cv corpus median 0.91 [IQR 0.75, 0.99]; the rule expects >= 0.75",
      "holds": true,
+     "measure": "para_len_cv corpus median 0.91 [IQR 0.75, 0.99]; the rule expects >= 0.75",
      "specimens": [
       {
        "quote": "Thus the algorithm does not find it necessary to perform variable splitting.",
        "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-       "locator": "section “2. Estimation”"
+       "locator": "PDF p. 2"
       },
       {
-       "quote": "In particular, MATH if and only if MATH agrees with the Parity function, MATH , on exactly half of the inputs.",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Degree measures”"
+       "quote": "In particular, this implies that deterministic, randomized and quantum complexities are all polynomially related.",
+       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+       "locator": "section “Introduction”"
       }
      ],
      "our_drafts_d": {
@@ -3232,6 +3046,10 @@
      "nominalization_rate"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:Let(?! us\\b|'s\\b)|Denote by|We write|Throughout|For each|We call)\\b"
+   },
    "specimens": [
     {
      "quote": "Symbols in different formulas must be separated by words.",
@@ -3244,11 +3062,6 @@
      "locator": "Section 5 heading"
     },
     {
-     "quote": "All variables must be defined",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "printed p. 2 (PDF p. 4), §1, item 11"
-    },
-    {
      "quote": "By a denominator of a rational number",
      "source": "Hančl and Tijdeman (2004), On the irrationality of Cantor and Ahmes series",
      "locator": "PDF page 2, paragraph before Theorem 2.1"
@@ -3257,11 +3070,6 @@
      "quote": "Don’t use the same notation for two different things.",
      "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
      "locator": "Section 1, point 14, printed p. 3 / PDF p. 5"
-    },
-    {
-     "quote": "We use a simple example in Fig. 2 to illustrate how theorems are formalized and proved in Lean.",
-     "source": "Yang et al. (2023), LeanDojo",
-     "locator": "PDF p. 5, section 3, opening"
     },
     {
      "quote": "Resist the temptation to use long strings of nouns as adjectives",
@@ -3274,59 +3082,59 @@
      "locator": "§1, point 11"
     },
     {
-     "quote": "We write MATH if real sequences MATH and MATH are asymptotically equal, i.e., MATH .",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Notation”",
+     "quote": "We write P for the set of all primes.",
+     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+     "locator": "PDF p. 10",
      "domain": "number_theory"
     },
     {
-     "quote": "Let n1 < n2 < · · · be an infinite sequence of positive integers such that ni+1 /ni >",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “1. Introduction”",
+     "quote": "Let µ(n) be the Möbius function.",
+     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+     "locator": "PDF p. 4",
      "domain": "number_theory"
     },
     {
-     "quote": "Let X0 = 0 and dXt = r(t, Xt )dt + dBt .",
+     "quote": "Let S be the support in Lemma 6.2.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 20",
      "domain": "probability"
     },
     {
      "quote": "We call these the visibility conditions.",
      "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-     "locator": "section “3. At a standard stage the special insertion is transported:”",
+     "locator": "PDF p. 53",
      "domain": "probability"
     },
     {
-     "quote": "Let bL denote the column vector consisting of L/2 1s followed by L/2 −1s (assuming L is even).",
-     "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-     "locator": "section “2. Estimation”",
+     "quote": "Let δ be a principal eigenvector of Γ.",
+     "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
+     "locator": "PDF p. 12",
      "domain": "computer_science"
     },
     {
-     "quote": "Let MATH be a nontrivial monotone graph property.",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Introduction”",
+     "quote": "Let D denote the set of valid deterministic classical algorithms, and let Q denote the set of valid quantum algorithms.",
+     "source": "Montanaro (2010), Quantum search with advice",
+     "locator": "PDF p. 3",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 8 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "We write MATH if real sequences MATH and MATH are asymptotically equal, i.e., MATH .",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Notation”"
+       "quote": "We write P for the set of all primes.",
+       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+       "locator": "PDF p. 10"
       },
       {
-       "quote": "Let n1 < n2 < · · · be an infinite sequence of positive integers such that ni+1 /ni >",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “1. Introduction”"
+       "quote": "Let µ(n) be the Möbius function.",
+       "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+       "locator": "PDF p. 4"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched",
      "our_drafts_d": {
       "short": {
        "let_open_share": -0.73,
@@ -3340,20 +3148,20 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
       {
-       "quote": "Let X0 = 0 and dXt = r(t, Xt )dt + dBt .",
+       "quote": "Let S be the support in Lemma 6.2.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 20"
       },
       {
        "quote": "We call these the visibility conditions.",
        "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-       "locator": "section “3. At a standard stage the special insertion is transported:”"
+       "locator": "PDF p. 53"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched",
      "our_drafts_d": {
       "short": {
        "let_open_share": 0.36,
@@ -3371,20 +3179,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 30 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Let bL denote the column vector consisting of L/2 1s followed by L/2 −1s (assuming L is even).",
-       "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-       "locator": "section “2. Estimation”"
+       "quote": "Let δ be a principal eigenvector of Γ.",
+       "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
+       "locator": "PDF p. 12"
       },
       {
-       "quote": "Let MATH be a nontrivial monotone graph property.",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Introduction”"
+       "quote": "Let D denote the set of valid deterministic classical algorithms, and let Q denote the set of valid quantum algorithms.",
+       "source": "Montanaro (2010), Quantum search with advice",
+       "locator": "PDF p. 3"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "let_open_share": -0.35,
@@ -3591,6 +3399,9 @@
      "question_share"
     ]
    },
+   "probe": {
+    "kind": "headings"
+   },
    "specimens": [
     {
      "quote": "Irrational series of rational numbers",
@@ -3633,11 +3444,6 @@
      "locator": "Section 2 title, p. 3"
     },
     {
-     "quote": "We end with some questions and remarks assembled in §4.",
-     "source": "Ebenfelt, Khavinson and Shapiro (2011), Two-dimensional shapes and lemniscates",
-     "locator": "p. 3, end of the introduction"
-    },
-    {
      "quote": "Proof of the irrationality criterion",
      "source": "Zudilin (2017), A determinantal approach to irrationality",
      "locator": "Section 2 heading, PDF p. 2"
@@ -3646,11 +3452,6 @@
      "quote": "Hankel determinants",
      "source": "Zudilin (2016), On the irrationality of generalized q-logarithm",
      "locator": "§4 heading."
-    },
-    {
-     "quote": "the interconnections of the theorems are visible",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "PDF p. 7, Section 4"
     },
     {
      "quote": "Quantum Query Complexity of the k-fold Rorrelation Problem.",
@@ -3687,14 +3488,14 @@
      "domain": "probability"
     },
     {
-     "quote": "A revised analysis of the Aaronson-Ambainis estimator; Estimation",
-     "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
+     "quote": "Known relations and separations; Paper organization; Query complexity",
+     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
      "locator": "section titles",
      "domain": "computer_science"
     },
     {
-     "quote": "Known relations and separations; Paper organization; Query complexity",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
+     "quote": "Concurrent work.; Definitions and results; Notation and complexity measures",
+     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
      "locator": "section titles",
      "domain": "computer_science"
     }
@@ -3702,6 +3503,7 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
      "specimens": [
       {
        "quote": "Statements of the results; One-dimensional results; General observations on subseries sums",
@@ -3714,8 +3516,7 @@
        "locator": "section titles"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched",
+     "measure": "noun-phrase section titles found in 2 cited papers",
      "our_drafts_d": {
       "short": {
        "heading_rate": 2.0,
@@ -3729,6 +3530,7 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
      "specimens": [
       {
        "quote": "The fixed-word tree calculus; A near-optimal bounded classical formula; Compiling classical formulas with seeded controls",
@@ -3741,8 +3543,7 @@
        "locator": "section titles"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched",
+     "measure": "noun-phrase section titles found in 2 cited papers",
      "our_drafts_d": {
       "short": {
        "heading_rate": 1.75,
@@ -3760,20 +3561,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
      "specimens": [
-      {
-       "quote": "A revised analysis of the Aaronson-Ambainis estimator; Estimation",
-       "source": "Aaronson, Ambainis, Bogdanov, Cheung and Dinesh (2021), On quantum versus classical query complexity",
-       "locator": "section titles"
-      },
       {
        "quote": "Known relations and separations; Paper organization; Query complexity",
        "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
        "locator": "section titles"
+      },
+      {
+       "quote": "Concurrent work.; Definitions and results; Notation and complexity measures",
+       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+       "locator": "section titles"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
+     "measure": "noun-phrase section titles found in 2 cited papers",
      "our_drafts_d": {
       "short": {
        "heading_rate": 1.06,
@@ -4022,36 +3823,20 @@
    "rule": "Put a small concrete example close to the first main result, in continuous prose, so that each abstraction answers a question the reader already has. Choose it to block the false inference a first-time reader is likely to make or to separate two operations they might identify. Check it in the object the theorem names, including its boundary conditions. In an exposition number examples in the flow and place each after the statement it illustrates.",
    "limit": "The example must be checked; an illustrative computation is not a proof.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13 and the quartic round 6 literature register",
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:For example|For instance|Example \\d|Consider the|As an example|To illustrate)\\b"
+   },
    "specimens": [
-    {
-     "quote": "central, crucial examples and counterexamples.",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "§4, organisation"
-    },
-    {
-     "quote": "A series of unit fractions",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "Introduction, PDF p. 2"
-    },
     {
      "quote": "The writer must anticipate and avoid the reader's difficulties.",
      "source": "Halmos (1970), How to write mathematics",
      "locator": "PDF p. 6, Section 3, second paragraph"
     },
     {
-     "quote": "We give some examples",
-     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-     "locator": "p. 4, paragraph following Corollary 1.2"
-    },
-    {
      "quote": "In this section, we introduce the Lean language using a series of examples.",
      "source": "de Moura and Ullrich (2021), The Lean 4 theorem prover and programming language",
      "locator": "PDF p. 2, section 2, opening"
-    },
-    {
-     "quote": "central, crucial examples and counterexamples",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "§4, paragraph on organising around examples."
     },
     {
      "quote": "We give some examples of Corollary 1.2.",
@@ -4064,93 +3849,71 @@
      "locator": "Section 4.2"
     },
     {
-     "quote": "For example, there exists a double exponentially growing sequence MATH such that MATH sum up to rational numbers.",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Simultaneous rationality”",
+     "quote": "For example, the sequence of all prime numbers belongs to the set E, since the nth prime number pn is asymptotic to n log n.",
+     "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+     "locator": "PDF p. 2",
      "domain": "number_theory"
     },
     {
-     "quote": "Consider the set of both finite and infinite sums of its terms:",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “2. General necessary conditions”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "Consider the corresponding instance where all the couplings on the same graph are set to J = +1, which makes the instance fully satisfiable.",
-     "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
-     "domain": "probability"
-    },
-    {
-     "quote": "For example, for the combinatorial search problem E3LIN2, a worst case performance guarantee was established but the typical performance is better .",
+     "quote": "For example, we can consider generalizations of the SK model where multi-spin couplings are allowed.",
      "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “1 Introduction”",
+     "locator": "PDF p. 15",
      "domain": "probability"
     },
     {
-     "quote": "Consider the weight scheme MATH .",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Semidefinite program version MATH .”",
+     "quote": "For example, single-qubit gates correspond to rotations on this sphere.",
+     "source": "de Wolf, Quantum computing: lecture notes",
+     "locator": "section “Exercises”",
      "domain": "computer_science"
     },
     {
-     "quote": "For example, Nisan's bound MATH , still the best general relation between randomized and deterministic query complexity, proceeds through MATH .",
-     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-     "locator": "section “Introduction”",
+     "quote": "For instance, one polynomial can be very sparse (having only a few non-zero coefficients), while the other is dense.",
+     "source": "Nisan and Szegedy (1994), On the degree of Boolean functions as real polynomials",
+     "locator": "PDF p. 2",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 6 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "For example, there exists a double exponentially growing sequence MATH such that MATH sum up to rational numbers.",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Simultaneous rationality”"
-      },
-      {
-       "quote": "Consider the set of both finite and infinite sums of its terms:",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “2. General necessary conditions”"
+       "quote": "For example, the sequence of all prime numbers belongs to the set E, since the nth prime number pn is asymptotic to n log n.",
+       "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
+       "locator": "PDF p. 2"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched"
+     ]
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
       {
-       "quote": "Consider the corresponding instance where all the couplings on the same graph are set to J = +1, which makes the instance fully satisfiable.",
-       "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
-      },
-      {
-       "quote": "For example, for the combinatorial search problem E3LIN2, a worst case performance guarantee was established but the typical performance is better .",
+       "quote": "For example, we can consider generalizations of the SK model where multi-spin couplings are allowed.",
        "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “1 Introduction”"
+       "locator": "PDF p. 15"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 26 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Consider the weight scheme MATH .",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Semidefinite program version MATH .”"
+       "quote": "For example, single-qubit gates correspond to rotations on this sphere.",
+       "source": "de Wolf, Quantum computing: lecture notes",
+       "locator": "section “Exercises”"
       },
       {
-       "quote": "For example, Nisan's bound MATH , still the best general relation between randomized and deterministic query complexity, proceeds through MATH .",
-       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-       "locator": "section “Introduction”"
+       "quote": "For instance, one polynomial can be very sparse (having only a few non-zero coefficients), while the other is dense.",
+       "source": "Nisan and Szegedy (1994), On the degree of Boolean functions as real polynomials",
+       "locator": "PDF p. 2"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -4359,6 +4122,10 @@
    "rule": "Order lemmas by the dependency graph of the argument and place each at its first substantial use. Put a secondary independent proof after the main one, without merging statements that carry different support, and shorten a duplicated proof only after naming the complete existing derivation.",
    "limit": "A long record may keep a reference section of lemmas cited from several places.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:we (?:first|begin by) prov\\w+ (?:a|two|three|the following) lemmas?|the following lemma|we need (?:a|the following) lemma)\\b"
+   },
    "specimens": [
     {
      "quote": "The lemmas are there when they are needed",
@@ -4366,81 +4133,64 @@
      "locator": "§4, PDF p. 7, printed p. 128"
     },
     {
-     "quote": "Organize first",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "PDF page 6, Section 4 heading"
-    },
-    {
      "quote": "We give a proof to make this paper self-contained.",
      "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
      "locator": "PDF page 7"
     },
     {
-     "quote": "Indeed, one can use the following lemma to prove irrationality :",
-     "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
-     "locator": "section “Introduction”",
-     "domain": "number_theory"
-    },
-    {
      "quote": "The following lemma collects their derivative rules and the integration-by-parts identity that will be used in the coercive calculation.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 13",
      "domain": "probability"
-    },
-    {
-     "quote": "The following lemma allows us to redu e an n-variate polynomial to a single-variate one.",
-     "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
-     "locator": "section “2.2 Multilinear polynomials”",
-     "domain": "computer_science"
     },
     {
      "quote": "We can control that behavior with the help of the following lemma.",
      "source": "Aaronson and Ambainis (2015), Forrelation",
-     "locator": "section “3.3 Gram-Schmidt Orthogonalization”",
+     "locator": "PDF p. 14",
+     "domain": "computer_science"
+    },
+    {
+     "quote": "The construction and proof of the following lemma are given in Appendix B.",
+     "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+     "locator": "PDF p. 13",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [
-      {
-       "quote": "Indeed, one can use the following lemma to prove irrationality :",
-       "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
-       "locator": "section “Introduction”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 1 of 9 cited papers searched"
+     "measure": "move found in 3 of 9 cited papers searched",
+     "specimens": []
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 1 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "The following lemma collects their derivative rules and the integration-by-parts identity that will be used in the coercive calculation.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 13"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 14 of 30 cited papers searched",
      "specimens": [
-      {
-       "quote": "The following lemma allows us to redu e an n-variate polynomial to a single-variate one.",
-       "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
-       "locator": "section “2.2 Multilinear polynomials”"
-      },
       {
        "quote": "We can control that behavior with the help of the following lemma.",
        "source": "Aaronson and Ambainis (2015), Forrelation",
-       "locator": "section “3.3 Gram-Schmidt Orthogonalization”"
+       "locator": "PDF p. 14"
+      },
+      {
+       "quote": "The construction and proof of the following lemma are given in Appendix B.",
+       "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
+       "locator": "PDF p. 13"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -4546,6 +4296,10 @@
      "hedge_rate"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:remains open|we do not know|it would be interesting|open (?:problem|question)s?|we (?:were|are) (?:not|unable)|cannot answer)\\b"
+   },
    "specimens": [
     {
      "quote": "do not hold without growth restrictions",
@@ -4553,19 +4307,9 @@
      "locator": "End of Introduction, PDF p. 2, printed p. 408"
     },
     {
-     "quote": "positive lower density",
-     "source": "Martin (2006), Simultaneous inequalities among values of the Euler phi-function",
-     "locator": "p. 3, paragraph distinguishing proved lower density from existence of a density"
-    },
-    {
      "quote": "the authors still do not know",
      "source": "Crmarić and Kovač (2025), On the irrationality of certain super-polynomially decaying series",
      "locator": "p. 1, discussion of the numerical value following (1.1)"
-    },
-    {
-     "quote": "The writer must anticipate and avoid the reader's difficulties.",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "PDF p. 6, §3, discussion of the reader’s difficulties"
     },
     {
      "quote": "we cannot answer the question",
@@ -4578,64 +4322,9 @@
      "locator": "p. 7, discussion following the extremal-polynomial argument"
     },
     {
-     "quote": "The writer must anticipate and avoid the reader’s difficulties.",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "Section 3, printed p. 127 / PDF p. 6"
-    },
-    {
      "quote": "Both options are workable, and mathlib contains traces of both approaches.",
      "source": "The mathlib Community (2020), The Lean mathematical library",
      "locator": "PDF p. 5, section 4.1.2"
-    },
-    {
-     "quote": "We also report on an illustrative use case",
-     "source": "Aniva et al. (2025), Pantograph",
-     "locator": "Abstract, PDF p. 1"
-    },
-    {
-     "quote": "demonstrates the importance of (d)",
-     "source": "Zudilin (2017), A determinantal approach to irrationality",
-     "locator": "§1, paragraph beginning with the example xi=1; typographical nonbreaking space normalised."
-    },
-    {
-     "quote": "assumptions in the preceding text.",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "section 1, item 5, printed p. 2, extracted line 152"
-    },
-    {
-     "quote": "Now fix a monic polynomial",
-     "source": "Eremenko and Hayman, The area of polynomial images and preimages (arXiv:math/0302189)",
-     "locator": "section 4, proof of Theorems 2 and 3, extracted line 89"
-    },
-    {
-     "quote": "purely elementary techniques and constructions.",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "PDF p. 2, purpose paragraph in Section 1"
-    },
-    {
-     "quote": "To prove the necessity",
-     "source": "Erdős and Straus (1974), On the irrationality of certain series",
-     "locator": "PDF p. 3, journal p. 86, proof of Theorem 2.1"
-    },
-    {
-     "quote": "Next we show that this quantity converges to zero.",
-     "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
-     "locator": "PDF page 9"
-    },
-    {
-     "quote": "We first claim that the set equalities",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "PDF p. 14, proof of Lemma 5.1"
-    },
-    {
-     "quote": "Our goal is to locate",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "PDF p. 15, proof of Theorem 2.4 (older labels it Theorem 4)"
-    },
-    {
-     "quote": "can take only finitely many values",
-     "source": "Martin (2006), Simultaneous inequalities among values of the Euler phi-function",
-     "locator": "discussion immediately after Theorem 1"
     },
     {
      "quote": "the things the proof does not prove",
@@ -4666,11 +4355,11 @@
     {
      "quote": "It would be interesting to see how the QAOA performs for those problems, and whether it will outperform the classical algorithms.",
      "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “7 Discussion”",
+     "locator": "PDF p. 15",
      "domain": "probability"
     },
     {
-     "quote": "This conjecture remains open to this day, although the weaker claim that MATH was proved over 40 years ago by Rivest and Vuillemin .",
+     "quote": "We were not able to find such a proof in the literature, and instead combine the following two claims to obtain the desired claim.",
      "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
      "locator": "section “Monotone graph properties”",
      "domain": "computer_science"
@@ -4678,13 +4367,15 @@
     {
      "quote": "We also identify some of the main remaining open questions.",
      "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
-     "locator": "section “1 Introdu tion”",
+     "locator": "PDF p. 2",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 3 of 9 cited papers searched",
      "specimens": [
       {
        "quote": "We do not know how to solve the original question implied by Erdős.",
@@ -4692,8 +4383,6 @@
        "locator": "section “Lambert subseries”"
       }
      ],
-     "holds": true,
-     "measure": "move found in 1 of 9 cited papers searched",
      "our_drafts_d": {
       "short": {
        "hedge_rate": 2.45
@@ -4705,15 +4394,15 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 1 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "It would be interesting to see how the QAOA performs for those problems, and whether it will outperform the classical algorithms.",
        "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “7 Discussion”"
+       "locator": "PDF p. 15"
       }
      ],
-     "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched",
      "our_drafts_d": {
       "short": {
        "hedge_rate": 0.0
@@ -4728,20 +4417,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 22 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "This conjecture remains open to this day, although the weaker claim that MATH was proved over 40 years ago by Rivest and Vuillemin .",
+       "quote": "We were not able to find such a proof in the literature, and instead combine the following two claims to obtain the desired claim.",
        "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
        "locator": "section “Monotone graph properties”"
       },
       {
        "quote": "We also identify some of the main remaining open questions.",
        "source": "Buhrman and de Wolf (2002), Complexity measures and decision tree complexity: a survey",
-       "locator": "section “1 Introdu tion”"
+       "locator": "PDF p. 2"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "hedge_rate": 0.0
@@ -5105,12 +4794,19 @@
      "negation_rate"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "negation_rate",
+    "op": "<=",
+    "value": 6.0
+   },
    "specimens": [],
+   "specimens_note": "No clean specimen: the rule removes a pattern, and the literature shows it by absence; see the corpus medians in domain_test.",
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "negation_rate corpus median 3.48 [IQR 2.75, 4.33]; the rule expects <= 6.00",
      "holds": true,
+     "measure": "negation_rate corpus median 3.48 [IQR 2.75, 4.33]; the rule expects <= 6.00",
      "our_drafts_d": {
       "short": {
        "negation_rate": 6.06
@@ -5122,8 +4818,8 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "negation_rate corpus median 5.11 [IQR 4.71, 5.37]; the rule expects <= 6.00",
      "holds": true,
+     "measure": "negation_rate corpus median 5.11 [IQR 4.71, 5.37]; the rule expects <= 6.00",
      "our_drafts_d": {
       "short": {
        "negation_rate": 5.16
@@ -5138,8 +4834,8 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "negation_rate corpus median 4.81 [IQR 3.76, 6.05]; the rule expects <= 6.00",
      "holds": true,
+     "measure": "negation_rate corpus median 4.81 [IQR 3.76, 6.05]; the rule expects <= 6.00",
      "our_drafts_d": {
       "short": {
        "negation_rate": 0.69
@@ -5184,6 +4880,12 @@
      "contrast_rate"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "em_dash_rate",
+    "op": "<=",
+    "value": 0.5
+   },
    "specimens": [
     {
      "quote": "The techniques of [SSW20] are incomparable to ours as their main focus is on proving optimal bounds on the Fourier weights of decision trees.",
@@ -5194,8 +4896,8 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.00]; the rule expects <= 0.50",
      "holds": true,
+     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.00]; the rule expects <= 0.50",
      "our_drafts_d": {
       "short": {
        "em_dash_rate": 0.0,
@@ -5211,8 +4913,8 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.24]; the rule expects <= 0.50",
      "holds": true,
+     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.24]; the rule expects <= 0.50",
      "our_drafts_d": {
       "short": {
        "em_dash_rate": 0.0,
@@ -5233,8 +4935,8 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.00]; the rule expects <= 0.50",
      "holds": true,
+     "measure": "em_dash_rate corpus median 0.00 [IQR 0.00, 0.00]; the rule expects <= 0.50",
      "our_drafts_d": {
       "short": {
        "em_dash_rate": 0.0,
@@ -5293,6 +4995,13 @@
      "para_summary_end_share"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "meta_narration_rate",
+    "op": "<=",
+    "value": 1.0,
+    "specimen_pattern": "^(?:We now (?:turn|prove|show|consider)|Recall that)\\b"
+   },
    "specimens": [
     {
      "quote": "For the sake of simplicity, we ignore this complication altogether in the remainder of this discussion.",
@@ -5302,55 +5011,49 @@
     {
      "quote": "We now turn to the fourth moment bound (2.9) for large primes.",
      "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “X X”",
+     "locator": "PDF p. 14",
      "domain": "number_theory"
     },
     {
      "quote": "Recall that d(n) is the divisor function, defined in (1.3).",
      "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-     "locator": "section “8 Daniel Duverney and Yohei Tachiya”",
+     "locator": "PDF p. 9",
      "domain": "number_theory"
     },
     {
      "quote": "We now turn the constant-interval curvature into full support.",
      "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
+     "locator": "PDF p. 18",
      "domain": "probability"
     },
     {
-     "quote": "We now consider the second example where we sum over n3 and n3̄ , but u = 3.",
-     "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “4 Summary of Results”",
-     "domain": "probability"
-    },
-    {
-     "quote": "Recall that in the definition of MATH , we picked MATH and MATH and defined the resulting matrix MATH .",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Semidefinite program version MATH .”",
+     "quote": "We now show how to take advantage of this symmetry to simplify the computation of the adversary bound.",
+     "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
+     "locator": "PDF p. 11",
      "domain": "computer_science"
     },
     {
-     "quote": "We now show a lower bound for the randomized query complexity of our function MATH .",
-     "source": "Ben-David (2016), A super-Grover separation",
-     "locator": "section “Lower Bound for MATH”",
+     "quote": "We now turn to the unknown model.",
+     "source": "Montanaro (2010), Quantum search with advice",
+     "locator": "PDF p. 4",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "meta_narration_rate corpus median 0.11 [IQR 0.00, 0.59]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "meta_narration_rate corpus median 0.11 [IQR 0.00, 0.59]; the rule expects <= 1.00",
      "specimens": [
       {
        "quote": "We now turn to the fourth moment bound (2.9) for large primes.",
        "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “X X”"
+       "locator": "PDF p. 14"
       },
       {
        "quote": "Recall that d(n) is the divisor function, defined in (1.3).",
        "source": "Duverney and Tachiya (2019), Refinement of the Chowla-Erdős method",
-       "locator": "section “8 Daniel Duverney and Yohei Tachiya”"
+       "locator": "PDF p. 9"
       }
      ],
      "our_drafts_d": {
@@ -5368,18 +5071,13 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "meta_narration_rate corpus median 0.74 [IQR 0.63, 0.76]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "meta_narration_rate corpus median 0.74 [IQR 0.63, 0.76]; the rule expects <= 1.00",
      "specimens": [
       {
        "quote": "We now turn the constant-interval curvature into full support.",
        "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
-      },
-      {
-       "quote": "We now consider the second example where we sum over n3 and n3̄ , but u = 3.",
-       "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “4 Summary of Results”"
+       "locator": "PDF p. 18"
       }
      ],
      "our_drafts_d": {
@@ -5402,18 +5100,18 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "meta_narration_rate corpus median 0.32 [IQR 0.03, 0.74]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "meta_narration_rate corpus median 0.32 [IQR 0.03, 0.74]; the rule expects <= 1.00",
      "specimens": [
       {
-       "quote": "Recall that in the definition of MATH , we picked MATH and MATH and defined the resulting matrix MATH .",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Semidefinite program version MATH .”"
+       "quote": "We now show how to take advantage of this symmetry to simplify the computation of the adversary bound.",
+       "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
+       "locator": "PDF p. 11"
       },
       {
-       "quote": "We now show a lower bound for the randomized query complexity of our function MATH .",
-       "source": "Ben-David (2016), A super-Grover separation",
-       "locator": "section “Lower Bound for MATH”"
+       "quote": "We now turn to the unknown model.",
+       "source": "Montanaro (2010), Quantum search with advice",
+       "locator": "PDF p. 4"
       }
      ],
      "our_drafts_d": {
@@ -5466,12 +5164,19 @@
      "ai_lexicon_rate"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "triad_rate",
+    "op": "<=",
+    "value": 1.5
+   },
    "specimens": [],
+   "specimens_note": "No clean specimen: the rule removes a pattern, and the literature shows it by absence; see the corpus medians in domain_test.",
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "triad_rate corpus median 0.25 [IQR 0.00, 0.41]; the rule expects <= 1.50",
      "holds": true,
+     "measure": "triad_rate corpus median 0.25 [IQR 0.00, 0.41]; the rule expects <= 1.50",
      "our_drafts_d": {
       "short": {
        "intensifier_rate": 0.77,
@@ -5487,8 +5192,8 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "triad_rate corpus median 1.44 [IQR 0.55, 2.64]; the rule expects <= 1.50",
      "holds": true,
+     "measure": "triad_rate corpus median 1.44 [IQR 0.55, 2.64]; the rule expects <= 1.50",
      "our_drafts_d": {
       "short": {
        "intensifier_rate": -1.2,
@@ -5509,8 +5214,8 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "triad_rate corpus median 0.59 [IQR 0.37, 1.07]; the rule expects <= 1.50",
      "holds": true,
+     "measure": "triad_rate corpus median 0.59 [IQR 0.37, 1.07]; the rule expects <= 1.50",
      "our_drafts_d": {
       "short": {
        "intensifier_rate": -0.01,
@@ -5567,33 +5272,24 @@
      "apparatus_rate"
     ]
    },
+   "probe": {
+    "kind": "feature",
+    "feature": "status_vocab_rate",
+    "op": "<=",
+    "value": 1.0
+   },
    "specimens": [
-    {
-     "quote": "Application of the Corollary 3.1 proves the theorem.",
-     "source": "Coons (2010), (Non)automaticity of number theoretic functions",
-     "locator": "p. 349, last sentence of the proof of Theorem 3.2"
-    },
     {
      "quote": "used the qEKHAD symbolic package",
      "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
      "locator": "p. 1, abstract, attribution of a symbolic computation"
-    },
-    {
-     "quote": "What does the reader know so far?",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF page 5, Section 1, item 11"
-    },
-    {
-     "quote": "[3, Conjecture 2]",
-     "source": "OpenAI (2026), A nearly quartic separation between randomized and quantum query complexity",
-     "locator": "Section 1.1"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "measure": "status_vocab_rate corpus median 0.00 [IQR 0.00, 0.20]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "status_vocab_rate corpus median 0.00 [IQR 0.00, 0.20]; the rule expects <= 1.00",
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 9.2,
@@ -5607,8 +5303,8 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "measure": "status_vocab_rate corpus median 0.26 [IQR 0.00, 1.00]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "status_vocab_rate corpus median 0.26 [IQR 0.00, 1.00]; the rule expects <= 1.00",
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 2.76,
@@ -5626,8 +5322,8 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "measure": "status_vocab_rate corpus median 0.34 [IQR 0.00, 0.81]; the rule expects <= 1.00",
      "holds": true,
+     "measure": "status_vocab_rate corpus median 0.34 [IQR 0.00, 0.81]; the rule expects <= 1.00",
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 8.85,
@@ -5727,48 +5423,24 @@
      "apparatus_rate"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:Appendix|In (?:the )?Appendix|We (?:defer|postpone|collect) .{0,40}appendix)"
+   },
    "specimens": [
     {
-     "quote": "We confirmed by a computer",
-     "source": "Koizumi (2025), Irrationality of the reciprocal sum of doubly exponential sequences",
-     "locator": "Published PDF p. 11, finite-computation report"
-    },
-    {
-     "quote": "Appendix A. Alternative proof of Eppstein's theorem",
-     "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “P P”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "Appendix A. Empirical distribution of consecutive values of prime counting functions",
-     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “1 X X”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "In Appendix 8, we show that condition (ii) can indeed be removed in the special case MATH",
+     "quote": "In Appendix 7, we study the largest possible quantum/classical separations that are achievable for approximate sampling and relation problems.",
      "source": "Aaronson and Ambainis (2015), Forrelation",
-     "locator": "section “1.1.2 Proof of Optimality”",
+     "locator": "PDF p. 5",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [
-      {
-       "quote": "Appendix A. Alternative proof of Eppstein's theorem",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “P P”"
-      },
-      {
-       "quote": "Appendix A. Empirical distribution of consecutive values of prime counting functions",
-       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “1 X X”"
-      }
-     ],
      "holds": true,
      "measure": "move found in 2 of 9 cited papers searched",
+     "specimens": [],
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 9.2,
@@ -5782,9 +5454,9 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "specimens": [],
      "holds": false,
      "measure": "move not found in the 4 cited papers searched",
+     "specimens": [],
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 2.76,
@@ -5802,15 +5474,15 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 3 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "In Appendix 8, we show that condition (ii) can indeed be removed in the special case MATH",
+       "quote": "In Appendix 7, we study the largest possible quantum/classical separations that are achievable for approximate sampling and relation problems.",
        "source": "Aaronson and Ambainis (2015), Forrelation",
-       "locator": "section “1.1.2 Proof of Optimality”"
+       "locator": "PDF p. 5"
       }
      ],
-     "holds": true,
-     "measure": "move found in 1 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "status_vocab_rate": 8.85,
@@ -5864,16 +5536,15 @@
    "rule": "Every stated result is either checked as stated or says, directly after its statement, exactly which named input it assumes. Keep the main proof dependent only on material that carries the support claimed for it, keep numbered references to ordinary arguments and formally supported theorems usable, and keep a named theorem used as a formal input beside the result it supports.",
    "limit": "This is the one place a status remark stays local; it names the input in mathematical terms.",
    "provenance": "operator directive, 29 September 2026",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:conditional(?:ly)? on|assuming (?:the|a|that)|under the assumption|if (?:the )?\\w+ conjecture holds)\\b"
+   },
    "specimens": [
-    {
-     "quote": "The lemmas are there when they are needed",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "§4, paragraph about the parts fitting together."
-    },
     {
      "quote": "The equivalence of (i) and (ii)",
      "source": "Ebenfelt, Khavinson and Shapiro (2011), Two-dimensional shapes and lemniscates",
-     "locator": "proof of Proposition 2.1, PDF p. 3, extracted line 119"
+     "locator": "proof of Proposition 2.1, PDF p. 3"
     },
     {
      "quote": "Let α, β be nonzero complex algebraic numbers",
@@ -5886,82 +5557,59 @@
      "locator": "PDF p. 7 / journal p. 413, proof of Corollary 4.1"
     },
     {
-     "quote": "Recently, Theorem 1.3 was shown conditionally on a form of the prime tuples conjecture in ; our result makes the irrationality unconditional.",
-     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “1. Introduction”",
-     "domain": "number_theory"
-    },
-    {
      "quote": "Conditional on the finite labels, all continuous derivatives of the pointwise maps are bounded.",
      "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-     "locator": "section “3. At a standard stage the special insertion is transported:”",
+     "locator": "PDF p. 68",
      "domain": "probability"
-    },
-    {
-     "quote": "It gets asymptotically close to the optimum assuming the solution space has no \"overlap gap property\" (see for a review).",
-     "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
-     "domain": "probability"
-    },
-    {
-     "quote": "By assuming a conjecture of Aaronson and Ambainis , we improve this separation to degree MATH .",
-     "source": "Ben-David (2016), A super-Grover separation",
-     "locator": "section “Introduction”",
-     "domain": "computer_science"
     },
     {
      "quote": "These models are equivalent, in the sense that they can simulate each other in polynomial time, assuming the circuits are appropriately \"uniform.\"",
      "source": "de Wolf, Quantum computing: lecture notes",
      "locator": "section “Quantum computation”",
      "domain": "computer_science"
+    },
+    {
+     "quote": "We now formally argue that Algorithm 1 witnesses the Simulation Theorem (assuming the Thickness Lemma and the Projection Lemma).",
+     "source": "Göös, Pitassi and Watson (2015), Deterministic communication vs. partition number",
+     "locator": "PDF p. 9",
+     "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [
-      {
-       "quote": "Recently, Theorem 1.3 was shown conditionally on a form of the prime tuples conjecture in ; our result makes the irrationality unconditional.",
-       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “1. Introduction”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 1 of 9 cited papers searched"
+     "measure": "move found in 3 of 9 cited papers searched",
+     "specimens": []
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 3 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "Conditional on the finite labels, all continuous derivatives of the pointwise maps are bounded.",
        "source": "OpenAI (2026), QAOA attains the SK ground-state energy",
-       "locator": "section “3. At a standard stage the special insertion is transported:”"
-      },
-      {
-       "quote": "It gets asymptotically close to the optimum assuming the solution space has no \"overlap gap property\" (see for a review).",
-       "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
+       "locator": "PDF p. 68"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 10 of 30 cited papers searched",
      "specimens": [
-      {
-       "quote": "By assuming a conjecture of Aaronson and Ambainis , we improve this separation to degree MATH .",
-       "source": "Ben-David (2016), A super-Grover separation",
-       "locator": "section “Introduction”"
-      },
       {
        "quote": "These models are equivalent, in the sense that they can simulate each other in polynomial time, assuming the circuits are appropriately \"uniform.\"",
        "source": "de Wolf, Quantum computing: lecture notes",
        "locator": "section “Quantum computation”"
+      },
+      {
+       "quote": "We now formally argue that Algorithm 1 witnesses the Simulation Theorem (assuming the Thickness Lemma and the Projection Lemma).",
+       "source": "Göös, Pitassi and Watson (2015), Deterministic communication vs. partition number",
+       "locator": "PDF p. 9"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -6040,6 +5688,10 @@
    "rule": "Report a computation with the object evaluated and its exact range in the mathematical sentence, keep the infinite theorem in a separate sentence with the inference that connects them, and distinguish proposed parameters from inequalities actually verified. Name the software where the literature would.",
    "limit": "Local marks for an assumption a proof relies on stay local.",
    "provenance": "learned from the Erdős paper critique rounds 12 and 13",
+   "probe": {
+    "kind": "regex",
+    "pattern": "\\b(?:we (?:computed|checked|verified|confirmed)|numerical(?:ly)? (?:computation|evidence|check)|by (?:a )?computer\\b(?! scien)|Mathematica|SageMath|PARI|numerically)\\b"
+   },
    "specimens": [
     {
      "quote": "We confirmed by a computer that Conjecture 1 holds",
@@ -6052,16 +5704,6 @@
      "locator": "p. 1, paragraph after (1.1)"
     },
     {
-     "quote": "the problem is to communicate an idea.",
-     "source": "Halmos (1970), How to write mathematics",
-     "locator": "PDF p. 3, §1, Say something"
-    },
-    {
-     "quote": "In §3 we work harder to make the bound effective.",
-     "source": "Crane (2007), A bound for Smale's mean value conjecture",
-     "locator": "p. 3, first paragraph"
-    },
-    {
      "quote": "By direct computation.",
      "source": "Zudilin (2004), Heine's basic transform and a permutation group for q-harmonic series",
      "locator": "Lemma 6 proof, printed p. 160 / PDF p. 8"
@@ -6072,75 +5714,41 @@
      "locator": "PDF p. 6, section 4, Data Extraction"
     },
     {
-     "quote": "Application of the Corollary 3.1 proves the theorem.",
-     "source": "Coons (2010), (Non)automaticity of number theoretic functions",
-     "locator": "p. 349, last sentence of the proof of Theorem 3.2"
-    },
-    {
      "quote": "used the qEKHAD symbolic package",
      "source": "Van Assche (2001), Little q-Legendre polynomials and irrationality of certain Lambert series",
      "locator": "p. 1, abstract, attribution of a symbolic computation"
     },
     {
-     "quote": "What does the reader know so far?",
-     "source": "Knuth, Larrabee and Roberts (1989), Mathematical writing",
-     "locator": "PDF page 5, Section 1, item 11"
-    },
-    {
      "quote": "Numerically, these predictions appear to be reasonably accurate (though they hint at additional lower order corrections); see Figure 3.",
      "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-     "locator": "section “1. Introduction”",
+     "locator": "PDF p. 8",
      "domain": "number_theory"
-    },
-    {
-     "quote": "Our iteration is more efficient than the one originally shown in Ref. , and we have been able to go numerically to higher depth.",
-     "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-     "locator": "section “Introduction”",
-     "domain": "probability"
-    },
-    {
-     "quote": "The optimal setting of the four variables can be found numerically by semidefinite programming and is the following:",
-     "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
-     "locator": "section “7.1 Ambainis function”",
-     "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 1 of 9 cited papers searched",
      "specimens": [
       {
        "quote": "Numerically, these predictions appear to be reasonably accurate (though they hint at additional lower order corrections); see Figure 3.",
        "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
-       "locator": "section “1. Introduction”"
+       "locator": "PDF p. 8"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 9 cited papers searched"
+     ]
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "specimens": [
-      {
-       "quote": "Our iteration is more efficient than the one originally shown in Ref. , and we have been able to go numerically to higher depth.",
-       "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "section “Introduction”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched"
+     "measure": "move found in 2 of 4 cited papers searched",
+     "specimens": []
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
-     "specimens": [
-      {
-       "quote": "The optimal setting of the four variables can be found numerically by semidefinite programming and is the following:",
-       "source": "Høyer, Lee and Špalek (2007), Negative weights make adversaries stronger",
-       "locator": "section “7.1 Ambainis function”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 1 of 30 cited papers searched"
+     "measure": "move found in 1 of 30 cited papers searched",
+     "specimens": []
     }
    },
    "instances": [
@@ -6245,7 +5853,7 @@
   },
   {
    "id": "RG-24",
-   "title": "Acknowledgements and AI use at the end, in two to four sentences",
+   "title": "A plain byline; acknowledgements and AI use at the end",
    "status": "adopted",
    "scopes": [
     "short",
@@ -6253,9 +5861,13 @@
     "long"
    ],
    "failure": "Process and authorship statements sat on the first page, ahead of the mathematics, and grew into paragraphs.",
-   "rule": "Put acknowledgements and the statement of AI use at the end, under a plain heading (Acknowledgements; Use of AI tools), in two to four sentences that say who did what and who takes responsibility. Repository metadata stays in the repository.",
+   "rule": "The byline names the responsible author and the AI assistance and credits the theorem's originators. Acknowledgements and any fuller statement of AI use go at the end, under a plain heading (Acknowledgements; Use of AI tools), in two to four sentences that say who did what and who takes responsibility. Repository metadata stays in the repository.",
    "limit": "A venue's own disclosure rule overrides the placement.",
    "provenance": "operator directive, 3 November 2026; specimens from the quartic round 6 literature register",
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:Acknowledg\\w*|We (?:thank|are grateful|would like to thank)|The authors? (?:thanks?|is grateful|are grateful|would like to thank))|\\bgrateful to\\b"
+   },
    "specimens": [
     {
      "quote": "We reviewed, corrected, and independently verified all LLM-generated output and take full responsibility for the final manuscript",
@@ -6271,33 +5883,33 @@
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [],
-     "holds": false,
-     "measure": "move not found in the 9 cited papers searched"
+     "holds": true,
+     "measure": "move found in 1 of 9 cited papers searched",
+     "specimens": []
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
+     "holds": true,
+     "measure": "move found in 1 of 4 cited papers searched",
      "specimens": [
       {
        "quote": "Acknowledgements The authors thank Sam Gutmann for being there and Matthew P. Harrigan for a careful read of the manuscript.",
        "source": "Basso, Farhi, Marwaha, Villalonga and Zhou (2022), The QAOA at high depth for MaxCut and the SK model",
-       "locator": "opening pages"
+       "locator": "PDF p. 2"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 4 cited papers searched"
+     ]
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 3 of 30 cited papers searched",
      "specimens": [
       {
        "quote": "We thank Jevgēnijs Vihrovs for bringing to our attention and for pointing out the near-quartic separation between R0 and Q.",
        "source": "Ambainis, Iraids and Kokainis (2026), Near-optimal separations of certificate complexity",
-       "locator": "section “7.2 Exact and zero-error bounds for Fn”"
+       "locator": "PDF p. 20"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 1 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -6327,6 +5939,10 @@
      "question_share"
     ]
    },
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:Let us|Let's|We'll|Consider the following|Why|Recall)\\b"
+   },
    "specimens": [
     {
      "quote": "This may seem like a stupid algorithm, but it has certain advantages.",
@@ -6339,53 +5955,53 @@
      "locator": "quantum-walk chapter"
     },
     {
-     "quote": "Let us order the multiset MATH into a decreasing sequence MATH .",
-     "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-     "locator": "section “Proof of Theorem REF on Lambert subseries”",
-     "domain": "number_theory"
-    },
-    {
-     "quote": "Let us begin by investigating necessary conditions for the set defined in (1.2) to contain all rational numbers from a non-degenerate open interval.",
+     "quote": "Let us turn to the claim about its interior.",
      "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-     "locator": "section “2. General necessary conditions”",
+     "locator": "PDF p. 5",
      "domain": "number_theory"
     },
     {
-     "quote": "Recall that the definition of K̄j from (170) in terms of u and v is MATH",
+     "quote": "Recall the definition of w in (2.3).",
+     "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+     "locator": "PDF p. 11",
+     "domain": "number_theory"
+    },
+    {
+     "quote": "Let's again look at the example where u, v, x, y are in B, and B has 8 elements as above.",
      "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “4 Summary of Results”",
+     "locator": "PDF p. 12",
      "domain": "probability"
     },
     {
-     "quote": "Recall that in the definition of MATH , we picked MATH and MATH and defined the resulting matrix MATH .",
-     "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-     "locator": "section “Semidefinite program version MATH .”",
+     "quote": "Let us do an easy case first.",
+     "source": "de Wolf, Quantum computing: lecture notes",
+     "locator": "body text",
      "domain": "computer_science"
     },
     {
-     "quote": "We'll show that a randomized algorithm must use MATH queries to find the special MATH bit in a matrix.",
-     "source": "Ben-David (2016), A super-Grover separation",
-     "locator": "section “Forandlation Lower Bound”",
+     "quote": "Recall the \"standard\" quantum algorithm for k-fold Forrelation (the one shown in Figure 1).",
+     "source": "Aaronson and Ambainis (2015), Forrelation",
+     "locator": "PDF p. 58",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
+     "holds": true,
+     "measure": "move found in 7 of 9 cited papers searched",
      "specimens": [
       {
-       "quote": "Let us order the multiset MATH into a decreasing sequence MATH .",
-       "source": "Kovač and Tao (2024), On several irrationality problems for Ahmes series",
-       "locator": "section “Proof of Theorem REF on Lambert subseries”"
+       "quote": "Let us turn to the claim about its interior.",
+       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
+       "locator": "PDF p. 5"
       },
       {
-       "quote": "Let us begin by investigating necessary conditions for the set defined in (1.2) to contain all rational numbers from a non-degenerate open interval.",
-       "source": "van Doorn and Kovač (2025), arXiv:2509.24971",
-       "locator": "section “2. General necessary conditions”"
+       "quote": "Recall the definition of w in (2.3).",
+       "source": "Tao and Teräväinen (2025), arXiv:2512.01739",
+       "locator": "PDF p. 11"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 9 cited papers searched",
      "our_drafts_d": {
       "short": {
        "question_share": 2.42
@@ -6397,15 +6013,15 @@
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "specimens": [
-      {
-       "quote": "Recall that the definition of K̄j from (170) in terms of u and v is MATH",
-       "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “4 Summary of Results”"
-      }
-     ],
      "holds": true,
      "measure": "move found in 1 of 4 cited papers searched",
+     "specimens": [
+      {
+       "quote": "Let's again look at the example where u, v, x, y are in B, and B has 8 elements as above.",
+       "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
+       "locator": "PDF p. 12"
+      }
+     ],
      "our_drafts_d": {
       "short": {
        "question_share": -0.31
@@ -6420,20 +6036,20 @@
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 24 of 30 cited papers searched",
      "specimens": [
       {
-       "quote": "Recall that in the definition of MATH , we picked MATH and MATH and defined the resulting matrix MATH .",
-       "source": "Aaronson, Ben-David, Kothari, Rao and Tal (2021), Degree vs. approximate degree and quantum implications of Huang's sensitivity theorem",
-       "locator": "section “Semidefinite program version MATH .”"
+       "quote": "Let us do an easy case first.",
+       "source": "de Wolf, Quantum computing: lecture notes",
+       "locator": "body text"
       },
       {
-       "quote": "We'll show that a randomized algorithm must use MATH queries to find the special MATH bit in a matrix.",
-       "source": "Ben-David (2016), A super-Grover separation",
-       "locator": "section “Forandlation Lower Bound”"
+       "quote": "Recall the \"standard\" quantum algorithm for k-fold Forrelation (the one shown in Figure 1).",
+       "source": "Aaronson and Ambainis (2015), Forrelation",
+       "locator": "PDF p. 58"
       }
      ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched",
      "our_drafts_d": {
       "short": {
        "question_share": -0.27
@@ -6479,6 +6095,10 @@
    "rule": "Say in the caption or the text what each mark means: what the boxes are, what an arrow carries, which relations are being checked. Use a table or matrix to separate independent dimensions instead of repeating a list of qualifications.",
    "limit": "A colour key aids interpretation but is no evidence of reader benefit; labels remain necessary when colour is unavailable.",
    "provenance": "learned from the systems-paper critique rounds",
+   "probe": {
+    "kind": "regex",
+    "pattern": "^(?:Figure|Fig\\.|Table) ?\\d+[.:]|\\b(?:Figure|Fig\\.|Table) \\d+ (?:shows|illustrates|depicts|plots|lists|summari[sz]es|compares)\\b|\\b(?:Figure|Fig\\.|Table) \\d+[^.]{0,80}\\b(?:shows|illustrates|depicts|plots|lists|summari[sz]es|compares)\\b"
+   },
    "specimens": [
     {
      "quote": "Input files are shown in rectangles, intermediate and output files are shown in rounded rectangles.",
@@ -6491,70 +6111,36 @@
      "locator": "Introduction, PDF p. 1"
     },
     {
-     "quote": "Figure 1: The contradiction on a hypothetical support gap with γ = c > 0.",
-     "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-     "locator": "section “Introduction”",
-     "domain": "probability"
-    },
-    {
-     "quote": "Figure 1: (a) Our results for V̄p = minγ,β Vp (γ, β) as a function of p.",
-     "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-     "locator": "section “4 Summary of Results”",
-     "domain": "probability"
-    },
-    {
-     "quote": "Figure 1: Query complexity of Search with Advice in different models, for power law distributions px ∝ x−k .",
-     "source": "Montanaro (2010), Quantum search with advice",
-     "locator": "section “1.1 New results”",
-     "domain": "computer_science"
-    },
-    {
      "quote": "Figure 1: A quantum circuit that can be taken to define the k-fold Forrelation problem.",
      "source": "Aaronson and Ambainis (2015), Forrelation",
-     "locator": "section “3.1 Query Complexity”",
+     "locator": "PDF p. 13",
      "domain": "computer_science"
     }
    ],
    "domain_test": {
     "number_theory": {
      "domain": "Erdős #257 (number theory)",
-     "specimens": [],
      "holds": false,
-     "measure": "move not found in the 9 cited papers searched"
+     "measure": "move not found in the 9 cited papers searched",
+     "specimens": []
     },
     "probability": {
      "domain": "zero-temperature SK model (probability)",
-     "specimens": [
-      {
-       "quote": "Figure 1: The contradiction on a hypothetical support gap with γ = c > 0.",
-       "source": "OpenAI (2026), Full support of the zero-temperature SK order parameter",
-       "locator": "section “Introduction”"
-      },
-      {
-       "quote": "Figure 1: (a) Our results for V̄p = minγ,β Vp (γ, β) as a function of p.",
-       "source": "Farhi, Goldstone, Gutmann and Zhou (2022), The QAOA and the SK model at infinite size",
-       "locator": "section “4 Summary of Results”"
-      }
-     ],
      "holds": true,
-     "measure": "move found in 2 of 4 cited papers searched"
+     "measure": "move found in 2 of 4 cited papers searched",
+     "specimens": []
     },
     "computer_science": {
      "domain": "quartic query separation (theoretical computer science)",
+     "holds": true,
+     "measure": "move found in 2 of 30 cited papers searched",
      "specimens": [
-      {
-       "quote": "Figure 1: Query complexity of Search with Advice in different models, for power law distributions px ∝ x−k .",
-       "source": "Montanaro (2010), Quantum search with advice",
-       "locator": "section “1.1 New results”"
-      },
       {
        "quote": "Figure 1: A quantum circuit that can be taken to define the k-fold Forrelation problem.",
        "source": "Aaronson and Ambainis (2015), Forrelation",
-       "locator": "section “3.1 Query Complexity”"
+       "locator": "PDF p. 13"
       }
-     ],
-     "holds": true,
-     "measure": "move found in 2 of 30 cited papers searched"
+     ]
     }
    },
    "instances": [
@@ -7014,7 +6600,7 @@
    "absorbs_quartic_round6": [
     15
    ],
-   "three_domain_result": "not found in: Erdős #257 (number theory)"
+   "three_domain_result": "holds in all three domains"
   },
   {
    "id": "RG-25",
@@ -7066,10 +6652,6 @@
     }
    ],
    "domain_notes": [
-    {
-     "id": "RG-24",
-     "note": "Acknowledgement sections were not recovered from the number-theory extractions, which end at the references; the rule is an operator directive and holds in the other two fields."
-    },
     {
      "id": "RG-26",
      "note": "The number-theory citations carry almost no figures; the rule applies wherever a paper has figures or tables."
