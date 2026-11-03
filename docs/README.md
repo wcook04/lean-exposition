@@ -14,6 +14,8 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
   to repair the account and test lessons for the next problem.
 - [Review one explanation](reader-review.md): freeze an edition, ask a bounded
   reader question and preserve the response through later revisions.
+- [Register stage](register-stage.md): measure each draft against the papers it
+  cites, line-edit every paragraph and carry the rules into every critique round.
 - [Writing methods](../skills/README.md): four local skills for source
   recording, detailed reconstruction, expert selection and exposition.
 - [Erdős examples](erdos-method-transfer.md): concrete writing methods illustrated

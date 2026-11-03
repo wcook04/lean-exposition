@@ -2,45 +2,53 @@
 
 <!-- EMPTY SCAFFOLD: No result or review is asserted here. -->
 
-## Reader and prerequisites
+<!-- Shape: good lecture notes on one result for a named reader (register skill,
+RG-25). It reads on its own: one sentence says where the complete proofs are and
+pointers to the record appear only at headline statements. No hashes, commands,
+receipts, review-status disclaimers or repository metadata (RG-20). -->
 
-<!-- Name the operations and results assumed known, what this exposition must
-teach, and the task the reader should learn to perform. Place each needed
-prerequisite before its first use or give a precise accessible reference. -->
+## Introduction
 
-## Question and result
+<!-- Open with the question or a concrete object (RG-04). Say who this is for,
+which operations and results are assumed known, what the reader will be able to do,
+and state the established result with its hypotheses and boundary. Place each
+needed prerequisite before its first use or give a precise accessible reference. -->
 
-<!-- State the established result, its hypotheses, evidence class and boundary. -->
-
-## Worked example
+## A worked example
 
 <!-- Choose an admissible example large enough to expose the intended mechanism
-or obstruction. Work through the relevant steps; state what varies, what stays
-fixed and which part of the general theorem the example does not establish. -->
+or obstruction, numbered in the flow and checked in the object the theorem names
+(RG-13). State what varies, what stays fixed and which part of the general theorem
+the example does not establish. -->
 
 ## From the example to the argument
 
-<!-- Teach the necessary definitions. At the hard step, identify the last
-established fact, next required conclusion and source-supported inference
-between them, including the hypothesis used and dependence of choices.
-Explain why a construction is possible and why it attains its claimed result. -->
+<!-- Teach the necessary definitions, name before notation (RG-11). At the hard
+step, identify the last established fact, next required conclusion and
+source-supported inference between them, including the hypothesis used and the
+dependence of choices. Invite ("Let us"), motivate and admit what looks odd. -->
 
-## Change one condition
+## Changing one condition
 
 <!-- Change one condition while making the others explicit. Ask what survives
 and which inference is affected. Put the justified answer separately, or mark
 the question open. Distinguish a false conclusion from an inconclusive test. -->
 
-## What the reader can now do
+## Exercises
 
-<!-- Give tasks that require reconstructing the hard inference and using the
-result. This heading is a teaching aim, not an assertion of measured learning.
-Record actual attempts, assistance and unresolved difficulties in review_notes
-in the companion mapping; distinguish self-review, agent review and reader review. -->
+<!-- Tasks that require reconstructing the hard inference and using the result.
+This is a teaching aim, not an assertion of measured learning. Record actual
+attempts, assistance and unresolved difficulties in review_notes in the companion
+mapping; distinguish self-review, agent review and reader review. -->
 
-## Sources and verification
+## Formal verification
 
-<!-- Link exact statements, proof destinations, citation roles and review scope. -->
+<!-- One ordinary paragraph with readable links to the formal statements, saying
+whether each is the same as, stronger or weaker than the statement taught (RG-20). -->
+
+## Acknowledgements
+
+<!-- At the end, in two to four sentences, including the use of AI tools (RG-24). -->
 
 ## References
 
