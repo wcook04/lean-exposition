@@ -59,6 +59,48 @@ show how to test a lesson outside the SK example, including a case where a
 teaching repair cannot replace a proof. These are worked method checks, not
 claims of improved human learning.
 
+## Worked instances
+
+The skills are written for any formalised result: a paper, a Lean development,
+a Comparator challenge and a long reasoning record. Lessons particular to one
+result are marked as instance notes in the skills or kept here.
+
+- **SK (QAOA and the Parisi measure).** The first instance, in
+  [`papers/qaoa-sk/`](../papers/qaoa-sk/). It taught statement fidelity across
+  changes of mathematical setting, exact proof destinations into the long
+  record, and plain words hyperlinked to pinned Lean line ranges in place of
+  identifiers in prose.
+- **Erdős #257.** The [method transfer](../docs/erdos-method-transfer.md)
+  records the irrationality exposition and the changed-case checks it taught.
+- **Quartic query separation** (OpenAI's total functions with
+  R(F) ≥ Q(F)^(4−o(1))). An editorial review of the first expert companion
+  and exposition found no mathematical error, yet neither was fit to send. They
+  never gave the one-line reason for the exponent (R ≈ m·L with
+  L ≈ m^(1−1/k), against Q ≈ √m), never placed the result after the earlier
+  exponents 5/2, 8/3 and 3 with their authors, under-credited the cheat-sheet
+  and Forrelation papers the construction inherits from, spent pages
+  re-deriving Grover search, minimax and the Forrelation lower bound that the
+  authors of the cited query-complexity literature already know, and named
+  implementation theorems in place of the Comparator challenge those readers
+  would audit. That case added the reader-modelling step and the "Checking
+  the statement" appendix to [long to short](long-to-short/SKILL.md), and the
+  frame-before-examples rule to
+  [record to exposition](record-to-expository/SKILL.md). It also showed the
+  value of a short table of natural shortcuts that fail, one counterexample
+  per row: it tells those readers what to take as known and what to check.
+
+## Where reader feedback goes
+
+Fold every reader report, referee return or editorial critique back through
+the [review-and-refinement loop](../docs/authoring.md#use-and-improve-the-transition-skills).
+Repair the paper first. Then route the lesson to the transition that made the
+decision: reader model, selection and Lean linking to `long-to-short`;
+teaching order and examples to `record-to-expository`; missing arguments to
+`graph-to-long`; wrong credit or evidence status to `source-to-graph`. Edit
+the existing rule when one was missed or too weak, and add a rule only when it
+changes an identifiable decision. A lesson true of one result goes under
+**Worked instances** above. Record which edition and reader produced it.
+
 The long record must make its selected argument recoverable. The expert paper
 must make its contribution and decisive reasoning assessable. The exposition
 must let its intended reader understand and use one meaningful result. These
@@ -78,3 +120,12 @@ steps can mechanically verify a prose implication, upgrade a pending
 check or inherit acceptance from an earlier edition. Graph-associated views
 reuse the authoritative Markdown and mappings without becoming another editable
 prose store.
+
+A reader built on these documents shows what the authors wrote and what Lean
+reports (axioms, dependency graph, statement types); the model's role is to
+link prose to code, so its failure is an unhelpful link, not false content.
+Label each link and graph edge with its origin: extracted from structured Lean
+output, or proposed by a model and how it was checked. A long record linked to
+from shorter papers opens with a reading guide that separates the required
+proof path from optional routes and evidence, and every linked destination
+opens with the statement it proves.
