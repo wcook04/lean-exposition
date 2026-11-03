@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "267b41919f95376c728c2f90f5c80e4bf7aa13ca3418d4931ff608c908902e54",
-  "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
+  "content_sha256": "4b34070c1152369eec9bef536de51f8929c68f3a851f291e962a0c51a3b31ebb",
+  "graph_sha256": "3592e6a1f4e5ac9cf05e86d1dac98fabd5ac5f25ba57c4ce6e79c2b2f110d0db",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"

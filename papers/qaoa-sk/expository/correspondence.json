@@ -154,8 +154,8 @@
     "support.zero_candidate_descent",
     "support.zero_curvature"
   ],
-  "content_sha256": "93145ef5687bb57439b6b2cb17b3f040069f7144f8a92e8bed7d3d18237af961",
-  "graph_sha256": "9a43c3eddb32c8ae6201629ef2e4df2d94167dc286a45dd429a8dff192df88b5",
+  "content_sha256": "67d89307e8131e8c2ca1f21749dce062218534d1ac25d4c5860f2500e234e33f",
+  "graph_sha256": "3592e6a1f4e5ac9cf05e86d1dac98fabd5ac5f25ba57c4ce6e79c2b2f110d0db",
   "passages": [
     {
       "anchor": "opening",

@@ -16,8 +16,13 @@ import "./styles/family.css";
 import "./reader/reader-content.css";
 import "./figures/figures.css";
 import "./app/app.css";
+import "./home/hero.css";
 
 import { App } from "./app/App";
+import { prefetch } from "./app/prefetch";
+import { parseRoute } from "./app/router";
+
+prefetch(parseRoute(new URL(window.location.href)).view);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

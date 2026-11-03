@@ -1,23 +1,34 @@
-// The reading column for one record. Its first screen answers why the reader
-// chose it: what it is and where it comes from, its title, a passage from the
-// chosen account, then the recorded statement and scope, every direct
-// relation (drawn on the map or not), and its sources and checks. Everything
-// shown is the record as captured; the panel adds wording, not facts.
+// The record sheet: the drill-down from a card. Its first screen answers "what is
+// this, and how is it stated?": kind, source, title and level marks, then the Lean
+// declarations linked to it, then its statement in each paper as an exact slice,
+// then what it uses and what uses it, its assumptions, and its sources and checks.
+// Where the alignment has nothing, the record's passages stand in. Everything shown
+// is the record as captured; the sheet adds wording, not facts.
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Stage } from "../api/types";
+import type { AlignedStatement, RecordAlignment } from "../api/lean";
 import { useEdition } from "../app/data";
 import { routeHref, type Trace } from "../app/router";
 import { kindLead } from "../checks/summary";
 import { statedDate } from "../checks/summary";
 import { closure, type ArgEdge } from "../model/graph";
 import { transitiveReduction } from "../map/engine/skeleton";
+import { recordLine, useRecordAlignment } from "../compare/useAlignment";
+import { LazyStatementSlice } from "../compare/lazy";
+import { LazyLeanBlock } from "../lean/lazy";
+import { statementHref } from "../reader/links";
+import { LENS_ORDER } from "../map/levels";
+import { recordMark } from "../map/leanMarks";
+import { noInputsWords } from "../map/labels";
+import { markWords } from "../model/leanStatus";
+import type { LeanStep } from "./model";
+import { PAPER_NAMES } from "../app/papers";
 import { Accounts } from "./Accounts";
 import { LeanCode } from "./LeanCode";
 import { flyTitle, installCardCapture, sourceFor } from "./flight";
 import {
   announcement,
-  firstSentence,
   groupPassages,
   kindWord,
   outcomeParts,
@@ -28,6 +39,7 @@ import {
   stepVerb,
   webUrl,
 } from "./model";
+import { useEntryState } from "../app/trail";
 import { CloseButton, CopyButton, Jumps, Pane, type PaneSpec } from "./parts";
 import { useSheet } from "./sheet";
 import { useProvenance } from "./sources";
@@ -61,20 +73,32 @@ interface Props {
   section?: "explanation" | "statement" | "argument" | "sources";
   /** Mark the panel's root element, e.g. for the page to restore focus or measure it. */
   panelRef?: React.Ref<HTMLElement>;
+  /** The paper tab to start on (the map's lens). */
+  account?: Stage;
+  /** The goal's theorem, shown when the alignment has no slices of it. */
+  goalBody?: React.ReactNode;
+  /** On the map: open one level of inputs. */
+  onInputs?(id: string): void;
+  /** On the map: draw everything below this record. */
+  onBelow?(id: string): void;
+  /** Walk to a Lean name in the sheet, as one history entry. */
+  onWalk?(walk: LeanStep): void;
 }
 
 const PANES: PaneSpec[] = [
-  { id: "explanation", title: "Passages" },
-  { id: "statement", title: "Statement" },
-  { id: "argument", title: "Argument" },
-  { id: "sources", title: "Sources & checks" },
+  { id: "quote", title: "Statement" },
+  { id: "statement", title: "Lean" },
+  { id: "explanation", title: "Papers" },
+  { id: "argument", title: "Uses" },
+  { id: "sources", title: "What ran" },
 ];
 
-export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef }: Props) {
+export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, passageHref, compact, onEcho, onEdge, leaving, section, panelRef, account, goalBody, onInputs, onBelow, onWalk }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const node = graph.nodes.get(nodeId)!;
   const { state: detail, retry } = useRecordDetail(node.ref);
+  const aligned = useRecordAlignment(nodeId);
   const rootRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -119,6 +143,10 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
   };
   const failed = detail.status === "error" ? failureKind(detail.error) : null;
   const peek = sheet.phone && sheet.state === "peek";
+  const mark = recordMark(nodeId, node);
+  const leanTitle = node.kind === "declaration" && !recordLine(nodeId)?.short;
+  const recordedStatement = record?.statement ? String(record.statement) : null;
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   return (
     <aside
@@ -133,11 +161,10 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
       <header className="panel__head">
         <div className="panel__id">
           <span className="caps">{kindWord(node.kind)}</span>
-          <span className="panel__src" data-slot={origin.slot} title={origin.locator ?? undefined}>
-            <span className="src-sq" aria-hidden="true" />
+          <span className="panel__src" title={origin.locator ?? undefined}>
             <span className="panel__src-name">
               {origin.label}
-              {origin.place && `, ${origin.place}`}
+              {origin.place && origin.family !== "lean" && `, ${origin.place}`}
             </span>
           </span>
           <span className={`panel__status panel__status--${node.status}`}>{statusWords(node.status, "record")}</span>
@@ -148,14 +175,28 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             <span aria-hidden="true">↓ </span>Show the map
           </button>
         )}
-        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${node.kind === "declaration" ? " lean" : ""}`}>
-          {node.kind === "declaration" ? breakable(node.label) : node.label}
+        <h2 id="panel-title" ref={headingRef} tabIndex={-1} className={`panel__title${leanTitle ? " lean" : ""}`}>
+          {leanTitle ? breakable(node.label) : plainLabel(nodeId, node)}
         </h2>
+        {node.kind === "declaration" && !leanTitle && (
+          <p className="panel__fullname lean" translate="no">
+            {node.declaration ?? node.label}
+          </p>
+        )}
+        <div className="panel__levels">
+          <span className="panel__mark">
+                        {markWords(mark)}
+            {mark.statement !== "none" || mark.proof !== "none" ? ". An AI agent made this link" : ""}
+          </span>
+          <a className="panel__quiet" href={routeHref({ view: "compare", node: nodeId })}>
+            Compare
+          </a>
+        </div>
         {path !== undefined && <Route path={path} nodeId={nodeId} onSelect={onSelect} onEcho={echo} />}
         {peek && (
           <div className="panel__peek">
             <button ref={sheet.readRef} type="button" className="panel__action panel__action--primary" onClick={() => sheet.open()}>
-              Read the record
+              Read the step
             </button>
             <button type="button" className="panel__action" onClick={() => sheet.open("sources")}>
               Sources &amp; checks
@@ -169,24 +210,27 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
         <div className="panel__content" key={`b:${nodeId}`}>
           {failed === "missing" ? (
             <p className="panel__error" role="alert">
-              This site has no record with this identifier.
+              This site has no step with this identifier.
             </p>
           ) : null}
-          <Pane id="explanation" title="Passages">
-            <Accounts
-              nodeId={nodeId}
-              grouped={grouped}
-              memberships={memberships}
-              status={detail.status}
-              onRetry={retry}
-              href={href}
-            />
+          <Pane id="quote" title="Statement">
+            <Quote aligned={aligned} first={account} compact={compact} recorded={node.kind === "declaration" ? null : recordedStatement} body={goalBody} />
           </Pane>
 
-          <Pane id="statement" title="Statement">
-            <Statement
+          <Pane id="statement" title="In Lean">
+            <InLean nodeId={nodeId} aligned={aligned} statement={recordedStatement} kind={node.kind} status={node.status} onWalk={onWalk} onSelect={onSelect} onEcho={echo} previewSlot={slot} />
+          </Pane>
+
+          <Pane id="explanation" title="In the papers">
+            {aligned?.statements.length ? (
+              <PaperSlices aligned={aligned} first={account} compact={compact} resetKey={nodeId} />
+            ) : (
+              <>
+                <Accounts nodeId={nodeId} grouped={grouped} memberships={memberships} status={detail.status} onRetry={retry} href={href} />
+              </>
+            )}
+            <AsRecorded
               kind={node.kind}
-              status={node.status}
               statement={record?.statement ? String(record.statement) : null}
               boundary={record?.boundary ? String(record.boundary) : null}
               state={detail.status}
@@ -194,8 +238,8 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
             />
           </Pane>
 
-          <Pane id="argument" title="Argument">
-            <Argument nodeId={nodeId} trace={trace} onTrace={onTrace} onSelect={onSelect} onEcho={echo} onEdge={onEdge} />
+          <Pane id="argument" title="Uses and used by">
+            <Argument nodeId={nodeId} trace={trace} onTrace={onTrace} onSelect={onSelect} onEcho={echo} onEdge={onEdge} onInputs={onInputs} onBelow={onBelow} />
           </Pane>
 
           <Pane id="sources" title="Sources & checks">
@@ -209,11 +253,17 @@ export function RecordPanel({ nodeId, path, trace, onClose, onSelect, onTrace, p
           </Pane>
         </div>
       </div>
+      <div ref={setSlot} className="lean-slot lean-slot--compact" />
       <p className="visually-hidden" aria-live="polite">
         {leaving ? "" : announcement(node.label, kindWord(node.kind))}
       </p>
     </aside>
   );
+}
+
+/** A declaration's record goes by its short title; every other record by its label. */
+function plainLabel(id: string, node: { kind: string; label: string }): string {
+  return node.kind === "declaration" ? recordLine(id)?.short || node.label : node.label;
 }
 
 // ------------------------------------------------------------------ route
@@ -230,13 +280,9 @@ function Route({
   onEcho(ids: Iterable<string> | null): void;
 }) {
   const { graph } = useEdition();
-  const [open, setOpen] = useState(false);
-  const [whole, setWhole] = useState(false);
-  useEffect(() => {
-    setOpen(false);
-    setWhole(false);
-  }, [nodeId]);
-  if (path === null) return <p className="panel__route">No recorded route from the main result in this account</p>;
+  const [open, setOpen] = useEntryState(`route-open:${nodeId}`, false);
+  const [whole, setWhole] = useEntryState(`route-whole:${nodeId}`, false);
+  if (path === null) return <p className="panel__route">No recorded route from the main result in this paper</p>;
   if (path.length < 2) return null;
   const goal = path[0];
   const goalName = graph.regions.find((r) => r.goal === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
@@ -245,7 +291,7 @@ function Route({
   const listId = `route-${nodeId.replace(/[^\w-]/g, "_")}`;
   return (
     <div className="panel__route">
-      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
+      <button type="button" className="panel__route-toggle" aria-expanded={open} aria-controls={listId} onClick={() => setOpen(!open)}>
         <span>
           One recorded route from <strong>{goalName}</strong>, in {steps} {steps === 1 ? "step" : "steps"}
         </span>
@@ -297,61 +343,207 @@ function RouteItem({
   );
 }
 
-// -------------------------------------------------------------- statement
+// ------------------------------------------------------------------- lean
 
-function Statement({
+function InLean({
+  nodeId,
+  aligned,
+  statement,
   kind,
   status,
+  onWalk,
+  onSelect,
+  onEcho,
+  previewSlot,
+}: {
+  nodeId: string;
+  aligned: RecordAlignment | null;
+  statement: string | null;
+  kind: string;
+  status: string;
+  onWalk?(walk: LeanStep): void;
+  onSelect(id: string): void;
+  onEcho(ids: Iterable<string> | null): void;
+  previewSlot: HTMLElement | null;
+}) {
+  // The sheet has its own papers and its own reading line, and with a host every name walks in the sheet.
+  const hosted = { noPapers: true, previewSlot, ...(onWalk ? { onName: onWalk } : {}) };
+  if (aligned?.lean.length)
+    return (
+      <div className="panel__lean">
+        {aligned.lean.map((row, i) => (
+          <LazyLeanBlock key={`${row.name}:${i}`} name={row.name} module={row.module} relation={row.relation} note={row.note} clause={row.clause} compact {...hosted} {...{ lines: row.lines, quietLines: true }} />
+        ))}
+      </div>
+    );
+  if (kind === "declaration" && statement)
+    return (
+      <>
+        <LeanCode source={statement} />
+        <p className="panel__note">{statusWords(status, kind)}</p>
+      </>
+    );
+  if ((recordLine(nodeId)?.lean ?? 0) > 0) return <p className="panel__state faint">Loading the Lean declarations…</p>;
+  return <NoLean nodeId={nodeId} onSelect={onSelect} onEcho={onEcho} />;
+}
+
+/** A record with no Lean: said plainly, with what it rests on, so the reader can go on down. */
+function NoLean({ nodeId, onSelect, onEcho }: { nodeId: string; onSelect(id: string): void; onEcho(ids: Iterable<string> | null): void }) {
+  const { graph } = useEdition();
+  const inputs = (graph.out.get(nodeId) ?? []).filter((e) => graph.nodes.has(e.to));
+  return (
+    <>
+      <p className="panel__lead">No Lean declaration is linked to this step.</p>
+      {inputs.length === 0 ? (
+        <p className="panel__note">It has no recorded inputs either, so the argument stops here and depends on its sources, listed below.</p>
+      ) : (
+        <>
+          <p className="panel__note">It uses {inputs.length === 1 ? "this step" : `these ${inputs.length} steps`}:</p>
+          <ul className="rests">
+            {inputs.map((edge) => {
+              const n = graph.nodes.get(edge.to)!;
+              const mark = recordMark(edge.to, n);
+              return (
+                <li key={edge.key} onPointerEnter={() => onEcho([edge.to])} onPointerLeave={() => onEcho(null)}>
+                  <button type="button" className="rels__name" onClick={() => onSelect(edge.to)}>
+                    {n.label}
+                  </button>
+                  <span className="rests__words">{markWords(mark)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </>
+  );
+}
+
+/** The papers in the order a reader meets them. */
+const QUOTE_ORDER: Stage[] = ["short", "long", "expository"];
+
+/** The record's statement as a paper gives it, quoted, with the way into the paper. */
+function Quote({ aligned, first, compact, recorded, body }: { aligned: RecordAlignment | null; first?: Stage; compact?: boolean; recorded: string | null; body?: React.ReactNode }) {
+  const order = first ? [first, ...QUOTE_ORDER.filter((s) => s !== first)] : QUOTE_ORDER;
+  const slices = aligned?.statements ?? [];
+  const rank = (slice: AlignedStatement) => ROLE_ORDER.indexOf(slice.role) * 10 + order.indexOf(slice.paper);
+  const best = [...slices].sort((a, b) => rank(a) - rank(b) || a.start_byte - b.start_byte)[0];
+  if (best)
+    return (
+      <div className="panel__slice panel__quote">
+        <p className="panel__slice-head">
+          <span>
+            {PAPER_NAMES[best.paper].short}, {best.section}
+          </span>
+          <a href={statementHref(best)}>Read in context</a>
+        </p>
+        <LazyStatementSlice statement={best} compact={compact} />
+      </div>
+    );
+  if (body) return <div className="panel__quote">{body}</div>;
+  if (recorded) return <p className="panel__statement panel__quote">{recorded}</p>;
+  return <p className="panel__note">No statement is recorded for this step.</p>;
+}
+
+// ----------------------------------------------------------------- papers
+
+const ROLE_WORDS: Record<AlignedStatement["role"], string> = {
+  statement: "States it",
+  definition: "Defines it",
+  derivation: "Derives it",
+  explanation: "Explains it",
+  example: "An example",
+  mention: "Mentions it",
+};
+const ROLE_ORDER: AlignedStatement["role"][] = ["statement", "definition", "derivation", "explanation", "example", "mention"];
+
+/** One tab per paper, each with that paper's exact slices, strongest first. */
+function PaperSlices({
+  aligned,
+  first,
+  compact,
+  resetKey,
+}: {
+  aligned: RecordAlignment;
+  first?: Stage;
+  compact?: boolean;
+  resetKey: string;
+}) {
+  const present = LENS_ORDER.filter((s) => aligned.statements.some((a) => a.paper === s));
+  // The entry owns the tab, per record, so Back returns to it and a new record starts fresh.
+  const [chosen, setChosen] = useEntryState<Stage | null>(`paper-tab:${resetKey}`, null);
+  const stage = chosen ?? (first && present.includes(first) ? first : present[0]);
+  const slices = aligned.statements.filter((a) => a.paper === stage).sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role));
+  return (
+    <>
+      <div className="panel__tabs" role="tablist" aria-label="Papers">
+        {LENS_ORDER.map((s) => (
+          <button
+            key={s}
+            type="button"
+            role="tab"
+            aria-selected={s === stage}
+            className="panel__tab"
+            onClick={() => setChosen(s)}
+          >
+            {PAPER_NAMES[s].short}
+          </button>
+        ))}
+      </div>
+      {slices.length === 0 ? (
+        <p className="panel__note">No slice of the {PAPER_NAMES[stage].short.toLowerCase()} is linked to this step.</p>
+      ) : (
+        slices.map((slice) => (
+          <div className="panel__slice" key={`${slice.at ?? slice.start_byte}:${slice.role}`}>
+            <p className="panel__slice-head">
+              <span>
+                {ROLE_WORDS[slice.role]}, in {slice.section}
+              </span>
+              <a href={statementHref(slice)}>Read in context</a>
+            </p>
+            <LazyStatementSlice statement={slice} compact={compact} />
+          </div>
+        ))
+      )}
+    </>
+  );
+}
+
+function AsRecorded({
+  kind,
   statement,
   boundary,
   state,
   onRetry,
 }: {
   kind: string;
-  status: string;
   statement: string | null;
   boundary: string | null;
   state: "loading" | "error" | "ready";
   onRetry(): void;
 }) {
-  if (state === "loading") return <p className="panel__state faint">Loading the record…</p>;
+  if (state === "loading") return <p className="panel__state faint">Loading the step…</p>;
   if (state === "error")
     return (
       <p className="panel__state" role="alert">
-        The record could not be loaded.{" "}
+        The step could not be loaded.{" "}
         <button type="button" className="control panel__retry" onClick={onRetry}>
           Retry
         </button>
       </p>
     );
-  const summary = boundary ? firstSentence(boundary) : null;
+  const text = kind === "declaration" ? null : statement;
+  if (!text && !boundary) return null;
   return (
-    <>
-      <p className="panel__lead caps">Recorded statement</p>
-      {statement ? (
-        kind === "declaration" ? (
-          <>
-            <LeanCode source={statement} />
-            <p className="panel__note">{statusWords(status, kind)}</p>
-          </>
-        ) : (
-          <p className="panel__statement">{statement}</p>
-        )
-      ) : (
-        <p className="panel__note">No statement is recorded for this record.</p>
-      )}
-      {summary && (
+    <details className="panel__recorded">
+      <summary>As recorded</summary>
+      {text && <p className="panel__statement">{text}</p>}
+      {boundary && (
         <p className="panel__scope">
-          <span className="panel__scope-lead">Scope</span> {summary}
+          <span className="panel__scope-lead">Scope</span> {boundary}
         </p>
       )}
-      {boundary && summary !== boundary.trim() && (
-        <details className="panel__more-scope">
-          <summary>Full recorded scope</summary>
-          <p>{boundary}</p>
-        </details>
-      )}
-    </>
+    </details>
   );
 }
 
@@ -364,6 +556,8 @@ function Argument({
   onSelect,
   onEcho,
   onEdge,
+  onInputs,
+  onBelow,
 }: {
   nodeId: string;
   trace?: Trace;
@@ -371,13 +565,17 @@ function Argument({
   onSelect(id: string): void;
   onEcho(ids: Iterable<string> | null): void;
   onEdge?(key: string): void;
+  onInputs?(id: string): void;
+  onBelow?(id: string): void;
 }) {
   const { graph } = useEdition();
   const restsOn = useMemo(() => closure(graph, nodeId, "prerequisites"), [graph, nodeId]);
   const feeds = useMemo(() => closure(graph, nodeId, "consumers"), [graph, nodeId]);
   // Relations the simplified map leaves out because a longer drawn route implies them.
   const implied = useMemo(() => transitiveReduction(graph.order, graph.edges).implied, [graph]);
-  const prerequisites = graph.out.get(nodeId) ?? [];
+  const out = graph.out.get(nodeId) ?? [];
+  const prerequisites = out.filter((e) => e.kind !== "assumes");
+  const assumptions = out.filter((e) => e.kind === "assumes");
   const uses = graph.in.get(nodeId) ?? [];
   const cites = useMemo(() => {
     const to = new Set<string>();
@@ -392,17 +590,30 @@ function Argument({
 
   return (
     <>
+      {onInputs && prerequisites.length > 0 && (
+        <div className="panel__open">
+          <button type="button" className="control" onClick={() => onInputs(nodeId)}>
+            Show or hide its inputs on the map
+          </button>
+          {onBelow && (
+            <button type="button" className="control" onClick={() => onBelow(nodeId)}>
+              Open everything below
+            </button>
+          )}
+        </div>
+      )}
       <Relations
-        title="Records it uses directly"
+        title="Steps it uses directly"
         edges={prerequisites}
         end="to"
         implied={implied}
-        empty="No recorded inputs."
+        empty={noInputsWords(graph.nodes.get(nodeId)?.kind ?? "claim")}
         onSelect={onSelect}
         onEcho={onEcho}
         onEdge={onEdge}
       />
-      <Relations title="Records that use it directly" edges={uses} end="from" implied={implied} empty="No record is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
+      <Relations title="Steps that use it directly" edges={uses} end="from" implied={implied} empty="Nothing is recorded as using it directly." onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />
+      {assumptions.length > 0 && <Relations title="Assumptions" edges={assumptions} end="to" implied={implied} empty="" onSelect={onSelect} onEcho={onEcho} onEdge={onEdge} />}
       <div className="panel__trace" role="group" aria-label="Highlight on the map">
         <button
           type="button"
@@ -413,7 +624,7 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={restsOn.size <= 1}
         >
-          All records it uses (<span className="num">{restsOn.size - 1}</span>)
+          All steps it uses (<span className="num">{restsOn.size - 1}</span>)
         </button>
         <button
           type="button"
@@ -424,16 +635,16 @@ function Argument({
           onPointerLeave={() => onEcho(null)}
           disabled={feeds.size <= 1}
         >
-          All records that use it (<span className="num">{feeds.size - 1}</span>)
+          All steps that use it (<span className="num">{feeds.size - 1}</span>)
         </button>
       </div>
       <p className="panel__note">
-        Each button highlights on the map every record reached through recorded links, directly or through other records.
+        Each button highlights on the map every step reached through recorded links, directly or through other steps.
       </p>
       {(cites.to.length > 0 || cites.from.length > 0) && (
         <div className="panel__cites">
           <p className="panel__group">
-            Citations <span className="faint">(links for navigation, not part of the argument)</span>
+            Citations <span className="faint">(links for navigation, outside the argument)</span>
           </p>
           <CiteList title="Cites" ids={cites.to} onSelect={onSelect} onEcho={onEcho} />
           <CiteList title="Cited by" ids={cites.from} onSelect={onSelect} onEcho={onEcho} />
@@ -483,12 +694,12 @@ function Relations({
                 <span className="rels__what">
                   <button
                     type="button"
-                    className={`rels__name${n.kind === "declaration" ? " lean" : ""}`}
+                    className={`rels__name${n.kind === "declaration" && !recordLine(id)?.short ? " lean" : ""}`}
                     onClick={() => onSelect(id)}
                     onFocus={() => onEcho([id])}
                     onBlur={() => onEcho(null)}
                   >
-                    {n.label}
+                    {plainLabel(id, n)}
                   </button>
                   <span className="rels__meta">
                     {implied.has(edge.key) && <span className="faint">Not drawn on the map</span>}
@@ -535,6 +746,12 @@ function CiteList({ title, ids, onSelect, onEcho }: { title: string; ids: string
 
 // ------------------------------------------------------- sources and checks
 
+/** A check's identifier as words: its date is shown beside it. */
+function plainCheck(label: string): string {
+  const words = label.replace(/_\d{8}$/, "").replace(/_/g, " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: string; sourceId?: string; citationIds?: string[]; declaration?: string }) {
   const { graph } = useEdition();
   const node = graph.nodes.get(nodeId)!;
@@ -546,11 +763,10 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
   const revision = source?.revision ?? null;
   return (
     <div className="prov">
-      <p className="prov__source" data-slot={origin.slot}>
-        <span className="src-sq" aria-hidden="true" />
+      <p className="prov__source">
         <span>
           {origin.label}
-          {origin.place && <span className="muted">, {origin.place}</span>}
+          {origin.place && origin.family !== "lean" && <span className="muted">, {origin.place}</span>}
         </span>
       </p>
       {origin.locator && <p className="prov__locator">{origin.locator}</p>}
@@ -580,9 +796,9 @@ function Provenance({ nodeId, sourceId, citationIds, declaration }: { nodeId: st
               </dd>
             </>
           )}
-          <dt>Record</dt>
+          <dt>Step</dt>
           <dd>
-            <code>{nodeId}</code> <CopyButton text={nodeId} what="record id" />
+            <code>{nodeId}</code> <CopyButton text={nodeId} what="step id" />
           </dd>
           {declaration && (
             <>
@@ -636,8 +852,7 @@ const OUTCOME_NAMES: Record<string, string> = { passed: "Passed", failed: "Faile
 function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly string[] }) {
   const edition = useEdition();
   const stored = useStored();
-  const [open, setOpen] = useState<string | null>(null);
-  useEffect(() => setOpen(null), [nodeId]);
+  const [open, setOpen] = useEntryState<string | null>(`checks-open:${nodeId}`, null);
   const rows = useMemo(() => {
     const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
     const by = new Map<string, { id: string; label: string; status: string }[]>();
@@ -658,9 +873,9 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
 
   return (
     <div className="checks">
-      <p className="panel__group">Recorded checks</p>
+      <p className="panel__group">Recorded runs</p>
       {rows.length === 0 ? (
-        <p className="panel__note">No check is recorded for this record.</p>
+        <p className="panel__note">No run is recorded for this step.</p>
       ) : (
         <ul className="checks__rows">
           {rows.map((row) => {
@@ -686,7 +901,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
                 </div>
                 {lead !== title && <p className="checks__lead">{lead}</p>}
                 <button type="button" className="linklike checks__toggle" aria-expanded={isOpen} aria-controls={histId} onClick={() => setOpen(isOpen ? null : row.kind)}>
-                  {isOpen ? "Hide the check records" : row.records.length === 1 ? "Show the check record" : `Show the ${row.records.length} check records`}
+                  {isOpen ? "Hide the run records" : row.records.length === 1 ? "Show the run record" : `Show the ${row.records.length} run records`}
                 </button>
                 {isOpen && (
                   <ol className="checks__history" id={histId}>
@@ -696,7 +911,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
                       return (
                         <li key={r.id}>
                           <span className={`outcome outcome--${r.status}`}>{OUTCOME_NAMES[r.status] ?? r.status.replace(/_/g, " ")}</span>
-                          <span className="checks__label">{r.label}</span>
+                          <span className="checks__label">{plainCheck(r.label)}</span>
                           {date && <span className="faint">{date.text}</span>}
                         </li>
                       );
@@ -710,7 +925,7 @@ function Checks({ nodeId, evidenceIds }: { nodeId: string; evidenceIds: readonly
       )}
       <p className="panel__more">
         <a href={routeHref({ view: "checks", node: nodeId })}>
-          What each check examined <span aria-hidden="true">→</span>
+          What each run examined <span aria-hidden="true">→</span>
         </a>
       </p>
     </div>

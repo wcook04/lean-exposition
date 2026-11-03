@@ -10,29 +10,36 @@ the generated website; make changes here and let the workflow publish them.
 The website shows one captured edition of the worked example as a reader would
 want to explore it:
 
-- **The argument map.** The main result is at the top, with the records its
-  recorded argument uses beneath it. Selecting "Inputs" on a card draws the
-  records that card uses. A line runs from a record to the result that uses it,
-  and each line opens the recorded explanation of that step. Assumptions are
-  drawn as tags on the results that assume them. On a phone the same argument is
-  an outline you scroll.
+- **The argument map.** The main result is at the top, with the steps its recorded argument uses beneath it. Selecting "Inputs" on a card draws the steps that card uses. A line runs from a step to the result that uses it, and each line opens the recorded explanation of that use. Assumptions are
+  drawn as tags on the results that assume them. A switch narrows the map to the steps one paper discusses. On a phone the same argument is an outline you
+  scroll.
+- **Compare.** The proof as a table. Each row is one step and each column is a
+  level, so a step's Lean declaration sits beside its exact statement in the long
+  record, the short paper and the exposition. Choose which levels show, and open
+  any row to read that step in full and walk through the proof.
 - **The papers.** The exposition, the short paper and the long reasoning record.
-  Beside any passage you can list the records linked to it and open passages in
-  the other accounts that are linked to the same records.
-- **The checks.** For each kind of check, what it tests and the outcome of each
-  recorded run: passed, failed, unavailable or not run.
-- **The architectural companion.** The About page includes the paper on why
-  several accounts share one record, with a link to its standalone PDF.
-- **The papers.** The front page's shelf (the header's "Papers") shows each paper's
-  first page, who it is for, and links to read it here or open its PDF.
-- **The films.** Two films are in preparation: one on how to use this site, near the
-  top of the front page, and one on the mathematics, at the end of its layers.
+  The pane facing the paper has two modes, Graph and Lean. In Graph the graph moves to the statement
+  you are reading, and pointing at a marked statement lights its card and names it. Clicking a
+  statement or a card opens its Lean, and any Back takes you to the graph and your place. Choosing
+  Lean yourself keeps the Lean on the statement you are reading.
+  Beside any passage you can list the steps linked to it and open passages in the other papers that are linked to the same steps.
+- **The Lean index.** OpenAI's source, every module and declaration, at the back of
+  the book: plain titles first, each central name explained in the papers' notation,
+  and the names each declaration mentions.
+- **What ran.** What compiled, which axioms, any `sorry`, what Comparator has and has not done, and what AI agents read. Then, for each kind of test, what it tests and the outcome of each recorded run: passed, failed, unavailable or not run.
+- **The architectural companion.** The About page includes the paper on why several papers share one graph, with a link to its standalone PDF.
+- **The papers and PDFs.** The front page's levels band (the Read menu's "All papers
+  and PDFs") shows each paper's first page, who it is for, and links to read it here
+  or open its PDF.
+- **The videos.** [How to use this site](https://www.youtube.com/watch?v=sYMDcT7vyng),
+  near the top of the front page, and [the mathematics](https://www.youtube.com/watch?v=IUAhxUriDVw),
+  at the end of its layers. Both open on YouTube.
 
 Search with <kbd>/</kbd>, or <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd>. The design
 rules (type, colour, the map's drawing conventions, motion and wording) are in
 [DESIGN.md](DESIGN.md).
 
-The argument map, the three accounts and the recorded checks come from the
+The argument map, the three papers and the recorded test runs come from the
 read-only [web API](../docs/web-api.md). The site pins the edition it opened, and if the
 server starts serving a different edition it says so and asks you to reload.
 
@@ -47,7 +54,9 @@ lean-exposition assemble examples/qaoa-sk/evidence-graph.json \
   --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
   --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
   --out build/reading-edition
-python site/scripts/export-static.py build/reading-edition
+python site/scripts/export-static.py build/reading-edition \
+  --lean-tree examples/qaoa-sk/upstream/lean \
+  --alignment examples/qaoa-sk/alignment
 cd site
 npm ci
 REQUIRE_STATIC_PARITY=true npm test
@@ -61,15 +70,33 @@ casefold rules. Tests compare search results and highlights against the server.
 This transport supports the reading website; it is not a complete hosted API.
 The bundle's draft, review and publication metadata remain visible.
 
-Record requests for one table load only that table's content-addressed file.
-The export retains complete record and summary files for unscoped requests and
-older clients; the reader also accepts captured editions without table files.
-This keeps unused citation data out of the initial paper load without changing
-the available records, pagination, search or edition pinning.
-The static reader also requests a smaller paper structure that retains the
-complete paper, coverage and reading links while omitting the expanded
-correspondence edges and support-reference list. The full structure remains
-available at its original route; older editions and live APIs remain supported.
+The export is deterministic and replaces any earlier export. Each response is a
+content-addressed file. `index.json` holds only what startup needs; the maps for
+`/record`, `/papers/query`, `/papers/reading` and `/lean/module` load when a reader
+first asks for that route.
+
+Record requests for one table load only that table's file, and a request with no
+table reads the same per-table files. The static edition carries only what the
+reader reads: a smaller paper structure without the expanded correspondence edges,
+paper queries reduced to their matches, and record responses whose passage text is
+restored from the paper's own bytes. The live API keeps the full responses. The
+exporter writes unpublished samples of those to `build/edition-oracle/`, and
+`tests/static-edition.test.ts` compares the static edition with them.
+
+The Lean index and record alignment have fixed paths (`lean/modules.json`,
+`lean/names.json`, `lean/module/<module>.json`, `alignment.json`), load on demand,
+and change no paper file. An alignment row that fails is printed and left out, so a
+reading edition survives a file still being written;
+`lean-exposition check-alignment examples/qaoa-sk/alignment` is the strict check.
+
+`alignment.json` stays whole for anyone reading the edition. The site mostly reads it in
+parts, which only the static edition has: `alignment/core.json` holds every record's Lean
+and every statement's place, `alignment/<paper>.json` what that paper's statements add
+(their words, their Lean rows and any note), and `/alignment/record?id=…` one record whole.
+The core and the three paper files together are exactly `alignment.json`, which
+`tests/static-edition.test.ts` checks. The startup forms
+`/overview?representation=reader` and `/graph?…representation=reader_map` leave out fields
+no page reads and name them in `omitted_fields`. The full responses stay published.
 
 The build writes route entry files for direct paper, map, search and checks
 links, so a page reload needs no Python server. `site/public/edition/` and
@@ -90,7 +117,7 @@ matches its PDF, and `npm test` fails until a re-rendered PDF's picture is rende
 again.
 The build also publishes the explicitly listed Support build and extraction
 observation at `verification/full-support-build-extraction-observation-20261026.json`.
-The Checks page links to it. `publicObservations()` in `vite.config.ts` owns this
+The What ran page links to it. `publicObservations()` in `vite.config.ts` owns this
 one-file list and serves the same JSON during local development.
 
 The [publishing workflow](../.github/workflows/pages.yml) rebuilds on pushes to
@@ -107,7 +134,7 @@ site's mark and name), film slots and a footer list of the other sites, as the [
 describes. `src/app/family.json` is an unchanged copy of that repository's `sites.json`
 and `src/styles/family.css` of its `assets/family/family.css`; `src/styles/tokens.css`
 maps the stylesheet's `--fam-*` names onto this site's tokens. `public/plectis.svg` is an unchanged
-copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A film without a
+copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A video without a
 YouTube address is held "In preparation". When one is published, copy the updated
 `sites.json` to `src/app/family.json` and the film's two stills
 (`assets/films/<id>-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
@@ -163,21 +190,47 @@ To deploy, serve the API and the site from one origin:
 To call an API on another origin instead, set `VITE_API_ORIGIN` when building.
 Then start `serve` with `--allow-origin` set to the site's origin.
 
-## Check it
+## Test it
 
 ```sh
 npm run typecheck
 npm test
 ```
 
-The tests read fixtures captured from a running server in `tests/fixtures/`, so
-they need no server. After you reassemble the bundle, recapture them with
-`node scripts/capture-fixtures.mjs http://127.0.0.1:8000`. Check visual changes
-in a browser at desktop and phone widths, in both colour schemes.
+The tests read one captured edition in `tests/fixtures/`, so they need no
+server. Its paper copies belong with their captured structures and tie offsets;
+do not replace them by reading directly from the current manuscripts.
+After [assembling the authored bundle](../papers/README.md#assemble-the-authored-bundle),
+start its server from the repository root:
+
+```sh
+lean-exposition serve build/qaoa-sk-authored --port 8000 \
+  --lean-tree examples/qaoa-sk/upstream/lean \
+  --alignment examples/qaoa-sk/alignment
+```
+
+In a second terminal, from the repository root, capture both the website's
+responses (including paper ties) and the backend's closure oracle:
+
+```sh
+node site/scripts/capture-fixtures.mjs http://127.0.0.1:8000
+python site/scripts/capture-closures.py
+```
+
+To inspect a candidate without replacing maintained fixtures, pass
+`--out build/fixture-candidate` to the first command and
+`--out build/fixture-candidate/closures.json` to the second. They must read
+the same assembled graph. Review their changes and run `npm test` from `site/`.
+Check visual changes in a browser at desktop and phone widths, in both colour
+schemes. For the real-input reference-card check, see
+[the design guide](DESIGN.md#references).
 
 After a paper or reader change, exercise a companion link in the built site under
 its deployed base path. Confirm that the opened view contains the intended
 argument, not just its heading, and that returning restores the reading position.
+A new inner scroller needs a `data-keep` attribute or an entry in `SCROLLERS` in
+`src/app/restore.ts`, and a new tab or open panel uses `useEntryState` from
+`src/app/trail.ts`, so that Back restores them.
 Also open the link normally or copy its address: an in-app click handler can hide
 an invalid public URL. Check the actual paper sources for print-only layout
 commands leaking into the reader, while preserving mathematical notation and
@@ -190,12 +243,14 @@ the promised explanation.
 | Folder | What it does |
 | --- | --- |
 | `src/api/` | API types and the client. The client pins the edition by its manifest hash. |
-| `src/home/` | The front page at "/": what the site holds, the main result's statement, the shelf of papers (`PaperShelf.tsx`), the three accounts with their strips, the argument drawn by the map's engine, and the recorded checks |
+| `src/home/` | The front page at "/": the first screen as plain HTML (`heroMarkup.ts`), the levels band with the argument narrowing (`LevelsBand.tsx`), the mathematics and the recorded checks |
+| `src/compare/` | Compare: the table of every step at each level (`table.ts`, `StepTable.tsx`), one step in full (`StepBench.tsx`), the record alignment's hook and the slice renderer |
+| `src/lean/` | The Lean viewer (`LeanBlock`), its tokenizer and data hooks, and the Lean browser at "/lean" |
 | `src/model/` | The argument graph built from the API: records, typed edges with their warrants and theorem applications, sources and the papers' selections. Traversal keeps each application's supplied premises within that use, as the backend does. |
-| `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and key row, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`) and the layout and routing engine (`engine/`) |
+| `src/map/` | The map page at "/map" and its state (`MapPage`, `scene.ts`), its header and strip, the argument tree (`ArgumentTree`), its screen-space layer (`canvas/`), the phone outline (`ArgumentOutline`), the Lean graph (`useLeanGraph`, built by `model/leanGraph.ts`) and the layout and routing engine (`engine/`) |
 | `src/panels/` | The inspector that opens when you select a record or a step |
 | `src/ribbons/` | The three account strips (`StripMarks`, shared with the front page), folded into a bar under the map until opened |
-| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
+| `src/reader/` | The paper reader: Markdown and KaTeX rendering, anchors, links, reviewed references that open in place, the reading page, its passage inspector, the linked-passage chooser and side-by-side visits |
 | `src/figures/` | Redrawn paper figures: the mathematical plots and the companion's shared claim, joint inputs and reading journey; the missing-area plot has an optional Explore mode |
 | `src/checks/`, `src/search/` | The checks page, the search palette and the full search results page |
 | `src/styles/` | Design tokens and shared classes; see [DESIGN.md](DESIGN.md). `family.css` is the family's shared stylesheet, copied unchanged |

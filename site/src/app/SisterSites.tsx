@@ -17,7 +17,7 @@ export function SisterSites({ className }: { className?: string }) {
           </li>
         ))}
         <li>
-          <a href={FAMILY.owner.home}>All websites and films</a>
+          <a href={FAMILY.owner.home}>All websites and videos</a>
         </li>
       </ul>
     </nav>

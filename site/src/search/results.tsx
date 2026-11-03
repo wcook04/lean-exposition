@@ -2,26 +2,34 @@
 // and the full results page. The kind of result is always said in words.
 
 import { useMemo } from "react";
-import type { RecordDetail, SearchItem, Stage } from "../api/types";
+import type { Overview, RecordDetail, SearchItem, Stage } from "../api/types";
 import { get } from "../api/client";
 import { useEdition, useRecord } from "../app/data";
 import { routeHref, type SearchType } from "../app/router";
 import { PAPER_NAMES } from "../app/papers";
 import { kindName } from "../map/labels";
+import { shortTitle } from "../compare/useAlignment";
 import { CHECK_KINDS, OUTCOME_NAMES } from "../checks/summary";
 import { loadDocument, sectionTitleOf, useDocument } from "../reader/documents";
 import { renderTex } from "../reader/math";
 import type { ArgGraph } from "../model/graph";
 import { prepareExcerpt, type PreparedExcerpt } from "./excerpt";
+import type { StepTitles } from "./order";
+import { markedPieces, type LeanHit } from "./leanNames";
+import { kindWord } from "../lean/data";
+import { isChallengeCopy } from "../lean/find";
+import { hasLeanHost } from "../lean/walk";
 
 /** The API table behind each kind of result, in the order results are listed. */
 export const SEARCH_TABLES: { type: SearchType; table: string; noun: [string, string] }[] = [
-  { type: "records", table: "nodes", noun: ["record on the map", "records on the map"] },
+  { type: "statements", table: "statements", noun: ["statement in the papers", "statements in the papers"] },
+  { type: "records", table: "nodes", noun: ["step on the map", "steps on the map"] },
   { type: "sections", table: "sections", noun: ["section heading", "section headings"] },
+  { type: "text", table: "paper", noun: ["place in the papers' text", "places in the papers' text"] },
   { type: "passages", table: "passages", noun: ["linked passage", "linked passages"] },
   { type: "citations", table: "citations", noun: ["citation", "citations"] },
   { type: "sources", table: "sources", noun: ["source", "sources"] },
-  { type: "checks", table: "evidence", noun: ["check record", "check records"] },
+  { type: "checks", table: "evidence", noun: ["run record", "run records"] },
 ];
 
 export function tableOf(type: SearchType): string {
@@ -39,7 +47,50 @@ export function nounFor(type: SearchType, n: number): string {
 
 /** What search does, said the same way in the palette and on the results page. */
 export const SEARCH_HELP =
-  "Search finds the records (claims, sources, citations and check records), section headings and linked passages that contain every word you type, spelled as you type it. It does not search the rest of the papers’ text, and it does not look for words with related meanings.";
+  "Search finds Lean names and what the papers call them, the steps of the argument, the exact statements in the papers, section headings and the full text of the three papers. Every word you type must appear, as a whole word or the start of one. It does not look for words with related meanings.";
+
+/** A Lean declaration as a result: the name, what the papers call it, and what and where it is. */
+export function LeanResultBody({ hit, beside }: { hit: LeanHit; beside?: boolean }) {
+  const fromShort = hit.name.length - hit.short.length;
+  const marks = hit.marks.flatMap(([a, b]): [number, number][] => (b <= fromShort ? [] : [[Math.max(a, fromShort) - fromShort, b - fromShort]]));
+  const file = hit.module.split(".").slice(-2).join("/");
+  const notation = hit.term?.tex ? renderTex(hit.term.tex, false).html : null;
+  return (
+    <>
+      <span className="palette__title lean" translate="no">
+        {markedPieces(hit.short, marks).map((piece, i) => (piece.mark ? <mark key={i}>{piece.text}</mark> : <span key={i}>{piece.text}</span>))}
+        {notation && <span className="palette__notation" dangerouslySetInnerHTML={{ __html: notation }} />}
+      </span>
+      <span className="palette__meta">
+        Lean {kindWord(hit.kind).toLowerCase()} in {isChallengeCopy(hit.module) ? `the Comparator challenge file ${hit.module.split(".").pop()}` : file}
+        {beside ? ". Opens beside the paper" : ""}
+      </span>
+      {hit.term?.words && <span className="palette__excerpt">{hit.term.words.replace(/`/g, "")}</span>}
+    </>
+  );
+}
+
+/** How search knows the steps of the argument, from the edition's graph. */
+export function stepTitles(graph: ArgGraph, main: string | null): StepTitles {
+  return {
+    main,
+    titles(id) {
+      const node = graph.nodes.get(id);
+      return node ? [node.label, shortTitle(id, node.label)] : [];
+    },
+    idOf: (item) => idFromRef(item.ref, "nodes"),
+    isDeclaration: (id) => graph.nodes.get(id)?.kind === "declaration",
+  };
+}
+
+/** The main result the long record names, as the search's first place. */
+export function mainStep(overview: Overview, graph: ArgGraph): string | null {
+  const long = overview.papers.find((paper) => paper.stage === "long");
+  return (long?.paper_scope.selected_goal_ids ?? graph.goals).find((goal) => graph.nodes.has(goal)) ?? null;
+}
+
+/** Whether a Lean result would open beside what is being read. */
+export const opensBeside = hasLeanHost;
 
 /** Where a result will open, in words, before it is opened. */
 export function destinationWords(item: SearchItem): string {
@@ -53,11 +104,15 @@ export function destinationWords(item: SearchItem): string {
     case "passages":
       return `Opens the ${paper.toLowerCase()} at this passage`;
     case "evidence":
-      return "Opens on the checks page";
+      return "Opens on the What ran page";
     case "edges":
-      return "Opens the record that uses it on the argument map";
+      return "Opens the step that uses it on the argument map";
+    case "statements":
+      return `Opens the ${paper.toLowerCase()} at this statement`;
+    case "paper":
+      return `Opens the ${paper.toLowerCase()} at this paragraph`;
     default:
-      return "Opens the record that uses it";
+      return "Opens the step that uses it";
   }
 }
 
@@ -73,6 +128,9 @@ export function directHref(item: SearchItem): string | null {
     }
     case "evidence":
       return routeHref({ view: "checks", node: idFromRef(item.ref, "evidence") });
+    case "statements":
+    case "paper":
+      return item.href ?? null;
     default:
       return null;
   }
@@ -85,7 +143,7 @@ const FIELD_NAMES: Record<string, string> = {
   id: "Identifier",
   declaration: "Lean name",
   title: "Title",
-  details: "Record",
+  details: "Step",
   tool: "Tool",
   url: "Address",
   path: "File",
@@ -124,6 +182,9 @@ export function ResultBody({ item, opening }: { item: SearchItem; opening: boole
       return <SectionResult item={item} excerpt={excerpt} opening={opening} />;
     case "passages":
       return <PassageResult item={item} excerpt={excerpt} opening={opening} />;
+    case "statements":
+    case "paper":
+      return <PaperResult item={item} excerpt={excerpt} />;
     default:
       return <RecordResult item={item} excerpt={excerpt} opening={opening} />;
   }
@@ -135,12 +196,14 @@ function NodeResult({ item, excerpt, opening }: { item: SearchItem; excerpt: Pre
   const node = graph.nodes.get(id);
   const label = node?.label ?? item.label ?? id;
   const inLabel = excerpt?.field === "label";
+  const short = shortTitle(id, label);
+  const marked = inLabel && excerpt ? <Excerpt excerpt={{ ...excerpt, cutStart: false, cutEnd: false }} /> : label;
   return (
     <>
-      <span className={`palette__title${node?.kind === "declaration" ? " lean" : ""}`} data-region={node?.region}>
-        {node && <span className="region-dot" aria-hidden="true" />}
-        {inLabel && excerpt ? <Excerpt excerpt={{ ...excerpt, cutStart: false, cutEnd: false }} /> : label}
+      <span className={`palette__title${node?.kind === "declaration" && short === label ? " lean" : ""}`} data-region={node?.region}>
+        {short === label ? marked : short}
       </span>
+      {short !== label && <span className={`palette__full${node?.kind === "declaration" ? " lean" : ""}`}>{marked}</span>}
       <span className="palette__meta">
         {node ? kindName(node.kind) : "Record"}
         {node && graph.regions.find((r) => r.id === node.region) && <> in {graph.regions.find((r) => r.id === node.region)!.title}</>}
@@ -181,6 +244,25 @@ function PassageResult({ item, excerpt, opening }: { item: SearchItem; excerpt: 
   );
 }
 
+const ROLE_NOUNS: Record<string, string> = { statement: "Statement", definition: "Definition", derivation: "Derivation", explanation: "Explanation", example: "Worked example" };
+
+/** A statement or a paragraph of a paper, by where it stands there. */
+function PaperResult({ item, excerpt }: { item: SearchItem; excerpt: PreparedExcerpt | null }) {
+  const stage = stageOf(item);
+  const paper = stage ? PAPER_NAMES[stage].short.toLowerCase() : "papers";
+  const section = String(item.section ?? "");
+  const statement = item.table === "statements";
+  return (
+    <>
+      <span className="palette__title palette__title--serif">{statement ? item.label : section ? sectionLabel(section) : "Opening of the paper"}</span>
+      <span className="palette__meta">
+        {statement ? `${ROLE_NOUNS[String(item.role)] ?? "Statement"} in the ${paper}${section ? `, ${sectionLabel(section)}` : ""}` : `Text of the ${paper}`}
+      </span>
+      {excerpt && <ExcerptLine excerpt={excerpt} />}
+    </>
+  );
+}
+
 function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: PreparedExcerpt | null; opening: boolean }) {
   const { graph } = useEdition();
   const detail = useRecord(item.ref);
@@ -191,7 +273,7 @@ function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: P
     title = (record?.title as string | undefined) ?? title;
     const owner = detail.status === "ready" ? ownerNode(detail.value, graph) : null;
     const ownerLabel = owner ? graph.nodes.get(owner)!.label : null;
-    meta = !ownerLabel ? "Citation" : ownerLabel === title ? "Citation for the record of the same name" : `Citation for ${ownerLabel}`;
+    meta = !ownerLabel ? "Citation" : ownerLabel === title ? "Citation for the step of the same name" : `Citation for ${ownerLabel}`;
   } else if (item.table === "sources") {
     const path = record?.path as string | undefined;
     title = path ? path.slice(path.lastIndexOf("/") + 1) : title;
@@ -200,7 +282,7 @@ function RecordResult({ item, excerpt, opening }: { item: SearchItem; excerpt: P
     title = (record?.tool as string | undefined) ?? title;
     const kind = CHECK_KINDS[String(record?.kind ?? "")]?.title;
     const status = OUTCOME_NAMES[String(record?.status ?? "")];
-    meta = ["Check record", kind, status?.toLowerCase()].filter(Boolean).join(", ");
+    meta = ["Run record", kind, status?.toLowerCase()].filter(Boolean).join(", ");
   } else if (item.table === "edges") {
     meta = "Recorded link";
   }
@@ -237,17 +319,29 @@ function ExcerptLine({ excerpt }: { excerpt: PreparedExcerpt }) {
   );
 }
 
+const PUNCTUATION = /^[,.;:)]+/;
+
 function Excerpt({ excerpt }: { excerpt: PreparedExcerpt }) {
   return (
     <>
       {excerpt.cutStart && "…"}
       {excerpt.segments.map((s, i) => {
+        const after = excerpt.segments[i + 1];
         if (s.kind === "math") {
           const html = renderTex(s.tex, false).html;
-          const inner = <span className="palette__math" dangerouslySetInnerHTML={{ __html: html }} />;
+          // Punctuation stays on its formula's line.
+          const stop = after?.kind === "text" ? PUNCTUATION.exec(after.text)?.[0] : undefined;
+          const inner = (
+            <span className={stop ? "palette__nobreak" : undefined}>
+              <span className="palette__math" dangerouslySetInnerHTML={{ __html: html }} />
+              {stop}
+            </span>
+          );
           return s.mark ? <mark key={i}>{inner}</mark> : <span key={i}>{inner}</span>;
         }
-        return s.mark ? <mark key={i}>{s.text}</mark> : <span key={i}>{s.text}</span>;
+        const before = excerpt.segments[i - 1];
+        const text = before?.kind === "math" ? s.text.replace(PUNCTUATION, "") : s.text;
+        return s.mark ? <mark key={i}>{text}</mark> : <span key={i}>{text}</span>;
       })}
       {excerpt.cutEnd && "…"}
     </>
@@ -276,6 +370,9 @@ export async function destination(item: SearchItem, graph: ArgGraph): Promise<st
       const anchor = item.label ?? idFromRef(item.ref, "passages");
       return stage ? routeHref({ view: "read", stage, anchor }) : null;
     }
+    case "statements":
+    case "paper":
+      return item.href ?? null;
     case "sections": {
       if (!stage) return null;
       const { doc } = await loadDocument(stage);

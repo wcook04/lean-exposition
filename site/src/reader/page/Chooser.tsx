@@ -60,7 +60,7 @@ export function Chooser({ here, structures, graph, placement, beside, onChoose, 
           <section key={g.stage} className="chooser__account" aria-labelledby={`chooser-${g.stage}`}>
             <header className="chooser__head">
               <h3 id={`chooser-${g.stage}`} className="chooser__name">
-                {own ? "Elsewhere in this account" : PAPER_NAMES[g.stage].short}
+                {own ? "Elsewhere in this paper" : PAPER_NAMES[g.stage].short}
               </h3>
               {!own && (
                 <a
@@ -77,7 +77,7 @@ export function Chooser({ here, structures, graph, placement, beside, onChoose, 
               )}
             </header>
             {!g.ready && <p className="chooser__none faint">Loading the passages…</p>}
-            {g.ready && empty && <p className="chooser__none">No passage in this account is linked to this one.</p>}
+            {g.ready && empty && <p className="chooser__none">No passage in this paper is linked to this one.</p>}
             {g.authored.length > 0 && <ul className="destinations">{g.authored.map(row)}</ul>}
             {g.shared.map((s) => (
               <div key={s.record} className="chooser__shared">

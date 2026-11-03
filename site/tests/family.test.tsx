@@ -94,7 +94,7 @@ describe("running times", () => {
 
 describe("a film slot", () => {
   it("holds a film in preparation with the registration-mark frame and no link", () => {
-    const film = familyFilm("sk-no-gap");
+    const film: FamilyFilm = { ...familyFilm("sk-no-gap"), youtube: null, duration_seconds: null, still: null };
     const host = render(<FilmSlot film={film} size="small" />);
     const figure = host.querySelector("figure")!;
     expect(figure.className).toBe("film-slot film-slot--small film-slot--pending");
@@ -146,7 +146,7 @@ describe("a film slot", () => {
   });
 
   it("switches by itself once the registry gives the film's address and still", () => {
-    const held = familyFilm("interfaces");
+    const held: FamilyFilm = { ...familyFilm("interfaces"), youtube: null, duration_seconds: null, still: null };
     expect(render(<FilmSlot film={held} />).querySelector(".film-slot--pending")).not.toBeNull();
     const released = { ...held, youtube: "https://www.youtube.com/watch?v=abc_123-XY", duration_seconds: 300, still: "assets/films/interfaces" };
     const host = render(<FilmSlot film={released} />);
@@ -178,7 +178,7 @@ describe("the sister sites", () => {
     const links = [...nav.querySelectorAll<HTMLAnchorElement>(".fam-sites__list a")];
     expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
       ...FAMILY.sites.map((s) => [s.short, s.url]),
-      ["All websites and films", "https://wcook04.github.io/"],
+      ["All websites and videos", "https://wcook04.github.io/"],
     ]);
     expect(links.filter((a) => a.getAttribute("aria-current") === "page").map((a) => a.textContent)).toEqual([familySite(THIS_SITE_ID).short]);
   });
@@ -192,7 +192,7 @@ describe("the header's lockup", () => {
     host?.remove();
   });
 
-  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and adds Papers to the jobs", async () => {
+  it("opens with the Plectis plait to the home page, a rule, then this site's mark and name, and lists the five jobs", async () => {
     (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
     const { TopBar } = await import("../src/app/TopBar");
     host = document.createElement("div");
@@ -205,7 +205,7 @@ describe("the header's lockup", () => {
     expect(home.getAttribute("href")).toBe("https://wcook04.github.io/");
     expect(home.getAttribute("rel")).toBe("author");
     const plait = home.querySelector("img")!;
-    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and films");
+    expect(plait.getAttribute("alt")).toBe("Will Cook: all websites and videos");
     expect(plait.getAttribute("src")).toMatch(/^\/(lean-exposition-site\/)?plectis\.svg$/);
     expect(lockup.querySelector(".fam-lockup__rule")!.getAttribute("aria-hidden")).toBe("true");
     const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
@@ -214,8 +214,8 @@ describe("the header's lockup", () => {
     expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
     expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
-    expect(jobs).toEqual(["Argument map", "Read", "Papers", "Checks"]);
-    expect(host.querySelector<HTMLAnchorElement>(".topnav a[href='/#papers']")!.textContent).toBe("Papers");
+    expect(jobs).toEqual(["Read", "Map", "Compare", "What ran", "Lean index"]);
+    expect(host.querySelector<HTMLAnchorElement>(".readmenu a[href='/#papers']")!.textContent).toContain("All papers and PDFs");
   });
 
   it("serves the plait from beside the site, with nothing from another host", () => {

@@ -8,11 +8,13 @@ import sys
 import textwrap
 from pathlib import Path
 
+from .alignment import check_alignment
 from .bundle import STAGES, check_bundle, export_bundle, scaffold
 from .contracts import ContractError, read_json, select, validate_graph, write_json
 from .consumer import inspect_bundle, inspect_graph, project_corpus, project_graph, project_paper, query_corpus, query_papers
 from .extraction import to_graph
 from .intake import audit_sources, fetch
+from .lean_index import build_index, counts, write_index
 from .prove2me import intake_prove2me
 from .verification import VerificationError, check_build, extract_dependencies, verify_comparator
 
@@ -79,6 +81,20 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--allow-origin", help="One exact frontend HTTP(S) origin for CORS")
     cmd.add_argument("--document-path", nargs=2, action="append", metavar=("STAGE", "PATH"),
                      help="Declare a portable authoring path for each of long, short and expository; repeat for all three")
+    cmd.add_argument("--lean-tree", type=Path, help="Serve a Lean tree or prebuilt index JSON beside the bundle")
+    cmd.add_argument("--alignment", type=Path, help="Serve this record-alignment directory (requires --lean-tree)")
+    cmd = commands.add_parser("lean-index", help="Index a Lean source tree from its text, without a toolchain")
+    cmd.add_argument("tree", type=Path)
+    cmd.add_argument("--out", type=Path, required=True, help="A .json file, or a directory for the split views")
+    cmd.add_argument("--lock", type=Path, help="source-lock.json; found beside the tree when omitted")
+    cmd.add_argument("--extraction", type=Path, action="append",
+                     help="Extractor report; its elaborated dependencies replace text ones (repeatable)")
+    cmd = commands.add_parser("check-alignment", help="Check that authored record alignment lands in Lean and the papers")
+    cmd.add_argument("directory", type=Path)
+    cmd.add_argument("--lean-tree", type=Path)
+    cmd.add_argument("--graph", type=Path)
+    cmd.add_argument("--paper", nargs=2, action="append", metavar=("STAGE", "PATH"))
+    cmd.add_argument("--out", type=Path, help="Write the resolved alignment JSON here")
     cmd = commands.add_parser("assemble", help="Validate and package existing paper/mapping pairs")
     cmd.add_argument("graph", type=Path)
     for stage in ("long", "short", "expository"):
@@ -123,7 +139,18 @@ def run(args):
                 raise ContractError("document paths require each of long, short and expository exactly once")
             document_paths = dict(args.document_path)
         return serve(args.bundle, host=args.host, port=args.port, allow_origin=args.allow_origin,
-                     document_paths=document_paths)
+                     document_paths=document_paths, lean_index=args.lean_tree, alignment=args.alignment)
+    if args.command == "lean-index":
+        reports = [read_json(path) for path in args.extraction or ()]
+        index = build_index(args.tree, lock=args.lock, extraction=reports)
+        write_index(index, args.out)
+        return {**counts(index), "revision": index["revision"], "toolchain": index["toolchain"],
+                "dependency_source": index["dependency_source"],
+                **({"extraction": index["extraction"]} if "extraction" in index else {}),
+                "out": str(args.out)}
+    if args.command == "check-alignment":
+        return check_alignment(args.directory, lean_tree=args.lean_tree, graph=args.graph,
+                               papers=dict(args.paper) if args.paper else None, out=args.out)
     if args.command == "validate":
         return validate_graph(read_json(args.graph))
     if args.command == "inspect":

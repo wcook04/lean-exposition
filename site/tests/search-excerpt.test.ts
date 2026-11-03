@@ -65,6 +65,12 @@ describe("readable excerpts", () => {
     expect(segs.some((s) => s.kind === "text" && s.mark && s.text === "gap")).toBe(true);
   });
 
+  it("drops a display formula cut at the end, both of its dollars", () => {
+    const m = marked("then for $t\\in I$ $$q'''(t)", []);
+    const segs = segments(m, false, true);
+    expect(segs.at(-1)).toEqual({ kind: "math", tex: "t\\in I", display: false, mark: false });
+  });
+
   it("prepares an API passage result end to end", () => {
     const excerpt = "\nzero.\n\n### 5.3 Strict curvature creates an impossible integral\n\nThe support";
     const start = 2539;

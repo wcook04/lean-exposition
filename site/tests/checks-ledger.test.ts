@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { GraphMap } from "../src/api/types";
-import { countsInWords, groupByKind, inStatedTimeOrder, standingSentence, statedDate, type EvidenceCard } from "../src/checks/summary";
+import { countsInWords, failureLine, groupByKind, identifierDate, inStatedTimeOrder, standingSentence, statedDate, type EvidenceCard } from "../src/checks/summary";
 import { batches } from "../src/checks/evidence";
 import { fixture } from "./fixtures";
 
@@ -48,6 +48,14 @@ describe("check grouping", () => {
     ]);
     expect(dated.map((d) => d.record.id)).toEqual(["early", "late"]);
     expect(undated.map((d) => d.id)).toEqual(["none"]);
+  });
+
+  it("says when and what for a recorded failure, and never invents a date", () => {
+    expect(identifierDate("full_support_solution_build_failure_20261023")).toBe("23 October 2026");
+    expect(identifierDate("lean_build_not_run")).toBeNull();
+    expect(failureLine({ id: "full_support_solution_build_failure_20261023", label: "x" })).toMatch(/^23 October 2026\. Comparator stopped .*AbsIncrement/);
+    expect(failureLine({ id: "other", label: "A label" }, { details: "Stopped early." })).toBe("Stopped early.");
+    expect(failureLine({ id: "other", label: "A label" })).toBe("A label");
   });
 
   it("batches record requests at 32 refs", () => {

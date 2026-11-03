@@ -17,6 +17,9 @@ header-includes:
       archnote/.style={font=\small,align=center,inner sep=2pt,fill=white}}
 ---
 
+**AI assistance.** Will Cook directed the work. AI agents based on large
+language models produced and revised this manuscript.
+
 A mathematician reading a short proof may want to stop at its main idea, check
 one difficult estimate, or learn the subject from the beginning. Those are
 different requests. A proof assistant can check a precisely stated theorem,

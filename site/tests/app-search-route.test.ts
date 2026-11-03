@@ -18,7 +18,7 @@ describe("search route", () => {
   });
 
   it("drops page 1, unknown kinds and nonsense pages", () => {
-    expect(routeHref({ view: "search", q: "gap", page: 1 })).toBe("/search?q=gap");
+    expect(routeHref({ view: "search", q: "gap", page: 1 })).toBe("/search/?q=gap");
     expect(parseRoute(new URL("https://example.test/search?q=gap&type=nope&p=-2"))).toEqual({ view: "search", q: "gap", type: undefined, page: undefined });
   });
 });
@@ -26,7 +26,7 @@ describe("search route", () => {
 describe("edition-pinned links and citations", () => {
   it("names the edition by manifest prefix and recognises it again", () => {
     const href = editionLink({ view: "read", stage: "short", anchor: "density" }, snapshot, "https://example.test");
-    expect(href).toBe("https://example.test/read/short?edition=79bf16ac8ab3a2ad#density");
+    expect(href).toBe("https://example.test/read/short/?edition=79bf16ac8ab3a2ad#density");
     const linked = linkedEdition(href)!;
     expect(sameEdition(linked, snapshot)).toBe(true);
     expect(sameEdition("0000000000000000", snapshot)).toBe(false);

@@ -26,6 +26,21 @@ import {
   type Structures,
 } from "../src/reader/page/model";
 import { documentFixture, graphFixture, structureFixture } from "./fixtures";
+import { statementLine } from "../src/reader/page/position";
+
+describe("selected statement in the visible paper", () => {
+  it("keeps the existing desktop reading line when the statement fits", () => {
+    expect(statementLine(100, 790, 120)).toBe(307);
+  });
+  it("fits the whole theorem above the phone proof sheet when there is room", () => {
+    const line = statementLine(44, 338, 272);
+    expect(line).toBeGreaterThanOrEqual(44);
+    expect(line + 272).toBeLessThanOrEqual(338);
+  });
+  it("starts an oversized statement below the strip rather than behind the sheet", () => {
+    expect(statementLine(44, 338, 700)).toBe(60);
+  });
+});
 
 const PATHS: Record<Stage, string> = {
   long: "long/reasoning-record.md",
@@ -87,7 +102,7 @@ describe("naming places", () => {
   });
 
   it("puts the edition status in words", () => {
-    expect(statusWords("draft", "needs_revision")).toBe("Draft. Review recorded as needing revision.");
+    expect(statusWords("draft", "needs_revision")).toBe("Draft by Will Cook, made using AI. No independent mathematician has accepted it yet.");
     expect(statusWords(undefined, undefined)).toBe("");
   });
 
@@ -349,5 +364,17 @@ describe("rendering helpers", () => {
     const html = withoutIds(long.render(hit.part).html);
     expect(html).not.toMatch(/\sid="/);
     expect(html).toContain('data-id="curvature-algebra"');
+  });
+});
+
+describe("searching a paper", () => {
+  it("holds every block's words, formulas as their source, on its own line", () => {
+    const d = doc("short");
+    const blocks = d.textBlocks();
+    expect(blocks.length).toBeGreaterThan(40);
+    const hit = blocks.find((b) => b.text.includes("Stieltjes"))!;
+    expect(hit.line).toBeGreaterThan(1);
+    expect(hit.text).not.toMatch(/[\uE000-\uF8FF]/);
+    expect(d.textBlocks()).toBe(blocks);
   });
 });

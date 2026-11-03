@@ -1,9 +1,13 @@
-import { defineConfig, loadEnv, type Plugin } from "vite";
+import { createServer, defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { copyFileSync, createReadStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import katex from "katex";
+import { copyFileSync, createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
+import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
+import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
+import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
 // Download links use page counts read from the same files at build time.
@@ -21,7 +25,7 @@ const PUBLIC_OBSERVATIONS = [{
   name: "full-support-build-extraction-observation-20261026.json",
 }];
 
-function publicObservations(): Plugin {
+function publicObservations(build = false): Plugin {
   return {
     name: "public-observations",
     configureServer(server) {
@@ -34,6 +38,7 @@ function publicObservations(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist", "verification");
       mkdirSync(out, { recursive: true });
       for (const item of PUBLIC_OBSERVATIONS) copyFileSync(resolve(item.file), resolve(out, item.name));
@@ -92,7 +97,7 @@ export function firstPage(stage: string, pdf: Buffer): FirstPage | null {
 }
 
 /** Serves the PDFs under /pdf/ in development, copies them into every build, and exports their page counts and first pages. */
-function paperPdfs(): Plugin {
+function paperPdfs(build = false): Plugin {
   const id = "virtual:paper-pdfs";
   return {
     name: "paper-pdfs",
@@ -118,6 +123,7 @@ function paperPdfs(): Plugin {
       });
     },
     closeBundle() {
+      if (!build) return;
       const out = resolve("dist");
       for (const p of Object.values(PAPER_PDFS)) {
         // The aliases retain the papers' relative cross-PDF targets without
@@ -132,68 +138,415 @@ function paperPdfs(): Plugin {
   };
 }
 
+// The authored alignment (docs/record-alignment.md), read once at build time. The page
+// needs only a line per record to title its tiles and mark its levels, so that line ships
+// in the bundle and the full alignment stays an on-demand file.
+const ALIGNMENT = "../examples/qaoa-sk/alignment";
+const ROLE_STRENGTH = ["mention", "example", "explanation", "derivation", "definition", "statement"];
+
+interface AuthoredRecord {
+  short?: string;
+  lean?: { relation?: string }[];
+  statements?: { paper: string; role: string }[];
+}
+
+/** The folder also holds the dictionary, the theorem's clauses, plain names, per-paper ties and reference tables. */
+const NOT_A_BATCH = /^(dictionary|main-theorem|names|ties-.*|references-.*)\.json$/;
+
+export function recordIndex(dir = ALIGNMENT): Record<string, { short: string; lean: number; relations: string[]; levels: Record<string, string> }> {
+  const out: ReturnType<typeof recordIndex> = {};
+  if (!existsSync(resolve(dir))) return out;
+  const names = readdirSync(resolve(dir)).sort();
+  const level = (levels: Record<string, string>, paper: string, role: string) => {
+    if (ROLE_STRENGTH.indexOf(role) > ROLE_STRENGTH.indexOf(levels[paper] ?? "")) levels[paper] = role;
+  };
+  for (const name of names) {
+    if (!name.endsWith(".json") || NOT_A_BATCH.test(name)) continue;
+    const { records } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { records: Record<string, AuthoredRecord> };
+    for (const [id, row] of Object.entries(records)) {
+      const levels: Record<string, string> = {};
+      for (const { paper, role } of row.statements ?? []) level(levels, paper, role);
+      const relations = [...new Set((row.lean ?? []).flatMap((lean) => lean.relation ?? []))];
+      out[id] = { short: row.short ?? "", lean: row.lean?.length ?? 0, relations, levels };
+    }
+  }
+  // Statements added paper by paper count towards their records' levels.
+  for (const name of names) {
+    if (!/^ties-.*\.json$/.test(name)) continue;
+    const { statements } = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { statements: { record: string; paper: string; role: string }[] };
+    for (const { record, paper, role } of statements) if (out[record]) level(out[record].levels, paper, role);
+  }
+  return out;
+}
+
+function recordIndexModule(): Plugin {
+  const id = "virtual:record-index";
+  return {
+    name: "record-index",
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const RECORD_INDEX = ${JSON.stringify(recordIndex())};` : null),
+  };
+}
+
+function siteFactsModule(facts: SiteFacts): Plugin {
+  const id = "virtual:site-facts";
+  return {
+    name: "site-facts",
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const SITE_FACTS = ${JSON.stringify(facts)};` : null),
+  };
+}
+
+/** The fields of the reviewed reference tables a reader's page uses. */
+export function referenceModule(stage: string): string {
+  const table = JSON.parse(readFileSync(resolve(ALIGNMENT, `references-${stage}.json`), "utf8"));
+  const references = (table.references as Record<string, unknown>[])
+    .filter((row) => row.kind !== "plain")
+    .map(({ before: _before, cited_as: _cited, ...row }) => row);
+  const used = (field: string, all: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(all).filter(([key]) => references.some((row) => row[field] === key && row.kind !== "other_paper")));
+  return `export default ${JSON.stringify({ paper: table.paper, targets: used("target", table.targets), sources: used("source", table.sources), references })};`;
+}
+
+function referenceTables(): Plugin {
+  const prefix = "virtual:paper-references/";
+  return {
+    name: "paper-references",
+    resolveId: (source) => (source.startsWith(prefix) ? `\0${source}` : null),
+    load: (resolved) => (resolved.startsWith(`\0${prefix}`) ? referenceModule(resolved.slice(prefix.length + 1)) : null),
+  };
+}
+
+/** The chunks each route opens with. What they import starts with them. */
+const ROUTE_CODE: Record<string, string[]> = {
+  map: ["MapPage"],
+  compare: ["ComparePage", "StatementSlice", "LeanBlock"],
+  lean: ["LeanPage"],
+  checks: ["ChecksPage"],
+  about: ["AboutPage"],
+  // Each paper's reference table is its own chunk, named for the paper, and the paper waits for it.
+  "read/long": ["ReaderPage", "long"],
+  "read/short": ["ReaderPage", "short"],
+  "read/expository": ["ReaderPage", "expository"],
+};
+
+interface BuiltChunk {
+  file: string;
+  entry: boolean;
+  imports: string[];
+  css: string[];
+}
+const chunksByName = new Map<string, BuiltChunk>();
+const chunksByFile = new Map<string, BuiltChunk>();
+
+/**
+ * A route's code, with everything it imports and their stylesheets. Without these links the
+ * page's chunks would start only once the edition has arrived, one wait after the other;
+ * with them, code and data download together.
+ */
+function routeCode(route: string, base: string): string[] {
+  const seen = new Set<BuiltChunk>();
+  const css = new Set<string>();
+  const visit = (chunk: BuiltChunk | undefined) => {
+    if (!chunk || chunk.entry || seen.has(chunk)) return;
+    seen.add(chunk);
+    chunk.css.forEach((file) => css.add(file));
+    chunk.imports.forEach((file) => visit(chunksByFile.get(file)));
+  };
+  (ROUTE_CODE[route] ?? []).forEach((name) => visit(chunksByName.get(name)));
+  // A chunk that holds only CSS loses its script when the bundle is written. Its stylesheet stays.
+  const scripts = [...seen].filter((chunk) => existsSync(resolve("dist", chunk.file)));
+  return [
+    ...scripts.map((chunk) => `<link rel="modulepreload" crossorigin href="${base}${chunk.file}" />`),
+    ...[...css].map((file) => `<link rel="preload" as="style" crossorigin href="${base}${file}" />`),
+  ];
+}
+
+/** The edition files a route asks for first, named by the edition's own index. */
+function routeData(route: string, base: string): string[] {
+  const path = resolve("public/edition/index.json");
+  if (!existsSync(path)) return [];
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  const responses: Record<string, string> = index.responses ?? {};
+  const graph = Object.keys(responses).find((key) => key.startsWith("/graph?") && key.includes("representation=reader_map"));
+  const stage = route.match(/^read\/(.+)$/)?.[1];
+  const files = [
+    responses[""],
+    responses["/overview?representation=reader"],
+    graph && responses[graph],
+    index.summaries_by_table?.nodes,
+    ...(stage ? ["nodes", "sources"] : ["nodes", "sources", "edges", "evidence"]).map((table) => index.records_by_table?.[table]),
+    ...(stage ? [index.documents?.[stage], responses[`/papers/${stage}/structure?representation=reader`], responses[`/ties/${stage}`]] : []),
+    ...(route === "compare" ? [responses["/alignment"]] : []),
+    ...(route === "lean" ? [responses["/lean/modules"], responses["/lean/names"]] : []),
+  ];
+  return files.filter(Boolean).map((file) => `<link rel="preload" href="${base}edition/${file}" as="fetch" crossorigin />`);
+}
+
+/** The maths on a paper's first screen is drawn in these, and hidden until they arrive. */
+function routeFonts(route: string, base: string): string[] {
+  if (!route.startsWith("read/")) return [];
+  return readdirSync(resolve("dist/assets"))
+    .filter((name) => /^KaTeX_(Main-Regular|Math-Italic)-.*\.woff2$/.test(name))
+    .map((name) => `<link rel="preload" href="${base}assets/${name}" as="font" type="font/woff2" crossorigin />`);
+}
+
+/**
+ * Each paper's first screen, through the page's own engine. It needs a DOM to sanitise, and the
+ * bundler's handling of `import.meta.env` and the virtual modules, so it runs in a dev server
+ * of its own. An edition that is not there leaves the empty shape.
+ */
+async function paperFirstScreens(base: string, facts: SiteFacts): Promise<Record<string, string>> {
+  const path = resolve("public/edition/index.json");
+  if (!existsSync(path)) return {};
+  const index = JSON.parse(readFileSync(path, "utf8"));
+  const edition = (name: string) => readFileSync(resolve("public/edition", name));
+  const body = (name: string | undefined) => (name ? JSON.parse(edition(name).toString("utf8")) : null);
+  // @ts-expect-error jsdom has no types here, and these two lines are all that touch it.
+  const { JSDOM } = await import("jsdom");
+  const { window } = new JSDOM("<!doctype html>");
+  const globals = globalThis as { window?: unknown; document?: unknown };
+  globals.window = window;
+  globals.document = window.document;
+  const { closeBundle: _pdfs, configureServer: _serve, ...pdfs } = paperPdfs();
+  const server = await createServer({
+    configFile: false,
+    base,
+    logLevel: "error",
+    appType: "custom",
+    server: { middlewareMode: true, hmr: false, ws: false },
+    optimizeDeps: { noDiscovery: true },
+    plugins: [pdfs, recordIndexModule(), referenceTables(), siteFactsModule(facts)],
+  });
+  try {
+    const { firstScreen } = await server.ssrLoadModule("/src/reader/firstScreen.ts");
+    const screens: Record<string, string> = {};
+    for (const stage of Object.keys(index.documents)) {
+      const references = JSON.parse(referenceModule(stage).replace(/^export default /, "").replace(/;$/, ""));
+      const { account, parts } = firstScreen(stage, edition(index.documents[stage]), body(index.responses[`/papers/${stage}/structure?representation=reader`]), body(index.responses[`/ties/${stage}`]), references);
+      screens[stage] = readerFirstScreenHtml(account, parts);
+    }
+    return screens;
+  } finally {
+    await server.close();
+    delete globals.window;
+    delete globals.document;
+  }
+}
+
+const typeset = (source: string) => katex.renderToString(source, { throwOnError: true, output: "html", strict: "error" });
+
+/**
+ * The first screen and the frame, built once. They go straight into the HTML, so the title,
+ * the theorem and the bar paint before any script or data arrives, and they reach readers
+ * and crawlers that run no script. Pages other than the front page get the frame only.
+ */
+function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
+  const id = "virtual:front-hero";
+  const hero = heroHtml(heroLinks(base, facts.theorem1), typeset);
+  const frame = frameHtml(base);
+  const shell = (main: string) => `<div class="app">${frame}<main id="main" class="app__main">${main}</main></div>`;
+  return {
+    name: "first-screen",
+    resolveId: (source) => (source === id ? `\0${id}` : null),
+    load: (resolved) => (resolved === `\0${id}` ? `export const HERO_HTML = ${JSON.stringify(hero)};` : null),
+    transformIndexHtml: {
+      order: "post",
+      handler(html, context) {
+        // Keep the fonts of the first screen from swapping in late.
+        const fonts = Object.keys(context.bundle ?? {}).filter((name) => /stix-two-text-latin-(400|500)-normal.*\.woff2$|source-sans-3-latin-wght-normal.*\.woff2$/.test(name));
+        const preload = [
+          ...fonts.map((name) => `<link rel="preload" href="${base}${name}" as="font" type="font/woff2" crossorigin />`),
+          // Every page starts from the edition's index.
+          ...(process.env.VITE_STATIC_EDITION === "true" ? [`<link rel="preload" href="${base}edition/index.json" as="fetch" crossorigin />`] : []),
+        ].join("");
+        return html
+          .replace('<html lang="en">', '<html lang="en" data-view="home">')
+          .replace("</head>", `${preload}</head>`)
+          .replace('<div id="root"></div>', `<div id="root"><!--first-screen-->${shell(`<div class="front">${hero}</div>`)}<!--/first-screen--></div>`);
+      },
+    },
+    generateBundle(_options, bundle) {
+      for (const [file, item] of Object.entries(bundle)) {
+        if (item.type !== "chunk") continue;
+        const chunk = { file, entry: item.isEntry, imports: item.imports, css: [...(item.viteMetadata?.importedCss ?? [])] };
+        chunksByName.set(item.name, chunk);
+        chunksByFile.set(file, chunk);
+      }
+    },
+    closeBundle() {
+      if (!build) return;
+      const home = resolve("dist/index.html");
+      if (!existsSync(home)) return;
+      const html = readFileSync(home, "utf8");
+      writeFileSync(
+        resolve("dist/.route-shell.html"),
+        html.replace(' data-view="home"', "").replace(/<!--first-screen-->[\s\S]*<!--\/first-screen-->/, shell("")),
+      );
+    },
+  };
+}
+
 // The public repository that receives the static build has no other README.
-const SITE_README = `# Why the SK order parameter has no gaps
+const SITE_README = `# Lean Exposition website
 
-This repository holds the built reading website published at
-https://wcook04.github.io/lean-exposition-site/.
+Read a mathematical paper with the exact Lean statement beside the paragraph
+that describes it. Lean is a language for writing statements and proofs that a
+computer can check. The papers and their links to the Lean are drafts awaiting
+mathematical review.
 
-The website presents one theorem about the zero-temperature
-Sherrington–Kirkpatrick spin glass: every minimising Parisi order parameter
-increases across every interval in [0, 1). It has three written accounts of
-the proof (an exposition, a short paper and a long record), each readable on
-the site or as a PDF in \`pdf/\`, an argument map of the records the proof
-uses, and the checks recorded for them. The architectural companion explains
-why these accounts share one record; read it on the About page or in
-\`pdf/architecture.pdf\`.
+**[Open Theorem 1 with its Lean](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)** · [Website](https://wcook04.github.io/lean-exposition-site/) · [Source and tools](https://github.com/wcook04/lean-exposition) · [Will Cook's projects](https://wcook04.github.io/)
 
-The mathematics comes from OpenAI's mathematics release, family 281:
-https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
+[![The short paper with Theorem 1 highlighted beside its Lean statement.](stills/reader-theorem-1-light-1440.webp)](https://wcook04.github.io/lean-exposition-site/read/short/?l=b5970-6319&n=full_support#main-result)
 
-Plectis Atlas has a page for the same family:
-https://wcook04.github.io/plectis-atlas/families/281.html
+The website contains three explanations of a theorem about interacting spins
+in the Sherrington–Kirkpatrick model. Start with the exposition for a two-spin
+example, or the short paper for the specialist statement and proof.
+The mathematics comes from
+[OpenAI's mathematics release, example 281](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md).
+These are drafts explaining existing results; mathematical and reader review
+remain open. The [source repository](https://github.com/wcook04/lean-exposition#the-worked-example)
+gives the exact scope of the Lean and the recorded checks.
 
-Will Cook made this website as part of Plectis, his projects on researching
-mathematics with AI and on tools that help people follow what AI produces:
-https://wcook04.github.io/practical-formal-verification/
-His videos are on YouTube: https://www.youtube.com/@willcook2004
+## Read and explore
 
-Source, papers, tools and contribution instructions:
-https://github.com/wcook04/lean-exposition
+| Start with | What you can inspect |
+| --- | --- |
+| [Exposition](https://wcook04.github.io/lean-exposition-site/read/expository/) | An explanation beginning with a calculation for two spins |
+| [Short paper](https://wcook04.github.io/lean-exposition-site/read/short/) | The precise mathematical statement and its proof |
+| [Long reasoning record](https://wcook04.github.io/lean-exposition-site/read/long/) | Detailed calculations, source references and remaining steps for OpenAI's separate claim about the limiting energies of quantum circuits |
+| [Argument map](https://wcook04.github.io/lean-exposition-site/map/) · [Compare](https://wcook04.github.io/lean-exposition-site/compare/) | The recorded proof steps and their passages in each paper |
+| [Lean index](https://wcook04.github.io/lean-exposition-site/lean/) · [What ran](https://wcook04.github.io/lean-exposition-site/checks/) | The named statements in the Lean code and recorded check results |
+| [About](https://wcook04.github.io/lean-exposition-site/about/) | A paper explaining how the website connects the papers to the proof steps |
 
-This repository receives the generated website from the source repository’s
-main-branch build workflow. Make changes in the source repository; the workflow
-publishes the resulting files here.
+A statement with a dark tick opens its Lean beside the paper.
+The three explanations and the paper under About are also available in [PDF](pdf/).
+[Plectis Atlas](https://wcook04.github.io/plectis-atlas/families/281.html)
+lists the same OpenAI manuscripts and Lean files.
+
+## Videos
+
+[How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw)
+starts with four magnets and explains the mathematical question.
+[Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng)
+walks through this website.
+
+## Source and generated files
+
+This repository contains the built website, not the tools that produce it.
+Make changes in [lean-exposition](https://github.com/wcook04/lean-exposition).
+Its [main-branch build workflow](https://github.com/wcook04/lean-exposition/blob/main/.github/workflows/pages.yml)
+replaces this repository's files with the built website. Installation,
+local development and contribution instructions live in that source repository.
+
+| Generated path | Contents |
+| --- | --- |
+| [read/](read/) | The three paper readers |
+| [edition/](edition/) | Copies of the papers, proof-step data and check results used by the site |
+| [pdf/](pdf/) | The three explanations and the paper about the website, as PDFs |
+| [assets/](assets/) · [stills/](stills/) | Built application files and website screenshots |
+
+Will Cook directs this project. His other projects and videos are linked below.
+[Projects](https://wcook04.github.io/) · [Videos](https://www.youtube.com/@willcook2004)
+`;
+
+const SITE_URL = "https://wcook04.github.io/lean-exposition-site/";
+const SITE_PAGES = ["", "read/short", "read/expository", "read/long", "map", "compare", "checks", "about", "lean", "lean?list=papers"];
+
+/** What a browser tab says before the page's script takes over, the same words as PageTitle. */
+const ROUTE_TITLES: Record<string, string> = {
+  map: "Argument map",
+  compare: "Compare side by side",
+  lean: "Lean index",
+  checks: "What ran",
+  about: "About",
+  search: "Search",
+  "read/long": "Long record",
+  "read/short": "Short paper",
+  "read/expository": "Exposition",
+};
+const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · Lean Exposition</title>`);
+
+// For readers that fetch text rather than run the page. It describes the same files the
+// browser reads, and no page loads it.
+const llmsTxt = (facts: SiteFacts) => `# Why the Sherrington–Kirkpatrick order parameter has no gaps
+
+> One theorem from OpenAI's mathematics release, family 281: every minimiser of the zero-temperature Parisi functional for the pure zero-field Sherrington-Kirkpatrick model has full support on [0,1). The site holds OpenAI's Lean beside three written accounts, and one graph of ${facts.steps ?? "many"} steps joins them. The data calls a step a record.
+
+Each paper is a narrower part of the same graph. Papers and records are drafts; no independent mathematical review has been done. Ties between the papers and the Lean are pointers written by AI agents after reading both sides. No independent mathematician has reviewed them, and a program confirms only that both ends of each one still exist.
+${facts.build && facts.extraction ? `
+Lean ${facts.build.toolchain.split(":").pop()} compiled ${facts.build.module} (\`${facts.build.command}\`, exit ${facts.build.returncode}) at OpenAI revision ${facts.build.revision.slice(0, 7)}, recorded ${facts.build.date}. Lean's extraction lists these axioms for ${facts.extraction.root}: ${facts.extraction.axioms.join(", ")}. The theorem assumes a minimiser. Comparator, a program that compares a Lean proof with a separately written statement, has accepted neither main statement, and the scalar value result has no successful build on record.
+` : ""}
+## Read
+
+- [Exposition](${SITE_URL}pdf/exposition.pdf): objects and ideas, from a calculation with two spins
+- [Short paper](${SITE_URL}pdf/short-paper.pdf): the result and proof for specialists
+- [Long record](${SITE_URL}pdf/long-record.pdf): each step with its source, continuing to the QAOA circuits
+- [Architectural companion](${SITE_URL}pdf/architecture.pdf): why the papers share one graph
+
+## Data
+
+All data is static JSON under ${SITE_URL}edition/. Start at edition/index.json: it maps API routes to files, and \`route_maps\` holds further maps for per-module and per-record routes.
+
+- The route "/alignment": for each record, its short title, Lean declarations with relation and exact \`lines\`, and exact statement slices in each paper, each slice with the Lean it means; a dictionary from Lean names to the papers' notation; \`names\`, plain titles for ${facts.plainTitles ?? "many"} declarations
+- The routes "/ties/short", "/ties/long" and "/ties/expository": non-overlapping byte ranges of each paper, each with its ties to records and Lean lines${facts.ties ? ` (${facts.ties.statements.toLocaleString("en-GB")} marked statements, ${facts.ties.withLean} with Lean, in ${facts.ties.total.toLocaleString("en-GB")} ties)` : ""}. A tie is a pointer. No program tests whether the two texts mean the same thing.
+- The reference tables behind the papers' links to theorems, equations, sections, figures and citations${facts.references ? ` (${facts.references} links)` : ""}, in examples/qaoa-sk/alignment/references-*.json in the repository
+- The routes "/lean/modules", "/lean/names" and "/lean/module": the Lean index${facts.lean ? ` (${facts.lean.modules} modules, ${facts.lean.declarations.toLocaleString("en-GB")} declarations at ${facts.lean.toolchain.split(":").pop()})` : ""}, one file per module with source, declarations and name references. ${facts.lean?.dependencySource === "elaborated" ? "Dependencies come from Lean's compiled declarations." : "Dependencies come from the source text and are not elaborated."}
+- The route "/graph" in edition/index.json: the whole recorded graph, with typed edges running from consumer to prerequisite
+
+## Source
+
+- [Repository](https://github.com/wcook04/lean-exposition): papers, records, tools and this website
+- [Web API](https://github.com/wcook04/lean-exposition/blob/main/docs/web-api.md): routes and field meanings
 `;
 
 // The site reads one captured edition from the read-only web API.
 // During development and preview, /api is proxied to a local
 // `lean-exposition serve` process so the page and the API share an origin.
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const api = env.LEAN_EXPOSITION_API ?? "http://127.0.0.1:8000";
   const proxy = { "/api": { target: api, changeOrigin: false } };
+  const base = env.VITE_BASE_PATH ?? "/";
+  const facts = siteFacts();
+  const build = command === "build";
   return {
-    base: env.VITE_BASE_PATH ?? "/",
-    plugins: [react(), paperPdfs(), publicObservations(), ...(env.VITE_STATIC_EDITION === "true" ? [{
+    base,
+    plugins: [react(), paperPdfs(build), publicObservations(build), recordIndexModule(), referenceTables(), siteFactsModule(facts), firstScreen(base, facts, build), ...(build && env.VITE_STATIC_EDITION === "true" ? [{
       name: "static-reading-routes",
-      closeBundle() {
+      async closeBundle() {
         const out = resolve("dist");
-        for (const route of ["map", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
+        const shell = resolve(out, ".route-shell.html");
+        const screens = await paperFirstScreens(base, facts);
+        for (const route of ["map", "compare", "lean", "checks", "about", "search", "read/long", "read/short", "read/expository"]) {
           mkdirSync(resolve(out, route), { recursive: true });
-          copyFileSync(resolve(out, "index.html"), resolve(out, route, "index.html"));
+          const preload = [...routeFonts(route, base), ...routeCode(route, base), ...routeData(route, base)].join("");
+          // A paper's first paint is already its text, in the shape of the page, so nothing moves when the page arrives.
+          const stage = route.match(/^read\/(.+)$/)?.[1];
+          const page = stage
+            ? readFileSync(shell, "utf8").replace("<html ", '<html data-view="read" ').replace('class="app__main"></main>', () => `class="app__main">${screens[stage] ?? readerSkeletonHtml()}</main>`)
+            : readFileSync(shell, "utf8");
+          writeFileSync(resolve(out, route, "index.html"), titled(page, ROUTE_TITLES[route]).replace("</head>", `${preload}</head>`));
         }
-        copyFileSync(resolve(out, "index.html"), resolve(out, "404.html"));
+        writeFileSync(resolve(out, "404.html"), titled(readFileSync(shell, "utf8"), "Page not found"));
+        rmSync(shell);
         copyFileSync(resolve("../LICENSE"), resolve(out, "LICENSE.txt"));
         copyFileSync(resolve("../NOTICE"), resolve(out, "NOTICE.txt"));
         copyFileSync(resolve("THIRD_PARTY_NOTICES.md"), resolve(out, "THIRD_PARTY_NOTICES.md"));
         writeFileSync(resolve(out, "README.md"), SITE_README);
         writeFileSync(resolve(out, ".nojekyll"), "");
+        writeFileSync(resolve(out, "llms.txt"), llmsTxt(facts));
+        writeFileSync(
+          resolve(out, "sitemap.xml"),
+          `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${SITE_PAGES.map((page) => `  <url><loc>${SITE_URL}${page}</loc></url>`).join("\n")}\n</urlset>\n`,
+        );
       },
     }] : [])],
     server: { port: 5173, strictPort: true, proxy },
     preview: { port: 4173, strictPort: true, proxy },
-    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900 },
+    // A font is fetched only if a page uses its characters. Inlined, its bytes would sit in the
+    // stylesheet that every page waits for.
+    build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 900, assetsInlineLimit: (file) => (/\.(woff2?|ttf)$/.test(file) ? false : undefined) },
     test: {
       environment: "jsdom",
       include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],

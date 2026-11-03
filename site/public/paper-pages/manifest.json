@@ -6,7 +6,7 @@
     },
     "height": 456,
     "pdf": "papers/architecture/paper.pdf",
-    "pdf_sha256": "sha256:dac00afd7c6b9c3d14b90d743b13cf3018e789d57e9169e441d5ad2cd82c5c98",
+    "pdf_sha256": "sha256:211ba202c2141c226389c463c5f53d9cdc1a4cace5a2a2e4bd30b8616693b867",
     "width": 352
   },
   "expository": {
@@ -16,7 +16,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/expository/main.pdf",
-    "pdf_sha256": "sha256:e7febe1f6024919226ef911a7bc9f0b42226de508fff0f654ad3c7fe93d6890d",
+    "pdf_sha256": "sha256:e5aa5e13dff9bed1a179a162b6fc074c27d7626b361d0d88077b680c276add40",
     "width": 352
   },
   "long": {
@@ -26,7 +26,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/long/reasoning-record.pdf",
-    "pdf_sha256": "sha256:4678e0f16e26ed8bf0058823b426c142db889e6c4c06868001b4f10b91ee0beb",
+    "pdf_sha256": "sha256:d5d44b436bc61a113bc612ee8b31e8320f24129d963325ff91680b83b9c656ba",
     "width": 352
   },
   "short": {
@@ -36,7 +36,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/short/paper.pdf",
-    "pdf_sha256": "sha256:6a4ede39bd2e7da612fb0f0a46f6f5ffc3180bea7613286689c2632bae2e058c",
+    "pdf_sha256": "sha256:ce5190e42be50fe157ee68237bcd54f67a8e605b1fe9ed9ed7d284c3b1f660fe",
     "width": 352
   }
 }

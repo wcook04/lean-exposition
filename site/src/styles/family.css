@@ -6,7 +6,7 @@
    colour and type tokens onto the --fam-* names below (see docs/family.md).
 
    Adapted, not new. Every rule here comes from the Plectis site's accepted
-   components (ai_workflow sites/microcosm/assets/style.css and film-map.css,
+   components (sites/microcosm/assets/style.css and film-map.css,
    28 October 2026):
      .fam-ladder          <- .brand-ladder, .brand-ladder__up, .brand-ladder__sep
      .film-slot__frame    <- .film-poster

@@ -1,0 +1,707 @@
+{
+  "schema_version": "1.0",
+  "records": {
+    "circuit.gaussian_root_calculus": {
+      "short": "Root shift and Gaussian chaos",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For any finite list of fixed centred real child vectors, their parent",
+          "to": "orthonormal Gaussian positions, this is its first Gaussian chaos."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The elementary continuity bound",
+          "to": "\\le(\\|v\\|+\\|w\\|)\\|v-w\\|\n$$"
+        }
+      ]
+    },
+    "circuit.energy_transfer": {
+      "short": "Edge energy needs occupation control",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Let $f_D$ be",
+          "to": "which identifies $R_M$."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Thus the exact edge decomposition is",
+          "to": "Strong convergence alone does not control the scaled remainder."
+        }
+      ]
+    },
+    "circuit.weighted_unitary_calculus": {
+      "short": "Unitary products and commuting substitution",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Let $K_D(x)$ be a smooth unitary family with $K_D(0)=1$, uniformly",
+          "to": "\\right\\}.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For a fixed finite list of strongly commuting self-adjoint signals",
+          "to": "$F_D(S_D)$, including its derivatives and adjoints."
+        }
+      ]
+    },
+    "circuit.ordinary_updates": {
+      "short": "Ordinary cost and mixer updates",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For an ordinary cost or mixer the root updates are, respectively,",
+          "to": "in §8.1. Thus its energy is the scaled edge limit required for\ntransfer."
+        }
+      ]
+    },
+    "circuit.gate_calculus": {
+      "short": "Smooth exclusion-gate calculus",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Smooth replacement.** Fix the height, a finite expression and channel",
+          "to": "[the foundations, smooth topology and gate calculus][q-gate-calculus]."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For the formula fixed here, its finite expression tree supplies the finite",
+          "to": "masked-column estimates used in §8.3."
+        }
+      ]
+    },
+    "circuit.additive_responses": {
+      "short": "Additive cut responses",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "There remains a response inside the lower formula $f$.",
+          "to": "obtained from the limiting time group of cut ratios."
+        },
+        {
+          "paper": "long",
+          "role": "example",
+          "from": "The mixed coefficients $c_{\\alpha\\lambda}$ must remain even when two",
+          "to": "remove a mixed second response."
+        }
+      ]
+    },
+    "circuit.rooted_realization": {
+      "short": "Rooted realization of scalar sum",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Start with the standard root seed $g_0=S$ and recursively set",
+          "to": "=\\sum_{j=0}^NA_jB_{j+1}.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "Start with a standard normal receiving-root seed $g_0$ and recursively put",
+          "to": "\\end{aligned}                                     \\tag{12}\n$$"
+        }
+      ]
+    },
+    "circuit.sign_smoothing": {
+      "short": "Finite sign smoothing",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Fix $T,N$ first. The independent continuous rounding coordinate makes",
+          "to": "approximations to that sign therefore converge in $L^2$ by dominated\nconvergence."
+        }
+      ]
+    },
+    "circuit.bounded_trigonometric": {
+      "short": "Bounded trigonometric approximation",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "If the bounded output is $m^*$, shrink it to",
+          "to": "columns that are bounded, while the Gaussian fields themselves remain\nunbounded."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "[OpenAI (2026b), §§3–5][Q] smooths the spin",
+          "to": "the final sign alone is insufficient."
+        }
+      ]
+    },
+    "circuit.color_exclusion": {
+      "short": "Seed reencoding and ancestor exclusion",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The types can be encoded together",
+          "to": "assuming an additional circuit resource."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For the already fixed formula, the exclusion estimate is",
+          "to": "arguments would not provide this bound."
+        }
+      ]
+    },
+    "circuit.classical_fixed_minimizer": {
+      "short": "Bounded input for given minimizer",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "The resulting classical\nnear-optimality proposition supplies",
+          "to": "zero on helpers, with energy as close to $P_*$ as required."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The bounded formula is chosen before the colors and helper law.",
+          "to": "positive helper probabilities jointly control $\\delta_c$ and $p_H$."
+        }
+      ]
+    },
+    "circuit.classical_primary": {
+      "short": "Near-optimal bounded synthesis input",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Apply the\nclassical near-optimality proposition with the two tolerances",
+          "to": "helper law does not silently preserve an already fixed formula."
+        }
+      ]
+    },
+    "circuit.masked_controls": {
+      "short": "Finite masked local controls",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "There are two different approximation operations. First, seed",
+          "to": "required in the continuous aggregate inputs, not in the mask labels."
+        }
+      ]
+    },
+    "circuit.orthogonal_quadratics": {
+      "short": "Orthogonal mask quadratics",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The estimate controlling a growing partition is",
+          "to": "would not justify inserting its exponential into the surrounding\ncircuit."
+        }
+      ]
+    },
+    "circuit.helper_contraction": {
+      "short": "Pinned helper contraction",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The second operation implements an aggregation.",
+          "to": "Terms with $j\\ne j'$ are simple paths and must disappear under\npartition refinement."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Helper pinning is a statement about every helper spin in the light",
+          "to": "on the full space to approximate it."
+        }
+      ]
+    },
+    "circuit.seeded_synthesis": {
+      "short": "Seeded synthesis with helper loss",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Helper contraction and synthesis.** Fix a bounded",
+          "to": "\\mathcal E(v)\\ge\\mathcal E(m)-2\\eta-2\\sqrt{p_H}.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "If the resulting insertion $v$ obeys",
+          "to": "|\\mathcal E(v)-\\mathcal E(m)|\\le2\\eta+2\\sqrt{p_H}.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "The resulting finite\nformula is approximated in energy using",
+          "to": "temporary Gaussian controls, with the same sitewise seeds throughout the word."
+        }
+      ]
+    },
+    "circuit.seed_packets": {
+      "short": "Small packet and tail estimates",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Fix $b>0$ and $0<r<1$, and put",
+          "to": "\\tag{8.1}\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The source's high-direction lemma gives that",
+          "to": "have overlap smaller than every fixed power of $r$."
+        }
+      ]
+    },
+    "circuit.selective_control": {
+      "short": "Zero-clock selective rotations",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "For the finite list of nonzero special centres",
+          "to": "Closure alone would not give exact cancellation."
+        }
+      ]
+    },
+    "circuit.selective_accuracy": {
+      "short": "Selective pulse accuracy",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The separate accuracy\nlemma then follows",
+          "to": "refer to the chosen finite pulse list."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "The error scale needed below follows from the source's quantitative",
+          "to": "These are the unequal accuracy requirements that the next echo uses."
+        }
+      ]
+    },
+    "circuit.singular_echo": {
+      "short": "Cost-flip echo keeps finite signal",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Consider a forward cost $t/r$, a selective flip of the special",
+          "to": "same construction can be used again."
+        }
+      ]
+    },
+    "circuit.external_mode_energy": {
+      "short": "Persistent Gaussian mode and energy",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "In the limit, $\\ell_r$ and $w_r$ become two orthogonal external real",
+          "to": "modes and endogenous child directions."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**The energy pairing after seed removal.**",
+          "to": "$\\mathsf L$ or its energy."
+        }
+      ]
+    },
+    "circuit.visibility": {
+      "short": "Finite visibility choices",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Why the selective rotations are available at every required stage.**",
+          "to": "No list is chosen from a limit that assumes its own successful\nimplementation."
+        }
+      ]
+    },
+    "circuit.seed_removal": {
+      "short": "Finite ordinary approximation of seeds",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Seed removal.** Fix that finite seeded word and an energy tolerance.",
+          "to": "ordinary-word transfer in §8.5 applicable."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The choices are therefore nested: make $b$ small to control",
+          "to": "tends to zero."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "Removing those controls produces an ordinary word",
+          "to": "$v(W)$ by the fixed-word transfer."
+        }
+      ]
+    },
+    "circuit.ordinary_word_primary": {
+      "short": "Finite near-optimal ordinary word",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Allocate errors after choosing the desired $\\varepsilon>0$.",
+          "to": "all approximation choices have been made."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The source theorem says that for every $\\varepsilon>0$, there is one",
+          "to": "The cost operator uses $J,n$, but this word and its angles do not."
+        }
+      ]
+    },
+    "circuit.fixed_word_transfer": {
+      "short": "Fixed tree word transfers",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "After all these choices there is one finite ordinary word $W$, fixed",
+          "to": "\\langle+|W_D^*Z_iZ_jW_D|+\\rangle.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "Basso et al. use a negative tree cost in (2.3).",
+          "to": "to the positive energy above."
+        },
+        {
+          "paper": "short",
+          "role": "mention",
+          "from": "whose limiting energy is",
+          "to": "$v(W)$ by the fixed-word transfer."
+        }
+      ]
+    },
+    "circuit.upper_bound_padding": {
+      "short": "Upper bound and identity padding",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "A cost expectation is bounded above by its",
+          "to": "It therefore suffices to construct one finite word for every accuracy."
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Since $Q_p\\le P_*$ and",
+          "to": "thermodynamic-first conclusion from its stated analytic inputs."
+        }
+      ]
+    },
+    "circuit.positive_input": {
+      "short": "Finite-temperature input family",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The positive-temperature appendix supplies a separate classical input to",
+          "to": "$[0,T]$ with $0<T<q$."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "His diffusion $\\widehat X$ has noise coefficient",
+          "to": "is exactly $\\mathbb E a(t,X_t)^2=1$."
+        }
+      ]
+    },
+    "circuit.positive_value": {
+      "short": "Finite-temperature scalar approximation",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The source derives $\\mathbb E a(t,X_t)^2=1$ on $[0,q]$ and",
+          "to": "\\ge P_*-\\frac{1/4+\\log2}{\\beta_0}-(q-T).\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "The cutoff removes at most $q-T$",
+          "to": "finite $\\beta_0$, then $T<q$ close enough to $q$."
+        }
+      ]
+    },
+    "circuit.positive_finite_step": {
+      "short": "EAMS finite-step edge identity",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "definition",
+          "from": "The finite-degree output is a message calculation on the $(D+1)$-regular",
+          "to": "z_i^L=\\sqrt\\delta\\sum_{r=1}^{L}B_i^{r-1}u_i^r.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The one-step lag in $A^{r-1}u^r$ gives conditional centring from the new",
+          "to": "\\qquad o\\sim v.\n$$"
+        }
+      ]
+    },
+    "circuit.positive_mesh": {
+      "short": "Normalized mesh convergence",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Only afterwards take $\\delta\\downarrow0$ with $L=\\lfloor T/\\delta\\rfloor$.",
+          "to": "by $C(\\beta_0,T)\\sqrt\\delta$."
+        }
+      ]
+    },
+    "circuit.classical_strong_limit": {
+      "short": "Strong limit of local formulas",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "A separate norm-convergence argument with a uniform first occupation",
+          "to": "finite-dimensional central limit theorem alone does not identify that\nobservable."
+        }
+      ]
+    },
+    "circuit.positive_rooted_clipping": {
+      "short": "Positive-temperature clipping",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "mention",
+          "from": "After clipping and bounded approximation, the result enters the same",
+          "to": "synthesis and seed-removal route as the primary construction."
+        }
+      ]
+    },
+    "circuit.classical_positive": {
+      "short": "Alternative bounded synthesis input",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Both routes produce a bounded finite classical calculation whose rooted",
+          "to": "theorems and different finite approximations."
+        },
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "One can choose $\\beta_0$ and $T$ finitely for the required",
+          "to": "mesh, graph degree and circuit depth."
+        }
+      ]
+    },
+    "circuit.ordinary_word_positive": {
+      "short": "Alternative-route ordinary word",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "explanation",
+          "from": "Both routes then use the same bounded approximation, exclusions, seeded",
+          "to": "is shared; its classical input has been supplied independently."
+        }
+      ]
+    },
+    "circuit.high_girth_maxcut": {
+      "short": "Fixed angles on high-girth graphs",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The original manuscript also gives a consequence for MaxCut. For each",
+          "to": "the whole graph need not be bipartite."
+        }
+      ]
+    },
+    "circuit.fixed_word_concentration": {
+      "short": "Fixed-word measurement moments",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Farhi, Goldstone, Gutmann and Zhou supply that additional input.",
+          "to": "averaged over disorder, not merely the square of the conditional mean."
+        }
+      ]
+    },
+    "circuit.one_measurement_near_optimum": {
+      "short": "One measurement near optimum",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "Now run the circuit construction with accuracy $\\varepsilon/2$ and",
+          "to": "selected formal interface."
+        }
+      ]
+    },
+    "circuit.weighted_finite_horizon": {
+      "short": "Corrected weighted finite-tree estimate",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**A finite estimate with the required hypotheses.**",
+          "to": "The constant is independent of $k$, and the sum is empty when $L=1$."
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "For $s=\\ell-1$, the adjacent-time summand of Proposition 2.1 is",
+          "to": "+\\delta\\sum_{\\ell=1}^LK^{2\\ell+2}.\n$$"
+        }
+      ]
+    },
+    "circuit.even_p_spin_obstruction": {
+      "short": "Even higher-spin ceiling",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "The pure even higher-spin model has a different thermodynamic-first",
+          "to": "normalization. The same ceiling bounds their supremum over all finite\n$p$ and angles."
+        }
+      ]
+    },
+    "circuit.later_finite_size_comparison": {
+      "short": "Later bounded-angle finite-size estimate",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "A separate, later source gives a quantitative comparison with the",
+          "to": "Here $\\nu_n$ is the disorder-averaged energy per spin."
+        },
+        {
+          "paper": "long",
+          "role": "example",
+          "from": "The estimate\napplies to each near-optimal word from §8.6 separately.",
+          "to": "\\nu_n(W_\\zeta)\\ge P_*-\\zeta\\qquad(n\\ge T_{p_\\zeta}).\n$$"
+        }
+      ]
+    },
+    "circuit.sampled_finite_instance_optimum": {
+      "short": "Measured configuration near instance maximum",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Comparison with the same finite instance.**",
+          "to": "\\right\\}\\longrightarrow1.\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "derivation",
+          "from": "To see this, choose the word with $v_W\\ge P_*-\\varepsilon/4$ and",
+          "to": "One fresh preparation and measurement suffices for this asymptotic\nstatement."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "**Corollary 6 (a measured configuration on the same instance).**",
+          "to": "\\tag{14}\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "derivation",
+          "from": "**Proof.** For a fixed word, put",
+          "to": "the same $J$; no independence between them is needed."
+        }
+      ]
+    },
+    "circuit.finite_formula_word_approximation": {
+      "short": "Gaussian data by ordinary word",
+      "lean": [],
+      "statements": [
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "**Approximating a specified finite observable.**",
+          "to": "\\tag{8.2}\n$$"
+        },
+        {
+          "paper": "long",
+          "role": "statement",
+          "from": "This establishes an absolute approximation of each specified finite",
+          "to": "classical output law."
+        },
+        {
+          "paper": "short",
+          "role": "statement",
+          "from": "**Proposition 5 (circuit approximation; a consequence of",
+          "to": "|v(W)-S_{T,N}|<\\eta.\n$$"
+        },
+        {
+          "paper": "short",
+          "role": "explanation",
+          "from": "**Construction underlying Proposition 5.**",
+          "to": "conclusion below uses a further concentration theorem."
+        }
+      ]
+    }
+  }
+}

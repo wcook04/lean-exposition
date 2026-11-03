@@ -1,0 +1,38 @@
+/* A statement slice: paper type at a column's size. Mathematics stays in the serif. */
+
+.slice.prose {
+  max-width: none;
+  font-size: var(--fs-card);
+  line-height: 1.55;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+.slice.prose > :first-child,
+.slice.prose > p.run-in:first-child {
+  margin-top: 0;
+}
+
+.slice.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.slice--compact.prose {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.slice-raw {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-card);
+  line-height: 1.55;
+  visibility: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.slice-raw--compact {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}

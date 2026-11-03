@@ -1,68 +1,116 @@
-// The map's key, as a row in the page's flow under the map's header: the
-// source colours, the two kinds of line, the assumption tag and the band on a
-// record drawn more than once. It sits in the flow so the canvas gives it room
-// and nothing is drawn under it; the items wrap when the window is narrow.
-// The samples reuse the connector classes the map draws with. The full
-// explanation lives on the About page, which the row links to.
+// The map's key, behind one button: the drawing is plain enough to need no legend on
+// screen, and the Key says everything in words, including the keys, the links the map
+// leaves out and how the map is drawn. The samples reuse the connector classes the map
+// draws with.
 
-import type { OriginFamily } from "../model/graph";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { routeHref } from "../app/router";
+import { LeanGlyph } from "./LeanGlyph";
+import { Sample } from "./Sample";
+import { usesSource } from "./MapStrip";
 
-export function SourceSwatches({ origins, className }: { origins: OriginFamily[]; className?: string }) {
-  return (
-    <ul className={`map-key__sources${className ? ` ${className}` : ""}`} aria-label="The colour of each source">
-      {origins
-        .filter((o) => o.slot > 0)
-        .map((o) => (
-          <li key={o.family} data-slot={o.slot}>
-            <span className="map-key__swatch src-sq" aria-hidden="true" />
-            {o.label}
-          </li>
-        ))}
-      <li data-slot={0}>
-        <span className="map-key__swatch src-sq" aria-hidden="true" />
-        Published papers and the long record
-      </li>
-    </ul>
-  );
-}
+export { Sample };
 
-/** A short piece of one kind of line, drawn with the map's own classes at the map's reading scale. */
-export function Sample({ kind, head = true, className }: { kind: "supports" | "assumes" | "formalizes"; head?: boolean; className?: string }) {
+/** The Key: everything the map's marks mean, in words. */
+export function KeyPopover({ onNotesHost, lean }: { onNotesHost(host: HTMLElement | null): void; lean?: { source?: string; note?: string; leftOut?: number } }) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const close = useCallback(() => setOpen(false), []);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node)) close();
+    };
+    // Capture phase, so the page's own Escape (which clears the selection) waits.
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
+      close();
+      root.current?.querySelector("button")?.focus();
+    };
+    document.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey, true);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey, true);
+    };
+  }, [open, close]);
   return (
-    <svg className={`map-key__sample${className ? ` ${className}` : ""}`} viewBox="0 0 48 16" width="48" height="16" aria-hidden="true" style={{ ["--k" as string]: 1 }}>
-      <path className={`link link--${kind}`} d={head ? "M3 8H37" : "M3 8H46"} />
-      {head && <path className={`head head--${kind}`} d="M46 8 L36 4.4 L36 11.6 Z" />}
-    </svg>
-  );
-}
-
-/** The key row under the map's header. `hidden` keeps it in the document for the Key button's aria-controls. */
-export function KeyRow({ id, origins, hidden }: { id: string; origins: OriginFamily[]; hidden?: boolean }) {
-  return (
-    <section id={id} className="keyrow" aria-label="Key to the argument map" hidden={hidden}>
-      <SourceSwatches origins={origins} className="keyrow__sources" />
-      <ul className="keyrow__marks">
-        <li>
-          <Sample kind="supports" />
-          Used in the argument for
-        </li>
-        <li>
-          <Sample kind="formalizes" head={false} />
-          Lean declaration for
-        </li>
-        <li>
-          <span className="keyrow__tag" aria-hidden="true" />
-          Assumption, shown as a tag on each result that assumes it
-        </li>
-        <li>
-          <span className="keyrow__clone" aria-hidden="true" />
-          A record drawn again under each result that uses it
-        </li>
-        <li className="keyrow__more">
+    <div className="map-keypop" ref={root}>
+      <button type="button" className="map-head__key" aria-expanded={open} aria-haspopup="dialog" onClick={() => setOpen((v) => !v)}>
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+          <rect x="2" y="3" width="4" height="4" rx="1" fill="currentColor" />
+          <path d="M8.5 5h5.5M2 11.5h4M8.5 11.5h5.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+        Key
+      </button>
+      {open && (
+        <div className="map-keypop__panel" role="dialog" aria-label="Key to the argument map">
+          <p className="map-keypop__h">Records</p>
+          <ul className="map-keypop__channels">
+            <li>This is the argument for a theorem about the Sherrington–Kirkpatrick (SK) spin glass. Each box is one step: a claim, an assumption or a declaration in Lean, the language of OpenAI’s proof. Select one to read it in Lean and in each paper.</li>
+            <li>
+              <span className="keyrow__tag" aria-hidden="true" /> An assumption is a tag on each result that assumes it.
+            </li>
+            <li>A step many results use, with nothing drawn below it, is drawn again under each of them.</li>
+          </ul>
+          <p className="map-keypop__h">Lean</p>
+          <ul className="map-keypop__channels">
+            <li>
+              <LeanGlyph fill="whole" /> Green: an AI agent linked this step to Lean that states and proves it, or defines it. Lean proves the linked declaration, and the link is the agent’s reading. A proof here is a theorem or lemma in OpenAI's source with no <code>sorry</code> in its text.
+            </li>
+            <li>
+              <LeanGlyph fill="part" /> Pale green: the linked Lean has some of it, or a Lean proof has the step in a different form.
+            </li>
+            <li>
+              <LeanGlyph fill="none" /> Plain: no declaration is linked.
+            </li>
+            <li>A box is a definition and a rounded shape a result. In the Lean the order parameter γ is called the coefficient. Each step's sheet says its status in words.</li>
+            <li>An AI agent read each link, and no program tests whether the two sides say the same thing. Whether a build ran is in each step's run records.</li>
+          </ul>
+          {lean && (
+            <>
+              <p className="map-keypop__h">Lean graph</p>
+              <ul className="map-keypop__channels">
+                <li>
+                  <Sample kind="supports" /> The proof uses the declaration below.
+                </li>
+                <li>
+                  <Sample kind="lean_type_dependency" /> The statement uses it: its name is written in the statement's lines.
+                </li>
+                <li>
+                  <Sample kind="lean_via" /> Reached only through helpers no step links. Point at the line to see how many.
+                </li>
+                <li>
+                  {usesSource(lean.source)}. {lean.note}
+                </li>
+                <li>Definitions are listed under the drawing: nearly every result uses them. Each sheet lists all of a declaration's uses.</li>
+                {!!lean.leftOut && <li>{lean.leftOut} uses are not drawn, because a longer chain already draws them. Each declaration's sheet lists all of its uses.</li>}
+              </ul>
+            </>
+          )}
+          <p className="map-keypop__h">Lines</p>
+          <ul className="map-keypop__channels">
+            <li>
+              <Sample kind="supports" /> Each line runs from a step up to the result that uses it.
+            </li>
+            <li>
+              <Sample kind="formalizes" head={false} /> A Lean declaration recorded for that result.
+            </li>
+            <li>With a paper chosen, a line may pass over steps that paper leaves out.</li>
+          </ul>
+          <p className="map-keypop__h">Moving around</p>
+          <ul className="map-keypop__channels">
+            <li>Scroll to pan, or drag from anywhere. Pinch, or Ctrl or ⌘ with the wheel, zooms. The + and − keys zoom too, Shift with an arrow key pans, and 0 fits the whole map.</li>
+            <li>↑ goes to the result that uses this one, ↓ to its first input, ← and → to the inputs beside it. Enter opens its inputs and Esc clears the selection.</li>
+            <li>With a paper chosen, [ and ] step through its passages.</li>
+          </ul>
+          <div ref={onNotesHost} />
           <a href={routeHref({ view: "about", anchor: "about-key" })}>How the map is drawn</a>
-        </li>
-      </ul>
-    </section>
+        </div>
+      )}
+    </div>
   );
 }

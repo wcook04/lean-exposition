@@ -205,6 +205,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* In a narrow cell the words under the formula say it scrolls. */
+.slice .math-display {
+  scrollbar-width: none;
+}
+
 .prose span.math-display {
   margin: var(--space-3) 0;
 }
@@ -402,7 +407,7 @@
 
 .prose figure.paper-figure figcaption {
   margin-top: var(--space-3);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: var(--fs-sm);
   line-height: var(--lh-ui);
   color: var(--ink-2);

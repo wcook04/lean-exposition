@@ -5,7 +5,7 @@ The front page's shelf shows each paper's real first page, so the picture is the
 object that its PDF link opens. A page is drawn as ink on a transparent ground at
 two widths, 176 and 352 pixels, for ordinary and high-density screens; the
 stylesheet lays it on paper in both colour schemes. This follows the Plectis
-site's landing paper sheets (ai_workflow tools/meta/dissemination/
+site's landing paper sheets (tools/meta/dissemination/
 build_landing_paper_sheets.py), with Poppler's transparent page in place of an
 image library.
 

@@ -10,32 +10,23 @@ const calls = vi.hoisted(() => ({
   edition: {} as { graph?: unknown },
 }));
 
-vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition }));
+vi.mock("../src/app/data", () => ({ useEdition: () => calls.edition, loadPaperStructure: () => new Promise(() => {}) }));
 vi.mock("../src/app/router", () => ({ navigate: calls.navigate }));
 vi.mock("../src/app/theme", () => ({ prefersReducedMotion: () => true }));
 vi.mock("../src/panels/accountStore", () => ({ chooseAccount: vi.fn() }));
 vi.mock("../src/panels/presence", () => ({ usePresence: (value: string | undefined) => ({ value, leaving: false }) }));
 vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: () => null }));
 vi.mock("../src/panels/EdgePanel", () => ({ EdgePanel: () => null }));
-vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, SourceSwatches: () => null }));
+vi.mock("../src/map/MapKey", () => ({ KeyRow: () => null, KeyPopover: () => null, SourceSwatches: () => null }));
 vi.mock("../src/map/TheoremPlate", () => ({
   TheoremBody: () => null,
+  GoalPlate: () => null,
   StatementExcerpt: () => null,
   mainGoal: () => "full_support",
   startingGoals: () => [
     { id: "full_support", title: "Full support", stages: ["long", "short", "expository"] },
     { id: "scalar_value", title: "Value identities", stages: ["long"] },
   ],
-}));
-vi.mock("../src/panels/AccountSwitch", () => ({
-  AccountSwitch: ({ onLens }: { onLens: (stage: "long") => void }) => (
-    <button onClick={() => onLens("long")}>Choose long from bar</button>
-  ),
-}));
-vi.mock("../src/ribbons/ReadingsDock", () => ({
-  ReadingsDock: ({ onLens }: { onLens: (stage: "long") => void }) => (
-    <button onClick={() => onLens("long")}>Choose long from dock</button>
-  ),
 }));
 vi.mock("../src/map/ArgumentTree", async () => {
   const { forwardRef, useImperativeHandle } = await import("react");
@@ -96,6 +87,7 @@ describe("map scope changes with a selected step", () => {
 
   it("collapses the branches of the active goal and closes its selected step", () => {
     open({ view: "map", goal: "scalar_value", edge: edgeKey, lens: "long" });
+    click("Step by step");
     click("Collapse branches");
     expect(calls.collapseAll).toHaveBeenCalledOnce();
     expect(calls.navigate).toHaveBeenLastCalledWith(
@@ -104,10 +96,9 @@ describe("map scope changes with a selected step", () => {
     );
   });
 
-  it.each(["Choose long from bar", "Choose long from dock"])("clears the selected step when changing the account through %s", (control) => {
+  it("clears the selected step when choosing a level", () => {
     open({ view: "map", edge: edgeKey });
-    if (control.endsWith("bar")) click("All accounts");
-    click(control);
+    click("Long record");
     expect(calls.navigate).toHaveBeenLastCalledWith(
       { view: "map", goal: undefined, lens: "long", node: undefined, edge: undefined, trace: undefined },
       { replace: true },
@@ -116,8 +107,7 @@ describe("map scope changes with a selected step", () => {
 
   it("keeps the existing record-selection policy when an account changes", () => {
     open({ view: "map", node: "full_support", trace: "rests" });
-    click("All accounts");
-    click("Choose long from bar");
+    click("Long record");
     expect(calls.navigate).toHaveBeenLastCalledWith(
       { view: "map", goal: undefined, lens: "long", node: "full_support", edge: undefined, trace: "rests" },
       { replace: true },

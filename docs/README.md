@@ -2,18 +2,19 @@
 
 For the purpose of the project and a first worked reading, start with the
 [project introduction](../README.md) and [papers guide](../papers/README.md).
-The [architectural companion](../papers/architecture/README.md) explains why
-the accounts share a graph and how a reader moves between them. Agents use
-[AGENTS.md](../AGENTS.md); it links the setup, source owners and checks.
+The [architectural companion](../papers/architecture/README.md) gives the reasons the papers share a graph and describes how a reader moves between them. Agents use
+[AGENTS.md](../AGENTS.md); it links the setup, source owners and test commands.
 
 ## Write and review
 
+- [Workflow](workflow.md): why there are three papers, how to apply the tool and
+  methods to another result, and how to package and serve the papers.
 - [Authoring guide](authoring.md): connect passages to claims, assumptions and
   sources, then use the [review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills)
   to repair the account and test lessons for the next problem.
 - [Review one explanation](reader-review.md): freeze an edition, ask a bounded
   reader question and preserve the response through later revisions.
-- [Authoring transitions](../skills/README.md): four local skills for source
+- [Writing methods](../skills/README.md): four local skills for source
   recording, detailed reconstruction, expert selection and exposition.
 - [Erdős examples](erdos-method-transfer.md): concrete writing methods illustrated
   by eight problem corpora.
@@ -21,8 +22,7 @@ the accounts share a graph and how a reader moves between them. Agents use
 ## Use and integrate the tools
 
 - [Examples](../examples/README.md): choose a starting point and run its workflow.
-- [Verification](verification.md): understand and run Lean builds, extraction and
-  Comparator checks.
+- [Verification](verification.md): understand and run Lean builds, extraction and Comparator.
 - [Prove2Me](prove2me.md): read public theorem metadata and preserve its limits.
 - [Bundle consumers](bundle-consumers.md): assemble authored papers, inspect a
   bundle, navigate from any record, resolve exact paper selections or read the
@@ -33,6 +33,8 @@ the accounts share a graph and how a reader moves between them. Agents use
   reading, comparison, connection witnesses and search; includes compact loading
   patterns, explicit explanation/derivation/answer routes and a reproducible
   backend benchmark.
+- [Record alignment](record-alignment.md): where each record is stated, in Lean
+  and in each paper, and how `check-alignment` tests those pointers.
 - [Reading-copy links](bundle-consumers.md#distribute-reading-copies-with-working-links):
   preserve usable references when PDFs leave their manuscript directories.
 - [Contributing](../CONTRIBUTING.md): set up development, run repository checks

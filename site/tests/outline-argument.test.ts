@@ -37,7 +37,6 @@ describe("outline rendering", () => {
   let root: Root;
   let container: HTMLDivElement;
   const onSelect = vi.fn();
-  const onEdgeSelect = vi.fn();
 
   beforeEach(() => {
     (globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
@@ -52,7 +51,7 @@ describe("outline rendering", () => {
     root = createRoot(container);
     act(() =>
       root.render(
-        createElement(ArgumentOutline, { graph, goal: GOAL, goalTitle: "Full support", scope: "scope", onSelect, onEdgeSelect }),
+        createElement(ArgumentOutline, { graph, goal: GOAL, goalTitle: "Full support", scope: "scope", onSelect }),
       ),
     );
   });
@@ -65,9 +64,10 @@ describe("outline rendering", () => {
 
   const rowsOf = (id: string) => [...container.querySelectorAll<HTMLElement>(`[data-outline-id="${id}"]`)];
 
-  it("offers the goal's inputs with a count", () => {
+  it("lists the goal's inputs as plain rows, with a kind word only where a record is not a claim", () => {
     const n = outlineChildren(graph, GOAL).length;
-    expect(container.querySelector(".outline__explore")?.textContent).toBe(`Go to the ${n} records it uses`);
+    expect(container.querySelector(".src-sq")).toBeNull();
+    expect(container.querySelector(".orow")!.textContent).not.toContain("Recorded support");
     expect(container.querySelectorAll(".outline > .outline__inputs > .outline__list > .orow")).toHaveLength(n);
   });
 
@@ -83,9 +83,7 @@ describe("outline rendering", () => {
     const shared = [...home.keys()].find((id) => rowsOf(id).length > 1);
     expect(shared, "a record shown more than once").toBeDefined();
     const rows = rowsOf(shared!);
-    const withInputs = rows.filter((r) => r.querySelector(":scope > .orow__body .orow__inputs"));
     const also = rows.filter((r) => r.querySelector(":scope > .orow__body .orow__also"));
-    expect(withInputs.length + rows.filter((r) => r.querySelector(":scope > .orow__body .orow__leaf")).length).toBe(1);
     expect(also.length).toBe(rows.length - 1);
     expect(also[0].querySelector(".orow__also")!.textContent).toContain("Also used by");
   });
@@ -106,11 +104,16 @@ describe("outline rendering", () => {
     expect(route?.querySelector('[aria-current="location"]')?.textContent).toBe(graph.nodes.get(id)!.label);
   });
 
-  it("inspects a record and a step without changing the outline", () => {
-    const first = container.querySelector<HTMLElement>(".orow")!;
-    act(() => first.querySelector<HTMLButtonElement>(".orow__inspect")!.click());
+  it("opens a record from anywhere on its row, unfolds what it uses, and leaves the chevron to unfold alone", () => {
+    const first = [...container.querySelectorAll<HTMLElement>(".orow")].find((r) => r.querySelector(".orow__inputs"))!;
+    const chevron = first.querySelector<HTMLButtonElement>(".orow__inputs")!;
+    onSelect.mockClear();
+    act(() => chevron.click());
+    expect(chevron.getAttribute("aria-expanded")).toBe("true");
+    expect(onSelect).not.toHaveBeenCalled();
+    act(() => chevron.click());
+    act(() => first.querySelector<HTMLButtonElement>(".orow__open")!.click());
     expect(onSelect).toHaveBeenCalledWith(first.dataset.outlineId);
-    act(() => first.querySelector<HTMLButtonElement>(".orow__rel")!.click());
-    expect(onEdgeSelect).toHaveBeenCalledWith(outlineChildren(graph, GOAL)[0].key);
+    expect(chevron.getAttribute("aria-expanded")).toBe("true");
   });
 });

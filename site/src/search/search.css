@@ -75,6 +75,10 @@
   display: none;
 }
 
+.palette__hint[hidden] {
+  display: none;
+}
+
 .palette__hint {
   padding: var(--space-2) var(--space-4);
   font-size: var(--fs-sm);
@@ -145,19 +149,28 @@
   overflow-wrap: anywhere;
 }
 
-.palette__title .region-dot {
-  margin-right: 7px;
-  transform: translateY(-1px);
-}
-
 .palette__title.lean {
   font-size: 0.875rem;
   color: var(--formal);
 }
 
+.palette__notation { margin-left: var(--space-2); font-family: var(--font-serif); font-size: 1rem; font-weight: 400; }
 .palette__title--serif {
   font-family: var(--font-serif);
   font-size: 1.0625rem;
+}
+
+.palette__full {
+  font-family: var(--font-serif);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+.palette__full.lean {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
 }
 
 .palette__meta {
@@ -192,6 +205,10 @@
   color: var(--ink);
   border-radius: 2px;
   box-shadow: 0 0 0 1px var(--lit-wash);
+}
+
+.palette__nobreak {
+  white-space: nowrap;
 }
 
 .palette__math .katex {
@@ -262,9 +279,47 @@
 
 .search-page {
   width: 100%;
-  max-width: 48rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: var(--space-7) var(--space-5) var(--space-8);
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.search-page__head {
+  max-width: 48rem;
+}
+
+/* Results beside the Lean names, so a query's two kinds of answer show together. */
+.search-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.search-lean {
+  margin-top: var(--space-6);
+  padding-top: 11px;
+}
+
+.search-lean .palette__title.lean {
+  font-size: 0.8125rem;
+}
+
+.search-lean__more {
+  margin-top: var(--space-3);
+}
+
+.search-page__foot {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+
+@media (max-width: 1000px) {
+  .search-body.is-exact .search-lean { order: -1; }
+  .search-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .search-page__head h1 {

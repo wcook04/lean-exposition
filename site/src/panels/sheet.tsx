@@ -6,6 +6,7 @@
 // but every change is also a visible button (DESIGN.md § Accessibility).
 
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type RefObject } from "react";
+import { useEntryState } from "../app/trail";
 
 export type SheetState = "peek" | "full";
 
@@ -54,7 +55,7 @@ export function useSheet({
   enabled?: boolean;
 } = {}) {
   const phone = usePhone() && enabled;
-  const [state, setState] = useState<SheetState>("peek");
+  const [state, setState] = useEntryState<SheetState>("sheet", "peek");
   const [drag, setDrag] = useState<number | null>(null); // live height in px while dragging
   const start = useRef<{ y: number; h: number; moved: boolean } | null>(null);
   const readRef = useRef<HTMLButtonElement>(null);

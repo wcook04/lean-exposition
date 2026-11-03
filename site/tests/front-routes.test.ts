@@ -11,8 +11,8 @@ describe("the front page and the map's address", () => {
 
   it("opens the map at /map", () => {
     expect(at("/map")).toMatchObject({ view: "map", goal: undefined, node: undefined });
-    expect(routeHref({ view: "map" })).toBe("/map");
-    expect(routeHref({ view: "map", goal: "scalar_value", node: "a" })).toBe("/map?g=scalar_value&n=a");
+    expect(routeHref({ view: "map" })).toBe("/map/");
+    expect(routeHref({ view: "map", goal: "scalar_value", node: "a" })).toBe("/map/?g=scalar_value&n=a");
   });
 
   it.each(["/?g=scalar_value", "/?n=support.diffusion", "/?n=x&t=rests", "/?lens=long", "/?e=a~b~supports"])(

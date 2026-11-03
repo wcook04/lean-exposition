@@ -2,9 +2,12 @@
 // reading position are named and found. Nothing here touches the DOM or the
 // network, so the rules are tested directly against the captured fixtures.
 
+import type { AlignedStatement, Alignment, StatementRole } from "../../api/lean";
 import type { PaperStructure, Stage, StructurePassage } from "../../api/types";
 import type { PreparedDocument, PreparedPart } from "../engine";
 import { readerHref } from "../links";
+import { tieCounts, type TieCount, type TieModel } from "../ties";
+import { AUTHOR } from "../../app/author";
 import { PAPER_NAMES, STAGE_ORDER } from "../../app/papers";
 import { sectionLabel } from "../../map/TheoremPlate";
 
@@ -61,12 +64,13 @@ export function placeName(structures: Structures, here: Stage, stage: Stage, anc
   return stage === here ? where : `${PAPER_NAMES[stage].short}, ${where}`;
 }
 
-/** "Draft; review needs revision." from the structure's state and review state. */
+/** "Draft. No independent mathematician has accepted it yet." from the structure's state and review state. */
 export function statusWords(state: string | undefined, review: string | undefined): string {
   const words = (s: string) => s.replace(/_/g, " ").trim();
   const parts: string[] = [];
-  if (state) parts.push(`${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
-  if (review) parts.push(`Review recorded as ${review === "needs_revision" ? "needing revision" : words(review)}.`);
+  if (state) parts.push(state === "draft" ? `Draft by ${AUTHOR}, made using AI.` : `${words(state).replace(/^./, (c) => c.toUpperCase())}.`);
+  // The papers' READMEs: draft until independent acceptance. No reviewer's list of changes exists to link.
+  if (review) parts.push(review === "needs_revision" ? "No independent mathematician has accepted it yet." : `Review recorded as ${words(review)}.`);
   return parts.join(" ");
 }
 
@@ -139,6 +143,22 @@ export interface AccountDestinations {
   shared: { record: string; places: Destination[] }[];
 }
 
+const SPECIFIC = new WeakMap<PaperStructure, StructurePassage[]>();
+
+/** A paper's passages, those mapping fewest records first; every bar on the page asks for this. */
+function specificFirst(structure: PaperStructure): StructurePassage[] {
+  let sorted = SPECIFIC.get(structure);
+  if (!sorted) {
+    sorted = [...structure.paper.passages].sort(
+      (a, b) =>
+        a.claim_ids.length + a.assumption_ids.length - (b.claim_ids.length + b.assumption_ids.length) ||
+        a.block_span.start_byte - b.block_span.start_byte,
+    );
+    SPECIFIC.set(structure, sorted);
+  }
+  return sorted;
+}
+
 /**
  * Where the same topic is treated, for the "Passages linked to this one" chooser: for each
  * other account, the authored reading links touching this passage with their
@@ -159,11 +179,7 @@ export function sameTopic(structures: Structures, here: { stage: Stage; anchor: 
       .map((r) => ({ stage, anchor: r.anchor, relation: relationWord(r), rationale: r.rationale }));
     const shared: AccountDestinations["shared"] = [];
     if (stage !== here.stage && structure) {
-      const passages = [...structure.paper.passages].sort(
-        (a, b) =>
-          a.claim_ids.length + a.assumption_ids.length - (b.claim_ids.length + b.assumption_ids.length) ||
-          a.block_span.start_byte - b.block_span.start_byte,
-      );
+      const passages = specificFirst(structure);
       for (const record of claims) {
         const places = passages
           .filter((p) => p.claim_ids.includes(record) && !taken.has(`${stage}:${p.anchor}`))
@@ -249,6 +265,133 @@ export function firstPassageFor(structure: PaperStructure | undefined, ids: stri
   return null;
 }
 
+const ROLE_ORDER: StatementRole[] = ["statement", "definition", "derivation", "explanation", "example", "mention"];
+
+/**
+ * The alignment's best slice of this paper for a record: statement first, then
+ * definition, derivation, explanation, example, mention, the earliest within a role.
+ */
+export function bestSlice(alignment: Alignment | null, stage: Stage, id: string): AlignedStatement | null {
+  const slices = (alignment?.records[id]?.statements ?? []).filter((s) => s.paper === stage);
+  return [...slices].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0] ?? null;
+}
+
+export interface PaperTarget {
+  /** The step the landing belongs to, which pins there. */
+  record: string;
+  slice: AlignedStatement;
+  /** The paper states the step, and does not name this declaration at that place. */
+  near: boolean;
+}
+
+/**
+ * Where to send a reader from an open declaration to another paper. Chosen by the Lean:
+ * first a slice that itself names this declaration, in this step and then in any step; then
+ * a slice of this step whose Lean includes it; then the step's best statement, said to be
+ * only that. A landing on unrelated words is the one thing this must never do.
+ */
+export function paperTarget(alignment: Alignment | null, paper: Stage, record: string, decl: string | null): PaperTarget | null {
+  const best = (rows: AlignedStatement[]) => [...rows].sort((a, b) => ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) || a.start_byte - b.start_byte)[0];
+  const own = (alignment?.records[record]?.statements ?? []).filter((s) => s.paper === paper);
+  if (decl) {
+    const names = (s: AlignedStatement) => s.lean?.some((row) => row.name === decl);
+    const stated = own.filter((s) => s.lean_source === "statement" && names(s));
+    if (stated.length) return { record, slice: best(stated), near: false };
+    for (const [id, row] of Object.entries(alignment?.records ?? {})) {
+      const found = row.statements.filter((s) => s.paper === paper && s.lean_source === "statement" && names(s));
+      if (found.length) return { record: id, slice: best(found), near: false };
+    }
+  }
+  const slice = bestSlice(alignment, paper, record);
+  return slice ? { record, slice, near: !!decl } : null;
+}
+
+export { sliceAt, statementHref } from "../links";
+
+/** The source lines an `l` value names in this document. */
+export function resolveAt(doc: Pick<PreparedDocument, "lineOfByte">, at: string): { start: number; end: number } | null {
+  const bytes = /^b(\d+)-(\d+)$/.exec(at);
+  if (bytes) return { start: doc.lineOfByte(Number(bytes[1])), end: doc.lineOfByte(Math.max(Number(bytes[1]), Number(bytes[2]) - 1)) };
+  const lines = /^(\d+)(?:-(\d+))?$/.exec(at);
+  if (!lines) return null;
+  const start = Number(lines[1]);
+  return { start, end: Math.max(start, Number(lines[2] ?? start)) };
+}
+
+/** The parts that hold these lines. */
+export function partsOfLines(parts: PreparedPart[], lines: { start: number; end: number }): number[] {
+  return parts.filter((p) => !p.blank && p.lines.start <= lines.end && p.lines.end >= lines.start).map((p) => p.index);
+}
+
+// ----------------------------------------------------------- reading trail
+
+/** One paper's path through its records, computed once from its structure. */
+export interface PaperTrail {
+  /** Each passage's position in reading order. */
+  order: Map<string, number>;
+  /** Each record's first passage in reading order. */
+  first: Map<string, number>;
+}
+
+export function paperTrail(structure: PaperStructure | undefined): PaperTrail {
+  const order = new Map<string, number>();
+  const first = new Map<string, number>();
+  const passages = [...(structure?.paper.passages ?? [])].sort((a, b) => a.block_span.start_byte - b.block_span.start_byte);
+  passages.forEach((passage, i) => {
+    order.set(passage.anchor, i);
+    for (const id of passageRecords(passage)) if (!first.has(id)) first.set(id, i);
+  });
+  return { order, first };
+}
+
+export interface TrailPlace {
+  /** Records reached earlier in the paper, without those in the current passage. */
+  passed: Set<string>;
+  /** Records the reader has reached, the current passage included. */
+  seen: number;
+  /** Every record the paper links a passage to. */
+  total: number;
+}
+
+/** Where a reader at this passage stands on the paper's path; records ahead are the rest. */
+export function trailAt(trail: PaperTrail, anchor: string | null, current: readonly string[]): TrailPlace {
+  const at = anchor === null ? undefined : trail.order.get(anchor);
+  const passed = new Set<string>();
+  let seen = 0;
+  const here = new Set(current);
+  for (const [id, first] of trail.first) {
+    if (at === undefined || first > at) continue;
+    seen++;
+    if (!here.has(id)) passed.add(id);
+  }
+  return { passed, seen, total: trail.first.size };
+}
+
+/**
+ * "Section 3 of 8. You have reached 14 of this paper's 37 steps.". Only numbered top-level sections count; in
+ * text before the first of them, or after the last, the section is named instead.
+ */
+export function trailWords(outline: OutlineEntry[], part: number, place: Pick<TrailPlace, "seen" | "total">): string {
+  const records = place.total ? `You have reached ${place.seen} of this paper’s ${place.total} steps.` : "";
+  const tops = outline.filter((e) => e.parent === null);
+  const numbered = tops.filter((e) => /^\d/.test(e.title));
+  let at: OutlineEntry | undefined;
+  for (const entry of tops) {
+    if (entry.part > part) break;
+    at = entry;
+  }
+  let where = "";
+  if (at && /^\d/.test(at.title)) where = `${sectionNumber(at.title).replace("§", "Section ")} of ${numbered.length}`;
+  else if (at) where = at.title;
+  else if (numbered.length) where = `Before section 1 of ${numbered.length}`;
+  return [where && `${where}.`, records].filter(Boolean).join(" ");
+}
+
+/** How many passages the "Linked passages" chooser offers for this one. */
+export function linkedCount(structures: Structures, here: { stage: Stage; anchor: string }): number {
+  return sameTopic(structures, here).reduce((n, account) => n + account.authored.length + account.shared.reduce((m, s) => m + s.places.length, 0), 0);
+}
+
 // ---------------------------------------------------------------- outline
 
 export interface OutlineEntry {
@@ -283,6 +426,16 @@ export function outlineOf(doc: PreparedDocument): OutlineEntry[] {
   return out;
 }
 
+/** Statements with Lean per outline entry, each section counting its subsections. */
+export function outlineTieCounts(entries: OutlineEntry[], structure: PaperStructure, doc: PreparedDocument, ties: TieModel): Map<string, TieCount> {
+  const sections = entries.map((entry) => {
+    const part = doc.parts[entry.part];
+    const heading = structure.paper.sections.find((s) => s.title === entry.title && s.heading_span.start_byte >= part.span.start && s.heading_span.start_byte < part.span.end);
+    return { id: entry.id, parent: entry.parent, start: heading?.heading_span.start_byte ?? part.span.start };
+  });
+  return tieCounts(ties, sections);
+}
+
 /** The entries from the top-level section down to `id`: a document breadcrumb, not a history. */
 export function chainOf(entries: OutlineEntry[], id: string | null): OutlineEntry[] {
   if (!id) return [];
@@ -301,16 +454,14 @@ export function sectionNumber(title: string): string {
 // ------------------------------------------------------------- rendering
 
 /**
- * A placeholder height for a part not yet rendered, from its byte length.
- * Calibrated against the rendered papers at the desktop measure; the page
- * keeps the reading position fixed when the real height arrives.
+ * The height to reserve for a part that has not been laid out, at the desktop measure. Source
+ * lines predict it where bytes do not: a display formula takes many short lines and a reference
+ * one long one. Calibrated on all three papers. The page keeps the reading position fixed when
+ * the real height arrives.
  */
-export function estimateHeight(part: PreparedPart, columnWidth = 592): number {
+export function estimateHeight(part: PreparedPart): number {
   if (part.blank) return 0;
-  const bytes = part.span.end - part.span.start;
-  const perLine = Math.max(30, columnWidth / 8.6);
-  const lines = bytes / perLine;
-  return Math.round(lines * 29 * 0.78 + part.headings.length * 56 + part.figures.length * 320 + 16);
+  return Math.round((part.lines.end - part.lines.start + 1) * 19 + part.headings.length * 20);
 }
 
 /** Parts in order of how soon a reader will reach them, nearest first. */

@@ -7,12 +7,12 @@ import { boxInView, frameBox, revealBox } from "../src/map/engine/camera";
 const vp = { width: 1000, height: 600, insets: { top: 20, right: 20, bottom: 20, left: 20 } };
 
 describe("representation by screen scale", () => {
-  it("is a card from 0.8, compact down to 0.5, a mark below", () => {
+  it("is a card from 0.8 and a tile below it", () => {
     expect(repFor(1)).toBe("card");
     expect(repFor(0.8)).toBe("card");
     expect(repFor(0.79)).toBe("compact");
     expect(repFor(0.5)).toBe("compact");
-    expect(repFor(0.49)).toBe("mark");
+    expect(repFor(0.1)).toBe("compact");
   });
 });
 
@@ -38,8 +38,8 @@ describe("edge chips", () => {
     expect(boxInView({ x0: 940, y0: 100, x1: 1200, y1: 150 }, vp, v)).toBe(true);
   });
   it("words the count", () => {
-    expect(chipText("right", 3)).toBe("3 records ▸");
-    expect(chipText("left", 1)).toBe("◂ 1 record");
+    expect(chipText("right", 3)).toBe("3 steps ▸");
+    expect(chipText("left", 1)).toBe("◂ 1 step");
   });
 });
 

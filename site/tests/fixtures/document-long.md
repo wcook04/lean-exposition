@@ -6,6 +6,9 @@ Draft, 26 October 2026. Mathematical sources: OpenAI's full-support
 manuscript of 27 September 2026 and QAOA manuscript of 25 September 2026,
 at the [pinned public revision](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a).
 
+**AI assistance.** Will Cook directed the work. AI agents based on large
+language models produced and revised this manuscript.
+
 <!-- passage:overview -->
 The full-support manuscript proves that an admissible integrable minimizer
 of the zero-temperature Parisi functional for the pure zero-field

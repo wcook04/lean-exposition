@@ -12,7 +12,7 @@ export interface CheckKindInfo {
 export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   source_hash: {
     title: "Source files",
-    question: "Whether each cited file still has exactly the bytes recorded for it, compared by hash. This check does not examine the mathematics in the files.",
+    question: "Whether each cited file still has exactly the bytes recorded for it, compared by hash. It does not read the mathematics in the files.",
   },
   lean_build: {
     title: "Lean build",
@@ -20,19 +20,19 @@ export const CHECK_KINDS: Record<string, CheckKindInfo> = {
   },
   comparator: {
     title: "Comparator",
-    question: "Whether Comparator, a program that compares a Lean proof with a separately written statement of the theorem, accepts the proof as proving that statement using only the permitted axioms.",
+    question: "Whether Comparator accepts the proof as proving the separately written statement, using only the permitted axioms.",
   },
   extraction: {
     title: "Dependency extraction",
-    question: "Which Lean declarations the proof uses, as listed by Lean after it has processed the proof.",
+    question: "Which Lean declarations the proof uses, as listed by a program run inside Lean on the compiled proof.",
   },
   semantic_review: {
     title: "Correspondence review",
-    question: "Whether a reviewer found that a recorded statement says the same thing as the paper or source it was taken from.",
+    question: "Whether a second reader, comparing a recorded step with the paper or source it was taken from, finds that they say the same thing.",
   },
   platform: {
     title: "Platform label",
-    question: "What an outside platform reports about a statement. This is that platform’s label, not a proof check run for these records.",
+    question: "What an outside platform reports about a statement. This is that platform’s label, and no proof was run for these steps.",
   },
 };
 
@@ -172,7 +172,7 @@ export function kindHeadline(kind: string, counts: Record<string, number>): stri
   return `${lead} (${countsInWords(counts)})`;
 }
 
-/** "View 12 check records" style count, and the line the theorem plate shows. */
+/** "View 12 run records" style count, and the line the theorem plate shows. */
 export interface GoalCheckLine {
   line: string;
   total: number;
@@ -184,7 +184,7 @@ const PLATE_ORDER = ["comparator", "lean_build", "extraction", "semantic_review"
 
 /**
  * The most informative short line about a record's checks, for the theorem
- * plate, with the number of check records attached. `evidenceIds` defaults to
+ * plate, with the number of run records attached. `evidenceIds` defaults to
  * the ids on the node's own record (ArgNode.evidenceIds).
  * E.g. { line: "No Comparator acceptance recorded", total: 12 }.
  */
@@ -193,7 +193,7 @@ export function goalCheckLine(edition: Edition, nodeId: string, evidenceIds?: re
   const cards = new Map(edition.map.records.evidence.map((e) => [e.id, e]));
   const records = ids.map((id) => cards.get(id)).filter((c): c is NonNullable<typeof c> => !!c);
   const total = records.length;
-  if (total === 0) return { line: "No check records", total };
+  if (total === 0) return { line: "No run records", total };
   const by = outcomeCounts(records);
   const kind = PLATE_ORDER.find((k) => by.has(k)) ?? [...by.keys()][0];
   const counts = by.get(kind)!;
@@ -226,10 +226,10 @@ export const OUTCOME_NAMES: Record<string, string> = {
 
 /** What each outcome means, in plain words, for the page's key. */
 export const OUTCOME_MEANINGS: { status: string; meaning: string }[] = [
-  { status: "passed", meaning: "The checking program ran and reported success on the inputs it examined." },
-  { status: "failed", meaning: "A run is recorded and it ended in failure. Where it stopped is written in the check record." },
-  { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the checking program never started." },
-  { status: "not_run", meaning: "The check is described and planned, but no run of it is recorded." },
+  { status: "passed", meaning: "The program ran and reported success on the inputs it examined." },
+  { status: "failed", meaning: "A run is recorded and it ended in failure. Where it stopped is written in the run record." },
+  { status: "unavailable", meaning: "A run was attempted but produced no outcome, for example because the program never started." },
+  { status: "not_run", meaning: "A run is described and planned, and none is recorded." },
 ];
 
 export interface EvidenceCard {
@@ -286,9 +286,30 @@ export function countsInWords(counts: Record<string, number>): string {
   return `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
 }
 
-/** "1 check record" or "8 check records". */
+/** Plain words for the recorded failures: what stopped, in the record's own terms. */
+const FAILURE_WORDS: Record<string, string> = {
+  full_support_solution_build_failure_20261023:
+    "Comparator stopped while building the proof of the Full support theorem, because a compiled file the proof imports (AbsIncrement) was missing.",
+  scalar_value_solution_build_failure_20261024:
+    "Comparator stopped while building the proof of the scalar value theorem, because a compiled file the proof imports (IntegralPositiveMulGaussian) was missing.",
+};
+
+/** The date a record carries at the end of its identifier, read only for a dated failure. */
+export function identifierDate(id: string): string | null {
+  const m = /_(\d{4})(\d{2})(\d{2})$/.exec(id);
+  return m ? statedDate(`${m[1]}-${m[2]}-${m[3]}`)?.text ?? null : null;
+}
+
+/** One sentence on a recorded failure: when, then what happened, in plain words or the record's own. */
+export function failureLine(card: Pick<EvidenceCard, "id" | "label">, record?: { details?: string; tool?: string }): string {
+  const date = statedDate(record?.details)?.text ?? identifierDate(card.id);
+  const what = FAILURE_WORDS[card.id] ?? plainDetails(record?.details) ?? record?.tool ?? card.label;
+  return date ? `${date}. ${what}` : what;
+}
+
+/** "1 run record" or "8 run records". */
 export function recordsWord(n: number): string {
-  return `${n} ${n === 1 ? "check record" : "check records"}`;
+  return `${n} ${n === 1 ? "run record" : "run records"}`;
 }
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -342,7 +363,7 @@ export function inStatedTimeOrder<T extends { details?: string | null }>(records
 }
 
 const KIND_NOUNS: Record<string, string> = {
-  source_hash: "source-file checks",
+  source_hash: "source-file comparisons",
   lean_build: "Lean build records",
   comparator: "Comparator records",
   extraction: "dependency extraction records",
@@ -372,11 +393,16 @@ export function standingSentence(group: Pick<KindGroup, "kind" | "title" | "coun
   if (passed === total) {
     const lead = total === 1 ? `The one ${singular(name)} passed.` : `All ${total} ${name} passed.`;
     if (group.kind === "source_hash")
-      return `${lead} In each, the SHA-256 hash and length of a named file matched the values recorded for it, so the file has the recorded bytes. These checks do not examine whether the mathematics in the files is correct.`;
+      return `${lead} In each, the SHA-256 hash and length of a named file matched the values recorded for it, so the file has the recorded bytes. These comparisons do not examine whether the mathematics in the files is correct.`;
     return lead;
   }
   if (passed === 0 && notRun === total)
     return total === 1 ? `The one ${singular(name)} has not been run.` : `None of the ${total} ${name} has been run.`;
   if (passed === 0) return `No ${KIND_RUN[group.kind] ?? group.title.toLowerCase()} run has passed. The outcomes of its ${recordsWord(total)} are ${countsInWords(group.counts)}.`;
   return `${passed} of ${recordsWord(total)} passed. The outcomes of all ${total} are ${countsInWords(group.counts)}.`;
+}
+
+/** A check's recorded details keep their tool settings; a reader gets the setting in words. */
+function plainDetails(details: string | undefined): string | undefined {
+  return details?.replace(/enable_nanoda=false/g, "Nanoda, a second proof checker, switched off");
 }

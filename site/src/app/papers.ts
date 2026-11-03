@@ -7,17 +7,17 @@ import type { Stage } from "../api/types";
 export const PAPER_NAMES: Record<Stage, { short: string; job: string; reader: string }> = {
   expository: {
     short: "Exposition",
-    job: "Explains the objects and the idea of the proof, starting from a calculation with two spins.",
+    job: "The objects and the idea of the proof, starting from a calculation with two spins.",
     reader: "Written for readers who know algebra and calculus; probability and measures are introduced through calculations.",
   },
   short: {
     short: "Short paper",
-    job: "States the result, relates it to earlier work and gives the proof, citing the curvature estimate it rests on.",
+    job: "The result, how it relates to earlier work and its proof, which cites the curvature estimate it depends on.",
     reader: "Written for readers who know Itô calculus and martingale convergence.",
   },
   long: {
     short: "Long record",
-    job: "Reconstructs the derivations, names the source of each step and of each imported estimate, and continues to the QAOA circuits.",
+    job: "The derivations, with the source of each step and of each imported estimate, continuing to the circuits of the quantum approximate optimization algorithm (QAOA).",
     reader: "Written so that a reader can start at any step they want to examine.",
   },
 };

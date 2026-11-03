@@ -21,7 +21,9 @@ import {
   type MathResult,
   type MathSpan,
 } from "./math";
+import { equationId, figureId, labelIds, linkReferences, markReferences, referenceIndex, stripRefMarks, type RefIndex, type ReferenceTable } from "./references";
 import { sanitizeHtml } from "./sanitize";
+import { clearTexBlocks, hasMarks, isMarkCode, MARK, markSource, segmentsIn, stripMarks, wrapTies, type TieSegment } from "./ties";
 
 export { byteOffsetOf };
 
@@ -30,6 +32,8 @@ export interface PreparedPart {
   kind: "passage" | "text";
   anchor?: string;
   span: { start: number; end: number };
+  /** The part's first and last source lines, counted from 1 in the document. */
+  lines: { start: number; end: number };
   headings: { id: string; level: number; title: string; aliases: string[] }[];
   anchors: string[];
   figures: { key: string; caption: string; source: string }[];
@@ -45,8 +49,22 @@ export interface PreparedDocument {
   mathCount: number;
   /** Non-fatal problems found while preparing (duplicate explicit ids). */
   issues: string[];
+  /** Every reference definition of the document, for slices that use them (renderSlice). */
+  references: NonNullable<Env["references"]>;
+  /** The paper's reviewed references, once loaded: what its in-text links point to. */
+  refs: RefIndex | null;
+  /** The source line, from 1, that holds this byte of the document. */
+  lineOfByte(byte: number): number;
   render(index: number): RenderedPart;
   renderAll(): RenderedPart[];
+  /** Every block's words with its source line, for searching text that has not rendered yet. */
+  textBlocks(): TextBlock[];
+}
+
+export interface TextBlock {
+  part: number;
+  line: number;
+  text: string;
 }
 
 export interface RenderedPart {
@@ -61,6 +79,10 @@ export interface PrepareInput {
   parts?: { kind: string; span: { start_byte: number; end_byte: number }; passageAnchor?: string }[];
   documentPath: string;
   documentPaths: Record<string, string>;
+  /** The reviewed reference table, when the paper has one. */
+  referenceTable?: ReferenceTable | null;
+  /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
+  ties?: readonly TieSegment[];
 }
 
 // ---------------------------------------------------------------- markdown-it
@@ -86,6 +108,56 @@ md.block.ruler.before("paragraph", "print_spacing", (state, startLine, _endLine,
   if (!silent) state.line = startLine + 1;
   return true;
 }, { alt: ["paragraph"] });
+// A tie's marks stand outside the parser's text (ties.ts). Delimiters look through them,
+// so `**` opens or closes exactly as it does in the source.
+const { isMdAsciiPunct, isPunctChar, isWhiteSpace } = md.utils;
+const BaseInlineState = md.inline.State;
+class InlineState extends BaseInlineState {
+  scanDelims(start: number, canSplitWord: boolean) {
+    const { src, posMax } = this as unknown as { src: string; posMax: number };
+    const marker = src.charCodeAt(start);
+    let before = start - 1;
+    while (before >= 0 && isMarkCode(src.charCodeAt(before))) before--;
+    let pos = start;
+    while (pos < posMax && src.charCodeAt(pos) === marker) pos++;
+    const length = pos - start;
+    while (pos < posMax && isMarkCode(src.charCodeAt(pos))) pos++;
+    const last = before >= 0 ? src.charCodeAt(before) : 0x20;
+    const next = pos < posMax ? src.charCodeAt(pos) : 0x20;
+    const lastPunct = isMdAsciiPunct(last) || isPunctChar(String.fromCharCode(last));
+    const nextPunct = isMdAsciiPunct(next) || isPunctChar(String.fromCharCode(next));
+    const lastSpace = isWhiteSpace(last);
+    const nextSpace = isWhiteSpace(next);
+    const left = !nextSpace && (!nextPunct || lastSpace || lastPunct);
+    const right = !lastSpace && (!lastPunct || nextSpace || nextPunct);
+    return {
+      can_open: left && (canSplitWord || !right || lastPunct),
+      can_close: right && (canSplitWord || !left || nextPunct),
+      length,
+    };
+  }
+}
+md.inline.State = InlineState;
+// Smart quotes read the neighbouring text, so each mark leaves the text tokens at once.
+const MARK_SPLIT = new RegExp(`(${MARK})`);
+md.core.ruler.after("inline", "tie_marks", (state) => {
+  for (const block of state.tokens) {
+    if (block.type !== "inline" || !block.children || !hasMarks(block.content)) continue;
+    block.children = block.children.flatMap((token) => {
+      if (token.type !== "text" || !hasMarks(token.content)) return [token];
+      return token.content.split(MARK_SPLIT).flatMap((piece) => {
+        if (!piece) return [];
+        const made = new state.Token(hasMarks(piece) ? "tie_mark" : "text", "", 0);
+        made.level = token.level;
+        if (hasMarks(piece)) made.meta = { mark: piece };
+        else made.content = piece;
+        return [made];
+      });
+    });
+  }
+});
+md.renderer.rules.tie_mark = (tokens, idx) => (tokens[idx].meta as { mark: string }).mark;
+
 // Pandoc's `smart` extension converts quotes, dashes and ellipses but not
 // (c), (r), (tm) or +-. Keep markdown-it's smartquotes, replace the rest.
 md.disable("replacements");
@@ -108,14 +180,16 @@ md.core.ruler.push("run_in", (state) => {
     if (tokens[i].type !== "paragraph_open" || tokens[i + 1].type !== "inline") continue;
     const kids = tokens[i + 1].children ?? [];
     let k = 0;
-    while (k < kids.length && kids[k].type === "text" && kids[k].content.trim() === "") k++;
+    while (k < kids.length && (kids[k].type === "tie_mark" || (kids[k].type === "text" && kids[k].content.trim() === ""))) k++;
     if (kids[k]?.type !== "strong_open") continue;
     let text = "";
     let j = k + 1;
     for (; j < kids.length && kids[j].type !== "strong_close"; j++) text += kids[j].content;
     if (j >= kids.length) continue;
-    const m = RUN_IN.exec(text.trim());
+    const lead = stripRefMarks(text).trim();
+    const m = RUN_IN.exec(lead);
     if (!m) continue;
+    tokens[i].meta = { ...(tokens[i].meta ?? {}), lead };
     tokens[i].attrJoin("class", "run-in");
     tokens[i].attrSet("data-run-in", m[1].toLowerCase());
     kids[k].attrJoin("class", "run-in__lead");
@@ -448,6 +522,8 @@ interface PartState {
   tokens: Token[];
   spans: MathSpan[];
   figures: FigureInfo[];
+  /** Figures before this part, for their numbers. */
+  figuresBefore: number;
   rendered?: RenderedPart;
 }
 
@@ -475,26 +551,192 @@ const REF_DEF = /^ {0,3}\[(?:[^\]\\\n]|\\.)+\]:[ \t]*\S.*$/gm;
 function inlineText(children: Token[], spans: MathSpan[]): string {
   let s = "";
   for (const c of children) {
-    if (c.type === "text" || c.type === "code_inline") s += c.content;
+    if (c.type === "text" || c.type === "code_inline") s += stripMarks(c.content);
     else if (c.type === "softbreak" || c.type === "hardbreak") s += " ";
   }
   return s.replace(new RegExp(`[${INLINE_OPEN}${DISPLAY_OPEN}](\\d+)[${INLINE_CLOSE}${DISPLAY_CLOSE}]`, "g"), (_m, n: string) => spans[Number(n)]?.tex ?? "");
 }
 
+/** One part's tokens as sanitised HTML, with KaTeX output substituted last. */
+/** The start of every line of a document's bytes, for byte-to-line lookups. */
+function lineStarts(bytes: Uint8Array): number[] {
+  const starts = [0];
+  for (let i = 0; i < bytes.length; i++) if (bytes[i] === 10) starts.push(i + 1);
+  return starts;
+}
+
+function lineAt(starts: number[], byte: number): number {
+  let lo = 0;
+  let hi = starts.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (starts[mid] <= byte) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo + 1;
+}
+
+const LINE_ATTR = `(?: data-line="(\\d+)")?`;
+/** Any tie marks at this place, kept: a block built around a formula leaves them outside it. */
+const MARKS = `(${MARK}*)`;
+const LITERAL_BREAK = new RegExp(`[${INLINE_OPEN}${DISPLAY_OPEN}${FIG_OPEN}]\\d+[${INLINE_CLOSE}${DISPLAY_CLOSE}${FIG_CLOSE}]`, "g");
+const LONE_MATH = new RegExp(`^\\s*${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`);
+
+/** A piece of a processed line that also stands in the raw text: the formula of a display, else its longest run of words. */
+function literalOf(line: string, spans: MathSpan[]): string {
+  const display = LONE_MATH.exec(line);
+  if (display) return spans[Number(display[1])]?.tex.split("\n").find((l) => l.trim())?.trim() ?? "";
+  const best = line.split(LITERAL_BREAK).reduce((a, b) => (b.trim().length > a.length ? b.trim() : a), "");
+  return best.length >= 4 ? best : "";
+}
+
+/**
+ * Stamp each block with its line in the source (data-line). Preparing a part drops
+ * comment lines and folds multi-line formulas, so token maps count lines of the
+ * processed text; each block is found again in the raw text, in order, by its words
+ * or formula. A block with neither (a figure) takes the next line that has text.
+ */
+function stampLines(tokens: Token[], text: string, rawText: string, spans: MathSpan[], firstLine: number): void {
+  const processed = stripMarks(text).split("\n");
+  const raw = rawText.split("\n");
+  let cursor = 0;
+  for (const token of tokens) {
+    if (!token.map || token.nesting < 0 || token.type === "inline") continue;
+    const literal = literalOf(processed[token.map[0]] ?? "", spans);
+    let found = -1;
+    if (literal) for (let i = cursor; i < raw.length && found < 0; i++) if (raw[i].includes(literal)) found = i;
+    if (found < 0) {
+      found = cursor;
+      while (found < raw.length - 1 && (!raw[found].trim() || raw[found].trimStart().startsWith("<!--"))) found++;
+    }
+    token.attrSet("data-line", String(firstLine + found));
+    // A list or quotation shares its first line with the block inside it.
+    cursor = /^(bullet_list|ordered_list|list_item|blockquote)/.test(token.type) ? found : found + 1;
+  }
+}
+
+function renderTokens(
+  st: PartState,
+  env: RenderEnv,
+  typesetSpan: (span: MathSpan) => MathResult,
+  /** The whole paper's references; a slice has none, and no ids, since the original stands elsewhere. */
+  refs?: { index: RefIndex | null },
+): { html: string; mathErrors: { tex: string; message: string }[] } {
+  let html = md.renderer.render(st.tokens, md.options, env);
+  const equationAttr = (n: string) => {
+    const id = refs ? equationId(st.spans[Number(n)]?.tex ?? "") : null;
+    return id ? ` id="${esc(id)}"` : "";
+  };
+  html = html.replace(new RegExp(`<p${LINE_ATTR}>${MARKS}${FIG_OPEN}(\\d+)${FIG_CLOSE}${MARKS}</p>`, "g"), (_m, line: string | undefined, before: string, n: string, after: string) => {
+    const f = st.figures[Number(n)];
+    const key = esc(f.key);
+    const id = refs ? ` id="${figureId(st.figuresBefore + Number(n) + 1)}"` : "";
+    return `${before}<figure class="paper-figure"${id}${line ? ` data-line="${line}"` : ""} data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"></div><figcaption>${f.captionHtml}</figcaption></figure>${after}`;
+  });
+  html = sanitizeHtml(html);
+  if (refs) html = linkReferences(html, refs.index);
+  html = html.replace(new RegExp(`<p(?: data-line="\\d+")?>${MARKS}((?:\\s*<a [^>]*class="anchor"[^>]*></a>)+)\\s*${MARKS}</p>`, "g"), "$1$2$3");
+  const mathErrors: { tex: string; message: string }[] = [];
+  const typeset = (n: string) => {
+    const span = st.spans[Number(n)];
+    if (!span) return "";
+    const r = typesetSpan(span);
+    if (r.error) mathErrors.push({ tex: span.tex, message: r.error });
+    return r.html;
+  };
+  html = html.replace(
+    new RegExp(`<p${LINE_ATTR}>${MARKS}${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}${MARKS}</p>`, "g"),
+    (_m, line: string | undefined, before: string, n: string, after: string) => `${before}<div class="math-display"${equationAttr(n)}${line ? ` data-line="${line}"` : ""}>${typeset(n)}</div>${after}`,
+  );
+  html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => `<span class="math-display"${equationAttr(n)}>${typeset(n)}</span>`);
+  // Punctuation directly after inline math stays on the formula's line.
+  html = html.replace(
+    new RegExp(`${INLINE_OPEN}(\\d+)${INLINE_CLOSE}${MARKS}([.,;:!?)\\]\u2019\u201d]+)?`, "g"),
+    // Chrome breaks after KaTeX's last box despite the wrapper, so a short
+    // formula is kept whole; a long one may still break between relations.
+    (_m, n: string, marks: string, punct?: string) => {
+      if (!punct) return typeset(n) + marks;
+      const whole = (st.spans[Number(n)]?.tex.length ?? 0) <= 48 ? " math-nobreak--whole" : "";
+      return `<span class="math-nobreak${whole}">${typeset(n)}${marks}${punct}</span>`;
+    },
+  );
+  return { html: wrapTies(html), mathErrors };
+}
+
+export interface SliceInput {
+  stage: string;
+  documentPath: string;
+  documentPaths: Record<string, string>;
+  /** The paper's reference definitions, once it is loaded. Without them a reference link shows its words alone. */
+  references?: NonNullable<Env["references"]>;
+}
+
+const REFERENCE_LINK = /\[((?:[^[\]\\]|\\.)*)\]\[((?:[^[\]\\]|\\.)*)\]/g;
+
+/** Whether a Markdown slice uses a reference-style link, whose definition lives elsewhere in its paper. */
+export function hasReferenceLink(markdown: string): boolean {
+  REFERENCE_LINK.lastIndex = 0;
+  return REFERENCE_LINK.test(markdown);
+}
+
+/**
+ * A slice of a paper's Markdown through the same pipeline as a whole part, so it is
+ * typeset exactly as the paper is. A reference link with no definition to hand shows
+ * its visible words, never its brackets. Slices are short, so repeats are the caller's
+ * to cache; formulas are shared across slices here.
+ */
+export function renderSlice(markdown: string, input: SliceInput): RenderedPart {
+  const references = input.references ?? {};
+  const spans: MathSpan[] = [];
+  const figures: FigureInfo[] = [];
+  const withFigures = extractFigures(preprocess(markdown, false, { value: null }), figures, spans);
+  const { text } = protectMath(withFigures, spans);
+  const linked = text.replace(REFERENCE_LINK, (whole, label: string, key: string) =>
+    references[md.utils.normalizeReference(key || label)] ? whole : label,
+  );
+  const tokens = md.parse(linked, { references });
+  const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
+  return { index: -1, ...renderTokens({ tokens, spans, figures, figuresBefore: 0 }, env, typesetShared) };
+}
+
+const sliceMath = new Map<string, MathResult>();
+
+function typesetShared(span: MathSpan): MathResult {
+  const key = `${span.display ? "display" : "inline"}:${span.tex}`;
+  let result = sliceMath.get(key);
+  if (result) sliceMath.delete(key);
+  else result = renderTex(span.tex, span.display);
+  sliceMath.set(key, result);
+  if (sliceMath.size > 512) sliceMath.delete(sliceMath.keys().next().value!);
+  return result;
+}
+
 export function prepareDocument(input: PrepareInput): PreparedDocument {
   const { bytes } = input;
   const dec = decoder();
+  const starts = lineStarts(bytes);
+  const lineOfByte = (byte: number) => lineAt(starts, byte);
   const partSpecs = input.parts?.length
     ? input.parts
     : [{ kind: "unmapped_text", span: { start_byte: 0, end_byte: bytes.length } }];
 
+  const refs = input.referenceTable ? referenceIndex(input.referenceTable, bytes) : null;
   const frontMatter = { value: null as Record<string, unknown> | null };
   const sources: string[] = [];
   const raw: string[] = [];
+  // What is parsed carries the tie marks. `raw` and every comparison made on it stay the source.
+  const marked: string[] = [];
+  const decode = (piece: Uint8Array) => dec.decode(piece);
   for (const p of partSpecs) {
     const text = dec.decode(bytes.subarray(p.span.start_byte, p.span.end_byte));
     raw.push(text);
     sources.push(preprocess(text, p.span.start_byte === 0, frontMatter));
+    const span = { start: p.span.start_byte, end: p.span.end_byte };
+    const inside = input.ties ? segmentsIn(input.ties, span.start, span.end) : [];
+    const tied = inside.length ? clearTexBlocks(markSource(bytes, span, inside, decode)) : text;
+    // Reference marks go in over the tie marks, which stand for no bytes.
+    const linked = markReferences(tied, span.start, refs);
+    marked.push(linked === text ? sources[sources.length - 1] : preprocess(linked, span.start === 0, { value: null }));
   }
 
   // Reference definitions from the whole document, available to every part.
@@ -507,14 +749,19 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
   const parts: PreparedPart[] = [];
   let mathCount = 0;
 
+  let figuresBefore = 0;
+
   // Pass 1: figures, math, parse, explicit anchors.
-  sources.forEach((src0, index) => {
+  marked.forEach((src0, index) => {
     const spans: MathSpan[] = [];
     const figures: FigureInfo[] = [];
     const withFigures = extractFigures(src0, figures, spans);
     const { text } = protectMath(withFigures, spans);
+    // A mark that a slice left inside a formula must not reach KaTeX.
+    for (const span of spans) span.tex = stripMarks(span.tex);
     const tokens = md.parse(text, { references });
-    states.push({ tokens, spans, figures });
+    stampLines(tokens, stripRefMarks(text), raw[index], spans, lineOfByte(partSpecs[index].span.start_byte));
+    states.push({ tokens, spans, figures, figuresBefore });
     mathCount += spans.length;
     const spec = partSpecs[index];
     const kind = spec.kind === "mapped_passage" ? "passage" : "text";
@@ -523,11 +770,22 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     for (const m of text.matchAll(/<a id="([^"]+)" class="anchor"/g)) {
       if (registry.claimExplicit(m[1], index)) anchors.push(m[1]);
     }
+    // Numbered equations and figures are addresses too.
+    for (const span of spans) {
+      const id = equationId(span.tex);
+      if (id && registry.claimExplicit(id, index)) anchors.push(id);
+    }
+    figures.forEach((_f, n) => {
+      const id = figureId(figuresBefore + n + 1);
+      if (registry.claimExplicit(id, index)) anchors.push(id);
+    });
+    figuresBefore += figures.length;
     parts.push({
       index,
       kind,
       ...(anchor ? { anchor } : {}),
       span: { start: spec.span.start_byte, end: spec.span.end_byte },
+      lines: { start: lineOfByte(spec.span.start_byte), end: lineOfByte(Math.max(spec.span.start_byte, spec.span.end_byte - 1)) },
       headings: [],
       anchors,
       figures: figures.map(({ key, caption, source }) => ({ key, caption, source })),
@@ -535,16 +793,25 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
-  // Pass 2: heading ids in document order.
+  // Pass 2: label and heading ids in document order.
+  const labelId = labelIds();
   states.forEach((st, index) => {
     const part = parts[index];
     for (let i = 0; i < st.tokens.length; i++) {
       const t = st.tokens[i];
+      if (t.type === "paragraph_open" && t.meta?.lead) {
+        const id = labelId(t.meta.lead as string);
+        if (id && registry.claimExplicit(id, index)) {
+          t.attrSet("id", id);
+          part.anchors.push(id);
+        }
+      }
       if (t.type !== "heading_open") continue;
       const inline = st.tokens[i + 1];
       const title = inlineText(inline?.children ?? [], st.spans).trim();
       const id = registry.claimHeading(pandocIdentifier(title), index);
       t.attrSet("id", id);
+      t.attrs?.sort((x, y) => Number(y[0] === "id") - Number(x[0] === "id"));
       const aliases: string[] = [];
       const gh = githubSlug(title);
       if (gh !== id && registry.claimAlias(gh, index)) aliases.push(gh);
@@ -554,7 +821,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       // is added here, so comparison panes can find the section's passage.
       const before = st.tokens[i - 1]?.type === "paragraph_close"
         && st.tokens[i - 2]?.type === "inline" && st.tokens[i - 3]?.type === "paragraph_open"
-        ? st.tokens[i - 2].content : "";
+        ? stripMarks(st.tokens[i - 2].content) : "";
       const bookmark = /<a id="([^"]+)" class="anchor" aria-hidden="true"><\/a>/g;
       const explicit = before.replace(bookmark, "").trim() === ""
         ? [...before.matchAll(bookmark)].map((match) => match[1]).filter((anchor) => registry.partOf(anchor) === index)
@@ -581,6 +848,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     return result;
   };
 
+  let blocks: TextBlock[] | undefined;
   const render = (index: number): RenderedPart => {
     const st = states[index];
     if (!st) throw new RangeError(`no part ${index}`);
@@ -592,36 +860,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    let html = md.renderer.render(st.tokens, md.options, env);
-    html = html.replace(new RegExp(`<p>${FIG_OPEN}(\\d+)${FIG_CLOSE}</p>`, "g"), (_m, n: string) => {
-      const f = st.figures[Number(n)];
-      const key = esc(f.key);
-      return `<figure class="paper-figure" data-figure="${key}"><div class="paper-figure__art" data-figure-slot="${key}"></div><figcaption>${f.captionHtml}</figcaption></figure>`;
-    });
-    html = sanitizeHtml(html);
-    html = html.replace(/<p>((?:\s*<a [^>]*class="anchor"[^>]*><\/a>)+)\s*<\/p>/g, "$1");
-    const mathErrors: { tex: string; message: string }[] = [];
-    const typeset = (n: string) => {
-      const span = st.spans[Number(n)];
-      if (!span) return "";
-      const r = typesetSpan(span);
-      if (r.error) mathErrors.push({ tex: span.tex, message: r.error });
-      return r.html;
-    };
-    html = html.replace(new RegExp(`<p>${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}</p>`, "g"), (_m, n: string) => `<div class="math-display">${typeset(n)}</div>`);
-    html = html.replace(new RegExp(`${DISPLAY_OPEN}(\\d+)${DISPLAY_CLOSE}`, "g"), (_m, n: string) => `<span class="math-display">${typeset(n)}</span>`);
-    // Punctuation directly after inline math stays on the formula's line.
-    html = html.replace(
-      new RegExp(`${INLINE_OPEN}(\\d+)${INLINE_CLOSE}([.,;:!?)\\]\u2019\u201d]+)?`, "g"),
-      // Chrome breaks after KaTeX's last box despite the wrapper, so a short
-      // formula is kept whole; a long one may still break between relations.
-      (_m, n: string, punct?: string) => {
-        if (!punct) return typeset(n);
-        const whole = (st.spans[Number(n)]?.tex.length ?? 0) <= 48 ? " math-nobreak--whole" : "";
-        return `<span class="math-nobreak${whole}">${typeset(n)}${punct}</span>`;
-      },
-    );
-    st.rendered = { index, html, mathErrors };
+    st.rendered = { index, ...renderTokens(st, env, typesetSpan, { index: refs }) };
     return st.rendered;
   };
 
@@ -632,7 +871,19 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     anchorIndex,
     mathCount,
     issues,
+    references,
+    refs,
+    lineOfByte,
     render,
     renderAll: () => parts.map((p) => render(p.index)),
+    textBlocks: () =>
+      (blocks ??= states.flatMap((st, part) =>
+        st.tokens.flatMap((token, i) => {
+          if (token.type !== "inline") return [];
+          const line = Number(st.tokens[i - 1]?.attrGet("data-line") ?? parts[part].lines.start);
+          const text = inlineText(token.children ?? [], st.spans).replace(/\s+/g, " ").trim();
+          return text ? [{ part, line, text }] : [];
+        }),
+      )),
   };
 }

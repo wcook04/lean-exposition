@@ -72,12 +72,12 @@ describe("check outcomes stay distinct", () => {
     });
   });
 
-  it("gives the theorem plate one short line and the number of check records", () => {
+  it("gives the theorem plate one short line and the number of run records", () => {
     expect(goalCheckLine(edition, "lean.full_support")).toEqual({ line: "No successful Comparator result recorded", total: 14 });
     expect(goalCheckLine(edition, "full_support")).toEqual({ line: "No successful Comparator result recorded", total: 12 });
     expect(goalCheckLine(edition, "lean.value_consequences")).toEqual({ line: "No successful Comparator result recorded", total: 11 });
     const qaoa = goalCheckLine(edition, "qaoa_thermodynamic_first");
     expect(qaoa).toEqual({ line: "No correspondence review run recorded", total: 3 });
-    expect(goalCheckLine(edition, "lean.full_support", [])).toEqual({ line: "No check records", total: 0 });
+    expect(goalCheckLine(edition, "lean.full_support", [])).toEqual({ line: "No run records", total: 0 });
   });
 });

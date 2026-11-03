@@ -2,21 +2,22 @@
 // to the camera, unfolded branches and representation they left. The URL holds
 // what is selected; the history entry's state holds how it was being looked at.
 //
-// Pan and zoom only ever replace the current entry's state (never push), and
-// other owners' keys in history.state (the reader keeps its own) are merged,
-// never overwritten.
+// Pan and zoom only ever write to the current entry (never push); app/trail.ts
+// holds the entry.
 
+import { useEffect, type RefObject } from "react";
+import { INPUT } from "../app/restore";
+import { arrivedBy, entryKey, onLeave, readEntry, useEntryKey, writeEntry } from "../app/trail";
 import type { MapScene } from "./ArgumentTree";
 
 export type { MapScene };
+type TreeHandle = { getScene(): MapScene; restoreScene(scene: MapScene): void };
 
 const KEY = "mapScene";
+const PANE_KEY = "paneScene";
 const DELAY = 200;
-
-function stateObject(): Record<string, unknown> {
-  const s = window.history.state as unknown;
-  return s && typeof s === "object" ? { ...(s as Record<string, unknown>) } : {};
-}
+/** When a restored pane is put back again: after its first fit, and after following has settled. */
+const PANE_SETTLE = [700, 1600];
 
 const finite = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -35,46 +36,73 @@ export function validScene(value: unknown, has: (id: string) => boolean): MapSce
 
 /** The scene remembered for the current history entry, or null. */
 export function readScene(has: (id: string) => boolean): MapScene | null {
-  return validScene(stateObject()[KEY], has);
+  return validScene(readEntry(KEY), has);
 }
 
-function write(scene: MapScene, href: string) {
-  // The entry may have changed since the scene settled; never write into another page's entry.
-  if (window.location.href !== href) return;
-  try {
-    window.history.replaceState({ ...stateObject(), [KEY]: scene }, "");
-  } catch {
-    /* history state unavailable (sandboxed frames) */
-  }
-}
-
-/** Debounced writes of the settled scene into the current entry. */
+/** Debounced writes of the settled scene into the entry it settled in. */
 export function sceneWriter() {
   let timer: ReturnType<typeof setTimeout> | null = null;
-  let pending: { scene: MapScene; href: string } | null = null;
+  let pending: { scene: MapScene; entry: string } | null = null;
   const cancel = () => {
     if (timer) clearTimeout(timer);
     timer = null;
     pending = null;
   };
+  const write = (p: { scene: MapScene; entry: string }) => {
+    // The entry may have changed since the scene settled; never write into another's.
+    if (p.entry === entryKey()) writeEntry(KEY, p.scene);
+  };
   return {
     /** Remember this scene for the current entry after a short quiet period. */
     save(scene: MapScene) {
       if (timer) clearTimeout(timer);
-      pending = { scene, href: window.location.href };
+      pending = { scene, entry: entryKey() };
       timer = setTimeout(() => {
         const p = pending;
         cancel();
-        if (p) write(p.scene, p.href);
+        if (p) write(p);
       }, DELAY);
     },
     /** Write now (before leaving the entry), preferring a fresh scene when one is given. */
     flush(scene?: MapScene | null) {
       const p = pending;
       cancel();
-      if (scene) write(scene, window.location.href);
-      else if (p) write(p.scene, p.href);
+      if (scene) write({ scene, entry: entryKey() });
+      else if (p) write(p);
     },
     cancel,
   };
+}
+
+/**
+ * The camera of a map shown beside something else, kept per history entry. The
+ * pane follows the reader, so it writes only on leaving, and on coming back it
+ * returns to the view that was left before following resumes.
+ */
+export function useKeptCamera(tree: RefObject<Pick<TreeHandle, "getScene" | "restoreScene"> | null>, has: (id: string) => boolean): void {
+  const key = useEntryKey();
+  useEffect(
+    () =>
+      onLeave(() => {
+        const scene = tree.current?.getScene();
+        if (scene) writeEntry(PANE_KEY, scene);
+      }),
+    [tree],
+  );
+  useEffect(() => {
+    if (arrivedBy() === "push") return;
+    const scene = validScene(readEntry(PANE_KEY), has);
+    if (!scene) return;
+    const put = () => tree.current?.restoreScene(scene);
+    put();
+    // The pane fits itself and then follows the restored line; come back after each, unless
+    // the reader has taken over, for following a hand is what the pane is for.
+    const timers = PANE_SETTLE.map((delay) => window.setTimeout(put, delay));
+    const stop = () => timers.forEach((timer) => window.clearTimeout(timer));
+    for (const type of INPUT) window.addEventListener(type, stop, { passive: true, capture: true, once: true });
+    return () => {
+      stop();
+      for (const type of INPUT) window.removeEventListener(type, stop, { capture: true });
+    };
+  }, [key, tree, has]);
 }

@@ -12,6 +12,9 @@ header-includes:
 
 Expository draft, 26 October 2026
 
+**AI assistance.** Will Cook directed the work. AI agents based on large
+language models produced and revised this manuscript.
+
 <!-- passage:opening -->
 The Sherrington–Kirkpatrick (SK) model asks us to choose signs that
 maximise a random sum of pair interactions. The Parisi formula expresses

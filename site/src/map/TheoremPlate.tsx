@@ -155,7 +155,8 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
   return (
     <div className={`plate${formalNode ? " plate--two" : ""}`}>
       <div className="plate__body">
-        <div className="plate__main">
+                <div className="plate__main">
+          
           {statement?.html ? (
             <div ref={clampRef} className={`plate__clamp${clamped ? " is-clamped" : ""}`}>
               <div ref={statementRef} className="prose plate__statement" dangerouslySetInnerHTML={{ __html: statement.html }} />
@@ -166,7 +167,7 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
           {statement?.html && (
             <p className="plate__source">
               <a href={routeHref({ view: "read", stage: statement.source.stage, anchor: statement.source.anchor })}>
-                {statement.partial ? "First part of the statement, from the" : "Statement from the"}{" "}
+                {statement.partial ? "Start of the statement, from the" : "Statement from the"}{" "}
                 {PAPER_NAMES[statement.source.stage].short.toLowerCase()}
                 {statement.section ? `, ${sectionLabel(statement.section)}` : ""}
               </a>
@@ -188,7 +189,7 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
         <span className="plate__checks">{checks.line}</span>
         {checks.total > 0 && (
           <a href={routeHref({ view: "checks", node: checkNode })}>
-            {checks.total === 1 ? "Show the check record" : `Show the ${checks.total} check records`}
+            {checks.total === 1 ? "Show the run record" : `Show the ${checks.total} run records`}
           </a>
         )}
         <span className="plate__sep" />
@@ -204,6 +205,33 @@ export function TheoremBody({ goal, lean = true, foot = true, first = false }: {
         )}
       </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * The map's compact plate under the goal's title: one sentence of the theorem and the
+ * ways on. The full theorem and its Lean live in the sheet, which the button opens (a
+ * click on the plate selects the goal).
+ */
+export function GoalPlate({ goal }: { goal: string }) {
+  const statement = useStatement(goal, true);
+  const html = useMemo(() => (statement?.html ? plainExcerpt(statement.html) : ""), [statement]);
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <div className="goal-plate">
+      {html ? <div ref={ref} className="prose goal-plate__sentence" dangerouslySetInnerHTML={{ __html: html }} /> : null}
+      <div className="goal-plate__actions">
+        <button type="button" className="goal-plate__primary">
+          Full statement and Lean
+        </button>
+        {statement && statement.readIn.length > 0 && <span>Read it in</span>}
+        {statement?.readIn.map((r) => (
+          <a key={r.stage} href={routeHref({ view: "read", stage: r.stage, anchor: r.anchor })}>
+            {PAPER_NAMES[r.stage].short} {sectionMark(r.section)}
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

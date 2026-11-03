@@ -29,7 +29,9 @@ jobs:
             --short papers/qaoa-sk/short/paper.md papers/qaoa-sk/short/correspondence.json \
             --expository papers/qaoa-sk/expository/main.md papers/qaoa-sk/expository/correspondence.json \
             --out build/reading-edition
-          python site/scripts/export-static.py build/reading-edition
+          python site/scripts/export-static.py build/reading-edition \
+            --lean-tree examples/qaoa-sk/upstream/lean \
+            --alignment examples/qaoa-sk/alignment
       - run: npm ci
         working-directory: site
       - run: npm test

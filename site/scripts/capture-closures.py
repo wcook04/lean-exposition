@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Record the backend's scoped argument closure for every node, as a test oracle.
 
-    .venv/bin/python site/scripts/capture-closures.py [build/qaoa-sk-authored-r9/graph.json]
+    .venv/bin/python site/scripts/capture-closures.py [build/qaoa-sk-authored/graph.json]
 
 Run from the repository root with the project's own interpreter. For each node
 taken as the only root it writes, from `lean_exposition.contracts`:
@@ -19,16 +19,20 @@ against this file (site/tests/application-scope.test.ts). Recapture it with the
 other fixtures whenever the edition changes; the test checks the graph digest.
 """
 
+import argparse
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 from lean_exposition.contracts import argument_contexts, closure
 
 repo = Path(__file__).resolve().parents[2]
-graph_path = Path(sys.argv[1]) if len(sys.argv) > 1 else repo / "build" / "qaoa-sk-authored-r9" / "graph.json"
-out = repo / "site" / "tests" / "fixtures" / "closures.json"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("graph", type=Path, nargs="?", default=repo / "build" / "qaoa-sk-authored" / "graph.json")
+parser.add_argument("--out", type=Path, default=repo / "site" / "tests" / "fixtures" / "closures.json",
+                    help="Output oracle; use a scratch path to inspect a recapture first")
+args = parser.parse_args()
+graph_path, out = args.graph, args.out
 
 raw = graph_path.read_bytes()
 graph = json.loads(raw)
@@ -47,6 +51,7 @@ for node in sorted(n["id"] for n in graph["nodes"]):
         "live": sorted(live),
     }
 
+out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps({
     "graph_sha256": hashlib.sha256(raw).hexdigest(),
     "selected_goals": graph["selected_goals"],

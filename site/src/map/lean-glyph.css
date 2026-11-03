@@ -1,0 +1,29 @@
+/* A tile the size of a word: the shape and the fill of tree.css at a fixed scale. */
+.lean-glyph {
+  flex: none;
+  display: inline-block;
+  width: 26px;
+  height: 15px;
+  vertical-align: -3px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-sizing: border-box;
+}
+
+.lean-glyph[data-shape="box"] {
+  border-radius: 1px;
+}
+
+.lean-glyph[data-shape="round"] {
+  border-radius: 7px;
+}
+
+.lean-glyph[data-fill="whole"] {
+  background: var(--lean-fill);
+  border-color: var(--lean-fill-line);
+}
+
+.lean-glyph[data-fill="part"] {
+  background: var(--lean-fill-part);
+  border-color: color-mix(in oklab, var(--lean-fill-line) 55%, var(--card-border));
+}

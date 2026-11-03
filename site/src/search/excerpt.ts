@@ -245,7 +245,7 @@ export function segments(m: Marked, cutStart: boolean, cutEnd: boolean): Segment
     const last = out[out.length - 1];
     if (last && last.kind === "text") {
       const dollar = last.text.lastIndexOf("$");
-      if (dollar >= 0) last.text = last.text.slice(0, dollar);
+      if (dollar >= 0) last.text = last.text.slice(0, dollar).replace(/\s*\$*\s*$/, "");
     }
   }
   return out.filter((s) => s.kind === "math" || s.text !== "");

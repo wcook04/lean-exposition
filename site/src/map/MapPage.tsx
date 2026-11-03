@@ -1,7 +1,8 @@
-// The map page: the bar that says what is drawn (goal, account, view), the
-// argument itself (the canvas, or the outline of the same argument), the
-// inspector as a full-height column beside it, and the account comparison as
-// a dock under the canvas only.
+// The map page: the bar that says what is drawn (goal, level, view), under a
+// paper's lens one line about what that lens does to the drawing, the argument
+// itself (the canvas, or the outline of the same argument), a foot bar with the
+// branch controls and, under a paper's lens, the walk through its passages, and
+// the record sheet as a full-height column beside them.
 //
 // What is selected lives in the URL (none, one record, or one step). How it was
 // being looked at (camera, unfolded branches, steps or overview) lives in the
@@ -14,18 +15,35 @@ import { navigate, type Route } from "../app/router";
 import { PAPER_NAMES, statedIn } from "../app/papers";
 import { ArgumentTree, type Insets, type MapViewHandle } from "./ArgumentTree";
 import { ArgumentOutline } from "./ArgumentOutline";
-import { pathFromGoal, reach, scopedGraph, usesOf } from "./treeModel";
-import { StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
+import { lensArgument, pathFromGoal, reach, scopedGraph, usesOf } from "./treeModel";
+import { GoalPlate, StatementExcerpt, TheoremBody, mainGoal, startingGoals } from "./TheoremPlate";
 import { RecordPanel } from "../panels/RecordPanel";
 import { EdgePanel } from "../panels/EdgePanel";
+import { DeclPanel } from "../panels/DeclPanel";
 import { usePresence } from "../panels/presence";
 import { chooseAccount } from "../panels/accountStore";
-import { AccountSwitch } from "../panels/AccountSwitch";
-import { KeyRow } from "./MapKey";
-import { ReadingsDock } from "../ribbons/ReadingsDock";
+import { KeyPopover } from "./MapKey";
+import { MapStrip } from "./MapStrip";
+import { LensControl } from "./LensControl";
+import { WalkBar, useWalk } from "./WalkBar";
+import { leanLevelCounts, leanSentence, levelCounts, levelRecords, lensSentence } from "./levels";
+import { recordMark } from "./leanMarks";
+import { declTitle } from "../model/declTitle";
+import { useLeanGraph } from "./useLeanGraph";
+import { leanWidth, neighbourhood } from "../model/leanGraph";
+import { useEntryState } from "../app/trail";
+import { fullAlignmentResource, useAlignment } from "../compare/useAlignment";
+import type { LeanStep } from "../panels/model";
+import { shortTitle as recordTitle } from "../compare/useAlignment";
+import { startLeanViewer } from "../lean/lazy";
+import type { WalkKey } from "./walk";
 import { prefersReducedMotion } from "../app/theme";
+import { namePlace, onLeave } from "../app/trail";
 import { readScene, sceneWriter, type MapScene } from "./scene";
 import "./map-page.css";
+
+// The theorem's sheet opens with the map on anything wider than a phone, with its Lean first.
+if (window.matchMedia?.("(min-width: 701px)").matches) startLeanViewer();
 
 type MapRoute = Extract<Route, { view: "map" }>;
 type Mode = MapScene["mode"];
@@ -33,28 +51,23 @@ type Display = "map" | "outline";
 
 type TreeHandle = MapViewHandle;
 
+const WALK_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
+
+/** Lean names break at their underscores, so a narrower tile than a record's holds them and the ranks stay on a monitor. */
+const LEAN_TILE_W = 168;
+/** On a laptop the sheet takes a third of the width: slimmer tiles keep the widest rank on the canvas. */
+const LAPTOP_TILE_W = 174;
+const LEAN_TILE_H = 58;
+/** Far enough out to see the whole shape on a monitor; titles shorten there and the strip has them whole. */
+const LEAN_MIN_K = 0.3;
+/** A phone reads a part at a time and pans: the whole graph is no use at that width. */
+const LEAN_PHONE_K = 0.75;
+/** Below this the whole graph is a shape rather than something to read, so the view opens on the part around the step. */
+const LEAN_READ_K = 0.72;
+
 const INTRO_KEY = "lx-map-intro";
 const DISPLAY_KEY = "lx-map-display";
-/** The reader's choice to show or hide the key row, kept across visits. */
-export const KEY_ROW_KEY = "lx-map-key";
-
-type View = "steps" | "overview" | "outline";
-
-function readLocal(key: string): string | null {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function writeLocal(key: string, value: string) {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    /* storage unavailable */
-  }
-}
+type View = "steps" | "overview" | "outline" | "lean";
 
 function useMedia(query: string): boolean {
   const [match, setMatch] = useState(() => typeof window !== "undefined" && !!window.matchMedia?.(query).matches);
@@ -87,13 +100,24 @@ function writeSession(key: string, value: string) {
 
 const accountWord = (lens: Stage) => PAPER_NAMES[lens].short;
 
+/** Keys the map listens for go to it only when nothing else on the page wants them. */
+function mapHasKeys(target: EventTarget | null, key: string): boolean {
+  const el = target as HTMLElement | null;
+  if (!el?.closest) return true;
+  if (el.closest("input, textarea, select, [contenteditable], [role='menu'], [role='tablist'], [role='dialog'], .card")) return false;
+  // Enter belongs to whatever button has focus.
+  if (key === "Enter" && el.closest("a, button")) return false;
+  if (WALK_KEYS.has(key) && el.closest("[role='radiogroup']")) return false;
+  return !el.closest(".panel") || el.id === "panel-title";
+}
+
 export function MapPage({ route }: { route: MapRoute }) {
   const edition = useEdition();
   const { graph } = edition;
   const treeRef = useRef<TreeHandle>(null);
   const goalBarRef = useRef<HTMLDivElement>(null);
   const has = useCallback((id: string) => graph.nodes.has(id), [graph]);
-  // Transient attention: what a pointer or focus is resting on in the dock or the inspector.
+  // Transient attention: what a pointer or focus is resting on in the inspector.
   const [preview, setPreview] = useState<ReadonlySet<string> | null>(null);
   const [intro] = useState(() => {
     try {
@@ -109,10 +133,7 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const allGoals = useMemo(() => startingGoals(edition), [edition]);
   // With an account chosen, the map shows that account's records and starts from its goals.
-  const within = useMemo(
-    () => (route.lens ? new Set(graph.order.filter((id) => graph.nodes.get(id)!.papers[route.lens!])) : undefined),
-    [graph, route.lens],
-  );
+  const within = useMemo(() => (route.lens ? levelRecords(graph, route.lens) : undefined), [graph, route.lens]);
   const goals = useMemo(() => {
     if (!route.lens) return allGoals;
     const own = allGoals.filter((g) => g.stages.includes(route.lens!));
@@ -127,6 +148,8 @@ export function MapPage({ route }: { route: MapRoute }) {
   const selected = !edgeKey && route.node && graph.nodes.has(route.node) ? route.node : undefined;
   const requestedGoal = route.goal && graph.nodes.has(route.goal) ? route.goal : fallbackGoal;
   const selectionIds = useMemo(() => (edgeObj ? [edgeObj.from, edgeObj.to] : selected ? [selected] : []), [edgeObj, selected]);
+  // In the Lean graph, what is selected is a declaration or the goal; the record stays in the URL.
+  const chosenDecl = route.decl;
   // The goal drawn: the one asked for, unless it does not draw the selection; then the
   // smallest starting goal that draws all of it, then any recorded goal that does.
   const goal = useMemo(() => {
@@ -147,11 +170,39 @@ export function MapPage({ route }: { route: MapRoute }) {
     return requestedGoal;
   }, [selectionIds, requestedGoal, goals, graph]);
   const goalTitle = allGoals.find((g) => g.id === goal)?.title ?? graph.nodes.get(goal)?.label ?? goal;
-  const goalFullTitle = graph.nodes.get(goal)?.label ?? goalTitle;
-  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: graph.nodes.get(g.id)?.label ?? g.title })), [goals, graph]);
+  const goalFullTitle = recordTitle(goal, graph.nodes.get(goal)?.label ?? goalTitle);
+  const menuGoals = useMemo(() => goals.map((g) => ({ ...g, full: recordTitle(g.id, graph.nodes.get(g.id)?.label ?? g.title) })), [goals, graph]);
   const goalReach = useMemo(() => reach(graph, goal), [graph, goal]);
-  const scopedReach = useMemo(() => reach(graph, goal, within), [graph, goal, within]);
+  // Through a paper's lens the records it leaves out close up, so everything it uses stays connected.
+  const argument = useMemo(() => {
+    const scoped = scopedGraph(graph, goal);
+    return within ? lensArgument(scoped, goal, within) : scoped;
+  }, [graph, goal, within]);
+  const scopedReach = useMemo(() => reach(argument, goal, within), [argument, goal, within]);
+  const counts = useMemo(() => levelCounts(graph, reach(scopedGraph(graph, goal), goal)), [graph, goal]);
   const stepNotDrawn = !!edgeObj && !(goalReach.has(edgeObj.from) && goalReach.has(edgeObj.to));
+
+  // ---- The Lean graph: the declarations this argument links, with their uses -------------
+
+  const leanOn = !!route.lean;
+  const leanRecords = useMemo(() => {
+    const all = reach(scopedGraph(graph, goal), goal);
+    return within ? new Set([...all].filter((id) => within.has(id) || id === goal)) : all;
+  }, [graph, goal, within]);
+  const leanGraph = useLeanGraph({ enabled: leanOn, graph, goal, records: leanRecords });
+  const leanReady = leanOn && leanGraph.status === "ready" ? leanGraph : null;
+  const alignment = useAlignment();
+  // The panel opens on one record's statements. A reader who starts choosing will choose others.
+  useEffect(() => {
+    const start = () => void fullAlignmentResource();
+    window.addEventListener("pointerdown", start, { once: true, passive: true });
+    window.addEventListener("keydown", start, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", start);
+      window.removeEventListener("keydown", start);
+    };
+  }, []);
+  const leanCounts = useMemo(() => (alignment ? leanLevelCounts(graph, reach(scopedGraph(graph, goal), goal), alignment) : null), [alignment, graph, goal]);
   const outsideScope = !!route.lens && !stepNotDrawn && selectionIds.some((id) => !within?.has(id) || !scopedReach.has(id));
 
   // ---- View: steps, overview or outline -----------------------------------------------
@@ -168,27 +219,21 @@ export function MapPage({ route }: { route: MapRoute }) {
     setChosenDisplay(d);
     writeSession(DISPLAY_KEY, d);
   };
-  // The key row: shown unless the reader hid it. On a phone, or a window under 760px
-  // tall (where its lines would push the first row of cards off the canvas), it is
-  // hidden unless the reader showed it; the front page explains the drawing first.
-  const short = useMedia("(max-height: 759px)");
-  const [chosenKey, setChosenKey] = useState<boolean | null>(() => {
-    const v = readLocal(KEY_ROW_KEY);
-    return v === "shown" ? true : v === "hidden" ? false : null;
-  });
-  const keyShown = chosenKey ?? !(phone || short);
-  const chooseKey = (shown: boolean) => {
-    setChosenKey(shown);
-    writeLocal(KEY_ROW_KEY, shown ? "shown" : "hidden");
-  };
+  const laptop = useMedia("(max-width: 1400px)");
+  // A short window (a laptop at 200%) gives the drawing the room: no sheet until something is chosen.
+  const short = useMedia("(max-height: 520px)");
+  const [notesHost, setNotesHost] = useState<HTMLElement | null>(null);
   const initialScene = useRef<MapScene | null>(null);
   if (initialScene.current === null) initialScene.current = readScene(has) ?? ({} as MapScene);
-  const [mode, setMode] = useState<Mode>(() => initialScene.current?.mode ?? "steps");
+  // The whole argument, named, is what a reader comes to see. Unfolding step by step is a choice.
+  const [mode, setMode] = useState<Mode>(() => initialScene.current?.mode ?? (phone ? "steps" : "overview"));
 
   // ---- Remembered scene per history entry -----------------------------------------------
 
   const writer = useMemo(() => sceneWriter(), []);
   useEffect(() => () => writer.cancel(), [writer]);
+  // Every way of leaving keeps the scene: this page's own links, plain links, Back and reload.
+  useEffect(() => onLeave(() => writer.flush(treeRef.current?.getScene() ?? null)), [writer]);
   const restoreRef = useRef<MapScene | null>(initialScene.current?.camera ? initialScene.current : null);
   const [restoreTick, setRestoreTick] = useState(0);
   useEffect(() => {
@@ -210,7 +255,7 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (!scene || display !== "map" || !treeRef.current) return;
     restoreRef.current = null;
     treeRef.current.restoreScene(scene);
-  }, [restoreTick, display]);
+  }, [restoreTick, display, !!leanReady]);
 
   // Which branches are open, as the tree last reported it; the canvas buttons use it to say when they would change nothing.
   const [openIds, setOpenIds] = useState<ReadonlySet<string> | null>(null);
@@ -226,15 +271,18 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   const go = useCallback(
     (patch: Partial<MapRoute>, replace = false) => {
-      const next: MapRoute = { view: "map", node: route.node, trace: route.trace, lens: route.lens, goal: route.goal, edge: route.edge, ...patch };
+      const next: MapRoute = { view: "map", node: route.node, trace: route.trace, lens: route.lens, goal: route.goal, edge: route.edge, lean: route.lean, decl: route.decl, declModule: route.declModule, ...patch };
       if (!next.node) next.trace = undefined;
       if (patch.node) next.edge = patch.edge;
+      // Choosing a record or a step closes the declaration open in the sheet.
+      if ((patch.node || patch.edge) && !("decl" in patch)) {
+        next.decl = undefined;
+        next.declModule = undefined;
+      }
       if (next.goal === fallbackGoal) next.goal = undefined;
-      // The entry being left keeps the scene it showed, so Back can return to it.
-      if (!replace) writer.flush(treeRef.current?.getScene() ?? null);
       navigate(next, { replace });
     },
-    [route, fallbackGoal, writer],
+    [route, fallbackGoal],
   );
 
   // Focus: closing the inspector returns to what opened it.
@@ -250,8 +298,8 @@ export function MapPage({ route }: { route: MapRoute }) {
         if (display === "outline") {
           const el =
             id === goal
-              ? document.querySelector<HTMLElement>(".outline__inspect-goal")
-              : document.querySelector<HTMLElement>(`.outline [data-outline-id="${CSS.escape(id)}"] .orow__inspect`);
+              ? document.querySelector<HTMLElement>(".outline__open-goal")
+              : document.querySelector<HTMLElement>(`.outline [data-outline-id="${CSS.escape(id)}"] .orow__open`);
           if (el) {
             el.focus();
             return;
@@ -262,6 +310,12 @@ export function MapPage({ route }: { route: MapRoute }) {
     });
   };
   const closeSelection = () => {
+    if (route.decl) {
+      const name = route.decl;
+      go({ decl: undefined, declModule: undefined });
+      if (!route.node) returnFocus([name]);
+      return;
+    }
     const ids = edgeObj ? [edgeObj.from] : [selected];
     if (edgeObj) go({ edge: undefined });
     else go({ node: undefined });
@@ -275,6 +329,17 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (opener !== undefined && !selected && !edgeKey) openerRef.current = opener;
     go({ node: id, edge: undefined, trace: undefined });
   };
+  /** One step to a declaration in the sheet: one history entry, and the sheet walks in place. */
+  const walkDecl = (walk: LeanStep) => go({ decl: walk.name, declModule: walk.module, edge: undefined });
+  /** A card of the Lean graph: a declaration, or the goal's record. */
+  const selectLean = (id: string | null) => {
+    if (id === null) {
+      if (route.decl || route.node) go({ decl: undefined, declModule: undefined, node: undefined });
+    } else if (id === goal) {
+      const main = alignment?.records[goal]?.lean.find((row) => row.relation === "states");
+      if (main) go({ decl: main.name, declModule: main.module });
+    } else go({ decl: id, declModule: undefined, node: undefined, edge: undefined, trace: undefined });
+  };
   const selectEdge = (key: string | null) => {
     if (key === null) {
       if (edgeKey) closeSelection();
@@ -284,6 +349,16 @@ export function MapPage({ route }: { route: MapRoute }) {
     if (!selected && !edgeKey && e) openerRef.current = e.from;
     go({ edge: key, node: undefined, trace: undefined });
   };
+
+  // The first view of the map shows the main theorem and its Lean beside the argument.
+  const firstView = useRef(true);
+  useEffect(() => {
+    if (!firstView.current) return;
+    firstView.current = false;
+    if (!phone && !short && display === "map" && !route.node && !route.edge && !route.decl && !initialScene.current?.camera) go({ node: goal }, true);
+    // Only the page's first render decides this.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Escape steps back out: a popover first (they handle it themselves), then the trace,
   // then the step, then the record.
@@ -295,7 +370,7 @@ export function MapPage({ route }: { route: MapRoute }) {
       if (document.querySelector("[data-modal-open]")) return;
       const { route: r, closeSelection: close } = routeRef.current;
       if (r.trace && r.node) go({ trace: undefined });
-      else if (r.edge || r.node) close();
+      else if (r.decl || r.edge || r.node) close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -315,14 +390,17 @@ export function MapPage({ route }: { route: MapRoute }) {
 
   // ---- Inspector ----------------------------------------------------------------------
 
-  const panelKey = edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
+  // The Lean graph needs the width: only a declaration opens the sheet there.
+  const panelKey = chosenDecl ? `d:${chosenDecl}` : leanOn ? undefined : edgeKey ? `e:${edgeKey}` : selected ? `n:${selected}` : undefined;
   const shown = usePresence(panelKey);
   const shownNode = shown.value?.startsWith("n:") ? shown.value.slice(2) : undefined;
   const shownEdge = shown.value?.startsWith("e:") ? shown.value.slice(2) : undefined;
+  const shownDecl = shown.value?.startsWith("d:") ? shown.value.slice(2) : undefined;
   const panelOpen = !!shown.value;
   // On a phone the panel is a bottom sheet over the canvas; the camera keeps
   // the selection above it.
   const canvasRef = useRef<HTMLDivElement>(null);
+  const captionRef = useRef<HTMLParagraphElement>(null);
   const [sheetInset, setSheetInset] = useState(0);
   useEffect(() => {
     if (!panelOpen) {
@@ -351,30 +429,102 @@ export function MapPage({ route }: { route: MapRoute }) {
       window.removeEventListener("resize", measure);
     };
   }, [panelOpen, shown.value]);
-  const noteShown = outsideScope || stepNotDrawn;
-  // The branch buttons float at the canvas's bottom right; framing keeps cards clear of them.
-  const controlsRoom = phone ? 64 : 56;
-  const insets: Insets = useMemo(
-    () => ({ top: noteShown ? 64 : 20, left: 20, right: 20, bottom: 20 + sheetInset + controlsRoom }),
-    [sheetInset, noteShown, controlsRoom],
-  );
+  const noteShown = (outsideScope || stepNotDrawn) && !leanOn;
+  const insets: Insets = useMemo(() => ({ top: noteShown ? 64 : 20, left: 20, right: 20, bottom: 20 + sheetInset }), [sheetInset, noteShown]);
 
   // What "Show all branches" and "Collapse branches" would change.
   const expandable = useMemo(() => {
     const scoped = scopedGraph(graph, goal);
     return [...reach(scoped, goal, within)].filter((id) => id !== goal && usesOf(scoped, id, within).length > 0);
   }, [graph, goal, within]);
-  const allOpen = !!openIds && expandable.every((id) => openIds.has(id));
-  const noneOpen = !!openIds && !expandable.some((id) => openIds.has(id)) && !route.edge && !route.trace;
+  // Overview draws every branch whatever is unfolded, so neither button would change it.
+  const overview = mode === "overview";
+  const allOpen = overview || (!!openIds && expandable.every((id) => openIds.has(id)));
+  const noneOpen = overview || (!!openIds && !expandable.some((id) => openIds.has(id)) && !route.edge && !route.trace);
 
-  // One recorded route from the goal, inside the chosen account; null when there is none.
-  const crumbs = useMemo(() => (shownNode ? pathFromGoal(graph, goal, shownNode, within) : null), [graph, goal, shownNode, within]);
+  // One recorded route from the goal; under a lens, through the records that paper uses. Null when there is none.
+  const crumbs = useMemo(() => (shownNode ? pathFromGoal(argument, goal, shownNode, within) : null), [argument, goal, shownNode, within]);
 
-  const argumentSize = scopedReach.size;
-  const scopeLine = route.lens
-    ? `${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument, counting only those the ${accountWord(route.lens).toLowerCase()} uses`
-    : `${argumentSize} ${argumentSize === 1 ? "record" : "records"} in this argument`;
+  // In the Lean graph, the declarations of the step you came from are lit, and it opens around them.
+  const litDecls = useMemo(() => {
+    if (!leanOn || !route.node || route.node === goal || route.decl) return null;
+    return new Set(alignment?.records[route.node]?.lean.map((row) => row.name) ?? []);
+  }, [leanOn, route.node, route.decl, goal, alignment]);
+  // The whole graph where it can be read at once; else the part around the step, and Fit shows all.
+  const [leanChoice, setLeanChoice] = useEntryState<boolean | null>("lean-whole", null);
+  const wholeReadable = useMemo(() => (leanReady ? window.innerWidth / leanWidth(leanReady.graph, goal, LEAN_TILE_W) >= LEAN_READ_K : false), [leanReady, goal]);
+  const leanWhole = leanChoice ?? wholeReadable;
+  const leanFocus = useMemo(() => (route.decl ? [route.decl] : litDecls ? [...litDecls] : [goal]), [route.decl, litDecls, goal]);
+  const drawnLean = useMemo(() => (leanReady ? (leanWhole ? leanReady.graph : neighbourhood(leanReady.graph, goal, leanFocus)) : null), [leanReady, leanWhole, goal, leanFocus]);
+  const leanPlace = drawnLean && leanReady ? `${drawnLean.nodes.size - 1} of ${leanReady.graph.nodes.size - 1} results, around ${route.decl ? (drawnLean.nodes.get(route.decl)?.label ?? "this declaration") : route.node && route.node !== goal ? "this step" : "the main result"}` : undefined;
+  // What is drawn changed: frame it. A remembered camera has already been put back.
+  const leanFrame = useRef<unknown>(null);
+  useEffect(() => {
+    const first = leanFrame.current === null;
+    if (!drawnLean || drawnLean === leanFrame.current) return;
+    leanFrame.current = drawnLean;
+    if (!first) requestAnimationFrame(() => treeRef.current?.fit());
+  }, [drawnLean]);
 
+  // ---- Paper walk ---------------------------------------------------------------------
+
+  const walk = useWalk(route.lens, scopedReach);
+  const [walkAt, setWalkAt] = useState<number | null>(null);
+  useEffect(() => setWalkAt(null), [route.lens, goal]);
+  const walkLit = useMemo(() => (walkAt === null ? null : new Set(walk.passages[walkAt]?.records ?? [])), [walk, walkAt]);
+  const stepWalk = useCallback(
+    (delta: number) => {
+      const last = walk.passages.length - 1;
+      if (last < 0) return;
+      const next = walkAt === null ? (delta > 0 ? 0 : last) : Math.max(0, Math.min(last, walkAt + delta));
+      setWalkAt(next);
+      treeRef.current?.revealIds(walk.passages[next].records);
+    },
+    [walk, walkAt],
+  );
+
+  // ---- Keys: walking the graph, zooming, stepping through a paper ---------------------
+
+  const keysRef = useRef({ selected, stepWalk, go, leanOn, selectLean });
+  keysRef.current = { selected, stepWalk, go, leanOn, selectLean };
+  const displayRef = useRef(display);
+  displayRef.current = display;
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || displayRef.current !== "map") return;
+      if (document.querySelector("[data-modal-open]") || !mapHasKeys(event.target, event.key)) return;
+      const tree = treeRef.current;
+      const k = keysRef.current;
+      if (!tree) return;
+      if (WALK_KEYS.has(event.key) && event.shiftKey) {
+        event.preventDefault();
+        const step = 96;
+        tree.panBy(event.key === "ArrowLeft" ? step : event.key === "ArrowRight" ? -step : 0, event.key === "ArrowUp" ? step : event.key === "ArrowDown" ? -step : 0);
+      } else if (WALK_KEYS.has(event.key)) {
+        event.preventDefault();
+        const id = tree.walk(event.key as WalkKey);
+        if (id && k.leanOn) k.selectLean(id);
+        else if (id) k.go({ node: id, edge: undefined, trace: undefined }, true);
+      } else if (event.key === "0") tree.fit();
+      else if (event.key === "+" || event.key === "=") tree.zoomBy(1.2);
+      else if (event.key === "-" || event.key === "_") tree.zoomBy(1 / 1.2);
+      else if (event.key === "[") k.stepWalk(-1);
+      else if (event.key === "]") k.stepWalk(1);
+      else if (event.key === "Enter" && k.selected) {
+        event.preventDefault();
+        tree.toggleInputs(k.selected);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const scopeLine = lensSentence(counts, route.lens);
+
+  // The place being left, for the Back control on the next page.
+  const placeRef = useRef<string | null>(null);
+  placeRef.current = chosenDecl ? (declTitle(alignment, chosenDecl) ?? chosenDecl.slice(chosenDecl.lastIndexOf(".") + 1)) : selected ? recordTitle(selected, graph.nodes.get(selected)?.label ?? selected) : leanOn ? "the Lean graph" : "the map";
+  useEffect(() => namePlace(() => placeRef.current), []);
 
   const chooseView = (v: View) => {
     // Pressing the view already shown frames it again: Steps around the selection, Overview the whole argument.
@@ -382,6 +532,12 @@ export function MapPage({ route }: { route: MapRoute }) {
       if (v !== "outline") treeRef.current?.fitAll();
       return;
     }
+    if (v === "lean") {
+      chooseDisplay("map");
+      return go({ lean: true });
+    }
+    // Leaving the Lean graph goes back to the record it was opened from.
+    if (leanOn) go({ lean: undefined, decl: undefined, declModule: undefined, node: route.node ?? goal });
     if (v === "outline") return chooseDisplay("outline");
     if (display !== "map") {
       // The tree mounts afresh; give it this entry's remembered camera.
@@ -392,23 +548,18 @@ export function MapPage({ route }: { route: MapRoute }) {
     chooseDisplay("map");
     setMode(v);
   };
-  const viewPressed = (v: View) => (v === "outline" ? display === "outline" : display === "map" && mode === v);
+  const viewPressed = (v: View) => (v === "lean" ? leanOn && display === "map" : leanOn ? false : v === "outline" ? display === "outline" : display === "map" && mode === v);
 
   return (
-    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}${keyShown ? " map-page--key" : ""}`}>
+    <div className={`map-page${panelOpen ? " map-page--panel" : ""}${phone ? " map-page--phone" : ""}`} data-keeps-brackets={(display === "map" && !leanOn && walk.passages.length > 0) || undefined}>
+      <h1 className="visually-hidden">Argument for {goalFullTitle}</h1>
       <div className="map-head" role="group" aria-label="Argument map controls">
         <GoalMenu ref={goalBarRef} goals={menuGoals} goal={goal} fullTitle={goalFullTitle} shortTitle={goalTitle} wide={wide} onGoal={changeGoal} />
+        <LensControl lens={route.lens} counts={leanOn && leanCounts ? leanCounts : counts} unit={leanOn && leanCounts ? "declarations" : "records"} onLens={changeLens} />
         <ViewSwitch pressed={viewPressed} onView={chooseView} />
-        <AccountPicker lens={route.lens} onLens={changeLens} onSelect={(id) => select(id)} />
-        <button type="button" className="map-head__key" aria-expanded={keyShown} aria-controls="map-key-row" onClick={() => chooseKey(!keyShown)}>
-          <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
-            <rect x="2" y="3" width="4" height="4" rx="1" fill="currentColor" />
-            <path d="M8.5 5h5.5M2 11.5h4M8.5 11.5h5.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          Key
-        </button>
+        <KeyPopover onNotesHost={setNotesHost} lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut } : undefined} />
       </div>
-      <KeyRow id="map-key-row" origins={graph.origins} hidden={!keyShown} />
+      {route.lens && display === "map" && <p className="map-sub">{leanOn && leanCounts ? `${leanSentence(leanCounts, route.lens)}` : `${scopeLine} A line may pass over steps it leaves out.`}</p>}
 
       <div className="map-page__main" ref={canvasRef} style={{ ["--sheet-inset" as string]: `${sheetInset}px` }}>
         {noteShown && (
@@ -428,17 +579,115 @@ export function MapPage({ route }: { route: MapRoute }) {
             ) : (
               <>
                 <span>
-                  This {edgeObj ? "step" : "record"} is not among the records the {accountWord(route.lens!).toLowerCase()} uses.
+                  This step is not among the steps the {accountWord(route.lens!).toLowerCase()} uses.
                 </span>{" "}
                 <button type="button" className="linklike" onClick={() => changeLens(undefined)}>
-                  Show all records
+                  Show all steps
                 </button>
               </>
             )}
           </p>
         )}
+        {display === "map" && leanOn && !leanReady ? (
+          <p className="map-loading" role="status">
+            {leanGraph.status === "failed" ? "The Lean index could not be loaded." : "Reading the Lean modules this argument uses…"}
+          </p>
+        ) : display === "map" && leanReady ? (
+          <ArgumentTree
+            key={`lean:${route.lens ?? ""}`}
+            ref={treeRef}
+            graph={drawnLean!}
+            goal={goal}
+            selected={chosenDecl && drawnLean?.nodes.has(chosenDecl) ? chosenDecl : undefined}
+            insets={insets}
+            onSelect={selectLean}
+            onTrace={() => undefined}
+            litIds={litDecls}
+            captionRef={captionRef}
+            mode="overview"
+            lens={undefined}
+            persist={false}
+            statusOf={leanReady.markOf}
+            copyLeaves={false}
+            tileWidth={LEAN_TILE_W}
+            tileHeight={LEAN_TILE_H}
+            minScale={phone ? LEAN_PHONE_K : LEAN_MIN_K}
+            worldText
+            onSceneSettled={onSceneSettled}
+          />
+        ) : display === "map" ? (
+          <ArgumentTree
+            key="argument"
+            ref={treeRef}
+            graph={graph}
+            goal={goal}
+            selected={selected}
+            trace={route.trace}
+            lens={route.lens}
+            within={within}
+            selectedEdge={edgeKey}
+            onEdgeSelect={selectEdge}
+            insets={insets}
+            intro={intro}
+            rootContent={<GoalPlate goal={goal} />}
+            rootExcerpt={<StatementExcerpt goal={goal} />}
+            onSelect={(id) => select(id, id ?? undefined)}
+            onWalk={(id) => go({ node: id, edge: undefined, trace: undefined }, true)}
+            sectionOf={walk.sections}
+            litIds={walkLit}
+            captionRef={captionRef}
+            notesHost={notesHost}
+            onTrace={(id) => {
+              if (route.node === id && route.trace === "rests") go({ trace: "uses" });
+              else if (route.node === id && route.trace === "uses") go({ trace: undefined });
+              else go({ node: id, trace: "rests" });
+            }}
+            mode={mode}
+            onModeChange={setMode}
+            previewIds={preview}
+            onSceneSettled={onSceneSettled}
+            statusOf={recordMark}
+            tileWidth={laptop ? LAPTOP_TILE_W : undefined}
+          />
+        ) : (
+          <ArgumentOutline
+            graph={argument}
+            goal={goal}
+            goalTitle={goalTitle}
+            scope={scopeLine}
+            within={within}
+            selected={selected}
+            selectedEdge={edgeKey}
+            statement={<TheoremBody goal={goal} />}
+            onSelect={(id) => select(id, id)}
+            bottomInset={sheetInset}
+          />
+        )}
+        {display === "map" && leanReady && leanReady.graph.shelf.length > 0 && (
+          <div className="lean-shelf" role="group" aria-label="Definitions these results use">
+            <span className="lean-shelf__head">Definitions</span>
+            {leanReady.graph.shelf.map((d) => (
+              <button key={d.name} type="button" className={`linklike${chosenDecl === d.name ? " is-chosen" : ""}`} title={d.name} onClick={() => walkDecl(d)}>
+                {d.title}
+                {d.model && <span className="lean-shelf__model"> ({d.model})</span>}
+              </button>
+            ))}
+          </div>
+        )}
         {display === "map" && (
-          <div className="map-controls" role="group" aria-label="Branches of the argument" style={{ bottom: 16 + sheetInset }}>
+          <MapStrip
+            lean={leanReady ? { source: leanReady.source, note: leanReady.note, leftOut: leanReady.graph.leftOut, place: leanWhole ? undefined : leanPlace } : leanOn ? {} : undefined}
+            captionRef={captionRef}
+            onFit={() => (leanOn && !leanWhole ? setLeanChoice(true) : treeRef.current?.fit())}
+            onNear={leanOn && leanWhole ? () => setLeanChoice(false) : undefined}
+          />
+        )}
+      </div>
+
+      {display === "map" && !leanOn && (route.lens || !overview) && (
+        <div className="map-foot" style={{ marginBottom: sheetInset }}>
+          {route.lens ? <WalkBar stage={route.lens} passages={walk.passages} at={walkAt} onStep={stepWalk} /> : <span />}
+          {!overview && <div className="map-controls" role="group" aria-label="Branches of the argument">
             <button
               type="button"
               className="map-controls__button"
@@ -463,51 +712,21 @@ export function MapPage({ route }: { route: MapRoute }) {
               </svg>
               Collapse branches
             </button>
-          </div>
-        )}
-        {display === "map" ? (
-          <ArgumentTree
-            ref={treeRef}
-            graph={graph}
-            goal={goal}
-            selected={selected}
-            trace={route.trace}
-            lens={route.lens}
-            within={within}
-            selectedEdge={edgeKey}
-            onEdgeSelect={selectEdge}
-            insets={insets}
-            intro={intro}
-            rootContent={<TheoremBody goal={goal} />}
-            rootExcerpt={<StatementExcerpt goal={goal} />}
-            onSelect={(id) => select(id, id ?? undefined)}
-            onTrace={(id) => {
-              if (route.node === id && route.trace === "rests") go({ trace: "uses" });
-              else if (route.node === id && route.trace === "uses") go({ trace: undefined });
-              else go({ node: id, trace: "rests" });
-            }}
-            mode={mode}
-            onModeChange={setMode}
-            previewIds={preview}
-            onSceneSettled={onSceneSettled}
-          />
-        ) : (
-          <ArgumentOutline
-            graph={graph}
-            goal={goal}
-            goalTitle={goalTitle}
-            scope={scopeLine}
-            within={within}
-            selected={selected}
-            selectedEdge={edgeKey}
-            statement={<TheoremBody goal={goal} />}
-            onSelect={(id) => select(id, id)}
-            onEdgeSelect={(key) => selectEdge(key)}
-            bottomInset={sheetInset}
-          />
-        )}
-      </div>
+          </div>}
+        </div>
+      )}
 
+      {shownDecl && (
+        <DeclPanel
+          name={shownDecl}
+          module={route.declModule}
+          leaving={shown.leaving}
+          onClose={closeSelection}
+          onSelect={(id) => (leanOn ? go({ lean: undefined, decl: undefined, declModule: undefined, node: id }) : select(id))}
+          onWalk={walkDecl}
+          onEcho={setPreview}
+        />
+      )}
       {shownNode && (
         <RecordPanel
           nodeId={shownNode}
@@ -519,6 +738,11 @@ export function MapPage({ route }: { route: MapRoute }) {
           onTrace={(t) => go({ trace: t })}
           onEcho={setPreview}
           onEdge={(key) => selectEdge(key)}
+          onWalk={walkDecl}
+          account={route.lens}
+          goalBody={shownNode === goal ? <TheoremBody goal={goal} /> : undefined}
+          onInputs={display === "map" && !overview ? (id) => treeRef.current?.toggleInputs(id) : undefined}
+          onBelow={display === "map" && !overview ? (id) => treeRef.current?.openBelow(id) : undefined}
         />
       )}
       {shownEdge && (
@@ -527,17 +751,11 @@ export function MapPage({ route }: { route: MapRoute }) {
           leaving={shown.leaving}
           onClose={closeSelection}
           onSelect={(id) => select(id)}
+          onWalk={walkDecl}
           onEcho={setPreview}
         />
       )}
 
-      <ReadingsDock
-        lens={route.lens}
-        selected={selected}
-        step={edgeKey}
-        onLens={(stage: Stage | undefined) => changeLens(stage)}
-        onPreview={setPreview}
-      />
     </div>
   );
 }
@@ -625,7 +843,7 @@ const GoalMenu = forwardRef<
       }}
     >
       <span className="goal-menu__label" id={`${id}-label`}>
-        Argument for
+        In the Sherrington–Kirkpatrick (SK) model, argument for
       </span>
       <button
         ref={button}
@@ -677,13 +895,14 @@ const GoalMenu = forwardRef<
   );
 });
 
-/** Steps, Overview, Outline: one pill whose thumb slides to the view shown. */
+/** Whole argument, Step by step, Outline: one pill whose thumb slides to the view shown. */
 function ViewSwitch({ pressed, onView }: { pressed(v: View): boolean; onView(v: View): void }) {
   const group = useRef<HTMLDivElement>(null);
   const views: { id: View; label: string }[] = [
-    { id: "steps", label: "Steps" },
-    { id: "overview", label: "Overview" },
+    { id: "overview", label: "Whole argument" },
+    { id: "steps", label: "Step by step" },
     { id: "outline", label: "Outline" },
+    { id: "lean", label: "Lean graph" },
   ];
   const current = views.find((v) => pressed(v.id))?.id;
   const [thumb, setThumb] = useState<{ x: number; w: number } | null>(null);
@@ -707,7 +926,7 @@ function ViewSwitch({ pressed, onView }: { pressed(v: View): boolean; onView(v: 
           key={v.id}
           type="button"
           aria-pressed={pressed(v.id)}
-          title={pressed(v.id) && v.id !== "outline" ? `Frame the ${v.id === "steps" ? "steps" : "overview"} again` : undefined}
+          title={pressed(v.id) && v.id !== "outline" ? "Frame this view again" : undefined}
           onClick={() => onView(v.id)}
         >
           {v.label}
@@ -737,47 +956,4 @@ function usePopover(open: boolean, close: () => void, root: RefObject<HTMLElemen
       window.removeEventListener("keydown", onKey, true);
     };
   }, [open, close, root]);
-}
-
-/** Records used by: a picker that opens the account switch with its coverage caption. */
-function AccountPicker({ lens, onLens, onSelect }: { lens?: Stage; onLens(stage: Stage | undefined): void; onSelect(id: string): void }) {
-  const [open, setOpen] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
-  const close = useCallback(() => setOpen(false), []);
-  usePopover(open, close, root);
-  return (
-    <div className="acct-picker" ref={root}>
-      <span className="acct-picker__label" id="acct-picker-label">
-        Records used by
-      </span>
-      <button
-        type="button"
-        className="acct-picker__button"
-        aria-expanded={open}
-        aria-haspopup="dialog"
-        aria-labelledby="acct-picker-label acct-picker-value"
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span id="acct-picker-value">{lens ? PAPER_NAMES[lens].short : "All accounts"}</span>
-        <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true">
-          <path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-      {open && (
-        <div className="acct-picker__pop" role="dialog" aria-label="Records used by">
-          <AccountSwitch
-            lens={lens}
-            onLens={(s) => {
-              onLens(s);
-              if (!s) setOpen(false);
-            }}
-            onSelect={(id) => {
-              setOpen(false);
-              onSelect(id);
-            }}
-          />
-        </div>
-      )}
-    </div>
-  );
 }
