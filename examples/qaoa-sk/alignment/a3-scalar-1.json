@@ -39,14 +39,14 @@
     {
      "paper": "short",
      "role": "definition",
-     "from": "Let $\\mathcal U$ consist of the nonnegative, nondecreasing,",
-     "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+     "from": "Let $\\mathcal U$ consist",
+     "to": "(t)\\,dt<\\infty$,"
     },
     {
      "paper": "short",
      "role": "definition",
-     "from": "The Parisi functional $\\mathcal P(\\gamma)$ is defined using",
-     "to": "\\mathcal P(\\gamma)=\\Phi_\\gamma(0,0)-\\tfrac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+     "from": "The Parisi functional $\\",
+     "to": "gamma(t)\\,dt.\n$$"
     },
     {
      "paper": "expository",
@@ -82,8 +82,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "The support theorem itself assumes a minimizer and proves a property of it;",
-     "to": "it does not separately supply one."
+     "from": "The support theorem itse",
+     "to": " property\nof it."
     },
     {
      "paper": "short",
@@ -100,8 +100,8 @@
     {
      "paper": "expository",
      "role": "explanation",
-     "from": "The theorem requires a minimiser,",
-     "to": "not merely an admissible candidate."
+     "from": "The hypothesis is minima",
+     "to": ", can have gaps."
     }
    ]
   },
@@ -127,14 +127,14 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "Auffinger and Chen's zero-temperature Parisi formula and",
-     "to": "attainment identify $P_*$ with $\\min_{\\gamma\\in\\mathcal U}\\mathcal P(\\gamma)$."
+     "from": "Auffinger and Chen prove",
+     "to": "hcal P(\\gamma)$."
     },
     {
      "paper": "long",
      "role": "explanation",
-     "from": "For overlap $R_{12}=n^{-1}\\sum_i\\sigma_i^1\\sigma_i^2$, the covariance is",
-     "to": "maximum."
+     "from": "For overlap $R_{12}=n^{-",
+     "to": "ximum\nunchanged."
     },
     {
      "paper": "long",
@@ -151,14 +151,14 @@
     {
      "paper": "short",
      "role": "explanation",
-     "from": "We use the covariance convention $\\xi(t)=t^2/2$, so $\\xi''=1$;",
-     "to": "[Auffinger and Chen (2017), Theorem 1][AC]."
+     "from": "We use the covariance co",
+     "to": " Theorem 1][AC]."
     },
     {
      "paper": "expository",
      "role": "statement",
-     "from": "The ground-state Parisi\nformula and attainment give",
-     "to": "P_*=\\min_{\\gamma\\text{ admissible}}\\mathcal P(\\gamma).\n$$"
+     "from": "The ground-state Parisi\n",
+     "to": "al P(\\gamma).\n$$"
     },
     {
      "paper": "expository",
@@ -175,26 +175,26 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "Auffinger and Chen's zero-temperature Parisi formula and",
-     "to": "it does not separately supply one."
+     "from": "Auffinger and Chen prove",
+     "to": " property\nof it."
     },
     {
      "paper": "short",
      "role": "statement",
-     "from": "Existence of a minimiser is a separate input from",
-     "to": "the proof of Lemma 3][AC]."
+     "from": "The existence of a minim",
+     "to": "of Lemma 3][AC]."
     },
     {
      "paper": "expository",
      "role": "statement",
-     "from": "The ground-state Parisi\nformula and attainment give",
-     "to": "P_*=\\min_{\\gamma\\text{ admissible}}\\mathcal P(\\gamma).\n$$"
+     "from": "The ground-state Parisi\n",
+     "to": "al P(\\gamma).\n$$"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "This equality and attainment are external inputs from",
-     "to": "the proof of Lemma 3][auffinger-chen];"
+     "from": "This equality and attain",
+     "to": "auffinger-chen],"
     }
    ]
   },
@@ -244,8 +244,8 @@
     {
      "paper": "expository",
      "role": "explanation",
-     "from": "At this stage, write",
-     "to": "\\ge\\frac{c^2}{1000}\\mathbb E[a(t,X_t)^4].\n$$"
+     "from": "At this stage write\n$R_c",
+     "to": "[a(t,X_t)^4].\n$$"
     }
    ]
   },
@@ -314,8 +314,8 @@
     {
      "paper": "long",
      "role": "derivation",
-     "from": "Convexity gives $a\\geq0$; the already established second moment gives",
-     "to": "hence $\\gamma(0)=0$."
+     "from": "Convexity gives $a\\geq0$",
+     "to": "e $\\gamma(0)=0$."
     },
     {
      "paper": "long",
@@ -384,8 +384,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "**Proposition 6.1 (terminal value).**",
-     "to": "attained Parisi formula in addition to the support theorem."
+     "from": "**Proposition 6.1 (termi",
+     "to": " Parisi formula."
     },
     {
      "paper": "long",
@@ -408,8 +408,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "Boundedness gives\n$|U|\\leq1$",
-     "to": "gives (10)."
+     "from": "Boundedness gives $|U|\\l",
+     "to": "then gives (10)."
     },
     {
      "paper": "expository",
@@ -450,14 +450,14 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "We first fix $0<T<1$, then a mesh $N\\ge1$,",
-     "to": "orthonormality does not assert independence."
+     "from": "We first fix $0<T<1$, th",
+     "to": "an independence."
     },
     {
      "paper": "short",
      "role": "statement",
-     "from": "**The finite Gaussian input.** Fix the minimiser",
-     "to": "They need not be independent Gaussians."
+     "from": "**The finite Gaussian in",
+     "to": "ndent Gaussians."
     }
    ]
   },
@@ -534,8 +534,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "The approximation\n$$\nM_N=",
-     "to": "Coordinatewise errors would not control a sum of growing length."
+     "from": "The approximation\n$$\nM_N",
+     "to": " not control it."
     },
     {
      "paper": "long",
@@ -546,8 +546,8 @@
     {
      "paper": "short",
      "role": "explanation",
-     "from": "Bessel's inequality, applied separately to $(g_j)$",
-     "to": "rounding-coordinate term vanishes."
+     "from": "Bessel's inequality, app",
+     "to": "inate, vanishes."
     }
    ]
   },
@@ -598,14 +598,14 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "The finite quantity\nneeded by the circuit construction is the adjacent pairing",
-     "to": "\\tag{11}\n$$"
+     "from": "The circuit construction\nnee",
+     "to": "     \\tag{11}\n$$"
     },
     {
      "paper": "short",
      "role": "explanation",
-     "from": "The same proposition proves this limit.",
-     "to": "fixed; only afterwards does $T\\uparrow1$ give $P_*$."
+     "from": "The same proposition pro",
+     "to": "ow1$ give\n$P_*$."
     }
    ]
   },
@@ -624,8 +624,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "The prediction error and the energy tail have different sizes:",
-     "to": "makes it nonnegative."
+     "from": "The prediction error and",
+     "to": "bound is needed."
     },
     {
      "paper": "long",
@@ -636,8 +636,8 @@
     {
      "paper": "short",
      "role": "statement",
-     "from": "In particular, convexity\nand Cauchy–Schwarz give $0\\leq\\mathbb E a\\leq1$, so",
-     "to": "\\leq1-T.\n$$"
+     "from": "Moreover, convexity and\n",
+     "to": "]\\,dt\\leq1-T.\n$$"
     }
    ]
   },
@@ -680,14 +680,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
-     "to": "for those clauses."
+     "from": "A separate\n[formal state",
+     "to": "r those clauses,"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-     "to": "concern the value identity and finite Gaussian approximation."
+     "from": "A separate [formal state",
+     "to": "ot been checked."
     }
    ]
   },
@@ -730,14 +730,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
-     "to": "for those clauses."
+     "from": "A separate\n[formal state",
+     "to": "r those clauses,"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-     "to": "concern the value identity and finite Gaussian approximation."
+     "from": "A separate [formal state",
+     "to": "ot been checked."
     }
    ]
   },
@@ -768,8 +768,8 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "Its third clause identifies the ground-state and",
-     "to": "constructing the diffusion internally."
+     "from": "and its third\nclause ide",
+     "to": "sion internally."
     }
    ]
   },
@@ -805,14 +805,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
-     "to": "for those clauses."
+     "from": "A separate\n[formal state",
+     "to": "r those clauses,"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-     "to": "concern the value identity and finite Gaussian approximation."
+     "from": "A separate [formal state",
+     "to": "ot been checked."
     }
    ]
   },
@@ -848,14 +848,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "A separate\n[scalar formal statement][value-challenge] covers value identities and",
-     "to": "for those clauses."
+     "from": "A separate\n[formal state",
+     "to": "r those clauses,"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-     "to": "concern the value identity and finite Gaussian approximation."
+     "from": "A separate [formal state",
+     "to": "ot been checked."
     }
    ]
   },
@@ -879,8 +879,8 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "Its third clause identifies the ground-state and",
-     "to": "constructing the diffusion internally."
+     "from": "and its third\nclause ide",
+     "to": "sion internally."
     }
    ]
   },
@@ -1019,8 +1019,8 @@
     {
      "paper": "long",
      "role": "explanation",
-     "from": "There is a second way to obtain $q=t$ from the variational inequalities.",
-     "to": "full-support theorem."
+     "from": "A second route obtains $",
+     "to": "support theorem."
     },
     {
      "paper": "long",

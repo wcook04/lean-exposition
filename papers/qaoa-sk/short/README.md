@@ -59,11 +59,19 @@ The selected formal declarations are
 `OAI.SKValue.value_consequences`. Their exact scope, source versions, historical
 unavailable startup, later failed solution builds, and lack of an accepted research-target replay
 are recorded in the [source example](../../../examples/qaoa-sk/README.md).
+A source-bound local build of the Support implementation completed on
+26 October 2026, and dependency extraction recorded its conditional
+full-support root; dependencies outside the selected extraction scope remain
+boundaries. Comparator acceptance and the scalar-target results remain
+pending. The paper's "Formal verification" paragraph states only which
+results the formal statements cover; these checking outcomes, which the
+register pass of 3 November 2026 moved out of the reading copy, stay here
+and in the long record's §13.
 The [long record](../long/reasoning-record.md) retains the broader recovery route.
 
 | Short-paper argument | Companion section in the long record |
 | --- | --- |
-| Fixed-time spatial estimate and plateau curvature | [§4.5: A fixed-time inequality and its plateau application](../long/reasoning-record.md#fixed-time-coercivity) |
+| Fixed-time spatial estimate and plateau curvature | [§4.5: Coercivity at a fixed time and on plateaus](../long/reasoning-record.md#fixed-time-coercivity) |
 | The three kinds of support gap | [§5: Excluding terminal, interior and initial gaps](../long/reasoning-record.md#gap-elimination) |
 | Smooth positive density | [§§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence) |
 | Scalar value identity | [§6: Recovering the value from a martingale](../long/reasoning-record.md#scalar-value-identities) |

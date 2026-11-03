@@ -227,7 +227,7 @@ describe("anchors", () => {
     const body = document.createElement("div");
     body.innerHTML = withoutIds(long.render(hit.part).html);
     const text = body.textContent!.replace(/\s+/g, " ");
-    expect(text).toContain("Choose one minimizer supplied by the attained Parisi formula");
+    expect(text).toContain("We choose one minimizer supplied by the attained Parisi formula");
     expect(text).toContain("The pointwise result also gives a simultaneous statement");
     expect(text).toContain("neither exact arbitrary real overlaps at finite");
     expect(text).not.toContain("The scalar Gaussian construction is not itself an algorithm");

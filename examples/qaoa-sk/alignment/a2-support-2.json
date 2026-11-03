@@ -110,8 +110,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "To obtain Lemma 2 for an integrable coefficient, choose positive",
-     "to": "so no convergence theorem for the auxiliary\nlogarithmic derivative $s$ is needed."
+     "from": "To obtain Lemma 2 for an",
+     "to": "ergence theorem."
     },
     {
      "paper": "expository",
@@ -155,8 +155,8 @@
     {
      "paper": "long",
      "role": "derivation",
-     "from": "**Corollary 4.2 (positive plateaus).**",
-     "to": "This proves strict convexity of $q'$ on $I$."
+     "from": "**Corollary 4.2 (positiv",
+     "to": "y convex on $I$."
     },
     {
      "paper": "short",
@@ -213,20 +213,20 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "The zero plateau has the separate",
-     "to": "and $|x|+O(1)$ growth."
+     "from": "The zero plateau has the",
+     "to": "$c=\\gamma(t)>0$."
     },
     {
      "paper": "expository",
      "role": "statement",
-     "from": "Instead the\nzero-coefficient heat identity gives",
-     "to": "\\qquad(0<t<s).\n$$"
+     "from": "Then $\\gamma=0$ there,\ns",
+     "to": "qquad(0<t<s).\n$$"
     },
     {
      "paper": "expository",
      "role": "derivation",
-     "from": "Here is why the inequality is strict.",
-     "to": "at most minus one."
+     "from": "The inequality is strict",
+     "to": "e1$ for $0<t<s$."
     }
    ]
   },
@@ -244,8 +244,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "**Why a terminal plateau violates the variational inequality.**",
-     "to": "every $t$ sufficiently close to one."
+     "from": "**A terminal plateau vio",
+     "to": "ly close to one."
     },
     {
      "paper": "long",
@@ -256,14 +256,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "The stronger boundary estimate\n$1-q(t)\\geq C\\sqrt{1-t}$ for arbitrary coefficients constant",
-     "to": "Lemma 6.3][FS]"
+     "from": "A stronger boundary esti",
+     "to": ", Lemma 6.3][FS]"
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "The source's different terminal argument proves the stronger estimate",
-     "to": "coefficient, without the left contact data used here."
+     "from": "By a different terminal ",
+     "to": " data used here."
     }
    ]
   },
@@ -288,8 +288,8 @@
     {
      "paper": "long",
      "role": "derivation",
-     "from": "The sign of the contradiction is now explicit.",
-     "to": "then $\\mu_\\gamma=0$ and $\\gamma=0$ on all of $[0,1)$."
+     "from": "We can now read off the ",
+     "to": " all of $[0,1)$."
     },
     {
      "paper": "long",
@@ -300,14 +300,14 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "The terminal exclusion was already recorded by",
-     "to": "Remark 7][ACZ]."
+     "from": "The terminal exclusion w",
+     "to": " Remark 7][ACZ]."
     },
     {
      "paper": "expository",
      "role": "mention",
-     "from": "[Auffinger–Chen–Zeng, Remark 7][acz] had already recorded the absence",
-     "to": "of terminal plateaus."
+     "from": "The absence of terminal ",
+     "to": " of the support."
     }
    ]
   },
@@ -337,8 +337,8 @@
     {
      "paper": "long",
      "role": "derivation",
-     "from": "First consider a gap $(a,b)$ with both endpoints in $S$, allowing",
-     "to": "The endpoint derivatives need\nonly be at most one; equality has not been assumed."
+     "from": "First consider a gap $(a",
+     "to": " be at most one."
     },
     {
      "paper": "long",
@@ -349,8 +349,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "Suppose $(\\ell,r)$ is a support gap with endpoints in $S$ and $r<1$.",
-     "to": "The geometric\nobstruction is an area deficit under $q'$."
+     "from": "Suppose first that $(\\el",
+     "to": "icit under $q'$."
     },
     {
      "paper": "expository",
@@ -405,8 +405,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "An initial gap $[0,r)$ with $0\\notin S$ and $r\\in S$ has no",
-     "to": "integral contradiction follows without assuming $G(0)=0$."
+     "from": "An initial gap $[0,r)$ w",
+     "to": "suming $G(0)=0$."
     },
     {
      "paper": "expository",
@@ -417,8 +417,8 @@
     {
      "paper": "expository",
      "role": "derivation",
-     "from": "Thus $q'$ is strictly increasing, and right contact gives",
-     "to": "Integrating again gives too little area."
+     "from": "Thus $q'$ is strictly in",
+     "to": "too little area."
     }
    ]
   },
@@ -610,8 +610,8 @@
     {
      "paper": "expository",
      "role": "derivation",
-     "from": "These cases exhaust the complement of the support. Contact now gives",
-     "to": "completing the theorem."
+     "from": "These cases exhaust the ",
+     "to": " of the theorem."
     }
    ]
   },
@@ -641,8 +641,8 @@
     {
      "paper": "long",
      "role": "explanation",
-     "from": "At the origin, the manuscript smoothly extends auxiliary quotient",
-     "to": "and reflection."
+     "from": "At the origin, the manus",
+     "to": " and\nreflection."
     }
    ]
   },
@@ -692,8 +692,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "With $h=q'$ and $C_{a,b}$ its endpoint chord, the contradiction is the exact area identity",
-     "to": "The first term is nonnegative; strict convexity makes the second positive."
+     "from": "With $h=q'$ and $C_{a,b}",
+     "to": "second\npositive."
     },
     {
      "paper": "long",
@@ -704,8 +704,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "Strict convexity of $q'$ and (2) give\n$$\nq'(t)<",
-     "to": "Integrating contradicts $q(r)-q(\\ell)=r-\\ell$."
+     "from": "Strict convexity of $q'$ and (2)",
+     "to": "icit under $q'$."
     },
     {
      "paper": "expository",
@@ -716,8 +716,8 @@
     {
      "paper": "expository",
      "role": "example",
-     "from": "A calculus model shows how strict convexity can prevent this.",
-     "to": "The missing area is $1/3-5/18=1/18$."
+     "from": "The first two conditions",
+     "to": "$1/3-5/18=1/18$."
     }
    ]
   },
@@ -735,8 +735,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "**Proposition 4.1 (coercivity at a fixed time).**",
-     "to": "Neither minimality nor a constant neighbourhood of $t$ is assumed."
+     "from": "**Proposition 4.1 (coerc",
+     "to": "ositive density."
     },
     {
      "paper": "long",
@@ -771,14 +771,14 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "Here is the elementary calculus step. Suppose",
-     "to": "All chord endpoints lie below one; no derivative at one is used."
+     "from": "One elementary calculus ",
+     "to": " at one is used."
     },
     {
      "paper": "short",
      "role": "derivation",
-     "from": "A terminal gap $(r,1)$ with nonempty support has $r\\in S$ and",
-     "to": "This uses no contact at one."
+     "from": "A terminal gap $(r,1)$ w",
+     "to": "e left endpoint."
     },
     {
      "paper": "expository",
@@ -801,14 +801,14 @@
     {
      "paper": "long",
      "role": "mention",
-     "from": "The\n[explicit zero-coefficient calculation](#zero-coefficient-example)",
-     "to": "additionally gives $D_+\\mathcal P(0)[1]=1/4-1/\\pi$"
+     "from": "The\n[explicit zero-coeff",
+     "to": ")[1]=1/4-1/\\pi$,"
     },
     {
      "paper": "expository",
      "role": "statement",
-     "from": "Return to the Gaussian value and slope from Section 3.",
-     "to": "So a small positive constant coefficient improves the zero candidate."
+     "from": "We return to the Gaussia",
+     "to": "ro-candidate -->"
     },
     {
      "paper": "expository",
@@ -845,8 +845,8 @@
     {
      "paper": "long",
      "role": "derivation",
-     "from": "A nonempty support with a terminal complementary component has a last",
-     "to": "quantitative proof above is retained for its stronger estimate (5.1)."
+     "from": "A nonempty support with ",
+     "to": " estimate (5.1)."
     },
     {
      "paper": "short",
@@ -863,8 +863,8 @@
     {
      "paper": "short",
      "role": "derivation",
-     "from": "These cases exhaust the complement of the relatively closed set $S$.",
-     "to": "This proves Theorem 1 using the stated analytic inputs."
+     "from": "These cases exhaust the ",
+     "to": "analytic inputs."
     },
     {
      "paper": "expository",
@@ -875,8 +875,8 @@
     {
      "paper": "expository",
      "role": "derivation",
-     "from": "These cases exhaust the complement of the support. Contact now gives",
-     "to": "completing the theorem."
+     "from": "These cases exhaust the ",
+     "to": " of the theorem."
     }
    ]
   },
@@ -887,8 +887,8 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "**The spatial inequality at a coefficient jump.**",
-     "to": "requires this extension."
+     "from": "**The spatial inequality",
+     "to": "s the\nextension."
     }
    ]
   },
@@ -905,8 +905,8 @@
     {
      "paper": "short",
      "role": "mention",
-     "from": "The same section gives a negative pointwise value with the actual",
-     "to": "terminal datum for a small positive constant coefficient"
+     "from": "and that section also fi",
+     "to": "tant\ncoefficient"
     }
    ]
   },
@@ -917,20 +917,20 @@
     {
      "paper": "long",
      "role": "statement",
-     "from": "To close the empty-support case using the same preceding inputs, observe",
-     "to": "Neither a value nor a derivative at one has been assumed."
+     "from": "The same inputs close th",
+     "to": "of mass at zero."
     },
     {
      "paper": "short",
      "role": "derivation",
-     "from": "If $S$ is empty, then $\\gamma=0$.",
-     "to": "so $G(0)<0$."
+     "from": "This case uses contact o",
+     "to": "t$, so\n$G(0)<0$."
     },
     {
      "paper": "expository",
      "role": "derivation",
-     "from": "**Empty support.** This would mean $\\gamma=0$ everywhere.",
-     "to": "No value or derivative at one was used."
+     "from": "**Empty support.** Empty",
+     "to": "of mass at zero."
     }
    ]
   }

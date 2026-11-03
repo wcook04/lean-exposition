@@ -32,8 +32,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Thus the exact edge decomposition is",
-          "to": "Strong convergence alone does not control the scaled remainder."
+          "from": "Thus the exact edge deco",
+          "to": "its comes later."
         }
       ]
     },
@@ -110,14 +110,14 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Start with the standard root seed $g_0=S$ and recursively set",
-          "to": "=\\sum_{j=0}^NA_jB_{j+1}.\n$$"
+          "from": "We start with the standa",
+          "to": "^NA_jB_{j+1}.\n$$"
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "Start with a standard normal receiving-root seed $g_0$ and recursively put",
-          "to": "\\end{aligned}                                     \\tag{12}\n$$"
+          "from": "We start with a standard",
+          "to": "     \\tag{12}\n$$"
         }
       ]
     },
@@ -128,8 +128,8 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "Fix $T,N$ first. The independent continuous rounding coordinate makes",
-          "to": "approximations to that sign therefore converge in $L^2$ by dominated\nconvergence."
+          "from": "We fix $T,N$ first. The ",
+          "to": "ted\nconvergence."
         }
       ]
     },
@@ -140,14 +140,14 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "If the bounded output is $m^*$, shrink it to",
-          "to": "columns that are bounded, while the Gaussian fields themselves remain\nunbounded."
+          "from": "If the bounded output is",
+          "to": "emain unbounded."
         },
         {
           "paper": "short",
           "role": "mention",
-          "from": "[OpenAI (2026b), §§3–5][Q] smooths the spin",
-          "to": "the final sign alone is insufficient."
+          "from": "[OpenAI (2026b), §§3–5][",
+          "to": "be insufficient."
         }
       ]
     },
@@ -158,8 +158,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "The types can be encoded together",
-          "to": "assuming an additional circuit resource."
+          "from": "The types can be encoded",
+          "to": "ircuit resource."
         },
         {
           "paper": "long",
@@ -194,8 +194,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Apply the\nclassical near-optimality proposition with the two tolerances",
-          "to": "helper law does not silently preserve an already fixed formula."
+          "from": "We allocate the errors a",
+          "to": "y fixed formula."
         }
       ]
     },
@@ -206,8 +206,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "There are two different approximation operations. First, seed",
-          "to": "required in the continuous aggregate inputs, not in the mask labels."
+          "from": "There are two different ",
+          "to": "abels\nneed none."
         }
       ]
     },
@@ -260,8 +260,8 @@
         {
           "paper": "short",
           "role": "mention",
-          "from": "The resulting finite\nformula is approximated in energy using",
-          "to": "temporary Gaussian controls, with the same sitewise seeds throughout the word."
+          "from": "This finite formula is\nt",
+          "to": "ughout the word."
         }
       ]
     },
@@ -368,14 +368,14 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "The choices are therefore nested: make $b$ small to control",
-          "to": "tends to zero."
+          "from": "The choices are therefor",
+          "to": "e\ntends to zero."
         },
         {
           "paper": "short",
           "role": "mention",
-          "from": "Removing those controls produces an ordinary word",
-          "to": "$v(W)$ by the fixed-word transfer."
+          "from": "Removing those\ncontrols ",
+          "to": "d-word transfer."
         }
       ]
     },
@@ -386,8 +386,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Allocate errors after choosing the desired $\\varepsilon>0$.",
-          "to": "all approximation choices have been made."
+          "from": "We allocate the errors a",
+          "to": " have been made."
         },
         {
           "paper": "long",
@@ -417,7 +417,7 @@
           "paper": "short",
           "role": "mention",
           "from": "whose limiting energy is",
-          "to": "$v(W)$ by the fixed-word transfer."
+          "to": "d-word transfer."
         }
       ]
     },
@@ -554,8 +554,8 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "Both routes then use the same bounded approximation, exclusions, seeded",
-          "to": "is shared; its classical input has been supplied independently."
+          "from": "Both routes then use the",
+          "to": "d independently."
         }
       ]
     },
@@ -578,8 +578,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Farhi, Goldstone, Gutmann and Zhou supply that additional input.",
-          "to": "averaged over disorder, not merely the square of the conditional mean."
+          "from": "Farhi, Goldstone, Gutmann and Zhou s",
+          "to": "onditional mean."
         }
       ]
     },
@@ -590,8 +590,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Now run the circuit construction with accuracy $\\varepsilon/2$ and",
-          "to": "selected formal interface."
+          "from": "Now run the circuit cons",
+          "to": "rmal interfaces."
         }
       ]
     },
@@ -632,14 +632,14 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "A separate, later source gives a quantitative comparison with the",
-          "to": "Here $\\nu_n$ is the disorder-averaged energy per spin."
+          "from": "Boulebnane, Khan, Subrahmanya, Herman, Farhi, Villalonga and Shaydulin\nl",
+          "to": "energy per spin."
         },
         {
           "paper": "long",
           "role": "example",
-          "from": "The estimate\napplies to each near-optimal word from §8.6 separately.",
-          "to": "\\nu_n(W_\\zeta)\\ge P_*-\\zeta\\qquad(n\\ge T_{p_\\zeta}).\n$$"
+          "from": "The estimate applies to ",
+          "to": "T_{p_\\zeta}).\n$$"
         }
       ]
     },
@@ -668,8 +668,8 @@
         {
           "paper": "short",
           "role": "derivation",
-          "from": "**Proof.** For a fixed word, put",
-          "to": "the same $J$; no independence between them is needed."
+          "from": "**Proof.** For a fixed w",
+          "to": "ce between them."
         }
       ]
     },
@@ -686,8 +686,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "This establishes an absolute approximation of each specified finite",
-          "to": "classical output law."
+          "from": "This gives an absolute a",
+          "to": "ical\noutput law."
         },
         {
           "paper": "short",
@@ -698,8 +698,8 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "**Construction underlying Proposition 5.**",
-          "to": "conclusion below uses a further concentration theorem."
+          "from": "**The construction behin",
+          "to": "tration\ntheorem."
         }
       ]
     }

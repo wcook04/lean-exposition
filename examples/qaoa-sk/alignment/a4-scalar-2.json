@@ -27,14 +27,14 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "The support and scalar models encode closely related control problems.",
-          "to": "an equivalence of their complete interfaces."
+          "from": "The support and scalar m",
+          "to": "lete interfaces."
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "The two formal models have not been transported",
-          "to": "into one another in this record."
+          "from": "The two formal statement",
+          "to": "d to each other."
         }
       ]
     },
@@ -57,8 +57,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "Full support and existence give an attained, strictly increasing",
-          "to": "includes no separate numerical-preprocessing or finite-precision bound."
+          "from": "Full support and existen",
+          "to": "inite precision."
         }
       ]
     },
@@ -228,8 +228,8 @@
         {
           "paper": "long",
           "role": "mention",
-          "from": "The scalar\nterminal assembly identifies",
-          "to": "with $\\mathcal P(\\gamma)$;"
+          "from": "The scalar\nterminal asse",
+          "to": "hcal P(\\gamma)$."
         },
         {
           "paper": "long",
@@ -339,8 +339,8 @@
         {
           "paper": "long",
           "role": "derivation",
-          "from": "First take the mesh\nlimit to obtain $I(T)\\le P_*$, then let $T\\uparrow1$.",
-          "to": "together with $P_*\\le\\mathcal P(\\gamma)$ this proves equality."
+          "from": "First take the mesh\nlimi",
+          "to": "proves equality."
         },
         {
           "paper": "long",
@@ -425,8 +425,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Choose each zero-or-unit direction measurably from columns already",
-          "to": "Dividing the offset inequality by $n\\sqrt n$ gives a bound by $e_n$."
+          "from": "We choose each zero-or-u",
+          "to": " bound by $e_n$."
         }
       ]
     },
@@ -481,8 +481,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "**A coefficient budget from the first curvature moment.** Full support",
-          "to": "ground-state identification."
+          "from": "**A coefficient budget f",
+          "to": "\nidentification."
         }
       ]
     },
@@ -511,14 +511,14 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "The same vector estimates also give an unshifted sum with this limit:",
-          "to": "the two finite pairings can differ, as [§10.4](#one-step-example) shows."
+          "from": "The same vector estimate",
+          "to": "-example) shows."
         },
         {
           "paper": "short",
           "role": "mention",
-          "from": "The unshifted pairing can\nhave the same scalar limit without identifying this energy.",
-          "to": "this energy."
+          "from": "An\nunshifted pairing can",
+          "to": "ing\nthis energy."
         }
       ]
     },
@@ -529,8 +529,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "**Proposition 6.2 (terminal normalization in zero field).** For the",
-          "to": "separate from the selected formal endpoints."
+          "from": "**Proposition 6.2 (termi",
+          "to": "ormal endpoints."
         },
         {
           "paper": "long",
@@ -547,14 +547,14 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "There is a useful contrast at a fixed finite size.",
-          "to": "has one maximizing pair $\\{\\sigma_*,-\\sigma_*\\}$."
+          "from": "At a fixed finite size t",
+          "to": "_*,-\\sigma_*\\}$."
         },
         {
           "paper": "expository",
           "role": "statement",
-          "from": "At a fixed finite size, almost surely the only exact maximisers are",
-          "to": "probability zero; there are only finitely many pairs."
+          "from": "At a fixed finite size, ",
+          "to": "tely many pairs."
         }
       ]
     }
