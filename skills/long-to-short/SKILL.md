@@ -47,19 +47,25 @@ Do this before selecting material. Write the answers in the review brief.
 
 1. **Who reads it.** The readers of a short paper are the authors of the
    works it cites and builds on. They will check it, build on it, referee it
-   and cite it.
+   and cite it. A sceptical reviewer of the formal statement has a different
+   first task (definitions, imports, quantifiers); give that role its route in
+   the long record, and keep the paper's main route a mathematical argument.
 2. **What they already know.** Read those cited papers. List what their
    authors will find obvious (the standard models, the algorithms and lemmas
    of their own papers) and what the new result asks them to learn: the new
    construction, the steps where a natural shortcut fails, quantifier order,
    and whether the formal statement says what the theorem says. Known
    material becomes a cited statement with its hypotheses, never a page of
-   re-derivation.
+   re-derivation. Keep a failing shortcut or counterexample on the main route
+   only when it protects an inference these readers are likely to make; attach
+   the others at their use or leave them in the long record.
 3. **The one point.** State in one or two lines why the result is true: the
    mechanism, and where an exponent or bound comes from when there is one.
-   Say what stopped the previous method and what the new idea changes. If you
-   cannot write this line, the source is not yet understood; return to the
-   long record rather than drafting.
+   Say what stopped the previous method and what the new idea changes: name
+   the earlier variant or recipe and the cost inequality actually analysed. An
+   exhibited bottleneck of one recipe is not an impossibility result for its
+   framework. If you cannot write this line, the source is not yet understood;
+   return to the long record rather than drafting.
 4. **The history.** Place the result in the sequence of earlier results it
    improves or refutes, with authors, years and the exact previous bounds,
    checked against the sources. Cite each prior work correctly and say what
@@ -68,7 +74,13 @@ Do this before selecting material. Write the answers in the review brief.
 Allocate pages from this model: most space to what the new result asks the
 cited authors to learn, least to what their own papers already contain.
 Abstract, opening section and Theorem 1 carry the one point and the history;
-a reader should meet both on page one.
+a reader should meet both on page one. When the obligations of this skill
+exceed the page budget, rank them by the reader's next decision and say so in
+the review brief: the mathematics, its hypotheses and the decisive proof come
+first; supporting inventories and evidence detail move to the long record.
+At each revision, compare the rendered section shares with this model and
+name the existing material each addition displaces. Material preserved in the
+long record need not be compulsory reading here.
 
 Orient before any technical step. Readers of machine-produced mathematics
 report that it jumps into detail, while a human paper's introduction says
@@ -130,14 +142,25 @@ section then opens with one sentence saying where it is going.
    paper. Independent routes may stay there. Essential assumptions,
    attribution and the reason for the decisive step stay beside their uses.
    Compare alternative proofs by hypotheses and exact conclusions, including
-   rates, before calling one indispensable or superseded. A shorter argument
+   rates, before calling one indispensable or superseded. Before claiming that
+   a specialised lemma is needed, instantiate the closest existing theorem at
+   the application's actual parameters and check whether its loss fits the
+   slack already chosen; if it does, either cite it or say what the selected
+   proof adds. A shorter argument
    may settle the selected question while losing a stronger bound or wider
    domain. Companions can use different proofs; state which route each uses
    and do not transfer a formal check to an alternative ordinary argument.
+   When two routes share a lemma name, say at the use which version the
+   argument needs.
 6. Reconcile the shared statements in both directions: corrections in the
    short paper must reach the long record, and assumptions revealed by the
    long argument must reach the short paper. Resolve differing evidence labels
-   from source and receipts rather than copying the stronger label.
+   from source and receipts rather than copying the stronger label. When a
+   fact changes (a repaired inference, a narrowed scope, a new evidence
+   status), search every companion for the abstract, opening, caption, reading
+   guide or absence claim that still teaches the old version, and record where
+   the correction was carried. A repaired proof paragraph alone does not close
+   the change.
 7. Update passage mappings and citation roles. Preserve credit for prior proofs,
    adapted constructions, supplied ideas and corrections at their actual uses.
    Carry still-used inputs and credit into the surviving passages; remove a
@@ -145,49 +168,42 @@ section then opens with one sentence saying where it is going.
    If a stronger estimate serves a later use, say why that use needs its margin
    or broader hypotheses. A qualitative condition may already suffice for the
    first conclusion. Preserve that distinction when explaining the contribution.
-   Gather toolchain details and run history in one verification destination.
+   When comparing estimates or routes, use one vocabulary for the parameters
+   the reader varies, and only the dimensions that change the judgement of
+   sufficiency; separate the main theorem's sufficient contract from optional
+   refinements.
+   Gather toolchain details and run history in the long record's verification
+   section or the repository metadata.
 8. Run `lean-exposition check-bundle DIR`. Inspect links and the rendered paper.
    Review mathematical meaning before sentence polish. A successful bundle
    check is not semantic acceptance or independent review.
 
-## Reference the Lean and Comparator evidence
+## Report the formal verification
 
-Link Lean the way a citation is linked. Write the claim in plain mathematical
-words and hyperlink those words to the declaration or statement at an
-immutable commit with a pinned line range (`.../blob/<commit>/<file>#L12-L40`).
-Do not put dotted typewriter identifiers in the prose. Every formally
-supported claim should be attributable to its Lean or Comparator evidence by
-one such link; claims supported only by an ordinary argument, a build without
-comparison, or a cited paper say so in the same plain words.
+A short paper reports its formal verification the way the literature reports
+a computation: once, plainly, in one ordinary paragraph or a short section
+after the mathematics, with readable link text. Say which results the
+formalisation proves, in plain mathematical words, and hyperlink those words
+to the declaration at an immutable commit with a pinned line range
+(`.../blob/<commit>/<file>#L12-L40`). The commit belongs in the link target
+alone. Do not put dotted typewriter identifiers in the prose.
+Where a formal statement differs materially from the printed one (a hidden
+premise, finite instead of general randomness, an existential constant), say
+so in one ordinary sentence beside that result. A result proved only on paper
+or cited from the literature is simply proved or cited; never describe it as
+formally proved. A formal result that rests on a further mathematical input
+states that input as a hypothesis of the theorem it qualifies. Link only what
+the linked edition proves.
 
-When a Comparator challenge exists, end the short paper with a one-page
-appendix, "Checking the statement", so the reader can answer whether the
-statement was encoded correctly in about fifteen minutes:
-
-- one sentence of purpose: the checker confirms that the proof has the stated
-  type; this page lists what that type says;
-- the challenge file, its size and imports, with a line-range map linking each
-  block of definitions (inputs, models, measures, the function, the headline
-  quantity);
-- each compared theorem in mathematical notation beside its linked name,
-  stating which constants are compared and which come only from built,
-  uncompared theorems;
-- the few modelling choices a reader should check: error conventions, what
-  the model may access, promises, degenerate cases such as an infimum over an
-  empty set, and the quantifier order;
-- what the comparison establishes and what it does not: a modelling error
-  shared by challenge and solution passes; uncompared theorems are only built;
-  whether runs were sandboxed; whether any person has reviewed the definitions;
-- a fidelity table: for each central result linked to Lean, whether its
-  formal statement is the same as the printed claim, stronger, or weaker, what
-  exactly differs (hidden premises, finite instead of general randomness,
-  existential instead of explicit constants, a floor form), and whether that
-  relation was reviewed against the current sources. Formal proofs drift to
-  nearby, easier statements, and this is the first thing a formal-methods
-  reader checks;
-- that the challenge file's proofs are deliberate placeholders, with a link to
-  the solution file and to the recorded run;
-- commit, toolchain and the command whose output is quoted.
+Everything else belongs in the long record's verification section or the
+repository metadata, where the [statement audit](../graph-to-long/SKILL.md#audit-the-formal-statement)
+lives: commit hashes, toolchains, commands, receipts, run history, the challenge-file map, Comparator's distinctions between compared
+and merely built theorems, sandboxing, review status and the full fidelity
+comparison. The short paper and exposition carry no review-status disclaimers
+("no human review", "no statement review exists"); a sentence about who has
+or has not read something is metadata, and the reader cannot act on it. A
+formal-methods reader follows one link from the verification paragraph to the
+audit. This supersedes the earlier one-page "Checking the statement" appendix.
 
 A highlighted line range must cover the whole declaration type, up to the
 proof; a check that the range exists passes a highlight that stops at a `let`
@@ -196,23 +212,33 @@ says and name the ordinary step that turns it into the paper's statement. A
 link that promises a full proof lands at the start of that argument, with its
 hypotheses, never at the final assembly.
 
-Gather all other run history in the long record's verification section.
-Write any formal status that is still being rebuilt or reviewed conditionally.
+## Register, line edit and the rendered pages
 
-## Register and the rendered pages
+The register of the cited literature is the floor. The target is prose a
+strong referee of that literature would admire: each sentence carries one
+mathematical step, the argument reads as a connected account, and nothing on
+the page is there for the authors' bookkeeping. Learn the moves of the best
+cited papers and make them in your own sentences.
 
 The reading copy contains no provenance notes, scratch paths, session remarks,
-relative links into unpublished folders, or workflow vocabulary. Agents and
-tools are never the subject of a sentence; mathematicians, theorems and
-proofs are. Do not use em dashes, rhetorical "not X, but Y" contrasts or
-taglines. Give the responsible author and the AI assistance in a byline and
-credit the theorem's originators there. Fix notation collisions before
-submission. Render the paper and look at every page at reading size: overfull
-lines, figures, tables, links and the reference list.
+relative links into unpublished folders, commit hashes, commands or workflow
+vocabulary. Agents and tools are never the subject of a sentence;
+mathematicians, theorems and proofs are. Do not use em dashes, rhetorical
+"not X, but Y" contrasts or taglines. Give the responsible author and the AI
+assistance in a byline and credit the theorem's originators there. Fix
+notation collisions before submission. Render the paper and look at every
+page at reading size: overfull lines, figures, tables, links and the
+reference list.
 
-A revision pass refines the existing text. Replace or tighten a passage
-instead of appending another one; a review that adds pages to a paper whose
-complaint was misallocation has not repaired it.
+Every revision round centres a paragraph-by-paragraph line edit of the whole
+paper: for each sentence ask what it asserts, whether the reader needs it
+here, and whether a plainer or more exact sentence would do. There is always
+something to improve. Rank critique findings in this order: mathematics and
+its hypotheses, then the reader's route through the argument, then prose,
+then the presentation of evidence. An evidence-presentation finding never
+displaces a line edit. A revision pass refines the existing text. Replace or
+tighten a passage instead of appending another one; a review that adds pages
+to a paper whose complaint was misallocation has not repaired it.
 
 ## Output contract
 
