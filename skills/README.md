@@ -82,18 +82,39 @@ result are marked as instance notes in the skills or kept here.
   re-deriving Grover search, minimax and the Forrelation lower bound that the
   authors of the cited query-complexity literature already know, and named
   implementation theorems in place of the Comparator challenge those readers
-  would audit. That case added the reader-modelling step and the "Checking
-  the statement" appendix to [long to short](long-to-short/SKILL.md), and the
-  frame-before-examples rule to
-  [record to exposition](record-to-expository/SKILL.md). It also showed the
+  would audit. That case added the reader-modelling step to
+  [long to short](long-to-short/SKILL.md) and the frame-before-examples rule
+  to [record to exposition](record-to-expository/SKILL.md). It also showed the
   value of a short table of natural shortcuts that fail, one counterexample
   per row: it tells those readers what to take as known and what to check.
+
+  A later round of emulated classical, quantum, formal-methods and teaching
+  readers found the opposite pressure. The "Checking the statement" appendix
+  grew to about 2.35 pages, longer than the classical proof it served; the
+  shortcut table had grown to eight pitfalls of unequal value; the
+  exposition's overview ran to about 1.8 pages with exact constants before the
+  mechanism; an opening route table still called required a proof that a later
+  section let readers bypass; a corrected cell-visit argument was still
+  summarised in its old form in the opening; a running board kept its geometry
+  while its probability law changed; a direct-product lemma was called
+  necessary before the classical theorem had been tried at the actual query
+  cap; and a fidelity label kept a reason that the edited lemma no longer
+  supported. With the author's direction that short papers look like ordinary
+  papers of the literature, this replaced the appendix by one verification
+  paragraph with a statement audit in the long record, and added the priority,
+  propagation, route-agreement, example-reset, instantiation and line-edit
+  rules in the three skills.
 
 ## Where reader feedback goes
 
 Fold every reader report, referee return or editorial critique back through
 the [review-and-refinement loop](../docs/authoring.md#use-and-improve-the-transition-skills).
-Repair the paper first. Then route the lesson to the transition that made the
+Repair the paper first, starting from a line edit of every paragraph, and
+rank the findings: mathematics and hypotheses, then the reader's route and
+examples, then prose, then the presentation of evidence. When a repair changes
+a fact or an inference, find every abstract, opening, caption, reading guide
+and absence claim across the companions that still teaches the old version.
+Then route the lesson to the transition that made the
 decision: reader model, selection and Lean linking to `long-to-short`;
 teaching order and examples to `record-to-expository`; missing arguments to
 `graph-to-long`; wrong credit or evidence status to `source-to-graph`. Edit
@@ -123,9 +144,19 @@ prose store.
 
 A reader built on these documents shows what the authors wrote and what Lean
 reports (axioms, dependency graph, statement types); the model's role is to
-link prose to code, so its failure is an unhelpful link, not false content.
-Label each link and graph edge with its origin: extracted from structured Lean
-output, or proposed by a model and how it was checked. A long record linked to
-from shorter papers opens with a reading guide that separates the required
-proof path from optional routes and evidence, and every linked destination
-opens with the statement it proves.
+link prose to code. A wrong link is still a misattribution of support: it can
+say that the wrong theorem proves a claim, or that a built declaration was
+compared. Label each link and graph edge with its kind, direction and origin:
+extracted from structured Lean output, or proposed by a model and how it was
+checked. A long record linked to from shorter papers opens with a reading
+guide that separates the required proof path from optional routes and
+evidence, and that agrees with every later skip permission and bypass; every
+linked destination opens with the statement it proves.
+
+Formal bookkeeping (commit hashes, toolchains, commands, receipts, Comparator
+categories and review status) lives in the long record's
+[statement audit](graph-to-long/SKILL.md#audit-the-formal-statement) and the
+repository metadata. The short paper and exposition report verification in one
+ordinary paragraph with readable link text, as the literature reports a
+computation. Their register is the literature's at its best, and the aim is
+prose a strong referee would admire.

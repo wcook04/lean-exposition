@@ -157,6 +157,53 @@ reading order. Keep that first response separate from the assisted reread.
 9. Run `lean-exposition check-bundle DIR`. Review the argument separately,
    then inspect the delivered Markdown or rendered paper and its references.
 
+## Audit the formal statement
+
+The long record's verification section, with the repository metadata, holds
+the formal bookkeeping that the short paper and exposition leave out. Its
+reader is a sceptic asking whether the formal statement says what the theorem
+says. Give that reader a bounded task with a stopping point: identify the
+compared targets, reconstruct one quantifier order, locate the ordinary bridge
+to the printed theorem, and name the semantic question that remains. Do not
+promise that the definitions can be certified in a fixed time unless a timed
+unaided attempt was recorded. Include:
+
+- the challenge file, its imports and a line-range map of its definitions
+  (inputs, models, measures, the function, the headline quantity), and that
+  its proofs are deliberate placeholders, with links to the solution and the
+  recorded run;
+- each compared theorem in mathematical notation beside its linked name,
+  which constants are compared and which come only from built, uncompared
+  theorems;
+- the modelling choices a reader should check: error conventions, what the
+  model may access, promises, degenerate cases such as an infimum over an
+  empty set, and the quantifier order;
+- what the comparison establishes and what it does not: a modelling error
+  shared by challenge and solution passes; uncompared theorems are only
+  built; whether runs were sandboxed; what review exists, what bytes it
+  covers, whether its binding is current and whether a person or a tool
+  performed it;
+- a fidelity comparison for each central result, along separate axes:
+  hypotheses and domain, conclusion, mathematical setting or representation,
+  and the ordinary transport joining them. A single same, stronger or weaker
+  label hides a stronger conclusion in a narrower setting; mark such a pair
+  mixed until the transport is stated. Name the exact current printed
+  statement each entry compares, and re-derive the entry's reason whenever
+  either side is edited. Formal proofs drift to nearby, easier statements;
+- one worked semantic check: a concrete way the intended mathematics could
+  fail while the formal types still agree, such as a shared bad specification
+  or a finite control whose expected answer a mutation changes, with the
+  limited conclusion it supports. A quick check of this kind is not a full
+  review of the definitions; if no suitable example exists, record that;
+- the commit, toolchain and command for each quoted output. Treat the reading
+  edition, link pins, receipts, review bindings and PDF source hashes as one
+  published set, and check that every human-facing version statement agrees
+  after links are regenerated.
+
+Label each displayed correspondence by kind, direction, endpoints and edition.
+A wrong edge can tell the reader that the wrong theorem supports a claim, or
+that a built declaration was compared; that is a misattribution of support.
+
 ## Output contract
 
 Produce the long record and its stage mapping. Preserve `selected_goal_ids`,

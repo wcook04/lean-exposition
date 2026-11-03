@@ -51,6 +51,10 @@ preparation before its first consequential use and check that the later passage
 can actually use it. A level such as “graduate” or a list of defined terms is
 not this prerequisite ladder. A standard operation already available to the
 reader needs no remedial example; knowing a lemma need not explain its purpose.
+Before accepting the draft, test the declared audience against the operations
+the text actually uses: for each first consequential use, record whether a
+named prerequisite supplies it, the exposition teaches it, or it is a stated
+input. An operation in none of these is a scope mismatch to repair or report.
 
 If the argument is incomplete, either select an established part or make the
 unresolved step an explicit subject of the exposition. Do not introduce a new
@@ -74,15 +78,28 @@ theorem in words and symbols, the one-line reason it holds (where a bound
 comes from), a few lines of history with correct credit, and a map saying
 which example illustrates which step. Then work the examples. A reader who
 meets the theorem only near the end cannot tell what each example is for.
+When these obligations exceed the opening page, rank them by the reader's next
+decision and check the rendered opening: keep the exact theorem scope and the
+mechanism first, and let quantitative provenance and a detailed example map
+follow the mechanism.
 
 Draw the objects the reader must hold in mind (the layout of an input, a small
 instance, the critical configuration) instead of describing them only in
 prose. Put standard proofs this reader can skip (minimax, concentration,
-textbook amplification) in clearly marked boxes. Keep Lean names out of the
-reading path: link plain words to pinned lines as the
-[short-paper skill](../long-to-short/SKILL.md#reference-the-lean-and-comparator-evidence)
-describes, and collect the formal correspondences in a closing half-page.
-The register, byline and rendered-page rules there apply here too.
+textbook amplification) in clearly marked boxes. After fixing the audience,
+read every retained supplier proof in sequence: keep the contract the next
+step consumes visible on the main route, and make the proof optional only when
+the next construction-specific inference stays recoverable without it.
+
+Keep Lean names out of the reading path. Report the formalisation as the
+[short-paper skill](../long-to-short/SKILL.md#report-the-formal-verification)
+describes: one ordinary closing paragraph or short section with readable link
+text, saying which results are formally proved and, in a plain sentence
+beside any of them, how a formal statement materially differs from the
+printed one. The full comparison, review status and run details stay in the
+long record's statement audit. The register, line-edit, byline and
+rendered-page rules there apply here too: the literature's register is the
+floor, and each revision round centres a paragraph-by-paragraph line edit.
 
 Rules that referees of a worked instance found missing:
 
@@ -94,11 +111,11 @@ Rules that referees of a worked instance found missing:
   bound the joint event; never condition on a cheap run.
 - A counterexample that redefines a random choice defines it on every branch,
   including the empty one, before claiming a marginal law. A counterexample
-  row refutes exactly the shortcut it is listed against.
+  row refutes exactly the shortcut it is listed against. Keep it on the main
+  route only when it protects an inference this reader is likely to make;
+  otherwise attach it at its use or leave it in the long record.
 - Keep every lemma statement that later steps use outside optional boxes; box
   only proofs. Total every cost term before simplifying to an exponent.
-- In the closing formal half-page, label each linked result as the same as,
-  stronger than or weaker than the prose claim, and how.
 
 ## Procedure
 
@@ -120,6 +137,10 @@ Rules that referees of a worked instance found missing:
    Separate admissibility from optimality and a definition from an identity
    proved only at an optimum. Reuse the example while it reveals something;
    do not force it through every section or rehearse operations the reader knows.
+   When an example returns under a new law, domain, conditioning, indexing or
+   parameter, or a link sends the reader to a different example, state the
+   reset at that point: what stays fixed and what changes. A drawing's
+   geometry does not carry its earlier data. Restore only what changed.
    Check what a convenient symmetry or normalisation makes indistinguishable.
    If the proof later needs that distinction, keep the easy first calculation
    and try one nearby case that separates the quantities. This is a reason for
@@ -133,6 +154,11 @@ Rules that referees of a worked instance found missing:
    why the next choice exists and why the choices reach the stated conclusion.
    A named technique or an analogy does not supply that connection. If the
    complete source argument does not supply it, refer the gap for research review.
+   Carry the recurring example through each derivation it is claimed to
+   illustrate, at least for the one decisive new operation: start from the
+   example's established data and end at the next claimed output. If the
+   example cannot do this, say so and give the imported interface with a
+   concrete task the reader can do with it.
    Before importing a property, check whether a short deduction from the
    displayed representation would explain it using this reader's available
    tools. Show it when it unlocks a later step; do not turn this into a demand
@@ -148,6 +174,9 @@ Rules that referees of a worked instance found missing:
    definitions and imported conclusions needed after the jump, and give the
    exact destination. Test that route using only the promised prerequisites;
    calling a section optional does not make its later notation available.
+   After any navigation change, check that the opening map, reading guides
+   and local skip permissions agree, and name each route's objective: using
+   an imported result, following a full proof, or auditing the evidence.
    Once the selected result is proved, consider returning to the opening
    question before developing further machinery or consequences. Keep an
    intervening lemma when the promised payoff actually depends on it.
@@ -176,7 +205,10 @@ Rules that referees of a worked instance found missing:
    nonminimising coefficient cannot select a minimiser-only convergence theorem
    merely because both use the same construction.
 6. Add a changed-case task: alter one hypothesis, parameter or example and ask
-   the reader what survives, keeping the other conditions explicit. Choose a
+   the reader what survives, keeping the other conditions explicit. Pose
+   existing worked changed cases as questions to the reader, with the answer
+   given separately, and include at least one task that reaches the promised
+   key inference without its answer beside it. Choose a
    change that requires using the key inference, not repeating its wording.
    For independent use, sometimes leave the method unnamed or choose a change
    that makes the earlier conclusion unavailable. Ask which tool applies and
@@ -285,5 +317,7 @@ Separate the local choice of example from the reusable teaching decision;
 test the latter outside this problem and for an audience where it should not
 apply. Record author checks separately from actual reader responses.
 
-A revision pass refines existing passages. When a reader stalls, replace or
-reorder the passage at the point of need before adding new material.
+A revision pass refines existing passages and line-edits every paragraph.
+When a reader stalls, replace or reorder the passage at the point of need
+before adding new material. Rank findings by mathematics, then teaching
+order and examples, then prose, then evidence presentation.
