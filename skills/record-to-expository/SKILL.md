@@ -64,6 +64,11 @@ do, what they will not know, and the one point they should leave with. Use
 the same one-line reason for the result as the short paper; if the short paper
 lacks it, supply it there first.
 
+Name the audience on page one and answer the reader's first question, why am
+I reading this: who the exposition is for, why the result matters to them,
+what they will be able to do by the end, and which payoffs are coming. Each
+section opens with where it is going and closes with what was gained.
+
 Give the frame before the examples: open with about a page that states the
 theorem in words and symbols, the one-line reason it holds (where a bound
 comes from), a few lines of history with correct credit, and a map saying
@@ -78,6 +83,22 @@ reading path: link plain words to pinned lines as the
 [short-paper skill](../long-to-short/SKILL.md#reference-the-lean-and-comparator-evidence)
 describes, and collect the formal correspondences in a closing half-page.
 The register, byline and rendered-page rules there apply here too.
+
+Rules that referees of a worked instance found missing:
+
+- When the analysis runs an ideal process on quantities the algorithm cannot
+  see, say so before introducing it, and define the process on every history,
+  including absorbing and failure states.
+- State each per-step failure bound with the histories on which it holds.
+- When a lower bound controls reaching a hidden object, name guessing and
+  bound the joint event; never condition on a cheap run.
+- A counterexample that redefines a random choice defines it on every branch,
+  including the empty one, before claiming a marginal law. A counterexample
+  row refutes exactly the shortcut it is listed against.
+- Keep every lemma statement that later steps use outside optional boxes; box
+  only proofs. Total every cost term before simplifying to an exponent.
+- In the closing formal half-page, label each linked result as the same as,
+  stronger than or weaker than the prose claim, and how.
 
 ## Procedure
 

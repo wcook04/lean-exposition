@@ -70,6 +70,14 @@ cited authors to learn, least to what their own papers already contain.
 Abstract, opening section and Theorem 1 carry the one point and the history;
 a reader should meet both on page one.
 
+Orient before any technical step. Readers of machine-produced mathematics
+report that it jumps into detail, while a human paper's introduction says
+where the argument is going. The opening section therefore runs in this
+order: the result and why a specialist should care, the one mechanism, what is
+new against each named antecedent (with that antecedent's own hypotheses and
+conclusion), and a short plan of every later section and appendix. Each
+section then opens with one sentence saying where it is going.
+
 ## Procedure
 
 1. Select one connected argument. State what changes relative to prior work
@@ -170,7 +178,23 @@ statement was encoded correctly in about fifteen minutes:
 - what the comparison establishes and what it does not: a modelling error
   shared by challenge and solution passes; uncompared theorems are only built;
   whether runs were sandboxed; whether any person has reviewed the definitions;
+- a fidelity table: for each central result linked to Lean, whether its
+  formal statement is the same as the printed claim, stronger, or weaker, what
+  exactly differs (hidden premises, finite instead of general randomness,
+  existential instead of explicit constants, a floor form), and whether that
+  relation was reviewed against the current sources. Formal proofs drift to
+  nearby, easier statements, and this is the first thing a formal-methods
+  reader checks;
+- that the challenge file's proofs are deliberate placeholders, with a link to
+  the solution file and to the recorded run;
 - commit, toolchain and the command whose output is quoted.
+
+A highlighted line range must cover the whole declaration type, up to the
+proof; a check that the range exists passes a highlight that stops at a `let`
+binding before every conclusion. Describe a formal endpoint by what its type
+says and name the ordinary step that turns it into the paper's statement. A
+link that promises a full proof lands at the start of that argument, with its
+hypotheses, never at the final assembly.
 
 Gather all other run history in the long record's verification section.
 Write any formal status that is still being rebuilt or reviewed conditionally.

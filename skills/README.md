@@ -117,3 +117,12 @@ transitions can mechanically verify a prose implication, upgrade a pending
 check or inherit acceptance from an earlier edition. Graph-associated views
 reuse the authoritative Markdown and mappings without becoming another editable
 prose store.
+
+A reader built on these documents shows what the authors wrote and what Lean
+reports (axioms, dependency graph, statement types); the model's role is to
+link prose to code, so its failure is an unhelpful link, not false content.
+Label each link and graph edge with its origin: extracted from structured Lean
+output, or proposed by a model and how it was checked. A long record linked to
+from shorter papers opens with a reading guide that separates the required
+proof path from optional routes and evidence, and every linked destination
+opens with the statement it proves.
