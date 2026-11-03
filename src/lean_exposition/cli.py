@@ -119,6 +119,7 @@ def parser() -> argparse.ArgumentParser:
     cmd.add_argument("--timeout", type=float, default=120)
     cmd.add_argument("--legacy", action="store_true", help="Use lake env comparator CONFIG (pre-4.35 tool installed separately)")
     cmd.add_argument("--out", type=Path, required=True)
+    _register_parser(commands)
     cmd = commands.add_parser("prove2me", help="Read a public theorem and its public decomposition from Prove2Me")
     cmd.add_argument("url")
     cmd.add_argument("--out", type=Path, required=True)
@@ -129,7 +130,108 @@ def parser() -> argparse.ArgumentParser:
     return p
 
 
+def _register_parser(commands) -> None:
+    reg = commands.add_parser("register", help="Measure prose register against cited literature; list register rules")
+    actions = reg.add_subparsers(dest="register_command", required=True)
+    cmd = actions.add_parser("profile", help="Build a corpus profile from the cited literature")
+    cmd.add_argument("corpus", nargs="+", help="Papers or directories (a directory's extracted.md is preferred)")
+    cmd.add_argument("--out", type=Path, required=True)
+    cmd.add_argument("--name", default="")
+    cmd.add_argument("--min-words", type=int, default=800)
+    cmd.add_argument("--no-loo", action="store_true", help="Skip the leave-one-out noise estimate")
+    cmd.add_argument("--format", choices=("json", "text"), default="json")
+    cmd = actions.add_parser("compare", help="Distance of manuscripts from a profile, with contributing sentences")
+    cmd.add_argument("manuscripts", nargs="+")
+    cmd.add_argument("--profile", type=Path, required=True)
+    cmd.add_argument("--baseline", help="An earlier edition of a single manuscript")
+    cmd.add_argument("--threshold", type=float, default=1.5)
+    cmd.add_argument("--worst", type=int, default=3, help="Features to quote sentences for")
+    cmd.add_argument("--specimens", type=int, default=5, help="Sentences per quoted feature")
+    cmd.add_argument("--format", choices=("json", "text", "matrix"), default="json")
+    cmd = actions.add_parser("specimens", help="Example sentences from the literature for one feature or move")
+    cmd.add_argument("corpus", nargs="+")
+    cmd.add_argument("--feature", required=True)
+    cmd.add_argument("--limit", type=int, default=12)
+    cmd.add_argument("--max-words", type=int, default=30)
+    cmd.add_argument("--grep")
+    cmd.add_argument("--seed", type=int, default=0)
+    cmd = actions.add_parser("features", help="Raw feature values, or --list for definitions")
+    cmd.add_argument("files", nargs="*")
+    cmd.add_argument("--list", action="store_true")
+    cmd = actions.add_parser("dump", help="Print the prose the profiler reads, with source lines")
+    cmd.add_argument("file")
+    cmd.add_argument("--all", action="store_true", help="Also show paragraphs with no counted sentence")
+    cmd = actions.add_parser("rules", help="Validate and list the packaged register rules")
+    cmd.add_argument("--scope", choices=("short", "expository", "long"))
+    cmd.add_argument("--status", choices=("adopted", "candidate"))
+    cmd.add_argument("--rules", type=Path, help="A local rule file in place of the packaged one")
+    cmd.add_argument("--format", choices=("json", "markdown"), default="json")
+    cmd = actions.add_parser("packet", help="Write the register inputs a critique packet carries")
+    cmd.add_argument("--draft", nargs=2, action="append", required=True, metavar=("STAGE", "PATH"),
+                     help="A draft and its stage: short, expository or long (repeatable)")
+    cmd.add_argument("--literature", nargs="+", required=True, help="Cited papers or their directories")
+    cmd.add_argument("--out", type=Path, required=True)
+    cmd.add_argument("--title", required=True)
+    cmd.add_argument("--job", type=Path, help="Markdown file with this packet's specific assignment")
+    cmd.add_argument("--min-words", type=int, default=800)
+
+
+def _run_register(args):
+    from . import register as reg
+    action = args.register_command
+    if action == "profile":
+        if args.out.exists():
+            raise ContractError("output already exists")
+        profile = reg.build_profile([str(p) for p in args.corpus], args.min_words, loo=not args.no_loo, name=args.name)
+        write_json(args.out, profile)
+        if args.format == "text":
+            return reg.render_profile(profile)
+        return {"out": str(args.out), "documents": [d["label"] for d in profile["documents"]]}
+    if action == "compare":
+        profile = read_json(args.profile)
+        rules = reg.load_rules()
+        baseline = args.baseline if len(args.manuscripts) == 1 else None
+        if args.baseline and baseline is None:
+            raise ContractError("--baseline requires exactly one manuscript")
+        results = [reg.annotate_with_rules(reg.compare_one(m, profile, baseline, args.threshold, args.worst,
+                                                           args.specimens), rules) for m in args.manuscripts]
+        if args.format == "text":
+            return reg.render_compare(results, profile)
+        if args.format == "matrix":
+            return reg.render_matrix(results, profile, args.threshold)
+        return results if len(results) > 1 else results[0]
+    if action == "specimens":
+        return reg.collect_specimens(args.corpus, args.feature, limit=args.limit, max_words=args.max_words,
+                                     grep=args.grep, seed=args.seed)
+    if action == "features":
+        if args.list:
+            return reg.feature_list()
+        if not args.files:
+            raise ContractError("give files, or --list")
+        return reg.features_of(args.files)
+    if action == "dump":
+        return reg.render_dump(args.file, args.all)
+    if action == "rules":
+        data = reg.load_rules(str(args.rules) if args.rules else None)
+        counts = reg.validate_rules(data)
+        selected = reg.select_rules(data, args.scope, args.status)
+        if args.format == "markdown":
+            return reg.render_rules(selected)
+        return {"counts": counts, "selected": [{"id": r["id"], "title": r["title"], "status": r["status"],
+                                                 "scopes": r["scopes"]} for r in selected]}
+    if action == "packet":
+        stages = [stage for stage, _ in args.draft]
+        if len(stages) != len(set(stages)):
+            raise ContractError("each draft stage may appear once")
+        job = args.job.read_text(encoding="utf-8") if args.job else ""
+        return reg.build_packet_inputs(dict(args.draft), args.literature, str(args.out), args.title,
+                                       job=job, min_words=args.min_words)
+    raise ContractError("unknown register command")
+
+
 def run(args):
+    if args.command == "register":
+        return _run_register(args)
     if args.command == "serve":
         from .web import serve
         document_paths = None
@@ -397,7 +499,9 @@ def main(argv=None) -> int:
     except (ContractError, OSError, ValueError, KeyError, TypeError) as exc:
         print(json.dumps({"error": str(exc)}, indent=2), file=sys.stderr)
         return 1
-    if args.command == "query-papers" and args.format == "text":
+    if isinstance(result, str):
+        print(result)
+    elif args.command == "query-papers" and args.format == "text":
         print(_paper_query_text(result))
     elif args.command == "query-corpus" and args.format == "text":
         print(_corpus_query_text(result))

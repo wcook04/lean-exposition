@@ -71,7 +71,13 @@
     "tests/test_web_reading.py",
     "tests/test_web_companions.py",
     "scripts/benchmark_web.py",
-    "site/README.md"
+    "site/README.md",
+    "skills/register/SKILL.md",
+    "src/lean_exposition/register.py",
+    "src/lean_exposition/resources/register/rules.json",
+    "src/lean_exposition/resources/templates/critique-request.md",
+    "docs/register-stage.md",
+    "tests/test_register.py"
   ],
   "readme_map": [
     ".github/",
@@ -98,7 +104,8 @@
     "skills/long-to-short/SKILL.md",
     "skills/record-to-expository/SKILL.md",
     "scripts/check_layout.py",
-    "scripts/check_links.py"
+    "scripts/check_links.py",
+    "skills/register/SKILL.md"
   ],
   "entry_aliases": {
     "CLAUDE.md": "AGENTS.md"
