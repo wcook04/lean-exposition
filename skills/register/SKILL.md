@@ -1,6 +1,6 @@
 ---
 name: register
-description: Line-edit a short paper, exposition or long record until its prose meets and then exceeds the register of the papers it cites. Runs after every long-to-short and record-to-expository draft and after every critique round; measures the draft against a profile of its own cited literature, edits every paragraph, re-measures and cold-reads the rendered PDF. Never changes mathematics, hypotheses or attribution.
+description: Review every paragraph of a short paper, exposition or long record against relevant cited literature. Runs after drafting and critique repair; selects genre-matched comparisons, inspects measured prose, edits for a stated reader benefit, re-measures and reads the rendered paper. Preserves successful prose, mathematics, hypotheses and attribution.
 ---
 
 # Register: write better than the field's own papers
@@ -17,9 +17,9 @@ the source preprint it explains. Mathematical care does not deliver this on its
 own. Drafts produced with AI assistance have a recognisable register (even
 sentences and paragraphs, a document announcing its own structure, contrast
 frames, chains of negations, status sentences after every theorem, intensifiers),
-and a referee discounts the paper within a paragraph of seeing it. Word bans do
-not fix this. Learning the moves the field's own papers make, and editing every
-paragraph with them, does.
+and can distract from the argument. A detector cannot establish a referee's
+response. Learn the moves the field's papers make and review every paragraph
+for its reader's task; a word ban or an improved rate cannot establish clarity.
 
 The general method is the rule set in
 [`register_rules.json`](../../src/lean_exposition/resources/register/rules.json):
@@ -41,17 +41,23 @@ edited statement against the long record before finishing.
 
 ### 1. Choose the reference papers from the paper's own citations
 
-Pick at least three cited papers closest to the manuscript in genre: for a short
+Choose a small set of cited works close to the manuscript in genre: for a short
 paper, research papers proving results of the same kind; for an exposition, the
-field's surveys and lecture notes where the citations include them, and otherwise
-the best-written research papers; for a long record, the longest careful papers
-cited. Add the source preprint the paper explains. Use the full text (a
+field's surveys and lecture notes where the citations include them; for a long
+record, extended arguments and reference treatments. If no matched teaching
+source exists, use research passages as a qualitative comparison and state
+the mismatch. Add the source preprint the paper explains. Choose one declared
+edition per work for a numeric baseline; keep other editions for source
+comparison. A mixed literature shelf is useful context, not a common target
+distribution for all three documents. Use the full text (a
 `pdftotext` extraction or the TeX source); the profiler reads `.tex`, `.md` and
 `.txt`, and a directory's `extracted.md`.
 
 ### 2. Extract the moves, with specimens
 
-Read the first four pages and one proof section of each reference paper. For each
+Read the opening and a relevant proof section of each reference paper. For a
+teaching difficulty, also read the passage that teaches the same operation;
+an arbitrary page sample may miss it. Record the actual inspected scope. For each
 move below, write how the papers make it, with one quoted specimen of at most 25
 words and its location: the first sentence of the abstract and of the
 introduction; how and where the main result is announced; how prior work is
@@ -76,7 +82,15 @@ distance in IQR units, the rules whose detector names that feature, and the
 sentences that contribute most. It is a detector: it says where to look. A good
 paper can sit outside the range on a feature for a reason, and a paper inside
 every range can still read badly. Use `register dump <draft>` to see exactly
-which prose was read.
+which prose was read. Inspect representative extracted paragraphs against their
+source pages before interpreting segmentation or punctuation statistics. Exclude
+damaged extraction, slides and nonprose blocks from paragraph comparisons, or
+report that comparison as unavailable. Compare like regions: the argument,
+captions and evidence appendix have different jobs. Separate them for the
+comparison when relevant, retaining the whole-document profile as context.
+The threshold flag concerns distance from the median in IQR units (or the
+reported floor); being beyond the observed corpus minimum and maximum is a
+different observation. Neither is a z-score, significance test or quality score.
 
 ### 4. Line-edit every paragraph
 
@@ -85,12 +99,18 @@ the abstract, captions and the verification paragraph. For each paragraph write
 down three things before editing it:
 
 - **What it is for**: the one job this paragraph does for this reader.
-- **What is weak**: the specific sentences, measured against the moves from step 2
-  and the rules for this stage. Start with the sentences the report quoted.
-- **The rewrite**: the new paragraph, in the moves of the reference papers.
+- **What needs attention**: a specific reader difficulty, informed by the moves
+  from step 2 and the rules for this stage. A flagged word may instead carry a
+  quantifier, attribution or useful comparison; preserve that function.
+- **The decision**: retain, move, shorten, split or explain, with the revised
+  paragraph when a change improves its job.
 
-There is always something to improve in a sentence. Leave a paragraph unchanged
-only with a stated reason. Imitate moves, never text: never copy a sentence from
+Review every sentence; changing every sentence is not an objective. A precise
+paragraph that already supplies its inference is a successful keep decision.
+For consequential edits, check the objects, quantifiers, events, conditioning,
+resource guarantees and credit before and after, following the
+[active-object checks](../../docs/authoring.md#check-the-active-objects-and-claims).
+Imitate moves, never text: never copy a sentence from
 the literature and never imitate a named author's voice. Keep this edit log with
 the revision record (the companion mapping's review notes, or the round's
 adjudication file).
@@ -100,30 +120,46 @@ states the result first (RG-03); the introduction opens with the object or the
 field's question (RG-04); formal verification is one ordinary paragraph with
 readable link text, and no hashes, commands, receipts, review-status disclaimers
 or repository metadata appear in the paper (RG-20); acknowledgements and AI use
-come at the end (RG-24); no em dashes and no "not X, but Y" (RG-17).
+come at the end (RG-24); empty rhetorical contrasts are removed while meaningful
+comparisons survive (RG-17). Author preferences are not tests of comprehension.
 
 ### 5. Measure again
 
 Re-run `compare` with `--baseline <previous edition>` and report both runs. The
-aim is movement toward the literature on the features the edit addressed, and no
-new distance elsewhere; entering every range is never the target.
+aim is to repair the stated reader difficulty while preserving meaning. Report
+metric movement descriptively. A useful worked explanation may move farther
+from a research-paper median; judge it by the operation it now enables.
 
 ### 6. Cold-read the rendered PDF at reading size
 
 Render the paper as it will be read and read it in order at normal size, as a
 reader new to the project would. Check that the first page states the result,
-that no repository apparatus is visible, that link text reads as ordinary words,
+that repository apparatus stays in its designated reference region, that link text reads as ordinary words,
 that headings name mathematics and that nothing announces the paper's own
 quality. Fix what you find and re-render.
+Read the densest table, longest link labels and reference appendix at the
+delivered size. No clipping or page overflow is only a geometric check: cramped
+wrapping, long identifier strings and several sentences in narrow status columns
+can still be unreadable. Keep compact tables that support an actual comparison;
+move extended explanations into full-width paragraphs with natural-language
+links resolved by the existing index. Preserve exact declaration metadata behind
+those links. A receiving editor inspects the revised output, and user rejection
+supersedes an earlier agent acceptance. Re-render and reinspect the affected
+pages after the repair; prose conversion alone is not proof of readability.
 
 ### 7. Report
 
-Report: the reference papers used; the moves table; the before and after
+Report: the reference papers and editions used; the moves and their source
+locations; the before and after
 measurement with the features that moved; the paragraph edit log; any finding
 returned to an earlier transition; and any rule that helped, failed or needs a
 limit. A lesson that holds in a second field goes into `register_rules.json` as
 a candidate instance under the general rule it refines, or as a new rule only
-when it changes a decision none of the existing rules covers.
+when it changes a decision none of the existing rules covers. Corpus occurrence
+is descriptive transfer evidence. Editorial judgment, agent reconstruction and
+observed reader performance are separate kinds of evidence; report only the
+kind actually obtained. Test a proposed generalisation on two differently
+shaped cases and an exception using the shared [review loop](../../docs/authoring.md#assess-revise-generalise-and-check).
 
 ## Where this stage sits in the funnel
 

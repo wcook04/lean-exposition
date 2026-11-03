@@ -73,15 +73,17 @@ I reading this: who the exposition is for, why the result matters to them,
 what they will be able to do by the end, and which payoffs are coming. Each
 section opens with where it is going and closes with what was gained.
 
-Give the frame before the examples: open with about a page that states the
-theorem in words and symbols, the one-line reason it holds (where a bound
-comes from), a few lines of history with correct credit, and a map saying
-which example illustrates which step. Then work the examples. A reader who
-meets the theorem only near the end cannot tell what each example is for.
-When these obligations exceed the opening page, rank them by the reader's next
-decision and check the rendered opening: keep the exact theorem scope and the
-mechanism first, and let quantitative provenance and a detailed example map
-follow the mechanism.
+Give enough frame for this reader to enter the first example: the object,
+the question, the result's scope and the idea the example will help explain.
+An informal result may precede the definitions needed for its precise statement;
+keep the precise theorem easy to find. A page quota must not force a newcomer
+to absorb the theorem's notation, all predecessor bounds and an example map
+before performing one operation. Put detailed history and refined constants
+where the construction makes their significance visible, preserving immediate
+credit for the result and its inputs. Read the opening as one experience:
+can the requested reader say what is being done and why the next example helps?
+Move or replace material when adding a prerequisite explanation; expand where
+a necessary operation genuinely needs teaching, then reassess the whole route.
 
 Draw the objects the reader must hold in mind (the layout of an input, a small
 instance, the critical configuration) instead of describing them only in
@@ -144,6 +146,11 @@ Rules that referees of a worked instance found missing:
    parameter, or a link sends the reader to a different example, state the
    reset at that point: what stays fixed and what changes. A drawing's
    geometry does not carry its earlier data. Restore only what changed.
+   Treat an example's data, parameter values, law and conventions as one object.
+   For a literal figure, check these against the drawing and caption; mark
+   omissions in a schematic. Name the operation a reader should perform from
+   that figure, including whose information it displays. A picture of a hidden
+   quantity does not give an algorithm access to it.
    Check what a convenient symmetry or normalisation makes indistinguishable.
    If the proof later needs that distinction, keep the easy first calculation
    and try one nearby case that separates the quantities. This is a reason for

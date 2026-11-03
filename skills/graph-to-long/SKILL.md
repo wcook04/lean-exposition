@@ -20,6 +20,20 @@ argument needing several sentences belongs in full-width prose, with a named
 paragraph or lemma where useful. Inspect the most text-heavy material at the
 delivered reading size: tall narrow text columns and largely empty neighbours
 are a reason to change the form, not shrink the type.
+This applies to statement comparisons and evidence appendices too. Keeping a
+table inside the page is not acceptance: read its longest cells at the intended
+size and check whether wrapping, density and cross-column comparison help the
+reader. Keep a compact, readable table when the entries are genuinely comparable;
+write multi-sentence scope and status explanations as full-width scholarly
+paragraphs with named mathematical subjects.
+
+Use natural-language hyperlink labels for those subjects, including in the
+formal audit. Resolve them through the repository's existing link index or
+reference definitions, retaining exact symbols, paths, revisions and line spans
+behind the links. Replacing a table with prose that still displays long dotted
+identifiers does not repair readability. Show literal code only when the reader's
+task is to inspect that syntax; an index may retain it without making it the
+ordinary reading label. Test both the readable label and its exact destination.
 
 ## Preconditions and inputs
 
@@ -114,6 +128,9 @@ reading order. Keep that first response separate from the assisted reread.
    state the conclusion this section supplies and identify its next use.
    A reader arriving from a shorter paper should be able to enter, recover the
    omitted inference and return. Test that route as well as the sequential read.
+   After moving a destination, inspect incoming references and its return
+   instructions together: the visible section number and topic must match the
+   actual argument. A valid anchor alone does not establish this correspondence.
    Check coverage in both directions: from each promised conclusion to its
    derivation, and from each load-bearing source mechanism to its written
    destination. An endpoint paragraph does not explain the construction supplying

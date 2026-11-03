@@ -62,6 +62,12 @@ the chronology of results and source editions from the order chosen to explain
 them. Companion papers can share a statement without sharing a proof route.
 Record the passage and the editorial decision it informed; neither a literature
 shelf nor a reviewer's description establishes that its practice was inspected.
+Read a passage that performs the same explanatory job, as well as the opening:
+a lecture's worked operation can be a better model for a difficult transition
+than a research abstract. Date historical comparisons and check their quantified
+objects, hypotheses and access costs against the inspected edition. A source
+may introduce a construction, implement it, or explain why it fails in its
+model; those are different precedents.
 
 Apply the skill to the document, then read the delivered result in order. In the
 existing mapping's `review_notes` or source-review record, identify the skill
@@ -129,6 +135,12 @@ changing. Keep unaffected prose and earlier review records intact. A batch is
 closed when its findings have reasoned dispositions, the affected outputs have
 been inspected, and any unresolved issue has an exact next check or owner.
 Neither a quota of edits nor another review packet is a completion condition.
+Close historical findings against the current passage as resolved, unresolved,
+regressed or superseded. An accepted plan is not evidence that the intended
+repair landed. Choose a few reconstruction tasks tied to the promised result
+and the changed inferences, then inspect the final continuous reading route.
+Agent reconstructions and simulated readers remain editorial evidence; record
+observed human attempts separately, including hints and source access.
 
 A compact method record should identify the observed difficulty, source check,
 before/after passage, owning skill, reused or changed instruction, transfer cases,
@@ -216,6 +228,16 @@ a target in its proof. At a linked proof destination, restore the small
 dictionary an incoming reader needs to parse its first inference. An
 uninterrupted calculation with unchanged objects needs no repeated inventory.
 
+When shortening or line-editing a probabilistic or algorithmic argument, retain
+the event, its time scope, the information available at that time, and the
+kind of guarantee. A fixed upper budget permits a variable realised run; an
+estimate for a single trial does not already bound eventual success. In an
+adaptive argument, identify observations preceding the action and what remains
+random. Replacing a local history with a completed transcript can condition on
+the very outcome being predicted. Check these meanings in prose verbs as well
+as formulas. Use ordinary language when formal filtration notation would add
+no help for the intended reader.
+
 Classify a reused property as a definition, hypothesis, proved conclusion or
 precisely stated input. A normalization proved later for an optimum cannot be
 moved into the admissible class without checking how it changes the available
@@ -237,6 +259,16 @@ dependence assumptions used. A finite set of matching numerical summaries does
 not by itself identify a law. Test a proposed counterexample against every
 hypothesis of the claim; if it violates one, it may refute a weakened claim
 but not the original statement.
+
+Check a teaching question against the conclusion it actually asks for before
+checking its arithmetic. Membership at an endpoint, attainment of an extremum,
+a bound on an infimum and failure of a sufficient test have different logic.
+Likewise, delimit a toy example by the hypothesis or useful estimate it lacks;
+a vacuous bound need not mean that the mathematical object does not exist.
+These checks apply when the distinction is consequential, not as compulsory
+endpoint exercises for every paper. Keep examples and figures consistent with
+their stated data, and test one changed case across the main inference rather
+than counting peripheral exercises as evidence that the result was taught.
 
 ## Preserve correspondence
 
