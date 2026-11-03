@@ -64,14 +64,14 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "OpenAI's retained [full-support formal statement][support-challenge]",
-          "to": "minimiser, and constructs its associated diffusion."
+          "from": "The\n[formal statement of",
+          "to": "iated diffusion."
         },
         {
           "paper": "expository",
           "role": "explanation",
-          "from": "The Lean [implementation][support-proof],",
-          "to": "statement assumes a minimiser; it does not prove the external Parisi formula or attainment."
+          "from": "contains a [formal statement][support-interface] of the support and",
+          "to": "[proof of the corresponding theorem][support-proof]."
         }
       ]
     },
@@ -101,8 +101,8 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "**Proposition 6.1 (terminal value).**",
-          "to": "attained Parisi formula in addition to the support theorem."
+          "from": "**Proposition 6.1 (termi",
+          "to": " Parisi formula."
         },
         {
           "paper": "long",
@@ -119,8 +119,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "needed by the circuit construction is the adjacent pairing",
-          "to": "\\tag{11}\n$$"
+          "from": "circuit construction\nnee",
+          "to": "     \\tag{11}\n$$"
         },
         {
           "paper": "expository",
@@ -170,14 +170,14 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "[scalar formal statement][value-challenge] covers value identities and",
-          "to": "Parisi values from a minimiser, constructing the diffusion internally."
+          "from": "[formal statement of the",
+          "to": "sion internally."
         },
         {
           "paper": "expository",
           "role": "explanation",
-          "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-          "to": "concern the value identity and finite Gaussian approximation."
+          "from": "A separate [formal state",
+          "to": "ot been checked."
         }
       ]
     },
@@ -200,8 +200,8 @@
         {
           "paper": "short",
           "role": "derivation",
-          "from": "The deduction of near-optimality is now explicit:",
-          "to": "$v(W)>P_*-\\varepsilon$ before $n$ tends to infinity."
+          "from": "Near-optimality follows ",
+          "to": "nds to infinity."
         },
         {
           "paper": "expository",
@@ -237,8 +237,8 @@
         {
           "paper": "long",
           "role": "definition",
-          "from": "Let $\\mathcal U$ consist of nonnegative, nondecreasing, right-continuous",
-          "to": "Support is relative to [0,1)."
+          "from": "Let $\\mathcal U$ consist",
+          "to": "lative to [0,1)."
         },
         {
           "paper": "long",
@@ -249,14 +249,14 @@
         {
           "paper": "short",
           "role": "definition",
-          "from": "Let $\\mathcal U$ consist of the nonnegative, nondecreasing,",
-          "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+          "from": "Let $\\mathcal U$ consist",
+          "to": "(t)\\,dt<\\infty$,"
         },
         {
           "paper": "short",
           "role": "mention",
-          "from": "asserts the support and moment conclusions conditional on an admissible",
-          "to": "minimiser, and constructs its associated diffusion."
+          "from": "asserts the\nsupport and ",
+          "to": "iated diffusion."
         },
         {
           "paper": "expository",
@@ -267,8 +267,8 @@
         {
           "paper": "expository",
           "role": "mention",
-          "from": "statement assumes a minimiser; it does not prove",
-          "to": "attainment."
+          "from": "statement takes the mini",
+          "to": "d its attainment"
         }
       ]
     },
@@ -298,8 +298,8 @@
         {
           "paper": "long",
           "role": "mention",
-          "from": "Its formal statement is separate\nand retains the minimizer and diffusion hypotheses where needed.",
-          "to": "needed."
+          "from": "Its formal statement is ",
+          "to": "they are needed."
         },
         {
           "paper": "long",
@@ -316,14 +316,14 @@
         {
           "paper": "short",
           "role": "mention",
-          "from": "[scalar formal statement][value-challenge] covers value identities and",
-          "to": "for those clauses."
+          "from": "[formal statement of the",
+          "to": "r those clauses,"
         },
         {
           "paper": "expository",
           "role": "mention",
-          "from": "The separate scalar [implementation][value-proof] and [statement][value-interface]",
-          "to": "concern the value identity and finite Gaussian approximation."
+          "from": "A separate [formal state",
+          "to": "ot been checked."
         }
       ]
     },
@@ -365,20 +365,20 @@
         {
           "paper": "short",
           "role": "definition",
-          "from": "Brownian motion and define the diffusion $X$ and its self-consistency function $q$ by",
-          "to": "q(t)=\\mathbb E[u(t,X_t)^2].\n$$"
+          "from": "Brownian\nmotion, and def",
+          "to": "[u(t,X_t)^2].\n$$"
         },
         {
           "paper": "short",
           "role": "explanation",
-          "from": "Its third clause identifies the ground-state and",
-          "to": "Parisi values from a minimiser, constructing the diffusion internally."
+          "from": "and its third\nclause ide",
+          "to": "sion internally."
         },
         {
           "paper": "expository",
           "role": "definition",
-          "from": "Following it generates the state",
-          "to": "This is the **associated diffusion**."
+          "from": "Following it generates t",
+          "to": "ularity theorem."
         }
       ]
     },
@@ -407,8 +407,8 @@
         {
           "paper": "expository",
           "role": "definition",
-          "from": "For each unordered pair choose an independent standard Gaussian",
-          "to": "J_{ij}\\sigma_i\\sigma_j.\n$$"
+          "from": "For each unordered pair ",
+          "to": "ma_i\\sigma_j.\n$$"
         },
         {
           "paper": "expository",
@@ -437,8 +437,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "For each fixed $\\rho\\in[0,1)$ and $\\delta,\\eta>0$, with probability",
-          "to": "using the Gaussian normalisation above."
+          "from": "For each fixed $\\rho\\in[",
+          "to": "alisation above."
         },
         {
           "paper": "expository",
@@ -481,20 +481,20 @@
         {
           "paper": "long",
           "role": "definition",
-          "from": "Their Stieltjes measures satisfy",
-          "to": "Support is relative to [0,1)."
+          "from": "Their Stieltjes measures",
+          "to": "lative to [0,1)."
         },
         {
           "paper": "short",
           "role": "definition",
-          "from": "Define the locally finite Stieltjes",
-          "to": "to one. All support statements use the relative topology of $[0,1)$."
+          "from": "Let $\\mathcal U$ consist",
+          "to": "logy of $[0,1)$."
         },
         {
           "paper": "expository",
           "role": "definition",
-          "from": "**Stieltjes measure** records the increments:",
-          "to": "They are finite on each $[0,T]$ with $T<1$."
+          "from": "**Stieltjes measure** as",
+          "to": "0,T]$ with $T<1$"
         }
       ]
     },
@@ -533,20 +533,20 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "For an admissible coefficient, $\\Phi$ is even, convex and one-Lipschitz",
-          "to": "has jumps (see [OpenAI (2026a), Lemmas 2.1–2.2][FS])."
+          "from": "For an admissible coeffi",
+          "to": " has jumps. This"
         },
         {
           "paper": "expository",
           "role": "derivation",
-          "from": "First consider the value as a function of the starting state",
-          "to": "best endpoint payoffs; taking the supremum preserves that upper bound."
+          "from": "We first regard the valu",
+          "to": " below time one."
         },
         {
           "paper": "expository",
           "role": "statement",
-          "from": "For each fixed $T<1$, the required spatial derivatives are bounded on",
-          "to": "bounds up to time one."
+          "from": "For each fixed $T<1$, th",
+          "to": "most every time."
         }
       ]
     },
@@ -590,20 +590,20 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "The SDE has a unique strong solution. All",
-          "to": "ending before one, unless an endpoint limit is justified explicitly."
+          "from": "The SDE has a unique str",
+          "to": "ding before one."
         },
         {
           "paper": "short",
           "role": "explanation",
-          "from": "Lemma 2.2 couples the diffusions using",
-          "to": "$\\sup_{s\\leq T}|X_s^\\delta-X_s|\\to0$."
+          "from": "By Lemma 2.2, the diffus",
+          "to": "delta-X_s|\\to0$."
         },
         {
           "paper": "expository",
           "role": "statement",
-          "from": "Following it generates the state",
-          "to": "gives its existence and uniqueness for a fixed Brownian motion."
+          "from": "$$\nX_t=B_t+\\int_0^t\\gamm",
+          "to": "ularity theorem."
         }
       ]
     },
@@ -642,14 +642,14 @@
         {
           "paper": "long",
           "role": "statement",
-          "from": "Fix any $\\gamma\\in\\mathcal U$, without yet assuming that it minimises",
-          "to": "admissible coefficient. They do not yet say that $q(t)=t$."
+          "from": "Fix any $\\gamma\\in\\mathc",
+          "to": "ll to be proved."
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "Fix a minimiser. Itô's formula cancels the drift of $u(t,X_t)$:",
-          "to": "In particular $q'$ is continuous across coefficient jumps."
+          "from": "We fix a minimiser. Itô'",
+          "to": "the coefficient."
         },
         {
           "paper": "expository",
@@ -698,14 +698,14 @@
         {
           "paper": "long",
           "role": "explanation",
-          "from": "There is one useful distinction between the manuscript's first variation",
-          "to": "not an additional formally named theorem."
+          "from": "The manuscript's first v",
+          "to": "eorem states it."
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "The one-sided variation formula gives the rate of change of the functional",
-          "to": "$\\varepsilon\\geq0$ (see [OpenAI (2026a), Lemma 6.1][FS])."
+          "from": "Minimality means that ev",
+          "to": "Lemma 6.1][FS])."
         },
         {
           "paper": "expository",
@@ -760,20 +760,20 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "first-order cost is therefore a tail integral:",
-          "to": "G(s):=\\int_s^1(q(t)-t)\\,dt\\geq0.\n$$"
+          "from": "first-order cost is half",
+          "to": "-t)\\,dt\\geq0.\n$$"
         },
         {
           "paper": "short",
           "role": "derivation",
-          "from": "let $\\nu=\\mu_\\gamma|_K$ for a compact $K\\subset[0,1)$.",
-          "to": "$S=\\operatorname{supp}\\mu_\\gamma$."
+          "from": "be removed. Let $\\nu=\\mu",
+          "to": "upp}\\mu_\\gamma$."
         },
         {
           "paper": "expository",
           "role": "statement",
-          "from": "$G(s)/2$ is the marginal cost of placing mass at $s$. At a minimiser,",
-          "to": "$G(s)\\ge0$ for every $s<1$."
+          "from": "$G(s)/2$ is the marginal",
+          "to": "for every $s<1$."
         },
         {
           "paper": "expository",
@@ -784,8 +784,8 @@
         {
           "paper": "expository",
           "role": "example",
-          "from": "Suppose temporarily that this two-weight candidate minimised",
-          "to": "the two-weight candidate attains the minimum."
+          "from": "Suppose temporarily that",
+          "to": " be nonpositive."
         }
       ]
     },
@@ -817,8 +817,8 @@
         {
           "paper": "short",
           "role": "statement",
-          "from": "At a support point $s>0$, $G$ has a minimum. Hence",
-          "to": "same slope bound at zero."
+          "from": "At a support point $s>0$",
+          "to": "e bound at zero."
         },
         {
           "paper": "expository",
@@ -885,8 +885,8 @@
         {
           "paper": "short",
           "role": "explanation",
-          "from": "Begin with a positive nondecreasing finite-step coefficient",
-          "to": "Comparison with $f_t=h_tg+hg_t$ yields $g_t=g_{xx}/2$."
+          "from": "We begin with a positive",
+          "to": " $g_t=g_{xx}/2$."
         }
       ]
     },
@@ -986,14 +986,14 @@
         {
           "paper": "long",
           "role": "derivation",
-          "from": "A further comparison, not concavity alone, is needed.",
-          "to": "$j(0)=0$; reflection gives $j\\ge0$ everywhere."
+          "from": "Concavity alone is insuf",
+          "to": "ge0$ everywhere."
         },
         {
           "paper": "short",
           "role": "statement",
-          "from": "For $s=-\\partial_x\\log g$,",
-          "to": "The joint sign therefore survives coefficient jumps as well."
+          "from": "For $s=-\\partial_x\\log g",
+          "to": "ficient as well."
         }
       ]
     },
@@ -1056,14 +1056,14 @@
         {
           "paper": "expository",
           "role": "explanation",
-          "from": "The operation can be written directly for the positive density $f_t$;",
-          "to": "=\\int_{\\mathbb R}(Ff_t)'(x)\\,dx=0.\n$$"
+          "from": "The operation can be wri",
+          "to": "t)'(x)\\,dx=0.\n$$"
         },
         {
           "paper": "expository",
           "role": "example",
-          "from": "For a small example of this operation, let $Z$ be standard normal and",
-          "to": "expectation; it supplies none of the SK-specific sign estimates."
+          "from": "For a small example of t",
+          "to": " sign estimates."
         }
       ]
     },

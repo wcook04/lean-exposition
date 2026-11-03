@@ -39,6 +39,17 @@ citations, assumptions and unresolved checks. Its canonical bundle path is
 uses pinned public mathematical-source URLs so its citations remain usable
 when the exact manuscript bytes are assembled into a portable bundle.
 
+The Support implementation built successfully on 26 October 2026, and its
+conditional root and scoped dependencies were extracted. Comparator acceptance
+and the scalar-target results remain pending; the
+[Comparator configuration](https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.json)
+names the intended comparison. Kernel checking establishes a declared
+statement under its definitions and axioms; its correspondence with the
+analytic theorem, independent proof review and reader comprehension are
+separate questions. These outcomes were moved here from the reading copy in
+the register pass of 3 November 2026, which keeps only a plain formal
+verification paragraph in the exposition.
+
 The paper is a draft. Source and agent review checked the displayed
 statements, examples and reconstructed inference chain. The revised scaling
 and terminal arguments were checked as ordinary mathematical deductions.

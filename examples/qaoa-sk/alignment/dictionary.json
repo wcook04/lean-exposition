@@ -7,8 +7,8 @@
       "tex": "[0,1)",
       "words": "The overlap interval from zero up to, and excluding, one, used as the time domain.",
       "paper": "short",
-      "from": "All support statements use the relative topology",
-      "to": "of $[0,1)$."
+      "from": "Support statements refer",
+      "to": "logy of $[0,1)$."
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -22,8 +22,8 @@
       "tex": "\\mathcal U",
       "words": "The admissible class: nonnegative, nondecreasing, right-continuous, integrable functions on [0,1), bundled with these proofs.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -32,8 +32,8 @@
       "tex": "\\gamma",
       "words": "The function itself, from [0,1) to the reals.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -42,8 +42,8 @@
       "tex": null,
       "words": "The function takes nonnegative values.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -52,8 +52,8 @@
       "tex": null,
       "words": "The function is nondecreasing.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -62,8 +62,8 @@
       "tex": null,
       "words": "The function is right-continuous at every point of [0,1).",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -72,8 +72,8 @@
       "tex": null,
       "words": "The function is Lebesgue integrable on [0,1); it may still grow near one.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -81,8 +81,8 @@
       "tex": null,
       "words": "A probability space with a standard Brownian motion on it, which every Lean definition below takes explicitly as W.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -98,8 +98,8 @@
       "tex": "B",
       "words": "The Brownian path, indexed by nonnegative real time.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -108,8 +108,8 @@
       "tex": null,
       "words": "States that the process is standard Brownian motion under the measure.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -201,8 +201,8 @@
       "tex": "\\mathcal P(\\gamma)",
       "words": "The Parisi functional, which Lean computes from the value function on the chosen Brownian system W.",
       "paper": "short",
-      "from": "The Parisi functional $\\mathcal P(\\gamma)$ is defined using",
-      "to": "\\mathcal P(\\gamma)=\\Phi_\\gamma(0,0)-\\tfrac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+      "from": "The Parisi functional $\\",
+      "to": "gamma(t)\\,dt.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -219,8 +219,8 @@
       "tex": "\\mu_\\gamma",
       "words": "A measure on [0,1) giving each interval [0,t] mass gamma(t); Lean states this as a property of a measure.",
       "paper": "short",
-      "from": "Define the locally finite Stieltjes",
-      "to": "\\mu_\\gamma([0,t])=\\gamma(t),\\qquad 0\\leq t<1.\n$$"
+      "from": "and define the locally f",
+      "to": "ad 0\\leq t<1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -228,8 +228,8 @@
       "tex": "X_t",
       "words": "A progressive, almost surely continuous solution of the integrated equation on [0,1], starting at zero, for the given W.",
       "paper": "short",
-      "from": "Let $B$ be standard\nBrownian motion and define the diffusion",
-      "to": "q(t)=\\mathbb E[u(t,X_t)^2].\n$$"
+      "from": "Let $B$ be standard Brow",
+      "to": "[u(t,X_t)^2].\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -237,8 +237,8 @@
       "tex": "q(t)",
       "words": "The second moment of the gradient along a given process X, supplied as an argument.",
       "paper": "short",
-      "from": "Let $B$ be standard\nBrownian motion and define the diffusion",
-      "to": "q(t)=\\mathbb E[u(t,X_t)^2].\n$$"
+      "from": "Let $B$ be standard Brow",
+      "to": "[u(t,X_t)^2].\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Model.lean",
@@ -255,8 +255,8 @@
       "tex": "\\mathbb E[a(t,X_t)^2]",
       "words": "The second moment of the curvature along the constructed diffusion.",
       "paper": "short",
-      "from": "Fix a minimiser. Itô's formula cancels the drift",
-      "to": "q'(t)=\\mathbb E[a(t,X_t)^2].\n$$"
+      "from": "We fix a minimiser. Itô'",
+      "to": "[a(t,X_t)^2].\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Diffusion/CompactDrift.lean",
@@ -273,8 +273,8 @@
       "tex": "\\mu_\\gamma",
       "words": "The Stieltjes measure Lean constructs from the coefficient, with an atom of mass gamma(0) at zero.",
       "paper": "short",
-      "from": "Define the locally finite Stieltjes",
-      "to": "\\mu_\\gamma([0,t])=\\gamma(t),\\qquad 0\\leq t<1.\n$$"
+      "from": "and define the locally f",
+      "to": "ad 0\\leq t<1.\n$$"
     },
     {
       "file": "OAI/Probability/SKSupport/Main.lean",
@@ -354,8 +354,8 @@
       "tex": "\\mathcal U",
       "words": "The admissible class, using a function on all reals whose constraints apply only on [0,1).",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -364,8 +364,8 @@
       "tex": "\\gamma",
       "words": "The coefficient, a function on all reals; its values outside [0,1) are unconstrained.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -374,8 +374,8 @@
       "tex": null,
       "words": "The coefficient is nonnegative on [0,1).",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -384,8 +384,8 @@
       "tex": null,
       "words": "The coefficient is nondecreasing on [0,1).",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -394,8 +394,8 @@
       "tex": null,
       "words": "The coefficient is right-continuous at every point of [0,1).",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -404,8 +404,8 @@
       "tex": null,
       "words": "The coefficient is integrable on the interval from zero to one.",
       "paper": "short",
-      "from": "Let $\\mathcal U$ consist of the nonnegative",
-      "to": "$\\int_0^1\\gamma(t)\\,dt<\\infty$."
+      "from": "Let $\\mathcal U$ consist",
+      "to": "(t)\\,dt<\\infty$,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -413,8 +413,8 @@
       "tex": null,
       "words": "A probability space with a standard Brownian motion, bundled together with its sample space, unlike the support model.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -430,8 +430,8 @@
       "tex": "B",
       "words": "The Brownian path, indexed by nonnegative real time.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -440,8 +440,8 @@
       "tex": null,
       "words": "States that the process is standard Brownian motion under the measure.",
       "paper": "short",
-      "from": "Let $B$ be standard",
-      "to": "Brownian motion"
+      "from": "Let $B$ be standard Brow",
+      "to": "Brownian\nmotion,"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -509,8 +509,8 @@
       "tex": "\\mathcal P(\\gamma)",
       "words": "The Parisi functional in this separate model, computed on the chosen Brownian space W.",
       "paper": "short",
-      "from": "The Parisi functional $\\mathcal P(\\gamma)$ is defined using",
-      "to": "\\mathcal P(\\gamma)=\\Phi_\\gamma(0,0)-\\tfrac12\\int_0^1t\\gamma(t)\\,dt.\n$$"
+      "from": "The Parisi functional $\\",
+      "to": "gamma(t)\\,dt.\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -527,8 +527,8 @@
       "tex": "X_t",
       "words": "An adapted, almost surely continuous solution of the integrated equation on [0,1]; here X runs on real time.",
       "paper": "short",
-      "from": "Let $B$ be standard\nBrownian motion and define the diffusion",
-      "to": "q(t)=\\mathbb E[u(t,X_t)^2].\n$$"
+      "from": "Let $B$ be standard Brow",
+      "to": "[u(t,X_t)^2].\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -554,8 +554,8 @@
       "tex": "n^{-1}\\mathbb E\\max_\\sigma H_n(\\sigma)",
       "words": "The expected maximum energy per spin at size n.",
       "paper": "short",
-      "from": "The limiting ground-state energy per spin",
-      "to": "\\mathbb E\\max_\\sigma H_n(\\sigma).\n$$"
+      "from": "With the maximisation co",
+      "to": " H_n(\\sigma).\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -563,8 +563,8 @@
       "tex": "P_*",
       "words": "The limit of the finite-size sequence; the Lean limit is meaningful once convergence is proved, which the scalar conclusion does.",
       "paper": "short",
-      "from": "The limiting ground-state energy per spin",
-      "to": "\\mathbb E\\max_\\sigma H_n(\\sigma).\n$$"
+      "from": "With the maximisation co",
+      "to": " H_n(\\sigma).\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -653,8 +653,8 @@
       "tex": "S_{T,N}",
       "words": "The adjacent pairing, summing A at j times B at j+1 for j from zero to N.",
       "paper": "short",
-      "from": "The finite quantity\nneeded by the circuit construction",
-      "to": "\\end{aligned}                                      \\tag{11}\n$$"
+      "from": "The circuit construction\nnee",
+      "to": "     \\tag{11}\n$$"
     },
     {
       "file": "OAI/Probability/SKValue/Model.lean",
@@ -662,8 +662,8 @@
       "tex": null,
       "words": "Normalisers are eventually positive, the pairing tends to the cutoff integral, and that integral tends to the ground-state value.",
       "paper": "short",
-      "from": "The finite quantity\nneeded by the circuit construction",
-      "to": "\\end{aligned}                                      \\tag{11}\n$$"
+      "from": "The circuit construction\nnee",
+      "to": "     \\tag{11}\n$$"
     },
     {
       "file": "ComparatorChallenges/SKValue.lean",
@@ -671,8 +671,8 @@
       "tex": null,
       "words": "The scalar statement: three clauses giving value identities, finite Gaussian convergence, and equality of ground-state and Parisi values.",
       "paper": "short",
-      "from": "A separate\n[scalar formal statement][value-challenge] covers",
-      "to": "constructing the diffusion internally."
+      "from": "A separate\n[formal state",
+      "to": "sion internally."
     },
     {
       "file": "OAI/Probability/SKValue/GroundState/MainConclusions.lean",

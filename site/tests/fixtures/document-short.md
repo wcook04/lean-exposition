@@ -1,35 +1,38 @@
 # Full support and positive density in the zero-temperature SK model
 
-*A reconstruction of OpenAI's quantitative argument · 26 October 2026*
+*Will Cook · An account of the quantitative proof of OpenAI (2026a) · 3 November 2026*
 
 **AI assistance.** Will Cook directed the work. AI agents based on large
 language models produced and revised this manuscript.
 
 <!-- passage:abstract -->
-**Abstract.** The Stieltjes measure of every integrable minimiser of the
-zero-temperature Parisi functional for the pure, zero-field
-Sherrington–Kirkpatrick model has full support on $[0,1)$ and a smooth
-density that is strictly positive on $(0,1)$. We reconstruct OpenAI's quantitative
-argument, organised around two uses of one spatial-moment inequality.
-On a positive constant interval, it makes the derivative of the gradient
-second moment strictly convex, contradicting the endpoint conditions
-imposed by minimality. The same curvature and the bounded gradient
-also exclude terminal gaps. Full support then gives moment identities and
-smoothness; a local constant replacement transfers the inequality to the minimiser and
-forces its density to be positive. H.-B. Chen previously proved full support
-and smooth nonnegative density. We isolate the fixed-time spatial moment
-and the positive margin that survives local replacement, while importing its
-shape comparisons and full polynomial identity. We also derive the scalar value
+**Abstract.** For the pure, zero-field Sherrington–Kirkpatrick model at
+zero temperature, the Stieltjes measure of every integrable minimiser of
+the Parisi functional has full support on $[0,1)$ and a smooth
+density that is strictly positive on $(0,1)$. We reconstruct OpenAI's
+quantitative proof, which uses one spatial-moment inequality twice.
+On a positive constant interval, the inequality makes the derivative of
+the gradient second moment strictly convex, contradicting the endpoint
+conditions imposed by minimality, and together with the bounded
+gradient it also excludes terminal gaps. Once the support is full, moment
+identities give smoothness, and a local constant replacement transfers
+the inequality to the minimiser and forces its density to be positive.
+H.-B. Chen previously proved full support and smooth nonnegative density.
+We isolate the fixed-time spatial moment and the positive margin that
+survives the local replacement, and we import its shape comparisons and
+full polynomial identity. Along the way we derive the scalar value
 identity and explain its classical optimisation consequence. For the quantum approximate
-optimization algorithm (QAOA), we identify the rooted energy of a finite Gaussian
-observable and the separate circuit theorem that approximates it. A further
-second-moment theorem gives a measured near-optimal configuration on the same
-random instance, with the circuit word fixed before the number of spins grows.
+optimization algorithm (QAOA), we identify the rooted energy of a finite
+Gaussian observable and the separate circuit theorem that approximates it,
+and a further second-moment theorem then gives a measured near-optimal
+configuration on the same random instance, with the circuit word fixed
+before the number of spins grows. The construction gives no bound on
+the depth needed for a given accuracy.
 <!-- /passage:abstract -->
 
 <a id="model-and-result"></a>
 
-## 1. The result and the mechanism
+## 1. The model and the result
 
 <!-- passage:model -->
 For independent standard Gaussian couplings $J_{ij}$, the pure,
@@ -38,50 +41,48 @@ $$
 H_n(\sigma)=n^{-1/2}\sum_{i<j}J_{ij}\sigma_i\sigma_j,
 \qquad \sigma\in\{-1,1\}^n.
 $$
-The limiting ground-state energy per spin, with the maximisation
-convention, is
+With the maximisation convention, its limiting ground-state energy per
+spin is
 $$
 P_*:=\lim_{n\to\infty}n^{-1}\mathbb E\max_\sigma H_n(\sigma).
 $$
 The Parisi formula expresses $P_*$ as a minimum over nondecreasing
-functions. Our subject is the structure of a minimiser: its increments
-charge every interval of overlap scales below one, and in fact have
-strictly positive density at each interior scale. The proof uses one
-quantitative bound twice, first to exclude constant intervals and then,
-after an approximation, to prove pointwise positivity.
+functions. We study the minimiser itself. Its increments charge every
+interval of overlap scales below one, and they have a strictly positive
+density at each interior scale. One quantitative bound gives both facts:
+it first excludes constant intervals and then, after an approximation,
+gives pointwise positivity.
 
-For two configurations, their overlap is
-$R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$. It determines the
-energy covariance: $\mathbb E[H_n(\sigma)H_n(\tau)]=nR^2/2-1/2$.
-Thus the Gaussian law of the energies is encoded by the overlaps.
-We use the covariance convention $\xi(t)=t^2/2$, so $\xi''=1$;
-adding one independent centred Gaussian of
-variance $1/2$ to every configuration's energy gives covariance
-$n\xi(R)$ and leaves the expected maximum unchanged. This is the
-normalisation of the ground-state Parisi formula of
-[Auffinger and Chen (2017), Theorem 1][AC]. There are no higher-order
-interactions and no external field.
+The overlap of two configurations is
+$R(\sigma,\tau)=n^{-1}\sum_i\sigma_i\tau_i$, and it determines the
+energy covariance, $\mathbb E[H_n(\sigma)H_n(\tau)]=nR^2/2-1/2$.
+Hence the Gaussian law of the energies is encoded by the overlaps.
+We use the covariance convention $\xi(t)=t^2/2$, so $\xi''=1$.
+Adding one independent centred Gaussian of variance $1/2$ to every
+configuration's energy gives covariance $n\xi(R)$ and leaves the
+expected maximum unchanged, which is the normalisation of the
+ground-state Parisi formula of [Auffinger and Chen (2017), Theorem 1][AC].
+The model has no higher-order interactions and no external field.
 
 Let $\mathcal U$ consist of the nonnegative, nondecreasing,
 right-continuous functions $\gamma:[0,1)\to[0,\infty)$ satisfying
-$\int_0^1\gamma(t)\,dt<\infty$. Define the locally finite Stieltjes
-measure by
+$\int_0^1\gamma(t)\,dt<\infty$, and define the locally finite
+Stieltjes measure by
 $$
 \mu_\gamma([0,t])=\gamma(t),\qquad 0\leq t<1.
 $$
-Thus $\mu_\gamma((s,t])=\gamma(t)-\gamma(s)$: the measure records
-the increments of $\gamma$. A point mass (atom) of size $\gamma(0)$
-is allowed at zero, and the total mass need not be finite or equal
-to one. All support statements use the relative topology of $[0,1)$.
-A support gap is a relatively open interval of positive length with
-zero mass; the cumulative coefficient is constant on such an interval.
+Thus $\mu_\gamma((s,t])=\gamma(t)-\gamma(s)$, so the measure charges
+each interval with the increment of $\gamma$ across it. It may have a point mass (an atom) of size
+$\gamma(0)$ at zero, and its total mass need not be finite or equal to
+one. Support statements refer to the relative topology of $[0,1)$.
+A support gap is a relatively open interval of positive length and zero
+mass, and the cumulative coefficient is constant on it.
 
-The Parisi functional $\mathcal P(\gamma)$ is defined using an
-auxiliary value function $\Phi_\gamma(t,x)$, where $x\in\mathbb R$
-is a spatial variable and $t$ is the overlap parameter, treated as
-time in the equation. Write $\Phi=\Phi_\gamma$ and use subscripts
-for partial derivatives. The backward equation, terminal condition
-and functional are
+The Parisi functional $\mathcal P(\gamma)$ is defined through an
+auxiliary value function $\Phi_\gamma(t,x)$, in which $x\in\mathbb R$
+is a spatial variable and the overlap parameter $t$ plays the role of
+time. Write $\Phi=\Phi_\gamma$ and use subscripts for partial
+derivatives. The backward equation, terminal condition and functional are
 $$
 \Phi_t=-\tfrac12\bigl(\Phi_{xx}+\gamma(t)\Phi_x^2\bigr),
 \qquad \Phi(1,x)=|x|,
@@ -89,36 +90,38 @@ $$
 \mathcal P(\gamma)=\Phi_\gamma(0,0)-\tfrac12\int_0^1t\gamma(t)\,dt.
 $$
 The terminal value $|x|$ is the zero-temperature value of one spin
-in a field $x$. For an integrable
-coefficient, the PDE solution is interpreted by approximation from
-bounded monotone coefficients. The exact control
-definition and stability theorem are [OpenAI (2026a), §1 and
-Lemmas 2.1–2.2][FS]. To turn minimality of $\mathcal P$ into a
-condition on $\gamma$, we use a random process whose gradient moment
-measures the first-order cost of changing $\gamma$. Write $u=\Phi_x$ for the spatial gradient
-and $a=\Phi_{xx}$ for its spatial derivative. Let $B$ be standard
-Brownian motion and define the diffusion $X$ and its self-consistency function $q$ by
+in a field $x$. For an integrable coefficient, the solution of the PDE
+is defined by approximation from bounded monotone coefficients.
+[OpenAI (2026a), §1 and Lemmas 2.1–2.2][FS] give the exact control
+definition and the stability theorem.
+
+To turn minimality of $\mathcal P$ into a condition on $\gamma$, we use
+a random process whose gradient moment measures the first-order cost of
+changing $\gamma$. Write $u=\Phi_x$ for the spatial gradient and
+$a=\Phi_{xx}$ for its spatial derivative. Let $B$ be standard Brownian
+motion, and define the diffusion $X$ and its self-consistency function
+$q$ by
 $$
 dX_t=\gamma(t)u(t,X_t)\,dt+dB_t,\qquad X_0=0,
 \qquad q(t)=\mathbb E[u(t,X_t)^2].
 $$
-The discrepancy $q(t)-t$ enters the first variation of $\mathcal P$;
-minimality will force $q(t)=t$ on the support of $\mu_\gamma$.
-The SDE has a unique strong solution. All
-stochastic calculations below take place on compact time intervals
-ending before one, unless an endpoint limit is justified explicitly.
+The discrepancy $q(t)-t$ enters the first variation of $\mathcal P$,
+and minimality will force $q(t)=t$ on the support of $\mu_\gamma$.
+The SDE has a unique strong solution. Unless an endpoint limit is
+justified explicitly, all stochastic calculations below take place on
+compact time intervals ending before one.
 <!-- /passage:model -->
 
 <!-- passage:main-result -->
-[Auffinger, Chen and Zeng (2020), Theorem 1][ACZ] proved infinite
-support. This need not be full support: the measure
-$\sum_{k\geq1}2^{-k}\delta_{1-2^{-k}}$ has infinitely many atoms
-and many gaps. [H.-B. Chen (2026), Theorem 1.3][Chen] subsequently proved
-full support and smooth nonnegative density. We follow OpenAI's
-quantitative proof of the support conclusion and its further
+The support of a minimiser is infinite by
+[Auffinger, Chen and Zeng (2020), Theorem 1][ACZ]. Infinite support
+still allows gaps: the measure $\sum_{k\geq1}2^{-k}\delta_{1-2^{-k}}$
+has infinitely many atoms and many gaps. Full support and a smooth
+nonnegative density were then proved in [H.-B. Chen (2026), Theorem 1.3][Chen]. We follow OpenAI's
+quantitative proof of the support conclusion and of its further
 strict-positivity result. The feature used twice is a lower bound
-valid throughout every positive constant interval of an admissible
-coefficient, without a minimising assumption.
+that holds throughout every positive constant interval of an admissible
+coefficient, whether or not the coefficient minimises.
 
 **Theorem 1 (full support; quantitative proof following
 [OpenAI (2026a), Theorem 1.1][FS]).**
@@ -132,77 +135,86 @@ $$
 q(t)=t,\qquad \mathbb E[a(t,X_t)^2]=1.
 $$
 
-Corollary 4 in §4 gives the smooth density and its strict positivity
-at every interior point.
+Corollary 4 in §4 adds a smooth density, strictly positive at every
+interior point.
 
-Existence of a minimiser is a separate input from
+The existence of a minimiser is a separate input, from
 [Auffinger and Chen (2017), Theorem 1 and the proof of Lemma 3][AC].
 Integrability allows $\gamma$ to grow near one. Zero field gives
-$u(0,0)=0$, and $\xi''=1$ is used in the curvature calculation;
-the theorem here does not extend these hypotheses to nonzero field
-or a general mixed-spin covariance.
+$u(0,0)=0$, and the curvature calculation uses $\xi''=1$, so the
+theorem is stated only for the pure SK covariance at zero field.
+Nonzero field and general mixed-spin covariances lie outside its
+hypotheses.
 
-Full support has a concrete interpretation in the energy landscape.
+Full support has a concrete meaning for the energy landscape.
 For each fixed $\rho\in[0,1)$ and $\delta,\eta>0$, with probability
 tending to one there are configurations $\sigma,\tau$ with
-$|R(\sigma,\tau)-\rho|<\delta$ and both energies at least
+$|R(\sigma,\tau)-\rho|<\delta$ whose energies are both at least
 $n(P_*-\eta)$. This follows from
-[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ],
-using the Gaussian normalisation above.
+[Auffinger, Chen and Zeng (2020), Proposition 1, equation (5)][ACZ]
+in the Gaussian normalisation above.
 
-Our purpose is to isolate the spatial moment common to the support and
-density arguments, explain why it needs an integrated estimate, and
-identify what survives the local-replacement limit. The conclusions
-and the quantitative method are those of the cited sources.
-The proof compares two demands on a gap with two support endpoints.
-Minimality forces $q$ to agree with time there, with endpoint slopes
-at most one. On a positive constant interval a quantitative estimate
-makes $q'$ strictly convex, so its integral is smaller than the
-interval's length. This contradicts the required change in $q$.
-After excluding all gaps, the identity $q'=1$ supplies the equation
-from which the same estimate will force $\gamma'>0$. A qualitative crossing
-criterion already suffices for a bounded gap. The density argument needs more:
-an estimate for a local constant replacement that need not minimise, at a time
-where $q''$ need not vanish, and a positive lower bound that survives the limit.
+We isolate the spatial moment that the support and density arguments
+share, explain why it needs an integrated estimate, and identify what
+survives the local-replacement limit. The conclusions and the
+quantitative method are those of the cited sources.
 
-The second aim, in §5, is to follow the support identities to a finite
-Gaussian observable whose rooted energy a QAOA circuit approximates, then
-identify the additional concentration input for a measured configuration.
-These optimisation consequences use full support; strict density positivity
-is a further analytic conclusion. Readers interested in optimisation may
-accept Theorem 1 and continue to §5. Sections 2–4 assume Itô calculus and
-martingale convergence; the circuit construction is a separate imported theorem.
-Omitted proofs are linked to *From Parisi full support to deterministic QAOA
-circuits: A long reasoning record*, the <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf">[companion edition of 26 October 2026](../long/reasoning-record.md)</span>; original-source citations remain beside
-the imported inputs.
+The proof has two stages. A gap with two support endpoints faces two
+demands. Minimality forces $q$ to agree with time at both endpoints,
+with endpoint slopes at most one. On a positive constant interval, a
+quantitative estimate makes $q'$ strictly convex, so its integral over
+the gap is smaller than the gap's length, which contradicts the required
+change in $q$. Once every gap is excluded, the identity $q'=1$ supplies
+the equation from which the same estimate forces $\gamma'>0$.
+For a bounded gap, a qualitative crossing criterion already suffices.
+The density argument needs more: an estimate for a local constant
+replacement, which need not minimise, at a time where $q''$ need not
+vanish, with a positive lower bound that survives the limit.
+
+Section 2 turns minimality into contact conditions and proves Theorem 1
+from the curvature bound of Lemma 2. In §3 we derive the moment
+polynomial behind that bound, together with the fixed-time estimate of
+Proposition 3, which §4 applies to prove Corollary 4. Section 5 follows
+the support identities to the value formula, the classical algorithm and
+a finite Gaussian observable whose rooted energy a QAOA circuit
+approximates, and then identifies the additional concentration input
+for a measured configuration.
+
+These optimisation consequences use full support only. Strict positivity of the density is a further analytic
+conclusion, and readers interested in optimisation may accept Theorem 1
+and go directly to §5. Sections 2–4 assume Itô calculus and martingale
+convergence. The circuit construction is imported as a separate theorem.
+Omitted proofs are linked to *From Parisi full support to deterministic
+QAOA circuits: A long reasoning record*, the <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf">[companion edition of 3 November 2026](../long/reasoning-record.md)</span>,
+and citations of the original sources stay beside the imported inputs.
 <!-- /passage:main-result -->
 
 <a id="contact"></a>
 
-## 2. Minimality gives contact; curvature excludes gaps
+## 2. Contact conditions and the exclusion of gaps
 
 <!-- passage:contact -->
 For an admissible coefficient, $\Phi$ is even, convex and one-Lipschitz
-in space. Its positive-order spatial derivatives are bounded and
-continuous on each strip $[0,T]\times\mathbb R$, $T<1$; the PDE
-holds almost everywhere in time. The compact-strip approximation
-theorem justifies the following Itô calculations even when $\gamma$
-has jumps (see [OpenAI (2026a), Lemmas 2.1–2.2][FS]). The control method
-has antecedents in [Jagannath and Tobasco (2016)][JT] at positive
-temperature and [Auffinger and Chen (2017), Theorem 2 and
-Corollary 2][AC] at zero temperature; see also [Chen, Handschy and
-Lerman (2018), Proposition 2 and Theorem 5][CHL].
+in space. Its spatial derivatives of positive order are bounded and
+continuous on each strip $[0,T]\times\mathbb R$, $T<1$, and the PDE
+holds for almost every time. The compact-strip approximation theorem of
+[OpenAI (2026a), Lemmas 2.1–2.2][FS] justifies the Itô calculations
+below even when $\gamma$ has jumps. This control method has antecedents
+in [Jagannath and Tobasco (2016)][JT] at positive temperature and in
+[Auffinger and Chen (2017), Theorem 2 and Corollary 2][AC] at zero
+temperature (see also [Chen, Handschy and Lerman (2018), Proposition 2
+and Theorem 5][CHL]).
 
-Fix a minimiser. Itô's formula cancels the drift of $u(t,X_t)$:
+We fix a minimiser. Itô's formula cancels the drift of $u(t,X_t)$:
 $$
 du(t,X_t)=a(t,X_t)\,dB_t,
 \qquad q(0)=0,\qquad q'(t)=\mathbb E[a(t,X_t)^2].
 $$
-In particular $q'$ is continuous across coefficient jumps. Minimality
-means that every allowed one-sided change has nonnegative first-order
-cost. The one-sided variation formula gives the rate of change of the functional
-when $\gamma$ is replaced by $\gamma+\varepsilon\eta$ as
-$\varepsilon\downarrow0$:
+In particular, $q'$ is continuous across jumps of the coefficient.
+Minimality means that every allowed one-sided change has nonnegative
+first-order cost, and the one-sided variation formula computes that
+cost. When $\gamma$ is replaced by $\gamma+\varepsilon\eta$ and
+$\varepsilon\downarrow0$, the functional changes at the rate
 $$
 D_+\mathcal P(\gamma)[\eta]
 =\tfrac12\int_0^1\eta(t)(q(t)-t)\,dt,                 \tag{1}
@@ -214,14 +226,16 @@ zero-temperature variation and support identities appear in
 [Chen, Handschy and Lerman (2018), Propositions 3–4][CHL].
 
 Adding a unit atom at $s$ raises the cumulative function at every
-$t\geq s$, so its direction is $\eta=\mathbf1_{[s,1)}$. The
-first-order cost is therefore a tail integral:
+$t\geq s$, so its direction is $\eta=\mathbf1_{[s,1)}$. Its
+first-order cost is half of a tail integral, and minimality makes the
+integral nonnegative:
 $$
 G(s):=\int_s^1(q(t)-t)\,dt\geq0.
 $$
-Here $G(s)/2$ is the first-order cost of the added atom. Conversely,
-let $\nu=\mu_\gamma|_K$ for a compact $K\subset[0,1)$.
-For $0\leq\varepsilon\leq1$, the measure
+Thus $G(s)/2$ is the first-order cost of the added atom.
+
+Mass can also be removed. Let $\nu=\mu_\gamma|_K$ for a compact
+$K\subset[0,1)$. For $0\leq\varepsilon\leq1$, the measure
 $\mu_\gamma-\varepsilon\nu=(1-\varepsilon\mathbf1_K)\mu_\gamma$
 is nonnegative, and its cumulative function is
 $\gamma-\varepsilon\nu([0,\cdot])\in\mathcal U$. Minimality gives
@@ -229,19 +243,21 @@ $$
 0\leq D_+\mathcal P(\gamma)[-\nu([0,\cdot])]
 =-\tfrac12\int_K G(s)\,d\mu_\gamma(s).
 $$
-The change of integration order is justified by $|q-t|\leq1$ and
-$\mu_\gamma(K)<\infty$. Since $G\geq0$, it vanishes almost
-everywhere for $\mu_\gamma$, and continuity makes it vanish on
+The bounds $|q-t|\leq1$ and $\mu_\gamma(K)<\infty$ justify the
+change in the order of integration. Since $G\geq0$, it vanishes almost
+everywhere for $\mu_\gamma$, and by continuity it vanishes on
 $S=\operatorname{supp}\mu_\gamma$. The variation removes a fraction of
-all mass in $K$, not only atoms; no density or probability constraint is assumed.
+all the mass in $K$, atoms and diffuse mass alike, and assumes no
+density or probability constraint.
 
-At a support point $s>0$, $G$ has a minimum. Hence
+At a support point $s>0$, the function $G$ has a minimum. Hence
 $$
 G'(s)=s-q(s)=0,\qquad G''(s)=1-q'(s)\geq0,
 \quad\text{so}\quad q(s)=s,\quad q'(s)\leq1.       \tag{2}
 $$
-If $0\in S$, contact gives $G(0)=0$; independently, zero field
-gives $q(0)=0$. Hence $G(h)=\tfrac12(1-q'(0))h^2+o(h^2)$; nonnegativity gives the
+If $0\in S$, contact gives $G(0)=0$, and zero field gives
+$q(0)=0$ independently. Consequently
+$G(h)=\tfrac12(1-q'(0))h^2+o(h^2)$, and nonnegativity gives the
 same slope bound at zero. These are the contact conditions of
 [OpenAI (2026a), Lemma 6.2][FS].
 <!-- /passage:contact -->
@@ -259,72 +275,74 @@ q'''(t)\geq\frac{c^2}{1000}\mathbb E[a(t,X_t)^4]>0
 $$
 If $c=0$, then $q''(t)=\mathbb E[\Phi_{xxx}(t,X_t)^2]>0$.
 
-Minimality is not a hypothesis of this lemma. Section 3 derives its
-moment polynomial and explains the integrated estimate imported from
-the source.
+The lemma holds for every admissible coefficient, minimising or not.
+Section 3 derives its moment polynomial and explains the integrated
+estimate imported from the source.
 
-**Proof of Theorem 1, assuming Lemma 2.** A complementary
-interval with two support endpoints admits two contact conditions;
-an initial interval without support at zero has coefficient zero.
-For terminal gaps, the bound $q\leq1$ replaces the missing right
-contact condition.
+**Proof of Theorem 1, assuming Lemma 2.** We treat the intervals of the
+complement of $S$ by type. An interval with two support endpoints admits
+two contact conditions. Initial intervals without support at zero have
+coefficient zero. For a terminal gap, the bound $q\leq1$ replaces the
+missing right contact condition.
 
-Suppose $(\ell,r)$ is a support gap with endpoints in $S$ and $r<1$.
-The coefficient is a positive constant there: support at $\ell$ and
-absence of mass immediately to its right force
-$\mu_\gamma([0,\ell])>0$. Strict convexity of $q'$ and (2) give
+Suppose first that $(\ell,r)$ is a support gap with endpoints in $S$
+and $r<1$. The coefficient is a positive constant there, because
+support at $\ell$ and the absence of mass immediately to its right
+force $\mu_\gamma([0,\ell])>0$. Strict convexity of $q'$ and (2) give
 $$
 q'(t)<\frac{r-t}{r-\ell}q'(\ell)
        +\frac{t-\ell}{r-\ell}q'(r)\leq1
 \qquad(\ell<t<r).
 $$
-Integrating contradicts $q(r)-q(\ell)=r-\ell$. The geometric
+Integrating contradicts $q(r)-q(\ell)=r-\ell$, so the geometric
 obstruction is an area deficit under $q'$.
-An initial gap $[0,r)$ with $0\notin S$ and $r\in S$ has no
+
+An initial gap $[0,r)$ with $0\notin S$ and $r\in S$ carries no
 mass, hence $\gamma=0$ there. Its right endpoint gives $q(r)=r$
-and $q'(r)\leq1$, while zero field gives $q(0)=0$.
-The zero-plateau identity gives $q''>0$, hence $q'(t)<q'(r)\leq1$.
-The same
+and $q'(r)\leq1$, and zero field gives $q(0)=0$. The zero-plateau
+identity gives $q''>0$, hence $q'(t)<q'(r)\leq1$, and the same
 integral contradiction follows without assuming $G(0)=0$. A gap
 $(0,r)$ with $0\in S$ is already covered by the two-contact case.
 
-A terminal gap $(r,1)$ with nonempty support has $r\in S$ and
-positive plateau height. Suppose $q(t)\geq t$ for some $r<t<1$.
+A terminal gap $(r,1)$ with nonempty support has $r\in S$ and a
+positive plateau height. Suppose that $q(t)\geq t$ for some $r<t<1$.
 Strict convexity of $q'$ and $q'(r)\leq1$ give
 $$
 t-r\leq\int_r^t q'(s)\,ds
 <\frac{t-r}{2}\bigl(q'(r)+q'(t)\bigr),
 $$
-so $q'(t)>1$. Convexity then gives $q'(s)>q'(t)>1$ for $s>t$.
-Consequently $q(s)>t+(s-t)q'(t)>1$ for $s<1$ sufficiently
-close to one, contrary to $q\leq1$. Thus $q(t)<t$ on $(r,1)$,
-and $G(r)<0$ contradicts minimality. This uses no contact at one.
+so $q'(t)>1$. Convexity then gives $q'(s)>q'(t)>1$ for $s>t$, and
+consequently $q(s)>t+(s-t)q'(t)>1$ for $s<1$ sufficiently close
+to one, contrary to $q\leq1$. Thus $q(t)<t$ on $(r,1)$,
+and $G(r)<0$ contradicts minimality. This case uses contact only at
+the left endpoint.
 
 If $S$ is empty, then $\gamma=0$. Lemma 2 makes $q$ strictly
-convex, and $q(0)=0$, $q\leq1$ give, for $0<t<b<1$,
-$q(t)<(t/b)q(b)\leq t/b$. Letting $b\uparrow1$ gives
-$q(t)\leq t$. Applying strict convexity again with $t<b<1$
-now gives $q(t)<(t/b)q(b)\leq t$, so $G(0)<0$.
+convex, and $q(0)=0$ and $q\leq1$ give $q(t)<(t/b)q(b)\leq t/b$ for
+$0<t<b<1$. Letting $b\uparrow1$ gives $q(t)\leq t$. Strict convexity
+applied once more with $t<b<1$ now gives $q(t)<(t/b)q(b)\leq t$, so
+$G(0)<0$.
 
-The terminal exclusion was already recorded by
-[Auffinger, Chen and Zeng (2020), Remark 7][ACZ]. The argument
-here uses only the curvature needed for the other gaps;
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qualitative-terminal-gap">[long §5, “A shorter qualitative exclusion”](../long/reasoning-record.md#qualitative-terminal-gap)</span>
-gives the full endpoint discussion. The stronger boundary estimate
-$1-q(t)\geq C\sqrt{1-t}$ for arbitrary coefficients constant
-near one is proved in [OpenAI (2026a), Lemma 6.3][FS] and
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="terminal-gap">[long §5, terminal boundary estimate](../long/reasoning-record.md#terminal-gap)</span>;
-[Chen (2026), Proposition 4.5, equations (4.27)–(4.38)][Chen]
+The terminal exclusion was already noted in
+[Auffinger, Chen and Zeng (2020), Remark 7][ACZ]. Our argument uses
+only the curvature needed for the other gaps, and the full endpoint
+discussion is in
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qualitative-terminal-gap">[long §5, “A shorter qualitative exclusion”](../long/reasoning-record.md#qualitative-terminal-gap)</span>. A stronger boundary estimate
+$1-q(t)\geq C\sqrt{1-t}$, for arbitrary coefficients constant near
+one, is proved in [OpenAI (2026a), Lemma 6.3][FS] and in
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="terminal-gap">[long §5, terminal boundary estimate](../long/reasoning-record.md#terminal-gap)</span>,
+and [Chen (2026), Proposition 4.5, equations (4.27)–(4.38)][Chen]
 gives the square-root asymptotic under the terminal-gap hypothesis.
-The zero-coefficient heat argument and late-step variation have
-antecedents in [Chen, Handschy and Lerman (2018), Theorem 6][CHL].
+Antecedents of the zero-coefficient heat argument and the late-step
+variation appear in [Chen, Handschy and Lerman (2018), Theorem 6][CHL].
 
 These cases exhaust the complement of the relatively closed set $S$.
 Consequently $S=[0,1)$, contact gives $q(t)=t$, and differentiation
 gives $\mathbb E a^2=1$, including the right-hand value at zero.
 Moreover,
 $\gamma(t_2)-\gamma(t_1)=\mu_\gamma((t_1,t_2])>0$.
-This proves Theorem 1 using the stated analytic inputs.
+
+This proves Theorem 1 from the stated analytic inputs.
 <!-- /passage:gap-proof -->
 
 <a id="curvature"></a>
@@ -332,15 +350,15 @@ This proves Theorem 1 using the stated analytic inputs.
 ## 3. The integrated estimate
 
 <!-- passage:curvature -->
-The quantity used in both arguments is a spatial moment. Recall
-$a=\Phi_{xx}$, write $b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$, and, for $0<t<1$, set
+Both arguments use one spatial moment. Recall $a=\Phi_{xx}$, write
+$b=\Phi_{xxx}$ and $d=\Phi_{xxxx}$, and for $0<t<1$ set
 $$
 \mathcal C_\gamma(t)
 =\mathbb E\bigl[d^2-12\gamma(t)ab^2+6\gamma(t)^2a^4\bigr],
 $$
 with the spatial factors evaluated at $(t,X_t)$.
-Its definition requires spatial regularity but no time derivative of
-$\gamma$. The estimate we need can therefore be stated at one time.
+The definition requires spatial regularity and no time derivative of
+$\gamma$, so the estimate we need can be stated at a single time.
 
 **Proposition 3 (fixed-time spatial-moment estimate).** Let
 $\gamma\in\mathcal U$, let $0<t<1$ be a continuity point of $\gamma$,
@@ -353,16 +371,17 @@ Neither minimality nor a constant neighbourhood of $t$ is required.
 This is the consequence of [OpenAI (2026a), Proposition 5.1 and
 Lemmas 2.1–2.2][FS] stated in the companion's
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="fixed-time-coercivity">[Proposition 4.1, §4.5](../long/reasoning-record.md#fixed-time-coercivity)</span>.
-We first explain the positive-plateau estimate, then obtain this
-fixed-time form by inserting a short plateau.
+We first explain the estimate on a positive plateau and then obtain
+the fixed-time form by inserting a short plateau.
 
-For a smooth coefficient the identity connecting the two applications is
+For a smooth coefficient, the two applications are connected by the
+identity
 $$
 q'''+2\gamma'\mathbb E a^3=\mathcal C_\gamma.
 $$
-On a plateau, $\gamma'=0$; at a smooth minimiser, full support gives
-$q=t$ and hence $q'''=0$. Section 4 proves the required smoothness
-before using the second identity.
+On a plateau $\gamma'=0$, while at a smooth minimiser full support
+gives $q=t$ and hence $q'''=0$. Section 4 proves the required
+smoothness before this second use.
 
 On a plateau with $\gamma=c>0$, put $r=c\Phi_x=c u$,
 $v=r_x=c a$, $w=r_{xx}$ and $z=r_{xxx}$. This rescaling makes
@@ -372,7 +391,7 @@ $\tfrac12\partial_{xx}+r\partial_x$. Differentiating in space and
 applying Itô's formula gives the drift and diffusion pairs
 $(0,v)$, $(-v^2,w)$ and $(-3vw,z)$ for $r,v,w$, respectively.
 All expectations in this section evaluate spatial functions at
-$(t,X_t)$. Starting with $c^2q'=\mathbb E v^2$, Itô's formula gives
+$(t,X_t)$. Starting from $c^2q'=\mathbb E v^2$, Itô's formula gives
 $$
 \begin{aligned}
 c^2q''&=\mathbb E[w^2-2v^3],\\
@@ -381,35 +400,38 @@ c^2q'''&=\mathbb E[z^2-12vw^2+6v^4]
 \end{aligned}                                      \tag{4}
 $$
 For example, the drifts of $w^2$ and $v^3$ are
-$z^2-6vw^2$ and $3vw^2-3v^4$, respectively. The negative
-mixed term is the obstacle. Convexity, which gives $v\geq0$,
-does not control it. Indeed, for the smooth auxiliary terminal value
-$\log(2\cosh x)$ and coefficient $\gamma\equiv1$, the solution is
-$\Phi(t,x)=\log(2\cosh x)+(1-t)/2$. Thus $r=\tanh x$;
-at $r^2=1/2$, the polynomial in (4) equals $-19/8$.
-This is a finite-step smoothing example, not a minimiser of the
-absolute-value-terminal problem; its calculation is given in
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-moments">[long §4.1](../long/reasoning-record.md#curvature-moments)</span>.
-The same section gives a negative pointwise value with the actual
-$|x|$ terminal datum for a small positive constant coefficient
+$z^2-6vw^2$ and $3vw^2-3v^4$, respectively.
+
+The negative mixed term is the obstacle, and convexity, which gives
+$v\geq0$, does not control it. Take, for instance, the smooth auxiliary
+terminal value $\log(2\cosh x)$ and the coefficient $\gamma\equiv1$.
+The solution is $\Phi(t,x)=\log(2\cosh x)+(1-t)/2$, so $r=\tanh x$,
+and at $r^2=1/2$ the polynomial in (4) equals $-19/8$.
+This example is a smoothed finite-step problem, and its coefficient is
+no minimiser of the absolute-value terminal problem. The calculation
+is in
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-moments">[long §4.1](../long/reasoning-record.md#curvature-moments)</span>,
+and that section also finds a negative pointwise value
+with the actual $|x|$ terminal datum for a small positive constant
+coefficient
 (<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="pointwise-curvature-obstruction">[long §4.1, pointwise obstruction](../long/reasoning-record.md#pointwise-curvature-obstruction)</span>).
 
-The proof subtracts a weighted divergence whose expectation under the
-law of $X_t$ is zero. The resulting expression has a positive
-fourth-moment remainder. The backward value function and the forward
-density must satisfy joint shape restrictions for this decomposition
-to have the required signs. Those comparisons and the exact polynomial
-identity are the substantial inputs from
-[OpenAI (2026a), §§3–4][FS]. We explain their roles first for finite-step
-coefficients, then pass the integrated inequality to an integrable
-coefficient by approximation.
+The proof therefore subtracts a weighted divergence whose expectation
+under the law of $X_t$ is zero, and what remains has a positive
+fourth-moment remainder. For this decomposition to have the required
+signs, the backward value function and the forward density must satisfy
+joint shape restrictions. Those comparisons and the exact polynomial
+identity are the substantial inputs from [OpenAI (2026a), §§3–4][FS].
+We explain their roles first for finite-step coefficients and then pass
+the integrated inequality to an integrable coefficient by approximation.
 
-Begin with a positive nondecreasing finite-step coefficient $\gamma_{\rm step}$: a function constant
-on each interval of a finite partition. Replace the terminal value
-$|x|$ by the smooth approximation $M^{-1}\log(2\cosh Mx)$, with
+We begin with a positive nondecreasing finite-step coefficient
+$\gamma_{\rm step}$, that is, a function constant on each interval of a
+finite partition, and we replace the terminal value $|x|$ by the smooth
+approximation $M^{-1}\log(2\cosh Mx)$, with
 $M\geq\|\gamma_{\rm step}\|_\infty$.
 On a step of height $c$, set $h=e^{c\Phi}$. Then
-$h_t=-h_{xx}/2$ and $r=h_x/h$. The same exponential removes the
+$h_t=-h_{xx}/2$ and $r=h_x/h$, and the same exponential removes the
 drift from the forward density equation. Indeed, writing $f=hg$ gives
 $$
 \begin{aligned}
@@ -418,32 +440,31 @@ f_t&=\tfrac12(hg)_{xx}-(h_xg)_x\\
     =h_tg+\tfrac12hg_{xx}.
 \end{aligned}
 $$
-Comparison with $f_t=h_tg+hg_t$ yields $g_t=g_{xx}/2$.
-Thus one backward heat factor and one forward heat factor determine
-the law against which the moment polynomial is integrated.
-For $s=-\partial_x\log g$,
-the source proves joint shape restrictions: on $x>0$, $r_x>0$ and
-$s_x\geq1/t$, both $r$ and $s$ are concave, and
-$H:=w/(2r)+v\leq0$ is nondecreasing. They also give
+Comparison with $f_t=h_tg+hg_t$ yields $g_t=g_{xx}/2$. One backward
+heat factor and one forward heat factor thus determine the law against
+which the moment polynomial is integrated.
+
+For $s=-\partial_x\log g$, the source proves joint shape restrictions
+on $x>0$: $r_x>0$ and $s_x\geq1/t$, both $r$ and $s$ are concave,
+and $H:=w/(2r)+v\leq0$ is nondecreasing. They also give
 $$
 j:=s_x-(s/r)v=r\,\partial_x(s/r)\geq0.
 $$
-The last inequality couples the backward gradient to the forward
-density; separate monotonicity and concavity do not supply it.
-On the first step, $s=x/t$, so concavity of $r$ gives $j\geq0$.
-A parabolic comparison propagates the sign within each step.
+This last inequality couples the backward gradient to the forward
+density, and separate monotonicity and concavity do not supply it.
+On the first step $s=x/t$, so concavity of $r$ gives $j\geq0$, and a
+parabolic comparison propagates the sign within each step.
 At a forward jump with $k=c_+/c_-\geq1$, continuity of $\Phi$ and $f$
 gives
 $$
 r_+=kr_-,\qquad s_+=s_-+(k-1)r_-,\qquad
 j_+=(s_x)_+-\frac{s_+}{r_+}(r_x)_+=j_-.
 $$
-The joint sign therefore survives coefficient jumps as well.
+The joint sign therefore survives jumps of the coefficient as well.
 The quotients $w/r$ and $s/r$ extend smoothly through zero because
-$r,s,w$ are odd
-and $r_x(0)>0$. The comparison's boundary controls and these extensions
-are analytic inputs from [OpenAI (2026a), Lemmas 3.2–3.4][FS],
-reconstructed in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[long §4.3](../long/reasoning-record.md#shape-comparisons)</span>.
+$r,s,w$ are odd and $r_x(0)>0$. Both the boundary controls of the
+comparison and these extensions are analytic inputs from
+[OpenAI (2026a), Lemmas 3.2–3.4][FS], reconstructed in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[long §4.3](../long/reasoning-record.md#shape-comparisons)</span>.
 
 The factorisation of the density gives $f_x/f=r-s$. For a suitable
 expression $F$ in the shape quantities, define
@@ -457,11 +478,11 @@ for the polynomial correction used below. Hence
 $\mathbb E_f\mathcal W(F)=0$, where $\mathbb E_f$ denotes integration
 against $f(x)\,dx$.
 
-The remaining step is algebra under these analytic restrictions.
-The correction polynomial below is chosen by first arranging a square
-and other nonnegative terms containing the highest derivative $z$,
-then cancelling their linear terms in $z$ through the weighted divergence.
-The residual depends only on lower derivatives and the shape quantities.
+What remains is algebra under these analytic restrictions. The
+correction polynomial is chosen in two steps: first arrange a square
+and other nonnegative terms containing the highest derivative $z$, then
+cancel their terms linear in $z$ with the weighted divergence. Only
+lower derivatives and the shape quantities then remain in the residual.
 [OpenAI (2026a), Lemma 4.1][FS] supplies an explicit polynomial $F_2$
 and a decomposition
 $$
@@ -471,21 +492,20 @@ z^2-12vw^2+6v^4
 \mathcal R\geq0,\qquad
 \kappa=\frac{1661507}{1521000000}>\frac1{1000}.
 $$
-The coefficients of $F_2$ have both signs; no sign of $F_2$ or
-$\mathcal W(F_2)$ is needed, since the correction integrates to zero.
-In contrast, the shape inequalities make every term of $\mathcal R$
+The coefficients of $F_2$ have both signs. Since the correction
+integrates to zero, the signs of $F_2$ and $\mathcal W(F_2)$ play no
+role, whereas the shape inequalities make every term of $\mathcal R$
 nonnegative. Two of its actual terms are
 $$
 \frac{337}{10000}\,r^2j\,(-w/r-7v)^2,
 \qquad
 (2rH_x)v\left(\frac{2331}{10000}r^2+\frac{87}{2500}j\right).
 $$
-The first needs the joint comparison $j\geq0$; the second also
+The first needs the joint comparison $j\geq0$, and the second also
 uses $H_x\geq0$ on the positive half-line. Reflection preserves
 these signs on the negative half-line. The remaining terms use
-$H\leq0$, forward concavity and the other shape bounds. Thus the
-decomposition is positive on the shapes supplied by the PDE, not
-on arbitrary spatial derivatives.
+$H\leq0$, forward concavity and the other shape bounds, so the
+positivity of the decomposition depends on the shapes the PDE supplies.
 Integration removes $\mathcal W(F_2)$ and keeps the fourth-moment
 margin, giving
 $$
@@ -493,26 +513,30 @@ $$
 \geq\frac1{1000}\int_{\mathbb R}v^4f\,dx.           \tag{5}
 $$
 We use (5) as an imported analytic estimate. The full polynomial and
-its decomposition are in [Lemma 4.1 and Table 1][certificate];
+its decomposition are in [Lemma 4.1 and Table 1][certificate], and
 Proposition 4.2 integrates them using the signs and zero boundary
-flux supplied by Lemma 3.4. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-algebra">[Long §4.4, “How the signs make a correction with zero expectation useful”](../long/reasoning-record.md#curvature-algebra)</span> reproduces the definitions and complete identity.
+flux supplied by Lemma 3.4. The definitions and the complete identity
+are reproduced in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="curvature-algebra">[long §4.4, “The polynomial correction with zero expectation”](../long/reasoning-record.md#curvature-algebra)</span>.
 
 To obtain Lemma 2 for an integrable coefficient, choose positive
-monotone step coefficients $\gamma_n$ retaining the plateau near a
+monotone step coefficients $\gamma_n$ that keep the plateau near a
 fixed interior time, with $\|\gamma_n-\gamma\|_1\to0$, and terminal
 parameters $M_n\geq\|\gamma_n\|_\infty$ with $M_n\to\infty$.
-Spatial derivatives through order four converge uniformly on a fixed
-strip below one, and the diffusions driven by the same Brownian
+Spatial derivatives through order four then converge uniformly on a
+fixed strip below one, and the diffusions driven by the same Brownian
 motion converge
 (see [OpenAI (2026a), Lemmas 2.1–2.2 and Proposition 5.1][FS]). Only
-$v,w,z$ remain in (5), so no convergence theorem for the auxiliary
-logarithmic derivative $s$ is needed. Dividing by $c^2$ gives (3); strictness follows from
-$\Phi_{xx}>0$ on the plateau (see [OpenAI (2026a), Lemma 2.3][FS]). The plateau-preserving approximants and their common strip bounds are
-specified in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="plateau-limit">[long §4.5](../long/reasoning-record.md#plateau-limit)</span>. The zero plateau has the separate
-heat identity in Lemma 2. Its strictness uses a positive diffusion
-density and the fact that $\Phi_{xxx}$ cannot vanish identically:
-an even quadratic profile would contradict the one-Lipschitz bound
-and $|x|+O(1)$ growth.
+$v,w,z$ remain in (5), so the auxiliary logarithmic derivative $s$
+needs no convergence theorem. Dividing by $c^2$ gives (3), and
+strictness follows from $\Phi_{xx}>0$ on the plateau (see [OpenAI (2026a), Lemma 2.3][FS]).
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="plateau-limit">[Long §4.5](../long/reasoning-record.md#plateau-limit)</span>
+specifies the plateau-preserving approximants and their common strip
+bounds.
+
+The zero plateau has the separate heat identity stated in Lemma 2. Its
+strictness uses a positive diffusion density and the fact that
+$\Phi_{xxx}$ cannot vanish identically, since an even quadratic profile
+would contradict the one-Lipschitz bound and $|x|+O(1)$ growth.
 
 **Passage to a fixed time.** Now let $\gamma\in\mathcal U$ be continuous
 at $t\in(0,1)$, with $c=\gamma(t)>0$. For
@@ -525,14 +549,14 @@ c,&t-\delta\leq s<t+\delta,\\
 \end{cases}
 $$
 The inequalities $\gamma(t-\delta)\leq c\leq\gamma(t+\delta)$
-make both joins nondecreasing. Thus $\gamma_\delta\in\mathcal U$;
+make both joins nondecreasing, so $\gamma_\delta\in\mathcal U$, although
 it need not minimise $\mathcal P$. Moreover,
 $$
 \|\gamma_\delta-\gamma\|_1
 \leq2\delta\,[\gamma(t+\delta)-\gamma(t-\delta)]
 \longrightarrow0.
 $$
-Use a subscript $\delta$ for its value-function derivatives and
+We use a subscript $\delta$ for its value-function derivatives and
 diffusion. Lemma 2 and (4), already extended to integrable
 coefficients, give at the fixed time $t$
 $$
@@ -540,52 +564,51 @@ $$
 =\mathbb E[d_\delta^2-12c\,a_\delta b_\delta^2+6c^2a_\delta^4]
 \geq\frac{c^2}{1000}\mathbb E[a_\delta^4].           \tag{6}
 $$
-Choose $t<T<T_1<1$. Monotonicity gives the common coefficient bound
+
+We now pass to the limit of shrinking plateaus and choose $t<T<T_1<1$. Monotonicity gives the
+common coefficient bound
 $$
 \sup_{s\leq T_1}\gamma_\delta(s)
 \leq\frac{\|\gamma_\delta\|_1}{1-T_1}.
 $$
-This is the first uniform estimate; the spatial derivative bounds require
-the smoothing theorem. Lemma 2.1 of [OpenAI (2026a)][FS]
-gives uniform convergence in space and uniform bounds for
-$a_\delta,b_\delta,d_\delta$ on $[0,T]$, with the next spatial
-derivatives bounded as well. Lemma 2.2 couples the diffusions using
-the same Brownian motion and gives
+This is the first uniform estimate, and the bounds on spatial
+derivatives require the smoothing theorem. Lemma 2.1 of
+[OpenAI (2026a)][FS] gives uniform convergence in space and uniform
+bounds for $a_\delta,b_\delta,d_\delta$ on $[0,T]$, with the next
+spatial derivatives bounded as well. By Lemma 2.2, the diffusions
+coupled through the same Brownian motion satisfy
 $\sup_{s\leq T}|X_s^\delta-X_s|\to0$. The derivative bounds control
-evaluation on these paths, so the integrands in (6) converge and
-are uniformly bounded. Dominated convergence passes their expectations
-to the limit. The common coefficient $L^1$ bound and the fixed distance
-from time one determine these estimates; the shrinking plateau width
-does not. The result is
-$\mathcal C_\gamma(t)\ge\gamma(t)^2\mathbb E a^4/1000$.
-This proves Proposition 3. No time derivative of the
-coefficient or minimising assumption has entered the limit.
+evaluation along these paths, so the integrands in (6) converge and
+are uniformly bounded, and dominated convergence passes their
+expectations to the limit. These estimates depend only on the common
+$L^1$ bound on the coefficient and the fixed distance from time one,
+whatever the width of the shrinking plateau. The result is
+$\mathcal C_\gamma(t)\ge\gamma(t)^2\mathbb E a^4/1000$,
+which proves Proposition 3. Neither a time derivative of the
+coefficient nor minimality has entered the limit.
 
-A qualitative crossing criterion already suffices for a bounded gap:
+For a bounded gap, a qualitative crossing criterion already suffices:
 if $q''=0$ implies $q'''>0$, then $q'$ cannot attain an interior
-maximum. The endpoint slope bounds therefore give $q'<1$ inside
-the gap and the same strict area deficit. Proposition 3 supplies more
-for the next argument: it applies at the chosen comparison time
-without assuming $q''=0$, and its fourth-moment lower bound survives
-the local replacement. Bare strict positivity could be lost in that
-limit.
+maximum, so the endpoint slope bounds give $q'<1$ inside the gap and
+the same strict area deficit. Proposition 3 supplies more for the next
+argument. It applies at the chosen comparison time without assuming
+$q''=0$, and its fourth-moment lower bound survives the local
+replacement, where bare strict positivity could be lost in the limit.
 <!-- /passage:curvature -->
 
 <a id="positive-density"></a>
 
-## 4. A second use: the density cannot vanish inside the interval
+## 4. Strict positivity of the density
 
 <!-- passage:density-consequence -->
-Full support does not force pointwise positive density. For instance,
-$\gamma(t)=\int_0^t(s-\tfrac12)^2\,ds$ has full Stieltjes
+Full support alone does not force a pointwise positive density.
+For instance, $\gamma(t)=\int_0^t(s-\tfrac12)^2\,ds$ has full Stieltjes
 support but $\gamma'(\tfrac12)=0$: every interval of positive length
 has a positive integral, although the integrand vanishes at one point.
-The quantitative remainder
-in (5) rules this out for a minimiser. First, the identity
-$\mathbb E a^2=1$ expresses $\gamma$ as a quotient of continuous
-moments and then gives smoothness. Only afterwards do we apply
-the fixed-time spatial estimate to obtain
-$\gamma'>0$.
+The quantitative remainder in (5) rules this out for a minimiser.
+The identity $\mathbb E a^2=1$ first expresses $\gamma$ as a quotient
+of continuous moments and then gives smoothness. Only afterwards do we
+apply the fixed-time spatial estimate to obtain $\gamma'>0$.
 
 **Corollary 4 (smooth positive density; [OpenAI (2026a),
 Corollary 6.4][FS]).** Under the hypotheses of Theorem 1,
@@ -599,23 +622,23 @@ $$
 $$
 Only nonnegativity of the density at zero is asserted.
 
-**Proof.** All spatial factors in expectations below are evaluated at $(t,X_t)$.
-Since
-$da=-\gamma a^2\,dt+b\,dB$, Itô's formula applied to $a^2$ gives, for almost every $t$,
-$0=\frac{d}{dt}\mathbb E a^2=\mathbb E b^2-2\gamma\mathbb E a^3$.
-Here the left side vanishes because full support gives $\mathbb E a^2=1$.
-Solving for the coefficient yields
+**Proof.** All spatial factors in the expectations below are evaluated
+at $(t,X_t)$. Since $da=-\gamma a^2\,dt+b\,dB$, Itô's formula applied
+to $a^2$ gives, for almost every $t$,
+$0=\frac{d}{dt}\mathbb E a^2=\mathbb E b^2-2\gamma\mathbb E a^3$,
+where the left side vanishes because full support gives
+$\mathbb E a^2=1$. Solving for the coefficient yields
 $$
 \gamma(t)=\frac{\mathbb E b^2}{2\mathbb E a^3}.      \tag{8}
 $$
-Initially (8) holds almost everywhere. Its denominator is at least
+At first (8) holds almost everywhere. Its denominator is at least
 two, because $a\geq0$ and
 $\mathbb E a^3\geq(\mathbb E a^2)^{3/2}=1$.
-The moments are continuous; right continuity of $\gamma$ extends
-(8) to every time and proves continuity of $\gamma$. Evenness
+The moments are continuous, so right continuity of $\gamma$ extends
+(8) to every time and proves that $\gamma$ is continuous. Evenness
 gives $b(0,0)=0$, hence $\gamma(0)=0$.
 
-For smoothness, fix $T<1$ and consider all polynomial moments
+For smoothness, fix $T<1$ and consider the polynomial moments
 $$
 M_P(t)=\mathbb E P(\Phi_x(t,X_t),\ldots,\partial_x^m\Phi(t,X_t)),
 $$
@@ -627,18 +650,19 @@ $$
 M_P(t)-M_P(0)=\int_0^t
  [M_{Q_P}(s)+\gamma(s)M_{R_P}(s)]\,ds.
 $$
-No derivative of $\gamma$ enters this identity. Bounded spatial
-derivatives on the fixed strip make every moment continuous.
-The integral identity then makes all moments $C^1$, and (8) makes
-$\gamma$ $C^1$. Repetition proves smoothness. This is the
+The identity involves $\gamma$ and none of its derivatives. Bounded
+spatial derivatives on the fixed strip make every moment continuous.
+The integral identity then makes every moment $C^1$, and (8) makes
+$\gamma$ $C^1$. Repeating the argument proves smoothness. This is the
 quotient-and-moment argument of [Chen (2026), Proposition 4.6
-and Appendix B.6][Chen], using the polynomial-moment method of
+and Appendix B.6][Chen], which uses the polynomial-moment method of
 [Auffinger and Chen (2015), Lemma 2 and the proof of Theorem 2(ii)][AC-properties].
-The explicit polynomials and the passage from initially nonsmooth
-coefficients are in [OpenAI (2026a), proof of Corollary 6.4][FS]
-and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">[long §9.1](../long/reasoning-record.md#smooth-density-consequence)</span>.
+[OpenAI (2026a), proof of Corollary 6.4][FS]
+and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">[long §9.1](../long/reasoning-record.md#smooth-density-consequence)</span>
+give the explicit polynomials and the passage from initially nonsmooth
+coefficients.
 
-Now the two differentiated moments are
+The two differentiated moments are now
 $$
 \frac{d}{dt}\mathbb E b^2=\mathbb E[d^2-6\gamma ab^2],
 \qquad
@@ -652,13 +676,13 @@ q^{(3)}+2\gamma'\mathbb E a^3
 $$
 This identity displays the two uses of the same spatial moment.
 On a plateau, $\gamma'=0$ and $(v,w,z)=c(a,b,d)$ recover (4).
-For the now smooth minimiser, $q=t$, so $q^{(3)}=0$ and the left
-side is $2\gamma'\mathbb E a^3$. Proposition 3 supplies
-the lower bound for this spatial moment.
+For the now smooth minimiser $q=t$, so $q^{(3)}=0$ and the left
+side is $2\gamma'\mathbb E a^3$, while Proposition 3 bounds the right
+side from below.
 
-Apply Proposition 3 to the now smooth minimiser. Strict
-increase and $\gamma(0)=0$ give $\gamma(t)>0$ for $t>0$; (9)
-therefore gives (7). Strictness follows from $\gamma(t)>0$ and
+We now apply Proposition 3 to the smooth minimiser. Strict increase and
+$\gamma(0)=0$ give $\gamma(t)>0$ for $t>0$, so (9) gives (7).
+Strictness follows from $\gamma(t)>0$ and
 $\mathbb E a^4\geq(\mathbb E a^2)^2=1$.
 In particular, Cauchy–Schwarz gives
 $$
@@ -668,38 +692,40 @@ $$
 so the same inequality implies
 $\gamma'(t)\geq\gamma(t)^2/2000$ for $0<t<1$.
 
-Proposition 3 passes spatial moments, so its proof does not identify
-$q_\delta'''$ with the third derivative of the limiting moment.
-Indeed the minimiser has $q(t)=t$ and
-$q'''=0$; the coefficient derivative in (9) is exactly what the
-constant-interval formula omits. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">[Long §§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence)</span> retain the smoothness argument and
+Proposition 3 passes spatial moments to the limit, and its proof does
+not identify $q_\delta'''$ with the third derivative of the limiting
+moment. Indeed, the minimiser has $q(t)=t$ and $q'''=0$, and the
+coefficient derivative in (9) is exactly the term that the
+constant-interval formula omits. <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="smooth-density-consequence">[Long §§9.1–9.2](../long/reasoning-record.md#smooth-density-consequence)</span> retain the smoothness argument and the
 fixed-time transfer, including the common approximation bounds.
 
 **Earlier and related estimates.** The backward shape comparisons,
-transformed density and positive-temperature gap-crossing argument
-appear in [Lopatto (2026), v3, Propositions 3.6, 7.1 and 9.1][Lopatto].
+the transformed density and the positive-temperature gap-crossing
+argument appear in [Lopatto (2026), v3, Propositions 3.6, 7.1 and 9.1][Lopatto].
 [H.-B. Chen (2026), Proposition 4.2][Chen] proves the zero-temperature
 crossing implication $q''=0\Rightarrow q'''>0$ under the minimiser
-convention of §3.1. [Lopatto's v4, Proposition 5.1 and
+convention of its §3.1. [Lopatto's v4, Proposition 5.1 and
 Corollary 5.6][Lopatto-v4] give qualitative crossing for arbitrary
 positive-temperature probability measures. In unit-noise coordinates,
-their cumulative coefficient is $\gamma_\beta=\beta\alpha_\nu$,
+the cumulative coefficient there is $\gamma_\beta=\beta\alpha_\nu$,
 where $\alpha_\nu(t)=\nu([0,t])$, and the terminal value is
 $\beta^{-1}\log\cosh(\beta x)$. Every bounded $\gamma\in\mathcal U$
 has this form: choose $\beta>0$ with $\beta\geq\sup\gamma$
-and put the remaining probability mass at one. Thus the coefficient
-classes alone do not distinguish the estimates; the terminal datum and the quantitative
-control through its zero-temperature limit matter.
+and put the remaining probability mass at one. The coefficient classes
+alone therefore do not distinguish the estimates. What distinguishes
+them is the terminal datum and the quantitative control through its
+zero-temperature limit.
 
 [Lopatto's external-field paper, Theorem 2.3 and §8][Lopatto-field]
 also uses a fixed-time spatial inequality for support and positive
 density. At a continuity point, monotonicity supplies its one-sided
-coefficient bounds; on a smooth full-support interval of the minimiser,
-its scalar conditions become equalities. Appendix B gives the positive-temperature,
-zero-field strict-density result. The bound used here instead applies at a
-nonstationary comparison time and retains an explicit fourth-moment
-margin through the local replacement with terminal datum $|x|$.
-The rescaling and exact hypothesis comparisons are in
+coefficient bounds, and on a smooth full-support interval of the
+minimiser its scalar conditions become equalities. Its Appendix B gives
+the positive-temperature, zero-field strict-density result. The bound
+used here instead applies at a nonstationary comparison time and keeps
+an explicit fourth-moment margin through the local replacement with
+terminal datum $|x|$.
+The rescaling and the exact comparison of hypotheses are in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-temperature-dictionary">[long §2.3, finite-temperature dictionary](../long/reasoning-record.md#finite-temperature-dictionary)</span>.
 <!-- /passage:density-consequence -->
 
@@ -711,74 +737,82 @@ The rescaling and exact hypothesis comparisons are in
 ### 5.1 A martingale formula for the ground-state value
 
 The support identities give a scalar representation of $P_*$. Set
-$M_t=u(t,X_t)$, the bounded gradient martingale satisfying
-$dM_t=a(t,X_t)\,dB_t$.
-The quadratic variations distinguish the two Hessian moments:
+$M_t=u(t,X_t)$, the bounded gradient martingale, which satisfies
+$dM_t=a(t,X_t)\,dB_t$. Its quadratic variations distinguish the two
+Hessian moments:
 $$
 d\langle M\rangle_t=a(t,X_t)^2\,dt,
 \qquad d\langle M,B\rangle_t=a(t,X_t)\,dt.
 $$
-Full support gives $\mathbb E a(t,X_t)^2=1$, hence each increment
+Full support gives $\mathbb E a(t,X_t)^2=1$, so each increment
 $M_t-M_s$ has unconditional variance $t-s$. This normalises the
-discrete increments below. The first moment of $a$ instead gives
+discrete increments below. The first moment of $a$ gives instead the
 covariance with the driving noise. Let $U$ be the almost-sure and
 $L^2$ limit of $M_t$. The value identity is
 $$
 P_*=\mathbb E[UB_1]
    =\int_0^1\mathbb E[a(t,X_t)]\,dt.                \tag{10}
 $$
-Boundedness gives
-$|U|\leq1$, while $\mathbb E M_t^2\to1$ gives $\mathbb E U^2=1$;
-therefore $U^2=1$ almost surely. To see the cancellation behind (10), the
-terminal convergence of the convex value functions gives $UX_1=|X_1|$
-(the equality is automatic on $X_1=0$), while Itô's formula gives
+Boundedness gives $|U|\leq1$, while $\mathbb E M_t^2\to1$ gives
+$\mathbb E U^2=1$, so $U^2=1$ almost surely.
+
+The cancellation behind (10) runs as follows. Terminal convergence of
+the convex value functions gives $UX_1=|X_1|$ (the equality is
+automatic on $X_1=0$), and Itô's formula gives
 $\mathcal P(\gamma)=\mathbb E|X_1|-\int_0^1t\gamma(t)\,dt$.
 Multiplying $X_1=B_1+\int_0^1\gamma(t)M_t\,dt$ by $U$ cancels
-that integral because $\mathbb E[UM_t]=t$. The Parisi formula then
-gives (10). The endpoint limits and stochastic-integral covariance
-are proved in [OpenAI (2026a), Corollary 7.1][FS] and the long
-record, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="scalar-value-identities">[§6, “Recovering the value from a martingale”](../long/reasoning-record.md#scalar-value-identities)</span>. This argument
-uses full support, not the density corollary. In particular, convexity
-and Cauchy–Schwarz give $0\leq\mathbb E a\leq1$, so
+that integral, because $\mathbb E[UM_t]=t$, and the Parisi formula
+then gives (10). [OpenAI (2026a), Corollary 7.1][FS] and the long
+record, <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="scalar-value-identities">[§6, “Recovering the value from a martingale”](../long/reasoning-record.md#scalar-value-identities)</span>, prove the endpoint limits and the
+stochastic-integral covariance. The argument uses only full
+support. Moreover, convexity and
+Cauchy–Schwarz give $0\leq\mathbb E a\leq1$, so
 $$
 0\leq P_*-\int_0^T\mathbb E[a(t,X_t)]\,dt\leq1-T.
 $$
-One can therefore fix the terminal cutoff before discretising the diffusion.
+
+We can therefore fix the terminal cutoff before discretising the
+diffusion.
 
 The gradient-martingale and value methods have antecedents in
 [Montanari, preprint v2, Lemmas 3.2–3.4][Montanari], under its
 positive-temperature support assumption, and in the zero-temperature
 calculations of [El Alaoui, Montanari and Sellke, preprint v1,
 Lemmas 6.5 and 6.13][EAMS]. [Sellke, preprint v4,
-Proposition 3.10 and Lemma 3.11, p. 17][Sellke] gives the closely related
-finite-cutoff cancellation by applying Itô's formula to $\Phi$ and $x\Phi_x$.
+Proposition 3.10 and Lemma 3.11, p. 17][Sellke] gives the closely
+related finite-cutoff cancellation by applying Itô's formula to $\Phi$
+and $x\Phi_x$.
 
 ### 5.2 The classical algorithm
 
 Full support and existence give an attained, strictly increasing
-minimiser in the monotone zero-temperature class. This is Assumption 2 of
-[El Alaoui, Montanari and Sellke, preprint v1][EAMS]. Their Corollary 2.2
-then gives, for every fixed $\varepsilon>0$, a randomised algorithm
-returning a configuration within $\varepsilon n$ of the finite SK
-maximum with probability tending to one over couplings and algorithmic
-randomness. Its cost is $C(\varepsilon)n^2$ real-arithmetic operations
-with the prescribed scalar functions and normalisers available; this
-includes no separate numerical-preprocessing or finite-precision bound.
+minimiser in the monotone zero-temperature class, which is Assumption 2
+of [El Alaoui, Montanari and Sellke, preprint v1][EAMS]. Their
+Corollary 2.2 then gives, for every fixed $\varepsilon>0$, a randomised
+algorithm that returns a configuration within $\varepsilon n$ of the
+finite SK maximum with probability tending to one over couplings and
+algorithmic randomness. It costs $C(\varepsilon)n^2$ real-arithmetic
+operations when the prescribed scalar functions and normalisers are
+available. This count includes no separate bound for numerical
+preprocessing or finite precision.
 [OpenAI (2026a), Corollary 7.3][FS] and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="classical-algorithm-consequence">[long §9.4](../long/reasoning-record.md#classical-algorithm-consequence)</span>
-check the Gaussian convention and operation count. Chen already records
-the classical consequence in [§1, p. 4][Chen].
-Their incremental approximate message-passing iterates use the coupling
-matrix. Their scalar description uses the martingale multiplier and state drift
+work out the Gaussian convention and the operation count. Chen already
+notes the classical consequence in [§1, p. 4][Chen].
+
+The incremental approximate message-passing iterates of El Alaoui,
+Montanari and Sellke use the coupling matrix, and their scalar
+description uses the martingale multiplier and state drift
 $$
 u_{\rm EAMS}(t,x)=a(t,x),\qquad
 v_{\rm EAMS}(t,x)=\gamma(t)u(t,x).
 $$
-Thus their noise multiplier is the Hessian, whereas our $u$ is the
-gradient. The bounded martingale $M_t$ and $\mathbb E a^2=1$ give
+Their noise multiplier is thus the Hessian, whereas our $u$ is the
+gradient. In our notation, the bounded martingale $M_t$ and $\mathbb E a^2=1$ give
 the required variance normalisation. With the fixed-strip regularity
 and discretisation estimates, [their Theorem 2][EAMS] achieves energy
 arbitrarily close to the truncated first-moment integral in (10).
-Strict positivity of the density is unnecessary.
+
+Strict positivity of the density is unnecessary for this algorithm.
 
 <!-- /passage:scalar-value -->
 
@@ -787,9 +821,9 @@ Strict positivity of the density is unnecessary.
 
 The remaining consequence uses a separate circuit approximation theorem,
 stated as Proposition 5 below. We give its finite Gaussian input and
-identify the energy it approximates. Its operator and control
-construction is developed in the companion; the support and density
-proofs above do not require those additional prerequisites.
+identify the energy it approximates. The companion develops its operator
+and control construction, and the support and density proofs above
+need none of those additional prerequisites.
 
 Let $\widehat Z_i,\widehat X_i$ be Pauli operators, and define the cost
 and mixer by
@@ -797,9 +831,10 @@ $$
 C_{n,J}=\frac1{\sqrt n}\sum_{i<j}J_{ij}\widehat Z_i\widehat Z_j,
 \qquad B_n=\sum_i\widehat X_i.
 $$
-The cost eigenvalues are $H_n(\sigma)$. QAOA alternates cost evolution
-and mixing from the uniform state $|+\rangle^{\otimes n}$
-([Farhi, Goldstone and Gutmann (2014)][FGG]). For a fixed sequence
+The eigenvalues of the cost are $H_n(\sigma)$. QAOA alternates cost
+evolution and mixing, starting from the uniform state
+$|+\rangle^{\otimes n}$ ([Farhi, Goldstone and Gutmann (2014)][FGG]).
+For a fixed sequence
 $W=(\theta_1,\beta_1,\ldots,\theta_p,\beta_p)$, write
 $$
 |\psi_{n,J}(W)\rangle
@@ -815,15 +850,17 @@ fixed-angle limit. [OpenAI (2026b), Theorem 1.1][Q] proves that for
 every $\varepsilon>0$ there is one finite $W$ with
 $v(W)\geq P_*-\varepsilon$, whose depth and angles depend on
 $\varepsilon$ but not on $n$ or $J$. The instance still determines
-$C_{n,J}$. Here depth counts global cost–mixer layers; their elementary
-gate counts depend on the implementation. This order of limits differs
-from the fixed-instance depth limit in [Farhi, Goldstone and Gutmann,
-§VI][FGG], which permits instance-dependent choices. The common-circuit
-conclusion was conjectured by [Basso, Farhi, Marwaha, Villalonga and
-Zhou (2022), §7, equation (7.2)][BFMVZ].
+$C_{n,J}$. Here depth counts global cost–mixer layers, whose
+elementary gate counts depend on the implementation.
+
+This order of limits differs from the fixed-instance depth limit in
+[Farhi, Goldstone and Gutmann, §VI][FGG], which permits
+instance-dependent choices. [Basso, Farhi, Marwaha, Villalonga and
+Zhou (2022), §7, equation (7.2)][BFMVZ] conjectured the common-circuit
+conclusion.
 
 **The finite Gaussian input.** Fix the minimiser and its diffusion,
-a cutoff $0<T<1$, and a mesh $t_j=j\Delta$, $\Delta=T/N$.
+a cutoff $0<T<1$, and a mesh $t_j=j\Delta$ with $\Delta=T/N$.
 The mesh count $N$ is distinct from the number of spins $n$.
 From independent standard normals $Z_1,\ldots,Z_{N+1}$, form
 $$
@@ -839,7 +876,7 @@ $$
 [OpenAI (2026a), Proposition 7.2][FS] proves that the denominators
 are positive for all sufficiently large $N$. Since $h_j$ depends
 only on $Z_1,\ldots,Z_{j-1}$, the $g_j$ are centred and
-orthonormal in $L^2$. They need not be independent Gaussians.
+orthonormal in $L^2$, although they need not be independent Gaussians.
 With $\Phi_{\rm G}$ the standard normal distribution function, set
 $$
 \begin{aligned}
@@ -847,10 +884,10 @@ F_N&=\operatorname{sgn}\{u(T,Y_N)+2\Phi_{\rm G}(Z_{N+1})-1\},\\
 \mathbb E[F_N\mid Z_1,\ldots,Z_N]&=u(T,Y_N).
 \end{aligned}
 $$
-The second equality follows because $\Phi_{\rm G}(Z_{N+1})$ is
-uniform on $[0,1]$: this random rounding preserves every correlation
-with a function of the preceding coordinates. The finite quantity
-needed by the circuit construction is the adjacent pairing
+The second equality holds because $\Phi_{\rm G}(Z_{N+1})$ is
+uniform on $[0,1]$, so this random rounding preserves every correlation
+with a function of the preceding coordinates. The circuit construction
+needs one finite quantity, the adjacent pairing
 $$
 \begin{aligned}
 S_{T,N}&:=\sum_{j=1}^N
@@ -859,22 +896,23 @@ S_{T,N}&:=\sum_{j=1}^N
 &=I_T:=\int_0^T\mathbb E[a(t,X_t)]\,dt.
 \end{aligned}                                      \tag{11}
 $$
-The same proposition proves this limit. The Euler approximation and
-the gradient martingale give
+
+The same proposition proves this limit. Its proof starts from the
+Euler approximation and the gradient martingale, which give
 $$
 \left\|u(T,Y_N)-\sum_{j=1}^N\sqrt\Delta\,
  a(t_{j-1},Y_{j-1})Z_j\right\|_2\longrightarrow0.
 $$
 Conditional-mean preservation transfers these correlations to $F_N$
-for the first $N$ coordinates. Rounding itself has squared $L^2$
-error $\mathbb E(F_N-u(T,Y_N))^2\to1-T$, so it is not the
-vanishing residual. Bessel's inequality, applied separately to $(g_j)$
-and $(Z_j)$, controls the errors of both correlation vectors in $\ell^2$.
-Their bounded norms control the growing pairing by Cauchy–Schwarz.
-The terms with $j<N$ give a Riemann sum, and the last
-rounding-coordinate term vanishes. All these limits keep $T$
-fixed; only afterwards does $T\uparrow1$ give $P_*$.
-The construction and estimates are in
+for the first $N$ coordinates. The rounding error itself stays of order
+one, since its squared $L^2$ error satisfies
+$\mathbb E(F_N-u(T,Y_N))^2\to1-T$. Bessel's inequality, applied
+separately to $(g_j)$ and $(Z_j)$, controls the errors of both
+correlation vectors in $\ell^2$, and their bounded norms control the
+growing pairing by Cauchy–Schwarz. The terms with $j<N$ give a Riemann
+sum, and the last term, from the rounding coordinate, vanishes. All
+these limits keep $T$ fixed. Only afterwards does $T\uparrow1$ give
+$P_*$. The construction and the estimates are in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-gaussian-approximation">[long §7, “A finite Gaussian spin and its adjacent correlations”](../long/reasoning-record.md#finite-gaussian-approximation)</span>.
 
 **Proposition 5 (circuit approximation; a consequence of
@@ -886,33 +924,34 @@ $$
 |v(W)-S_{T,N}|<\eta.
 $$
 
-**Why the adjacent pairing is the energy.** We use the rooted Gaussian
-representation of [OpenAI (2026b), §2 and Lemma 3.1][Q], building on
-the spin–boson description of [Boulebnane et al. (2026)][spin-boson].
+**The adjacent pairing as a rooted energy.** We use the rooted Gaussian
+representation of [OpenAI (2026b), §2 and Lemma 3.1][Q], which builds
+on the spin–boson description of [Boulebnane et al. (2026)][spin-boson].
 Its classical sector consists of square-integrable functions built
 recursively from a local Gaussian seed and child-generated Gaussian
 coordinates, with inner product given by expectation.
 For any finite list of fixed centred real child directions, their
-coordinates at the receiving root have a joint centred Gaussian law.
-For two such directions $f,g$,
+coordinates at the receiving root have a joint centred Gaussian law,
+and for two such directions $f,g$,
 $$
 \mathbb E[\mathsf G(f)\mathsf G(g)]=\langle f,g\rangle.
 $$
-The directions are fixed elements of the child space, even when their
-values depend on the child's Gaussian coordinates.
-The receiving root's seed is independent of these coordinates;
-compatible embeddings preserve them as the recursive depth grows.
+These directions are fixed elements of the child space, even when their
+values depend on the child's Gaussian coordinates. Moreover, the seed of
+the receiving root is independent of these coordinates, and compatible
+embeddings preserve them as the recursive depth grows.
 The root shift $\mathsf L$ inserts a child direction into the first
 Gaussian chaos (the linear Gaussian part) with constant receiving-root
-state. Its adjoint projects onto that part and returns the child direction. The
+state, and its adjoint projects onto that part and returns the child
+direction. A
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="depth-one-calibration">[one-pair calculation at the start of long §8](../long/reasoning-record.md#depth-one-calibration)</span>
-checks this representation's energy against the finite SK circuit
+compares the energy of this representation with the finite SK circuit
 before the general construction in §8.1.
 
-Start with a standard normal receiving-root seed $g_0$ and recursively put
-$Z_{j+1}=\mathsf G(g_j)$. The orthonormal child directions give
-independent standard Gaussian lifts, reproducing the scalar law.
-The finite spin $F_N$ depends only on those lifts. Projection therefore
+We start with a standard normal receiving-root seed $g_0$ and put
+$Z_{j+1}=\mathsf G(g_j)$ recursively. The orthonormal child directions
+give independent standard Gaussian lifts, which reproduce the scalar
+law. Since the finite spin $F_N$ depends only on those lifts, projection
 gives the exact rooted-energy identity
 $$
 \begin{aligned}
@@ -924,58 +963,64 @@ $$
 $$
 Independence of the receiving-root seed removes the $j=0$ term.
 This identity concerns the finite Gaussian formula in a limiting
-rooted space, not a finite-$n$ circuit. The unshifted pairing can
-have the same scalar limit without identifying this energy.
-The construction and projection are proved in
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="rooted-energy">[long §8.1](../long/reasoning-record.md#rooted-energy)</span>.
+rooted space and makes no statement about a finite-$n$ circuit. An
+unshifted pairing can have the same scalar limit without identifying
+this energy.
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="rooted-energy">[Long §8.1](../long/reasoning-record.md#rooted-energy)</span>
+proves the construction and the projection.
 
-The shift records the lift from a child direction $g_j$ to the receiving
-coordinate $Z_{j+1}$. A one-step example distinguishes it from the unshifted
-pairing. For the nonminimising heat coefficient $\gamma=0$, take
-$T=4/5$ and $N=1$. Then $g_1=Z_1$ and
-$F_1=\operatorname{sgn}(2Z_1+Z_2)$, so Gaussian regression gives
+The shift carries the lift from a child direction $g_j$ to the receiving
+coordinate $Z_{j+1}$, and a one-step example separates it from the
+unshifted pairing. For the nonminimising heat coefficient $\gamma=0$,
+take $T=4/5$ and $N=1$. Then $g_1=Z_1$ and
+$F_1=\operatorname{sgn}(2Z_1+Z_2)$, and Gaussian regression gives
 $$
 S_{T,1}=\frac4{5\pi},\qquad
 \mathbb E[F_1g_1]\,\mathbb E[F_1Z_1]=\frac8{5\pi}.
 $$
-This tests the finite representation, not the minimiser-dependent limit in
-(11). The calculation is in
+The example tests only the finite representation, since the limit in
+(11) depends on the minimiser. The calculation is in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="one-step-example">[long §10.4, “An exact one-step calculation”](../long/reasoning-record.md#one-step-example)</span>.
 
-**Construction underlying Proposition 5.**
+**The construction behind Proposition 5.**
 [OpenAI (2026b), §§3–5][Q] smooths the spin and approximates every
-transmitted function by a bounded smooth map, preserving oddness; smoothing
-the final sign alone is insufficient. Its class exclusions prevent return
-through a traversed branch and reserve helper classes on which the output is
-zero, with positive probabilities fixed during synthesis. The resulting finite
-formula is approximated in energy using
-temporary Gaussian controls, with the same sitewise seeds throughout the word.
-Removing those controls produces an ordinary word, whose limiting energy is
-$v(W)$ by the fixed-word transfer. The approximation errors are absolute and
-can be chosen successively for each fixed $S_{T,N}$, before it is chosen close
-to $P_*$. The preserved quantity is energy; the measured-configuration
-conclusion below uses a further concentration theorem. The complete error bound is in
+transmitted function by a bounded smooth map that preserves oddness.
+Smoothing the final sign alone would be insufficient. The class
+exclusions of the construction prevent return through a traversed
+branch and reserve helper classes on which the output is zero, with
+positive probabilities fixed during synthesis. This finite formula is
+then approximated in energy using temporary Gaussian controls,
+with the same sitewise seeds throughout the word. Removing those
+controls produces an ordinary word, whose limiting energy is $v(W)$ by
+the fixed-word transfer. The approximation errors are absolute and can
+be chosen successively for each fixed $S_{T,N}$, before it is chosen
+close to $P_*$. Energy is the preserved quantity, and the conclusion
+about a measured configuration below uses a further concentration
+theorem. The complete error bound is in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-formula-energy-error">[long §8.6, finite-formula energy approximation](../long/reasoning-record.md#finite-formula-energy-error)</span>,
-with the constructions and their hypotheses in
+and the constructions and their hypotheses are in
 <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="qaoa-construction">[long §§8.1–8.6](../long/reasoning-record.md#qaoa-construction)</span>.
 
-The deduction of near-optimality is now explicit:
+Near-optimality follows from the decomposition
 $$
 P_*-v(W)\leq
  (P_*-I_T)+|I_T-S_{T,N}|+|S_{T,N}-v(W)|.            \tag{13}
 $$
 Choose $T$ so that $1-T<\varepsilon/3$, then $N$ so that the
-second term is below $\varepsilon/3$, and finally use Proposition 5
+second term is below $\varepsilon/3$, and finally apply Proposition 5
 with $\eta<\varepsilon/3$. These finite choices give
-$v(W)>P_*-\varepsilon$ before $n$ tends to infinity. The source's
-Appendix A supplies an alternative positive-temperature input to the
-same synthesis. This construction supplies no bounds on depth or cost-angle
-magnitudes in terms of accuracy, and no efficient procedure for finding angles.
-A separate estimate for the expected energy of a specified word is described
-in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-size-comparison">[long §11.5](../long/reasoning-record.md#finite-size-comparison)</span>.
-Its threshold depends on the word's depth and cost angles. Without bounds on
-those parameters it gives no threshold in optimisation accuracy alone; it
-also supplies no rate for measurement concentration.
+$v(W)>P_*-\varepsilon$ before $n$ tends to infinity. Appendix A of the
+source supplies an alternative positive-temperature input to the same
+synthesis.
+
+The construction gives no bound on the depth or on the cost-angle
+magnitudes in terms of the accuracy, and no efficient procedure for
+finding the angles. A separate estimate for the expected energy of a
+specified word appears in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="finite-size-comparison">[long §11.5](../long/reasoning-record.md#finite-size-comparison)</span>.
+Its threshold depends on the depth and cost angles of the word, so
+without bounds on those parameters it gives no threshold in terms of
+optimisation accuracy alone. It also gives no rate for the
+concentration of measurements.
 
 **Corollary 6 (a measured configuration on the same instance).**
 For every $\varepsilon>0$ there is a finite ordinary QAOA word
@@ -1004,41 +1049,38 @@ maximum and its defining mean limit give $K_n\to P_*$ in probability.
 Choose $W$ with $P_*-v(W)<\varepsilon/3$. With probability tending
 to one, both $K_n-P_*<\varepsilon/3$ and
 $v(W)-Y_n<\varepsilon/3$, which proves (14). The two energies use
-the same $J$; no independence between them is needed.
-The companion's
-<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="fixed-word-probability">[§11.2, “What is averaged, and a fixed-word probability consequence”](../long/reasoning-record.md#fixed-word-probability)</span>
-gives the concentration argument and its further probability consequences.
+the same $J$, and the argument needs no independence between them.
+The concentration argument and its further probability consequences
+are in the companion's
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="fixed-word-probability">[§11.2, “What is averaged, and a fixed-word probability consequence”](../long/reasoning-record.md#fixed-word-probability)</span>.
 <!-- /passage:qaoa-boundary -->
 
 <a id="evidence-scope"></a>
 
-## Formal scope
+## Formal verification
 
 <!-- passage:evidence-scope -->
-This AI-assisted article reconstructs the cited analytic arguments.
-The integrated estimate (5), its shape hypotheses and compact-strip
-approximation are substantial imported inputs.
+The proofs above are ordinary mathematical arguments that import three
+analytic inputs: the integrated estimate (5), the shape comparisons
+behind it and the compact-strip approximation. OpenAI's formalisation
+in [Lean][Lean4] with [mathlib][mathlib] contains two formal statements
+that bear on this paper. The
+[formal statement of full support][support-challenge] asserts the
+support and moment conclusions of Theorem 1, with an admissible
+minimiser as its hypothesis, and constructs the associated diffusion.
+Lean checks OpenAI's [proof of the corresponding theorem][support-lean].
 
-OpenAI's retained [full-support formal statement][support-challenge]
-asserts the support and moment conclusions conditional on an admissible
-minimiser, and constructs its associated diffusion. A separate
-[scalar formal statement][value-challenge] covers value identities and
-finite Gaussian approximation, with minimiser and diffusion premises
-for those clauses. Its third clause identifies the ground-state and
-Parisi values from a minimiser, constructing the diffusion internally.
-The two formal models have not been transported
-into one another in this record. Neither statement includes the
-positive-density corollary or QAOA convergence. Their
-[full-support][support-lean] and [scalar][value-lean] implementations
-use [Lean][Lean4] and [mathlib][mathlib].
-
-A source-bound local build of the Support implementation completed on
-26 October 2026, and dependency extraction recorded its conditional
-full-support root. Dependencies outside the selected extraction scope
-remain boundaries. Comparator acceptance and the scalar-target results
-remain pending.
-Exact versions, checking outcomes and correspondence are retained in the
-long record's <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="formal-interfaces">[§12, “What the formal statements establish”](../long/reasoning-record.md#formal-interfaces)</span> and <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">[§13, “Source checks and finite calculation”](../long/reasoning-record.md#verification)</span>.
+A separate
+[formal statement of the scalar consequences][value-challenge] covers
+the value identity and the finite Gaussian approximation, with
+minimiser and diffusion premises for those clauses, and its third
+clause identifies the ground-state and Parisi values from a minimiser,
+constructing the diffusion internally. Its [proof][value-lean] has not
+been checked, so those results rest here on the paper proofs cited in
+§5. The two formal statements use separate models of the order
+parameter, which have not been related to each other. Neither covers
+Corollary 4 or the convergence of QAOA. The long record compares each
+formal statement with the printed one in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="formal-interfaces">[§12, “The formal statements and their scope”](../long/reasoning-record.md#formal-interfaces)</span>, and gives versions and checking outcomes in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="verification">[§13, “Source checks and finite calculation”](../long/reasoning-record.md#verification)</span>.
 <!-- /passage:evidence-scope -->
 
 ## References

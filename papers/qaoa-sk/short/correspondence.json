@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "4b34070c1152369eec9bef536de51f8929c68f3a851f291e962a0c51a3b31ebb",
-  "graph_sha256": "3592e6a1f4e5ac9cf05e86d1dac98fabd5ac5f25ba57c4ce6e79c2b2f110d0db",
+  "content_sha256": "0cab99e62e04475d45ef7ab47579feee2be323ae8b9c4108d1e26adbd1ba36a2",
+  "graph_sha256": "05cd25e48622c61863e237a23bb6df11291711ec1cc1686433b4a62c89a6f0f0",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -297,7 +297,7 @@
   "passages": [
     {
       "anchor": "abstract",
-      "text_sha256": "16a64b2de2fada9eb888cfa9d9066c8405673f9ae3359f761ea8f677072f0c1f",
+      "text_sha256": "a7ef349dcc8369cdd5310a6535aa0c8d0154dbe4832ee65ca5a9221e4fdde8f2",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -359,7 +359,7 @@
     },
     {
       "anchor": "model",
-      "text_sha256": "2fa12ea9247f53d34e2ff2a2f276cff90a317031089f2e283c90ae375aec9166",
+      "text_sha256": "375a4d072cf5ea5ed61f912a9073e2422b1f109c493cd1ee65cf40a6004441c7",
       "claim_ids": [
         "support.stieltjes_measure",
         "support.regularity",
@@ -389,7 +389,7 @@
     },
     {
       "anchor": "main-result",
-      "text_sha256": "55927f752c93557d8311aa6a38063bb5f249eca00f5c9ba7f6ff56ba2cff73e2",
+      "text_sha256": "b5d4b27534ceb4449dc5b1a7f68eba4e126bebd5bd819ef542b833d5722fe81b",
       "claim_ids": [
         "full_support",
         "support.full_relative_support_curvature",
@@ -459,7 +459,7 @@
     },
     {
       "anchor": "contact",
-      "text_sha256": "e4838274b24e496ea70c01516fd868b8dcb383a270d81c4db36e33f315f09e4f",
+      "text_sha256": "df8fc77a826faf664479e193fca5043482f28b7dac11c9f820928a634ce2281e",
       "claim_ids": [
         "support.first_variation",
         "support.contact",
@@ -511,7 +511,7 @@
     },
     {
       "anchor": "gap-proof",
-      "text_sha256": "e3c43c2d3c3bfb92a1368c72af4ad738993f320d8dccfea7765ff1379cc729ea",
+      "text_sha256": "0151b732de17b748d034321e8748b269c24c3f14f2e41701226f3e71f2295d2a",
       "claim_ids": [
         "support.positive_curvature",
         "support.zero_curvature",
@@ -591,7 +591,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "b63424723c2d1d529d60ca11bb97f7a58ed15e5349ad30a6d33839c6720b4757",
+      "text_sha256": "a825230953e65db66bac2d0459f0d331cf321584638c24ccf95da63fb1f0d471",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -636,7 +636,7 @@
     },
     {
       "anchor": "density-consequence",
-      "text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
+      "text_sha256": "d0060f70f5740df6adf2a4671a4832ba4eed55c52b7be5336eb244070e884857",
       "claim_ids": [
         "scalar.smooth_positive_density",
         "support.fixed_time_spatial_coercivity"
@@ -708,7 +708,7 @@
     },
     {
       "anchor": "scalar-value",
-      "text_sha256": "6fbc0a9676d5750254f3ba2fa6f6098d1de2d61aee83b1eb9844d18ec450f4e5",
+      "text_sha256": "ea6e9a48fcd2913d3472579a05ff3879e072436b88c695944e916d5afddc3c95",
       "claim_ids": [
         "scalar.manuscript_terminal_value",
         "scalar.parisi_formula",
@@ -790,7 +790,7 @@
     },
     {
       "anchor": "qaoa-boundary",
-      "text_sha256": "934241f69a79d4a12d63e89b229ef65d3cb88631f8374c71cbbbeb1290e15dc8",
+      "text_sha256": "538ede0336f886b56583f7c4a1a1d5f4b7973e1df5f17b6c0c2bd7b4cf59e718",
       "claim_ids": [
         "qaoa_thermodynamic_first",
         "circuit.bounded_trigonometric",
@@ -925,7 +925,7 @@
     },
     {
       "anchor": "evidence-scope",
-      "text_sha256": "263fb8a7e6755fe83b3dffd8c941307a585a6d3bb63219b6b46a4685cc5e62f1",
+      "text_sha256": "52d78db583052fb54a0760814cf5ea71125abbc4b808708e6876e53c164f47ab",
       "claim_ids": [
         "full_support",
         "lean.full_support",
@@ -1029,21 +1029,22 @@
     "26 October 2026 R9 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 534feb1b0753760508bd21802c94d503e4cb71999415a107bd70bd2b0378fd53). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of probability and weighted-mass operations, finite contact and endpoint proof teaching, the rooted-energy bridge and sampled corollary, terminal coefficient normalization and sharper discretization bounds. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 R10 review assimilation: applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Ten advisory returns were reconciled against the frozen mathematical sources, companion texts and graph. The source-review revision account records adopted changes and boundaries. General lessons refined the existing local authoring process; other applicable instructions were retained and applied. Passage hypotheses were recomputed after review of deterministic feedback and random evaluation, feasible weighted-mass operations, finite-chord exclusion of empty support, changed-case transfer, local certificate dictionaries, exact finite observable approximation and source comparisons. Ordinary deductions have separate graph records; formal declarations and checking outcomes are unchanged. Source-assisted agent reading, finite calculations and exact bindings do not establish complete independent analytic acceptance, a new formal replay or human reader comprehension. Earlier review notes refer to their earlier editions; draft/needs_revision is retained.",
     "26 October 2026 independent Terra audit: Applied local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Compared the fixed-direction joint Gaussian premise with the long record and the original rooted construction. Used scoped source identity and citation checks from skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136) to rebind the long-record source and preserve supplied-premise citation credit. The review is source-assisted and bounded; finite computations and structural checks do not establish independent analytic acceptance, a new Lean or Comparator replay, or human reader understanding. Draft and needs_revision are retained.",
-    "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Checked the prescribed-overlap consequence and its same-minimizer citation closure; retained the finite-Gaussian and circuit quantifiers, and distinguished a word-dependent expected-energy estimate from a threshold in accuracy alone. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained."
+    "26 October 2026 R11 source-assisted refinement: The drafting transition used local skills/long-to-short/SKILL.md (SHA256 503c08b1a2ebc517d89bd93d54f865dd8c7b7d915f5731ecdc79ecdc6d98b6c8). Checked the prescribed-overlap consequence and its same-minimizer citation closure; retained the finite-Gaussian and circuit quantifiers, and distinguished a word-dependent expected-energy estimate from a threshold in accuracy alone. Final correspondence and source binding used skills/source-to-graph/SKILL.md (SHA256 4eb57fe7af40d705755dd0dc0d7b7c92e0021b34c4d969e080274c5d6e1c7136). The dated Support build and v2-report binding observations are separate from curated extraction and formal-result eligibility; earlier outcomes remain visible. Source-assisted review, finite checks and strict structural validation do not establish independent analytic acceptance, a new native replay, Comparator acceptance or human reader understanding. Draft and needs_revision are retained.",
+    "3 November 2026 register pass (skills/register/SKILL.md, rules.json RG-01 to RG-26): paragraph-by-paragraph line edit against a 16-paper profile of the cited literature (H.-B. Chen 2026, Lopatto v3 and the external-field paper, Auffinger-Chen-Zeng, Auffinger-Chen 2015 and 2017, Chen-Handschy-Lerman, Jagannath-Tobasco, Montanari, El Alaoui-Montanari-Sellke, Sellke, Farhi-Goldstone-Gutmann-Zhou, Basso et al., Boulebnane et al., and both OpenAI manuscripts). Semicolons, contrast frames and status vocabulary were removed from the argument; an organisation paragraph was added; citation-led sentences were reworded so authors and results carry them; the formal scope became one plain Formal verification paragraph, and the build, extraction and Comparator status moved to the README. Every display and inline formula, theorem statement, hypothesis, quantifier, citation and attribution is unchanged, and all passage anchors are kept. This prose edit is not a new mathematical review."
   ],
   "reading_links": [
     {
       "from_anchor": "density-consequence",
-      "from_text_sha256": "88f63589e7b3a458a253fe4bc32a86302e1628895d46179f1b5f91309c56b515",
+      "from_text_sha256": "d0060f70f5740df6adf2a4671a4832ba4eed55c52b7be5336eb244070e884857",
       "to_stage": "expository",
       "to_anchor": "density-and-approximation",
-      "to_text_sha256": "67008282c8acb406ff489e585827809b7e6aa5e44670a65076f8ed7ca2b87977",
+      "to_text_sha256": "87c9b6cea47401a6f3c12a714632d406da5eca158f0024795e74b50e8105519a",
       "kind": "expands",
       "rationale": "Develops the smoothness and fixed-time local-replacement arguments that the exposition names as further reading. Both treatments retain interior-only strict positivity and separate this ordinary argument from formal-check status."
     },
     {
       "from_anchor": "scalar-value",
-      "from_text_sha256": "6fbc0a9676d5750254f3ba2fa6f6098d1de2d61aee83b1eb9844d18ec450f4e5",
+      "from_text_sha256": "ea6e9a48fcd2913d3472579a05ff3879e072436b88c695944e916d5afddc3c95",
       "to_stage": "expository",
       "to_anchor": "scalar-identities",
       "to_text_sha256": "4d5fdfa1f38316eefdc0f251c63ff870ef4bcc980ad62ebd8293c1c8f841a1ae",
@@ -1052,7 +1053,7 @@
     },
     {
       "from_anchor": "qaoa-boundary",
-      "from_text_sha256": "934241f69a79d4a12d63e89b229ef65d3cb88631f8374c71cbbbeb1290e15dc8",
+      "from_text_sha256": "538ede0336f886b56583f7c4a1a1d5f4b7973e1df5f17b6c0c2bd7b4cf59e718",
       "to_stage": "expository",
       "to_anchor": "qaoa-boundary",
       "to_text_sha256": "59c864bb33ce8e5daf2b932178cabec59d91b4b8f4c0980425df63f46808ce53",
