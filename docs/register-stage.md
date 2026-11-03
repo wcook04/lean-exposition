@@ -2,11 +2,11 @@
 
 The package turns a formal result and its sources into three papers: a long
 record, a short research paper and an exposition. Mathematical care makes them
-correct. It does not make them read like the field's own papers, and a referee
-who meets machine cadence in the first paragraph discounts everything after it.
+correct. It does not by itself make their arguments clear or their prose useful
+to the field's readers.
 The register stage makes writing quality a built-in step of the funnel: every
-draft is measured against the papers it cites, line-edited paragraph by
-paragraph, measured again and read cold before it goes to readers or to a
+draft is compared with suitable passages from the papers it cites, reviewed
+paragraph by paragraph, measured again and read in sequence before it goes to readers or to a
 critique round.
 
 ```text
@@ -51,8 +51,9 @@ lean-exposition register packet --draft short paper.md --draft expository exposi
 
 ## Three fields, one method
 
-The rules were learned in three domains and kept general only where they held
-in all three:
+The rules were learned in three domains. Their retained probes describe corpus
+occurrences or feature distributions; they do not establish improved reader
+understanding or prove that a rule is suitable everywhere:
 
 - **Number theory**: a short paper and a long record on Erdős problem #257
   (irrationality of Lambert-type series), with critique rounds over several
@@ -79,7 +80,9 @@ Each general rule was then tested against the cited literature of all three
 fields: a move the rule prescribes was searched for in each corpus, or a
 detector's corpus median was checked against the direction the rule asks for.
 The results are stored in each rule's `domain_test`, together with the measured
-distance of our own drafts. Rules found in every field stay general. The appendix
+distance of our own drafts. These are descriptive transfer checks, not tests of
+effectiveness. A move's occurrence in several fields supports investigating it;
+its task and exception determine where to use it. The appendix
 rule for the long record was not found in the probability citations and stays a
 candidate scoped to the long record; the lecture-note voice is scoped to the
 exposition; the verification-paragraph rule is scoped to the short paper and
@@ -100,13 +103,16 @@ literature on the same features. Distances are in corpus inter-quartile ranges:
 
 The computer-science companion had already been through a round of register
 repair, which is why its negation distance is small. Those shared distances are
-why the verification, voice, rhythm and negation rules are general.
+why those passages were selected for editorial inspection. They do not make a
+particular rate a writing objective. A mathematical negation can be essential,
+and a reference appendix can properly contain substantial verification detail.
 
 ## Adopted directives
 
 Six rules are adopted directives rather than candidates: the literature as the
 floor and a strong referee's admiration as the target; a paragraph-by-paragraph
-line edit in every round; no em dashes and no rhetorical contrast; formal
+review in every round; removal of empty rhetorical contrast with punctuation
+preferences distinguished from mathematical clarity; formal
 verification as one ordinary paragraph with readable links, no hashes, commands,
 receipts or review-status disclaimers, and metadata in the repository; a
 conditional result naming its input beside the statement; acknowledgements and
@@ -138,4 +144,20 @@ show the move. Rules with no clean specimen say so in `specimens_note`.
 A lesson from a new paper or critique round goes into `rules.json` as
 an instance under the general rule it refines. It becomes a new rule only when it
 changes a decision none of the existing rules covers, and it becomes general only
-after the move is found in the literature of a second field.
+after testing its decision on two differently shaped cases and an exception.
+Read the relevant literature passages, retain the locators and distinguish a
+source precedent from an observed reader outcome. The shared
+[review loop](authoring.md#assess-revise-generalise-and-check) owns that test.
+
+Compare each document with a declared genre and region of prose. Group editions
+of the same work for a numerical baseline; inspect extraction against source
+pages; keep slides, damaged text and metadata out of paragraph comparisons.
+A whole-document profile can remain as context. A detector nominates a passage
+for inspection; its mathematical or instructional job decides the edit, and
+retaining a successful paragraph is a positive outcome.
+
+A review export must preserve the complete active rule inventory and resolve
+every rule ID referenced by its measurements and supplied skills. If private
+specimens or history are omitted, remove those fields individually and disclose
+the omission. Do not remove the enclosing rule. An intentionally selected
+subset must identify itself and supply the referenced operative rule bodies.

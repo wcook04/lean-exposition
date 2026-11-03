@@ -160,6 +160,43 @@ class TestTexStripping(unittest.TestCase):
 
 
 class TestMarkdownStripping(unittest.TestCase):
+    def test_yaml_metadata_excluded_but_block_abstract_kept_with_source_lines(self):
+        for scalar, end in (("|", "---"), (">-", "...")):
+            with self.subTest(scalar=scalar):
+                raw = ("---\ntitle: A metadata title that must not count.\n"
+                       "author: A metadata author who must not count.\nabstract: " + scalar + "\n"
+                       "  We prove that every finite tree has a leaf.\n"
+                       "  This gives an elementary counting argument.\n"
+                       "\n  A second paragraph states the precise application.\n"
+                       "bibliography: private-sources.bib\n" + end + "\n\n"
+                       "## Introduction\n\nThe body begins with the definition of a tree.\n")
+                d = doc(raw, "md")
+                text = " ".join(s.text for s in d.sentences)
+                self.assertNotIn("metadata", text)
+                self.assertNotIn("bibliography", text)
+                self.assertNotIn("private-sources", text)
+                self.assertIn("We prove that every finite tree has a leaf.", text)
+                self.assertIn("A second paragraph states the precise application.", text)
+                self.assertTrue(d.abstract_words)
+                for p in d.paragraphs:
+                    if p.sentences:
+                        self.assertEqual(p.abstract, not p.text.startswith("The body"))
+                for s in d.sentences:
+                    self.assertIn(s.text, raw.splitlines()[s.line - 1].strip())
+
+    def test_yaml_without_abstract_leaves_only_body(self):
+        raw = "---\ntitle: The title should not count.\nauthor: Another name.\n---\n\n" + MD_DOC
+        expected = doc(MD_DOC, "md")
+        actual = doc(raw, "md")
+        self.assertEqual(pr.compute_features(actual), pr.compute_features(expected))
+        self.assertEqual([s.line for s in actual.sentences], [s.line + 5 for s in expected.sentences])
+
+    def test_thematic_breaks_and_unclosed_front_matter_do_not_hide_prose(self):
+        for raw in ("---\nThe theorem follows by a finite counting argument.\n---\n",
+                    "---\ntitle: An incomplete block must not consume the whole document.\n\n"
+                    "The theorem follows by a finite counting argument.\n"):
+            self.assertIn("The theorem follows", " ".join(s.text for s in doc(raw, "md").sentences))
+
     def test_pandoc_markup(self):
         d = doc(MD_DOC, "md")
         t = " ".join(s.text for s in d.sentences)
@@ -266,6 +303,26 @@ class TestProfileAndCompare(unittest.TestCase):
         self.assertIn("loo_outside_rate", st)
         json.dumps(self.prof)
 
+    def test_text_separates_distance_threshold_from_observed_range(self):
+        for value, scale, threshold_flag, range_flag in ((8, 2, True, False), (11, 10, False, True)):
+            with self.subTest(value=value):
+                profile = {"documents": [], "features": {"we_rate": {
+                    "median": 4, "q1": 3, "q3": 5, "iqr": 2, "scale": scale, "min": 0, "max": 10}}}
+                rows = pr.distances({"we_rate": value}, profile)
+                rows["we_rate"]["outside"] = abs(rows["we_rate"]["d"]) > 1.5
+                result = {"manuscript": "test.md", "prose_words": 100, "sentences": 10,
+                          "baseline": None, "threshold": 1.5, "features": rows, "ranked": ["we_rate"],
+                          "specimens": {}, "summary": {"outside": int(threshold_flag),
+                                                       "mean_abs_d": abs(rows["we_rate"]["d"])}}
+                text = pr.render_compare([result], profile)
+                self.assertEqual(rows["we_rate"]["outside"], threshold_flag)
+                self.assertEqual(rows["we_rate"]["beyond_corpus"], range_flag)
+                self.assertEqual("<< |d| exceeds threshold" in text, threshold_flag)
+                self.assertEqual("<< beyond observed corpus min/max" in text, range_flag)
+                self.assertIn("|d| > 1.5: %d features" % threshold_flag, text)
+                self.assertIn("beyond observed corpus min/max: %d features" % range_flag, text)
+                self.assertNotIn("outside the literature range", text)
+
     def test_compare_ranks_ai_further_than_human(self):
         ai = pr.compare_one(self.ai, self.prof, None, 1.5, 3, 5)
         hu = pr.compare_one(self.held, self.prof, None, 1.5, 3, 5)
@@ -360,8 +417,11 @@ class TestPackagedRules(unittest.TestCase):
         self.assertEqual(len(verification), 1)
         self.assertIn(verification[0]["id"], adopted)
         self.assertEqual(verification[0]["scopes"], ["short", "expository"])
-        dashes = [r for r in rules.values() if "em dash" in r["title"].lower()]
-        self.assertTrue(dashes and dashes[0]["id"] in adopted)
+        self.assertIn("RG-17", adopted)
+        self.assertIn("em_dash_rate", rules["RG-17"]["detector"]["features"])
+        self.assertIn("contrast_rate", rules["RG-17"]["detector"]["features"])
+        self.assertIn("preferences", rules["RG-17"]["rule"])
+        self.assertIn("preserve", rules["RG-17"]["limit"].lower())
         self.assertTrue(any("line edit" in r["title"] for r in rules.values() if r["id"] in adopted))
 
     def test_history_records_every_local_rule(self):
@@ -435,7 +495,8 @@ class TestRegisterCli(unittest.TestCase):
         self.assertEqual(self.run_cli(["register", "profile"] + self.lit + ["--out", profile, "--min-words", "50"])[0], 0)
         code, out = self.run_cli(["register", "compare", "--profile", profile, "--format", "text", self.draft])
         self.assertEqual(code, 0)
-        self.assertIn("outside the literature range", out)
+        self.assertIn("|d| > 1.5:", out)
+        self.assertIn("beyond observed corpus min/max:", out)
         self.assertRegex(out, r"\[RG-\d\d")
         self.assertEqual(self.run_cli(["register", "profile"] + self.lit + ["--out", profile])[0], 1)
 

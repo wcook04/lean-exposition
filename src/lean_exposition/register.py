@@ -14,15 +14,19 @@ Inputs
   * Markdown or plain text (.md, .txt), including pandoc output and pdftotext
     extractions (``extracted.md``): markup, extraction junk, reference lists
     and math-heavy lines are removed; two-column page layouts are split.
+    Closed initial YAML metadata is excluded, retaining an ``abstract: |`` or
+    ``abstract: >`` block as abstract prose. Other YAML abstract forms are not
+    extracted; use ``register dump`` to check the input.
   * A directory: uses ``extracted.md`` if present, otherwise every
     .tex/.md/.txt file below it.
 
 Distances: d = (value - corpus median) / scale, where scale is the corpus IQR,
 floored for features the corpus almost never uses. |d| above the threshold
-(default 1.5) is reported as outside the literature range. The profile also
-records, per feature, the leave-one-out rate at which the corpus documents
-themselves fall outside the range: a feature with a high rate is noisy even
-for human papers.
+(default 1.5) is reported as exceeding the distance threshold, separately from
+falling beyond the observed corpus minimum and maximum. This is not a z score
+or a probability. The profile also records, per feature, the leave-one-out
+rate at which the corpus documents themselves exceed a distance threshold
+of 1.5: a feature with a high rate is noisy even for human papers.
 
 Extraction limits: mathematics becomes the token MATH, cross references REF
 and inline code CODE; a sentence that is a semicolon-separated catalogue of
@@ -459,6 +463,41 @@ def _heading_text(line: str, pdf: bool) -> Optional[str]:
     return None
 
 
+def _md_front_matter(lines: List[Tuple[int, str]]) -> List[Tuple[int, str]]:
+    """Exclude closed initial YAML; retain a literal/folded block abstract.
+
+    This handles block scalars, not arbitrary YAML values, aliases or tags.
+    Keep original source lines for the retained prose and never consume an
+    unterminated block or a pair of ordinary thematic breaks.
+    """
+    if not lines or lines[0][1].lstrip("\ufeff").rstrip() != "---":
+        return lines
+    end = next((i for i in range(1, len(lines)) if lines[i][1].rstrip() in ("---", "...")), None)
+    if end is None or not any(re.match(r"^[\w-]+:\s", s) for _, s in lines[1:end]):
+        return lines
+    abstract: List[Tuple[int, str]] = []
+    for i in range(1, end):
+        if not re.fullmatch(r"abstract:\s*[|>][-+]?\s*(?:#.*)?", lines[i][1]):
+            continue
+        for ln, s in lines[i + 1:end]:
+            if s.strip() and not s[0].isspace():
+                break
+            abstract.append((ln, s))
+        while abstract and not abstract[0][1].strip():
+            abstract.pop(0)
+        while abstract and not abstract[-1][1].strip():
+            abstract.pop()
+        if abstract:
+            indent = min(len(s) - len(s.lstrip()) for _, s in abstract if s.strip())
+            abstract = [(ln, s[indent:]) for ln, s in abstract]
+            ln, s = abstract[0]
+            abstract[0] = (ln, PBREAK + ABS_O + s)
+            ln, s = abstract[-1]
+            abstract[-1] = (ln, s + ABS_C + PBREAK)
+        break
+    return abstract + lines[end + 1:]
+
+
 def md_to_stream(raw: str) -> Tuple[str, List[int]]:
     """Convert markdown / pdftotext text to the marker stream.
 
@@ -470,7 +509,7 @@ def md_to_stream(raw: str) -> Tuple[str, List[int]]:
         t = t.replace(a, b)
     t = re.sub(r"[\x00-\x08\x0b\x0e-\x1f]", lambda m: "\f" if m.group(0) == "\f" else "", t)
     src = t.split("\n")
-    lines = [(i + 1, l) for i, l in enumerate(src)]
+    lines = _md_front_matter([(i + 1, l) for i, l in enumerate(src)])
     nonempty = [l for _, l in lines if l.strip()]
     med_len = statistics.median([len(l) for l in nonempty]) if nonempty else 0
     pandoc = bool(re.search(r"\$\$|\[@|^:::|\{reference-type=|^#{1,6} ", t, re.M))
@@ -1380,13 +1419,18 @@ def print_compare(res: Dict, profile: Dict) -> None:
             line += " %9s %+7.2f %s" % (_fmt(r["baseline_value"]), r["baseline_d"],
                                          "toward" if r["moved_toward"] else ("same" if abs(r["d"]) == abs(r["baseline_d"]) else "away"))
         if r["outside"]:
-            line += "   << outside the literature range"
+            line += "   << |d| exceeds threshold"
+        if r["beyond_corpus"]:
+            line += "   << beyond observed corpus min/max"
         if r.get("rules"):
             line += "  [%s]" % ", ".join(r["rules"])
         print(line)
     print("\n* scale floored (corpus IQR smaller than the feature floor)")
+    print("d = (value - corpus median) / max(corpus IQR, feature floor); not a z score or probability")
     s = res["summary"]
-    print("outside the literature range: %d features; mean |d| = %.2f" % (s["outside"], s["mean_abs_d"]))
+    print("|d| > %g: %d features; beyond observed corpus min/max: %d features; mean |d| = %.2f"
+          % (res["threshold"], s["outside"], sum(r["beyond_corpus"] for r in res["features"].values()),
+             s["mean_abs_d"]))
     for k, spec in res["specimens"].items():
         d = res["features"][k]["d"]
         print("\n== %s (d=%+.2f, %s the corpus): specimens from the manuscript" % (k, d, "above" if d > 0 else "below"))

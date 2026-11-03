@@ -73,11 +73,12 @@ Do this before selecting material. Write the answers in the review brief.
 
 Allocate pages from this model: most space to what the new result asks the
 cited authors to learn, least to what their own papers already contain.
-Abstract, opening section and Theorem 1 carry the one point and the history;
-a reader should meet both on page one. When the obligations of this skill
-exceed the page budget, rank them by the reader's next decision and say so in
-the review brief: the mathematics, its hypotheses and the decisive proof come
-first; supporting inventories and evidence detail move to the long record.
+Abstract, opening section and main theorem carry the one point and establish
+its relation to prior work early. Give the hypotheses and immediate credit
+needed to understand the contribution; place detailed predecessor arithmetic
+where the construction makes it useful. Rank competing opening obligations by
+the reader's next decision and say so in the review brief. Supporting inventories
+and evidence detail move to the long record.
 At each revision, compare the rendered section shares with this model and
 name the existing material each addition displaces. Material preserved in the
 long record need not be compulsory reading here.
@@ -85,10 +86,11 @@ long record need not be compulsory reading here.
 Orient before any technical step. Readers of machine-produced mathematics
 report that it jumps into detail, while a human paper's introduction says
 where the argument is going. The opening section therefore runs in this
-order: the result and why a specialist should care, the one mechanism, what is
-new against each named antecedent (with that antecedent's own hypotheses and
-conclusion), and a short plan of every later section and appendix. Each
-section then opens with one sentence saying where it is going.
+order when it serves the argument: the result and why a specialist should care,
+the mechanism, and the closest antecedent with its own hypotheses and conclusion.
+Give a short plan by mathematical role where navigation helps. A comparison
+needing definitions from the construction can follow those definitions; do not
+make every cited predecessor or appendix an opening obligation.
 
 ## Procedure
 
@@ -228,8 +230,10 @@ each with specimens from published papers.
 The reading copy contains no provenance notes, scratch paths, session remarks,
 relative links into unpublished folders, commit hashes, commands or workflow
 vocabulary. Agents and tools are never the subject of a sentence;
-mathematicians, theorems and proofs are. Do not use em dashes, rhetorical
-"not X, but Y" contrasts or taglines. Give the responsible author and the AI
+mathematicians, theorems and proofs are. Remove empty rhetorical contrasts and
+taglines. Preserve negations, comparisons and reference words that carry a
+mathematical distinction; punctuation preferences cannot decide clarity.
+Give the responsible author and the AI
 assistance in a byline and credit the theorem's originators there. Fix
 notation collisions before submission. Render the paper and look at every
 page at reading size: overfull lines, figures, tables, links and the
@@ -237,13 +241,17 @@ reference list.
 
 Every revision round centres a paragraph-by-paragraph line edit of the whole
 paper: for each sentence ask what it asserts, whether the reader needs it
-here, and whether a plainer or more exact sentence would do. There is always
-something to improve. Rank critique findings in this order: mathematics and
+here, and whether a plainer or more exact sentence would do. Retain a successful
+sentence deliberately; a rewrite needs a specific reader benefit. Recheck the
+changed passage's objects, events, quantifiers and resource guarantees against
+its proof, including the meaning of verbs such as chooses, stops and succeeds.
+Rank critique findings in this order: mathematics and
 its hypotheses, then the reader's route through the argument, then prose,
 then the presentation of evidence. An evidence-presentation finding never
-displaces a line edit. A revision pass refines the existing text. Replace or
-tighten a passage instead of appending another one; a review that adds pages
-to a paper whose complaint was misallocation has not repaired it.
+displaces a line edit. Replace or tighten material that repeats an existing
+job. A missing inference may need more space; justify that addition by the
+reader task it repairs and reassess the surrounding allocation. Neither a net
+word reduction nor a quota of changed sentences establishes improvement.
 
 ## Output contract
 
