@@ -11,6 +11,14 @@ paper, after [graph to long](../graph-to-long/SKILL.md) revises the long record,
 after every critique round has been repaired. Nobody needs to ask for it; a draft
 is not ready to send until this stage has run on it.
 
+This stage applies the [three paper purposes and their deliverables](../../docs/authoring.md#what-makes-each-kind-of-paper-good),
+including [standard terminology and literature-grounded prose](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose).
+Name the reader capability each proposed language edit should improve. A
+specialist needs precise compression, a learner needs the operation behind the
+term, and a complete record needs explicit inferences throughout its longer
+proofs. Use accumulated review diagnoses to select those needs; do not collect
+every proposed addition into the next draft.
+
 The papers a manuscript cites set the floor for its prose. The aim is higher:
 prose that a strong referee in that field would single out as better written than
 the source preprint it explains. Mathematical care does not deliver this on its
@@ -107,6 +115,15 @@ down three things before editing it:
 
 Review every sentence; changing every sentence is not an objective. A precise
 paragraph that already supplies its inference is a successful keep decision.
+Retain standard terms consistently rather than cycling through synonyms or
+inventing house names. Explain unfamiliar operations at the audience's level.
+Use a humanizer skill, when available, within this paragraph review to remove
+stock rhetoric and ambiguous referents. Its generic preferences cannot override
+the mathematical register, meaningful contrasts or necessary qualifications.
+The [shared language audit](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+states the complete procedure when no such skill is installed. Re-read the
+whole revised manuscript in sequence; a detector or changed word count cannot
+perform that review.
 For consequential edits, check the objects, quantifiers, events, conditioning,
 resource guarantees and credit before and after, following the
 [active-object checks](../../docs/authoring.md#check-the-active-objects-and-claims).
