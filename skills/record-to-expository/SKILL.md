@@ -16,6 +16,13 @@ Keep the Lean and Comparator outcomes and the relevant source literature
 available throughout. They constrain the account; they do not choose its
 teaching order or prove that a reader understands it.
 
+The deliverable is an [exposition that gives the reader command of the mechanism](../../docs/authoring.md#exposition-give-the-reader-command-of-the-mechanism).
+Choose examples and prerequisite lessons for the operations they enable later,
+not for their number or friendliness. Return to the opening question after the
+reader can answer it. At closeout, apply the [whole-paper purpose review](../../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
+to the rendered edition; distinguish an author's worked reconstruction from an
+actual reader performing it.
+
 ## Preconditions and inputs
 
 Choose an established result and read its complete argument, source statement,

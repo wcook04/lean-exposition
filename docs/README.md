@@ -7,6 +7,9 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
 
 ## Write and review
 
+- [What makes each kind of paper good](authoring.md#what-makes-each-kind-of-paper-good):
+  the purposes and success conditions of the specialist paper, exposition and
+  complete reasoning record.
 - [Workflow](workflow.md): why there are three papers, how to apply the tool and
   methods to another result, and how to package and serve the papers.
 - [Authoring guide](authoring.md): connect passages to claims, assumptions and

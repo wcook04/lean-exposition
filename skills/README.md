@@ -31,6 +31,13 @@ review contract. These steps may expose a mathematical gap. Record that gap
 and return to research; a writing step cannot fill it by changing the
 claim's wording.
 
+The [paper-type ontology](../docs/authoring.md#what-makes-each-kind-of-paper-good)
+defines what makes each deliverable good: assessable decisive ideas for the
+specialist, command of a mechanism for the learner, and a reconstructible
+argument in the complete record. The [whole-paper review](../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
+uses these purposes when judging a revision; passage checks alone cannot
+establish them.
+
 Inputs accumulate; the scope of the paper need not. Load the matching method
 before selecting material, then apply its review questions to the actual
 document. Record consequential choices and observed failures in the existing
