@@ -140,6 +140,13 @@ Use this loop for each substantive review batch:
 
 Check two directions before closing: a changed source claim reaches all its
 recorded uses, and every revised paper claim still reaches adequate support.
+When transferring feedback between companions, transfer the diagnosed reader
+difficulty, then choose the repair for each audience. Record one concrete
+reading task that the changed passage must enable and what must stay: a short
+paper may cite an operation that an exposition must teach. Compare those tasks
+against the revised passages before closing the shared finding. Shared
+mathematical corrections still reach every affected account; an audience-specific
+cut does not. A review of one companion supplies no review coverage for another.
 The graph locates candidates; read the affected passages to decide what needs
 changing. Keep unaffected prose and earlier review records intact. A batch is
 closed when its findings have reasoned dispositions, the affected outputs have
