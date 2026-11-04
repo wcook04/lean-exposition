@@ -21,6 +21,14 @@ Use the three accounts below to choose and assess the delivered work before
 choosing its sections. They are an ontology of the deliverables, not three
 mandatory templates or three lengths of the same text.
 
+Read accumulated feedback across editions before setting the next deliverable.
+Separate a reader's observed difficulty from the proposed remedy and any later
+withdrawal. Repeated complaints about density, navigation or defensive prose
+can describe one failure of emphasis; adding all the requested explanations
+can make it worse. Distil the underlying reader capability, then adjudicate the
+remedies against the mathematics and that paper's audience. Retain useful earlier
+lessons without treating old page numbers or a reviewer's example as current facts.
+
 ### Specialist paper: make the decisive ideas assessable
 
 The reader knows the field and wants to understand what this account contributes,
@@ -97,10 +105,76 @@ purpose. Preserve a caveat that changes the result or explains the hard step.
 Relocate a caveat that merely repeats an already clear boundary. Elegance is
 economy of explanation with the necessary reasoning intact.
 
+These purposes determine the high-level deliverables throughout a paper:
+
+| Paper | Opening establishes | Main account delivers | Ending leaves the reader with |
+| --- | --- | --- | --- |
+| Specialist | The precise contribution, closest antecedent and obstacle overcome | The construction and decisive reductions, with enough detail to assess the difficult step locally | Why the mechanism works, what it changes and its actual scope |
+| Exposition | A meaningful question at the stated prerequisite level | Connected operations, revealing examples and the general argument they prepare | An answer to the opening question and the ability to reason through a nearby changed case |
+| Complete record | The result, models, imported assumptions and route through the argument | Complete selected proofs, explicit dependencies and usable individual proof destinations | The assembled argument, justified parameter conclusions and remaining mathematical boundaries |
+
+These are properties of the finished reading document, not additional sections,
+boxes or administrative deliverables. A figure, example or appendix belongs
+when it supplies one of them. Mathematical preservation, usable references and
+inspection of the rendered pages apply to all three. The finished PDF remains
+the primary deliverable; the review account records why it is ready.
+
 Before accepting a revision, apply the [whole-paper purpose review](reader-review.md#judge-the-whole-paper-against-its-purpose)
 to the delivered edition. Local repairs, clean typography and successful bindings
 cannot substitute for this judgment. Keep its evidence in the existing review
 account, outside the mathematical paper.
+
+### Mathematical register and literature-grounded prose
+
+Apply the existing [register stage](../skills/register/SKILL.md) to enact this
+part of the paper purposes. Its source comparisons and paragraph review serve
+these reader outcomes; they are not a separate numerical standard of quality.
+
+The field's language is part of all three deliverables. Use the established
+term for an established object, operation or result, consistently. Explain an
+unfamiliar term at its first needed use in an exposition; do not replace it with
+a private nickname that the reader must later unlearn. Introduce a new name only
+for a distinction the argument needs and the existing terminology cannot make.
+Keep familiar mathematical vocabulary even when a generic style guide calls it
+formal. Repetition of the same technical term is often more precise than a
+sequence of attractive synonyms.
+
+Ground the prose in actual passages that perform the same mathematical task:
+a research paper's decisive reduction, a lecture's worked operation, or a long
+proof's transition between representations. Inspect how the source establishes
+its objects, states its guarantee, motivates its definitions and connects its
+equations. Adapt that explanatory practice to the present prerequisites and
+proof obligations. An abstract alone cannot calibrate a technical proof; a dense
+expert proof cannot determine a newcomer's teaching order. Record the source
+edition, inspected passage and consequential writing decision in the existing
+review account. Citations and an annex inventory do not establish this use.
+
+Write direct mathematical sentences: name what is sampled, conditioned on,
+bounded or proved, and state why the next inference follows. Replace stock
+announcements, inflated significance, vague metaphors and manufactured contrasts
+with the relation they obscure. Preserve a real contrast when it distinguishes
+two hypotheses, probability laws or notions of correctness. Useful roadmaps and
+short emphatic sentences need no automatic deletion. The aim is readable
+mathematics, not conformity to a word blacklist or imitation of an author's voice.
+
+Once the mathematical content and structure are settled, run a bounded language
+audit, using a humanizer skill when available. Read the whole manuscript in
+sequence, including captions and appendices, with only the knowledge established
+so far and the reader's declared background. Check referents, standard terms,
+logical connections and repetitive rhetorical shapes; revise the complete
+thought rather than swapping watched words. Then compare the edited passages
+against their sources for changed claims, hypotheses, quantifiers, attribution
+and certainty. Return any substantive ambiguity to mathematical review. Do not
+invent informality, personal reactions or weaker terminology to make the prose
+sound human. The working instructions here remain usable without an installed
+skill or a particular provider.
+
+For the specialist, this audit protects precise compression and removes prose
+that distracts from the inference. For the exposition, it preserves the standard
+term while making its operation intelligible. For the record, it makes lengthy
+derivations readable without concealing a premise behind “clearly” or “standard”.
+These requirements apply when selecting and drafting material as well as when
+accepting the final text; a late wording pass cannot repair a missing explanation.
 
 ## Choose a transition
 
@@ -147,21 +221,11 @@ essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
-Calibrate expert prose against original passages in nearby mathematical papers:
-their vocabulary, notation, order of definitions, theorem and proof structure,
-citations, and allocation of detail to the difficult step. Match the source
-edition and mathematical setting before transferring a convention or comparison.
-Preserve the field's useful terms and explain their operations at the reader's
-level. A specialist source may assume background that an exposition must teach.
-Compare its prerequisites and purpose before adopting its order or compression;
-write the explanation independently rather than copying its prose. Distinguish
+Apply [literature-grounded prose](#mathematical-register-and-literature-grounded-prose)
+from the start, using the register stage's actual source comparisons. Distinguish
 the chronology of results and source editions from the order chosen to explain
 them. Companion papers can share a statement without sharing a proof route.
-Record the passage and the editorial decision it informed; neither a literature
-shelf nor a reviewer's description establishes that its practice was inspected.
-Read a passage that performs the same explanatory job, as well as the opening:
-a lecture's worked operation can be a better model for a difficult transition
-than a research abstract. Date historical comparisons and check their quantified
+Date historical comparisons and check their quantified
 objects, hypotheses and access costs against the inspected edition. A source
 may introduce a construction, implement it, or explain why it fails in its
 model; those are different precedents.
@@ -333,6 +397,17 @@ worked example on an expert already fluent in induction fails the selection
 test. These are author-executed applications of the purpose distinctions, not
 reviews of actual reader performance or claims that elementary examples model
 every difficulty of a research paper.
+
+The register requirement also transfers. In the weighted-average account,
+“normalization” names division by the positive total weight: teach that operation
+where needed and retain its name, rather than calling it a “weight-balancing
+engine”. In the induction account, “induction hypothesis” names the assumption
+used to prove the next case; describing it as a “ladder of certainty” obscures
+the implication. Both examples require different amounts of explanation for
+different readers while preserving the same standard terminology. Conversely,
+the technical term “coupling” should not be replaced by “connection” merely
+because the latter sounds simpler: that loses the assertion of a joint law with
+specified marginals. A language audit must preserve mathematical content.
 
 ## Establish that the inputs suffice
 

@@ -27,6 +27,21 @@ pays off the opening question, and whether the account's claimed independence
 matches its dependencies. Uniform detail can conceal the hard step; repeated
 previews can conceal an absent explanation. More signposting alone repairs neither.
 
+Apply the [literature and language review](authoring.md#mathematical-register-and-literature-grounded-prose)
+to each paper. Compare passages doing the same explanatory job in the actual
+literature, and identify what their practice changes in this manuscript. Check
+that the field's terms remain stable, that unfamiliar operations are explained
+at the stated level, and that apparent fluency does not hide a missing subject
+or inference. Read the full revised text sequentially after a humanizer pass;
+a phrase scan cannot establish natural mathematical prose. Check mathematical
+meaning again where wording changed. Keep this evidence outside the paper.
+
+When several reviews describe the same difficulty, synthesize their diagnosis
+before accepting their proposed additions. Test the revised opening, argument
+and ending against the [per-type deliverables](authoring.md#shared-structure-different-allocation).
+Record which earlier criticism no longer applies and why; do not merge
+incompatible recommendations or turn the manuscript into a response to reviewers.
+
 Choose the most consequential remaining obstacle and a concrete revision that
 would remove it. State what the reader should then be able to recover, and what
 must survive the edit. Reorder, replace or relocate before accumulating another

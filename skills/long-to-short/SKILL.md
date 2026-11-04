@@ -16,6 +16,11 @@ to supply the short paper's missing intellectual centre. At closeout, apply the
 [whole-paper purpose review](../../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
 to the rendered edition, including the mathematical payoff of its ending.
 
+Apply the shared [literature-grounded language requirements](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+when drafting, and the [register stage](../register/SKILL.md) after revision.
+Use established terminology, adapt actual explanatory practices from appropriate
+source passages, and judge the final prose against this paper's purpose.
+
 ## Preconditions and inputs
 
 Keep the Lean corpus and its original-source and checking context available
