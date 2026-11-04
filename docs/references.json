@@ -1031,6 +1031,83 @@
       "consumer": "Use explicit half-open UTF-8 coordinates for pinned Markdown passage queries. No indexer, protobuf or formal-source resolver added.",
       "disposition": "pattern_comparison",
       "boundary": "Implementation research is not evidence of mathematical correctness or improved reader comprehension."
+    },
+    {
+      "id": "knuth-larrabee-roberts-mathematical-writing",
+      "title": "Mathematical Writing",
+      "authors": [
+        "Donald E. Knuth",
+        "Tracy Larrabee",
+        "Paul M. Roberts"
+      ],
+      "url": "https://www-cs-faculty.stanford.edu/~knuth/papers/cs1193.pdf",
+      "kind": "primary_writing_guidance",
+      "retrieved_on": "2026-11-04",
+      "edition": "Stanford CS-TR-87-1193; autumn 1987 course report",
+      "selected_files": [
+        {
+          "url": "https://www-cs-faculty.stanford.edu/~knuth/papers/cs1193.pdf",
+          "sha256": "646072129e5c74443447d5de1f8343626bcb7cdefb97758721d3ec15d044f5e0"
+        }
+      ],
+      "reading_scope": "§1 items 5 and 10–14, printed pp. 2–3; §10, printed pp. 20–21.",
+      "decision": "Sequential first-use review, portable statement scope and operational algorithm descriptions; the source also cautions against imitation of a named style.",
+      "license": {
+        "spdx": "NOASSERTION",
+        "redistribution": "reference_only; no source bytes included"
+      },
+      "disposition": "reference_only; applied in docs/authoring.md and the existing transition owners",
+      "boundary": "Selected passage inspection, not a whole-work review, mathematical certification or evidence of measured reader benefit."
+    },
+    {
+      "id": "su-mathematical-writing-2020",
+      "title": "Guidelines for Good Mathematical Writing",
+      "authors": [
+        "Francis Edward Su"
+      ],
+      "url": "https://math.hmc.edu/su/wp-content/uploads/sites/10/2020/08/Guidelines-for-Good-Mathematical-Writing.pdf",
+      "kind": "primary_writing_guidance",
+      "retrieved_on": "2026-11-04",
+      "edition": "Updated 18 August 2020",
+      "selected_files": [
+        {
+          "url": "https://math.hmc.edu/su/wp-content/uploads/sites/10/2020/08/Guidelines-for-Good-Mathematical-Writing.pdf",
+          "sha256": "b1ece2b233160479c49237bda4b8928cec1a946db90e939afd463e082f4ebd02"
+        }
+      ],
+      "reading_scope": "Pages 1–2: audience, prerequisite recall and the worked distance problem.",
+      "decision": "Distinguish an essential hypothesis or unfamiliar inference from routine algebra the intended reader can supply.",
+      "license": {
+        "spdx": "NOASSERTION",
+        "redistribution": "reference_only; no source bytes included"
+      },
+      "disposition": "reference_only; applied in docs/authoring.md and the existing transition owners",
+      "boundary": "Selected passage inspection, not a whole-work review, mathematical certification or evidence of measured reader benefit."
+    },
+    {
+      "id": "childs-quantum-algorithms-2025",
+      "title": "Lecture Notes on Quantum Algorithms",
+      "authors": [
+        "Andrew M. Childs"
+      ],
+      "url": "https://www.cs.umd.edu/~amchilds/qa/qa.pdf",
+      "kind": "primary_mathematical_exemplar",
+      "retrieved_on": "2026-11-04",
+      "edition": "17 April 2025 title-page date",
+      "selected_files": [
+        {
+          "url": "https://www.cs.umd.edu/~amchilds/qa/qa.pdf",
+          "sha256": "6e3a32f0aede35e954d665c909fec41f716b955f041957e723e2724ae3efabd1"
+        }
+      ],
+      "reading_scope": "§1.4, printed pp. 2–3: retained intermediate values, clean-output construction and their explicit maps.",
+      "decision": "Teach an operation through its interface; do not require clean output when the consuming argument only uses retained workspace.",
+      "license": {
+        "spdx": "NOASSERTION",
+        "redistribution": "reference_only; no source bytes included"
+      },
+      "disposition": "reference_only; applied in docs/authoring.md and the existing transition owners",
+      "boundary": "Selected passage inspection, not a whole-work review, mathematical certification or evidence of measured reader benefit."
     }
   ],
   "community_leads": [

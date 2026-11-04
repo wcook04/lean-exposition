@@ -109,6 +109,13 @@ make every cited predecessor or appendix an opening obligation.
 2. Draft the title, abstract and main theorem against the exact same statement.
    Retain the domain, every essential hypothesis, quantifier order, dependence
    of witnesses on parameters and direction of implication.
+   Trace each abstract formula to the body claim and the argument that proves
+   it. If varying a parameter needs an extra uniform input, that route is
+   necessary for that formula, even if optional for a weaker main theorem.
+   Compare the contribution sentence with the primary source's actual results:
+   distinguish inherited mechanisms from added derivations or explicit bounds.
+   Put source credit and reconstructed refinements with a portable theorem
+   statement, without repeating provenance after every routine consequence.
    Explain the force of a restrictive hypothesis with familiar cases where known.
 3. Put the mechanism early, then allocate detail to the inference that makes
    it work. Introduce definitions when their purpose can be understood. Use
@@ -196,6 +203,9 @@ or cited from the literature is simply proved or cited; never describe it as
 formally proved. A formal result that rests on a further mathematical input
 states that input as a hypothesis of the theorem it qualifies. Link only what
 the linked edition proves.
+Let the label preserve a material distinction such as fixed versus varying
+parameters; a shared topic name can conceal a narrower target. Check the
+promised operation at that pinned edition, not only an anchor in today's copy.
 
 Everything else belongs in the long record's verification section or the
 repository metadata, where the [statement audit](../graph-to-long/SKILL.md#audit-the-formal-statement)

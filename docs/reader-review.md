@@ -50,11 +50,27 @@ that point before supplying context from a later section. Keep that observation
 separate from a later reconstruction after help; it identifies a sequencing
 problem that a fluent whole-paper summary can conceal.
 
+Freeze the first-pass file before source checks or later annotation; record its
+digest and the materials already seen, including inherited critique and answers.
+Append resolutions with source locators instead of rewriting the encounter.
+Label a retrospectively expanded sentence index as such. Inspect its boundaries:
+formulas, captions and nonrendered source markers are different coverage units.
+An exhaustive index does not establish contemporaneous observations, independent
+readers or learning gains. Record the actual order and assistance rather than
+silently replacing an unperformed protocol with a similar one.
+
 The QAOA/SK example has several separable tasks: understanding support and an
 atom; reconstructing the endpoint-and-convexity contradiction; distinguishing
 first and second moments; and explaining the ordered limits of the QAOA claim.
 Only ask a task after the corresponding material has been read. An answer about
 the no-gap argument cannot establish comprehension of the circuit construction.
+
+Match each promised outcome to a task that would reveal it: recognition,
+following a taught procedure and reconstructing a proof are different outcomes.
+Replace redundant tasks before adding more. In a worked answer, show the short
+calculation that distinguishes the plausible mistake, including whether a
+conclusion is false or merely unsupported by the proposed bound. Simple recall
+questions need no extended diagnosis.
 
 Match each task to the inference in the edition being read. After a proof-route
 revision, keep useful tasks for unchanged steps and replace or supplement those
@@ -97,6 +113,13 @@ For each actionable observation, retain the disputed passage, the relevant sourc
 the author's decision and its reason. A source error can be corrected directly;
 a preference may call for a different route or no change. Do not decide mathematical
 truth by counting agreeing reports.
+
+Before diagnosing a mathematical error, state the exact required contract and
+check the current operation's cases, including tie rules and early termination.
+A familiar implementation may impose stronger requirements than this consumer
+needs. A finite calculation may refute that criticism without proving the
+general theorem. Preserve the initial uncertainty and explicitly withdraw it
+when resolved; do not convert it silently into a different complaint.
 
 Follow the [authoring contract](authoring.md#track-assumptions-and-citations-through-a-rewrite)
 through the long record, short paper, exposition and their mappings. Rebuild the

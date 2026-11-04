@@ -114,9 +114,19 @@ Use this loop for each substantive review batch:
    continue honestly; do not manufacture a blind-reading claim by restarting.
 2. Group findings by the underlying inference or reader difficulty. Check
    competing explanations against the original sources; record what is already
-   correct and should survive. A repaired passage may answer several reviews.
+   correct and should survive. Before accepting an absence claim, inspect the
+   preceding definition, complete paragraph and immediate continuation. Separate
+   missing information, information supplied later, and a preference for another
+   presentation. Retain a sequencing cost only with its later-resolution locator.
+   Group by the edit needed, preserving secondary locators; report withdrawals
+   and coverage separately from the number of actions. A repaired passage may
+   answer several reviews. Prefer replacement over adding one box per finding.
 3. Revise the appropriate account, its source relations and dependent accounts.
    Test both continuous reading and entry at the affected proof destination.
+   Restart just before each repair and check newly introduced symbols and
+   referents through its next use: an earlier preview can create a new first-use
+   problem. Split paragraphs when the mathematical task changes, keeping each
+   hypothesis with its use; a word-count threshold cannot choose that boundary.
 4. Decide whether an existing instruction was missed or a reusable rule is
    absent. Repair a missed route or acceptance check instead of restating the
    same instruction. Add a rule only when it changes an identifiable decision.
@@ -237,6 +247,12 @@ random. Replacing a local history with a completed transcript can condition on
 the very outcome being predicted. Check these meanings in prose verbs as well
 as formulas. Use ordinary language when formal filtration notation would add
 no help for the intended reader.
+
+At a change of model or parameter regime, say what remains fixed and what is
+replaced, then show the substitution, averaging identity or other bridge used
+by the next theorem. Apply this check to exercises, answers and captions too.
+In a standalone probability example, recall the actual sampling law when it
+determines the result; independence alone does not specify a distribution.
 
 Classify a reused property as a definition, hypothesis, proved conclusion or
 precisely stated input. A normalization proved later for an optimum cannot be
@@ -573,6 +589,15 @@ inspect the replacement at reading size. Do not preserve a poor layout by
 shrinking the text. Check other instances of the same treatment after a reader
 rejects one of them.
 
+Inspect adjacent pages around definitions, short examples, optional proofs and
+answers. Keep a lead-in with what it introduces and mark a long continuation;
+do not force every proof onto one page. Inspect claim, citation and qualifier
+together so a page break cannot detach the scope or credit from the claim.
+For quantitative prose comparisons, use the [register skill's extraction and
+region checks](../skills/register/SKILL.md#3-measure-the-draft). Evidence appendices
+need vocabulary that may be distracting in a teaching argument; the same
+word-frequency target cannot judge both.
+
 Use the [bounded reader-review procedure](reader-review.md) to freeze one edition,
 retain the reader's first response and distinguish later assistance. No schema or
 hash check can establish that a previous acceptance applies to revised prose.
@@ -637,6 +662,35 @@ Export preserves a draft's recorded limits; it does not turn it into a reviewed
 publication. Follow the README's minimal example for concrete files.
 
 ## Method sources and redistribution
+
+### Primary writing passages and their use
+
+The following passages were inspected on 4 November 2026. They constrain
+editorial choices; they are not experimental evidence of improved learning.
+
+- Knuth, Larrabee and Roberts, [*Mathematical Writing*, Stanford report](https://www-cs-faculty.stanford.edu/~knuth/papers/cs1193.pdf),
+  §1, items 5 and 10–14, printed pp. 2–3: self-contained statements, connected
+  explanation, first-use definitions and the reader's available knowledge
+  motivate the sequential and repaired-first-use checks above. §10, pp. 20–21,
+  discusses algorithm steps and invariants but cautions against imitating a
+  named style. Use those devices to expose an operation, not as mandatory form.
+- Francis Edward Su, [*Guidelines for Good Mathematical Writing*](https://math.hmc.edu/su/wp-content/uploads/sites/10/2020/08/Guidelines-for-Good-Mathematical-Writing.pdf),
+  updated 18 August 2020, pp. 1–2: the worked distance problem keeps the
+  positive-coordinate assumption visible while omitting routine algebra for
+  its intended reader. This informs our distinction between a missing inference
+  and a useful compression. It does not justify omitting an unfamiliar step
+  for a different audience.
+- Andrew M. Childs, [*Lecture Notes on Quantum Algorithms*](https://www.cs.umd.edu/~amchilds/qa/qa.pdf),
+  17 April 2025, §1.4, pp. 2–3: the retained-intermediate-values construction
+  precedes the clean-output construction and their maps are explicit. This is
+  an example of teaching an operation through its interface. It also constrains
+  review: requiring a clean output is unjustified when the consuming argument
+  only needs retained workspace. The source supplies a construction, not an
+  assessment of this project's exposition.
+
+These are selected readings, not whole-work reviews. The copies are linked,
+not redistributed. Apply a source's advice with its audience and mathematical
+task; a named authority or an inspected passage is not a universal style rule.
 
 The [Erdős method transfer](erdos-method-transfer.md) traces specific choices to
 the eight public long, short and expository papers. Use its source-located cases

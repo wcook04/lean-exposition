@@ -55,6 +55,9 @@ Before accepting the draft, test the declared audience against the operations
 the text actually uses: for each first consequential use, record whether a
 named prerequisite supplies it, the exposition teaches it, or it is a stated
 input. An operation in none of these is a scope mismatch to repair or report.
+Test the classification with a minimal calculation at this reader's level.
+Teach only what the selected route needs; a specialist need not repeat a
+novice's preparation.
 
 If the argument is incomplete, either select an established part or make the
 unresolved step an explicit subject of the exposition. Do not introduce a new
@@ -187,6 +190,8 @@ Rules that referees of a worked instance found missing:
    After any navigation change, check that the opening map, reading guides
    and local skip permissions agree, and name each route's objective: using
    an imported result, following a full proof, or auditing the evidence.
+   Name the operation the reader can perform on returning. If the proof may be
+   skipped, its needed statement remains on the main route.
    Once the selected result is proved, consider returning to the opening
    question before developing further machinery or consequences. Keep an
    intervening lemma when the promised payoff actually depends on it.

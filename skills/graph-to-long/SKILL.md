@@ -102,6 +102,11 @@ reading order. Keep that first response separate from the assisted reread.
 4. At each assumption's use, say what it permits. Check domains, endpoint
    cases, signs, parameter dependence and witness choices. If several premises
    require one witness, show that the same witness meets them together.
+   For an operational instruction, supply an admissible parameter value when
+   its constant determines validity; an asymptotic cost is not that choice.
+   Check each exit against the promised output, including termination before a
+   sampled time. Check the smallest admitted input before using a denominator
+   or index set. A later asymptotic restriction cannot repair an earlier domain.
 5. Separate constructing a sequence from proving its limiting conclusion.
    Identify the estimate or theorem that justifies a limit, infinite sum or
    interchange of operations. Expose a missing justification as an obligation.
@@ -238,6 +243,17 @@ each essential assumption, the precise citations and the unfinished work.
 Keep formal proofs, ordinary proofs, finite checks and external inputs distinct.
 Do not mark semantic or reader review as performed merely because a checker
 passed. A generated scaffold stays `scaffold` until someone authors it.
+
+Order a verification appendix by the reader's present question, current scope
+and supporting evidence, then optional execution history. Match each heading
+to all entries beneath it. Keep corrected history, but state each current
+limitation once with targeted references unless another use changes its force.
+When a claim needs several declarations, make its clauses and their suppliers
+recoverable together; one primary declaration must not appear to supply their
+aggregate conclusion. In the edition check above, a different commit need not
+mean changed proof bytes, but any claimed byte equivalence needs its own
+evidence. Keep process isolation, checker mode and statement coverage distinct.
+Historical chronology may lead when it is itself the subject of the account.
 
 Markdown remains the prose authority. A graph-associated reading view may reuse
 its exact mapped passages, with their original order and surrounding unmapped
