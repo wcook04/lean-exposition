@@ -11,6 +11,97 @@ Start with the [transition skills](../skills/README.md) and the machine
 skill before selecting or revising material. These are instructions for people
 and agents, not runtime dependencies or a claim of measured writing benefit.
 
+## What makes each kind of paper good
+
+The purpose of a mathematical paper is a change in the reader's understanding.
+Its theorem, construction, proof, examples and references earn their place by
+producing that change. Correctness and accurate credit are necessary throughout;
+neither a complete inventory nor fluent sentences establish a successful paper.
+Use the three accounts below to choose and assess the delivered work before
+choosing its sections. They are an ontology of the deliverables, not three
+mandatory templates or three lengths of the same text.
+
+### Specialist paper: make the decisive ideas assessable
+
+The reader knows the field and wants to understand what this account contributes,
+why the result holds, and whether its mechanism is useful elsewhere. The
+contribution may be a theorem, a proof, a reconstruction or an explanation;
+state that distinction without borrowing the original result's novelty.
+
+The paper's centre is the inference that makes the result possible. Give that
+inference more attention than routine suppliers, refined constants and checks.
+Introduce a technical device through the obstacle it resolves. A specialist
+should recover the proof's governing idea before remembering its notation,
+then inspect enough mathematics to see why the idea works. A familiar lemma
+can be imported with its exact contract; a novel or delicate bridge cannot be
+replaced by a citation to the record merely to save space.
+
+Success means the reader can state the result and its reach, distinguish the
+contribution from antecedents, and reconstruct the decisive argument from this
+paper. References support that reading rather than completing an otherwise
+unintelligible synopsis. The ending explains what the argument has shown and
+what its mechanism permits or leaves unresolved. An accurate but uniformly
+dense abridgement fails this purpose even if every sentence is defensible.
+
+### Exposition: give the reader command of the mechanism
+
+The reader has the stated prerequisites but cannot yet perform the central
+operations. The exposition makes those operations available and connects them
+into a reason for the theorem. Simpler vocabulary alone does not do this.
+
+Choose a concrete question that the result answers. Let examples expose the
+need for a definition or construction, carry the reader through the operation,
+and return to it when the proof needs it. A continuing example reduces the cost
+of learning new objects; choose another when the first hides an essential
+distinction. Explain the passage from the finite case to the general argument
+rather than letting the example stand in for proof. Teach prerequisite machinery
+to the extent the promised understanding needs it. Precisely stated inputs can
+leave substantial supplier proofs outside the teaching route.
+
+Success means the reader can explain why the construction is shaped as it is,
+reconstruct its central steps, and reason about a nearby changed case without
+being told which formula to copy. The ending returns to the opening question
+with the understanding now earned. A friendly tour with many examples fails
+if the reader cannot connect them into the argument; an expert paper with every
+sentence expanded can fail for the same reason.
+
+### Complete reasoning record: make the argument reconstructible
+
+The reader wants to recover the entire selected mathematical argument, including
+steps a specialist paper can safely omit. Completeness is relative to an explicit
+theorem and declared imported results; it does not require rederiving every
+textbook prerequisite or printing the project's history.
+
+Organize the record by mathematical dependency and explanatory use. State the
+contracts needed to follow the main construction before their long derivations
+when that makes a coherent first route. At each substantial proof destination,
+make the local question, available hypotheses and resulting conclusion clear.
+Keep nonroutine transitions, parameter choices, endpoint cases and changes of
+representation recoverable. A failed approach belongs when its exact failure
+illuminates a necessary hypothesis or a remaining boundary. Preserve complete
+proofs while moving repeated inventories and execution records to references.
+
+Success means a reader can follow the main argument continuously and can also
+enter at an individual lemma, establish its premises, recover its proof and
+return to its consumer. Both journeys matter. A repository with every relevant
+fact somewhere in it is not yet a complete mathematical account. Nor is a long
+document whose dependencies must be rediscovered by its reader.
+
+### Shared structure, different allocation
+
+All three relate a question to a precise claim, the claim to its mechanism,
+the mechanism to justified inferences, and those inferences to their scope and
+sources. Their difference is what they enable their reader to do. Share truth
+and attribution; choose order, examples and proof detail for each account's
+purpose. Preserve a caveat that changes the result or explains the hard step.
+Relocate a caveat that merely repeats an already clear boundary. Elegance is
+economy of explanation with the necessary reasoning intact.
+
+Before accepting a revision, apply the [whole-paper purpose review](reader-review.md#judge-the-whole-paper-against-its-purpose)
+to the delivered edition. Local repairs, clean typography and successful bindings
+cannot substitute for this judgment. Keep its evidence in the existing review
+account, outside the mathematical paper.
+
 ## Choose a transition
 
 | Transition | Required input | Authored output | Principal review question |
@@ -35,6 +126,12 @@ next problem. Those are separate outcomes: a sound local revision need not
 yield a new general rule, and a method edit does not establish better writing.
 
 ### Start a pass
+
+Choose the applicable [paper purpose](#what-makes-each-kind-of-paper-good).
+Name the specific understanding the present edition fails to deliver. Repeated
+middling ratings are a signal to diagnose that failure, not an instruction to
+add another round of local improvements. A rating is neither a release gate nor
+an objective an author can satisfy by awarding a higher number.
 
 Record a short brief in the existing review account: the selected result and
 claim boundary; reader and intended takeaway; exact input and output editions;
@@ -214,6 +311,28 @@ These are author-executed transfer checks with explicit expected answers, not
 observed reader responses. Record actual attempts using the
 [reader-review procedure](reader-review.md). When a new lesson fails a transfer
 case, narrow or reject it before treating it as reusable.
+
+The same two cases also test the paper purposes. For weighted averaging, an
+expert account can put the normalization and convex-combination argument first:
+nonnegative normalized weights sum to one, so an average lies between the
+extreme values. A teaching account must first make division by total weight
+intelligible and revisit it when all weights are doubled. A complete record
+supplies the two inequalities by multiplying each extremal bound by each weight
+and summing, including zero weights and the positive-total requirement. Each
+account has a different job even though all use the same mathematics.
+
+For the odd-number identity, an expert account can give the decisive induction
+step directly, crediting the identity as established rather than claiming it
+as a new theorem. The exposition connects the small sums to the operation
+that adds the next odd number, then asks the reader to recover that increment.
+The record supplies the base case, quantified step and conclusion for every
+positive integer. A catalogue of correct sums fails the record's purpose; a
+perfectly valid induction proof can still fail the exposition if its reader
+cannot yet identify the induction hypothesis. Conversely, forcing a long
+worked example on an expert already fluent in induction fails the selection
+test. These are author-executed applications of the purpose distinctions, not
+reviews of actual reader performance or claims that elementary examples model
+every difficulty of a research paper.
 
 ## Establish that the inputs suffice
 
@@ -521,6 +640,12 @@ until targeted review is complete. Updating bindings does not itself invalidate
 an acceptance, so the author must revisit it.
 
 ## Review a transition
+
+First judge the [whole paper against its purpose](reader-review.md#judge-the-whole-paper-against-its-purpose),
+then diagnose its passages. After repairs, repeat that judgment on the rendered
+edition: the reader's route may still fail when every local finding has a
+disposition. Do not average a broken central inference away with good layout,
+complete metadata or correct peripheral calculations.
 
 ### Read the paper in order
 

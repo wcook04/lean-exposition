@@ -5,6 +5,42 @@ is to find where an explanation helps or fails, then make a source-faithful revi
 A favourable impression, a proof check and demonstrated understanding are different
 observations. None substitutes for the others.
 
+## Judge the whole paper against its purpose
+
+Use the [three paper purposes](authoring.md#what-makes-each-kind-of-paper-good)
+before assigning local edits. Read the current paper in sequence at its declared
+prerequisite level; record prior exposure to the argument and reviews. An author
+or agent can assess a route but cannot report an unassisted human reading or a
+learning gain that did not occur.
+
+For the specialist paper, recover the result, contribution and decisive proof
+without asking the long record to supply its central idea. For the exposition,
+trace how examples and explanations equip the reader for the promised operation
+and a changed case. For the long record, trace both the continuous argument and
+entry at a substantial proof, including its premises and return to the result
+it supports. Retain actual passages or responses as evidence.
+
+Assess hierarchy as well as local clarity. Identify the passages carrying the
+main insight and the space devoted to their suppliers. Check whether each
+difficult device arrives after its need becomes intelligible, whether the ending
+pays off the opening question, and whether the account's claimed independence
+matches its dependencies. Uniform detail can conceal the hard step; repeated
+previews can conceal an absent explanation. More signposting alone repairs neither.
+
+Choose the most consequential remaining obstacle and a concrete revision that
+would remove it. State what the reader should then be able to recover, and what
+must survive the edit. Reorder, replace or relocate before accumulating another
+layer of explanation. Re-read the complete affected route after editing, rather
+than inspecting only new sentences. Missing mathematics returns to research;
+clarity cannot certify an unsupported implication.
+
+Close with a bounded judgment of the delivered work: which reader tasks are now
+supported, what evidence was inspected, and which consequential difficulty
+remains or was not assessed. Keep mathematical validity, explanatory coherence,
+navigation and observed reader performance distinct. Scores may summarize an
+opinion, but repeated scores do not diagnose a cause and a self-assigned perfect
+score does not establish excellence. Local issue counts cannot close this review.
+
 ## Freeze what the reader will see
 
 Use the [bundle identity convention](bundle-consumers.md#identify-a-revision-before-requesting-review).

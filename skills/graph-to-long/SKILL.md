@@ -9,6 +9,13 @@ Use this skill to explain and preserve an argument already represented by
 source records. Organize the reasoning record around the argument's dependencies
 and the reader's needs.
 
+The deliverable is a [complete record whose argument is reconstructible](../../docs/authoring.md#complete-reasoning-record-make-the-argument-reconstructible).
+Completeness concerns the selected mathematical argument, not the accumulation
+of everything recorded while developing it. At closeout, apply the
+[whole-paper purpose review](../../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
+to the rendered edition: test the continuous argument as well as entry into a
+substantial proof and the route back to its consumer.
+
 The record is a citable mathematical document: exact statements, reconstructible
 derivations, source references and identified checks. Give substantive results
 and unresolved steps stable destinations. Its length follows the detail needed

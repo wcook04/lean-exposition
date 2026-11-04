@@ -9,6 +9,13 @@ Use this skill when an existing argument needs a coherent research paper.
 Shortening is a choice of contribution and explanation. It cannot strengthen
 the mathematics or upgrade its evidence.
 
+The deliverable is a [specialist paper whose decisive ideas are assessable](../../docs/authoring.md#specialist-paper-make-the-decisive-ideas-assessable).
+Judge selection by that purpose before checking individual passages. The expert
+should recover the mechanism here; use the record for omitted derivations, not
+to supply the short paper's missing intellectual centre. At closeout, apply the
+[whole-paper purpose review](../../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
+to the rendered edition, including the mathematical payoff of its ending.
+
 ## Preconditions and inputs
 
 Keep the Lean corpus and its original-source and checking context available
