@@ -91,6 +91,11 @@ with recoverable support over a large declaration count. Select its necessary
 proof closure, useful alternative arguments and informative obstructions;
 unrelated corpus material remains available without becoming a chapter.
 
+Use the [shared composition rule](../../docs/authoring.md#shared-structure-different-allocation)
+to distinguish the main inference from its supporting derivations. A complete
+record must support a continuous reading as well as local proof lookup; give
+a lemma's exact guarantee at its use before relocating its full proof.
+
 Read an existing draft from beginning to end before repairing isolated passages.
 At each first-use difficulty, record what the text has established and what the
 next inference needs. Then consult the sources. A later definition or an author's

@@ -105,6 +105,33 @@ purpose. Preserve a caveat that changes the result or explains the hard step.
 Relocate a caveat that merely repeats an already clear boundary. Elegance is
 economy of explanation with the necessary reasoning intact.
 
+Composition determines whether these properties work together. At each major
+transition, identify the question the reader can now ask and the mathematical
+fact that answers it. Put the difficult device where that question makes it
+necessary. A preview followed by several pages of unrelated preparation does
+not establish this order. Conversely, a useful proof need not be interrupted
+to announce its purpose again once the purpose is clear.
+
+Distinguish the decisive inference, the guarantee its consumer needs, and the
+derivation that implements the guarantee. These can occupy the same passage
+when understanding the derivation is the point. When the derivation interrupts
+an already intelligible argument, keep its exact statement at the use and give
+the full proof a reachable destination. The specialist paper allocates space to
+assessing the decisive inference; the exposition teaches the operation that
+makes it available; the complete record preserves both the continuous argument
+and every supporting derivation. Moving a proof changes its location, not the
+paper's obligation to supply it.
+
+When successive revisions have accumulated, reverse-outline the actual draft
+by paragraph function before editing it again. Compare repeated introductions,
+examples, caveats and conclusions by the inference each enables. Retain the
+strongest explanation, with later reminders only where the reader needs them.
+An addition must establish a missing fact or replace a less effective account;
+do not add a second explanation solely because a reviewer requested emphasis.
+Test the new order through the next use, including the return from an appendix.
+An alternative proof can remain beside the first when comparing their mechanisms
+is itself the promised contribution.
+
 These purposes determine the high-level deliverables throughout a paper:
 
 | Paper | Opening establishes | Main account delivers | Ending leaves the reader with |

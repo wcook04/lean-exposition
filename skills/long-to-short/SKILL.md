@@ -104,6 +104,11 @@ Give a short plan by mathematical role where navigation helps. A comparison
 needing definitions from the construction can follow those definitions; do not
 make every cited predecessor or appendix an opening obligation.
 
+Before another revision, apply the [shared composition rule](../../docs/authoring.md#shared-structure-different-allocation)
+to the actual draft. Consolidate repeated previews and keep the decisive
+reduction locally assessable; a shorter account that sends its central idea
+elsewhere has failed selection.
+
 ## Procedure
 
 1. Select one connected argument. State what changes relative to prior work
