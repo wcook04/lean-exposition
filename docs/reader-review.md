@@ -59,6 +59,14 @@ An exhaustive index does not establish contemporaneous observations, independent
 readers or learning gains. Record the actual order and assistance rather than
 silently replacing an unperformed protocol with a similar one.
 
+For a strict prospective pass, reveal one semantic unit, save its encounter
+record, and only then reveal the next. Include captions and generated references
+at their positions in the delivered edition. If the interface reveals a whole
+paragraph or page, record that exposure; ordered annotations within that block
+do not establish isolated sentence encounters. This stricter procedure is useful
+when the question concerns first-use dependencies, not a requirement for every
+bounded proof review.
+
 The QAOA/SK example has several separable tasks: understanding support and an
 atom; reconstructing the endpoint-and-convexity contradiction; distinguishing
 first and second moments; and explaining the ordered limits of the QAOA claim.

@@ -140,11 +140,22 @@ Use this loop for each substantive review batch:
 
 Check two directions before closing: a changed source claim reaches all its
 recorded uses, and every revised paper claim still reaches adequate support.
+When transferring feedback between companions, transfer the diagnosed reader
+difficulty, then choose the repair for each audience. Record one concrete
+reading task that the changed passage must enable and what must stay: a short
+paper may cite an operation that an exposition must teach. Compare those tasks
+against the revised passages before closing the shared finding. Shared
+mathematical corrections still reach every affected account; an audience-specific
+cut does not. A review of one companion supplies no review coverage for another.
 The graph locates candidates; read the affected passages to decide what needs
 changing. Keep unaffected prose and earlier review records intact. A batch is
 closed when its findings have reasoned dispositions, the affected outputs have
 been inspected, and any unresolved issue has an exact next check or owner.
 Neither a quota of edits nor another review packet is a completion condition.
+For each disposition, read its current locator against the original difficulty.
+A matching phrase elsewhere in the paper does not establish that this inference
+was repaired. Describe a narrower repair as narrower, and retain a reasonable
+alternative as a reasoned decision rather than calling the requested edit done.
 Close historical findings against the current passage as resolved, unresolved,
 regressed or superseded. An accepted plan is not evidence that the intended
 repair landed. Choose a few reconstruction tasks tied to the promised result
@@ -253,6 +264,12 @@ replaced, then show the substitution, averaging identity or other bridge used
 by the next theorem. Apply this check to exercises, answers and captions too.
 In a standalone probability example, recall the actual sampling law when it
 determines the result; independence alone does not specify a distribution.
+
+When comparing old and new bounds, evaluate both at the same input scale and
+parameter convention before saying that a cost grows, stays fixed or improves.
+Check the paired costs in every companion that uses the comparison. Different
+normalizations can be useful, but name the change of baseline where the
+comparative claim is made.
 
 Classify a reused property as a definition, hypothesis, proved conclusion or
 precisely stated input. A normalization proved later for an optimum cannot be
@@ -576,6 +593,13 @@ Graph validation checks recorded structure; it does not reopen source files or
 resolve citation locators. For sources with a compatible lock, run `audit-sources`
 against the source root. Inspect citation and proof destinations separately.
 
+Read the exact edition at the destination, not merely the current file with a
+matching anchor. If only another edition is available, record what was read and
+what remains unchecked; an anchor check does not establish proof-body identity.
+At a source landing point, date an earlier status statement or explain its
+relation to later receipts. Keep source presence, compilation, axiom inspection
+and comparison distinct; reconciling their chronology performs none of them.
+
 State which sources and sections were assessed, sampled, unavailable or not
 reviewed. An author's cold reread is useful but differs from an independent
 reader test. A successful compile checks the production process; inspect the
@@ -593,6 +617,11 @@ Inspect adjacent pages around definitions, short examples, optional proofs and
 answers. Keep a lead-in with what it introduces and mark a long continuation;
 do not force every proof onto one page. Inspect claim, citation and qualifier
 together so a page break cannot detach the scope or credit from the claim.
+Inspect a display together with the convention specifying its probability law,
+domain or active assumptions. Floats can separate this small mathematical unit
+even when its source lines are adjacent. Move the needed convention into the
+lead-in when that restores the reading order; whole-proof page constraints are
+usually unnecessary.
 For quantitative prose comparisons, use the [register skill's extraction and
 region checks](../skills/register/SKILL.md#3-measure-the-draft). Evidence appendices
 need vocabulary that may be distracting in a teaching argument; the same
