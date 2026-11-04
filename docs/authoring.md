@@ -559,6 +559,23 @@ A compact formal-source link may support a statement without turning its proof
 into software documentation. Remove object-role inventories and workflow labels
 when a mathematical paragraph explains their relationship more naturally.
 
+Apply requests for auditability at the destination where the reader needs them.
+A request for exact theorem names or execution versions usually calls for a
+better linked proof index or verification record, not more identifiers in the
+paper. The index should describe the mathematics and distinguish the statement
+specification from the substantive proof. A link ending at a placeholder
+specification or a forwarding wrapper is not enough for a reader seeking the
+argument; provide the implementation route too. Preserve mathematical model
+assumptions and correspondence limitations beside the claims they qualify.
+
+Before accepting the rendition, inspect the abstract, formalization section,
+appendices and bibliography as printed. For every exposed source path, revision
+hash, declaration name or review/run label, identify a task that requires the
+reader to see that literal text. Move it behind a readable link when none does.
+Check the destination after the move. This is a reader-facing acceptance check,
+not a ban on such data in machine records or on necessary technical syntax in
+a paper whose subject is verification tooling.
+
 Before a long calculation, say what question it answers and where its result
 will be used. If an example tests a theorem's hypothesis, state that theorem
 first. After dense notation, work one small literal case before taking a limit.

@@ -136,6 +136,14 @@ actual checks. An author reporting a fix is distinct from a reader confirming it
 If an earlier acceptance no longer describes the changed content, reopen that
 review. Preserve its original edition, question and actual coverage.
 
+A reviewer may ask for more traceability while the reader needs less visible
+administration. Resolve the underlying need rather than copying the proposed
+presentation. Recheck the actual PDF after the move: can the reader state the
+mathematical scope without interpreting internal names, and can they follow a
+natural-language link to both the formal statement and its substantive proof?
+An unchanged rule in an authoring guide is not evidence that this release
+applied it. Keep this acceptance observation with the exact revised rendition.
+
 Close the authoring pass with the
 [review-and-refinement loop](authoring.md#use-and-improve-the-transition-skills).
 Locate the decision that caused the difficulty, then distinguish an existing

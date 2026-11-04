@@ -35,6 +35,14 @@ identifiers does not repair readability. Show literal code only when the reader'
 task is to inspect that syntax; an index may retain it without making it the
 ordinary reading label. Test both the readable label and its exact destination.
 
+A complete mathematical account need not print its administrative archive.
+Keep complete derivations and mathematical boundaries in the reading edition;
+put duplicated statement catalogues, execution chronology and source identities
+in the existing linked reference. Preserve their anchors and machine mappings
+when moving them. Before release, apply the [printed-reading-path check](../../docs/authoring.md#read-the-paper-in-order)
+to the actual PDF, including its appendices and bibliography. A long record is
+not exempt merely because the short companion is clean.
+
 ## Preconditions and inputs
 
 For a formally grounded record, read the selected Lean declarations, their
