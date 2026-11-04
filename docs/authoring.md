@@ -222,8 +222,13 @@ its difficult passages. Record what an unfamiliar reader has actually been
 told at each inference. Define a quantity before using it and explain the job
 it will do; a later definition does not repair the earlier reading experience.
 Then follow each omitted-proof destination into the long record, check its
-local hypotheses and conclusion, and return to the shorter account. This tests
-both sequential reading and entry at a particular proof step. A consequence,
+local hypotheses and conclusion, and return to the shorter account. Assess
+the complete reading route and entry at a particular proof step separately:
+a usable shortcut can coexist with a costly default order. Before relocating
+a long derivation, list the contracts used before their proofs and the places
+that discharge them; check that the revised complete route still closes every
+obligation it promises to prove. An existing interface defeats an allegation
+of absence, but need not settle a sequencing concern. A consequence,
 alternative proof or comparison should not appear to be a prerequisite merely
 because it occupies the next section.
 
