@@ -132,12 +132,24 @@ make every cited predecessor or appendix an opening obligation.
    invariant is used, say why it suffices without claiming interchangeable
    objects. Routine renaming within the reader's existing setting needs no new
    theorem interface.
+   Compare the default order with any suggested skip-ahead route. When generic
+   machinery delays the quantity that gives it a purpose, try its complete
+   contract, then the application, then the implementation at an exact later
+   destination. Retain the hypotheses, success law and termination guarantees
+   needed to check the application. Keep an implementation in the main route
+   when its mechanism is the contribution or the contract cannot carry the
+   inference; a forward pointer alone does not justify relocation.
 4. Give an intelligible proof or explicitly label a sketch. For every omitted
    argument, give the long record's version and exact theorem or section, then
    read that destination. Check that its proof supplies the missing inference
    with the required assumptions and translated notation. A working link to a
    nearby theorem is insufficient. Identify the result obtained at that
-   destination and where the reader returns. Test one complete short-to-long
+   destination, including the exact event, probability law, quantifiers and
+   budget convention when these determine its use. A correct counterexample
+   to a neighboring claim is only a related example. An example isolating one
+   invalid inference need not satisfy every hypothesis of the final theorem,
+   but state that limited job explicitly. Identify where the reader returns
+   after that inference. Test one complete short-to-long
    journey, including a boundary case when the omitted proof has cases.
    Inspect the delivered PDF as well as the source: a reference should name the
    companion and section even when its link cannot be followed. Test local links
