@@ -137,6 +137,12 @@ Rules that referees of a worked instance found missing:
 - Keep every lemma statement that later steps use outside optional boxes; box
   only proofs. Total every cost term before simplifying to an exponent.
 
+Apply the [shared composition rule](../../docs/authoring.md#shared-structure-different-allocation)
+at each new operation: the preceding example or argument should make its purpose
+apparent. Distinguish teaching the operation from deriving its implementation
+constants, without moving a calculation that this reader needs to understand
+the operation itself.
+
 ## Procedure
 
 1. State the mathematical question and exact result in language the reader can

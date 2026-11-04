@@ -42,6 +42,15 @@ and ending against the [per-type deliverables](authoring.md#shared-structure-dif
 Record which earlier criticism no longer applies and why; do not merge
 incompatible recommendations or turn the manuscript into a response to reviewers.
 
+Test composition separately from the presence of explanations. At a difficult
+construction, can the reader identify the question it answers from the preceding
+text? After a central proof, can they state what has been established and use
+it in the next argument? Check whether a supporting derivation obscures that
+transition, or whether moving it would conceal the very mechanism this paper
+promises to explain. Read the revised transition in the delivered PDF, including
+its page break and any intervening figure. A source-level move alone does not
+establish a better reading sequence.
+
 Choose the most consequential remaining obstacle and a concrete revision that
 would remove it. State what the reader should then be able to recover, and what
 must survive the edit. Reorder, replace or relocate before accumulating another
