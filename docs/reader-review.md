@@ -117,12 +117,13 @@ assumptions and literature credit are recoverable from the short paper. Ask for
 the first unsupported transition and its source destination. Reading the short
 paper is not an audit of every source linked from it.
 
-For someone learning the subject, choose one section of the exposition. After
-reading, ask them to explain its result and argument in their own words with the
-text closed. Save that first account before giving hints or a checklist. Then
-offer one fresh example or changed hypothesis appropriate to what they read.
-Finally reopen the text and ask which passage resolves, or fails to resolve,
-their uncertainty. Record skipped sections as unassessed.
+Give a new learner the opening up to its first worked step. Before showing
+the next step or its answer, change one entry and ask what to do and what
+result follows. Use only the stated prerequisites in the question. Save the
+response and any hints. At the first unfamiliar term, record its location
+and ask the reader to point to the value, object or action it names. If they
+can state the theorem but cannot make the move, revisit the first sentence
+that assumes it. Record which later sections, if any, the learner read.
 
 During a chronological reading, record the first point where the reader needs
 a missing definition, purpose or intermediate inference. Let them interrupt at
