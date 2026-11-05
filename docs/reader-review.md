@@ -68,9 +68,11 @@ that calls for a fresh choice, or record independent selection as unassessed.
 Choose a worked case in which the promised operation or improvement is visible.
 A case designed to exhibit failure answers a different question.
 
-Where a revision explains less well than its predecessor, try the earlier
-passage against today's statement and the sentences on both sides. Record a
-restoration or a reason to keep the current prose. Check the final rendered
+When two orders both give the reader the necessary premises, try the same
+stretch in each order without saying which version is newer. Ask where the
+reader looked back and what was easier to recover in each. Keep the better
+sequence and restore a sentence from the other if it still does useful work
+at the join. A missing definition can be fixed directly. Check the final rendered
 edition in order, including the section after the last edited passage.
 Close the review when the promised reading task succeeds and the necessary
 proofs remain recoverable. Record a missing inference or an untested route
