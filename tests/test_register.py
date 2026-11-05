@@ -512,8 +512,13 @@ class TestRegisterCli(unittest.TestCase):
             request = fh.read()
         self.assertIn("# Round 1", request)
         self.assertNotIn("{job}", request)
-        first = request.index("Sentence- and paragraph-level writing")
-        self.assertLess(first, request.index("Evidence presentation"))
+        self.assertLess(request.index("First judge each draft as a whole"),
+                        request.index("1. **Sentence- and paragraph-level writing"))
+        self.assertIn("Withhold the chosen object and the method cue", request)
+        self.assertIn("If independent selection was untested, say so", request)
+        self.assertIn("follow the intervening pages to its next", request)
+        self.assertIn("Keep a second application", request)
+        self.assertIn("7. **Evidence presentation", request)
         for name in ("register/measurement.json", "register/profile.json", "register/measurement.txt"):
             with open(os.path.join(out, name), encoding="utf-8") as fh:
                 self.assertNotIn(self.tmp.name, fh.read(), name)

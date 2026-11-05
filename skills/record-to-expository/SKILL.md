@@ -1,6 +1,6 @@
 ---
 name: record-to-expository
-description: Teach one result from any formalised instance (Lean corpus, Comparator check, long record and short paper) to a modelled reader, frame first and then examples, choosing prerequisites and proof detail without weakening assumptions or evidence boundaries.
+description: Teach one result from any formalised instance (Lean corpus, Comparator check, long record and short paper) to a reader with stated prerequisites. Begin with a worked step the reader can check and keep the hypotheses and proof scope explicit.
 ---
 
 # Research record to expository paper
@@ -23,10 +23,10 @@ reader can answer it. At closeout, apply the [whole-paper purpose review](../../
 to the rendered edition; distinguish an author's worked reconstruction from an
 actual reader performing it.
 
-Apply the shared [literature-grounded language requirements](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
-when drafting, and the [register stage](../register/SKILL.md) after revision.
-Use established terminology, adapt actual explanatory practices from appropriate
-source passages, and judge the final prose against this paper's purpose.
+Before outlining, [compare a passage from the field](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+to decide where a learner with the stated prerequisites will need help.
+Use that judgment to order the argument and choose which steps to explain.
+Apply the [register stage](../register/SKILL.md) after revision.
 
 ## Preconditions and inputs
 
@@ -83,22 +83,22 @@ do, what they will not know, and the one point they should leave with. Use
 the same one-line reason for the result as the short paper; if the short paper
 lacks it, supply it there first.
 
-Name the audience on page one and answer the reader's first question, why am
-I reading this: who the exposition is for, why the result matters to them,
-what they will be able to do by the end, and which payoffs are coming. Each
-section opens with where it is going and closes with what was gained.
+For a reader new to the subject, start with something they can do using the
+prerequisites you named. Show the data, ask a question about them and work one
+step whose result the reader can check on the page. For example, for a sum
+beginning with $1/3+1/15+1/255$, multiplication by 15 gives $5+1+1/17$ from
+those terms. The first two now add to the integer 6. The irrationality proof
+needs an upper bound on the sum of all the terms left over. The [Erdős 257
+exposition](https://github.com/wcook04/plectis-erdos/blob/f3433226f69af08f145ee18dba1a1b9facf8ade0/paper/257/erdos257-expository-sums-never-fractions.tex#L46-L73)
+works the next such example. Compare how a paper or lecture on your own subject
+introduces its first operation. Use the field's term once the reader can point
+to what it names. Keep the theorem and its hypotheses easy to find.
 
-Give enough frame for this reader to enter the first example: the object,
-the question, the result's scope and the idea the example will help explain.
-An informal result may precede the definitions needed for its precise statement;
-keep the precise theorem easy to find. A page quota must not force a newcomer
-to absorb the theorem's notation, all predecessor bounds and an example map
-before performing one operation. Put detailed history and refined constants
-where the construction makes their significance visible, preserving immediate
-credit for the result and its inputs. Read the opening as one experience:
-can the requested reader say what is being done and why the next example helps?
-Move or replace material when adding a prerequisite explanation; expand where
-a necessary operation genuinely needs teaching, then reassess the whole route.
+Say what to read, where to find it and how to use it. On a board filled with
+zeros and ones, replace “read an entry” with “Read the number in row 2 of
+column 3. If it is zero, cross out column 3 because it cannot be all ones.”
+Attribute each choice or check to the reader or algorithm. Say what an object
+contains in place of attributing knowledge or intention to it.
 
 Draw the objects the reader must hold in mind (the layout of an input, a small
 instance, the critical configuration) instead of describing them only in
