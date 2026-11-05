@@ -47,14 +47,16 @@ and ending against the [per-type deliverables](authoring.md#shared-structure-dif
 Record which earlier criticism no longer applies and why; do not merge
 incompatible recommendations or turn the manuscript into a response to reviewers.
 
-Test composition separately from the presence of explanations. At a difficult
-construction, can the reader identify the question it answers from the preceding
-text? After a central proof, can they state what has been established and use
-it in the next argument? Check whether a supporting derivation obscures that
-transition, or whether moving it would conceal the very mechanism this paper
-promises to explain. Read the revised transition in the delivered PDF, including
-its page break and any intervening figure. A source-level move alone does not
-establish a better reading sequence.
+On the first complete read of the rendered paper, mark where a result becomes
+available and where the reader next needs it. Read the pages between them.
+Identify the first place the reader loses the question, must redo a proof, or
+needs a premise that an earlier cut removed. Compare the two passages and try
+the concrete edit in order. Can the reader now use the result, with its
+conditions, without being told the answer? An intervening example earns its
+place if it equips this audience for that use. A short reminder can also
+restore the thread after a substantial proof. Record the passages and what
+the reader could recover. A successful test on an isolated choice covers only
+that choice.
 
 When the proof turns on a choice, test what the preceding passage makes
 possible. Give the obstacle, available information and constraints. Withhold
@@ -63,18 +65,16 @@ and what it must preserve. Accept another choice if its justification meets
 the same requirements. A calculation done after revealing the choice supports
 a narrower judgment. If the reader has already seen it, use a changed problem
 that calls for a fresh choice, or record independent selection as unassessed.
-Then follow the paper's actual choice through its first use and any later step
-that relies on the same property. Check that an optional refinement does not
-interrupt that connection.
-Check that the main worked example actually exhibits the operation or improvement
-the text promises, and distinguish this job from illustrating a failure case.
+Choose a worked case in which the promised operation or improvement is visible.
+A case designed to exhibit failure answers a different question.
 
-Choose the most consequential remaining obstacle and a concrete revision that
-would remove it. State what the reader should then be able to recover, and what
-must survive the edit. Reorder, replace or relocate before accumulating another
-layer of explanation. Re-read the complete affected route after editing, rather
-than inspecting only new sentences. Missing mathematics returns to research;
-clarity cannot certify an unsupported implication.
+Where a revision explains less well than its predecessor, try the earlier
+passage against today's statement and the sentences on both sides. Record a
+restoration or a reason to keep the current prose. Check the final rendered
+edition in order, including the section after the last edited passage.
+Close the review when the promised reading task succeeds and the necessary
+proofs remain recoverable. Record a missing inference or an untested route
+at its actual scope.
 
 Close with a bounded judgment of the delivered work: which reader tasks are now
 supported, what evidence was inspected, and which consequential difficulty

@@ -35,13 +35,15 @@ improves that reading. Use these criterion numbers to classify findings:
    most). The cited literature's register is the floor; the target is prose a
    strong referee would admire. The measurement points at sentences to reread;
    it never passes or fails a paper.
-2. **Context, purpose and route.** Does each document give the question, the
-   prior position, the key idea and what is new before technical detail, and say
-   who it is for and what comes next?
-3. **Weighting.** Where do the drafts overweight what these readers already know
-   and underweight what is new, surprising or delicate to them? Test one
-   familiar passage by shortening it to a precise import. Name the inference
-   that deserves the space, or the condition the cut would lose.
+2. **Context, purpose and route.** Read each edition in order before proposing
+   line edits. From a decisive result, follow the intervening pages to its next
+   use. Name both passages and say what the reader must carry between them.
+   Identify where the sequence breaks, or what makes the connection work.
+3. **Weighting.** Try a specific cut or move across that sequence. Say what
+   the later passage adds under its own hypotheses. Keep a second application
+   that proves a new claim. Check what the specialist can cite, the learner
+   still needs to do, or the reconstructor must be able to recover. When a prior
+   edition is supplied, consider restoring stronger wording if it still fits.
 4. **What they would ask.** At a decisive choice, pose the problem as it stood
    before the device was named. Withhold the chosen object and the method cue.
    What could this reader propose, and why would it meet the constraints?
@@ -96,8 +98,9 @@ Return one ZIP containing:
    lacks, with specimens of at most 25 words, its scope and a limit.
 4. `method_findings.json`: weaknesses in the method, each with the rule it would
    change.
-5. `verdict.md`: at most one page: would this panel read to the end, which
-   changes matter most, and what must be kept.
+5. `verdict.md`: at most one page. For each paper, give the
+   consequential edit with its two passage locations, or explain why the
+   sequence should stand. State what must survive and how far you actually read.
 
 Rank findings by the difference a repair would make to the intended reader.
 Give a finding only where the quoted passage supports it. State which sources

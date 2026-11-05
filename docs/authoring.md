@@ -144,22 +144,24 @@ makes it available; the complete record preserves both the continuous argument
 and every supporting derivation. Moving a proof changes its location, not the
 paper's obligation to supply it.
 
-When successive revisions have accumulated, reverse-outline the actual draft
-by paragraph function before editing it again. Compare repeated introductions,
-examples, caveats and conclusions by the inference each enables. Retain the
-strongest explanation, with later reminders only where the reader needs them.
-An addition must establish a missing fact or replace a less effective account;
-do not add a second explanation solely because a reviewer requested emphasis.
-Test the new order through the next use, including the return from an appendix.
-An alternative proof can remain beside the first when comparing their mechanisms
-is itself the promised contribution.
+When successive revisions have accumulated, follow the argument from each
+decisive inference to the next place that needs it. What must the reader carry
+between them? If a later section proves the same guarantee under the same
+hypotheses, keep the stronger explanation where the reader first needs it.
+At the later use, give the new deduction. If the hypotheses, conclusion or
+reader's task have changed, keep the extra work that makes the passage valid.
+A second application of one lemma can discharge a different obligation. Two
+proofs can also belong together when comparing their methods is the point.
 
-Protect the moment when a difficult argument pays off. After proving the bound
-or constructing the object that resolves the current obstacle, carry it through
-its immediate use before inserting an optional example, finer constant or
-comparison. Place that material where it answers the reader's next question.
-Keep an example at the use when the reader needs it to understand the inference;
-moving all examples to appendices would defeat the teaching purpose.
+Try the cut in the actual draft. Read across the join, including any figure,
+worked example or page break. A specialist may proceed with a cited guarantee
+once its application is clear. A learner may need to perform the operation
+before continuing. In a reconstruction the full proof must still be reachable
+and the return from it must make sense. If a revision has buried a good
+sentence or derivation, compare the earlier wording at this point and restore
+it when it still supplies the inference with the current hypotheses. Keep a new
+explanation only when it replaces a weaker one or fills an identified gap.
+Once the argument works for its reader, spare it another rewrite.
 
 These purposes determine the high-level deliverables throughout a paper:
 

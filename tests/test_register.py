@@ -516,6 +516,8 @@ class TestRegisterCli(unittest.TestCase):
                         request.index("1. **Sentence- and paragraph-level writing"))
         self.assertIn("Withhold the chosen object and the method cue", request)
         self.assertIn("If independent selection was untested, say so", request)
+        self.assertIn("follow the intervening pages to its next", request)
+        self.assertIn("Keep a second application", request)
         self.assertIn("7. **Evidence presentation", request)
         for name in ("register/measurement.json", "register/profile.json", "register/measurement.txt"):
             with open(os.path.join(out, name), encoding="utf-8") as fh:
