@@ -111,17 +111,21 @@ purpose. Preserve a caveat that changes the result or explains the hard step.
 Relocate a caveat that merely repeats an already clear boundary. Elegance is
 economy of explanation with the necessary reasoning intact.
 
-Explain which properties the proof uses and how the chosen construction supplies
-them. A convenient representation is not a necessary feature of every possible
-proof. Trace an important hypothesis to the inference it supports before calling
-it essential; a failed shortcut establishes only the failure actually shown.
-For a specialist, this distinction makes the reusable argument and its conditions
-visible. For a learner, a nearby changed case tests whether the operation is
-understood. For a complete record, it separates the assumptions of a local lemma
-from those needed to assemble the final theorem. Do this in the mathematics
-already being explained, without adding a master theorem or an inventory of
-hypotheses solely for presentation. A routine imported lemma whose role is clear
-needs no separate discussion of every assumption.
+Where the idea of the proof lies in choosing an object, start one step before
+its definition. What must the next step achieve, and which earlier guarantee
+must survive it? Work from those requirements far enough to suggest a choice.
+For example, an identity that is immediate once a weight is given may explain
+how to check it. To explain how a reader might choose it, show which terms
+the proof needs to cancel and how this suggests the weight. If the same choice
+later pays for a second step, show where the same property is used again.
+
+Give the specialist the decisive comparison. Let the learner try the choice
+in a case where it matters. Retain the full justification and its conditions
+in the complete record. A simple alternative earns space if it shows which
+requirement is hard to satisfy. Its failure establishes a limit of that route.
+Claim uniqueness or optimality only with a proof over the stated alternatives.
+A familiar input used through its stated guarantee needs no invented design
+problem or account of its discovery.
 
 Composition determines whether these properties work together. At each major
 transition, identify the question the reader can now ask and the mathematical

@@ -56,15 +56,16 @@ promises to explain. Read the revised transition in the delivered PDF, including
 its page break and any intervening figure. A source-level move alone does not
 establish a better reading sequence.
 
-Test what the reader can reuse. At the decisive step, identify a property the
-proof requires, the chosen way of supplying it, and the inference that would
-fail without it. Distinguish a demonstrated obstruction from a claim that the
-whole construction is necessary. Check this at the paper's level: the specialist
-recovers a transferable argument with its conditions, the learner reasons through
-a nearby changed case, and the record supplies the dependencies needed to justify
-that reasoning. Do not require an additional abstraction when the concrete proof
-already makes these distinctions clear. Check also that the central inference
-reaches its next use before optional refinements interrupt it.
+When the proof turns on a choice, test what the preceding passage makes
+possible. Give the obstacle, available information and constraints. Withhold
+the proposed object, method name and formula. Ask what the reader would try
+and what it must preserve. Accept another choice if its justification meets
+the same requirements. A calculation done after revealing the choice supports
+a narrower judgment. If the reader has already seen it, use a changed problem
+that calls for a fresh choice, or record independent selection as unassessed.
+Then follow the paper's actual choice through its first use and any later step
+that relies on the same property. Check that an optional refinement does not
+interrupt that connection.
 Check that the main worked example actually exhibits the operation or improvement
 the text promises, and distinguish this job from illustrating a failure case.
 
@@ -162,10 +163,9 @@ revision, keep useful tasks for unchanged steps and replace or supplement those
 that miss the new step. If an easy example makes distinct quantities equal,
 use a nearby case that separates them. Check the other hypotheses and the worked
 answer first; an arbitrary broken example may test a different failure.
-Distinguish executing a named operation from selecting it independently. When
-the latter is the question, withhold the method cue and include a case where
-the familiar argument may not apply. Record whether the reader identifies a
-false conclusion, insufficient information, or only the failure of that route.
+Use the [whole-paper review](#judge-the-whole-paper-against-its-purpose) to
+test selection when the passage promises it. Keep a changed case that separates
+a false conclusion, insufficient information and failure of the proposed route.
 
 ## Preserve the attempt, including assistance
 

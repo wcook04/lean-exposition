@@ -40,11 +40,15 @@ improves that reading. Use these criterion numbers to classify findings:
    who it is for and what comes next?
 3. **Weighting.** Where do the drafts overweight what these readers already know
    and underweight what is new, surprising or delicate to them? Test one
-   passage by shortening it to a precise import and another by reconstructing
-   the hard inference from what the reader has encountered so far.
-4. **What they would ask.** For each section, figure, table, example and
-   appendix: what is it for, does it earn its place, why is a proof done this way
-   and not the obvious way, why is a step spelled out or skipped.
+   familiar passage by shortening it to a precise import. Name the inference
+   that deserves the space, or the condition the cut would lose.
+4. **What they would ask.** At a decisive choice, pose the problem as it stood
+   before the device was named. Withhold the chosen object and the method cue.
+   What could this reader propose, and why would it meet the constraints?
+   In the verdict distinguish selecting a method from checking one shown.
+   Record prior exposure. If independent selection was untested, say so. Accept
+   a justified alternative. A failed shortcut alone cannot establish uniqueness
+   or optimality. Apply this probe where design is part of the paper's purpose.
 5. **Credit and contribution.** Is each prior result credited by author and
    precise statement at its use, and is a new explanation kept distinct from new
    mathematics?
