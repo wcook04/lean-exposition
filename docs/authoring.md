@@ -191,15 +191,22 @@ Keep familiar mathematical vocabulary even when a generic style guide calls it
 formal. Repetition of the same technical term is often more precise than a
 sequence of attractive synonyms.
 
-Ground the prose in actual passages that perform the same mathematical task:
-a research paper's decisive reduction, a lecture's worked operation, or a long
-proof's transition between representations. Inspect how the source establishes
-its objects, states its guarantee, motivates its definitions and connects its
-equations. Adapt that explanatory practice to the present prerequisites and
-proof obligations. An abstract alone cannot calibrate a technical proof; a dense
-expert proof cannot determine a newcomer's teaching order. Record the source
-edition, inspected passage and consequential writing decision in the existing
-review account. Citations and an annex inventory do not establish this use.
+Before outlining or revising, read a passage from the field that does comparable
+mathematical work for a reader with the proposed background. Where does its
+author proceed by citation or a single line? Where do they stop to explain an
+obstruction, work a case or prove an intermediate result? Use that comparison
+to predict what *this* reader can supply and which inference will cost them
+effort. An expert source may take an operation for granted that a learner must
+practise. A familiar theorem can also have an unfamiliar application. State the
+import precisely and spend the explanation on why its hypotheses hold here.
+Adapt how the source explains a difficult step where that practice fits this
+reader. Identify the source edition, passage and decision in the review account.
+
+Plan the encounters in that light. Start from what the reader can already ask.
+Bring in the object or estimate that answers the question, then let its use
+raise the next one. Discovery and verification can reveal why a step is hard.
+Recount either process only where it gives the reader a mathematical reason
+they need, such as a failed attempt that exposes an indispensable condition.
 
 Write direct mathematical sentences: name what is sampled, conditioned on,
 bounded or proved, and state why the next inference follows. Replace stock
@@ -267,16 +274,14 @@ Lean corpus or review packet with having read its contents.
 
 Begin with the relevant skill and the current source versions. Choose the
 mathematical question, supported result and intended reader before choosing
-sections. Rank candidate material by its contribution to that purpose: a proof
-step, necessary prerequisite, useful consequence or revealing example. Keep
-essential assumptions and credit beside their uses. Preserve useful omitted
+sections. Use the [literature comparison](#mathematical-register-and-literature-grounded-prose)
+to decide which inference deserves a proof here, which familiar input can be
+stated and cited, and which supporting calculation needs a reachable destination.
+Keep essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
-Apply [literature-grounded prose](#mathematical-register-and-literature-grounded-prose)
-from the start, using the register stage's actual source comparisons. Distinguish
-the chronology of results and source editions from the order chosen to explain
-them. Companion papers can share a statement without sharing a proof route.
+Companion papers can share a statement without sharing a proof route.
 Date historical comparisons and check their quantified
 objects, hypotheses and access costs against the inspected edition. A source
 may introduce a construction, implement it, or explain why it fails in its

@@ -23,10 +23,10 @@ reader can answer it. At closeout, apply the [whole-paper purpose review](../../
 to the rendered edition; distinguish an author's worked reconstruction from an
 actual reader performing it.
 
-Apply the shared [literature-grounded language requirements](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
-when drafting, and the [register stage](../register/SKILL.md) after revision.
-Use established terminology, adapt actual explanatory practices from appropriate
-source passages, and judge the final prose against this paper's purpose.
+Before outlining, [compare a passage from the field](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+to decide where a learner with the stated prerequisites will need help.
+Use that judgment to order the argument and choose which steps to explain.
+Apply the [register stage](../register/SKILL.md) after revision.
 
 ## Preconditions and inputs
 

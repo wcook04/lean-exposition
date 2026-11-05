@@ -190,8 +190,8 @@ It runs on the long record after `graph-to-long`, on each companion after its
 transition, and again after every critique round, before the next packet is
 built. A critique packet carries the rule set and this stage's measurement of the
 drafts (see [the critique request](../../src/lean_exposition/resources/templates/critique-request.md)
-and `lean-exposition register packet`), so reviewers judge sentences and
-paragraphs first and evidence presentation last.
+and `lean-exposition register packet`). Reviewers judge the whole reading route
+first, then use the paragraph review to find the edits that most improve it.
 
 ## Completion question
 

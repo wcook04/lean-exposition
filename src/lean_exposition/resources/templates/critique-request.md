@@ -18,7 +18,12 @@ perspective is anchored in what a cited paper shows its authors know and care
 about. Use the supplied literature to make each perspective concrete and to check
 every attribution the drafts make.
 
-Judge the drafts against these criteria, **in this order of weight**:
+First judge each draft as a whole. Use the cited passage and the draft's declared
+prerequisites to say what this reader can supply and where they will need help.
+Follow the argument in order. Can a specialist assess the decisive inference,
+a learner use the operation in a changed case, or a reader of the complete record
+reconstruct the proof with its conditions? A line edit earns priority when it
+improves that reading. Use these criterion numbers to classify findings:
 
 1. **Sentence- and paragraph-level writing.** Is every paragraph doing one job
    for this reader, and is every sentence as good as the best sentences in the
@@ -34,8 +39,9 @@ Judge the drafts against these criteria, **in this order of weight**:
    prior position, the key idea and what is new before technical detail, and say
    who it is for and what comes next?
 3. **Weighting.** Where do the drafts overweight what these readers already know
-   and underweight what is new, surprising or delicate to them? Estimate page
-   share now against page share deserved.
+   and underweight what is new, surprising or delicate to them? Test one
+   passage by shortening it to a precise import and another by reconstructing
+   the hard inference from what the reader has encountered so far.
 4. **What they would ask.** For each section, figure, table, example and
    appendix: what is it for, does it earn its place, why is a proof done this way
    and not the obvious way, why is a step spelled out or skipped.
@@ -79,16 +85,16 @@ Return one ZIP containing:
    `severity`; `finding`; `why_it_matters`; `suggested_direction`; optional
    `evidence` locators in the literature or formal source.
 2. `line_edits.md`: for every paragraph of the short paper and the exposition,
-   and for the weakest twenty paragraphs of a long record: the quote, what it is
-   for, what is weak, and the direction of the rewrite, ranked by how much each
-   would improve a cold reading.
+   and for up to twenty consequential passages of a long record: give the quote,
+   its purpose, and a reason to keep or revise it. Rank proposed revisions by
+   how much each would improve a cold reading.
 3. `register_rules.json` returns: any rule you relied on that the packaged set
    lacks, with specimens of at most 25 words, its scope and a limit.
 4. `method_findings.json`: weaknesses in the method, each with the rule it would
    change.
-5. `verdict.md`: at most one page: would this panel read to the end, the five
-   changes that matter most, and what must be kept.
+5. `verdict.md`: at most one page: would this panel read to the end, which
+   changes matter most, and what must be kept.
 
-Aim for several dozen findings, most of them under criterion 1. Every finding
-must quote the current text. State which sources you read in full and which you
-only sampled.
+Rank findings by the difference a repair would make to the intended reader.
+Give a finding only where the quoted passage supports it. State which sources
+you read in full and which you only sampled.

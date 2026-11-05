@@ -16,10 +16,10 @@ to supply the short paper's missing intellectual centre. At closeout, apply the
 [whole-paper purpose review](../../docs/reader-review.md#judge-the-whole-paper-against-its-purpose)
 to the rendered edition, including the mathematical payoff of its ending.
 
-Apply the shared [literature-grounded language requirements](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
-when drafting, and the [register stage](../register/SKILL.md) after revision.
-Use established terminology, adapt actual explanatory practices from appropriate
-source passages, and judge the final prose against this paper's purpose.
+Before outlining, [compare a passage from the field](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+to decide where the intended specialist will need help.
+Use that judgment to order the argument and choose which steps to explain.
+Apply the [register stage](../register/SKILL.md) after revision.
 
 ## Preconditions and inputs
 

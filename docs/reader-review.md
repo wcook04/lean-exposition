@@ -29,10 +29,15 @@ previews can conceal an absent explanation. More signposting alone repairs neith
 
 Apply the [literature and language review](authoring.md#mathematical-register-and-literature-grounded-prose)
 to each paper. Compare passages doing the same explanatory job in the actual
-literature, and identify what their practice changes in this manuscript. Check
-that the field's terms remain stable, that unfamiliar operations are explained
-at the stated level, and that apparent fluency does not hide a missing subject
-or inference. Read the full revised text sequentially after a humanizer pass;
+literature. At the predicted hard step, say what this reader knows on arrival
+and try the inference using only that knowledge and the passage. At a passage
+devoted to familiar material, try removing it or giving its exact result and
+citation. What could the reader no longer understand, apply or reconstruct?
+Keep the explanation if the answer identifies a necessary condition, a delicate
+application or the very operation this paper promises to teach. Otherwise
+release the space to the harder step. Check that the field's terms remain stable
+and that fluency does not hide a missing inference. Read the full revised text
+sequentially after a humanizer pass;
 a phrase scan cannot establish natural mathematical prose. Check mathematical
 meaning again where wording changed. Keep this evidence outside the paper.
 
