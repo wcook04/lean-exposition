@@ -118,10 +118,11 @@ the first unsupported transition and its source destination. Reading the short
 paper is not an audit of every source linked from it.
 
 Give a new learner the opening up to its first worked step. Before showing
-the next step or its answer, change one entry and ask what to do and what
-result follows. Use only the stated prerequisites in the question. Save the
-response and any hints. At the first unfamiliar term, record its location
-and ask the reader to point to the value, object or action it names. If they
+the next step or its answer, change a number or another feature of the example.
+Ask the learner to point to the number or mark they need, say what it represents
+and show how they use it. Use only the stated prerequisites in the question. Save the
+response and any hints. Record the first unfamiliar term the reader cannot
+match to the example and the sentence where they encountered it. If they
 can state the theorem but cannot make the move, revisit the first sentence
 that assumes it. Record which later sections, if any, the learner read.
 

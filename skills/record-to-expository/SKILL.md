@@ -91,14 +91,14 @@ those terms. The first two now add to the integer 6. The irrationality proof
 needs an upper bound on the sum of all the terms left over. The [Erdős 257
 exposition](https://github.com/wcook04/plectis-erdos/blob/f3433226f69af08f145ee18dba1a1b9facf8ade0/paper/257/erdos257-expository-sums-never-fractions.tex#L46-L73)
 works the next such example. Compare how a paper or lecture on your own subject
-introduces its first operation. Use the field's
-term when the reader can point to what it names. Keep the theorem and its
-hypotheses easy to find.
+introduces its first operation. Use the field's term once the reader can point
+to what it names. Keep the theorem and its hypotheses easy to find.
 
-Name who acts and what they do. An algorithm reads a position, a table stores
-a value, and a reader can check that value against the displayed data. Replace
-a sentence about what an object wants or knows with the read, update or check
-on which the inference depends.
+Say what to read, where to find it and how to use it. On a board filled with
+zeros and ones, replace “read an entry” with “Read the number in row 2 of
+column 3. If it is zero, cross out column 3 because it cannot be all ones.”
+Attribute each choice or check to the reader or algorithm. Say what an object
+contains in place of attributing knowledge or intention to it.
 
 Draw the objects the reader must hold in mind (the layout of an input, a small
 instance, the critical configuration) instead of describing them only in
