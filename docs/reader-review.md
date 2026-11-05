@@ -51,6 +51,18 @@ promises to explain. Read the revised transition in the delivered PDF, including
 its page break and any intervening figure. A source-level move alone does not
 establish a better reading sequence.
 
+Test what the reader can reuse. At the decisive step, identify a property the
+proof requires, the chosen way of supplying it, and the inference that would
+fail without it. Distinguish a demonstrated obstruction from a claim that the
+whole construction is necessary. Check this at the paper's level: the specialist
+recovers a transferable argument with its conditions, the learner reasons through
+a nearby changed case, and the record supplies the dependencies needed to justify
+that reasoning. Do not require an additional abstraction when the concrete proof
+already makes these distinctions clear. Check also that the central inference
+reaches its next use before optional refinements interrupt it.
+Check that the main worked example actually exhibits the operation or improvement
+the text promises, and distinguish this job from illustrating a failure case.
+
 Choose the most consequential remaining obstacle and a concrete revision that
 would remove it. State what the reader should then be able to recover, and what
 must survive the edit. Reorder, replace or relocate before accumulating another

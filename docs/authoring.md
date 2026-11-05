@@ -66,6 +66,12 @@ rather than letting the example stand in for proof. Teach prerequisite machinery
 to the extent the promised understanding needs it. Precisely stated inputs can
 leave substantial supplier proofs outside the teaching route.
 
+Choose the main worked case to exhibit the operation being taught. If the text
+promises an improvement, show a case where that improvement occurs; an endpoint
+where it vanishes may then explain a limitation. Before inventing another example,
+look for a stronger case already present in the supporting material. When failure
+or degeneracy is itself the question, that boundary case belongs at the centre.
+
 Success means the reader can explain why the construction is shaped as it is,
 reconstruct its central steps, and reason about a nearby changed case without
 being told which formula to copy. The ending returns to the opening question
@@ -105,6 +111,18 @@ purpose. Preserve a caveat that changes the result or explains the hard step.
 Relocate a caveat that merely repeats an already clear boundary. Elegance is
 economy of explanation with the necessary reasoning intact.
 
+Explain which properties the proof uses and how the chosen construction supplies
+them. A convenient representation is not a necessary feature of every possible
+proof. Trace an important hypothesis to the inference it supports before calling
+it essential; a failed shortcut establishes only the failure actually shown.
+For a specialist, this distinction makes the reusable argument and its conditions
+visible. For a learner, a nearby changed case tests whether the operation is
+understood. For a complete record, it separates the assumptions of a local lemma
+from those needed to assemble the final theorem. Do this in the mathematics
+already being explained, without adding a master theorem or an inventory of
+hypotheses solely for presentation. A routine imported lemma whose role is clear
+needs no separate discussion of every assumption.
+
 Composition determines whether these properties work together. At each major
 transition, identify the question the reader can now ask and the mathematical
 fact that answers it. Put the difficult device where that question makes it
@@ -131,6 +149,13 @@ do not add a second explanation solely because a reviewer requested emphasis.
 Test the new order through the next use, including the return from an appendix.
 An alternative proof can remain beside the first when comparing their mechanisms
 is itself the promised contribution.
+
+Protect the moment when a difficult argument pays off. After proving the bound
+or constructing the object that resolves the current obstacle, carry it through
+its immediate use before inserting an optional example, finer constant or
+comparison. Place that material where it answers the reader's next question.
+Keep an example at the use when the reader needs it to understand the inference;
+moving all examples to appendices would defeat the teaching purpose.
 
 These purposes determine the high-level deliverables throughout a paper:
 
