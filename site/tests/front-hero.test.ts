@@ -46,6 +46,21 @@ describe("the first screen", () => {
     expect(html).toContain(", video on YouTube, 1 minute 32 seconds</span>");
   });
 
+  it("draws five pictures of the site in use, the first chosen, each opening the view it is of", () => {
+    const html = heroHtml(heroLinks("/lean-exposition-site/", { at: "b1-2", anchor: "main-result" }), (tex) => tex);
+    const values = [...html.matchAll(/name="front-shot" value="([a-z]+)"( checked)?/g)].map((m) => [m[1], Boolean(m[2])]);
+    expect(values).toEqual([["follow", true], ["tick", false], ["card", false], ["compare", false], ["checks", false]]);
+    for (const [id] of values) {
+      expect(html).toContain(`src="/lean-exposition-site/stills/tour-${id}-light-1440.webp"`);
+      expect(html).toContain(`src="/lean-exposition-site/stills/tour-${id}-dark-1440.webp"`);
+    }
+    expect(html).toContain('class="shots__pic shots__pic--tick" href="/lean-exposition-site/read/short?l=b1-2&n=full_support#main-result"');
+    expect(html).toContain('class="shots__pic shots__pic--checks" href="/lean-exposition-site/checks"');
+    // The pictures come before the videos, and the table of clauses after the first screen.
+    expect(html.indexOf("shots__frame")).toBeLessThan(html.indexOf("front__watch"));
+    expect(html.indexOf("front__watch")).toBeLessThan(html.indexOf("rosetta__table"));
+  });
+
   it("draws the same five jobs as the top bar", () => {
     const html = frameHtml("/");
     for (const job of ["Read", "Map", "Compare", "What ran", "Lean index"]) expect(html).toContain(`>${job}</a>`);
