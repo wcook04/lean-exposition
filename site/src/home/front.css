@@ -6,23 +6,6 @@ html[data-view="home"] {
   scroll-padding-top: calc(var(--topbar-h) + 16px);
 }
 
-.front__film {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-  max-width: 36rem;
-}
-
-.front__film .film-slot__caption {
-  margin-top: 0;
-}
-
-.front__film .film-slot__text {
-  font-size: var(--fs-ui);
-  line-height: 1.5;
-}
-
 /* ---- The mathematics in plain words: prose beside one of the exposition's figures. ---- */
 
 .front__pair {
@@ -46,14 +29,82 @@ html[data-view="home"] {
   max-width: 36em;
 }
 
-/* The reader as it is: a capture of the page, with one rule round it. */
-.readerstill {
+/* The site in five pictures. Wide: the words are a list on the left and the pictures share
+   one frame on the right, where the one whose words are pointed at or focused is drawn. The
+   list is as tall as the frame, so neither column ends in a gap. */
+.tour {
+  display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 9fr);
-  align-items: center;
+  column-gap: 48px;
+  align-items: start;
+  margin-top: 20px;
 }
 
-.readerstill__link {
+.tour__item {
+  display: contents;
+}
+
+.tour__words {
+  grid-column: 1;
+  padding: 12px 0 13px 16px;
+  border-left: 2px solid var(--rule);
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+
+.tour__item.is-on .tour__words {
+  border-left-color: var(--lit);
+}
+
+.tour__name {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink-2);
+  transition: color var(--t-hover) var(--ease-out);
+}
+
+.tour__item.is-on .tour__name {
+  color: var(--ink);
+}
+
+.front .tour__text {
+  margin: 0;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.tour__open {
+  color: var(--ink);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.tour__fig {
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  margin: 0;
+  visibility: hidden;
+}
+
+.tour__item.is-on .tour__fig {
+  visibility: visible;
+}
+
+.tour__piclink {
   display: block;
+}
+
+.front .tour__limit {
+  max-width: 46em;
+  margin: 28px 0 0;
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
 }
 
 .readerstill__img {
@@ -292,22 +343,6 @@ html[data-view="home"] {
   color: var(--ink-2);
 }
 
-/* Between the stacked hero and a wide window, put both films under the two columns. */
-@media (min-width: 68.8125em) and (max-width: 77.5em) {
-  .front__hero {
-    grid-template-areas:
-      "intro plate"
-      "film film";
-    row-gap: 32px;
-  }
-  .front__intro {
-    grid-area: intro;
-  }
-  .front__films {
-    grid-area: film;
-  }
-}
-
 /* ---- Narrower windows: stack the hero and each row in reading order. ---- */
 
 @media (max-width: 68.75em) {
@@ -317,10 +352,30 @@ html[data-view="home"] {
     padding: 40px 0 48px;
   }
   .front__pair,
-  .front__pair--flip,
-  .readerstill {
+  .front__pair--flip {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
+  }
+  /* Narrow: every picture stands under its own words. */
+  .tour {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tour__words {
+    grid-row: auto !important;
+    border-left-color: var(--rule);
+  }
+  .tour__item.is-on .tour__words {
+    border-left-color: var(--rule);
+  }
+  .tour__name,
+  .tour__item.is-on .tour__name {
+    color: var(--ink);
+  }
+  .tour__fig {
+    grid-column: 1;
+    grid-row: auto;
+    margin: 4px 0 28px;
+    visibility: visible;
   }
   .front__pair--flip .front__fig {
     grid-column: auto;
@@ -331,20 +386,6 @@ html[data-view="home"] {
   }
   .asked > li {
     grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 43.75em) {
-  /* A phone: the site film's frame over its words, at a width that holds its name. */
-  .front__film {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .front__film .film-slot__frame {
-    max-width: 280px;
-  }
-  .front__film .film-slot__caption {
-    margin-top: 0.8rem;
   }
 }
 

@@ -525,7 +525,10 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
           <header className="map-pane__head">
             <div className="map-pane__row map-pane__row--trail">
               {progress && <span className="map-pane__progress">{progress}</span>}
-              <span className="map-pane__legend">Cards darken as you read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.</span>
+              <span className="map-pane__legend">
+                <i className="map-pane__key" aria-hidden="true" />
+                Amber: the passage on screen. Darker: already read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.
+              </span>
             </div>
           </header>
           <div className="map-pane__body" ref={bodyRef}>

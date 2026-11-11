@@ -1,6 +1,6 @@
 // The front page, for a reader arriving for the first time. The first screen is the
 // theorem itself, clause by clause, with Lean beside the mathematics, and the way into
-// reading a paper (heroMarkup.ts; the build puts it in the HTML), then the two films. The
+// reading a paper, with the videos in a row under it (heroMarkup.ts; the build puts it in the HTML). The
 // levels band shows the same argument
 // narrowing from the Lean through the three papers, and doubles as the shelf of papers.
 // Then what OpenAI's release asked and proved, with where each result is explained here;
@@ -15,15 +15,13 @@ import { SITE_FACTS } from "virtual:site-facts";
 import { useEdition } from "../app/data";
 import { routeHref, useRoute } from "../app/router";
 import { AUTHOR, LINKS } from "../app/author";
-import { familyFilm } from "../app/family";
-import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { PAPERS_ANCHOR } from "../app/TopBar";
 import { Out } from "../app/Out";
-import { LINK_CAVEAT } from "../app/caveat";
 import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
 import { FrontHeroBody } from "./FrontHero";
 import { LevelsBand } from "./LevelsBand";
+import { Tour } from "./Tour";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
@@ -43,10 +41,6 @@ const SOURCE_REPOSITORY = "https://github.com/wcook04/lean-exposition#readme";
 /** The Lean modules in the vendored tree, as the edition's index counts them. */
 const LEAN_MODULES = SITE_FACTS.lean?.modules ?? null;
 
-/** The films this site holds a place for, and the released film the mathematics one will be like. */
-const SITE_FILM = familyFilm("interfaces");
-const MATHS_FILM = familyFilm("sk-no-gap");
-
 export function FrontPage() {
   const route = useRoute();
   const anchor = route.view === "home" ? route.anchor : undefined;
@@ -58,13 +52,7 @@ export function FrontPage() {
     <div className="front">
       <FrontHeroBody />
 
-      {/* The site walkthrough and the mathematics explanation, right under the theorem. */}
-      <div className="front__films">
-        <FilmSlot film={SITE_FILM} size="small" className="front__film" sizes="200px" />
-        <FilmSlot film={MATHS_FILM} size="small" className="front__film" sizes="200px" />
-      </div>
-
-      <ReaderStill />
+      <Tour />
 
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
@@ -202,54 +190,6 @@ export function FrontPage() {
         <SisterSites />
       </footer>
     </div>
-  );
-}
-
-const STILL_BASE = `${import.meta.env.BASE_URL}stills/reader-theorem-1`;
-const STILL_ALT = "The short paper open at Theorem 1, with the theorem highlighted. Beside it are the theorem’s card on the graph of the proof and OpenAI’s Lean for it, with the lines that state it lit.";
-
-/** A real capture of the reader, in the reader's scheme: the hidden one is never fetched (`loading="lazy"`). */
-function ReaderStill() {
-  const place = SITE_FACTS.theorem1;
-  const open = routeHref({ view: "read", stage: "short", at: place?.at, node: place ? "full_support" : undefined, anchor: place?.anchor ?? undefined });
-  const ties = SITE_FACTS.ties;
-  return (
-    <section className="front__band front__pair readerstill" aria-labelledby="front-reading">
-      <div className="front__prose">
-        <h2 id="front-reading" className="front__bandtitle">
-          A paper beside its Lean
-        </h2>
-        <p>
-          In the picture, a reader has clicked Theorem 1 of the short paper. The Lean has opened at the lines that state the theorem, and the paper has not moved.
-        </p>
-        {ties && (
-          <p>
-            The three papers have {ties.statements.toLocaleString("en-GB")} marked statements, {ties.withLean} of them with Lean. {LINK_CAVEAT}
-          </p>
-        )}
-        <p>
-          <a href={open}>Open this statement</a>
-        </p>
-      </div>
-      <figure className="front__fig">
-        <a href={open} className="readerstill__link" aria-label="Open Theorem 1 of the short paper with its Lean">
-          {(["light", "dark"] as const).map((scheme) => (
-            <img
-              key={scheme}
-              className={`readerstill__img readerstill__img--${scheme}`}
-              src={`${STILL_BASE}-${scheme}-1440.webp`}
-              srcSet={`${STILL_BASE}-${scheme}-1440.webp 1440w, ${STILL_BASE}-${scheme}-2880.webp 2880w`}
-              sizes="(min-width: 68.75em) 66vw, 100vw"
-              alt={STILL_ALT}
-              width={1440}
-              height={790}
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
-        </a>
-      </figure>
-    </section>
   );
 }
 

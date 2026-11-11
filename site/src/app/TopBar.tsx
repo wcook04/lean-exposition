@@ -1,5 +1,5 @@
 // The site's frame: the family's lockup (the Plectis plait, a rule, this site's mark and name), five jobs
-// (Read first, then Map, Compare, What ran and a quiet Lean index), About as a quieter link, search and
+// (Read first, then Map, Compare, What ran and a quiet Lean index), Videos (VideosMenu.tsx), About as a quieter link, search and
 // the scheme. Read is a menu button listing the three accounts with the job each one
 // does, then the front page's shelf of papers and PDFs. On phones the same items
 // sit behind one menu button so the bar never clips.
@@ -12,6 +12,7 @@ import { currentScheme, onSchemeChange, setScheme, type Scheme } from "./theme";
 import { PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
 import { FAMILY } from "./family";
+import { VideoRows, VideosMenu } from "./VideosMenu";
 
 interface Props {
   route: Route;
@@ -107,6 +108,7 @@ export function TopBar({ route, onSearch }: Props) {
       {/* The Lean read in a paper, the Lean index and Compare read a pointed name here, so nothing on the page waits for a hover. */}
       {(route.view === "read" || route.view === "lean" || route.view === "compare") && <div id={BAR_LINE} className="topbar__line" />}
       <div className="topbar__tools">
+        <VideosMenu />
         <a className="topbar__about" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
           About
         </a>
@@ -351,6 +353,12 @@ function PhoneMenu({ route, job, drafts, scheme }: { route: Route; job: Job; dra
               <a className="phonemenu__job phonemenu__job--quiet" href={routeHref({ view: "about" })} aria-current={job === "about" ? "page" : undefined}>
                 About
               </a>
+            </li>
+            <li>
+              <span className="phonemenu__job phonemenu__job--head" id={`${id}-videos`}>
+                Videos
+              </span>
+              <VideoRows labelledBy={`${id}-videos`} />
             </li>
           </ul>
         </nav>

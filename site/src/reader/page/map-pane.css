@@ -467,6 +467,17 @@
   color: var(--ink-3);
 }
 
+/* The key's one mark: the amber outline a card takes while its passage is on screen. */
+.map-pane__key {
+  display: inline-block;
+  width: 14px;
+  height: 9px;
+  margin-right: 6px;
+  border: 1.5px solid var(--lit);
+  border-radius: 3px;
+  vertical-align: -1px;
+}
+
 /* The note about undrawn links and the assumption tags belong to the full map: here
    a tile is its name, with nothing over its text. The sheet lists a record's assumptions. */
 .map-pane .sim,

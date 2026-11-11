@@ -131,15 +131,17 @@ deploy key scoped to that public output repository. Only the built website is co
 This site is one of [Will Cook's websites](https://wcook04.github.io/), which share a
 header lockup (the Plectis plait, which opens the home page, a short rule, then this
 site's mark and name), film slots and a footer list of the other sites, as the [family contract](https://github.com/wcook04/wcook04.github.io/blob/main/docs/family.md)
-describes. `src/app/family.json` is an unchanged copy of that repository's `sites.json`
+describes. `src/app/family.json` is an unchanged copy of that repository's `family.json`
 and `src/styles/family.css` of its `assets/family/family.css`; `src/styles/tokens.css`
 maps the stylesheet's `--fam-*` names onto this site's tokens. `public/plectis.svg` is an unchanged
 copy of that repository's `assets/family/marks/plectis.svg`, served beside the site. A video without a
 YouTube address is held "In preparation". When one is published, copy the updated
-`sites.json` to `src/app/family.json` and the film's two stills
-(`assets/films/<id>-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
+`family.json` to `src/app/family.json` and the film's two stills
+(named by the registry's `still`, `-640.webp` and `-1280.webp`) to `public/films/`, then rebuild: its
 slot shows the still, play chip and running time and opens YouTube. The tests check
-that every released film this site shows has both stills.
+that every released film this site shows has both stills. `src/app/siteFilms.ts` lists the
+three videos the front page and the bar's Videos button show, the short video of this
+website first.
 
 ## Run it locally
 
