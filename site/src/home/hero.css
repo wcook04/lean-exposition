@@ -24,10 +24,157 @@ html[data-view="home"] .topbar {
   grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
   align-content: center;
   align-items: center;
-  gap: 40px 48px;
+  gap: 28px 48px;
   box-sizing: border-box;
   min-height: min(calc(100svh - var(--topbar-h)), 46rem);
-  padding: 36px 0 32px;
+  padding: 24px 0 28px;
+}
+
+/* The site in use: five captures of the real pages in one frame, chosen by the row of
+   names above it. Radio buttons and :has(), so the first picture is drawn before any script
+   runs and the arrow keys move between them. */
+.shots {
+  min-width: 0;
+  margin: 0;
+}
+
+.shots__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.shots__tab {
+  position: relative;
+  display: inline-flex;
+}
+
+.shots__tab input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.shots__tab span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-control);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out), border-color var(--t-hover) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shots__tab:hover span {
+    border-color: var(--ink-2);
+    color: var(--ink);
+  }
+}
+
+.shots__tab:has(input:checked) span {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.shots__tab:has(input:focus-visible) span {
+  outline: 2px solid var(--lit);
+  outline-offset: 2px;
+}
+
+/* The frame keeps one size whichever picture is in it; a capture's last rows are cut. */
+.shots__frame {
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+}
+
+.shots__pic,
+.shots__cap {
+  display: none;
+}
+
+.shots__pic {
+  height: 100%;
+}
+
+.shots__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.shots__img--dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shots__img--light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .shots__img--dark {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .shots__img--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .shots__img--dark {
+  display: block;
+}
+
+.shots:has(input[value="follow"]:checked) :is(.shots__pic--follow, .shots__cap--follow),
+.shots:has(input[value="tick"]:checked) :is(.shots__pic--tick, .shots__cap--tick),
+.shots:has(input[value="card"]:checked) :is(.shots__pic--card, .shots__cap--card),
+.shots:has(input[value="compare"]:checked) :is(.shots__pic--compare, .shots__cap--compare),
+.shots:has(input[value="checks"]:checked) :is(.shots__pic--checks, .shots__cap--checks) {
+  display: block;
+}
+
+/* Two lines are held for the words, so choosing a picture moves nothing under it. */
+.front .shots__cap {
+  min-height: 2.9em;
+  margin: 10px 0 0;
+  font-size: var(--fs-ui);
+  line-height: 1.45;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.shots__cap a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* The theorem, clause by clause, under the first screen. */
+.front__clauses {
+  padding: 28px 0 56px;
+}
+
+.front__clauses-title {
+  margin: 0 0 20px;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 /* What the site is, in one line above the result's name. */
@@ -338,7 +485,7 @@ html[data-view="home"] .topbar {
     padding-top: 24px;
   }
 
-  .rosetta {
+  .shots {
     order: 2;
   }
 

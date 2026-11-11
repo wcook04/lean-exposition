@@ -309,13 +309,14 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   (`src/app/VideosMenu.tsx`) opens the same three on every page, so a reader in a paper reaches
   them without leaving it. Titles, addresses, lengths and stills come from the family registry;
   `tests/front-hero.test.ts` pins the order and the addresses.
-- **Five real pictures follow, in the short video's order.** `src/home/Tour.tsx` names five
-  things the site does (the graph follows the paper, a tick opens the Lean, a card opens its
-  step, Compare, What ran), each beside a capture of the real page in the reader's scheme, and
-  each opens the view it is of. Wide, the pictures share one frame and the one whose words are
-  pointed at or focused is drawn; narrow, each stands under its words. Retake them with
-  `scripts/capture-tour-stills.py` when those pages change visibly (`loading="lazy"`, so the
-  scheme not in use is never fetched).
+- **The first screen is the site in use.** Beside the title are five captures of the real
+  pages, in the short video's order (paper and graph, a statement and its Lean, a card and its
+  step, Compare, What ran), in one frame under a row of names. They are radio buttons and
+  `:has()` in `heroMarkup.ts` and `hero.css`, so the first picture is drawn before any script
+  runs, the arrow keys move between them, and choosing one moves nothing. Each picture and its
+  line of words open the view it is of. Retake them with `scripts/capture-tour-stills.py` when
+  those pages change visibly (`loading="lazy"`, so only the picture and scheme in use are
+  fetched). The theorem, clause by clause, is the band under the first screen.
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and

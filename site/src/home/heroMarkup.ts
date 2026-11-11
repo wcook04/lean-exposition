@@ -78,6 +78,11 @@ export interface HeroLinks {
   /** The step that records that the two Lean models are not connected. */
     models: string;
   about: string;
+  checks: string;
+  /** A step of the exposition, opened from its card on the graph. */
+  step: string;
+  /** The site's base path, for the pictures under public/stills/. */
+  base: string;
   /** The videos on the first screen: the short one of this website first, then the two about the result. */
   films: SiteFilm[];
 }
@@ -91,6 +96,9 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   theorem: `${base}compare?n=full_support`,
     models: `${base}map?n=${MODELS_STEP}`,
   about: `${base}about#made-by`,
+  checks: `${base}checks`,
+  step: `${base}read/expository?n=support.diffusion`,
+  base,
   films: siteFilms(base),
 });
 
@@ -111,6 +119,93 @@ function filmHtml(film: SiteFilm, lead: boolean): string {
 </figure>`;
 }
 
+/**
+ * Five pictures of the site in use, in the order the short video goes through it. Each is a
+ * capture of the real page (scripts/capture-tour-stills.py) in the reader's scheme, and each
+ * opens the view it is of. They are radio buttons and plain CSS, so the first one is drawn
+ * before any script runs and the keyboard's arrow keys move between them.
+ */
+interface Shot {
+  id: "follow" | "tick" | "card" | "compare" | "checks";
+  tab: string;
+  text: string;
+  link: string;
+  href: string;
+  alt: string;
+}
+
+const heroShots = (links: HeroLinks): Shot[] => [
+  {
+    id: "follow",
+    tab: "Paper and graph",
+    text: "Beside each paper is a graph of its argument, with a card for each step. As the paper scrolls, the cards for the passage on screen are outlined in amber.",
+    link: "Open the exposition",
+    href: links.exposition,
+    alt: "The exposition open at its third section. On the graph beside it, three cards are outlined in amber.",
+  },
+  {
+    id: "tick",
+    tab: "A statement and its Lean",
+    text: "A reader has clicked Theorem 1 of the short paper. The Lean has opened at the lines that state the theorem, and the paper has not moved.",
+    link: "Open this statement",
+    href: links.beside,
+    alt: "The short paper open at Theorem 1, with the theorem highlighted. Beside it is OpenAI’s Lean for the theorem, with the lines of its statement highlighted.",
+  },
+  {
+    id: "card",
+    tab: "A card and its step",
+    text: "A reader has clicked the card “Controlled diffusion exists uniquely” on the graph. The paper has moved to the passage that states the step, and the Lean for the step has opened beside it.",
+    link: "Open this step",
+    href: links.step,
+    alt: "The exposition at its passage on the controlled diffusion, highlighted. Beside it is the Lean definition IsDiffusion, with its lines highlighted.",
+  },
+  {
+    id: "compare",
+    tab: "Compare",
+    text: "On the Compare page, the Lean for one step is set beside the passages on that step in the papers.",
+    link: "Open Compare at the main theorem",
+    href: links.theorem,
+    alt: "The Compare page at the main theorem: a column with its Lean statement, a column of passages from the long record and a column of passages from the short paper.",
+  },
+  {
+    id: "checks",
+    tab: "What ran",
+    text: "On the What ran page, each recorded run is listed with its result, and beside each result is what it leaves open.",
+    link: "Open What ran",
+    href: links.checks,
+    alt: "The What ran page: a table with rows for the Lean compile, the statement, the axioms, any sorry and Comparator. Each row has what ran with its result, and what that leaves open.",
+  },
+];
+
+function shotsHtml(links: HeroLinks): string {
+  const shots = heroShots(links);
+  const still = (id: string, scheme: string, width: number) => `${links.base}stills/tour-${id}-${scheme}-${width}.webp`;
+  const tabs = shots
+    .map((shot, i) => `<label class="shots__tab"><input type="radio" name="front-shot" value="${shot.id}"${i === 0 ? " checked" : ""} /><span>${escapeHtml(shot.tab)}</span></label>`)
+    .join("");
+  const pics = shots
+    .map(
+      (shot) =>
+        `<a class="shots__pic shots__pic--${shot.id}" href="${shot.href}" tabindex="-1" aria-label="${escapeHtml(shot.link)}, the view in this picture">${["light", "dark"]
+          .map(
+            (scheme) =>
+              `<img class="shots__img shots__img--${scheme}" src="${still(shot.id, scheme, 1440)}" srcset="${still(shot.id, scheme, 1440)} 1440w, ${still(shot.id, scheme, 2880)} 2880w" sizes="(min-width: 68.75em) 58vw, 100vw" alt="${escapeHtml(shot.alt)}" width="1440" height="790" loading="lazy" decoding="async" />`,
+          )
+          .join("")}</a>`,
+    )
+    .join("\n");
+  const caps = shots.map((shot) => `<p class="shots__cap shots__cap--${shot.id}">${escapeHtml(shot.text)} <a href="${shot.href}">${escapeHtml(shot.link)}</a></p>`).join("\n");
+  return `<figure class="shots">
+<div class="shots__tabs" role="radiogroup" aria-label="Pictures of this website in use">${tabs}</div>
+<div class="shots__frame">
+${pics}
+</div>
+<figcaption class="shots__caps">
+${caps}
+</figcaption>
+</figure>`;
+}
+
 /** The hero, typeset with `tex`, a function from TeX source to KaTeX HTML. */
 export function heroHtml(links: HeroLinks, tex: (source: string) => string): string {
   const rows = HERO_ROWS.map(
@@ -125,18 +220,9 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
 <h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A gap is an interval on which an order parameter stays flat. A minimising order parameter has none: it increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
-<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s.</p>
+<p class="front__made">Made by <a href="${links.about}">Will Cook</a> using AI. The theorem and the Lean proof are OpenAI’s. Lean is a programming language whose compiler rejects a proof with a wrong step.</p>
 </div>
-<figure class="rosetta">
-<table class="rosetta__table">
-<caption class="visually-hidden">The main theorem, clause by clause: OpenAI’s Lean statement beside Theorem 1 of the short paper.</caption>
-<thead><tr><th scope="col">In OpenAI’s Lean</th><th scope="col">In the short paper, Theorem 1</th></tr></thead>
-<tbody>
-${rows}
-</tbody>
-</table>
-<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a></figcaption>
-</figure>
+${shotsHtml(links)}
 ${
   links.films.length
     ? `<div class="front__watch" id="${VIDEOS_ANCHOR}" role="group" aria-label="Videos">
@@ -154,6 +240,19 @@ ${links.films.slice(1).map((film) => filmHtml(film, false)).join("\n")}
 <p class="front__guide-link"><a href="${links.beside}">Theorem 1 with its Lean open</a></p>
 </div>
 <p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p>
+</section>
+<section class="front__clauses" aria-labelledby="front-clauses">
+<h2 id="front-clauses" class="front__clauses-title">Theorem 1, clause by clause</h2>
+<figure class="rosetta">
+<table class="rosetta__table">
+<caption class="visually-hidden">The main theorem, clause by clause: OpenAI’s Lean statement beside Theorem 1 of the short paper.</caption>
+<thead><tr><th scope="col">In OpenAI’s Lean</th><th scope="col">In the short paper, Theorem 1</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+<figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a></figcaption>
+</figure>
 </section>`;
 }
 

@@ -1,7 +1,8 @@
-// The front page, for a reader arriving for the first time. The first screen is the
-// theorem itself, clause by clause, with Lean beside the mathematics, and the way into
-// reading a paper, with the videos in a row under it (heroMarkup.ts; the build puts it in the HTML). The
-// levels band shows the same argument
+// The front page, for a reader arriving for the first time. The first screen is the site in
+// use: the result's name and the way into reading a paper, beside five pictures of the real
+// pages, with the videos in a row under them (heroMarkup.ts; the build puts it in the HTML).
+// Under it are how to read a paper here and the theorem, clause by clause, with Lean beside
+// the mathematics. The levels band shows the same argument
 // narrowing from the Lean through the three papers, and doubles as the shelf of papers.
 // Then what OpenAI's release asked and proved, with where each result is explained here;
 // the mathematics of the proof with the exposition's two figures; and what has been
@@ -21,7 +22,7 @@ import { Out } from "../app/Out";
 import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
 import { FrontHeroBody } from "./FrontHero";
 import { LevelsBand } from "./LevelsBand";
-import { Tour } from "./Tour";
+import { LINK_CAVEAT } from "../app/caveat";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
@@ -52,7 +53,11 @@ export function FrontPage() {
     <div className="front">
       <FrontHeroBody />
 
-      <Tour />
+      {SITE_FACTS.ties && (
+        <p className="front__limit">
+          The three papers have {SITE_FACTS.ties.statements.toLocaleString("en-GB")} marked statements, {SITE_FACTS.ties.withLean} of them with Lean. {LINK_CAVEAT}
+        </p>
+      )}
 
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
