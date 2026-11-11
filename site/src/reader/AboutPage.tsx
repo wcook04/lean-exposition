@@ -17,7 +17,7 @@ import { useAlignment } from "../compare/useAlignment";
 import { citationText, copyText, editionLink } from "../app/cite";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { AUTHOR, LINKS } from "../app/author";
-import { familyFilm, minutesOf, type FamilyFilm } from "../app/family";
+import { clockTime, familyFilm, type FamilyFilm } from "../app/family";
 import { FilmSlot } from "../app/FilmSlot";
 import { SisterSites } from "../app/SisterSites";
 import { Out } from "../app/Out";
@@ -53,21 +53,22 @@ const COMPANION = "companion";
 
 /** His released films closest to this result, each with what it shows, from the family registry. */
 const RELATED_FILMS: { film: FamilyFilm; shows: string }[] = [
+  { film: familyFilm("long-lean-readers"), shows: "This site and his two other reader websites, each with a paper open beside its Lean." },
   { film: familyFilm("mathematics"), shows: "A walkthrough of his work on one Erdős problem, from the question to the formal proof." },
   { film: familyFilm("mathematics-overview"), shows: "A tour of the maths map, including the long record and the papers for problem #257." },
   { film: familyFilm("atlas"), shows: "One result followed through Plectis Atlas, its claims compared with the formal statement." },
 ];
 const INTRODUCTION = familyFilm("introduction");
-const WALKTHROUGH = familyFilm("interfaces");
+const WALKTHROUGH = familyFilm("short-sk-website");
 
 /** A released film as a line of the list: its title, opening YouTube, and its length. */
 function FilmLink({ film }: { film: FamilyFilm }) {
-  const minutes = minutesOf(film);
+  const seconds = film.duration_seconds;
   if (!film.youtube) return <span>{film.title}</span>;
   return (
     <>
       <Out href={film.youtube}>{film.title}</Out>
-      {minutes ? <span className="about__len">{minutes} min</span> : null}
+      {seconds ? <span className="about__len">{clockTime(seconds)}</span> : null}
     </>
   );
 }
@@ -379,7 +380,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           walkthrough of Erdős problem #257 is linked below.
         </p>
         <div className="about__films">
-          <FilmSlot film={familyFilm("interfaces")} size="small" sizes="(min-width: 700px) 320px, 100vw" />
+          <FilmSlot film={WALKTHROUGH} size="small" sizes="(min-width: 700px) 320px, 100vw" />
           <FilmSlot film={familyFilm("sk-no-gap")} size="small" sizes="(min-width: 700px) 320px, 100vw" />
         </div>
         <ul className="about__links">

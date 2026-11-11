@@ -6,6 +6,7 @@
 // in OpenAI's Comparator challenge, and every formula is Theorem 1 of the short paper.
 
 import { MODELS_STEP } from "../app/caveat.ts";
+import { siteFilms, type SiteFilm } from "../app/siteFilms.ts";
 
 export interface HeroRow {
   /** Exact text of the Lean statement. */
@@ -77,6 +78,8 @@ export interface HeroLinks {
   /** The step that records that the two Lean models are not connected. */
     models: string;
   about: string;
+  /** The videos on the first screen: the short one of this website first, then the two about the result. */
+  films: SiteFilm[];
 }
 
 /** `theorem1` is the statement's place in the short paper, from the alignment (the build derives it). */
@@ -88,7 +91,25 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   theorem: `${base}compare?n=full_support`,
     models: `${base}map?n=${MODELS_STEP}`,
   about: `${base}about#made-by`,
+  films: siteFilms(base),
 });
+
+/** The id of the first screen's row of videos, which the bar's Videos menu and other pages may link to. */
+export const VIDEOS_ANCHOR = "videos";
+
+/**
+ * A video in the family's film-slot markup (docs/family.md in wcook04.github.io): the picture
+ * and the title open the same YouTube address, so only the title is in the Tab order, and it
+ * says the running time in words. The lead's still loads with the page; the others wait.
+ */
+function filmHtml(film: SiteFilm, lead: boolean): string {
+  const open = `href="${film.href}" target="_blank" rel="noopener noreferrer"`;
+  const image = `<img src="${film.src}" srcset="${film.srcSet}" sizes="${lead ? "(max-width: 37.5em) 100vw, 300px" : "160px"}" alt="" width="1280" height="720" decoding="async"${lead ? ' fetchpriority="high"' : ' loading="lazy"'} />`;
+  return `<figure class="film-slot ${lead ? "front__lead" : "film-slot--small front__minor"}">
+<a class="film-slot__frame" ${open} aria-hidden="true" tabindex="-1">${image}<span class="film-slot__play"></span><span class="film-slot__time">${film.clock}</span></a>
+<figcaption class="film-slot__caption"><p class="front__kicker">${escapeHtml(film.kicker)}</p><p class="film-slot__title"><a ${open}>${escapeHtml(film.title)}<span class="sr-only">, video on YouTube, ${film.spoken}</span></a></p></figcaption>
+</figure>`;
+}
 
 /** The hero, typeset with `tex`, a function from TeX source to KaTeX HTML. */
 export function heroHtml(links: HeroLinks, tex: (source: string) => string): string {
@@ -100,6 +121,7 @@ export function heroHtml(links: HeroLinks, tex: (source: string) => string): str
   ).join("\n");
   return `<section class="front__hero" aria-labelledby="front-title">
 <div class="front__intro">
+<p class="front__what">Three papers on a theorem of OpenAI’s, read beside its Lean proof and a graph of the argument</p>
 <h1 id="front-title" class="front__title">Why the Sherrington–Kirkpatrick order parameter has no gaps</h1>
 <p class="front__lede">Parisi’s formula gives the largest energy per spin in the Sherrington–Kirkpatrick (SK) spin glass as a minimum over nondecreasing functions, called order parameters. A gap is an interval on which an order parameter stays flat. A minimising order parameter has none: it increases across every interval in [0, 1), and its derivative is positive between 0&nbsp;and&nbsp;1.</p>
 <p class="front__actions"><a class="front__primary" href="${links.short}">Read the short paper</a><a class="front__secondary" href="${links.exposition}">Read the exposition</a></p>
@@ -115,6 +137,16 @@ ${rows}
 </table>
 <figcaption class="rosetta__foot"><a href="${links.theorem}">Compare the whole theorem, its proof and its definitions</a></figcaption>
 </figure>
+${
+  links.films.length
+    ? `<div class="front__watch" id="${VIDEOS_ANCHOR}" role="group" aria-label="Videos">
+${filmHtml(links.films[0], true)}
+<div class="front__others">
+${links.films.slice(1).map((film) => filmHtml(film, false)).join("\n")}
+</div>
+</div>`
+    : ""
+}
 </section>
 <section class="front__guide" aria-label="How to read a paper here, and what the Lean covers">
 <div class="front__guide-read">

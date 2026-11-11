@@ -302,9 +302,20 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   "Read the exposition". Below them, quieter, are Theorem 1 with its Lean open (an address
   built from the alignment, `heroLinks`), Compare and the map. The graph and the Lean come
   along beside the paper; they are never the way in.
-- **A real still follows the films.** `public/stills/` holds a capture of Theorem 1 open on its
-  Lean, in both schemes, taken from a production build at 1440x790. Retake it when the reader
-  changes visibly (`loading="lazy"`, so the scheme not in use is never fetched).
+- **The videos stand inside the first screen.** Under the title and the theorem is one row
+  (`.front__watch`, built in `heroMarkup.ts` from `src/app/siteFilms.ts`): the short video of
+  this website leads, at the largest size, and the two videos about the result stand beside it,
+  smaller. Stacked, the row comes before the table. The bar's Videos button
+  (`src/app/VideosMenu.tsx`) opens the same three on every page, so a reader in a paper reaches
+  them without leaving it. Titles, addresses, lengths and stills come from the family registry;
+  `tests/front-hero.test.ts` pins the order and the addresses.
+- **Five real pictures follow, in the short video's order.** `src/home/Tour.tsx` names five
+  things the site does (the graph follows the paper, a tick opens the Lean, a card opens its
+  step, Compare, What ran), each beside a capture of the real page in the reader's scheme, and
+  each opens the view it is of. Wide, the pictures share one frame and the one whose words are
+  pointed at or focused is drawn; narrow, each stands under its words. Retake them with
+  `scripts/capture-tour-stills.py` when those pages change visibly (`loading="lazy"`, so the
+  scheme not in use is never fetched).
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and

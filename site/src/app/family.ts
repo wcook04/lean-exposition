@@ -1,8 +1,8 @@
 // Will Cook's websites and films, as the family registry lists them. family.json is an
-// unchanged copy of sites.json from https://github.com/wcook04/wcook04.github.io, whose
+// unchanged copy of family.json from https://github.com/wcook04/wcook04.github.io, whose
 // docs/family.md is the contract: the header's ladder, the film slots and the footer's
 // sister sites are rendered from this copy at build time, so the page requests nothing
-// from another host. To show a released film, copy the new sites.json here and its two
+// from another host. To show a released film, copy the new family.json here and its two
 // stills into public/films/.
 
 import registry from "./family.json";
@@ -62,8 +62,8 @@ export function familyFilm(id: string): FamilyFilm {
   return film;
 }
 
-/** The series name a held frame carries: this website's name. */
-export const FILM_SERIES = familySite(THIS_SITE_ID).name;
+/** The series name a held frame carries: this website's name as its own header gives it. */
+export const FILM_SERIES = "Lean Exposition";
 
 const YOUTUBE = /^https:\/\/(?:www\.youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/;
 

@@ -24,10 +24,22 @@ html[data-view="home"] .topbar {
   grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
   align-content: center;
   align-items: center;
-  gap: 48px;
+  gap: 40px 48px;
   box-sizing: border-box;
   min-height: min(calc(100svh - var(--topbar-h)), 46rem);
-  padding: 44px 0;
+  padding: 36px 0 32px;
+}
+
+/* What the site is, in one line above the result's name. */
+.front .front__what {
+  max-width: 30em;
+  margin: 0 0 14px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-2);
+  text-wrap: balance;
 }
 
 .front__title {
@@ -243,12 +255,67 @@ html[data-view="home"] .topbar {
   text-underline-offset: 3px;
 }
 
-.front__films {
+/* The videos, inside the first screen: the short video of this website leads, at a size
+   that holds its picture, and the two about the result stand beside it, smaller. The row
+   keeps the hero's two columns, so the lead starts on the title's edge and the others on
+   the table's. */
+.front__watch {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
+  gap: 24px 48px;
+  align-items: start;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.front__lead {
+  display: grid;
+  grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.front__lead .film-slot__frame {
+  --play: 44px;
+}
+
+.front__others {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 48px;
-  min-height: 112px;
-  padding: 0 0 44px;
+  gap: 20px 40px;
+  align-items: start;
+}
+
+.front__minor {
+  display: grid;
+  grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.front__watch .film-slot__caption {
+  margin-top: 0;
+  gap: 0.35rem;
+}
+
+.front__watch .front__kicker {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink-2);
+}
+
+.front__lead .film-slot__title {
+  font-size: 1.1875rem;
+  line-height: 1.24;
+}
+
+.front__minor .film-slot__title {
+  font-size: 1rem;
+  line-height: 1.28;
 }
 
 .rosetta__foot a {
@@ -256,17 +323,23 @@ html[data-view="home"] .topbar {
   text-underline-offset: 3px;
 }
 
-@media (max-width: 43.75em) {
-  .front__films {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 68.75em) {
   .front__hero,
-  .front__guide {
+  .front__guide,
+  .front__watch {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
+  }
+
+  /* Stacked, the videos come straight after the title and its routes, before the table. */
+  .front__watch {
+    gap: 24px;
+    order: 1;
+    padding-top: 24px;
+  }
+
+  .rosetta {
+    order: 2;
   }
 
   .front__hero {
@@ -275,9 +348,26 @@ html[data-view="home"] .topbar {
   }
 }
 
+@media (max-width: 43.75em) {
+  .front__others {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 37.5em) {
   .front {
     padding: 0 var(--space-4);
+  }
+
+  /* A phone: the lead's picture takes the column, its words under it. */
+  .front__lead {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .front__minor {
+    grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+    gap: 14px;
   }
 
   .rosetta__table,

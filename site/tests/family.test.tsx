@@ -38,7 +38,7 @@ const RELEASED: FamilyFilm = {
 describe("the registry copy", () => {
   it("lists this site and its two films, each in preparation until it has a YouTube address", () => {
     const own = familySite(THIS_SITE_ID);
-    expect(own.films).toEqual(expect.arrayContaining(["interfaces", "sk-no-gap"]));
+    expect(own.films).toEqual(expect.arrayContaining(["short-sk-website", "sk-no-gap", "short-sk-no-gap"]));
     for (const id of own.films) {
       const film = familyFilm(id);
       expect(isReleased(film)).toBe(Boolean(film.youtube));
@@ -46,7 +46,7 @@ describe("the registry copy", () => {
   });
 
   // The front page and the About page name these films; a registry copy without one would fail to render them.
-  it.each(["interfaces", "sk-no-gap", "mathematics", "mathematics-overview", "atlas", "introduction"])(
+  it.each(["short-sk-website", "sk-no-gap", "short-sk-no-gap", "long-lean-readers", "mathematics", "mathematics-overview", "atlas", "introduction"])(
     "lists the film %s that the pages show",
     (id) => {
       expect(() => familyFilm(id)).not.toThrow();

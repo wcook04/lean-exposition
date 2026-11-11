@@ -28,6 +28,24 @@ describe("the first screen", () => {
     expect(html.match(/class="rosetta__row"/g)).toHaveLength(HERO_ROWS.length);
   });
 
+  it("puts the short video of this website first and the long video of the result after it, as the catalogue lists them", () => {
+    const links = heroLinks("/lean-exposition-site/");
+    expect(links.films.map((film) => [film.id, film.href, film.clock])).toEqual([
+      ["short-sk-website", "https://www.youtube.com/watch?v=8ge7rwRMkhI", "1:32"],
+      ["sk-no-gap", "https://www.youtube.com/watch?v=IUAhxUriDVw", "12:28"],
+      ["short-sk-no-gap", "https://www.youtube.com/watch?v=x901wkmxCMQ", "1:38"],
+    ]);
+    const html = heroHtml(links, (tex) => tex);
+    const lead = html.indexOf("front__lead");
+    expect(lead).toBeGreaterThan(-1);
+    expect(html.indexOf("8ge7rwRMkhI")).toBeGreaterThan(lead);
+    expect(html.indexOf("8ge7rwRMkhI")).toBeLessThan(html.indexOf("IUAhxUriDVw"));
+    expect(html).toContain('src="/lean-exposition-site/films/short-sk-website-640.webp"');
+    // The picture and the title open the same video; only the title is in the Tab order.
+    expect(html.match(/class="film-slot__frame"[^>]*tabindex="-1"/g)).toHaveLength(3);
+    expect(html).toContain(", video on YouTube, 1 minute 32 seconds</span>");
+  });
+
   it("draws the same five jobs as the top bar", () => {
     const html = frameHtml("/");
     for (const job of ["Read", "Map", "Compare", "What ran", "Lean index"]) expect(html).toContain(`>${job}</a>`);
