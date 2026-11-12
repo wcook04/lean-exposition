@@ -41,7 +41,8 @@ async def follow(page: Page, base: str) -> None:
     await page.goto(base + "read/expository/")
     await settle(page, 2600)
     await scroll_paper(page)
-    await page.mouse.move(700, 780)
+    await page.mouse.move(720, 28)
+    await settle(page, 900)
 
 
 async def tick(page: Page, base: str) -> None:
@@ -59,7 +60,8 @@ async def card(page: Page, base: str) -> None:
         raise SystemExit(f'no card "{CARD}" on the graph')
     await page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
     await settle(page, 2400)
-    await page.mouse.move(700, 780)
+    await page.mouse.move(720, 28)
+    await settle(page, 900)
 
 
 async def compare(page: Page, base: str) -> None:

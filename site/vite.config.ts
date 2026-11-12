@@ -8,6 +8,7 @@ import { inflateSync } from "node:zlib";
 import { frameHtml, heroHtml, heroLinks } from "./src/home/heroMarkup.ts";
 import { readerFirstScreenHtml, readerSkeletonHtml } from "./src/reader/skeleton.ts";
 import { siteFacts, type SiteFacts } from "./src/home/siteFacts.ts";
+import { SITE_NAME } from "./src/app/siteName.ts";
 
 // The three accounts and architectural companion, as the repository renders them.
 // Download links use page counts read from the same files at build time.
@@ -388,7 +389,7 @@ function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
 }
 
 // The public repository that receives the static build has no other README.
-const SITE_README = `# Lean Exposition website
+const SITE_README = `# ${SITE_NAME} website
 
 Read a mathematical paper with the exact Lean statement beside the paragraph
 that describes it. Lean is a language for writing statements and proofs that a
@@ -465,7 +466,7 @@ const ROUTE_TITLES: Record<string, string> = {
   "read/short": "Short paper",
   "read/expository": "Exposition",
 };
-const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · Lean Exposition</title>`);
+const titled = (html: string, title: string) => html.replace(/<title>[^<]*<\/title>/, `<title>${title} · ${SITE_NAME}</title>`);
 
 // For readers that fetch text rather than run the page. It describes the same files the
 // browser reads, and no page loads it.

@@ -26,6 +26,7 @@ import { Breakable, Notation, PathText, Prose, ReadingFoot, readingStore } from 
 import { buildCode, CodeView, type BuiltCode } from "./CodeView";
 import { collectLocals, findDecl, makeScope, type DeclRow, type NameTarget } from "./resolve";
 import { tokenize } from "./tokenize";
+import { SITE_NAME } from "../app/siteName";
 
 const count = (n: number) => n.toLocaleString("en-GB");
 
@@ -841,7 +842,7 @@ export function LeanPage({ route }: { route: Extract<Route, { view: "lean" }> })
   // PageTitle cannot see the index, so the page names its tab, and only by what exists.
   const tabTitle = decl ? (shell?.plain.get(decl.name) ?? decl.short) : knownModule ? lastPart(knownModule) : knownFolder ? folderLabel(knownFolder) : null;
   useEffect(() => {
-    document.title = tabTitle ? `${tabTitle} · Lean Exposition` : "Lean index · Lean Exposition";
+    document.title = tabTitle ? `${tabTitle} · ${SITE_NAME}` : `Lean index · ${SITE_NAME}`;
   }, [tabTitle]);
 
   // A new declaration starts at its head, unless Back is restoring a place.

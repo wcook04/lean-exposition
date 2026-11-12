@@ -7,6 +7,7 @@
 
 import { LINK_CAVEAT, MODELS_STEP } from "../app/caveat.ts";
 import { siteFilms, type SiteFilm } from "../app/siteFilms.ts";
+import { SITE_NAME } from "../app/siteName.ts";
 
 export interface HeroRow {
   /** Exact text of the Lean statement. */
@@ -261,5 +262,5 @@ ${rows}
 /** The frame as plain HTML, the same markup TopBar renders, so the bar is there before the scripts. */
 export function frameHtml(base: string): string {
   const job = (href: string, name: string, quiet = false) => `<a class="topnav__job${quiet ? " topnav__job--quiet" : ""}" href="${base}${href}">${name}</a>`;
-  return `<header class="topbar"><span class="fam-lockup"><a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="${base}plectis.svg" alt="Will Cook: all websites and videos" width="26" height="26" /></a><span class="fam-lockup__rule" aria-hidden="true"></span><a class="fam-lockup__site" href="${base}" aria-label="Lean Exposition, front page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"></path><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"></path><circle cx="16" cy="14" r="3"></circle></svg><span class="fam-lockup__name" translate="no">Lean Exposition</span></a></span><nav class="topnav" aria-label="Main">${job("read/short", "Read")}${job("map", "Map")}${job("compare", "Compare")}${job("checks", "What ran")}${job("lean", "Lean index", true)}</nav></header>`;
+  return `<header class="topbar"><span class="fam-lockup"><a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="${base}plectis.svg" alt="Will Cook: all websites and videos" width="26" height="26" /></a><span class="fam-lockup__rule" aria-hidden="true"></span><a class="fam-lockup__site" href="${base}" aria-label="${SITE_NAME}, front page"><svg viewBox="0 0 32 32" aria-hidden="true" class="wordmark__mark"><path d="M4 27 L4 5 M4 27 L28 27" fill="none" stroke-width="2" stroke-linecap="round"></path><path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" stroke-width="2.6" stroke-linecap="round"></path><circle cx="16" cy="14" r="3"></circle></svg><span class="fam-lockup__name" translate="no">${SITE_NAME}</span></a></span><nav class="topnav" aria-label="Main">${job("read/short", "Read")}${job("map", "Map")}${job("compare", "Compare")}${job("checks", "What ran")}${job("lean", "Lean index", true)}</nav></header>`;
 }

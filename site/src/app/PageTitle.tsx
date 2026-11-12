@@ -3,6 +3,7 @@ import { useLayoutEffect } from "react";
 import { useEdition } from "./data";
 import { PAPER_NAMES } from "./papers";
 import type { Route } from "./router";
+import { SITE_NAME } from "./siteName";
 
 /** The edition's title, as the front page and index.html give it. */
 export const EDITION_TITLE = "Why the Sherrington–Kirkpatrick order parameter has no gaps";
@@ -43,7 +44,7 @@ export function PageTitle({ route }: { route: Route }) {
   }
   useLayoutEffect(() => {
     // The front page carries the edition's own title, as a search result or a tab names it.
-    document.title = route.view === "home" ? title : `${title} · Lean Exposition`;
+    document.title = route.view === "home" ? title : `${title} · ${SITE_NAME}`;
   }, [title, route.view]);
   return null;
 }
