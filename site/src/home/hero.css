@@ -162,21 +162,6 @@ html[data-view="home"] .topbar {
   white-space: nowrap;
 }
 
-/* The theorem, clause by clause, under the first screen. */
-.front__clauses {
-  padding: 28px 0 56px;
-}
-
-.front__clauses-title {
-  margin: 0 0 20px;
-  font-family: var(--font-serif);
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-
 /* What the site is, in one line above the result's name. */
 .front .front__what {
   max-width: 30em;
@@ -575,4 +560,140 @@ html[data-view="home"] .topbar {
 .front__made a {
   color: inherit;
   text-underline-offset: 3px;
+}
+
+/* ---- The theorem as a plate: under the first screen, how to read a paper here beside
+   OpenAI's Lean statement and Theorem 1, clause by clause. The plate is one raised sheet
+   with a rule between rows; each row opens that clause on the Compare page. ---- */
+.front__theorem {
+  display: grid;
+  grid-template-columns: minmax(0, 9fr) minmax(0, 14fr);
+  gap: 32px 48px;
+  align-items: start;
+  padding: 44px 0 40px;
+}
+
+.front__theorem .front__clauses-title {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.front__theorem .rosetta__models,
+.front .front__limit {
+  max-width: 37em;
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Who linked the statements to the Lean, and what no one has reviewed. */
+.front .front__limit {
+  font-size: var(--fs-ui);
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+@media (min-width: 37.51em) {
+  .front__theorem .rosetta {
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-m);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .front__theorem .rosetta__table th {
+    padding: 12px 20px 11px;
+    border-bottom: 1px solid var(--rule-strong);
+    background: color-mix(in oklab, var(--ink) 4%, var(--surface));
+  }
+
+  .front__theorem .rosetta__table th:first-child {
+    width: 50%;
+  }
+
+  .front__theorem .rosetta__row td,
+  .front__theorem .rosetta__row td + td {
+    position: relative;
+    padding: 15px 20px 14px;
+    vertical-align: top;
+  }
+
+  /* The Lean stands on the ground the Lean viewer gives its code. */
+  .front__theorem .rosetta__lean {
+    border-right: 1px solid var(--rule);
+    background: color-mix(in oklab, var(--ground) 55%, var(--surface));
+  }
+
+  .front__theorem .rosetta__lean code {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .front__theorem .rosetta__formula {
+    font-size: 1.1875rem;
+    line-height: 1.3;
+  }
+
+  /* The words that match the two columns stand under each formula, with no pointing needed. */
+  .front__theorem .rosetta__words {
+    position: static;
+    display: block;
+    margin-top: 5px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* The whole row is the link's target; amber marks the row pointed at. */
+  .front__theorem .rosetta__row {
+    position: relative;
+  }
+
+  .front__theorem .rosetta__formula::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .front__theorem .rosetta__lean::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: transparent;
+    transition: background-color var(--t-hover) var(--ease-out);
+  }
+
+  .front__theorem .rosetta__row:hover .rosetta__lean::before,
+  .front__theorem .rosetta__row:focus-within .rosetta__lean::before {
+    background: var(--lit);
+  }
+
+  .front__theorem .rosetta__formula:hover {
+    color: inherit;
+  }
+
+  .front__theorem .rosetta__foot {
+    margin: 0;
+    padding: 12px 20px 13px;
+    border-top: 1px solid var(--rule-strong);
+    background: color-mix(in oklab, var(--ink) 4%, var(--surface));
+    font-size: var(--fs-ui);
+  }
+
+  .front__theorem .rosetta__row:last-child td {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 68.75em) {
+  .front__theorem {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 32px 0;
+  }
 }

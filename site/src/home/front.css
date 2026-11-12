@@ -29,15 +29,6 @@ html[data-view="home"] {
   max-width: 36em;
 }
 
-/* Who linked the statements to the Lean, and what no one has reviewed. */
-.front .front__limit {
-  max-width: 46em;
-  margin: 0 0 8px;
-  font-size: var(--fs-ui);
-  line-height: 1.5;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
 
 /* Mathematical prose is set in the serif, like the papers and their formulas. */
 .front__prose p {
