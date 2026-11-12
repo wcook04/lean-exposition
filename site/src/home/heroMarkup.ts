@@ -5,7 +5,7 @@
 // by tests/front-hero.test.ts: every Lean fragment is an exact substring of the statement
 // in OpenAI's Comparator challenge, and every formula is Theorem 1 of the short paper.
 
-import { MODELS_STEP } from "../app/caveat.ts";
+import { LINK_CAVEAT, MODELS_STEP } from "../app/caveat.ts";
 import { siteFilms, type SiteFilm } from "../app/siteFilms.ts";
 
 export interface HeroRow {
@@ -83,12 +83,14 @@ export interface HeroLinks {
   step: string;
   /** The site's base path, for the pictures under public/stills/. */
   base: string;
+  /** How many statements the papers have marked, and how many of those have Lean, when the edition says. */
+  ties: { statements: number; withLean: number } | null;
   /** The videos on the first screen: the short one of this website first, then the two about the result. */
   films: SiteFilm[];
 }
 
 /** `theorem1` is the statement's place in the short paper, from the alignment (the build derives it). */
-export const heroLinks = (base: string, theorem1?: { at: string; anchor: string | null } | null): HeroLinks => ({
+export const heroLinks = (base: string, theorem1?: { at: string; anchor: string | null } | null, ties?: { statements: number; withLean: number } | null): HeroLinks => ({
   short: `${base}read/short`,
   exposition: `${base}read/expository`,
   beside: theorem1 ? `${base}read/short?l=${theorem1.at}&n=full_support${theorem1.anchor ? `#${theorem1.anchor}` : ""}` : `${base}read/short`,
@@ -99,6 +101,7 @@ export const heroLinks = (base: string, theorem1?: { at: string; anchor: string 
   checks: `${base}checks`,
   step: `${base}read/expository?n=support.diffusion`,
   base,
+  ties: ties ?? null,
   films: siteFilms(base),
 });
 
@@ -234,15 +237,14 @@ ${links.films.slice(1).map((film) => filmHtml(film, false)).join("\n")}
     : ""
 }
 </section>
-<section class="front__guide" aria-label="How to read a paper here, and what the Lean covers">
-<div class="front__guide-read">
+<section class="front__theorem" aria-labelledby="front-clauses">
+<div class="front__theorem-words">
+<h2 id="front-clauses" class="front__clauses-title">Theorem 1, clause by clause</h2>
 <p class="front__site">OpenAI’s proof of the increase is written in Lean, a programming language whose compiler rejects a proof with a wrong step; the positive derivative is proved in OpenAI’s manuscript and is not in the Lean. In a paper here, click a statement with a dark tick in the margin and its Lean opens beside the text. A graph of the proof beside the paper moves to the statement you are reading.</p>
 <p class="front__guide-link"><a href="${links.beside}">Theorem 1 with its Lean open</a></p>
+<p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p>${links.ties ? `
+<p class="front__limit">The three papers have ${links.ties.statements.toLocaleString("en-GB")} marked statements, ${links.ties.withLean} of them with Lean. ${escapeHtml(LINK_CAVEAT)}</p>` : ""}
 </div>
-<p class="rosetta__models">This Lean is OpenAI’s full-support model. OpenAI’s value theorem is in a separate model, and no Lean theorem connects the two, so combining them in Lean <a href="${links.models}">needs that connection first</a>.</p>
-</section>
-<section class="front__clauses" aria-labelledby="front-clauses">
-<h2 id="front-clauses" class="front__clauses-title">Theorem 1, clause by clause</h2>
 <figure class="rosetta">
 <table class="rosetta__table">
 <caption class="visually-hidden">The main theorem, clause by clause: OpenAI’s Lean statement beside Theorem 1 of the short paper.</caption>

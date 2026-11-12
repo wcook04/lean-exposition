@@ -343,7 +343,7 @@ const typeset = (source: string) => katex.renderToString(source, { throwOnError:
  */
 function firstScreen(base: string, facts: SiteFacts, build = false): Plugin {
   const id = "virtual:front-hero";
-  const hero = heroHtml(heroLinks(base, facts.theorem1), typeset);
+  const hero = heroHtml(heroLinks(base, facts.theorem1, facts.ties), typeset);
   const frame = frameHtml(base);
   const shell = (main: string) => `<div class="app">${frame}<main id="main" class="app__main">${main}</main></div>`;
   return {

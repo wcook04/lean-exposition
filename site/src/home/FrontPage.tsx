@@ -22,7 +22,6 @@ import { Out } from "../app/Out";
 import { CHECK_KINDS, CHECK_ORDER, STATUS_WORDS, outcomeCounts } from "../checks/summary";
 import { FrontHeroBody } from "./FrontHero";
 import { LevelsBand } from "./LevelsBand";
-import { LINK_CAVEAT } from "../app/caveat";
 import { Rich, texHtml } from "../figures/tex";
 import { GapFigure } from "../figures/GapFigure";
 import { AreaFigure } from "../figures/AreaFigure";
@@ -53,11 +52,6 @@ export function FrontPage() {
     <div className="front">
       <FrontHeroBody />
 
-      {SITE_FACTS.ties && (
-        <p className="front__limit">
-          The three papers have {SITE_FACTS.ties.statements.toLocaleString("en-GB")} marked statements, {SITE_FACTS.ties.withLean} of them with Lean. {LINK_CAVEAT}
-        </p>
-      )}
 
       <LevelsBand id={PAPERS_ANCHOR} leanModules={LEAN_MODULES} />
 
