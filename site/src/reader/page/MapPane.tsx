@@ -207,7 +207,7 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   }, [structures, stage]);
   // Kept open, the Lean holds part of the page for good, so the map frames what is left.
   const [kept, setKept] = useState({ bottom: 0, left: 0 });
-  const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 12 + kept.bottom, right: 16 }), [kept]);
+  const insets: Insets = useMemo(() => ({ top: 12, left: 16 + kept.left, bottom: 24 + kept.bottom, right: 16 }), [kept]);
   const canvasRef = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(false);
   const framedFrom = useRef<ReturnType<MapViewHandle["getScene"]> | null>(null);
@@ -382,7 +382,8 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
   inViewRef.current = (ids) => {
     const canvas = bodyRef.current?.getBoundingClientRect();
     if (!canvas?.width) return false;
-    const bottom = canvas.bottom - kept.bottom;
+    // The handle lies over the canvas's last rows: a card under it is not in view.
+    const bottom = canvas.bottom - kept.bottom - 14;
     const left = canvas.left + kept.left;
     return ids.every((id) => {
       const cards = bodyRef.current!.querySelectorAll<HTMLElement>(`.card[data-record="${CSS.escape(id)}"]`);
@@ -523,12 +524,38 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
       <div className="map-pane__pages">
         <div className="map-pane__graph">
           <header className="map-pane__head">
-            <div className="map-pane__row map-pane__row--trail">
-              {progress && <span className="map-pane__progress">{progress}</span>}
-              <span className="map-pane__legend">
-                <i className="map-pane__key" aria-hidden="true" />
-                Amber: the passage on screen. Darker: already read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.
-              </span>
+            {/* What the reader is on, named at the head of the graph and changing as the paper scrolls. */}
+            <div className="map-pane__now" data-via={line.via} data-named={line.name ? "" : undefined}>
+              <div className="map-pane__top">
+                <span className="map-pane__via">{line.lead}</span>
+                {progress && <span className="map-pane__progress">{progress}</span>}
+                {passed.total > 0 && (
+                  <span className="map-pane__meter" aria-hidden="true">
+                    <i style={{ inlineSize: `${(100 * passed.seen) / passed.total}%` }} />
+                  </span>
+                )}
+              </div>
+              <p className="map-pane__line" data-via={line.via} role="status">
+                {line.name && (
+                  <>
+                    <strong className="map-pane__name">{line.name}</strong>
+                    <span className="visually-hidden">. </span>
+                  </>
+                )}
+                <span className="map-pane__rest">{line.rest}</span>
+              </p>
+              {pin && !expanded ? (
+                <button type="button" className="map-pane__keep" onClick={onRelease}>
+                  Close this statement
+                </button>
+              ) : (
+                anchor &&
+                onPassage && (
+                  <button type="button" className="map-pane__keep" onClick={(event) => onPassage(anchor, event.currentTarget)}>
+                    This passage
+                  </button>
+                )
+              )}
             </div>
           </header>
           <div className="map-pane__body" ref={bodyRef}>
@@ -537,22 +564,10 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
             </div>
           </div>
           <div className="map-pane__foot">
-            <p className="map-pane__line" data-via={line.via} role="status">
-              {line.words}
-            </p>
-            {pin && !expanded ? (
-              <button type="button" className="map-pane__keep" onClick={onRelease}>
-                Close this statement
-              </button>
-            ) : (
-              <>
-                {anchor && onPassage && (
-                  <button type="button" className="map-pane__keep" onClick={(event) => onPassage(anchor, event.currentTarget)}>
-                    This passage
-                  </button>
-                )}
-              </>
-            )}
+            <span className="map-pane__legend">
+              <i className="map-pane__key" aria-hidden="true" />
+              Amber: the passage on screen. Darker: already read. Faintest: not in the {PAPER_NAMES[stage].short.toLowerCase()}.
+            </span>
           </div>
         </div>
         {!previewOnly && (!inModal || leanShown) && (
@@ -593,29 +608,34 @@ export const MapPane = memo(function MapPane({ stage, structures, outline, trail
     </section>
   );
 
-  /** One line under the graph, in plain words: what the reader is on or pointing at. */
-  function lineFor(): { via: string; words: string } {
+  /** What the reader is on or pointing at, in plain words: a label, the step's name and one line about it. */
+  function lineFor(): { via: string; lead?: string; name?: string; rest: string } {
     const named = (id: string) => shortTitle(id, graph.nodes.get(id)?.label ?? id);
-    /** "Has Lean: click to open it.", or the note or the plain fact where there is none to open. */
-    const says = (id: string, t: number | null, invite: string) => {
-      if (t === null) return recordLine(id)?.lean ? `${named(id)}. Has Lean: ${invite}.` : `${named(id)}. No Lean linked.`;
+    /** The step's name and "Has Lean: click to open it.", or the note or the plain fact where there is none to open. */
+    const says = (id: string, t: number | null, invite: string): { name?: string; rest: string } => {
+      const has = (words: string) => (invite ? `${words}: ${invite}.` : `${words}.`);
+      if (t === null) return { name: named(id), rest: recordLine(id)?.lean ? has("Has Lean") : "No Lean linked." };
       const truth = leanTruth(ties, t, alignment);
-      if (truth.lean) return `${named(id)}. ${truth.words}: ${invite}.`;
-      return truth.note ?? `${named(id)}. No Lean linked.`;
+      if (truth.lean) return { name: named(id), rest: has(truth.words) };
+      return truth.note ? { rest: truth.note } : { name: named(id), rest: "No Lean linked." };
     };
     // What is not drawn is said here, so that no note ever covers a card.
     const drawn = (id: string) => (reachOf(goal).has(id) ? "" : " Not in the argument drawn here.");
-    if (pin && !expanded) return { via: "pin", words: `${says(pin.record, pin.tie, "")}${drawn(pin.record)}` };
-    if (pointed) return { via: "point", words: `${says(pointed.record, pointed.tie, "click to open it")}${drawn(pointed.record)}` };
+    const about = (via: string, lead: string, id: string, t: number | null, invite: string) => {
+      const said = says(id, t, invite);
+      return { via, lead, name: said.name, rest: `${said.rest}${drawn(id)}` };
+    };
+    if (pin && !expanded) return about("pin", "Open", pin.record, pin.tie, "");
+    if (pointed) return about("point", "Pointing at", pointed.record, pointed.tie, "click to open it");
     if (caption) {
       const topics = passageTopics(ties, caption).filter((id) => graph.nodes.has(id));
-      if (topics.length) return { via: "point", words: `No exact tie in this paragraph. Steps in its passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
+      if (topics.length) return { via: "point", rest: `No exact tie in this paragraph. Steps in its passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
     }
-    if (followRecord) return { via: "follow", words: `Reading: ${says(followRecord, follow.tie, "click the statement or its card")}${drawn(followRecord)}` };
+    if (followRecord) return about("follow", "Reading", followRecord, follow.tie, "click the statement or its card");
     // Past the last passage (the references, say) the nearest passage is not what is on the page.
     const inPassage = !!anchor && passagePart?.(partAt) === anchor;
     const topics = inPassage ? passageTopics(ties, anchor).filter((id) => graph.nodes.has(id)) : [];
-    if (topics.length) return { via: "follow", words: `No exact statement here. Steps in this passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
-    return { via: "follow", words: "Nothing in this stretch of the paper is tied to the Lean." };
+    if (topics.length) return { via: "follow", rest: `No exact statement here. Steps in this passage: ${topics.slice(0, 3).map(named).join(", ")}${topics.length > 3 ? ", and more" : ""}.` };
+    return { via: "follow", rest: "Nothing in this stretch of the paper is tied to the Lean." };
   }
 });

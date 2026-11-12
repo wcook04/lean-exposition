@@ -317,6 +317,12 @@ parameters (`g`, `n`, `t`, `lens`, `e`) still opens the map, so old links work.
   line of words open the view it is of. Retake them with `scripts/capture-tour-stills.py` when
   those pages change visibly (`loading="lazy"`, so only the picture and scheme in use are
   fetched). The theorem, clause by clause, is the band under the first screen.
+- **The reader's graph pane names the step being read.** At the head of the pane are a label
+  (Reading, Pointing at, Open), the step's name in the serif at 20px, one line on its Lean, and
+  a meter of how many of the paper's steps the reader has reached. They change as the paper
+  scrolls, so the pane has in words what the amber ring has on the drawing. The head's height
+  is held, the key to the drawing's marks is the foot, and a card under the pane's handle
+  counts as out of view, so the camera moves to it.
 - **Every count is read at build time.** `src/home/siteFacts.ts` reads the edition, the
   reference tables, the published observation and the vendored Lean, and hands the result to
   the pages as `virtual:site-facts` and to `llms.txt`. A file that is absent gives a null and

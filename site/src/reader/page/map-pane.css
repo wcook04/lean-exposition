@@ -952,3 +952,127 @@ html[data-right-sheet] .reader__paper {
     animation: none;
   }
 }
+
+
+/* ---- The head of the graph: the step being read, named large, and how far the reader is.
+   It changes as the paper scrolls, so the pane says in words what the amber outline says
+   on the drawing. Its height is held, so the graph under it never jumps. ---- */
+.map-pane__head {
+  padding: 10px var(--space-4) 10px;
+}
+
+.map-pane__now {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-3);
+  align-content: start;
+  align-items: end;
+  min-height: 4.5rem;
+  padding-left: 12px;
+  border-left: 3px solid var(--rule-strong);
+  transition: border-color var(--t-hover) var(--ease-out);
+}
+
+.map-pane__now[data-named] {
+  border-left-color: var(--lit);
+}
+
+.map-pane__top {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 20px;
+  font-size: var(--fs-xs);
+}
+
+.map-pane__via {
+  flex: 1 1 auto;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.map-pane__now .map-pane__line {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+  line-clamp: none;
+}
+
+.map-pane__name {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.map-pane__rest {
+  color: var(--ink-2);
+}
+
+.map-pane__now .map-pane__keep {
+  align-self: end;
+  margin-bottom: 1px;
+}
+
+.map-pane__head .map-pane__progress {
+  color: var(--ink-2);
+}
+
+/* How many of the paper's steps the reader has reached, as a length. */
+.map-pane__meter {
+  flex: 0 0 88px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.map-pane__meter i {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--lit);
+  transition: inline-size 300ms var(--ease-out);
+}
+
+/* The foot is the key to the drawing's marks; the handle rests on its top edge. */
+.map-pane__foot {
+  --foot-h: 34px;
+}
+
+.map-pane__handle {
+  bottom: max(35px, min(calc(var(--lean-share) * 100%), calc(100% - 11px)));
+}
+
+.map-pane__foot .map-pane__legend {
+  margin-left: 0;
+}
+
+/* The card whose passage is on screen: a full amber ring and full-strength words. */
+.map-pane .card[data-trail="here"]:not(.is-selected) {
+  border-color: var(--lit);
+  box-shadow: 0 0 0 2px var(--lit);
+}
+
+.map-pane .card[data-trail="here"] .card__ctitle,
+.map-pane .card[data-trail="here"] .card__title {
+  color: var(--ink);
+  font-style: normal;
+}
+
+.map-pane .card[data-trail="pinned"] {
+  border-color: var(--lit);
+  box-shadow: 0 0 0 3px var(--lit);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pane__meter i {
+    transition: none;
+  }
+}
