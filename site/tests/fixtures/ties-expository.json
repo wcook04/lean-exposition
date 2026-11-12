@@ -165,7 +165,7 @@
   ],
   [
    50708,
-   52342,
+   52719,
    [
     "support.flux_identity",
     "support.integrated_coercivity",
@@ -176,16 +176,16 @@
    "curvature-mechanism"
   ],
   [
-   52416,
-   52948,
+   52793,
+   53325,
    [
     "support.flux_identity"
    ],
    "correction-example"
   ],
   [
-   53021,
-   55334,
+   53398,
+   55711,
    [
     "scalar.integrated_coercivity",
     "support.fixed_time_spatial_coercivity",
@@ -199,8 +199,8 @@
    "curvature-transfer"
   ],
   [
-   55408,
-   59563,
+   55785,
+   59940,
    [
     "assumptions.value_diffusion",
     "support.endpoint_chord_area",
@@ -213,8 +213,8 @@
    "changed-case-answer"
   ],
   [
-   59665,
-   60404,
+   60042,
+   60781,
    [
     "scalar.paper_admissible",
     "scalar.paper_minimizer",
@@ -223,8 +223,8 @@
    "density-and-approximation"
   ],
   [
-   60483,
-   60967,
+   60860,
+   61344,
    [
     "scalar.formal_scalar_clause",
     "scalar.manuscript_terminal_value",
@@ -235,8 +235,8 @@
    "scalar-identities"
   ],
   [
-   61034,
-   61595,
+   61411,
+   61972,
    [
     "assumptions.qaoa_model_and_limits",
     "qaoa_thermodynamic_first"
@@ -244,8 +244,8 @@
    "qaoa-boundary"
   ],
   [
-   61658,
-   65633,
+   62035,
+   66211,
    [
     "assumptions.full_support_minimizer",
     "assumptions.value_diffusion",
@@ -2664,91 +2664,91 @@
    ]
   ],
   [
-   52001,
-   52234,
+   52378,
+   52611,
    [
     260
    ]
   ],
   [
-   52236,
-   52341,
+   52613,
+   52718,
    [
     260
    ]
   ],
   [
-   52417,
-   52568,
+   52794,
+   52945,
    [
     261,
     262
    ]
   ],
   [
-   52569,
-   52648,
+   52946,
+   53025,
    [
     262,
     263
    ]
   ],
   [
-   52650,
-   52676,
+   53027,
+   53053,
    [
     262,
     263
    ]
   ],
   [
-   52678,
-   52708,
+   53055,
+   53085,
    [
     262,
     263
    ]
   ],
   [
-   52709,
-   52798,
+   53086,
+   53175,
    [
     264,
     262
    ]
   ],
   [
-   52799,
-   52947,
+   53176,
+   53324,
    [
     262,
     265
    ]
   ],
   [
-   53023,
-   53267,
+   53400,
+   53644,
    [
     266
    ]
   ],
   [
-   53268,
-   53404,
+   53645,
+   53781,
    [
     267
    ]
   ],
   [
-   53406,
-   53484,
+   53783,
+   53861,
    [
     267
    ]
   ],
   [
-   53486,
-   53600,
+   53863,
+   53977,
    [
     268,
     269,
@@ -2756,8 +2756,8 @@
    ]
   ],
   [
-   53601,
-   53670,
+   53978,
+   54047,
    [
     270,
     269,
@@ -2765,8 +2765,8 @@
    ]
   ],
   [
-   53671,
-   53683,
+   54048,
+   54060,
    [
     271,
     269,
@@ -2774,8 +2774,8 @@
    ]
   ],
   [
-   53685,
-   53789,
+   54062,
+   54166,
    [
     271,
     269,
@@ -2783,194 +2783,194 @@
    ]
   ],
   [
-   53791,
-   53923,
+   54168,
+   54300,
    [
     272
    ]
   ],
   [
-   53925,
-   54090,
+   54302,
+   54467,
    [
     273,
     274
    ]
   ],
   [
-   54091,
-   54228,
+   54468,
+   54605,
    [
     275,
     274
    ]
   ],
   [
-   54229,
-   54277,
+   54606,
+   54654,
    [
     276,
     274
    ]
   ],
   [
-   54278,
-   54658,
+   54655,
+   55035,
    [
     277
    ]
   ],
   [
-   54659,
-   54761,
+   55036,
+   55138,
    [
     278
    ]
   ],
   [
-   55466,
-   55729,
+   55843,
+   56106,
    [
     279
    ]
   ],
   [
-   55730,
-   55901,
+   56107,
+   56278,
    [
     280
    ]
   ],
   [
-   55902,
-   55962,
+   56279,
+   56339,
    [
     281
    ]
   ],
   [
-   56109,
-   56369,
+   56486,
+   56746,
    [
     282
    ]
   ],
   [
-   56371,
-   56459,
+   56748,
+   56836,
    [
     282
    ]
   ],
   [
-   56461,
-   56639,
+   56838,
+   57016,
    [
     282
    ]
   ],
   [
-   56641,
-   56752,
+   57018,
+   57129,
    [
     283
    ]
   ],
   [
-   56753,
-   57103,
+   57130,
+   57480,
    [
     284
    ]
   ],
   [
-   57128,
-   57212,
+   57505,
+   57589,
    [
     285
    ]
   ],
   [
-   57213,
-   57358,
+   57590,
+   57735,
    [
     286
    ]
   ],
   [
-   57359,
-   57496,
+   57736,
+   57873,
    [
     287
    ]
   ],
   [
-   57497,
-   57616,
+   57874,
+   57993,
    [
     288
    ]
   ],
   [
-   57689,
-   57817,
+   58066,
+   58194,
    [
     289
    ]
   ],
   [
-   57819,
-   57864,
+   58196,
+   58241,
    [
     289
    ]
   ],
   [
-   57866,
-   58072,
+   58243,
+   58449,
    [
     289
    ]
   ],
   [
-   58097,
-   58666,
+   58474,
+   59043,
    [
     290
    ]
   ],
   [
-   58668,
-   59001,
+   59045,
+   59378,
    [
     291
    ]
   ],
   [
-   59026,
-   59562,
+   59403,
+   59939,
    [
     292
    ]
   ],
   [
-   59666,
-   60001,
+   60043,
+   60378,
    [
     293
    ]
   ],
   [
-   60484,
-   60577,
+   60861,
+   60954,
    [
     294,
     295
    ]
   ],
   [
-   60578,
-   60691,
+   60955,
+   61068,
    [
     296,
     294,
@@ -2978,58 +2978,58 @@
    ]
   ],
   [
-   61035,
-   61481,
+   61412,
+   61858,
    [
     297
    ]
   ],
   [
-   61482,
-   61540,
+   61859,
+   61917,
    [
     298,
     297
    ]
   ],
   [
-   61541,
-   61594,
+   61918,
+   61971,
    [
     297
    ]
   ],
   [
-   61695,
-   61844,
+   62072,
+   62221,
    [
     299
    ]
   ],
   [
-   61845,
-   62050,
+   62222,
+   62427,
    [
     300
    ]
   ],
   [
-   62299,
-   62492,
+   62676,
+   62869,
    [
     301
    ]
   ],
   [
-   62497,
-   62593,
+   62874,
+   62970,
    [
     302
    ]
   ],
   [
-   62610,
-   62774,
+   62987,
+   63151,
    [
     303,
     304,
@@ -3040,8 +3040,8 @@
    ]
   ],
   [
-   62775,
-   62905,
+   63152,
+   63282,
    [
     309
    ]
@@ -6991,7 +6991,7 @@
   },
   {
    "anchor": "curvature-mechanism",
-   "at": "b52001-52341",
+   "at": "b52378-52718",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7007,7 +7007,7 @@
   },
   {
    "anchor": "correction-example",
-   "at": "b52417-52568",
+   "at": "b52794-52945",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7022,7 +7022,7 @@
   },
   {
    "anchor": "correction-example",
-   "at": "b52417-52947",
+   "at": "b52794-53324",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7037,7 +7037,7 @@
   },
   {
    "anchor": "correction-example",
-   "at": "b52569-52708",
+   "at": "b52946-53085",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7049,7 +7049,7 @@
   },
   {
    "anchor": "correction-example",
-   "at": "b52709-52798",
+   "at": "b53086-53175",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7065,7 +7065,7 @@
   },
   {
    "anchor": "correction-example",
-   "at": "b52799-52947",
+   "at": "b53176-53324",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7077,7 +7077,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53023-53267",
+   "at": "b53400-53644",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7093,7 +7093,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53268-53789",
+   "at": "b53645-54166",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7109,7 +7109,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53486-53600",
+   "at": "b53863-53977",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7125,7 +7125,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53486-53789",
+   "at": "b53863-54166",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7141,7 +7141,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53601-53670",
+   "at": "b53978-54047",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7157,7 +7157,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53671-53789",
+   "at": "b54048-54166",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7173,7 +7173,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53791-53923",
+   "at": "b54168-54300",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7189,7 +7189,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53925-54090",
+   "at": "b54302-54467",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7205,7 +7205,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b53925-54277",
+   "at": "b54302-54654",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7221,7 +7221,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b54091-54228",
+   "at": "b54468-54605",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7237,7 +7237,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b54229-54277",
+   "at": "b54606-54654",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7253,7 +7253,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b54278-54658",
+   "at": "b54655-55035",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7269,7 +7269,7 @@
   },
   {
    "anchor": "curvature-transfer",
-   "at": "b54659-54761",
+   "at": "b55036-55138",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7285,7 +7285,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b55466-55729",
+   "at": "b55843-56106",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7301,7 +7301,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b55730-55901",
+   "at": "b56107-56278",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7313,7 +7313,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b55902-55962",
+   "at": "b56279-56339",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7329,7 +7329,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b56109-56639",
+   "at": "b56486-57016",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7341,7 +7341,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b56641-56752",
+   "at": "b57018-57129",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7353,7 +7353,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b56753-57103",
+   "at": "b57130-57480",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7365,7 +7365,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b57128-57212",
+   "at": "b57505-57589",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7377,7 +7377,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b57213-57358",
+   "at": "b57590-57735",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7389,7 +7389,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b57359-57496",
+   "at": "b57736-57873",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7401,7 +7401,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b57497-57616",
+   "at": "b57874-57993",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7413,7 +7413,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b57689-58072",
+   "at": "b58066-58449",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7425,7 +7425,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b58097-58666",
+   "at": "b58474-59043",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7437,7 +7437,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b58668-59001",
+   "at": "b59045-59378",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7449,7 +7449,7 @@
   },
   {
    "anchor": "changed-case-answer",
-   "at": "b59026-59562",
+   "at": "b59403-59939",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7460,7 +7460,7 @@
   },
   {
    "anchor": "density-and-approximation",
-   "at": "b59666-60001",
+   "at": "b60043-60378",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7471,7 +7471,7 @@
   },
   {
    "anchor": "scalar-identities",
-   "at": "b60484-60691",
+   "at": "b60861-61068",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7487,7 +7487,7 @@
   },
   {
    "anchor": "scalar-identities",
-   "at": "b60484-60691",
+   "at": "b60861-61068",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7503,7 +7503,7 @@
   },
   {
    "anchor": "scalar-identities",
-   "at": "b60578-60691",
+   "at": "b60955-61068",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7519,7 +7519,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b61035-61594",
+   "at": "b61412-61971",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7530,7 +7530,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b61482-61540",
+   "at": "b61859-61917",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7541,7 +7541,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b61695-61844",
+   "at": "b62072-62221",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7553,7 +7553,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b61845-62050",
+   "at": "b62222-62427",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7564,7 +7564,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62299-62492",
+   "at": "b62676-62869",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7580,7 +7580,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62497-62593",
+   "at": "b62874-62970",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7596,7 +7596,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7612,7 +7612,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7628,7 +7628,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7644,7 +7644,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7660,7 +7660,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7676,7 +7676,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62610-62774",
+   "at": "b62987-63151",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7692,7 +7692,7 @@
   },
   {
    "anchor": "source-record",
-   "at": "b62775-62905",
+   "at": "b63152-63282",
    "from_record": false,
    "lean": false,
    "lines": null,

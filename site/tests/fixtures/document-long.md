@@ -1200,6 +1200,28 @@ The quotient $s/r$ extends smoothly and evenly across zero, with
 $j(0)=0$. Reflection then gives $j\ge0$ everywhere.
 [OpenAI (2026a), Lemma 3.3][fs-signs].
 
+This ratio comparison also follows from the earlier lower-history
+inequalities in [Zhou (2026), Appendix E.3, (E.37) and (E.41)][zhou-gardner].
+To compare the finite-step problems, choose $M>\|\gamma_{\rm step}\|_\infty$
+and put $T=M^2t$, $y=Mx$, $U(T,y)=M\Phi(t,x)$ and $m=c/M$.
+Then $U$ has terminal data $\log(2\cosh y)$, whose additive constant
+has no effect on the derivatives, and $0<m<1$. In Zhou's notation,
+$B=U_y$, $C=U_{yy}$ and $V_y=y/T+W_y$. The correspondence is
+$r=MmB$, $s=MV_y$, so
+$$
+j=M^2\left(V_{yy}-\frac{C V_y}{B}\right)
+ =M^2\left(\frac{B-yC}{TB}
+              +B\,\partial_y\frac{W_y}{B}\right)\ge0.
+$$
+Here $B\ge yC$ follows from decreasing $C$ on the positive half-line
+(Zhou, p. 130), while (E.37) implies (E.41),
+$\partial_y(W_y/B)\ge0$. At a mass jump $m\mapsto m+d$, Zhou's
+update $W\mapsto W+dU$ in (E.28) adds $dB$ to $V_y$ and $dC$ to
+$V_{yy}$, leaving the displayed expression for $j$ unchanged.
+This identifies an earlier source for the ratio sign and its jump
+invariance in the smoothed finite-step problem; the approximation and
+coercivity arguments below are still needed for the full-support result.
+
 <a id="curvature-algebra"></a>
 
 ### 4.4 The polynomial correction with zero expectation
@@ -5671,6 +5693,10 @@ study have not been performed.
   *CPP 2020*, 367–381.
   [Published article](https://doi.org/10.1145/3372885.3373824).
 
+- Zhou (2026), “On the Gardner Transition in the Ising Pure p-Spin Glass II”.
+  [arXiv:2608.06523v1][zhou-gardner], 6 August 2026. Appendix E.3,
+  (E.28), (E.37), (E.41), pp. 127–128, and p. 130.
+
 [scope]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/281.md
 [support-type]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean#L81-L92
 [support-main]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Main.lean#L19-L61
@@ -5783,3 +5809,5 @@ study have not been performed.
 [scalar-main-conclusions]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKValue/GroundState/MainConclusions.lean#L13-L27
 
 [support-fixed-time]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Probability/SKSupport/Density/SampleJets.lean#L135-L143
+
+[zhou-gardner]: https://arxiv.org/abs/2608.06523v1

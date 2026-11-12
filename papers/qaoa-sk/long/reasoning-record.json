@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "2b095aacecc1f5d7007325207b199a16856277bccf9cd83f2e5f52f0d81b6ef8",
-  "graph_sha256": "05cd25e48622c61863e237a23bb6df11291711ec1cc1686433b4a62c89a6f0f0",
+  "content_sha256": "fa472c25832b36a2061f212196277009f716c230a658520bb4b4f2ed8173d74b",
+  "graph_sha256": "47eb5f9cd8936c095f37a279430757722203f6e0f60993eeefcb2953ffb994dd",
   "selected_goal_ids": [
     "full_support",
     "scalar_value",
@@ -281,6 +281,7 @@
     "support_transfer_source",
     "support_uniqueness_lean_source",
     "support_variation_source",
+    "zhou2026_lower_history",
     "zhou2026_near_critical"
   ],
   "assumption_ids": [
@@ -868,7 +869,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "f2c406fd5d47370db5a31fca8fd47247703d11205d285ba2dd29aa6e07e5a509",
+      "text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "claim_ids": [
         "support.backward_shapes",
         "support.forward_shapes",
@@ -900,11 +901,12 @@
         "support_regularity_source",
         "support_tails_source",
         "support_transfer_source",
-        "support_uniqueness_lean_source"
+        "support_uniqueness_lean_source",
+        "zhou2026_lower_history"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Reconstructs the finite-step backward and forward shape comparisons, zero expected divergence, exact rational identity and integrated coercivity. The transfer to a continuous-time coefficient and its positive/zero plateau applications are now in the fixed-time-coercivity passage.",
+      "rationale": "Reconstructs the finite-step backward and forward shape comparisons, zero expected divergence, exact rational identity and integrated coercivity. The transfer to a continuous-time coefficient and its positive/zero plateau applications are now in the fixed-time-coercivity passage. The ratio comparison is credited to Zhou 2608.06523v1, Appendix E.3; the long record gives the finite-step rescaling. No evidence status is upgraded.",
       "treatments": [
         {
           "claim_id": "support.flux_identity",
@@ -3033,16 +3035,16 @@
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "f2c406fd5d47370db5a31fca8fd47247703d11205d285ba2dd29aa6e07e5a509",
+      "from_text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "a825230953e65db66bac2d0459f0d331cf321584638c24ccf95da63fb1f0d471",
+      "to_text_sha256": "a23c009c1b45d88b51bb7210392f199cfaafcabf9543bcc4fcaa0206cacdec68",
       "kind": "expands",
       "rationale": "Expands the short account into the finite-step sign comparisons, zero-expectation correction, exact certificate and integrated inequality; the continuity-point transfer is developed separately."
     },
     {
       "from_anchor": "curvature",
-      "from_text_sha256": "f2c406fd5d47370db5a31fca8fd47247703d11205d285ba2dd29aa6e07e5a509",
+      "from_text_sha256": "61bc6937a975e4ef541096bc0d174710ff8777efd1660c82ac954f400a4825fd",
       "to_stage": "expository",
       "to_anchor": "curvature-transfer",
       "to_text_sha256": "e7bc10ccd37b4a0ea80e8cc47eed7d8a9e407a062f0208f38a807b84d98455d8",
@@ -3099,7 +3101,7 @@
       "from_text_sha256": "c431cd0269134d06f737c6762e0bc3c64ef61a63ce4798d6b7b252bcc60d2d53",
       "to_stage": "short",
       "to_anchor": "curvature",
-      "to_text_sha256": "a825230953e65db66bac2d0459f0d331cf321584638c24ccf95da63fb1f0d471",
+      "to_text_sha256": "a23c009c1b45d88b51bb7210392f199cfaafcabf9543bcc4fcaa0206cacdec68",
       "kind": "expands",
       "rationale": "Develops the continuity-point transfer of the integrated inequality, proves strict curvature on positive plateaus for the limiting solution, and treats the zero plateau separately without dividing by the coefficient."
     },

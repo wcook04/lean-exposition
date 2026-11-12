@@ -48,9 +48,9 @@
   "kind": "file",
   "license": "Apache-2.0",
   "redistribution": "original",
-  "revision": "sha256:2b095aacecc1f5d7007325207b199a16856277bccf9cd83f2e5f52f0d81b6ef8",
-  "sha256": "2b095aacecc1f5d7007325207b199a16856277bccf9cd83f2e5f52f0d81b6ef8",
-  "url": "urn:sha256:2b095aacecc1f5d7007325207b199a16856277bccf9cd83f2e5f52f0d81b6ef8"
+  "revision": "sha256:fa472c25832b36a2061f212196277009f716c230a658520bb4b4f2ed8173d74b",
+  "sha256": "fa472c25832b36a2061f212196277009f716c230a658520bb4b4f2ed8173d74b",
+  "url": "urn:sha256:fa472c25832b36a2061f212196277009f716c230a658520bb4b4f2ed8173d74b"
  },
  {
   "id": "bfmvz2022_tree_transfer",
@@ -842,6 +842,14 @@
   "revision": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
   "sha256": "4cca977ebece444b6c999d99755c1ad3c93119bafc127ea761f7f703c7279e74",
   "url": "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/lakefile.lean"
+ },
+ {
+  "id": "zhou2026_gardner_ii",
+  "kind": "literature",
+  "license": "NOASSERTION",
+  "redistribution": "reference_only",
+  "revision": "arXiv:2608.06523v1, 6 August 2026",
+  "url": "https://arxiv.org/abs/2608.06523v1"
  },
  {
   "id": "zhou2026_near_critical",

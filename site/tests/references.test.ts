@@ -332,7 +332,7 @@ describe("what a reference shows", () => {
   it("jumps for a section and opens the other paper beside this one", () => {
     const at = index("short");
     expect(opensInPlace(at.rows.find((r) => r.kind === "section")!)).toBe(false);
-    const other = at.rows.find((r) => r.kind === "other_paper")!;
+    const other = at.rows.find((r) => r.kind === "other_paper" && r.target === "rooted-energy")!;
     expect(other.target).toBe("rooted-energy");
     expect(refView(at, other).note).toContain("§8.1");
   });

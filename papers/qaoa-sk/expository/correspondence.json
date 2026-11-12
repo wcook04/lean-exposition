@@ -119,7 +119,8 @@
     "support_transfer_source",
     "support_uniqueness_lean_source",
     "support_variation_source",
-    "support_zero_candidate_chl"
+    "support_zero_candidate_chl",
+    "zhou2026_lower_history"
   ],
   "claim_ids": [
     "full_support",
@@ -154,8 +155,8 @@
     "support.zero_candidate_descent",
     "support.zero_curvature"
   ],
-  "content_sha256": "c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a",
-  "graph_sha256": "05cd25e48622c61863e237a23bb6df11291711ec1cc1686433b4a62c89a6f0f0",
+  "content_sha256": "f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110",
+  "graph_sha256": "47eb5f9cd8936c095f37a279430757722203f6e0f60993eeefcb2953ffb994dd",
   "passages": [
     {
       "anchor": "opening",
@@ -612,15 +613,16 @@
         "support_regularity_source",
         "support_tails_source",
         "support_transfer_source",
-        "support_uniqueness_lean_source"
+        "support_uniqueness_lean_source",
+        "zhou2026_lower_history"
       ],
       "claim_ids": [
         "support.plateau_transfer",
         "support.flux_identity"
       ],
       "evidence_class": "source_argument",
-      "rationale": "Relocated explanation resets to any admissible coefficient constant and positive on an interval, without minimality. Explains the signed spatial moment polynomial and zero-expectation integration-by-parts correction. Distinguishes spatial probability density from Stieltjes measure on overlap scale. Analytic signs and boundary estimates remain sourced inputs.",
-      "text_sha256": "a602638a167515e2ce48e495bc237d121e543fe15e4d7c151fde9da3754a99dc"
+      "rationale": "Relocated explanation resets to any admissible coefficient constant and positive on an interval, without minimality. Explains the signed spatial moment polynomial and zero-expectation integration-by-parts correction. Distinguishes spatial probability density from Stieltjes measure on overlap scale. Analytic signs and boundary estimates remain sourced inputs. The ratio comparison is credited to Zhou 2608.06523v1, Appendix E.3; the long record gives the finite-step rescaling. No evidence status is upgraded.",
+      "text_sha256": "4c4c677eb4e796cd4275258c9913588fe038ebd23fddaa4e364a8945b1914831"
     },
     {
       "anchor": "correction-example",
@@ -979,7 +981,8 @@
         "support_terminal_source",
         "support_transfer_source",
         "support_uniqueness_lean_source",
-        "support_variation_source"
+        "support_variation_source",
+        "zhou2026_lower_history"
       ],
       "claim_ids": [
         "full_support",
@@ -988,8 +991,8 @@
         "lean.value_consequences"
       ],
       "evidence_class": "context",
-      "rationale": "Separates conditional formal support/moments, scalar value/finite-Gaussian scope, and the external overlap, density and circuit results. Comparator/research-v2 remain unknown, with evidence routed to long §11. No new formal replay, independent analytic acceptance or human comprehension study is claimed.",
-      "text_sha256": "634a7ec78df1ebe4c1ae092bfb690afe16b53031fa9726a27b97a5236b1db24b"
+      "rationale": "Separates conditional formal support/moments, scalar value/finite-Gaussian scope, and the external overlap, density and circuit results. Comparator/research-v2 remain unknown, with evidence routed to long §11. No new formal replay, independent analytic acceptance or human comprehension study is claimed. The ratio comparison is credited to Zhou 2608.06523v1, Appendix E.3; the long record gives the finite-step rescaling. No evidence status is upgraded.",
+      "text_sha256": "4816e56b746a2142b562de2ad672bdcee25d6dfd7ba3287bcf9521edfdb11d00"
     }
   ],
   "path": "papers/expository.md",
@@ -1132,7 +1135,7 @@
       "from_text_sha256": "9467d1b6be4cc9852c9a6ccaba04ef5431f795295268ee44c3128bae4c4f12d3",
       "to_stage": "expository",
       "to_anchor": "curvature-mechanism",
-      "to_text_sha256": "a602638a167515e2ce48e495bc237d121e543fe15e4d7c151fde9da3754a99dc",
+      "to_text_sha256": "4c4c677eb4e796cd4275258c9913588fe038ebd23fddaa4e364a8945b1914831",
       "kind": "illustrates",
       "rationale": "The elementary Gaussian correction illustrates changing the visible sign while preserving expectation through a vanishing boundary term. It supplies none of the SK-specific joint shape restrictions, rational certificate or coercive estimate."
     },
