@@ -103,7 +103,7 @@ describe("a film slot", () => {
     expect(frame.className).toBe("film-slot__frame film-slot__frame--pending");
     expect(frame.getAttribute("aria-hidden")).toBe("true");
     expect([...frame.children].map((c) => [c.className, c.textContent])).toEqual([
-      ["film-slot__series", "Lean Exposition"],
+      ["film-slot__series", "SK Reader"],
       ["film-slot__name", film.short],
       ["film-slot__status", "In preparation"],
     ]);
@@ -211,7 +211,7 @@ describe("the header's lockup", () => {
     const own = lockup.querySelector<HTMLAnchorElement>("a.fam-lockup__site")!;
     expect(own.getAttribute("href")).toBe("/");
     expect(own.querySelector("svg.wordmark__mark")!.getAttribute("aria-hidden")).toBe("true");
-    expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("Lean Exposition");
+    expect(own.querySelector(".fam-lockup__name")!.textContent).toBe("SK Reader");
     expect(host.querySelector(".fam-ladder")).toBeNull();
     const jobs = [...host.querySelectorAll(".topnav > a, .topnav > .readmenu > button")].map((el) => el.textContent?.trim());
     expect(jobs).toEqual(["Read", "Map", "Compare", "What ran", "Lean index"]);

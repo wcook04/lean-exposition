@@ -35,7 +35,7 @@ describe("page title after navigation", () => {
     ];
     for (const [route, title] of cases) {
       await act(async () => root!.render(<PageTitle route={route} />));
-      expect(document.title).toBe(`${title} · Lean Exposition`);
+      expect(document.title).toBe(`${title} · SK Reader`);
     }
     await act(async () => root!.render(<PageTitle route={{ view: "home" }} />));
     expect(document.title).toBe("Why the Sherrington–Kirkpatrick order parameter has no gaps");

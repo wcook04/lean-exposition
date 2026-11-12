@@ -6,6 +6,7 @@
 // stills into public/films/.
 
 import registry from "./family.json";
+import { SITE_NAME } from "./siteName";
 
 export interface FamilyLink {
   label: string;
@@ -62,8 +63,8 @@ export function familyFilm(id: string): FamilyFilm {
   return film;
 }
 
-/** The series name a held frame carries: this website's name as its own header gives it. */
-export const FILM_SERIES = "Lean Exposition";
+/** The series name a held frame carries: this website's name. */
+export const FILM_SERIES = SITE_NAME;
 
 const YOUTUBE = /^https:\/\/(?:www\.youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/;
 

@@ -13,6 +13,7 @@ import { PAPER_NAMES, STAGE_ORDER } from "./papers";
 import { useMaybeEdition } from "./data";
 import { FAMILY } from "./family";
 import { VideoRows, VideosMenu } from "./VideosMenu";
+import { SITE_NAME } from "./siteName";
 
 interface Props {
   route: Route;
@@ -78,14 +79,14 @@ export function TopBar({ route, onSearch }: Props) {
           <img src={`${import.meta.env.BASE_URL}plectis.svg`} alt="Will Cook: all websites and videos" width={26} height={26} />
         </a>
         <span className="fam-lockup__rule" aria-hidden="true" />
-        <a className="fam-lockup__site" href={routeHref({ view: "home" })} aria-label="Lean Exposition, front page" aria-current={route.view === "home" ? "page" : undefined}>
+        <a className="fam-lockup__site" href={routeHref({ view: "home" })} aria-label={`${SITE_NAME}, front page`} aria-current={route.view === "home" ? "page" : undefined}>
           <svg viewBox="0 0 32 32" aria-hidden="true" className="wordmark__mark">
             <path d="M4 27 L4 5 M4 27 L28 27" fill="none" strokeWidth="2" strokeLinecap="round" />
             <path d="M5 26 C10 22 13 17 16 14 C19 11 22 9 27 6" fill="none" strokeWidth="2.6" strokeLinecap="round" />
             <circle cx="16" cy="14" r="3" />
           </svg>
           <span className="fam-lockup__name" translate="no">
-            Lean Exposition
+            {SITE_NAME}
           </span>
         </a>
       </span>

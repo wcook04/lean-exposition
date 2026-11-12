@@ -5,6 +5,7 @@
 import type { Snapshot, Stage } from "../api/types";
 import { PAPER_NAMES } from "./papers";
 import { routeHref, type Route } from "./router";
+import { SITE_NAME } from "./siteName";
 
 /** The query parameter an edition-pinned link carries: a manifest hash prefix. */
 export const EDITION_PARAM = "edition";
@@ -43,7 +44,7 @@ export interface CitationTarget {
 export function citationText(target: CitationTarget, route: Route, snapshot: Snapshot, origin = window.location.origin): string {
   const what = [target.stage ? PAPER_NAMES[target.stage].short : null, target.place ?? null].filter(Boolean).join(", ");
   return [
-    `Lean Exposition${what ? `: ${what}` : ""}.`,
+    `${SITE_NAME}${what ? `: ${what}` : ""}.`,
     `Edition ${snapshot.bundle_id} ${snapshot.bundle_version}, manifest SHA-256 ${snapshot.manifest_sha256}.`,
     editionLink(route, snapshot, origin),
   ].join(" ");
