@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "0cab99e62e04475d45ef7ab47579feee2be323ae8b9c4108d1e26adbd1ba36a2",
-  "graph_sha256": "05cd25e48622c61863e237a23bb6df11291711ec1cc1686433b4a62c89a6f0f0",
+  "content_sha256": "bc21296455ab786301336177a360e9aca944f4a42bbefc6e55b5b9c49382c6bd",
+  "graph_sha256": "47eb5f9cd8936c095f37a279430757722203f6e0f60993eeefcb2953ffb994dd",
   "selected_goal_ids": [
     "full_support",
     "scalar.smooth_positive_density"
@@ -59,6 +59,7 @@
   "citation_ids": [
     "ac2017_ground_state",
     "acz2020_infinite_support",
+    "acz2020_near_ground_pairs",
     "authored_r10_empty_support_chord",
     "authored_r8_circuit_sampled_finite_instance_optimum",
     "authored_r8_scalar_finite_maximum_concentration",
@@ -179,7 +180,7 @@
     "support_transfer_source",
     "support_uniqueness_lean_source",
     "support_variation_source",
-    "acz2020_near_ground_pairs"
+    "zhou2026_lower_history"
   ],
   "assumption_ids": [
     "assumptions.full_support_minimizer",
@@ -591,7 +592,7 @@
     },
     {
       "anchor": "curvature",
-      "text_sha256": "a825230953e65db66bac2d0459f0d331cf321584638c24ccf95da63fb1f0d471",
+      "text_sha256": "a23c009c1b45d88b51bb7210392f199cfaafcabf9543bcc4fcaa0206cacdec68",
       "claim_ids": [
         "support.flux_identity",
         "support.rational_certificate",
@@ -628,11 +629,12 @@
         "support_regularity_source",
         "support_tails_source",
         "support_transfer_source",
-        "support_uniqueness_lean_source"
+        "support_uniqueness_lean_source",
+        "zhou2026_lower_history"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Derives the scaled Ito moment polynomial and identifies the common spatial moment C_gamma before its two uses. The smooth c=M=1 auxiliary terminal problem gives the exact negative integrand -19/8; it illustrates integration, not minimizer hypotheses. The displayed eta equation follows signs.tex: nonnegative source, negative zeroth-order coefficient and j-preservation at jumps. Certificate design is grounded in certificate.tex section 4.1: only the derivative of -w/r introduces z, and the chosen partial derivative cancels linear z terms before the nonnegative remainder. Full signs, boundary flux, identity and approximation remain imported at long sections 4.3–4.5. Lopatto v3, v4 and external-field v1 keep distinct mathematical roles and editions."
+      "rationale": "Derives the scaled Ito moment polynomial and identifies the common spatial moment C_gamma before its two uses. The smooth c=M=1 auxiliary terminal problem gives the exact negative integrand -19/8; it illustrates integration, not minimizer hypotheses. The displayed eta equation follows signs.tex: nonnegative source, negative zeroth-order coefficient and j-preservation at jumps. Certificate design is grounded in certificate.tex section 4.1: only the derivative of -w/r introduces z, and the chosen partial derivative cancels linear z terms before the nonnegative remainder. Full signs, boundary flux, identity and approximation remain imported at long sections 4.3–4.5. Lopatto v3, v4 and external-field v1 keep distinct mathematical roles and editions. The ratio comparison is credited to Zhou 2608.06523v1, Appendix E.3; the long record gives the finite-step rescaling. No evidence status is upgraded."
     },
     {
       "anchor": "density-consequence",

@@ -1241,7 +1241,11 @@ These probability weights live on states $x$ and are distinct from the
 Stieltjes weights $\mu_\gamma(ds)$ on overlap scales. The proof needs
 bounds relating this density to the spatial derivatives of the value,
 and [OpenAI (2026a), §3][support-signs] gives the factorisation and
-comparison arguments that establish them.
+comparison arguments that establish them. An earlier comparison between
+the density and the value's derivatives is in
+[Zhou (2026), Appendix E.3][zhou-gardner]. Section 4.3 of the
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[long record](../long/reasoning-record.md#shape-comparisons)</span> shows how
+Zhou's inequalities give this density comparison.
 
 \Needspace{8\baselineskip}
 
@@ -1506,6 +1510,9 @@ versions used. The links below select the editions of the sources.
   at High Depth for MaxCut on Large-Girth Regular Graphs and the
   Sherrington-Kirkpatrick Model*. [Full preprint, version 3][bfmvz],
   §7, equation (7.2). The eventual-optimality conjecture.
+- **Yuxin Zhou (2026).** *On the Gardner Transition in the Ising Pure
+  p-Spin Glass II*. [Version 1][zhou-gardner], Appendix E.3, (E.37) and
+  (E.41). Earlier inequalities for the density comparison.
 <!-- /passage:source-record -->
 
 [support-interface]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/ComparatorChallenges/SKFullSupport.lean
@@ -1529,3 +1536,5 @@ versions used. The links below select the editions of the sources.
 [jt-control]: https://arxiv.org/abs/1502.04398v4
 
 [acz]: https://arxiv.org/abs/1703.06872v2
+
+[zhou-gardner]: https://arxiv.org/abs/2608.06523v1

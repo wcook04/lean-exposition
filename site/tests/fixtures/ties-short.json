@@ -98,7 +98,7 @@
   ],
   [
    16990,
-   28989,
+   29424,
    [
     "scalar.integrated_coercivity",
     "support.backward_shapes",
@@ -118,8 +118,8 @@
    "curvature"
   ],
   [
-   29125,
-   35696,
+   29560,
+   36131,
    [
     "scalar.paper_admissible",
     "scalar.paper_minimizer",
@@ -129,8 +129,8 @@
    "density-consequence"
   ],
   [
-   35830,
-   39877,
+   36265,
+   40312,
    [
     "scalar.euler_normalization",
     "scalar.manuscript_terminal_value",
@@ -144,8 +144,8 @@
    "scalar-value"
   ],
   [
-   39939,
-   51981,
+   40374,
+   52416,
    [
     "assumptions.qaoa_model_and_limits",
     "circuit.bounded_trigonometric",
@@ -168,8 +168,8 @@
    "qaoa-boundary"
   ],
   [
-   52098,
-   53818,
+   52533,
+   54253,
    [
     "assumptions.full_support_minimizer",
     "assumptions.value_diffusion",
@@ -1488,70 +1488,70 @@
    ]
   ],
   [
-   22830,
-   22881,
+   23265,
+   23316,
    [
     149,
     150
    ]
   ],
   [
-   22882,
-   22943,
+   23317,
+   23378,
    [
     151,
     150
    ]
   ],
   [
-   22944,
-   22989,
+   23379,
+   23424,
    [
     151,
     150
    ]
   ],
   [
-   22990,
-   23028,
+   23425,
+   23463,
    [
     152,
     150
    ]
   ],
   [
-   23029,
-   23231,
+   23464,
+   23666,
    [
     153,
     150
    ]
   ],
   [
-   23232,
-   23267,
+   23667,
+   23702,
    [
     154,
     150
    ]
   ],
   [
-   23268,
-   23327,
+   23703,
+   23762,
    [
     150
    ]
   ],
   [
-   23329,
-   23672,
+   23764,
+   24107,
    [
     155
    ]
   ],
   [
-   23673,
-   23762,
+   24108,
+   24197,
    [
     156,
     157,
@@ -1559,8 +1559,8 @@
    ]
   ],
   [
-   23763,
-   23902,
+   24198,
+   24337,
    [
     156,
     157,
@@ -1568,163 +1568,163 @@
    ]
   ],
   [
-   23903,
-   23945,
+   24338,
+   24380,
    [
     159
    ]
   ],
   [
-   23946,
-   23986,
+   24381,
+   24421,
    [
     159,
     160
    ]
   ],
   [
-   23987,
-   24117,
+   24422,
+   24552,
    [
     160
    ]
   ],
   [
-   24118,
-   24145,
+   24553,
+   24580,
    [
     161
    ]
   ],
   [
-   24146,
-   24257,
+   24581,
+   24692,
    [
     161
    ]
   ],
   [
-   24258,
-   24367,
+   24693,
+   24802,
    [
     162
    ]
   ],
   [
-   24368,
-   24427,
+   24803,
+   24862,
    [
     163
    ]
   ],
   [
-   24428,
-   24514,
+   24863,
+   24949,
    [
     164
    ]
   ],
   [
-   24515,
-   24586,
+   24950,
+   25021,
    [
     165,
     164
    ]
   ],
   [
-   24587,
-   24667,
+   25022,
+   25102,
    [
     166,
     167
    ]
   ],
   [
-   24668,
-   24772,
+   25103,
+   25207,
    [
     166,
     167
    ]
   ],
   [
-   24773,
-   24817,
+   25208,
+   25252,
    [
     168
    ]
   ],
   [
-   24818,
-   25002,
+   25253,
+   25437,
    [
     169
    ]
   ],
   [
-   25298,
-   25558,
+   25733,
+   25993,
    [
     170,
     171
    ]
   ],
   [
-   25559,
-   25712,
+   25994,
+   26147,
    [
     172,
     171
    ]
   ],
   [
-   25713,
-   25778,
+   26148,
+   26213,
    [
     171
    ]
   ],
   [
-   25779,
-   25880,
+   26214,
+   26315,
    [
     173,
     171
    ]
   ],
   [
-   25881,
-   25909,
+   26316,
+   26344,
    [
     174
    ]
   ],
   [
-   25914,
-   25966,
+   26349,
+   26401,
    [
     175
    ]
   ],
   [
-   26254,
-   26320,
+   26689,
+   26755,
    [
     176
    ]
   ],
   [
-   26321,
-   26523,
+   26756,
+   26958,
    [
     177,
     176
    ]
   ],
   [
-   26525,
-   26635,
+   26960,
+   27070,
    [
     177,
     176,
@@ -1733,419 +1733,419 @@
    ]
   ],
   [
-   26636,
-   26669,
+   27071,
+   27104,
    [
     179,
     178
    ]
   ],
   [
-   26670,
-   26778,
+   27105,
+   27213,
    [
     179,
     178
    ]
   ],
   [
-   26779,
-   26948,
+   27214,
+   27383,
    [
     179,
     178
    ]
   ],
   [
-   26949,
-   26958,
+   27384,
+   27393,
    [
     179
    ]
   ],
   [
-   26959,
-   27058,
+   27394,
+   27493,
    [
     179
    ]
   ],
   [
-   27059,
-   27136,
+   27494,
+   27571,
    [
     179
    ]
   ],
   [
-   27137,
-   27225,
+   27572,
+   27660,
    [
     180,
     179
    ]
   ],
   [
-   27226,
-   27385,
+   27661,
+   27820,
    [
     180,
     179
    ]
   ],
   [
-   27458,
-   27505,
+   27893,
+   27940,
    [
     181
    ]
   ],
   [
-   27506,
-   27583,
+   27941,
+   28018,
    [
     181
    ]
   ],
   [
-   27584,
-   27872,
+   28019,
+   28307,
    [
     182
    ]
   ],
   [
-   27873,
-   27988,
+   28308,
+   28423,
    [
     183
    ]
   ],
   [
-   27989,
-   28175,
+   28424,
+   28610,
    [
     184
    ]
   ],
   [
-   28176,
-   28331,
+   28611,
+   28766,
    [
     185
    ]
   ],
   [
-   28332,
-   28429,
+   28767,
+   28864,
    [
     186,
     187
    ]
   ],
   [
-   28430,
-   28512,
+   28865,
+   28947,
    [
     187
    ]
   ],
   [
-   28658,
-   28747,
+   29093,
+   29182,
    [
     188
    ]
   ],
   [
-   28748,
-   28865,
+   29183,
+   29300,
    [
     189
    ]
   ],
   [
-   28866,
-   28931,
+   29301,
+   29366,
    [
     190
    ]
   ],
   [
-   29671,
-   29941,
+   30106,
+   30376,
    [
     191
    ]
   ],
   [
-   29942,
-   30090,
+   30377,
+   30525,
    [
     191
    ]
   ],
   [
-   30091,
-   30145,
+   30526,
+   30580,
    [
     191
    ]
   ],
   [
-   30147,
-   30265,
+   30582,
+   30700,
    [
     192
    ]
   ],
   [
-   30266,
-   30392,
+   30701,
+   30827,
    [
     193
    ]
   ],
   [
-   30393,
-   30467,
+   30828,
+   30902,
    [
     194
    ]
   ],
   [
-   30468,
-   30502,
+   30903,
+   30937,
    [
     195
    ]
   ],
   [
-   30503,
-   30569,
+   30938,
+   31004,
    [
     195
    ]
   ],
   [
-   30608,
-   30705,
+   31043,
+   31140,
    [
     196
    ]
   ],
   [
-   30706,
-   30733,
+   31141,
+   31168,
    [
     197
    ]
   ],
   [
-   30832,
-   30858,
+   31267,
+   31293,
    [
     198
    ]
   ],
   [
-   30881,
-   30942,
+   31316,
+   31377,
    [
     199
    ]
   ],
   [
-   30943,
-   31014,
+   31378,
+   31449,
    [
     199
    ]
   ],
   [
-   31015,
-   31079,
+   31450,
+   31514,
    [
     199
    ]
   ],
   [
-   31080,
-   31229,
+   31515,
+   31664,
    [
     200
    ]
   ],
   [
-   31230,
-   31297,
+   31665,
+   31732,
    [
     200
    ]
   ],
   [
-   31298,
-   31357,
+   31733,
+   31792,
    [
     201
    ]
   ],
   [
-   31358,
-   31434,
+   31793,
+   31869,
    [
     202
    ]
   ],
   [
-   31435,
-   31487,
+   31870,
+   31922,
    [
     203
    ]
   ],
   [
-   32117,
-   32155,
+   32552,
+   32590,
    [
     204
    ]
   ],
   [
-   32156,
-   32279,
+   32591,
+   32714,
    [
     204
    ]
   ],
   [
-   32280,
-   32383,
+   32715,
+   32818,
    [
     205
    ]
   ],
   [
-   32384,
-   32479,
+   32819,
+   32914,
    [
     205
    ]
   ],
   [
-   32544,
-   32605,
+   32979,
+   33040,
    [
     206
    ]
   ],
   [
-   32709,
-   32756,
+   33144,
+   33191,
    [
     207
    ]
   ],
   [
-   32810,
-   32873,
+   33245,
+   33308,
    [
     208
    ]
   ],
   [
-   32892,
-   32973,
+   33327,
+   33408,
    [
     209
    ]
   ],
   [
-   32974,
-   33011,
+   33409,
+   33446,
    [
     210
    ]
   ],
   [
-   33012,
-   33110,
+   33447,
+   33545,
    [
     210
    ]
   ],
   [
-   33111,
-   33187,
+   33546,
+   33622,
    [
     210
    ]
   ],
   [
-   33189,
-   33335,
+   33624,
+   33770,
    [
     211
    ]
   ],
   [
-   35888,
-   35949,
+   36323,
+   36384,
    [
     212,
     213
    ]
   ],
   [
-   35950,
-   36041,
+   36385,
+   36476,
    [
     214,
     213
    ]
   ],
   [
-   36042,
-   36103,
+   36477,
+   36538,
    [
     215,
     213
    ]
   ],
   [
-   36104,
-   36188,
+   36539,
+   36623,
    [
     215,
     213
    ]
   ],
   [
-   36189,
-   36295,
+   36624,
+   36730,
    [
     216,
     213
    ]
   ],
   [
-   36296,
-   36342,
+   36731,
+   36777,
    [
     213
    ]
   ],
   [
-   36343,
-   36419,
+   36778,
+   36854,
    [
     217,
     213
    ]
   ],
   [
-   36420,
-   36472,
+   36855,
+   36907,
    [
     218,
     219,
@@ -2153,8 +2153,8 @@
    ]
   ],
   [
-   36473,
-   36494,
+   36908,
+   36929,
    [
     220,
     219,
@@ -2162,8 +2162,8 @@
    ]
   ],
   [
-   36495,
-   36581,
+   36930,
+   37016,
    [
     220,
     219,
@@ -2171,40 +2171,40 @@
    ]
   ],
   [
-   36582,
-   36690,
+   37017,
+   37125,
    [
     221,
     222
    ]
   ],
   [
-   36692,
-   36847,
+   37127,
+   37282,
    [
     223,
     222
    ]
   ],
   [
-   36848,
-   36932,
+   37283,
+   37367,
    [
     224,
     222
    ]
   ],
   [
-   36933,
-   37038,
+   37368,
+   37473,
    [
     225,
     222
    ]
   ],
   [
-   37039,
-   37078,
+   37474,
+   37513,
    [
     226,
     225,
@@ -2212,264 +2212,264 @@
    ]
   ],
   [
-   37079,
-   37114,
+   37514,
+   37549,
    [
     227
    ]
   ],
   [
-   37432,
-   37468,
+   37867,
+   37903,
    [
     228
    ]
   ],
   [
-   37469,
-   37539,
+   37904,
+   37974,
    [
     229,
     230
    ]
   ],
   [
-   37540,
-   37542,
+   37975,
+   37977,
    [
     231,
     230
    ]
   ],
   [
-   37543,
-   37598,
+   37978,
+   38033,
    [
     231,
     230
    ]
   ],
   [
-   37600,
-   37675,
+   38035,
+   38110,
    [
     232
    ]
   ],
   [
-   38173,
-   38817,
+   38608,
+   39252,
    [
     233
    ]
   ],
   [
-   39529,
-   39638,
+   39964,
+   40073,
    [
     234
    ]
   ],
   [
-   40105,
-   40138,
+   40540,
+   40573,
    [
     235
    ]
   ],
   [
-   40329,
-   40413,
+   40764,
+   40848,
    [
     236
    ]
   ],
   [
-   40414,
-   40515,
+   40849,
+   40950,
    [
     236
    ]
   ],
   [
-   40516,
-   40782,
+   40951,
+   41217,
    [
     236
    ]
   ],
   [
-   40783,
-   40920,
+   41218,
+   41355,
    [
     236
    ]
   ],
   [
-   40921,
-   41018,
+   41356,
+   41453,
    [
     236
    ]
   ],
   [
-   41105,
-   41343,
+   41540,
+   41778,
    [
     237
    ]
   ],
   [
-   41727,
-   41856,
+   42162,
+   42291,
    [
     238,
     239
    ]
   ],
   [
-   41857,
-   41917,
+   42292,
+   42352,
    [
     239
    ]
   ],
   [
-   41918,
-   41978,
-   [
-    240,
-    239
-   ]
-  ],
-  [
-   41979,
-   42217,
+   42353,
+   42413,
    [
     240,
     239
    ]
   ],
   [
-   42218,
-   42329,
+   42414,
+   42652,
+   [
+    240,
+    239
+   ]
+  ],
+  [
+   42653,
+   42764,
    [
     241,
     239
    ]
   ],
   [
-   42330,
-   42476,
+   42765,
+   42911,
    [
     242,
     239
    ]
   ],
   [
-   42477,
-   42543,
+   42912,
+   42978,
    [
     243,
     244
    ]
   ],
   [
-   42544,
-   42688,
+   42979,
+   43123,
    [
     243,
     244
    ]
   ],
   [
-   42689,
-   42769,
+   43124,
+   43204,
    [
     245,
     244
    ]
   ],
   [
-   42770,
-   42772,
+   43205,
+   43207,
    [
     244
    ]
   ],
   [
-   42773,
-   42867,
+   43208,
+   43302,
    [
     246,
     244
    ]
   ],
   [
-   42868,
-   42871,
+   43303,
+   43306,
    [
     247
    ]
   ],
   [
-   42872,
-   42940,
-   [
-    248,
-    247
-   ]
-  ],
-  [
-   42941,
-   43155,
+   43307,
+   43375,
    [
     248,
     247
    ]
   ],
   [
-   43157,
-   43196,
+   43376,
+   43590,
+   [
+    248,
+    247
+   ]
+  ],
+  [
+   43592,
+   43631,
    [
     249,
     250
    ]
   ],
   [
-   43197,
-   43282,
+   43632,
+   43717,
    [
     251,
     250
    ]
   ],
   [
-   43283,
-   43380,
+   43718,
+   43815,
    [
     251,
     250
    ]
   ],
   [
-   43381,
-   43479,
+   43816,
+   43914,
    [
     252,
     250
    ]
   ],
   [
-   43480,
-   43600,
+   43915,
+   44035,
    [
     250
    ]
   ],
   [
-   43601,
-   43725,
+   44036,
+   44160,
    [
     253,
     254,
@@ -2477,8 +2477,8 @@
    ]
   ],
   [
-   43726,
-   43798,
+   44161,
+   44233,
    [
     255,
     253,
@@ -2487,8 +2487,8 @@
    ]
   ],
   [
-   43799,
-   43839,
+   44234,
+   44274,
    [
     256,
     254,
@@ -2496,8 +2496,8 @@
    ]
   ],
   [
-   43840,
-   43898,
+   44275,
+   44333,
    [
     257,
     254,
@@ -2505,97 +2505,97 @@
    ]
   ],
   [
-   43899,
-   43977,
+   44334,
+   44412,
    [
     258,
     250
    ]
   ],
   [
-   44282,
-   44584,
+   44717,
+   45019,
    [
     259
    ]
   ],
   [
-   44585,
-   44611,
+   45020,
+   45046,
    [
     259
    ]
   ],
   [
-   46078,
-   46395,
+   46513,
+   46830,
    [
     260
    ]
   ],
   [
-   46396,
-   46665,
+   46831,
+   47100,
    [
     261,
     260
    ]
   ],
   [
-   46666,
-   46729,
+   47101,
+   47164,
    [
     262
    ]
   ],
   [
-   46859,
-   46943,
+   47294,
+   47378,
    [
     263
    ]
   ],
   [
-   47901,
-   47943,
+   48336,
+   48378,
    [
     264
    ]
   ],
   [
-   47944,
-   48137,
+   48379,
+   48572,
    [
     265,
     264
    ]
   ],
   [
-   48138,
-   48328,
+   48573,
+   48763,
    [
     264
    ]
   ],
   [
-   48329,
-   48464,
+   48764,
+   48899,
    [
     266,
     264
    ]
   ],
   [
-   48465,
-   48515,
+   48900,
+   48950,
    [
     267,
     264
    ]
   ],
   [
-   48516,
-   48575,
+   48951,
+   49010,
    [
     268,
     267,
@@ -2603,119 +2603,119 @@
    ]
   ],
   [
-   48576,
-   48834,
+   49011,
+   49269,
    [
     264
    ]
   ],
   [
-   49340,
-   49386,
+   49775,
+   49821,
    [
     269,
     270
    ]
   ],
   [
-   49387,
-   49466,
+   49822,
+   49901,
    [
     269,
     270
    ]
   ],
   [
-   49467,
-   49565,
+   49902,
+   50000,
    [
     271,
     270
    ]
   ],
   [
-   49566,
-   49703,
+   50001,
+   50138,
    [
     270
    ]
   ],
   [
-   50450,
-   50696,
+   50885,
+   51131,
    [
     272
    ]
   ],
   [
-   50697,
-   50871,
+   51132,
+   51306,
    [
     272
    ]
   ],
   [
-   50873,
-   51047,
+   51308,
+   51482,
    [
     273
    ]
   ],
   [
-   51048,
-   51129,
+   51483,
+   51564,
    [
     273
    ]
   ],
   [
-   51130,
-   51297,
+   51565,
+   51732,
    [
     273
    ]
   ],
   [
-   51298,
-   51397,
+   51733,
+   51832,
    [
     274,
     273
    ]
   ],
   [
-   51398,
-   51638,
+   51833,
+   52073,
    [
     273
    ]
   ],
   [
-   52191,
-   52284,
+   52626,
+   52719,
    [
     275
    ]
   ],
   [
-   52285,
-   52404,
+   52720,
+   52839,
    [
     276,
     277
    ]
   ],
   [
-   52405,
-   52462,
+   52840,
+   52897,
    [
     278,
     277
    ]
   ],
   [
-   52463,
-   52548,
+   52898,
+   52983,
    [
     279,
     278,
@@ -2723,16 +2723,16 @@
    ]
   ],
   [
-   52549,
-   52608,
+   52984,
+   53043,
    [
     279,
     278
    ]
   ],
   [
-   52683,
-   52693,
+   53118,
+   53128,
    [
     280,
     281,
@@ -2742,8 +2742,8 @@
    ]
   ],
   [
-   52694,
-   52878,
+   53129,
+   53313,
    [
     285,
     280,
@@ -2755,8 +2755,8 @@
    ]
   ],
   [
-   52879,
-   53002,
+   53314,
+   53437,
    [
     287,
     288,
@@ -2765,15 +2765,15 @@
    ]
   ],
   [
-   53110,
-   53222,
+   53545,
+   53657,
    [
     290
    ]
   ],
   [
-   53223,
-   53277,
+   53658,
+   53712,
    [
     291
    ]
@@ -5142,7 +5142,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22830-22881",
+   "at": "b23265-23316",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5158,7 +5158,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22830-23327",
+   "at": "b23265-23762",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5174,7 +5174,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22882-22989",
+   "at": "b23317-23424",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5190,7 +5190,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b22990-23028",
+   "at": "b23425-23463",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5206,7 +5206,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23029-23231",
+   "at": "b23464-23666",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5222,7 +5222,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23232-23267",
+   "at": "b23667-23702",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5238,7 +5238,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23329-23672",
+   "at": "b23764-24107",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5254,7 +5254,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23673-23902",
+   "at": "b24108-24337",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5269,7 +5269,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23673-23902",
+   "at": "b24108-24337",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5285,7 +5285,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23673-23902",
+   "at": "b24108-24337",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5301,7 +5301,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23903-23986",
+   "at": "b24338-24421",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5317,7 +5317,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b23946-24117",
+   "at": "b24381-24552",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5333,7 +5333,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24118-24257",
+   "at": "b24553-24692",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5349,7 +5349,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24258-24367",
+   "at": "b24693-24802",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5365,7 +5365,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24368-24427",
+   "at": "b24803-24862",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5381,7 +5381,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24428-24586",
+   "at": "b24863-25021",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5397,7 +5397,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24515-24586",
+   "at": "b24950-25021",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5413,7 +5413,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24587-24772",
+   "at": "b25022-25207",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5428,7 +5428,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24587-24772",
+   "at": "b25022-25207",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5444,7 +5444,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24773-24817",
+   "at": "b25208-25252",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5460,7 +5460,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b24818-25002",
+   "at": "b25253-25437",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5476,7 +5476,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25298-25558",
+   "at": "b25733-25993",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5492,7 +5492,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25298-25880",
+   "at": "b25733-26315",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5508,7 +5508,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25559-25712",
+   "at": "b25994-26147",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5524,7 +5524,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25779-25880",
+   "at": "b26214-26315",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5540,7 +5540,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25881-25909",
+   "at": "b26316-26344",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5556,7 +5556,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b25914-25966",
+   "at": "b26349-26401",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5572,7 +5572,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26254-26635",
+   "at": "b26689-27070",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5588,7 +5588,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26321-26635",
+   "at": "b26756-27070",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5604,7 +5604,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26525-26948",
+   "at": "b26960-27383",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -5616,7 +5616,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b26525-27385",
+   "at": "b26960-27820",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5632,7 +5632,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27137-27385",
+   "at": "b27572-27820",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5648,7 +5648,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27458-27583",
+   "at": "b27893-28018",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5664,7 +5664,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27584-27872",
+   "at": "b28019-28307",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5680,7 +5680,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27873-27988",
+   "at": "b28308-28423",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5696,7 +5696,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b27989-28175",
+   "at": "b28424-28610",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5712,7 +5712,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28176-28331",
+   "at": "b28611-28766",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5728,7 +5728,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28332-28429",
+   "at": "b28767-28864",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5744,7 +5744,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28332-28512",
+   "at": "b28767-28947",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5760,7 +5760,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28658-28747",
+   "at": "b29093-29182",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5776,7 +5776,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28748-28865",
+   "at": "b29183-29300",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5792,7 +5792,7 @@
   },
   {
    "anchor": "curvature",
-   "at": "b28866-28931",
+   "at": "b29301-29366",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5808,7 +5808,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b29671-30145",
+   "at": "b30106-30580",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -5820,7 +5820,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30147-30265",
+   "at": "b30582-30700",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5836,7 +5836,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30266-30392",
+   "at": "b30701-30827",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5852,7 +5852,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30393-30467",
+   "at": "b30828-30902",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5868,7 +5868,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30468-30569",
+   "at": "b30903-31004",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -5880,7 +5880,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30608-30705",
+   "at": "b31043-31140",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5896,7 +5896,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30706-30733",
+   "at": "b31141-31168",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5912,7 +5912,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30832-30858",
+   "at": "b31267-31293",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5928,7 +5928,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b30881-31079",
+   "at": "b31316-31514",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5944,7 +5944,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b31080-31297",
+   "at": "b31515-31732",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5960,7 +5960,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b31298-31357",
+   "at": "b31733-31792",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5976,7 +5976,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b31358-31434",
+   "at": "b31793-31869",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -5992,7 +5992,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b31435-31487",
+   "at": "b31870-31922",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6008,7 +6008,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32117-32279",
+   "at": "b32552-32714",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6024,7 +6024,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32280-32479",
+   "at": "b32715-32914",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6040,7 +6040,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32544-32605",
+   "at": "b32979-33040",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6056,7 +6056,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32709-32756",
+   "at": "b33144-33191",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6072,7 +6072,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32810-32873",
+   "at": "b33245-33308",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6088,7 +6088,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32892-32973",
+   "at": "b33327-33408",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6104,7 +6104,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b32974-33187",
+   "at": "b33409-33622",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6115,7 +6115,7 @@
   },
   {
    "anchor": "density-consequence",
-   "at": "b33189-33335",
+   "at": "b33624-33770",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6131,7 +6131,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b35888-35949",
+   "at": "b36323-36384",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6147,7 +6147,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b35888-36581",
+   "at": "b36323-37016",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6163,7 +6163,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b35950-36041",
+   "at": "b36385-36476",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6179,7 +6179,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36042-36188",
+   "at": "b36477-36623",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6195,7 +6195,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36189-36295",
+   "at": "b36624-36730",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6211,7 +6211,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36343-36419",
+   "at": "b36778-36854",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6227,7 +6227,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36420-36472",
+   "at": "b36855-36907",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6243,7 +6243,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36420-36581",
+   "at": "b36855-37016",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6259,7 +6259,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36473-36581",
+   "at": "b36908-37016",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6275,7 +6275,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36582-36690",
+   "at": "b37017-37125",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6291,7 +6291,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36582-37078",
+   "at": "b37017-37513",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6307,7 +6307,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36692-36847",
+   "at": "b37127-37282",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6323,7 +6323,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36848-36932",
+   "at": "b37283-37367",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6339,7 +6339,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b36933-37078",
+   "at": "b37368-37513",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6355,7 +6355,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37039-37078",
+   "at": "b37474-37513",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6371,7 +6371,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37079-37114",
+   "at": "b37514-37549",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6387,7 +6387,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37432-37468",
+   "at": "b37867-37903",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6403,7 +6403,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37469-37539",
+   "at": "b37904-37974",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6419,7 +6419,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37469-37598",
+   "at": "b37904-38033",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6435,7 +6435,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37540-37598",
+   "at": "b37975-38033",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6451,7 +6451,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b37600-37675",
+   "at": "b38035-38110",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6467,7 +6467,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b38173-38817",
+   "at": "b38608-39252",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6478,7 +6478,7 @@
   },
   {
    "anchor": "scalar-value",
-   "at": "b39529-39638",
+   "at": "b39964-40073",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6494,7 +6494,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b40105-40138",
+   "at": "b40540-40573",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6510,7 +6510,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b40329-41018",
+   "at": "b40764-41453",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6521,7 +6521,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b41105-41343",
+   "at": "b41540-41778",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6532,7 +6532,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b41727-41856",
+   "at": "b42162-42291",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6548,7 +6548,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b41727-42476",
+   "at": "b42162-42911",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6564,7 +6564,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b41918-42217",
+   "at": "b42353-42652",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6580,7 +6580,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42218-42329",
+   "at": "b42653-42764",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6596,7 +6596,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42330-42476",
+   "at": "b42765-42911",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6612,7 +6612,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42477-42688",
+   "at": "b42912-43123",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6628,7 +6628,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42477-42867",
+   "at": "b42912-43302",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6644,7 +6644,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42689-42769",
+   "at": "b43124-43204",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6660,7 +6660,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42773-42867",
+   "at": "b43208-43302",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6676,7 +6676,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42868-43155",
+   "at": "b43303-43590",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6692,7 +6692,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b42872-43155",
+   "at": "b43307-43590",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6708,7 +6708,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43157-43196",
+   "at": "b43592-43631",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6724,7 +6724,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43157-43977",
+   "at": "b43592-44412",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6740,7 +6740,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43197-43380",
+   "at": "b43632-43815",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6756,7 +6756,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43381-43479",
+   "at": "b43816-43914",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6772,7 +6772,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43601-43798",
+   "at": "b44036-44233",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6788,7 +6788,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43601-43898",
+   "at": "b44036-44333",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6804,7 +6804,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43726-43798",
+   "at": "b44161-44233",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6820,7 +6820,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43799-43839",
+   "at": "b44234-44274",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6836,7 +6836,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43840-43898",
+   "at": "b44275-44333",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6852,7 +6852,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b43899-43977",
+   "at": "b44334-44412",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6868,7 +6868,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b44282-44611",
+   "at": "b44717-45046",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6879,7 +6879,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46078-46665",
+   "at": "b46513-47100",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6890,7 +6890,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46396-46665",
+   "at": "b46831-47100",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6902,7 +6902,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46666-46729",
+   "at": "b47101-47164",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6914,7 +6914,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b46859-46943",
+   "at": "b47294-47378",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6925,7 +6925,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47901-48834",
+   "at": "b48336-49269",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6936,7 +6936,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b47944-48137",
+   "at": "b48379-48572",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6947,7 +6947,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b48329-48464",
+   "at": "b48764-48899",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6958,7 +6958,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b48465-48575",
+   "at": "b48900-49010",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6969,7 +6969,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b48516-48575",
+   "at": "b48951-49010",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -6980,7 +6980,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b49340-49466",
+   "at": "b49775-49901",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -6996,7 +6996,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b49340-49703",
+   "at": "b49775-50138",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7007,7 +7007,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b49467-49565",
+   "at": "b49902-50000",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7023,7 +7023,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b50450-50871",
+   "at": "b50885-51306",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7034,7 +7034,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b50873-51638",
+   "at": "b51308-52073",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7045,7 +7045,7 @@
   },
   {
    "anchor": "qaoa-boundary",
-   "at": "b51298-51397",
+   "at": "b51733-51832",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7061,7 +7061,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52191-52284",
+   "at": "b52626-52719",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7077,7 +7077,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52285-52404",
+   "at": "b52720-52839",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7093,7 +7093,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52285-52548",
+   "at": "b52720-52983",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7109,7 +7109,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52405-52608",
+   "at": "b52840-53043",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7125,7 +7125,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52463-52608",
+   "at": "b52898-53043",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7141,7 +7141,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52683-52878",
+   "at": "b53118-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7157,7 +7157,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52683-52878",
+   "at": "b53118-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7173,7 +7173,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52683-52878",
+   "at": "b53118-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7189,7 +7189,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52683-52878",
+   "at": "b53118-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7205,7 +7205,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52683-52878",
+   "at": "b53118-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7221,7 +7221,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52694-52878",
+   "at": "b53129-53313",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7237,7 +7237,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52694-53002",
+   "at": "b53129-53437",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7253,7 +7253,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52879-53002",
+   "at": "b53314-53437",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7269,7 +7269,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52879-53002",
+   "at": "b53314-53437",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7285,7 +7285,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b52879-53002",
+   "at": "b53314-53437",
    "from_record": false,
    "lean": true,
    "lines": [
@@ -7301,7 +7301,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b53110-53222",
+   "at": "b53545-53657",
    "from_record": false,
    "lean": false,
    "lines": null,
@@ -7313,7 +7313,7 @@
   },
   {
    "anchor": "evidence-scope",
-   "at": "b53223-53277",
+   "at": "b53658-53712",
    "from_record": false,
    "lean": true,
    "lines": [

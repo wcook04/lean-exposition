@@ -465,6 +465,13 @@ The quotients $w/r$ and $s/r$ extend smoothly through zero because
 $r,s,w$ are odd and $r_x(0)>0$. Both the boundary controls of the
 comparison and these extensions are analytic inputs from
 [OpenAI (2026a), Lemmas 3.2–3.4][FS], reconstructed in <span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[long §4.3](../long/reasoning-record.md#shape-comparisons)</span>.
+This ratio sign and its preservation at jumps also follow from
+[Zhou (2026), Appendix E.3, (E.37) and (E.41)][zhou-gardner], after
+rescaling the smoothed finite-step problem. Section 4.3 of the
+<span class="pdf-companion" data-pdf-target="../long/reasoning-record.pdf" data-pdf-anchor="shape-comparisons">[long record](../long/reasoning-record.md#shape-comparisons)</span> gives the
+change of variables and the resulting inequality.
+
+
 
 The factorisation of the density gives $f_x/f=r-s$. For a suitable
 expression $F$ in the shape quantities, define
@@ -1156,6 +1163,9 @@ formal statement with the printed one in <span class="pdf-companion" data-pdf-ta
 - Sherrington, D. and Kirkpatrick, S. (1975). “Solvable Model of a Spin-Glass.”
   *Physical Review Letters* **35**, 1792–1796. [Original model][SK].
 
+- Zhou, Y. (2026). “On the Gardner Transition in the Ising Pure p-Spin Glass II”.
+  [arXiv:2608.06523v1][zhou-gardner], Appendix E.3, (E.37), (E.41).
+
 [Lean4]: https://doi.org/10.1007/978-3-030-79876-5_37
 [mathlib]: https://doi.org/10.1145/3372885.3373824
 [FS]: https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf
@@ -1189,3 +1199,5 @@ formal statement with the printed one in <span class="pdf-companion" data-pdf-ta
 [Sellke]: https://arxiv.org/abs/2105.03506v4
 
 [spin-boson]: https://arxiv.org/abs/2505.07929v2
+
+[zhou-gardner]: https://arxiv.org/abs/2608.06523v1

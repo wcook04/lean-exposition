@@ -2,7 +2,7 @@
  "stage": "expository",
  "paper": {
   "path": "papers/expository.md",
-  "byte_length": 68746,
+  "byte_length": 69376,
   "sections": [
    {
     "heading_span": {
@@ -13,10 +13,10 @@
     },
     "level": 1,
     "parent_ref": null,
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "span": {
-     "end_byte": 68746,
-     "end_line": 1531,
+     "end_byte": 69376,
+     "end_line": 1540,
      "start_byte": 104,
      "start_line": 9
     },
@@ -30,8 +30,8 @@
      "start_line": 11
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/146",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/146",
     "span": {
      "end_byte": 2242,
      "end_line": 49,
@@ -48,8 +48,8 @@
      "start_line": 50
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/2242",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/2242",
     "span": {
      "end_byte": 6894,
      "end_line": 157,
@@ -66,8 +66,8 @@
      "start_line": 158
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/6894",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/6894",
     "span": {
      "end_byte": 13851,
      "end_line": 323,
@@ -84,8 +84,8 @@
      "start_line": 324
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/13851",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/13851",
     "span": {
      "end_byte": 25230,
      "end_line": 586,
@@ -102,8 +102,8 @@
      "start_line": 333
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/13851",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/14298",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/13851",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/14298",
     "span": {
      "end_byte": 15480,
      "end_line": 358,
@@ -120,8 +120,8 @@
      "start_line": 359
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/13851",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/15480",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/13851",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/15480",
     "span": {
      "end_byte": 18078,
      "end_line": 422,
@@ -138,8 +138,8 @@
      "start_line": 423
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/13851",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/18078",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/13851",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/18078",
     "span": {
      "end_byte": 25230,
      "end_line": 586,
@@ -156,8 +156,8 @@
      "start_line": 587
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/25230",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/25230",
     "span": {
      "end_byte": 26017,
      "end_line": 606,
@@ -174,8 +174,8 @@
      "start_line": 607
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
     "span": {
      "end_byte": 43303,
      "end_line": 1027,
@@ -192,8 +192,8 @@
      "start_line": 614
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26300",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26300",
     "span": {
      "end_byte": 31768,
      "end_line": 744,
@@ -210,8 +210,8 @@
      "start_line": 745
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/31768",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/31768",
     "span": {
      "end_byte": 32371,
      "end_line": 761,
@@ -228,8 +228,8 @@
      "start_line": 762
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/32371",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/32371",
     "span": {
      "end_byte": 36818,
      "end_line": 863,
@@ -246,8 +246,8 @@
      "start_line": 864
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/36818",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/36818",
     "span": {
      "end_byte": 42078,
      "end_line": 998,
@@ -264,8 +264,8 @@
      "start_line": 999
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/42078",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/42078",
     "span": {
      "end_byte": 43303,
      "end_line": 1027,
@@ -282,8 +282,8 @@
      "start_line": 1028
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/43303",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/43303",
     "span": {
      "end_byte": 45874,
      "end_line": 1081,
@@ -300,11 +300,11 @@
      "start_line": 1082
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
     "span": {
-     "end_byte": 61659,
-     "end_line": 1447,
+     "end_byte": 62036,
+     "end_line": 1451,
      "start_byte": 45874,
      "start_line": 1082
     },
@@ -318,8 +318,8 @@
      "start_line": 1095
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/46418",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/46418",
     "span": {
      "end_byte": 47644,
      "end_line": 1132,
@@ -336,8 +336,8 @@
      "start_line": 1133
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/47644",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/47644",
     "span": {
      "end_byte": 50709,
      "end_line": 1214,
@@ -354,11 +354,11 @@
      "start_line": 1215
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/50709",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/50709",
     "span": {
-     "end_byte": 55409,
-     "end_line": 1323,
+     "end_byte": 55786,
+     "end_line": 1327,
      "start_byte": 50709,
      "start_line": 1215
     },
@@ -366,55 +366,55 @@
    },
    {
     "heading_span": {
-     "end_byte": 55442,
-     "end_line": 1324,
-     "start_byte": 55409,
-     "start_line": 1324
+     "end_byte": 55819,
+     "end_line": 1328,
+     "start_byte": 55786,
+     "start_line": 1328
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/55409",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/55786",
     "span": {
-     "end_byte": 59602,
-     "end_line": 1415,
-     "start_byte": 55409,
-     "start_line": 1324
+     "end_byte": 59979,
+     "end_line": 1419,
+     "start_byte": 55786,
+     "start_line": 1328
     },
     "title": "7.4 Answers to the questions"
    },
    {
     "heading_span": {
-     "end_byte": 59622,
-     "end_line": 1416,
-     "start_byte": 59602,
-     "start_line": 1416
+     "end_byte": 59999,
+     "end_line": 1420,
+     "start_byte": 59979,
+     "start_line": 1420
     },
     "level": 3,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/59602",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/59979",
     "span": {
-     "end_byte": 61659,
-     "end_line": 1447,
-     "start_byte": 59602,
-     "start_line": 1416
+     "end_byte": 62036,
+     "end_line": 1451,
+     "start_byte": 59979,
+     "start_line": 1420
     },
     "title": "Further reading"
    },
    {
     "heading_span": {
-     "end_byte": 61694,
-     "end_line": 1448,
-     "start_byte": 61659,
-     "start_line": 1448
+     "end_byte": 62071,
+     "end_line": 1452,
+     "start_byte": 62036,
+     "start_line": 1452
     },
     "level": 2,
-    "parent_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/61659",
+    "parent_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/62036",
     "span": {
-     "end_byte": 68746,
-     "end_line": 1531,
-     "start_byte": 61659,
-     "start_line": 1448
+     "end_byte": 69376,
+     "end_line": 1540,
+     "start_byte": 62036,
+     "start_line": 1452
     },
     "title": "Formal verification and sources"
    }
@@ -487,8 +487,8 @@
      "start_line": 18
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/opening",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/146",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/opening",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/146",
     "selected": true
    },
    {
@@ -514,8 +514,8 @@
      "start_line": 49
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/spins-and-overlap",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/spins-and-overlap",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true
    },
    {
@@ -542,8 +542,8 @@
      "start_line": 157
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/order-parameter-example",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/order-parameter-example",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true,
     "treatments": [
      {
@@ -589,8 +589,8 @@
      "start_line": 323
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/value-and-diffusion",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/value-and-diffusion",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true
    },
    {
@@ -652,8 +652,8 @@
      "start_line": 586
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/full-support-statement",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/full-support-statement",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true,
     "treatments": [
      {
@@ -694,8 +694,8 @@
      "start_line": 606
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/first-variation",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/first-variation",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true,
     "treatments": [
      {
@@ -768,8 +768,8 @@
      "start_line": 645
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/contact-and-gap",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/contact-and-gap",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
     "selected": true
    },
    {
@@ -835,8 +835,8 @@
      "start_line": 863
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/endpoints",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/endpoints",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
     "selected": true
    },
    {
@@ -859,8 +859,8 @@
      "start_line": 998
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/changed-cases",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/26017",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/changed-cases",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/26017",
     "selected": true
    },
    {
@@ -924,8 +924,8 @@
      "start_line": 1025
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/overlap-payoff",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/overlap-payoff",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true
    },
    {
@@ -966,8 +966,8 @@
      "start_line": 1092
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/zero-candidate",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/zero-candidate",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
     "selected": true,
     "treatments": [
      {
@@ -1014,16 +1014,16 @@
      "start_line": 1132
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/control-derivations",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/control-derivations",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
     "selected": true
    },
    {
     "anchor": "curvature-mechanism",
     "assumption_ids": [],
     "block_span": {
-     "end_byte": 52379,
-     "end_line": 1258,
+     "end_byte": 52756,
+     "end_line": 1262,
      "start_byte": 50672,
      "start_line": 1214
     },
@@ -1037,55 +1037,56 @@
      "support_regularity_source",
      "support_tails_source",
      "support_transfer_source",
-     "support_uniqueness_lean_source"
+     "support_uniqueness_lean_source",
+     "zhou2026_lower_history"
     ],
     "claim_ids": [
      "support.plateau_transfer",
      "support.flux_identity"
     ],
     "content_span": {
-     "end_byte": 52342,
-     "end_line": 1257,
+     "end_byte": 52719,
+     "end_line": 1261,
      "start_byte": 50708,
      "start_line": 1214
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/curvature-mechanism",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/curvature-mechanism",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
     "selected": true
    },
    {
     "anchor": "correction-example",
     "assumption_ids": [],
     "block_span": {
-     "end_byte": 52984,
-     "end_line": 1274,
-     "start_byte": 52381,
-     "start_line": 1260
+     "end_byte": 53361,
+     "end_line": 1278,
+     "start_byte": 52758,
+     "start_line": 1264
     },
     "citation_ids": [
      "support_flux_source"
     ],
     "claim_ids": [],
     "content_span": {
-     "end_byte": 52948,
-     "end_line": 1273,
-     "start_byte": 52416,
-     "start_line": 1260
+     "end_byte": 53325,
+     "end_line": 1277,
+     "start_byte": 52793,
+     "start_line": 1264
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/correction-example",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/50709",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/correction-example",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/50709",
     "selected": true
    },
    {
     "anchor": "curvature-transfer",
     "assumption_ids": [],
     "block_span": {
-     "end_byte": 55370,
-     "end_line": 1321,
-     "start_byte": 52986,
-     "start_line": 1276
+     "end_byte": 55747,
+     "end_line": 1325,
+     "start_byte": 53363,
+     "start_line": 1280
     },
     "citation_ids": [
      "full_support_origin_coercivity",
@@ -1116,24 +1117,24 @@
      "support.positive_curvature"
     ],
     "content_span": {
-     "end_byte": 55334,
-     "end_line": 1320,
-     "start_byte": 53021,
-     "start_line": 1276
+     "end_byte": 55711,
+     "end_line": 1324,
+     "start_byte": 53398,
+     "start_line": 1280
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/curvature-transfer",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/50709",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/curvature-transfer",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/50709",
     "selected": true
    },
    {
     "anchor": "changed-case-answer",
     "assumption_ids": [],
     "block_span": {
-     "end_byte": 59600,
-     "end_line": 1414,
-     "start_byte": 55372,
-     "start_line": 1323
+     "end_byte": 59977,
+     "end_line": 1418,
+     "start_byte": 55749,
+     "start_line": 1327
     },
     "citation_ids": [
      "authored_r8_support_terminal_chord_barrier",
@@ -1145,14 +1146,14 @@
      "support.terminal_chord_barrier"
     ],
     "content_span": {
-     "end_byte": 59563,
-     "end_line": 1413,
-     "start_byte": 55408,
-     "start_line": 1323
+     "end_byte": 59940,
+     "end_line": 1417,
+     "start_byte": 55785,
+     "start_line": 1327
     },
     "evidence_class": "example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/changed-case-answer",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/45874",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/changed-case-answer",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/45874",
     "selected": true
    },
    {
@@ -1162,10 +1163,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 60447,
-     "end_line": 1428,
-     "start_byte": 59623,
-     "start_line": 1418
+     "end_byte": 60824,
+     "end_line": 1432,
+     "start_byte": 60000,
+     "start_line": 1422
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -1209,14 +1210,14 @@
      "scalar.smooth_positive_density"
     ],
     "content_span": {
-     "end_byte": 60404,
-     "end_line": 1427,
-     "start_byte": 59665,
-     "start_line": 1418
+     "end_byte": 60781,
+     "end_line": 1431,
+     "start_byte": 60042,
+     "start_line": 1422
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/density-and-approximation",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/59602",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/density-and-approximation",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/59979",
     "selected": true,
     "treatments": [
      {
@@ -1235,10 +1236,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 61002,
-     "end_line": 1436,
-     "start_byte": 60449,
-     "start_line": 1430
+     "end_byte": 61379,
+     "end_line": 1440,
+     "start_byte": 60826,
+     "start_line": 1434
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -1285,14 +1286,14 @@
      "scalar.manuscript_terminal_value"
     ],
     "content_span": {
-     "end_byte": 60967,
-     "end_line": 1435,
-     "start_byte": 60483,
-     "start_line": 1430
+     "end_byte": 61344,
+     "end_line": 1439,
+     "start_byte": 60860,
+     "start_line": 1434
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/scalar-identities",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/59602",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/scalar-identities",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/59979",
     "selected": true,
     "treatments": [
      {
@@ -1310,10 +1311,10 @@
      "assumptions.qaoa_model_and_limits"
     ],
     "block_span": {
-     "end_byte": 61626,
-     "end_line": 1445,
-     "start_byte": 61004,
-     "start_line": 1438
+     "end_byte": 62003,
+     "end_line": 1449,
+     "start_byte": 61381,
+     "start_line": 1442
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -1397,14 +1398,14 @@
      "qaoa_thermodynamic_first"
     ],
     "content_span": {
-     "end_byte": 61595,
-     "end_line": 1444,
-     "start_byte": 61034,
-     "start_line": 1438
+     "end_byte": 61972,
+     "end_line": 1448,
+     "start_byte": 61411,
+     "start_line": 1442
     },
     "evidence_class": "source_argument",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/qaoa-boundary",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/59602",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/qaoa-boundary",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/59979",
     "selected": true,
     "treatments": [
      {
@@ -1426,10 +1427,10 @@
      "scalar.paper_minimizer"
     ],
     "block_span": {
-     "end_byte": 65664,
-     "end_line": 1509,
-     "start_byte": 61628,
-     "start_line": 1447
+     "end_byte": 66242,
+     "end_line": 1516,
+     "start_byte": 62005,
+     "start_line": 1451
     },
     "citation_ids": [
      "authored_r8_scaling_contact",
@@ -1495,7 +1496,8 @@
      "support_terminal_source",
      "support_transfer_source",
      "support_uniqueness_lean_source",
-     "support_variation_source"
+     "support_variation_source",
+     "zhou2026_lower_history"
     ],
     "claim_ids": [
      "full_support",
@@ -1504,22 +1506,22 @@
      "lean.value_consequences"
     ],
     "content_span": {
-     "end_byte": 65633,
-     "end_line": 1508,
-     "start_byte": 61658,
-     "start_line": 1447
+     "end_byte": 66211,
+     "end_line": 1515,
+     "start_byte": 62035,
+     "start_line": 1451
     },
     "evidence_class": "context",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/source-record",
-    "section_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sections/104",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/source-record",
+    "section_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sections/104",
     "selected": true
    }
   ],
   "document_parts": [
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/0",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/0",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/0",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/0",
     "span": {
      "end_byte": 384,
      "end_line": 17,
@@ -1529,8 +1531,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/opening",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/384",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/opening",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/384",
     "span": {
      "end_byte": 2205,
      "end_line": 47,
@@ -1540,8 +1542,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/2205",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/2205",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/2205",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/2205",
     "span": {
      "end_byte": 2207,
      "end_line": 48,
@@ -1551,8 +1553,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/spins-and-overlap",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/2207",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/spins-and-overlap",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/2207",
     "span": {
      "end_byte": 6851,
      "end_line": 155,
@@ -1562,8 +1564,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/6851",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/6851",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/6851",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/6851",
     "span": {
      "end_byte": 6853,
      "end_line": 156,
@@ -1573,8 +1575,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/order-parameter-example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/6853",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/order-parameter-example",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/6853",
     "span": {
      "end_byte": 13812,
      "end_line": 321,
@@ -1584,8 +1586,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/13812",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/13812",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/13812",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/13812",
     "span": {
      "end_byte": 13814,
      "end_line": 322,
@@ -1595,8 +1597,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/value-and-diffusion",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/13814",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/value-and-diffusion",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/13814",
     "span": {
      "end_byte": 25188,
      "end_line": 584,
@@ -1606,8 +1608,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/25188",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/25188",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/25188",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/25188",
     "span": {
      "end_byte": 25190,
      "end_line": 585,
@@ -1617,8 +1619,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/full-support-statement",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/25190",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/full-support-statement",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/25190",
     "span": {
      "end_byte": 25982,
      "end_line": 604,
@@ -1628,8 +1630,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/25982",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/25982",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/25982",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/25982",
     "span": {
      "end_byte": 25984,
      "end_line": 605,
@@ -1639,8 +1641,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/first-variation",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/25984",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/first-variation",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/25984",
     "span": {
      "end_byte": 27730,
      "end_line": 643,
@@ -1650,8 +1652,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/27730",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/27730",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/27730",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/27730",
     "span": {
      "end_byte": 27732,
      "end_line": 644,
@@ -1661,8 +1663,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/contact-and-gap",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/27732",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/contact-and-gap",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/27732",
     "span": {
      "end_byte": 36789,
      "end_line": 861,
@@ -1672,8 +1674,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/36789",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/36789",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/36789",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/36789",
     "span": {
      "end_byte": 36791,
      "end_line": 862,
@@ -1683,8 +1685,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/endpoints",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/36791",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/endpoints",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/36791",
     "span": {
      "end_byte": 42045,
      "end_line": 996,
@@ -1694,8 +1696,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/42045",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/42045",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/42045",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/42045",
     "span": {
      "end_byte": 42047,
      "end_line": 997,
@@ -1705,8 +1707,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/changed-cases",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/42047",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/changed-cases",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/42047",
     "span": {
      "end_byte": 43244,
      "end_line": 1023,
@@ -1716,8 +1718,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/43244",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/43244",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/43244",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/43244",
     "span": {
      "end_byte": 43246,
      "end_line": 1024,
@@ -1727,8 +1729,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/overlap-payoff",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/43246",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/overlap-payoff",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/43246",
     "span": {
      "end_byte": 45872,
      "end_line": 1080,
@@ -1738,8 +1740,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/45872",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/45872",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/45872",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/45872",
     "span": {
      "end_byte": 46357,
      "end_line": 1091,
@@ -1749,8 +1751,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/zero-candidate",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/46357",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/zero-candidate",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/46357",
     "span": {
      "end_byte": 47605,
      "end_line": 1130,
@@ -1760,8 +1762,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/47605",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/47605",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/47605",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/47605",
     "span": {
      "end_byte": 47607,
      "end_line": 1131,
@@ -1771,8 +1773,8 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/control-derivations",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/47607",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/control-derivations",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/47607",
     "span": {
      "end_byte": 50670,
      "end_line": 1212,
@@ -1782,8 +1784,8 @@
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/50670",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/50670",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/50670",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/50670",
     "span": {
      "end_byte": 50672,
      "end_line": 1213,
@@ -1793,178 +1795,178 @@
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/curvature-mechanism",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/50672",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/curvature-mechanism",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/50672",
     "span": {
-     "end_byte": 52379,
-     "end_line": 1258,
+     "end_byte": 52756,
+     "end_line": 1262,
      "start_byte": 50672,
      "start_line": 1214
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/52379",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/52379",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/52756",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/52756",
     "span": {
-     "end_byte": 52381,
-     "end_line": 1259,
-     "start_byte": 52379,
-     "start_line": 1258
+     "end_byte": 52758,
+     "end_line": 1263,
+     "start_byte": 52756,
+     "start_line": 1262
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/correction-example",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/52381",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/correction-example",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/52758",
     "span": {
-     "end_byte": 52984,
-     "end_line": 1274,
-     "start_byte": 52381,
-     "start_line": 1260
+     "end_byte": 53361,
+     "end_line": 1278,
+     "start_byte": 52758,
+     "start_line": 1264
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/52984",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/52984",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/53361",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/53361",
     "span": {
-     "end_byte": 52986,
-     "end_line": 1275,
-     "start_byte": 52984,
-     "start_line": 1274
+     "end_byte": 53363,
+     "end_line": 1279,
+     "start_byte": 53361,
+     "start_line": 1278
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/curvature-transfer",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/52986",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/curvature-transfer",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/53363",
     "span": {
-     "end_byte": 55370,
-     "end_line": 1321,
-     "start_byte": 52986,
-     "start_line": 1276
+     "end_byte": 55747,
+     "end_line": 1325,
+     "start_byte": 53363,
+     "start_line": 1280
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/55370",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/55370",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/55747",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/55747",
     "span": {
-     "end_byte": 55372,
-     "end_line": 1322,
-     "start_byte": 55370,
-     "start_line": 1321
+     "end_byte": 55749,
+     "end_line": 1326,
+     "start_byte": 55747,
+     "start_line": 1325
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/changed-case-answer",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/55372",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/changed-case-answer",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/55749",
     "span": {
-     "end_byte": 59600,
-     "end_line": 1414,
-     "start_byte": 55372,
-     "start_line": 1323
+     "end_byte": 59977,
+     "end_line": 1418,
+     "start_byte": 55749,
+     "start_line": 1327
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/59600",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/59600",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/59977",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/59977",
     "span": {
-     "end_byte": 59623,
-     "end_line": 1417,
-     "start_byte": 59600,
-     "start_line": 1414
-    }
-   },
-   {
-    "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/density-and-approximation",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/59623",
-    "span": {
-     "end_byte": 60447,
-     "end_line": 1428,
-     "start_byte": 59623,
+     "end_byte": 60000,
+     "end_line": 1421,
+     "start_byte": 59977,
      "start_line": 1418
     }
    },
    {
-    "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/60447",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/60447",
+    "kind": "mapped_passage",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/density-and-approximation",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/60000",
     "span": {
-     "end_byte": 60449,
-     "end_line": 1429,
-     "start_byte": 60447,
-     "start_line": 1428
+     "end_byte": 60824,
+     "end_line": 1432,
+     "start_byte": 60000,
+     "start_line": 1422
+    }
+   },
+   {
+    "kind": "unmapped_text",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/60824",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/60824",
+    "span": {
+     "end_byte": 60826,
+     "end_line": 1433,
+     "start_byte": 60824,
+     "start_line": 1432
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/scalar-identities",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/60449",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/scalar-identities",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/60826",
     "span": {
-     "end_byte": 61002,
-     "end_line": 1436,
-     "start_byte": 60449,
-     "start_line": 1430
+     "end_byte": 61379,
+     "end_line": 1440,
+     "start_byte": 60826,
+     "start_line": 1434
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/61002",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/61002",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/61379",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/61379",
     "span": {
-     "end_byte": 61004,
-     "end_line": 1437,
-     "start_byte": 61002,
-     "start_line": 1436
+     "end_byte": 61381,
+     "end_line": 1441,
+     "start_byte": 61379,
+     "start_line": 1440
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/qaoa-boundary",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/61004",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/qaoa-boundary",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/61381",
     "span": {
-     "end_byte": 61626,
-     "end_line": 1445,
-     "start_byte": 61004,
-     "start_line": 1438
+     "end_byte": 62003,
+     "end_line": 1449,
+     "start_byte": 61381,
+     "start_line": 1442
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/61626",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/61626",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/62003",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/62003",
     "span": {
-     "end_byte": 61628,
-     "end_line": 1446,
-     "start_byte": 61626,
-     "start_line": 1445
+     "end_byte": 62005,
+     "end_line": 1450,
+     "start_byte": 62003,
+     "start_line": 1449
     }
    },
    {
     "kind": "mapped_passage",
-    "passage_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/passages/source-record",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/61628",
+    "passage_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/passages/source-record",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/62005",
     "span": {
-     "end_byte": 65664,
-     "end_line": 1509,
-     "start_byte": 61628,
-     "start_line": 1447
+     "end_byte": 66242,
+     "end_line": 1516,
+     "start_byte": 62005,
+     "start_line": 1451
     }
    },
    {
     "kind": "unmapped_text",
-    "ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/sha256:3c748f53bb2f3e44dcb0d6e814dfdec32f507d6f2c7aca36d581cbe758b05a36/papers/expository.json/parts/65664",
-    "segment_ref": "sha256:c17d1e4e497443c153dbfaed9967804be060f37981ee446a2f3daf79a50f2f7a/papers/expository.md/unmapped/65664",
+    "ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/sha256:95feefddef23144747162a16bb432cae00873b24c5a622f6d54e2674013e9f3c/papers/expository.json/parts/66242",
+    "segment_ref": "sha256:f0da93cd589e9833c441d8d9b5c8266db357dfce3236277b8d302606da295110/papers/expository.md/unmapped/66242",
     "span": {
-     "end_byte": 68746,
-     "end_line": 1531,
-     "start_byte": 65664,
-     "start_line": 1509
+     "end_byte": 69376,
+     "end_line": 1540,
+     "start_byte": 66242,
+     "start_line": 1516
     }
    }
   ]
@@ -1986,7 +1988,7 @@
    "rationale": "The elementary Gaussian correction illustrates changing the visible sign while preserving expectation through a vanishing boundary term. It supplies none of the SK-specific joint shape restrictions, rational certificate or coercive estimate.",
    "to_anchor": "curvature-mechanism",
    "to_stage": "expository",
-   "to_text_sha256": "a602638a167515e2ce48e495bc237d121e543fe15e4d7c151fde9da3754a99dc"
+   "to_text_sha256": "4c4c677eb4e796cd4275258c9913588fe038ebd23fddaa4e364a8945b1914831"
   },
   {
    "from_anchor": "zero-candidate",

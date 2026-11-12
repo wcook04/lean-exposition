@@ -16,7 +16,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/expository/main.pdf",
-    "pdf_sha256": "sha256:93d10afba9dc333d45e473aa04ad9e75dacfe85ffd97c2d5803d464268cb66ba",
+    "pdf_sha256": "sha256:efce80a43fd3285003f3bee5e9ae031e3c61e73c945073a83fec68b6e7061ced",
     "width": 352
   },
   "long": {
@@ -26,7 +26,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/long/reasoning-record.pdf",
-    "pdf_sha256": "sha256:ef7f5cb4f74798a2331119df5e38a8c1219a7947885eb25aa04ad17736618075",
+    "pdf_sha256": "sha256:66c8d41de1c21952ae9877f1dd82c833744688768c54fb1b2e74d059ff4046c1",
     "width": 352
   },
   "short": {
@@ -36,7 +36,7 @@
     },
     "height": 456,
     "pdf": "papers/qaoa-sk/short/paper.pdf",
-    "pdf_sha256": "sha256:2674e2226171a07ef039b75e2c443073a870306f7413ffb3ef3346850a8ad94d",
+    "pdf_sha256": "sha256:07ceedd706f5e6873b2d77f1d7ee6be202dff6bbb29cdb0fa5a95ee491716dda",
     "width": 352
   }
 }
