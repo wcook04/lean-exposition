@@ -31,15 +31,15 @@ describe("the first screen", () => {
   it("puts the short video of this website first and the long video of the result after it, as the catalogue lists them", () => {
     const links = heroLinks("/lean-exposition-site/");
     expect(links.films.map((film) => [film.id, film.href, film.clock])).toEqual([
-      ["short-sk-website", "https://www.youtube.com/watch?v=8ge7rwRMkhI", "1:32"],
+      ["short-sk-website", "https://www.youtube.com/watch?v=27oL5tMEkH4", "1:32"],
       ["sk-no-gap", "https://www.youtube.com/watch?v=IUAhxUriDVw", "12:28"],
-      ["short-sk-no-gap", "https://www.youtube.com/watch?v=x901wkmxCMQ", "1:38"],
+      ["short-sk-no-gap", "https://www.youtube.com/watch?v=qLqea5st6Bo", "1:38"],
     ]);
     const html = heroHtml(links, (tex) => tex);
     const lead = html.indexOf("front__lead");
     expect(lead).toBeGreaterThan(-1);
-    expect(html.indexOf("8ge7rwRMkhI")).toBeGreaterThan(lead);
-    expect(html.indexOf("8ge7rwRMkhI")).toBeLessThan(html.indexOf("IUAhxUriDVw"));
+    expect(html.indexOf("27oL5tMEkH4")).toBeGreaterThan(lead);
+    expect(html.indexOf("27oL5tMEkH4")).toBeLessThan(html.indexOf("IUAhxUriDVw"));
     expect(html).toContain('src="/lean-exposition-site/films/short-sk-website-640.webp"');
     // The picture and the title open the same video; only the title is in the Tab order.
     expect(html.match(/class="film-slot__frame"[^>]*tabindex="-1"/g)).toHaveLength(3);
