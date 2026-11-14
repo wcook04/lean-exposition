@@ -50,10 +50,10 @@ when moving them. Before release, apply the [printed-reading-path check](../../d
 to the actual PDF, including its appendices and bibliography. A long record is
 not exempt merely because the short companion is clean.
 
-Apply the shared [literature-grounded language requirements](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
-when drafting, and the [register stage](../register/SKILL.md) after revision.
-Use established terminology, adapt actual explanatory practices from appropriate
-source passages, and judge the final prose against this paper's purpose.
+Before outlining, [compare a passage from the field](../../docs/authoring.md#mathematical-register-and-literature-grounded-prose)
+to decide where a reader reconstructing the proof will need help.
+Use that judgment to order the argument and choose which steps to explain.
+Apply the [register stage](../register/SKILL.md) after revision.
 
 ## Preconditions and inputs
 

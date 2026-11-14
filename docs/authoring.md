@@ -66,6 +66,12 @@ rather than letting the example stand in for proof. Teach prerequisite machinery
 to the extent the promised understanding needs it. Precisely stated inputs can
 leave substantial supplier proofs outside the teaching route.
 
+Choose the main worked case to exhibit the operation being taught. If the text
+promises an improvement, show a case where that improvement occurs; an endpoint
+where it vanishes may then explain a limitation. Before inventing another example,
+look for a stronger case already present in the supporting material. When failure
+or degeneracy is itself the question, that boundary case belongs at the centre.
+
 Success means the reader can explain why the construction is shaped as it is,
 reconstruct its central steps, and reason about a nearby changed case without
 being told which formula to copy. The ending returns to the opening question
@@ -105,6 +111,22 @@ purpose. Preserve a caveat that changes the result or explains the hard step.
 Relocate a caveat that merely repeats an already clear boundary. Elegance is
 economy of explanation with the necessary reasoning intact.
 
+Where the idea of the proof lies in choosing an object, start one step before
+its definition. What must the next step achieve, and which earlier guarantee
+must survive it? Work from those requirements far enough to suggest a choice.
+For example, an identity that is immediate once a weight is given may explain
+how to check it. To explain how a reader might choose it, show which terms
+the proof needs to cancel and how this suggests the weight. If the same choice
+later pays for a second step, show where the same property is used again.
+
+Give the specialist the decisive comparison. Let the learner try the choice
+in a case where it matters. Retain the full justification and its conditions
+in the complete record. A simple alternative earns space if it shows which
+requirement is hard to satisfy. Its failure establishes a limit of that route.
+Claim uniqueness or optimality only with a proof over the stated alternatives.
+A familiar input used through its stated guarantee needs no invented design
+problem or account of its discovery.
+
 Composition determines whether these properties work together. At each major
 transition, identify the question the reader can now ask and the mathematical
 fact that answers it. Put the difficult device where that question makes it
@@ -122,15 +144,24 @@ makes it available; the complete record preserves both the continuous argument
 and every supporting derivation. Moving a proof changes its location, not the
 paper's obligation to supply it.
 
-When successive revisions have accumulated, reverse-outline the actual draft
-by paragraph function before editing it again. Compare repeated introductions,
-examples, caveats and conclusions by the inference each enables. Retain the
-strongest explanation, with later reminders only where the reader needs them.
-An addition must establish a missing fact or replace a less effective account;
-do not add a second explanation solely because a reviewer requested emphasis.
-Test the new order through the next use, including the return from an appendix.
-An alternative proof can remain beside the first when comparing their mechanisms
-is itself the promised contribution.
+When successive revisions have accumulated, follow the argument from each
+decisive inference to the next place that needs it. What must the reader carry
+between them? If a later section proves the same guarantee under the same
+hypotheses, keep the stronger explanation where the reader first needs it.
+At the later use, give the new deduction. If the hypotheses, conclusion or
+reader's task have changed, keep the extra work that makes the passage valid.
+A second application of one lemma can discharge a different obligation. Two
+proofs can also belong together when comparing their methods is the point.
+
+Try the cut in the actual draft. Read across the join, including any figure,
+worked example or page break. A specialist may proceed with a cited guarantee
+once its application is clear. A learner may need to perform the operation
+before continuing. In a reconstruction the full proof must still be reachable
+and the return from it must make sense. If a revision has buried a good
+sentence or derivation, compare the earlier wording at this point and restore
+it when it still supplies the inference with the current hypotheses. Keep a new
+explanation only when it replaces a weaker one or fills an identified gap.
+Once the argument works for its reader, spare it another rewrite.
 
 These purposes determine the high-level deliverables throughout a paper:
 
@@ -166,15 +197,22 @@ Keep familiar mathematical vocabulary even when a generic style guide calls it
 formal. Repetition of the same technical term is often more precise than a
 sequence of attractive synonyms.
 
-Ground the prose in actual passages that perform the same mathematical task:
-a research paper's decisive reduction, a lecture's worked operation, or a long
-proof's transition between representations. Inspect how the source establishes
-its objects, states its guarantee, motivates its definitions and connects its
-equations. Adapt that explanatory practice to the present prerequisites and
-proof obligations. An abstract alone cannot calibrate a technical proof; a dense
-expert proof cannot determine a newcomer's teaching order. Record the source
-edition, inspected passage and consequential writing decision in the existing
-review account. Citations and an annex inventory do not establish this use.
+Before outlining or revising, read a passage from the field that does comparable
+mathematical work for a reader with the proposed background. Where does its
+author proceed by citation or a single line? Where do they stop to explain an
+obstruction, work a case or prove an intermediate result? Use that comparison
+to predict what *this* reader can supply and which inference will cost them
+effort. An expert source may take an operation for granted that a learner must
+practise. A familiar theorem can also have an unfamiliar application. State the
+import precisely and spend the explanation on why its hypotheses hold here.
+Adapt how the source explains a difficult step where that practice fits this
+reader. Identify the source edition, passage and decision in the review account.
+
+Plan the encounters in that light. Start from what the reader can already ask.
+Bring in the object or estimate that answers the question, then let its use
+raise the next one. Discovery and verification can reveal why a step is hard.
+Recount either process only where it gives the reader a mathematical reason
+they need, such as a failed attempt that exposes an indispensable condition.
 
 Write direct mathematical sentences: name what is sampled, conditioned on,
 bounded or proved, and state why the next inference follows. Replace stock
@@ -242,16 +280,14 @@ Lean corpus or review packet with having read its contents.
 
 Begin with the relevant skill and the current source versions. Choose the
 mathematical question, supported result and intended reader before choosing
-sections. Rank candidate material by its contribution to that purpose: a proof
-step, necessary prerequisite, useful consequence or revealing example. Keep
-essential assumptions and credit beside their uses. Preserve useful omitted
+sections. Use the [literature comparison](#mathematical-register-and-literature-grounded-prose)
+to decide which inference deserves a proof here, which familiar input can be
+stated and cited, and which supporting calculation needs a reachable destination.
+Keep essential assumptions and credit beside their uses. Preserve useful omitted
 detail at an exact long-record destination. Availability, declaration counts
 and page quotas do not decide what belongs in a paper.
 
-Apply [literature-grounded prose](#mathematical-register-and-literature-grounded-prose)
-from the start, using the register stage's actual source comparisons. Distinguish
-the chronology of results and source editions from the order chosen to explain
-them. Companion papers can share a statement without sharing a proof route.
+Companion papers can share a statement without sharing a proof route.
 Date historical comparisons and check their quantified
 objects, hypotheses and access costs against the inspected edition. A source
 may introduce a construction, implement it, or explain why it fails in its
