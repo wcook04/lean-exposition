@@ -126,7 +126,11 @@ successfully, and reviewing the mathematics answer different questions.
 
 ## Videos
 
-In [How different can two nearly best answers be?](https://www.youtube.com/watch?v=IUAhxUriDVw), Will Cook starts with four magnets and explains the mathematical question. In [Read a maths paper beside its argument map](https://www.youtube.com/watch?v=sYMDcT7vyng), he goes through the website. In [Introduction V3](https://www.youtube.com/watch?v=MBmVMMogXTA), he explains how his projects fit together.
+[Introduction to the projects](https://www.youtube.com/watch?v=Yk_kUQUCylc) explains the wider project.
+
+- [Lean Exposition short](https://www.youtube.com/watch?v=8ge7rwRMkhI) opens the Lean proof beside a statement. The [full comparison](https://www.youtube.com/watch?v=i5GdVgC-cw0) shows how it works across three reader websites.
+- Spin glasses: [short explanation](https://www.youtube.com/watch?v=x901wkmxCMQ) and [full explanation starting with four magnets](https://www.youtube.com/watch?v=IUAhxUriDVw).
+- [Original Lean Exposition walkthrough](https://www.youtube.com/watch?v=sYMDcT7vyng).
 
 ## Related projects
 
