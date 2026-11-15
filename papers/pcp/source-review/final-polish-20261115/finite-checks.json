@@ -1,0 +1,18 @@
+{
+  "check_examples.py": {
+    "source_sha256": "76c817554ddb306694892eed54bbacadde3111d2b6588ba920335911c6375ef2",
+    "retained_output_matches": true
+  },
+  "check_exposition_examples.py": {
+    "source_sha256": "207553be39243673afea1116a1d0233480b53570a25f6fb55b9e71258dcd95b4",
+    "retained_output_matches": true
+  },
+  "check_trace.py": {
+    "source_sha256": "ca8f1fd65d07d9ce837a218b861ec03b97749cb05249f6611b6ce441c262c591",
+    "retained_output_matches": true
+  },
+  "check_changed_cases.py": {
+    "source_sha256": "57937b404a3688800ce83a6e2d281be536f29e41e795c91b4a470414bd127e1b",
+    "retained_output_matches": true
+  }
+}

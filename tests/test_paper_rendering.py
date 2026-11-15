@@ -2,8 +2,11 @@
 import re
 import shutil
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
+
+from papers.pcp.render import copy_image_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 FILTER = ROOT / "scripts/paper_anchors.lua"
@@ -159,6 +162,35 @@ portable-local-links: true
         self.assertEqual(subprocess.check_output(html, input=source, text=True),
                          subprocess.check_output(html + ["--lua-filter", str(FILTER)],
                                                  input=source, text=True))
+
+
+@unittest.skipUnless(shutil.which("pandoc"), "Pandoc is optional paper tooling")
+class PcpImageAssetsTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.source = self.root / "source" / "paper.md"
+        self.source.parent.mkdir()
+        self.out = self.root / "out"
+        self.out.mkdir()
+
+    def test_copies_only_markdown_images_beside_generated_tex(self):
+        (self.source.parent / "figures").mkdir()
+        (self.source.parent / "figures" / "proof-map.png").write_bytes(b"PNG fixture")
+        self.source.write_text("```md\n![Code only](ignored.png)\n```\n\n![Proof map](figures/proof-map.png)\n")
+        copy_image_assets(self.source, self.out)
+        self.assertEqual((self.out / "figures" / "proof-map.png").read_bytes(), b"PNG fixture")
+        self.assertFalse((self.out / "ignored.png").exists())
+
+    def test_missing_and_escaping_images_fail(self):
+        self.source.write_text("![Missing](figures/missing.png)\n")
+        with self.assertRaisesRegex(FileNotFoundError, "image is missing"):
+            copy_image_assets(self.source, self.out)
+        (self.root / "outside.png").write_bytes(b"outside")
+        self.source.write_text("![Escape](../outside.png)\n")
+        with self.assertRaisesRegex(ValueError, "must stay within"):
+            copy_image_assets(self.source, self.out)
 
 
 if __name__ == "__main__":

@@ -87,6 +87,17 @@ verifier. The [unbounded counterexample to the old scalar test](source-review/ol
 is a separate ordinary mathematical argument, not a conclusion proved by a
 finite enumeration or a counterexample to the corrected theorem.
 
+## Final editorial polish
+
+The [final polish record](source-review/final-polish-20261115/README.md) records
+consistent credits, a clearer specialist opening, and two new navigation
+figures. The current PDFs have 47, 13 and 25 pages. The
+[figure sources and rebuild instructions](figures/README.md) explain their
+provenance and limits. The table/check matrix follows the actual seven branches;
+the long proof map shows selected mathematical uses, not extracted Lean edges.
+The [current PDF check](source-review/final-polish-20261115/pdf-checks.json)
+validates the companion destinations for this edition.
+
 ## Assemble a reader bundle
 
 After the [package setup](../../CONTRIBUTING.md#setup), run from the repository root:

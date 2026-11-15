@@ -1,0 +1,26 @@
+{
+  "long": {
+    "display_formulas_unchanged": 173,
+    "passage_markers_unchanged": 73,
+    "changed_passages": [
+      "pcp-long-intro-roadmap"
+    ],
+    "sha256": "389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110"
+  },
+  "short": {
+    "display_formulas_unchanged": 36,
+    "passage_markers_unchanged": 16,
+    "changed_passages": [
+      "pcp-short-abstract"
+    ],
+    "sha256": "5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25"
+  },
+  "expository": {
+    "display_formulas_unchanged": 53,
+    "passage_markers_unchanged": 24,
+    "changed_passages": [
+      "pcp-expository-assembly"
+    ],
+    "sha256": "656438f0fb3c5cb516d368ba5b0f6a71d2f97278f3c18e2cb33635dba4a2c532"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "ok": true,
+  "papers": [
+    {
+      "file": "long/reasoning-record.pdf",
+      "pages": 47,
+      "sha256": "481f51cdc0181946eae7c822460b23ef42830a36207c3674b73ad27ac2586f60",
+      "companion_links": [
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    },
+    {
+      "file": "short/paper.pdf",
+      "pages": 13,
+      "sha256": "e063e1bc28f0532b729d64ee01b4385dab49728e33fb23e408aa7a9ae6b46475",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "2-the-corrected-short-low-degree-test"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "testing-a-received-hadamard-word"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "a-binary-version-of-the-weighted-low-degree-test"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "5-point-versus-line-soundness"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "correcting-an-outer-value-at-a-prescribed-point"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "checking-that-a-polynomial-vanishes-on-a-grid"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "parameters-for-every-finite-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "repetition-on-one-fixed-proof"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "the-polynomial-time-implementation"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "from-every-np-verifier-to-a-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "transporting-the-verifier-through-the-reduction"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "source-and-verification-account"
+        }
+      ]
+    },
+    {
+      "file": "expository/main.pdf",
+      "pages": 25,
+      "sha256": "003e914580bdc7577a42c498ac2b9b53c67423991c8bdd860bb769fd7362f499",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "5-point-versus-line-soundness"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "testing-a-received-hadamard-word"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "from-every-np-verifier-to-a-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "correcting-an-outer-value-at-a-prescribed-point"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
