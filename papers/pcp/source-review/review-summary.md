@@ -14,6 +14,11 @@ individual reports retain the exact revisions they reviewed, including
 successor-PDF rechecks after rendering repairs. The graph still reports
 `extraction_status: not_run` and `semantic_certification: false`.
 
+The [release-check record](release-checks.json) binds the subsequent fresh-clone
+installation and bundle reproduction to the tested commit. It also records the
+successful Proof Reader deployment and byte-for-byte comparison of all three
+published reading copies with the inspected build.
+
 ## Review findings and dispositions
 
 | Account | Finding and correction | Retained review |

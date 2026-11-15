@@ -20,6 +20,13 @@ was checked and the limits of those checks. AI agents researched, drafted and re
 these explanations under Will Cook's direction. They are accounts of existing
 results, not a new PCP theorem or an independent human expert's acceptance.
 
+Read the same accounts beside the linked Lean in Proof Reader:
+[full argument](https://wcook04.github.io/proof-reader/#/pcp-full-argument),
+[specialist paper](https://wcook04.github.io/proof-reader/#/pcp-specialist), and
+[worked exposition](https://wcook04.github.io/proof-reader/#/pcp-exposition).
+The [release checks](source-review/release-checks.json) record the clean-clone
+installation, bundle reproduction and deployed-reader verification.
+
 ## Exact sources and scope
 
 The formal source is

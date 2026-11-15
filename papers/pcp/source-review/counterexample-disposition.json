@@ -23,7 +23,7 @@
     "long": "../long/reasoning-record.md",
     "short": "../short/paper.md",
     "expository": "../expository/main.md",
-    "state": "included_in_final_reviewed_local_edition"
+    "state": "included_in_reviewed_published_reader_editions"
   },
   "comparator": {
     "status": "not_selected",
@@ -35,7 +35,7 @@
     "human_review": "not_performed"
   },
   "destinations": {
-    "proof_reader": "selected_as_explanatory_passage",
+    "proof_reader": "published_as_explanatory_passage",
     "Palomar": "not_selected: teaching example of an already-corrected published error",
     "Prove2Me": "not_selected: no new formal object requested",
     "aiXiv": "not_selected: task publishes companions in existing reader",
@@ -43,11 +43,18 @@
     "FormalConjectures": "not_applicable: no conjecture submission"
   },
   "continuation": {
-    "owner": "Parent integration and publication",
-    "event": "Scoped merge and reader publication; no remaining counterexample manuscript or review action"
+    "state": "complete",
+    "boundary": "The explanatory consequence is in all three reader editions; no new formal theorem or author contact was requested."
   },
   "publication": {
-    "status": "not_yet_published",
-    "boundary": "The local manuscripts, reading PDFs and bundle are complete. Publication is pending the scoped merge and deployment; this record asserts neither."
+    "status": "published_in_reader",
+    "merge_revision": "c662163e1e3d73349ceb24e233eb7543b9f4e25d",
+    "deployment": "https://github.com/wcook04/proof-reader/actions/runs/43741382463",
+    "verified": "All nine source, reading and edition files for the three entries matched the reviewed local build byte-for-byte.",
+    "urls": [
+      "https://wcook04.github.io/proof-reader/#/pcp-full-argument",
+      "https://wcook04.github.io/proof-reader/#/pcp-specialist",
+      "https://wcook04.github.io/proof-reader/#/pcp-exposition"
+    ]
   }
 }
