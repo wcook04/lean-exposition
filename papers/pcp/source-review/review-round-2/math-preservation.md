@@ -1,0 +1,24 @@
+# PCP mathematics preservation audit
+
+The audit covers the revised long record, specialist paper and worked exposition. [The JSON receipt](math-preservation.json) binds the checked manuscript bytes, source ranges, script hashes and computation outcomes. This was source reading, ordinary mathematical checking and exact finite computation. No Lean elaboration or proof replay was performed.
+
+## Two corrections
+
+- **Digit encoding injectivity**. Formal substitution sends each admitted digit monomial back to its original power of \(Y\). Applying this left inverse proves injectivity. When \(q<b^c\), evaluation alone cannot distinguish \(Y^q-Y\) from zero within the degree range. `SetMultilinear.lean` 67–75, 88–107 and 115–121.
+- **Claim 3.7 attribution**. The v1 claim has the composition identity. Its corrected v2 edition adds the homogeneity assertion only for \(P(Y)=\eta Y\) and homogeneous \(L\). The wider statement discussed in the Lean comment is absent from both supplied editions. ABSSW v1 `main.tex` 829–847 and v2 `technical_tools.tex` 168–188.
+
+## Preserved or rejected findings
+
+- **Mixed planes and the ruled surface**. The revised four discrepancies use transverse predictions on the selected row and column. The selected row uses the fixed-parameter bound. In the ruled surface, the zero column is the corrected target line and each nonzero column has a uniform oriented center and direction. `MixedPlaneSampling.lean` 142–163 and 199–241, `PointLineEndpointConsistency.lean` 31–72 and 77–128, and `RuledSurfaceSampling.lean` 47–74 and 110–119.
+- **Kaufman–Sudan specialization**. The \(c+2\) forms, their accepted linear subspace and their two-ary independence have the required hypotheses. The first form and any other form are jointly uniform because the corresponding node is nonzero. The threshold denominator is \(2c^2+7c+5\). Kaufman–Sudan, Definition 2.3, Definition 2.5 and Theorem 2.9.
+- **Shared decoding witness**. Full and homogeneous distances refer to the same point or polynomial. The good-row affine bound is \(3e\), the homogeneous bound is \(6e\), and the large-rejection fallback gives \(28e\) on both domains. For the combined tester, the formal restricted result is homogeneous and v2 states its restricted result for all affine labels. The formal full result already covers affine if the label bound is one. `HadamardSoundness.lean` 29–61, `HadamardRowDecoding.lean` 34–54 and 90–112, and `EncodedLineLowDegreeSoundness.lean` 325–359.
+- **Corrector and ZERO**. The result counts rejection or a wrong returned bit and averages over the requested homogeneous label. Moving from the comparison to the origin adds \(D/[2(Q-1)]\). The modified ZERO rejection rate includes the derived-read replacement, so it is that rate which the two corrector applications multiply. The ideal lower bound requires one nonzero residual and no independence of detections. `BinaryLocalCorrectionSoundness.lean` 222–236 and 252–313, `BinaryZeroOnGridSoundness.lean` 210–299, and `DerivedZeroOnGridSoundness.lean` 187–229 and 246–270.
+- **Reference NP**. The path verifier consumes its supplied list of branch choices. The reference time bound limits admissible witness lengths. Conversely a concrete relation checker is transported to a multitape pair decider, followed by polynomially bounded guessing. `ImplementedBy` unfolds both answers at each queried branch. `ReferenceNTMWitness.lean` 18–48, `ReferenceNPBridge.lean` 35–76, `ReferenceNPConverse.lean` 18–41, and `CostModel.lean` 35–64.
+- **BLR credit**. The suspected attribution defect was rejected. The \(x\le 1/2\) restriction in BCHKS Theorem 1.2 concerns distance from linearity. The formal rejection-to-distance inequality has no rejection threshold.
+
+## Executed evidence
+
+- Both tracked example checkers ran anew and exactly matched their retained stdout. Checks include all GF(4) coordinate products, the cubic residual and weighted label, the revised F₅ degree-four example and all 625 degree-at-most-three alternatives, the 256/16/8 label counts, all 256 requests under all 256 random masks, interpolation and thin slices, and the final gap arithmetic.
+- An independent F₅ enumeration checked 125 mixed-plane row cases, 125 column cases and 100 nonzero ruled-surface columns. The general argument uses invertible affine maps.
+- All five returned Python scripts ran on the original returns and, where needed, original packet directories. The reviewed finite arithmetic and example JSON match. The full-argument structural validator passes. The worked-exposition association replay differs in one BLR scholarly-credit prose field with the same mathematical finding. Its other generated checks match exactly as parsed JSON.
+- Eight central local Lean files match their original packet copies byte-for-byte. This confirms which source text was read.

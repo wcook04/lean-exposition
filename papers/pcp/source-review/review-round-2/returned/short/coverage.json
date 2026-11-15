@@ -1,0 +1,2542 @@
+{
+  "packet": "pcp-review-2-specialist",
+  "review_status": "completed within stated scope",
+  "reviewer_kind": "model-led review with three parallel model subreviews",
+  "prior_exposure": [
+    "General mathematical/model background",
+    "Supplied task context and assignment.md read before primary opening; deviation disclosed in first_reading.md",
+    "Subreviewers inherited the primary reading/context; not isolated blind readers",
+    "Prior-review archive consulted only after the saved independent checkpoints"
+  ],
+  "edition_pins": {
+    "manuscript_repository": "eae2c38daa698b28dc8f48c7c5403f4228976746",
+    "frozen_reader": "db6737b25fdcb02eef0af5010b2f289cc3931c9e",
+    "lean": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+    "toolchain": "v4.35.0-rc2",
+    "mathlib": "065356127b1dc0016f66b7283ce0ce2c4055aa55"
+  },
+  "input_zip_sha256": "c17df0185a58dc6dc208ba81b7c5172a1e72755c0e1d27eb0746be90da90dd78",
+  "edition_manifest_sha256": "75ec709e1e62f074e039e23082269015d9487337cd9274610df1f06f141a2e63",
+  "items": [
+    {
+      "path_or_url": "papers/short/paper.md",
+      "sha256_or_edition": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+      "status": "assessed",
+      "actual_range": "all 433 lines; 80 non-heading prose blocks and 38 displays; nine references and six direct source URLs",
+      "observations": "Read sequentially before support sources; all blocks have decisions in line_edits.md.",
+      "limitations": "Opening was primed by assignment.md; not a blind human experiment."
+    },
+    {
+      "path_or_url": "papers/short/paper.pdf",
+      "sha256_or_edition": "3dcc5fa9cadbbd3f3343ba8f2bd83cf20cad22d8282faf0610aa3f4d06789cf5",
+      "status": "assessed",
+      "actual_range": "all physical pages1–11, rendered at90dpi; all11 remote-link annotation instances",
+      "observations": "Every rendered page visually inspected; bibliography and page flow inspected; companion files/destinations exist.",
+      "limitations": "Annotation inspection is not a GUI click of every PDF link."
+    },
+    {
+      "path_or_url": "START_HERE.md",
+      "sha256_or_edition": "63b5ed5ddd1a6631dcf9c95a00965d539d242fe2c851b7ef44388adad57ed1a4",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "FIRST_READING.md",
+      "sha256_or_edition": "7d879fe73a2ece53358140f9bfaa9c4ce7bb81800a6f675bc26d4135fcc059e0",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "RECIPIENT_CONTEXT.md",
+      "sha256_or_edition": "aa69752a737f434646d5ace46c2406f8c2a8430b825bfc315a42f3e008abd67b",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "EVIDENCE_BOUNDARIES.md",
+      "sha256_or_edition": "cf0ecef6915ac84277e251256e66712b335067b24a209a65d6251dd38a0b20fa",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "PROVENANCE.md",
+      "sha256_or_edition": "c21bb5e5953c917fdb148ab13ceb4a9aec06a19cef1c6a871f5a207ee478518e",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "RETURN_FORMAT.md",
+      "sha256_or_edition": "aaffcf58d24a62dd29e793f6d0f1d2f4d10331ea4b0f5f403a546f75d8fa25b7",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "assignment.md",
+      "sha256_or_edition": "998bff68e542793ca6f38e5643acb6bb1548bde6756ec0dddb11a0ffc4b81ca6",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "request.md",
+      "sha256_or_edition": "c9b2390858605e8e8d5afe71bb072d09f95a2712a45ea0fad7d6e768e7cb9780",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "contract/REVIEW_RUBRIC.md",
+      "sha256_or_edition": "2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "contract/HUMANIZER_BOUNDARY.md",
+      "sha256_or_edition": "ae72a09af6db814ea1d7e7844e5a73b81277da1b79eaded499386a48e630e702",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Task, audience, evidence and return constraints read.",
+      "limitations": "assignment.md read earlier than requested first-reading protocol."
+    },
+    {
+      "path_or_url": "methods/long-to-short/SKILL.md",
+      "sha256_or_edition": "20549b5ce45571734707566ab2ab7f5fd57de56f541799d8e8c350a595eaf400",
+      "status": "assessed",
+      "actual_range": "full text across returned sections",
+      "observations": "Used as review context and descriptive writing prompts.",
+      "limitations": "No style score or human learning effect inferred; rules not installed or changed."
+    },
+    {
+      "path_or_url": "register/REGISTER_RULES.md",
+      "sha256_or_edition": "654f94ee1c6a66e01200452347b52d20359405d4af8b4ae9bd69cc51bf07d1dc",
+      "status": "assessed",
+      "actual_range": "full text across returned sections",
+      "observations": "Used as review context and descriptive writing prompts.",
+      "limitations": "No style score or human learning effect inferred; rules not installed or changed."
+    },
+    {
+      "path_or_url": "register/measurement.txt",
+      "sha256_or_edition": "cc0dc6cd10a1332939223449b1332b8154a1415070e505ca22b29fd0e2efccd1",
+      "status": "assessed",
+      "actual_range": "full text across returned sections",
+      "observations": "Used as review context and descriptive writing prompts.",
+      "limitations": "No style score or human learning effect inferred; rules not installed or changed."
+    },
+    {
+      "path_or_url": "register/README.md",
+      "sha256_or_edition": "b441ce15efabc5e5cb287d098d112968923210e55d7718ffa3d106da302c0368",
+      "status": "assessed",
+      "actual_range": "full text across returned sections",
+      "observations": "Used as review context and descriptive writing prompts.",
+      "limitations": "No style score or human learning effect inferred; rules not installed or changed."
+    },
+    {
+      "path_or_url": "register/input-provenance.json",
+      "sha256_or_edition": "035b6f6f0ac6290bd02143aa2d8aee99a392988217f67bd9fff84f69daa5769e",
+      "status": "assessed",
+      "actual_range": "full text across returned sections",
+      "observations": "Used as review context and descriptive writing prompts.",
+      "limitations": "No style score or human learning effect inferred; rules not installed or changed."
+    },
+    {
+      "path_or_url": "methods/docs/authoring.md",
+      "sha256_or_edition": "3b3df0dd94fb4d026ccefeebd1ef34d7c0f1f3450d5f40bfb9de74e70b45d5b8",
+      "status": "sampled",
+      "actual_range": "relevant rubric/method transitions and rules used in rubric.md and method_findings.json",
+      "observations": "Read for proposed reusable amendments.",
+      "limitations": "No general audit of the entire production method."
+    },
+    {
+      "path_or_url": "methods/docs/reader-review.md",
+      "sha256_or_edition": "ace61c39fc9f9621804f1209a4e4f4e4eef09a10b35dfb0165e826160d182be8",
+      "status": "sampled",
+      "actual_range": "relevant rubric/method transitions and rules used in rubric.md and method_findings.json",
+      "observations": "Read for proposed reusable amendments.",
+      "limitations": "No general audit of the entire production method."
+    },
+    {
+      "path_or_url": "methods/docs/register-stage.md",
+      "sha256_or_edition": "4aa2c03637f4981b3be97e01d41bc574750a275122d8b6c67cd920ecc49adefd",
+      "status": "sampled",
+      "actual_range": "relevant rubric/method transitions and rules used in rubric.md and method_findings.json",
+      "observations": "Read for proposed reusable amendments.",
+      "limitations": "No general audit of the entire production method."
+    },
+    {
+      "path_or_url": "methods/register/SKILL.md",
+      "sha256_or_edition": "622f4a69c9eeb3fcf39a4b709b7a1657ac6b1ae1f918eb56d9c70c2e30f87215",
+      "status": "sampled",
+      "actual_range": "relevant rubric/method transitions and rules used in rubric.md and method_findings.json",
+      "observations": "Read for proposed reusable amendments.",
+      "limitations": "No general audit of the entire production method."
+    },
+    {
+      "path_or_url": "reader/edition.json",
+      "sha256_or_edition": "39959b4cd7780fd2cdc39034e95121c70be88e68a1dd8c824a30132da76fd64e",
+      "status": "sampled",
+      "actual_range": "all12 selected specialist association records, declarations, source/evidence metadata; definition records followed as listed in claim_checks.json",
+      "observations": "Static link-to-proposition and provenance checks.",
+      "limitations": "Not every unrelated declaration/graph node audited."
+    },
+    {
+      "path_or_url": "reader/source.json",
+      "sha256_or_edition": "dd5b40998ecca2b7bd8d1d24c9bf2d9fff58fa9149c349a4990ffbdfb084656f",
+      "status": "sampled",
+      "actual_range": "all12 selected specialist association records, declarations, source/evidence metadata; definition records followed as listed in claim_checks.json",
+      "observations": "Static link-to-proposition and provenance checks.",
+      "limitations": "Not every unrelated declaration/graph node audited."
+    },
+    {
+      "path_or_url": "reader/links.json",
+      "sha256_or_edition": "31b2c4c5b56e50257fdf45862f0cd044481ab628b9be4d6d336c99aeba17b9c6",
+      "status": "sampled",
+      "actual_range": "all12 selected specialist association records, declarations, source/evidence metadata; definition records followed as listed in claim_checks.json",
+      "observations": "Static link-to-proposition and provenance checks.",
+      "limitations": "Not every unrelated declaration/graph node audited."
+    },
+    {
+      "path_or_url": "reader/source-link-coverage.json",
+      "sha256_or_edition": "3049c8f289e0585ad372bc6d02a2d02fae5ed107f2466aca5f1280c8124fe03d",
+      "status": "sampled",
+      "actual_range": "all12 selected specialist association records, declarations, source/evidence metadata; definition records followed as listed in claim_checks.json",
+      "observations": "Static link-to-proposition and provenance checks.",
+      "limitations": "Not every unrelated declaration/graph node audited."
+    },
+    {
+      "path_or_url": "reader/reading.html",
+      "sha256_or_edition": "35828969323dd12e7582ad011c293548af55e7a80d664199549a33bed5bbf480",
+      "status": "sampled",
+      "actual_range": "specialist companion hrefs, including full weighted argument section route",
+      "observations": "Same double-hash route pattern as observed live.",
+      "limitations": "Not a complete DOM/layout/source audit."
+    },
+    {
+      "path_or_url": "reader/README.md",
+      "sha256_or_edition": "50412218f9034229196f16e435baf0be7551392881b2d92241a4bd7937602bda",
+      "status": "assessed",
+      "actual_range": "full text",
+      "observations": "Frozen/live scope read.",
+      "limitations": "No live byte comparison implied."
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/reading-guide.md",
+      "sha256_or_edition": "ae1500d458c2d1c032e239d21e6398038fcf5b2996f401a4e51eaa976c298360",
+      "status": "assessed",
+      "actual_range": "complete guide text, with declarations traced as listed",
+      "observations": "Baseline source-owner guide read to assess added explanatory value.",
+      "limitations": "Guide reading is not proof replay."
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/README.md",
+      "sha256_or_edition": "5a04bc8b2a49d8c876a21751980f7867951196052fc2d3119f67737094836e04",
+      "status": "sampled",
+      "actual_range": "theorem overview, proof map, implementation differences and headings",
+      "observations": "Checked implementation versus v2 context.",
+      "limitations": "Unlisted text not independently audited."
+    },
+    {
+      "path_or_url": "papers/short/paper.md",
+      "sha256_or_edition": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+      "status": "assessed",
+      "actual_range": "all 433 lines inherited/read; mathematical audit concentrated on §§2–6 and gap arithmetic",
+      "observations": "All displayed algebraic implications and constraints checked in the stated audit scope.",
+      "limitations": "Does not claim complete external literature or formal dependency audit.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "sampled",
+      "actual_range": "93–345, 386–705, 868–1298, 1370–1518; headings searched elsewhere",
+      "observations": "Directly reconstructed the omitted weighted, binary, correction, ZERO and assembly arguments; read the bivariate and point-line proofs in ordinary prose.",
+      "limitations": "Unlisted sections not audited by this subreview; bivariate and point-line Lean dependency proofs only sampled via main theorem/constants.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/WeightedConstraintSoundness.lean",
+      "sha256_or_edition": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2",
+      "status": "assessed",
+      "actual_range": "1–179, full file text read",
+      "observations": "Prediction bound and exact weighted correction.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "sha256_or_edition": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+      "status": "sampled",
+      "actual_range": "24–145 declarations/search; 160–334 bodies",
+      "observations": "Generator characterization and robust proximity; not every preliminary proof body.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardSoundness.lean",
+      "sha256_or_edition": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa",
+      "status": "assessed",
+      "actual_range": "1–84, full file text read",
+      "observations": "Same-message full/affine estimates and evaluation structure.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean",
+      "sha256_or_edition": "37c298215572bafa7c466cd761dd084e1bd2cfa24a6f558bf6fc83f68637b98b",
+      "status": "assessed",
+      "actual_range": "1–139, full file text read",
+      "observations": "Good/bad rows; factor six to homogeneous; common field function.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256_or_edition": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "status": "assessed",
+      "actual_range": "1–178, full file text read",
+      "observations": "K, same-polynomial dual-distance bounds, high-rejection fallback.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+      "sha256_or_edition": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09",
+      "status": "sampled",
+      "actual_range": "1–150",
+      "observations": "Actual conjunction, sample, query list, completeness.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineSoundness.lean",
+      "sha256_or_edition": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74",
+      "status": "assessed",
+      "actual_range": "1–87, full file text read",
+      "observations": "Main oriented-line theorem and hypotheses.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineConstants.lean",
+      "sha256_or_edition": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "status": "assessed",
+      "actual_range": "1–74, full file text read",
+      "observations": "Numerical constants and rigidity budget.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+      "sha256_or_edition": "a6abc41d00df59cfdb96833e15dbb5a274eddd3125e0c7f80a776b8373fdc6e8",
+      "status": "sampled",
+      "actual_range": "1–165",
+      "observations": "Actual sample, run, query bound, completeness.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256_or_edition": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "status": "assessed",
+      "actual_range": "1–358, full file text read",
+      "observations": "Full proof of rejection-inclusive failure bound.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+      "sha256_or_edition": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e",
+      "status": "sampled",
+      "actual_range": "93–225; declaration index 249/301/328",
+      "observations": "Generic shared-label two-corrector bound and concrete call wrapper.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+      "sha256_or_edition": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0",
+      "status": "assessed",
+      "actual_range": "1–280, full file text read",
+      "observations": "Fresh derived-read transfer and ZERO bound.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+      "sha256_or_edition": "15cd9fb44cdd7133c8feea82f1dfe9d0dfbda37223556ebbb786dfe86f9eee00",
+      "status": "assessed",
+      "actual_range": "1–163, full file text read",
+      "observations": "One four-polynomial constraint argument.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256_or_edition": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "status": "assessed",
+      "actual_range": "1–132, full file text read",
+      "observations": "Four polynomials constructed from actual branch rejection.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+      "sha256_or_edition": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+      "status": "assessed",
+      "actual_range": "1–154, full file text read",
+      "observations": "Explicit gap and field-ratio bounds.",
+      "limitations": "Source read and ordinary mathematical reasoning; no fresh Lean kernel execution.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/reading-guide.md",
+      "sha256_or_edition": "ae1500d458c2d1c032e239d21e6398038fcf5b2996f401a4e51eaa976c298360",
+      "status": "sampled",
+      "actual_range": "heading/declaration index search only",
+      "observations": "Located low-degree theorem reading route.",
+      "limitations": "Not read in full by this subreview.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/README.md",
+      "sha256_or_edition": "5a04bc8b2a49d8c876a21751980f7867951196052fc2d3119f67737094836e04",
+      "status": "sampled",
+      "actual_range": "heading/keyword index search only",
+      "observations": "Located algorithmic differences and proof map.",
+      "limitations": "Not read in full by this subreview.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "contract/REVIEW_RUBRIC.md",
+      "sha256_or_edition": "2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d",
+      "status": "sampled",
+      "actual_range": "headings and lines 576–648",
+      "observations": "Mathematical understanding/taste and short-vs-long criteria.",
+      "limitations": "Root reviewer covers remaining rubric.",
+      "review_component": "algebra"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Theorem.lean",
+      "sha256_or_edition": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          74
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/ReverseConcrete.lean",
+      "sha256_or_edition": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          45
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Verifier/Definition.lean",
+      "sha256_or_edition": "9251c711540860428f8227a9d8e08c1e02eaf68fd7b054acdaac340f2b360f11",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          223
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/CostModel.lean",
+      "sha256_or_edition": "61004144561944c3ed8d18a6a4ad3ed22db29f34cda6e9f5f3888e3d06bff0eb",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          121
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/Machine.lean",
+      "sha256_or_edition": "640230c1838bffb7442c52575b34f9322c3da3f90fedcfd2ed57c3e1fc763dc0",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          126
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/NP.lean",
+      "sha256_or_edition": "b23701ce674baccb03d4333ce8327e81119f55e7c1a2f02488db7787b51ee861",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          47
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ReferenceNPConverse.lean",
+      "sha256_or_edition": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          43
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ThreeColorRuntime.lean",
+      "sha256_or_edition": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          17
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorFinalAssembly.lean",
+      "sha256_or_edition": "d81de382ca0a80c3f5a4f2a2e5a92e626f9002ec726e176367c3207014c4d4aa",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          71
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+      "sha256_or_edition": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          80
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorGap.lean",
+      "sha256_or_edition": "ec33df69147de564b61af610b2a4158316bafc2241c87bfd6978fad79ff599c6",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          56
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "sha256_or_edition": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          82
+        ],
+        [
+          242,
+          292
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256_or_edition": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          155
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256_or_edition": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          58
+        ],
+        [
+          294,
+          359
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorGrid.lean",
+      "sha256_or_edition": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          145
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+      "sha256_or_edition": "a6abc41d00df59cfdb96833e15dbb5a274eddd3125e0c7f80a776b8373fdc6e8",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          156
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256_or_edition": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "status": "sampled",
+      "actual_range": [
+        [
+          200,
+          313
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+      "sha256_or_edition": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e",
+      "status": "sampled",
+      "actual_range": [
+        [
+          225,
+          298
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+      "sha256_or_edition": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          135
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+      "sha256_or_edition": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          154
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorParameters.lean",
+      "sha256_or_edition": "f69f9c4c76ec3f56ad97e9adcbdfbe862e942180fb7a5128b0d47db886abce13",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          177
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorParameterChoice.lean",
+      "sha256_or_edition": "15570572d3f4def63898507f449a0d7c5ead1016fbddd0982649b76a8efc77c4",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          96
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256_or_edition": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          132
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLowDegreeTest.lean",
+      "sha256_or_edition": "d9557f179975603c0d72fc09a537a9bd73ba584ded8a37f91f936c9fb31fd5f8",
+      "status": "sampled",
+      "actual_range": [
+        [
+          28,
+          90
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+      "sha256_or_edition": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09",
+      "status": "sampled",
+      "actual_range": [
+        [
+          28,
+          95
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardTest.lean",
+      "sha256_or_edition": "e98d517ad8a075351efc3c7f7375b3c7a2c8c379281e259d0ec9ba228fe8aa5c",
+      "status": "sampled",
+      "actual_range": [
+        [
+          48,
+          120
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifier.lean",
+      "sha256_or_edition": "59cbc12ef8abce1d8a62a6744f890fed98d97fd53060c398d120021405196739",
+      "status": "sampled",
+      "actual_range": [
+        [
+          312,
+          390
+        ]
+      ],
+      "observations": "source statement/definition inspection; proof bodies read only in listed ranges; no elaboration or kernel replay",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1510,
+          1740
+        ],
+        [
+          1800,
+          1855
+        ]
+      ],
+      "observations": "resources, amplification, runtime, reduction transport and converse cross-check; not full companion review",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "papers/expository/main.md",
+      "sha256_or_edition": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+      "status": "sampled",
+      "actual_range": [
+        [
+          942,
+          1002
+        ]
+      ],
+      "observations": "resources, amplification, runtime, reduction transport and converse cross-check; not full companion review",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+      "sha256_or_edition": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0",
+      "status": "sampled",
+      "actual_range": [
+        [
+          228,
+          280
+        ]
+      ],
+      "observations": "Source statement and proof inspection; no fresh elaboration.",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/theorem-math-review.md",
+      "sha256_or_edition": "46f9fe3297d2bc93b875857ab52548259967bbbb40b02f9886c0c3ee61972caa",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          29
+        ]
+      ],
+      "observations": "Read after independent findings freeze; prior reported results are not fresh checks.",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mapping-review-corrected.md",
+      "sha256_or_edition": "b338b65f7ae9f2e5bf078c7ecb125d354df44f29a0cc9ad3b2061a6007d89db4",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          25
+        ]
+      ],
+      "observations": "Read after independent findings freeze; prior reported results are not fresh checks.",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/README.md",
+      "sha256_or_edition": "49ccdda4600b4a4c1a6cc453efc8c29aa72c7d5f328729efae1ba22ee8e5adde",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          110
+        ]
+      ],
+      "observations": "Read after independent findings freeze; prior reported results are not fresh checks.",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/reader-theorem-correspondence-review.md",
+      "sha256_or_edition": "ae9b896135d87cef88f020a51aa2b93fe12214a950a831f8a48dcbede522c295",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          230
+        ]
+      ],
+      "observations": "Read after independent findings freeze; prior reported results are not fresh checks.",
+      "limitations": "No new Lean build, elaboration or axiom audit.",
+      "review_component": "formal"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/paper.pdf",
+      "sha256_or_edition": "764824336d1de4f95e1fe9c774d157e419578157c408dfd016f3903d73d73795",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/paper.txt",
+      "sha256_or_edition": "89d3506588bf915a265435323da0b190ef68819f9773d1c64b3067b45b32ea7c",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/main.tex",
+      "sha256_or_edition": "8896409424c190ba41aa88abbca5020076ae5390c9dd4156c770f948e6a077db",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/intro.tex",
+      "sha256_or_edition": "978f6322e1f9c9ff5412b72cb18dbe7201c7fb20c26a48094554687a0b489c27",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/preliminaries.tex",
+      "sha256_or_edition": "d36ae006f3a41a6e22e7235614caf1338fe34c25a11de8464b210a1bab0e3449",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/technical_tools.tex",
+      "sha256_or_edition": "0c6fbe16c347a80e0c82373413e14844d4bf947da9183768ca1bbdce72baae10",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/low_degree_test.tex",
+      "sha256_or_edition": "c26ee68aa20db994515cda3c97e29a5290ad7ddf8d25489efa331cedaa31ef26",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/appendix_-_hadamard_test.tex",
+      "sha256_or_edition": "a3215ac7062cf2295178b0cda162e3a7d3b089bc6c3504b3a9fc52bf07223ea9",
+      "status": "sampled",
+      "actual_range": [
+        "Introduction incl. prior work and novelty",
+        "Fact2.7 and AppendixA proof",
+        "Lemma2.9 and Corollary2.10",
+        "Definitions3.1,3.5–3.6 and Claim3.2",
+        "Lemma3.3 and cited antecedents",
+        "Algorithm3/Lemma3.10 and AppendixB TheoremB.1",
+        "Algorithm5/Theorem4.1",
+        "Acknowledgments"
+      ],
+      "observations": "supplied PDF/text/TeX; versioned external arXiv request unavailable",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v2; arXiv 22 October 2026, manuscript title date 23 October 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v1/paper.pdf",
+      "sha256_or_edition": "2abc01344b762470a3db6c5a923190489c5afe14a314d6a2d38eb7b1b12f0ce7",
+      "status": "sampled",
+      "actual_range": [
+        "Fact2.7",
+        "Lemma3.3 and proof-claim paragraph"
+      ],
+      "observations": "supplied PDF/text/TeX",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v1, 18 August 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v1/paper.txt",
+      "sha256_or_edition": "8285c6b296699e334616e4dd9be551def8f4f204caf9dec9c86495d8d612b0d4",
+      "status": "sampled",
+      "actual_range": [
+        "Fact2.7",
+        "Lemma3.3 and proof-claim paragraph"
+      ],
+      "observations": "supplied PDF/text/TeX",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v1, 18 August 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "literature/abssw-v1/tex/main.tex",
+      "sha256_or_edition": "9b21956e4138ee4210f6a2cd9731dab80a7e90c91cc4c2b6b5d9dcf294448651",
+      "status": "sampled",
+      "actual_range": [
+        "Fact2.7",
+        "Lemma3.3 and proof-claim paragraph"
+      ],
+      "observations": "supplied PDF/text/TeX",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "arXiv:2608.17429v1, 18 August 2026",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+      "sha256_or_edition": "JACM45(1), 1998, 70–122; 53-page journal scan",
+      "status": "sampled",
+      "actual_range": [
+        "Abstract",
+        "§5.2 Lemmas5.2.1,5.2.2,5.2.5,5.2.7 and Corollary5.2.3, physical pp38–44 / printed107–113"
+      ],
+      "observations": "Attribution of bivariate error-locator/clean-rectangle/interpolation route is supported; no exact modern constants credited to AS.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+      "sha256_or_edition": "Author-hosted journal manuscript corresponding to JACM45(3), 1998; 53 pages",
+      "status": "sampled",
+      "actual_range": [
+        "Abstract",
+        "§7.2 Theorem45, physical p27",
+        "AppendixA Theorems65,69 and closing proof, physical pp47–53"
+      ],
+      "observations": "Constant-query historical credit, arbitrary line table/whole-field parameter and implicit-constant bivariate antecedent match. Exact later constants are separate.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://people.csail.mit.edu/ronitt/papers/selftestcorrect.pdf",
+      "sha256_or_edition": "Author-hosted journal.dvi manuscript corresponding to JCSS47(3), 1993; 43 pages",
+      "status": "sampled",
+      "actual_range": [
+        "Abstract",
+        "Generic linear self-testing, physical pp15–17"
+      ],
+      "observations": "Test provenance supported. Text extraction is damaged, so the precise sharp constant was checked in BCHKS and supplied v2 instead.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/README.md",
+      "sha256_or_edition": "5a04bc8b2a49d8c876a21751980f7867951196052fc2d3119f67737094836e04",
+      "status": "sampled",
+      "actual_range": [
+        "reading-guide.md complete inherited returned guide",
+        "README.md theorem overview, proof map and departures sections"
+      ],
+      "observations": "Guide explains deliberate stronger/weaker statements, independent seeds, sampling changes and redundant product checks. Lean proof-body audit belongs to formal/algebra agents.",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "Supplied source pin a0ce13ed0fa264f051c1278e039596ce65557fa4",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/reading-guide.md",
+      "sha256_or_edition": "ae1500d458c2d1c032e239d21e6398038fcf5b2996f401a4e51eaa976c298360",
+      "status": "sampled",
+      "actual_range": [
+        "reading-guide.md complete inherited returned guide",
+        "README.md theorem overview, proof map and departures sections"
+      ],
+      "observations": "Guide explains deliberate stronger/weaker statements, independent seeds, sampling changes and redundant product checks. Lean proof-body audit belongs to formal/algebra agents.",
+      "limitations": "Coverage regions are listed collectively for this edition; no claim all source files were read end to end.",
+      "edition": "Supplied source pin a0ce13ed0fa264f051c1278e039596ce65557fa4",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+      "sha256_or_edition": "Author-hosted 26-page manuscript, 1996",
+      "status": "sampled",
+      "actual_range": [
+        "Theorem1.2 physical p7/printed p5",
+        "Fourier proof physical p12"
+      ],
+      "observations": "Supports the characteristic-two sharp bound in its stated distance range; specialist explicitly points to v2 B.1 for its full formulation.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+      "sha256_or_edition": "Prepublication toappear.dvi, manuscript no.0255151; linked PDF",
+      "status": "sampled",
+      "actual_range": [
+        "§4 Theorem5, Lemmas6–8, printed pp10–11"
+      ],
+      "observations": "Prime-field arithmetic-progression method supports the stated antecedent; not silently equated with corrected generator-weighted theorem. Initial direct open returned403; search-indexed full text was subsequently read.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "sha256_or_edition": "STOC2008 conference manuscript, 10 pages",
+      "status": "sampled",
+      "actual_range": [
+        "Definitions2.3,2.5,2.8 and Theorem2.9, physical p5",
+        "§3 proof opening, physical p6"
+      ],
+      "observations": "Exact formal-characterization hypothesis checked. Weighted instance has k=c+2, and the source threshold implies the stricter threshold used here.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "https://arxiv.org/pdf/1307.3975",
+      "sha256_or_edition": "Corrected arXiv:1307.3975v1, 15 July2013, reissue of1995 conference text; 9 pages",
+      "status": "sampled",
+      "actual_range": [
+        "Title footnote and Lemma4, physical pp1–2"
+      ],
+      "observations": "Exact hypothesis q-q/p-1>=d; characteristic-two q>2c is sufficient. The versioned URL failed, but unversioned URL returned a PDF explicitly marked v1.",
+      "limitations": "External raw-byte hash not computed; source edition identified from returned primary document.",
+      "review_component": "literature"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/README.md",
+      "sha256_or_edition": "49ccdda4600b4a4c1a6cc453efc8c29aa72c7d5f328729efae1ba22ee8e5adde",
+      "status": "assessed",
+      "actual_range": "full text, after independent checkpoint",
+      "observations": "Compared with independently saved findings.",
+      "limitations": "Prior outcomes and reported tests are historical, not freshly reproduced."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/short/sequential-review.md",
+      "sha256_or_edition": "d296e1fb84bf612c1eacf7004cdd88bd1c5cf1bfc3afab1f27a8898e08877f09",
+      "status": "assessed",
+      "actual_range": "full text, after independent checkpoint",
+      "observations": "Compared with independently saved findings.",
+      "limitations": "Prior outcomes and reported tests are historical, not freshly reproduced."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mapping-review-corrected.md",
+      "sha256_or_edition": "b338b65f7ae9f2e5bf078c7ecb125d354df44f29a0cc9ad3b2061a6007d89db4",
+      "status": "assessed",
+      "actual_range": "full text, after independent checkpoint",
+      "observations": "Compared with independently saved findings.",
+      "limitations": "Prior outcomes and reported tests are historical, not freshly reproduced."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mathematical-preservation-review.md",
+      "sha256_or_edition": "5ca9f441683f5a85fff90fd02bcf2005578ae5ed8517f8844d5b68af7babf099",
+      "status": "assessed",
+      "actual_range": "full text, after independent checkpoint",
+      "observations": "Compared with independently saved findings.",
+      "limitations": "Prior outcomes and reported tests are historical, not freshly reproduced."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/algebra-math-review.md",
+      "sha256_or_edition": "b19f96445585ce6877cd2949cf31b3160cc0db27fcc67e7dd209209894b8a449",
+      "status": "assessed",
+      "actual_range": "full text, read only after independent report and findings saved",
+      "observations": "Confirmed the repaired long crossing statement now includes d>0 and q≥1000d³; ruled-surface wording says Separately. Independently reconstructed the weighted/bivariate/point-line chains before reading this report. Not all cited Lean bodies were re-audited.",
+      "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition.",
+      "review_component": "algebra prior comparison"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/binary-math-review.md",
+      "sha256_or_edition": "cd3f16693ce12bbccf3672e015c35127af50dd2f2f60ba10fabd940ac402014d",
+      "status": "assessed",
+      "actual_range": "full text, read only after independent report and findings saved",
+      "observations": "Confirmed current long text specifies honest primary, certificate and auxiliary tables for completeness; distinguishes tester generator from GoodNodes; repeats the derived polynomiality premise. Independently confirmed the shared-label and fresh-mask estimates. No inherited acceptance of uninspected portions.",
+      "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition.",
+      "review_component": "algebra prior comparison"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/specialist-math-review.md",
+      "sha256_or_edition": "5d018374fbbc6181a2d33505ae0fbf71877b7a865fe8be1b5c76de46d309034f",
+      "status": "assessed",
+      "actual_range": "full text, read only after independent report and findings saved",
+      "observations": "The current equation (8) uses field-domain L(A(u)); prior type mismatch is absent. Independently reproduced K,J,S,C,T,g4 and δ and the soundness chain. Its quantitative acceptance does not resolve the new protocol/notation/explanation findings.",
+      "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition.",
+      "review_component": "algebra prior comparison"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/specialist-math-review.md",
+      "sha256_or_edition": "5d018374fbbc6181a2d33505ae0fbf71877b7a865fe8be1b5c76de46d309034f",
+      "status": "assessed",
+      "actual_range": "full text, after literature independent checkpoint",
+      "observations": "Confirmed its repaired label-type convention on current text and historical-test scope. Did not inherit its numerical arithmetic certification.",
+      "limitations": "Prior outcomes remain reports of earlier work, not new execution."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/literature-grounding-audit.md",
+      "sha256_or_edition": "ddabddfe63019d9b29ceec64f693f4b862db8dc38925b4f0bcac2354bcd9af1c",
+      "status": "assessed",
+      "actual_range": "full text, after literature independent checkpoint",
+      "observations": "Confirmed repaired BCHKS, weighted antecedent, Friedl field-condition and implicit-constant attribution issues in current manuscript. The blanket closing encoding-credit overstatement remains a new current finding.",
+      "limitations": "Prior outcomes remain reports of earlier work, not new execution."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mathematical-preservation-review.md",
+      "sha256_or_edition": "5ca9f441683f5a85fff90fd02bcf2005578ae5ed8517f8844d5b68af7babf099",
+      "status": "assessed",
+      "actual_range": "full text, after literature independent checkpoint",
+      "observations": "Confirmed its cautious edition/statement distinctions. Its acceptance remains bounded; it does not settle novelty wording or full reader usefulness.",
+      "limitations": "Prior outcomes remain reports of earlier work, not new execution."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/short/literature-register.md",
+      "sha256_or_edition": "0621a988e0e8febd9c7338a1136e946383d60ed9ea6ef12051dab35253cf5999",
+      "status": "assessed",
+      "actual_range": "full text, after literature independent checkpoint",
+      "observations": "Confirmed useful donor moves and explicit unavailable extraction metrics. Do not infer a prose score or full current correctness from reported preservation.",
+      "limitations": "Prior outcomes remain reports of earlier work, not new execution."
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/README.md",
+      "sha256_or_edition": "49ccdda4600b4a4c1a6cc453efc8c29aa72c7d5f328729efae1ba22ee8e5adde",
+      "status": "assessed",
+      "actual_range": "full text, after literature independent checkpoint",
+      "observations": "Read after independent notes frozen; retained draft/no semantic-certification and no human endorsement boundaries.",
+      "limitations": "Prior outcomes remain reports of earlier work, not new execution."
+    },
+    {
+      "path_or_url": "https://wcook04.github.io/proof-reader/#/pcp-specialist",
+      "sha256_or_edition": "live observed2026-11-15; displayed Lean pin a0ce13ed0fa264f051c1278e039596ce65557fa4; deployment bytes unmeasured",
+      "status": "sampled",
+      "actual_range": "desktop1900×990; abstract→Lean→CanonicalRandomness→return; full weighted argument→error; plain full argument→companion",
+      "observations": "Successful headline/definition interaction and confirmed broken section route; see evidence/browser_observations.json.",
+      "limitations": "No mobile, keyboard-only, all-graph or every-selected-statement interaction; live edition not byte-compared to freeze."
+    },
+    {
+      "path_or_url": "https://arxiv.org/abs/2608.17429v2",
+      "sha256_or_edition": "arXiv:2608.17429v2",
+      "status": "unavailable",
+      "actual_range": "external versioned retrieval attempt",
+      "observations": "External versioned retrieval was unavailable; enclosed exact PDF and TeX supplied the relevant content.",
+      "limitations": "No assertion that the paper does not exist or that its enclosed text is inaccessible."
+    },
+    {
+      "path_or_url": "formal/lean/lake-manifest.json",
+      "sha256_or_edition": "cf701e06ca307d54b90245845a2a6e6a16a119f5225e784e8e30f4c830d9e456",
+      "status": "sampled",
+      "actual_range": "toolchain/mathlib dependency metadata",
+      "observations": "Pinned mathlib identity recorded.",
+      "limitations": "Dependencies/caches required for a complete build are not enclosed."
+    },
+    {
+      "path_or_url": "formal/lean/lean-toolchain",
+      "sha256_or_edition": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+      "status": "assessed",
+      "actual_range": "single toolchain declaration",
+      "observations": "Lean v4.35.0-rc2.",
+      "limitations": "No local installation/replay implied."
+    },
+    {
+      "path_or_url": "formal/lean/** (unlisted dependencies and proof bodies)",
+      "sha256_or_edition": "75ec709e1e62f074e039e23082269015d9487337cd9274610df1f06f141a2e63",
+      "status": "unassessed",
+      "actual_range": "none beyond listed file ranges",
+      "observations": "No claim of whole-development independent verification.",
+      "limitations": "No full import-closure audit, fresh compilation or axiom inspection."
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "sampled",
+      "actual_range": [
+        [
+          93,
+          345
+        ],
+        [
+          386,
+          705
+        ],
+        [
+          868,
+          1298
+        ],
+        [
+          1370,
+          1518
+        ],
+        [
+          1510,
+          1740
+        ],
+        [
+          1800,
+          1855
+        ]
+      ],
+      "observations": "Targeted support for the specialist review; see section_coverage.",
+      "limitations": "Not a comprehensive prose review; sections without recorded reading ranges remain unassessed even if their headings were searched."
+    },
+    {
+      "path_or_url": "papers/expository/main.md",
+      "sha256_or_edition": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+      "status": "sampled",
+      "actual_range": [
+        [
+          942,
+          1002
+        ]
+      ],
+      "observations": "Targeted support for the specialist review; see section_coverage.",
+      "limitations": "Not a comprehensive prose review; sections without recorded reading ranges remain unassessed even if their headings were searched."
+    }
+  ],
+  "section_coverage": {
+    "papers/short/paper.md": [
+      {
+        "heading": "Constant-query verification by algebraic encoding",
+        "lines": [
+          1,
+          4
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1,
+            4
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "Abstract",
+        "lines": [
+          5,
+          10
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            5,
+            10
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "1. The theorem and the encoding problem",
+        "lines": [
+          11,
+          34
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            11,
+            34
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "2. Three-colouring as two vanishing conditions",
+        "lines": [
+          35,
+          80
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            35,
+            80
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "3. Encoding the values that the verifier needs",
+        "lines": [
+          81,
+          146
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            81,
+            146
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "4. The local tests and their decoding guarantee",
+        "lines": [
+          147,
+          243
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            147,
+            243
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "5. Correcting the nonuniform certificate queries",
+        "lines": [
+          244,
+          292
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            244,
+            292
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "6. One decoding for all seven checks",
+        "lines": [
+          293,
+          340
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            293,
+            340
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "7. Resources, implementation and the reverse inclusion",
+        "lines": [
+          341,
+          407
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            341,
+            407
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "Formal correspondence and credits",
+        "lines": [
+          408,
+          415
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            408,
+            415
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      },
+      {
+        "heading": "References",
+        "lines": [
+          416,
+          433
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            416,
+            433
+          ]
+        ],
+        "limitation": "All primary prose and displays reviewed."
+      }
+    ],
+    "papers/long/reasoning-record.md": [
+      {
+        "heading": "The algebraic PCP theorem: a detailed account of the Lean proof",
+        "lines": [
+          8,
+          42
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "How the proof is organized",
+        "lines": [
+          43,
+          58
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Reading this account",
+        "lines": [
+          59,
+          75
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Algebraic tests and correction",
+        "lines": [
+          76,
+          92
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "1. Polynomial distance, interpolation, and grid certificates",
+        "lines": [
+          93,
+          193
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            93,
+            193
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "2. The corrected short low-degree test",
+        "lines": [
+          194,
+          345
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            194,
+            345
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "3. Recovering a specified value",
+        "lines": [
+          346,
+          385
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "4. Bivariate agreement",
+        "lines": [
+          386,
+          510
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            386,
+            510
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "5. Point-versus-line soundness",
+        "lines": [
+          511,
+          705
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            511,
+            705
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Source correspondence and scope",
+        "lines": [
+          706,
+          747
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "From polynomial values to a constant number of bits",
+        "lines": [
+          748,
+          765
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+        "lines": [
+          766,
+          814
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Binary labels for field elements",
+        "lines": [
+          815,
+          867
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Testing a received Hadamard word",
+        "lines": [
+          868,
+          990
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            868,
+            990
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "A binary version of the weighted low-degree test",
+        "lines": [
+          991,
+          1076
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            991,
+            1076
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Testing a high-degree outer polynomial",
+        "lines": [
+          1077,
+          1134
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1077,
+            1134
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Correcting an outer value at a prescribed point",
+        "lines": [
+          1135,
+          1183
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1135,
+            1183
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Checking that a polynomial vanishes on a grid",
+        "lines": [
+          1184,
+          1255
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1184,
+            1255
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Derived polynomial oracles and fresh correction randomness",
+        "lines": [
+          1256,
+          1299
+        ],
+        "status": "sampled",
+        "actual_read_ranges": [
+          [
+            1256,
+            1298
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "From the algebraic tests to the PCP theorem",
+        "lines": [
+          1300,
+          1314
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Three colours as polynomial equations",
+        "lines": [
+          1315,
+          1369
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "The eight tables and seven checks",
+        "lines": [
+          1370,
+          1411
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1370,
+            1411
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Perfect completeness",
+        "lines": [
+          1412,
+          1431
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1412,
+            1431
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Soundness of the seven-check verifier",
+        "lines": [
+          1432,
+          1519
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1432,
+            1518
+          ],
+          [
+            1510,
+            1519
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Parameters for every finite graph",
+        "lines": [
+          1520,
+          1569
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1520,
+            1569
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "From finite samples to fair random bits",
+        "lines": [
+          1570,
+          1648
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1570,
+            1648
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Repetition on one fixed proof",
+        "lines": [
+          1649,
+          1683
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1649,
+            1683
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "The polynomial-time implementation",
+        "lines": [
+          1684,
+          1705
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1684,
+            1705
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "From every NP verifier to a graph",
+        "lines": [
+          1706,
+          1802
+        ],
+        "status": "sampled",
+        "actual_read_ranges": [
+          [
+            1706,
+            1740
+          ],
+          [
+            1800,
+            1802
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Transporting the verifier through the reduction",
+        "lines": [
+          1803,
+          1832
+        ],
+        "status": "assessed",
+        "actual_read_ranges": [
+          [
+            1803,
+            1832
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "The reverse inclusion",
+        "lines": [
+          1833,
+          1888
+        ],
+        "status": "sampled",
+        "actual_read_ranges": [
+          [
+            1833,
+            1855
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Source and verification account",
+        "lines": [
+          1889,
+          1896
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "References",
+        "lines": [
+          1897,
+          1931
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      }
+    ],
+    "papers/expository/main.md": [
+      {
+        "heading": "Checking a long proof by reading a few bits",
+        "lines": [
+          1,
+          2
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "An algebraic proof of the PCP theorem, through worked examples",
+        "lines": [
+          3,
+          43
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "1. Why checking a few edges is not enough",
+        "lines": [
+          44,
+          83
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "2. What the theorem promises",
+        "lines": [
+          84,
+          144
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "3. Why polynomial tables can reveal a hidden defect",
+        "lines": [
+          145,
+          188
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Extending a short table",
+        "lines": [
+          189,
+          236
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "4. Turning three colours into polynomial equations",
+        "lines": [
+          237,
+          295
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "5. A certificate for vanishing on a grid",
+        "lines": [
+          296,
+          380
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "6. Keeping the number of queries constant",
+        "lines": [
+          381,
+          465
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Testing and correcting a polynomial of fixed degree",
+        "lines": [
+          466,
+          515
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "7. A field value represented by many one-bit questions",
+        "lines": [
+          516,
+          570
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Recovering a chosen answer",
+        "lines": [
+          571,
+          601
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Why the construction needs more than linear questions",
+        "lines": [
+          602,
+          645
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "8. Combining the encodings and returning to the grid",
+        "lines": [
+          646,
+          764
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "9. From the seven checks to a colouring",
+        "lines": [
+          765,
+          822
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Why the accumulated errors still leave a gap",
+        "lines": [
+          823,
+          901
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "10. Randomness, proof length and repetition",
+        "lines": [
+          902,
+          1006
+        ],
+        "status": "sampled",
+        "actual_read_ranges": [
+          [
+            942,
+            1002
+          ]
+        ],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "From an arbitrary certificate checker to a graph",
+        "lines": [
+          1007,
+          1109
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "11. Answers and a reconstruction task",
+        "lines": [
+          1110,
+          1168
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "12. Why the low-degree test needed correction",
+        "lines": [
+          1169,
+          1227
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      },
+      {
+        "heading": "Sources and verification",
+        "lines": [
+          1228,
+          1292
+        ],
+        "status": "unassessed",
+        "actual_read_ranges": [],
+        "limitation": "Companion status reports recorded reading ranges, not a full paragraph/proof-dependency review."
+      }
+    ]
+  },
+  "reader_selection_coverage": [
+    {
+      "passage_id": "pcp-short-abstract",
+      "status": "assessed",
+      "actual_range": [
+        8,
+        8
+      ],
+      "declarations": [
+        "PCP.np_subset_pcp"
+      ],
+      "outcome": "direct_after_definition_bridge",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-theorem",
+      "status": "assessed",
+      "actual_range": [
+        20,
+        20
+      ],
+      "declarations": [
+        "PCP.np_subset_pcp"
+      ],
+      "outcome": "direct_after_definition_bridge",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-colour-constraints",
+      "status": "assessed",
+      "actual_range": [
+        57,
+        57
+      ],
+      "declarations": [
+        "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+      ],
+      "outcome": "direct_specialization",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-weighted-test",
+      "status": "assessed",
+      "actual_range": [
+        167,
+        167
+      ],
+      "declarations": [
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
+      ],
+      "outcome": "direct_specialization",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-binary-decoding",
+      "status": "assessed",
+      "actual_range": [
+        204,
+        204
+      ],
+      "declarations": [
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+      ],
+      "outcome": "direct",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-outer-decoding",
+      "status": "assessed",
+      "actual_range": [
+        241,
+        241
+      ],
+      "declarations": [
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close"
+      ],
+      "outcome": "direct",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-outer-correction",
+      "status": "assessed",
+      "actual_range": [
+        262,
+        262
+      ],
+      "declarations": [
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+      ],
+      "outcome": "direct",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-zero",
+      "status": "assessed",
+      "actual_range": [
+        280,
+        280
+      ],
+      "declarations": [
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+      ],
+      "outcome": "direct_for_base_bound_only",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "linked-source-12",
+      "status": "assessed",
+      "actual_range": [
+        338,
+        338
+      ],
+      "declarations": [
+        "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
+      ],
+      "outcome": "direct",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "linked-source-13",
+      "status": "assessed",
+      "actual_range": [
+        389,
+        389
+      ],
+      "declarations": [
+        "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+      ],
+      "outcome": "direct_for_semantic_resources",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "pcp-short-complexity",
+      "status": "assessed",
+      "actual_range": [
+        393,
+        393
+      ],
+      "declarations": [
+        "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+      ],
+      "outcome": "direct_for_graph_runtime",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    },
+    {
+      "passage_id": "linked-source-14",
+      "status": "assessed",
+      "actual_range": [
+        405,
+        405
+      ],
+      "declarations": [
+        "PCP.pcp_subset_np_concrete"
+      ],
+      "outcome": "direct_after_definition_bridge",
+      "limitation": "Static proposition/type/definition comparison; live interaction only as separately recorded."
+    }
+  ],
+  "commands_actually_executed": [
+    {
+      "command_family": "Python zipfile",
+      "purpose": "Safe local extraction of the supplied attachment; response ZIP creation and integrity check at finalization."
+    },
+    {
+      "command_family": "rg / rg --files, sed, nl",
+      "purpose": "File discovery, sequential manuscript reads, exact source declarations and supporting proof regions."
+    },
+    {
+      "command_family": "Python hashlib/json",
+      "purpose": "Exact input/edition/source hashes, source-bound inventory, structured evidence and return validation."
+    },
+    {
+      "command_family": "pdfinfo; pdftoppm -png -r 90; pdftotext -layout",
+      "purpose": "PDF metadata, rendering all11pages and text/order inspection."
+    },
+    {
+      "command_family": "Python pypdf",
+      "purpose": "All11 remote-link annotations and named companion PDF destinations checked."
+    },
+    {
+      "command_family": "Python fractions.Fraction",
+      "purpose": "Independent exact c=4 gap, query and label-count recomputation."
+    },
+    {
+      "command_family": "Browser plugin DOM/navigation/screenshot operations",
+      "purpose": "Specific desktop reader journeys recorded in browser_observations.json; completion already recorded."
+    },
+    {
+      "command_family": "Web primary-document open/find/search",
+      "purpose": "Relevant historical theorem and attribution regions; editions/access limitations listed above."
+    },
+    {
+      "command_family": "apply_patch and Python artifact scripts",
+      "purpose": "Create this response without altering manuscripts; final schema/quote/hash/range/ZIP validation."
+    }
+  ],
+  "reported_prior_results_not_reexecuted": [
+    "Prior software counts710/112/380",
+    "Prior green-build, theorem/axiom or mapping receipts",
+    "Retained statement-compiled/lean reader provenance",
+    "Graph extraction marked not_run and semantic validation false in prior packet metadata"
+  ],
+  "not_executed": [
+    "Lean lake build",
+    "Fresh Lean elaboration or kernel replay",
+    "New axiom inventory",
+    "Whole compiler/import closure audit",
+    "Full companion/expository paragraph review",
+    "Human reading experiment",
+    "Contact with source owner or authors",
+    "Source manuscript edits or publication"
+  ],
+  "independent_checkpoints": {
+    "first_reading_sha256": "46d850884e5ee93ac0cfbd389e5d0e47ce06b4081edbd9941b677bee6bb397d4",
+    "root_findings_sha256": "5a514b5fc722c697eeb8e221f2622874480d7c78c7994c9626d5343371dbcc28",
+    "formal": "59e5ef9ed91edaea45ea1c3c5127a9d9eabad912374ce9ddd8679387cdf60660",
+    "literature": "c45ac446721ca941c14c8896c755d12c85411788143b73d72c290d452292049d",
+    "algebra": {
+      "report_sha256_before_prior_reviews": "16e69ad8be5cbf252be8ff1fdc793e02e0a00bb2fbe25adb00bad0737290d77c",
+      "json_sha256_before_prior_reviews": "e01db1ae72195393eec62f1024b6bc4d86519ccbc8fb54a2e3a552129433481f"
+    }
+  },
+  "prior_review_comparison": {
+    "formal": [
+      {
+        "source": "prior-reviews/source-review/theorem-math-review.md",
+        "range": "full",
+        "confirmed": "Query counts are upper bounds, one fixed four-polynomial decoding underlies the seven-check argument, and the exact source gap/parameter resources agree.",
+        "not_reaudited": "The historical constant-literal gadget repair and machine compiler internals are outside this formal subreview; do not inherit their earlier accepted status."
+      },
+      {
+        "source": "prior-reviews/source-review/humanizer/mapping-review-corrected.md",
+        "range": "full",
+        "confirmed": "Current selected maps are local entry points with source-read status. Authored graph edges do not establish extracted proof dependencies.",
+        "qualification": "The current selected twelve are accurately local, but derived ZERO and reference NP are additional support needs; this is an editorial navigation proposal, not a reassertion of repaired old mapping errors."
+      },
+      {
+        "source": "prior-reviews/source-review/humanizer/README.md",
+        "range": "full",
+        "confirmed": "The current 12-link selection and source-only status match inspection.",
+        "qualification": "Its historical testing/build/visual-review statements were read as reported prior evidence, not rerun or adopted as fresh verification."
+      },
+      {
+        "source": "prior-reviews/source-review/humanizer/reader-theorem-correspondence-review.md",
+        "range": "lines 1–230, sampled",
+        "confirmed": "The final selected direct mathematical targets agree with independent inspection.",
+        "qualification": "Earlier rejected selections and omitted formula-only anchors are history. Current base ZERO selection supports its selected prose; the proposed added derived-ZERO link fills a separate explanatory need."
+      }
+    ],
+    "algebra": [
+      {
+        "path_or_url": "prior-reviews/source-review/algebra-math-review.md",
+        "sha256_or_edition": "b19f96445585ce6877cd2949cf31b3160cc0db27fcc67e7dd209209894b8a449",
+        "status": "assessed",
+        "actual_range": "full text, read only after independent report and findings saved",
+        "observations": "Confirmed the repaired long crossing statement now includes d>0 and q≥1000d³; ruled-surface wording says Separately. Independently reconstructed the weighted/bivariate/point-line chains before reading this report. Not all cited Lean bodies were re-audited.",
+        "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition."
+      },
+      {
+        "path_or_url": "prior-reviews/source-review/binary-math-review.md",
+        "sha256_or_edition": "cd3f16693ce12bbccf3672e015c35127af50dd2f2f60ba10fabd940ac402014d",
+        "status": "assessed",
+        "actual_range": "full text, read only after independent report and findings saved",
+        "observations": "Confirmed current long text specifies honest primary, certificate and auxiliary tables for completeness; distinguishes tester generator from GoodNodes; repeats the derived polynomiality premise. Independently confirmed the shared-label and fresh-mask estimates. No inherited acceptance of uninspected portions.",
+        "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition."
+      },
+      {
+        "path_or_url": "prior-reviews/source-review/specialist-math-review.md",
+        "sha256_or_edition": "5d018374fbbc6181a2d33505ae0fbf71877b7a865fe8be1b5c76de46d309034f",
+        "status": "assessed",
+        "actual_range": "full text, read only after independent report and findings saved",
+        "observations": "The current equation (8) uses field-domain L(A(u)); prior type mismatch is absent. Independently reproduced K,J,S,C,T,g4 and δ and the soundness chain. Its quantitative acceptance does not resolve the new protocol/notation/explanation findings.",
+        "limitations": "Previous report concerns its own recorded hashes and is not treated as independent proof of the current edition."
+      }
+    ],
+    "literature": [
+      {
+        "path": "prior-reviews/source-review/specialist-math-review.md",
+        "status": "assessed",
+        "disposition": "Confirmed its repaired label-type convention on current text and historical-test scope. Did not inherit its numerical arithmetic certification."
+      },
+      {
+        "path": "prior-reviews/source-review/humanizer/literature-grounding-audit.md",
+        "status": "assessed",
+        "disposition": "Confirmed repaired BCHKS, weighted antecedent, Friedl field-condition and implicit-constant attribution issues in current manuscript. The blanket closing encoding-credit overstatement remains a new current finding."
+      },
+      {
+        "path": "prior-reviews/source-review/humanizer/mathematical-preservation-review.md",
+        "status": "assessed",
+        "disposition": "Confirmed its cautious edition/statement distinctions. Its acceptance remains bounded; it does not settle novelty wording or full reader usefulness."
+      },
+      {
+        "path": "prior-reviews/source-review/humanizer/short/literature-register.md",
+        "status": "assessed",
+        "disposition": "Confirmed useful donor moves and explicit unavailable extraction metrics. Do not infer a prose score or full current correctness from reported preservation."
+      },
+      {
+        "path": "prior-reviews/source-review/humanizer/README.md",
+        "status": "assessed",
+        "disposition": "Read after independent notes frozen; retained draft/no semantic-certification and no human endorsement boundaries."
+      }
+    ]
+  },
+  "allowed_status": [
+    "assessed",
+    "sampled",
+    "unavailable",
+    "unassessed"
+  ]
+}

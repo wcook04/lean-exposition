@@ -1,0 +1,4084 @@
+{
+  "packet": "pcp-review-1-full-argument",
+  "review_status": "completed within stated scope",
+  "reviewer_kind": "root model plus three parallel model subaudits; not human peer review",
+  "edition": {
+    "input_zip_sha256": "7adcfea65cf1109967fb71a0ebc7c91ef3a805c9a61b806def73a0e0f70e98e8",
+    "manifest_sha256": "c437cbb11a25c2b78c7742230ca87d86c0af93d1ecacbbe74a1a07662a0ecbcb",
+    "manuscript_revision": "eae2c38daa698b28dc8f48c7c5403f4228976746",
+    "reader_revision": "db6737b25fdcb02eef0af5010b2f289cc3931c9e",
+    "formal_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+    "toolchain": "Lean4.35.0-rc2",
+    "complete_project_environment": "Not supplied; snapshot lacks Mathlib/caches; no build attempted."
+  },
+  "prior_exposure": [
+    "Root read assignment.md alongside entry instructions before paper; openly disclosed in first_reading.md.",
+    "Parallel model source checks were shared after first encounters; not independent human votes.",
+    "Prior-review archive read only after independent checkpoints; reconciliations separately preserved."
+  ],
+  "first_account_sha256": "ac28d5f6c44e7e3ccbac83e7b85a3d028040574087dd0771254194b147fc0aab",
+  "sections": [
+    {
+      "heading": "The algebraic PCP theorem: a detailed account of the Lean proof",
+      "lines": [
+        8,
+        42
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-01",
+        "LE-02"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "How the proof is organized",
+      "lines": [
+        43,
+        58
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-03"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Reading this account",
+      "lines": [
+        59,
+        75
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-04"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Algebraic tests and correction",
+      "lines": [
+        76,
+        92
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-05"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "1. Polynomial distance, interpolation, and grid certificates",
+      "lines": [
+        93,
+        193
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-06",
+        "LE-07",
+        "LE-08",
+        "LE-09"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "2. The corrected short low-degree test",
+      "lines": [
+        194,
+        345
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-10",
+        "LE-11",
+        "LE-12",
+        "LE-13"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "3. Recovering a specified value",
+      "lines": [
+        346,
+        385
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-14",
+        "LE-15"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "4. Bivariate agreement",
+      "lines": [
+        386,
+        510
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-16",
+        "LE-17",
+        "LE-18",
+        "LE-19",
+        "LE-20",
+        "LE-21"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "5. Point-versus-line soundness",
+      "lines": [
+        511,
+        705
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-22",
+        "LE-23",
+        "LE-24",
+        "LE-25",
+        "LE-26",
+        "LE-27",
+        "LE-28",
+        "LE-29"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Source correspondence and scope",
+      "lines": [
+        706,
+        747
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-30"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "From polynomial values to a constant number of bits",
+      "lines": [
+        748,
+        765
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-31"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+      "lines": [
+        766,
+        814
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-32",
+        "LE-33"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Binary labels for field elements",
+      "lines": [
+        815,
+        867
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-34",
+        "LE-35"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Testing a received Hadamard word",
+      "lines": [
+        868,
+        990
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-36",
+        "LE-37",
+        "LE-38",
+        "LE-39"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "A binary version of the weighted low-degree test",
+      "lines": [
+        991,
+        1076
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-40",
+        "LE-41"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Testing a high-degree outer polynomial",
+      "lines": [
+        1077,
+        1134
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-42",
+        "LE-43"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Correcting an outer value at a prescribed point",
+      "lines": [
+        1135,
+        1183
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-44",
+        "LE-45"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Checking that a polynomial vanishes on a grid",
+      "lines": [
+        1184,
+        1255
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-46",
+        "LE-47",
+        "LE-48"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Derived polynomial oracles and fresh correction randomness",
+      "lines": [
+        1256,
+        1299
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-49"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "From the algebraic tests to the PCP theorem",
+      "lines": [
+        1300,
+        1314
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-50"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Three colours as polynomial equations",
+      "lines": [
+        1315,
+        1369
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-51",
+        "LE-52"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "The eight tables and seven checks",
+      "lines": [
+        1370,
+        1411
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-53",
+        "LE-54",
+        "LE-55"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Perfect completeness",
+      "lines": [
+        1412,
+        1431
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-56"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Soundness of the seven-check verifier",
+      "lines": [
+        1432,
+        1519
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-57",
+        "LE-58",
+        "LE-59",
+        "LE-60",
+        "LE-61"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Parameters for every finite graph",
+      "lines": [
+        1520,
+        1569
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-62"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "From finite samples to fair random bits",
+      "lines": [
+        1570,
+        1648
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-63",
+        "LE-64"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Repetition on one fixed proof",
+      "lines": [
+        1649,
+        1683
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-65"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "The polynomial-time implementation",
+      "lines": [
+        1684,
+        1705
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-66"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "From every NP verifier to a graph",
+      "lines": [
+        1706,
+        1802
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-67",
+        "LE-68",
+        "LE-69",
+        "LE-70",
+        "LE-71"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Transporting the verifier through the reduction",
+      "lines": [
+        1803,
+        1832
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-72"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "The reverse inclusion",
+      "lines": [
+        1833,
+        1888
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-73"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "Source and verification account",
+      "lines": [
+        1889,
+        1896
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-74"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    },
+    {
+      "heading": "References",
+      "lines": [
+        1897,
+        1931
+      ],
+      "status": "assessed",
+      "basis": "Complete sequential long-source read; mathematical reconstruction and paragraph judgments.",
+      "paragraph_decisions": [
+        "LE-75"
+      ],
+      "limitations": "Source-level review, not a new kernel build; some low-level machine results are explicitly imported."
+    }
+  ],
+  "items": [
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          1931
+        ]
+      ],
+      "observations": "Complete sequential text, equations, tables, source account and references read.75 distinct consequential paragraphs; every heading covered.",
+      "limitations": "Not every imported source proof was audited.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.pdf",
+      "sha256_or_edition": "87d000671158d1161c7e7f2ca4dbbad77dfce9775c95810e8637ce0553481e2b",
+      "status": "sampled",
+      "actual_range": {
+        "contact_sheet_survey": "all pages1–43",
+        "readable_scale_visual_inspection": [
+          1,
+          29,
+          30,
+          42,
+          43
+        ]
+      },
+      "observations": "Full layout overview; selected full-page views establish byline absence, table split and bibliography legibility.",
+      "limitations": "No full-size word-by-word visual read of all43 pages; mathematical text read in Markdown.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "reader/edition.json",
+      "sha256_or_edition": "2a9b6eefd12229265d8fc4aa80571aea6b4d9e65696e05469ce6e226266fa0eb",
+      "status": "assessed",
+      "actual_range": "All46 selected associations; declaration provenance/global scope/analytics; counts of indexed and external selected declarations.",
+      "observations": "40 direct contextual supports,5 ingredients/subclaims,1 valid variant; metadata distinctions assessed.",
+      "limitations": "No fresh extraction, elaboration, dependency or axiom report; live deployment not byte-compared.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "manifest.json",
+      "sha256_or_edition": "c437cbb11a25c2b78c7742230ca87d86c0af93d1ecacbbe74a1a07662a0ecbcb",
+      "status": "sampled",
+      "actual_range": "Edition pins, relevant status, source inventory and dependency fields.",
+      "observations": "Identity and capability boundary.",
+      "limitations": "Reading an inventory is not reading every listed file.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "reader/source-link-coverage.json",
+      "sha256_or_edition": "50ea87aa8719b313c2be7a387ac5af2334cbe4414a46d3a960282421a803ae36",
+      "status": "sampled",
+      "actual_range": "Edition pins, relevant status, source inventory and dependency fields.",
+      "observations": "Identity and capability boundary.",
+      "limitations": "Reading an inventory is not reading every listed file.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "formal/lean/lean-toolchain",
+      "sha256_or_edition": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+      "status": "sampled",
+      "actual_range": "Edition pins, relevant status, source inventory and dependency fields.",
+      "observations": "Identity and capability boundary.",
+      "limitations": "Reading an inventory is not reading every listed file.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "formal/lean/lake-manifest.json",
+      "sha256_or_edition": "cf701e06ca307d54b90245845a2a6e6a16a119f5225e784e8e30f4c830d9e456",
+      "status": "sampled",
+      "actual_range": "Edition pins, relevant status, source inventory and dependency fields.",
+      "observations": "Identity and capability boundary.",
+      "limitations": "Reading an inventory is not reading every listed file.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "contract/REVIEW_RUBRIC.md",
+      "sha256_or_edition": "2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          804
+        ]
+      ],
+      "observations": "Full contract read;13 authoring gates,7 understanding dimensions,16 acceptance tests and all receipt fields assessed.",
+      "limitations": "No private capabilities or omitted source bundle assumed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "contract/HUMANIZER_BOUNDARY.md",
+      "sha256_or_edition": "ae72a09af6db814ea1d7e7844e5a73b81277da1b79eaded499386a48e630e702",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          64
+        ]
+      ],
+      "observations": "Mathematical precision and minimum effective editing preserved.",
+      "limitations": "No detector target or forced edit quota.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "START_HERE.md",
+      "sha256_or_edition": "aef83bf96d0be3307c4a0cd8dfd88568cedc25ba1e594a148ee41cf255d5ac87",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          15
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "FIRST_READING.md",
+      "sha256_or_edition": "7d879fe73a2ece53358140f9bfaa9c4ce7bb81800a6f675bc26d4135fcc059e0",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          9
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "assignment.md",
+      "sha256_or_edition": "daf89ebc6c9e81d0b9c3b14e32f437849688fe6bfbcf4c0af952ea693fec432f",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          37
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "RETURN_FORMAT.md",
+      "sha256_or_edition": "aaffcf58d24a62dd29e793f6d0f1d2f4d10331ea4b0f5f403a546f75d8fa25b7",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          16
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "EVIDENCE_BOUNDARIES.md",
+      "sha256_or_edition": "cf0ecef6915ac84277e251256e66712b335067b24a209a65d6251dd38a0b20fa",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          13
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "RECIPIENT_CONTEXT.md",
+      "sha256_or_edition": "aa69752a737f434646d5ace46c2406f8c2a8430b825bfc315a42f3e008abd67b",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          9
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "request.md",
+      "sha256_or_edition": "f19593d86501f4bec1659f7309806db0b44e3878dfe22f2f96e8904b2e51367a",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          129
+        ]
+      ],
+      "observations": "Task instructions and scope read.",
+      "limitations": "assignment.md exposure preceded the first account and is disclosed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "register/REGISTER_RULES.md",
+      "sha256_or_edition": "77494a244483c62a3d2d4c083a2fae8a0850874040f5a9d0414a41cee7d011d0",
+      "status": "sampled",
+      "actual_range": [
+        "Most rules in initial read; explicit reread118–166 and215–end",
+        "Heading inventory"
+      ],
+      "observations": "Existing rules already address notation, local support, credit and evidence scope.",
+      "limitations": "Initial output partially truncated; not a claim of independently rechecking every donor quotation.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "methods/graph-to-long/SKILL.md",
+      "sha256_or_edition": "24f158baebce32da4f1b25e2957238f4be7641a7e510a59c0b265bc36b1c4dfa",
+      "status": "sampled",
+      "actual_range": [
+        [
+          75,
+          135
+        ],
+        "Earlier headings/keyword excerpts around source binding and formal-statement audit"
+      ],
+      "observations": "Existing source-version, necessary-step and transition rules compared with observed failures.",
+      "limitations": "Not a complete review of this method or private dependencies.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "methods/docs/reader-review.md",
+      "sha256_or_edition": "ace61c39fc9f9621804f1209a4e4f4e4eef09a10b35dfb0165e826160d182be8",
+      "status": "sampled",
+      "actual_range": [
+        [
+          68,
+          115
+        ],
+        "Earlier heading and diagnostic excerpts"
+      ],
+      "observations": "First-account freeze and reader/source evidence distinction applied.",
+      "limitations": "No general method overhaul or skill edit.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "methods/docs/authoring.md",
+      "sha256_or_edition": "3b3df0dd94fb4d026ccefeebd1ef34d7c0f1f3450d5f40bfb9de74e70b45d5b8",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "Available but not read as a complete method source.",
+      "limitations": "The standalone supplied rubric was the authoritative complete review contract.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "sampled",
+      "actual_range": [
+        "lines 174–385",
+        "lines 706–1183",
+        "lines 1256–1519"
+      ],
+      "observations": "Sequential first read of assigned corrected-test and binary sections; later exact-line/source notes and assembly portions. Initial note preserved.",
+      "limitations": "Not an exhaustive review of the 1931-line long paper; no rendered-PDF inspection.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/short/paper.md",
+      "sha256_or_edition": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+      "status": "sampled",
+      "actual_range": [
+        "lines 1–262",
+        "selected visible portions of lines 299–433"
+      ],
+      "observations": "Headline scope, theorem, digit encoding, Hadamard labels, inner/outer decoding, and prescribed-point correction sampled.",
+      "limitations": "One larger batched output was truncated; do not infer exhaustive whole-paper or lines 263–298 coverage.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/expository/main.md",
+      "sha256_or_edition": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+      "status": "sampled",
+      "actual_range": [
+        "lines 1–140",
+        "lines 410–513",
+        "lines 604–662"
+      ],
+      "observations": "Opening/theorem scope and worked encoding/binary/closing material sampled.",
+      "limitations": "No full sequential companion or PDF review.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/SetMultilinear.lean",
+      "sha256_or_edition": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–233; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/SetMultilinearDecode.lean",
+      "sha256_or_edition": "515f35d71b19c78180f3721575b90ef2fa31723b09fd04ff308a4716b1616370",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–82; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardTest.lean",
+      "sha256_or_edition": "e98d517ad8a075351efc3c7f7375b3c7a2c8c379281e259d0ec9ba228fe8aa5c",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–163; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardSoundness.lean",
+      "sha256_or_edition": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–84; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean",
+      "sha256_or_edition": "37c298215572bafa7c466cd761dd084e1bd2cfa24a6f558bf6fc83f68637b98b",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–139; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "sha256_or_edition": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–332; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/WeightedConstraintSoundness.lean",
+      "sha256_or_edition": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–179; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256_or_edition": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–178; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+      "sha256_or_edition": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–168; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256_or_edition": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "status": "assessed",
+      "actual_range": [
+        "lines 1–132; complete file source-read"
+      ],
+      "observations": "Definitions, statements, and proof bodies inspected in assigned scope.",
+      "limitations": "Source inspection is not kernel replay; imported dependencies not exhaustively verified.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardComposition.lean",
+      "sha256_or_edition": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb",
+      "status": "sampled",
+      "actual_range": [
+        "1–35",
+        "140–195"
+      ],
+      "observations": "Named source transitions and hypotheses compared with prose.",
+      "limitations": "Source read only; no Lean execution or rendered-layout assessment implied.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardWeights.lean",
+      "sha256_or_edition": "1dbab5f7a0311581cbe318065c304ed1a46baa1a6c52d2ceef0614abded823ae",
+      "status": "sampled",
+      "actual_range": [
+        "1–145"
+      ],
+      "observations": "Named source transitions and hypotheses compared with prose.",
+      "limitations": "Source read only; no Lean execution or rendered-layout assessment implied.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256_or_edition": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "status": "sampled",
+      "actual_range": [
+        "24–60",
+        "265–356"
+      ],
+      "observations": "Named source transitions and hypotheses compared with prose.",
+      "limitations": "Source read only; no Lean execution or rendered-layout assessment implied.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLowDegreeTest.lean",
+      "sha256_or_edition": "d9557f179975603c0d72fc09a537a9bd73ba584ded8a37f91f936c9fb31fd5f8",
+      "status": "sampled",
+      "actual_range": [
+        "1–135"
+      ],
+      "observations": "Named source transitions and hypotheses compared with prose.",
+      "limitations": "Source read only; no Lean execution or rendered-layout assessment implied.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v1/tex/main.tex",
+      "sha256_or_edition": "9b21956e4138ee4210f6a2cd9731dab80a7e90c91cc4c2b6b5d9dcf294448651",
+      "status": "sampled",
+      "actual_range": [
+        "470–520",
+        "710–742",
+        "829–853"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/technical_tools.tex",
+      "sha256_or_edition": "0c6fbe16c347a80e0c82373413e14844d4bf947da9183768ca1bbdce72baae10",
+      "status": "sampled",
+      "actual_range": [
+        "1–113",
+        "145–235",
+        "309–348",
+        "389–414"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/preliminaries.tex",
+      "sha256_or_edition": "d36ae006f3a41a6e22e7235614caf1338fe34c25a11de8464b210a1bab0e3449",
+      "status": "sampled",
+      "actual_range": [
+        "122–135"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/appendix_-_hadamard_test.tex",
+      "sha256_or_edition": "a3215ac7062cf2295178b0cda162e3a7d3b089bc6c3504b3a9fc52bf07223ea9",
+      "status": "sampled",
+      "actual_range": [
+        "1–145"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/low_degree_test.tex",
+      "sha256_or_edition": "c26ee68aa20db994515cda3c97e29a5290ad7ddf8d25489efa331cedaa31ef26",
+      "status": "sampled",
+      "actual_range": [
+        "510–554"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/main.tex",
+      "sha256_or_edition": "8896409424c190ba41aa88abbca5020076ae5390c9dd4156c770f948e6a077db",
+      "status": "sampled",
+      "actual_range": [
+        "acknowledgement line 64 and diagnostic metadata snippets"
+      ],
+      "observations": "Specific theorem hypotheses, edition differences, attribution, or rowwise argument inspected.",
+      "limitations": "Only listed passages and diagnostic snippets read; no whole-paper source verification.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/appendix-claim-consistency.tex",
+      "sha256_or_edition": "189fd5e073fdb9594a694f73d2274dab1979b51f3d75a212b6496d3f13caad57",
+      "status": "assessed",
+      "actual_range": [
+        "1–99; complete file"
+      ],
+      "observations": "Read composition proof and scalar homogeneous case.",
+      "limitations": "No TeX/PDF rebuild; direct source reading.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "RETURN_FORMAT.md",
+      "sha256_or_edition": "aaffcf58d24a62dd29e793f6d0f1d2f4d10331ea4b0f5f403a546f75d8fa25b7",
+      "status": "assessed",
+      "actual_range": [
+        "complete content read"
+      ],
+      "observations": "Used for reporting contract and edition/availability context.",
+      "limitations": "Source-inventory access claims are packet metadata, not proof review or independently downloaded byte hashes.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "contract/HUMANIZER_BOUNDARY.md",
+      "sha256_or_edition": "ae72a09af6db814ea1d7e7844e5a73b81277da1b79eaded499386a48e630e702",
+      "status": "assessed",
+      "actual_range": [
+        "complete content read"
+      ],
+      "observations": "Used for reporting contract and edition/availability context.",
+      "limitations": "Source-inventory access claims are packet metadata, not proof review or independently downloaded byte hashes.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "return-templates/findings.json",
+      "sha256_or_edition": "a79f9df3f173accb8f49a17ba23b1116f25f829175ab2372fe80e357b3fc24b3",
+      "status": "assessed",
+      "actual_range": [
+        "complete content read"
+      ],
+      "observations": "Used for reporting contract and edition/availability context.",
+      "limitations": "Source-inventory access claims are packet metadata, not proof review or independently downloaded byte hashes.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "return-templates/coverage.json",
+      "sha256_or_edition": "989d2214c8574c5ddd45571c2ea19bd835f1b460ef46b5f06be26598abff523e",
+      "status": "assessed",
+      "actual_range": [
+        "complete content read"
+      ],
+      "observations": "Used for reporting contract and edition/availability context.",
+      "limitations": "Source-inventory access claims are packet metadata, not proof review or independently downloaded byte hashes.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "literature/source-inventory.json",
+      "sha256_or_edition": "0c376c6c1708c987bb50a25033313ece952535a7ca3d666ea86f98f329a53e95",
+      "status": "assessed",
+      "actual_range": [
+        "complete content read"
+      ],
+      "observations": "Used for reporting contract and edition/availability context.",
+      "limitations": "Source-inventory access claims are packet metadata, not proof review or independently downloaded byte hashes.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "contract/REVIEW_RUBRIC.md",
+      "sha256_or_edition": "2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d",
+      "status": "sampled",
+      "actual_range": [
+        "headings throughout",
+        "576–end"
+      ],
+      "observations": "Used seven dimensions and explicit first-pass/literature-restoration boundary.",
+      "limitations": "Earlier rubric text was not independently reread in full in this child audit.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/binary-math-review.md",
+      "sha256_or_edition": "cd3f16693ce12bbccf3672e015c35127af50dd2f2f60ba10fabd940ac402014d",
+      "status": "assessed",
+      "actual_range": [
+        "complete file, only after independent report and findings hash freeze"
+      ],
+      "observations": "Reconciled in separate prior_review_reconciliation.md.",
+      "limitations": "No earlier claim treated as a proof or fresh verification; other prior-review files remain unassessed.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/algebra-math-review.md",
+      "sha256_or_edition": "b19f96445585ce6877cd2949cf31b3160cc0db27fcc67e7dd209209894b8a449",
+      "status": "assessed",
+      "actual_range": [
+        "complete file, only after independent report and findings hash freeze"
+      ],
+      "observations": "Reconciled in separate prior_review_reconciliation.md.",
+      "limitations": "No earlier claim treated as a proof or fresh verification; other prior-review files remain unassessed.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/old-test-counterexample.md",
+      "sha256_or_edition": "9e3f4415c695bec1eb385af70aa60667b1a5ec197d21f17aa5bf2bc097e81f44",
+      "status": "assessed",
+      "actual_range": [
+        "complete file, only after independent report and findings hash freeze"
+      ],
+      "observations": "Reconciled in separate prior_review_reconciliation.md.",
+      "limitations": "No earlier claim treated as a proof or fresh verification; other prior-review files remain unassessed.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/literature-grounding-audit.md",
+      "sha256_or_edition": "ddabddfe63019d9b29ceec64f693f4b862db8dc38925b4f0bcac2354bcd9af1c",
+      "status": "assessed",
+      "actual_range": [
+        "complete file, only after independent report and findings hash freeze"
+      ],
+      "observations": "Reconciled in separate prior_review_reconciliation.md.",
+      "limitations": "No earlier claim treated as a proof or fresh verification; other prior-review files remain unassessed.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://eccc.weizmann.ac.il/report/2026/134/",
+      "sha256_or_edition": "ECCC TR26-134 live report, read 2026-11-15",
+      "status": "assessed",
+      "actual_range": [
+        "report metadata and revision-1 correction notice"
+      ],
+      "observations": "Confirms 22 October 2026 revision and corrected Lemma 3.3 notice.",
+      "limitations": "Metadata check, not theorem verification.",
+      "web_reference_ids": [
+        "turn1view2",
+        "turn2search1"
+      ],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://eccc.weizmann.ac.il/report/2026/134/revision/1/download",
+      "sha256_or_edition": "ECCC revision 1, 22 October 2026",
+      "status": "sampled",
+      "actual_range": [
+        "opening metadata and abstract",
+        "Acknowledgements, printed page 41 / physical PDF page 43"
+      ],
+      "observations": "Acknowledgement explicitly credits Troy Lee for pointing out earlier mistake.",
+      "limitations": "No byte hash acquisition and no claim ECCC bytes match arXiv v2.",
+      "web_reference_ids": [
+        "turn2view0",
+        "turn6view2"
+      ],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "sha256_or_edition": "Author-hosted STOC manuscript, 10 pages",
+      "status": "sampled",
+      "actual_range": [
+        "PDF page 5: Definitions 2.3,2.5,2.8, Theorem 2.9",
+        "Section 3 opening and Lemma 3.1 proof outline; web lines 683–736 and sampled matrix-grid portion"
+      ],
+      "observations": "Verified exact characterization, pairwise independence, and denominator mapping for the corrected generator test.",
+      "limitations": "No complete proof or broader classification-theorem audit.",
+      "web_reference_ids": [
+        "turn3view1",
+        "turn6view0",
+        "turn8view0",
+        "turn13view0",
+        "turn13view1",
+        "turn14view0",
+        "turn14view1"
+      ],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+      "sha256_or_edition": "Author manuscript, Linearity Testing in Characteristic Two",
+      "status": "sampled",
+      "actual_range": [
+        "Theorem 1.2, printed page 5 / physical page 7",
+        "Section 2 Fourier proof, Lemmas 2.1 and 2.2; web lines 497–694"
+      ],
+      "observations": "Supports attribution of sharp characteristic-two distance bound.",
+      "limitations": "BLR original Section 4.2 was not independently read here.",
+      "web_reference_ids": [
+        "turn3view2",
+        "turn6view1",
+        "turn8view1"
+      ],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+      "sha256_or_edition": "Prepublication manuscript, marked To appear SIAM J Computing",
+      "status": "sampled",
+      "actual_range": [
+        "Section 4, Theorem 5, Lemmas 6–8; web lines 257–388, printed pages 10–11"
+      ],
+      "observations": "Verified plurality/double-sampling antecedent and integer-spaced test context.",
+      "limitations": "Published numbering Theorem 4.1 not independently verified. Initial direct open returned 403; later cached search-ref open succeeded.",
+      "web_reference_ids": [
+        "turn8search25",
+        "turn9view2",
+        "turn10view0",
+        "turn10view1"
+      ],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://arxiv.org/pdf/1307.3975v1",
+      "sha256_or_edition": "Friedl–Sudan corrected 2013 reissue",
+      "status": "unavailable",
+      "actual_range": [],
+      "observations": "Open failed through browsing service.",
+      "limitations": "Exact corrected Lemma 4 not read; do not claim direct source verification. Related author-hosted 1995 PDF open also failed (turn9view1), but that ref is not the corrected edition.",
+      "web_reference_ids": [],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://arxiv.org/abs/2608.17429v1",
+      "sha256_or_edition": "arXiv v1",
+      "status": "unavailable",
+      "actual_range": [],
+      "observations": "arXiv live direct opens blocked/disabled; bundled TeX supplied primary passages.",
+      "limitations": "Live access failure does not impugn mathematical statement; primary bundled sources read separately.",
+      "web_reference_ids": [],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "https://arxiv.org/abs/2608.17429v2",
+      "sha256_or_edition": "arXiv v2",
+      "status": "unavailable",
+      "actual_range": [],
+      "observations": "arXiv live direct opens blocked/disabled; bundled TeX supplied primary passages.",
+      "limitations": "Live access failure does not impugn mathematical statement; primary bundled sources read separately.",
+      "web_reference_ids": [],
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.pdf",
+      "sha256_or_edition": "87d000671158d1161c7e7f2ca4dbbad77dfce9775c95810e8637ce0553481e2b",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "Outside this child subreview. Parent handles reader and rendered scope.",
+      "limitations": "No browser interaction or visual page review performed by this agent.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/short/paper.pdf",
+      "sha256_or_edition": "3dcc5fa9cadbbd3f3343ba8f2bd83cf20cad22d8282faf0610aa3f4d06789cf5",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "Outside this child subreview. Parent handles reader and rendered scope.",
+      "limitations": "No browser interaction or visual page review performed by this agent.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/expository/main.pdf",
+      "sha256_or_edition": "8827a957fa76826196448739ce1f66997b3910ced55377afa485829fac6dd190",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "Outside this child subreview. Parent handles reader and rendered scope.",
+      "limitations": "No browser interaction or visual page review performed by this agent.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "reader/index.html",
+      "sha256_or_edition": "reader edition supplied in packet",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "Outside this child subreview. Parent handles reader and rendered scope.",
+      "limitations": "No browser interaction or visual page review performed by this agent.",
+      "reviewer": "binary/literature subaudit"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "assessed",
+      "actual_range": [
+        [
+          93,
+          705
+        ],
+        [
+          748,
+          1705
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Sequential mathematical reconstruction; no PDF layout assessment by this subagent.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateAgreement.lean",
+      "sha256_or_edition": "9dc7fa8512f0d8b2445176f2094455e297b48c18bdeb475713819f92c4e021cc",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          167
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read assembly proof and hypotheses; underlying matrix, rectangle and boost proofs only searched/indexed, not fully read.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineSoundness.lean",
+      "sha256_or_edition": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          87
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read final statement and proof; not a kernel replay.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineConstants.lean",
+      "sha256_or_edition": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          74
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read constants and arithmetic assembly.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineEndpointConsistency.lean",
+      "sha256_or_edition": "af4c019538dbbf399d311dc32d2233bc3d26b4024f77c0a90b1d56dfd6446a27",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          128
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read four-error correspondence and endpoint assembly; underlying MixedPlaneSampling estimates not read in full.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/CandidateCrossing.lean",
+      "sha256_or_edition": "d4cf783b0e88dcd8a63d1b08164276bdf7945143a77ac26a8686d4590b0582bd",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          91
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read exact five-error statement and its proof.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/RuledSurfaceRigidity.lean",
+      "sha256_or_edition": "59ae4b2ef9fd2e0937b9079ab5937ec45d80f19f7f0be25092cdded581c197fe",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          113
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read fixed best-approximation and line-characterization composition; underlying sampling lemmas not read in full.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256_or_edition": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "status": "sampled",
+      "actual_range": [
+        [
+          245,
+          361
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Decoded-table and final exists_close proofs; earlier marginal proofs not read in full.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256_or_edition": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "status": "sampled",
+      "actual_range": [
+        [
+          210,
+          354
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read failure_le full proof and most full-distance corollary; earlier event/correction lemmas used at their inspected conclusion.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+      "sha256_or_edition": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e",
+      "status": "sampled",
+      "actual_range": [
+        [
+          98,
+          161
+        ],
+        [
+          210,
+          359
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read actual lower-bound proofs; generic two-corrector proof only its first portion, not 162–209.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+      "sha256_or_edition": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0",
+      "status": "sampled",
+      "actual_range": [
+        [
+          178,
+          280
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read transfer, completeness statement and lower-bound proof; procedure/query implementation not read in full.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+      "sha256_or_edition": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          154
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read constants and every displayed budget proof.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+      "sha256_or_edition": "15cd9fb44cdd7133c8feea82f1dfe9d0dfbda37223556ebbb786dfe86f9eee00",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          163
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read complete displayed source, clipped to actual file length in output.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256_or_edition": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          132
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read full source assembly; hypotheses/objects compared to manuscript.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/appendix-local_correction.tex",
+      "sha256_or_edition": "d28b807a5cb4724351fe21dccb60e099f0dba16da8f1a15b19eb89b336e65ad5",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          273
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Inspected substantive local-correction proof in tool output; TeX commented-out alternatives not treated as current claims.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "literature/abssw-v2/tex/appendix-zero_test.tex",
+      "sha256_or_edition": "948d9baae82264d9db7538e1a86efb9cb35a560adbe5f9e53d21d9451c5e070a",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          152
+        ]
+      ],
+      "observations": "Algebra audit source reconstruction; see evidence/algebra_review.md.",
+      "limitations": "Read current ZERO proof; no claim that v2 formal conventions equal the Lean test.",
+      "reviewer": "algebra subaudit"
+    },
+    {
+      "path_or_url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+      "sha256_or_edition": "author-hosted journal manuscript, 53-page PDF",
+      "status": "sampled",
+      "actual_range": {
+        "url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+        "edition": "author-hosted journal manuscript, 53-page PDF",
+        "status": "sampled",
+        "locations": [
+          "Theorem 69, PDF p.48",
+          "Corollary 70",
+          "Lemmas 71–73, scanned extraction excerpts"
+        ],
+        "source_refs": [
+          "turn4view0",
+          "turn5view0"
+        ],
+        "sha256": "not independently acquired as local bytes by this subagent"
+      },
+      "observations": "Historical agreement antecedent checked by the algebra auditor and relevant theorem/locator reopened by root.",
+      "limitations": "Only stated portions; exact metadata in evidence/algebra_coverage.json.",
+      "reviewer": "algebra and root"
+    },
+    {
+      "path_or_url": "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+      "sha256_or_edition": "JACM 45(1), January 1998, pp.70–122; 53-page PDF",
+      "status": "sampled",
+      "actual_range": {
+        "url": "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+        "edition": "JACM 45(1), January 1998, pp.70–122; 53-page PDF",
+        "status": "sampled",
+        "locations": [
+          "§5.2, Lemma 5.2.2",
+          "Corollary 5.2.3",
+          "Lemma 5.2.7 and clean-rectangle proof excerpts"
+        ],
+        "source_refs": [
+          "turn4view1",
+          "turn5view1",
+          "turn5view2"
+        ],
+        "sha256": "not independently acquired as local bytes by this subagent"
+      },
+      "observations": "Historical agreement antecedent checked by the algebra auditor and relevant theorem/locator reopened by root.",
+      "limitations": "Only stated portions; exact metadata in evidence/algebra_coverage.json.",
+      "reviewer": "algebra and root"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Verifier/Definition.lean",
+      "sha256_or_edition": "9251c711540860428f8227a9d8e08c1e02eaf68fd7b054acdaac340f2b360f11",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          223
+        ]
+      ],
+      "observations": "Definitions, probability, prefix/seed semantics",
+      "limitations": "Complete file read; no imported-library replay.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Theorem.lean",
+      "sha256_or_edition": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          74
+        ]
+      ],
+      "observations": "Main theorem and semantic reverse",
+      "limitations": "Complete file read; imported proof closure unassessed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/ReverseConcrete.lean",
+      "sha256_or_edition": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          45
+        ]
+      ],
+      "observations": "Concrete reverse wrapper",
+      "limitations": "Complete file read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ReferenceNPConverse.lean",
+      "sha256_or_edition": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          43
+        ]
+      ],
+      "observations": "Both-class equivalence and concrete-to-reference composition",
+      "limitations": "Complete file read; imported simulation proof bodies not all read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/NP.lean",
+      "sha256_or_edition": "b23701ce674baccb03d4333ce8327e81119f55e7c1a2f02488db7787b51ee861",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          47
+        ]
+      ],
+      "observations": "Certificate class and quantifiers",
+      "limitations": "Complete file read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/Machine.lean",
+      "sha256_or_edition": "640230c1838bffb7442c52575b34f9322c3da3f90fedcfd2ed57c3e1fc763dc0",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          126
+        ]
+      ],
+      "observations": "Concrete machine predicates and codecs",
+      "limitations": "Complete file read; Mathlib implementation absent.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/CostModel.lean",
+      "sha256_or_edition": "61004144561944c3ed8d18a6a4ad3ed22db29f34cda6e9f5f3888e3d06bff0eb",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          121
+        ]
+      ],
+      "observations": "Verifier algorithm, unfolding and implementation, closure interface",
+      "limitations": "Complete file read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/StandardModel.lean",
+      "sha256_or_edition": "a8f34f1f691383e92a529274183c8e9332c33105d1ec956152f8f1c16c86173e",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          69
+        ]
+      ],
+      "observations": "Concrete finite-checker closure",
+      "limitations": "Source region read. The final part near69 was in output that may have been clipped; essential theorem45–57 read. Do not infer complete dependency proof.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/CheckerFinal.lean",
+      "sha256_or_edition": "6e5122d3ba2061dc461bedca0481747797aaa62da80d7c7f01cafe04e862c22a",
+      "status": "sampled",
+      "actual_range": [
+        [
+          300,
+          575
+        ]
+      ],
+      "observations": "Actual exhaustive checker final run, bound and witness",
+      "limitations": "Earlier requested output partly clipped; only300–575 claimed as assessed. No whole file claim.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorFinalAssembly.lean",
+      "sha256_or_edition": "d81de382ca0a80c3f5a4f2a2e5a92e626f9002ec726e176367c3207014c4d4aa",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          71
+        ]
+      ],
+      "observations": "Composition of executable NP reduction and graph verifier",
+      "limitations": "Complete file read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ReferenceNPBridge.lean",
+      "sha256_or_edition": "ea6a73d55506f5504f5610900d829f88f6b1e71d9f0d6d1d2b744a206549c371",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          90
+        ]
+      ],
+      "observations": "Reference NP to concrete witness class and forward theorem",
+      "limitations": "Complete file read; full path-simulator internals not inspected.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ReferenceBoundedVerifier.lean",
+      "sha256_or_edition": "a855d2062de1a8aa37f108028faf53a91b940b294e6a023af3ad7b11573e0041",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          54
+        ]
+      ],
+      "observations": "Enforcing computed polynomial witness bound",
+      "limitations": "Complete file read; imported bound-setup machine internals not inspected.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ReferencePairDecider.lean",
+      "sha256_or_edition": "472f042ec7a5df6ae9a5957c75c670549db48369702f29473fb084bcf24dc308",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          62
+        ]
+      ],
+      "observations": "Pair parsing/interface and explicit verdict normalization",
+      "limitations": "Complete file read; imported checker_mem_FP simulation not fully inspected.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ThreeColorBasePolynomial.lean",
+      "sha256_or_edition": "32657e7e292b6873dc42fa14d4c2c52861af88218efdb7267721a3431dd47870",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          62
+        ]
+      ],
+      "observations": "Charged cost and storage-premise discharge",
+      "limitations": "Complete file read; called helper routines not all inspected.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ThreeColorFieldSetupCost.lean",
+      "sha256_or_edition": "f148e02ebfc9a69325ad2ca667e489d1a22eded92803e585f479629d8fa9aab8",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          77
+        ]
+      ],
+      "observations": "Displayed polynomial setup/root costs",
+      "limitations": "Complete file read; imported finite-search micro-cost proofs not replayed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorSeedSize.lean",
+      "sha256_or_edition": "53e13d4b4761b908b57019fbe52f72b8f6ccfb9d7f4dc6d68c5d513473964af7",
+      "status": "sampled",
+      "actual_range": [
+        [
+          17,
+          90
+        ],
+        [
+          160,
+          181
+        ]
+      ],
+      "observations": "Full and original seed bit formulas",
+      "limitations": "Sampled exact expression and final equality; middle helper proofs not assessed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorResourceBounds.lean",
+      "sha256_or_edition": "b2a8b284e0c59ce737d5fea951b1ed3e77a59c1693d1752d7d704ad9954fdc85",
+      "status": "sampled",
+      "actual_range": [
+        [
+          20,
+          179
+        ]
+      ],
+      "observations": "Address and fair-bit resource bounds",
+      "limitations": "Most file read; no claim about unlisted prefix/tail.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ThreeColorBaseCorrect.lean",
+      "sha256_or_edition": "58c00d2a7ce2302c414f030c52c8a1a41bb6ee62e097d443836321399ad4fb67",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          43
+        ]
+      ],
+      "observations": "Query discovery/replay correctness",
+      "limitations": "Complete file read; imported routine correctness not fully assessed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/SetMultilinear.lean",
+      "sha256_or_edition": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+      "status": "sampled",
+      "actual_range": [
+        [
+          25,
+          130
+        ]
+      ],
+      "observations": "Formal encode/decode, evaluation recovery and injectivity",
+      "limitations": "Theorem bodies in these ranges read. Later degree results only via selected claims/context; no whole file certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineConstants.lean",
+      "sha256_or_edition": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          74
+        ]
+      ],
+      "observations": "Field hypotheses and actual combined budget",
+      "limitations": "Complete file read.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineCrossing.lean",
+      "sha256_or_edition": "05fb01c8a4218b909e6d0f39d2c24f76a8c641a7fb526fcc3ff0f236d974bf05",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          215
+        ]
+      ],
+      "observations": "Transverse distance and generalized selected-row crossing",
+      "limitations": "Range read; selected variant comparison supported at130–155.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+      "sha256_or_edition": "a6abc41d00df59cfdb96833e15dbb5a274eddd3125e0c7f80a776b8373fdc6e8",
+      "status": "sampled",
+      "actual_range": [
+        [
+          20,
+          110
+        ]
+      ],
+      "observations": "Procedure, sample and physical queries",
+      "limitations": "Definitions and local correctness material sampled, no full soundness here.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/StandardLocalCorrection.lean",
+      "sha256_or_edition": "83d99c2a1ebc7b0d9d88235d58c54db3dbc95688e6656ae4e5bb813c2e728e27",
+      "status": "sampled",
+      "actual_range": [
+        [
+          15,
+          55
+        ]
+      ],
+      "observations": "GoodNodes condition and generator implication",
+      "limitations": "Relevant definitions sampled.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardTest.lean",
+      "sha256_or_edition": "e98d517ad8a075351efc3c7f7375b3c7a2c8c379281e259d0ec9ba228fe8aa5c",
+      "status": "sampled",
+      "actual_range": [
+        [
+          20,
+          112
+        ]
+      ],
+      "observations": "Intermediate-degree product checks and query count",
+      "limitations": "Test definition and count sampled; not a full soundness proof.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/NPTableau.lean",
+      "sha256_or_edition": "741c70f92f8c28b126ffcb066e4587ff10ebec68356b987013ff1101f9959ee8",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          160
+        ]
+      ],
+      "observations": "Concrete checker, bounds, assignment semantics and equivalence",
+      "limitations": "Complete160-line file read if file ends there; imported tableau framework not replayed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifier.lean",
+      "sha256_or_edition": "59cbc12ef8abce1d8a62a6744f890fed98d97fd53060c398d120021405196739",
+      "status": "sampled",
+      "actual_range": [
+        [
+          25,
+          145
+        ],
+        [
+          292,
+          309
+        ],
+        [
+          362,
+          368
+        ]
+      ],
+      "observations": "Eight shared tables, branch seeds, dependency on listed queries and count",
+      "limitations": "Sampled; declaration signatures and selected contexts also separately recorded.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Reduction/FiniteDomainConstraints.lean",
+      "sha256_or_edition": "62bf4c341e0dd12266ebbdf3923aa9e77211fffe2ef659dc3f3dd438d3f10f07",
+      "status": "sampled",
+      "actual_range": [
+        [
+          18,
+          125
+        ]
+      ],
+      "observations": "One-hot Boolean constraint semantics",
+      "limitations": "Generic semantic conversion, not runtime certificate.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Reduction/NAEThreeColor.lean",
+      "sha256_or_edition": "fcbd1fd37193f9157f1bf5c4b228746dcae7e17e3277703a9fa615117c1e752b",
+      "status": "sampled",
+      "actual_range": [
+        [
+          19,
+          122
+        ],
+        [
+          238,
+          248
+        ]
+      ],
+      "observations": "NAE gadgets, actual graph and colourability equivalence",
+      "limitations": "Selected graph/conversion region; omitted induction proof middles not assessed.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+      "sha256_or_edition": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09",
+      "status": "sampled",
+      "actual_range": [
+        [
+          85,
+          145
+        ]
+      ],
+      "observations": "Test depends on query list; exact honest completeness theorem",
+      "limitations": "Completeness test_eval114–134 read to correct recommendation; source list queries_length selected separately.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/vendor/Complexitylib/Classes/NP.lean",
+      "sha256_or_edition": "3a95e8df47665ce82d2f854c2243fd3bf80eb7251a19ab9b0fa9d46af71eea47",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          37
+        ]
+      ],
+      "observations": "Actual reference NP definition",
+      "limitations": "No byte comparison against upstream, no imported NTM implementation replay.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/vendor/Complexitylib/Classes/Time.lean",
+      "sha256_or_edition": "2c7f98667b32239733549f399bdd9c197e4c9a515e73874e6ae5829b4e71dc4a",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          59
+        ]
+      ],
+      "observations": "Actual reference NTIME definition",
+      "limitations": "Only class definitions and available comments, not all Turing semantics internals.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/vendor/README.md",
+      "sha256_or_edition": "d78cd74e42b1b7c34775837c55e9e974d382a12ac7b514e8078f9a1a46a03097",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          36
+        ]
+      ],
+      "observations": "Reported vendor source pins",
+      "limitations": "Provenance report read, not independently verified against remote repository.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/docs/pcp/reading-guide.md",
+      "sha256_or_edition": "ae1500d458c2d1c032e239d21e6398038fcf5b2996f401a4e51eaa976c298360",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          577
+        ]
+      ],
+      "observations": "Source-owner mathematical orientation",
+      "limitations": "Author guide treated as exposition, never as verification; root provides owner-comparison judgment.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "reader/README.md",
+      "sha256_or_edition": "ab286cf34e0ff8e115131b0899debb57e5e70395718ba6c12cf38c070574b2e5",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          11
+        ]
+      ],
+      "observations": "Frozen/live boundary and entry instructions",
+      "limitations": "No browser launched by child.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "reader/source-link-coverage.json",
+      "sha256_or_edition": "50ea87aa8719b313c2be7a387ac5af2334cbe4414a46d3a960282421a803ae36",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          128
+        ]
+      ],
+      "observations": "Complete absent-inline-declaration inventory",
+      "limitations": "Confirmed source existence, no inference about live interaction success.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "reader/edition.json",
+      "sha256_or_edition": "2a9b6eefd12229265d8fc4aa80571aea6b4d9e65696e05469ce6e226266fa0eb",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          1
+        ]
+      ],
+      "observations": "All46 passage selections and all relevant declaration/index/provenance fields",
+      "limitations": "Minified JSON; precise field selectors rather than misleading per-field line numbers. No claim that all embedded whole-source strings or dependency arrays are mathematically audited.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "manifest.json",
+      "sha256_or_edition": "c437cbb11a25c2b78c7742230ca87d86c0af93d1ecacbbe74a1a07662a0ecbcb",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          6294
+        ]
+      ],
+      "observations": "Pins/primary document/hash inventory",
+      "limitations": "Read relevant manifest fields; file list computationally available, not a mathematical check.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "RETURN_FORMAT.md",
+      "sha256_or_edition": "aaffcf58d24a62dd29e793f6d0f1d2f4d10331ea4b0f5f403a546f75d8fa25b7",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          16
+        ]
+      ],
+      "observations": "Required return structure",
+      "limitations": "Read after saved independent first encounter.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "EVIDENCE_BOUNDARIES.md",
+      "sha256_or_edition": "cf0ecef6915ac84277e251256e66712b335067b24a209a65d6251dd38a0b20fa",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          13
+        ]
+      ],
+      "observations": "Snapshot and reported-build limits",
+      "limitations": "Claims of historical checks remain reported.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "contract/HUMANIZER_BOUNDARY.md",
+      "sha256_or_edition": "ae72a09af6db814ea1d7e7844e5a73b81277da1b79eaded499386a48e630e702",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          64
+        ]
+      ],
+      "observations": "Revision and reviewer role boundary",
+      "limitations": "No source manuscript altered.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "contract/REVIEW_RUBRIC.md",
+      "sha256_or_edition": "2527ee0d0ec1b7927b953e22fff9437c8593f352e727e8a869694f98925b539d",
+      "status": "sampled",
+      "actual_range": [
+        [
+          144,
+          217
+        ],
+        [
+          396,
+          444
+        ],
+        [
+          576,
+          727
+        ]
+      ],
+      "observations": "Dependency/evidence roles and mathematical understanding dimensions",
+      "limitations": "Heading index inspected; full rubric integration belongs to root.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "request.md",
+      "sha256_or_edition": "f19593d86501f4bec1659f7309806db0b44e3878dfe22f2f96e8904b2e51367a",
+      "status": "sampled",
+      "actual_range": [
+        [
+          21,
+          46
+        ],
+        [
+          103,
+          127
+        ]
+      ],
+      "observations": "Criterion1–7 mapping and return expectations",
+      "limitations": "Relevant grep output read; not additional hidden task instructions.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "return-templates/findings.json",
+      "sha256_or_edition": "a79f9df3f173accb8f49a17ba23b1116f25f829175ab2372fe80e357b3fc24b3",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          35
+        ]
+      ],
+      "observations": "Finding schema",
+      "limitations": "No template claim_checks.json or rubric.md exists; failed lookups recorded.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "papers/long/reasoning-record.md",
+      "sha256_or_edition": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          1931
+        ]
+      ],
+      "observations": "Complete mathematical text, source account and references; source-correspondence focus.",
+      "limitations": "Opening inherited with task context; first independent pass1300–1850 and1889–1931, then sequential earlier text. Citation strings read, external works not thereby inspected. No PDF rendering.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "papers/short/paper.md",
+      "sha256_or_edition": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          433
+        ]
+      ],
+      "observations": "Full text read; principal compressed claims compared to long/source.",
+      "limitations": "Bibliography read as manuscript, not external source verification. This child did not independently audit every bibliographic attribution.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "papers/expository/main.md",
+      "sha256_or_edition": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          143
+        ],
+        [
+          296,
+          465
+        ],
+        [
+          646,
+          1108
+        ],
+        [
+          1168,
+          1225
+        ]
+      ],
+      "observations": "Endpoint, grid certificate, digit/point-line sketch, binary corrections, seven checks, resources, reduction and historical old-test sample.",
+      "limitations": "144–295,466–645,1110–1167,1226 onward not assessed here; root covers other reading. Exercises read in these intervals but not attempted as a novice; no human learning observation.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Theorem.lean",
+      "sha256_or_edition": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.np_subset_pcp",
+        "lines": [
+          25,
+          33
+        ],
+        "association": "LEAN-01"
+      },
+      "observations": "direct: Faithful endpoint. ReadsBelow concerns every syntactic branch, not just branches on an honest proof. A finite prefix suffices by eval_congr.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/VanishingCertificate.lean",
+      "sha256_or_edition": "f8a240c66a7507cbfd78bfabc0e858e1342ae7ad2bf5e8bb1ded5b5b2a25add6",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+        "lines": [
+          119,
+          122
+        ],
+        "association": "LEAN-02"
+      },
+      "observations": "direct: The introductory roadmap suppresses hypotheses legitimately; the full paragraph at 134–169 supplies H nonempty and both identities.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/GridInterpolation.lean",
+      "sha256_or_edition": "e51c245bcd58818a49a47097e3e92c2d45c0d85242f25cf3142747e127b5bf58",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.GridInterpolation.existsUnique_extension",
+        "lines": [
+          170,
+          173
+        ],
+        "association": "LEAN-03"
+      },
+      "observations": "direct: Exactly the individual-degree uniqueness asserted. Do not replace with uniqueness under total degree m(h−1).",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PolynomialLineCharacterization.lean",
+      "sha256_or_edition": "da00cd9aef5152da10e797f99ef2c7e55fd7061e698a5821087fcb87a35da3fa",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.PolynomialLine.exists_polynomial_of_hasLowDegreeLines_finite",
+        "lines": [
+          163,
+          166
+        ],
+        "association": "LEAN-04"
+      },
+      "observations": "direct: The line property quantifies over every u,v including zero direction and all field parameters. The prose preserves the stronger sufficient q>2d condition.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/WeightedConstraintSoundness.lean",
+      "sha256_or_edition": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.WeightedConstraint.correction_satisfies",
+        "lines": [
+          136,
+          140
+        ],
+        "association": "LEAN-05"
+      },
+      "observations": "direct: A10 is exactly the strict premise with n=|I|. The ordinary double-sampling proof is a substantive derivation, not an unsupported invocation.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+      "sha256_or_edition": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+        "lines": [
+          274,
+          278
+        ],
+        "association": "LEAN-06"
+      },
+      "observations": "direct: This source theorem is stronger in field size/characteristic than the binary cubic-field paper variant. Long paragraph 300–314 states the exact formal variant and its threshold.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/LineTableLocalCorrection.lean",
+      "sha256_or_edition": "6ff2ad650d3b081d73fde62d1adce7e66e117e8977f6d0139e071a9b2b75ef55",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.LineTableLocalCorrection.correct_wrong_le",
+        "lines": [
+          249,
+          255
+        ],
+        "association": "LEAN-07"
+      },
+      "observations": "direct: No auxiliary-table closeness or low rejection is assumed. This is an accepted-wrong bound, unlike later BinaryLocalCorrection.failure_le, which counts rejection too.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateAgreement.lean",
+      "sha256_or_edition": "9dc7fa8512f0d8b2445176f2094455e297b48c18bdeb475713819f92c4e021cc",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+        "lines": [
+          141,
+          149
+        ],
+        "association": "LEAN-08"
+      },
+      "observations": "direct: All hypotheses and individual rather than total degree are correctly stated. No nearest-approximation premise is added.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateColumnSelection.lean",
+      "sha256_or_edition": "26eb0309cc0d2201abb8fca9b36f866c6d90ecc4a3d8af62b7d1c3f3839f88a8",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BivariateColumnSelection.exists_good_columns",
+        "lines": [
+          94,
+          99
+        ],
+        "association": "LEAN-09"
+      },
+      "observations": "direct: The manuscript supplies these premises from the preceding theorem. Its stronger Markov count is compatible with the formal finite selection.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BerlekampWelchCertificate.lean",
+      "sha256_or_edition": "186786ff43ca8d24ccc6645c95e003bde54be0c4d5aa72955e49a9b1476ff831",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations",
+        "lines": [
+          237,
+          247
+        ],
+        "association": "LEAN-10"
+      },
+      "observations": "direct: Specialize e=2d, D=d, |I|=10d. This gives exactly 2d,3d and (5d+1)d in the prose. The formal theorem constructs rather than assumes E.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateCleanRectangle.lean",
+      "sha256_or_edition": "15aefdef1570d1e0de6ca5d2ff267a71b24b82016362c2ab6ebe7daf9e3b216f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns",
+        "lines": [
+          241,
+          245
+        ],
+        "association": "LEAN-11"
+      },
+      "observations": "direct: The prose supplies e=2d and Y degree K=(5d+1)d; q≥1000d^3 implies both <q, although that Lean-specific hsize premise is not stated at this application. The ordinary F[Y] root argument is valid without hsize.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateAgreementBoost.lean",
+      "sha256_or_edition": "9d38a1459104f5b3579198bc004dfdaac72f73934c3733689fc7d3b731992189",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul",
+        "lines": [
+          105,
+          112
+        ],
+        "association": "LEAN-12"
+      },
+      "observations": "direct: Set ρ=ε+1/9; ε≤1/100 and q≥20d imply the displayed premise. This is the sharper conclusion, not an unrelated existence theorem.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineSoundness.lean",
+      "sha256_or_edition": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+        "lines": [
+          58,
+          62
+        ],
+        "association": "LEAN-13"
+      },
+      "observations": "direct: The source test samples all t∈F, includes zero directions and d=0. The manuscript preserves these features and distinguishes the paper variant.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineParameterError.lean",
+      "sha256_or_edition": "04309f6274542c6f96745b5a07b2234e47a362e57579179614615bee6713d448",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul",
+        "lines": [
+          151,
+          153
+        ],
+        "association": "LEAN-14"
+      },
+      "observations": "direct: It is not a theorem for arbitrary received line tables. The preceding paragraph switches to nearest polynomials before using it, correctly.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BivariateCrossingSoundness.lean",
+      "sha256_or_edition": "7183eef65f1945c756092ff2fd8bee00dc6e4b401a206310e5da9a9f70d3a3f6",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq",
+        "lines": [
+          32,
+          45
+        ],
+        "association": "LEAN-15"
+      },
+      "observations": "variant: The prose initially allows arbitrary transverse approximants and requires nearestness only at the selected crossing. Its displayed proof establishes that slightly more general variant. PointLineCrossing.crossing_eq_of_nearby_rows supports the deterministic generalized step; the selected theorem specializes all rows/columns to nearest.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/RuledSurfaceRigidity.lean",
+      "sha256_or_edition": "59ae4b2ef9fd2e0937b9079ab5937ec45d80f19f7f0be25092cdded581c197fe",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds",
+        "lines": [
+          74,
+          86
+        ],
+        "association": "LEAN-16"
+      },
+      "observations": "direct: The prose derives the five-error budget and fixes Q before y0. This avoids swapping ∀y∃Q with ∃Q∀y.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineConstants.lean",
+      "sha256_or_edition": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.PointLineConstants.field_bounds",
+        "lines": [
+          32,
+          34
+        ],
+        "association": "LEAN-17"
+      },
+      "observations": "prerequisite: field_bounds supports the field-size and crossing premises but not the displayed combined numerical budget by itself. rigidity_budget, same file 62–72, supplies that final inequality.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/PointLineConstant.lean",
+      "sha256_or_edition": "b39716dbec3042881445ddef483b484922c0a76252d98da4edce3ff283329bf8",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.PointLineTest.exists_close_degree_zero",
+        "lines": [
+          160,
+          162
+        ],
+        "association": "LEAN-18"
+      },
+      "observations": "direct: The elementary bijection proof and boundary claims match.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/SetMultilinear.lean",
+      "sha256_or_edition": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.SetMultilinear.eval_encode",
+        "lines": [
+          101,
+          102
+        ],
+        "association": "LEAN-19"
+      },
+      "observations": "prerequisite: This exact selected theorem supplies evaluation recovery, not formal-polynomial injectivity. The latter is true by decode_encode and encode_injective_on, lines 89–98 and 115–122. Evaluation equality alone cannot imply polynomial equality over a finite field when the degree capacity exceeds q.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/Hadamard.lean",
+      "sha256_or_edition": "cee04e797972995450f11ce8039d13c27479d5962d8c38d27f33efb75778dfdd",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+        "lines": [
+          119,
+          122
+        ],
+        "association": "LEAN-20"
+      },
+      "observations": "direct: The prose proof specializes to field coordinates. The homogeneous version is a distinct supporting result; do not infer arbitrary received-word restriction bounds from this theorem.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardComposition.lean",
+      "sha256_or_edition": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.HadamardComposition.encode_query",
+        "lines": [
+          169,
+          173
+        ],
+        "association": "LEAN-21"
+      },
+      "observations": "direct: Allows a nonzero affine constant and arbitrary A; the following homogeneous statement is appropriately restricted to scalar multiplication.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BLR.lean",
+      "sha256_or_edition": "79fae6671c6d90b3287d9323c59743506a71d2eab431d8cb3cd554c974add51f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+        "lines": [
+          321,
+          323
+        ],
+        "association": "LEAN-22"
+      },
+      "observations": "direct: The finite-vector-space prose is the coordinate-independent version; choosing a basis transfers it to the source signature.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardCorrection.lean",
+      "sha256_or_edition": "79668d3cdb3cb79557d8db8fc47a9ce228867332df39bd915768724092a931de",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+        "lines": [
+          34,
+          36
+        ],
+        "association": "LEAN-23"
+      },
+      "observations": "direct: The prose specializes this to labels and correctly samples the mask after the request. Does not require independent error events.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardSoundness.lean",
+      "sha256_or_edition": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.Hadamard.test_soundness",
+        "lines": [
+          29,
+          34
+        ],
+        "association": "LEAN-24"
+      },
+      "observations": "direct: The test definition has product checks for every intermediate degree. The prose derives exact evaluation rather than assuming every linear functional is an evaluation.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean",
+      "sha256_or_edition": "37c298215572bafa7c466cd761dd084e1bd2cfa24a6f558bf6fc83f68637b98b",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate",
+        "lines": [
+          123,
+          130
+        ],
+        "association": "LEAN-25"
+      },
+      "observations": "direct: No global smallness premise and no efficient-decoding promise; both are explicitly preserved in prose.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256_or_edition": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+        "lines": [
+          108,
+          119
+        ],
+        "association": "LEAN-26"
+      },
+      "observations": "direct: Matches the good-row/bad-row split and displayed K. Need no polynomial prior on received rows.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryStandardLocalCorrection.lean",
+      "sha256_or_edition": "6a109273c03dc706914cc705701580156e5ab379a04b4878a5dcf77beb15e56b",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le",
+        "lines": [
+          89,
+          97
+        ],
+        "association": "LEAN-27"
+      },
+      "observations": "direct: The prose keeps the label in the probability space and does not strengthen this to every fixed label.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+      "sha256_or_edition": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.EncodedLineLowDegreeTest.queries_length_le",
+        "lines": [
+          72,
+          74
+        ],
+        "association": "LEAN-28"
+      },
+      "observations": "prerequisite: The selected quote also asserts honest completeness, which this count theorem alone does not prove. It is a direct resource link; the actual test definition and separate completeness lemmas support the rest.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256_or_edition": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "lines": [
+          325,
+          339
+        ],
+        "association": "LEAN-29"
+      },
+      "observations": "direct: The selected sentence first reports the intermediate field-distance bound, while the declaration states the final encoded-distance conclusion. The proof invokes PointLineTest.exists_close_of_small_rejection explicitly; both steps are visible and consistent.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256_or_edition": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+        "lines": [
+          222,
+          236
+        ],
+        "association": "LEAN-30"
+      },
+      "observations": "prerequisite: The selected quote describes the algorithm. failure_le supports its later guarantee, while BinaryLocalCorrection.run/sample (44–67) directly specify the described procedure. The source reuses inner direction and label at z and zero exactly as prose says.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Theorem.lean",
+      "sha256_or_edition": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.np_subset_pcp",
+        "lines": [
+          25,
+          33
+        ],
+        "association": "LEAN-31"
+      },
+      "observations": "direct: Faithful repeat.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorAlgebra.lean",
+      "sha256_or_edition": "fc6eee6c8ae126f32b4ad96cef8ba55576c30d4ce7f55f607493a6d0e9eb1813",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+        "lines": [
+          60,
+          61
+        ],
+        "association": "LEAN-32"
+      },
+      "observations": "direct: The selected sentence depends on both valid-colour hypotheses; they are present immediately before it. Excluding zero via vertex constraints remains essential.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorGrid.lean",
+      "sha256_or_edition": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+        "lines": [
+          117,
+          122
+        ],
+        "association": "LEAN-33"
+      },
+      "observations": "direct: The prose also explains the public adjacency polynomial and then introduces a separate difference table constrained later; no unconstrained witness is hidden in the source conclusion.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/HadamardDerivedOracle.lean",
+      "sha256_or_edition": "b561f7840dd937d9d97db5234efec9407b9842faddfc367352f682173769da6f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+        "lines": [
+          58,
+          61
+        ],
+        "association": "LEAN-34"
+      },
+      "observations": "direct: Correct honest-evaluation support. The subsequent noisy statement needs answer_failure_le rather than this theorem alone.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifier.lean",
+      "sha256_or_edition": "59cbc12ef8abce1d8a62a6744f890fed98d97fd53060c398d120021405196739",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
+        "lines": [
+          362,
+          364
+        ],
+        "association": "LEAN-35"
+      },
+      "observations": "direct: At c=4 the arithmetic gives187. This is an upper bound on listed physical reads, not exact distinct addresses. test_congr supplies the information-dependence statement separately.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+      "sha256_or_edition": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+        "lines": [
+          101,
+          106
+        ],
+        "association": "LEAN-36"
+      },
+      "observations": "direct: All common tables and the strict honest capacity are supplied. The theorem does not assume soundness hypotheses for completeness.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256_or_edition": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "lines": [
+          325,
+          339
+        ],
+        "association": "LEAN-37"
+      },
+      "observations": "prerequisite: Four applications plus branch-rejection≤whole-rejection produce the manuscript’s four simultaneous polynomials. The selected theorem is a legitimate reusable supplier, not literally the four-table assembly. ThreeColorVerifierSoundness.colorable_of_rejection_lt (58 onward) contains those choices.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/BinaryDifferenceConsistency.lean",
+      "sha256_or_edition": "280c80d2753868ba8fcb67b1db2cf72b3133c6f7f839c9b4414c4b0b65a67f81",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+        "lines": [
+          204,
+          209
+        ],
+        "association": "LEAN-38"
+      },
+      "observations": "direct: Set all three sampled-bit errors≤ε to obtain κ+3ε. The exact polynomial identity is a later consequence of a separate separation bound.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256_or_edition": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "lines": [
+          117,
+          127
+        ],
+        "association": "LEAN-39"
+      },
+      "observations": "direct: This is precisely the contrapositive endpoint claimed. Numerical positivity is supplied in the budget file; no proof-table honesty is assumed.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+      "sha256_or_edition": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+        "lines": [
+          72,
+          77
+        ],
+        "association": "LEAN-40"
+      },
+      "observations": "direct: This source does not claim efficiency; the manuscript correctly postpones implementation to the next section.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/ThreeColorRuntime.lean",
+      "sha256_or_edition": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+        "lines": [
+          11,
+          12
+        ],
+        "association": "LEAN-41"
+      },
+      "observations": "direct: The short proof imports actual callback correctness and polynomial charged cost, then a proved compiler/runtime transfer. Source-level composition checked; compiler micro-proofs not replayed.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Complexity/NPTableau.lean",
+      "sha256_or_edition": "741c70f92f8c28b126ffcb066e4587ff10ebec68356b987013ff1101f9959ee8",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Machine.NPTableau.exists_accepts_iff",
+        "lines": [
+          142,
+          144
+        ],
+        "association": "LEAN-42"
+      },
+      "observations": "direct: The source includes zero witness length, time polynomial substitution and stack-space bound; manuscript formulas match. This is a finite tableau theorem, not yet bounded-arity conversion or a runtime theorem.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Reduction/FiniteDomainConstraints.lean",
+      "sha256_or_edition": "62bf4c341e0dd12266ebbdf3923aa9e77211fffe2ef659dc3f3dd438d3f10f07",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff",
+        "lines": [
+          119,
+          120
+        ],
+        "association": "LEAN-43"
+      },
+      "observations": "direct: One-hot blocks decode to the same symbols in all relations. The finite variable/count hypotheses for polynomial size are supplied by the NP application, not this generic semantic equivalence.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Reduction/NAEThreeColor.lean",
+      "sha256_or_edition": "fcbd1fd37193f9157f1bf5c4b228746dcae7e17e3277703a9fa615117c1e752b",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Reduction.NAEThreeColor.colorable_iff",
+        "lines": [
+          241,
+          242
+        ],
+        "association": "LEAN-44"
+      },
+      "observations": "direct: The printed gadget matches direct, graph, triangleWitness and or_iff_two_nae. Clauses use one fresh Boolean variable per OR reduction.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/Reduction/NPThreeColorRuntime.lean",
+      "sha256_or_edition": "949beaa45a454ec0e3e713e5d8065d6459054ddf4353616f9d73bf845db43d34",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+        "lines": [
+          257,
+          263
+        ],
+        "association": "LEAN-45"
+      },
+      "observations": "direct: The source is program-bearing; final assembly uses InputReductionRuntime to compose it with the graph verifier. It does not merely assume NP-completeness.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "formal/lean/PCP/ReverseConcrete.lean",
+      "sha256_or_edition": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+      "status": "sampled",
+      "actual_range": {
+        "declaration": "PCP.pcp_subset_np_concrete",
+        "lines": [
+          33,
+          39
+        ],
+        "association": "LEAN-46"
+      },
+      "observations": "direct: StandardModel constructs the cost-model closure via checkerWitness; Theorem.pcp_subset_np supplies finite-prefix semantics. ReferenceNPConverse is a separate subsequent equivalence with Complexitylib NP.",
+      "limitations": "Statement, section-variable context and sampled local proof inspected. Additional definition/assembly regions are recorded in coverage.json; no whole dependency closure certification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/README.md",
+      "sha256_or_edition": "49ccdda4600b4a4c1a6cc453efc8c29aa72c7d5f328729efae1ba22ee8e5adde",
+      "status": "assessed",
+      "actual_range": "Full document",
+      "observations": "Read after root independent checkpoint; compared conclusions and scope.",
+      "limitations": "Historical reported checks are not current executions.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/long/final-sequential-read.md",
+      "sha256_or_edition": "330318aa02cbad319f0a5eda4d6906b065113cacc1618cdbc7c42c2e8666b1a9",
+      "status": "assessed",
+      "actual_range": "Full document; bounded reread after initial concatenated output",
+      "observations": "Read after root independent checkpoint; compared conclusions and scope.",
+      "limitations": "Historical reported checks are not current executions.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/long/review-notes.md",
+      "sha256_or_edition": "f0d8b229fbd4309ff44c8764b544f1f915d4ad8e6c8fa7ba1b642cf3f162ac63",
+      "status": "sampled",
+      "actual_range": "Opening and paragraph decisions through Runtime; final32 lines reread; small mid-output truncation not counted",
+      "observations": "Read after root independent checkpoint; compared conclusions and scope.",
+      "limitations": "Historical reported checks are not current executions.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mapping-review-corrected.md",
+      "sha256_or_edition": "b338b65f7ae9f2e5bf078c7ecb125d354df44f29a0cc9ad3b2061a6007d89db4",
+      "status": "assessed",
+      "actual_range": "Full document in bounded reread",
+      "observations": "Read after root independent checkpoint; compared conclusions and scope.",
+      "limitations": "Historical reported checks are not current executions.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/long-pdf-review.md",
+      "sha256_or_edition": "9b6c6d1639d29bdf4fa26574b0a4cd05682cf421b7257c6b9e053c78beb706e6",
+      "status": "assessed",
+      "actual_range": "Full document including successor disposition",
+      "observations": "Read after root independent checkpoint; compared conclusions and scope.",
+      "limitations": "Historical reported checks are not current executions.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/README.md",
+      "sha256_or_edition": "49ccdda4600b4a4c1a6cc453efc8c29aa72c7d5f328729efae1ba22ee8e5adde",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          110
+        ]
+      ],
+      "observations": "Read by Lean auditor after independent checkpoint; see lean_prior_reconciliation.md.",
+      "limitations": "Historical reviewer report, not reproduced Lean or UI verification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/mapping-review-corrected.md",
+      "sha256_or_edition": "b338b65f7ae9f2e5bf078c7ecb125d354df44f29a0cc9ad3b2061a6007d89db4",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          25
+        ]
+      ],
+      "observations": "Read by Lean auditor after independent checkpoint; see lean_prior_reconciliation.md.",
+      "limitations": "Historical reviewer report, not reproduced Lean or UI verification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/reader-algebra-correspondence-review.md",
+      "sha256_or_edition": "5cec32e29277ff0e5eea3999866baa8f833b3c8917d5b084f22627bd68c6d184",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          51
+        ]
+      ],
+      "observations": "Read by Lean auditor after independent checkpoint; see lean_prior_reconciliation.md.",
+      "limitations": "Historical reviewer report, not reproduced Lean or UI verification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "prior-reviews/source-review/humanizer/reader-theorem-correspondence-review.md",
+      "sha256_or_edition": "ae9b896135d87cef88f020a51aa2b93fe12214a950a831f8a48dcbede522c295",
+      "status": "sampled",
+      "actual_range": [
+        [
+          1,
+          140
+        ],
+        [
+          165,
+          262
+        ]
+      ],
+      "observations": "Read by Lean auditor after independent checkpoint; see lean_prior_reconciliation.md.",
+      "limitations": "Historical reviewer report, not reproduced Lean or UI verification.",
+      "reviewer": "Lean correspondence subaudit"
+    },
+    {
+      "path_or_url": "https://wcook04.github.io/proof-reader/#/pcp-full-argument",
+      "sha256_or_edition": "Live15 November2026; displayed source pin matches frozen formal source.",
+      "status": "sampled",
+      "actual_range": "Desktop1900×990; theorem→InNP→NPCertificate, digit encoding→Whole file, metadata pane, companion click/direct route.",
+      "observations": "Detailed observations in evidence/browser_observations.json.",
+      "limitations": "No mobile, accessibility, deployment-code audit or byte-identical freeze/live claim.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "sha256_or_edition": "Author-hosted conference manuscript",
+      "status": "sampled",
+      "actual_range": "Definitions2.3,2.5,2.8; Theorem2.9 and proof opening",
+      "observations": "Primary source read for the exact comparison in review.md.",
+      "limitations": "No entire-paper or byte-identical arXiv/ECCC comparison claimed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+      "sha256_or_edition": "Author-hosted journal manuscript",
+      "status": "sampled",
+      "actual_range": "Theorem69 and crossing/point-line context; root reopened Theorem69",
+      "observations": "Primary source read for the exact comparison in review.md.",
+      "limitations": "No entire-paper or byte-identical arXiv/ECCC comparison claimed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf",
+      "sha256_or_edition": "Journal-format copy",
+      "status": "sampled",
+      "actual_range": "Section5.2, Lemmas5.2.2/5.2.7 and Corollary5.2.3; root reopened clean-rectangle context",
+      "observations": "Primary source read for the exact comparison in review.md.",
+      "limitations": "No entire-paper or byte-identical arXiv/ECCC comparison claimed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "https://eccc.weizmann.ac.il/report/2026/134/",
+      "sha256_or_edition": "Official report; Revision1 dated22 October2026",
+      "status": "sampled",
+      "actual_range": "Author list, version date and Lemma3.3 correction notice",
+      "observations": "Primary source read for the exact comparison in review.md.",
+      "limitations": "No entire-paper or byte-identical arXiv/ECCC comparison claimed.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "Friedl–Sudan corrected2013 original",
+      "sha256_or_edition": "arXiv1307.3975v1 as identified by supplied bibliography",
+      "status": "unavailable",
+      "actual_range": "Attempted original source retrieval; manuscript's own exact-line proof separately assessed.",
+      "observations": "Original Lemma4 not independently checked here.",
+      "limitations": "Access failure does not imply a mathematical defect.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "Shoup original finite-field theorem",
+      "sha256_or_edition": "Author electronic version1,15 January2005 as identified by supplied bibliography",
+      "status": "unavailable",
+      "actual_range": "Attempted primary PDF retrieval; original Theorem20.11 not inspected.",
+      "observations": "Formal source's bounded-search contracts checked separately.",
+      "limitations": "No original-book theorem verification or historical priority conclusion.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "prior-reviews (remaining files)",
+      "sha256_or_edition": "Individual hashes in supplied manifest; response evidence/packet_file_inventory.json",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "79 files not separately covered by an explicit record here; some reference-only literature has no local original.",
+      "limitations": "No transitive closure or archive-wide review is implied by source selection.",
+      "files": [
+        "prior-reviews/source-review/sources.json",
+        "prior-reviews/source-review/theorem-math-review.md",
+        "prior-reviews/source-review/delivery-pdf-check.json",
+        "prior-reviews/source-review/mapping-review.md",
+        "prior-reviews/source-review/ordinary-checks.json",
+        "prior-reviews/source-review/exposition-reader-review.md",
+        "prior-reviews/source-review/theorem-evidence.json",
+        "prior-reviews/source-review/assembly.json",
+        "prior-reviews/source-review/exposition-pdf-review.md",
+        "prior-reviews/source-review/review-archive.json",
+        "prior-reviews/source-review/exposition-authoring.md",
+        "prior-reviews/source-review/bundle-validation.json",
+        "prior-reviews/source-review/algebra-evidence.json",
+        "prior-reviews/source-review/release-checks.json",
+        "prior-reviews/source-review/assembly-initial.json",
+        "prior-reviews/source-review/short-pdf-review.md",
+        "prior-reviews/source-review/counterexample-disposition.json",
+        "prior-reviews/source-review/binary-evidence.json",
+        "prior-reviews/source-review/short-evidence.json",
+        "prior-reviews/source-review/release-checks-initial.json",
+        "prior-reviews/source-review/review-summary-initial.md",
+        "prior-reviews/source-review/specialist-math-review.md",
+        "prior-reviews/source-review/review-archive-initial.json",
+        "prior-reviews/source-review/companion-link-check.json",
+        "prior-reviews/source-review/specialist-authoring.md",
+        "prior-reviews/source-review/acquisition-status.json",
+        "prior-reviews/source-review/long-pdf-review.md",
+        "prior-reviews/source-review/review-summary.md",
+        "prior-reviews/source-review/humanizer/exposition-preservation-reader-review.md",
+        "prior-reviews/source-review/humanizer/delivery-pdf-check.json",
+        "prior-reviews/source-review/humanizer/package-tests.json",
+        "prior-reviews/source-review/humanizer/bundle-validation-corrected.json",
+        "prior-reviews/source-review/humanizer/bundle-validation-prior-0c888.json",
+        "prior-reviews/source-review/humanizer/exposition-pdf-review.md",
+        "prior-reviews/source-review/humanizer/bundle-validation.json",
+        "prior-reviews/source-review/humanizer/mathematical-preservation-review.md",
+        "prior-reviews/source-review/humanizer/short-pdf-review.md",
+        "prior-reviews/source-review/humanizer/graph-review.md",
+        "prior-reviews/source-review/humanizer/canonical-pdf-check.json",
+        "prior-reviews/source-review/humanizer/companion-link-check.json",
+        "prior-reviews/source-review/humanizer/reader-refresh-review.md",
+        "prior-reviews/source-review/humanizer/ordinary-checks-rerun.json",
+        "prior-reviews/source-review/humanizer/history/mapping-review-initial.md",
+        "prior-reviews/source-review/humanizer/history/theorem-review-before-link-definition.txt",
+        "prior-reviews/source-review/humanizer/history/mapping-review-pre-correction.md",
+        "prior-reviews/source-review/humanizer/history/reader-refresh-review-before-disposition-fix.md",
+        "prior-reviews/source-review/humanizer/short/paragraph-review-final.json",
+        "prior-reviews/source-review/humanizer/short/before-profile-public.json",
+        "prior-reviews/source-review/humanizer/short/preservation-checks.json",
+        "prior-reviews/source-review/humanizer/short/marks-check.json",
+        "prior-reviews/source-review/humanizer/short/after-profile-public.json",
+        "prior-reviews/source-review/humanizer/short/profile-projection-provenance.json",
+        "prior-reviews/source-review/humanizer/short/sequential-review.md",
+        "prior-reviews/source-review/humanizer/short/profile-public.json",
+        "prior-reviews/source-review/humanizer/short/literature-register.md",
+        "prior-reviews/source-review/humanizer/short/paragraph-decisions-before-edits.json",
+        "prior-reviews/source-review/humanizer/expository/paragraph-jobs.tsv",
+        "prior-reviews/source-review/humanizer/expository/fidelity-receipt.json",
+        "prior-reviews/source-review/humanizer/expository/measurements.md",
+        "prior-reviews/source-review/humanizer/expository/sequential-review.md",
+        "prior-reviews/source-review/humanizer/expository/bundled-preservation-validation.txt",
+        "prior-reviews/source-review/humanizer/expository/paragraph-review.json",
+        "prior-reviews/source-review/humanizer/expository/literature-review.md",
+        "prior-reviews/source-review/humanizer/expository/metrics-summary.json",
+        "prior-reviews/source-review/humanizer/long/final-preservation-receipt.md",
+        "prior-reviews/source-review/humanizer/long/preservation-check.json",
+        "prior-reviews/source-review/humanizer/long/corpus-manifest.json",
+        "prior-reviews/source-review/humanizer/long/literature-moves.md",
+        "prior-reviews/source-review/humanizer/long/citation-repair.json",
+        "prior-reviews/source-review/humanizer/long/register-metrics-public.json",
+        "prior-reviews/source-review/humanizer/long/public-artifact-manifest.json",
+        "prior-reviews/source-review/humanizer/long/preservation-check-first-pass.json",
+        "prior-reviews/source-review/humanizer/long/paragraph-review.json",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/README.md",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/long.json",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/expository.json",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/provenance.json",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/short.json",
+        "prior-reviews/source-review/humanizer/history/pre-correction-mappings/manifest.json"
+      ]
+    },
+    {
+      "path_or_url": "formal/lean/PCP (remaining files)",
+      "sha256_or_edition": "Individual hashes in supplied manifest; response evidence/packet_file_inventory.json",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "676 files not separately covered by an explicit record here; some reference-only literature has no local original.",
+      "limitations": "No transitive closure or archive-wide review is implied by source selection.",
+      "files": [
+        "formal/lean/PCP/Verifier/QueryListAlgorithm.lean",
+        "formal/lean/PCP/Verifier/ReductionResources.lean",
+        "formal/lean/PCP/Verifier/Reduction.lean",
+        "formal/lean/PCP/Verifier/Repetition.lean",
+        "formal/lean/PCP/Verifier/QueryTreeConjunction.lean",
+        "formal/lean/PCP/Verifier/QueryList.lean",
+        "formal/lean/PCP/Verifier/FiniteProbability.lean",
+        "formal/lean/PCP/Complexity/BooleanMaskOrder.lean",
+        "formal/lean/PCP/Complexity/LangSpace.lean",
+        "formal/lean/PCP/Complexity/PlacedBlock.lean",
+        "formal/lean/PCP/Complexity/AmplifiedRoundCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowHistoryCost.lean",
+        "formal/lean/PCP/Complexity/FinTM2TapeSimulation.lean",
+        "formal/lean/PCP/Complexity/LangMachineState.lean",
+        "formal/lean/PCP/Complexity/LangPowerTwo.lean",
+        "formal/lean/PCP/Complexity/BlockCleanupMachine.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionQueries.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialDegreeCost.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedMaterialize.lean",
+        "formal/lean/PCP/Complexity/FiniteTransducer.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldLang.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialSelectorLang.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelKernel.lean",
+        "formal/lean/PCP/Complexity/OuterSeedInner.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchPassCost.lean",
+        "formal/lean/PCP/Complexity/OuterBranchRead.lean",
+        "formal/lean/PCP/Complexity/ThreeColorNestedSeedRadices.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicTableCost.lean",
+        "formal/lean/PCP/Complexity/GridFactorLang.lean",
+        "formal/lean/PCP/Complexity/LocalCorrectionSemantics.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedMaterialize.lean",
+        "formal/lean/PCP/Complexity/InnerSeedResources.lean",
+        "formal/lean/PCP/Complexity/GridEdgeLang.lean",
+        "formal/lean/PCP/Complexity/FiniteBlockMachine.lean",
+        "formal/lean/PCP/Complexity/BinaryRootConstruction.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedResources.lean",
+        "formal/lean/PCP/Complexity/OuterStoredBounds.lean",
+        "formal/lean/PCP/Complexity/LangUniformDecodeCost.lean",
+        "formal/lean/PCP/Complexity/BinaryComparisonMachine.lean",
+        "formal/lean/PCP/Complexity/InnerSeedState.lean",
+        "formal/lean/PCP/Complexity/HadamardRowQueriesCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedVectorCost.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldCodePowerCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorQuerySize.lean",
+        "formal/lean/PCP/Complexity/LangEvaluationPoint.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedLoad.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardDerived.lean",
+        "formal/lean/PCP/Complexity/LangCompiledProgram.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelTransformCost.lean",
+        "formal/lean/PCP/Complexity/LangQueryTupleConcat.lean",
+        "formal/lean/PCP/Complexity/MachineComposition.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialMaskScan.lean",
+        "formal/lean/PCP/Complexity/BlockConditionalExecution.lean",
+        "formal/lean/PCP/Complexity/CounterDecr.lean",
+        "formal/lean/PCP/Complexity/HadamardRowLoop.lean",
+        "formal/lean/PCP/Complexity/HadamardRowBranch.lean",
+        "formal/lean/PCP/Complexity/LangSeedMaterialization.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMPairedTerms.lean",
+        "formal/lean/PCP/Complexity/GridTensorCost.lean",
+        "formal/lean/PCP/Complexity/BinaryRootPredicateCost.lean",
+        "formal/lean/PCP/Complexity/ArithmeticParallel.lean",
+        "formal/lean/PCP/Complexity/DerivedCallPrimaryCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchEmitCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBasePreflightCost.lean",
+        "formal/lean/PCP/Complexity/CallPrepare.lean",
+        "formal/lean/PCP/Complexity/LangProgramMachine.lean",
+        "formal/lean/PCP/Complexity/LangQueryAddress.lean",
+        "formal/lean/PCP/Complexity/NumericCorrectionLang.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientRecoveryList.lean",
+        "formal/lean/PCP/Complexity/NumericOuterCost.lean",
+        "formal/lean/PCP/Complexity/OuterSeedDecodeCost.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceDecode.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedOutputBound.lean",
+        "formal/lean/PCP/Complexity/ThreeColorRawSeedCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedRadicesCost.lean",
+        "formal/lean/PCP/Complexity/LangSplitFirst.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedBitsCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedBudget.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchWeight.lean",
+        "formal/lean/PCP/Complexity/FilteredZipMachine.lean",
+        "formal/lean/PCP/Complexity/OuterBranchResources.lean",
+        "formal/lean/PCP/Complexity/ReverseTransducer.lean",
+        "formal/lean/PCP/Complexity/LangListReverseMachine.lean",
+        "formal/lean/PCP/Complexity/AmplifiedEncodeCost.lean",
+        "formal/lean/PCP/Complexity/NumericDerivedLang.lean",
+        "formal/lean/PCP/Complexity/Bridge.lean",
+        "formal/lean/PCP/Complexity/BlockResetMachine.lean",
+        "formal/lean/PCP/Complexity/NPTableauSource.lean",
+        "formal/lean/PCP/Complexity/LangComposition.lean",
+        "formal/lean/PCP/Complexity/CorrectionSeedVectorCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseBranchState.lean",
+        "formal/lean/PCP/Complexity/AdaptiveTurn.lean",
+        "formal/lean/PCP/Complexity/Checker.lean",
+        "formal/lean/PCP/Complexity/InnerSeedDecode.lean",
+        "formal/lean/PCP/Complexity/OuterSeedResources.lean",
+        "formal/lean/PCP/Complexity/PolynomialBudgetLang.lean",
+        "formal/lean/PCP/Complexity/GridRecoveryLang.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMFiniteTable.lean",
+        "formal/lean/PCP/Complexity/OuterBranchStandardCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedFinishCost.lean",
+        "formal/lean/PCP/Complexity/OuterBranchPrimary.lean",
+        "formal/lean/PCP/Complexity/LangListTransforms.lean",
+        "formal/lean/PCP/Complexity/LangAffineVectorCost.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextInnerCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchLabel.lean",
+        "formal/lean/PCP/Complexity/ReferenceNP.lean",
+        "formal/lean/PCP/Complexity/LangArithmeticBlocks.lean",
+        "formal/lean/PCP/Complexity/LocalCorrectionLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseSetup.lean",
+        "formal/lean/PCP/Complexity/OuterSeedCost.lean",
+        "formal/lean/PCP/Complexity/BinaryZipSurvey.lean",
+        "formal/lean/PCP/Complexity/ArithmeticBlocks.lean",
+        "formal/lean/PCP/Complexity/ReferencePairFP.lean",
+        "formal/lean/PCP/Complexity/ThreeColorParameterLang.lean",
+        "formal/lean/PCP/Complexity/NumericCorrectionCost.lean",
+        "formal/lean/PCP/Complexity/LangComputedRadices.lean",
+        "formal/lean/PCP/Complexity/BinaryMultiplicationMachine.lean",
+        "formal/lean/PCP/Complexity/ArithmeticStreamCost.lean",
+        "formal/lean/PCP/Complexity/LangListPopBlocks.lean",
+        "formal/lean/PCP/Complexity/WitnessSearch.lean",
+        "formal/lean/PCP/Complexity/CallEmbed.lean",
+        "formal/lean/PCP/Complexity/AmplifiedProtocol.lean",
+        "formal/lean/PCP/Complexity/BinaryRootSearchCost.lean",
+        "formal/lean/PCP/Complexity/AmplifiedSequenceOutput.lean",
+        "formal/lean/PCP/Complexity/DerivedCallState.lean",
+        "formal/lean/PCP/Complexity/AmplifiedProtocolSetupCost.lean",
+        "formal/lean/PCP/Complexity/ReverseSymbolsMachine.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedFinish.lean",
+        "formal/lean/PCP/Complexity/LangUniformDecode.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchLang.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialMaterialization.lean",
+        "formal/lean/PCP/Complexity/LangBooleanLoops.lean",
+        "formal/lean/PCP/Complexity/BinaryDivisionCore.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceVerdict.lean",
+        "formal/lean/PCP/Complexity/Bounds.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMSimulation.lean",
+        "formal/lean/PCP/Complexity/OuterBranchInner.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldCodeSemantics.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceDecodeCost.lean",
+        "formal/lean/PCP/Complexity/FiniteLookupLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseSetupCost.lean",
+        "formal/lean/PCP/Complexity/DerivedGridQuerySemantics.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldCodeCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseOuter.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedRadices.lean",
+        "formal/lean/PCP/Complexity/PreservingBinaryZip.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicCodeCost.lean",
+        "formal/lean/PCP/Complexity/LangQueryAddressState.lean",
+        "formal/lean/PCP/Complexity/OuterSeedDecode.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchFrame.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialSelection.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedMaterializeCost.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientTransformCost.lean",
+        "formal/lean/PCP/Complexity/LangTapeEncoding.lean",
+        "formal/lean/PCP/Complexity/LangRegisterBlocks.lean",
+        "formal/lean/PCP/Complexity/StaticTapeLayout.lean",
+        "formal/lean/PCP/Complexity/InnerSeedCost.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceVerdictCost.lean",
+        "formal/lean/PCP/Complexity/InnerSeedDecodeCost.lean",
+        "formal/lean/PCP/Complexity/FinalTransducer.lean",
+        "formal/lean/PCP/Complexity/InnerSeedWords.lean",
+        "formal/lean/PCP/Complexity/DerivedPrimaryLang.lean",
+        "formal/lean/PCP/Complexity/LangConstant.lean",
+        "formal/lean/PCP/Complexity/AdaptiveRun.lean",
+        "formal/lean/PCP/Complexity/FieldExpressionLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardDerivedCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowVerdict.lean",
+        "formal/lean/PCP/Complexity/PolynomialPrefixLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorContextCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedState.lean",
+        "formal/lean/PCP/Complexity/FiniteTransitionTable.lean",
+        "formal/lean/PCP/Complexity/HadamardRowFactor.lean",
+        "formal/lean/PCP/Complexity/BinaryRootSearchLang.lean",
+        "formal/lean/PCP/Complexity/LangAnswerEncode.lean",
+        "formal/lean/PCP/Complexity/NumericDerivedPolynomial.lean",
+        "formal/lean/PCP/Complexity/HadamardRowVerdictCost.lean",
+        "formal/lean/PCP/Complexity/StackMove.lean",
+        "formal/lean/PCP/Complexity/OuterBranchPointLabel.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedCodec.lean",
+        "formal/lean/PCP/Complexity/ArithmeticLookupCost.lean",
+        "formal/lean/PCP/Complexity/HadamardLabelCost.lean",
+        "formal/lean/PCP/Complexity/TableauIndex.lean",
+        "formal/lean/PCP/Complexity/AmplifiedWorkspace.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextFinalize.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchPass.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMBounds.lean",
+        "formal/lean/PCP/Complexity/GridRecoveryPoints.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMWitness.lean",
+        "formal/lean/PCP/Complexity/OuterBranchPrimaryCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorNestedSeedSemantics.lean",
+        "formal/lean/PCP/Complexity/StackSimulationTime.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicCodeLang.lean",
+        "formal/lean/PCP/Complexity/FieldExpressionCost.lean",
+        "formal/lean/PCP/Complexity/DerivedCallResources.lean",
+        "formal/lean/PCP/Complexity/BinaryGeneratorPredicate.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientEvaluation.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionFrame.lean",
+        "formal/lean/PCP/Complexity/LangSplitFirstCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowPhysicalCost.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldWordCode.lean",
+        "formal/lean/PCP/Complexity/ReferencePairTape.lean",
+        "formal/lean/PCP/Complexity/LangClog.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicTable.lean",
+        "formal/lean/PCP/Complexity/TapeSimulationTime.lean",
+        "formal/lean/PCP/Complexity/NumericDerivedCost.lean",
+        "formal/lean/PCP/Complexity/TransducerBlocks.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMPairedStream.lean",
+        "formal/lean/PCP/Complexity/TableauConstraints.lean",
+        "formal/lean/PCP/Complexity/ThreeColorFieldSetup.lean",
+        "formal/lean/PCP/Complexity/GridBasisCoordinateSemantics.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelTable.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchPoint.lean",
+        "formal/lean/PCP/Complexity/InterpolationWeightLang.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelConstructorsCost.lean",
+        "formal/lean/PCP/Complexity/HadamardLabelLang.lean",
+        "formal/lean/PCP/Complexity/BinaryZipMachine.lean",
+        "formal/lean/PCP/Complexity/AmplifiedSequenceFrame.lean",
+        "formal/lean/PCP/Complexity/CallEntry.lean",
+        "formal/lean/PCP/Complexity/BlockTransducer.lean",
+        "formal/lean/PCP/Complexity/OuterBranchStandard.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientRecoveryCost.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelKernelCost.lean",
+        "formal/lean/PCP/Complexity/LangStep.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicQueryCost.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedCost.lean",
+        "formal/lean/PCP/Complexity/InnerBranchLang.lean",
+        "formal/lean/PCP/Complexity/BinaryLabelScaleCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMPairedBounds.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextFinalizeCost.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextLang.lean",
+        "formal/lean/PCP/Complexity/SymbolCode.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedWords.lean",
+        "formal/lean/PCP/Complexity/DerivedPrimaryCost.lean",
+        "formal/lean/PCP/Complexity/WitnessLoop.lean",
+        "formal/lean/PCP/Complexity/BinaryLabelScale.lean",
+        "formal/lean/PCP/Complexity/PolyTimeMap.lean",
+        "formal/lean/PCP/Complexity/LangAffineVector.lean",
+        "formal/lean/PCP/Complexity/LangCost.lean",
+        "formal/lean/PCP/Complexity/LangBinaryEncode.lean",
+        "formal/lean/PCP/Complexity/Encoding.lean",
+        "formal/lean/PCP/Complexity/SeedIncrement.lean",
+        "formal/lean/PCP/Complexity/InPlaceReverseTransducer.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialMaterializationCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedArithmetic.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextInner.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBasePreflightResources.lean",
+        "formal/lean/PCP/Complexity/CorrectionSeedMaterializationCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedPoints.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSetupLang.lean",
+        "formal/lean/PCP/Complexity/OuterSeedState.lean",
+        "formal/lean/PCP/Complexity/AmplifiedSequenceLang.lean",
+        "formal/lean/PCP/Complexity/ArithmeticConditionals.lean",
+        "formal/lean/PCP/Complexity/NPTableauLocalTables.lean",
+        "formal/lean/PCP/Complexity/NumericOuterLang.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMPrefix.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseProduction.lean",
+        "formal/lean/PCP/Complexity/OuterBranchSeedIndex.lean",
+        "formal/lean/PCP/Complexity/ThreeColorRawSeedSemantics.lean",
+        "formal/lean/PCP/Complexity/LookupDispatch.lean",
+        "formal/lean/PCP/Complexity/DerivedGridSite.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextResources.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchCost.lean",
+        "formal/lean/PCP/Complexity/ReferencePairMachine.lean",
+        "formal/lean/PCP/Complexity/HadamardRowHistory.lean",
+        "formal/lean/PCP/Complexity/NPTableauRelationTable.lean",
+        "formal/lean/PCP/Complexity/LangExprBlocks.lean",
+        "formal/lean/PCP/Complexity/Lang.lean",
+        "formal/lean/PCP/Complexity/NaturalListEncoding.lean",
+        "formal/lean/PCP/Complexity/LangTakePad.lean",
+        "formal/lean/PCP/Complexity/OuterBranchInnerCost.lean",
+        "formal/lean/PCP/Complexity/LangHistoryParity.lean",
+        "formal/lean/PCP/Complexity/HadamardRowBase.lean",
+        "formal/lean/PCP/Complexity/LangStructuredLoop.lean",
+        "formal/lean/PCP/Complexity/ProductionGridLang.lean",
+        "formal/lean/PCP/Complexity/QueryAddressBounds.lean",
+        "formal/lean/PCP/Complexity/SeedConstruct.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialConvolutionCost.lean",
+        "formal/lean/PCP/Complexity/BoundedEval.lean",
+        "formal/lean/PCP/Complexity/AmplifiedProtocolBudget.lean",
+        "formal/lean/PCP/Complexity/DerivedCallLang.lean",
+        "formal/lean/PCP/Complexity/AmplifiedSequenceCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBasePreflight.lean",
+        "formal/lean/PCP/Complexity/BooleanAffineList.lean",
+        "formal/lean/PCP/Complexity/LangHistoryParityOracle.lean",
+        "formal/lean/PCP/Complexity/LangListMachine.lean",
+        "formal/lean/PCP/Complexity/ReferencePolynomialBoundSetup.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedRadices.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialFactorLang.lean",
+        "formal/lean/PCP/Complexity/CorrectionSeedResources.lean",
+        "formal/lean/PCP/Complexity/SeedEnum.lean",
+        "formal/lean/PCP/Complexity/LangComputedRadicesCost.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientList.lean",
+        "formal/lean/PCP/Complexity/DerivedGridVerdict.lean",
+        "formal/lean/PCP/Complexity/AmplifiedStreamStages.lean",
+        "formal/lean/PCP/Complexity/LangSymbolBridge.lean",
+        "formal/lean/PCP/Complexity/OuterSeedMaterialize.lean",
+        "formal/lean/PCP/Complexity/TableauArithmeticTerms.lean",
+        "formal/lean/PCP/Complexity/SeedConstructLoop.lean",
+        "formal/lean/PCP/Complexity/GridEdgeLoop.lean",
+        "formal/lean/PCP/Complexity/BinarySubtractionMachine.lean",
+        "formal/lean/PCP/Complexity/CallDispatch.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientRecoveryLang.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicQueryLang.lean",
+        "formal/lean/PCP/Complexity/HadamardFactorLoadCost.lean",
+        "formal/lean/PCP/Complexity/QueryHistoryLang.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceWords.lean",
+        "formal/lean/PCP/Complexity/BooleanMaskLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseBranchCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseResources.lean",
+        "formal/lean/PCP/Complexity/ThreeColorNestedSeedLang.lean",
+        "formal/lean/PCP/Complexity/BooleanMaskSubset.lean",
+        "formal/lean/PCP/Complexity/BooleanMaskEnumeration.lean",
+        "formal/lean/PCP/Complexity/LangEvaluationPointCost.lean",
+        "formal/lean/PCP/Complexity/CounterZero.lean",
+        "formal/lean/PCP/Complexity/LangCompilerLayout.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseSeedCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDifferenceCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowAcceptance.lean",
+        "formal/lean/PCP/Complexity/InnerBranchState.lean",
+        "formal/lean/PCP/Complexity/LangRadixCodec.lean",
+        "formal/lean/PCP/Complexity/InnerSeedLang.lean",
+        "formal/lean/PCP/Complexity/LangWordCodec.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedMaterializeCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardCost.lean",
+        "formal/lean/PCP/Complexity/OuterSeedInnerCost.lean",
+        "formal/lean/PCP/Complexity/BinaryMultiplicationCore.lean",
+        "formal/lean/PCP/Complexity/NPCellConstraints.lean",
+        "formal/lean/PCP/Complexity/BlockLoopMachine.lean",
+        "formal/lean/PCP/Complexity/Recode.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedRadicesCost.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorProductionCode.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialCoefficientLang.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedLang.lean",
+        "formal/lean/PCP/Complexity/GridTensorLang.lean",
+        "formal/lean/PCP/Complexity/InputReductionRuntime.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchWeightCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedCodec.lean",
+        "formal/lean/PCP/Complexity/BinaryCounter.lean",
+        "formal/lean/PCP/Complexity/InnerBranchHadamard.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedContext.lean",
+        "formal/lean/PCP/Complexity/LangListBlocks.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldInverseLang.lean",
+        "formal/lean/PCP/Complexity/OuterBranchReadCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedEdgeCost.lean",
+        "formal/lean/PCP/Complexity/LangCounterBlocks.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardCall.lean",
+        "formal/lean/PCP/Complexity/LangRenaming.lean",
+        "formal/lean/PCP/Complexity/ProductionEdgeLang.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionSite.lean",
+        "formal/lean/PCP/Complexity/ComputationTableau.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialFactorCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchQueries.lean",
+        "formal/lean/PCP/Complexity/BinaryNormalizationMachine.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardResources.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceResources.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceWordCost.lean",
+        "formal/lean/PCP/Complexity/HadamardSeedCardinal.lean",
+        "formal/lean/PCP/Complexity/Support.lean",
+        "formal/lean/PCP/Complexity/InterpolationWeightLoad.lean",
+        "formal/lean/PCP/Complexity/AmplifiedEncode.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionQueriesCost.lean",
+        "formal/lean/PCP/Complexity/OuterSeedWordCost.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientCode.lean",
+        "formal/lean/PCP/Complexity/ArithmeticExpressionLang.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceLang.lean",
+        "formal/lean/PCP/Complexity/TableauNumericIndex.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionAddressLang.lean",
+        "formal/lean/PCP/Complexity/OuterBranchCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseBranchSemantics.lean",
+        "formal/lean/PCP/Complexity/InnerSeedWordCost.lean",
+        "formal/lean/PCP/Complexity/LangHistoryParityCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSetupCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuardCallCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseCostBudget.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialMaskCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedLang.lean",
+        "formal/lean/PCP/Complexity/CodeCfg.lean",
+        "formal/lean/PCP/Complexity/DerivedCallCorrectionCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMTapeTerms.lean",
+        "formal/lean/PCP/Complexity/TableauCells.lean",
+        "formal/lean/PCP/Complexity/DerivedCallPrimary.lean",
+        "formal/lean/PCP/Complexity/ArithmeticStream.lean",
+        "formal/lean/PCP/Complexity/SeedBits.lean",
+        "formal/lean/PCP/Complexity/AmplifiedResourcePolynomial.lean",
+        "formal/lean/PCP/Complexity/InnerBranchHadamardCost.lean",
+        "formal/lean/PCP/Complexity/ArithmeticFiniteLookup.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionPointLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseSeed.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseOuterResources.lean",
+        "formal/lean/PCP/Complexity/ProductionEdgeCost.lean",
+        "formal/lean/PCP/Complexity/CorrectionContextState.lean",
+        "formal/lean/PCP/Complexity/RelocatedBlock.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldCodePower.lean",
+        "formal/lean/PCP/Complexity/GridTensorSemantics.lean",
+        "formal/lean/PCP/Complexity/LangStructuredCorrect.lean",
+        "formal/lean/PCP/Complexity/CallTrace.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBasePass.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseProtocol.lean",
+        "formal/lean/PCP/Complexity/WitnessInputCells.lean",
+        "formal/lean/PCP/Complexity/DerivedCallCost.lean",
+        "formal/lean/PCP/Complexity/LangCompile.lean",
+        "formal/lean/PCP/Complexity/GridRecoveryPointsCost.lean",
+        "formal/lean/PCP/Complexity/HadamardFactorLoad.lean",
+        "formal/lean/PCP/Complexity/ListPrimitiveBlocks.lean",
+        "formal/lean/PCP/Complexity/LangStructuredMachine.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldPowerLang.lean",
+        "formal/lean/PCP/Complexity/OuterSeedTrace.lean",
+        "formal/lean/PCP/Complexity/LangRunOnFirstCost.lean",
+        "formal/lean/PCP/Complexity/Simulate.lean",
+        "formal/lean/PCP/Complexity/CorrectionSeedMaterialization.lean",
+        "formal/lean/PCP/Complexity/ArithmeticExpressionCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseInputSemantics.lean",
+        "formal/lean/PCP/Complexity/GridBasisCoordinateCost.lean",
+        "formal/lean/PCP/Complexity/InnerBranchFrame.lean",
+        "formal/lean/PCP/Complexity/BinaryGeneratorPredicateCost.lean",
+        "formal/lean/PCP/Complexity/TM2Locality.lean",
+        "formal/lean/PCP/Complexity/HadamardRowBranchCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowLocation.lean",
+        "formal/lean/PCP/Complexity/LocalCorrectionVerdict.lean",
+        "formal/lean/PCP/Complexity/ThreeColorNodeSetupCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationWeightLoadCost.lean",
+        "formal/lean/PCP/Complexity/LangReset.lean",
+        "formal/lean/PCP/Complexity/OuterSeedLang.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchLabelCost.lean",
+        "formal/lean/PCP/Complexity/Codec.lean",
+        "formal/lean/PCP/Complexity/GridBasisCoordinateLang.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialDegreeScan.lean",
+        "formal/lean/PCP/Complexity/HadamardRowLoopCost.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchPointCost.lean",
+        "formal/lean/PCP/Complexity/GridEdgeKernelCost.lean",
+        "formal/lean/PCP/Complexity/LocalCorrectionCost.lean",
+        "formal/lean/PCP/Complexity/CanonicalWidth.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionWeightCost.lean",
+        "formal/lean/PCP/Complexity/LangBlockReframe.lean",
+        "formal/lean/PCP/Complexity/ThreeColorContextLang.lean",
+        "formal/lean/PCP/Complexity/LangAssignmentSkeleton.lean",
+        "formal/lean/PCP/Complexity/OuterBranchState.lean",
+        "formal/lean/PCP/Complexity/SeedRound.lean",
+        "formal/lean/PCP/Complexity/LangListLengthMachine.lean",
+        "formal/lean/PCP/Complexity/LangSeedDecode.lean",
+        "formal/lean/PCP/Complexity/OuterSeedWords.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceQueries.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDifference.lean",
+        "formal/lean/PCP/Complexity/AmplifiedRound.lean",
+        "formal/lean/PCP/Complexity/ThreeColorNodeSetup.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedBitsLang.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceBranchCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorAmplifiedRuntime.lean",
+        "formal/lean/PCP/Complexity/LangComputedSeedCost.lean",
+        "formal/lean/PCP/Complexity/ArithmeticLookupLang.lean",
+        "formal/lean/PCP/Complexity/LangRunOnFirst.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchState.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientEvaluationCost.lean",
+        "formal/lean/PCP/Complexity/BlockWriteMachine.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedSplitCost.lean",
+        "formal/lean/PCP/Complexity/DerivedGridSemantics.lean",
+        "formal/lean/PCP/Complexity/InnerBranchCost.lean",
+        "formal/lean/PCP/Complexity/DerivedPrimaryLabels.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelAddition.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseQuerySize.lean",
+        "formal/lean/PCP/Complexity/NumericDifferenceState.lean",
+        "formal/lean/PCP/Complexity/LangDivisionBlocks.lean",
+        "formal/lean/PCP/Complexity/LangFramedTabulation.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedPointsCost.lean",
+        "formal/lean/PCP/Complexity/InnerSeedFinalize.lean",
+        "formal/lean/PCP/Complexity/LangTabulation.lean",
+        "formal/lean/PCP/Complexity/BooleanCoefficientTransform.lean",
+        "formal/lean/PCP/Complexity/DerivedCallCorrection.lean",
+        "formal/lean/PCP/Complexity/BinaryDivisionMachine.lean",
+        "formal/lean/PCP/Complexity/BinaryRootPredicateLang.lean",
+        "formal/lean/PCP/Complexity/BinaryPolynomialSelectorCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMDigits.lean",
+        "formal/lean/PCP/Complexity/GridEdgeKernel.lean",
+        "formal/lean/PCP/Complexity/FiniteStackSimulation.lean",
+        "formal/lean/PCP/Complexity/BlockControlMachine.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseOuterCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMArithmetic.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicObservationCost.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMTape.lean",
+        "formal/lean/PCP/Complexity/BinaryFieldCodeLang.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseDerivedCost.lean",
+        "formal/lean/PCP/Complexity/BinaryNaturalMachine.lean",
+        "formal/lean/PCP/Complexity/GridEdgeCost.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelTableCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseCardinalCost.lean",
+        "formal/lean/PCP/Complexity/CanonicalResourceBounds.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceQueriesCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorSeedGuard.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseCardinal.lean",
+        "formal/lean/PCP/Complexity/GraphHeaderLang.lean",
+        "formal/lean/PCP/Complexity/HadamardRowPhysical.lean",
+        "formal/lean/PCP/Complexity/ThreeColorRawSeedLang.lean",
+        "formal/lean/PCP/Complexity/AmplifiedProtocolParseCost.lean",
+        "formal/lean/PCP/Complexity/TableauDescriptorArithmetic.lean",
+        "formal/lean/PCP/Complexity/HadamardHomogeneousCode.lean",
+        "formal/lean/PCP/Complexity/GraphAdjacencyLang.lean",
+        "formal/lean/PCP/Complexity/GridRecoveryCost.lean",
+        "formal/lean/PCP/Complexity/HadamardRowAcceptanceCost.lean",
+        "formal/lean/PCP/Complexity/LangCompilerBudget.lean",
+        "formal/lean/PCP/Complexity/LangDifferenceBranch.lean",
+        "formal/lean/PCP/Complexity/InterpolationBranchEmit.lean",
+        "formal/lean/PCP/Complexity/BranchQueryBounds.lean",
+        "formal/lean/PCP/Complexity/HadamardRowFactorCost.lean",
+        "formal/lean/PCP/Complexity/BlockCopyMachine.lean",
+        "formal/lean/PCP/Complexity/DerivedPrimaryLabelCost.lean",
+        "formal/lean/PCP/Complexity/InnerSeedMaterialize.lean",
+        "formal/lean/PCP/Complexity/LangLookup.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedEdge.lean",
+        "formal/lean/PCP/Complexity/BooleanMaskEnumerationCost.lean",
+        "formal/lean/PCP/Complexity/SeedEnumBound.lean",
+        "formal/lean/PCP/Complexity/HadamardRowQueries.lean",
+        "formal/lean/PCP/Complexity/OuterBranchSite.lean",
+        "formal/lean/PCP/Complexity/OuterBranchLang.lean",
+        "formal/lean/PCP/Complexity/LangProductSeedLayout.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBasePassCost.lean",
+        "formal/lean/PCP/Complexity/ThreeColorBaseProtocolCost.lean",
+        "formal/lean/PCP/Complexity/TapeBooleanInterface.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMList.lean",
+        "formal/lean/PCP/Complexity/GeneratorWeightLang.lean",
+        "formal/lean/PCP/Complexity/OptionalBitPrefix.lean",
+        "formal/lean/PCP/Complexity/LangSeedValue.lean",
+        "formal/lean/PCP/Complexity/HadamardRowSpec.lean",
+        "formal/lean/PCP/Complexity/AmplifiedProtocolParse.lean",
+        "formal/lean/PCP/Complexity/GridFactorCost.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedResources.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelConstructors.lean",
+        "formal/lean/PCP/Complexity/BinaryAdditionMachine.lean",
+        "formal/lean/PCP/Complexity/BlockLoopExecution.lean",
+        "formal/lean/PCP/Complexity/LangMixedRadixDecode.lean",
+        "formal/lean/PCP/Complexity/CodeStep.lean",
+        "formal/lean/PCP/Complexity/StandardCorrectionWeight.lean",
+        "formal/lean/PCP/Complexity/SeedBound.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedDecode.lean",
+        "formal/lean/PCP/Complexity/ReferenceNTMReadout.lean",
+        "formal/lean/PCP/Complexity/BinaryCubicObservation.lean",
+        "formal/lean/PCP/Complexity/BooleanLabelTransform.lean",
+        "formal/lean/PCP/Complexity/LangQueryStep.lean",
+        "formal/lean/PCP/Complexity/LangProductBlocks.lean",
+        "formal/lean/PCP/Complexity/OuterBranchPointLabelCost.lean",
+        "formal/lean/PCP/Complexity/BlockExecution.lean",
+        "formal/lean/PCP/Complexity/DerivedSeedCost.lean",
+        "formal/lean/PCP/Complexity/UniformRadixLang.lean",
+        "formal/lean/PCP/Complexity/LangComputedSeed.lean",
+        "formal/lean/PCP/Complexity/CorrectionSeedSplitCost.lean",
+        "formal/lean/PCP/Complexity/AdaptivePath.lean",
+        "formal/lean/PCP/Complexity/TableauSourceLang.lean",
+        "formal/lean/PCP/Complexity/CheckerWrap.lean",
+        "formal/lean/PCP/Complexity/LangTraceSequence.lean",
+        "formal/lean/PCP/Complexity/NPCellTableau.lean",
+        "formal/lean/PCP/Audit/ReferenceNP.lean",
+        "formal/lean/PCP/Audit/GeneratorLowDegree.lean",
+        "formal/lean/PCP/Reduction/BooleanClauseSource.lean",
+        "formal/lean/PCP/Reduction/NPThreeColor.lean",
+        "formal/lean/PCP/Reduction/NPTableauGraphLang.lean",
+        "formal/lean/PCP/Reduction/FiniteDomainSource.lean",
+        "formal/lean/PCP/Reduction/BooleanClauseLang.lean",
+        "formal/lean/PCP/Reduction/FiniteDomainGraphLang.lean",
+        "formal/lean/PCP/Reduction/ThreeColorNumericAdjacency.lean",
+        "formal/lean/PCP/Reduction/ThreeColorMatrixSource.lean",
+        "formal/lean/PCP/Reduction/BooleanGraphLang.lean",
+        "formal/lean/PCP/Reduction/FiniteBooleanConstraints.lean",
+        "formal/lean/PCP/Reduction/ThreeColorAdjacencyLang.lean",
+        "formal/lean/PCP/Reduction/FiniteDomainEncoding.lean",
+        "formal/lean/PCP/Reduction/ThreeSATGraphEncoding.lean",
+        "formal/lean/PCP/Reduction/FiniteAlphabetEncoding.lean",
+        "formal/lean/PCP/Reduction/BooleanClauseArithmetic.lean",
+        "formal/lean/PCP/Reduction/ThreeSATNumericClauses.lean",
+        "formal/lean/PCP/Reduction/ThreeSATToColor.lean",
+        "formal/lean/PCP/Reduction/BooleanClauseTerms.lean",
+        "formal/lean/PCP/Reduction/ThreeColorMatrixLang.lean",
+        "formal/lean/PCP/Reduction/FiniteDomainLang.lean",
+        "formal/lean/PCP/Reduction/FiniteBooleanEncoding.lean",
+        "formal/lean/PCP/Algebraic/PolynomialSubstitution.lean",
+        "formal/lean/PCP/Algebraic/BooleanCoefficientRecovery.lean",
+        "formal/lean/PCP/Algebraic/BinaryQuotientModel.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorGridIndex.lean",
+        "formal/lean/PCP/Algebraic/BinaryPolynomialProduct.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorFullFieldSampling.lean",
+        "formal/lean/PCP/Algebraic/FiniteDistance.lean",
+        "formal/lean/PCP/Algebraic/ComputableThreeColorVerifier.lean",
+        "formal/lean/PCP/Algebraic/PolynomialMatrixKernel.lean",
+        "formal/lean/PCP/Algebraic/HadamardHomogeneousDistance.lean",
+        "formal/lean/PCP/Algebraic/RationalRepetitionBound.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorAmplifiedQueryAlgorithm.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorFullFieldSeeds.lean",
+        "formal/lean/PCP/Algebraic/BerlekampWelch.lean",
+        "formal/lean/PCP/Algebraic/MultilinearReduction.lean",
+        "formal/lean/PCP/Algebraic/FiniteSeedPadding.lean",
+        "formal/lean/PCP/Algebraic/BinaryConcreteField.lean",
+        "formal/lean/PCP/Algebraic/BinaryPolynomialSpace.lean",
+        "formal/lean/PCP/Algebraic/BinaryIrreduciblePolynomial.lean",
+        "formal/lean/PCP/Algebraic/UnivariateDistance.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorEncoding.lean",
+        "formal/lean/PCP/Algebraic/ComputableHadamardTest.lean",
+        "formal/lean/PCP/Algebraic/BinarySeedPadding.lean",
+        "formal/lean/PCP/Algebraic/AffineSampling.lean",
+        "formal/lean/PCP/Algebraic/BinaryDistance.lean",
+        "formal/lean/PCP/Algebraic/BinaryLagrangeConstraint.lean",
+        "formal/lean/PCP/Algebraic/BinaryZeroOnGrid.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorQueryIndex.lean",
+        "formal/lean/PCP/Algebraic/FiniteFieldInverse.lean",
+        "formal/lean/PCP/Algebraic/PolynomialLine.lean",
+        "formal/lean/PCP/Algebraic/ComputableDerivedZeroOnGrid.lean",
+        "formal/lean/PCP/Algebraic/InterpolationQueryParity.lean",
+        "formal/lean/PCP/Algebraic/FieldQueryArithmetic.lean",
+        "formal/lean/PCP/Algebraic/HadamardRobustBounds.lean",
+        "formal/lean/PCP/Algebraic/ZeroOnGridCheck.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorGap.lean",
+        "formal/lean/PCP/Algebraic/BinaryWordMaterialization.lean",
+        "formal/lean/PCP/Algebraic/ComputableBinaryLocalCorrection.lean",
+        "formal/lean/PCP/Algebraic/CandidateCrossingProbability.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorOracle.lean",
+        "formal/lean/PCP/Algebraic/BinaryZeroOnGridCorrection.lean",
+        "formal/lean/PCP/Algebraic/GridVanishing.lean",
+        "formal/lean/PCP/Algebraic/BinaryConstraintRobust.lean",
+        "formal/lean/PCP/Algebraic/BinaryWordArithmetic.lean",
+        "formal/lean/PCP/Algebraic/AmplifiedSequenceSlicing.lean",
+        "formal/lean/PCP/Algebraic/GraphGridEmbedding.lean",
+        "formal/lean/PCP/Algebraic/SeedBitCompatibility.lean",
+        "formal/lean/PCP/Algebraic/FiniteAlphabetIndex.lean",
+        "formal/lean/PCP/Algebraic/HadamardCharacterization.lean",
+        "formal/lean/PCP/Algebraic/PointedLineSampling.lean",
+        "formal/lean/PCP/Algebraic/BinarySeedEncoding.lean",
+        "formal/lean/PCP/Algebraic/BivariateAgreementFromRectangle.lean",
+        "formal/lean/PCP/Algebraic/BinaryPolynomialEmbedding.lean",
+        "formal/lean/PCP/Algebraic/BinaryZeroOnGridRobust.lean",
+        "formal/lean/PCP/Algebraic/PointLineDecoder.lean",
+        "formal/lean/PCP/Algebraic/Distance.lean",
+        "formal/lean/PCP/Algebraic/BinaryLowDegreeBranchBounds.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorFields.lean",
+        "formal/lean/PCP/Algebraic/AmplifiedSeedSlicing.lean",
+        "formal/lean/PCP/Algebraic/FiniteConjunction.lean",
+        "formal/lean/PCP/Algebraic/PolynomialLineDegree.lean",
+        "formal/lean/PCP/Algebraic/BivariateInterpolation.lean",
+        "formal/lean/PCP/Algebraic/BilinearHadamard.lean",
+        "formal/lean/PCP/Algebraic/ProbabilisticCrossing.lean",
+        "formal/lean/PCP/Algebraic/FiniteGeneratorSearchOrder.lean",
+        "formal/lean/PCP/Algebraic/PointLineCorrection.lean",
+        "formal/lean/PCP/Algebraic/PointLineReparametrization.lean",
+        "formal/lean/PCP/Algebraic/FiniteGeneratorSearch.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorParameters.lean",
+        "formal/lean/PCP/Algebraic/BooleanCoefficientArithmetic.lean",
+        "formal/lean/PCP/Algebraic/GridCoordinateTransport.lean",
+        "formal/lean/PCP/Algebraic/BerlekampWelchMatrix.lean",
+        "formal/lean/PCP/Algebraic/AffinePlaneSampling.lean",
+        "formal/lean/PCP/Algebraic/ComputableThreeColorQueryAlgorithm.lean",
+        "formal/lean/PCP/Algebraic/BinaryEncodingDistance.lean",
+        "formal/lean/PCP/Algebraic/HadamardAffineQueries.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+        "formal/lean/PCP/Algebraic/GridEdgeArithmetic.lean",
+        "formal/lean/PCP/Algebraic/BooleanCoefficientIndex.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorSeedNormalization.lean",
+        "formal/lean/PCP/Algebraic/RuledSurfaceSampling.lean",
+        "formal/lean/PCP/Algebraic/PointLinePredictionConsistency.lean",
+        "formal/lean/PCP/Algebraic/BinaryMaterializedField.lean",
+        "formal/lean/PCP/Algebraic/PointLineTest.lean",
+        "formal/lean/PCP/Algebraic/HadamardTestMarginals.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorQueryAlgorithm.lean",
+        "formal/lean/PCP/Algebraic/LagrangeConstraint.lean",
+        "formal/lean/PCP/Algebraic/FiniteRepetition.lean",
+        "formal/lean/PCP/Algebraic/MixedPlaneSampling.lean",
+        "formal/lean/PCP/Algebraic/Digits.lean",
+        "formal/lean/PCP/Algebraic/FiniteRootSearchOrder.lean",
+        "formal/lean/PCP/Algebraic/PolynomialDistance.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorSeedIndex.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorCanonicalVerifier.lean",
+        "formal/lean/PCP/Algebraic/AmplifiedSlicedAlgorithm.lean",
+        "formal/lean/PCP/Algebraic/ThreeColorParameterChoice.lean",
+        "formal/lean/PCP/Algebraic/FiniteRootSearch.lean",
+        "formal/lean/PCP/Algebraic/BilinearDistance.lean",
+        "formal/lean/PCP/Algebraic/AffineLineSampling.lean"
+      ]
+    },
+    {
+      "path_or_url": "literature (remaining files)",
+      "sha256_or_edition": "Individual hashes in supplied manifest; response evidence/packet_file_inventory.json",
+      "status": "unassessed",
+      "actual_range": [],
+      "observations": "15 files not separately covered by an explicit record here; some reference-only literature has no local original.",
+      "limitations": "No transitive closure or archive-wide review is implied by source selection.",
+      "files": [
+        "literature/README.md",
+        "literature/abssw-v2/paper.txt",
+        "literature/abssw-v2/paper.pdf",
+        "literature/abssw-v1/paper.txt",
+        "literature/abssw-v1/paper.pdf",
+        "literature/abssw-v2/tex/references.bib",
+        "literature/abssw-v2/tex/00README.json",
+        "literature/abssw-v2/tex/intro.tex",
+        "literature/abssw-v2/tex/local_correction.tex",
+        "literature/abssw-v2/tex/appendix-full-verifier.tex",
+        "literature/abssw-v2/tex/macro.tex",
+        "literature/abssw-v2/tex/pcp-verifier.tex",
+        "literature/abssw-v2/tex/zero-on-variety_test.tex",
+        "literature/abssw-v1/tex/references.bib",
+        "literature/abssw-v1/tex/00README.json"
+      ]
+    },
+    {
+      "path_or_url": "register/README.md",
+      "sha256_or_edition": "237f6a3dd7675605933d848a124f58b41e5500f71a5d0669759f7804e967e652",
+      "status": "assessed",
+      "actual_range": [
+        [
+          1,
+          5
+        ]
+      ],
+      "observations": "Full-target versus matched-region distinction and two-work baseline read.",
+      "limitations": "No complete automatic register-method audit or causal prose-quality inference.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "register/measurement.txt",
+      "sha256_or_edition": "96ca525eaab87a905204bd42c589d2d602f83ca78e5114afff1c2916b1088900",
+      "status": "sampled",
+      "actual_range": [
+        "Selected rows in1–42 and earlier diagnostic scope notes; oversized output partially clipped"
+      ],
+      "observations": "Metrics treated as descriptive flags, never quality scores or editing targets.",
+      "limitations": "No complete automatic register-method audit or causal prose-quality inference.",
+      "reviewer": "root"
+    },
+    {
+      "path_or_url": "https://eccc.weizmann.ac.il/report/2026/134/revision/1/download",
+      "sha256_or_edition": "ECCC Revision1 PDF,22 October2026; not assumed byte-identical to bundled arXivv2",
+      "status": "sampled",
+      "actual_range": "Root targeted homogeneous search: printed Claim3.7 scalar clause and corresponding proof; retrieved lines1005–1018 and3458–3491",
+      "observations": "Independently corroborates the supplied v2 scalar-homogeneity clause.",
+      "limitations": "Not a complete PDF read or an arXiv/ECCC byte comparison.",
+      "reviewer": "root"
+    }
+  ],
+  "selected_associations": {
+    "count": 46,
+    "classification": {
+      "direct": 40,
+      "variant": 1,
+      "prerequisite": 5
+    },
+    "record": "claim_checks.json",
+    "all_primary_associations_assessed": true,
+    "whole_files_not_inferred_from_declarations": true
+  },
+  "commands_actually_executed": [
+    {
+      "tool": "exec_command",
+      "command": "python3 analysis/build_line_edits.py",
+      "result": "75 distinct paragraph decisions and14 complete replacement passages generated."
+    },
+    {
+      "tool": "exec_command",
+      "command": "python3 analysis/build_findings.py",
+      "result": "40 normalized findings with exact source locators."
+    },
+    {
+      "tool": "exec_command",
+      "command": "python3 analysis/build_coverage.py",
+      "result": "Coverage and byte inventory produced; hashing is not content review."
+    },
+    {
+      "tool": "exec_command",
+      "command": "sha256sum analysis/root-independent-checkpoint.md response/pcp-review-1-full-argument-response/first_reading.md",
+      "result": "Frozen independent identities recorded."
+    },
+    {
+      "tool": "exec_command",
+      "command": "rg --files analysis response | sort",
+      "result": "Deliverable/source-audit inventory inspected."
+    },
+    {
+      "tool": "source inspection",
+      "command": "Bounded sed/cat/rg and Python source-range inspections; exact child invocations in evidence/*_coverage.json.",
+      "result": "Long source and selected contracts/proofs read. Oversized truncated output was not automatically counted as complete."
+    },
+    {
+      "tool": "view_image",
+      "command": "View three PDF contact sheets and page1/page29/page30/page42/page43 PNGs.",
+      "result": "All-page overview and five readable-scale page checks; no full-scale all-page claim."
+    },
+    {
+      "tool": "browser_js",
+      "command": "Observed browser actions in evidence/browser_observations.json.",
+      "result": "Successful definition/file inspection; bounded companion-click failure; direct destination success."
+    },
+    {
+      "tool": "web search/open/find",
+      "command": "Primary-source retrieval and targeted theorem lookups at listed URLs.",
+      "result": "Sources checked within listed ranges; FS/Shoup original retrieval unsuccessful."
+    },
+    {
+      "tool": "exec_command",
+      "command": "python3 response/pcp-review-1-full-argument-response/evidence/validate_response.py --packet work/pcp-review-1-full-argument --input-zip upload/pcp-review-1-full-argument.zip",
+      "result": "Passed required-file/JSON/quote/association checks, frozen-record checks and byte comparison of all1256 original files; invoked both portable computation scripts afresh."
+    },
+    {
+      "tool": "subprocess in validator",
+      "command": "python3 evidence/verify_algebra_constants.py; python3 evidence/counterexample_checks.py (separate invocations)",
+      "result": "Both exited0 and matched the supplied JSON exactly;18 arithmetic checks and GF(16) finite illustration only."
+    }
+  ],
+  "subaudit_execution_records": [
+    "evidence/algebra_coverage.json",
+    "evidence/binary_coverage.json",
+    "evidence/lean_coverage.json"
+  ],
+  "reported_prior_results_not_reexecuted": [
+    "Historical Lean/statement/compiler reports in packet",
+    "Historical710 package tests with two opt-in Lean tests skipped",
+    "Historical reader112 Python,11 web source and380 browser journey checks",
+    "Prior companion PDF annotation and preservation receipts"
+  ],
+  "not_performed": [
+    "Lean/Lake build",
+    "Axiom extraction or dependency extraction",
+    "Full imported compiler and machine-simulation proof audit",
+    "Compiled verifier execution",
+    "Full independent specialist/exposition review",
+    "Human learning or cold-reader experiment",
+    "Source edits, publication, deployment or third-party contact"
+  ],
+  "validation_receipt": "evidence/package_validation.json (generated after assembly)",
+  "format_note": "Repeated file entries record different reviewers/ranges, not repeated independent human confirmations.",
+  "validation_history": {
+    "initial_failure": "Validator first compared display-text quotes against raw TeX and tried reading its own still-empty redirected receipt. This was a validation-harness issue, not a discovered mathematical contradiction.",
+    "repair": "Preserved the original independent claim ledger; added exact selected_source_quote beside rendered selected_quote. Excluded only the actively written receipt from the parse loop.",
+    "final": "The rerun passed; evidence/package_validation.json records its actual scope."
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "ok": true,
+  "papers": [
+    {
+      "file": "long/reasoning-record.pdf",
+      "pages": 44,
+      "sha256": "13884ff9194a058e75c37c4cdc976b02be7f615d4900014c436a4a5b975e7e94",
+      "companion_links": [
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    },
+    {
+      "file": "short/paper.pdf",
+      "pages": 12,
+      "sha256": "cf3d650cd73c3a77659af1ba5b9244f1693c4f61cfcf65f1e1f201cdee789cb1",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "2-the-corrected-short-low-degree-test"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "5-point-versus-line-soundness"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "correcting-an-outer-value-at-a-prescribed-point"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "checking-that-a-polynomial-vanishes-on-a-grid"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "parameters-for-every-finite-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "repetition-on-one-fixed-proof"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "the-polynomial-time-implementation"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "from-every-np-verifier-to-a-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "transporting-the-verifier-through-the-reduction"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "source-and-verification-account"
+        }
+      ]
+    },
+    {
+      "file": "expository/main.pdf",
+      "pages": 22,
+      "sha256": "0168dbfeaebd0a30be6181c4a8f83dabd9eae39ced0d4ac7b1960c7d0f12657c",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "5-point-versus-line-soundness"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "from-every-np-verifier-to-a-graph"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "correcting-an-outer-value-at-a-prescribed-point"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

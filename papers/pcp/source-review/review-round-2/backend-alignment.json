@@ -1,0 +1,3620 @@
+{
+  "lean_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "reader_freeze": "db6737b25fdcb02eef0af5010b2f289cc3931c9e",
+  "evidence": "Source correspondence, byte comparison, and reader data checks. No fresh Lean build or extraction.",
+  "tracked_lean_snapshot_diff_clean": true,
+  "reader_association_checks": {
+    "pcp-full-argument": {
+      "source_review": "pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/claim_checks.json",
+      "baseline_association_count": 46,
+      "returned_classifications": {
+        "direct": 40,
+        "variant": 1,
+        "prerequisite": 5
+      },
+      "baseline_inline_declaration_count": 50,
+      "baseline_axiom_free_counts_by_provenance": {
+        "source-read": 23,
+        "statement-compiled": 1
+      },
+      "baseline_targets_absent_from_published_index": [
+        "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations",
+        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+        "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le",
+        "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul",
+        "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns",
+        "PCP.Algebraic.BivariateColumnSelection.exists_good_columns",
+        "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+        "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+        "PCP.Algebraic.PointLineConstants.field_bounds",
+        "PCP.Algebraic.PointLineTest.exists_close_degree_zero",
+        "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul",
+        "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "PCP.Algebraic.WeightedConstraint.correction_satisfies",
+        "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff",
+        "PCP.Reduction.NAEThreeColor.colorable_iff",
+        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program"
+      ],
+      "targets_absent_from_source_read_input": [],
+      "associations": [
+        {
+          "passage": "pcp-long-intro-theorem",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Faithful endpoint. ReadsBelow concerns every syntactic branch, not just branches on an honest proof. A finite prefix suffices by eval_congr.",
+          "built_after": {
+            "passage": "pcp-long-intro-theorem",
+            "paper_lines": [
+              13,
+              13
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-intro-roadmap",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+              "file": "PCP/Algebraic/VanishingCertificate.lean",
+              "source_lines": [
+                119,
+                122
+              ],
+              "source_sha256": "f8a240c66a7507cbfd78bfabc0e858e1342ae7ad2bf5e8bb1ded5b5b2a25add6"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The introductory roadmap suppresses hypotheses legitimately; the full paragraph at 134–169 supplies H nonempty and both identities.",
+          "built_after": {
+            "passage": "pcp-long-intro-roadmap",
+            "paper_lines": [
+              48,
+              48
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+                "file": "PCP/Algebraic/VanishingCertificate.lean",
+                "source_lines": [
+                  119,
+                  132
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-grid-interpolation",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GridInterpolation.existsUnique_extension",
+              "file": "PCP/Algebraic/GridInterpolation.lean",
+              "source_lines": [
+                170,
+                173
+              ],
+              "source_sha256": "e51c245bcd58818a49a47097e3e92c2d45c0d85242f25cf3142747e127b5bf58"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Exactly the individual-degree uniqueness asserted. Do not replace with uniqueness under total degree m(h−1).",
+          "built_after": {
+            "passage": "pcp-long-algebra-grid-interpolation",
+            "paper_lines": [
+              131,
+              131
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GridInterpolation.existsUnique_extension",
+                "file": "PCP/Algebraic/GridInterpolation.lean",
+                "source_lines": [
+                  170,
+                  183
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-line-characterization",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PolynomialLine.exists_polynomial_of_hasLowDegreeLines_finite",
+              "file": "PCP/Algebraic/PolynomialLineCharacterization.lean",
+              "source_lines": [
+                163,
+                166
+              ],
+              "source_sha256": "da00cd9aef5152da10e797f99ef2c7e55fd7061e698a5821087fcb87a35da3fa"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The line property quantifies over every u,v including zero direction and all field parameters. The prose preserves the stronger sufficient q>2d condition.",
+          "built_after": {
+            "passage": "pcp-long-algebra-line-characterization",
+            "paper_lines": [
+              182,
+              182
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PolynomialLine.exists_polynomial_of_hasLowDegreeLines_finite",
+                "file": "PCP/Algebraic/PolynomialLineCharacterization.lean",
+                "source_lines": [
+                  163,
+                  181
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-weighted-plurality",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.WeightedConstraint.correction_satisfies",
+              "file": "PCP/Algebraic/WeightedConstraintSoundness.lean",
+              "source_lines": [
+                136,
+                140
+              ],
+              "source_sha256": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "A10 is exactly the strict premise with n=|I|. The ordinary double-sampling proof is a substantive derivation, not an unsupported invocation.",
+          "built_after": {
+            "passage": "pcp-long-algebra-weighted-plurality",
+            "paper_lines": [
+              295,
+              295
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.WeightedConstraint.correction_satisfies",
+                "file": "PCP/Algebraic/WeightedConstraintSoundness.lean",
+                "source_lines": [
+                  136,
+                  176
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-generator-soundness",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+              "source_lines": [
+                274,
+                278
+              ],
+              "source_sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "This source theorem is stronger in field size/characteristic than the binary cubic-field paper variant. Long paragraph 300–314 states the exact formal variant and its threshold.",
+          "built_after": {
+            "passage": "pcp-long-algebra-generator-soundness",
+            "paper_lines": [
+              302,
+              302
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+                "source_lines": [
+                  274,
+                  292
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-line-table-correction",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.LineTableLocalCorrection.correct_wrong_le",
+              "file": "PCP/Algebraic/LineTableLocalCorrection.lean",
+              "source_lines": [
+                249,
+                255
+              ],
+              "source_sha256": "6ff2ad650d3b081d73fde62d1adce7e66e117e8977f6d0139e071a9b2b75ef55"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "No auxiliary-table closeness or low rejection is assumed. This is an accepted-wrong bound, unlike later BinaryLocalCorrection.failure_le, which counts rejection too.",
+          "built_after": {
+            "passage": "pcp-long-algebra-line-table-correction",
+            "paper_lines": [
+              364,
+              364
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.LineTableLocalCorrection.correct_wrong_le",
+                "file": "PCP/Algebraic/LineTableLocalCorrection.lean",
+                "source_lines": [
+                  249,
+                  265
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-bivariate-statement",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+              "file": "PCP/Algebraic/BivariateAgreement.lean",
+              "source_lines": [
+                141,
+                149
+              ],
+              "source_sha256": "9dc7fa8512f0d8b2445176f2094455e297b48c18bdeb475713819f92c4e021cc"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "All hypotheses and individual rather than total degree are correctly stated. No nearest-approximation premise is added.",
+          "built_after": {
+            "passage": "pcp-long-algebra-bivariate-statement",
+            "paper_lines": [
+              402,
+              402
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+                "file": "PCP/Algebraic/BivariateAgreement.lean",
+                "source_lines": [
+                  141,
+                  165
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-column-selection",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BivariateColumnSelection.exists_good_columns",
+              "file": "PCP/Algebraic/BivariateColumnSelection.lean",
+              "source_lines": [
+                94,
+                99
+              ],
+              "source_sha256": "26eb0309cc0d2201abb8fca9b36f866c6d90ecc4a3d8af62b7d1c3f3839f88a8"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The manuscript supplies these premises from the preceding theorem. Its stronger Markov count is compatible with the formal finite selection.",
+          "built_after": {
+            "passage": "pcp-long-algebra-column-selection",
+            "paper_lines": [
+              407,
+              407
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BivariateColumnSelection.exists_good_columns",
+                "file": "PCP/Algebraic/BivariateColumnSelection.lean",
+                "source_lines": [
+                  94,
+                  105
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-error-locator",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations",
+              "file": "PCP/Algebraic/BerlekampWelchCertificate.lean",
+              "source_lines": [
+                237,
+                247
+              ],
+              "source_sha256": "186786ff43ca8d24ccc6645c95e003bde54be0c4d5aa72955e49a9b1476ff831"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Specialize e=2d, D=d, |I|=10d. This gives exactly 2d,3d and (5d+1)d in the prose. The formal theorem constructs rather than assumes E.",
+          "built_after": {
+            "passage": "pcp-long-algebra-error-locator",
+            "paper_lines": [
+              419,
+              419
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations",
+                "file": "PCP/Algebraic/BerlekampWelchCertificate.lean",
+                "source_lines": [
+                  237,
+                  257
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-clean-rectangle",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns",
+              "file": "PCP/Algebraic/BivariateCleanRectangle.lean",
+              "source_lines": [
+                241,
+                245
+              ],
+              "source_sha256": "15aefdef1570d1e0de6ca5d2ff267a71b24b82016362c2ab6ebe7daf9e3b216f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose supplies e=2d and Y degree K=(5d+1)d; q≥1000d^3 implies both <q, although that Lean-specific hsize premise is not stated at this application. The ordinary F[Y] root argument is valid without hsize.",
+          "built_after": {
+            "passage": "pcp-long-algebra-clean-rectangle",
+            "paper_lines": [
+              451,
+              451
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns",
+                "file": "PCP/Algebraic/BivariateCleanRectangle.lean",
+                "source_lines": [
+                  241,
+                  261
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-agreement-boost",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul",
+              "file": "PCP/Algebraic/BivariateAgreementBoost.lean",
+              "source_lines": [
+                105,
+                112
+              ],
+              "source_sha256": "9d38a1459104f5b3579198bc004dfdaac72f73934c3733689fc7d3b731992189"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Set ρ=ε+1/9; ε≤1/100 and q≥20d imply the displayed premise. This is the sharper conclusion, not an unrelated existence theorem.",
+          "built_after": {
+            "passage": "pcp-long-algebra-agreement-boost",
+            "paper_lines": [
+              509,
+              509
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul",
+                "file": "PCP/Algebraic/BivariateAgreementBoost.lean",
+                "source_lines": [
+                  105,
+                  117
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-point-line-statement",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+              "file": "PCP/Algebraic/PointLineSoundness.lean",
+              "source_lines": [
+                58,
+                62
+              ],
+              "source_sha256": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The source test samples all t∈F, includes zero directions and d=0. The manuscript preserves these features and distinguishes the paper variant.",
+          "built_after": {
+            "passage": "pcp-long-algebra-point-line-statement",
+            "paper_lines": [
+              531,
+              531
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+                "file": "PCP/Algebraic/PointLineSoundness.lean",
+                "source_lines": [
+                  58,
+                  69
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-fixed-parameter",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul",
+              "file": "PCP/Algebraic/PointLineParameterError.lean",
+              "source_lines": [
+                151,
+                153
+              ],
+              "source_sha256": "04309f6274542c6f96745b5a07b2234e47a362e57579179614615bee6713d448"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "It is not a theorem for arbitrary received line tables. The preceding paragraph switches to nearest polynomials before using it, correctly.",
+          "built_after": {
+            "passage": "pcp-long-algebra-fixed-parameter",
+            "paper_lines": [
+              556,
+              556
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul",
+                "file": "PCP/Algebraic/PointLineParameterError.lean",
+                "source_lines": [
+                  151,
+                  161
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-crossing",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq",
+              "file": "PCP/Algebraic/BivariateCrossingSoundness.lean",
+              "source_lines": [
+                32,
+                45
+              ],
+              "source_sha256": "7183eef65f1945c756092ff2fd8bee00dc6e4b401a206310e5da9a9f70d3a3f6"
+            }
+          ],
+          "returned_classification": "variant",
+          "returned_comparison": "The prose initially allows arbitrary transverse approximants and requires nearestness only at the selected crossing. Its displayed proof establishes that slightly more general variant. PointLineCrossing.crossing_eq_of_nearby_rows supports the deterministic generalized step; the selected theorem specializes all rows/columns to nearest.",
+          "built_after": {
+            "passage": "pcp-long-algebra-crossing",
+            "paper_lines": [
+              588,
+              588
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineCrossing.crossing_eq_of_nearby_polynomial",
+                "file": "PCP/Algebraic/PointLineCrossing.lean",
+                "source_lines": [
+                  246,
+                  292
+                ],
+                "provenance": "source-read"
+              },
+              {
+                "name": "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq",
+                "file": "PCP/Algebraic/BivariateCrossingSoundness.lean",
+                "source_lines": [
+                  32,
+                  54
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-ruled-surface",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds",
+              "file": "PCP/Algebraic/RuledSurfaceRigidity.lean",
+              "source_lines": [
+                74,
+                86
+              ],
+              "source_sha256": "59ae4b2ef9fd2e0937b9079ab5937ec45d80f19f7f0be25092cdded581c197fe"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose derives the five-error budget and fixes Q before y0. This avoids swapping ∀y∃Q with ∃Q∀y.",
+          "built_after": {
+            "passage": "pcp-long-algebra-ruled-surface",
+            "paper_lines": [
+              642,
+              642
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds",
+                "file": "PCP/Algebraic/RuledSurfaceRigidity.lean",
+                "source_lines": [
+                  74,
+                  91
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-point-line-constants",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PointLineConstants.field_bounds",
+              "file": "PCP/Algebraic/PointLineConstants.lean",
+              "source_lines": [
+                32,
+                34
+              ],
+              "source_sha256": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553"
+            }
+          ],
+          "returned_classification": "prerequisite",
+          "returned_comparison": "field_bounds supports the field-size and crossing premises but not the displayed combined numerical budget by itself. rigidity_budget, same file 62–72, supplies that final inequality.",
+          "built_after": {
+            "passage": "pcp-long-algebra-point-line-constants",
+            "paper_lines": [
+              697,
+              697
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineConstants.field_bounds",
+                "file": "PCP/Algebraic/PointLineConstants.lean",
+                "source_lines": [
+                  32,
+                  50
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-algebra-degree-zero",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PointLineTest.exists_close_degree_zero",
+              "file": "PCP/Algebraic/PointLineConstant.lean",
+              "source_lines": [
+                160,
+                162
+              ],
+              "source_sha256": "b39716dbec3042881445ddef483b484922c0a76252d98da4edce3ff283329bf8"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The elementary bijection proof and boundary claims match.",
+          "built_after": {
+            "passage": "pcp-long-algebra-degree-zero",
+            "paper_lines": [
+              716,
+              716
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineTest.exists_close_degree_zero",
+                "file": "PCP/Algebraic/PointLineConstant.lean",
+                "source_lines": [
+                  160,
+                  164
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-set-multilinear",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.SetMultilinear.eval_encode",
+              "file": "PCP/Algebraic/SetMultilinear.lean",
+              "source_lines": [
+                101,
+                102
+              ],
+              "source_sha256": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59"
+            }
+          ],
+          "returned_classification": "prerequisite",
+          "returned_comparison": "This exact selected theorem supplies evaluation recovery, not formal-polynomial injectivity. The latter is true by decode_encode and encode_injective_on, lines 89–98 and 115–122. Evaluation equality alone cannot imply polynomial equality over a finite field when the degree capacity exceeds q.",
+          "built_after": {
+            "passage": "pcp-long-set-multilinear",
+            "paper_lines": [
+              810,
+              812
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.SetMultilinear.decode_encode",
+                "file": "PCP/Algebraic/SetMultilinear.lean",
+                "source_lines": [
+                  89,
+                  98
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-hadamard-labels",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+              "file": "PCP/Algebraic/Hadamard.lean",
+              "source_lines": [
+                119,
+                122
+              ],
+              "source_sha256": "cee04e797972995450f11ce8039d13c27479d5962d8c38d27f33efb75778dfdd"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose proof specializes to field coordinates. The homogeneous version is a distinct supporting result; do not infer arbitrary received-word restriction bounds from this theorem.",
+          "built_after": {
+            "passage": "pcp-long-hadamard-labels",
+            "paper_lines": [
+              855,
+              855
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+                "file": "PCP/Algebraic/Hadamard.lean",
+                "source_lines": [
+                  119,
+                  123
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-hadamard-composition",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.HadamardComposition.encode_query",
+              "file": "PCP/Algebraic/HadamardComposition.lean",
+              "source_lines": [
+                169,
+                173
+              ],
+              "source_sha256": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Allows a nonzero affine constant and arbitrary A; the following homogeneous statement is appropriately restricted to scalar multiplication.",
+          "built_after": {
+            "passage": "pcp-long-hadamard-composition",
+            "paper_lines": [
+              877,
+              877
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.HadamardComposition.encode_query",
+                "file": "PCP/Algebraic/HadamardComposition.lean",
+                "source_lines": [
+                  169,
+                  174
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-blr-proof",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+              "file": "PCP/Algebraic/BLR.lean",
+              "source_lines": [
+                321,
+                323
+              ],
+              "source_sha256": "79fae6671c6d90b3287d9323c59743506a71d2eab431d8cb3cd554c974add51f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The finite-vector-space prose is the coordinate-independent version; choosing a basis transfers it to the source signature.",
+          "built_after": {
+            "passage": "pcp-long-blr-proof",
+            "paper_lines": [
+              894,
+              894
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+                "file": "PCP/Algebraic/BLR.lean",
+                "source_lines": [
+                  321,
+                  325
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-hadamard-self-correction",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+              "file": "PCP/Algebraic/HadamardCorrection.lean",
+              "source_lines": [
+                34,
+                36
+              ],
+              "source_sha256": "79668d3cdb3cb79557d8db8fc47a9ce228867332df39bd915768724092a931de"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose specializes this to labels and correctly samples the mask after the request. Does not require independent error events.",
+          "built_after": {
+            "passage": "pcp-long-hadamard-self-correction",
+            "paper_lines": [
+              935,
+              935
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+                "file": "PCP/Algebraic/HadamardCorrection.lean",
+                "source_lines": [
+                  34,
+                  43
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-hadamard-soundness",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.test_soundness",
+              "file": "PCP/Algebraic/HadamardSoundness.lean",
+              "source_lines": [
+                29,
+                34
+              ],
+              "source_sha256": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The test definition has product checks for every intermediate degree. The prose derives exact evaluation rather than assuming every linear functional is an evaluation.",
+          "built_after": {
+            "passage": "pcp-long-hadamard-soundness",
+            "paper_lines": [
+              964,
+              964
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.test_soundness",
+                "file": "PCP/Algebraic/HadamardSoundness.lean",
+                "source_lines": [
+                  29,
+                  61
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-hadamard-row-decoding",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate",
+              "file": "PCP/Algebraic/HadamardRowDecoding.lean",
+              "source_lines": [
+                123,
+                130
+              ],
+              "source_sha256": "37c298215572bafa7c466cd761dd084e1bd2cfa24a6f558bf6fc83f68637b98b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "No global smallness premise and no efficient-decoding promise; both are explicitly preserved in prose.",
+          "built_after": {
+            "passage": "pcp-long-hadamard-row-decoding",
+            "paper_lines": [
+              1009,
+              1009
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.exists_field_function_of_average_rejectionRate",
+                "file": "PCP/Algebraic/HadamardRowDecoding.lean",
+                "source_lines": [
+                  123,
+                  135
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-binary-weighted-test",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+              "file": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+              "source_lines": [
+                108,
+                119
+              ],
+              "source_sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Matches the good-row/bad-row split and displayed K. Need no polynomial prior on received rows.",
+          "built_after": {
+            "passage": "pcp-long-binary-weighted-test",
+            "paper_lines": [
+              1074,
+              1074
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+                "file": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+                "source_lines": [
+                  108,
+                  144
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-binary-inner-correction",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le",
+              "file": "PCP/Algebraic/BinaryStandardLocalCorrection.lean",
+              "source_lines": [
+                89,
+                97
+              ],
+              "source_sha256": "6a109273c03dc706914cc705701580156e5ab379a04b4878a5dcf77beb15e56b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose keeps the label in the probability space and does not strengthen this to every fixed label.",
+          "built_after": {
+            "passage": "pcp-long-binary-inner-correction",
+            "paper_lines": [
+              1080,
+              1080
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le",
+                "file": "PCP/Algebraic/BinaryStandardLocalCorrection.lean",
+                "source_lines": [
+                  89,
+                  99
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-encoded-line-test",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.queries_length_le",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+              "source_lines": [
+                72,
+                74
+              ],
+              "source_sha256": "72dafb54abca13161b4c784283296575e2e7f3c2cc14f136584152d38fb28a09"
+            }
+          ],
+          "returned_classification": "prerequisite",
+          "returned_comparison": "The selected quote also asserts honest completeness, which this count theorem alone does not prove. It is a direct resource link; the actual test definition and separate completeness lemmas support the rest.",
+          "built_after": {
+            "passage": "pcp-long-encoded-line-test",
+            "paper_lines": [
+              1109,
+              1109
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.EncodedLineLowDegreeTest.queries_length_le",
+                "file": "PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+                "source_lines": [
+                  72,
+                  78
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-encoded-line-soundness",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+              "source_lines": [
+                325,
+                339
+              ],
+              "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The selected sentence first reports the intermediate field-distance bound, while the declaration states the final encoded-distance conclusion. The proof invokes PointLineTest.exists_close_of_small_rejection explicitly; both steps are visible and consistent.",
+          "built_after": {
+            "passage": "pcp-long-encoded-line-soundness",
+            "paper_lines": [
+              1143,
+              1143
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+                "source_lines": [
+                  325,
+                  359
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-outer-local-corrector",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+              "file": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+              "source_lines": [
+                222,
+                236
+              ],
+              "source_sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f"
+            }
+          ],
+          "returned_classification": "prerequisite",
+          "returned_comparison": "The selected quote describes the algorithm. failure_le supports its later guarantee, while BinaryLocalCorrection.run/sample (44–67) directly specify the described procedure. The source reuses inner direction and label at z and zero exactly as prose says.",
+          "built_after": {
+            "passage": "pcp-long-outer-local-corrector",
+            "paper_lines": [
+              1161,
+              1161
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryLocalCorrection.run",
+                "file": "PCP/Algebraic/BinaryLocalCorrection.lean",
+                "source_lines": [
+                  45,
+                  59
+                ],
+                "provenance": "source-read"
+              },
+              {
+                "name": "PCP.Algebraic.BinaryLocalCorrection.sample",
+                "file": "PCP/Algebraic/BinaryLocalCorrection.lean",
+                "source_lines": [
+                  62,
+                  67
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-final-target",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Faithful repeat.",
+          "built_after": {
+            "passage": "pcp-long-final-target",
+            "paper_lines": [
+              1332,
+              1332
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-colour-equations",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+              "file": "PCP/Algebraic/ThreeColorAlgebra.lean",
+              "source_lines": [
+                60,
+                61
+              ],
+              "source_sha256": "fc6eee6c8ae126f32b4ad96cef8ba55576c30d4ce7f55f607493a6d0e9eb1813"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The selected sentence depends on both valid-colour hypotheses; they are present immediately before it. Excluding zero via vertex constraints remains essential.",
+          "built_after": {
+            "passage": "pcp-long-colour-equations",
+            "paper_lines": [
+              1360,
+              1360
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
+                "file": "PCP/Algebraic/ThreeColorAlgebra.lean",
+                "source_lines": [
+                  60,
+                  70
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-grid-constraints",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+              "file": "PCP/Algebraic/ThreeColorGrid.lean",
+              "source_lines": [
+                117,
+                122
+              ],
+              "source_sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The prose also explains the public adjacency polynomial and then introduces a separate difference table constrained later; no unconstrained witness is hidden in the source conclusion.",
+          "built_after": {
+            "passage": "pcp-long-grid-constraints",
+            "paper_lines": [
+              1389,
+              1389
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+                "file": "PCP/Algebraic/ThreeColorGrid.lean",
+                "source_lines": [
+                  117,
+                  132
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-derived-constraints",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+              "file": "PCP/Algebraic/HadamardDerivedOracle.lean",
+              "source_lines": [
+                58,
+                61
+              ],
+              "source_sha256": "b561f7840dd937d9d97db5234efec9407b9842faddfc367352f682173769da6f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Correct honest-evaluation support. The subsequent noisy statement needs answer_failure_le rather than this theorem alone.",
+          "built_after": {
+            "passage": "pcp-long-derived-constraints",
+            "paper_lines": [
+              1420,
+              1420
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+                "file": "PCP/Algebraic/HadamardDerivedOracle.lean",
+                "source_lines": [
+                  58,
+                  65
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-query-budget",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
+              "file": "PCP/Algebraic/ThreeColorVerifier.lean",
+              "source_lines": [
+                362,
+                364
+              ],
+              "source_sha256": "59cbc12ef8abce1d8a62a6744f890fed98d97fd53060c398d120021405196739"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "At c=4 the arithmetic gives187. This is an upper bound on listed physical reads, not exact distinct addresses. test_congr supplies the information-dependence statement separately.",
+          "built_after": {
+            "passage": "pcp-long-query-budget",
+            "paper_lines": [
+              1433,
+              1433
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
+                "file": "PCP/Algebraic/ThreeColorVerifier.lean",
+                "source_lines": [
+                  362,
+                  389
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-completeness",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+              "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+              "source_lines": [
+                101,
+                106
+              ],
+              "source_sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "All common tables and the strict honest capacity are supplied. The theorem does not assume soundness hypotheses for completeness.",
+          "built_after": {
+            "passage": "pcp-long-completeness",
+            "paper_lines": [
+              1453,
+              1453
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+                "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+                "source_lines": [
+                  101,
+                  128
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-decoding-contract",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+              "source_lines": [
+                325,
+                339
+              ],
+              "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+            }
+          ],
+          "returned_classification": "prerequisite",
+          "returned_comparison": "Four applications plus branch-rejection≤whole-rejection produce the manuscript’s four simultaneous polynomials. The selected theorem is a legitimate reusable supplier, not literally the four-table assembly. ThreeColorVerifierSoundness.colorable_of_rejection_lt (58 onward) contains those choices.",
+          "built_after": {
+            "passage": "pcp-long-decoding-contract",
+            "paper_lines": [
+              1474,
+              1474
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt",
+                "file": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+                "source_lines": [
+                  90,
+                  97
+                ],
+                "provenance": "source-read"
+              },
+              {
+                "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+                "source_lines": [
+                  325,
+                  359
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-difference-soundness",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+              "file": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+              "source_lines": [
+                204,
+                209
+              ],
+              "source_sha256": "280c80d2753868ba8fcb67b1db2cf72b3133c6f7f839c9b4414c4b0b65a67f81"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Set all three sampled-bit errors≤ε to obtain κ+3ε. The exact polynomial identity is a later consequence of a separate separation bound.",
+          "built_after": {
+            "passage": "pcp-long-difference-soundness",
+            "paper_lines": [
+              1484,
+              1484
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+                "file": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+                "source_lines": [
+                  204,
+                  233
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-gap",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+              "file": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+              "source_lines": [
+                117,
+                127
+              ],
+              "source_sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "This is precisely the contrapositive endpoint claimed. Numerical positivity is supplied in the budget file; no proof-table honesty is assumed.",
+          "built_after": {
+            "passage": "pcp-long-gap",
+            "paper_lines": [
+              1547,
+              1547
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+                "file": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+                "source_lines": [
+                  117,
+                  130
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-amplification",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+              "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+              "source_lines": [
+                72,
+                77
+              ],
+              "source_sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "This source does not claim efficiency; the manuscript correctly postpones implementation to the next section.",
+          "built_after": {
+            "passage": "pcp-long-amplification",
+            "paper_lines": [
+              1711,
+              1711
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+                "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+                "source_lines": [
+                  72,
+                  78
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-runtime",
+          "targets_before": [
+            {
+              "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+              "file": "PCP/Complexity/ThreeColorRuntime.lean",
+              "source_lines": [
+                11,
+                12
+              ],
+              "source_sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The short proof imports actual callback correctness and polynomial charged cost, then a proved compiler/runtime transfer. Source-level composition checked; compiler micro-proofs not replayed.",
+          "built_after": {
+            "passage": "pcp-long-runtime",
+            "paper_lines": [
+              1717,
+              1717
+            ],
+            "targets": [
+              {
+                "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+                "file": "PCP/Complexity/ThreeColorRuntime.lean",
+                "source_lines": [
+                  11,
+                  15
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-np-tableau",
+          "targets_before": [
+            {
+              "name": "PCP.Machine.NPTableau.exists_accepts_iff",
+              "file": "PCP/Complexity/NPTableau.lean",
+              "source_lines": [
+                142,
+                144
+              ],
+              "source_sha256": "741c70f92f8c28b126ffcb066e4587ff10ebec68356b987013ff1101f9959ee8"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The source includes zero witness length, time polynomial substitution and stack-space bound; manuscript formulas match. This is a finite tableau theorem, not yet bounded-arity conversion or a runtime theorem.",
+          "built_after": {
+            "passage": "pcp-long-np-tableau",
+            "paper_lines": [
+              1757,
+              1757
+            ],
+            "targets": [
+              {
+                "name": "PCP.Machine.NPTableau.exists_accepts_iff",
+                "file": "PCP/Complexity/NPTableau.lean",
+                "source_lines": [
+                  142,
+                  152
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-clause-reduction",
+          "targets_before": [
+            {
+              "name": "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff",
+              "file": "PCP/Reduction/FiniteDomainConstraints.lean",
+              "source_lines": [
+                119,
+                120
+              ],
+              "source_sha256": "62bf4c341e0dd12266ebbdf3923aa9e77211fffe2ef659dc3f3dd438d3f10f07"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "One-hot blocks decode to the same symbols in all relations. The finite variable/count hypotheses for polynomial size are supplied by the NP application, not this generic semantic equivalence.",
+          "built_after": {
+            "passage": "pcp-long-clause-reduction",
+            "paper_lines": [
+              1790,
+              1790
+            ],
+            "targets": [
+              {
+                "name": "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff",
+                "file": "PCP/Reduction/FiniteDomainConstraints.lean",
+                "source_lines": [
+                  119,
+                  125
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-colouring-gadget",
+          "targets_before": [
+            {
+              "name": "PCP.Reduction.NAEThreeColor.colorable_iff",
+              "file": "PCP/Reduction/NAEThreeColor.lean",
+              "source_lines": [
+                241,
+                242
+              ],
+              "source_sha256": "fcbd1fd37193f9157f1bf5c4b228746dcae7e17e3277703a9fa615117c1e752b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The printed gadget matches direct, graph, triangleWitness and or_iff_two_nae. Clauses use one fresh Boolean variable per OR reduction.",
+          "built_after": {
+            "passage": "pcp-long-colouring-gadget",
+            "paper_lines": [
+              1818,
+              1818
+            ],
+            "targets": [
+              {
+                "name": "PCP.Reduction.NAEThreeColor.colorable_iff",
+                "file": "PCP/Reduction/NAEThreeColor.lean",
+                "source_lines": [
+                  241,
+                  247
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-reduction-runtime",
+          "targets_before": [
+            {
+              "name": "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+              "file": "PCP/Reduction/NPThreeColorRuntime.lean",
+              "source_lines": [
+                257,
+                263
+              ],
+              "source_sha256": "949beaa45a454ec0e3e713e5d8065d6459054ddf4353616f9d73bf845db43d34"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The source is program-bearing; final assembly uses InputReductionRuntime to compose it with the graph verifier. It does not merely assume NP-completeness.",
+          "built_after": {
+            "passage": "pcp-long-reduction-runtime",
+            "paper_lines": [
+              1828,
+              1828
+            ],
+            "targets": [
+              {
+                "name": "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+                "file": "PCP/Reduction/NPThreeColorRuntime.lean",
+                "source_lines": [
+                  257,
+                  265
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-long-converse",
+          "targets_before": [
+            {
+              "name": "PCP.pcp_subset_np_concrete",
+              "file": "PCP/ReverseConcrete.lean",
+              "source_lines": [
+                33,
+                39
+              ],
+              "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "StandardModel constructs the cost-model closure via checkerWitness; Theorem.pcp_subset_np supplies finite-prefix semantics. ReferenceNPConverse is a separate subsequent equivalence with Complexitylib NP.",
+          "built_after": {
+            "passage": "pcp-long-converse",
+            "paper_lines": [
+              1866,
+              1866
+            ],
+            "targets": [
+              {
+                "name": "PCP.pcp_subset_np_concrete",
+                "file": "PCP/ReverseConcrete.lean",
+                "source_lines": [
+                  33,
+                  43
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        }
+      ],
+      "canonical_markdown": "work/lean-exposition/papers/pcp/long/reasoning-record.md",
+      "reader_markdown": "work/proof-reader/papers/pcp-full-argument/paper.md",
+      "canonical_and_mirror_sha256": "ea1535be69567887bbfb2fb6e82a8705aa6c8c67f38e34bff34a75f604babece",
+      "built_association_count": 54,
+      "built_declaration_count": 81,
+      "built_source_status_counts": {
+        "source-read": 54,
+        "lean": 26,
+        "statement-compiled": 1
+      },
+      "built_targets_absent_from_index": [],
+      "restored_baseline_index_entries": [
+        "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations",
+        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+        "PCP.Algebraic.BinaryStandardLocalCorrection.failure_le",
+        "PCP.Algebraic.BivariateAgreementBoost.distance_le_four_mul",
+        "PCP.Algebraic.BivariateCleanRectangle.exists_nonzero_columns",
+        "PCP.Algebraic.BivariateColumnSelection.exists_good_columns",
+        "PCP.Algebraic.BivariateCrossingSoundness.crossing_bestApproximation_eq",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+        "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+        "PCP.Algebraic.PointLineConstants.field_bounds",
+        "PCP.Algebraic.PointLineTest.exists_close_degree_zero",
+        "PCP.Algebraic.PointLineTest.rejectionAt_le_four_mul",
+        "PCP.Algebraic.RuledSurface.hasLowDegreeLines_of_endpoint_bounds",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "PCP.Algebraic.WeightedConstraint.correction_satisfies",
+        "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff",
+        "PCP.Reduction.NAEThreeColor.colorable_iff",
+        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program"
+      ],
+      "built_axiom_free_theorems_with_extracted_reports": [],
+      "built_card_titles": {
+        "inner_weighted": "Decoding the inner weighted test",
+        "outer_encoded_line": "Decoding the outer encoded-line test"
+      },
+      "added_associations": [
+        {
+          "passage": "pcp-long-algebra-crossing-candidate",
+          "paper_lines": [
+            590,
+            590
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.CandidateCrossing.crossing_eq",
+              "file": "PCP/Algebraic/CandidateCrossing.lean",
+              "source_lines": [
+                27,
+                89
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-rigidity-budget",
+          "paper_lines": [
+            707,
+            709
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.PointLineConstants.rigidity_budget",
+              "file": "PCP/Algebraic/PointLineConstants.lean",
+              "source_lines": [
+                62,
+                72
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-digit-decoder",
+          "paper_lines": [
+            804,
+            806
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.SetMultilinear.decode",
+              "file": "PCP/Algebraic/SetMultilinear.lean",
+              "source_lines": [
+                67,
+                69
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-digit-injectivity",
+          "paper_lines": [
+            814,
+            814
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.SetMultilinear.encode_injective_on",
+              "file": "PCP/Algebraic/SetMultilinear.lean",
+              "source_lines": [
+                116,
+                121
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-digit-evaluation",
+          "paper_lines": [
+            816,
+            819
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.SetMultilinear.eval_encode",
+              "file": "PCP/Algebraic/SetMultilinear.lean",
+              "source_lines": [
+                101,
+                107
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-encoded-line-completeness",
+          "paper_lines": [
+            1109,
+            1109
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.test_eval",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+              "source_lines": [
+                114,
+                134
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-outer-correction-soundness",
+          "paper_lines": [
+            1177,
+            1180
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+              "file": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+              "source_lines": [
+                222,
+                313
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-long-reference-np",
+          "paper_lines": [
+            1879,
+            1879
+          ],
+          "targets": [
+            {
+              "name": "PCP.ReferenceNP.inNP_iff_mem",
+              "file": "PCP/Complexity/ReferenceNPConverse.lean",
+              "source_lines": [
+                39,
+                41
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        }
+      ],
+      "reader_check": "Exact quotes, anchors, source name/line ranges, target reachability and proof provenance passed."
+    },
+    "pcp-specialist": {
+      "source_review": "pcp-review-2-specialist-response/claim_checks.json",
+      "baseline_association_count": 12,
+      "returned_classifications": {
+        "direct_after_definition_bridge": 3,
+        "direct_specialization": 2,
+        "direct": 4,
+        "direct_for_base_bound_only": 1,
+        "direct_for_semantic_resources": 1,
+        "direct_for_graph_runtime": 1
+      },
+      "baseline_inline_declaration_count": 37,
+      "baseline_axiom_free_counts_by_provenance": {
+        "source-read": 10,
+        "statement-compiled": 1
+      },
+      "baseline_targets_absent_from_published_index": [],
+      "targets_absent_from_source_read_input": [],
+      "associations": [
+        {
+          "passage": "pcp-short-abstract",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "direct_after_definition_bridge",
+          "returned_comparison": "Faithful summary of the forward theorem. The raw Lean hypothesis is InNP Machine.PolyTimeRel L, rather than an unqualified external NP predicate; ReferenceNPConverse.inNP_iff_mem supplies the separately linked bridge. The abstract suppresses exact constants and uses an existence claim, correctly.",
+          "built_after": {
+            "passage": "pcp-short-abstract",
+            "paper_lines": [
+              8,
+              8
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-theorem",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "direct_after_definition_bridge",
+          "returned_comparison": "Quantifiers agree: V, alg, a, b, q and p are fixed before x; proof existential is inside positive-instance quantifier and before random seeds. CompleteAt states probability one; accProb_eq_one_iff changes it to all seeds. queries is a depth bound, not an exact number of reads. CanonicalRandomness is equality, not only an asymptotic inequality.",
+          "built_after": {
+            "passage": "pcp-short-theorem",
+            "paper_lines": [
+              20,
+              20
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-colour-constraints",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+              "file": "PCP/Algebraic/ThreeColorGrid.lean",
+              "source_lines": [
+                117,
+                122
+              ],
+              "source_sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e"
+            }
+          ],
+          "returned_classification": "direct_specialization",
+          "returned_comparison": "The theorem is an equivalence between Colorable 3 and one bounded-degree P satisfying the two vanishing constraints. CharP F 2 and a primitive cube root are explicit. Graph has grid vertices; graph embedding/isolation is additional support. Nonempty H imposed by prose is stronger than this theorem requires, and needed later for certificates.",
+          "built_after": {
+            "passage": "pcp-short-colour-constraints",
+            "paper_lines": [
+              59,
+              59
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+                "file": "PCP/Algebraic/ThreeColorGrid.lean",
+                "source_lines": [
+                  117,
+                  132
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-weighted-test",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+              "source_lines": [
+                274,
+                278
+              ],
+              "source_sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4"
+            }
+          ],
+          "returned_classification": "direct_specialization",
+          "returned_comparison": "q>2c, generator of full multiplicative group, strict delta threshold and 2delta distance match exactly. Source theorem works over arbitrary finite fields, whereas paper remains in characteristic two, a faithful specialization. This is not the weaker-v2 field-size hypothesis.",
+          "built_after": {
+            "passage": "pcp-short-weighted-test",
+            "paper_lines": [
+              169,
+              169
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+                "source_lines": [
+                  274,
+                  292
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-binary-decoding",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+              "file": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+              "source_lines": [
+                108,
+                119
+              ],
+              "source_sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "Both distances are in a single existential conjunction for the same Q, with no rejection-size hypothesis. q>2c, r>=1, field/binary linear coordinates and generator nodes remain required. K matches decodingConstant exactly. Degree c refers to the inner polynomial; it is not yet the outer polynomial degree D.",
+          "built_after": {
+            "passage": "pcp-short-binary-decoding",
+            "paper_lines": [
+              213,
+              213
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+                "file": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+                "source_lines": [
+                  108,
+                  144
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-outer-decoding",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+              "source_lines": [
+                325,
+                339
+              ],
+              "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The selected sentence correctly limits the second conclusion to homogeneous degree-one labels. Full-label distance is a separate first conclusion, both for one P. Source requires q>=10^6(c b^c)^3, r>=1, generator test nodes, GoodNodes for correction, positive inner base, and J*kappa<=1/4000000. The paper has those inherited hypotheses. Affine-label extension for r>1 is not proved by this declaration.",
+          "built_after": {
+            "passage": "pcp-short-outer-decoding",
+            "paper_lines": [
+              256,
+              256
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+                "source_lines": [
+                  325,
+                  359
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-outer-correction",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+              "file": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+              "source_lines": [
+                222,
+                236
+              ],
+              "source_sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "failure_le is pointwise in target a but averages the requested homogeneous label and the other finite seeds. H is an arbitrary direction-indexed auxiliary table. The Option-valued distance counts rejection (none) and wrong returned bits. Proximity of primary table, degree P<=D, c b^c<=D, q>2c, generator nodes and GoodNodes are required. It is not a conditional-on-acceptance bound.",
+          "built_after": {
+            "passage": "pcp-short-outer-correction",
+            "paper_lines": [
+              287,
+              287
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+                "file": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+                "source_lines": [
+                  222,
+                  313
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-zero",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+              "file": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+              "source_lines": [
+                249,
+                267
+              ],
+              "source_sha256": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e"
+            }
+          ],
+          "returned_classification": "direct_for_base_bound_only",
+          "returned_comparison": "The selected general inference and Eq.(15) match the base ZERO theorem. This link alone does not prove Eq.(16), which substitutes a randomized derived primary read and needs DerivedZeroOnGrid.rejectionRate_lower_bound. The source declaration requires nonempty H, both polynomial degrees<=D, D>=c b^c, global homogeneous proximity and arbitrary auxiliary table. Its conclusion is conditional on nonvanishing.",
+          "built_after": {
+            "passage": "pcp-short-zero",
+            "paper_lines": [
+              305,
+              305
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+                "file": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+                "source_lines": [
+                  249,
+                  298
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-12",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+              "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+              "source_lines": [
+                101,
+                106
+              ],
+              "source_sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae"
+            }
+          ],
+          "returned_classification": "direct",
+          "returned_comparison": "The source yields one full eight-table proof for all seeds and a Colourable 3 assumption. Its sufficient capacity is 5*(h-1)*dimension < b^c, with characteristic two, cube root, injective test nodes, GoodNodes, nonempty H and positive b. Branch-level completeness works with individual honest-polynomial degree bounds. This is completeness, not the seven-check soundness theorem.",
+          "built_after": {
+            "passage": "linked-source-12",
+            "paper_lines": [
+              372,
+              372
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true",
+                "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+                "source_lines": [
+                  101,
+                  128
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-13",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+              "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+              "source_lines": [
+                72,
+                77
+              ],
+              "source_sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a"
+            }
+          ],
+          "returned_classification": "direct_for_semantic_resources",
+          "returned_comparison": "The theorem bundles positive repetitions, queries = repetitions*187 (a verifier depth budget), canonical randomness, unchanged address polynomial, completeness, soundness 1/2. It does not assert runtime or the NP reduction. Those have independent declarations and are not inherited from verification_guarantees.",
+          "built_after": {
+            "passage": "linked-source-13",
+            "paper_lines": [
+              413,
+              413
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+                "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+                "source_lines": [
+                  72,
+                  78
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-short-complexity",
+          "targets_before": [
+            {
+              "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+              "file": "PCP/Complexity/ThreeColorRuntime.lean",
+              "source_lines": [
+                11,
+                12
+              ],
+              "source_sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c"
+            }
+          ],
+          "returned_classification": "direct_for_graph_runtime",
+          "returned_comparison": "polyTimeAlg concerns the actual ComputableThreeColorAmplifiedQueryAlgorithm.algorithm, not an unrelated efficient verifier. Machine.PolyTimeAlg is the finite multi-stack FinTM2 semantics; the short paragraph currently calls the compiler target multi-tape. The full NP reduction and full-language theorem need the separately inspected ThreeColorFinalAssembly.of_runtime.",
+          "built_after": {
+            "passage": "pcp-short-complexity",
+            "paper_lines": [
+              417,
+              417
+            ],
+            "targets": [
+              {
+                "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+                "file": "PCP/Complexity/ThreeColorRuntime.lean",
+                "source_lines": [
+                  11,
+                  15
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-14",
+          "targets_before": [
+            {
+              "name": "PCP.pcp_subset_np_concrete",
+              "file": "PCP/ReverseConcrete.lean",
+              "source_lines": [
+                33,
+                39
+              ],
+              "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+            }
+          ],
+          "returned_classification": "direct_after_definition_bridge",
+          "returned_comparison": "Concrete reverse inclusion explicitly requires the same implementation, polynomial-time algorithm, exact canonical randomness, address bound, perfect completeness and soundness 1/2. Proof uses existing standard CostModel rather than an assumed external cost-model premise. Concludes concrete InNP; reference-NP equivalence closes the identification with Complexity.NP.",
+          "built_after": {
+            "passage": "linked-source-14",
+            "paper_lines": [
+              429,
+              429
+            ],
+            "targets": [
+              {
+                "name": "PCP.pcp_subset_np_concrete",
+                "file": "PCP/ReverseConcrete.lean",
+                "source_lines": [
+                  33,
+                  43
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        }
+      ],
+      "FA04_reference_NP_context": {
+        "passage": "pcp-short-reference-np-context",
+        "paper_lines": [
+          14,
+          14
+        ],
+        "targets": [
+          {
+            "name": "PCP.ReferenceNP.inNP_iff_mem",
+            "file": "PCP/Complexity/ReferenceNPConverse.lean",
+            "source_lines": [
+              39,
+              41
+            ],
+            "provenance": "source-read"
+          }
+        ]
+      },
+      "canonical_markdown": "work/lean-exposition/papers/pcp/short/paper.md",
+      "reader_markdown": "work/proof-reader/papers/pcp-specialist/paper.md",
+      "canonical_and_mirror_sha256": "a8c7cca605a352fae8bae3b6a2ff418c036a609f7d379da28ff5d3654ee52c48",
+      "built_association_count": 15,
+      "built_declaration_count": 39,
+      "built_source_status_counts": {
+        "source-read": 12,
+        "lean": 26,
+        "statement-compiled": 1
+      },
+      "built_targets_absent_from_index": [],
+      "restored_baseline_index_entries": [],
+      "built_axiom_free_theorems_with_extracted_reports": [],
+      "built_card_titles": {
+        "inner_weighted": "Decoding the inner weighted test",
+        "outer_encoded_line": "Decoding the outer encoded-line test"
+      },
+      "added_associations": [
+        {
+          "passage": "pcp-short-reference-np-context",
+          "paper_lines": [
+            14,
+            14
+          ],
+          "targets": [
+            {
+              "name": "PCP.ReferenceNP.inNP_iff_mem",
+              "file": "PCP/Complexity/ReferenceNPConverse.lean",
+              "source_lines": [
+                39,
+                41
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-short-derived-zero",
+          "paper_lines": [
+            309,
+            313
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+              "file": "PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+              "source_lines": [
+                261,
+                264
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-short-reference-np",
+          "paper_lines": [
+            435,
+            435
+          ],
+          "targets": [
+            {
+              "name": "PCP.ReferenceNP.inNP_iff_mem",
+              "file": "PCP/Complexity/ReferenceNPConverse.lean",
+              "source_lines": [
+                39,
+                41
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        }
+      ],
+      "reader_check": "Exact quotes, anchors, source name/line ranges, target reachability and proof provenance passed."
+    },
+    "pcp-exposition": {
+      "source_review": "pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/claim_checks.json",
+      "baseline_association_count": 16,
+      "returned_classifications": {
+        "supported": 11,
+        "supported_via_definitions": 2,
+        "partial_association": 1,
+        "supported_with_sampled_implementation": 1,
+        "supported_with_exact_arithmetic": 1
+      },
+      "baseline_inline_declaration_count": 41,
+      "baseline_axiom_free_counts_by_provenance": {
+        "source-read": 14,
+        "statement-compiled": 1
+      },
+      "baseline_targets_absent_from_published_index": [],
+      "targets_absent_from_source_read_input": [],
+      "associations": [
+        {
+          "passage": "pcp-expository-opening",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Compressed consequence of the forward theorem; the quantified formulation is supplied in §2.",
+          "built_after": {
+            "passage": "pcp-expository-opening",
+            "paper_lines": [
+              16,
+              17
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-theorem",
+          "targets_before": [
+            {
+              "name": "PCP.np_subset_pcp",
+              "file": "PCP/Theorem.lean",
+              "source_lines": [
+                25,
+                33
+              ],
+              "source_sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Same result after expanding the verifier and concrete-efficiency definitions.",
+          "built_after": {
+            "passage": "pcp-expository-theorem",
+            "paper_lines": [
+              98,
+              100
+            ],
+            "targets": [
+              {
+                "name": "PCP.np_subset_pcp",
+                "file": "PCP/Theorem.lean",
+                "source_lines": [
+                  25,
+                  33
+                ],
+                "provenance": "statement-compiled"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-17",
+          "targets_before": [
+            {
+              "name": "PCP.pcp_subset_np_concrete",
+              "file": "PCP/ReverseConcrete.lean",
+              "source_lines": [
+                33,
+                43
+              ],
+              "source_sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Same concrete reverse-inclusion argument, with the implementation and finite-prefix hypotheses retained.",
+          "built_after": {
+            "passage": "linked-source-17",
+            "paper_lines": [
+              123,
+              125
+            ],
+            "targets": [
+              {
+                "name": "PCP.pcp_subset_np_concrete",
+                "file": "PCP/ReverseConcrete.lean",
+                "source_lines": [
+                  33,
+                  43
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-colour-polynomials",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+              "file": "PCP/Algebraic/ThreeColorGrid.lean",
+              "source_lines": [
+                91,
+                114
+              ],
+              "source_sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e"
+            }
+          ],
+          "returned_classification": "supported_via_definitions",
+          "returned_comparison": "The selected theorem is the exact two-equation ↔ algebraic-predicate step; interpreting that predicate as three-colouring uses further local algebra.",
+          "built_after": {
+            "passage": "pcp-expository-colour-polynomials",
+            "paper_lines": [
+              312,
+              315
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+                "file": "PCP/Algebraic/ThreeColorGrid.lean",
+                "source_lines": [
+                  91,
+                  114
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-grid-certificate",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+              "file": "PCP/Algebraic/GridVanishing.lean",
+              "source_lines": [
+                134,
+                148
+              ],
+              "source_sha256": "c83d997bd9b991bed002a8c04648a6e93a58b4a324408bd4fdaf31a45b15557d"
+            }
+          ],
+          "returned_classification": "supported_via_definitions",
+          "returned_comparison": "Correct local decomposition; the source has a stronger integral-domain generality than the finite-field exposition.",
+          "built_after": {
+            "passage": "pcp-expository-grid-certificate",
+            "paper_lines": [
+              342,
+              345
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+                "file": "PCP/Algebraic/GridVanishing.lean",
+                "source_lines": [
+                  134,
+                  148
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-digit-encoding",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+              "file": "PCP/Algebraic/PointLineSoundness.lean",
+              "source_lines": [
+                58,
+                69
+              ],
+              "source_sha256": "407bbc29a9b11ff06cf8a2efdf1c2772711734371ae59169c36c834b773a6b74"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Same formal whole-field point-versus-line variant, not the identical sampling convention of ABSSW Theorem 2.12.",
+          "built_after": {
+            "passage": "pcp-expository-digit-encoding",
+            "paper_lines": [
+              425,
+              433
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
+                "file": "PCP/Algebraic/PointLineSoundness.lean",
+                "source_lines": [
+                  58,
+                  69
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-weighted-test",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+              "source_lines": [
+                274,
+                292
+              ],
+              "source_sha256": "dbd4314cabaeba5f67a87a0495a310a180b0ddf0a7e289a22f6acd7294a00bc4"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Exact formal generator theorem; stronger field hypothesis/general field characteristic than the cited paper’s version.",
+          "built_after": {
+            "passage": "pcp-expository-weighted-test",
+            "paper_lines": [
+              519,
+              526
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+                "source_lines": [
+                  274,
+                  292
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-18",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
+              "file": "PCP/Algebraic/Hadamard.lean",
+              "source_lines": [
+                119,
+                123
+              ],
+              "source_sha256": "cee04e797972995450f11ce8039d13c27479d5962d8c38d27f33efb75778dfdd"
+            }
+          ],
+          "returned_classification": "partial_association",
+          "returned_comparison": "The mathematics is correct, but the selected declaration is over the wrong label domain for this local example.",
+          "built_after": {
+            "passage": "linked-source-18",
+            "paper_lines": [
+              578,
+              580
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+                "file": "PCP/Algebraic/Hadamard.lean",
+                "source_lines": [
+                  173,
+                  180
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-hadamard",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+              "file": "PCP/Algebraic/BLR.lean",
+              "source_lines": [
+                321,
+                325
+              ],
+              "source_sha256": "79fae6671c6d90b3287d9323c59743506a71d2eab431d8cb3cd554c974add51f"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Exact unrestricted Boolean linearity-distance theorem in the formal development.",
+          "built_after": {
+            "passage": "pcp-expository-hadamard",
+            "paper_lines": [
+              605,
+              612
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
+                "file": "PCP/Algebraic/BLR.lean",
+                "source_lines": [
+                  321,
+                  325
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-cubic-labels",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.Hadamard.testQueries_length",
+              "file": "PCP/Algebraic/HadamardTest.lean",
+              "source_lines": [
+                89,
+                92
+              ],
+              "source_sha256": "e98d517ad8a075351efc3c7f7375b3c7a2c8c379281e259d0ec9ba228fe8aa5c"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "The exact formal query-list length is 2r+4, hence ten at r=3.",
+          "built_after": {
+            "passage": "pcp-expository-cubic-labels",
+            "paper_lines": [
+              704,
+              710
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.Hadamard.testQueries_length",
+                "file": "PCP/Algebraic/HadamardTest.lean",
+                "source_lines": [
+                  89,
+                  92
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-binary-tests",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+              "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+              "source_lines": [
+                325,
+                359
+              ],
+              "source_sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Exact one-witness, two-distance conclusion, with the formal homogeneous-label restriction retained.",
+          "built_after": {
+            "passage": "pcp-expository-binary-tests",
+            "paper_lines": [
+              783,
+              790
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+                "file": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+                "source_lines": [
+                  325,
+                  359
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-16",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+              "file": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+              "source_lines": [
+                301,
+                325
+              ],
+              "source_sha256": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Valid summary of the generic binary zero-on-grid rejection-transfer bound, subject to the explicit degree, node and distance conditions.",
+          "built_after": {
+            "passage": "linked-source-16",
+            "paper_lines": [
+              896,
+              904
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+                "file": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+                "source_lines": [
+                  301,
+                  325
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-14",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+              "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+              "source_lines": [
+                130,
+                141
+              ],
+              "source_sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Same perfect-completeness existence result under the source’s honest-capacity bound.",
+          "built_after": {
+            "passage": "linked-source-14",
+            "paper_lines": [
+              926,
+              932
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+                "file": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+                "source_lines": [
+                  130,
+                  141
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-assembly",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+              "file": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+              "source_lines": [
+                117,
+                130
+              ],
+              "source_sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b"
+            }
+          ],
+          "returned_classification": "supported",
+          "returned_comparison": "Exact contrapositive structure of the actual seven-check source theorem.",
+          "built_after": {
+            "passage": "pcp-expository-assembly",
+            "paper_lines": [
+              934,
+              936
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+                "file": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+                "source_lines": [
+                  117,
+                  130
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "pcp-expository-resources",
+          "targets_before": [
+            {
+              "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+              "file": "PCP/Complexity/ThreeColorRuntime.lean",
+              "source_lines": [
+                11,
+                15
+              ],
+              "source_sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c"
+            }
+          ],
+          "returned_classification": "supported_with_sampled_implementation",
+          "returned_comparison": "Correct target theorem for runtime of the actual production amplified verifier; the full implementation dependency closure was not audited.",
+          "built_after": {
+            "passage": "pcp-expository-resources",
+            "paper_lines": [
+              1125,
+              1131
+            ],
+            "targets": [
+              {
+                "name": "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+                "file": "PCP/Complexity/ThreeColorRuntime.lean",
+                "source_lines": [
+                  11,
+                  15
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        },
+        {
+          "passage": "linked-source-19",
+          "targets_before": [
+            {
+              "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+              "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+              "source_lines": [
+                72,
+                78
+              ],
+              "source_sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a"
+            }
+          ],
+          "returned_classification": "supported_with_exact_arithmetic",
+          "returned_comparison": "Matches the formal repetition definition and guarantees, after unfolding the exact rational gap.",
+          "built_after": {
+            "passage": "linked-source-19",
+            "paper_lines": [
+              1141,
+              1144
+            ],
+            "targets": [
+              {
+                "name": "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
+                "file": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+                "source_lines": [
+                  72,
+                  78
+                ],
+                "provenance": "source-read"
+              }
+            ]
+          }
+        }
+      ],
+      "canonical_markdown": "work/lean-exposition/papers/pcp/expository/main.md",
+      "reader_markdown": "work/proof-reader/papers/pcp-exposition/paper.md",
+      "canonical_and_mirror_sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3",
+      "built_association_count": 19,
+      "built_declaration_count": 44,
+      "built_source_status_counts": {
+        "source-read": 17,
+        "lean": 26,
+        "statement-compiled": 1
+      },
+      "built_targets_absent_from_index": [],
+      "restored_baseline_index_entries": [],
+      "built_axiom_free_theorems_with_extracted_reports": [],
+      "built_card_titles": {
+        "inner_weighted": "Decoding the inner weighted test",
+        "outer_encoded_line": "Decoding the outer encoded-line test"
+      },
+      "added_associations": [
+        {
+          "passage": "pcp-expository-homogeneous-encoding",
+          "paper_lines": [
+            564,
+            566
+          ],
+          "targets": [
+            {
+              "name": "PCP.Algebraic.Hadamard.linearEncode",
+              "file": "PCP/Algebraic/Hadamard.lean",
+              "source_lines": [
+                137,
+                139
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-expository-clause-flags",
+          "paper_lines": [
+            1363,
+            1366
+          ],
+          "targets": [
+            {
+              "name": "PCP.Reduction.FiniteBooleanConstraints.clauses",
+              "file": "PCP/Reduction/FiniteBooleanConstraints.lean",
+              "source_lines": [
+                82,
+                88
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        },
+        {
+          "passage": "pcp-expository-or-gate",
+          "paper_lines": [
+            1375,
+            1378
+          ],
+          "targets": [
+            {
+              "name": "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+              "file": "PCP/Reduction/FiniteBooleanConstraints.lean",
+              "source_lines": [
+                47,
+                62
+              ],
+              "provenance": "source-read"
+            }
+          ]
+        }
+      ],
+      "reader_check": "Exact quotes, anchors, source name/line ranges, target reachability and proof provenance passed."
+    }
+  },
+  "finite_sanity_checks": {
+    "three_bit_homogeneous_positions": 8,
+    "three_bit_distinct_pair_count": 28,
+    "positions_differing_for_each_pair": 4,
+    "three_bit_full_degree_one_positions": 16,
+    "field_two_distinct_polynomials_identical_evaluations": {
+      "polynomials": [
+        "Y^2+Y",
+        "0"
+      ],
+      "capacity": 4,
+      "evaluations": [
+        0,
+        0
+      ]
+    }
+  },
+  "rendered_route_checks": {
+    "pcp-full-argument": {
+      "companion_hrefs_and_counts": {
+        "./#/pcp-specialist": 1,
+        "./#/pcp-exposition": 1
+      },
+      "pinned_direct_lean_urls": [
+        {
+          "path": "PCP/Verifier/Definition.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Theorem.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/ReverseConcrete.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Complexity/ReferenceNPConverse.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PolynomialDistance.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/GridInterpolation.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/GridVanishing.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/VanishingCertificate.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PolynomialLineCharacterization.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/GeneratorLowDegreeTest.lean",
+          "occurrences": 2
+        },
+        {
+          "path": "PCP/Algebraic/WeightedConstraintSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/StandardLocalCorrection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/LineTableLocalCorrection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateAgreement.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateColumnSelection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PolynomialMatrixKernel.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BerlekampWelchCertificate.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateCleanRectangle.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateAgreementFromRectangle.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateAgreementBoost.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineTest.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineCorrection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineParameterError.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BivariateCrossingSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/CandidateCrossing.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/MixedPlaneSampling.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineEndpointConsistency.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/RuledSurfaceSampling.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/RuledSurfaceRigidity.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineConstants.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/PointLineConstant.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/SetMultilinear.lean",
+          "occurrences": 1,
+          "lines": [
+            89,
+            89
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/SetMultilinear.lean",
+          "occurrences": 1,
+          "lines": [
+            116,
+            116
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/SetMultilinear.lean",
+          "occurrences": 1,
+          "lines": [
+            101,
+            101
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/SetMultilinearDecode.lean",
+          "occurrences": 1,
+          "lines": [
+            75,
+            75
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/HadamardComposition.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/HadamardWeights.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BLR.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/HadamardSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BilinearHadamard.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/HadamardRowDecoding.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BinaryStandardLocalCorrection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BinaryLocalCorrection.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/ZeroOnGridCheck.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/HadamardDerivedOracle.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Theorem.lean",
+          "occurrences": 1,
+          "lines": [
+            25,
+            25
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorAlgebra.lean",
+          "occurrences": 1,
+          "lines": [
+            94,
+            94
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorGrid.lean",
+          "occurrences": 1,
+          "lines": [
+            135,
+            135
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "occurrences": 1,
+          "lines": [
+            37,
+            37
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "occurrences": 1,
+          "lines": [
+            362,
+            362
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+          "occurrences": 1,
+          "lines": [
+            101,
+            101
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "occurrences": 1,
+          "lines": [
+            58,
+            58
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+          "occurrences": 1,
+          "lines": [
+            297,
+            297
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+          "occurrences": 1,
+          "lines": [
+            86,
+            86
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "occurrences": 1,
+          "lines": [
+            142,
+            142
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorParameters.lean",
+          "occurrences": 1,
+          "lines": [
+            168,
+            168
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorParameterChoice.lean",
+          "occurrences": 1,
+          "lines": [
+            89,
+            89
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorFullFieldSampling.lean",
+          "occurrences": 1,
+          "lines": [
+            160,
+            160
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorSeedSize.lean",
+          "occurrences": 1,
+          "lines": [
+            170,
+            170
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorResourceBounds.lean",
+          "occurrences": 1,
+          "lines": [
+            44,
+            44
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+          "occurrences": 1,
+          "lines": [
+            250,
+            250
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorCanonicalVerifier.lean",
+          "occurrences": 1,
+          "lines": [
+            168,
+            168
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/RationalRepetitionBound.lean",
+          "occurrences": 1,
+          "lines": [
+            59,
+            59
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+          "occurrences": 1,
+          "lines": [
+            72,
+            72
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorFieldSetupCost.lean",
+          "occurrences": 1,
+          "lines": [
+            45,
+            45
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorBaseCorrect.lean",
+          "occurrences": 1,
+          "lines": [
+            14,
+            14
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorBasePolynomial.lean",
+          "occurrences": 1,
+          "lines": [
+            55,
+            55
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorRuntime.lean",
+          "occurrences": 1,
+          "lines": [
+            11,
+            11
+          ]
+        },
+        {
+          "path": "PCP/Complexity/NPTableau.lean",
+          "occurrences": 1,
+          "lines": [
+            142,
+            142
+          ]
+        },
+        {
+          "path": "PCP/Complexity/TableauCells.lean",
+          "occurrences": 1,
+          "lines": [
+            155,
+            155
+          ]
+        },
+        {
+          "path": "PCP/Complexity/NPCellConstraints.lean",
+          "occurrences": 1,
+          "lines": [
+            227,
+            227
+          ]
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColor.lean",
+          "occurrences": 1,
+          "lines": [
+            144,
+            144
+          ]
+        },
+        {
+          "path": "PCP/Reduction/FiniteDomainConstraints.lean",
+          "occurrences": 1,
+          "lines": [
+            119,
+            119
+          ]
+        },
+        {
+          "path": "PCP/Reduction/FiniteBooleanConstraints.lean",
+          "occurrences": 1,
+          "lines": [
+            187,
+            187
+          ]
+        },
+        {
+          "path": "PCP/Reduction/NAEThreeColor.lean",
+          "occurrences": 1,
+          "lines": [
+            241,
+            241
+          ]
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColorRuntime.lean",
+          "occurrences": 1,
+          "lines": [
+            257,
+            257
+          ]
+        },
+        {
+          "path": "PCP/Verifier/ReductionResources.lean",
+          "occurrences": 1,
+          "lines": [
+            35,
+            35
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorFinalAssembly.lean",
+          "occurrences": 1,
+          "lines": [
+            54,
+            54
+          ]
+        },
+        {
+          "path": "PCP/ReverseConcrete.lean",
+          "occurrences": 1,
+          "lines": [
+            33,
+            33
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ReferenceNPConverse.lean",
+          "occurrences": 1,
+          "lines": [
+            39,
+            39
+          ]
+        }
+      ]
+    },
+    "pcp-specialist": {
+      "companion_hrefs_and_counts": {
+        "./#/pcp-full-argument": 1,
+        "./#/pcp-exposition": 1,
+        "./#/pcp-full-argument/@2-the-corrected-short-low-degree-test": 1,
+        "./#/pcp-full-argument/@4-bivariate-agreement": 1,
+        "./#/pcp-full-argument/@5-point-versus-line-soundness": 1,
+        "./#/pcp-full-argument/@correcting-an-outer-value-at-a-prescribed-point": 1,
+        "./#/pcp-full-argument/@checking-that-a-polynomial-vanishes-on-a-grid": 1,
+        "./#/pcp-full-argument/@parameters-for-every-finite-graph": 1,
+        "./#/pcp-full-argument/@repetition-on-one-fixed-proof": 1,
+        "./#/pcp-full-argument/@the-polynomial-time-implementation": 1,
+        "./#/pcp-full-argument/@from-every-np-verifier-to-a-graph": 1,
+        "./#/pcp-full-argument/@transporting-the-verifier-through-the-reduction": 1,
+        "./#/pcp-full-argument/@source-and-verification-account": 1
+      },
+      "pinned_direct_lean_urls": [
+        {
+          "path": "PCP/Theorem.lean",
+          "occurrences": 1,
+          "lines": [
+            24,
+            35
+          ]
+        },
+        {
+          "path": "PCP/ReverseConcrete.lean",
+          "occurrences": 1,
+          "lines": [
+            33,
+            39
+          ]
+        },
+        {
+          "path": "PCP/Complexity/ReferenceNPConverse.lean",
+          "occurrences": 1,
+          "lines": [
+            39,
+            41
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "occurrences": 1,
+          "lines": [
+            325,
+            339
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "occurrences": 1,
+          "lines": [
+            222,
+            236
+          ]
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "occurrences": 1,
+          "lines": [
+            58,
+            70
+          ]
+        }
+      ]
+    },
+    "pcp-exposition": {
+      "companion_hrefs_and_counts": {
+        "./#/pcp-full-argument": 4,
+        "./#/pcp-specialist": 2,
+        "./#/pcp-full-argument/@4-bivariate-agreement": 1,
+        "./#/pcp-full-argument/@5-point-versus-line-soundness": 1,
+        "./#/pcp-full-argument/@from-every-np-verifier-to-a-graph": 1,
+        "./#/pcp-full-argument/@correcting-an-outer-value-at-a-prescribed-point": 1
+      },
+      "pinned_direct_lean_urls": [
+        {
+          "path": "PCP/Verifier/Definition.lean",
+          "occurrences": 1
+        },
+        {
+          "path": "PCP/Theorem.lean",
+          "occurrences": 1
+        }
+      ]
+    }
+  },
+  "canonical_evidence_graph_checks": {
+    "sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
+    "node_count": 387,
+    "curated_edge_count": 35,
+    "extraction_status": "not_run",
+    "semantic_certification": false,
+    "argument_routes_tested": {
+      "PCP.Algebraic.SetMultilinear.encode_injective_on": [
+        "PCP.Algebraic.SetMultilinear.decode_encode"
+      ],
+      "PCP.Algebraic.Hadamard.relativeDistance_homogeneous_queries": [
+        "PCP.Algebraic.Hadamard.linearEncode",
+        "PCP.Algebraic.Hadamard.relativeDistance_linearEncode"
+      ],
+      "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound": [
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+        "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer"
+      ]
+    }
+  }
+}

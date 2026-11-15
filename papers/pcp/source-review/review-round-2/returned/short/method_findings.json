@@ -1,0 +1,157 @@
+{
+  "status": "assessed_proposals_not_applied",
+  "scope": "Small clarifications of existing transitions, derived from this frozen specialist review. No method, skill, manuscript, deployment or register policy was edited or installed.",
+  "evidence_boundary": "Model review of the supplied edition plus the recorded desktop journey and structural PDF annotation checks. Proposed repairs have no post-incorporation or human confirmation yet.",
+  "proposals": [
+    {
+      "id": "M01",
+      "status": "proposed_not_applied",
+      "title": "Verify a companion-section journey on each delivered reading surface",
+      "owner": "methods/long-to-short/SKILL.md, procedure 4",
+      "existing_rule": {
+        "locator": "lines 159-176",
+        "passage": "Test one complete short-to-long journey; inspect delivered PDF and source, and check portable Markdown separately.",
+        "classification": "Existing journey rule was not successfully applied to the observed web route; a small surface-specific clarification would prevent substituting a PDF destination check."
+      },
+      "donor_observation": {
+        "source": "papers/short/paper.md, line 174, full weighted argument link",
+        "url": "https://wcook04.github.io/proof-reader/#/pcp-full-argument#2-the-corrected-short-low-degree-test",
+        "observed_result": "The live desktop reader displayed There is no paper at this address. The plain #/pcp-full-argument route opened.",
+        "separate_pdf_result": "The corresponding packaged PDF remote annotation names an existing long-paper destination on page 6. All 11 inspected remote PDF destinations exist structurally; no GUI click was performed on them.",
+        "evidence": [
+          "evidence/browser_observations.json",
+          "pdf_link_checks.json"
+        ],
+        "limit": "Only the recorded anchored web journey is established as failing. Other anchored web links, mobile and keyboard-only navigation were not assessed; live deployed source bytes were not compared to the freeze."
+      },
+      "proposed_amendment": "When a delivered web reader rewrites links or uses fragment routing, test the source passage to the intended companion section and the return in that reader. Record which rendition was exercised. A PDF annotation or a working companion landing page does not establish the web section journey. Keep each existing PDF or portable-Markdown check as evidence for that surface.",
+      "smallest_workflow_change": "Add the rendition and actual destination outcome to the existing journey observation; do not add another review stage, registry or publication gate.",
+      "transfer_cases": [
+        "A mathematical single-page reader whose route parser interprets a second hash differently from ordinary browser anchors.",
+        "A documentation portal that rewrites relative section links while distributing a separate PDF edition."
+      ],
+      "exception": "A PDF-only handoff needs the existing relocated-PDF check, not a fabricated website check. Unavailable surfaces should be listed as unassessed rather than assumed equivalent.",
+      "validation_after_incorporation": [
+        "Follow specialist to the corrected weighted-test section in the delivered web reader, confirm the section content and return to the originating passage.",
+        "Sample one other link in the same routing family, such as ZERO, to distinguish a local link repair from a parser-family repair.",
+        "Retain the PDF named-destination verification as a separate check, and label it structural unless a viewer click is actually performed."
+      ],
+      "tradeoff": "One representative route per relevant delivered surface adds a small check; checking every graph interaction or every browser is not implied."
+    },
+    {
+      "id": "M02",
+      "status": "proposed_not_applied",
+      "title": "Preserve the common witness, sampling law and combined-test operation in compressed interfaces",
+      "owner": "methods/long-to-short/SKILL.md, procedures 3-4; existing claim-correspondence record",
+      "existing_rules": [
+        {
+          "path": "methods/long-to-short/SKILL.md",
+          "locator": "lines 138-176",
+          "requirement": "State input, output, preserved observable and remaining approximation; retain exact event, probability law, quantifiers and budget convention."
+        },
+        {
+          "path": "register/REGISTER_RULES.md",
+          "locator": "RG-11",
+          "requirement": "Give different roles different symbols and introduce notation beside its operation."
+        },
+        {
+          "path": "register/REGISTER_RULES.md",
+          "locator": "RG-15",
+          "requirement": "State a common witness before combining separately quantified conditions."
+        },
+        {
+          "path": "register/REGISTER_RULES.md",
+          "locator": "RG-16",
+          "requirement": "State the procedure input and output used by the next step, preserving scope."
+        }
+      ],
+      "diagnosis": "These are already required distinctions. The reusable change is a short operational prompt at compression, not a new correctness framework.",
+      "donor_passages": [
+        {
+          "path": "papers/short/paper.md",
+          "locator": "lines 187-205, row decoding and full/affine/homogeneous label guarantees",
+          "reader_need": "The same decoded value must satisfy the unrestricted and restricted guarantees; a small unrestricted error alone gives no homogeneous-label bound."
+        },
+        {
+          "path": "papers/short/paper.md",
+          "locator": "line 208 and surrounding outer-test statement",
+          "reader_need": "The test is a conjunction with a specified homogeneous-label distribution, which matters when bounding a component rejection event."
+        },
+        {
+          "path": "papers/short/paper.md",
+          "locator": "line 249 and surrounding correction argument",
+          "reader_need": "Keep the per-target, label-averaged event rejection or wrong output and the shared random direction."
+        },
+        {
+          "path": "papers/short/paper.md",
+          "locator": "lines 296-305, received-table checks and fixed decoded polynomials",
+          "reader_need": "Do not substitute the intended identity Q_P for a received table or a decoded Q before the difference check proves it."
+        }
+      ],
+      "proposed_amendment": "At a load-bearing compressed composition, identify the received input objects, the output witness fixed once, the exact sampling domain and law, which variables are fixed or averaged, the operation joining component checks, and the failure event and budget used by the consumer. Put this in the existing claim-correspondence record and retain the shortest ordinary mathematical statement that makes the inference reconstructible. A concise table is suitable when several oracle roles must be compared.",
+      "smallest_workflow_change": "Use an extra interface prompt within the current short-to-long correspondence pass. Do not add reader-facing audit badges, a parallel witness ledger or another production system.",
+      "transfer_cases": [
+        "Concatenated-code analyses that decode an inner row under one label distribution and test it under a restricted distribution.",
+        "Compositions of randomized procedures whose separately valid output guarantees need a common fixed object, or whose rejection bound depends on conjunction versus random selection."
+      ],
+      "exception": "Routine renaming or substitution within an already explicit domain and probability space needs no repeated interface inventory. Include only facts that determine the downstream implication.",
+      "validation_after_incorporation": [
+        "Read the repaired passage and reconstruct which input table is queried, which single witness is used, what randomness is shared and what event is bounded.",
+        "Compare that reconstruction with the complete formal statement and the operational definitions it uses, rather than inferring the algorithm from its endpoint type alone.",
+        "Check the joint-decoding argument and seven-check budget after the proposed table and local bridge are inserted; no new Lean test result is claimed by this proposal."
+      ],
+      "tradeoff": "Some local exposition must grow. Recover space from decimal descendants or repetitive narration only where the complete long argument already exists at a verified destination."
+    },
+    {
+      "id": "M03",
+      "status": "proposed_not_applied",
+      "title": "Treat display-fragment sentence statistics as conditional on segmentation quality",
+      "owner": "methods/register/SKILL.md, section 3; methods/docs/register-stage.md, profile interpretation",
+      "existing_rules": [
+        {
+          "path": "methods/register/SKILL.md",
+          "locator": "section 3, lines 81-102",
+          "requirement": "Use the prose dump, inspect extraction against source pages, compare like regions and treat statistics as detectors."
+        },
+        {
+          "path": "register/REGISTER_RULES.md",
+          "locator": "RG-01 and RG-10",
+          "requirement": "Check extraction before numerical comparison; assess rhythm after compression without treating lower word count as better."
+        }
+      ],
+      "donor_observation": {
+        "path": "register/measurement.txt",
+        "locator": "lines 63-76, long_sent_share and short_sent_share specimens",
+        "fragments": [
+          "For example, put",
+          "Packing the quotients into",
+          "In characteristic two,"
+        ],
+        "manuscript_locators": [
+          "papers/short/paper.md line 322 and following display",
+          "papers/short/paper.md line 65 and following display",
+          "papers/short/paper.md line 176 and following display"
+        ],
+        "counterexamples_to_blanket_editing": [
+          "Both are needed.",
+          "Fix these choices."
+        ],
+        "inference": "The reported specimen list includes lead-ins to displayed mathematics as very short units. That limits sentence-length interpretation; it does not by itself establish a detector implementation bug or invalidate every feature."
+      },
+      "proposed_amendment": "Before acting on sentence-length or rhythm flags in mathematical text, inspect representative display lead-ins and continuations with their equations. Where the reported units split a mathematical sentence, join them for interpretation or mark the affected sentence features unreliable until the segmentation is verified. Keep complete short sentences eligible for counting and evaluate them by their mathematical job.",
+      "smallest_workflow_change": "Add display-adjacent prose to the existing extraction spot-check; preserve the report as descriptive evidence and do not introduce a target prose score or new threshold.",
+      "transfer_cases": [
+        "Markdown or TeX papers in which a sentence passes through a displayed equation.",
+        "Scientific manuscripts whose equation introductions and continuations are segmented independently by plain-text extraction."
+      ],
+      "exception": "Self-contained short conclusions may be correctly segmented and useful. Properly segmented prose-only regions retain their descriptive comparisons; do not suppress every measurement because one feature is affected.",
+      "validation_after_incorporation": [
+        "Inspect raw extracted units and source rendering for the two named display fragments and the two complete short sentences.",
+        "If segmentation is changed, rerun only the affected comparison and document the unit definition before interpreting a changed distribution.",
+        "Do not claim this review reran the register detector or measured an improvement in reader understanding."
+      ],
+      "tradeoff": "A smaller set of interpretable metrics is preferable to precise-looking rhythm claims from unverified sentence units; this does not require discarding the whole profile."
+    }
+  ],
+  "adoption_boundary": "All three are candidate clarifications or application checks. Their transfer cases and exceptions are recorded here for owner review; none is installed."
+}

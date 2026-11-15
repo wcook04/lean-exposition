@@ -1,0 +1,37 @@
+{
+  "status": "completed; two bounded candidate amendments, not adopted",
+  "proposals": [
+    {
+      "id": "M01",
+      "existing_transition_or_rule": "methods/graph-to-long/SKILL.md75–84 and Procedure2: compare actual source versions and theorem hypotheses",
+      "donor_passage": "pcp-long-hadamard-composition, line864; bundled v2 Claim3.7 versus HadamardComposition.lean20–24",
+      "proposed_amendment": "When a source comment criticizes a paper assertion, record the exact paper edition and compare the assertion's hypotheses before carrying the criticism into exposition. If the supplied edition has changed, retain the comment only as explicitly dated history.",
+      "scope": "Version-dependent scholarly comparison in source-linked mathematical explanations.",
+      "transfer_cases": [
+        "Corrected theorem hypotheses superseding an older code comment",
+        "A published appendix narrowing an earlier draft's assertion"
+      ],
+      "exception": "A comment may be quoted as historical evidence about its own edition if that edition and claim are available and identified.",
+      "first_test": "Would the workflow reject the current broader-homogeneity sentence after reading corrected Claim3.7?",
+      "evidence": "F02; evidence/binary_literature_review.md; claim/source locators in review.md.",
+      "adoption_status": "proposal only"
+    },
+    {
+      "id": "M02",
+      "existing_transition_or_rule": "methods/docs/reader-review.md68–115; register RG-21: freeze version and state each verification's actual scope",
+      "donor_passage": "reader/edition.json lean.scope, per-declaration provenance and analytics.free_of_axioms",
+      "proposed_amendment": "Keep absent or unextracted reports distinct from verified-empty results in the reader data contract. A retained statement-elaboration receipt must not imply proof build or axiom extraction, and a global status should summarize mixed local evidence without erasing its origin.",
+      "scope": "Evidence readers and review packages combining heterogeneous formal-source receipts.",
+      "transfer_cases": [
+        "Dependency list absent versus a checked declaration with no dependencies",
+        "Statement elaboration retained from an extraction versus current project proof compilation"
+      ],
+      "exception": "A verified-empty report may be shown positively when its command, edition and scope are bound to the displayed declaration.",
+      "first_test": "An unextracted empty axiom array renders unknown/unextracted; a genuine completed report with an empty result remains distinguishable.",
+      "evidence": "F05; evidence/browser_observations.json; claim_checks.json reader_receipt_observation.",
+      "adoption_status": "proposal only"
+    }
+  ],
+  "not_proposed": "No second authoring system, new mandatory outside review gate, detector optimization or blanket simplification rule.",
+  "skill_changes_made": false
+}

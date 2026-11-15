@@ -3,8 +3,8 @@
   "stage": "expository",
   "state": "draft",
   "path": "papers/expository.md",
-  "content_sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
-  "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
+  "content_sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3",
+  "graph_sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
@@ -13,11 +13,18 @@
   "claim_ids": [
     "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
     "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
     "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
     "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+    "PCP.Algebraic.Hadamard.linearEncode",
+    "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+    "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
     "PCP.Algebraic.Hadamard.testQueries_length",
+    "PCP.Algebraic.HadamardComposition.encode_query",
+    "PCP.Algebraic.HadamardDerivedOracle.answer_failure_le",
+    "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le",
     "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
     "PCP.Algebraic.SetMultilinear.eval_encode",
     "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
@@ -26,6 +33,8 @@
     "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
     "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
     "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+    "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+    "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
     "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
     "PCP.ReferenceNP.inNP_iff_mem",
     "PCP.np_subset_pcp",
@@ -82,8 +91,14 @@
     "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+    "PCP.Algebraic.Hadamard.linearEncode",
+    "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+    "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
     "PCP.Algebraic.Hadamard.testQueries_length",
     "PCP.Algebraic.Hadamard.test_soundness",
+    "PCP.Algebraic.HadamardComposition.encode_query",
+    "PCP.Algebraic.HadamardDerivedOracle.answer_failure_le",
+    "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le",
     "PCP.Algebraic.HadamardDerivedOracle.rejection_transfer",
     "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
     "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -96,6 +111,8 @@
     "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
     "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
     "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+    "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+    "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
     "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
     "PCP.ReferenceNP.inNP_iff_mem",
     "PCP.np_subset_pcp",
@@ -107,7 +124,7 @@
   "passages": [
     {
       "anchor": "pcp-expository-opening",
-      "text_sha256": "b545546224ae7d1a6673c61f9d5886fbb9cf9a8a36a745cd5680ad6b32f80f75",
+      "text_sha256": "fad7611a17a697d4a3d40755f274435ee50935821ddae3e974e1ea3288f4f458",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -146,7 +163,7 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
     },
     {
       "anchor": "pcp-expository-colouring",
@@ -157,7 +174,7 @@
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-theorem",
@@ -204,33 +221,33 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
     },
     {
       "anchor": "pcp-expository-polynomial-distance",
-      "text_sha256": "eca2663c18423875882c2fc0a652f95a57defb4a9f85ebee67883c0497c87d20",
+      "text_sha256": "a32a685eea946c90f561cdbfbc499bf1a6045fec01e0828479a1823030f120ab",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-interpolation",
-      "text_sha256": "f78cbd60e7906df144074a78ee0ddabde1ae6bb896d3dfb4710db5f80d61ef0c",
+      "text_sha256": "ccc8921d42b87221f187c1a9b4c3f0899349f3538029f1d86354e85fbcdf1a8f",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-colour-polynomials",
-      "text_sha256": "0ba40ee67ffd71db79640f63179578a3961c36e7084323740c8154d0cfda5ecc",
+      "text_sha256": "14d92fc62c2a0461a6fcc7ada72893e5f44b5945fc684210bf26b92af651c628",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
         "ordinary:finite-examples",
@@ -242,11 +259,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
     },
     {
       "anchor": "pcp-expository-grid-certificate",
-      "text_sha256": "070247823c7eda397c36185b38c9e9b5bbed164f5c56553cb9eb0e6674060d96",
+      "text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
       "claim_ids": [
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
         "ordinary:exposition-examples",
@@ -258,11 +275,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-digit-encoding",
-      "text_sha256": "15b5e1e89cfaf88a423d81e5b2d6409ece216db32775b85ab2e55c0e0b2b169c",
+      "text_sha256": "28c4856f3519f97588e3a6b4a783b5e6927e22a19566eddfc83a987086a4645c",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
         "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -278,11 +295,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-weighted-test",
-      "text_sha256": "a2cd1443d3d90e7735f9a142c26504618a1fc3073ca7fdebbb99b125a21135b6",
+      "text_sha256": "593a0ebdf5fbdfd815b1f8606941e6fb2a424af197f954e6dc6a70ee3ed48d0e",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
       ],
@@ -291,14 +308,16 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
     },
     {
       "anchor": "pcp-expository-hadamard",
-      "text_sha256": "420a33637a889233fd8000e3ea8f4b0aa4023f56f02726007e0bf47aabc075b9",
+      "text_sha256": "88293c84cedf9851d8ac4fee42c36248e8d190d293e758d33befe3b33077bd30",
       "claim_ids": [
         "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
-        "ordinary:finite-examples"
+        "ordinary:finite-examples",
+        "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+        "PCP.Algebraic.Hadamard.linearEncode"
       ],
       "citation_ids": [
         "blr:4",
@@ -307,14 +326,15 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. The cited antecedent references have their own source records and may differ in hypotheses and conclusions from the formal statement."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. The cited antecedent references have their own source records and may differ in hypotheses and conclusions from the formal statement."
     },
     {
       "anchor": "pcp-expository-hadamard-correction",
       "text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
       "claim_ids": [
         "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
-        "ordinary:finite-examples"
+        "ordinary:finite-examples",
+        "PCP.Algebraic.Hadamard.selfCorrect_failure_le"
       ],
       "citation_ids": [
         "blr:4",
@@ -323,14 +343,17 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
     },
     {
       "anchor": "pcp-expository-cubic-labels",
-      "text_sha256": "50952341ae57f436e321e02402969c7f795faabd575b329c741a5ae55f9f57bb",
+      "text_sha256": "5e1ba04ee31a9c46d84aada4496f7d481a384f976bb82942e7cf30cbba13150a",
       "claim_ids": [
         "ordinary:exposition-examples",
-        "PCP.Algebraic.Hadamard.testQueries_length"
+        "PCP.Algebraic.Hadamard.testQueries_length",
+        "PCP.Algebraic.HadamardComposition.encode_query",
+        "PCP.Algebraic.HadamardDerivedOracle.answer_failure_le",
+        "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le"
       ],
       "citation_ids": [
         "paper:additional:3"
@@ -341,11 +364,12 @@
     },
     {
       "anchor": "pcp-expository-binary-tests",
-      "text_sha256": "2ce5b77d0a2af56648be1174cbf025482fe68f63e96b7c95946ad97cb1545556",
+      "text_sha256": "7814f42fd767730ae703b8594e4925e7f821256006a1364f45d7b71d38087db8",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.BinaryLocalCorrection.failure_le",
-        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge"
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+        "ordinary:exposition-examples"
       ],
       "citation_ids": [
         "almss:45",
@@ -369,11 +393,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
     },
     {
       "anchor": "pcp-expository-assembly",
-      "text_sha256": "1fc5ce4c16abc3e3c0df6c2cb42e0b530221898231eaf4f0afc669ffd058e88f",
+      "text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
@@ -406,11 +430,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
     },
     {
       "anchor": "pcp-expository-resources",
-      "text_sha256": "2ec7581fcd743ec00e7f14315dfa176aad3fee46d0bf094c2a45935de81aea5b",
+      "text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
         "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
@@ -449,22 +473,64 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
       "anchor": "pcp-expository-answers",
-      "text_sha256": "9b32e308f83116ce62396723f5262c5020cab9c262561445eda9c309fd09bf0a",
+      "text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
+    },
+    {
+      "anchor": "pcp-expository-error-constants",
+      "text_sha256": "f463e47972eecb10774e1764690adf07e587e61072b372958a4dacb27b4972ca",
+      "claim_ids": [
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:additional:0",
+        "paper:additional:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Exact definitions and source-supported bounds for the constants previously used; no fresh Lean extraction."
+    },
+    {
+      "anchor": "pcp-expository-clause-calculation",
+      "text_sha256": "aade5b5aee937d9cc1140efde637d6f2367cfccdbb5c4cb1499fb8220547664c",
+      "claim_ids": [
+        "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+        "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
+        "ordinary:exposition-examples"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The ordinary finite-pattern calculation explains the clause construction, supported by the source equivalence and finite truth-table checks."
     },
     {
       "anchor": "pcp-expository-correction",
-      "text_sha256": "c853b29e897a1fec1ae87a5acb0dc85ba0bbc5bad7aa2c26b7c4378e16b7ee72",
+      "text_sha256": "191daee2ebbd6cb5ba737fbd7dbf017fa294b9f4f3ddaad0dffdd07ca5397241",
       "claim_ids": [
         "ordinary:v1-old-test-counterexample",
         "ordinary:finite-examples"
@@ -474,11 +540,11 @@
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
     },
     {
       "anchor": "pcp-expository-evidence",
-      "text_sha256": "5fcefccd9c93550f40b162b3f5ebf2a10110e8fc6c1bb0f18b8aa9d5711b3bb0",
+      "text_sha256": "f1f6d79755c44ec861f456c76f8a8cf1309b3f3769872c3b49c5f0c89065b598",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -517,15 +583,144 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
     }
   ],
   "review_state": "not_reviewed",
   "review_notes": [
-    "Bound to the author\u2019s initial frozen passage edition; finite calculations and the ordinary v1 counterexample are distinct from compiled Lean evidence. Source-aware mapping is not independent mathematical or reader review.",
+    "Bound to the author’s initial frozen passage edition; finite calculations and the ordinary v1 counterexample are distinct from compiled Lean evidence. Source-aware mapping is not independent mathematical or reader review.",
     "Graph reconciliation added direct source-locator statements. These are unelaborated; new finite examples not covered by the original checker await separate evidence mapping.",
     "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification.",
-    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl\u2013Sudan, Rubinfeld\u2013Sudan and Kaufman\u2013Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
-    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged."
+    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
+    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
+    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed."
+  ],
+  "reading_links": [
+    {
+      "from_anchor": "pcp-expository-interpolation",
+      "from_text_sha256": "ccc8921d42b87221f187c1a9b4c3f0899349f3538029f1d86354e85fbcdf1a8f",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-colour-constraints",
+      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "kind": "illustrates",
+      "rationale": "Works the interpolation operation used for the colouring and edge tables."
+    },
+    {
+      "from_anchor": "pcp-expository-colour-polynomials",
+      "from_text_sha256": "14d92fc62c2a0461a6fcc7ada72893e5f44b5945fc684210bf26b92af651c628",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-colour-constraints",
+      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "kind": "illustrates",
+      "rationale": "Computes the field equations for allowed colours and edges."
+    },
+    {
+      "from_anchor": "pcp-expository-grid-certificate",
+      "from_text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-colour-constraints",
+      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "kind": "illustrates",
+      "rationale": "Works both certificate identities and explains why both are needed."
+    },
+    {
+      "from_anchor": "pcp-expository-digit-encoding",
+      "from_text_sha256": "28c4856f3519f97588e3a6b4a783b5e6927e22a19566eddfc83a987086a4645c",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-digit-encoding",
+      "to_text_sha256": "2ba3588f352c79c58324dc572b489e09c27b2c6e18d5c4c96b533d218b7d31f4",
+      "kind": "illustrates",
+      "rationale": "Works base-three substitution and distinguishes formal and functional degree."
+    },
+    {
+      "from_anchor": "pcp-expository-hadamard",
+      "from_text_sha256": "88293c84cedf9851d8ac4fee42c36248e8d190d293e758d33befe3b33077bd30",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-hadamard-encoding",
+      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "kind": "illustrates",
+      "rationale": "Works an eight-position homogeneous word and corruption."
+    },
+    {
+      "from_anchor": "pcp-expository-hadamard-correction",
+      "from_text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-hadamard-encoding",
+      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "kind": "illustrates",
+      "rationale": "Works the random two-read correction at a fixed requested location."
+    },
+    {
+      "from_anchor": "pcp-expository-cubic-labels",
+      "from_text_sha256": "5e1ba04ee31a9c46d84aada4496f7d481a384f976bb82942e7cf30cbba13150a",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-hadamard-encoding",
+      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "kind": "illustrates",
+      "rationale": "Traces field coordinates into a derived bit address and a masked read."
+    },
+    {
+      "from_anchor": "pcp-expository-binary-tests",
+      "from_text_sha256": "7814f42fd767730ae703b8594e4925e7f821256006a1364f45d7b71d38087db8",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-outer-correction",
+      "to_text_sha256": "22f3ece57fa44a833466e67e5e01bfd2411893fb85cc03bcd178e701faef876a",
+      "kind": "illustrates",
+      "rationale": "Explains the row addresses, rejection event and fixed-target correction."
+    },
+    {
+      "from_anchor": "pcp-expository-assembly",
+      "from_text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-assembly",
+      "to_text_sha256": "b0bd505dbf2980db48fd927de0d38c2206f2ff268f32fd8e95def98916834a31",
+      "kind": "illustrates",
+      "rationale": "Derives the ideal-to-actual event comparison and strict error budget."
+    },
+    {
+      "from_anchor": "pcp-expository-resources",
+      "from_text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-resources",
+      "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
+      "kind": "illustrates",
+      "rationale": "Explains address counts and repetition through worked resource bounds."
+    },
+    {
+      "from_anchor": "pcp-expository-answers",
+      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "to_stage": "expository",
+      "to_anchor": "pcp-expository-grid-certificate",
+      "to_text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
+      "kind": "answers",
+      "rationale": "Answers the question about omitting the first certificate identity."
+    },
+    {
+      "from_anchor": "pcp-expository-answers",
+      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "to_stage": "expository",
+      "to_anchor": "pcp-expository-hadamard-correction",
+      "to_text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
+      "kind": "answers",
+      "rationale": "Explains why a fixed mask loses the random-query guarantee."
+    },
+    {
+      "from_anchor": "pcp-expository-answers",
+      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "to_stage": "expository",
+      "to_anchor": "pcp-expository-assembly",
+      "to_text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
+      "kind": "answers",
+      "rationale": "Explains why separate decoded witnesses cannot support the colouring deduction."
+    },
+    {
+      "from_anchor": "pcp-expository-answers",
+      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "to_stage": "expository",
+      "to_anchor": "pcp-expository-resources",
+      "to_text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
+      "kind": "answers",
+      "rationale": "Checks seed enumeration and the strict toy error threshold."
+    }
   ]
 }

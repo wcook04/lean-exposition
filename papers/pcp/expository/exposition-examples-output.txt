@@ -3,10 +3,19 @@ K4: all 81 three-colour assignments checked; displayed assignment has one bad ed
 F5: all 125 quadratics satisfy the [1,2,3] interpolation formula;
   both certificate identities checked at 25 ambient points; P(2,2)=4;
   P=M=1 shows why the first identity cannot be omitted.
-Digit encoding: substitution equality checked at all five field elements; lambda=2 gives 4.
+F5: weights [1,3,2] at nodes (2,4,3) interpolate all 125 quadratics at zero;
+  all 25 zero-slice points can be corrupted with overall error 1/25.
+Digit encoding: substitution equality checked at all five field elements; lambda=2 gives 3;
+  none of the 625 polynomials of degree at most three has the same evaluations.
 Label counterexample: all 256 BLR pairs pass; none of four evaluation points matches.
+Label domains: 256 full, 16 affine, 8 homogeneous; replacing four bits gives
+  error 1/64 on full labels and 1/2 on homogeneous labels.
+Label correction: all 256 requests and all 256 masks per request checked;
+  maximum error 1/32 equals twice the full-label error.
 NAE: all eight Boolean cases checked for OR conversion and triangle extension;
   palette gadget permits exactly the complementary pairs (0,1), (1,0).
 Review additions: all eight OR-gate cases and 64 prefix-mismatch cases pass;
   toy soundness budgets give 7/32 < 3/8 and equality 3/8 at the boundary.
+Degree four: (K,E,S,C)=(105408,1054138,1054166,1054082);
+  fair-bit gap 1/1137847282503168, 1137847282503168 repetitions at 187 queries each.
 All additional exposition checks passed.

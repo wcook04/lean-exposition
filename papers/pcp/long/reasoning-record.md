@@ -7,6 +7,8 @@ attribution: "Original algebraic argument: Prashanth Amireddy, Amik Raj Behera, 
 
 # The algebraic PCP theorem: a detailed account of the Lean proof
 
+*An explanatory account prepared by Will Cook with AI assistance, following Troy Lee's formalization of the algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard.*
+
 <!-- passage:pcp-long-intro-theorem -->
 A polynomial-time verifier can check membership in any NP language by reading a constant number of bits from a suitably encoded proof. It uses only logarithmically many random bits, accepts a correct proof with certainty, and rejects every purported proof of a false statement with probability at least one half. This account explains the algebraic construction and the machine-level steps that establish this statement in Troy Lee's Lean formalization.
 
@@ -292,7 +294,7 @@ $$
 
 their disagreement probability is less than one, so they must be equal. This proves that the corrected word $g$ satisfies every weighted constraint. This last use of strict inequality converts a probability estimate into an exact identity. See the [weighted-constraint soundness proof][lean-weighted].
 
-The plurality correction and double-sampling argument follow the approach of Rubinfeld–Sudan [Section 4, Theorem 5 and Lemmas 6–8 in the retained manuscript][rubinfeld-sudan]. Amireddy et al. identify this antecedent as Theorem 4.1 of the published paper in their discussion after Lemma 3.3. They also relate the test to Kaufman–Sudan [Theorem 2.9][kaufman-sudan], whose general result assumes a 2-ary independent local formal characterization. We have proved the weighted estimate directly above; applying that general theorem would additionally require checking its characterization hypotheses.
+The plurality correction and double-sampling argument follow the approach of Rubinfeld–Sudan [Section 4, Theorem 5 and Lemmas 6–8 in the retained manuscript][rubinfeld-sudan]. Amireddy et al. identify this antecedent as Theorem 4.1 of the published paper in their discussion after Lemma 3.3. They also relate the test to Kaufman–Sudan [Theorem 2.9][kaufman-sudan], whose general result assumes a 2-ary independent local formal characterization. For that theorem, take $k=c+2$ forms: $\ell_1(u,v)=u$ and $\ell_{i+1}(u,v)=u+a_iv$. Accepted vectors satisfy $y_0=\sum_iw_i y_i$, a linear subspace. The exact characterization proved above supplies the formal characterization, and the nonzero nodes make the center and each other form jointly uniform, giving the required two-ary independence. Its denominator becomes $(2k+1)(k-1)=2c^2+7c+5$, the denominator in (A10). The direct grid proof is retained here because it also explains the fixed-center prediction bound (A9).
 
 <!-- /passage:pcp-long-algebra-weighted-plurality -->
 
@@ -597,13 +599,31 @@ M(y,z)=f\bigl(u+yv+(z-s)w\bigr).
 \tag{A27}
 $$
 
-Use nearest degree-$d$ polynomials on its rows and columns. At crossing $(t,s)$, the column prediction is $L_{u,v}(t)$, and the row prediction is
+Here a row fixes $y$ and varies $z$; a column fixes $z$ and varies $y$. Use the nearest line polynomials
+
+$$
+R_y(z)=L_{u+yv-sw,w}(z),\qquad
+C_z(y)=L_{u+(z-s)w,v}(y).
+$$
+
+At crossing $(t,s)$, the column prediction is $C_s(t)=L_{u,v}(t)$, and the row prediction is
 
 $$
 L_{u+tv-sw,w}(s)=\pi_{u+tv}(w,s).
 $$
 
-To apply crossing consistency, we bound its four errors. A random affine expression $a+\lambda b$ is uniform in $V$ when $b$ is uniform and $\lambda\ne0$. In the global row error of (A27), the row center contains the coefficient $y$ of $v$; all $y\ne0$ therefore give the global rejection distribution, while the exceptional slice $y=0$ contributes at most $1/q$. In the global column error, the analogous exceptional slice is $z=s$. The local error along the selected column has the same $y=0$ exception. These three means are at most $\delta'+1/q$. For the local error along the selected row, $z\ne s$ makes the center uniform, but the evaluation parameter is the fixed $t$; (A25) bounds this contribution by $4\delta'$, and the exceptional slice contributes at most $1/q$. Thus all four means are at most $4\delta'+1/q$.
+The four discrepancies needed for crossing consistency are
+
+$$
+\begin{aligned}
+e_{\rm row}&=\Pr_{y,z}[M(y,z)\ne R_y(z)],&
+e_{\rm col}&=\Pr_{y,z}[M(y,z)\ne C_z(y)],\\
+e_{\rm cross,row}&=\Pr_z[M(t,z)\ne C_z(t)],&
+e_{\rm cross,col}&=\Pr_y[M(y,s)\ne R_y(s)].
+\end{aligned}
+$$
+
+The last two compare a received slice with the *transverse* polynomial predictions. Each quantity depends on the sampled $v,w,s$; we now bound its mean over those choices. A random affine expression $a+\lambda b$ is uniform in $V$ when $b$ is uniform and $\lambda\ne0$. In the global row error of (A27), the row center contains the coefficient $y$ of $v$; all $y\ne0$ therefore give the global rejection distribution, while the exceptional slice $y=0$ contributes at most $1/q$. In the global column error, the analogous exceptional slice is $z=s$. The local error along the selected column has the same $y=0$ exception. These three means are at most $\delta'+1/q$. For the local error along the selected row, $z\ne s$ makes the center uniform, but the evaluation parameter is the fixed $t$; (A25) bounds this contribution by $4\delta'$, and the exceptional slice contributes at most $1/q$. Thus all four means are at most $4\delta'+1/q$.
 
 Markov's inequality and a union bound show that the probability one of these four errors exceeds $\varepsilon$ is at most $4(4\delta'+1/q)/\varepsilon$. On the complementary event the predictions agree by the crossing lemma. For each $v$, plurality minimizes the probability of disagreeing with the independent prediction $\pi_{u+tv}(w,s)$; comparing it with $L_{u,v}(t)$ costs at most a factor two, exactly as in (A7). Hence
 
@@ -630,7 +650,7 @@ f\bigl(x+yh+z(v+yw)\bigr),&z\ne0.
 \tag{A29}
 $$
 
-The expression for nonzero $z$ is affine in either variable when the other is fixed. Give row $y$ the candidate polynomial
+The zero column is the target line in the corrected function. Each nonzero column samples an oriented line with uniform center and direction. The rows join these random comparisons to the target, allowing us to prove that the already chosen $Q$ agrees with every target value. The expression for nonzero $z$ is affine in either variable when the other is fixed. Give row $y$ the candidate polynomial
 
 $$
 R_y(z)=L_{x+yh,\,v+yw}(z).
@@ -779,26 +799,28 @@ $$
 \operatorname{Enc}(p)=\sum_{j<b^c}p_j\prod_{i=0}^{c-1}X_{i,j_i}.
 $$
 
-Each monomial uses exactly one variable from each of the $c$ groups. Thus the encoding has total degree at most $c$, although the original polynomial may have degree almost $b^c$. Define the evaluation point
-
-$$
-\Phi(z)_{i,k}=z^{k b^i}.
-$$
-
-For a monomial, substitution gives
-
-$$
-\prod_i\Phi(z)_{i,j_i}
-=z^{\sum_i j_i b^i}=z^j.
-$$
-
-Linearity now proves $\operatorname{Enc}(p)(\Phi(z))=p(z)$. This establishes both recovery of evaluations and injectivity on polynomials of degree strictly below $b^c$. The strict bound matters: the encoding retains only $c$ digits.
-
-Soundness must also handle a received table which decodes to an arbitrary polynomial $Q$ of total degree at most $c$, not necessarily a set-multilinear one. Define
+Each monomial uses exactly one variable from each of the $c$ groups. Thus the encoding has total degree at most $c$, although the original polynomial may have degree almost $b^c$. To recover the formal polynomial, define the substitution map
 
 $$
 \operatorname{Dec}(Q)(Y)=Q\bigl((Y^{k b^i})_{i,k}\bigr).
 $$
+
+For $j<b^c$, this substitution sends the encoded monomial $\prod_iX_{i,j_i}$ to $Y^{\sum_i j_i b^i}=Y^j$. Linearity therefore gives the identity
+
+$$
+\operatorname{Dec}(\operatorname{Enc}(p))=p\qquad\text{in }F[Y].
+$$
+
+Applying $\operatorname{Dec}$ to equal encodings proves injectivity on polynomials of degree strictly below $b^c$. The strict bound matters: the encoding retains only $c$ digits. Evaluating the identity at $z\in F$ then gives
+
+$$
+\operatorname{Enc}(p)(\Phi(z))=p(z),
+\qquad \Phi(z)_{i,k}=z^{k b^i}.
+$$
+
+The formal identity proves more than equality of evaluations. Over a finite field of size $q$, the nonzero polynomial $Y^q-Y$ vanishes at every field element. When $q<b^c$, it lies within the admitted degree range, so equality as functions would not by itself prove injectivity.
+
+Soundness must also handle a received table which decodes to an arbitrary polynomial $Q$ of total degree at most $c$, not necessarily a set-multilinear one. Use the same substitution map $\operatorname{Dec}$.
 
 A monomial of $Q$ has at most $c$ variable occurrences, counted with multiplicity. Each substituted variable has degree at most $b^c$, so
 
@@ -808,7 +830,7 @@ $$
 
 The distinction between the honest degree bound $\deg p<b^c$ and the decoded bound $c b^c$ propagates through the outer tests. A low-degree test does not by itself prove that an arbitrary decoded polynomial has the special set-multilinear form of an honest encoding.
 
-The corresponding formal statements are [evaluation recovery](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinear.lean#L101) and [degree control for an arbitrary decoded polynomial](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinearDecode.lean#L75). This is the first encoding in the paper's Section 3.
+The formal source separates [the substitution identity](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinear.lean#L89), [injectivity](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinear.lean#L116), [evaluation recovery](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinear.lean#L101) and [degree control for an arbitrary decoded polynomial](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/SetMultilinearDecode.lean#L75). This is the first encoding in the paper's Section 3.
 
 <!-- /passage:pcp-long-set-multilinear -->
 
@@ -861,7 +883,7 @@ $$
 
 The statement concerns one field value $u$ and one polynomial $A$; its extension to an oracle is pointwise. In particular, cubic labels suffice to observe $u^3-1$, the expression used to enforce membership in the three allowed colours.
 
-For $A(Y)=\eta Y$ and a homogeneous label $L$, the composed label is homogeneous. If $\eta\neq0$, multiplication by $\eta$ is a linear bijection of $F$, and its dual permutes the homogeneous labels. This permutation is essential when averaging noisy answers with Lagrange weights. Zero weights must be treated separately: a zero summand is known without reading the oracle. The formal source proves the general [composition identity](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardComposition.lean) and the needed [weighted homogeneous relabelling](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardWeights.lean). We do not require the paper's more general homogeneity assertion.
+For $A(Y)=\eta Y$ and a homogeneous label $L$, the composed label is homogeneous. If $\eta\neq0$, multiplication by $\eta$ is a linear bijection of $F$, and its dual permutes the homogeneous labels. This permutation is essential when averaging noisy answers with Lagrange weights. Zero weights must be treated separately: a zero summand is known without reading the oracle. The formal source proves the general [composition identity](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardComposition.lean) and the needed [weighted homogeneous relabelling](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardWeights.lean). This is the scalar homogeneous case stated in Claim 3.7 of the corrected paper.
 
 <!-- /passage:pcp-long-hadamard-composition -->
 
@@ -943,7 +965,7 @@ Suppose the full test rejects with probability at most $\epsilon<1/28$. Each ind
 
 The corrected unit test and (B3) force $\ell(1)=1$. Otherwise the correct target value and the required answer differ on every seed, whereas their discrepancy is at most $2\epsilon+\epsilon<1$.
 
-For the product check, replace its three corrected answers by their $\ell$-values. The three replacements cost at most $6\epsilon$, and test failure costs at most another $\epsilon$. Thus
+For $r\ge2$, use the top-degree product check and replace its three corrected answers by their $\ell$-values. The three replacements cost at most $6\epsilon$, and test failure costs at most another $\epsilon$. Thus
 
 $$
 \Pr_{L,P}\bigl[\ell(LP)\neq\ell(L)\ell(P)\bigr]
@@ -1041,7 +1063,7 @@ For a row above this threshold, use the zero polynomial and the universal distan
 $$
 K(c)=4(c+2)^2\bigl(112(c+2)+60\bigr):
 \quad
-\Delta_{\rm full}(h,\mathcal H_r(Q)),\ 
+\Delta_{\rm full}(h,\mathcal H_r(Q)),\
 \Delta_{\rm hom}(h,\mathcal H_r(Q))
 \leq K(c)\kappa.
 \tag{B11}
@@ -1118,10 +1140,10 @@ $$
 q\geq10^6D^3,\qquad E(c)\kappa\leq\frac1{4\cdot10^6}.
 $$
 
-It supplies a polynomial $P:F^k\to F$ of total degree at most $D$ for which $\Delta(g,P)\leq2E(c)\kappa$. Encoding halves this distance. A final triangle inequality proves
+It supplies a formal polynomial $P\in F[X_1,\ldots,X_k]$ of total degree at most $D$ for which $\Delta(g,P)\leq2E(c)\kappa$. Encoding halves this distance. A final triangle inequality proves
 
 $$
-\Delta_{\rm full}(f,\mathcal H_r(P)),\ 
+\Delta_{\rm full}(f,\mathcal H_r(P)),\
 \Delta_{\rm hom}(f,\mathcal H_r(P))
 \leq S(c)\kappa,
 \qquad S(c)=28+E(c).
@@ -1309,6 +1331,8 @@ The preceding tests give a verifier for graph three-colourability. This chapter 
 
 The constants, polynomial, verifier and implementation are chosen before the input. The proof may depend on the input but is fixed before the random seed. This is the content of [the forward theorem][lean-theorem]. A separate argument below gives the reverse inclusion in the same machine model. Here $\ell$ denotes a query budget; the number of actual reads may be smaller on some seeds.
 
+For this final chapter, $d$ denotes the grid dimension, $m$ the digit base (previously $b$), and $Q$ the field cardinality (previously $q$). The decoded degree bound is $D=cm^c$; the difference polynomial will be written $Q_*$. These choices keep the final parameter statements close to their source.
+
 The algebraic construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. We follow the corrected [arXiv v2, Section 7][paper-pcp], with the concrete choices and additional reductions in Troy Lee's formalization. The paper proves the three-colouring construction and invokes NP-completeness. The formalization also constructs the NP reduction, the fair-bit sampler and the polynomial-time machine. Its exact choices need not coincide with the asymptotic parameter choices in the paper.
 <!-- /passage:pcp-long-final-target -->
 
@@ -1406,7 +1430,7 @@ $$
 \quad6c+20,\quad6c+20,\quad3.
 $$
 
-Their sum is $20c+107$, independent of the graph size. Taking $c=4$ gives $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
+Their sum is $20c+107$, independent of the graph size. Taking $c=4$ bounds one unamplified run by at most $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
 <!-- /passage:pcp-long-query-budget -->
 
 ### Perfect completeness
@@ -1439,7 +1463,7 @@ Q\ge10^6D^3,\qquad Q\ge100Dh,
 \qquad d(h-1)\le D,
 $$
 
-with $c,m,h\ge1$, the prescribed generator nodes, a valid local-correction generator, and a primitive cube root of unity. Let $\kappa$ be the rejection probability of an arbitrary received proof. The argument will show that sufficiently small $\kappa$ forces the graph to be three-colourable.
+with $c,m,h\ge1$, the prescribed generator nodes, a correction parameter satisfying `GoodNodes`, as in the inner corrector, and a primitive cube root of unity. Let $\kappa$ be the rejection probability of an arbitrary received proof. The argument will show that sufficiently small $\kappa$ forces the graph to be three-colourable.
 
 Write $E_c$ for the line-error constant and $S_c$ for the soundness constant of the encoded-line test, and $C_c$ for the binary local corrector's soundness constant. If
 
@@ -1505,6 +1529,12 @@ g_c&=\min\left\{
 \frac{1}{16(T_c+1)}\right\}.
 \end{aligned}
 $$
+
+At the chosen value $c=4$, the constants evaluate to
+
+| $K_4$ | $E_4$ | $S_4$ | $C_4$ | $T_4$ |
+| ---: | ---: | ---: | ---: | ---: |
+| $105408$ | $1054138$ | $1054166$ | $1054082$ | $4444715947277$ |
 
 All denominators are positive, so $g_c>0$. If $0\le\kappa<g_c$, then $E_c\kappa\le1/4\,000\,000$, $\kappa+3S_c\kappa<1/16$, and $A_c(\kappa+2S_c\kappa)+2S_c\kappa<1/16$. The field bound $Q\ge100Dh$, with $D,h\ge1$, gives
 
@@ -1684,7 +1714,7 @@ The same honest proof still accepts on every repeated seed. Repetition leaves th
 ### The polynomial-time implementation
 
 <!-- passage:pcp-long-runtime -->
-The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this. The formal implementation computes the parameters, field arithmetic, seed codecs, query addresses and verdict in a fixed program language and compiles that language to Mathlib's `FinTM2` machine model.
+The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this. The formal implementation computes the parameters, field arithmetic, seed codecs, query addresses and verdict in a fixed program language and compiles that language to Mathlib's finite multi-stack `FinTM2` machine model. A verifier step takes the input, random seed and answer history, then either halts with a verdict or requests the next proof address. The implementation relation states that executing these steps produces the specified bounded query tree, on both possible answers at every queried branch.
 
 The concrete operations can be bounded as follows. Parameter selection is a bounded search for the least admissible $a$. Field elements have $t=12a+32$ binary coefficients; arithmetic reduces polynomial representatives modulo the computed irreducible modulus, and inversion uses powering. The modulus, cube root and full generator are obtained by bounded finite searches, with candidate tests expressed in the same finite arithmetic. Their search ranges are polynomial in the field cardinality $Q$, and $Q=2^{32}s^{12}$ is polynomially bounded in the input length. For example, the charged modulus-construction cost is at most $7\,000\,000(Q+1)^7$; each root search costs at most $400\,000\,000(Q+4)^6$; the combined field-and-roots routine costs at most $10^9(Q+4)^7$. [These cost proofs][lean-field-cost] include candidate testing and storage. The runtime construction computes the parameters and arithmetic data from the input. For the underlying finite-field construction, see Shoup [Sections 20.2 and 21.1][shoup], especially the irreducible-polynomial existence result in Theorem 20.11. Shoup also analyses irreducibility testing and randomized construction. The deterministic bounded searches and charged cost estimates above are those of the formal implementation.
 
@@ -1846,7 +1876,11 @@ For each seed, at most $\ell$ answers are requested. Each address is below $p(n)
 
 If $x\in L$, perfect completeness gives a proof accepted on every seed. Truncating it to its first $p(n)$ bits preserves every run because no branch reads another address. Conversely, if a finite witness is accepted on every seed, extend it by zeros to an infinite oracle. The acceptance probability of this oracle is one. If $x\notin L$, soundness would make it at most $1/2$, a contradiction. Thus the finite witness relation characterizes $L$, proving the reverse inclusion.
 
-The finite-machine class used here is connected to the unchanged vendored Complexitylib definition of NP by [the reference-NP equivalence][lean-reference-np]. That equivalence is a separate representation and simulation result. Together with the forward construction, it identifies the intended classical complexity class.
+The remaining task is to identify this certificate class with the reference nondeterministic-machine definition of NP in the unchanged vendored Complexitylib. The [reference-NP equivalence][lean-reference-np] uses two concrete simulations.
+
+For the direction from a polynomial-time nondeterministic machine to certificates, a witness records the bounded sequence of nondeterministic choices. A deterministic path checker follows the supplied choices and checks that the machine has accepted when the list ends; the time bound limits the admissible witness length. Its compiled program has polynomial cost, giving a certificate verifier in the concrete model used above.
+
+For the converse, translate the concrete certificate checker into a reference decision machine. A bounded-guess construction computes and enforces the polynomial witness-length bound, guesses a witness within it, and runs the translated checker. An accepting branch exists exactly when an accepted certificate does. The translation and bounded-guess theorems supply the simulation and runtime guarantees; they are imported machine proofs, not additional premises left to the reader. Together these directions identify the certificate class in the PCP theorem with the intended reference NP class.
 <!-- /passage:pcp-long-converse -->
 
 [paper-pcp]: https://arxiv.org/html/2608.17429v2#S7

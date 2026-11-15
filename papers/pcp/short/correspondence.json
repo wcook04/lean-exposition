@@ -3,8 +3,8 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
-  "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
+  "content_sha256": "a8c7cca605a352fae8bae3b6a2ff418c036a609f7d379da28ff5d3654ee52c48",
+  "graph_sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
@@ -15,8 +15,10 @@
     "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
     "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
     "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
     "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
+    "PCP.Algebraic.Hadamard.exists_row_message_distance_le",
     "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
     "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
     "PCP.Algebraic.Hadamard.testQueries_length",
@@ -81,11 +83,13 @@
     "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
     "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
     "PCP.Algebraic.BivariateAgreement.exists_polynomial_of_row_column_agreement",
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
     "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
     "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition",
+    "PCP.Algebraic.Hadamard.exists_row_message_distance_le",
     "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
     "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
     "PCP.Algebraic.Hadamard.testQueries_length",
@@ -114,7 +118,7 @@
   "passages": [
     {
       "anchor": "pcp-short-abstract",
-      "text_sha256": "f6121a431174993fada0f7f067bd5e95a65feebb04fb497b26aef3ffc911fa78",
+      "text_sha256": "a98b5bbaae88f38e01cbb3c53f73b723b81a2805d0b67e0e07bc9ce6c8c97fde",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
@@ -159,7 +163,7 @@
     },
     {
       "anchor": "pcp-short-theorem",
-      "text_sha256": "fa61f25a67423fd1261a25d175bf4e91c9bcce51c3978f5cadc5a45edc6a0bfd",
+      "text_sha256": "a55a8186ea4655850eb4cd1e9fa3b2a8884b7338775663b94401246c31b65220",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -206,7 +210,7 @@
     },
     {
       "anchor": "pcp-short-colour-constraints",
-      "text_sha256": "f614565cd20e2a5b69cc00a76f247624e1e95172c1ca6074b0442a95e856744b",
+      "text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
       ],
@@ -230,7 +234,7 @@
     },
     {
       "anchor": "pcp-short-hadamard-encoding",
-      "text_sha256": "e509984c127c805b6d6ca056e46f1211e7fc4e5c7046a28503a78c4651881084",
+      "text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.relativeDistance_encodeFunction_map",
         "PCP.Algebraic.HadamardComposition.encode_query",
@@ -243,7 +247,7 @@
     },
     {
       "anchor": "pcp-short-weighted-test",
-      "text_sha256": "5d09c5958fd7b1b49c3e3ea850ec383e1133fc0c8e26a353231263d4af4d1e02",
+      "text_sha256": "3705c2f89538f95a250d55f885ed41f25f1c59b904280bf7b79502c3144fae23",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
         "ordinary:v1-old-test-counterexample"
@@ -262,11 +266,12 @@
     },
     {
       "anchor": "pcp-short-binary-decoding",
-      "text_sha256": "389c9fe6e933a7bf8344430cabaa06c5d17ac3ab976f92757410e6efc09e8ad8",
+      "text_sha256": "385cd3615ea47fec09980c7014d34bd4b767ec11e843175ff84ca84ade82c029",
       "claim_ids": [
         "PCP.Algebraic.Hadamard.test_soundness",
         "PCP.Algebraic.Hadamard.testQueries_length",
-        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le"
+        "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le",
+        "PCP.Algebraic.Hadamard.exists_row_message_distance_le"
       ],
       "citation_ids": [
         "blr:4",
@@ -283,7 +288,7 @@
     },
     {
       "anchor": "pcp-short-outer-decoding",
-      "text_sha256": "15b5d2fec0571b566d6c80786545a87a1bfe44dc3238ba5aa9c43cd1ae684db0",
+      "text_sha256": "63f07c2ad7a2dfa3fae88ab9e104029e44a299e6a512250e39164ae9916f37e2",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
@@ -311,7 +316,7 @@
     },
     {
       "anchor": "pcp-short-outer-correction",
-      "text_sha256": "32eba368abd9104c4e23ccfbd7434fc72214567e18837a789f314aebb96b58be",
+      "text_sha256": "22f3ece57fa44a833466e67e5e01bfd2411893fb85cc03bcd178e701faef876a",
       "claim_ids": [
         "PCP.Algebraic.BinaryLocalCorrection.failure_le"
       ],
@@ -325,18 +330,27 @@
     },
     {
       "anchor": "pcp-short-zero",
-      "text_sha256": "3609139f3976f250424642d9e3c448ad92a3fea275fba4388f2cf795b9f2fdf4",
+      "text_sha256": "f1fbd1f9c21da06d8b4b8fd80dc086af3685c030ec0eb3a3d49b46bfe8b2e61a",
       "claim_ids": [
-        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound"
+        "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
+        "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
       ],
-      "citation_ids": [],
+      "citation_ids": [
+        "paper:10",
+        "paper:12",
+        "paper:9",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:grid:0",
+        "paper:grid:1"
+      ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
       "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
     },
     {
       "anchor": "pcp-short-assembly",
-      "text_sha256": "613696c051e6bc171776323a1dbefa78f286269600b800478278f6f23880f9c8",
+      "text_sha256": "b0bd505dbf2980db48fd927de0d38c2206f2ff268f32fd8e95def98916834a31",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
@@ -373,7 +387,7 @@
     },
     {
       "anchor": "pcp-short-resources",
-      "text_sha256": "da92734a9fe374857d87b99a2bb43b97a49eebeafafc023628f750ec5dcfa8b5",
+      "text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one"
       ],
@@ -384,7 +398,7 @@
     },
     {
       "anchor": "pcp-short-complexity",
-      "text_sha256": "2d0c72f19c7e65a3a3d093bb93df481fb1e57db946085a29b9e72632248616e2",
+      "text_sha256": "cf427e020fe6f9d4b76e2223807166d44075360862d4bf18f517df2d86ccb328",
       "claim_ids": [
         "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
       ],
@@ -397,7 +411,7 @@
     },
     {
       "anchor": "pcp-short-formal-correspondence",
-      "text_sha256": "bf955dfdc8024c2fa36d00acb3a54b41ae0949f5a928ebcf09b8f7e4140ba37b",
+      "text_sha256": "c00940ef095d5e1f21edaeba164665289e5ac31d9498efc6d19dfbe19aba47b8",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -455,8 +469,10 @@
     "Rebound graph edition after separately recorded finite exposition checker was added; no source statement or manuscript passage changed.",
     "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification.",
     "Humanizer revision rebound after independent preservation review. Passage scope and source-node selection remain as before; the revision adds source attributions in prose and bibliography whose individual graph citation records were not previously captured. Full correctness and fresh Lean verification are not inferred.",
-    "Bibliographic graph now includes source-specific antecedent citations BCHKS, Rubinfeld\u2013Sudan, Kaufman\u2013Sudan and Friedl\u2013Sudan, with differing hypotheses preserved; no proof edges or Lean verification were added.",
-    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl\u2013Sudan, Rubinfeld\u2013Sudan and Kaufman\u2013Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
-    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged."
-  ]
+    "Bibliographic graph now includes source-specific antecedent citations BCHKS, Rubinfeld–Sudan, Kaufman–Sudan and Friedl–Sudan, with differing hypotheses preserved; no proof edges or Lean verification were added.",
+    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
+    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
+    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed."
+  ],
+  "reading_links": []
 }

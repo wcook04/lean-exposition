@@ -1,0 +1,1433 @@
+# Paragraph-level decisions and complete repairs
+
+All 150 prose/answer/reconstruction blocks of the frozen primary manuscript are covered below. The 57 remaining blocks are covered separately in `nonprose_coverage.json`. These are review recommendations, not manuscript edits or author incorporation decisions.
+
+## Ranked changes
+
+1. R02 and R05: F4 arithmetic, coordinate labels and the actual two-query derived read.
+2. R06–R08: table and label roles, reject/return correction and the soundness event comparison.
+3. R03–R04: special-point error concentration and the non-collapsing digit example.
+4. R01 and R09: resource convention and an answer-separated reconstruction task.
+5. R10: the homogeneous-distance source association. UI repairs are in `reader_review.md`.
+
+Large constant expansions and the detailed reduction compiler can move only with their consumer contracts retained on the main route. A paragraph marked retain is an affirmative preservation decision. “Explain” does not mean change the mathematical assertion. Priorities in the individual ledger are local editorial priorities; final global severity is in `findings.json`.
+
+## Complete highest-priority replacement prose
+
+# Located replacement passages
+
+These are proposed edits, not changes to the manuscript. Locations refer to the frozen `papers/expository/main.md` (SHA-256 recorded in `coverage.json`). The replacements deliberately retain the formal theorem's hypotheses and the distinction between an example and a general result. Mathematical checks are in `audit_checks.py` and `audit_checks.json`. The finite examples do not instantiate the final PCP parameters.
+
+## R01 — State the resource convention before the opening claim uses it
+
+**Source:** opening, lines 16–24; §2, lines 86–117. **Action:** insert the first two sentences at first use and retain the exact theorem in §2. Do not repeat this paragraph in both places.
+
+> Here “polynomial” means bounded by a fixed power of the input length, with fixed constants. The bound may depend on the problem, but it cannot be chosen anew for each input. The verifier can inspect and process the input graph in polynomial time. Its special restriction concerns the encoded certificate: it reads only a fixed number of its bits, however large the graph becomes. The certificate is chosen before the verifier's random bits.
+
+**Tradeoff:** this defines the resource distinction in place without introducing machine models. The existing exact randomness, address, completeness and soundness clauses remain unchanged.
+
+## R02 — Make the characteristic-two calculation available to this audience
+
+**Source:** §4, `pcp-expository-colour-polynomials`, lines 239–267. **Action:** replace the initial field-introduction paragraph, retaining the following constraint table and K4 counterexample.
+
+> We now use a different field from the five-element field in the earlier examples. In the four-element field, every element has the form $a+b\omega$, where $a,b\in\{0,1\}$. Add the coefficients modulo two, and multiply using $\omega^2=\omega+1$. Thus $1+1=0$, subtraction equals addition, and
+> $$
+> (a+b\omega)(c+d\omega)=(ac+bd)+(ad+bc+bd)\omega.
+> $$
+> The three nonzero elements are $1,\omega,\omega+1=\omega^2$. Since $\omega(\omega+1)=1$, each has cube one. These are our three colours. If two colours differ, their difference is another nonzero element of this field and therefore also has cube one. If they are equal, their difference is zero and its cube is zero. Consequently $(u-v)^3-1$ is zero exactly for distinct colours.
+>
+> The full construction uses a larger field of characteristic two containing these same four elements. The colour calculation stays inside this four-element subfield. The two constraints have separate jobs: $u^3-1=0$ restricts a vertex to the three colours, and the edge constraint requires adjacent vertices to have distinct colours. Assigning all four field elements to K4 shows why the first job cannot be omitted.
+
+**Check:** all four cube values and all six distinct colour differences were enumerated. This paragraph assumes the existence of the larger field, supplied later by the parameter choice; it does not pretend to construct arbitrary finite fields.
+
+## R03 — Show why the certificate requests need correction
+
+**Source:** §5, `pcp-expository-grid-certificate`, lines 374–377. **Action:** expand the thin-slice explanation immediately after Question 1.
+
+> The two identities ask for certificate values at special points, not at uniformly chosen points of its whole table. A small example shows the problem. Let $M(X,U)$ have two $X$-coordinates and two $U$-coordinates over the five-element field. Its table has $5^4=625$ positions, but only $5^2=25$ have $U=(0,0)$. A received table could be wrong at all 25 of these positions and correct everywhere else. Its overall error would be only $1/25$, while every direct request in the first identity would be wrong. We therefore need a way to obtain the value of the same decoded polynomial at a prescribed point without trusting that table entry.
+
+**Tradeoff:** the example isolates a probability issue. It does not claim such a corrupted table passes the other verifier tests.
+
+## R04 — Replace the collapsing digit example
+
+**Source:** §6, `pcp-expository-digit-encoding`, lines 415–440. **Action:** replace the displayed polynomial, its encoding and its numerical substitution together.
+
+> Here is the operation with two base-three digits. Over $\mathbb F_5$, take
+> $$
+> p(Y)=Y^4+2Y+3.
+> $$
+> Write an exponent as $j=j_0+3j_1$. The exponents $4,1,0$ have digit pairs $(1,1),(1,0),(0,0)$, respectively. Introduce two groups of variables, $X_{0,0},X_{0,1},X_{0,2}$ and $X_{1,0},X_{1,1},X_{1,2}$, and replace $Y^j$ by $X_{0,j_0}X_{1,j_1}$. This gives
+> $$
+> \widetilde p=X_{0,1}X_{1,1}+2X_{0,1}X_{1,0}+3X_{0,0}X_{1,0}.
+> $$
+> Every term now has total degree two. To recover $p(\lambda)$, substitute $(1,\lambda,\lambda^2)$ in the first group and $(1,\lambda^3,\lambda^6)$ in the second. For $\lambda=2$, these groups are $(1,2,4)$ and $(1,3,4)$, with arithmetic modulo five. The encoded polynomial returns
+> $$
+> 2\cdot3+2\cdot2+3\cdot1=13=3\pmod5,
+> $$
+> which equals $p(2)$. More generally, each substituted term becomes $\lambda^{j_0+3j_1}=\lambda^j$, so the identity holds for every $\lambda$.
+>
+> This example has a genuine degree distinction even as a function on the field. A polynomial of degree at most two cannot agree with $p$ at all five field elements: their difference would be a nonzero degree-four polynomial with five roots. The new low-degree table lives on six coordinates; we recover the original one-variable table only on the special substitution points. Those points are not a uniform sample of the new table, which is why correction will be needed there too.
+
+**Why this edit:** the old $Y^5+2Y+3$ is formally degree five but equals the linear function $3Y+3$ at every element of $\mathbb F_5$. Its calculation was correct. The replacement preserves the field and the base-three mechanism while removing that accidental simplification. Retain the next paragraph's distinct, larger degree bound for arbitrary decoded polynomials.
+
+## R05 — Calculate an actual label, then recover it from a corrupted word
+
+**Source:** §7, `pcp-expository-cubic-labels`, lines 604–626; reuse at §9, lines 808–811 and 855–857. **Action:** insert this worked explanation before the existing non-evaluation functional counterexample. The final two paragraphs replace “freshly randomised self-correction” when first used for a derived read; later occurrences can refer back.
+
+> A field value becomes a tuple of bits after we choose a basis. In the four-element example, $u=a+b\omega$ becomes the pair $(a,b)$. Addition is coordinatewise modulo two; the multiplication formula from Section 4 tells us how to multiply pairs. A label is a Boolean polynomial in these coordinates, and the encoded word stores its answer at $u$.
+>
+> Let $L$ ask for the first coordinate. We want the bit $L(u^3-1)$, without first reading both coordinates of $u$. Applying the multiplication formula twice gives
+> $$
+> u^3-1=(1+a+b+ab,0).
+> $$
+> We can therefore ask the single label
+> $$
+> \Lambda(Z_1,Z_2)=1+Z_1+Z_2+Z_1Z_2.
+> $$
+> At $u=\omega=(0,1)$, its stored answer is $1+0+1+0=0$, agreeing with $\omega^3-1=0$. In this small field the label simplifies to degree two. The general construction's degree-at-most-three statement remains valid; it is a sufficient bound, not a claim of minimal degree.
+>
+> This explains an honest read. A corrupted word might be wrong precisely at $\Lambda$, even if it is right at almost every other label. To request $\Lambda$ reliably, choose a fresh uniform polynomial label $R$ of degree at most three and read the two bits
+> $$
+> g(R)+g(R+\Lambda).
+> $$
+> Their sum is the desired answer for an honest evaluation word, because evaluation is additive in the label. For the corrupted word, suppose a fraction $e$ of all labels give wrong answers. Both $R$ and $R+\Lambda$ are individually uniform: adding a fixed label permutes the label space. Each read is wrong with probability $e$, so the probability that either is wrong is at most $2e$. The reads need not be independent.
+>
+> In the full oracle, a row belongs to a point $x$. The decoded polynomial $P$ has already been fixed. Conditional on $x$ and the requested observation, use a fresh mask $R$ in that row; its error bound is $2e_x$. Averaging over the uniformly sampled $x$ gives $2\varepsilon$ when the full-label table distance is at most $\varepsilon$. We have not assumed that every row has small error, or that the derived labels themselves are uniform. The decoded $P$ here must be the same one used in the homogeneous-label checks later.
+
+**Source transfer:** the operation is already explicit in the specialist paper, `pcp-short-hadamard-encoding`, equations $8$–$9$, lines 128–146. Transfer that operation into the worked route; do not require the learner to open the specialist paper to discover it.
+
+**Additional short insertion after the non-evaluation counterexample:**
+
+> An evaluation word also has $H(1)=1$ and $H(AB)=H(A)H(B)$ whenever the labels and their product lie in the allowed degree ranges. These relations explain what the extra consistency checks test. Their quantitative soundness is an imported theorem; these equations alone are not a proof that the tester is robust.
+
+## R06 — Show a weighted label and distinguish the two averaging domains
+
+**Source:** §8, `pcp-expository-binary-tests`, lines 654–704. **Action:** retain the existing weighted identity, add the short calculation, then put the two domains before the common-witness theorem.
+
+> Multiplying a field value changes the question we ask it. For example, multiplication by $\omega$ sends $(a,b)$ to $(b,a+b)$. If $L$ asks for the first coordinate, then $L(\omega u)$ asks for the second coordinate of $u$. The verifier can use that new label without reading $u$ first. Nonzero multiplication permutes the homogeneous linear labels, preserving their uniform distribution.
+
+| Label family | What an address specifies | Later use |
+|---|---|---|
+| All degree-at-most-$r$ reduced polynomial labels | A coefficient for every allowed squarefree monomial, including the constant monomial | Random-mask correction of derived polynomial observations |
+| Homogeneous linear labels | A parity of the coordinates, with no constant term | Weighted sums, difference checks and outer correction |
+
+> A guarantee averaged over the first family does not automatically hold on the second. With three coordinate bits and degree-three labels, there are eight squarefree monomials and therefore 256 polynomial labels. Only eight labels are homogeneous linear. Start with the encoding of message $101$, and on those eight positions replace its answers by those for $100$. Four bits change. The whole word is only $1/64$ away from the original encoding, but its homogeneous-linear portion is $1/2$ away. This is why the theorem must give both distance bounds.
+>
+> It must also give them for one polynomial $P$. Choosing a separate polynomial for each family would let the derived constraint and the difference check describe different colourings. For certificate rows, whose full degree bound is one, the first family includes all affine labels; the second family still excludes their constant term.
+
+**Keep immediately after this explanation:** the exact combined theorem, including $D=cb^c$, $Q\ge10^6D^3$, $E\kappa\le1/(4\cdot10^6)$, and both distances at most $S\kappa$ for the same $P$. The expansions of $K,E,S,C$ may move to a nearby parameter note; their definitions and hypotheses may not disappear.
+
+## R07 — Give the outer corrector's operation before its error bound
+
+**Source:** §8, lines 706–727. **Action:** replace the introductory description; retain the exact displayed bound and its qualifications. The final derivation below can be an immediately adjacent worked note.
+
+> Fix the point $a$ whose value is requested. Choose a uniform direction $v$, a uniform nonzero parameter $z$, and a uniform homogeneous label $L$. Independently choose the inner tester’s seed and a uniform direction in the digit-coordinate space. The proof supplies an auxiliary row intended to describe the polynomial on the line $a+Yv$.
+>
+> First test that auxiliary row with the inner tester. Reject if it fails. Otherwise use the inner corrector to obtain the line's proposed observation at $z$, and compare it with the primary-table bit at $a+zv$. Reject if the observations differ. If they agree, return the inner-corrected observation at zero. This output is intended to be $L(P(a))$. The two inner corrections share this inner direction and the label $L$, on the same chosen outer line. The inner direction is a different object from the outer direction $v$; the two corrections need not be independent.
+>
+> The random comparison point is uniform in the whole ambient space, even though $a$ was fixed: for every nonzero $z$, the map $v\mapsto a+zv$ is a bijection. This lets the global homogeneous-distance bound control the primary-table comparison. The auxiliary rows can still be arbitrary; testing them is part of this procedure.
+>
+> Let $R_a$ be the actual probability of rejection. Decode each auxiliary row to a proxy line polynomial $T_v$ of degree at most $D$. Since an inner-test failure forces rejection, the inner correction theorem bounds each correction-to-proxy discrepancy, averaged over the choices, by $e=(c+1)K R_a$. The checked comparison therefore gives a proxy comparison-error bound $e+R_a+\delta$, where $\delta$ is the primary table's homogeneous distance from the already fixed $P$.
+>
+> If $T_v(0)\ne P(a)$, then $T_v(Y)-P(a+Yv)$ is a nonzero polynomial of degree at most $D$. It has at most $D$ roots among the $Q-1$ nonzero choices of $z$. A uniform homogeneous label detects each nonzero field difference with probability $1/2$. Moving from the comparison point to zero thus costs at most $D/[2(Q-1)]$. Replacing the proxy answer at zero costs another $e$, and counting rejection as failure costs another $R_a$. In total,
+> $$
+> \Pr[\text{reject or return a wrong bit}]
+> \le 2e+2R_a+\delta+\frac{D}{2(Q-1)}
+> =C R_a+\delta+\frac{D}{2(Q-1)}.
+> $$
+> The probability includes the random label. It does not promise this bound for every prescribed label. Nor does it assert that $R_a$ is small: after averaging over the targets requested by ZERO, the corrector’s rejection rate is bounded by ZERO’s observed rejection rate.
+
+**Preserved premises:** $c,b>0$, $D\ge cb^c$, $Q>2c$, full-generator nodes for the tester and valid distinct nonzero weighted nodes for the corrector, primary homogeneous proximity to one $P$, arbitrary auxiliary data. Honest success for every seed requires honest auxiliary line data. The formal whole-field wrapper's zero-parameter acceptance factor belongs to §10 and is not silently removed by this conditional nonzero-parameter description.
+
+## R08 — Derive the soundness comparison as events
+
+**Source:** §9, `pcp-expository-assembly`, lines 838–863. **Action:** replace the explanation after the difference identity with this chain and keep the existing field-size and strict-margin choices.
+
+> Fix the four polynomials supplied by the decoding theorems. We compare random tests using the same random choices. If an ideal test rejects while an actual test accepts, some replaced answer must have changed the decision. Therefore
+> $$
+> \Pr[\text{ideal rejects}]
+> \le \Pr[\text{actual rejects}]
+>   +\Pr[\text{some replacement changes the decision}].
+> $$
+> This is an event inclusion and a union bound; it requires no independence between the possible errors.
+>
+> First replace the freshly masked derived constraint read by the exact bit of the constraint built from the fixed colour polynomial. The bound from Section 7 is $2\varepsilon$. Call the resulting ZERO procedure $Z'$. Its rejection probability is at most $\kappa'=\kappa+2\varepsilon$. We average over the original fresh mask in this comparison; we do not fix a favourable mask and call it a deterministic oracle.
+>
+> In $Z'$, each of the two certificate-corrector rejections also rejects the enclosing procedure. Each actual corrector rejection rate is consequently at most $\kappa'$, after averaging over the enclosing choices. With certificate distance at most $\varepsilon$, the two correction bounds give
+> $$
+> \Pr[\text{ideal ZERO rejects}]
+> \le \kappa'+2\left(C\kappa'+\varepsilon+
+>             \frac{5D}{2(Q-1)}\right).
+> $$
+> Here $5D$ is a common safe degree bound: the vertex constraint has degree at most $3D$, the edge constraint at most $5D$, and both certificate polynomials at most $D$. A false grid condition supplies a nonzero residual of degree at most $5Dh$; the root bound and the random homogeneous label give ideal rejection at least $(1-5Dh/Q)/2$. Substitution yields
+> $$
+> \frac{1-5Dh/Q}{2}
+> \le (1+2C)(\kappa+2\varepsilon)+2\varepsilon+
+>       \frac{5D}{Q-1}.
+> $$
+> In particular, the factor $1+2C$ multiplies the derived-read error too. The correction bound uses rejection measured inside $Z'$; small correction rejection has not been assumed separately.
+
+**Tradeoff:** this adds an intermediate procedure and one inequality to remove an otherwise hidden inference. Preserve the existing lower bound $3/8$, strict upper margin $<3/16$, Question 5, and the explanation that decoded objects exist in the proof but are not reconstructed by the verifier.
+
+## R09 — Provide a reconstruction answer without claiming an independent first attempt
+
+**Source:** §11, lines 1154–1165. **Action:** move the task itself before the answers; place a solution after it or behind a disclosure in the reader. This review's solution was produced after seeing Section 11 and checking source support.
+
+> The certificate identity $M(X,0)=0$ asks about a thin slice of a larger table. Global proximity alone permits every point on that slice to be wrong. We fix the certificate polynomial selected by the low-degree theorem and use the outer corrector to request its value there. The corrector tests the supplied line row and compares at a random nonzero point before returning the origin observation; it may reject. Its failure bound refers to actual rejection, the global homogeneous distance and a root term. Because a correction rejection rejects ZERO too, the observed ZERO rejection controls the first term after averaging over ZERO’s requested targets. Coupling the ideal and actual ZERO tests then bounds the ideal rejection. If the decoded constraint did not vanish, one residual would be a nonzero low-degree polynomial, forcing a larger ideal rejection than this bound allows. The same decoded polynomial and the random-label average are necessary at each step.
+
+**Marking guide:** require the thin-slice obstruction, one fixed decoded witness, arbitrary auxiliary data, reject/return operation, marginal uniformity, homogeneous-label averaging, rejection containment and the ideal-versus-actual event inequality. A response that merely says “self-correction fixes the errors” has not reconstructed the argument. No additional transfer question is necessary before the existing task is made usable.
+
+## R10 — The small source-link repair
+
+**Source:** §7, lines 532–536; reader association `linked-source-18`.
+
+Retarget the homogeneous eight-position distance claim to `PCP.Algebraic.Hadamard.relativeDistance_linearEncode`, `PCP/Algebraic/Hadamard.lean`, lines 173–180, and expose `linearEncode` (lines 137–143) as a definition. The currently selected `relativeDistance_encodeFunction_map` concerns full polynomial coefficient labels, including the constant coefficient. Preserve it at claims about the full label family. No change to the valid half-distance sentence is needed.
+
+
+## Every prose paragraph
+
+### P001 · An algebraic proof of the PCP theorem, through worked examples · lines 8–14
+**Passage:** `pcp-expository-opening` · **Block:** `B002` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Suppose someone hands you a graph and claims that its vertices can be coloured
+with three colours, with different colours”
+**Job:** Introduce the graph-specific PCP promise.
+**Assessment:** Concrete input, certificate, acceptance and rejection are all named; the final quantifier is every certificate.
+**Direction:** Preserve the perfect-completeness and every-false-certificate wording.
+
+### P002 · An algebraic proof of the PCP theorem, through worked examples · lines 16–18
+**Passage:** `pcp-expository-opening` · **Block:** `B003` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The same statement holds for every problem whose proposed solutions can be
+checked in polynomial time. The encoded certificate still”
+**Job:** Extend the promise from colouring to NP.
+**Assessment:** Polynomial time and polynomial length are used before the non-complexity reader is told what they mean.
+**Direction:** Add a brief definition in terms of input length and a fixed exponent, with the exact NP definition retained in Section 2.
+
+### P003 · An algebraic proof of the PCP theorem, through worked examples · lines 20–24
+**Passage:** `pcp-expository-opening` · **Block:** `B004` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The constant bounds the number of **certificate bits read**. The checker may
+read the input and perform a polynomial amount”
+**Job:** Separate query cost from total computation.
+**Assessment:** This prevents the central misleading interpretation that ordinary prose can be checked at a few places.
+**Direction:** Preserve the distinction and the specific object queried.
+
+### P004 · An algebraic proof of the PCP theorem, through worked examples · lines 26–33
+**Passage:** `pcp-expository-opening` · **Block:** `B005` · **Decision:** shorten · **Local priority:** 3
+**Exact locator:** “These notes explain the algebraic construction of Amireddy, Behera,
+Srinivasan, Sudan and Willumsgaard, and its formalisation in Lean by Troy”
+**Job:** Credit the construction, formalization and original theorem.
+**Assessment:** The composition comparison arrives before a learner knows what a PCP verifier is; otherwise credit and source version are precise.
+**Direction:** Keep names and version in the opening; move the no-composition comparison to the construction overview or closing comparison.
+
+### P005 · An algebraic proof of the PCP theorem, through worked examples · lines 35–40
+**Passage:** `pcp-expository-opening` · **Block:** `B006` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “The intended reader knows polynomial arithmetic, finite sums and elementary
+probability, but need not know complexity theory, coding theory or”
+**Job:** Set prerequisites and state the teaching promise.
+**Assessment:** The declared audience does not yet have total degree, finite-field coordinates, homogeneous labels or asymptotic notation; later use cannot silently add them.
+**Direction:** Retain this audience and supply the missing operations at their first uses; make the promised capability reconstructing the assembly from stated testing theorems.
+
+### P006 · 1. Why checking a few edges is not enough · lines 46–49
+**Passage:** `pcp-expository-colouring` · **Block:** `B007` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “A proper three-colouring of a graph assigns one of three colours to each
+vertex so that the ends of every”
+**Job:** Define the motivating decision problem and ordinary certificate.
+**Assessment:** All actors and the checking operation are clear.
+**Direction:** Keep the short definition; no gratuitous synonym changes.
+
+### P007 · 1. Why checking a few edges is not enough · lines 51–56
+**Passage:** `pcp-expository-colouring` · **Block:** `B008` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Consider the complete graph on four vertices, $K_4$. It has six edges and
+cannot be three-coloured: among four vertices, two”
+**Job:** Give one explicit false colouring and its rejection probability.
+**Assessment:** The graph and bad edge count can be checked with the declared prerequisites.
+**Direction:** Keep K4 and the actual colouring; a small drawing is optional, not necessary.
+
+### P008 · 1. Why checking a few edges is not enough · lines 58–61
+**Passage:** `pcp-expository-colouring` · **Block:** `B009` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Now add $t$ disjoint triangles, each properly coloured. The graph is still
+not three-colourable, because it still contains $K_4$, but”
+**Job:** Make the small rejection fraction tend to zero.
+**Assessment:** Disjoint triangles preserve the obstruction while diluting uniformly sampled original edges.
+**Direction:** Preserve the growing family; it does more work than one isolated K4 example.
+
+### P009 · 1. Why checking a few edges is not enough · lines 67–69
+**Passage:** `pcp-expository-colouring` · **Block:** `B011` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “For example, three added triangles reduce this to $1/15$. A fixed number
+of samples becomes ineffective as $t$ grows: the”
+**Job:** Explain why a constant number of naive samples fails.
+**Assessment:** The one-sample fraction is computed, but the fixed-number-of-samples conclusion is verbal.
+**Direction:** Add the union bound q/(6+3t), explicitly for this uniform-edge strategy, if space permits.
+
+### P010 · 1. Why checking a few edges is not enough · lines 71–74
+**Passage:** `pcp-expository-colouring` · **Block:** `B012` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “In the PCP construction, the prover supplies redundant tables related by
+algebraic identities. The checker tests only a few entries,”
+**Job:** State the reconstruction goal of the encoded verifier.
+**Assessment:** The route from frequent acceptance to an impossible colouring is the soundness mechanism.
+**Direction:** Retain and echo it when the final contradiction closes.
+
+### P011 · 1. Why checking a few edges is not enough · lines 76–80
+**Passage:** `pcp-expository-colouring` · **Block:** `B013` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “There are two obligations. First, the tables must describe coherent
+mathematical objects rather than arbitrary strings. Second, those objects
+must”
+**Job:** Separate coherence testing from constraint testing.
+**Assessment:** This is a useful two-obligation map that later tables fulfill.
+**Direction:** At the first four-table list, recall which tests enforce each obligation.
+
+### P012 · 2. What the theorem promises · lines 86–89
+**Passage:** `pcp-expository-theorem` · **Block:** `B014` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “A decision problem is a set $L$ of finite bit strings; a string $x$ is a
+yes-instance when $x\in L$.”
+**Job:** Define NP and yes-instances.
+**Assessment:** The definition is accurate but deterministic, polynomial time, certificate length and input size remain unexpanded for the stated audience.
+**Direction:** Add one sentence defining polynomial resource bounds and distinguish certificate length from the encoded proof length.
+
+### P013 · 2. What the theorem promises · lines 91–92
+**Passage:** `pcp-expository-theorem` · **Block:** `B015` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “A verifier is one algorithm, fixed for the problem. The prover fixes its
+certificate before the verifier chooses its random”
+**Job:** Fix verifier and certificate before randomness.
+**Assessment:** This supplies the important quantifier order directly and tersely.
+**Direction:** Preserve verbatim if possible.
+
+### P014 · 2. What the theorem promises · lines 94–96
+**Passage:** `pcp-expository-theorem` · **Block:** `B016` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**PCP theorem.** For every $L\in\mathrm{NP}$, there are a polynomial-time
+verifier $V$, natural-number constants $a,b,q$, and a polynomial $p$, such
+that”
+**Job:** Introduce the precise theorem and its parameters.
+**Assessment:** The quantified resources are explicit.
+**Direction:** Keep as the visible theorem; give a short notation gloss for ceiling and logarithm beside the list.
+
+### P015 · 2. What the theorem promises · lines 106–112
+**Passage:** `pcp-expository-theorem` · **Block:** `B018` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The constants, polynomial and verifier are chosen once for $L$, before
+$x$. The certificate may depend on $x$, but it”
+**Job:** Explain quantifier order and name completeness and soundness.
+**Assessment:** Names are attached to already described behavior; the certificate-randomness order is worth repeating here.
+**Direction:** Keep, with readable formal links subordinate to the ordinary definition.
+
+### P016 · 2. What the theorem promises · lines 114–117
+**Passage:** `pcp-expository-theorem` · **Block:** `B019` · **Decision:** shorten · **Local priority:** 3
+**Exact locator:** “The formula for the random-bit budget is convenient for the formal proof.
+Extra random bits can be ignored, so requiring”
+**Job:** Explain exact-form randomness and padding.
+**Assessment:** The computability observation is more formal than the immediate reading task; the padding point earns its place.
+**Direction:** Keep one sentence that unused random bits can be ignored; place the precise implementation reason in the formal comparison.
+
+### P017 · 2. What the theorem promises · lines 119–121
+**Passage:** `pcp-expository-theorem` · **Block:** `B020` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Conversely, suppose a problem has a verifier with these properties. Guess
+the first $p(n)$ certificate bits, and run the verifier”
+**Job:** Begin the reverse-inclusion algorithm.
+**Assessment:** Guessing a bounded prefix and enumerating all seeds makes the proof operational.
+**Direction:** Keep the whole-prefix bound; do not replace it with an unsupported claim that only q positions suffice.
+
+### P018 · 2. What the theorem promises · lines 128–133
+**Passage:** `pcp-expository-theorem` · **Block:** `B022` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “such strings, a polynomial number because $a,b$ are fixed. Accept the
+guessed certificate if every run accepts. Perfect completeness supplies”
+**Job:** Complete the NP reverse inclusion.
+**Assessment:** The conclusion uses polynomial number of runs times polynomial cost per run, but the multiplication is not stated explicitly.
+**Direction:** Add that each run is polynomial time and a polynomial number of such runs still costs polynomial time; keep the false-instance argument.
+
+### P019 · 2. What the theorem promises · lines 139–141
+**Passage:** `pcp-expository-theorem` · **Block:** `B024` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The hard direction is constructing the verifier. We first explain it for
+three-colouring. A polynomial-time reduction then transfers it to”
+**Job:** Identify the hard direction and reduction route.
+**Assessment:** This gives the global construction a destination without overstating what has been proved.
+**Direction:** Keep the direction distinction and the later reduction reference.
+
+### P020 · 3. Why polynomial tables can reveal a hidden defect · lines 147–150
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B025` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Work first with arithmetic modulo $5$, in the field
+$\mathbb F_5=\{0,1,2,3,4\}$. Addition and multiplication are performed
+modulo $5$. In particular,”
+**Job:** Teach prime-field arithmetic.
+**Assessment:** A concrete inverse establishes that division is available and modulo arithmetic is stated.
+**Direction:** Retain; mark later field changes as changes of arithmetic, not integer arithmetic modulo four.
+
+### P021 · 3. Why polynomial tables can reveal a hidden defect · lines 152–152
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B026` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The polynomial $Z(X)=X(X-1)$ has the following values:”
+**Job:** Introduce the first evaluation table.
+**Assessment:** The example is minimal and directly usable.
+**Direction:** Keep paired with the adjacent table.
+
+### P022 · 3. Why polynomial tables can reveal a hidden defect · lines 158–161
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B028` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “It vanishes at two points and is nonzero at three. This reflects a general
+fact: a nonzero polynomial of degree”
+**Job:** Prove the univariate root bound.
+**Assessment:** The factor-removal argument connects a familiar polynomial operation to the distance claim.
+**Direction:** Retain the nonzero condition.
+
+### P023 · 3. Why polynomial tables can reveal a hidden defect · lines 163–167
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B029` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Consequently, two different polynomials of degree at most $d$ disagree at
+at least a fraction $1-d/Q$ of the elements of”
+**Job:** Extend distance to multivariate polynomials.
+**Assessment:** Total degree is emphasized but not defined, and the multivariate statement is imported at the same moment as the term.
+**Direction:** Define total degree using X^2Y, contrasting it with degree in one variable; retain the general bound as a stated input.
+
+### P024 · 3. Why polynomial tables can reveal a hidden defect · lines 173–176
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B031` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The probability is uniform over the whole ambient space. This is the
+polynomial distance estimate used throughout the proof; a”
+**Job:** State sampling domain and useful parameter regime.
+**Assessment:** Uniform ambient sampling and degree versus field size are exactly the conditions later arguments need.
+**Direction:** Keep the full-domain condition and the large-field qualification.
+
+### P025 · 3. Why polynomial tables can reveal a hidden defect · lines 178–181
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B032` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “If a claimed polynomial identity is false, its difference is a nonzero
+polynomial. A uniformly random point then finds a”
+**Job:** Turn a false identity into a detectable discrepancy.
+**Assessment:** The last sentence depends on the useful low-degree regime; low degree is qualitative here.
+**Direction:** Say explicitly that when d is small compared with Q a false identity disagrees on many points.
+
+### P026 · 3. Why polynomial tables can reveal a hidden defect · lines 183–185
+**Passage:** `pcp-expository-polynomial-distance` · **Block:** `B033` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “An arbitrary table can agree with a polynomial everywhere except one
+entry. A received table therefore needs a separate low-degree”
+**Job:** Separate polynomial distance from arbitrary-table closeness.
+**Assessment:** This is a decisive distinction and motivates testing instead of treating every table as a polynomial.
+**Direction:** Preserve; it prepares the later special-point counterexample.
+
+### P027 · 3. Why polynomial tables can reveal a hidden defect · lines 191–194
+**Passage:** `pcp-expository-interpolation` · **Block:** `B034` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Interpolation turns values on a small set into a polynomial on a larger
+space. A polynomial of degree at most”
+**Job:** State interpolation in a three-point case.
+**Assessment:** The degree and number of distinct points are specified before the formula.
+**Direction:** Keep this elementary anchor.
+
+### P028 · 3. Why polynomial tables can reveal a hidden defect · lines 200–203
+**Passage:** `pcp-expository-interpolation` · **Block:** `B036` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “For $p(X)=X^2$, those three values are $0,1,4$, and the weighted sum is
+$0+2+12=4$ modulo $5$, just as $3^2=4$ modulo $5$.”
+**Job:** Verify interpolation and derive one coefficient.
+**Assessment:** One coefficient is derived, but learners who have never interpolated must trust the other two.
+**Direction:** Show a compact three-column weight calculation or ask for the other two weights as immediate practice.
+
+### P029 · 3. Why polynomial tables can reveal a hidden defect · lines 210–211
+**Passage:** `pcp-expository-interpolation` · **Block:** `B038` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “These weights are part of the identity. Replacing them by three unit
+weights would give $0+1+4=0$, which is not $p(3)$.”
+**Job:** Show that interpolation weights are essential.
+**Assessment:** The failed unit-weight calculation blocks a real later shortcut.
+**Direction:** Retain the exact failed value rather than merely saying the weights matter.
+
+### P030 · 3. Why polynomial tables can reveal a hidden defect · lines 213–215
+**Passage:** `pcp-expository-interpolation` · **Block:** `B039` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For a set $H$ of $h$ distinct field elements, let $L_s(X)$ be the
+degree-$(h-1)$ polynomial equal to one at $s\in”
+**Job:** Define the general Lagrange basis.
+**Assessment:** The target behavior is stated before its product formula.
+**Direction:** Add the empty-product convention only if the h=1 edge case is developed; it is not necessary to interrupt this route.
+
+### P031 · 3. Why polynomial tables can reveal a hidden defect · lines 221–221
+**Passage:** `pcp-expository-interpolation` · **Block:** `B041` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Any table $f:H^m\to\mathbb F_Q$ has the extension”
+**Job:** Generalize to a multidimensional grid table.
+**Assessment:** H^m, the tuple index s, the coordinate s_j, and the tensor-product basis all enter together without a concrete two-dimensional instance.
+**Direction:** Introduce H^m as m-tuples from H and show one basis product for H={0,1}, m=2 before the summation.
+
+### P032 · 3. Why polynomial tables can reveal a hidden defect · lines 228–233
+**Passage:** `pcp-expository-interpolation` · **Block:** `B043` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “At a grid point, all the basis products are zero except the one indexed
+by that point. The extension therefore”
+**Job:** Explain interpolation agreement and degree accounting.
+**Assessment:** The conclusion is good, but depends on the unintroduced distinction between degree in each variable and total degree.
+**Direction:** After the total-degree gloss, explicitly multiply two univariate basis polynomials once; retain the degree bounds and ambient-table purpose.
+
+### P033 · 4. Turning three colours into polynomial equations · lines 239–243
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B044` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “For the colouring construction we now change fields. We use characteristic
+two, where $1+1=0$, and a field containing an element”
+**Job:** Switch to characteristic two and identify the three colours.
+**Assessment:** The text states F4 and its closure rather than teaching the arithmetic; a reader with polynomial arithmetic alone cannot yet compute omega minus omega squared or see why three nonzero elements suffice.
+**Direction:** Work in {0,1,omega,1+omega}, with omega^2=omega+1 and u-v=u+v; calculate one nonzero difference and one cube, then introduce the larger field containing this copy.
+
+### P034 · 4. Turning three colours into polynomial equations · lines 249–251
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B046` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Use $1,\omega,\omega^2$ as the colours. A proposed value $u$ is one of
+these colours exactly when $u^3-1=0$. If $u,v$ are”
+**Job:** Translate legal colours and distinctness into equations.
+**Assessment:** The equivalence for arbitrary ambient u follows from the three displayed roots and the cubic root bound, but that logical step is missing.
+**Direction:** Say that a cubic has at most three roots, and the three listed elements already are roots; then explain difference closure inside F4.
+
+### P035 · 4. Turning three colours into polynomial equations · lines 259–267
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B048` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For example, the triangle coloured $(1,\omega,\omega^2)$ gives three
+zero edge residuals. The assignment $(1,1,\omega^2)$ gives residuals
+$(1,0,0)$ on edges $12,23,31$.”
+**Job:** Show why vertex validity cannot be omitted.
+**Assessment:** The K4 assignment using all four field elements is a strong changed-case example and establishes a separate necessity.
+**Direction:** Preserve both the honest triangle and the four-colour cheating example; the former may be shorter if the field arithmetic is expanded.
+
+### P036 · 4. Turning three colours into polynomial equations · lines 269–272
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B049` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Label the graph's vertices by a grid $H^m$, adding isolated vertices if
+needed. Let $\chi$ be the low-degree extension of”
+**Job:** Place graph data on a grid and interpolate it.
+**Assessment:** The graph-to-grid indexing is abstract, so the reader does not see what chi and E-hat are entries of.
+**Direction:** Give one tiny table or explicit assignment of vertices to H^2, identifying unused points as isolated vertices; do not imply the toy grid meets the asymptotic parameter regime.
+
+### P037 · 4. Turning three colours into polynomial equations · lines 282–285
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B051` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Then $\chi$ describes a proper colouring precisely when
+$\operatorname{Val}$ vanishes on $H^m$ and
+$\operatorname{Prop}$ vanishes on $H^{2m}$. The adjacency factor”
+**Job:** State equivalence between colouring and grid vanishing.
+**Assessment:** Both domains and the nonedge factor are explicit.
+**Direction:** Retain after explaining the interpolation input and the valid-colour roots.
+
+### P038 · 4. Turning three colours into polynomial equations · lines 287–292
+**Passage:** `pcp-expository-colour-polynomials` · **Block:** `B052` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “This translation has combined all the vertex requirements into one
+polynomial and all the edge requirements into another. It has”
+**Job:** Explain why vanishing on the grid differs from global zero.
+**Assessment:** This creates the exact problem solved by the next section.
+**Direction:** Preserve the distinction; it is a central explanatory success.
+
+### P039 · 5. A certificate for vanishing on a grid · lines 298–299
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B053` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Return temporarily to $\mathbb F_5$, with $H=\{0,1\}$ and
+$Z(X)=X(X-1)$. Consider”
+**Job:** Reset the arithmetic for a transparent certificate example.
+**Assessment:** The return to F5 is announced honestly.
+**Direction:** Keep the field-reset sentence; add a short reminder that this is a mechanism example, not the eventual verifier's field.
+
+### P040 · 5. A certificate for vanishing on a grid · lines 305–306
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B055` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “It vanishes at all four points of $H^2$: at each of them both $Z(X)$
+and $Z(Y)$ vanish. It is not”
+**Job:** Verify grid zero and separate it from a polynomial identity.
+**Assessment:** Four grid values and one off-grid value isolate the important distinction.
+**Direction:** Keep the example intact.
+
+### P041 · 5. A certificate for vanishing on a grid · lines 312–315
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B057` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The displayed decomposition certifies the grid condition: each term
+contains a factor that vanishes on the grid. In more variables,”
+**Job:** State and credit the grid-ideal certificate theorem.
+**Assessment:** A named source lemma and the visible decomposition separate an imported general fact from the toy example.
+**Direction:** Keep the citation and decomposition; give the full proof destination precisely if the record has a stable section.
+
+### P042 · 5. A certificate for vanishing on a grid · lines 322–328
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B059` · **Decision:** split · **Local priority:** 2
+**Exact locator:** “with suitable degree bounds on the $Q_j$. Polynomial division in each
+variable proves this result. After removing all multiples of”
+**Job:** Explain repeated polynomial division and quotient degree bounds.
+**Assessment:** The paragraph moves from remainder elimination to a total-degree budget; these are two jobs at a delicate transition.
+**Direction:** Split after the remainder vanishes; add one line of division in the toy example or connect the quotients directly to Y+1 and X+2.
+
+### P043 · 5. A certificate for vanishing on a grid · lines 330–332
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B060` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Reading all $m$ terms would require a number of queries that grows with
+the dimension. Following Corollary 2.10 of the”
+**Job:** Motivate packing many quotient reads into one object.
+**Assessment:** The dimension-dependent query problem is concrete and supplies a purpose for M.
+**Direction:** Retain the contrast between m separate quotient values and one packaged value.
+
+### P044 · 5. A certificate for vanishing on a grid · lines 338–340
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B062` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Its degree is at most $\deg P$, because multiplication by $U_j$ adds
+one to $\deg Q_j$ and $h\geq1$. This bound”
+**Job:** Check honest certificate degree capacity.
+**Assessment:** The inequality is short and states h>=1 as the needed reason.
+**Direction:** Retain; tie it explicitly to the total-degree definition introduced earlier.
+
+### P045 · 5. A certificate for vanishing on a grid · lines 342–342
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B063` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “It satisfies two polynomial identities,”
+**Job:** Introduce the two identities.
+**Assessment:** Short lead-in gives the display its role.
+**Direction:** Keep attached to the identities, not as a detached paragraph at a page break.
+
+### P046 · 5. A certificate for vanishing on a grid · lines 349–351
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B065` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “where $Z_H$ is applied to each coordinate. These identities also imply
+the desired grid condition: if $x\in H^m$, then $Z_H(x)=0$,”
+**Job:** Derive grid vanishing from the two identities.
+**Assessment:** The substitution x in H^m makes the implication transparent.
+**Direction:** Preserve the coordinatewise meaning of Z_H.
+
+### P047 · 5. A certificate for vanishing on a grid · lines 353–353
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B066` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “In the small example, the packaged certificate is”
+**Job:** Return to the concrete packaged polynomial.
+**Assessment:** Returning to the same data reduces abstraction cost.
+**Direction:** Retain the next example rather than replacing it with another abstract summary.
+
+### P048 · 5. A certificate for vanishing on a grid · lines 359–362
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B068` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “At $(X,Y)=(2,2)$ its two substitutions are
+$M(2,2,0,0)=0$ and $M(2,2,2,2)=4=P(2,2)$.
+The polynomial $P$ is allowed to be nonzero there. The identity”
+**Job:** Evaluate both substitutions and explain the off-grid case.
+**Assessment:** The actual values establish precisely what the certificate checks.
+**Direction:** Preserve the allowed nonzero off-grid value.
+
+### P049 · 5. A certificate for vanishing on a grid · lines 364–368
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B069` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere
+on the grid. At least one of the two”
+**Job:** Turn a bad grid point into a failed polynomial identity.
+**Assessment:** The composition M(X,Z_H(X)) has a different degree from M; invoking polynomial distance without naming this is an unsupported pedagogical shortcut.
+**Direction:** Add that substitution may multiply the degree by h and that the field is chosen large relative to that resulting degree; exact 5Dh/Q remains in Section 9.
+
+### P050 · 5. A certificate for vanishing on a grid · lines 374–377
+**Passage:** `pcp-expository-grid-certificate` · **Block:** `B071` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The remaining problem is that a received table is only *close* to a
+polynomial, and the points $(x,0)$ and $(x,Z_H(x))$”
+**Job:** Introduce adversarial corruption at special points.
+**Assessment:** The obstruction is correctly named, but a concrete density calculation would make the need for correction immediate.
+**Direction:** Use H or a full ambient toy table to show that a thin slice can contain all errors, and promise recovery at a prescribed point rather than direct reads there.
+
+### P051 · 6. Keeping the number of queries constant · lines 383–386
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B072` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “A low-degree polynomial in many variables restricts to a low-degree
+univariate polynomial on each line $u+Yv$. The prover supplies a”
+**Job:** Introduce the point table and auxiliary line descriptions.
+**Assessment:** The domains and contents of T_(u,v) are not yet explicit; table could mean a full function table or a coefficient list.
+**Direction:** Say the row indexed by (u,v) proposes a degree-d univariate polynomial, and specify that lambda selects the compared point.
+
+### P052 · 6. Keeping the number of queries constant · lines 388–396
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B073` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The point-versus-line theorem gives the converse needed for soundness.
+Suppose each supplied line polynomial has degree at most $d$, and”
+**Job:** State the point-versus-line theorem with constants.
+**Assessment:** This is an honest imported theorem with sampling, degree, field-size, rejection and conclusion all visible.
+**Direction:** Keep the theorem contract; define normalized distance before it rather than waiting until the fixed-degree theorem.
+
+### P053 · 6. Keeping the number of queries constant · lines 398–408
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B074` · **Decision:** move · **Local priority:** 2
+**Exact locator:** “To prove this, compare two families of lines through a plane, giving
+row and column descriptions of the same received”
+**Job:** Sketch the deep proof of the imported theorem.
+**Assessment:** Error locator, plurality, bivariate agreement and plane restrictions arrive without an operation the stated learner can perform; the sentence chain sounds explanatory but cannot be reconstructed locally.
+**Direction:** Move the proof sketch to an optional note linked to exact record sections; main route keeps the theorem's input, output and the role of line consistency.
+
+### P054 · 6. Keeping the number of queries constant · lines 410–413
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B075` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “A line polynomial of degree $d$ has $d+1$ coefficients. Reading all
+those coefficients is not a constant number of bit”
+**Job:** Explain why reading line coefficients is too expensive.
+**Assessment:** It clearly motivates changing representation.
+**Direction:** Keep; connect degree growth to graph size in one phrase if needed.
+
+### P055 · 6. Keeping the number of queries constant · lines 415–415
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B076` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Here is the operation with two base-$3$ digits. Over $\mathbb F_5$, take”
+**Job:** Choose the digit-encoding example.
+**Assessment:** Over F5 the function Y^5 equals Y, so this example's evaluation table is already linear and does not display a genuine function-degree saving.
+**Direction:** Use the checked F5 replacement Y^4+2Y+3 in replacement_passages.md R04; update all terms and the value at two together.
+
+### P056 · 6. Keeping the number of queries constant · lines 421–422
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B078` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “Since $5=2+1\cdot3$, replace $Y^5$ by $X_{0,2}X_{1,1}$.
+Likewise, $1=1+0\cdot3$ and $0=0+0\cdot3$. The encoded polynomial is”
+**Job:** Translate exponents into digit-position variables.
+**Assessment:** The subscripts X_(0,2), X_(1,1) encode two roles before those roles are spelled out.
+**Direction:** State that the first subscript selects digit position and the second selects its value, then label the exponent 5 as digits (2,1).
+
+### P057 · 6. Keeping the number of queries constant · lines 429–430
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B080` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “It has degree two, although $p$ has degree five. There are more variables,
+one group for each digit position. To”
+**Job:** Interpret reduced degree and give recovery substitution.
+**Assessment:** The extra variables are tied directly to the reconstruction operation.
+**Direction:** Preserve the formal-polynomial versus function distinction if F5 is retained.
+
+### P058 · 6. Keeping the number of queries constant · lines 438–440
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B082` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “At $\lambda=2$, these two triples are $(1,2,4)$ and $(1,3,4)$.
+The encoded evaluation is $4\cdot3+2\cdot2+3=4$ modulo $5$,
+which agrees with $p(2)=2^5+2\cdot2+3=4$”
+**Job:** Verify the encoded evaluation numerically.
+**Assessment:** The computation is explicit and consistent with the supplied polynomial.
+**Direction:** Recompute it only if the field is changed; do not preserve the old numerical line after changing the field.
+
+### P059 · 6. Keeping the number of queries constant · lines 442–448
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B083` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “In general, write an exponent $j<b^c$ with $c$ base-$b$ digits and
+replace $Y^j$ by the product of the corresponding $c$”
+**Job:** Generalize digit encoding and credit it.
+**Assessment:** Fixed c, growing variables and the evaluation identity are stated together.
+**Direction:** Retain; the name is subordinate to a completed operation.
+
+### P060 · 6. Keeping the number of queries constant · lines 450–455
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B084` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The test need not enforce its exact special form. A received table
+may decode to an arbitrary polynomial of degree”
+**Job:** Separate honest encoding form from arbitrary decoded polynomials.
+**Assessment:** This prevents a serious soundness shortcut and distinguishes completeness from soundness assumptions.
+**Direction:** Preserve this paragraph as a highlighted conceptual hinge.
+
+### P061 · 6. Keeping the number of queries constant · lines 457–462
+**Passage:** `pcp-expository-digit-encoding` · **Block:** `B085` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “We can calculate the larger bound. Each substituted variable is
+$Y^{j b^i}$, with $0\leq j<b$ and $0\leq i<c$, so its”
+**Job:** Derive the larger decoded degree bound.
+**Assessment:** The variable degree and count of occurrences give an actual derivation of D.
+**Direction:** Keep this calculation; it earns the notation D used later.
+
+### P062 · 6. Keeping the number of queries constant · lines 468–474
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B086` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “For degree at most $c$, interpolation needs $c+1$ values, a fixed number.
+The nonzero elements of a finite field form”
+**Job:** Introduce generator nodes and fixed-degree interpolation.
+**Assessment:** The cyclic-group theorem is honestly imported, but the weights for evaluation at zero remain abstract despite the earlier evaluation-at-three example.
+**Direction:** Work one shifted-line interpolation using explicitly nonzero nodes and show that the center is not queried; retain the generator theorem as the general source condition.
+
+### P063 · 6. Keeping the number of queries constant · lines 480–482
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B088` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “at uniformly random $u,v$. An honest polynomial of total degree at
+most $c$ passes: along a line it is a”
+**Job:** Prove honest acceptance of the weighted test.
+**Assessment:** The restriction-to-a-line argument supplies the exact interpolation premise.
+**Direction:** Retain the total-degree hypothesis.
+
+### P064 · 6. Keeping the number of queries constant · lines 484–491
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B089` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “For the converse, use the stated generator nodes and $|F|>2c$.
+If the rejection rate is $\delta<1/[2(c+2)^2]$, the function is within”
+**Job:** State the weighted-test converse.
+**Assessment:** Distance is defined here after several earlier uses; otherwise the import boundary and hypotheses are clear.
+**Direction:** Move the normalized-distance definition to its first use; keep the formal versus paper-bound distinction and exact source locator.
+
+### P065 · 6. Keeping the number of queries constant · lines 493–499
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B090` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The same formula also corrects a value at a prescribed point. Suppose
+$f$ differs from a degree-$c$ polynomial $P$ on”
+**Job:** Derive local correction at a prescribed point.
+**Assessment:** This is the pivotal operation, but the affine bijection argument for uniformity and one actual weighted read are still implicit.
+**Direction:** Explain v -> u+a_i v is a bijection because a_i is nonzero, and add one numerical request trace using the earlier interpolation example.
+
+### P066 · 6. Keeping the number of queries constant · lines 505–507
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B092` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The sampled points need not be independent for this bound: they all
+lie on one line, but each individual error”
+**Job:** Explain why independence is unnecessary.
+**Assessment:** It prevents misuse of a product bound and names the exact probability tool.
+**Direction:** Preserve this sentence; it is an unusually efficient teaching safeguard.
+
+### P067 · 6. Keeping the number of queries constant · lines 509–512
+**Passage:** `pcp-expository-weighted-test` · **Block:** `B093` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “A fixed-degree encoding can therefore be checked with a fixed number
+of field queries, and a value at a special”
+**Job:** Expose the remaining field-symbol-to-bit bottleneck.
+**Assessment:** The route from fixed field queries to fixed bit queries is motivated rather than merely announced.
+**Direction:** Keep the two resource units explicit.
+
+### P068 · 7. A field value represented by many one-bit questions · lines 518–519
+**Passage:** `pcp-expository-hadamard` · **Block:** `B094` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “Start with a three-bit message $s=101$. For every three-bit vector
+$x$, store the parity”
+**Job:** Introduce an explicit three-bit message.
+**Assessment:** The dot product is immediately written, but the parity operation could be demonstrated once for a reader without binary linear algebra.
+**Direction:** Compute h_(101)(110)=1+0+0=1 modulo two before listing the whole word, or label one cell of the table.
+
+### P069 · 7. A field value represented by many one-bit questions · lines 525–526
+**Passage:** `pcp-expository-hadamard` · **Block:** `B096` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The positions of the word are themselves bit vectors. In order
+$000,001,010,011,100,101,110,111$, its contents are”
+**Job:** Specify addresses and output order.
+**Assessment:** The distinction between address vectors and stored bits is explicit.
+**Direction:** Preserve the ordering so the corruption example remains reproducible.
+
+### P070 · 7. A field value represented by many one-bit questions · lines 532–536
+**Passage:** `pcp-expository-hadamard` · **Block:** `B098` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “This is the homogeneous linear part of a Hadamard encoding. It stores
+eight answers about a message with only three”
+**Job:** Prove the half-distance property.
+**Assessment:** Homogeneous linear functional is introduced as a technical name before it is defined, and the pairing proof presupposes this binary linear algebra.
+**Direction:** Say it is exactly a parity dot product with no added constant; show that two messages differ by another such dot product.
+
+### P071 · 7. A field value represented by many one-bit questions · lines 538–541
+**Passage:** `pcp-expository-hadamard` · **Block:** `B099` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Thus a uniformly random one-bit observation distinguishes two unequal
+messages with probability $1/2$. To compare values, the checker queries
+the”
+**Job:** Use random linear observations to compare field values.
+**Assessment:** It explains why the same label is queried and why full reconstruction is unnecessary.
+**Direction:** Keep; later weighting should reuse this concrete operation.
+
+### P072 · 7. A field value represented by many one-bit questions · lines 543–544
+**Passage:** `pcp-expository-hadamard` · **Block:** `B100` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Blum, Luby and Rubinfeld's [linearity test][blr] checks this kind of
+word. Choose independent uniform $a,b$ and check”
+**Job:** Attribute and introduce the BLR test.
+**Assessment:** Source credit and operation are adjacent.
+**Direction:** Retain the named source.
+
+### P073 · 7. A field value represented by many one-bit questions · lines 550–558
+**Passage:** `pcp-expository-hadamard` · **Block:** `B102` · **Decision:** split · **Local priority:** 3
+**Exact locator:** “where all vector and bit additions are modulo two. An honest word always
+passes. Flip the entry at $001$ in”
+**Job:** Count the effect of one corrupted entry.
+**Assessment:** The 18-pair count is correct and worthwhile, but the inclusion-exclusion explanation is compressed into a long paragraph.
+**Direction:** Separate test semantics from the count, optionally show the three intersections as a compact table; keep the cancellation argument.
+
+### P074 · 7. A field value represented by many one-bit questions · lines 560–567
+**Passage:** `pcp-expository-hadamard` · **Block:** `B103` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Bellare, Coppersmith, Håstad, Kiwi and Sudan proved the sharp bound
+([Theorem 1.2][bchks]): a function which fails this test with probability”
+**Job:** State the sharp BLR distance bound and its source role.
+**Assessment:** The text distinguishes the finite example from the general theorem and credits the sharper bound separately.
+**Direction:** Keep exact theorem attribution; source verification belongs to the source audit.
+
+### P075 · 7. A field value represented by many one-bit questions · lines 573–574
+**Passage:** `pcp-expository-hadamard-correction` · **Block:** `B104` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Suppose we want $h_s(x)$ but distrust the entry at $x$. Choose a uniform
+$r$ and return”
+**Job:** State the random two-query correction procedure.
+**Assessment:** Fixed target, random offset and returned expression are clearly separated.
+**Direction:** Preserve the fixed-target order.
+
+### P076 · 7. A field value represented by many one-bit questions · lines 580–583
+**Passage:** `pcp-expository-hadamard-correction` · **Block:** `B106` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For the honest word this equals $h_s(x)$, because the two appearances
+of $h_s(r)$ cancel. If $g$ has error fraction $\varepsilon$,”
+**Job:** Derive the correction error bound.
+**Assessment:** The two marginal uniformity statements justify the union bound directly.
+**Direction:** Keep; use this as the pattern for the more complex correction explanation.
+
+### P077 · 7. A field value represented by many one-bit questions · lines 585–589
+**Passage:** `pcp-expository-hadamard-correction` · **Block:** `B107` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “In our word with one corrupted position, $\varepsilon=1/8$. For each
+nonzero $x$, exactly six of the eight choices of $r$”
+**Job:** Check the correction bound including the zero target.
+**Assessment:** The exceptional target makes the quantitative statement accurate and gives a useful changed case.
+**Direction:** Preserve x=0; do not generalize six correct offsets to all targets.
+
+### P078 · 7. A field value represented by many one-bit questions · lines 595–598
+**Passage:** `pcp-expository-hadamard-correction` · **Block:** `B109` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Random self-correction lets the verifier request a special algebraic
+observation using random query locations. The requested location itself
+need not”
+**Job:** Connect self-correction to the special-point problem.
+**Assessment:** This returns the operation to its original purpose and cites a teaching source locally.
+**Direction:** Keep the relevant textbook section rather than a bare general citation.
+
+### P079 · 7. A field value represented by many one-bit questions · lines 604–607
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B110` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “A field $F$ with $2^t$ elements can be represented as $t$ binary
+coordinates using a fixed basis. An element $u$”
+**Job:** Represent extension-field elements in binary coordinates.
+**Assessment:** A fixed basis is named but never made operational; the reader is asked to understand another representation change before seeing any coordinates.
+**Direction:** Use the already introduced F4 basis (1,omega) to write u=a+b omega as (a,b) and show addition coordinatewise.
+
+### P080 · 7. A field value represented by many one-bit questions · lines 609–610
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B111` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “For this purpose, it stores a larger word whose positions are Boolean
+polynomials $R$ of degree at most three:”
+**Job:** Define a larger label space of Boolean polynomials.
+**Assessment:** The jump from three-bit parity addresses to all cubic polynomial labels is the largest missing worked operation in the paper.
+**Direction:** List a small field element's answers for labels 1,Z1,Z2,Z1Z2; distinguish a polynomial used as an address from its one-bit value.
+
+### P081 · 7. A field value represented by many one-bit questions · lines 616–619
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B113` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The coefficients of $R$ specify the position; the stored answer is
+one bit. Boolean variables satisfy $Z_i^2=Z_i$ when evaluated, so”
+**Job:** Explain labels, squarefree monomials and linearity in labels.
+**Assessment:** The reader must separate two notions of degree/linearity, but the text offers only a sentence-level distinction.
+**Direction:** Use one pair R,S to demonstrate H(u)(R+S)=H(u)(R)+H(u)(S), while R itself can contain a product.
+
+### P082 · 7. A field value represented by many one-bit questions · lines 621–626
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B114` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “Multiplication in a finite field is bilinear in its binary coordinates.
+Consequently, a linear binary observation $L(u^3-1)$ is a polynomial”
+**Job:** Turn a cubic field expression into a query label.
+**Assessment:** Bilinearity of multiplication is asserted and the corresponding label is never computed; the promised operation cannot be reproduced from the stated prerequisites.
+**Direction:** Compute a small binary-coordinate multiplication or one label for a chosen coordinate of u^3-1, then show which address and bit the verifier reads.
+
+### P083 · 7. A field value represented by many one-bit questions · lines 628–634
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B115` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Linearity in the labels alone is insufficient to establish that a
+received word represents a field element. For example, assign”
+**Job:** Give a linear functional that is not a point evaluation.
+**Assessment:** The four-label counterexample precisely explains why linearity testing alone is inadequate.
+**Direction:** Preserve; place it immediately after the worked genuine evaluation word so its failure is recognizable.
+
+### P084 · 7. A field value represented by many one-bit questions · lines 636–642
+**Passage:** `pcp-expository-cubic-labels` · **Block:** `B116` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The formal Hadamard test checks these properties using corrected
+answers. Its degree-three version makes ten bit queries. The current
+paper”
+**Job:** Describe extra Hadamard tests and version query counts.
+**Assessment:** Products and the constant label are named as repairs, but their checked relations are not shown; ten versus eight queries currently has more detail than the operation itself.
+**Direction:** State one product consistency equation and H(1)=1, label them components of the imported soundness theorem, then retain the 10/8 distinction in a short source note.
+
+### P085 · 8. Combining the encodings and returning to the grid · lines 648–652
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B117` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The construction now has two forms of redundancy. A line polynomial
+is encoded as a polynomial of fixed degree in”
+**Job:** Summarize the two encodings and the composed comparison.
+**Assessment:** Primary row, encoded line row and corrected line value are dense terms whose indexing is never shown together.
+**Direction:** Add a compact typed table or one end-to-end query trace: row key, polynomial label, returned bit and comparison.
+
+### P086 · 8. Combining the encodings and returning to the grid · lines 654–656
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B118` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Field coefficients in the interpolation formula do not require
+reading a whole field element. For a homogeneous binary linear
+label”
+**Job:** Introduce absorbing field coefficients into labels.
+**Assessment:** The right bottleneck is identified and a clean identity follows.
+**Direction:** Define homogeneous binary linear label here only if the earlier definition has not been added.
+
+### P087 · 8. Combining the encodings and returning to the grid · lines 662–665
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B120` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The weight is incorporated into the queried label. Applying $L$ to a
+weighted field identity therefore produces an identity among”
+**Job:** Explain weighted bit testing and its half-gap.
+**Assessment:** The identity is right, but no example shows how multiplying a field value changes the parity label rather than its stored answer.
+**Direction:** Use the small fixed basis to compute one transformed label L composed with multiplication by eta; retain uniform label sampling.
+
+### P088 · 8. Combining the encodings and returning to the grid · lines 667–674
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B121` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The combined low-degree theorem supplies **one** polynomial close to
+the primary oracle on the label sets used later. It is”
+**Job:** State the same-decoded-polynomial requirement.
+**Assessment:** The key common-witness principle is explicit, but full, affine and homogeneous label families are not laid out in one usable definition.
+**Direction:** Give a two-row label-family table with whether a constant term is permitted and which later test consumes each guarantee; preserve that both guarantees use one polynomial.
+
+### P089 · 8. Combining the encodings and returning to the grid · lines 676–679
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B122` · **Decision:** move · **Local priority:** 1
+**Exact locator:** “We need quantitative versions of these statements to know that the
+errors will leave a positive gap. Fix a positive”
+**Job:** Introduce exact constants in the combined test.
+**Assessment:** K,E,S,C arrive before the reader has seen the four tables and before an instance of composed correction; four large formulas interrupt the only construction-level explanation.
+**Direction:** Introduce S(c), E(c), C(c) by their error roles on the main route and place their exact unchanged expansions in a nearby parameter note or endnote with an exact destination.
+
+### P090 · 8. Combining the encodings and returning to the grid · lines 689–691
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B124` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Their sizes are less important here than their independence from the
+graph. With the prescribed interpolation nodes, if the complete”
+**Job:** State the encoded-line test assumptions.
+**Assessment:** The graph independence is the real asymptotic point and the following hypotheses are explicit.
+**Direction:** Keep those hypotheses on the main route even if expanded constants move.
+
+### P091 · 8. Combining the encodings and returning to the grid · lines 698–704
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B126` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “there is one polynomial of degree at most $D$ whose encoding differs from the
+received primary table on at most”
+**Job:** State simultaneous distance conclusions.
+**Assessment:** The conclusion carefully averages over point and label, but full labels remains undefined enough for a learner to conflate it with all cubic monomials separately.
+**Direction:** Write the probability event explicitly once, with one fixed decoded polynomial and the uniformly sampled label family; keep the simultaneous nature.
+
+### P092 · 8. Combining the encodings and returning to the grid · lines 706–715
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B127` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “The outer local corrector uses a random line through a prescribed
+point. It checks the encoded line information and compares”
+**Job:** Define the outer corrector and its rejection-dependent bound.
+**Assessment:** The correction theorem is named precisely but the algorithm is described at too high a level to distinguish its reject outcome from its returned bit in a worked reconstruction.
+**Direction:** Trace a fixed target, a sampled line, the check, reject/return outcomes and the ideal bit; explain the bound as a three-source error budget before the formula.
+
+### P093 · 8. Combining the encodings and returning to the grid · lines 722–727
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B129` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “This probability includes a uniformly random homogeneous label; it is
+not a guarantee for every fixed label. It assumes no”
+**Job:** Explain averaging over labels and rejection coupling.
+**Assessment:** This explicitly avoids an incorrect every-fixed-label guarantee and does not assume auxiliary honesty.
+**Direction:** Preserve these conditions; do not simplify away the random-label scope or rejection event.
+
+### P094 · 8. Combining the encodings and returning to the grid · lines 729–729
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B130` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “We can now return to the two identities for the vanishing certificate:”
+**Job:** Return to the grid certificate identities.
+**Assessment:** The return supplies the pending payoff.
+**Direction:** Keep the exact two identities visibly linked to Section 5.
+
+### P095 · 8. Combining the encodings and returning to the grid · lines 736–740
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B132` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The binary ZERO test observes them through a random homogeneous
+label. It reads the primary bit at the random point”
+**Job:** Describe the binary ZERO test.
+**Assessment:** Primary bit and two corrected certificate values could mean field values or bits; the same label/derived labels must be clear.
+**Direction:** Write one ideal and received bit comparison side by side, identifying which oracle supplies each bit and that corrector rejection is rejection of the enclosing test.
+
+### P096 · 8. Combining the encodings and returning to the grid · lines 742–746
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B133` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For an honest zero-on-grid polynomial, the prover supplies its exact
+primary encoding, an exact vanishing certificate and the honest encoded”
+**Job:** State perfect-completeness requirements for ZERO.
+**Assessment:** Honest auxiliary data is explicitly required and not conflated with honest primary values.
+**Direction:** Keep this fidelity safeguard.
+
+### P097 · 8. Combining the encodings and returning to the grid · lines 748–756
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B134` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The soundness argument compares this received-data test with the
+ideal test on the decoded polynomials. If the two outcomes differ,”
+**Job:** Compare actual ZERO behavior to ideal polynomial behavior.
+**Assessment:** The right coupling argument appears, but the exact probability inequality is postponed past a new four-table inventory.
+**Direction:** Give the elementary ideal rejection <= actual rejection + disagreement inequality here, with named events; retain the full constants later.
+
+### P098 · 8. Combining the encodings and returning to the grid · lines 758–761
+**Passage:** `pcp-expository-binary-tests` · **Block:** `B135` · **Decision:** shorten · **Local priority:** 3
+**Exact locator:** “Global closeness by itself would not justify either certificate
+read. At each requested point, the correction theorem bounds rejection
+or”
+**Job:** Restate the correction dependency at special points.
+**Assessment:** It repeats the preceding caveat without adding an operation; after a worked correction trace it can be shorter.
+**Direction:** Use one final sentence returning to the original corrupt-slice example, rather than restating the theorem abstractly.
+
+### P099 · 9. From the seven checks to a colouring · lines 767–768
+**Passage:** `pcp-expository-assembly` · **Block:** `B136` · **Decision:** move · **Local priority:** 1
+**Exact locator:** “The proof contains four main polynomial tables, each accompanied by
+an encoded line table. They describe:”
+**Job:** Introduce the four polynomial objects.
+**Assessment:** The reader learns the full inventory only after all combined-test constants; earlier references to primary and certificate rows lack this scaffold.
+**Direction:** Move a compact inventory to the start of Section 8 and retain the seven-check assembly here.
+
+### P100 · 9. From the seven checks to a colouring · lines 776–779
+**Passage:** `pcp-expository-assembly` · **Block:** `B138` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “That is eight tables in total. The verifier runs four low-degree
+tests, one for each main table and its line”
+**Job:** Count the eight tables and seven checks.
+**Assessment:** The count is logically transparent once the four objects are named.
+**Direction:** Keep acceptance as the conjunction of all seven checks.
+
+### P101 · 9. From the seven checks to a colouring · lines 781–785
+**Passage:** `pcp-expository-assembly` · **Block:** `B139` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The separate difference table lets the verifier obtain binary
+observations of the cube of a difference using the same local”
+**Job:** Motivate the separate difference table.
+**Assessment:** The need for the extra table is given in abstract local-operation terms; one example showing the label cannot query both chi values at once would help.
+**Direction:** Explain that a single cubic label observes one stored field value, so the difference is made a stored value and then tied to chi by a separate check.
+
+### P102 · 9. From the seven checks to a colouring · lines 787–793
+**Passage:** `pcp-expository-assembly` · **Block:** `B140` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For perfect completeness, start with a proper colouring, interpolate it,
+form its difference polynomial, and construct the two vanishing
+certificates.”
+**Job:** Construct an honest proof and list completeness inputs.
+**Assessment:** It starts with an actual colouring and accounts for the auxiliary tables and degree capacity.
+**Direction:** Retain the explicit later degree-capacity check.
+
+### P103 · 9. From the seven checks to a colouring · lines 795–797
+**Passage:** `pcp-expository-assembly` · **Block:** `B141` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For soundness, suppose an arbitrary proof string is accepted with
+probability very close to one. Each of the seven checks”
+**Job:** Start soundness from high acceptance.
+**Assessment:** The conjunction implication is short and exact; it does not need independence between the seven checks.
+**Direction:** Preserve; explicitly note independence is not needed here if readers later confuse it with repetition.
+
+### P104 · 9. From the seven checks to a colouring · lines 799–806
+**Passage:** `pcp-expository-assembly` · **Block:** `B142` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The four low-degree tests produce four decoded polynomials.
+The difference check and the binary distance identity show that
+the decoded”
+**Job:** Upgrade approximate difference agreement to exact identity.
+**Assessment:** This is the strongest explanatory paragraph in the assembly; it describes both bounds that conflict.
+**Direction:** Retain and attach the later numerical inequality to this exact step.
+
+### P105 · 9. From the seven checks to a colouring · lines 808–815
+**Passage:** `pcp-expository-assembly` · **Block:** `B143` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “The two ZERO checks then force the two decoded colouring
+polynomials to vanish on their grids. Their primary values are”
+**Job:** Apply ZERO to the common decoded objects.
+**Assessment:** The phrase two decoded colouring polynomials can refer to chi and chi-prime or to the two derived constraints; they are different objects.
+**Direction:** Name the two constraint polynomials Val_chi and Prop_chi-prime, and say their vanishing uses the same chi and chi-prime fixed by decoding.
+
+### P106 · 9. From the seven checks to a colouring · lines 817–821
+**Passage:** `pcp-expository-assembly` · **Block:** `B144` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Thus sufficiently high acceptance implies that the graph is
+three-colourable. Taking the contrapositive, every proof for a
+non-three-colourable graph is”
+**Job:** Take the contrapositive and explain a uniform gap.
+**Assessment:** This gives the original false-instance guarantee a mathematical source.
+**Direction:** Keep the gap independence before amplification.
+
+### P107 · 9. From the seven checks to a colouring · lines 825–833
+**Passage:** `pcp-expository-assembly` · **Block:** `B145` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Let $\kappa$ now be the rejection rate of the whole seven-check
+verifier, and suppose $E\kappa\leq1/(4\cdot10^6)$. Each low-degree
+test rejects at”
+**Job:** Derive the ideal-versus-actual difference-test inequality.
+**Assessment:** Replacing three bits costing 3 epsilon is a new probability operation that deserves one explicit union-bound sentence.
+**Direction:** Identify the three uniform point-label marginals; no independence is required for the union bound.
+
+### P108 · 9. From the seven checks to a colouring · lines 839–839
+**Passage:** `pcp-expository-assembly` · **Block:** `B147` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “forces the exact difference identity.”
+**Job:** State the consequence of the strict inequality.
+**Assessment:** The line completes the preceding display's grammatical sentence.
+**Direction:** Keep with the display to avoid a stranded fragment.
+
+### P109 · 9. From the seven checks to a colouring · lines 841–847
+**Passage:** `pcp-expository-assembly` · **Block:** `B148` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Put $h=|H|$. The parameters also ensure $m(h-1)\leq D$, so the public adjacency
+extension has degree at most $2D$. The decoded”
+**Job:** Budget degrees of the derived vertex and edge constraints.
+**Assessment:** It explains where 3D and 5D come from and names adjacency's degree.
+**Direction:** Keep; this repairs the composite-degree hint that should be introduced in Section 5.
+
+### P110 · 9. From the seven checks to a colouring · lines 855–863
+**Passage:** `pcp-expository-assembly` · **Block:** `B150` · **Decision:** explain · **Local priority:** 1
+**Exact locator:** “The left side is the ideal rejection bound. On the right, replacing
+the derived cubic read costs $2\varepsilon$, so the”
+**Job:** Explain the terms of the ZERO soundness inequality.
+**Assessment:** Nearly every term is verbally attributed but the chain from actual test to one failed identity remains compressed; 'combined polynomial-root loss' is not itself a derivation.
+**Direction:** Present the event coupling as a short three-line inequality with the two corrected reads accounted for, then substitute the already stated bounds; leave exact source theorem as support.
+
+### P111 · 9. From the seven checks to a colouring · lines 865–865
+**Passage:** `pcp-expository-assembly` · **Block:** `B151` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Choose the field large enough that”
+**Job:** Choose field bounds independently of observed rejection.
+**Assessment:** The separation of root-error parameters from rejection-controlled errors is structurally useful.
+**Direction:** Keep this order of choices.
+
+### P112 · 9. From the seven checks to a colouring · lines 873–875
+**Passage:** `pcp-expository-assembly` · **Block:** `B153` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “Both ideal lower bounds are then at least $3/8$. Since $E,S,C$ are
+fixed constants, we can choose a fixed positive”
+**Job:** Choose a fixed gap after the field requirements.
+**Assessment:** The existence of g is elementary but the simultaneous inequalities obscure how it is chosen.
+**Direction:** Say take g smaller than the minimum of the finitely many positive thresholds; optionally display one exact expression in the parameter note.
+
+### P113 · 9. From the seven checks to a colouring · lines 882–888
+**Passage:** `pcp-expository-assembly` · **Block:** `B155` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “The difference identity follows because $1/16<3/8$. A false grid
+condition would make the ZERO inequality assert
+$3/8<1/16+1/8=3/16$, which is impossible.”
+**Job:** Close the contradiction and explain why the gap stays fixed.
+**Assessment:** The displayed verbal implication writes 3/8 < 3/16, while the actual chain is 3/8 <= RHS < 3/16; the contradiction is valid but the chain could be cleaner.
+**Direction:** Write the full inequality chain once; preserve strictness and the separate role of field size versus rejection.
+
+### P114 · 9. From the seven checks to a colouring · lines 890–893
+**Passage:** `pcp-expository-assembly` · **Block:** `B156` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The decoded polynomials and the recovered colouring exist in
+the soundness argument. Their existence shows what a frequently
+accepted string”
+**Job:** Separate existential decoding in the analysis from verifier computation.
+**Assessment:** This prevents a serious misconception about how constant queries could reconstruct the whole colouring.
+**Direction:** Preserve and consider placing an earlier reminder at the first decoder theorem.
+
+### P115 · 10. Randomness, proof length and repetition · lines 904–906
+**Passage:** `pcp-expository-resources` · **Block:** `B158` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The table sizes and the randomness budget have to be controlled
+alongside the query count: the PCP theorem requires polynomial”
+**Job:** State the remaining resource obligations.
+**Assessment:** The three resources are separated before calculations.
+**Direction:** Keep the explicit polynomial-length and logarithmic-randomness obligations.
+
+### P116 · 10. Randomness, proof length and repetition · lines 908–909
+**Passage:** `pcp-expository-resources` · **Block:** `B159` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “For a graph with $N\geq2$ vertices, choose the least integer $a\geq2$
+such that $\lceil\log_2 N\rceil\leq a2^a$. Put”
+**Job:** Choose the growth parameter a.
+**Assessment:** The least a and exponential parametrization look unmotivated until after they are introduced.
+**Direction:** First explain the target: enough grid points while a point address takes O(log N) bits, then give the convenient choice.
+
+### P117 · 10. Randomness, proof length and repetition · lines 916–921
+**Passage:** `pcp-expository-resources` · **Block:** `B161` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The grid $H^m$ contains $s^s=2^{a2^a}$ points, enough for
+the vertices. Minimality of $a$ gives $a2^a=O(\log N)$:
+if $a>2$, the preceding”
+**Job:** Prove the grid fits and bound the parameter.
+**Assessment:** Minimality and the a=2 boundary are both handled.
+**Direction:** Keep; define the big-O convention earlier rather than here.
+
+### P118 · 10. Randomness, proof length and repetition · lines 923–931
+**Passage:** `pcp-expository-resources` · **Block:** `B162` · **Decision:** split · **Local priority:** 2
+**Exact locator:** “A point of $F^m$ takes $m\log_2|F|=s(12a+32)=O(\log N)$
+bits to specify. The encoded line data uses $cs=4s$ extra
+field coordinates, so”
+**Job:** Count address and label bits.
+**Assessment:** Three different addresses and an exponential-versus-polynomial comparison are packed into one paragraph; the label-count formula assumes the reader recognizes squarefree monomial counts.
+**Direction:** Split point/line coordinates from label coefficients; tie binomial coefficients to choosing variables in degree-0/1/2/3 monomials and explicitly deduce 2^(O(log N))=N^(O(1)).
+
+### P119 · 10. Randomness, proof length and repetition · lines 933–936
+**Passage:** `pcp-expository-resources` · **Block:** `B163` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The digit encoding uses base $b=s$ and degree $c=4$, so
+the substitution estimate in Section 6 gives $D=cb^c=4s^4$.
+The honest”
+**Job:** Identify honest and decoded degree bounds under chosen parameters.
+**Assessment:** This connects earlier encoding capacity to the actual construction.
+**Direction:** Keep honest degree separate from the larger soundness degree.
+
+### P120 · 10. Randomness, proof length and repetition · lines 942–950
+**Passage:** `pcp-expository-resources` · **Block:** `B165` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “so all their line restrictions fit the honest encoding capacity.
+The field is large enough for all the testing bounds.”
+**Job:** Verify field inequalities and small-example limitation.
+**Assessment:** The calculations are transparent enough once parameter purpose is given, and the final limitation prevents overinterpreting toy computations.
+**Direction:** Retain as an optional parameter verification block if main-route constants are compressed.
+
+### P121 · 10. Randomness, proof length and repetition · lines 952–960
+**Passage:** `pcp-expository-resources` · **Block:** `B166` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Fair random bits give uniform field elements directly,
+since $|F|$ is a power of two. Four correction parameters
+originally range”
+**Job:** Explain exact fair-bit sampling by zero-padding.
+**Assessment:** Four nonzero parameters are introduced only here without identifying the four correction calls, so their count is hard to recover.
+**Direction:** Name the two correction calls in each of the two ZERO tests; keep immediate acceptance and the multiplicative gap loss explicit.
+
+### P122 · 10. Randomness, proof length and repetition · lines 962–968
+**Passage:** `pcp-expository-resources` · **Block:** `B167` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The running-time claim requires more than short addresses.
+The formal implementation computes the field, its arithmetic,
+the public adjacency extension,”
+**Job:** Separate running time from short addresses.
+**Assessment:** It prevents an information-theoretic argument from masquerading as a machine-time proof.
+**Direction:** Keep the boundary; a direct source locator would reduce burden on the full record.
+
+### P123 · 10. Randomness, proof length and repetition · lines 970–972
+**Passage:** `pcp-expository-resources` · **Block:** `B168` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “"Constant" does not mean small in this formal construction.
+One unamplified graph verifier reads at most $187$ bits,
+but its”
+**Job:** State a concrete query bound and tiny gap.
+**Assessment:** The contrast between asymptotically constant and practically small is useful and honest.
+**Direction:** Keep one compact numerical instance, with complete formal support in the claim map.
+
+### P124 · 10. Randomness, proof length and repetition · lines 978–981
+**Passage:** `pcp-expository-resources` · **Block:** `B170` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “These bounds establish independence from the input size; they do
+not give a practical verification protocol. The formal construction
+repeats”
+**Job:** Explain the practical limitation and repetition count.
+**Assessment:** It neither oversells the protocol nor hides that the repetition count is fixed.
+**Direction:** Retain alongside the toy amplification calculation.
+
+### P125 · 10. Randomness, proof length and repetition · lines 983–986
+**Passage:** `pcp-expository-resources` · **Block:** `B171` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The elementary calculation is easier with a toy gap.
+Suppose one run accepts any fixed false proof with
+probability at”
+**Job:** Introduce a smaller numerical amplification example.
+**Assessment:** The toy gap makes the product bound intelligible.
+**Direction:** Keep and label it as a distinct illustrative gap.
+
+### P126 · 10. Randomness, proof length and repetition · lines 992–996
+**Passage:** `pcp-expository-resources` · **Block:** `B173` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The proof string is fixed throughout. The random seeds are
+independent, so the acceptance events for that fixed
+string multiply.”
+**Job:** Explain why acceptance probabilities multiply.
+**Assessment:** It names both fixed proof and independent seeds, and shows why reusing randomness fails.
+**Direction:** Preserve the unchanged proof string and randomness condition.
+
+### P127 · 10. Randomness, proof length and repetition · lines 998–1005
+**Passage:** `pcp-expository-resources` · **Block:** `B174` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “For the actual gap, $(1-\gamma)^R\leq1/2$ follows from
+$R\gamma\geq1$. One algebraic proof uses
+$(1-\gamma)^{-1}\geq1+\gamma$ and
+$(1+\gamma)^R\geq1+R\gamma$, giving
+$(1-\gamma)^R\leq1/(1+R\gamma)\leq1/2$.
+The value of”
+**Job:** Bound actual repetition without transcendental estimates.
+**Assessment:** The elementary inequality completes the actual claim rather than relying only on the toy example.
+**Direction:** Keep as a short optional arithmetic note if the resource section is streamlined.
+
+### P128 · 10. Randomness, proof length and repetition · lines 1009–1020
+**Passage:** `pcp-expository-resources` · **Block:** `B175` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “For any problem in NP, write a candidate accepting
+computation of its certificate checker as a table:
+one configuration per”
+**Job:** Reduce certificate checking to local computation constraints.
+**Assessment:** Configurations, machine alphabet and locality are introduced in one paragraph; this is a second teaching subject late in the paper.
+**Direction:** Either give a small local-transition example or state the reduction as an imported polynomial-time theorem on the main path and keep this construction in an optional appendix.
+
+### P129 · 10. Randomness, proof length and repetition · lines 1022–1027
+**Passage:** `pcp-expository-resources` · **Block:** `B176` · **Decision:** move · **Local priority:** 2
+**Exact locator:** “The formal reduction represents each finite choice by
+a block of bits with exactly one bit equal to one,
+then”
+**Job:** Encode finite relations as 3-CNF via mismatch flags.
+**Assessment:** This detailed clause compiler is accurate but less central to the algebraic PCP mechanism than the missing field-label trace.
+**Direction:** Move the flags construction to an optional reduction appendix; retain the reduction's exact guarantee and source on the main path.
+
+### P130 · 10. Randomness, proof length and repetition · lines 1034–1039
+**Passage:** `pcp-expository-resources` · **Block:** `B178` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The flags record whether the actual input has yet
+differed from $p$. The last condition imposes $R(p)$
+only when the”
+**Job:** Explain mismatch flags and their Boolean literals.
+**Assessment:** The semantics of each flag and final condition are concrete.
+**Direction:** Keep with the optional flags example; do not separate it from the formulas it explains.
+
+### P131 · 10. Randomness, proof length and repetition · lines 1046–1051
+**Passage:** `pcp-expository-resources` · **Block:** `B180` · **Decision:** explain · **Local priority:** 3
+**Exact locator:** “The first two require $z=1$ if either input is one;
+the third requires an input to be one if $z=1$.”
+**Job:** Verify OR clauses and polynomial-size accounting.
+**Assessment:** The fixed-arity assumption is stated, but exactly-one constraints on a finite-choice block also need fixed size; a novice may not see why.
+**Direction:** Mention the machine alphabet and local relation arities are fixed once the verifier is fixed; keep this within the optional reduction proof.
+
+### P132 · 10. Randomness, proof length and repetition · lines 1053–1057
+**Passage:** `pcp-expository-resources` · **Block:** `B181` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The final colouring gadget can be checked by hand.
+For Boolean values, write $\operatorname{NAE}(a,b,c)$
+when the three values are **not”
+**Job:** Introduce NAE as a route from clauses to colours.
+**Assessment:** The notation is immediately expanded and followed by a checkable equivalence.
+**Direction:** Retain if any reduction worked example survives; this gadget is more visual and teachable than the mismatch compiler.
+
+### P133 · 10. Randomness, proof length and repetition · lines 1064–1067
+**Passage:** `pcp-expository-resources` · **Block:** `B183` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “If $a=b=0$, the first relation forces $z=1$, and the
+second then forces $c=1$. If $a=b=1$, choose $z=0$;
+if $a\ne b$,”
+**Job:** Check the NAE clause equivalence by cases.
+**Assessment:** The cases cover a=b=0, a=b=1 and a!=b, with a working z in each case.
+**Direction:** Keep the explicit assignments.
+
+### P134 · 10. Randomness, proof length and repetition · lines 1069–1081
+**Passage:** `pcp-expository-resources` · **Block:** `B184` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “Now make a palette triangle whose colours we call
+$0,1,2$. A Boolean variable and its negation are
+adjacent vertices, each”
+**Job:** Construct the colouring gadget.
+**Assessment:** The gadget is given as a long verbal construction even though adjacency is the operation the reader must inspect.
+**Direction:** Add a small labelled diagram or incidence list for one NAE clause; retain the palette, variable/negation edge, and fresh triangle rules.
+
+### P135 · 10. Randomness, proof length and repetition · lines 1083–1091
+**Passage:** `pcp-expository-resources` · **Block:** `B185` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The graph is therefore three-colourable exactly when
+the original input has an accepting certificate.
+The formal reduction also implements its”
+**Job:** Close the general NP reduction and resource transfer.
+**Assessment:** The equality route is recovered and both inclusions are separated.
+**Direction:** Retain even if the internal reduction mechanics move.
+
+### P136 · 11. Answers and a reconstruction task · lines 1112–1117
+**Passage:** `pcp-expository-answers` · **Block:** `B188` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**Answer 1.** The second identity alone is insufficient.
+Take $P=1$ and let $M(X,U)=1$ independently of $U$.
+Then $M(X,Z_H(X))=P(X)$ holds everywhere,”
+**Job:** Answer the missing-first-identity exercise.
+**Assessment:** The constant counterexample is complete and the two-identity repair is explicit.
+**Direction:** Preserve the answer separately from the question.
+
+### P137 · 11. Answers and a reconstruction task · lines 1119–1127
+**Passage:** `pcp-expository-answers` · **Block:** `B189` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**Answer 2.** For nonzero $x$, with $r=x$ fixed, the answer uses only the
+entries at $x$ and zero. A corrupt”
+**Job:** Answer the fixed-offset correction exercise.
+**Assessment:** The answer handles nonzero x, exceptional x=0, uniformity and global-to-local reasoning.
+**Direction:** Preserve the exception; do not claim the deterministic strategy always fails.
+
+### P138 · 11. Answers and a reconstruction task · lines 1129–1136
+**Passage:** `pcp-expository-answers` · **Block:** `B190` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**Answer 3.** The difference check would relate the
+linearly decoded values, while the ZERO checks for the
+cubic expressions could”
+**Job:** Answer the common-witness exercise.
+**Assessment:** It identifies exactly which conditions could concern different colourings.
+**Direction:** Retain, but make the main text concrete enough that the exercise tests reconstruction rather than repeating this wording.
+
+### P139 · 11. Answers and a reconstruction task · lines 1138–1143
+**Passage:** `pcp-expository-answers` · **Block:** `B191` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**Answer 4.** The number of seeds would be
+$2^{\sqrt n}$, which is not bounded by any fixed
+polynomial in $n$.”
+**Job:** Answer the excessive-randomness exercise.
+**Assessment:** It correctly distinguishes failure of this proof from proof of nonmembership in NP.
+**Direction:** Keep the distinction as a major teaching strength.
+
+### P140 · 11. Answers and a reconstruction task · lines 1145–1152
+**Passage:** `pcp-expository-answers` · **Block:** `B192` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “**Answer 5.** Ideal rejection is at most actual rejection plus
+the probability that the verdict changes, hence at most
+$5\kappa+1/16$.”
+**Job:** Answer the strict-budget boundary exercise.
+**Assessment:** It calculates both endpoints and correctly treats equality as inconclusive.
+**Direction:** Preserve the equality case and the strict sufficient condition.
+
+### P141 · 11. Answers and a reconstruction task · lines 1154–1165
+**Passage:** `pcp-expository-answers` · **Block:** `B193` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “**Reconstruction task.** A received table is close to
+a low-degree polynomial $M$, but all its erroneous
+entries might lie among”
+**Job:** Ask for integrated reconstruction.
+**Assessment:** The task targets the right hard connection, but appears after all other answers and has no model solution or diagnostic rubric for independent users.
+**Direction:** Move the task before the answer section or state answer exposure explicitly; give a separate solution naming fixed M, target, randomized correction, rejection coupling and polynomial identity.
+
+### P142 · 12. Why the low-degree test needed correction · lines 1171–1173
+**Passage:** `pcp-expository-correction` · **Block:** `B194` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The first version of the source paper used an element of order $c+1$
+and unit weights. For $c=2$, let $\zeta$”
+**Job:** Introduce the faulty historical test.
+**Assessment:** The old version, nodes, unit weights and c=2 specialization are identified.
+**Direction:** Keep the local scope; optionally mark the whole section as a historical boundary example after the main payoff.
+
+### P143 · 12. Why the low-degree test needed correction · lines 1179–1182
+**Passage:** `pcp-expository-correction` · **Block:** `B196` · **Decision:** explain · **Local priority:** 2
+**Exact locator:** “It holds for quadratic polynomials, but its converse
+fails. Take $f(X)=X^4$. In characteristic two,
+$(u+av)^4=u^4+a^4v^4$. Since $\zeta^4=\zeta$
+and $1+\zeta+\zeta^2=0$, the”
+**Job:** Construct the Frobenius counterexample.
+**Assessment:** The characteristic-two fourth-power identity is assumed although the declared reader may not know Frobenius.
+**Direction:** Derive (u+av)^2=u^2+a^2v^2 because the cross term is 2uav=0, then square once more.
+
+### P144 · 12. Why the low-degree test needed correction · lines 1188–1193
+**Passage:** `pcp-expository-correction` · **Block:** `B198` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The test accepts every pair $(u,v)$, although
+$X^4$ cannot agree everywhere with a quadratic
+when $|F|>4$: their difference is a”
+**Job:** Separate X^4 from all quadratic functions on a large field.
+**Assessment:** The difference-root argument gives a complete reason and the needed field-size condition.
+**Direction:** Retain; it also supplies the right comparison for the smaller F5 digit example's limitation.
+
+### P145 · 12. Why the low-degree test needed correction · lines 1195–1200
+**Passage:** `pcp-expository-correction` · **Block:** `B199` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “The failure persists in arbitrarily large fields.
+Fields $F=\mathbb F_{2^{2k}}$, for $k\geq2$, contain elements of order
+three and have unbounded”
+**Job:** Extend the defect to an unbounded field family.
+**Assessment:** The scope exceeds one finite experiment and explicitly excludes the corrected theorem from the defect.
+**Direction:** Keep the field family, c=2 scope and no-overclaim conclusion.
+
+### P146 · 12. Why the low-degree test needed correction · lines 1202–1214
+**Passage:** `pcp-expository-correction` · **Block:** `B200` · **Decision:** split · **Local priority:** 2
+**Exact locator:** “For a concrete comparison, take
+$\mathbb F_{16}=\mathbb F_2[t]/(t^4+t+1)$.
+This notation means that elements are binary polynomials
+of degree below four.”
+**Job:** Explain the concrete F16 enumeration.
+**Assessment:** A new quotient-field construction, modulus irreducibility, generator and 256-pair count arrive together; the executable evidence is not linked locally.
+**Direction:** Split the field representation from the experiment; give the checker filename/link and either verify the stated modulus/generator or label them supplied setup facts.
+
+### P147 · 12. Why the low-degree test needed correction · lines 1216–1224
+**Passage:** `pcp-expository-correction` · **Block:** `B201` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Completeness requires honest low-degree polynomials
+to pass; the interpolation identity proves that
+they do. Soundness must also rule out other”
+**Job:** Separate completeness, soundness, correction and priority.
+**Assessment:** It assigns distinct roles to interpolation and the converse and credits Lee without claiming priority for the example.
+**Direction:** Keep the attribution and scope, even if the historical section becomes optional.
+
+### P148 · Sources and verification · lines 1230–1242
+**Passage:** `pcp-expository-evidence` · **Block:** `B202` · **Decision:** shorten · **Local priority:** 3
+**Exact locator:** “The mathematical construction is from
+[Amireddy, Behera, Srinivasan, Sudan and
+Willumsgaard, version 2][paper-v2]. The
+formal development discussed here is
+[Troy”
+**Job:** State formal-source and correspondence evidence.
+**Assessment:** The paragraph contains a raw revision hash and several verification nouns; the useful message is the formal source and the fact that links do not certify every prose sentence.
+**Direction:** Use a readable pinned link, keep the exact revision in metadata/full record, and state the source support versus prose correspondence distinction once.
+
+### P149 · Sources and verification · lines 1244–1255
+**Passage:** `pcp-expository-evidence` · **Block:** `B203` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “AI agents wrote this exposition under Will
+Cook's direction. The finite calculations
+were checked by the accompanying Python
+program. They”
+**Job:** Disclose AI authorship and finite-evidence boundaries.
+**Assessment:** The evidence classes and absence of measured human understanding are stated candidly.
+**Direction:** Preserve; add a direct reproducibility link to the finite checker rather than a vague accompanying-program reference.
+
+### P150 · Sources and verification · lines 1257–1257
+**Passage:** `pcp-expository-evidence` · **Block:** `B204` · **Decision:** retain · **Local priority:** 0
+**Exact locator:** “Further reading:”
+**Job:** Introduce further reading.
+**Assessment:** It is only a useful label for the subsequent list.
+**Direction:** Keep with its list rather than as an orphaned paragraph.

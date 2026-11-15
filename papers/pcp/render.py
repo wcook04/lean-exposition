@@ -33,7 +33,7 @@ def main():
             "--lua-filter", str(repo / "scripts/paper_anchors.lua"),
             "--include-in-header", str(family / "latex-preamble.tex"),
             "-V", "fontsize=11pt", "-V", "geometry:margin=1in",
-            "-M", "keep-display-leads=" + ("true" if stage == "expository" else "false"),
+            "-M", "keep-display-leads=true",
             "-M", "lang=en-GB", "-M", "title=", "--output", str(tex),
         ], check=True, cwd=repo)
         subprocess.run(["tectonic", str(tex), "--outdir", str(dest)], check=True, cwd=repo)

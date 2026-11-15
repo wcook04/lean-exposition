@@ -4,5 +4,6 @@ Hadamard word: [0, 1, 0, 1, 1, 0, 1, 0] corrupt index 1; BLR acceptance 46 / 64;
 Grid H={0,1}: P at grid [0, 0, 0, 0] ; P(2,2)= 4 ; P(2,0)= 2
 GF4 colors: [1, 6, 7] edge residual matrix: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 triangle proper residuals [0,0,0]; improper [1,0,0]
+GF4 coordinates: all 16 products, four products by omega, and four cubic-residual labels checked.
 Toy repetition: (3/4)^3 = 27/64
 All checks passed.

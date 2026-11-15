@@ -1,0 +1,891 @@
+{
+  "scope": "Internal source-located ordinary mathematical preservation review and exact finite computation. This report does not certify an elaboration, Lean proof replay, independent peer review, or new theorem.",
+  "lean_elaboration_performed": false,
+  "lean_replay_performed": false,
+  "pinned_lean_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "vendored_complexitylib_revision": "add0aca8ee0d71e68969f2cb45cf91554a50f787",
+  "exposition_checkout_base": "eae2c38daa698b28dc8f48c7c5403f4228976746",
+  "manuscripts_checked": [
+    {
+      "path": "work/lean-exposition/papers/pcp/long/reasoning-record.md",
+      "sha256": "ea1535be69567887bbfb2fb6e82a8705aa6c8c67f38e34bff34a75f604babece"
+    },
+    {
+      "path": "work/lean-exposition/papers/pcp/short/paper.md",
+      "sha256": "a8c7cca605a352fae8bae3b6a2ff418c036a609f7d379da28ff5d3654ee52c48"
+    },
+    {
+      "path": "work/lean-exposition/papers/pcp/expository/main.md",
+      "sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3"
+    }
+  ],
+  "material_corrections": [
+    "F01. Digit encoding injectivity",
+    "F02. Claim 3.7 attribution"
+  ],
+  "finding_adjudication": [
+    {
+      "topic": "F01. Digit encoding injectivity",
+      "status": "corrected",
+      "analysis": "Dec substitutes X_(i,j) → Y^(j b^i). The encoded exponent k maps to Y^(k mod b^c), so Dec(Enc(p))=p on deg p<b^c and applying Dec proves injectivity. Evaluations alone can identify zero and Y^q−Y when q<b^c.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/SetMultilinear.lean",
+          "sha256": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+          "lines": [
+            [
+              67,
+              75
+            ],
+            [
+              88,
+              107
+            ],
+            [
+              115,
+              121
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "F02. Claim 3.7 attribution",
+      "status": "corrected",
+      "analysis": "v1 contains the general composition identity without a final homogeneity clause. v2 appends only the needed scalar case P(Y)=ηY with homogeneous L. Nonzero η gives a permutation of homogeneous labels. The wider false statement illustrated in the Lean comment is not attributed to either supplied edition.",
+      "source_loci": [
+        {
+          "path": "work/pcp-sources/core/source-v1/main.tex",
+          "sha256": "9b21956e4138ee4210f6a2cd9731dab80a7e90c91cc4c2b6b5d9dcf294448651",
+          "lines": [
+            [
+              829,
+              847
+            ]
+          ]
+        },
+        {
+          "path": "work/pcp-sources/core/source-v2/technical_tools.tex",
+          "sha256": "0c6fbe16c347a80e0c82373413e14844d4bf947da9183768ca1bbdce72baae10",
+          "lines": [
+            [
+              168,
+              188
+            ]
+          ]
+        },
+        {
+          "path": "work/pcp-sources/core/source-v2/appendix-claim-consistency.tex",
+          "sha256": "189fd5e073fdb9594a694f73d2274dab1979b51f3d75a212b6496d3f13caad57",
+          "lines": [
+            [
+              82,
+              88
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardComposition.lean",
+          "sha256": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb",
+          "lines": [
+            [
+              20,
+              24
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardWeights.lean",
+          "sha256": "1dbab5f7a0311581cbe318065c304ed1a46baa1a6c52d2ceef0614abded823ae",
+          "lines": [
+            [
+              91,
+              98
+            ],
+            [
+              125,
+              147
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Mixed-plane and ruled-surface sampling",
+      "status": "kept_with_explicit_discrepancies",
+      "analysis": "With M(y,z)=f(u+yv+(z−s)w), the row varies z, column varies y. The local row compares M(t,z) with C_z(t) and the local column compares M(y,s) with R_y(s). Global row and local column exclude y=0, global column excludes z=s, and the local row excludes z=s and uses the fixed-parameter bound 4δ′. The exceptional slice costs 1/q. In A29 the z=0 column is the corrected target line; z≠0 gives uniform oriented center/direction (x+zv,h+zw).",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/MixedPlaneSampling.lean",
+          "sha256": "33fa0f3659173ec69d58c9cfe98fed5fb0fa7efe0fb7af4a4cff5fb2211dfb77",
+          "lines": [
+            [
+              142,
+              163
+            ],
+            [
+              199,
+              241
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/PointLineEndpointConsistency.lean",
+          "sha256": "af4c019538dbbf399d311dc32d2233bc3d26b4024f77c0a90b1d56dfd6446a27",
+          "lines": [
+            [
+              31,
+              72
+            ],
+            [
+              77,
+              128
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/RuledSurfaceSampling.lean",
+          "sha256": "4a75c72a5420967ad76fb9c885d18cb4f1bd9182be76ab05ed989d9821d6309b",
+          "lines": [
+            [
+              47,
+              74
+            ],
+            [
+              110,
+              119
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Kaufman–Sudan exact specialization",
+      "status": "kept",
+      "analysis": "Family of degree ≤c evaluations is linear-invariant. Use k=c+2 forms (u,v)↦u and (u,v)↦u+a_i v. Their accepted vectors form the subspace y_0=∑w_i y_i. Exact characterization under the specified generator and q>2c supplies the formal characterization. Each pair comprising the first form and another is jointly uniform since a_i≠0. (2k+1)(k−1)=2c²+7c+5 agrees with the direct proof threshold denominator.",
+      "source_loci": [
+        {
+          "path": "work/pcp-sources/algebra/kaufman-sudan.txt",
+          "sha256": "d57930a1dbc5d134ce3881343e666be6a8fd6a6a7c4a40dc3274ad8269cd4fbb",
+          "lines": [
+            [
+              305,
+              321
+            ],
+            [
+              352,
+              361
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/WeightedConstraintSoundness.lean",
+          "sha256": "a6dbba1c588a52f02b81e5f5d1b997df14bc5572969005475fdb5eafc60cf9e2",
+          "lines": [
+            [
+              25,
+              41
+            ],
+            [
+              64,
+              90
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "GF(4) and F5 revised teaching calculations",
+      "status": "kept",
+      "analysis": "Basis (1,ω), ω²=1+ω; product (ac+bd,ad+bc+bd), multiply by ω as (b,a+b), square (a+b,b), cube residual (1+a+b+ab,0). F5 p(Y)=Y⁴+2Y+3 encodes via digits (1,1),(1,0),(0,0), evaluates to 3 at 2; no degree≤3 polynomial induces that function. Y⁵+2Y+3 remains formally degree five while inducing 3Y+3. Finite check also verifies weighted nodes (2,4,3), weights (1,3,2), and the certificate thin slice.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardComposition.lean",
+          "sha256": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb",
+          "lines": [
+            [
+              109,
+              143
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/SetMultilinear.lean",
+          "sha256": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+          "lines": [
+            [
+              35,
+              44
+            ],
+            [
+              67,
+              107
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Hadamard label domains and shared row witness",
+      "status": "kept_with_quantifiers",
+      "analysis": "Full rank ∑_{j≤min(r,t)} binom(t,j), affine rank t+1, homogeneous rank t for r≥1, zero label included. At t=r=3, spoiler (1,0,1)→(1,0,0) on homogeneous labels changes four bits, giving 1/64 full and 1/2 homogeneous. The two reads need not be independent: conditioning on fixed point and request, uniform R and shifted R+Λ are each uniform, giving union bound 2ε_x. At good row rejection e<1/28, the same evaluation point has error at most e, 3e, and 6e on the full, affine, and homogeneous domains respectively. For e≥1/28, choose any value with universal error ≤1≤28e.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryPolynomialSpace.lean",
+          "sha256": "02b8176a9f46a7ce7112a8d605a2675f71160296a16004ddccd30a098c1f095c",
+          "lines": [
+            [
+              25,
+              28
+            ],
+            [
+              219,
+              245
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/Hadamard.lean",
+          "sha256": "cee04e797972995450f11ce8039d13c27479d5962d8c38d27f33efb75778dfdd",
+          "lines": [
+            [
+              90,
+              104
+            ],
+            [
+              137,
+              180
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardSoundness.lean",
+          "sha256": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa",
+          "lines": [
+            [
+              29,
+              61
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardAffineQueries.lean",
+          "sha256": "0219b84445d6a0587b684e92a9a2cbf876aea0e5f1d8c26385dc14a856df2848",
+          "lines": [
+            [
+              44,
+              79
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardRowDecoding.lean",
+          "sha256": "37c298215572bafa7c466cd761dd084e1bd2cfa24a6f558bf6fc83f68637b98b",
+          "lines": [
+            [
+              34,
+              54
+            ],
+            [
+              90,
+              112
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Suggested BCHKS attribution defect",
+      "status": "rejected",
+      "analysis": "BCHKS Theorem 1.2 compares rejection to nearest-linear distance. The x≤1/2 range is a distance range, not a hypothesis on rejection. Nearest-linear distance is at most one half in a positive-dimensional binary vector space; the zero-dimensional boundary also directly satisfies distance≤rejection. The formal theorem states the bound without a rejection threshold.",
+      "source_loci": [
+        {
+          "path": "work/pcp-sources/algebra/bchks.txt",
+          "sha256": "81052fae3e4ba2d31416c176152b8b975aae2ad79b5d53923ab3f1af73eba9a5",
+          "lines": [
+            [
+              271,
+              284
+            ],
+            [
+              464,
+              480
+            ],
+            [
+              541,
+              555
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BLR.lean",
+          "sha256": "79fae6671c6d90b3287d9323c59743506a71d2eab431d8cb3cd554c974add51f",
+          "lines": [
+            [
+              283,
+              325
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Combined binary tester and restricted guarantee",
+      "status": "kept",
+      "analysis": "Two inner branch losses at most 2κ each. Row decoding costs 56κ, field rejection ≤(112(c+2)+4)κ, field proximity factor two cancels encoding half-distance, yielding small-error binary coefficient 112(c+2)+60. Fallback gives K=4(c+2)^2(112(c+2)+60). Outer comparison gives E=2((c+1)K+29), same polynomial distance Sκ with S=28+E, q≥10^6D^3 and Eκ≤1/(4·10^6). Formal restricted conclusion is homogeneous. v2 states it on all affine labels. At r=1 the formal full guarantee already covers affine labels.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+          "sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+          "lines": [
+            [
+              28,
+              30
+            ],
+            [
+              39,
+              103
+            ],
+            [
+              111,
+              144
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+          "sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+          "lines": [
+            [
+              45,
+              50
+            ],
+            [
+              245,
+              319
+            ],
+            [
+              325,
+              359
+            ]
+          ]
+        },
+        {
+          "path": "work/pcp-sources/core/source-v2/low_degree_test.tex",
+          "sha256": "c26ee68aa20db994515cda3c97e29a5290ad7ddf8d25489efa331cedaa31ef26",
+          "lines": [
+            [
+              219,
+              247
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Outer corrector and ZERO error chain",
+      "status": "kept",
+      "analysis": "At fixed a average over homogeneous L and inner and outer seeds. e=(c+1)K R_a. Comparison costs e+R_a+δ; wrong origin against P yields nonzero degree≤D polynomial and at most D roots among Q−1 nonzero parameters, followed by homogeneous-label factor one half. Origin replacement and rejection add e+R_a. C=2+2(c+1)K. Use uniform v on its entire vector space for a+zv uniform when z≠0. Generator nodes and correction GoodNodes are distinct hypotheses. ZERO calls share x,L and use independent other seeds; after derived read replacement r≤κ+2ε each averaged corrector rejection is at most r. Ideal rejection≤(1+2C)(κ+2ε)+2ε+5D/(Q−1), while failed grid condition implies ideal rejection≥(1−5Dh/Q)/2. No independence between residual detections is assumed.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/StandardLocalCorrection.lean",
+          "sha256": "83d99c2a1ebc7b0d9d88235d58c54db3dbc95688e6656ae4e5bb813c2e728e27",
+          "lines": [
+            [
+              17,
+              33
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+          "sha256": "a6abc41d00df59cfdb96833e15dbb5a274eddd3125e0c7f80a776b8373fdc6e8",
+          "lines": [
+            [
+              37,
+              63
+            ],
+            [
+              82,
+              90
+            ],
+            [
+              131,
+              156
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+          "lines": [
+            [
+              222,
+              236
+            ],
+            [
+              252,
+              313
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean",
+          "sha256": "a4b0fba9858828f5ca75a186415acae9dff1c6fd5aee9ce8dc587cd78390e84e",
+          "lines": [
+            [
+              98,
+              116
+            ],
+            [
+              210,
+              299
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean",
+          "sha256": "6e58a5b2b12060f38bc3c640be2169ef0ddbd3652deed85ce5453c094fd7cfa0",
+          "lines": [
+            [
+              187,
+              229
+            ],
+            [
+              246,
+              270
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "sha256": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+          "lines": [
+            [
+              26,
+              39
+            ],
+            [
+              65,
+              115
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Reference NP and implementation branch semantics",
+      "status": "kept_with_model_distinction",
+      "analysis": "ComplexityLib polynomial-time NTM chooses one of two transitions per step. The deterministic checker consumes the supplied list exactly, checking acceptance when it ends; the time bound is imposed on list length, with frozen-halt padding. FinTM2 implements the checker with cost evidence. Reverse: compile to a reference deterministic pair decider, reject malformed encodings, compute p(|x|), nondeterministically guess within the bound, and run the decider. ImplementedBy unfolds from empty history and covers both answers at every queried branch, not continuations beyond prior halt.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/vendor/Complexitylib/Classes/NP.lean",
+          "sha256": "3a95e8df47665ce82d2f854c2243fd3bf80eb7251a19ab9b0fa9d46af71eea47",
+          "lines": [
+            [
+              24,
+              27
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/vendor/Complexitylib/Models/TuringMachine.lean",
+          "sha256": "6a3976d328c0c866523c9aaf8cd831ee89de5569bacbda6897b2c1b46615a32e",
+          "lines": [
+            [
+              457,
+              480
+            ],
+            [
+              748,
+              753
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceNTMWitness.lean",
+          "sha256": "e827825c2c437c4b54099632ed44d8f0f9581837b40c603899d0a382edb489ee",
+          "lines": [
+            [
+              18,
+              48
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceNPBridge.lean",
+          "sha256": "ea6a73d55506f5504f5610900d829f88f6b1e71d9f0d6d1d2b744a206549c371",
+          "lines": [
+            [
+              35,
+              76
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferencePairDecider.lean",
+          "sha256": "472f042ec7a5df6ae9a5957c75c670549db48369702f29473fb084bcf24dc308",
+          "lines": [
+            [
+              19,
+              60
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceBoundedVerifier.lean",
+          "sha256": "a855d2062de1a8aa37f108028faf53a91b940b294e6a023af3ad7b11573e0041",
+          "lines": [
+            [
+              17,
+              52
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceNPConverse.lean",
+          "sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+          "lines": [
+            [
+              18,
+              41
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/CostModel.lean",
+          "sha256": "61004144561944c3ed8d18a6a4ad3ed22db29f34cda6e9f5f3888e3d06bff0eb",
+          "lines": [
+            [
+              16,
+              24
+            ],
+            [
+              35,
+              47
+            ],
+            [
+              56,
+              64
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic": "Historical failure example and fixed final budgets",
+      "status": "kept",
+      "analysis": "Old order-three unit weights accept X^4 on all GF(16) pairs; corrected accepts 16/256 and the nearest quadratic agrees at only four inputs. The F_{2^{2k}} proof gives arbitrary large-family failure, not a counterexample to the final verifier. New arithmetic checks give (K,E,S,C,T)=(105408,1054138,1054166,1054082,4444715947277), pre-sampling gap 1/71115455156448, fair-bit gap 1/1137847282503168, integer repetitions 1137847282503168 at most 187 reads apiece, product 212777441828092416.",
+      "source_loci": [
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "sha256": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+          "lines": [
+            [
+              26,
+              39
+            ]
+          ]
+        },
+        {
+          "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+          "sha256": "6cd6905e857018a6d5bfc65b73750440d2d6f2ac4d18a538074c7b4541508880",
+          "lines": [
+            [
+              173,
+              178
+            ],
+            [
+              203,
+              206
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "manuscript_precision_checks": {
+    "confirmed": [
+      "Strict digit capacity and conditional Y^q−Y example.",
+      "Encoded distance averages over points and labels; field distance averages only points.",
+      "No separate center query, with zero direction still allowed.",
+      "Row fallback uses actual rejection and gives the unit check 3e bound.",
+      "Expository outer sampling includes zero for the tester and uses nonzero comparison z for the corrector.",
+      "Honest corrector uses degree strictly below b^c. Expository address count covers N=0,1 via N+2.",
+      "Reference path checker consumes supplied choices. ImplementedBy wording covers both answers at queried branches."
+    ],
+    "remaining_precision_note": "The Short calls the outer v a sampled direction rather than explicitly uniform on the entire vector space in its procedure, but its finite averaging convention and proof identify the intended law. Some corrector passages use “degree-D” as shorthand for “degree at most D”; the formal bound uses the latter."
+  },
+  "fresh_execution": {
+    "tracked_finite_checks": [
+      {
+        "script": {
+          "path": "work/lean-exposition/papers/pcp/expository/check_examples.py",
+          "sha256": "76c817554ddb306694892eed54bbacadde3111d2b6588ba920335911c6375ef2"
+        },
+        "arguments": [],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "439df9f119bdf5faaecb40c183a4d15119e450183f56c79da925c1bcb502d49e",
+        "retained_stdout": {
+          "path": "work/lean-exposition/papers/pcp/expository/examples-output.txt",
+          "sha256": "439df9f119bdf5faaecb40c183a4d15119e450183f56c79da925c1bcb502d49e"
+        },
+        "exact_stdout_match": true
+      },
+      {
+        "script": {
+          "path": "work/lean-exposition/papers/pcp/expository/check_exposition_examples.py",
+          "sha256": "207553be39243673afea1116a1d0233480b53570a25f6fb55b9e71258dcd95b4"
+        },
+        "arguments": [],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "c3fe0896fc6d4fc64a129834f1d57ecfafd96501a95e347ac8785d32ab7c6bfb",
+        "retained_stdout": {
+          "path": "work/lean-exposition/papers/pcp/expository/exposition-examples-output.txt",
+          "sha256": "c3fe0896fc6d4fc64a129834f1d57ecfafd96501a95e347ac8785d32ab7c6bfb"
+        },
+        "exact_stdout_match": true
+      }
+    ],
+    "returned_check_scripts": [
+      {
+        "script": {
+          "path": "work/pcp-review-return-20261115/pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/evidence/verify_algebra_constants.py",
+          "sha256": "11c4d8844ea4550dd246c3aa75ba08eca9ca254e5bfd6c07e7682a41170f19a7"
+        },
+        "arguments": [],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "f27e75ed37ef0d9e77de7bf9202629705090e8b7254cdd0d969d4841aedadf3c",
+        "retained_json": {
+          "path": "work/pcp-review-return-20261115/pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/evidence/algebra_constants.json",
+          "sha256": "f27e75ed37ef0d9e77de7bf9202629705090e8b7254cdd0d969d4841aedadf3c"
+        },
+        "parsed_json_match": true
+      },
+      {
+        "script": {
+          "path": "work/pcp-review-return-20261115/pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/evidence/counterexample_checks.py",
+          "sha256": "df65b76e656b8947d596daf4c3f708afe33d0d4b2a9aa89856a286918bb0a1d4"
+        },
+        "arguments": [],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "29ae1c1268762e7e02c6bbc80e1ce458e200aa768482e158b03529b09dee0266",
+        "retained_json": {
+          "path": "work/pcp-review-return-20261115/pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/evidence/counterexample_checks.json",
+          "sha256": "29ae1c1268762e7e02c6bbc80e1ce458e200aa768482e158b03529b09dee0266"
+        },
+        "parsed_json_match": true
+      },
+      {
+        "script": {
+          "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/audit_checks.py",
+          "sha256": "70d9c008d5ab7bd9b93f76b30ef6fc874c0a69ae20042c71379e8dd59b8f46d6"
+        },
+        "arguments": [],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "3dd946ed09a5c7f05cb28ffc28345d2552c064afe2c3c759a3d73c269aa43fb1",
+        "retained_json": {
+          "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/audit_checks.json",
+          "sha256": "3dd946ed09a5c7f05cb28ffc28345d2552c064afe2c3c759a3d73c269aa43fb1"
+        },
+        "parsed_json_match": true
+      },
+      {
+        "script": {
+          "path": "work/pcp-review-return-20261115/pcp-review-1-full-argument-response/pcp-review-1-full-argument-response/evidence/validate_response.py",
+          "sha256": "f0dfd5bf73fd74d35fbcda5c0add8925ce33e789c467ca889fc57136db6a6cf5"
+        },
+        "arguments": [
+          "--packet",
+          "work/pcp-review-packets/pcp-review-1-full-argument"
+        ],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "b00deaaa4f2676cf38bfce49d8443ff6a98dda90a3baf6f446fd1ae9e092a92e",
+        "summary": {
+          "status": "passed",
+          "scope": "Structural, exact source-binding, frozen-record, input-preservation and finite-computation checks only; no Lean or mathematical proof certification.",
+          "checks": {
+            "required_files": true,
+            "json_files_parsed": 21,
+            "findings_count": 40,
+            "finding_severities": {
+              "moderate": 6,
+              "minor": 16,
+              "keep": 18
+            },
+            "distinct_paragraphs": 75,
+            "sections": 33,
+            "all_sections_have_paragraph_decisions": true,
+            "all_reader_associations_match": true,
+            "reader_associations": 46,
+            "first_reading_unchanged": true,
+            "independent_checkpoint_unchanged": true,
+            "fresh_computation_runs": {
+              "verify_algebra_constants.py": {
+                "exit_code": 0,
+                "matches_saved_result": true
+              },
+              "counterexample_checks.py": {
+                "exit_code": 0,
+                "matches_saved_result": true
+              }
+            },
+            "verdict_words": 469
+          },
+          "errors": []
+        },
+        "scope": "Packet source binding, structure, hashes of frozen records, and finite checks. Optional ZIP comparison was omitted in this run."
+      },
+      {
+        "script": {
+          "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/support/build_audit.py",
+          "sha256": "b3f4f47084d0b548205df20802a0dd6bc154d1300962cd85251348ec0b0ff2f6"
+        },
+        "arguments": [
+          "--packet",
+          "work/pcp-review-packets/pcp-review-3-worked-exposition",
+          "--output",
+          "<temporary audit output directory>"
+        ],
+        "exit_code": 0,
+        "python": "3.12.7",
+        "fresh_stdout_sha256": "3cafe1fa4fecad12fd5de48d6bb2e1dc4865070984aec9a19599379c9f47bd14",
+        "summary": {
+          "associations": 16,
+          "partial_association": [
+            "linked-source-18"
+          ],
+          "constant_check": {
+            "kind": "fresh finite rational/arithmetic and exhaustive finite-label checks; not Lean",
+            "constants": {
+              "c": 4,
+              "K": 105408,
+              "E": 1054138,
+              "S": 1054166,
+              "C": 1054082
+            },
+            "gap_terms": [
+              "1/4216556000000",
+              "1/50599984",
+              "1/71115455156448"
+            ],
+            "gap": "1/1137847282503168",
+            "repetitions": 1137847282503168,
+            "homogeneous_restriction_example": {
+              "t": 3,
+              "r": 3,
+              "full_labels": 256,
+              "homogeneous_labels": 8,
+              "changed_full": 4,
+              "changed_homogeneous": 4,
+              "full_distance": "1/64",
+              "homogeneous_distance": "1/2"
+            }
+          },
+          "embedded_sources_match": 21
+        },
+        "generated_files": {
+          "association_checks.json": {
+            "generated_replay": {
+              "path": "work/pcp-review-return-20261115/local-worked-review-replay/association_checks.json",
+              "sha256": "6f9724b47ae9b93398734e7fdbe75a4f5fe55a3424ba99959abbf3e651d4317b"
+            },
+            "retained": {
+              "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/support/association_checks.json",
+              "sha256": "e357ae37e62c01bffdd4d534fbecaf54dcc67f8e442ba92e1752447ac9356813"
+            },
+            "parsed_json_match": false,
+            "difference": "One BLR scholarly-credit prose field; status, mathematical comparison, and cited loci match."
+          },
+          "embedded_source_checks.json": {
+            "generated_replay": {
+              "path": "work/pcp-review-return-20261115/local-worked-review-replay/embedded_source_checks.json",
+              "sha256": "20ddc69f8a55f8457c091ed659cccd19dd25e9ee4ef8143ab2ca2d792e8b034b"
+            },
+            "retained": {
+              "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/support/embedded_source_checks.json",
+              "sha256": "20ddc69f8a55f8457c091ed659cccd19dd25e9ee4ef8143ab2ca2d792e8b034b"
+            },
+            "parsed_json_match": true
+          },
+          "finite_checks.json": {
+            "generated_replay": {
+              "path": "work/pcp-review-return-20261115/local-worked-review-replay/finite_checks.json",
+              "sha256": "de8c37f162167a21f1664e2acf52af9892b1957a8ac5a2c96aedf546022488b2"
+            },
+            "retained": {
+              "path": "work/pcp-review-return-20261115/pcp-review-3-worked-exposition-response/pcp-review-3-worked-exposition-response/support/finite_checks.json",
+              "sha256": "de8c37f162167a21f1664e2acf52af9892b1957a8ac5a2c96aedf546022488b2"
+            },
+            "parsed_json_match": true
+          }
+        }
+      }
+    ],
+    "independent_mixed_plane_check": {
+      "field_size": 5,
+      "ambient_dimension": 1,
+      "A27_row_parameter_cases": 125,
+      "A27_column_parameter_cases": 125,
+      "A29_nonzero_column_cases": 100,
+      "statement": "All A27 affine row and column projections are onto off their respective exceptional slices. All A29 nonzero-column center/direction projections are onto.",
+      "status": "passed"
+    }
+  },
+  "local_lean_bytes_matched_to_original_packet": [
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/SetMultilinear.lean",
+      "sha256": "4c7be94da1aaffe745b72f499a2dc38ac208b34cd7a1f8e1fa1daa2b38604b59",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/SetMultilinear.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardComposition.lean",
+      "sha256": "2d62f5a8b1d995e1096c39a61179fe9320613e280fe8b8f1a2d5fa5f542210bb",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/HadamardComposition.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/HadamardSoundness.lean",
+      "sha256": "c62baef0f718f99a76f8daafa578b591302f44790e3b91b5b67d1e19e7d214fa",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/HadamardSoundness.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceNPBridge.lean",
+      "sha256": "ea6a73d55506f5504f5610900d829f88f6b1e71d9f0d6d1d2b744a206549c371",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Complexity/ReferenceNPBridge.lean",
+      "exact_byte_match": true
+    },
+    {
+      "path": "work/proof-reader/papers/pcp-full-argument/lean/PCP/Complexity/ReferenceNPConverse.lean",
+      "sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+      "original_packet_path": "work/pcp-review-packets/pcp-review-1-full-argument/formal/lean/PCP/Complexity/ReferenceNPConverse.lean",
+      "exact_byte_match": true
+    }
+  ]
+}
