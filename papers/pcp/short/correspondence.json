@@ -3,7 +3,7 @@
   "stage": "short",
   "state": "draft",
   "path": "papers/short.md",
-  "content_sha256": "402e104d94c7b706d34f94c111541b7837ca071300fa1e7b31d57333f9037d70",
+  "content_sha256": "5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -117,7 +117,7 @@
   "passages": [
     {
       "anchor": "pcp-short-abstract",
-      "text_sha256": "d691ba8254025c1d662e0f46587d9a3890945b8974395969705b3aee75f69e72",
+      "text_sha256": "ba0f4d13758c088ae71b404fdbce5f55e17c348cb5a9d64571b1704d75d59807",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
@@ -490,7 +490,8 @@
     "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
     "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
-    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed."
+    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed.",
+    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits."
   ],
   "reading_links": []
 }

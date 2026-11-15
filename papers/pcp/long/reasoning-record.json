@@ -3,7 +3,7 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "cdd16f1c3887203894531a0d7d9525260c022e251bc09a52b9da1bfc775c4c4e",
+  "content_sha256": "389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -373,18 +373,54 @@
     },
     {
       "anchor": "pcp-long-intro-roadmap",
-      "text_sha256": "a3b0ebab44e8e4699dab9d787f1c930d66da55fa92531216504856b949f325c1",
+      "text_sha256": "9c2531fff0e125d8d42e97a61f9a5157a7fded6b6394c0ca1383a79937adf98c",
       "claim_ids": [
+        "PCP.Algebraic.BinaryLocalCorrection.failure_le",
+        "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
         "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_certificates",
-        "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
+        "PCP.np_subset_pcp",
+        "PCP.pcp_subset_np_concrete"
       ],
       "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:0",
+        "paper:1",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:18",
+        "paper:19",
+        "paper:3",
+        "paper:4",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
         "paper:grid:0",
-        "paper:grid:1"
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+      "rationale": "Authored mathematical navigation through the retained construction, soundness, correction and endpoint records. Figure arrows denote selected mathematical uses, not extracted Lean dependencies. The reverse enumeration argument is described separately; no new Lean build or semantic certification."
     },
     {
       "anchor": "pcp-long-intro-readers",
@@ -1479,7 +1515,8 @@
     "Citation-only successor reviewed for preservation; existing source mappings and claim scope retained. Passage hashes rebound to this edition.",
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
     "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
-    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed."
+    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed.",
+    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits."
   ],
   "reading_links": [
     {

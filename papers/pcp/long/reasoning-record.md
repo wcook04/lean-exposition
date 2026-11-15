@@ -1,13 +1,15 @@
 ---
 title: "The algebraic PCP theorem: a detailed account of the Lean proof"
 authors:
-  - "Explanatory reconstruction by AI agents directed by Will Cook"
+  - "Explanatory reconstruction prepared by Will Cook with AI assistance"
 attribution: "Original algebraic argument: Prashanth Amireddy, Amik Raj Behera, Srikanth Srinivasan, Madhu Sudan and Sophus Valentin Willumsgaard. Lean formalization: Troy Lee."
 ---
 
 # The algebraic PCP theorem: a detailed account of the Lean proof
 
-*An explanatory account prepared by Will Cook with AI assistance, following Troy Lee's formalization of the algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard.*
+*Explanatory reconstruction prepared by Will Cook with AI assistance · 15 November 2026.*
+
+Algebraic construction: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee.
 
 <!-- passage:pcp-long-intro-theorem -->
 A polynomial-time verifier can check membership in any NP language by reading a constant number of bits from a suitably encoded proof. It uses only logarithmically many random bits, accepts a correct proof with certainty, and rejects every purported proof of a false statement with probability at least one half. We reconstruct the algebraic argument in Troy Lee's Lean formalization and explain how its implementation and machine-simulation theorems establish these resource bounds.
@@ -50,6 +52,10 @@ The construction treats graph three-colourability first. Interpolation turns a c
 We begin with that verifier and prove the global implication from low rejection to colourability, using precise testing and correction statements. The chapter also gives perfect completeness, parameter choices, fair-bit sampling, repetition and the reductions to and from NP. The later chapters prove the algebraic and binary statements used in this assembly. Thus a reader can first see what each estimate must accomplish, then follow its proof without changing the verifier under discussion.
 
 The algebraic chapter reconstructs the corrected weighted test and point-versus-line soundness, including the bivariate agreement and ruled-surface arguments. The binary chapter proves how two encodings give constant-query tests, how one decoded polynomial satisfies both required label-distance bounds, and how correction handles the nonuniform points requested by a grid certificate. The same auxiliary tables are used for testing and correction throughout.
+
+![Main implications in the soundness argument and theorem assembly. Each arrow names the guarantee used at its destination. This is an authored proof map, not an extracted Lean dependency graph.](proof-map.png)
+
+The encoded-line theorem supplies the four polynomial witnesses. Correction and the derived grid tests constrain these same witnesses at the certificate points; the difference check connects the colour and difference witnesses. The resource and reduction arguments then give the forward PCP inclusion. For the reverse inclusion, a nondeterministic machine guesses the finite proof prefix and checks every random seed. The implementation results in the next table supply the machine-level contracts.
 <!-- /passage:pcp-long-intro-roadmap -->
 
 ## Reading this account

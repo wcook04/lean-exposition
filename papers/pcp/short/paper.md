@@ -1,11 +1,13 @@
 # Constant-query verification by algebraic encoding
 
-*A specialist reconstruction of the algebraic PCP proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard, following Troy Lee's formalization*
+*Explanatory reconstruction prepared by Will Cook with AI assistance · 15 November 2026.*
+
+Algebraic construction: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee.
 
 ## Abstract
 
 <!-- passage:pcp-short-abstract -->
-The PCP theorem gives every language in NP a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and soundness error at most one half. We explain the algebraic construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard through Troy Lee's formalization. Degree reduction keeps encoded line restrictions polynomial in size; Hadamard words make the required observations available as bit queries. The soundness argument chooses four nearby polynomials and forces them to satisfy the colouring constraints together. Its main difficulty is correction at prescribed certificate points, where average proximity alone gives no control. We derive the rejection-dependent correction bound and its use in the seven-check verifier, taking the underlying low-degree testing theorems as stated inputs. The resource bounds follow the formal variant, including its sampling conventions and query counts.
+The PCP theorem gives every language in NP a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and soundness error at most one half. This account isolates the encoding, fixed-target correction and soundness estimates in Troy Lee's formalization of the algebraic construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Degree reduction keeps encoded line restrictions polynomial in size; Hadamard words make the required observations available as bit queries. The soundness argument chooses four nearby polynomials and forces them to satisfy the colouring constraints together. Its main difficulty is correction at prescribed certificate points, where average proximity alone gives no control. We derive the rejection-dependent correction bound and its use in the seven-check verifier, taking the underlying low-degree testing theorems as stated inputs. The resource accounting makes explicit where the formal variant uses different sampling conventions or query counts from the source paper.
 <!-- /passage:pcp-short-abstract -->
 
 ## 1. The theorem and the encoding problem

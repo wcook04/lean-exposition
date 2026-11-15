@@ -2,7 +2,9 @@
 
 ## An algebraic proof of the PCP theorem, through worked examples
 
-15 November 2026
+*Explanatory reconstruction prepared by Will Cook with AI assistance · 15 November 2026.*
+
+Algebraic construction: Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. Lean formalization: Troy Lee.
 
 <!-- passage:pcp-expository-opening -->
 Suppose someone hands you a graph and claims that its vertices can be coloured
@@ -1024,6 +1026,11 @@ The eight received tables were listed after the grid certificate in Section 5. T
 four low-degree tests, one for each primary table and its line table;
 two ZERO tests, one for each colouring condition; and one difference
 check connecting $\chi'$ to $\chi$. It accepts only if all seven pass.
+
+![Which of the eight stored tables each of the seven checks may query. A dot marks table use, not the number of queries. The shaded vertex ZERO column is the branch illustrated in Section 8.](table-checks.png)
+
+The line tables used for correction are the same ones used in the low-degree tests. In check 5, the colour table supplies a derived observation of $\chi(x)^3-1$, while the vertex-certificate tables supply corrected observations at $(x,0)$ and $(x,Z_H(x))$. This is the path followed by the one-edge example. Its displayed reads illustrate that branch; they omit the inner-test queries and do not run the complete seven-check verifier. Check 6 also uses the public adjacency polynomial, which is computed from the input graph and is not a ninth proof table.
+
 
 The separate difference table lets the verifier obtain binary
 observations of the cube of a difference using the same local

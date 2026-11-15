@@ -3,7 +3,7 @@
   "stage": "expository",
   "state": "draft",
   "path": "papers/expository.md",
-  "content_sha256": "8fe580911bb36a94b0a92445bd5f3a04bcf4029e3faeb774064f0dcd331df7a0",
+  "content_sha256": "656438f0fb3c5cb516d368ba5b0f6a71d2f97278f3c18e2cb33635dba4a2c532",
   "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
@@ -433,10 +433,11 @@
     },
     {
       "anchor": "pcp-expository-assembly",
-      "text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
+      "text_sha256": "818facf843ca271f5cda918f371201196d428282f3c2c52e9b21f341c8c46db5",
       "claim_ids": [
-        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
-        "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
+        "PCP.Algebraic.ThreeColorVerifier.Proof",
+        "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
       ],
       "citation_ids": [
         "almss:45",
@@ -466,7 +467,7 @@
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
+      "rationale": "Source-level proof inventory and completeness/soundness assembly. Figure incidence was checked against the pinned branchTest definition; dots denote potential table use, not query counts. The worked trace covers vertex ZERO and omits inner-test queries. No claim to a full verifier execution or new Lean build."
     },
     {
       "anchor": "pcp-expository-resources",
@@ -659,7 +660,8 @@
     "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
     "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
-    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed."
+    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed.",
+    "Final editorial polish recorded in source-review/final-polish-20261115: consistent credits, specialist scope, authored proof map and table/check incidence figure. Preserves all mathematical statements and source-only evidence limits."
   ],
   "reading_links": [
     {
@@ -736,7 +738,7 @@
     },
     {
       "from_anchor": "pcp-expository-assembly",
-      "from_text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
+      "from_text_sha256": "818facf843ca271f5cda918f371201196d428282f3c2c52e9b21f341c8c46db5",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
       "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
@@ -775,7 +777,7 @@
       "from_text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "to_stage": "expository",
       "to_anchor": "pcp-expository-assembly",
-      "to_text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
+      "to_text_sha256": "818facf843ca271f5cda918f371201196d428282f3c2c52e9b21f341c8c46db5",
       "kind": "answers",
       "rationale": "Explains why separate decoded witnesses cannot support the colouring deduction."
     },

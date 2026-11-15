@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-15",
+  "scope": "Final editorial and navigation-figure polish; PDF rendering and Proof Reader synchronization. No new Lean build or human expert endorsement.",
+  "lean_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
+  "manuscripts": {
+    "long": {
+      "display_formulas_unchanged": 173,
+      "passage_markers_unchanged": 73,
+      "changed_passages": [
+        "pcp-long-intro-roadmap"
+      ],
+      "sha256": "389a2a28a98f509445fba61b753e4d59154b9d727d21cb872d5794b67d8b7110"
+    },
+    "short": {
+      "display_formulas_unchanged": 36,
+      "passage_markers_unchanged": 16,
+      "changed_passages": [
+        "pcp-short-abstract"
+      ],
+      "sha256": "5190e5a5c2b30bcb07790d99b494213f03f8b71c0063623d24ff33bf8dfb7e25"
+    },
+    "expository": {
+      "display_formulas_unchanged": 53,
+      "passage_markers_unchanged": 24,
+      "changed_passages": [
+        "pcp-expository-assembly"
+      ],
+      "sha256": "656438f0fb3c5cb516d368ba5b0f6a71d2f97278f3c18e2cb33635dba4a2c532"
+    }
+  },
+  "pdfs": [
+    {
+      "file": "long/reasoning-record.pdf",
+      "pages": 47,
+      "sha256": "481f51cdc0181946eae7c822460b23ef42830a36207c3674b73ad27ac2586f60"
+    },
+    {
+      "file": "short/paper.pdf",
+      "pages": 13,
+      "sha256": "e063e1bc28f0532b729d64ee01b4385dab49728e33fb23e408aa7a9ae6b46475"
+    },
+    {
+      "file": "expository/main.pdf",
+      "pages": 25,
+      "sha256": "003e914580bdc7577a42c498ac2b9b53c67423991c8bdd860bb769fd7362f499"
+    }
+  ],
+  "figures": {
+    "papers/pcp/long/proof-map.png": "9cb02c9d2a368f0fcb2ffd0bd59a1dea832406d672c6b9974626d86e8d704649",
+    "papers/pcp/long/proof-map.svg": "e02b928673bddc3780b73a305d4a270b06b4e129cb0fc822ff101f652e56899f",
+    "papers/pcp/expository/table-checks.png": "aa249aee173f035c75566807497f0e89ee10eea529a2db8e9e2815b44472bdf1",
+    "papers/pcp/expository/table-checks.svg": "7be5de9bff4eca2ded55f08a32062a57b0bd0df9e7c23b734683cf98d8b3d7ad"
+  },
+  "checks": {
+    "authoring_tests": {
+      "total": 712,
+      "passed": 710,
+      "skipped": 2,
+      "skip_reason": "opt-in pinned Lean fixtures"
+    },
+    "graph": "valid; source-only extraction status unchanged",
+    "bundle": "assemble and check-bundle passed on final Markdown/maps",
+    "finite_examples": "All four checkers passed and matched retained outputs",
+    "pdf_companion_destinations": "all 28 validated in relocated reading edition",
+    "pdf_visual_review": "All 85 pages inspected in ordered contact sheets; final figure pages, openings and previously rejected trace table inspected at reading size. Figures also inspected at native resolution.",
+    "render_warnings": "Two underfull bibliography paragraphs; no overfull or missing-glyph warning.",
+    "svg_accessibility": "Both editable SVGs include named title/description and role=img; PNGs and PDF pixels unchanged by the final metadata annotation."
+  },
+  "edge_semantics": {
+    "proof_map": "Every arrow names the guarantee used by its destination; selected mathematical uses, not extracted Lean proof edges.",
+    "table_matrix": "Dots mean a physical table may be queried by the named check, not a query count.",
+    "reader_links": "Uses and explains roles distinguish premises/contracts from endpoint explanation; source-read declarations retain their limits."
+  },
+  "interface_boundary": "The separate lean-exposition bundle/site contract remains text and mappings only and strips images. This release delivers figures through the PDFs, manuscript source folders and Proof Reader, whose builder copies and hashes the assets. No generic bundle image-transport support is claimed."
+}
