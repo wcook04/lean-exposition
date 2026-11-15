@@ -1,0 +1,11 @@
+# Mapping review: frozen bundle
+
+The curated evidence graph at `examples/pcp/evidence-graph.json` was read as a navigation aid, and `lean-exposition validate` returned `extraction_status: not_run`, `semantic_certification: false`, with all selected declarations unresolved. The graph edges are authored supports, not checked Lean dependency references. The documentary citation closure demanded by the assembler is inherited transitively; passage claim selections should remain the claims actually explained in that passage.
+
+The three selected endpoints are `PCP.np_subset_pcp`, `PCP.pcp_subset_np_concrete`, and `PCP.ReferenceNP.inNP_iff_mem`; they are distinct and each requires a relevant treatment in each artifact that selects it. The stage nodes cover generator low-degree testing, bivariate and point-line agreement, set-multilinear encoding, BLR and Hadamard test, decoded low-degree and correction, zero testing, graph verifier, amplification, runtime and reduction. These stage relations provide navigation and do not alone establish a claim on the content of an entire passage.
+
+The graph owner added direct source nodes for grid vanishing/certificate decomposition, graph-colour residual equations and finite examples after the initial inspection. Their `unverified` status remains explicit. A mathematically different soundness theorem must not be treated as directly asserting a toy identity.
+
+Initially, chapter fragments contained opening passage markers without closing markers. This was resolved in the merged manuscripts: the final long, short and expository mappings bind 72, 14 and 18 paired passages, respectively. Passage and document hashes were refreshed for the frozen text and final graph, including the separately checked expanded exposition examples.
+
+The assembled local bundle passed `check-bundle` and export. The receipt at `work/pcp-bundle-validation.json` records that all seven manifest file hashes matched and ZIP integrity passed; the exported ZIP SHA-256 is `017e7cbaa379e8c8a2c016fb05060d8c0a5297abb018b14082136d7c2f82c4a3`. All three mapping states remain `draft`. Extraction remains `not_run` and semantic certification is false. The exposition underwent a bounded reader review; bundle validation itself does not establish reader comprehension, a Lean build, or a comprehensive mathematical audit.

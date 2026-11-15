@@ -1,0 +1,37 @@
+{
+  "bundle_id": "pcp-a0ce13ed-curated",
+  "manifest_all_file_hashes_match": true,
+  "manifest_file_checks": {
+    "graph.json": true,
+    "papers/long.md": true,
+    "papers/long.json": true,
+    "papers/short.md": true,
+    "papers/short.json": true,
+    "papers/expository.md": true,
+    "papers/expository.json": true
+  },
+  "zip_sha256": "017e7cbaa379e8c8a2c016fb05060d8c0a5297abb018b14082136d7c2f82c4a3",
+  "zip_integrity_error": null,
+  "zip_members": [
+    "graph.json",
+    "manifest.json",
+    "papers/expository.json",
+    "papers/expository.md",
+    "papers/long.json",
+    "papers/long.md",
+    "papers/short.json",
+    "papers/short.md"
+  ],
+  "assembled": "passed",
+  "check_bundle": "passed",
+  "export": "passed",
+  "states": [
+    "draft",
+    "draft",
+    "draft"
+  ],
+  "extraction_status": "not_run",
+  "semantic_certification": false,
+  "expanded_checker_sha256": "b1c375fa0c8ab21ed9f415cbe375ac449252bdeefc074094539925e6e8016cfe",
+  "scope": "Byte integrity and package validation; not Lean compilation or mathematical proof certification."
+}

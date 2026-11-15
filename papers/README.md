@@ -1,11 +1,11 @@
 # Mathematical papers
 
-The QAOA / SK drafts develop three complementary accounts of the selected
-mathematics: a detailed reasoning record, a short paper selecting the main
-argument, and an exposition introducing its objects and mechanisms.
+Each mathematical project develops three complementary accounts: a detailed
+reasoning record, a specialist paper selecting the main argument, and an
+exposition introducing its objects through worked examples.
 
-Their starting point is the [pinned source corpus](../examples/qaoa-sk/README.md)
-and its [evidence graph](../examples/qaoa-sk/evidence-graph.json). The graph
+The QAOA / SK papers start from the [pinned source corpus](../examples/qaoa-sk/README.md)
+and its [evidence graph](../examples/qaoa-sk/evidence-graph.json). That graph
 distinguishes the full-support and scalar-value formal interfaces from the
 broader QAOA manuscript. Source correspondence and unresolved obligations
 belong beside each draft's mathematical claims.
@@ -13,9 +13,22 @@ belong beside each draft's mathematical claims.
 The package's [authoring skills](../skills/README.md) describe the transitions.
 Its default templates remain empty so another project can use the same workflow.
 
+## Algebraic PCP theorem
+
+The [PCP reading guide](pcp/README.md) presents the algebraic construction of
+Amireddy, Behera, Srinivasan, Sudan and Willumsgaard and the route formalized by
+Troy Lee. Choose the [worked exposition](pcp/expository/main.md),
+[specialist paper](pcp/short/paper.md), or [full argument](pcp/long/reasoning-record.md).
+The [source-review summary](pcp/source-review/review-summary.md) records the
+AI reviews, corrections, finite computations and remaining checks. These papers
+were reconstructed from pinned source code and literature; this run does not
+claim a fresh Lean build or kernel extraction. The guide includes the PCP bundle
+assembly commands.
+
 ## Read the drafts
 
-Choose one entrance; reading every account in order is unnecessary.
+For QAOA / SK, choose one entrance below; reading every account in order is
+unnecessary.
 
 | Paper | What you can reconstruct | Inputs and next destination |
 | --- | --- | --- |

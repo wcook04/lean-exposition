@@ -1,0 +1,11 @@
+# Long PDF visual and link review
+
+Reviewed `work/pdf-build/long/reasoning-record.pdf`, SHA-256 `4b62e96425023a13b1c4c2ad3b23a92db946640d6a0b1e1c67b1b1d094bd9a4b`; 43 letter-size pages. Inspected all 43 corresponding page PNGs individually, full-page at reading scale. No visible clipping, missing-glyph boxes, overlapping equations, broken tables or obstructive page breaks found. The interpolation product on PDF page 4 visibly renders the set-difference symbol in `H\{a}`. The last references page contains one entry and substantial blank space; this is legible, not clipped.
+
+PyMuPDF link enumeration found 135 annotations: 133 HTTP(S) links and two remote-GoTo relative file links on PDF page 3. The two destinations are `../short/paper.pdf` and `../expository/main.pdf`; no unexpected URI scheme was found. At review time `work/pdf-build/short/paper.pdf` existed and `work/pdf-build/expository/main.pdf` did not yet exist. These links require the final packaging to preserve the corresponding relative paths. This inspection checks annotation structure and destination-file presence only; it did not test remote server availability, browser behavior, or final packaged paths. No internal GoTo annotations were present.
+
+This is a visual and structural PDF check of the stated bytes, not a fresh Lean kernel build, mathematical proof audit, or verification of a subsequent PDF revision. Earlier source reviews are separate.
+
+## Regenerated final PDF recheck
+
+Rechecked the successor at the same PDF path, SHA-256 `41ba323b4241960a1631a987b845bb7d062179e91a27f730fa19beb7ab215264`. Inspected all 43 current PNG pages individually at full-page reading scale; the layout, formulas, tables, set-difference glyph on page 4, and page edges remain legible, with no visible clipping or overlap. Both relative companion PDF files now exist at their destinations in `work/pdf-build`. The prior PDF hash above identifies the previous version, not this successor. Parent reports this regeneration changes named destinations, while source remains cc9fc82; this check is visual and confirms relative destination-file presence, not external HTTP availability or fresh Lean kernel validation. Incoming named-anchor verification was performed separately by the short-PDF reviewer.

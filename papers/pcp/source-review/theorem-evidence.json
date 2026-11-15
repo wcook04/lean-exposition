@@ -1,0 +1,947 @@
+{
+  "schema": "pcp-theorem-chapter-evidence-v1",
+  "chapter": "theorem.md",
+  "source_revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "source_checkout": "/Volumes/Demo Take Media/_builds/quartic-pcp-20261114/tcs-formalizations",
+  "read_checkout": "/Users/willcook/src/_builds/quartic-pcp-20261114/tcs-pub",
+  "primary_paper": {
+    "url": "https://arxiv.org/html/2608.17429v2#S7",
+    "local_source": "work/pcp-sources/core/source-v2/pcp-verifier.tex",
+    "scope": "Section 7 and Appendix E; mathematical construction, not the separately formalized machine reduction"
+  },
+  "verification_boundary": "The chapter reconstructs the mathematical argument and cost composition from pinned source. Finite executable checks below verify arithmetic and illustrative reductions only. No fresh Lean build or independent certification of imported machine simulations is claimed.",
+  "passages": [
+    {
+      "passage_id": "pcp-long-final-target",
+      "lean": [
+        {
+          "path": "PCP/Theorem.lean",
+          "symbol": "np_subset_pcp",
+          "namespace": "PCP",
+          "line": 25,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L25"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-colour-equations",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorAlgebra.lean",
+          "symbol": "cube_eq_one_iff",
+          "namespace": "PCP.Algebraic.ThreeColorAlgebra",
+          "line": 40,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean#L40"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorAlgebra.lean",
+          "symbol": "sub_cube_eq_one_iff_ne",
+          "namespace": "PCP.Algebraic.ThreeColorAlgebra",
+          "line": 60,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean#L60"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorAlgebra.lean",
+          "symbol": "colorable_iff_exists_satisfies",
+          "namespace": "PCP.Algebraic.ThreeColorAlgebra",
+          "line": 94,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAlgebra.lean#L94"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-grid-constraints",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorGrid.lean",
+          "symbol": "edgeExtension",
+          "namespace": "PCP.Algebraic.ThreeColorGrid",
+          "line": 60,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorGrid.lean#L60"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorGrid.lean",
+          "symbol": "colorable_iff_exists_certificates",
+          "namespace": "PCP.Algebraic.ThreeColorGrid",
+          "line": 135,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorGrid.lean#L135"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-eight-tables",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "Proof",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 37,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L37"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "BranchSeed",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 84,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L84"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "branchTest",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 97,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L97"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-derived-constraints",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+          "symbol": "vertexRejectionRate",
+          "namespace": "PCP.Algebraic.ThreeColorDecodedSoundness",
+          "line": 29,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L29"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+          "symbol": "properRejectionRate",
+          "namespace": "PCP.Algebraic.ThreeColorDecodedSoundness",
+          "line": 38,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L38"
+        },
+        {
+          "path": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+          "symbol": "check",
+          "namespace": "PCP.Algebraic.BinaryDifferenceConsistency",
+          "line": 49,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryDifferenceConsistency.lean#L49"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-query-budget",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "branchQueryBound",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 319,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L319"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "queries_length_le",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 362,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L362"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+          "symbol": "test_congr",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 301,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifier.lean#L301"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-completeness",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+          "symbol": "honestProof",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 26,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L26"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+          "symbol": "branchTest_honestProof",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 42,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L42"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+          "symbol": "exists_proof_test_eq_true",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 101,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierCompleteness.lean#L101"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-decoding-contract",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "symbol": "exists_close_of_rejection_le",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 32,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean#L32"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "symbol": "colorable_of_rejection_lt",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 58,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean#L58"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-difference-soundness",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+          "symbol": "rejectionRate_encode",
+          "namespace": "PCP.Algebraic.BinaryDifferenceConsistency",
+          "line": 236,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryDifferenceConsistency.lean#L236"
+        },
+        {
+          "path": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+          "symbol": "eq_differencePolynomial_of_close",
+          "namespace": "PCP.Algebraic.BinaryDifferenceConsistency",
+          "line": 297,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryDifferenceConsistency.lean#L297"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-assembled-zero-soundness",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+          "symbol": "vanishesOn_of_rejection_bound",
+          "namespace": "PCP.Algebraic.ThreeColorDecodedSoundness",
+          "line": 54,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L54"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+          "symbol": "colorable_of_rejection_bounds",
+          "namespace": "PCP.Algebraic.ThreeColorDecodedSoundness",
+          "line": 86,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorDecodedSoundness.lean#L86"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-gap",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "symbol": "gap",
+          "namespace": "PCP.Algebraic.ThreeColorSoundnessBudget",
+          "line": 37,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSoundnessBudget.lean#L37"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "symbol": "field_ratio_bounds",
+          "namespace": "PCP.Algebraic.ThreeColorSoundnessBudget",
+          "line": 119,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSoundnessBudget.lean#L119"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+          "symbol": "sufficient_budget",
+          "namespace": "PCP.Algebraic.ThreeColorSoundnessBudget",
+          "line": 142,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSoundnessBudget.lean#L142"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+          "symbol": "rejectionRate_ge_of_not_colorable",
+          "namespace": "PCP.Algebraic.ThreeColorVerifier",
+          "line": 117,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorVerifierSoundness.lean#L117"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-parameters",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorParameters.lean",
+          "symbol": "parameter_bounds",
+          "namespace": "PCP.Algebraic.ThreeColorParameters",
+          "line": 168,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameters.lean#L168"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorParameterChoice.lean",
+          "symbol": "exponent",
+          "namespace": "PCP.Algebraic.ThreeColorParameterChoice",
+          "line": 27,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameterChoice.lean#L27"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorParameterChoice.lean",
+          "symbol": "choice_spec",
+          "namespace": "PCP.Algebraic.ThreeColorParameterChoice",
+          "line": 89,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorParameterChoice.lean#L89"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-fair-bits",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorFullFieldSampling.lean",
+          "symbol": "retention_ge_sixteenth",
+          "namespace": "PCP.Algebraic.ThreeColorFullFieldSampling",
+          "line": 111,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFullFieldSampling.lean#L111"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorFullFieldSampling.lean",
+          "symbol": "rejectionRate_eq",
+          "namespace": "PCP.Algebraic.ThreeColorFullFieldSampling",
+          "line": 160,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFullFieldSampling.lean#L160"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+          "symbol": "seedEquiv",
+          "namespace": "PCP.Algebraic.ThreeColorBinaryVerifier",
+          "line": 108,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorBinaryVerifier.lean#L108"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+          "symbol": "addressEquiv",
+          "namespace": "PCP.Algebraic.ThreeColorBinaryVerifier",
+          "line": 63,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorBinaryVerifier.lean#L63"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-resources",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/ThreeColorSeedSize.lean",
+          "symbol": "originalBits_eq_sum",
+          "namespace": "PCP.Algebraic.ThreeColorSeedSize",
+          "line": 170,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorSeedSize.lean#L170"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorResourceBounds.lean",
+          "symbol": "card_query_le",
+          "namespace": "PCP.Algebraic.ThreeColorResourceBounds",
+          "line": 44,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorResourceBounds.lean#L44"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorResourceBounds.lean",
+          "symbol": "family_proof_exponent_le",
+          "namespace": "PCP.Algebraic.ThreeColorResourceBounds",
+          "line": 108,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorResourceBounds.lean#L108"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorResourceBounds.lean",
+          "symbol": "family_seed_exponent_le",
+          "namespace": "PCP.Algebraic.ThreeColorResourceBounds",
+          "line": 118,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorResourceBounds.lean#L118"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+          "symbol": "verification_guarantees",
+          "namespace": "PCP.Algebraic.ThreeColorBinaryVerifier",
+          "line": 250,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorBinaryVerifier.lean#L250"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorCanonicalVerifier.lean",
+          "symbol": "verification_guarantees",
+          "namespace": "PCP.Algebraic.ThreeColorCanonicalVerifier",
+          "line": 168,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorCanonicalVerifier.lean#L168"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-amplification",
+      "lean": [
+        {
+          "path": "PCP/Algebraic/RationalRepetitionBound.lean",
+          "symbol": "linear_mul_pow_le_one",
+          "namespace": "PCP.Algebraic.RationalRepetitionBound",
+          "line": 28,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RationalRepetitionBound.lean#L28"
+        },
+        {
+          "path": "PCP/Algebraic/RationalRepetitionBound.lean",
+          "symbol": "acceptance_pow_le_half",
+          "namespace": "PCP.Algebraic.RationalRepetitionBound",
+          "line": 59,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/RationalRepetitionBound.lean#L59"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+          "symbol": "verification_guarantees",
+          "namespace": "PCP.Algebraic.ThreeColorAmplifiedVerifier",
+          "line": 72,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorAmplifiedVerifier.lean#L72"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-runtime",
+      "lean": [
+        {
+          "path": "PCP/Complexity/ThreeColorFieldSetupCost.lean",
+          "symbol": "roots_cost",
+          "namespace": "PCP.Lang.ThreeColorContext",
+          "line": 45,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorFieldSetupCost.lean#L45"
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorBaseCorrect.lean",
+          "symbol": "correct",
+          "namespace": "PCP.Lang.ThreeColorBaseBranches",
+          "line": 14,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBaseCorrect.lean#L14"
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorBasePolynomial.lean",
+          "symbol": "program_polynomial_of_queries",
+          "namespace": "PCP.Lang.ThreeColorBaseBranches",
+          "line": 20,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBasePolynomial.lean#L20"
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorBasePolynomial.lean",
+          "symbol": "program_polynomial_cost",
+          "namespace": "PCP.Lang.ThreeColorBaseBranches",
+          "line": 55,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorBasePolynomial.lean#L55"
+        },
+        {
+          "path": "PCP/Complexity/ThreeColorRuntime.lean",
+          "symbol": "polyTimeAlg",
+          "namespace": "PCP.Lang.ThreeColorRuntime",
+          "line": 11,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ThreeColorRuntime.lean#L11"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-np-tableau",
+      "lean": [
+        {
+          "path": "PCP/Complexity/NPTableau.lean",
+          "symbol": "timePoly",
+          "namespace": "PCP.Machine.NPTableau",
+          "line": 57,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPTableau.lean#L57"
+        },
+        {
+          "path": "PCP/Complexity/NPTableau.lean",
+          "symbol": "spacePoly",
+          "namespace": "PCP.Machine.NPTableau",
+          "line": 60,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPTableau.lean#L60"
+        },
+        {
+          "path": "PCP/Complexity/NPTableau.lean",
+          "symbol": "exists_accepts_iff",
+          "namespace": "PCP.Machine.NPTableau",
+          "line": 142,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPTableau.lean#L142"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-local-constraints",
+      "lean": [
+        {
+          "path": "PCP/Complexity/TableauCells.lean",
+          "symbol": "predictedCell",
+          "namespace": "PCP.Machine.TableauCells",
+          "line": 123,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/TableauCells.lean#L123"
+        },
+        {
+          "path": "PCP/Complexity/TableauCells.lean",
+          "symbol": "step_represents",
+          "namespace": "PCP.Machine.TableauCells",
+          "line": 155,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/TableauCells.lean#L155"
+        },
+        {
+          "path": "PCP/Complexity/NPCellConstraints.lean",
+          "symbol": "satisfiable_accepts_iff",
+          "namespace": "PCP.Machine.NPCellConstraints",
+          "line": 227,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPCellConstraints.lean#L227"
+        },
+        {
+          "path": "PCP/Complexity/NPCellConstraints.lean",
+          "symbol": "never_accepts_of_unsupported",
+          "namespace": "PCP.Machine.NPCellConstraints",
+          "line": 237,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/NPCellConstraints.lean#L237"
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColor.lean",
+          "symbol": "variablesPoly",
+          "namespace": "PCP.Reduction.NPThreeColor",
+          "line": 36,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColor.lean#L36"
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColor.lean",
+          "symbol": "constraintsPoly",
+          "namespace": "PCP.Reduction.NPThreeColor",
+          "line": 41,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColor.lean#L41"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-clause-reduction",
+      "lean": [
+        {
+          "path": "PCP/Reduction/FiniteDomainConstraints.lean",
+          "symbol": "satisfiable_iff",
+          "namespace": "PCP.Reduction.FiniteDomainConstraints",
+          "line": 119,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteDomainConstraints.lean#L119"
+        },
+        {
+          "path": "PCP/Reduction/FiniteBooleanConstraints.lean",
+          "symbol": "orGate_iff",
+          "namespace": "PCP.Reduction.FiniteBooleanConstraints",
+          "line": 47,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteBooleanConstraints.lean#L47"
+        },
+        {
+          "path": "PCP/Reduction/FiniteBooleanConstraints.lean",
+          "symbol": "pattern_spec",
+          "namespace": "PCP.Reduction.FiniteBooleanConstraints",
+          "line": 117,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteBooleanConstraints.lean#L117"
+        },
+        {
+          "path": "PCP/Reduction/FiniteBooleanConstraints.lean",
+          "symbol": "satisfiable_iff",
+          "namespace": "PCP.Reduction.FiniteBooleanConstraints",
+          "line": 187,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/FiniteBooleanConstraints.lean#L187"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-colouring-gadget",
+      "lean": [
+        {
+          "path": "PCP/Reduction/NAEThreeColor.lean",
+          "symbol": "or_iff_two_nae",
+          "namespace": "PCP.Reduction.NAEThreeColor",
+          "line": 66,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L66"
+        },
+        {
+          "path": "PCP/Reduction/NAEThreeColor.lean",
+          "symbol": "triangle_iff",
+          "namespace": "PCP.Reduction.NAEThreeColor",
+          "line": 50,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L50"
+        },
+        {
+          "path": "PCP/Reduction/NAEThreeColor.lean",
+          "symbol": "colorable_iff",
+          "namespace": "PCP.Reduction.NAEThreeColor",
+          "line": 241,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L241"
+        },
+        {
+          "path": "PCP/Reduction/NAEThreeColor.lean",
+          "symbol": "card_vertex",
+          "namespace": "PCP.Reduction.NAEThreeColor",
+          "line": 118,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NAEThreeColor.lean#L118"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-reduction-runtime",
+      "lean": [
+        {
+          "path": "PCP/Reduction/NPThreeColorRuntime.lean",
+          "symbol": "costPoly",
+          "namespace": "PCP.Reduction.NPThreeColorRuntime",
+          "line": 31,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean#L31"
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColorRuntime.lean",
+          "symbol": "exists_program",
+          "namespace": "PCP.Reduction.NPThreeColorRuntime",
+          "line": 63,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean#L63"
+        },
+        {
+          "path": "PCP/Reduction/NPThreeColorRuntime.lean",
+          "symbol": "of_inNP_program",
+          "namespace": "PCP.Reduction.NPThreeColorRuntime",
+          "line": 257,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Reduction/NPThreeColorRuntime.lean#L257"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-seed-transport",
+      "lean": [
+        {
+          "path": "PCP/Verifier/ReductionResources.lean",
+          "symbol": "clog_eval_add_two_le",
+          "namespace": "PCP.Verifier.Reduction",
+          "line": 35,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/ReductionResources.lean#L35"
+        },
+        {
+          "path": "PCP/Verifier/ReductionResources.lean",
+          "symbol": "canonicalVerifier_readsBelow",
+          "namespace": "PCP.Verifier.Reduction",
+          "line": 79,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/ReductionResources.lean#L79"
+        },
+        {
+          "path": "PCP/Algebraic/ThreeColorFinalAssembly.lean",
+          "symbol": "of_runtime",
+          "namespace": "PCP.Algebraic.ThreeColorFinalAssembly",
+          "line": 54,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/ThreeColorFinalAssembly.lean#L54"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    },
+    {
+      "passage_id": "pcp-long-converse",
+      "lean": [
+        {
+          "path": "PCP/Theorem.lean",
+          "symbol": "pcp_subset_np",
+          "namespace": "PCP",
+          "line": 39,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L39"
+        },
+        {
+          "path": "PCP/ReverseConcrete.lean",
+          "symbol": "pcp_subset_np_concrete",
+          "namespace": "PCP",
+          "line": 33,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33"
+        },
+        {
+          "path": "PCP/Complexity/ReferenceNPConverse.lean",
+          "symbol": "inNP_iff_mem",
+          "namespace": "PCP.ReferenceNP",
+          "line": 39,
+          "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Complexity/ReferenceNPConverse.lean#L39"
+        }
+      ],
+      "review_status": "source-grounded prose; independently reviewed source interfaces and selected proof bodies; no new Lean build"
+    }
+  ],
+  "sources": [
+    {
+      "path": "PCP/Algebraic/BinaryDifferenceConsistency.lean",
+      "sha256": "280c80d2753868ba8fcb67b1db2cf72b3133c6f7f839c9b4414c4b0b65a67f81",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+      "sha256": "9faf72ddd7491f19e0991eb3b42bdc476359e334e997cbbcd22a283a280fba9f",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/BinaryLocalRowDecoding.lean",
+      "sha256": "5f5fc69c434ac9eb8cbeac6fe531eb3811ebe32d3e53102e74e313dcfef5c24b",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/EncodedLineLowDegreeSoundness.lean",
+      "sha256": "af34f9c2189f34eddfa011afdb9dd6d7d730485aed2bcf9633bdc59d7b0db85f",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/PointLineConstants.lean",
+      "sha256": "4f5fef245322c8092ef94eb09a48bc0531ec4cc0a659a9abf02f6a0fae947553",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/RationalRepetitionBound.lean",
+      "sha256": "6bf8d90746b1d50b79e30bfe9a0ed18a983d319f06441d960b47880b5842de86",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorAlgebra.lean",
+      "sha256": "fc6eee6c8ae126f32b4ad96cef8ba55576c30d4ce7f55f607493a6d0e9eb1813",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorAmplifiedVerifier.lean",
+      "sha256": "f3447d6eb968b83534637e3ad8590f0c839cacf8c7b436fe3f44c342ecdb272a",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorBinaryVerifier.lean",
+      "sha256": "6cd6905e857018a6d5bfc65b73750440d2d6f2ac4d18a538074c7b4541508880",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorCanonicalVerifier.lean",
+      "sha256": "181b533bdd83154f2c39b4b26ee606f6805e16639ca97cf6772549edff426a32",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorDecodedSoundness.lean",
+      "sha256": "15cd9fb44cdd7133c8feea82f1dfe9d0dfbda37223556ebbb786dfe86f9eee00",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorFinalAssembly.lean",
+      "sha256": "d81de382ca0a80c3f5a4f2a2e5a92e626f9002ec726e176367c3207014c4d4aa",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorFullFieldSampling.lean",
+      "sha256": "1fec597a64fb975e2ef500b48e612b7fa69682efa4818acae6cb44ddc6bb4c00",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorGap.lean",
+      "sha256": "ec33df69147de564b61af610b2a4158316bafc2241c87bfd6978fad79ff599c6",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorGrid.lean",
+      "sha256": "35f471fc3db3f7d82f0aa84bb5eb2a64405bd71a8414a29f625c1a81ac19bc0e",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorParameterChoice.lean",
+      "sha256": "15570572d3f4def63898507f449a0d7c5ead1016fbddd0982649b76a8efc77c4",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorParameters.lean",
+      "sha256": "f69f9c4c76ec3f56ad97e9adcbdfbe862e942180fb7a5128b0d47db886abce13",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorResourceBounds.lean",
+      "sha256": "b2a8b284e0c59ce737d5fea951b1ed3e77a59c1693d1752d7d704ad9954fdc85",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorSeedSize.lean",
+      "sha256": "53e13d4b4761b908b57019fbe52f72b8f6ccfb9d7f4dc6d68c5d513473964af7",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorSoundnessBudget.lean",
+      "sha256": "cd6d6abcd0b9381ed47cca8a169fb21bd3f8e1216b43f5b1cbe24bddd57833fb",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorVerifier.lean",
+      "sha256": "59cbc12ef8abce1d8a62a6744f890fed98d97fd53060c398d120021405196739",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorVerifierCompleteness.lean",
+      "sha256": "fc43e1c4c7702f76b80a3bf99f5c4b7aa16c0f35dd76b9e431e6a0d5d7d5e9ae",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Algebraic/ThreeColorVerifierSoundness.lean",
+      "sha256": "143ce38e33c951347a283521425f0a76539e55489a0531c5de0017ab3ed0081b",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/BinaryRootSearchLang.lean",
+      "sha256": "0a4e23277a6b5adfaf3544b56ade81d9c2dce6f09d3f43bc69ccfbdae6a2c67d",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/NPCellConstraints.lean",
+      "sha256": "401285719d9b0b67aca20340c9ed57049ae74f91b6e6caefa16698a24824bb01",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/NPTableau.lean",
+      "sha256": "741c70f92f8c28b126ffcb066e4587ff10ebec68356b987013ff1101f9959ee8",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ReferenceNPConverse.lean",
+      "sha256": "108ba788230ea09deabe051395dc8eb6267bff2fcff34d7bd2dd5f1a78d8682b",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/TableauCells.lean",
+      "sha256": "3297cac8a2e528b5e5fe4d599dfd030ef4b004058138175a6ab90da94bf7d7e4",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/TableauConstraints.lean",
+      "sha256": "8c8688580bf09a994a88a52d398abd606719387b9beeb27a6da29d24627503ea",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorAmplifiedRuntime.lean",
+      "sha256": "2cee11c6b176fc26ba26c88d1b717b71a366fd711dbd7f4ea111949725aaca9e",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorBaseCorrect.lean",
+      "sha256": "58c00d2a7ce2302c414f030c52c8a1a41bb6ee62e097d443836321399ad4fb67",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorBasePolynomial.lean",
+      "sha256": "32657e7e292b6873dc42fa14d4c2c52861af88218efdb7267721a3431dd47870",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorBaseProtocol.lean",
+      "sha256": "8d819b40bae6641377ce92f64464d8348d9c354426649895c413a6b14da1255d",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorFieldSetupCost.lean",
+      "sha256": "f148e02ebfc9a69325ad2ca667e489d1a22eded92803e585f479629d8fa9aab8",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Complexity/ThreeColorRuntime.lean",
+      "sha256": "747a333a56ba0d9cd514be74e0477225066476c5af5e2d91d27606711485a92c",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Reduction/FiniteBooleanConstraints.lean",
+      "sha256": "3b31811c8061f4861106f861910f63a2e8adb31e066485c23a866f5274ff3335",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Reduction/FiniteDomainConstraints.lean",
+      "sha256": "62bf4c341e0dd12266ebbdf3923aa9e77211fffe2ef659dc3f3dd438d3f10f07",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Reduction/NAEThreeColor.lean",
+      "sha256": "fcbd1fd37193f9157f1bf5c4b228746dcae7e17e3277703a9fa615117c1e752b",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Reduction/NPThreeColor.lean",
+      "sha256": "6bd72d2c5acd30d1846526babfcce4c20a294d4d843ce04d5eaf7350d59ea47c",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Reduction/NPThreeColorRuntime.lean",
+      "sha256": "949beaa45a454ec0e3e713e5d8065d6459054ddf4353616f9d73bf845db43d34",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/ReverseConcrete.lean",
+      "sha256": "eec1aa8e789598543dfb5b3b5e61665fd34e483795e140a1198603e6ff966b3c",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Theorem.lean",
+      "sha256": "987a4f3993b06a078fabcc8e4c90b69c722096957e7ca43aa45c9e4e90d80f88",
+      "matches_pinned_checkout": true
+    },
+    {
+      "path": "PCP/Verifier/ReductionResources.lean",
+      "sha256": "8643d9984e8a9f2d32bd57fb2b0ea7929ab1f611c60d983963de5ed68ec16a24",
+      "matches_pinned_checkout": true
+    }
+  ],
+  "checks": {
+    "math_delimiters": "paired dollar syntax, no residual backslash delimiters",
+    "passages": 23,
+    "source_files_identical_to_pin": 43,
+    "exact_constants": {
+      "K": "105408",
+      "E": "1054138",
+      "S": "1054166",
+      "C": "1054082",
+      "A": "2108165",
+      "B": "3162499",
+      "T": "4444715947277",
+      "g": "1/71115455156448",
+      "delta": "1/1137847282503168",
+      "R": "1137847282503168",
+      "amplified_queries": "212777441828092416"
+    },
+    "finite_checks": [
+      "OR-to-NAE: all 8 assignments",
+      "NAE triangle: all 8 assignments, all 6 colour permutations",
+      "OR gate: all 8 assignments",
+      "GF(4) edge-only counterexample: all 12 ordered edges",
+      "parameter selection: N=0..1024",
+      "seed-padding polynomial inequality: all 81 coefficient tuples in {0,1,2}^4 at n=0..32, including zero and constants"
+    ],
+    "not_performed": [
+      "Lean rebuild",
+      "axiom audit",
+      "browser rendering",
+      "exhaustive proof validation of compiler modules"
+    ]
+  },
+  "supporting_contracts": [
+    {
+      "operation": "binary low-degree decoding and ZERO",
+      "consumer": "decoding-contract, assembled-zero-soundness",
+      "provider": "binary.md",
+      "requires": "same decoded polynomial supplies full and homogeneous distances; fresh replacement costs 2epsilon inside coefficient 1+2C; certificate homogeneous error twice"
+    },
+    {
+      "operation": "grid interpolation and vanishing certificates",
+      "consumer": "grid-constraints, completeness",
+      "provider": "algebra.md",
+      "requires": "total degrees d(h-1), 3d(h-1), 5d(h-1); certificate coordinates have two blocks"
+    },
+    {
+      "operation": "finite-program compiler and machine simulations",
+      "consumer": "runtime, reduction-runtime, converse",
+      "provider": "pinned implementation proofs",
+      "requires": "semantic correctness and charged-cost-to-machine-time guarantees, composed here; no line-by-line reproof of machine-state transitions"
+    }
+  ]
+}

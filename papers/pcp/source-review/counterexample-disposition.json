@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-15",
+  "object": "Old order-three unit-weight scalar low-degree test over characteristic two",
+  "mathematical_authority": {
+    "class": "ordinary proof with independent AI source review",
+    "source": "old-test-counterexample.md",
+    "claim": "For q=2^(2k), k>=2, c=2 and any positive dimension, f(x)=x_1^4 passes the old scalar test identically but has distance at least 1-4/q from every total-degree-at-most-two polynomial."
+  },
+  "prior_art": {
+    "v1": "https://arxiv.org/abs/2608.17429v1",
+    "locators": [
+      "Fact 2.7",
+      "Lemma 3.3"
+    ],
+    "v2": "https://arxiv.org/abs/2608.17429v2",
+    "credit": "v2 acknowledges Troy Lee for finding the earlier mistake; no novelty or priority claimed for this explanatory family."
+  },
+  "lean": {
+    "status": "not_formalized_here",
+    "reason": "Explanatory ordinary counterexample to superseded test; no change to Troy's corrected formal proof."
+  },
+  "papers": {
+    "long": "../long/reasoning-record.md",
+    "short": "../short/paper.md",
+    "expository": "../expository/main.md",
+    "state": "included_in_final_reviewed_local_edition"
+  },
+  "comparator": {
+    "status": "not_selected",
+    "reason": "No new Lean theorem/independent challenge for this ordinary explanatory example; source-cited proof is the appropriate evidence."
+  },
+  "review": {
+    "kind": "AI_review",
+    "source": "old-test-counterexample.md",
+    "human_review": "not_performed"
+  },
+  "destinations": {
+    "proof_reader": "selected_as_explanatory_passage",
+    "Palomar": "not_selected: teaching example of an already-corrected published error",
+    "Prove2Me": "not_selected: no new formal object requested",
+    "aiXiv": "not_selected: task publishes companions in existing reader",
+    "arXiv": "not_selected: task publishes companions in existing reader",
+    "FormalConjectures": "not_applicable: no conjecture submission"
+  },
+  "continuation": {
+    "owner": "Parent integration and publication",
+    "event": "Scoped merge and reader publication; no remaining counterexample manuscript or review action"
+  },
+  "publication": {
+    "status": "not_yet_published",
+    "boundary": "The local manuscripts, reading PDFs and bundle are complete. Publication is pending the scoped merge and deployment; this record asserts neither."
+  }
+}
