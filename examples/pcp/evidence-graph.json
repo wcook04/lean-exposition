@@ -987,6 +987,56 @@
       "redistribution": "reference_only",
       "sha256": "550aff6fe4c7ff5ad727b8ca24f351d38d97c92930a4965fbf9ec14bbf019969",
       "path": "papers/pcp/expository/exposition-examples-output.txt"
+    },
+    {
+      "id": "literature:bchks",
+      "kind": "literature",
+      "url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+      "revision": "author manuscript",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "02a2af5639db713749b3515586190b3bd90ad11bfb5d0099f8e28a1f34d22a65",
+      "path": "bchks.pdf"
+    },
+    {
+      "id": "literature:rubinfeld-sudan",
+      "kind": "literature",
+      "url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+      "revision": "pre-publication manuscript, to appear SIAM J. Computing",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "cc472a6295152927f4ab0abdd808692a20e82984c8341d38a487fce814e89d29",
+      "path": "rubinfeld-sudan.pdf"
+    },
+    {
+      "id": "literature:kaufman-sudan",
+      "kind": "literature",
+      "url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "revision": "STOC conference manuscript",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "9974d3155db954563f5f3b48babbc6991d2f3484c0fd41b4712b889e9630664a",
+      "path": "kaufman-sudan.pdf"
+    },
+    {
+      "id": "literature:friedl-sudan",
+      "kind": "literature",
+      "url": "https://arxiv.org/pdf/1307.3975v1",
+      "revision": "arXiv:1307.3975v1, 15 July 2013; corrected typographical errors relative to 1995 conference version",
+      "license": "NOASSERTION",
+      "redistribution": "reference_only",
+      "sha256": "0bc8d8dd1f3aa9bc7df9da2da74601847056722a13a3e4f14453c31037168af8",
+      "path": "friedl-sudan.pdf"
+    },
+    {
+      "id": "file:PCP/Algebraic/HadamardCorrection.lean",
+      "kind": "file",
+      "url": "https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/HadamardCorrection.lean",
+      "revision": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+      "license": "Apache-2.0",
+      "redistribution": "reference_only",
+      "sha256": "79668d3cdb3cb79557d8db8fc47a9ce228867332df39bd915768724092a931de",
+      "path": "PCP/Algebraic/HadamardCorrection.lean"
     }
   ],
   "citations": [
@@ -1220,6 +1270,34 @@
       "url": "https://arxiv.org/abs/2608.17429v1",
       "source_id": "paper:v1",
       "locator": "Fact 2.7 and Lemma 3.3"
+    },
+    {
+      "id": "citation:bchks",
+      "title": "Linearity testing in characteristic two",
+      "url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+      "source_id": "literature:bchks",
+      "locator": "Theorem 1.2 (printed p. 5; PDF p. 7)"
+    },
+    {
+      "id": "citation:rubinfeld-sudan",
+      "title": "Robust characterizations of polynomials with applications to program testing",
+      "url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+      "source_id": "literature:rubinfeld-sudan",
+      "locator": "§4, Theorem 5 in retained prepublication manuscript (published numbering Theorem 4.1)"
+    },
+    {
+      "id": "citation:kaufman-sudan",
+      "title": "Algebraic property testing: the role of invariance",
+      "url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+      "source_id": "literature:kaufman-sudan",
+      "locator": "Theorem 2.9; §3 plurality and double sampling"
+    },
+    {
+      "id": "citation:friedl-sudan",
+      "title": "Some improvements to total degree tests",
+      "url": "https://arxiv.org/pdf/1307.3975v1",
+      "source_id": "literature:friedl-sudan",
+      "locator": "Lemma 4 (arXiv v1, PDF p. 2)"
     }
   ],
   "nodes": [
@@ -1495,9 +1573,10 @@
       "evidence_ids": [],
       "citation_ids": [
         "paper:16",
-        "blr:4"
+        "blr:4",
+        "citation:bchks"
       ],
-      "boundary": "BLR linearity estimate. Exact implicit parameters require Lean elaboration; this is source transcription, not a checked signature."
+      "boundary": "BLR linearity estimate. Exact implicit parameters require Lean elaboration; this is source transcription, not a checked signature. Literature role: Characteristic-two quantitative rejection-distance antecedent, also cited in paper v2 Theorem B.1."
     },
     {
       "id": "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -2304,8 +2383,10 @@
       "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem exists_polynomial_of_hasLowDegreeLines {n d : ℕ}\n    (f : (Fin n → F) → F) (hcard : 2 * d < Fintype.card F)\n    (hf : HasLowDegreeLines d f) :\n    ∃ P : MvPolynomial (Fin n) F, P.totalDegree ≤ d ∧ ∀ x, eval x P = f x",
       "assumption_ids": [],
       "evidence_ids": [],
-      "citation_ids": [],
-      "boundary": "Exact source locator and bytes only; active section variables, typeclass assumptions and implicit arguments require inspection or Lean elaboration. Passage-level correspondence is authored, not an extracted dependency or kernel check."
+      "citation_ids": [
+        "citation:friedl-sudan"
+      ],
+      "boundary": "Exact source locator and bytes only; active section variables, typeclass assumptions and implicit arguments require inspection or Lean elaboration. Passage-level correspondence is authored, not an extracted dependency or kernel check. Literature role: Exact-line characterization antecedent; paper condition q−q/p−1 ≥ d differs from the formal source sufficient condition."
     },
     {
       "id": "PCP.Algebraic.PolynomialLine.hasLowDegreeLines_iff_exists_polynomial",
@@ -2724,8 +2805,11 @@
       "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem correction_satisfies (a w : I → F) (ha : ∀ i, a i ≠ 0)\n    (f : V → F)\n    (hsmall : (2 * (Fintype.card I : ℚ) + 3) * Fintype.card I *\n      rejectionRate a w f < 1) (x v : V) :\n    correction a w f x = predict a w (correction a w f) x v",
       "assumption_ids": [],
       "evidence_ids": [],
-      "citation_ids": [],
-      "boundary": "Exact source locator and bytes only; active section variables, typeclass assumptions and implicit arguments require inspection or Lean elaboration. Passage-level correspondence is authored, not an extracted dependency or kernel check."
+      "citation_ids": [
+        "citation:rubinfeld-sudan",
+        "citation:kaufman-sudan"
+      ],
+      "boundary": "Exact source locator and bytes only; active section variables, typeclass assumptions and implicit arguments require inspection or Lean elaboration. Passage-level correspondence is authored, not an extracted dependency or kernel check. Literature role: Robust-characterization antecedent; not a claim that the retained theorem has the exact Lean hypotheses or constants. Literature role: Antecedent for linear-invariant families with a two-ary independent local formal characterization; no assumption that arbitrary nodes and weights qualify."
     },
     {
       "id": "PCP.Algebraic.StandardLocalCorrection.goodNodes_of_generator",
@@ -6563,6 +6647,90 @@
       ],
       "citation_ids": [],
       "boundary": "Finite computation with source-bound code and stdout; does not establish general claims or any Lean theorem."
+    },
+    {
+      "id": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/HadamardCorrection.lean",
+      "locator": "PCP/Algebraic/HadamardCorrection.lean:34",
+      "declaration": "PCP.Algebraic.Hadamard.selfCorrect_failure_le",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem selfCorrect_failure_le [Fintype V] [DecidableEq W] (E : V →+ W)\n    (w : V → W) (P : V) :\n    relativeDistance (selfCorrect w P) (fun _ => E P) ≤ 2 * relativeDistance w E\nActive section variables: {V W : Type*} [AddCommGroup V] [AddCommGroup W].",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Finite additive-code correction bound; source transcription only, no fresh Lean elaboration, kernel check, or inferred dependency edge."
+    },
+    {
+      "id": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/BinaryDifferenceConsistency.lean",
+      "locator": "PCP/Algebraic/BinaryDifferenceConsistency.lean:204",
+      "declaration": "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem rejectionRate_le_add_errors (hr : 1 ≤ r)\n    (f f' : (σ → F) → Coefficients t r → ZMod 2)\n    (g g' : ((σ ⊕ σ) → F) → Coefficients t r → ZMod 2) :\n    rejectionRate hr f' g' ≤ rejectionRate hr f g +\n      2 * BinaryLagrangeConstraint.homogeneousDistance hr f f' +\n        BinaryLagrangeConstraint.homogeneousDistance hr g g'\nActive section variables: {F σ : Type*} [Field F] [Fintype F] [Fintype σ] [DecidableEq σ] {t r D : ℕ}.",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Rejection-transfer bound under homogeneous-distance errors; source transcription only, no fresh Lean elaboration, kernel check, or inferred dependency edge. Unused section variables may be omitted by elaboration."
+    },
+    {
+      "id": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/ThreeColorGrid.lean",
+      "locator": "PCP/Algebraic/ThreeColorGrid.lean:117",
+      "declaration": "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem colorable_iff_exists_constraints [CharP F 2] {ω : F}\n    (hω : IsPrimitiveRoot ω 3) (H : Finset F) (G : SimpleGraph (σ → H)) :\n    G.Colorable 3 ↔ ∃ P : MvPolynomial σ F,\n      P.totalDegree ≤ (H.card - 1) * Fintype.card σ ∧\n      VanishesOn H (validPolynomial P) ∧\n      VanishesOn H (properPolynomial (edgeExtension H G) (differencePolynomial P))",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Pinned source transcription only. Active section variables, implicit binders and typeclass arguments require source inspection or Lean elaboration; no fresh Lean check or inferred dependency edge."
+    },
+    {
+      "id": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/HadamardDerivedOracle.lean",
+      "locator": "PCP/Algebraic/HadamardDerivedOracle.lean:58",
+      "declaration": "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem answer_encode (ρ : F ≃ₗ[ZMod 2] (Fin t → ZMod 2))\n    (P : Polynomial F) (hP : P.natDegree ≤ r) (u : F)\n    (L : Coefficients t 1) (R : Coefficients t r) :\n    answer ρ P hP (encode r (ρ u)) L R = encode 1 (ρ (P.eval u)) L",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Pinned source transcription only. Active section variables, implicit binders and typeclass arguments require source inspection or Lean elaboration; no fresh Lean check or inferred dependency edge."
+    },
+    {
+      "id": "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/ThreeColorParameterChoice.lean",
+      "locator": "PCP/Algebraic/ThreeColorParameterChoice.lean:79",
+      "declaration": "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem volume_le_log_add_one (N : ℕ) : volume N ≤ 32 * (Nat.clog 2 N + 1)",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Pinned source transcription only. Active section variables, implicit binders and typeclass arguments require source inspection or Lean elaboration; no fresh Lean check or inferred dependency edge."
+    },
+    {
+      "id": "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/ThreeColorParameterChoice.lean",
+      "locator": "PCP/Algebraic/ThreeColorParameterChoice.lean:58",
+      "declaration": "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem volume_le (N : ℕ) : volume N ≤ 4 * max 8 (Nat.clog 2 N)",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Pinned source transcription only. Active section variables, implicit binders and typeclass arguments require source inspection or Lean elaboration; no fresh Lean check or inferred dependency edge."
     }
   ],
   "edges": [

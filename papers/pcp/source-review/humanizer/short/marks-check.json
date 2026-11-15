@@ -1,0 +1,6 @@
+{
+  "tool": "avoid-ai-writing/scripts/normalize-quotes.js",
+  "scope": "changed paragraphs only; --reference original changed paragraphs --write",
+  "normalized_copy_equals_changed_manuscript_prose": true,
+  "manuscript_typography_edits_needed": false
+}

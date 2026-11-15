@@ -1,0 +1,107 @@
+{
+  "ok": true,
+  "papers": [
+    {
+      "file": "long/reasoning-record.pdf",
+      "pages": 43,
+      "sha256": "87d000671158d1161c7e7f2ca4dbbad77dfce9775c95810e8637ce0553481e2b",
+      "companion_links": [
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    },
+    {
+      "file": "short/paper.pdf",
+      "pages": 11,
+      "sha256": "3dcc5fa9cadbbd3f3343ba8f2bd83cf20cad22d8282faf0610aa3f4d06789cf5",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../expository/main.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "2-the-corrected-short-low-degree-test"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "4-bivariate-agreement"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "5-point-versus-line-soundness"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "correcting-an-outer-value-at-a-prescribed-point"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "checking-that-a-polynomial-vanishes-on-a-grid"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "the-polynomial-time-implementation"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "the-polynomial-time-implementation"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "source-and-verification-account"
+        }
+      ]
+    },
+    {
+      "file": "expository/main.pdf",
+      "pages": 18,
+      "sha256": "8827a957fa76826196448739ce1f66997b3910ced55377afa485829fac6dd190",
+      "companion_links": [
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../long/reasoning-record.pdf",
+          "destination": "[0/Fit]"
+        },
+        {
+          "file": "../short/paper.pdf",
+          "destination": "[0/Fit]"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

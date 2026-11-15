@@ -1,29 +1,25 @@
 {
-  "operation": "Concatenate reviewed chapters; relocate unchanged edition passage to final verification section",
-  "inputs": [
-    {
-      "name": "introduction.md",
-      "sha256": "6ca447e6831ad5990e7840620d0ed1612ff527137a98d40aa42bfef9a991121b"
-    },
-    {
-      "name": "algebra.md",
-      "sha256": "5d22ab32ab81f127bb8e13a63d746948cb894f6f294f8fabee1198598c08c093"
-    },
-    {
-      "name": "binary.md",
-      "sha256": "c76a06272c4c2d9eb5d2bfc7344ac3c1b7e8cfb6ad1da2293d63c91dae7f8819"
-    },
-    {
-      "name": "theorem.md",
-      "sha256": "2b631d1bcd117c38a41b4f20d8d510d0575b6c2168d214aa1a1f54efedf35937"
-    },
-    {
-      "name": "references.md",
-      "sha256": "e19711b3fb099735748252686610ccd0fa478ac3facd8793396b18fb9bc5d328"
-    }
-  ],
+  "operation": "Revise an already assembled long manuscript for prose clarity, literature attribution and grammatical source-link labels",
+  "status": "source and render review complete; corrected canonical correspondence and selected-reader review complete within stated scope",
+  "source_pin": "a0ce13ed0fa264f051c1278e039596ce65557fa4",
+  "initial_assembly": {
+    "file": "assembly-initial.json",
+    "sha256": "d7c01065a4e0dd71ed854124b60f2567cd89e4898296b1d52d19f549516a8056",
+    "initial_long_sha256": "cc9fc82c4525c6977040666e2f8fe6a0dfc3ca4514af49b16b81d007011f42bd"
+  },
+  "intermediate_revision": {
+    "sha256": "1d9cf0f3d38363daaad2f363804372c3b8534de23aeb7a0638bc5485debd3736",
+    "status": "superseded by grammatical repair to standalone source-link lead-ins; not current final source"
+  },
   "output": "../long/reasoning-record.md",
-  "sha256": "cc9fc82c4525c6977040666e2f8fe6a0dfc3ca4514af49b16b81d007011f42bd",
+  "sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588",
   "passages": 72,
-  "whitespace_words": 17407
+  "whitespace_words": 17623,
+  "preservation_review": "humanizer/mathematical-preservation-review.md",
+  "scope": "Current identity records revision of the existing paper, not reproduction by original chapter concatenation; no new Lean build or kernel extraction.",
+  "final_readback": "humanizer/long/final-sequential-read.md",
+  "revision_receipt": "humanizer/long/final-preservation-receipt.md",
+  "pdf_review": "humanizer/long-pdf-review.md",
+  "correspondence_review": "humanizer/mapping-review-corrected.md",
+  "reader_review": "humanizer/reader-refresh-review.md"
 }

@@ -37,7 +37,7 @@ $$
 \mathrm{NP}=\mathrm{PCP}(O(\log n),O(1)).
 $$
 
-The formal statement uses an infinite Boolean oracle $\pi:\mathbb N\to\{0,1\}$ and bounds every reachable address by $p(n)$; only that finite prefix can affect acceptance. Its exact randomness formula makes the budget computable, and unused random bits may be ignored. The definition of NP is tied to the formalization's concrete machine model and is proved equivalent to the pinned ComplexityLib nondeterministic-machine class. These conditions are part of the theorem, rather than informal assumptions about an abstract verifier. [Lean: verifier definitions][intro-verifier], [forward theorem][intro-theorem], [concrete reverse theorem][intro-reverse], [reference NP equivalence][intro-reference].
+The formal statement uses an infinite Boolean oracle $\pi:\mathbb N\to\{0,1\}$ and bounds every reachable address by $p(n)$; only that finite prefix can affect acceptance. Its exact randomness formula makes the budget computable, and unused random bits may be ignored. The definition of NP is tied to the formalization's concrete machine model and is proved equivalent to the pinned ComplexityLib nondeterministic-machine class. See the [verifier definitions][intro-verifier], [forward theorem][intro-theorem], [concrete reverse theorem][intro-reverse], and [reference NP equivalence][intro-reference].
 <!-- /passage:pcp-long-intro-theorem -->
 
 ## How the proof is organized
@@ -47,7 +47,7 @@ The construction first treats graph three-colourability. A colouring is interpol
 
 There are two obstacles to checking only constantly many **bits**. A corrupted table may not be a polynomial at all, so low-degree testing must produce an actual nearby polynomial from the observed rejection probability. Also, a field element or a line polynomial can contain many bits, so counting a field-valued query as one proof query would not establish the theorem. The proof handles the obstacles in successive stages.
 
-The first chapter establishes the algebraic tools. It proves interpolation and grid vanishing, then the corrected weighted low-degree test and the associated local correctors. It also reconstructs the point-versus-line soundness theorem, including its bivariate agreement input, rather than treating that theorem's conclusion as an extra premise. Its explicit field-size and error bounds are carried into the subsequent tests.
+The first chapter establishes the algebraic tools. It proves interpolation and grid vanishing, then the corrected weighted low-degree test and the associated local correctors. It also proves point-versus-line soundness from bivariate agreement. Its explicit field-size and error bounds are carried into the subsequent tests.
 
 The second chapter encodes polynomial values as bits. A set-multilinear encoding lowers the degree needed by an inner test. Hadamard labels let the verifier request individual Boolean linear or polynomial observations of a field element. Linearity testing and local correction turn consistency checks on those bits into the hypotheses needed by the algebraic tests. The resulting encoded-line test, outer local corrector and zero-on-grid test have constant physical bit-query bounds.
 
@@ -63,7 +63,6 @@ The mathematical prerequisites are finite fields, polynomials in several variabl
 
 This is the long account. It contains the intermediate estimates, reconstruction of the substantial algebraic inputs, parameter substitutions, and boundary cases needed to follow the complete argument. The [specialist paper](../short/paper.md) presents the theorem and main proof structure with less local detail. The [exposition with worked examples](../expository/main.md) develops the construction through concrete calculations. These companion texts have different reading purposes; the detailed proofs remain here, and the linked Lean statements provide the exact formal counterparts.
 
-The new prose was prepared by AI agents directed by Will Cook. The underlying algebraic argument is due to Prashanth Amireddy, Amik Raj Behera, Srikanth Srinivasan, Madhu Sudan and Sophus Valentin Willumsgaard; the Lean formalization is Troy Lee's. This account is an explanation of that work, not a new proof claimed by its explanatory authors. It does not imply the original authors' endorsement or human review.
 <!-- /passage:pcp-long-intro-readers -->
 
 
@@ -107,9 +106,9 @@ $$
 P(X,T)=\sum_{j=0}^r P_j(X)T^j,\qquad P_r\ne0.
 $$
 
-The coefficient $P_r$ has total degree at most $d-r$. The induction hypothesis bounds the fraction of $X$ for which it vanishes by $(d-r)/q$. For every other $X$, the specialization in $T$ is nonzero of degree $r$, so at most $r/q$ of its evaluations vanish. Counting all parameters over the exceptional bases, rather than trying to improve their contribution, gives at most $(d-r)/q+r/q=d/q$.
+The coefficient $P_r$ has total degree at most $d-r$. The induction hypothesis bounds the fraction of $X$ for which it vanishes by $(d-r)/q$. For every other $X$, the specialization in $T$ is nonzero of degree $r$, so at most $r/q$ of its evaluations vanish. Bounding the contribution from exceptional bases by their full probability gives at most $(d-r)/q+r/q=d/q$.
 
-Thus distinct polynomials of total degree at most $d$ have evaluation distance at least $1-d/q$. In particular, evaluation is injective on these polynomials when $d<q$. Two such polynomials cannot both lie at distance less than $r$ from one word when $2r\le1-d/q$: the triangle inequality would make their mutual distance strictly smaller than $1-d/q$. This strict inequality will be used when choosing nearest line polynomials. [Lean: polynomial distance][lean-distance].
+Thus distinct polynomials of total degree at most $d$ have evaluation distance at least $1-d/q$. In particular, evaluation is injective on these polynomials when $d<q$. Two such polynomials cannot both lie at distance less than $r$ from one word when $2r\le1-d/q$: the triangle inequality would make their mutual distance strictly smaller than $1-d/q$. This strict inequality will be used when choosing nearest line polynomials. See the [polynomial-distance bound][lean-distance].
 
 <!-- /passage:pcp-long-algebra-polynomial-distance -->
 
@@ -127,7 +126,7 @@ $$
 \tag{A2}
 $$
 
-Its degree in each variable is at most $h-1$, and its total degree is at most $m(h-1)$. It agrees with $f$ because precisely one summand survives at each grid point. It is the unique polynomial with these individual degree bounds and these evaluations. To prove uniqueness, a difference polynomial vanishing on $H^m$, regarded as a polynomial in its last variable, has $h$ roots after every specialization of the others. Its degree is less than $h$, so each coefficient vanishes on $H^{m-1}$; induction makes every coefficient zero. The empty product and singleton zero-dimensional grid give the same assertion when $m=0$. [Lean: grid interpolation][lean-interpolation].
+Its degree in each variable is at most $h-1$, and its total degree is at most $m(h-1)$. It agrees with $f$ because precisely one summand survives at each grid point. It is the unique polynomial with these individual degree bounds and these evaluations. To prove uniqueness, a difference polynomial vanishing on $H^m$, regarded as a polynomial in its last variable, has $h$ roots after every specialization of the others. Its degree is less than $h$, so each coefficient vanishes on $H^{m-1}$; induction makes every coefficient zero. The empty product and singleton zero-dimensional grid give the same assertion when $m=0$. See the [grid interpolation proof][lean-interpolation].
 
 <!-- /passage:pcp-long-algebra-grid-interpolation -->
 
@@ -152,7 +151,7 @@ $$
 \tag{A4}
 $$
 
-To see this, divide successively by the monic polynomials $Z_1,\ldots,Z_m$, treating the other variables as coefficients. At the $i$-th step remove every term whose exponent of $X_i$ is at least $h$. Replacing the leading term $X_i^h$ by lower powers never increases total degree. The quotient terms have lost $h$ from their degree, proving (A4). Later divisions do not increase degrees in previously processed variables, since their divisors involve only their own coordinate. The result is $P=\sum Q_iZ_i+R$, where $R$ has individual degrees less than $h$. If $P$ vanishes on the grid, so does $R$; uniqueness in (A2) gives $R=0$. The converse follows by evaluation, since every $Z_i$ vanishes there. This also proves the assertion in dimension zero: a vanishing constant is zero and the sum is empty. [Lean: grid decomposition][lean-grid].
+To see this, divide successively by the monic polynomials $Z_1,\ldots,Z_m$, treating the other variables as coefficients. At the $i$-th step remove every term whose exponent of $X_i$ is at least $h$. Replacing the leading term $X_i^h$ by lower powers never increases total degree. The quotient terms have lost $h$ from their degree, proving (A4). Later divisions do not increase degrees in previously processed variables, since their divisors involve only their own coordinate. The result is $P=\sum Q_iZ_i+R$, where $R$ has individual degrees less than $h$. If $P$ vanishes on the grid, so does $R$; uniqueness in (A2) gives $R=0$. The converse follows by evaluation, since every $Z_i$ vanishes there. This also proves the assertion in dimension zero: a vanishing constant is zero and the sum is empty. See the [grid decomposition][lean-grid].
 
 Package (A3) as one polynomial in two blocks of variables:
 
@@ -167,7 +166,7 @@ M(X,0)=0,\qquad M(X,Z_1(X),\ldots,Z_m(X))=P(X),
 \tag{A5}
 $$
 
-and $\deg M\le\deg P$, since $h\ge1$ and (A4) gives $\deg Q_i+1\le\deg P$. Conversely, any polynomial $M$ satisfying (A5), including one nonlinear in $Y$, proves that $P$ vanishes on the grid: at a grid point the two substitutions have the same value. Nonemptiness of $H$ is needed for the degree-bounded existence direction. On an empty grid of positive dimension, the constant one vanishes vacuously but has no degree-zero certificate whose zero substitution is zero. Finally, substitution of the $Z_i$'s into an arbitrary degree-$D$ certificate has degree at most $hD$: each substituted variable has degree at most $h$, so each monomial's degree grows by at most that factor. [Lean: certificate and substitution bounds][lean-certificate].
+and $\deg M\le\deg P$, since $h\ge1$ and (A4) gives $\deg Q_i+1\le\deg P$. Conversely, any polynomial $M$ satisfying (A5), including one nonlinear in $Y$, proves that $P$ vanishes on the grid: at a grid point the two substitutions have the same value. Nonemptiness of $H$ is needed for the degree-bounded existence direction. On an empty grid of positive dimension, the constant one vanishes vacuously but has no degree-zero certificate whose zero substitution is zero. Finally, substitution of the $Z_i$'s into an arbitrary degree-$D$ certificate has degree at most $hD$: each substituted variable has degree at most $h$, so each monomial's degree grows by at most that factor. See the [certificate and substitution bounds][lean-certificate].
 
 <!-- /passage:pcp-long-algebra-grid-vanishing -->
 
@@ -180,7 +179,7 @@ $$
 
 is represented by a univariate polynomial of degree at most $d$. Then $f$ is represented by a multivariate polynomial of total degree at most $d$.
 
-Here is a proof that keeps track of formal degree. Induct on the dimension. Choose $d+1$ distinct values $a_0,\ldots,a_d\in F$ for the first coordinate. Each slice $y\mapsto f(a_i,y)$ has the same exact-line property in one less dimension and therefore, by induction, is represented by a total-degree-$d$ polynomial $P_i(y)$. Interpolate the slices:
+We prove the claim by induction on the dimension. Choose $d+1$ distinct values $a_0,\ldots,a_d\in F$ for the first coordinate. Each slice $y\mapsto f(a_i,y)$ has the same exact-line property in one less dimension and therefore, by induction, is represented by a total-degree-$d$ polynomial $P_i(y)$. Interpolate the slices:
 
 $$
 Q(x,y)=\sum_{i=0}^d\ell_i(x)P_i(y).
@@ -188,7 +187,7 @@ $$
 
 This polynomial has total degree at most $2d$. For fixed $y$, both $Q(\cdot,y)$ and the prescribed polynomial representing the first-coordinate line have degree at most $d$ and agree at $d+1$ nodes. They are equal, so $Q$ represents $f$ everywhere.
 
-It remains to improve total degree from $2d$ to $d$. For every direction $v$, the formal polynomial $Q(tv)$ has degree at most $2d<q$ and agrees at all $q$ parameters with a degree-$d$ polynomial. The root bound makes the polynomials identical. Write $Q=\sum_k Q_k$, where $Q_k$ is its homogeneous degree-$k$ part. The coefficient of $t^k$ in $Q(tv)$ is $Q_k(v)$, so $Q_k$ vanishes everywhere for $k>d$. Each such component has degree at most $2d<q$; (A1) forces it to be the zero polynomial. Thus $Q$ has total degree at most $d$. No assertion that arbitrary equal polynomial functions have equal formal degree has been used. [Lean: finite-field line characterization][lean-lines].
+It remains to improve total degree from $2d$ to $d$. For every direction $v$, the formal polynomial $Q(tv)$ has degree at most $2d<q$ and agrees at all $q$ parameters with a degree-$d$ polynomial. The root bound makes the polynomials identical. Write $Q=\sum_k Q_k$, where $Q_k$ is its homogeneous degree-$k$ part. The coefficient of $t^k$ in $Q(tv)$ is $Q_k(v)$, so $Q_k$ vanishes everywhere for $k>d$. Each such component has degree at most $2d<q$; (A1) forces it to be the zero polynomial. Thus $Q$ has total degree at most $d$. No assertion that arbitrary equal polynomial functions have equal formal degree has been used. See the [finite-field line characterization][lean-lines]. The corresponding classical result is Friedl–Sudan, [Lemma 4 of the corrected 2013 reissue][friedl-sudan]: in characteristic $p$, their hypothesis is $q-q/p-1\ge d$. The stronger sufficient hypothesis used here gives the direct interpolation proof above.
 
 <!-- /passage:pcp-long-algebra-line-characterization -->
 
@@ -222,12 +221,12 @@ $$
 
 All exponents except the last are smaller positive integers. Induction and $w_{c+1}\ne0$ give $h(\zeta^n)=0$. The initial nodes and induction include the exponents $1,\ldots,q-1$, which exhaust $F^\times$. Thus $h=0$.
 
-For a word on $V$, fix any affine line and apply the same univariate argument. Its constraint at parameters $r,s\in F$ is exactly the original constraint at center $u+rv$ and direction $sv$. Every line is consequently degree at most $c$. The exact-line characterization applies because $q>2c$. This proof includes $c=0$ and arbitrary field characteristic. [Lean: corrected generator test][lean-generator].
+For a word on $V$, fix any affine line and apply the same univariate argument. Its constraint at parameters $r,s\in F$ is exactly the original constraint at center $u+rv$ and direction $sv$. Every line is consequently degree at most $c$. The exact-line characterization applies because $q>2c$. This proof includes $c=0$ and arbitrary field characteristic. See the [corrected generator test][lean-generator].
 
 <!-- /passage:pcp-long-algebra-generator-test -->
 
 <!-- passage:pcp-long-algebra-weighted-plurality -->
-The robust statement follows from a useful argument that does not yet mention polynomials. Let $a_1,\ldots,a_n\in F^\times$, allow arbitrary weights $w_i\in F$, and use the same prediction formula with $n$ terms. Neither distinctness of nodes nor nonzero weights is needed in this paragraph. Set
+We first prove robustness for weighted affine constraints, before applying it to polynomials. Let $a_1,\ldots,a_n\in F^\times$, allow arbitrary weights $w_i\in F$, and use the same prediction formula with $n$ terms. Neither distinctness of nodes nor nonzero weights is needed in this paragraph. Set
 
 $$
 \delta=\Pr_{x,v}[f(x)\ne A_f(x,v)],\qquad
@@ -243,7 +242,7 @@ $$
 
 For a fixed $x$ with $g(x)\ne f(x)$, the probability of prediction $f(x)$ is at most one half, since the distinct plurality value is at least as frequent. Thus the conditional rejection probability is at least one half. Averaging proves (A7).
 
-We next bound predictions at **each** center, not just on average. Introduce the weighted grid
+We next bound predictions at **each** center. Introduce the weighted grid
 
 $$
 D(x;y,z,b)=\sum_{i,j}w_iw_j
@@ -291,7 +290,9 @@ $$
 \tag{A10}
 $$
 
-their disagreement probability is less than one, so they must be equal. This proves that the corrected word $g$ satisfies every weighted constraint. This last use of strict inequality converts a probability estimate into an exact identity. [Lean: weighted constraint soundness][lean-weighted].
+their disagreement probability is less than one, so they must be equal. This proves that the corrected word $g$ satisfies every weighted constraint. This last use of strict inequality converts a probability estimate into an exact identity. See the [weighted-constraint soundness proof][lean-weighted].
+
+The plurality correction and double-sampling argument follow the approach of Rubinfeld–Sudan [Section 4, Theorem 5 and Lemmas 6–8 in the retained manuscript][rubinfeld-sudan]. Amireddy et al. identify this antecedent as Theorem 4.1 of the published paper in their discussion after Lemma 3.3. They also relate the test to Kaufman–Sudan [Theorem 2.9][kaufman-sudan], whose general result assumes a 2-ary independent local formal characterization. We have proved the weighted estimate directly above; applying that general theorem would additionally require checking its characterization hypotheses.
 
 <!-- /passage:pcp-long-algebra-weighted-plurality -->
 
@@ -310,7 +311,7 @@ $$
 \tag{A12}
 $$
 
-This is the corrected low-degree soundness statement. It needs $q>2c$, not a cubic field-size hypothesis. A downstream closed threshold such as $1/[4(c+2)^2]$ lies strictly below (A11). The full multiplicative generator and the weights are essential parts of the test being proved here; replacing them by a root of order $c+1$ and unit weights changes the equations. [Paper, Fact 2.7 and Lemma 3.3][paper]; [Lean: proximity theorem][lean-generator].
+This is the corrected low-degree soundness statement. It needs $q>2c$, not a cubic field-size hypothesis. A downstream closed threshold such as $1/[4(c+2)^2]$ lies strictly below (A11). The full multiplicative generator and the weights are essential parts of the test being proved here; replacing them by a root of order $c+1$ and unit weights changes the equations. See [the paper, Fact 2.7 and Lemma 3.3][paper] and the [proximity theorem][lean-generator].
 
 <!-- /passage:pcp-long-algebra-generator-soundness -->
 
@@ -353,7 +354,7 @@ $$
 \tag{A13}
 $$
 
-The sampled points are correlated, but the union bound requires no independence. This correction result has no small-distance hypothesis and needs no additional field-size assumption beyond the existence of the distinct nonzero nodes. For an exact polynomial it always succeeds. It uses $c+1$ listed queries. [Paper, Fact 2.8 and Lemma 3.4][paper]; [Lean: local correction][lean-correction].
+The sampled points are correlated, but the union bound requires no independence. This correction result has no small-distance hypothesis and needs no additional field-size assumption beyond the existence of the distinct nonzero nodes. For an exact polynomial it always succeeds. It uses $c+1$ listed queries. See [the paper, Fact 2.8 and Lemma 3.4][paper] and the [local-correction bound][lean-correction].
 
 <!-- /passage:pcp-long-algebra-standard-correction -->
 
@@ -378,7 +379,7 @@ $$
 T_b(0)\ne P(u),\qquad T_b(\lambda)=P(u+\lambda b).
 $$
 
-For each nonzero $\lambda$, the tested point is uniform as $b$ varies, so the first event has probability $\eta$. For each fixed $b$ in the second event, $T_b(T)-P(u+Tb)$ is a nonzero degree-$d$ polynomial because its constant coefficient is nonzero. At most $d$ of the $q-1$ nonzero parameters are roots. Averaging proves (A14). No consistency among the different $T_b$'s was assumed. The bound concerns accepted wrong answers; it does not claim that an arbitrary line table accepts frequently. [Lean: line-table correction][lean-line-correction].
+For each nonzero $\lambda$, the tested point is uniform as $b$ varies, so the first event has probability $\eta$. For each fixed $b$ in the second event, $T_b(T)-P(u+Tb)$ is a nonzero degree-$d$ polynomial because its constant coefficient is nonzero. At most $d$ of the $q-1$ nonzero parameters are roots. Averaging proves (A14). No consistency among the different $T_b$'s was assumed. The bound concerns accepted wrong answers; it does not claim that an arbitrary line table accepts frequently. See the [line-table correction bound][lean-line-correction].
 
 <!-- /passage:pcp-long-algebra-line-table-correction -->
 
@@ -396,7 +397,7 @@ $$
 \tag{A15}
 $$
 
-Then there exists $P\in F[X,Y]$, of degree at most $d$ in **each** variable, such that $\Delta(f,P)\le4\varepsilon$. The approximating rows and columns need not be nearest approximations. Individual degree at most $d$ allows total degree $2d$, which is sufficient for the use below. The statement is the bivariate input identified with [ALMSS Theorem 69][almss] in the source; its construction follows the two-variable argument of [Arora–Safra §5.2][arora-safra]. [Lean: bivariate agreement][lean-bivariate].
+Then there exists $P\in F[X,Y]$, of degree at most $d$ in **each** variable, such that $\Delta(f,P)\le4\varepsilon$. The approximating rows and columns need not be nearest approximations. Individual degree at most $d$ allows total degree $2d$, which is sufficient for the use below. This is an explicit variant of [ALMSS Theorem 69, in the author-hosted manuscript][almss]. That theorem uses nearest row and column polynomials and unspecified absolute constants. The arbitrary approximants and numerical bounds in (A15) are justified by the proof below, which adapts the construction in [Arora–Safra §5.2, Lemmas 5.2.2 and 5.2.7 and Corollary 5.2.3][arora-safra]. See the [bivariate agreement theorem][lean-bivariate].
 
 <!-- /passage:pcp-long-algebra-bivariate-statement -->
 
@@ -408,12 +409,12 @@ $$
 \tag{A16}
 $$
 
-Let $e(y)$ count the discrepant entries among these $10d$ columns. Its mean is at most $d$. Since $e(y)$ is an integer, the fraction of rows with $e(y)>2d$ is at most $d/(2d+1)<1/2$. Let $S$ be the rows with $e(y)\le2d$; then $|S|\ge q/2$. [Lean: column selection][lean-column-selection].
+Let $e(y)$ count the discrepant entries among these $10d$ columns. Its mean is at most $d$. Since $e(y)$ is an integer, the fraction of rows with $e(y)>2d$ is at most $d/(2d+1)<1/2$. Let $S$ be the rows with $e(y)\le2d$; then $|S|\ge q/2$. See the [column-selection argument][lean-column-selection].
 
 <!-- /passage:pcp-long-algebra-column-selection -->
 
 <!-- passage:pcp-long-algebra-error-locator -->
-We now construct a polynomial error locator; its existence is not an assumption. Seek bivariate polynomials $E,N$ satisfying
+To describe the inconsistent entries algebraically, we use the error-locator construction of [Arora–Safra, Lemma 5.2.5 and its polynomial extension in Lemma 5.2.7][arora-safra]. Seek bivariate polynomials $E,N$ satisfying
 
 $$
 \deg_X E\le2d,\qquad\deg_X N\le3d,\qquad
@@ -440,7 +441,7 @@ $$
 \tag{A18}
 $$
 
-Also $E\ne0$. If $E=0$, then $N(a_i,Y)=0$ for $10d>3d$ distinct values $a_i$. Regard $N$ as a polynomial in $X$ over the integral domain $F[Y]$; its root bound gives $N=0$, contradicting the nonzero kernel vector. [Lean: bounded polynomial kernel][lean-matrix]; [Lean: assembled error-locator certificate][lean-locator].
+Also $E\ne0$. If $E=0$, then $N(a_i,Y)=0$ for $10d>3d$ distinct values $a_i$. Regard $N$ as a polynomial in $X$ over the integral domain $F[Y]$; its root bound gives $N=0$, contradicting the nonzero kernel vector. See the [bounded polynomial-kernel construction][lean-matrix] and the [assembled error-locator certificate][lean-locator].
 
 <!-- /passage:pcp-long-algebra-error-locator -->
 
@@ -457,7 +458,7 @@ $$
 E(a_i,y)\bigl(C_i(y)-R_y(a_i)\bigr)=0.
 $$
 
-Each nonzero polynomial $E(a_i,Y)$ has at most $K$ roots. Removing these roots for all $d+1$ indices in $J$ removes at most $(d+1)K\le q/10$ rows. At least $q/2-q/10=2q/5$ rows remain. Call this set $B$. All entries of the rectangle $J\times B$ agree between $R$ and $C$. This establishes the clean rectangle from the approximate columns, rather than assuming it. [Lean: clean rectangle][lean-rectangle].
+Each nonzero polynomial $E(a_i,Y)$ has at most $K$ roots. Removing these roots for all $d+1$ indices in $J$ removes at most $(d+1)K\le q/10$ rows. At least $q/2-q/10=2q/5$ rows remain. Call this set $B$. All entries of the rectangle $J\times B$ agree between $R$ and $C$. See the [clean-rectangle construction][lean-rectangle].
 
 <!-- /passage:pcp-long-algebra-clean-rectangle -->
 
@@ -478,7 +479,7 @@ $$
 \tag{A19}
 $$
 
-The distinction between the fraction of differing formal rows and their evaluation distance is useful: the former bounds the latter without any additional root estimate. [Lean: agreement from the rectangle][lean-coarse].
+The distinction between the fraction of differing formal rows and their evaluation distance is useful: the former bounds the latter without any additional root estimate. See the [agreement argument from the rectangle][lean-coarse].
 
 <!-- /passage:pcp-long-algebra-coarse-agreement -->
 
@@ -503,7 +504,7 @@ $$
 \ge1-\tau-(\varepsilon+\rho+\tau).
 $$
 
-Since $\rho\le\varepsilon+1/9$, $\varepsilon\le1/100$, and $q\ge20d$, this lower bound is at least $2/3$. The global row/column discrepancy is at most $2\varepsilon$, so at most $3\varepsilon$ of formal rows differ from $P$. Adding the initial row error gives $\Delta(f,P)\le\varepsilon+3\varepsilon=4\varepsilon$, as asserted. [Lean: sharpening coarse agreement][lean-boost].
+Since $\rho\le\varepsilon+1/9$, $\varepsilon\le1/100$, and $q\ge20d$, this lower bound is at least $2/3$. The global row/column discrepancy is at most $2\varepsilon$, so at most $3\varepsilon$ of formal rows differ from $P$. Adding the initial row error gives $\Delta(f,P)\le\varepsilon+3\varepsilon=4\varepsilon$, as asserted. See the [sharpening of coarse agreement][lean-boost].
 
 <!-- /passage:pcp-long-algebra-agreement-boost -->
 
@@ -525,7 +526,7 @@ q\ge10^6d^3,\qquad\delta\le1/(4\cdot10^6),
 \tag{A22}
 $$
 
-then there is a polynomial $P$ of total degree at most $d$ with $\Delta(f,P)\le2\delta$. The result covers $d=0$ and $m=0$. These are the explicit sufficient constants in the source, rather than optimized values. Its all-field parameter distribution and factor-two conclusion should not be conflated with the paper's formulation using nonzero parameters and a factor-four conclusion. [Lean: test definition][lean-point-test]; [Lean: complete soundness theorem][lean-point-soundness].
+then there is a polynomial $P$ of total degree at most $d$ with $\Delta(f,P)\le2\delta$. The result covers $d=0$ and $m=0$. These are the explicit sufficient constants in the source, rather than optimized values. Its all-field parameter distribution and factor-two conclusion should not be conflated with the paper's formulation using nonzero parameters and a factor-four conclusion. See the [test definition][lean-point-test] and the [complete soundness theorem][lean-point-soundness].
 
 <!-- /passage:pcp-long-algebra-point-line-statement -->
 
@@ -545,7 +546,7 @@ $$
 \tag{A24}
 $$
 
-We must show that $g$ is an actual polynomial of the required total degree. Approximate consistency by itself would not establish this. [Lean: all-parameter correction][lean-point-correction].
+We must show that $g$ is an actual polynomial of the required total degree. See the [all-parameter correction definition][lean-point-correction].
 
 <!-- /passage:pcp-long-algebra-nearest-lines -->
 
@@ -570,7 +571,7 @@ $$
 \tag{A25}
 $$
 
-No global convention for choosing tied minimizers is required. [Lean: fixed-parameter estimate][lean-parameter].
+No global convention for choosing tied minimizers is required. See the [fixed-parameter estimate][lean-parameter].
 
 <!-- /passage:pcp-long-algebra-fixed-parameter -->
 
@@ -584,7 +585,7 @@ $$
 
 If the selected row and column polynomials are nearest approximations, their values at the crossing agree. To prove this, bivariate agreement supplies $P$ within $4\varepsilon$ of the received grid. Each polynomial family is then within $5\varepsilon$ of $P$ in mean evaluation distance. Formula (A20) shows that its transverse distance at every fixed parameter is at most $5\varepsilon+d/q$. The received selected row is therefore within $6\varepsilon+d/q$ of the corresponding row of $P$. Its nearest polynomial is no farther away from the received row, so it lies within $12\varepsilon+2d/q<1-d/q$ of that polynomial row of $P$, by (A26). Polynomial separation forces identity. The same holds for the column, proving agreement at the crossing.
 
-One variant will be needed: the selected row may be a candidate rather than a nearest approximation, provided its own received-row error is at most $\varepsilon$. Its distance from the row of $P$ is then at most $7\varepsilon+d/q<1-d/q$, again by (A26), so the same conclusion holds. The selected column remains a nearest approximation. Thus four small errors suffice when both are nearest, and five suffice in this candidate-row version. [Lean: crossing consistency][lean-crossing]; [Lean: candidate-row variant][lean-candidate].
+One variant will be needed: the selected row may be a candidate rather than a nearest approximation, provided its own received-row error is at most $\varepsilon$. Its distance from the row of $P$ is then at most $7\varepsilon+d/q<1-d/q$, again by (A26), so the same conclusion holds. The selected column remains a nearest approximation. Thus four small errors suffice when both are nearest, and five suffice in this candidate-row version. See the [crossing-consistency lemma][lean-crossing] and the [candidate-row variant][lean-candidate].
 
 <!-- /passage:pcp-long-algebra-crossing -->
 
@@ -602,7 +603,7 @@ $$
 L_{u+tv-sw,w}(s)=\pi_{u+tv}(w,s).
 $$
 
-We spell out the averaging that makes crossing consistency applicable. A random affine expression $a+\lambda b$ is uniform in $V$ when $b$ is uniform and $\lambda\ne0$. In the global row error of (A27), the row center contains the coefficient $y$ of $v$; all $y\ne0$ therefore give the global rejection distribution, while the exceptional slice $y=0$ contributes at most $1/q$. In the global column error, the analogous exceptional slice is $z=s$. The local error along the selected column has the same $y=0$ exception. These three means are at most $\delta'+1/q$. For the local error along the selected row, $z\ne s$ makes the center uniform, but the evaluation parameter is the fixed $t$; (A25) bounds this contribution by $4\delta'$, and the exceptional slice contributes at most $1/q$. Thus all four means are at most $4\delta'+1/q$.
+To apply crossing consistency, we bound its four errors. A random affine expression $a+\lambda b$ is uniform in $V$ when $b$ is uniform and $\lambda\ne0$. In the global row error of (A27), the row center contains the coefficient $y$ of $v$; all $y\ne0$ therefore give the global rejection distribution, while the exceptional slice $y=0$ contributes at most $1/q$. In the global column error, the analogous exceptional slice is $z=s$. The local error along the selected column has the same $y=0$ exception. These three means are at most $\delta'+1/q$. For the local error along the selected row, $z\ne s$ makes the center uniform, but the evaluation parameter is the fixed $t$; (A25) bounds this contribution by $4\delta'$, and the exceptional slice contributes at most $1/q$. Thus all four means are at most $4\delta'+1/q$.
 
 Markov's inequality and a union bound show that the probability one of these four errors exceeds $\varepsilon$ is at most $4(4\delta'+1/q)/\varepsilon$. On the complementary event the predictions agree by the crossing lemma. For each $v$, plurality minimizes the probability of disagreeing with the independent prediction $\pi_{u+tv}(w,s)$; comparing it with $L_{u,v}(t)$ costs at most a factor two, exactly as in (A7). Hence
 
@@ -613,7 +614,7 @@ $$
 \tag{A28}
 $$
 
-The endpoint $u+tv$ varies here. This is stronger than merely bounding the average error at a fixed point and is precisely what is needed next. [Lean: mixed-plane sampling][lean-mixed]; [Lean: endpoint consistency][lean-endpoint].
+The endpoint $u+tv$ varies here. This is stronger than merely bounding the average error at a fixed point and is precisely what is needed next. See the [mixed-plane sampling estimates][lean-mixed] and the [endpoint-consistency bound][lean-endpoint].
 
 <!-- /passage:pcp-long-algebra-mixed-plane -->
 
@@ -653,7 +654,7 @@ Put $\eta=\Delta(f,g)\le2\delta'$, and $\ell=4\delta'$, the bound in (A25). The 
 | received zero column versus row values | $\gamma$ |
 | selected row candidate's own error | $\gamma+\eta$ |
 
-Here are the sampling details. For fixed $y$, $v+yw$ is a uniform direction. Equation (A28) bounds disagreement of its line polynomial with $g$ at each parameter by $\gamma$; at nonzero parameters the sampled point is uniform, adding at most $\eta$ for replacing $g$ by $f$. At parameter zero the received value already is $g$. This proves the first and fifth entries. For a fixed $z\ne0$, the pair $(x+zv,h+zw)$ is uniform on $V^2$, so the mean column error is $\delta'$; discard the exceptional zero column at cost $1/q$. For the third entry, the same uniform pair is evaluated at fixed $y_0$, so (A25) gives $\ell$ off the zero column. For the fourth entry, apply (A28) with parameter zero to each row center. These arguments use invertible affine maps; they do not assume independence among all entries of a grid. [Lean: ruled-surface sampling][lean-ruled-sampling].
+Here are the sampling details. For fixed $y$, $v+yw$ is a uniform direction. Equation (A28) bounds disagreement of its line polynomial with $g$ at each parameter by $\gamma$; at nonzero parameters the sampled point is uniform, adding at most $\eta$ for replacing $g$ by $f$. At parameter zero the received value already is $g$. This proves the first and fifth entries. For a fixed $z\ne0$, the pair $(x+zv,h+zw)$ is uniform on $V^2$, so the mean column error is $\delta'$; discard the exceptional zero column at cost $1/q$. For the third entry, the same uniform pair is evaluated at fixed $y_0$, so (A25) gives $\ell$ off the zero column. For the fourth entry, apply (A28) with parameter zero to each row center. These arguments use invertible affine maps; they do not assume independence among all entries of a grid. See the [ruled-surface sampling estimates][lean-ruled-sampling].
 
 Let
 
@@ -668,12 +669,12 @@ $$
 \Pr[R_{y_0}(0)\ne g(x+y_0h)]\le\gamma.
 $$
 
-If $B/\varepsilon+\gamma<1$, some seed satisfies both equalities. Their right sides are constants, so $Q(y_0)=g(x+y_0h)$. This holds for each $y_0$, with the same previously chosen $Q$; hence the entire target line has degree at most $d$. Since the line was arbitrary, the exact-line characterization makes $g$ a polynomial of total degree at most $d$. [Lean: ruled-surface rigidity][lean-ruled].
+If $B/\varepsilon+\gamma<1$, some seed satisfies both equalities. Their right sides are constants, so $Q(y_0)=g(x+y_0h)$. This holds for each $y_0$, with the same previously chosen $Q$; hence the entire target line has degree at most $d$. Since the line was arbitrary, the exact-line characterization makes $g$ a polynomial of total degree at most $d$. See the [ruled-surface rigidity argument][lean-ruled].
 
 <!-- /passage:pcp-long-algebra-ruled-surface -->
 
 <!-- passage:pcp-long-algebra-point-line-constants -->
-It remains to verify the budget, rather than leave it as an unspecified “sufficiently small” condition. For $d>0$, (A22) gives $q\ge10^6$ and $q\ge1000d^3$. Take $\varepsilon=1/100$. Then
+We now verify the numerical bounds required by the crossing argument. For $d>0$, (A22) gives $q\ge10^6$ and $q\ge1000d^3$. Take $\varepsilon=1/100$. Then
 
 $$
 \gamma\le0.0016,\qquad
@@ -687,7 +688,7 @@ $$
 B/\varepsilon+\gamma\le0.482025<1.
 $$
 
-Also $d/q\le10^{-6}$, so $6\varepsilon+2d/q<1/2$; all uses of the crossing lemma are valid. The bound $q>2d$ needed for the exact-line characterization follows as well. We have constructed $g=P$, and (A24) finishes the estimate $\Delta(f,P)\le2\delta'\le2\delta$. [Lean: explicit constants][lean-point-constants].
+Also $d/q\le10^{-6}$, so $6\varepsilon+2d/q<1/2$; all uses of the crossing lemma are valid. The bound $q>2d$ needed for the exact-line characterization follows as well. We have constructed $g=P$, and (A24) finishes the estimate $\Delta(f,P)\le2\delta'\le2\delta$. See the [explicit constants][lean-point-constants].
 
 <!-- /passage:pcp-long-algebra-point-line-constants -->
 
@@ -698,7 +699,7 @@ $$
 (u,v)\longmapsto(u+tv,\ u+(t+1)v)
 $$
 
-is a bijection of $V^2$, with inverse $v=y-x, u=x-tv$. Therefore two independent uniform values of $f$ disagree with probability at most $2\delta$. Averaging over the second point gives a value $a\in F$ with $\Pr_x[f(x)\ne a]\le2\delta$. The constant polynomial $a$ is the required approximation. This works in characteristic two and in dimension zero. [Lean: degree-zero soundness][lean-constant].
+is a bijection of $V^2$, with inverse $v=y-x, u=x-tv$. Therefore two independent uniform values of $f$ disagree with probability at most $2\delta$. Averaging over the second point gives a value $a\in F$ with $\Pr_x[f(x)\ne a]\le2\delta$. The constant polynomial $a$ is the required approximation. This works in characteristic two and in dimension zero. See the [degree-zero soundness proof][lean-constant].
 
 <!-- /passage:pcp-long-algebra-degree-zero -->
 
@@ -707,7 +708,7 @@ is a bijection of $V^2$, with inverse $v=y-x, u=x-tv$. Therefore two independent
 <!-- passage:pcp-long-algebra-source-boundary -->
 The short-test proof and the point-versus-line proof are separate components. The former uses only $q>2c$ and a weighted affine-constraint argument. The latter uses the bivariate agreement construction and explicit cubic field-size constants. The local correctors then consume proximity to a polynomial; they do not supply the polynomial's existence. Keeping these implications separate prevents a correction guarantee from being used as an unproved testing theorem.
 
-This chapter reconstructs the ordinary mathematics from the Lean source at revision `a0ce13ed0fa264f051c1278e039596ce65557fa4`, with the corrected v2 paper as its primary literary reference. ALMSS Theorems 45 and 69 and the two-variable construction in Arora–Safra §5.2 explain the point-line and bivariate antecedents. The account makes no claim of a fresh Lean build or human review. The accompanying evidence record identifies the inspected source files and distinguishes the source statements from this prose reconstruction.
+The point-versus-line argument follows the sequence in [ALMSS Appendix A][almss]: plurality correction (Lemma 66), bivariate agreement and crossing consistency (Theorem 69 and Corollary 70), then consistency on randomly sampled surfaces (Lemmas 71–73). The fixed-parameter estimate above handles arbitrary choices among nearest-line ties, and the candidate-row crossing variant handles the modified zero column in (A29). These steps give the stated whole-field test and explicit constants.
 
 <!-- /passage:pcp-long-algebra-source-boundary -->
 
@@ -748,9 +749,9 @@ This chapter reconstructs the ordinary mathematics from the Lean source at revis
 
 <!-- passage:pcp-long-binary-purpose -->
 
-The field-valued tests from the preceding part read a bounded number of field elements, but a field element contains several bits. Moreover, a line restriction can have degree growing with the input size. Two encodings remove these obstacles. A digit substitution represents a univariate polynomial by a polynomial of fixed total degree in more variables. A Hadamard encoding then lets the verifier inspect a binary linear observation of a field value with one bit query. Local tests ensure that a received binary table has the meaning these encodings promise.
+The field-valued tests from the preceding part read a bounded number of field elements, but a field element contains several bits. Moreover, a line restriction can have degree growing with the input size. Two encodings remove these obstacles. A digit substitution represents a univariate polynomial by a polynomial of fixed total degree in more variables. A Hadamard encoding then lets the verifier inspect a binary linear observation of a field value with one bit query. Local tests bound the distance of a received binary table from a valid encoding.
 
-This section reconstructs the binary part of the formal proof: the two encodings, the low-degree test, the local corrector, and the zero-on-grid test. The construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard in [the corrected paper, Sections 3–6 and Appendices B–D](https://arxiv.org/abs/2608.17429v2); the quantitative argument below follows Troy Lee's pinned formal implementation. Its explicit constants and sampling conventions sometimes differ from that paper. The changes are identified at the relevant steps.
+We next combine the two encodings with low-degree testing, local correction and the zero-on-grid test. The construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard in [the corrected paper, Sections 3–6 and Appendices B–D](https://arxiv.org/abs/2608.17429v2); the quantitative argument below follows Troy Lee's pinned formal implementation. Its explicit constants and sampling conventions sometimes differ from that paper. The changes are identified at the relevant steps.
 
 Throughout, $F$ is a finite field of characteristic two, $q=|F|=2^t$, and
 
@@ -874,7 +875,7 @@ $$
 h(x+y)=h(x)+h(y).
 $$
 
-If its rejection probability is $\epsilon$, some linear functional $\ell:V\to\mathbb F_2$ satisfies $\Delta(h,\ell)\leq\epsilon$. Here is the finite Fourier proof followed in the formal development. Choose coordinates for $V$, put $s(x)=(-1)^{h(x)}$, and for a linear functional $a$ put $\chi_a(x)=(-1)^{a(x)}$. A nontrivial character has average zero: translation by a point where it is $-1$ negates its sum. Thus the characters are orthonormal. With
+If its rejection probability is $\epsilon$, some linear functional $\ell:V\to\mathbb F_2$ satisfies $\Delta(h,\ell)\leq\epsilon$. The test is due to Blum, Luby and Rubinfeld [Section 4.2][blr]; the sharp characteristic-two bound follows from Bellare, Coppersmith, Håstad, Kiwi and Sudan [Theorem 1.2 and Section 2][bchks], also cited in Amireddy et al., Appendix B, Theorem B.1. We give that Fourier argument. Choose coordinates for $V$, put $s(x)=(-1)^{h(x)}$, and for a linear functional $a$ put $\chi_a(x)=(-1)^{a(x)}$. A nontrivial character has average zero: translation by a point where it is $-1$ negates its sum. Thus the characters are orthonormal. With
 
 $$
 \widehat s(a)=\mathbb E_x s(x)\chi_a(x),
@@ -1137,7 +1138,7 @@ This is the formal [encoded-line low-degree theorem](https://github.com/troyjlee
 
 Fix a target $a\in F^k$. A point oracle $f$ has degree-one labels, and an auxiliary table is supplied for each line through $a$. Choose a uniform direction $v\in F^k$, a nonzero uniform parameter $z\in F^\times$, a uniform homogeneous label $L$, an inner correction direction, and an independent inner-test seed. Run the inner test on the line's auxiliary row. If it fails, reject. Otherwise correct that row at $\Phi(z)$ and compare with $f(a+zv,L)$. If the comparison fails, reject. If both checks pass, return the correction at $\Phi(0)$, with the same inner correction direction and label.
 
-Thus the output is either one bit or rejection. Rejection is not silently converted to a bit. The procedure uses at most $3c+9$ queries. With honest point and line tables for a polynomial of degree strictly below $b^c$, it returns $L(P(a))$ for every random seed. See [the local-correction procedure](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryLocalCorrection.lean).
+Thus the output is either one bit or rejection. The procedure uses at most $3c+9$ queries. With honest point and line tables for a polynomial of degree strictly below $b^c$, it returns $L(P(a))$ for every random seed. See [the local-correction procedure](https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Algebraic/BinaryLocalCorrection.lean).
 
 <!-- /passage:pcp-long-outer-local-corrector -->
 
@@ -1308,7 +1309,7 @@ The preceding tests give a verifier for graph three-colourability. This chapter 
 
 The constants, polynomial, verifier and implementation are chosen before the input. The proof may depend on the input but is fixed before the random seed. This is the content of [the forward theorem][lean-theorem]. A separate argument below gives the reverse inclusion in the same machine model. Here $\ell$ denotes a query budget; the number of actual reads may be smaller on some seeds.
 
-The algebraic construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. We follow the corrected [arXiv v2, Section 7][paper-pcp], while recording the concrete choices and additional reductions in Troy Lee's formalization at `a0ce13ed0fa264f051c1278e039596ce65557fa4`. The paper proves the three-colouring construction and invokes NP-completeness. The formalization also constructs the NP reduction, the fair-bit sampler and the polynomial-time machine. Its exact choices need not coincide with the asymptotic parameter choices in the paper.
+The algebraic construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. We follow the corrected [arXiv v2, Section 7][paper-pcp], with the concrete choices and additional reductions in Troy Lee's formalization. The paper proves the three-colouring construction and invokes NP-completeness. The formalization also constructs the NP reduction, the fair-bit sampler and the polynomial-time machine. Its exact choices need not coincide with the asymptotic parameter choices in the paper.
 <!-- /passage:pcp-long-final-target -->
 
 ### Three colours as polynomial equations
@@ -1405,7 +1406,7 @@ $$
 \quad6c+20,\quad6c+20,\quad3.
 $$
 
-Their sum is $20c+107$, independent of the graph size. The production choice $c=4$ gives $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
+Their sum is $20c+107$, independent of the graph size. Taking $c=4$ gives $26+22+26+22+44+44+3=187$ physical bit reads. This count includes the fresh derived reads. A separate congruence theorem says that two proof oracles agreeing on the listed addresses give the same verdict; the count therefore measures actual information read from the proof, rather than merely the number of named subroutines. The [query-list theorem][lean-query-budget] establishes both facts.
 <!-- /passage:pcp-long-query-budget -->
 
 ### Perfect completeness
@@ -1425,7 +1426,7 @@ $$
 L(Q_P(x,y))=L(P(x))+L(P(y))
 $$
 
-for every homogeneous label $L$, so the difference check also accepts. The same eight tables satisfy all these statements simultaneously. Consequently every seven-component random seed accepts. This proves perfect completeness, not merely a high average acceptance probability. The [honest-proof construction][lean-completeness] supplies the certificates and verifies each branch.
+for every homogeneous label $L$, so the difference check also accepts. The same eight tables satisfy all these statements simultaneously. Consequently every seven-component random seed accepts. This proves perfect completeness. The [honest-proof construction][lean-completeness] supplies the certificates and verifies each branch.
 <!-- /passage:pcp-long-completeness -->
 
 ### Soundness of the seven-check verifier
@@ -1452,7 +1453,7 @@ $$
 \varepsilon=S_c\kappa
 $$
 
-for $P,Q_*$, and homogeneous linear-label distance at most $\varepsilon$ for all four relevant primary tables. These polynomials are chosen once for the received proof; the later argument uses those same choices. No closeness assumption is imposed on the auxiliary line tables. Their actual test behaviour is already part of the decoding theorem. This is the starting contract in [the assembled soundness proof][lean-soundness].
+for $P,Q_*$, and homogeneous linear-label distance at most $\varepsilon$ for all four relevant primary tables. These polynomials are chosen once for the received proof; the later argument uses those same choices. No closeness assumption is imposed on the auxiliary line tables. Their actual test behaviour is already part of the decoding theorem. These are the decoded polynomials used in [the assembled soundness proof][lean-soundness].
 <!-- /passage:pcp-long-decoding-contract -->
 
 <!-- passage:pcp-long-difference-soundness -->
@@ -1513,7 +1514,7 @@ $$
 \frac{5D}{Q-1}\le\frac18.
 $$
 
-For the last inequality, $Q\ge100D$ implies $Q-1\ge40D$. The difference error is then below $1/16<3/8$, and the total ZERO error is below $1/16+1/8=3/16<3/8$. These bounds prove the required strict comparisons. Thus rejection below $g_c$ implies colourability. Taking the contrapositive, **every received proof of a non-three-colourable graph has rejection probability at least $g_c$**. The [budget lemmas][lean-budget] use this explicit minimum rather than an unspecified sufficiently small constant.
+For the last inequality, $Q\ge100D$ implies $Q-1\ge40D$. The difference error is then below $1/16<3/8$, and the total ZERO error is below $1/16+1/8=3/16<3/8$. These bounds prove the required strict comparisons. Thus rejection below $g_c$ implies colourability. Taking the contrapositive, **every received proof of a non-three-colourable graph has rejection probability at least $g_c$**. The [budget lemmas][lean-budget] establish this explicit rejection gap.
 <!-- /passage:pcp-long-gap -->
 
 ### Parameters for every finite graph
@@ -1685,7 +1686,7 @@ The same honest proof still accepts on every repeated seed. Repetition leaves th
 <!-- passage:pcp-long-runtime -->
 The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this. The formal implementation computes the parameters, field arithmetic, seed codecs, query addresses and verdict in a fixed program language and compiles that language to Mathlib's `FinTM2` machine model.
 
-The concrete operations can be bounded as follows. Parameter selection is a bounded search for the least admissible $a$. Field elements have $t=12a+32$ binary coefficients; arithmetic reduces polynomial representatives modulo the computed irreducible modulus, and inversion uses powering. The modulus, cube root and full generator are obtained by bounded finite searches, with candidate tests expressed in the same finite arithmetic. Their search ranges are polynomial in the field cardinality $Q$, and $Q=2^{32}s^{12}$ is polynomially bounded in the input length. For example, the charged modulus-construction cost is at most $7\,000\,000(Q+1)^7$; each root search costs at most $400\,000\,000(Q+4)^6$; the combined field-and-roots routine costs at most $10^9(Q+4)^7$. [These cost proofs][lean-field-cost] include candidate testing and storage. The runtime construction computes the parameters and arithmetic data from the input.
+The concrete operations can be bounded as follows. Parameter selection is a bounded search for the least admissible $a$. Field elements have $t=12a+32$ binary coefficients; arithmetic reduces polynomial representatives modulo the computed irreducible modulus, and inversion uses powering. The modulus, cube root and full generator are obtained by bounded finite searches, with candidate tests expressed in the same finite arithmetic. Their search ranges are polynomial in the field cardinality $Q$, and $Q=2^{32}s^{12}$ is polynomially bounded in the input length. For example, the charged modulus-construction cost is at most $7\,000\,000(Q+1)^7$; each root search costs at most $400\,000\,000(Q+4)^6$; the combined field-and-roots routine costs at most $10^9(Q+4)^7$. [These cost proofs][lean-field-cost] include candidate testing and storage. The runtime construction computes the parameters and arithmetic data from the input. For the underlying finite-field construction, see Shoup [Sections 20.2 and 21.1][shoup], especially the irreducible-polynomial existence result in Theorem 20.11. Shoup also analyses irreducibility testing and randomized construction. The deterministic bounded searches and charged cost estimates above are those of the formal implementation.
 
 The public edge extension is evaluated from the input adjacency matrix by finite interpolation sums. The grid and its pair space have polynomial size because $s^s=2^{a2^a}$ and the preceding volume bound is logarithmic. Lagrange weights, degree-reduction coordinates and label transformations use bounded arithmetic loops. The proof-address values are polynomially bounded by $p_0(n)$; the implementation proves bounds for the sizes of their stored representations as well as for the number of addresses.
 
@@ -1794,7 +1795,7 @@ $$
 <!-- /passage:pcp-long-colouring-gadget -->
 
 <!-- passage:pcp-long-reduction-runtime -->
-There is an executable version of this reduction, not just a polynomial bound on an existentially chosen graph. The program computes $T(n)$, $S(n)$ and the fixed source dimensions, enumerates the tableau variables and relations using arithmetic sum/product indices, emits the fixed-arity clauses and gadgets, and writes the graph's bitstring. The fixed finite alphabet and fixed relation arity make truth-table enumeration constant work per relation up to the machine-dependent factor $2^{k_0}$. Matrix emission is polynomial in the already bounded vertex count.
+The reduction is executable. The program computes $T(n)$, $S(n)$ and the fixed source dimensions, enumerates the tableau variables and relations using arithmetic sum/product indices, emits the fixed-arity clauses and gadgets, and writes the graph's bitstring. The fixed finite alphabet and fixed relation arity make truth-table enumeration constant work per relation up to the machine-dependent factor $2^{k_0}$. Matrix emission is polynomial in the already bounded vertex count.
 
 More explicitly, the [program-bearing reduction theorem][lean-np-runtime] returns $f,p,P,C,e$, all depending only on the NP certificate, such that on every input $x$, program $P$ emits exactly $f(x)$, its charged cost is at most $C(|x|+1)^e$, the output length is at most $p(|x|)$, and graph colourability is equivalent to $x\in L$. The source derives the program cost from fixed polynomial preprocessing plus a sixth-degree bound in the preprocessing size and the variable/constraint counts. Substitution of their polynomial bounds is again a polynomial. The compiler and fixed public symbol codecs give the corresponding finite-machine certificate. These retained data are what the final verifier uses to preprocess its input.
 <!-- /passage:pcp-long-reduction-runtime -->
@@ -1845,7 +1846,7 @@ For each seed, at most $\ell$ answers are requested. Each address is below $p(n)
 
 If $x\in L$, perfect completeness gives a proof accepted on every seed. Truncating it to its first $p(n)$ bits preserves every run because no branch reads another address. Conversely, if a finite witness is accepted on every seed, extend it by zeros to an infinite oracle. The acceptance probability of this oracle is one. If $x\notin L$, soundness would make it at most $1/2$, a contradiction. Thus the finite witness relation characterizes $L$, proving the reverse inclusion.
 
-The finite-machine class used here is connected to the unchanged vendored Complexitylib definition of NP by [the reference-NP equivalence][lean-reference-np]. That equivalence is a separate representation and simulation result; it is not obtained merely by reusing the name NP. Together with the forward construction, it identifies the intended classical complexity class.
+The finite-machine class used here is connected to the unchanged vendored Complexitylib definition of NP by [the reference-NP equivalence][lean-reference-np]. That equivalence is a separate representation and simulation result. Together with the forward construction, it identifies the intended classical complexity class.
 <!-- /passage:pcp-long-converse -->
 
 [paper-pcp]: https://arxiv.org/html/2608.17429v2#S7
@@ -1888,7 +1889,9 @@ The finite-machine class used here is connected to the unchanged vendored Comple
 ## Source and verification account
 
 <!-- passage:pcp-long-intro-source-editions -->
-The fixed formal source is revision a0ce13ed0fa264f051c1278e039596ce65557fa4 of Lee's repository. The primary paper is the corrected [arXiv v2 of *A Simple Algebraic Proof of the PCP Theorem*][intro-paper], dated 22 October 2026. That public revision corrects the short low-degree test and acknowledges Lee's identification of an earlier mistake. A separate final SOSA proceedings edition has not been established identical to v2. Nor are the paper and Lean development asserted to be textually or parametrically identical: the chapters state the formalization's exact tests, constants and resource guarantees where these differ. Public links identify the supporting statements at the fixed revision. Source inspection, ordinary mathematical derivation, and finite illustrative calculations are distinguished from a fresh kernel-check receipt; this account does not by itself claim the latter.
+The fixed formal source is [Lee's PCP development at the revision linked throughout this account][formal-source]. The primary paper is the corrected [arXiv v2 of *A Simple Algebraic Proof of the PCP Theorem*][intro-paper], dated 22 October 2026. That public revision corrects the short low-degree test and acknowledges Lee's identification of an earlier mistake. A separate final SOSA proceedings edition has not been established identical to v2. Nor are the paper and Lean development asserted to be textually or parametrically identical: the chapters state the formalization's exact tests, constants and resource guarantees where these differ. Public links identify the supporting statements at the fixed revision. The linked declarations identify the formal statements explained here. The ordinary proofs and illustrative calculations in this account are explanatory reconstructions; they do not constitute a separate kernel check of the prose.
+
+The new prose was prepared by AI agents directed by Will Cook. The underlying algebraic argument is due to Prashanth Amireddy, Amik Raj Behera, Srikanth Srinivasan, Madhu Sudan and Sophus Valentin Willumsgaard; the Lean formalization is Troy Lee's. This account is an explanation of that work, not a new proof claimed by its explanatory authors. It does not imply the original authors' endorsement or human review.
 <!-- /passage:pcp-long-intro-source-editions -->
 
 ## References
@@ -1912,7 +1915,17 @@ The version notes identify the copies consulted. Theorem and section numbers ref
 
 **[KS08]** Tali Kaufman and Madhu Sudan. “Algebraic Property Testing: The Role of Invariance.” In *Proceedings of the 40th Annual ACM Symposium on Theory of Computing*, 403–412, 2008. [DOI: 10.1145/1374376.1374434](https://doi.org/10.1145/1374376.1374434). Consulted version: the [conference manuscript](https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf), especially Theorem 2.9. The weighted affine-constraint argument is the specialization used in the corrected short test.
 
+**[RS96]** Ronitt Rubinfeld and Madhu Sudan. “Robust Characterizations of Polynomials with Applications to Program Testing.” *SIAM Journal on Computing* **25**(2), 252–271, 1996. [DOI: 10.1137/S0097539793255151](https://doi.org/10.1137/S0097539793255151). Consulted version: the [retained manuscript][rubinfeld-sudan], Section 4, Theorem 5 and Lemmas 6–8, pp. 10–12. The primary PCP paper cites the corresponding published result as Theorem 4.1; numbering differs between these editions.
+
 **[Lee26]** Troy Lee. *tcs-formalizations: PCP development*. Lean source, 2026. [Revision a0ce13ed0fa264f051c1278e039596ce65557fa4](https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP). This fixed revision is the formal source of the theorem statements, explicit constants, verifier implementation and concrete complexity-model results explained here. The chapter links identify individual files and declarations within it.
 
 **[Shoup05]** Victor Shoup. *A Computational Introduction to Number Theory and Algebra*. First edition. Cambridge University Press, 2005. Consulted version: [Version 1 of the author's electronic edition](https://shoup.net/ntb/ntb-v1.pdf), 15 January 2005. Chapters 20–21 provide the finite-field construction background cited in the primary paper's Fact 2.3. The detailed bounded-search algorithms and explicit cost bounds in the final chapter are those of Lee's formalization, not bounds attributed to this book.
 <!-- /passage:pcp-long-references -->
+
+[friedl-sudan]: https://arxiv.org/abs/1307.3975v1
+[rubinfeld-sudan]: https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf
+[kaufman-sudan]: https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf
+[blr]: https://people.csail.mit.edu/ronitt/papers/selftestcorrect.pdf
+[bchks]: https://www.csc.kth.se/tcs/projects/publications/bchks.pdf
+[shoup]: https://shoup.net/ntb/ntb-v1.pdf
+[formal-source]: https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP

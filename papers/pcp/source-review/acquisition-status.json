@@ -1,0 +1,97 @@
+{
+  "schema": "pcp-bibliography-acquisition-status-v1",
+  "date": "2026-11-15",
+  "bibliography": {
+    "paper": "A Simple Algebraic Proof of the PCP Theorem",
+    "edition": "arXiv:2608.17429v2",
+    "url": "https://arxiv.org/html/2608.17429v2#S8",
+    "entries": 24
+  },
+  "coverage": {
+    "obtained_or_available": 21,
+    "unacquired": 3,
+    "obtained_or_available_entry_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      21,
+      23,
+      24
+    ],
+    "counting_rule": "Bibliographic entries, not PDF files. Includes the implementation repository and the existing Troy Lee Lean checkout; primary-paper versions and supplemental sources are separate from these 24 references.",
+    "retained_inventory": "sources.json records retained source items and versions; its item count is not the bibliography coverage count."
+  },
+  "unacquired": [
+    {
+      "number": 11,
+      "authors": "Richard A. DeMillo and Richard J. Lipton",
+      "title": "A probabilistic remark on algebraic program testing",
+      "doi": "10.1016/0020-0190(78)90067-4",
+      "attempts": [
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/0020019078900674/pdfft",
+          "observed_result": "HTTP 403"
+        },
+        {
+          "url": "https://www.researchgate.net/publication/220112604_A_Probabilistic_Remark_on_Algebraic_Program_Testing",
+          "observed_result": "Coauthor page indexed text; linked PDF returned 403 locally and 429 through web access."
+        }
+      ],
+      "disposition": "No verified PDF acquired."
+    },
+    {
+      "number": 20,
+      "authors": "Øystein Ore",
+      "title": "Über höhere Kongruenzen",
+      "publication": "Norsk Mat. Forenings Skrifter, Series I no. 7 (1922), 15 pages",
+      "attempts": [
+        {
+          "method": "Bibliographic and primary-copy search",
+          "observed_result": "No verified primary copy found. The same-title Springer item by Adolf Hurwitz and a different Ore paper were rejected as substitutes."
+        }
+      ],
+      "disposition": "Exact bibliographic item identified; no verified primary copy acquired."
+    },
+    {
+      "number": 22,
+      "authors": "Jacob T. Schwartz",
+      "title": "Fast probabilistic algorithms for verification of polynomial identities",
+      "doi": "10.1145/322217.322225",
+      "attempts": [
+        {
+          "url": "https://dl.acm.org/doi/pdf/10.1145/322217.322225",
+          "observed_result": "HTTP 403"
+        },
+        {
+          "url": "https://dlnext.acm.org/doi/pdf/10.1145/322217.322225",
+          "observed_result": "HTTP 403"
+        },
+        {
+          "url": "https://pages.cs.wisc.edu/~cs787-1/Schwartz1980.pdf",
+          "observed_result": "HTTP 404 despite search indexing."
+        }
+      ],
+      "disposition": "Publisher-indexed title/DOI identified; no PDF retained."
+    }
+  ],
+  "scope": "Recorded acquisition attempts, not a claim that no public copies exist. No paywall bypass or redistribution permission is implied. Acquisition does not establish complete mathematical review.",
+  "evidence": {
+    "private_receipt_sha256": "07be9f1faecdd676a5cbad905d56f16aeecd82d6a6d4e0217b672b719a849068",
+    "public_projection": "Private annex paths and raw receipt contents are omitted."
+  }
+}

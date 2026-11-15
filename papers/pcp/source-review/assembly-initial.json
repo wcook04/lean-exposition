@@ -1,0 +1,29 @@
+{
+  "operation": "Concatenate reviewed chapters; relocate unchanged edition passage to final verification section",
+  "inputs": [
+    {
+      "name": "introduction.md",
+      "sha256": "6ca447e6831ad5990e7840620d0ed1612ff527137a98d40aa42bfef9a991121b"
+    },
+    {
+      "name": "algebra.md",
+      "sha256": "5d22ab32ab81f127bb8e13a63d746948cb894f6f294f8fabee1198598c08c093"
+    },
+    {
+      "name": "binary.md",
+      "sha256": "c76a06272c4c2d9eb5d2bfc7344ac3c1b7e8cfb6ad1da2293d63c91dae7f8819"
+    },
+    {
+      "name": "theorem.md",
+      "sha256": "2b631d1bcd117c38a41b4f20d8d510d0575b6c2168d214aa1a1f54efedf35937"
+    },
+    {
+      "name": "references.md",
+      "sha256": "e19711b3fb099735748252686610ccd0fa478ac3facd8793396b18fb9bc5d328"
+    }
+  ],
+  "output": "../long/reasoning-record.md",
+  "sha256": "cc9fc82c4525c6977040666e2f8fe6a0dfc3ca4514af49b16b81d007011f42bd",
+  "passages": 72,
+  "whitespace_words": 17407
+}

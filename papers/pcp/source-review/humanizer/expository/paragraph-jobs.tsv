@@ -1,0 +1,158 @@
+1	Open with the finite certificate problem	Both existence of an always-accepted certificate and rejection of every false certificate are explicit.
+2	Extend the promise to NP and name PCP	Polynomial length and the expansion of the acronym are necessary first-use information.
+3	Separate proof queries from other computation	The negative about ordinary proof sampling prevents a concrete false interpretation.
+4	Credit the construction, formalisation and original theorem	The composition distinction and corrected edition identify the actual route.
+5	Declare prerequisites and stopping points	The novice prerequisites and links to accepted supplier proofs must remain.
+6	Define a proper colouring as an ordinary certificate	Checking every edge supplies the operation behind certificate verification.
+7	Calculate the K4 obstruction	The pigeonhole inference, six edges and one bad edge are complete and reproducible.
+8	Dilute the one bad edge with disjoint triangles	The disconnected construction and exact denominator are the example's point.
+9	Interpret the dilution probability	The sampled object is an edge, not an unspecified portion of a certificate.
+10	Explain why redundant tables change the task	The high-acceptance-to-colouring implication must not become a guarantee for isolated answers.
+11	Separate testing the representation from testing the constraint	The two obligations prevent arbitrary mutually unrelated answers.
+12	Define decision problems and NP	The definition is short enough for a reader without complexity background.
+13	Fix the verifier and certificate before randomness	The order of choices is a mathematical condition, not dispensable narration.
+14	State the theorem's quantified objects	All objects and their order are part of the exact theorem.
+15	State four resource and correctness guarantees	Every quantifier, bound, exact budget and probability remains protected.
+16	Explain quantifier order, completeness and soundness	The definitions exclude adapting the proof to the random seed.
+17	Explain the exact random-bit budget	Unused bits connect the formal shape to the asymptotic statement.
+18	Start exhaustive checking for the converse	The reader can perform the certificate guess and enumeration.
+19	Close the polynomial-time converse	The yes/no cases explicitly use perfect completeness and soundness.
+20	Identify the construction and reduction still to prove	This short route statement identifies the two unfinished mathematical tasks.
+21	Introduce finite-field arithmetic concretely	The inverse calculation makes division meaningful before interpolation.
+22	Introduce the finite polynomial value table	The display is a direct calculation without excess narration.
+23	Explain the root bound	The removal of distinct linear factors supplies the inference.
+24	Convert roots to polynomial distance	The multivariate degree convention and ambient sampling are preserved.
+25	Specify the sampling distribution and informative regime	Large field relative to degree is the limitation needed by subsequent uses.
+26	Apply distance to false identities	The low-degree condition is essential to the few-query argument.
+27	Separate arbitrary received tables from polynomials	This is a missing-hypothesis warning, not removable negative framing.
+28	Introduce interpolation as recovery from values	The distinct-node condition and concrete recovery point must remain.
+29	Compute interpolation weights and their result	The modular arithmetic and Lagrange coefficient are reproducible.
+30	Show why unit weights cannot replace interpolation weights	The failed replacement prepares the later correction example.
+31	Define a Lagrange basis for the grid	The first-use degree, nodes and values specify the operation.
+32	Construct the multivariate extension	The displayed sum is the complete definition.
+33	Verify interpolation and bound degrees	Basis products, rather than possibly zero summands, are the literal objects.
+34	Move from the arithmetic example to the characteristic-two field	The field change is explicit and the four-element subfield is defined.
+35	Translate valid colours and edge differences	The edge condition retains the assumption that both colours are valid.
+36	Calculate a triangle and the invalid-zero-colour counterexample	The K4 example shows why the vertex check cannot be omitted.
+37	Label vertices and define the adjacency extension	Isolated padding, colouring extension and adjacency values are introduced before formulas.
+38	Relate the two polynomials to a proper colouring	Each grid and the nonedge factor are explicitly identified.
+39	Separate grid vanishing from ambient vanishing	The failed inference is central; retain the negative sentences.
+40	Introduce the two-variable certificate example	The temporary field and grid change are explicit.
+41	Check grid vanishing without zero-polynomial identity	The off-grid calculation makes the distinction concrete.
+42	State the grid decomposition theorem	The factor explanation and precise source locator aid transfer from example to theorem.
+43	Prove the decomposition and degree capacity	Division, residual interpolation and the quotient degree inequality must remain.
+44	Package the many quotient terms	The query-growth motivation and source attribution identify the operation.
+45	Bound the packaged certificate degree	The added auxiliary variable and nonempty-grid condition justify capacity.
+46	Introduce the two certificate identities	The count is exact and does not need emphasis.
+47	Deduce grid vanishing from both identities	The substitution at a grid point gives the complete implication.
+48	Display the certificate for the small example	The variable groups and formula are sufficient.
+49	Calculate both substitutions off the grid	An ambient identity must not be confused with ambient vanishing.
+50	Explain the ideal random certificate check	The false-grid assumption and nonzero-identity inference are explicit.
+51	Ask whether the first identity can be dropped	The changed task names a concrete nonvanishing polynomial.
+52	Warn that special query points may concentrate errors	Global closeness does not justify a fixed-position read.
+53	Introduce line tables and point-line comparison	The supplied object and the actual comparison are named.
+54	State the exact point-versus-line contract	Thresholds, zero-allowed sampling and arbitrary auxiliary consistency are preserved.
+55	Outline the planes-based proof	The narrative retains the error locator, plurality and interpolation steps.
+56	Identify coefficient read cost	The explicit degree-dependent count motivates another encoding.
+57	Begin a two-digit worked encoding	The small base and field are named before the polynomial.
+58	Replace exponents by digit variables	Each monomial replacement can be checked independently.
+59	Explain the substitution recovering the original value	The two degrees and variable-group count are concrete.
+60	Evaluate the digit encoding at a specified field point	The arithmetic verifies the identity for the displayed example.
+61	Generalize the encoding and name its source	The degree and evaluation identity stay explicit beside attribution.
+62	Allow arbitrary decoded low-degree polynomials	The test does not enforce the honest set-multilinear form.
+63	Derive the larger substituted degree bound	Each maximum and monomial occurrence is justified.
+64	Define generator nodes and interpolation weights	The cyclic-group input, generator meaning and exact nodes are explicit.
+65	Prove honest acceptance of the weighted test	Line restriction and interpolation supply the two-step proof.
+66	State the robust converse for the weighted test	The formal threshold is not silently attributed to the source's differently parameterized lemma.
+67	Prove correction at a prescribed point	The uniformity of each query and union bound give the exact error guarantee.
+68	Explain why independence is unnecessary	The dependent points have uniform individual marginals.
+69	Identify the remaining field-to-bit cost	The two encodings solve different resource requirements.
+70	Introduce the three-bit parity example	The message, positions and operation are concrete.
+71	Fix the order of the eight codeword positions	The table ordering makes every subsequent count reproducible.
+72	Prove half-distance of the Hadamard code	The pairing argument explains the exact half rather than merely naming distance.
+73	Use a random functional for a bit comparison	The verifier queries a common functional, not an entire message.
+74	Introduce the BLR test and credit its inventors	The test's origin is separated from the later sharp analysis.
+75	Count all rejected ordered pairs after one bit flip	The overlapping pairs and cancellation explain the number 18.
+76	State and attribute the sharp distance bound	BCHKS Theorem 1.2 and v2 Appendix B locate the exact quantitative input.
+77	Introduce randomized self-correction	The target value and random shift are named before the formula.
+78	Prove the two-query error bound	The cancellation and two uniform marginals suffice without independence.
+79	Check all nonzero and zero targets in the example	The limiting zero case and attained upper bound remain explicit.
+80	Ask what fails for a deterministic shift	The question assesses the random-marginal hypothesis.
+81	Connect random correction to special algebraic requests	The textbook teaches the same operation and fixed-point obstruction.
+82	Represent a field element in binary coordinates	The basis and requested cubic expression are named before the new code.
+83	Define the degree-three label word	The label is a polynomial and the answer is an evaluation.
+84	Explain squarefree labels and linearity in the label	Degree in message coordinates is distinct from dependence on labels.
+85	Compute why a cubic observation has an available label	Field multiplication's bilinearity justifies the label degree.
+86	Give a linear-label word that is not point evaluation	The product inconsistency shows why BLR alone cannot suffice.
+87	Separate the full Hadamard test from the toy linearity test	The ten-versus-eight query difference and source revision must remain.
+88	Combine the two encodings and list actual comparisons	The primary row and auxiliary row have distinct operations.
+89	Introduce a weighted homogeneous binary label	The displayed composition is the operation that avoids full field reads.
+90	Convert a field identity to a bit identity	The uniform homogeneous-label condition supports the half-detection probability.
+91	Require a common decoded polynomial across label families	The common witness and affine-versus-homogeneous distinction are load-bearing.
+92	Introduce the constants for the combined contract	The parameters have first-use definitions and graph-independent roles.
+93	State the tester premise before its threshold display	The independence from graph size matters more than optimizing constants.
+94	State simultaneous distance guarantees	The point and label averaging and the same polynomial are explicit.
+95	State the outer corrector theorem	The event includes rejection, the target is fixed, and actual rejection is an input.
+96	Explain the random-label and rejection assumptions	The fixed-label exclusion and later bound on rejection prevent circular soundness reasoning.
+97	Return to the two vanishing identities	The backward link recalls exactly the target supplied by correction.
+98	Describe the binary ZERO reads and rejection rule	The corrector-to-test rejection implication is the literal mechanism.
+99	State perfect completeness with all honest auxiliary data	Honest primary data alone is expressly insufficient.
+100	Explain received-versus-ideal comparison before the budget	The section pointer takes a learner from qualitative overview to exact inequality.
+101	Relate correction to concentration at special points	Both global distance and actual rejection must remain visible in the summary.
+102	Introduce the four main tables	The list has a mathematical reason and is not decorative.
+103	Identify the colouring, difference and two certificates	Each entry corresponds to a required object in completeness and soundness.
+104	Count the eight tables and seven checks	The fixed counts and accept-all rule are the assembly contract.
+105	Explain why the difference table is supplied	The identified object is a decoded polynomial under high acceptance.
+106	Construct the honest proof	Every honest table and the degree-capacity condition are retained.
+107	Start the soundness overview	Failure of any one check bounds each individual rejection.
+108	Recover the exact difference identity	The two low-degree objects and distance contradiction are named.
+109	Use the ZERO checks for the same decoded objects	Fresh correction and common witnesses connect the constraints to one colouring.
+110	Take the contrapositive to obtain a constant gap	The field/degree selection must keep the gap independent of graph size.
+111	Start the quantitative difference-check budget	Actual rejection, three replaced bits and ideal lower bound are explicit.
+112	Close the difference inequality	This continuation gives the exact conclusion of the preceding display.
+113	Bound degrees for both constraints	The public adjacency factor and certificate degrees enter the ZERO bound.
+114	Account for all terms in the ZERO inequality	The corrector rejection is controlled by observed rejection, not assumed small.
+115	Choose the three field-ratio bounds	The display is the complete numerical premise.
+116	Choose a fixed rejection threshold	The constants depend on degree, not graph size.
+117	Derive the strict contradiction and explain the gap	The inequalities preserve the strict boundary and distinguish field losses from rejection losses.
+118	Separate soundness decoding from verifier computation	The verifier never reconstructs the global colouring during its run.
+119	Test the common-witness condition	The changed task asks which inference fails with unrelated decodings.
+120	State the remaining resource requirements	The theorem itself supplies the polynomial and logarithmic targets.
+121	Choose the least admissible parameter	The minimality condition drives all later address bounds.
+122	Prove grid capacity and the logarithmic parameter estimate	The a=2 and N=0,1 boundary cases stay explicit.
+123	Count addresses, labels and random seed lengths	The separate field-coordinate and label costs support polynomial length.
+124	Apply the substituted and honest degree bounds	The two different degree regimes are not conflated.
+125	Check all large-field and capacity conditions	The same parameter choice meets every threshold; toy fields remain separate.
+126	Convert nonzero choices to fair bits	The conditioning event, immediate acceptance and multiplicative loss are explicit.
+127	Separate computable implementation from address counting	The exact polynomial-time operations are named and linked to full proof.
+128	State the base query count and gap	The impractical constant is reported exactly.
+129	Explain repetition's purpose and actual count	Independence from input size is distinct from practical feasibility.
+130	Calculate repetition on a toy acceptance rate	The example fixes one false proof and varies independent seeds.
+131	Explain why a fixed proof and independent seeds matter	Reusing one seed would invalidate the product.
+132	Prove amplification for the actual gap	The algebraic estimate, positivity and fixed repetition count remain.
+133	Encode a candidate accepting computation as a finite table	The initial, transition and final constraints specify the reduction.
+134	Convert fixed-arity relations using mismatch flags	The actual formal mechanism is retained instead of substituting a generic reduction.
+135	Interpret the flags and OR clauses	Fixed pattern bits turn XOR into a literal; all clauses are stated.
+136	Verify the OR equivalence and polynomial-size count	The fixed arity, exhaustive patterns and padding explain complexity.
+137	Introduce the NAE clause transformation	The existential auxiliary bit and exact meaning of NAE remain.
+138	Check all Boolean cases of the NAE transformation	The case partition is complete and constructive.
+139	Build and verify the colouring gadget	The palette, adjacency constraints and explicit triangle colouring suffice to reproduce it.
+140	Compose the reductions and preserve randomness	The input-size change and both theorem directions are explicit.
+141	Test the role of logarithmic randomness	The modified seed count is a real changed-case exercise.
+142	Test the quantitative soundness inference and strict boundary	The toy constants are explicitly separated from production theorem constants.
+143	Answer the omitted-identity question	The counterexample and repaired two-identity substitution are complete.
+144	Answer the deterministic-correction question	The nonzero and zero targets are distinguished without false independence claims.
+145	Answer the unrelated-witness question	The exact shared decoded object needed by both checks is identified.
+146	Answer the altered randomness question	Failure of this argument is not promoted to nonmembership in NP.
+147	Answer the budget question	The equality case gives no contradiction; inconclusive estimates are not a false theorem.
+148	Ask for a connected reconstruction	The task crosses certificate, encoding, correction and soundness rather than recalling a number.
+149	State the old unit-weight test	The failed condition comes before the explanation of its failure.
+150	Compute acceptance of the fourth-power function	The characteristic-two calculation and order-three identity prove acceptance.
+151	Lower-bound its distance from quadratics	The nonzero degree-four difference and field-size premise are explicit.
+152	Extend the failure to unbounded field sizes	The example refutes the old characterization, not PCP or the corrected proof.
+153	Explain and enumerate the GF16 comparison	The quotient-field notation and arithmetic are taught before the counts.
+154	Separate completeness from soundness and credit the correction	The source acknowledgment does not imply a priority claim for this teaching example.
+155	State mathematical and formal sources	Revision metadata and correspondence limits stay in the final evidence section under the preservation instruction.
+156	Disclose AI authoring and actual check scope	Finite checks, ordinary family reasoning and absence of human-learning evidence remain distinct.
+157	Introduce further reading	The short label performs its indexing job.
+158	Describe the companion and source reading routes	Existing URLs, edition warning, source purposes and companion targets remain intact.

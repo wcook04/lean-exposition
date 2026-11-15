@@ -1,0 +1,3 @@
+PASS - no mechanical preservation errors found
+  residual checked (policy: warn)
+  warning [number-added] New numeric literals in the rewrite: 2.9, 2.10, 3.1, 3.2, 3.2 (+5 more). Check against the source; spelling out or digitizing a number can be legitimate.

@@ -1,0 +1,96 @@
+{
+  "kind": "metrics-only projection; no third-party source excerpts",
+  "final_sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+  "reference": {
+    "citation": "Arora and Barak, Computational Complexity: A Modern Approach, January 2007 draft",
+    "locators": [
+      "Chapter 18 opening and Section 18.1, pp.18.1\u201318.3",
+      "Section 18.4.1, pp.18.13\u201318.15"
+    ],
+    "sample_paragraphs": 11,
+    "prose_words": 833,
+    "sentences": 44,
+    "limitation": "One selected teaching sample; IQR floors, not a field distribution or quality score."
+  },
+  "regions": {
+    "matched": {
+      "after_prose_words": 1385,
+      "after_sentences": 111,
+      "features": {
+        "sent_len_mean": {
+          "before": 12.833333333333334,
+          "after": 13.126126126126126,
+          "reference": 20.568181818181817
+        },
+        "sent_len_cv": {
+          "before": 0.45105583634163,
+          "after": 0.4625750236784334,
+          "reference": 0.556988286486833
+        },
+        "para_len_mean": {
+          "before": 44.3125,
+          "after": 44.125,
+          "reference": 82.27272727272727
+        },
+        "contrast_rate": {
+          "before": 2.1489971346704873,
+          "after": 1.444043321299639,
+          "reference": 1.2004801920768307
+        },
+        "status_vocab_rate": {
+          "before": 13.61031518624642,
+          "after": 14.440433212996389,
+          "reference": 12.004801920768307
+        },
+        "negation_rate": {
+          "before": 9.312320916905444,
+          "after": 8.664259927797834,
+          "reference": 4.801920768307323
+        }
+      }
+    },
+    "whole_context": {
+      "after_prose_words": 6852,
+      "after_sentences": 522,
+      "features": {
+        "sent_len_mean": {
+          "before": 13.6,
+          "after": 14.026819923371647,
+          "reference": 20.568181818181817
+        },
+        "sent_len_cv": {
+          "before": 0.4469439638597955,
+          "after": 0.4446014989543017,
+          "reference": 0.556988286486833
+        },
+        "para_len_mean": {
+          "before": 46.57142857142857,
+          "after": 46.42857142857143,
+          "reference": 82.27272727272727
+        },
+        "contrast_rate": {
+          "before": 1.452643811737362,
+          "after": 1.1675423234092235,
+          "reference": 1.2004801920768307
+        },
+        "status_vocab_rate": {
+          "before": 8.570598489250436,
+          "after": 8.90251021599533,
+          "reference": 12.004801920768307
+        },
+        "negation_rate": {
+          "before": 10.168506682161533,
+          "after": 9.486281377699942,
+          "reference": 4.801920768307323
+        }
+      }
+    }
+  },
+  "sources": {
+    "work/pcp-sources/foundations/arora-barak-book.pdf": "da0881782a35bde6a0779a2eb1a8d480f39fbddf70bbb92824d1dc5550a033b2",
+    "work/pcp-sources/core/source-v2/technical_tools.tex": "0c6fbe16c347a80e0c82373413e14844d4bf947da9183768ca1bbdce72baae10",
+    "work/pcp-sources/core/source-v2/preliminaries.tex": "d36ae006f3a41a6e22e7235614caf1338fe34c25a11de8464b210a1bab0e3449",
+    "work/pcp-sources/core/source-v2/appendix_-_hadamard_test.tex": "a3215ac7062cf2295178b0cda162e3a7d3b089bc6c3504b3a9fc52bf07223ea9",
+    "work/pcp-sources/algebra/bchks.pdf": "02a2af5639db713749b3515586190b3bd90ad11bfb5d0099f8e28a1f34d22a65"
+  }
+}

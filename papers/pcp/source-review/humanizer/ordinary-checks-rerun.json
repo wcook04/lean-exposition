@@ -1,0 +1,35 @@
+{
+  "schema": "pcp-ordinary-check-rerun-v1",
+  "date": "2026-11-15",
+  "scope": "Ordinary finite Python calculations rerun after all three prose sources were frozen. No Lean build, dependency extraction, or general theorem certification.",
+  "manuscripts": [
+    {
+      "file": "papers/pcp/long/reasoning-record.md",
+      "sha256": "1d09db7bfda9d8f7cb2a4b8cf14421c8bf8b2edb7d0391655fb8715c1dce1588"
+    },
+    {
+      "file": "papers/pcp/short/paper.md",
+      "sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377"
+    },
+    {
+      "file": "papers/pcp/expository/main.md",
+      "sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303"
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 papers/pcp/expository/check_examples.py",
+      "script_sha256": "743563475ac1fb850d79537fb89291a03980a182d80115a94169988be30ee118",
+      "exit_code": 0,
+      "observed_final_stdout_line": "All checks passed.",
+      "scope": "GF16 weighted test and Frobenius example, binary Hadamard toy, grid certificate, GF4 colour residuals, toy repetition."
+    },
+    {
+      "command": "python3 papers/pcp/expository/check_exposition_examples.py",
+      "script_sha256": "b1c375fa0c8ab21ed9f415cbe375ac449252bdeefc074094539925e6e8016cfe",
+      "exit_code": 0,
+      "observed_final_stdout_line": "All additional exposition checks passed.",
+      "scope": "K4, F5 interpolation and certificate identities, digit encoding, homogeneous-label counterexample, NAE and OR-gate cases, prefix mismatch, toy soundness budgets."
+    }
+  ]
+}

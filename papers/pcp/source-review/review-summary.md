@@ -1,5 +1,77 @@
 # PCP source and manuscript reviews
 
+## Prose and literature revision
+
+The three papers have received paragraph-level prose reviews and closer
+comparison with the cited literature. All three revised sources are frozen and
+independent mathematical preservation is accepted. Final sequential source
+reads and all 72 PDF-page reviews are complete. A separate reader-correspondence
+review found overly broad paragraph-to-Lean associations, including use of a
+downstream weighted-proximity theorem for exact-line characterization and an
+unrelated row-decoding fallback in Hadamard/correction passages. Those mappings
+were corrected against the pinned source statements and rechecked. The
+manuscripts and reviewed PDFs were unchanged by that repair.
+
+| Account | Accepted source prefix | Accepted PDF prefix | Pages |
+| --- | --- | --- | --- |
+| Full argument | `1d09db7bfda9` | `87d000671158` | 43 |
+| Specialist | `c1f177680bbe` | `3dcc5fa9cadb` | 11 |
+| Exposition | `4fc575eb9827` | `8827a957fa76` | 18 |
+
+The complete source and PDF hashes are bound by the
+[revision archive](humanizer/README.md). Its records distinguish paragraph
+decisions, final sequential reading, descriptive comparisons with the literature,
+independent mathematical preservation and rendered-page inspection. The
+[canonical](humanizer/canonical-pdf-check.json) and
+[relocated](humanizer/delivery-pdf-check.json) PDF packets have identical hashes;
+all 20 companion annotations resolve. Both [finite-example scripts](humanizer/ordinary-checks-rerun.json)
+passed at the final source hashes. The [current source-package suite](humanizer/package-tests.json)
+ran 710 tests, OK with two opt-in pinned Lean fixtures skipped.
+
+The reader provides selected source entry points, not an exhaustive matching of
+every mathematical statement. Its present format cannot anchor a quote to
+display mathematics, so formula-only direct links are omitted there; the
+declarations remain indexed and the manuscripts retain their source hyperlinks.
+Canonical passage mappings can cover those complete passages under their own
+contract. The repaired reader retains 46 full-argument, 12 specialist and 16
+exposition links. The [algebra](humanizer/reader-algebra-correspondence-review.md)
+and [theorem/specialist](humanizer/reader-theorem-correspondence-review.md)
+receipts distinguish bounded source-data review from the coordinating agent's
+rendered-reader inspection. The [reader refresh receipt](humanizer/reader-refresh-review.md)
+lists the selected data hashes and further omissions, including the eight-table
+structure and quotes that could not be bound reliably. It records 112 Python
+tests, 11 web source checks and 380 browser-journey checks passing. These records
+do not claim a complete formal audit; deployment evidence remains separate.
+
+The [corrected mapping review](humanizer/mapping-review-corrected.md) and
+[bundle receipt](humanizer/bundle-validation-corrected.json) bind the final
+canonical package, ZIP prefix `8ac76496d9d9`. Assembly, bundle checking, export,
+all seven payload hashes and ZIP integrity passed. Consumer queries exercised
+direct matches, recorded prerequisites and source neighborhoods; the receipt
+retains an initial failed guessed-source query and its correction. Paper states
+remain `draft`, extraction is `not_run` and semantic certification is false.
+
+The [pre-correction bundle](humanizer/bundle-validation.json) passed structural
+validation at final long-source hash `1d09db7`. That did not establish semantic
+matching. Its three mappings are retained in the
+[superseded mapping snapshot](humanizer/history/pre-correction-mappings/README.md).
+
+The [acquisition record](acquisition-status.json) separately reports that 21 of
+the corrected paper's 24 bibliographic entries were obtained or already
+available, including the implementation and existing Lean repositories.
+DeMillo–Lipton, Ore and Schwartz remain unacquired for the recorded access
+reasons. The retained-item inventory is not a count of bibliography coverage;
+it also includes versions and supplementary sources.
+
+The records below concern the first edition. Its reports remain byte-identical
+historical evidence; they do not certify the revised source or PDF bytes. The
+[initial assembly](assembly-initial.json) and
+[initial archive index](review-archive-initial.json) are retained alongside the
+[current revision lineage](assembly.json). Release and deployment evidence is
+owned separately by [the release-check record](release-checks.json).
+
+## First edition: historical source and manuscript reviews
+
 The [three papers](../README.md) were reconstructed from the corrected primary
 paper, earlier literature and Troy Lee's Lean sources at
 `a0ce13ed0fa264f051c1278e039596ce65557fa4`. Separate AI agents reviewed the
@@ -14,7 +86,7 @@ individual reports retain the exact revisions they reviewed, including
 successor-PDF rechecks after rendering repairs. The graph still reports
 `extraction_status: not_run` and `semantic_certification: false`.
 
-The [release-check record](release-checks.json) binds the subsequent fresh-clone
+The [release-check record](release-checks-initial.json) binds the subsequent fresh-clone
 installation and bundle reproduction to the tested commit. It also records the
 successful Proof Reader deployment and byte-for-byte comparison of all three
 published reading copies with the inspected build.
@@ -45,7 +117,7 @@ and [specialist authoring record](specialist-authoring.md) explain the chosen
 prerequisites, worked examples and proof omissions.
 
 The final rechecked chapter hashes are recorded in their reports and in
-[the assembly record](assembly.json). The long manuscript combines those
+[the initial assembly record](assembly-initial.json). The first long manuscript combines those
 chapters; its full-file hash is distinct from any chapter hash. The
 [mapping review](mapping-review.md) owns passage-to-source correspondence and
 its subsequent revisions. No review is silently extended to text it did not see.
@@ -107,7 +179,7 @@ soundness view and source display, including exact-quote checks. These exercise
 the package and reader; they do not supply a fresh full Lean run. The
 documentation archive did not rerun those suites.
 
-## Final PDF and reader inspection
+## First edition: historical PDF and reader inspection
 
 | PDF | Full-page visual review | Final PDF SHA-256 |
 | --- | --- | --- |

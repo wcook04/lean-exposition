@@ -1,0 +1,26 @@
+{
+  "before_sha256": "cc9fc82c4525c6977040666e2f8fe6a0dfc3ca4514af49b16b81d007011f42bd",
+  "after_sha256": "1d9cf0f3d38363daaad2f363804372c3b8534de23aeb7a0638bc5485debd3736",
+  "display_count": 170,
+  "displays_equal": true,
+  "inline_math_removed": [],
+  "inline_math_added": [
+    "p",
+    "q-q/p-1\\ge d"
+  ],
+  "headings_equal": true,
+  "markers_equal": true,
+  "urls_removed": [],
+  "urls_added": [
+    "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+    "https://people.csail.mit.edu/ronitt/papers/selftestcorrect.pdf",
+    "https://arxiv.org/abs/1307.3975v1",
+    "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+    "https://doi.org/10.1137/S0097539793255151",
+    "https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP",
+    "https://shoup.net/ntb/ntb-v1.pdf",
+    "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf"
+  ],
+  "tables_equal": true,
+  "frontmatter_equal": true
+}

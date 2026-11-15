@@ -3,8 +3,8 @@
   "stage": "expository",
   "state": "draft",
   "path": "papers/expository.md",
-  "content_sha256": "2e2333ca4727a5f8d510f5de8f184a4139f33122ae2d12ca3d29f2b9bec4d913",
-  "graph_sha256": "a986e7db76f7fe65d774240dbac012dfb1cf76fa04d0bebae00c69ff63744b90",
+  "content_sha256": "4fc575eb9827c6253c457bcae3a55547a15f709efacbc3f65443cdf2c84fe303",
+  "graph_sha256": "f89a6bef6c10b021e855600590e6da2d5556bfc32907d82f1fb3befade29abea",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
@@ -17,7 +17,7 @@
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
     "PCP.Algebraic.GeneratorLowDegreeTest.exists_close",
     "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
-    "PCP.Algebraic.Hadamard.test_soundness",
+    "PCP.Algebraic.Hadamard.testQueries_length",
     "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
     "PCP.Algebraic.SetMultilinear.eval_encode",
     "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
@@ -38,6 +38,7 @@
     "almss:45",
     "almss:69",
     "blr:4",
+    "citation:bchks",
     "paper:0",
     "paper:1",
     "paper:10",
@@ -106,7 +107,7 @@
   "passages": [
     {
       "anchor": "pcp-expository-opening",
-      "text_sha256": "d9ba57e6cc2d3423afc66533711276facc0ce6a06a0e5100cb7c92719cd2bd0f",
+      "text_sha256": "b545546224ae7d1a6673c61f9d5886fbb9cf9a8a36a745cd5680ad6b32f80f75",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -114,6 +115,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:0",
         "paper:10",
         "paper:11",
@@ -148,7 +150,7 @@
     },
     {
       "anchor": "pcp-expository-colouring",
-      "text_sha256": "db4b3e0022f5c1bbc975962e8dd985c6df7d325dbd3bdd343a2f57361960d9ed",
+      "text_sha256": "2244eda8139b2f7b6506ff6da46fcc91b8b9cef1ada0d6aeb82f1326d738095f",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
@@ -159,7 +161,7 @@
     },
     {
       "anchor": "pcp-expository-theorem",
-      "text_sha256": "b89517bc4ff6f64010a06d2002c61dab819f2c8a08d77664c484625bef5a125e",
+      "text_sha256": "08b3978c2f7df88bf1565a742b8f9b85fa731a1335b145967ab054feff181ffc",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -169,6 +171,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:0",
         "paper:1",
         "paper:10",
@@ -205,7 +208,7 @@
     },
     {
       "anchor": "pcp-expository-polynomial-distance",
-      "text_sha256": "aba4e6db02d56f4a48bc7ccfa5ffe5014aecce6e78000f6bc14cba363e67c88c",
+      "text_sha256": "eca2663c18423875882c2fc0a652f95a57defb4a9f85ebee67883c0497c87d20",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
@@ -216,7 +219,7 @@
     },
     {
       "anchor": "pcp-expository-interpolation",
-      "text_sha256": "7e2673e68ca91dc5cbc60c45af54d2fb7b0bf885a1496558d31cf8a63553c33f",
+      "text_sha256": "f78cbd60e7906df144074a78ee0ddabde1ae6bb896d3dfb4710db5f80d61ef0c",
       "claim_ids": [
         "ordinary:exposition-examples"
       ],
@@ -243,7 +246,7 @@
     },
     {
       "anchor": "pcp-expository-grid-certificate",
-      "text_sha256": "d03c78f4d9a97db6bb84aa3e26d5b217faf08c066f018cea6fec0815841f3085",
+      "text_sha256": "070247823c7eda397c36185b38c9e9b5bbed164f5c56553cb9eb0e6674060d96",
       "claim_ids": [
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
         "ordinary:exposition-examples",
@@ -259,7 +262,7 @@
     },
     {
       "anchor": "pcp-expository-digit-encoding",
-      "text_sha256": "f6e557d289308bbf962ec0777334cfe1a18d66620456e8926db2c40ae2315194",
+      "text_sha256": "15b5e1e89cfaf88a423d81e5b2d6409ece216db32775b85ab2e55c0e0b2b169c",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
         "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -279,7 +282,7 @@
     },
     {
       "anchor": "pcp-expository-weighted-test",
-      "text_sha256": "1931644179af7dda8c6a0975de4fe27283d283b33467dc9c122d9eff649833c1",
+      "text_sha256": "a2cd1443d3d90e7735f9a142c26504618a1fc3073ca7fdebbb99b125a21135b6",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
       ],
@@ -292,28 +295,30 @@
     },
     {
       "anchor": "pcp-expository-hadamard",
-      "text_sha256": "90f3ee78188b237351aa3585105a9921b50494edabdb50296a1accee60ab707f",
+      "text_sha256": "420a33637a889233fd8000e3ea8f4b0aa4023f56f02726007e0bf47aabc075b9",
       "claim_ids": [
         "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
         "ordinary:finite-examples"
       ],
       "citation_ids": [
         "blr:4",
+        "citation:bchks",
         "paper:16"
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency."
+      "rationale": "The direct records correspond to the passage\u2019s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. The cited antecedent references have their own source records and may differ in hypotheses and conclusions from the formal statement."
     },
     {
       "anchor": "pcp-expository-hadamard-correction",
-      "text_sha256": "a08f32bf0786e513167ba5883fe84c4a9c43b2ceb40788402636c23f894c39d5",
+      "text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
       "claim_ids": [
         "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le",
         "ordinary:finite-examples"
       ],
       "citation_ids": [
         "blr:4",
+        "citation:bchks",
         "paper:16"
       ],
       "assumption_ids": [],
@@ -324,22 +329,19 @@
       "anchor": "pcp-expository-cubic-labels",
       "text_sha256": "50952341ae57f436e321e02402969c7f795faabd575b329c741a5ae55f9f57bb",
       "claim_ids": [
-        "PCP.Algebraic.Hadamard.test_soundness",
-        "ordinary:exposition-examples"
+        "ordinary:exposition-examples",
+        "PCP.Algebraic.Hadamard.testQueries_length"
       ],
       "citation_ids": [
-        "blr:4",
-        "paper:15",
-        "paper:16",
         "paper:additional:3"
       ],
       "assumption_ids": [],
       "evidence_class": "example",
-      "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage\u2019s general construction or source statement."
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
     },
     {
       "anchor": "pcp-expository-binary-tests",
-      "text_sha256": "9507ef55ead77b42b69f0fb32329fa5266e0573fafe12463402271320521e335",
+      "text_sha256": "2ce5b77d0a2af56648be1174cbf025482fe68f63e96b7c95946ad97cb1545556",
       "claim_ids": [
         "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.BinaryLocalCorrection.failure_le",
@@ -349,6 +351,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:10",
         "paper:11",
         "paper:12",
@@ -370,7 +373,7 @@
     },
     {
       "anchor": "pcp-expository-assembly",
-      "text_sha256": "1bc1ec6c8b547bacd07c969e3e0ff08fd3c6460535566005b6c4ca7c6896f3dc",
+      "text_sha256": "1fc5ce4c16abc3e3c0df6c2cb42e0b530221898231eaf4f0afc669ffd058e88f",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
@@ -379,6 +382,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:10",
         "paper:11",
         "paper:12",
@@ -406,7 +410,7 @@
     },
     {
       "anchor": "pcp-expository-resources",
-      "text_sha256": "d4d9760d158cd23012cc7745f7dcd37e361215d38e1975032be9075fd074e9d1",
+      "text_sha256": "2ec7581fcd743ec00e7f14315dfa176aad3fee46d0bf094c2a45935de81aea5b",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
         "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
@@ -417,6 +421,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:10",
         "paper:11",
         "paper:12",
@@ -459,7 +464,7 @@
     },
     {
       "anchor": "pcp-expository-correction",
-      "text_sha256": "0be39e667e5bdc95521a87210bf21d9039e410ffbe4474f3fedeea7abd2597aa",
+      "text_sha256": "c853b29e897a1fec1ae87a5acb0dc85ba0bbc5bad7aa2c26b7c4378e16b7ee72",
       "claim_ids": [
         "ordinary:v1-old-test-counterexample",
         "ordinary:finite-examples"
@@ -481,6 +486,7 @@
         "almss:45",
         "almss:69",
         "blr:4",
+        "citation:bchks",
         "paper:0",
         "paper:10",
         "paper:11",
@@ -518,6 +524,8 @@
   "review_notes": [
     "Bound to the author\u2019s initial frozen passage edition; finite calculations and the ordinary v1 counterexample are distinct from compiled Lean evidence. Source-aware mapping is not independent mathematical or reader review.",
     "Graph reconciliation added direct source-locator statements. These are unelaborated; new finite examples not covered by the original checker await separate evidence mapping.",
-    "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification."
+    "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification.",
+    "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl\u2013Sudan, Rubinfeld\u2013Sudan and Kaufman\u2013Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
+    "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged."
   ]
 }

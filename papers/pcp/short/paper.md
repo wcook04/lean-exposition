@@ -5,7 +5,7 @@
 ## Abstract
 
 <!-- passage:pcp-short-abstract -->
-The PCP theorem states that every language in NP has a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and constant soundness error. The algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard obtains these resources by encoding line polynomials as constant-degree multivariate polynomials and encoding field values by low-degree Hadamard words. This permits a point-versus-line test and a correction procedure to operate through constantly many bits. We explain the resulting construction for three-colourability, including the Lagrange-weighted test in the corrected paper, correction at the nonuniform points used by vanishing certificates, and the common decoding argument that makes the seven verifier checks sound. The quantitative statements follow Lee's formal implementation; its sampling conventions and query counts differ in several places from the paper. The contribution of this account is an explanatory reconstruction of that proof.
+The PCP theorem states that every language in NP has a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and constant soundness error. The algebraic proof of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard obtains these resources by encoding line polynomials as constant-degree multivariate polynomials and encoding field values by low-degree Hadamard words. A point-versus-line test and a correction procedure can then use constantly many bits. We reconstruct the resulting proof for three-colourability, including the Lagrange-weighted test in the corrected paper, correction at the nonuniform points used by vanishing certificates, and the common decoding argument for the seven verifier checks. The quantitative statements follow Lee's formal implementation, whose sampling conventions and query counts differ in several places from the paper.
 <!-- /passage:pcp-short-abstract -->
 
 ## 1. The theorem and the encoding problem
@@ -25,9 +25,9 @@ $$
 \mathrm{NP}=\mathrm{PCP}(O(\log n),O(1)).
 $$
 
-Arora–Safra and Arora–Lund–Motwani–Sudan–Szegedy established the PCP characterization in their foundational work [2,3]. Our subject is the algebraic proof in the corrected version of [1], as implemented by Lee [5]. Its central problem is already visible in the usual point-versus-line test. Reading a field value costs several bits; reading a line polynomial by its coefficient vector costs its degree times as many. Treating either object as one oracle symbol does not prove constant **bit** query complexity.
+Arora–Lund–Motwani–Sudan–Szegedy [3] proved the constant-query theorem, building on Arora–Safra [2]. We consider the algebraic proof in the corrected version of [1], as implemented by Lee [5]. The cost of reading a field value is already an obstacle in the usual point-versus-line test: a field value takes several bits, and a line polynomial's coefficient vector takes its degree times as many. Treating either object as one oracle symbol does not prove constant **bit** query complexity.
 
-The construction resolves these costs by two encodings. A base-$b$ digit expansion turns a degree-$O(b^c)$ line polynomial into a degree-$c$ polynomial in $cb$ variables. Here $c$ is fixed while $b$ grows. A Hadamard word then makes a binary observation of a field value accessible in one query. The encoded line is tested and locally corrected, so its value at the required digit-substitution point can be recovered despite errors. This supplies the local operations needed to verify polynomial constraints directly. An auxiliary line oracle remains part of the proof, but the verifier's acceptance computation is not recursively re-encoded through repeated PCP composition.
+Two encodings reduce these costs. A base-$b$ digit expansion turns a degree-$O(b^c)$ line polynomial into a degree-$c$ polynomial in $cb$ variables. Here $c$ is fixed while $b$ grows. A Hadamard word then makes a binary observation of a field value accessible in one query. Testing and locally correcting the encoded line recovers its value at the required digit-substitution point despite errors. These operations suffice to verify the polynomial constraints. An auxiliary line oracle remains part of the proof, but the verifier's acceptance computation is not recursively re-encoded through repeated PCP composition [1, §1].
 
 We give the construction for graph three-colourability, keeping the bit-level soundness argument explicit. The [full argument](../long/reasoning-record.md) supplies the underlying bivariate agreement proof, all error estimates and the machine-model reductions; the [worked exposition](../expository/main.md) develops concrete examples of the encodings and constraints.
 <!-- /passage:pcp-short-theorem -->
@@ -56,7 +56,7 @@ $$
 
 An honest colouring makes $A_P$ vanish on $H^m$ and $B_P$ vanish on $H^{2m}$. Conversely, these vanishing conditions recover a proper colouring: the first restricts every vertex to the three allowed values, and the second separates the values across each edge. Both are needed. For example, assigning the four elements of $\mathbb F_4$ to $K_4$ satisfies every edge equation, since every nonzero field element has cube one; the vertex assigned zero fails the vertex equation. The degree bounds in (1) are $d_0,3d_0,5d_0$.
 
-There is a convenient certificate for vanishing on a grid. Put $Z_H(T)=\prod_{u\in H}(T-u)$. Repeated monic division in the separate coordinates shows that a polynomial $A$ vanishes on $H^k$ precisely when
+To certify vanishing on a grid, put $Z_H(T)=\prod_{u\in H}(T-u)$. Repeated monic division in the separate coordinates shows that a polynomial $A$ vanishes on $H^k$ precisely when [1, Lemma 2.9]
 
 $$
 A(X)=\sum_{i=1}^{k} Z_H(X_i)U_i(X).
@@ -75,13 +75,13 @@ M(X,0)=0,\qquad M(X,Z_H(X))=A(X).
 \tag{2}
 $$
 
-Here $Z_H$ is applied coordinatewise, and $M$ can be chosen with degree at most $\deg A$. The converse in (2) holds even for a proposed certificate nonlinear in $Y$: on the grid its two second arguments coincide. The proof therefore needs four principal polynomials, $P,Q_P,M_A,M_B$, together with their encoded line restrictions. The public polynomial $E$ is computed from the graph. It is not part of the prover's advice.
+Here $Z_H$ is applied coordinatewise, and $M$ can be chosen with degree at most $\deg A$. The converse in (2) holds even for a proposed certificate nonlinear in $Y$: on the grid its two second arguments coincide. The proof therefore needs four principal polynomials, $P,Q_P,M_A,M_B$, together with their encoded line restrictions. The verifier computes the public polynomial $E$ from the graph rather than reading it from the prover's advice.
 <!-- /passage:pcp-short-colour-constraints -->
 
 ## 3. Encoding the values that the verifier needs
 
 <!-- passage:pcp-short-digit-encoding -->
-Fix positive integers $b,c$, and consider a univariate polynomial $T(Y)=\sum_{j<b^c}t_jY^j$. Write $j=\sum_{i=0}^{c-1}j_ib^i$, where $0\le j_i<b$, and introduce $cb$ variables $X_{i,s}$. Define
+Fix positive integers $b,c$, and consider a univariate polynomial $T(Y)=\sum_{j<b^c}t_jY^j$. Write $j=\sum_{i=0}^{c-1}j_ib^i$, where $0\le j_i<b$, and introduce $cb$ variables $X_{i,s}$. The set-multilinear encoding of [1, Definition 3.1 and Claim 3.2] is
 
 $$
 \Psi(T)=\sum_{j<b^c}t_j\prod_{i=0}^{c-1}X_{i,j_i},
@@ -98,18 +98,18 @@ $$
 \tag{4}
 $$
 
-An honest line table consists of these encodings. Soundness only establishes that a received row is close to some polynomial $U$ of degree at most $c$; it need not have the set-multilinear form in (3). Nevertheless,
+An honest line table consists of these encodings. In the soundness proof, we choose a polynomial $U$ of degree at most $c$ close to the received row; it need not have the set-multilinear form in (3). Nevertheless,
 
 $$
 T_U(Y)=U(\Phi(Y)),\qquad \deg T_U\le D:=cb^c.
 \tag{5}
 $$
 
-Indeed, a monomial of $U$ has at most $c$ variable occurrences, and each substituted variable has degree at most $b^c$. Honest completeness requires degree strictly below $b^c$, whereas decoded soundness permits degree $D$. This distinction will determine the field size.
+Indeed, a monomial of $U$ has at most $c$ variable occurrences, and each substituted variable has degree at most $b^c$. The honest prover encodes polynomials of degree strictly below $b^c$; decoding gives only the bound $D$. The field size must accommodate this larger bound.
 <!-- /passage:pcp-short-digit-encoding -->
 
 <!-- passage:pcp-short-hadamard-encoding -->
-Fix a linear isomorphism $\rho:F\to\mathbb F_2^t$, where $q=2^t$. Let $\mathcal B_r$ be the binary vector space of squarefree Boolean polynomials in $t$ variables of degree at most $r$. For $r\ge1$, encode $u\in F$ by
+Fix a linear isomorphism $\rho:F\to\mathbb F_2^t$, where $q=2^t$. Let $\mathcal B_r$ be the binary vector space of squarefree Boolean polynomials in $t$ variables of degree at most $r$. For $r\ge1$, encode $u\in F$ by [1, Definitions 3.5–3.6]
 
 $$
 \mathcal H_r(u)(R)=R(\rho(u)),\qquad R\in\mathcal B_r.
@@ -162,16 +162,16 @@ f(u)=\sum_{i=1}^{c+1}\eta_i f(u+a_iv).
 \tag{10}
 $$
 
-Conversely, satisfying (10) for every $u,v$ characterizes total degree at most $c$. On a univariate line, subtract the interpolant through $\zeta,\ldots,\zeta^{c+1}$. The constraint at zero gives the zero value; applying it with successively shifted powers of $\zeta$ propagates these zeros through $F^\times$. Every affine line is therefore degree at most $c$. The finite-field line characterization, using $q>2c$, gives total degree at most $c$.
+Conversely, satisfying (10) for every $u,v$ characterizes total degree at most $c$. On a univariate line, subtract the interpolant through $\zeta,\ldots,\zeta^{c+1}$. The constraint at zero gives the zero value; applying it with successively shifted powers of $\zeta$ propagates these zeros through $F^\times$. Every affine line is therefore degree at most $c$. The finite-field line characterization of Friedl–Sudan [9, Lemma 4], under the stronger sufficient hypothesis $q>2c$, gives total degree at most $c$.
 
-The robust form is equally important: if (10) rejects with probability $\delta<1/[2(c+2)^2]$, then $f$ is within $2\delta$ of a degree-$c$ polynomial. One way to prove it is to replace each value by the plurality of its predictions in (10). A point at which this changes $f$ has conditional test failure at least $1/2$, giving the distance bound. Comparing predictions through the symmetric weighted grid
+If (10) rejects with probability $\delta<1/[2(c+2)^2]$, then $f$ is within $2\delta$ of a degree-$c$ polynomial. To prove this robust form, replace each value by the plurality of its predictions in (10). A point at which this changes $f$ has conditional test failure at least $1/2$, giving the distance bound. Comparing predictions through the symmetric weighted grid
 
 $$
 \sum_{i,j}\eta_i\eta_j
 f(u+a_i v+a_j w+a_i a_j z)
 $$
 
-then shows that the corrected word satisfies every constraint exactly. The total failure budget is $(2(c+1)^2+3(c+1))\delta<1$; two fixed values agreeing with positive probability must be equal. This yields the exact characterization above. The [full weighted argument](../long/reasoning-record.md#2-the-corrected-short-low-degree-test) includes the pointwise prediction bound needed for this last step.
+then shows that the corrected word satisfies every constraint exactly. The total failure budget is $(2(c+1)^2+3(c+1))\delta<1$; two fixed values agreeing with positive probability must be equal. This yields the exact characterization above. The [full weighted argument](../long/reasoning-record.md#2-the-corrected-short-low-degree-test) includes the pointwise prediction bound needed for this last step. The plurality correction and comparison of predictions follow the robust-characterization argument of Rubinfeld–Sudan [7, §4]. Kaufman–Sudan [8, Theorem 2.9] prove a general testability theorem for linear-invariant families with a two-ary independent local characterization. As noted in [1, §3.2], these are antecedents of the weighted test; the hypotheses and constants used here are those of Lee's formalized version.
 
 The weights and full generator are the correction in [1, v2, Fact 2.7 and Lemma 3.3]. The old unit-weight test fails even over arbitrarily large fields. For $q=2^{2k}$, $k\ge2$, take an element $\omega$ of order three and, in any dimension $m\ge1$, put $f(x)=x_1^4$. In characteristic two,
 
@@ -184,24 +184,24 @@ for every $u,v$. Yet every total-degree-two polynomial agrees with $f$ on at mos
 <!-- /passage:pcp-short-weighted-test -->
 
 <!-- passage:pcp-short-binary-decoding -->
-To test a received row $w:\mathcal B_r\to\mathbb F_2$, combine the BLR additivity test [4] with unit preservation, multiplicativity and consistency on affine degree-one labels. Suppose this combined test rejects with probability at most $\epsilon$. Its additivity check supplies a linear functional $\ell$ within $\epsilon$ of $w$. The remaining laws distinguish evaluation functionals from arbitrary linear functionals. They are checked using (9); replacing the three corrected values in a product check by their $\ell$-values costs at most $6\epsilon$, and the check itself costs another $\epsilon$. The defect
+To test a received row $w:\mathcal B_r\to\mathbb F_2$, combine the BLR additivity test [4] with unit preservation, multiplicativity and consistency on affine degree-one labels. Suppose this combined test rejects with probability at most $\epsilon$. The characteristic-two analysis of Bellare, Coppersmith, Håstad, Kiwi and Sudan [6, Theorem 1.2], in the form stated in [1, Theorem B.1], gives a linear functional $\ell$ within $\epsilon$ of $w$. The remaining laws distinguish evaluation functionals from arbitrary linear functionals. They are checked using (9); replacing the three corrected values in a product check by their $\ell$-values costs at most $6\epsilon$, and the check itself costs another $\epsilon$. The defect
 
 $$
 (L,A)\longmapsto\ell(LA)-\ell(L)\ell(A)
 $$
 
-is bilinear for $L\in\mathcal B_1$, $A\in\mathcal B_{r-1}$. For $r\ge2$, a nonzero defect is nonzero on at least a quarter of its arguments, so rejection below $1/28$ forces exact multiplicativity. With $z_i=\ell(Z_i)$, induction on monomials gives $\ell(R)=R(z)$; unit preservation handles the constant monomial. For $r=1$, additivity and unit preservation already give this conclusion. This yields one decoded field value and bounds on both full-label and homogeneous-label error. For badly tested rows choose any value and charge their entire error to their rejection probability. The uniform result is an error bound of $28$ times row rejection on both label domains, for the same decoded value.
+is bilinear for $L\in\mathcal B_1$, $A\in\mathcal B_{r-1}$. For $r\ge2$, a nonzero defect is nonzero on at least a quarter of its arguments, so rejection below $1/28$ forces exact multiplicativity. With $z_i=\ell(Z_i)$, induction on monomials gives $\ell(R)=R(z)$; unit preservation handles the constant monomial. For $r=1$, additivity and unit preservation already give this conclusion. This yields one decoded field value and bounds on both full-label and homogeneous-label error. For the remaining rows, choose any value and use the trivial distance bound one. The resulting error bound is $28$ times row rejection on both label domains, for the same decoded value.
 
 The implemented Hadamard test retains product checks at every degree from two to $r$, sharing the read values. Its query count is $2r+4$, hence ten for cubic labels. The v2 algorithm uses only the top-degree product check and has eight queries. The extra checks are included in the counts below.
 
-The inner binary polynomial tester flips a fair coin between this Hadamard test and the binary observation of (10) using a random homogeneous label. If its rejection is $\kappa$, each branch rejects with probability at most $2\kappa$. Decode the rows to field values. The weighted relabelling preserves uniform labels; replacing each of the $c+2$ queried bits therefore costs its homogeneous error. Equation (7) converts the resulting binary rejection into field rejection. Applying the weighted theorem, and again charging bad rows by the trivial distance bound one, gives a degree-$c$ polynomial $U$ with both binary distances at most
+The inner binary polynomial tester flips a fair coin between this Hadamard test and the binary observation of (10) using a random homogeneous label. If its rejection is $\kappa$, each branch rejects with probability at most $2\kappa$. Decode the rows to field values. The weighted relabelling preserves uniform labels; replacing each of the $c+2$ queried bits therefore costs its homogeneous error. Equation (7) converts the resulting binary rejection into field rejection. Apply the weighted theorem when its rejection hypothesis holds, and the trivial distance bound one otherwise. This gives a degree-$c$ polynomial $U$ with both binary distances at most
 
 $$
 K\kappa,\qquad K=4(c+2)^2\bigl(112(c+2)+60\bigr).
 \tag{11}
 $$
 
-There is no small-rejection premise in (11). The same decoded polynomial supplies both conclusions. Full-label proximity alone would not justify restriction to the much smaller set of homogeneous labels.
+There is no small-rejection premise in (11), and both bounds concern the same decoded polynomial. Full-label proximity alone would not justify restriction to the much smaller set of homogeneous labels.
 <!-- /passage:pcp-short-binary-decoding -->
 
 <!-- passage:pcp-short-outer-decoding -->
@@ -209,7 +209,7 @@ The outer test has a primary table $f(x,R)$ and an auxiliary encoded-line table.
 
 The inner corrector uses (10) without reading its centre. At a prescribed inner point $a$, it sums the $c+1$ weighted observations at $a+a_iv$. For a received row of homogeneous error $\tau$, its wrong-answer probability is at most $(c+1)\tau$, averaged over the uniform direction and homogeneous label. Each point and weighted label is uniform, even though the requested centre need not be. This is why a direct query at $\Phi(z)$ can be replaced safely.
 
-Suppose the outer test rejects with probability $\kappa$. Primary Hadamard decoding supplies one field function $g$ with both binary errors at most $28\kappa$. Decode each auxiliary row using (11) and substitute (3) to obtain a line polynomial $T_{u,v}$ of degree at most $D=cb^c$. The corrected auxiliary error, the tested comparison, and the primary error give
+Suppose the outer test rejects with probability $\kappa$. By the primary Hadamard bound, choose one field function $g$ with both binary errors at most $28\kappa$. Decode each auxiliary row using (11) and substitute (3) to obtain a line polynomial $T_{u,v}$ of degree at most $D=cb^c$. The corrected auxiliary error, the tested comparison, and the primary error give
 
 $$
 \Pr_{u,v,z}[T_{u,v}(z)\ne g(u+zv)]
@@ -226,7 +226,7 @@ $$
 q\ge10^6D^3,\qquad \theta\le\frac1{4\cdot10^6},
 $$
 
-and degree-$D$ line polynomials disagree with a point function on a fraction $\theta$ of uniform triples $(u,v,z)$, then that function is within $2\theta$ of one total-degree-$D$ polynomial. It applies to arbitrary oriented line tables, including zero directions. The formal proof reconstructs the classical bivariate agreement route of [2,3]. Nearest line polynomials define a corrected point function by plurality. Bivariate agreement on randomly sampled planes controls their predictions at crossings. A ruled surface $x+yh+z(v+yw)$ then compares an entire target line with transverse random lines, forcing that corrected function to have degree at most $D$ on every line. The exact-line characterization converts this into total degree. The full argument supplies both the [bivariate error-locator construction](../long/reasoning-record.md#4-bivariate-agreement) and the [point-versus-line proof](../long/reasoning-record.md#5-point-versus-line-soundness), including its exceptional zero-slice estimates.
+and degree-$D$ line polynomials disagree with a point function on a fraction $\theta$ of uniform triples $(u,v,z)$, then that function is within $2\theta$ of one total-degree-$D$ polynomial. It applies to arbitrary oriented line tables, including zero directions. This is a formalized variant of the line test in [3, Theorem 45], with the explicit bounds above from Lee's proof. The argument uses the bivariate agreement method of [2, §5.2] and [3, Appendix A]. Nearest line polynomials define a corrected point function by plurality. Bivariate agreement on randomly sampled planes controls their predictions at crossings. A ruled surface $x+yh+z(v+yw)$ then compares an entire target line with transverse random lines, forcing that corrected function to have degree at most $D$ on every line. The exact-line characterization converts this into total degree. The full argument contains both the [bivariate error-locator construction](../long/reasoning-record.md#4-bivariate-agreement) and the [point-versus-line proof](../long/reasoning-record.md#5-point-versus-line-soundness), including its exceptional zero-slice estimates.
 
 Applying this theorem to (12) and encoding the resulting field distance yields one polynomial $P$ of degree at most $D$ such that
 
@@ -302,7 +302,7 @@ $$
 
 Each branch has its prescribed independent seed; acceptance requires all seven to pass. The same certificate line table is used in its low-degree test and in its correction calls. If the whole verifier rejects with probability $\kappa$, each branch rejects with probability at most $\kappa$.
 
-Assume $q\ge10^6D^3$, $q\ge100Dh$ and $m(h-1)\le D$. When $J\kappa\le1/(4\cdot10^6)$, the four low-degree tests choose four polynomials $P,Q,M_A,M_B$ of degree at most $D$, each with the appropriate errors at most $\epsilon=S\kappa$. Fix these choices. In (17), replacing the three received bits by the decoded bits costs at most $3\epsilon$. If $Q$ differed from $P(X)-P(Y)$, their nonzero polynomial difference would have relative support at least $1-D/q$. Equation (7) would make the ideal check reject on at least half that fraction. Hence
+Assume $q\ge10^6D^3$, $q\ge100Dh$ and $m(h-1)\le D$. When $J\kappa\le1/(4\cdot10^6)$, apply (13) to each of the four low-degree tests and choose polynomials $P,Q,M_A,M_B$ of degree at most $D$, each with the appropriate errors at most $\epsilon=S\kappa$. Fix these choices. In (17), replacing the three received bits by the decoded bits costs at most $3\epsilon$. If $Q$ differed from $P(X)-P(Y)$, their nonzero polynomial difference would have relative support at least $1-D/q$. Equation (7) would make the ideal check reject on at least half that fraction. Hence
 
 $$
 \kappa+3\epsilon<\frac{1-D/q}{2}
@@ -363,7 +363,7 @@ a2^a\le32(\lceil\log_2N\rceil+1).
 \tag{22}
 $$
 
-This proves the resource bounds, not just the grid's capacity. Field vectors in the query and seed spaces use $O(st)=O(a2^a)$ bits; constant-degree label vectors use $O(t^3)=O(a2^a)$ bits. There are only a fixed number of such vectors. Thus the seed length is $O(\log N)$ and the table address spaces have size $2^{O(a2^a)}=N^{O(1)}$, with the harmless small-$N$ convention included.
+Equation (22) bounds the randomness and proof addresses. Field vectors in the query and seed spaces use $O(st)=O(a2^a)$ bits; constant-degree label vectors use $O(t^3)=O(a2^a)$ bits. There are only a fixed number of such vectors. Thus the seed length is $O(\log N)$ and the table address spaces have size $2^{O(a2^a)}=N^{O(1)}$, with the harmless small-$N$ convention included.
 
 Four corrector parameters were sampled from $F^\times$. For an exact fixed fair-bit sampler, the implementation samples all four from $F$ and accepts immediately if any is zero. Conditional on all being nonzero, the seed distribution is precisely the one analysed above. Rejection is multiplied by $((q-1)/q)^4\ge1/16$. All other random coordinates are encoded bijectively by fixed-length bit strings.
 
@@ -408,9 +408,9 @@ For the converse, guess the first $p(n)$ proof bits and simulate the verifier on
 ## Formal correspondence and credits
 
 <!-- passage:pcp-short-formal-correspondence -->
-Lee's formalization proves the [forward PCP theorem][lean-forward] with an implemented verifier in a concrete finite-machine model, and the [reverse inclusion in that model][lean-reverse]. It also proves that its concrete witness class is [equal to the NP class in the unchanged vendored ComplexityLib][lean-reference-np], through explicit machine simulations. The statements above follow its [encoded-line decoding theorem][lean-line], [local-correction guarantee][lean-correction] and [assembled three-colouring argument][lean-assembly]. They retain the homogeneous-label guarantee, whole-field outer sampling, independent branch seeds and ten-query cubic Hadamard test of that implementation. The separate [source and verification account](../long/reasoning-record.md#source-and-verification-account) records the exact source revision, theorem definitions and validation evidence. The old-test calculation in §4 is an ordinary mathematical explanation, not an additional formal theorem.
+Using Lean, Lee proved the [forward PCP theorem][lean-forward] with an implemented verifier in a concrete finite-machine model, and the [reverse inclusion in that model][lean-reverse]. Explicit machine simulations identify the concrete witness class with [the NP class in the unchanged vendored ComplexityLib][lean-reference-np]. Our quantitative statements follow his [encoded-line decoding theorem][lean-line], [local-correction guarantee][lean-correction] and [assembled three-colouring argument][lean-assembly]. They retain the homogeneous-label guarantee, whole-field outer sampling, independent branch seeds and ten-query cubic Hadamard test of that implementation. The separate [source and verification account](../long/reasoning-record.md#source-and-verification-account) records the exact source revision, theorem definitions and validation evidence. The old-test calculation in §4 is an ordinary mathematical explanation, not an additional formal theorem.
 
-This account was prepared by Will Cook with AI assistance. The PCP construction and its two encodings are due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; the formal proof is due to Troy Lee. The corrected paper acknowledges Lee's identification of the earlier low-degree-test error. The exposition reorganizes these arguments and makes their quantitative interfaces explicit; it claims no new PCP theorem.
+This account was prepared by Will Cook with AI assistance. The PCP construction and its two encodings are due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; the formal proof is due to Troy Lee. The corrected paper acknowledges Lee's identification of the earlier low-degree-test error. This explanatory reconstruction claims no new PCP theorem.
 <!-- /passage:pcp-short-formal-correspondence -->
 
 ## References
@@ -420,6 +420,10 @@ This account was prepared by Will Cook with AI assistance. The PCP construction 
 3. Sanjeev Arora, Carsten Lund, Rajeev Motwani, Madhu Sudan and Mario Szegedy. *Proof Verification and the Hardness of Approximation Problems*. Journal of the ACM **45**(3), 1998. [Author-hosted manuscript](https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf), especially Theorems 45 and 69 in that manuscript's numbering.
 4. Manuel Blum, Michael Luby and Ronitt Rubinfeld. *Self-Testing/Correcting with Applications to Numerical Problems*. Journal of Computer and System Sciences **47**(3), 549–595, 1993. [Author-hosted manuscript](https://people.csail.mit.edu/ronitt/papers/selftestcorrect.pdf).
 5. Troy Lee. *Formalization of the PCP theorem*. [Source and mathematical guide](https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/docs/pcp).
+6. Mihir Bellare, Don Coppersmith, Johan Håstad, Marcos Kiwi and Madhu Sudan. *Linearity Testing in Characteristic Two*. IEEE Transactions on Information Theory **42**(6), 1781–1795, 1996. [Author-hosted manuscript](https://www.csc.kth.se/tcs/projects/publications/bchks.pdf), Theorem 1.2.
+7. Ronitt Rubinfeld and Madhu Sudan. *Robust Characterizations of Polynomials with Applications to Program Testing*. SIAM Journal on Computing **25**(2), 252–271, 1996. [Prepublication manuscript](https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf), §4, Theorem 5; cited as Theorem 4.1 of the published paper in [1, §3.2].
+8. Tali Kaufman and Madhu Sudan. *Algebraic Property Testing: The Role of Invariance*. STOC 2008, 403–412. [Conference manuscript](https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf), Theorem 2.9.
+9. Katalin Friedl and Madhu Sudan. *Some Improvements to Total Degree Tests*. Proceedings of the Third Israel Symposium on Theory of Computing and Systems, 1995. [Corrected manuscript, arXiv:1307.3975v1](https://arxiv.org/abs/1307.3975v1), Lemma 4.
 
 [lean-forward]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean#L24-L35
 [lean-reverse]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/ReverseConcrete.lean#L33-L39

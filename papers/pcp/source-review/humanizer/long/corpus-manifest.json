@@ -1,0 +1,70 @@
+{
+  "scope": "Long proof body, one edition per work; no slides, introductions, bibliography or duplicate editions. AS/ALMSS extraction limits disclosed. Primary source text retained privately; no manuscript quotation copied.",
+  "works": [
+    {
+      "work": "ABSSW26 v2",
+      "genre": "research proof, algebraic PCP construction",
+      "region": "Sections 2–7 and proof appendices; introduction/bibliography omitted",
+      "inputs": [
+        "preliminaries.tex",
+        "technical_tools.tex",
+        "low_degree_test.tex",
+        "local_correction.tex",
+        "zero-on-variety_test.tex",
+        "pcp-verifier.tex",
+        "appendix-claim-consistency.tex",
+        "appendix_-_hadamard_test.tex",
+        "appendix-local_correction.tex",
+        "appendix-zero_test.tex",
+        "appendix-full-verifier.tex"
+      ],
+      "file": "work/pcp-humanizer/long/corpus/abssw-v2-proofs.tex",
+      "sha256": "1e153cab305e49fdde08635c170cc7ef1026cd2ab91b5aef0859628054f35642"
+    },
+    {
+      "work": "almss-point-line",
+      "genre": "extended research proof",
+      "region": "Appendix point-versus-line proof, Lemma 66 through Theorem 65 constant choice",
+      "input": "work/pcp-sources/foundations/almss-journal.txt",
+      "start_line": 2515,
+      "end_line": 2958,
+      "file": "work/pcp-humanizer/long/corpus/almss-point-line.txt",
+      "sha256": "dccda159470d9b96500efbd2655d1579413a39bfc21b4b6074a405a2d2621c60",
+      "extraction_limit": "PDF extraction retains damaged formula glyphs and page headers; inspect prose dump, use numerical comparison as diagnostic only."
+    },
+    {
+      "work": "arora-safra-bivariate",
+      "genre": "extended research proof",
+      "region": "Section 5.2, Lemma 5.2.1 through clean-rectangle proof",
+      "input": "work/pcp-sources/foundations/arora-safra-jacm.txt",
+      "start_line": 2032,
+      "end_line": 2375,
+      "file": "work/pcp-humanizer/long/corpus/arora-safra-bivariate.txt",
+      "sha256": "9d070fb8189ddbf4d62a001dca2dbc42a57e35e15a5675d4190a0a152460f2f0",
+      "extraction_limit": "PDF extraction retains damaged formula glyphs and page headers; inspect prose dump, use numerical comparison as diagnostic only."
+    }
+  ],
+  "numerical_selection": {
+    "included": [
+      "abssw-v2-proofs.tex",
+      "friedl-sudan-proof-region.tex"
+    ],
+    "works": 2,
+    "reason": "Native TeX proof regions preserve paragraph boundaries and mask mathematics through the installed profiler. One edition per work. FS original is a gzip-compressed single TeX file despite retained .tar suffix; excluded historical text inside remove macros and excluded introduction/conclusion/references.",
+    "excluded": [
+      "almss-point-line.txt",
+      "arora-safra-bivariate.txt",
+      "shoup-finite-fields.txt",
+      "arora-safra-bivariate-blocks.md",
+      "almss-point-line-blocks.md"
+    ],
+    "exclusion_reason": "PDF extracts introduce damaged math glyphs, split paragraphs or merge several paragraphs. Their actual source arguments were read as qualitative evidence; their numerical paragraph profiles are not used.",
+    "fs_source": {
+      "public_url": "https://arxiv.org/abs/1307.3975v1",
+      "source_artifact_sha256": "4b56e8dc84583a279561098d6d296bd0b5ca3e5befc4210ea4e141333bf7ccc5",
+      "original_tex_lines": "1115–1633, Sections 2–3; remove-macro arguments excluded",
+      "private_region_sha256": "e9814443b36e285dc63df72d9b54262fcada8a4a1f015b29c95b1ae470818e78"
+    }
+  },
+  "target_region": "The theorem and full argument up to Source and verification account; YAML, link-definition metadata, final verification note and bibliography excluded. Full manuscript profiles retained separately as context."
+}

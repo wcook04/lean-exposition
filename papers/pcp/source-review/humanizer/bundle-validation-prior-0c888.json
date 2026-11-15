@@ -1,0 +1,38 @@
+{
+  "bundle_id": "pcp-a0ce13ed-curated",
+  "assembled": "passed",
+  "check_bundle": "passed",
+  "export": "passed",
+  "manifest_sha256": "1a27bf7faffb38a37d945b0f83642050b47d79b33b8f1bb764e3658936d181e3",
+  "manifest_file_checks": {
+    "graph.json": true,
+    "papers/long.md": true,
+    "papers/long.json": true,
+    "papers/short.md": true,
+    "papers/short.json": true,
+    "papers/expository.md": true,
+    "papers/expository.json": true
+  },
+  "manifest_all_file_hashes_match": true,
+  "zip_sha256": "0c8883a7a1bb8c5b7b3c3cbd0fb375008c9187d7bb6b5179eee9f7bee1df2366",
+  "zip_integrity_error": null,
+  "zip_members": [
+    "graph.json",
+    "manifest.json",
+    "papers/expository.json",
+    "papers/expository.md",
+    "papers/long.json",
+    "papers/long.md",
+    "papers/short.json",
+    "papers/short.md"
+  ],
+  "paper_states": [
+    "draft",
+    "draft",
+    "draft"
+  ],
+  "extraction_status": "not_run",
+  "semantic_certification": false,
+  "scope": "Byte and structural checks; not Lean build or independent proof certification.",
+  "prior_bundle_preserved": "work/pcp-authored-bundle.zip"
+}

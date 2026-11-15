@@ -52,16 +52,23 @@ expression dependencies.
 
 ## Checks and review state
 
-The [archived reviews](source-review/review-summary.md) distinguish source-based
-mathematical checks, finite Python calculations, bundle validation and reader
-review. The algebra, binary, theorem and specialist reviews record corrections
-and rechecks of their named revisions. The exposition's consequential
-source-level findings were resolved and rechecked at revision `2e2333ca`.
-All 72 final PDF pages were visually reviewed, the 19 companion annotations
-passed structural checks, and the assembled reader bundle passed validation.
-The [review summary](source-review/review-summary.md) gives the exact revisions
-and the scope of the reader inspection. A review of an earlier revision does
-not automatically cover later edits.
+The current prose and literature revision is documented in the
+[paragraph-review archive](source-review/humanizer/README.md). Final source,
+sequential-reading and mathematical-preservation reviews are complete. All 72
+revised PDF pages passed visual review, and all 20 companion annotations resolve
+in both the canonical and relocated packets. Finite examples and the source-package
+tests passed; two opt-in pinned Lean fixtures were skipped.
+
+A reader audit found overly broad paragraph-to-Lean associations. These were
+[corrected against the pinned statements](source-review/humanizer/mapping-review-corrected.md),
+and the [corrected bundle](source-review/humanizer/bundle-validation-corrected.json)
+passed structural validation. Reader links are selected source entry points,
+not exhaustive statement matching. Formula-only quote anchors unsupported by
+the reader are omitted; the declarations remain indexed and the manuscripts
+retain their source hyperlinks. The [review summary](source-review/review-summary.md)
+separates these checks and retains the earlier reports and mappings as historical
+evidence. Structural validation does not establish mathematical correspondence
+or a fresh Lean build.
 
 Run the finite examples from the repository root with ordinary Python 3:
 
@@ -127,8 +134,14 @@ This checks file presence, PDF hashes and named companion destinations. It does
 not inspect typography, test external websites, or replace an actual reading of
 the rendered pages.
 
-The [source inventory](source-review/sources.json) records hashes, public URLs
-and redistribution status. Reference PDFs were retained in a separate working
+The [source inventory](source-review/sources.json) records retained items, hashes,
+public URLs and redistribution status. The separate
+[bibliography acquisition record](source-review/acquisition-status.json) reports
+21 of the corrected paper's 24 references obtained or already available,
+including two code repositories. DeMillo–Lipton, Ore and Schwartz remain
+unacquired; the record gives the exact items and failed access attempts. This
+coverage count differs from the inventory's count of source files and versions.
+Reference PDFs were retained in a separate working
 annex for this reconstruction; they are not bundled with these papers. Permission
 to download a source does not by itself permit redistribution. Sources marked
 `NOASSERTION` remain reference-only until their rights are established. The

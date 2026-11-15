@@ -1,0 +1,48 @@
+{
+  "bundle_id": "pcp-a0ce13ed-curated",
+  "edition": "audited local correspondence",
+  "assembled": "passed",
+  "check_bundle": "passed",
+  "export": "passed",
+  "manifest_sha256": "f23d3b26881458f5326e218dd53a08ff23860834f512e34d003926f3a37ba8f8",
+  "manifest_file_checks": {
+    "graph.json": true,
+    "papers/long.md": true,
+    "papers/long.json": true,
+    "papers/short.md": true,
+    "papers/short.json": true,
+    "papers/expository.md": true,
+    "papers/expository.json": true
+  },
+  "manifest_all_file_hashes_match": true,
+  "zip_sha256": "8ac76496d9d9853f2984a24b1f9cc0871c3f67c9b68fb17b2b5d5ee9259dba7b",
+  "zip_integrity_error": null,
+  "zip_members": [
+    "graph.json",
+    "manifest.json",
+    "papers/expository.json",
+    "papers/expository.md",
+    "papers/long.json",
+    "papers/long.md",
+    "papers/short.json",
+    "papers/short.md"
+  ],
+  "paper_states": [
+    "draft",
+    "draft",
+    "draft"
+  ],
+  "extraction_status": "not_run",
+  "semantic_certification": false,
+  "scope": "Byte and structural checks; bounded correspondence audits, not Lean build or complete independent proof certification.",
+  "prior_receipt": "work/pcp-humanizer/bundle-validation-prior-81ce.json",
+  "consumer_journey": {
+    "endpoint-direct": 9,
+    "endpoint-prerequisites": 9,
+    "line-direct": 1,
+    "line-prerequisites": 1,
+    "source-selected-records": 10,
+    "zip-theorem": 1
+  },
+  "consumer_journey_correction": "Initial source query used a non-existent guessed PolynomialLine.lean record and failed; corrected to the graph-declared PolynomialLineCharacterization.lean source and passed."
+}

@@ -1,0 +1,23 @@
+{
+  "status": "superseded; historical evidence only",
+  "bundle_sha256": "81ce615798ddf8eb63b52a244ca9dd45584df65a26c3aff84f501269b74f9266",
+  "graph_sha256": "b7d92ed2314221ece705e8f7dfe676869f22937d64aa1ca47cb425cbee651cb0",
+  "scope": "These byte-identical mappings passed structural validation but contained broad fallback or downstream-theorem associations that did not establish direct semantic correspondence. They must not be used as current mappings. Corrected source selections are being reviewed separately.",
+  "entries": [
+    {
+      "file": "long.json",
+      "zip_member": "papers/long.json",
+      "sha256": "9b12ace7e3daca1a95ed288bbc00ba52db0d348af2ccd73e21b67175d4934293"
+    },
+    {
+      "file": "short.json",
+      "zip_member": "papers/short.json",
+      "sha256": "1b9dbc0f7579b9ab2def5b832b189bdb854bd0cbb22a0379b00d669ee64a7df1"
+    },
+    {
+      "file": "expository.json",
+      "zip_member": "papers/expository.json",
+      "sha256": "4cb85588a5e02451e3dbac5b1170bc81761af314cafb10c707be3d493c9ec1e5"
+    }
+  ]
+}

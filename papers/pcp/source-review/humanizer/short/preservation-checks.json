@@ -1,0 +1,25 @@
+{
+  "baseline_sha256": "72d165920fbc02aa7b58bc626c3e6899cd2f099089a80cb10efa792279127577",
+  "revised_sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+  "checks": {
+    "display_math_exact": true,
+    "inline_math_exact_order": true,
+    "passage_markers_exact": true,
+    "paired_passages": true,
+    "headings_exact": true,
+    "all_original_links_retained": true,
+    "all_original_urls_retained": true,
+    "lean_reference_definitions_exact": true,
+    "main_theorem_quantifier_text_exact": true
+  },
+  "display_math_blocks": 38,
+  "inline_math_spans": 275,
+  "passages": 14,
+  "new_urls": [
+    "https://arxiv.org/abs/1307.3975v1",
+    "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+    "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+    "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf"
+  ],
+  "mechanical_limit": "Exact formula/link checks do not establish semantic preservation of prose; independent mathematical review remains required."
+}

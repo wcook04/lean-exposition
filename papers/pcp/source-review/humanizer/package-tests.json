@@ -1,0 +1,17 @@
+{
+  "schema": "pcp-package-test-summary-v1",
+  "date": "2026-11-15",
+  "executor": "coordinating agent",
+  "evidence": "Private raw log read by archive agent; host-specific fixture output omitted from this public summary.",
+  "raw_log_locator": "private-audit:pcp-humanizer/unit-tests.log",
+  "raw_log_sha256": "6bfebf9ba6198a6f4f07fbce39a22d089a199387e28b486659f2eacf715585a3",
+  "tests_run": 710,
+  "elapsed_seconds": 50.372,
+  "result": "OK",
+  "skipped": 2,
+  "skipped_scope": "Two opt-in pinned Lean fixtures, according to coordinating agent. No fresh full Lean build performed.",
+  "runtime_code_change": "None in this prose/literature revision, according to coordinating agent.",
+  "boundary": "Software tests are separate from mathematical preservation, source correspondence, rendering, and reader review.",
+  "command": ".venv/bin/python -m unittest discover -s tests > ../pcp-humanizer/unit-tests.log 2>&1",
+  "working_directory": "repository root"
+}
