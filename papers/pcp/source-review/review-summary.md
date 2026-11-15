@@ -1,5 +1,9 @@
 # PCP source and manuscript reviews
 
+The subsequent [returned-review revision](review-round-2/README.md) supersedes the
+manuscript and reader state described below. This report is retained for its
+original hashes and outcomes.
+
 ## Prose and literature revision
 
 The three papers have received paragraph-level prose reviews and closer

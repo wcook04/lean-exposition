@@ -28,6 +28,17 @@ function Header(header)
   return header
 end
 
+function Table(tbl)
+  if FORMAT ~= "latex" then return tbl end
+  local rows = 0
+  for _, body in ipairs(tbl.bodies) do rows = rows + #body.body end
+  if rows <= 4 then
+    -- Reserve space for a compact comparison, including wrapped cell text.
+    return {pandoc.RawBlock("latex", "\\Needspace{" .. (3 * rows + 2) .. "\\baselineskip}"), tbl}
+  end
+  return tbl
+end
+
 function Link(link)
   if FORMAT ~= "latex" then return link end
   local file, fragment = link.target:match("^(%.%./[^#]+%.md)(.*)$")

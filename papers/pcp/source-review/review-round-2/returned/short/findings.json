@@ -1,0 +1,1672 @@
+{
+  "packet": "pcp-review-2-specialist",
+  "review_status": "completed critique; no incorporation",
+  "edition_manifest_sha256": "75ec709e1e62f074e039e23082269015d9487337cd9274610df1f06f141a2e63",
+  "primary_sha256": "c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377",
+  "panel": [
+    {
+      "perspective": "source owner",
+      "anchor": "RECIPIENT_CONTEXT.md and Lee’s pinned mathematical guide",
+      "already_knows": "The formal development and its interfaces; no preferences or endorsement are inferred for a named person.",
+      "reviewer": "model perspective"
+    },
+    {
+      "perspective": "PCP researcher",
+      "anchor": "ABSSW arXiv:2608.17429v2 and its testing antecedents",
+      "already_knows": "PCP, finite-field low-degree tests, the supplied v2 construction; seeks exact implementation departures.",
+      "reviewer": "model perspective"
+    },
+    {
+      "perspective": "complexity theorist",
+      "anchor": "Arora–Safra and ALMSS theorem context; declared specialist audience",
+      "already_knows": "NP, reductions, finite fields and interpolation; not this algebraic construction or its oracle conventions.",
+      "reviewer": "model perspective"
+    }
+  ],
+  "finding_field_contract": {
+    "required": [
+      "id",
+      "paper",
+      "perspective",
+      "locator",
+      "criterion",
+      "kind",
+      "severity",
+      "confidence",
+      "finding",
+      "why_it_matters",
+      "suggested_direction",
+      "evidence"
+    ],
+    "locator": [
+      "section",
+      "passage_id_if_present",
+      "quote_at_most_25_words",
+      "pdf_page_if_used"
+    ],
+    "severity": [
+      "critical",
+      "major",
+      "moderate",
+      "minor",
+      "keep"
+    ]
+  },
+  "summary_counts": {
+    "total": 49,
+    "by_severity": {
+      "critical": 0,
+      "major": 1,
+      "moderate": 17,
+      "minor": 16,
+      "keep": 15
+    },
+    "by_criterion": {
+      "1": 27,
+      "2": 2,
+      "3": 1,
+      "4": 0,
+      "5": 6,
+      "6": 8,
+      "7": 5
+    }
+  },
+  "findings": [
+    {
+      "id": "ALG-01",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-weighted-test",
+        "quote_at_most_25_words": "then shows that the corrected word satisfies every constraint exactly.",
+        "source_lines": [
+          174,
+          174
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The pointwise prediction estimate that turns average failure into exact satisfaction is deferred but not displayed. The stated proof sketch is correct once that estimate is supplied.",
+      "why_it_matters": "A reader can recover the distance bound immediately but cannot account for the exact-correction step or the stated three-part error budget from the short paragraph alone.",
+      "suggested_direction": "Display Pr_v[A_f(x,v)≠g(x)]≤2(c+1)δ for every x, then identify the three comparison costs 2(c+1)δ, (c+1)δ, 2(c+1)^2δ. If space precludes this, explicitly label the paragraph a sketch and identify this precise delegated step.",
+      "evidence": [
+        "papers/long/reasoning-record.md:228–295, pcp-long-algebra-weighted-plurality",
+        "formal/lean/PCP/Algebraic/WeightedConstraintSoundness.lean:130–176, prediction_error_le and correction_satisfies"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-02",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-binary-decoding",
+        "quote_at_most_25_words": "This yields one decoded field value and bounds on both full-label and homogeneous-label error.",
+        "source_lines": [
+          193,
+          193
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The paragraph proves evaluation structure but omits the affine-consistency argument that bounds the restricted homogeneous error for that same field value.",
+      "why_it_matters": "This is an important interface: full-space proximity alone can be arbitrarily weak on the homogeneous subspace.",
+      "suggested_direction": "Insert: affine consistency costs at most ε for its check plus 2ε for correction, giving affine error≤3ε; homogeneous labels occupy half that affine space, giving homogeneous error≤6ε. Then state the 28ε good/bad-row bound.",
+      "evidence": [
+        "papers/long/reasoning-record.md:942–989, Hadamard soundness and row decoding",
+        "formal/lean/PCP/Algebraic/HadamardSoundness.lean:29–61, test_soundness",
+        "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean:34–53, exists_row_message_distance_le"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-03",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "quote_at_most_25_words": "tests a uniformly selected auxiliary row by the inner test",
+        "source_lines": [
+          208,
+          208
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The exact outer experiment leaves the line-row binding and conjunction implicit. The tested auxiliary row must be the row for the same sampled (u,v) used by the comparison; the primary Hadamard test uses the row at u.",
+      "why_it_matters": "The constants in (12) require every component failure to be bounded by outer rejection. A reader who imports the inner tester's coin-flip structure at this level gets a different protocol and budget.",
+      "suggested_direction": "State the three numbered checks, their shared (u,v), uniform homogeneous comparison label, independent tester seeds, and that all three must pass.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean:35–57, Sample and test",
+        "papers/long/reasoning-record.md:1077–1090, pcp-long-encoded-line-test"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-04",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "5. Correcting the nonuniform certificate queries",
+        "passage_id_if_present": "pcp-short-outer-correction",
+        "quote_at_most_25_words": "otherwise return the corrected auxiliary value at $\\Phi(0)$.",
+        "source_lines": [
+          249,
+          249
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The algorithm description postpones the label quantifier and does not state the reuse of the inner correction direction and label between the sampled point and the origin.",
+      "why_it_matters": "The exact formal procedure returns a homogeneous observation, not a field value, and its guarantee is averaged over the requested label.",
+      "suggested_direction": "State before the procedure that L is uniform homogeneous, the auxiliary row is that of (a,v), and the two inner corrections share L and their direction. Preserve the fact that only the inner-test seed is independent of those choices.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean:37–60, Sample and run",
+        "papers/long/reasoning-record.md:1135–1145, pcp-long-outer-local-corrector"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-05",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "5. Correcting the nonuniform certificate queries",
+        "passage_id_if_present": "pcp-short-outer-correction",
+        "quote_at_most_25_words": "Taking a homogeneous binary observation halves this term.",
+        "source_lines": [
+          260,
+          260
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The proof jumps from a wrong field value at zero to the additive binary root-loss term. The missing object is the origin-versus-sampled-point inequality, not another independence assumption.",
+      "why_it_matters": "Without that inequality the reader can mistake the factor 1/2 for an individual-label guarantee, or fail to reconstruct the coefficient of R_a.",
+      "suggested_direction": "Display the origin-to-sample inequality from long (B18), set e=(c+1)K R_a, then list the two e and two R_a losses. See the complete replacement in agent_algebra.md §5.",
+      "evidence": [
+        "papers/long/reasoning-record.md:1150–1180, equations (B16)–(B18)",
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222–313, failure_le"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-06",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "5. Correcting the nonuniform certificate queries",
+        "passage_id_if_present": "pcp-short-zero",
+        "quote_at_most_25_words": "The actual ZERO check reads one primary bit and makes two correction calls to the certificate.",
+        "source_lines": [
+          272,
+          272
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The two certificate calls use the same x and homogeneous label as the primary read, with independent remaining seeds. This protocol information is not made explicit in the short paragraph.",
+      "why_it_matters": "The two identities and the ideal rejection lower bound are coupled through one label. Their detections need not be independent.",
+      "suggested_direction": "State the shared x,L and independent remaining seeds, and explain that a single nonzero residual already gives detection probability 1/2.",
+      "evidence": [
+        "papers/long/reasoning-record.md:1184–1254, pcp-long-zero-certificate and pcp-long-zero-actual-test",
+        "formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean:98–193, two_corrector_rejection_bound"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-07",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "6. One decoding for all seven checks",
+        "passage_id_if_present": "pcp-short-assembly",
+        "quote_at_most_25_words": "The proof contains eight tables: degree-three Hadamard encodings of $P$ and $Q_P$",
+        "source_lines": [
+          296,
+          296
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The soundness section describes the received tables as encodings before decoding has been proved. This is intended-content shorthand, not an established mathematical error.",
+      "why_it_matters": "A reader needs to distinguish arbitrary prover strings, honest encodings, and the four polynomials chosen in soundness analysis.",
+      "suggested_direction": "Say “The received proof consists of eight arbitrary binary tables. In an honest proof ...” and use a compact four-row table to state intended contents, domains, and encoding degrees.",
+      "evidence": [
+        "papers/long/reasoning-record.md:1370–1384, pcp-long-eight-tables",
+        "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean:58–113, decoding from arbitrary π"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-08",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "6. One decoding for all seven checks",
+        "passage_id_if_present": "pcp-short-assembly",
+        "quote_at_most_25_words": "L(Q_P(x,y))=L(P(x))+L(P(y)).",
+        "source_lines": [
+          299,
+          299
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Equation (17) uses the already defined difference polynomial Q_P to describe the received-bit test, while the following soundness argument must establish the identity for the decoded Q.",
+      "why_it_matters": "As written the test can look tautological. The verifier reads table bits, not decoded polynomials known to satisfy the relation.",
+      "suggested_direction": "Write the operational equation using received tables f_Q(x,y,L)=f_P(x,L)+f_P(y,L); reserve Q for the decoded polynomial and prove Q=P(X)−P(Y) in the next paragraph.",
+      "evidence": [
+        "papers/long/reasoning-record.md:1387–1400 and 1450–1470, pcp-long-derived-constraints and pcp-long-difference-soundness",
+        "formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean:86–130, colorable_of_rejection_bounds"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-09",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "2. Three-colouring as two vanishing conditions",
+        "passage_id_if_present": "pcp-short-colour-constraints",
+        "quote_at_most_25_words": "$M$ can be chosen with degree at most $\\deg A$.",
+        "source_lines": [
+          78,
+          78
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The honest certificate degree bound is correct but the degree calculation is omitted at its first use.",
+      "why_it_matters": "The completeness degree cap later relies on this bound; a one-line derivation avoids an unnecessary source detour.",
+      "suggested_direction": "Add deg U_i≤deg A−h for nonzero quotients, hence deg(Y_i U_i)≤deg A because h≥1. Keep the zero-polynomial convention implicit or state totalDegree if formal precision is wanted.",
+      "evidence": [
+        "papers/long/reasoning-record.md:142–170, pcp-long-algebra-grid-vanishing"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-10",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-binary-decoding",
+        "quote_at_most_25_words": "Decode the rows to field values.",
+        "source_lines": [
+          197,
+          197
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "This step is existential analysis of the received proof; the verifier is not running a global decoding algorithm. The context suggests this but does not say so.",
+      "why_it_matters": "Separating proof choices from verifier computation prevents the later polynomial-time claim from appearing to require efficient nearest-codeword decoding.",
+      "suggested_direction": "At the first such step add one sentence that decoded values and polynomials are chosen only in the soundness proof; the verifier performs only the stated local reads.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean:8–22 and 94–146",
+        "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean:8–19"
+      ],
+      "mathematical_status": "expository recommendation",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "ALG-11",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "3. Encoding the values that the verifier needs",
+        "passage_id_if_present": "pcp-short-digit-encoding",
+        "quote_at_most_25_words": "The honest prover encodes polynomials of degree strictly below $b^c$; decoding gives only the bound $D$.",
+        "source_lines": [
+          108,
+          108
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The text correctly distinguishes the strict honest capacity from the larger decoded degree bound.",
+      "why_it_matters": "Merging these bounds would silently weaken the field-size and local-correction hypotheses.",
+      "suggested_direction": "Retain the strict/weak inequality distinction, the shared symbol D, and the statement that field size must accommodate D.",
+      "evidence": [
+        "papers/long/reasoning-record.md:766–813, digit encoding and decoding",
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222–236, hdecode"
+      ],
+      "mathematical_status": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "ALG-12",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-binary-decoding",
+        "quote_at_most_25_words": "There is no small-rejection premise in (11), and both bounds concern the same decoded polynomial.",
+        "source_lines": [
+          204,
+          204
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The unconditional row-decoding statement matches the good-row/bad-row argument and inspected Lean theorem.",
+      "why_it_matters": "Local correction averages over arbitrary auxiliary rows, so a theorem requiring every row to be good would not suffice.",
+      "suggested_direction": "Retain this sentence and attach any restricted-label expansion to the same decoded object.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean:108–145, exists_polynomial_distance_le"
+      ],
+      "mathematical_status": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "ALG-13",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "5. Correcting the nonuniform certificate queries",
+        "passage_id_if_present": "pcp-short-outer-correction",
+        "quote_at_most_25_words": "This statement allows an arbitrary auxiliary table.",
+        "source_lines": [
+          262,
+          262
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "Equation (14) has no hidden auxiliary proximity assumption and permits frequent rejection.",
+      "why_it_matters": "This is the main reason correction can be used at nonuniform certificate points without assuming that all line tables are already coherent.",
+      "suggested_direction": "Preserve the dependence on actual R_a and the rejection-inclusive failure event; do not replace it by an unconditional local-decoding success claim.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222–313, failure_le"
+      ],
+      "mathematical_status": "supported passage to preserve",
+      "merged_aliases": [
+        "FA06"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "ALG-14",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "5. Correcting the nonuniform certificate queries",
+        "passage_id_if_present": "pcp-short-zero",
+        "quote_at_most_25_words": "The factor $1+2C$ multiplies the derived-read error because that error enters through rejection.",
+        "source_lines": [
+          290,
+          290
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The multiplier matches the actual rejection-transfer proof.",
+      "why_it_matters": "Dropping it changes the quantitative gap calculation.",
+      "suggested_direction": "Keep the factor and explain it as the coefficient in the existing transfer argument; do not imply that other valid source-paper analyses are thereby refuted.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean:246–280, rejectionRate_lower_bound"
+      ],
+      "mathematical_status": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "ALG-15",
+      "paper": "short",
+      "perspective": "complexity theorist; PCP researcher; source-owner review",
+      "locator": {
+        "section": "6. One decoding for all seven checks",
+        "passage_id_if_present": "pcp-short-assembly",
+        "quote_at_most_25_words": "The soundness argument used the same four decoded polynomials throughout;",
+        "source_lines": [
+          338,
+          338
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The central common-decoding invariant is actually discharged by the displayed proof and inspected formal assembly.",
+      "why_it_matters": "Independent existential witnesses for the later constraints could describe different colourings and would not prove the desired conclusion.",
+      "suggested_direction": "Preserve this sentence and the earlier “Fix these choices”; clarify that auxiliary row decodings need not be globally consistent.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean:86–113",
+        "formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean:125–167"
+      ],
+      "mathematical_status": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "FA01",
+      "paper": "short",
+      "perspective": "source owner / complexity theorist",
+      "locator": {
+        "section": "7",
+        "passage_id_if_present": "pcp-short-complexity",
+        "quote_at_most_25_words": "compiled into a finite multi-tape machine with a polynomial cost bound",
+        "source_lines": [
+          393,
+          393
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "error",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The compiler target named by the linked theorem is Mathlib FinTM2, a finite multi-stack machine, rather than the multi-tape reference model. This is a local nomenclature mismatch, not a failure of polynomial-time implementation or the PCP theorem.",
+      "why_it_matters": "A reader following the exact formal correspondence encounters different machine models; the separate simulation bridge is precisely what identifies the concrete model with reference NP.",
+      "suggested_direction": "Replace with “compiled into Mathlib’s finite multi-stack machine model with a polynomial cost bound”, or simply “compiled into a concrete finite-machine model with a polynomial cost bound”.",
+      "evidence": [
+        "formal/lean/PCP/Complexity/Machine.lean:9–12,66–73",
+        "formal/lean/PCP/Complexity/ThreeColorRuntime.lean:10–15",
+        "formal/lean/docs/pcp/reading-guide.md §3 Polynomial time",
+        "papers/long/reasoning-record.md:1687"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "established local nomenclature mismatch; not a false central theorem"
+    },
+    {
+      "id": "FA02",
+      "paper": "short and long",
+      "perspective": "specialist / source owner",
+      "locator": {
+        "section": "7",
+        "passage_id_if_present": "pcp-short-resources",
+        "quote_at_most_25_words": "They sum to $20c+107=187$ physical proof-bit reads",
+        "source_lines": [
+          376,
+          376
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The sum is a proved query bound. It is not an exact read count for every seed; whole-field zero seeds accept without querying, and several subroutine query bounds are deliberately loose. The surrounding text partly disambiguates this by saying “bounds”, but the sentence can still be read as exact.",
+      "why_it_matters": "Exact and asymptotic resources are a stated aim of this explanation, and the Lean verifier.queries field is a maximum depth.",
+      "suggested_direction": "Say “Their sum gives the bound of at most 20c+107=187 physical proof-bit reads.” Make the same local adjustment to the long record line 1409. Keep 187; do not turn this revision into optimization.",
+      "evidence": [
+        "formal/lean/PCP/Verifier/Definition.lean:29–36,80–93",
+        "formal/lean/PCP/Algebraic/ThreeColorVerifier.lean:320–370",
+        "formal/lean/PCP/Algebraic/BinaryLowDegreeTest.lean:46–59",
+        "papers/long/reasoning-record.md:1409,1628,1646"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "FA03",
+      "paper": "reader",
+      "perspective": "source owner / specialist",
+      "locator": {
+        "section": "5",
+        "passage_id_if_present": "pcp-short-zero",
+        "quote_at_most_25_words": "The factor $1+2C$ multiplies the derived-read error because that error enters through rejection.",
+        "source_lines": [
+          290,
+          290
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The selected ZERO association supports the base bound (15); the decisive randomized-derived-read inequality (16) requires a different source theorem. A reader inspecting only that selected proposition does not see the rejection-transfer argument. The current prose itself does not claim this selected theorem alone proves (16).",
+      "why_it_matters": "This is one of the paper’s promised delicate implementation differences. Making the formal route explicit lowers the source owner’s extra checking work.",
+      "suggested_direction": "Add a local ordinary source link or a second selected association at Eq.(16) to the derived ZERO lower-bound declaration, labelled as support for the randomized derived read. Preserve the base association.",
+      "evidence": [
+        "reader/edition.json passages pcp-short-zero",
+        "formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean:249–267",
+        "formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean:228 onward"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "located editorial/evidence recommendation"
+    },
+    {
+      "id": "FA04",
+      "paper": "reader",
+      "perspective": "complexity theorist",
+      "locator": {
+        "section": "1 / Formal correspondence and credits",
+        "passage_id_if_present": "pcp-short-theorem",
+        "quote_at_most_25_words": "The verifier, implementation, constants and polynomial are fixed for $L$ before the input is chosen.",
+        "source_lines": [
+          22,
+          22
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "Both selected headline associations land on the concrete NP theorem. The separate reference-NP bridge is correctly linked in the final credits, but absent from the selected declaration index. This is not a broken link or missing mathematical proof; it is a longer definition-recovery path.",
+      "why_it_matters": "A skeptical reader who wants to confirm that NP has its usual meaning needs the bridge as well as the verifier theorem.",
+      "suggested_direction": "Keep the precise headline and expose ReferenceNP.inNP_iff_mem as a prerequisite or contextual link beside the theorem. Do not replace the concrete theorem by a generic uninstantiated interface.",
+      "evidence": [
+        "reader/edition.json declarations list",
+        "formal/lean/PCP/Theorem.lean:25–33",
+        "formal/lean/PCP/Complexity/NP.lean:30–43",
+        "formal/lean/PCP/Complexity/ReferenceNPConverse.lean:18–41"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "located editorial/evidence recommendation"
+    },
+    {
+      "id": "FA05",
+      "paper": "short",
+      "perspective": "specialist",
+      "locator": {
+        "section": "4",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "quote_at_most_25_words": "The restricted conclusion is for homogeneous linear labels.",
+        "source_lines": [
+          241,
+          241
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "This restriction is exact and necessary; do not simplify it to “linear” without distinguishing affine labels, or infer it by restricting a full-label proximity bound.",
+      "why_it_matters": "The difference check uses homogeneous observations, while the derived cubic reads use full-label proximity. Both must concern the same decoded polynomial.",
+      "suggested_direction": "Retain this sentence and retain the same-polynomial clause in the inner decoding paragraph. A small label-domain table could consolidate the distinction without deleting it.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325–339",
+        "formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean:108–119"
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "LIT-01",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "Formal correspondence and credits / pcp-short-formal-correspondence",
+        "quote_at_most_25_words": "The PCP construction and its two encodings are due to",
+        "source_lines": [
+          413,
+          413
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-formal-correspondence",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "credit",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "This gives blanket origin credit for both encodings, although the primary paper explicitly treats the Hadamard layer as established.",
+      "why_it_matters": "A specialist may read the closing credit as a novelty claim about the low-degree long code. It also loses the specific novelty of set-multilinear degree reduction.",
+      "suggested_direction": "Replace with: 'The PCP construction follows Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. It combines their set-multilinear form of inverse-Kronecker degree reduction with the established low-degree Hadamard encoding; the formal proof is due to Troy Lee.' Preserve the existing AI-assistance and correction-credit sentences.",
+      "evidence": [
+        {
+          "path": "literature/abssw-v2/tex/intro.tex",
+          "lines": "29–39",
+          "role": "Source distinguishes standard Hadamard concatenation, inverse-Kronecker antecedent and its new set-multilinear variant."
+        },
+        {
+          "path": "literature/abssw-v2/tex/technical_tools.tex",
+          "lines": "5, 130–149, 246",
+          "role": "Identifies higher-degree Hadamard/long code and earlier BLR/ALMSS tests."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "attribution overstatement supported by the cited primary edition"
+    },
+    {
+      "id": "LIT-02",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "§1 / pcp-short-theorem",
+        "quote_at_most_25_words": "Two encodings reduce these costs.",
+        "source_lines": [
+          30,
+          30
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-theorem",
+        "pdf_page_if_used": null
+      },
+      "criterion": 2,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The opening identifies bit-read cost but omits why directly encoding the entire line-coefficient vector is too expensive in proof length and randomness.",
+      "why_it_matters": "The digit encoding can look like an arbitrary representation trick rather than the step that makes binary encoding compatible with logarithmic address length.",
+      "suggested_direction": "Add one sentence before the digit map: encoding the whole coefficient vector directly can make the proof quasipolynomially large; applying the low-degree binary code to individual field values after the digit transformation avoids that size cost. Keep the full parameter proof in §7.",
+      "evidence": [
+        {
+          "path": "literature/abssw-v2/tex/intro.tex",
+          "lines": "29–39, 47–50",
+          "role": "States the line-coefficient/low-degree-long-code blowup and resulting two-level design."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "expository omission or ambiguity, not established mathematical error"
+    },
+    {
+      "id": "LIT-03",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "§4 / pcp-short-weighted-test",
+        "quote_at_most_25_words": "with a two-ary independent local characterization.",
+        "source_lines": [
+          174,
+          174
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-weighted-test",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "Kaufman–Sudan uses the defined term local formal characterization; inserting formal avoids weakening the quoted applicability condition.",
+      "why_it_matters": "A merely arbitrary local characterization is not the theorem hypothesis.",
+      "suggested_direction": "Change to: with a two-ary independent local formal characterization. No extra survey paragraph is needed.",
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf",
+          "web_ref": "turn6view1",
+          "locator": "Definitions 2.3 and 2.5, Theorem 2.9; physical PDF p5",
+          "role": "Exact source hypothesis."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "located editorial/evidence recommendation"
+    },
+    {
+      "id": "LIT-04",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "§4 / pcp-short-weighted-test",
+        "quote_at_most_25_words": "This calculation explains the distinction between the tests;",
+        "source_lines": [
+          183,
+          183
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-weighted-test",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The historical counterexample correctly falsifies the old scalar test without asserting an attack on the whole verifier.",
+      "why_it_matters": "Its large-field family shows the structural defect; the final scope sentence prevents a materially stronger unsupported claim.",
+      "suggested_direction": "Retain c=2, q=2^(2k), k>=2, m>=1, the root-bound argument, the v1/v2 split and Lee attribution.",
+      "evidence": [
+        {
+          "path": "literature/abssw-v1/tex/main.tex",
+          "lines": "478–485, 716–742",
+          "role": "Old arbitrary-node characterization and order-(c+1) unit-weight test."
+        },
+        {
+          "path": "literature/abssw-v2/tex/preliminaries.tex",
+          "lines": "124–134",
+          "role": "Corrected full-generator Lagrange construction."
+        },
+        {
+          "path": "literature/abssw-v2/tex/main.tex",
+          "lines": "64",
+          "role": "Explicit acknowledgement of Lee identifying the earlier Lemma3.3 error."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "LIT-05",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "§4 / pcp-short-binary-decoding",
+        "quote_at_most_25_words": "in the form stated in [1, Theorem B.1]",
+        "source_lines": [
+          187,
+          187
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-binary-decoding",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The text distinguishes BLR test provenance from the characteristic-two distance bound and its exact later formulation.",
+      "why_it_matters": "Citing only BLR would conceal the sharper quantitative ingredient; citing BCHKS without its statement range would also be imprecise.",
+      "suggested_direction": "Retain both attributions and the v2 Theorem B.1 bridge. Do not replace the bound by an unspecified O(epsilon).",
+      "evidence": [
+        {
+          "url": "https://www.csc.kth.se/tcs/projects/publications/bchks.pdf",
+          "web_ref": "turn3view1",
+          "locator": "Theorem 1.2, physical PDF p7 / printed p5; Fourier proof physical p12",
+          "role": "Rejection-versus-distance result, stated for distances at most one half."
+        },
+        {
+          "path": "literature/abssw-v2/tex/appendix_-_hadamard_test.tex",
+          "lines": "5–19",
+          "role": "Unqualified binary-vector-space linear-functional statement used by specialist."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "LIT-06",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "§4 / pcp-short-outer-decoding",
+        "quote_at_most_25_words": "with the explicit bounds above from Lee's proof.",
+        "source_lines": [
+          229,
+          229
+        ],
+        "source_path": "papers/short/paper.md",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The explicit point-line constants are correctly identified as implementation-specific; ALMSS is cited for the theorem and proof route.",
+      "why_it_matters": "The original theorem leaves constants existential and assumes positive degree. It is not a source for the numerical 10^6 and 1/(4*10^6).",
+      "suggested_direction": "Keep this qualifier and the whole-field parameter convention. Keep the long proof links for the actual quantitative derivation.",
+      "evidence": [
+        {
+          "url": "https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf",
+          "web_ref": "turn6view0",
+          "locator": "Theorem45, physical PDF p27; AppendixA Theorem65, physical p47",
+          "role": "Original arbitrary line-table and whole-field sampling result."
+        },
+        {
+          "path": "formal/lean/docs/pcp/README.md",
+          "lines": "204–209",
+          "role": "Explicit implementation variation and degree-zero case."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "LIT-07",
+      "paper": "short",
+      "perspective": [
+        "source_owner",
+        "pcp_researcher",
+        "complexity_theorist"
+      ],
+      "locator": {
+        "section": "References / entry 7",
+        "quote_at_most_25_words": "§4, Theorem 5; cited as Theorem 4.1",
+        "source_lines": [
+          424,
+          424
+        ],
+        "source_path": "papers/short/paper.md",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The citation honestly distinguishes the accessible prepublication numbering from the published numbering used by v2.",
+      "why_it_matters": "A reader following the linked PDF can find the intended robust-characterization theorem.",
+      "suggested_direction": "Preserve the edition qualifier; do not silently rename Theorem5 to Theorem4.1 in the linked manuscript.",
+      "evidence": [
+        {
+          "url": "https://www.cs.princeton.edu/courses/archive/spring04/cos598B/bib/RubinfeldS.pdf",
+          "web_ref": "turn2view0",
+          "locator": "§4, Theorem5 and Lemmas6–8, printed pp10–11",
+          "role": "Actual prepublication theorem numbering."
+        }
+      ],
+      "adjudication_status": "proposed; not incorporated",
+      "classification": "supported passage to preserve"
+    },
+    {
+      "id": "ED01",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "Abstract",
+        "passage_id_if_present": "pcp-short-abstract",
+        "quote_at_most_25_words": "A point-versus-line test and a correction procedure can then use constantly many bits.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          8,
+          9
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The abstract names operations but does not yet say how their combination forces a valid colouring or why proof length survives.",
+      "why_it_matters": "A specialist sees a list of ingredients before the reason this explanatory reconstruction is worth choosing.",
+      "suggested_direction": "Use R11 to put the resource obstacle and sufficiently-small-rejection mechanism in the abstract while retaining the exact theorem in §1.",
+      "evidence": [
+        "papers/short/paper.md:8–9"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED02",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "2. Three-colouring as two vanishing conditions",
+        "passage_id_if_present": "pcp-short-colour-constraints",
+        "quote_at_most_25_words": "Choose a nonempty grid",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          44,
+          44
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The paragraph moves from the cubic colour relation to grid padding, interpolation and adjacency without a paragraph break.",
+      "why_it_matters": "Two different construction choices compete for the same paragraph; a cold reader must restart its purpose midway.",
+      "suggested_direction": "Split after the cubic equivalence and define E as the 0/1 adjacency extension of the padded graph.",
+      "evidence": [
+        "papers/short/paper.md:44–44"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED03",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "2. Three-colouring as two vanishing conditions",
+        "passage_id_if_present": "pcp-short-colour-constraints",
+        "quote_at_most_25_words": "The proof therefore needs four principal polynomials",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          78,
+          79
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The degree/converse paragraph ends by introducing the entire oracle architecture.",
+      "why_it_matters": "The first inventory is easy to miss inside the certificate proof, and the auxiliary table types are still implicit.",
+      "suggested_direction": "Separate the certificate calculation from a compact inventory of primary and auxiliary tables; coordinate with R07, without assuming received tables are encodings.",
+      "evidence": [
+        "papers/short/paper.md:78–79"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED04",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "3. Encoding the values that the verifier needs",
+        "passage_id_if_present": "pcp-short-hadamard-encoding",
+        "quote_at_most_25_words": "Fix a linear isomorphism",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          112,
+          112
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The label definition is mathematically precise but does not immediately identify the index as an oracle address and the evaluation as the stored bit.",
+      "why_it_matters": "A complexity theorist can parse the polynomial formula while still lacking a physical proof-query interpretation.",
+      "suggested_direction": "Add one sentence: a label R is a row address and H_r(u)(R) is its stored bit; distinguish label degree r from outer degree D.",
+      "evidence": [
+        "papers/short/paper.md:112–112"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED05",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "3. Encoding the values that the verifier needs",
+        "passage_id_if_present": "pcp-short-hadamard-encoding",
+        "quote_at_most_25_words": "Consequently, for field-valued functions",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          119,
+          119
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The extension of half-distance to functions leaves the point-domain product implicit.",
+      "why_it_matters": "The reader later needs to know whether a distance averages over points, labels, or an exceptional subset.",
+      "suggested_direction": "At (7), name the common finite point domain and say full/homogeneous distances average over that domain and the corresponding label domain.",
+      "evidence": [
+        "papers/short/paper.md:119–119"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED06",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "3. Encoding the values that the verifier needs",
+        "passage_id_if_present": "pcp-short-hadamard-encoding",
+        "quote_at_most_25_words": "To take a weighted sum of field values, however, the verifier uses homogeneous linear labels.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          135,
+          135
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The necessary switch from affine to homogeneous labels would benefit from one explicit zero-constant-term reminder.",
+      "why_it_matters": "The terms linear and affine are overloaded across the surrounding coding discussion; a constant term would not respect weighted addition.",
+      "suggested_direction": "State that homogeneous labels have zero constant term and preserve sums; keep the nonzero-weight permutation argument.",
+      "evidence": [
+        "papers/short/paper.md:135–135"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED07",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-weighted-test",
+        "quote_at_most_25_words": "under the stronger sufficient hypothesis",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          165,
+          165
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The stronger sufficient finite-field hypothesis is asserted without the one-line characteristic-two comparison.",
+      "why_it_matters": "A reader checking the exact cited lemma has to derive the numerical implication independently.",
+      "suggested_direction": "Add that q>2c, with q even, gives q/2-1>=c, the required characteristic-two specialization.",
+      "evidence": [
+        "papers/short/paper.md:165",
+        "Friedl–Sudan corrected arXiv:1307.3975v1, Lemma 4, physical page 2"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED08",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "quote_at_most_25_words": "The corrected auxiliary error, the tested comparison, and the primary error",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          212,
+          212
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The sentence names three sources of loss but suppresses their coefficients immediately before J is introduced.",
+      "why_it_matters": "The reader can copy J without reconstructing why its 29 appears or where the factor two is spent.",
+      "suggested_direction": "Write the three contributions (c+1)Kκ, κ, 28κ, then apply half-distance; preserve the same primary decoding and arbitrary auxiliary rows.",
+      "evidence": [
+        "papers/short/paper.md:212–212"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED09",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "quote_at_most_25_words": "Nearest line polynomials define a corrected point function by plurality.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          229,
+          229
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The paragraph combines an imported theorem, precise scholarly role and a long proof sketch.",
+      "why_it_matters": "Its status changes twice without a paragraph boundary; a reader may mistake orientation for a complete proof.",
+      "suggested_direction": "Separate theorem contract, historical attribution and proof sketch. Name the exact long bivariate/point-line destinations; retain zero-direction and quantitative hypotheses.",
+      "evidence": [
+        "papers/short/paper.md:229–229"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED10",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-resources",
+        "quote_at_most_25_words": "These constants establish the complexity bounds;",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          383,
+          383
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 3,
+      "kind": "overweighted",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Large decimal resource bounds take main-route space while the restricted-label and local-correction deductions remain compressed.",
+      "why_it_matters": "The reader learns an unusable numerical magnitude before fully understanding the mechanism establishing constant queries.",
+      "suggested_direction": "Move decimal evaluations to existing long parameter/sampling/repetition sections; keep the parameter derivation, symbolic gap and named base query upper bound.",
+      "evidence": [
+        "papers/short/paper.md:376–389",
+        "papers/long/reasoning-record.md:1520–1683",
+        "review.md page-share table"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED11",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-resources",
+        "quote_at_most_25_words": "The seven query bounds are",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          370,
+          370
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The seven-entry vector has no labels, and its P,M_A,Q,M_B ordering is not the immediately preceding principal-polynomial order.",
+      "why_it_matters": "Readers cannot reliably associate a cost with a check or inspect why cubic and affine rows differ.",
+      "suggested_direction": "Use R08 to name every check and its bound; keep the distinction between base and amplified verifier.",
+      "evidence": [
+        "papers/short/paper.md:370–370"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED12",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-resources",
+        "quote_at_most_25_words": "constant-degree label vectors use",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          366,
+          366
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The estimate t^3=O(a2^a) omits the elementary comparison a^2=O(2^a).",
+      "why_it_matters": "This is the key resource connection for the large Hadamard label space, and a reader may think a polynomial in log N was silently replaced by log N.",
+      "suggested_direction": "Insert the elementary comparison, then connect logarithmic address length to polynomial proof length.",
+      "evidence": [
+        "papers/short/paper.md:366–366"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED13",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-resources",
+        "quote_at_most_25_words": "using the natural ceiling-log convention",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          344,
+          344
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The special convention for N=0,1 is named rather than stated.",
+      "why_it_matters": "Natural logarithm could be misread as the base-e logarithm, or the empty graph might seem undefined.",
+      "suggested_direction": "Say explicitly that the natural-number ceiling-log value is zero at N=0,1.",
+      "evidence": [
+        "papers/short/paper.md:344–344"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED14",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-complexity",
+        "quote_at_most_25_words": "full reduction and runtime argument",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          403,
+          403
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "One companion destination begins at runtime although the adjacent claims include NP-to-graph reduction and logarithmic transport.",
+      "why_it_matters": "The reader must locate two later arguments rather than arrive at the promised proof.",
+      "suggested_direction": "Give distinct destinations for long runtime (1684 onward), reduction (1706 onward), and transport (1803 onward); fix reader section routing before relying on them.",
+      "evidence": [
+        "papers/short/paper.md:403–403"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED15",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-outer-decoding",
+        "quote_at_most_25_words": "Applying this theorem to (12)",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          231,
+          231
+        ],
+        "pdf_page_if_used": [
+          6,
+          7
+        ]
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The PDF places the theorem-to-decoding lead-in on page 6 and the decisive bound (13) on page 7.",
+      "why_it_matters": "The already dense interface is separated from its conclusion at a page turn.",
+      "suggested_direction": "During reflow, keep the theorem assumptions, application and conclusion together where possible; do not change the mathematics.",
+      "evidence": [
+        "papers/short/paper.pdf, physical pages 6–7"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED16",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "Formal correspondence and credits",
+        "passage_id_if_present": "pcp-short-formal-correspondence",
+        "quote_at_most_25_words": "The old-test calculation in §4 is an ordinary mathematical explanation, not an additional formal theorem.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          411,
+          411
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The evidence paragraph gives mathematical entry points and correctly separates ordinary calculation from formal proof.",
+      "why_it_matters": "It lets a skeptical reader inspect claims without mistaking explanation for a newly verified theorem.",
+      "suggested_direction": "Preserve the modest evidence class and immutable source route. Do not import prior test-count logs into the short prose.",
+      "evidence": [
+        "papers/short/paper.md:411–411"
+      ],
+      "classification": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED17",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-complexity",
+        "quote_at_most_25_words": "its zero extension would be a fixed proof with acceptance probability one",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          405,
+          406
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The converse connects bounded addresses, a finite witness and the fixed-proof soundness quantifier in one concise argument.",
+      "why_it_matters": "It shows why the formal verifier definition does not hide extra computational power.",
+      "suggested_direction": "Retain the finite prefix, all seeds and zero extension; do not shorten this to an unexplained standard converse.",
+      "evidence": [
+        "papers/short/paper.md:405–406"
+      ],
+      "classification": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED18",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "2. Three-colouring as two vanishing conditions",
+        "passage_id_if_present": "pcp-short-colour-constraints",
+        "quote_at_most_25_words": "Both are needed.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          57,
+          57
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The immediately following K4/F4 example demonstrates the missing vertex condition if only edge constraints are checked.",
+      "why_it_matters": "This is a concrete failed simplification that reveals the construction, not optional decorative background.",
+      "suggested_direction": "Retain the example and its zero-colour failure when reallocating space.",
+      "evidence": [
+        "papers/short/paper.md:57–57"
+      ],
+      "classification": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED19",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "1. The theorem and the encoding problem",
+        "passage_id_if_present": "pcp-short-theorem",
+        "quote_at_most_25_words": "A proof may depend on $x$, but it is fixed before the random seed.",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          22,
+          22
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "This short sentence states the quantifier order on which soundness and the converse depend.",
+      "why_it_matters": "Deleting it to reduce short-sentence frequency would weaken the explanation of the headline theorem.",
+      "suggested_direction": "Preserve it verbatim or equally explicitly; do not use register measurements as a pass/fail rule.",
+      "evidence": [
+        "papers/short/paper.md:22–22"
+      ],
+      "classification": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "ED20",
+      "paper": "short",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "6. One decoding for all seven checks",
+        "passage_id_if_present": "pcp-short-assembly",
+        "quote_at_most_25_words": "For example, put",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          322,
+          322
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "This is an incomplete grammatical lead-in to the following display, not an autonomous choppy sentence.",
+      "why_it_matters": "Automatic sentence-fragment counts can misdirect editing toward a necessary equation introduction.",
+      "suggested_direction": "Assess the prose and display as one sentence; separately decide whether the detailed constant evaluation belongs in the long record.",
+      "evidence": [
+        "papers/short/paper.md:322–334",
+        "register/measurement.txt",
+        "contract/REVIEW_RUBRIC.md §7"
+      ],
+      "classification": "supported passage to preserve",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "RD01",
+      "paper": "reader",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "4. The local tests and their decoding guarantee",
+        "passage_id_if_present": "pcp-short-weighted-test",
+        "quote_at_most_25_words": "full weighted argument",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          174,
+          174
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "major",
+      "confidence": "high",
+      "finding": "Clicking this live specialist link reaches “There is no paper at this address.” The plain long-paper route opens correctly.",
+      "why_it_matters": "The reader is blocked at the proof destination for the pointwise estimate omitted from the short account.",
+      "suggested_direction": "Repair section-route handling and validate source click → correct companion heading → return. Treat other same-pattern links as risks until individually tested.",
+      "evidence": [
+        "evidence/browser_observations.json",
+        "reader/reading.html, corresponding href",
+        "pdf_link_checks.json, page-5 companion destination exists"
+      ],
+      "classification": "observed functional defect",
+      "adjudication_status": "proposed; not incorporated"
+    },
+    {
+      "id": "RD02",
+      "paper": "reader",
+      "perspective": [
+        "complexity theorist",
+        "PCP researcher",
+        "source-owner review"
+      ],
+      "locator": {
+        "section": "1. The theorem and the encoding problem",
+        "passage_id_if_present": "pcp-short-theorem",
+        "quote_at_most_25_words": "1. The theorem and the encoding problem",
+        "source_path": "papers/short/paper.md",
+        "source_lines": [
+          11,
+          11
+        ],
+        "pdf_page_if_used": null
+      },
+      "criterion": 2,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "medium",
+      "finding": "At the observed 1900×990 desktop viewport, the full-width section list occupies roughly the upper 40% of the initial reader view.",
+      "why_it_matters": "The first explanatory paragraph appears substantially lower than the title; the navigation competes with the reading entry point.",
+      "suggested_direction": "Consider a compact or collapsible contents list. This is an optional design preference, not a demonstrated mobile or accessibility failure.",
+      "evidence": [
+        "evidence/browser_observations.json"
+      ],
+      "classification": "expository/editorial recommendation",
+      "adjudication_status": "proposed; not incorporated"
+    }
+  ]
+}

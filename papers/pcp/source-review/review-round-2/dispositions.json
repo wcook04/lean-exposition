@@ -1,0 +1,2274 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-11-15",
+  "scope": "All 133 supplied findings; original files preserved separately. Review suggestions were assessed as evidence, not executed as instructions.",
+  "reviews": [
+    {
+      "stage": "long",
+      "returned_findings_sha256": "b3a610935918ee2f1e238f4ebfcfad974564a90a623d6035434c7e7685ca1d18",
+      "findings": [
+        {
+          "id": "F01",
+          "status": "incorporated",
+          "action": "Moved formal decoding before injectivity and proved the monomial left inverse. Added the finite-field evaluation counterexample and the exact injectivity source.",
+          "original_locator": {
+            "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+            "passage_id_if_present": "pcp-long-set-multilinear",
+            "quote_at_most_25_words": "This establishes both recovery of evaluations and injectivity on polynomials of degree strictly below $b^c$.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F02",
+          "status": "incorporated",
+          "action": "Replaced the incorrect historical attribution with corrected v2 Claim 3.7’s scalar homogeneous assertion; compared both retained editions.",
+          "original_locator": {
+            "section": "Binary labels for field elements",
+            "passage_id_if_present": "pcp-long-hadamard-composition",
+            "quote_at_most_25_words": "We do not require the paper's more general homogeneity assertion.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "error",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F03",
+          "status": "incorporated",
+          "action": "Displayed the row and column polynomials and all four discrepancies, with their distributions and the fixed-parameter distinction.",
+          "original_locator": {
+            "section": "Algebraic tests and correction / Point-versus-line soundness",
+            "passage_id_if_present": "pcp-long-algebra-mixed-plane",
+            "quote_at_most_25_words": "To apply crossing consistency, we bound its four errors.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "underweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F04",
+          "status": "incorporated",
+          "action": "Explained both reference-NP simulations and their bounded witnesses. The lower-level machine simulations remain identified imported results.",
+          "original_locator": {
+            "section": "The reverse inclusion",
+            "passage_id_if_present": "pcp-long-converse",
+            "quote_at_most_25_words": "That equivalence is a separate representation and simulation result.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "underweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F05",
+          "status": "incorporated",
+          "action": "Separated declaration evidence in the reader. Unknown axiom reports no longer generate axiom-free claims; statement compilation is explicitly distinct from a proof build.",
+          "original_locator": {
+            "section": "Global and declaration verification metadata",
+            "passage_id_if_present": null,
+            "quote_at_most_25_words": "Selected source declarations, read by hand.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F06",
+          "status": "incorporated",
+          "action": "Explained the modified target column and uniform nonzero columns before the retained five-event argument.",
+          "original_locator": {
+            "section": "Algebraic tests and correction / Point-versus-line soundness",
+            "passage_id_if_present": "pcp-long-algebra-ruled-surface",
+            "quote_at_most_25_words": "The expression for nonzero $z$ is affine in either variable when the other is fixed.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F07",
+          "status": "incorporated",
+          "action": "Defined verdict/address verifier steps and equality with the bounded query tree on both answers at every queried branch.",
+          "original_locator": {
+            "section": "The polynomial-time implementation",
+            "passage_id_if_present": "pcp-long-runtime",
+            "quote_at_most_25_words": "The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F08",
+          "status": "incorporated",
+          "action": "Added narrower crossing, rigidity, completeness, corrector-procedure and four-decoding selections. Retained ingredient links with their proper scope.",
+          "original_locator": {
+            "section": "Selected reader supports across algebra, encoded-line testing and assembly",
+            "passage_id_if_present": "pcp-long-encoded-line-test",
+            "quote_at_most_25_words": "Honest polynomials of degree strictly below $b^c$, with their actual encoded line restrictions, pass for every seed.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F09",
+          "status": "incorporated",
+          "action": "Added an association for the prose conclusion of the explicit gap argument, retaining display mathematics and the separate budget source.",
+          "original_locator": {
+            "section": "The corrected short low-degree test",
+            "passage_id_if_present": "pcp-long-algebra-generator-soundness",
+            "quote_at_most_25_words": "Apply this result to (A6), with $n=c+1$. If",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F10",
+          "status": "incorporated",
+          "action": "Added r≥2 before the product test; retained the separate linear case.",
+          "original_locator": {
+            "section": "Testing a received Hadamard word",
+            "passage_id_if_present": "pcp-long-hadamard-soundness",
+            "quote_at_most_25_words": "For the product check, replace its three corrected answers by their $\\ell$-values.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F11",
+          "status": "incorporated",
+          "action": "Replaced generator terminology by a correction parameter satisfying GoodNodes.",
+          "original_locator": {
+            "section": "Soundness of the seven-check verifier",
+            "passage_id_if_present": "pcp-long-decoding-contract",
+            "quote_at_most_25_words": "a valid local-correction generator",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F12",
+          "status": "incorporated",
+          "action": "Specified a formal polynomial with a total-degree bound and separated it from evaluation.",
+          "original_locator": {
+            "section": "Testing a high-degree outer polynomial",
+            "passage_id_if_present": "pcp-long-encoded-line-soundness",
+            "quote_at_most_25_words": "It supplies a polynomial $P:F^k\\to F$ of total degree at most $D$",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F13",
+          "status": "incorporated",
+          "action": "Added the exact c=4 constant table and retained the symbolic proof.",
+          "original_locator": {
+            "section": "Soundness of the seven-check verifier",
+            "passage_id_if_present": "pcp-long-gap",
+            "quote_at_most_25_words": "An explicit positive gap makes all three inequalities hold at once.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F14",
+          "status": "alternative_applied",
+          "action": "Retained the existing event-by-event derivation; the specialist account now collects the two correction and two rejection costs explicitly. A second long table would repeat those adjacent paragraphs.",
+          "original_locator": {
+            "section": "Correcting an outer value at a prescribed point",
+            "passage_id_if_present": "pcp-long-outer-correction-soundness",
+            "quote_at_most_25_words": "Replacing its bit by the actual corrected origin costs another $e$, and accounting for rejection costs another $R_a$.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F15",
+          "status": "incorporated",
+          "action": "Added the Kaufman–Sudan forms, accepted subspace and threshold specialization, keeping the direct weighted proof.",
+          "original_locator": {
+            "section": "The corrected short low-degree test",
+            "passage_id_if_present": "pcp-long-algebra-weighted-plurality",
+            "quote_at_most_25_words": "applying that general theorem would additionally require checking its characterization hypotheses.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "credit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F16",
+          "status": "alternative_applied",
+          "action": "Placed the optional 256/16/8-label example in the worked exposition. The long account retains the simultaneous-metric theorem.",
+          "original_locator": {
+            "section": "Binary labels for field elements",
+            "passage_id_if_present": "pcp-long-hadamard-labels",
+            "quote_at_most_25_words": "For an arbitrary received word, small full-label distance does not imply equally small distance on a much smaller subset of labels.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F17",
+          "status": "incorporated",
+          "action": "Corrected the machine description to Mathlib’s finite multi-stack FinTM2 model.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-complexity",
+            "quote_at_most_25_words": "The program producing the queries and verdict is compiled into a finite multi-tape machine with a polynomial cost bound",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F18",
+          "status": "retained",
+          "action": "Preserved. Preserve in long and specialist theorem; keep a shorter reminder at repetition, where the quantifier matters again.",
+          "original_locator": {
+            "section": "The algebraic PCP theorem: a detailed account of the Lean proof",
+            "passage_id_if_present": "pcp-long-intro-theorem",
+            "quote_at_most_25_words": "The verifier, its implementation, the constants, and the proof-length polynomial are chosen for the language, before the input.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F19",
+          "status": "retained",
+          "action": "Preserved. Keep the family, fibrewise root bound, and narrow scope. The GF(16) run may be used only as an illustration.",
+          "original_locator": {
+            "section": "The corrected short low-degree test",
+            "passage_id_if_present": "pcp-long-algebra-old-test-counterexample",
+            "quote_at_most_25_words": "The earlier test's failure can be seen in a family of arbitrarily large fields, so it is not merely a small-field exception.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F20",
+          "status": "retained",
+          "action": "Preserved. Retain the propagation argument and its explicit full-generator hypothesis.",
+          "original_locator": {
+            "section": "The corrected short low-degree test",
+            "passage_id_if_present": "pcp-long-algebra-generator-test",
+            "quote_at_most_25_words": "The initial nodes and induction include the exponents $1,\\ldots,q-1$, which exhaust $F^\\times$.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F21",
+          "status": "retained",
+          "action": "Preserved. Retain the positive-degree, cubic field-size, individual-degree and arbitrary-approximant qualifications together.",
+          "original_locator": {
+            "section": "Bivariate agreement",
+            "passage_id_if_present": "pcp-long-algebra-bivariate-statement",
+            "quote_at_most_25_words": "The approximating rows and columns need not be nearest approximations.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F22",
+          "status": "retained",
+          "action": "Preserved. Preserve the strict good-line condition and the exceptional-line term delta-prime/r.",
+          "original_locator": {
+            "section": "Point-versus-line soundness",
+            "passage_id_if_present": "pcp-long-algebra-fixed-parameter",
+            "quote_at_most_25_words": "No global convention for choosing tied minimizers is required.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F23",
+          "status": "retained",
+          "action": "Preserved. Retain it adjacent to the positive-probability calculation, including the fact that the two right-hand values are deterministic.",
+          "original_locator": {
+            "section": "Point-versus-line soundness",
+            "passage_id_if_present": "pcp-long-algebra-ruled-surface",
+            "quote_at_most_25_words": "This holds for each $y_0$, with the same previously chosen $Q$; hence the entire target line has degree at most $d$.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F24",
+          "status": "retained",
+          "action": "Preserved. Retain the distinction in all three accounts; do not force honest form without an additional test.",
+          "original_locator": {
+            "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+            "passage_id_if_present": "pcp-long-set-multilinear",
+            "quote_at_most_25_words": "A low-degree test does not by itself prove that an arbitrary decoded polynomial has the special set-multilinear form of an honest encoding.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F25",
+          "status": "retained",
+          "action": "Preserved. Keep the explicit difference. Describe final aggregate counts as upper bounds rather than distinct-address exact counts.",
+          "original_locator": {
+            "section": "Testing a received Hadamard word",
+            "passage_id_if_present": "pcp-long-hadamard-self-correction",
+            "quote_at_most_25_words": "At $r=3$, the formal query count is ten.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F26",
+          "status": "retained",
+          "action": "Preserved. A named short lemma is optional. Preserve each local threshold, each metric, and the nonalgorithmic nature of selection.",
+          "original_locator": {
+            "section": "Testing a received Hadamard word",
+            "passage_id_if_present": "pcp-long-hadamard-row-decoding",
+            "quote_at_most_25_words": "The same $g$ occurs in both conclusions.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F27",
+          "status": "retained",
+          "action": "Preserved. Retain the same-choice sentence and the companion exposition exercise. Do not replace restricted-label guarantees with a full-label-only distance.",
+          "original_locator": {
+            "section": "Soundness of the seven-check verifier",
+            "passage_id_if_present": "pcp-long-decoding-contract",
+            "quote_at_most_25_words": "These polynomials are chosen once for the received proof; the later argument uses those same choices.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F28",
+          "status": "retained",
+          "action": "Preserved. Preserve this qualifier in every summary and in the outer-correction probability statement.",
+          "original_locator": {
+            "section": "A binary version of the weighted low-degree test",
+            "passage_id_if_present": "pcp-long-binary-inner-correction",
+            "quote_at_most_25_words": "The guarantee is averaged over the requested homogeneous label as well as the direction.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F29",
+          "status": "retained",
+          "action": "Preserved. Preserve the event definition, no-smallness statement and absence of auxiliary proximity hypotheses.",
+          "original_locator": {
+            "section": "Correcting an outer value at a prescribed point",
+            "passage_id_if_present": "pcp-long-outer-correction-soundness",
+            "quote_at_most_25_words": "the probability of either rejection or a wrong returned bit",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F30",
+          "status": "retained",
+          "action": "Preserved. Retain this motivating obstruction and the shared-point/shared-label description.",
+          "original_locator": {
+            "section": "Checking that a polynomial vanishes on a grid",
+            "passage_id_if_present": "pcp-long-zero-actual-test",
+            "quote_at_most_25_words": "these points lie in special subsets that could contain all its errors.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F31",
+          "status": "retained",
+          "action": "Preserved. Preserve this hypothesis and its application through explicitly polynomial vertex and edge constraints.",
+          "original_locator": {
+            "section": "Derived polynomial oracles and fresh correction randomness",
+            "passage_id_if_present": "pcp-long-derived-oracle-transfer",
+            "quote_at_most_25_words": "This polynomiality is a hypothesis: arbitrary dependence of $A_x$ on $x$ does not establish it.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F32",
+          "status": "retained",
+          "action": "Preserved. Retain the coupled-distribution explanation and this factor in all compressed occurrences.",
+          "original_locator": {
+            "section": "Derived polynomial oracles and fresh correction randomness",
+            "passage_id_if_present": "pcp-long-derived-oracle-transfer",
+            "quote_at_most_25_words": "The replacement error is multiplied by $1+2C(c)$, because it enters through ZERO's rejection term.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F33",
+          "status": "retained",
+          "action": "Preserved. Keep the separate primary degree D and constraint degree 5D roles.",
+          "original_locator": {
+            "section": "Soundness of the seven-check verifier",
+            "passage_id_if_present": "pcp-long-assembled-zero-soundness",
+            "quote_at_most_25_words": "the common degree bound $5D$ is sufficient for the two ZERO arguments.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F34",
+          "status": "retained",
+          "action": "Preserved. Retain the exact rational gap and amplified count; a c=4 constant table may make their derivation easier to reproduce.",
+          "original_locator": {
+            "section": "Repetition on one fixed proof",
+            "passage_id_if_present": "pcp-long-amplification",
+            "quote_at_most_25_words": "Repetition leaves the proof-length polynomial unchanged and multiplies the query and random-bit budgets by the fixed constant $R$.",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F35",
+          "status": "retained",
+          "action": "Preserved. Preserve the correctness/cost/compilation sequence and the explicit supporting-lemma boundary at long1703.",
+          "original_locator": {
+            "section": "The polynomial-time implementation",
+            "passage_id_if_present": "pcp-long-runtime",
+            "quote_at_most_25_words": "Callback correctness",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F36",
+          "status": "incorporated",
+          "action": "Added a local notation bridge before the final assembly; no global renaming.",
+          "original_locator": {
+            "section": "From the algebraic tests to the PCP theorem",
+            "passage_id_if_present": "pcp-long-final-target",
+            "quote_at_most_25_words": "From the algebraic tests to the PCP theorem",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F37",
+          "status": "incorporated",
+          "action": "Added the rendered byline and preserved the detailed attribution and limits of review.",
+          "original_locator": {
+            "section": "Opening byline",
+            "passage_id_if_present": "pcp-long-intro-theorem",
+            "quote_at_most_25_words": "The algebraic PCP theorem: a detailed account of the Lean proof",
+            "pdf_page_if_used": 1
+          },
+          "review_kind": "missing",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F38",
+          "status": "incorporated",
+          "action": "The compact primary-table comparison is now together; the renderer reserves space for short tables and keeps display leads with their formulas.",
+          "original_locator": {
+            "section": "The eight tables and seven checks",
+            "passage_id_if_present": "pcp-long-eight-tables",
+            "quote_at_most_25_words": "Primary polynomial",
+            "pdf_page_if_used": 29
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F39",
+          "status": "incorporated",
+          "action": "Fixed companion-route handling and history restoration; tested every anchored companion link in Chrome.",
+          "original_locator": {
+            "section": "Reading this account",
+            "passage_id_if_present": "pcp-long-intro-readers",
+            "quote_at_most_25_words": "specialist paper",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "F40",
+          "status": "incorporated",
+          "action": "Changed section labels so an initial article is not interpreted as an appendix letter.",
+          "original_locator": {
+            "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+            "passage_id_if_present": "pcp-long-set-multilinear",
+            "quote_at_most_25_words": "← Back to §A",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        }
+      ]
+    },
+    {
+      "stage": "short",
+      "returned_findings_sha256": "6850b5f2ad9c10859af3b1e848a2e3f7423e887d22330cf2f240d05c2b58cd6d",
+      "findings": [
+        {
+          "id": "ALG-01",
+          "status": "incorporated",
+          "action": "Added the fixed-centre estimate and all three comparison losses.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-weighted-test",
+            "quote_at_most_25_words": "then shows that the corrected word satisfies every constraint exactly.",
+            "source_lines": [
+              174,
+              174
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-02",
+          "status": "incorporated",
+          "action": "Added affine 3ε, homogeneous 6ε and arbitrary-row 28ε bounds for the same decoded value.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-binary-decoding",
+            "quote_at_most_25_words": "This yields one decoded field value and bounds on both full-label and homogeneous-label error.",
+            "source_lines": [
+              193,
+              193
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-03",
+          "status": "incorporated",
+          "action": "Stated the three checks, shared line, homogeneous label and independent tester seeds.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "quote_at_most_25_words": "tests a uniformly selected auxiliary row by the inner test",
+            "source_lines": [
+              208,
+              208
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-04",
+          "status": "incorporated",
+          "action": "Specified the common homogeneous label and shared inner direction before the correction procedure.",
+          "original_locator": {
+            "section": "5. Correcting the nonuniform certificate queries",
+            "passage_id_if_present": "pcp-short-outer-correction",
+            "quote_at_most_25_words": "otherwise return the corrected auxiliary value at $\\Phi(0)$.",
+            "source_lines": [
+              249,
+              249
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-05",
+          "status": "incorporated",
+          "action": "Displayed the root inequality and accounted for both correction and both rejection losses.",
+          "original_locator": {
+            "section": "5. Correcting the nonuniform certificate queries",
+            "passage_id_if_present": "pcp-short-outer-correction",
+            "quote_at_most_25_words": "Taking a homogeneous binary observation halves this term.",
+            "source_lines": [
+              260,
+              260
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-06",
+          "status": "incorporated",
+          "action": "Specified shared x and L, independent remaining seeds and detection by one nonzero residual.",
+          "original_locator": {
+            "section": "5. Correcting the nonuniform certificate queries",
+            "passage_id_if_present": "pcp-short-zero",
+            "quote_at_most_25_words": "The actual ZERO check reads one primary bit and makes two correction calls to the certificate.",
+            "source_lines": [
+              272,
+              272
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-07",
+          "status": "incorporated",
+          "action": "Introduced arbitrary received binary tables before the honest-contents inventory.",
+          "original_locator": {
+            "section": "6. One decoding for all seven checks",
+            "passage_id_if_present": "pcp-short-assembly",
+            "quote_at_most_25_words": "The proof contains eight tables: degree-three Hadamard encodings of $P$ and $Q_P$",
+            "source_lines": [
+              296,
+              296
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-08",
+          "status": "incorporated",
+          "action": "Wrote the operational comparison in received bits, followed by its decoded polynomial identity.",
+          "original_locator": {
+            "section": "6. One decoding for all seven checks",
+            "passage_id_if_present": "pcp-short-assembly",
+            "quote_at_most_25_words": "L(Q_P(x,y))=L(P(x))+L(P(y)).",
+            "source_lines": [
+              299,
+              299
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-09",
+          "status": "incorporated",
+          "action": "Added the quotient-degree and packaged-certificate degree calculation.",
+          "original_locator": {
+            "section": "2. Three-colouring as two vanishing conditions",
+            "passage_id_if_present": "pcp-short-colour-constraints",
+            "quote_at_most_25_words": "$M$ can be chosen with degree at most $\\deg A$.",
+            "source_lines": [
+              78,
+              78
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-10",
+          "status": "incorporated",
+          "action": "Stated that decoded objects are soundness witnesses; local reads are the verifier’s operations.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-binary-decoding",
+            "quote_at_most_25_words": "Decode the rows to field values.",
+            "source_lines": [
+              197,
+              197
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-11",
+          "status": "retained",
+          "action": "Preserved. Retain the strict/weak inequality distinction, the shared symbol D, and the statement that field size must accommodate D.",
+          "original_locator": {
+            "section": "3. Encoding the values that the verifier needs",
+            "passage_id_if_present": "pcp-short-digit-encoding",
+            "quote_at_most_25_words": "The honest prover encodes polynomials of degree strictly below $b^c$; decoding gives only the bound $D$.",
+            "source_lines": [
+              108,
+              108
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-12",
+          "status": "retained",
+          "action": "Preserved. Retain this sentence and attach any restricted-label expansion to the same decoded object.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-binary-decoding",
+            "quote_at_most_25_words": "There is no small-rejection premise in (11), and both bounds concern the same decoded polynomial.",
+            "source_lines": [
+              204,
+              204
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-13",
+          "status": "retained",
+          "action": "Preserved. Preserve the dependence on actual R_a and the rejection-inclusive failure event; do not replace it by an unconditional local-decoding success claim.",
+          "original_locator": {
+            "section": "5. Correcting the nonuniform certificate queries",
+            "passage_id_if_present": "pcp-short-outer-correction",
+            "quote_at_most_25_words": "This statement allows an arbitrary auxiliary table.",
+            "source_lines": [
+              262,
+              262
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-14",
+          "status": "retained",
+          "action": "Preserved. Keep the factor and explain it as the coefficient in the existing transfer argument; do not imply that other valid source-paper analyses are thereby refuted.",
+          "original_locator": {
+            "section": "5. Correcting the nonuniform certificate queries",
+            "passage_id_if_present": "pcp-short-zero",
+            "quote_at_most_25_words": "The factor $1+2C$ multiplies the derived-read error because that error enters through rejection.",
+            "source_lines": [
+              290,
+              290
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ALG-15",
+          "status": "retained",
+          "action": "Preserved. Preserve this sentence and the earlier “Fix these choices”; clarify that auxiliary row decodings need not be globally consistent.",
+          "original_locator": {
+            "section": "6. One decoding for all seven checks",
+            "passage_id_if_present": "pcp-short-assembly",
+            "quote_at_most_25_words": "The soundness argument used the same four decoded polynomials throughout;",
+            "source_lines": [
+              338,
+              338
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "FA01",
+          "status": "incorporated",
+          "action": "Corrected the target to Mathlib’s finite multi-stack machine model.",
+          "original_locator": {
+            "section": "7",
+            "passage_id_if_present": "pcp-short-complexity",
+            "quote_at_most_25_words": "compiled into a finite multi-tape machine with a polynomial cost bound",
+            "source_lines": [
+              393,
+              393
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "error",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "FA02",
+          "status": "incorporated",
+          "action": "Described 187 as an upper bound on unamplified physical reads, not an exact count on each seed.",
+          "original_locator": {
+            "section": "7",
+            "passage_id_if_present": "pcp-short-resources",
+            "quote_at_most_25_words": "They sum to $20c+107=187$ physical proof-bit reads",
+            "source_lines": [
+              376,
+              376
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "FA03",
+          "status": "incorporated",
+          "action": "Added the derived ZERO source at equation (16), retaining the base ZERO association at (15).",
+          "original_locator": {
+            "section": "5",
+            "passage_id_if_present": "pcp-short-zero",
+            "quote_at_most_25_words": "The factor $1+2C$ multiplies the derived-read error because that error enters through rejection.",
+            "source_lines": [
+              290,
+              290
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "FA04",
+          "status": "incorporated",
+          "action": "Retained the concrete endpoint and exposed the reference-NP bridge as contextual source support.",
+          "original_locator": {
+            "section": "1 / Formal correspondence and credits",
+            "passage_id_if_present": "pcp-short-theorem",
+            "quote_at_most_25_words": "The verifier, implementation, constants and polynomial are fixed for $L$ before the input is chosen.",
+            "source_lines": [
+              22,
+              22
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "FA05",
+          "status": "retained",
+          "action": "Preserved. Retain this sentence and retain the same-polynomial clause in the inner decoding paragraph. A small label-domain table could consolidate the distinction without deleting it.",
+          "original_locator": {
+            "section": "4",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "quote_at_most_25_words": "The restricted conclusion is for homogeneous linear labels.",
+            "source_lines": [
+              241,
+              241
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-01",
+          "status": "incorporated",
+          "action": "Separated the authors’ set-multilinear degree reduction from the established low-degree Hadamard encoding and preserved Lee’s formalization credit.",
+          "original_locator": {
+            "section": "Formal correspondence and credits / pcp-short-formal-correspondence",
+            "quote_at_most_25_words": "The PCP construction and its two encodings are due to",
+            "source_lines": [
+              413,
+              413
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-formal-correspondence",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "credit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-02",
+          "status": "incorporated",
+          "action": "Explained why encoding the whole line-coefficient vector threatens polynomial proof length before introducing the digit map.",
+          "original_locator": {
+            "section": "§1 / pcp-short-theorem",
+            "quote_at_most_25_words": "Two encodings reduce these costs.",
+            "source_lines": [
+              30,
+              30
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-theorem",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-03",
+          "status": "incorporated",
+          "action": "Restored the exact term local formal characterization in the Kaufman–Sudan attribution.",
+          "original_locator": {
+            "section": "§4 / pcp-short-weighted-test",
+            "quote_at_most_25_words": "with a two-ary independent local characterization.",
+            "source_lines": [
+              174,
+              174
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-weighted-test",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-04",
+          "status": "retained",
+          "action": "Preserved. Retain c=2, q=2^(2k), k>=2, m>=1, the root-bound argument, the v1/v2 split and Lee attribution.",
+          "original_locator": {
+            "section": "§4 / pcp-short-weighted-test",
+            "quote_at_most_25_words": "This calculation explains the distinction between the tests;",
+            "source_lines": [
+              183,
+              183
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-weighted-test",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-05",
+          "status": "retained",
+          "action": "Preserved. Retain both attributions and the v2 Theorem B.1 bridge. Do not replace the bound by an unspecified O(epsilon).",
+          "original_locator": {
+            "section": "§4 / pcp-short-binary-decoding",
+            "quote_at_most_25_words": "in the form stated in [1, Theorem B.1]",
+            "source_lines": [
+              187,
+              187
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-binary-decoding",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-06",
+          "status": "retained",
+          "action": "Preserved. Keep this qualifier and the whole-field parameter convention. Keep the long proof links for the actual quantitative derivation.",
+          "original_locator": {
+            "section": "§4 / pcp-short-outer-decoding",
+            "quote_at_most_25_words": "with the explicit bounds above from Lee's proof.",
+            "source_lines": [
+              229,
+              229
+            ],
+            "source_path": "papers/short/paper.md",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LIT-07",
+          "status": "retained",
+          "action": "Preserved. Preserve the edition qualifier; do not silently rename Theorem5 to Theorem4.1 in the linked manuscript.",
+          "original_locator": {
+            "section": "References / entry 7",
+            "quote_at_most_25_words": "§4, Theorem 5; cited as Theorem 4.1",
+            "source_lines": [
+              424,
+              424
+            ],
+            "source_path": "papers/short/paper.md",
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED01",
+          "status": "incorporated",
+          "action": "Rewrote the abstract around degree reduction, binary encoding and the low-rejection implication; kept the exact theorem.",
+          "original_locator": {
+            "section": "Abstract",
+            "passage_id_if_present": "pcp-short-abstract",
+            "quote_at_most_25_words": "A point-versus-line test and a correction procedure can then use constantly many bits.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              8,
+              9
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED02",
+          "status": "incorporated",
+          "action": "Separated cubic validity from adjacency and defined the public adjacency extension as 0/1.",
+          "original_locator": {
+            "section": "2. Three-colouring as two vanishing conditions",
+            "passage_id_if_present": "pcp-short-colour-constraints",
+            "quote_at_most_25_words": "Choose a nonempty grid",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              44,
+              44
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED03",
+          "status": "incorporated",
+          "action": "Separated certificates from the inventory of arbitrary received tables and their intended contents.",
+          "original_locator": {
+            "section": "2. Three-colouring as two vanishing conditions",
+            "passage_id_if_present": "pcp-short-colour-constraints",
+            "quote_at_most_25_words": "The proof therefore needs four principal polynomials",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              78,
+              79
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED04",
+          "status": "incorporated",
+          "action": "Distinguished label addresses, stored bits, label degree and outer polynomial degree.",
+          "original_locator": {
+            "section": "3. Encoding the values that the verifier needs",
+            "passage_id_if_present": "pcp-short-hadamard-encoding",
+            "quote_at_most_25_words": "Fix a linear isomorphism",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              112,
+              112
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED05",
+          "status": "incorporated",
+          "action": "Specified the point domain and both label domains for the distances.",
+          "original_locator": {
+            "section": "3. Encoding the values that the verifier needs",
+            "passage_id_if_present": "pcp-short-hadamard-encoding",
+            "quote_at_most_25_words": "Consequently, for field-valued functions",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              119,
+              119
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED06",
+          "status": "incorporated",
+          "action": "Defined homogeneous labels by zero constant term and preserved their additive and weighted identities.",
+          "original_locator": {
+            "section": "3. Encoding the values that the verifier needs",
+            "passage_id_if_present": "pcp-short-hadamard-encoding",
+            "quote_at_most_25_words": "To take a weighted sum of field values, however, the verifier uses homogeneous linear labels.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              135,
+              135
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED07",
+          "status": "incorporated",
+          "action": "Added the characteristic-two q/2−1≥c implication.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-weighted-test",
+            "quote_at_most_25_words": "under the stronger sufficient hypothesis",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              165,
+              165
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED08",
+          "status": "incorporated",
+          "action": "Displayed the three discrepancy costs and the half-distance implication using the same primary decoding.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "quote_at_most_25_words": "The corrected auxiliary error, the tested comparison, and the primary error",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              212,
+              212
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED09",
+          "status": "incorporated",
+          "action": "Separated the test contract, attribution and sketch, with exact destinations for the longer arguments.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "quote_at_most_25_words": "Nearest line polynomials define a corrected point function by plurality.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              229,
+              229
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED10",
+          "status": "incorporated",
+          "action": "Moved decimal constant evaluations to linked long sections while retaining the symbolic parameter and gap calculation.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-resources",
+            "quote_at_most_25_words": "These constants establish the complexity bounds;",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              383,
+              383
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "overweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED11",
+          "status": "incorporated",
+          "action": "Added the seven-check query-budget table and retained the distinction between base and amplified verifiers.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-resources",
+            "quote_at_most_25_words": "The seven query bounds are",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              370,
+              370
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED12",
+          "status": "incorporated",
+          "action": "Added the elementary logarithmic-volume comparison and its proof-length consequence.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-resources",
+            "quote_at_most_25_words": "constant-degree label vectors use",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              366,
+              366
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "missing",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED13",
+          "status": "incorporated",
+          "action": "Stated the natural ceiling-log convention at N=0 and N=1.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-resources",
+            "quote_at_most_25_words": "using the natural ceiling-log convention",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              344,
+              344
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED14",
+          "status": "incorporated",
+          "action": "Provided distinct exact companion destinations for runtime, reduction and transport.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-complexity",
+            "quote_at_most_25_words": "full reduction and runtime argument",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              403,
+              403
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED15",
+          "status": "incorporated",
+          "action": "Kept display leads with following formulas through the shared renderer and inspected the resulting pages.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-outer-decoding",
+            "quote_at_most_25_words": "Applying this theorem to (12)",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              231,
+              231
+            ],
+            "pdf_page_if_used": [
+              6,
+              7
+            ]
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED16",
+          "status": "retained",
+          "action": "Preserved. Preserve the modest evidence class and immutable source route. Do not import prior test-count logs into the short prose.",
+          "original_locator": {
+            "section": "Formal correspondence and credits",
+            "passage_id_if_present": "pcp-short-formal-correspondence",
+            "quote_at_most_25_words": "The old-test calculation in §4 is an ordinary mathematical explanation, not an additional formal theorem.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              411,
+              411
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED17",
+          "status": "retained",
+          "action": "Preserved. Retain the finite prefix, all seeds and zero extension; do not shorten this to an unexplained standard converse.",
+          "original_locator": {
+            "section": "7. Resources, implementation and the reverse inclusion",
+            "passage_id_if_present": "pcp-short-complexity",
+            "quote_at_most_25_words": "its zero extension would be a fixed proof with acceptance probability one",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              405,
+              406
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED18",
+          "status": "retained",
+          "action": "Preserved. Retain the example and its zero-colour failure when reallocating space.",
+          "original_locator": {
+            "section": "2. Three-colouring as two vanishing conditions",
+            "passage_id_if_present": "pcp-short-colour-constraints",
+            "quote_at_most_25_words": "Both are needed.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              57,
+              57
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED19",
+          "status": "retained",
+          "action": "Preserved. Preserve it verbatim or equally explicitly; do not use register measurements as a pass/fail rule.",
+          "original_locator": {
+            "section": "1. The theorem and the encoding problem",
+            "passage_id_if_present": "pcp-short-theorem",
+            "quote_at_most_25_words": "A proof may depend on $x$, but it is fixed before the random seed.",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              22,
+              22
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "ED20",
+          "status": "retained",
+          "action": "Preserved. Assess the prose and display as one sentence; separately decide whether the detailed constant evaluation belongs in the long record.",
+          "original_locator": {
+            "section": "6. One decoding for all seven checks",
+            "passage_id_if_present": "pcp-short-assembly",
+            "quote_at_most_25_words": "For example, put",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              322,
+              322
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "RD01",
+          "status": "incorporated",
+          "action": "Fixed relative and legacy companion-section routes; tested heading arrival and Back restoration.",
+          "original_locator": {
+            "section": "4. The local tests and their decoding guarantee",
+            "passage_id_if_present": "pcp-short-weighted-test",
+            "quote_at_most_25_words": "full weighted argument",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              174,
+              174
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "RD02",
+          "status": "not_adopted_optional",
+          "action": "Kept the existing fixed contents rail. Closing the graph now preserves the article beside it. A new collapsible desktop control was an optional preference, not needed to repair the demonstrated defect.",
+          "original_locator": {
+            "section": "1. The theorem and the encoding problem",
+            "passage_id_if_present": "pcp-short-theorem",
+            "quote_at_most_25_words": "1. The theorem and the encoding problem",
+            "source_path": "papers/short/paper.md",
+            "source_lines": [
+              11,
+              11
+            ],
+            "pdf_page_if_used": null
+          },
+          "review_kind": "line_edit",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        }
+      ]
+    },
+    {
+      "stage": "expository",
+      "returned_findings_sha256": "b46160d98f6399aee7c20723765b3df3074f428cb9764d2c1584cad2df781df0",
+      "findings": [
+        {
+          "id": "PA-01",
+          "status": "incorporated",
+          "action": "Defined polynomial time with an input-length bound and fixed exponent before the formal theorem.",
+          "original_locator": {
+            "section": "An algebraic proof of the PCP theorem, through worked examples",
+            "passage_id": "pcp-expository-opening",
+            "quote": "The same statement holds for every problem whose proposed solutions can be\nchecked in polynomial time. The encoded certificate still",
+            "lines": [
+              16,
+              18
+            ],
+            "paragraph_id": "P002"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-02",
+          "status": "retained",
+          "action": "Preserved. Preserve the distinction and the specific object queried.",
+          "original_locator": {
+            "section": "An algebraic proof of the PCP theorem, through worked examples",
+            "passage_id": "pcp-expository-opening",
+            "quote": "The constant bounds the number of **certificate bits read**. The checker may\nread the input and perform a polynomial amount",
+            "lines": [
+              20,
+              24
+            ],
+            "paragraph_id": "P003"
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-03",
+          "status": "retained",
+          "action": "Preserved. Preserve the growing family; it does more work than one isolated K4 example.",
+          "original_locator": {
+            "section": "1. Why checking a few edges is not enough",
+            "passage_id": "pcp-expository-colouring",
+            "quote": "Now add $t$ disjoint triangles, each properly coloured. The graph is still\nnot three-colourable, because it still contains $K_4$, but",
+            "lines": [
+              58,
+              61
+            ],
+            "paragraph_id": "P008"
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-04",
+          "status": "incorporated",
+          "action": "Defined total degree with X²Y and distinguished individual-variable degree.",
+          "original_locator": {
+            "section": "3. Why polynomial tables can reveal a hidden defect",
+            "passage_id": "pcp-expository-polynomial-distance",
+            "quote": "Consequently, two different polynomials of degree at most $d$ disagree at\nat least a fraction $1-d/Q$ of the elements of",
+            "lines": [
+              163,
+              167
+            ],
+            "paragraph_id": "P023"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-05",
+          "status": "incorporated",
+          "action": "Defined grid tuples and worked the basis product X(1−Y) before the general interpolation sum.",
+          "original_locator": {
+            "section": "3. Why polynomial tables can reveal a hidden defect",
+            "passage_id": "pcp-expository-interpolation",
+            "quote": "Any table $f:H^m\\to\\mathbb F_Q$ has the extension",
+            "lines": [
+              221,
+              221
+            ],
+            "paragraph_id": "P031"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-06",
+          "status": "incorporated",
+          "action": "Introduced the four-element field, characteristic-two subtraction and explicit difference/cube calculations.",
+          "original_locator": {
+            "section": "4. Turning three colours into polynomial equations",
+            "passage_id": "pcp-expository-colour-polynomials",
+            "quote": "For the colouring construction we now change fields. We use characteristic\ntwo, where $1+1=0$, and a field containing an element",
+            "lines": [
+              239,
+              243
+            ],
+            "paragraph_id": "P033"
+          },
+          "review_kind": "missing",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-07",
+          "status": "retained",
+          "action": "Preserved. Preserve both the honest triangle and the four-colour cheating example; the former may be shorter if the field arithmetic is expanded.",
+          "original_locator": {
+            "section": "4. Turning three colours into polynomial equations",
+            "passage_id": "pcp-expository-colour-polynomials",
+            "quote": "For example, the triangle coloured $(1,\\omega,\\omega^2)$ gives three\nzero edge residuals. The assignment $(1,1,\\omega^2)$ gives residuals\n$(1,0,0)$ on edges $12,23,31$.",
+            "lines": [
+              259,
+              267
+            ],
+            "paragraph_id": "P035"
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-08",
+          "status": "incorporated",
+          "action": "Identified the two toy quotients and connected polynomial division to the grid identity.",
+          "original_locator": {
+            "section": "5. A certificate for vanishing on a grid",
+            "passage_id": "pcp-expository-grid-certificate",
+            "quote": "with suitable degree bounds on the $Q_j$. Polynomial division in each\nvariable proves this result. After removing all multiples of",
+            "lines": [
+              322,
+              328
+            ],
+            "paragraph_id": "P042"
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-09",
+          "status": "incorporated",
+          "action": "Explained substitution’s degree growth and the corresponding field-size requirement.",
+          "original_locator": {
+            "section": "5. A certificate for vanishing on a grid",
+            "passage_id": "pcp-expository-grid-certificate",
+            "quote": "Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere\non the grid. At least one of the two",
+            "lines": [
+              364,
+              368
+            ],
+            "paragraph_id": "P049"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-10",
+          "status": "incorporated",
+          "action": "Added the thin-row concentration example and the need for correction at prescribed points.",
+          "original_locator": {
+            "section": "5. A certificate for vanishing on a grid",
+            "passage_id": "pcp-expository-grid-certificate",
+            "quote": "The remaining problem is that a received table is only *close* to a\npolynomial, and the points $(x,0)$ and $(x,Z_H(x))$",
+            "lines": [
+              374,
+              377
+            ],
+            "paragraph_id": "P050"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-11",
+          "status": "incorporated",
+          "action": "Defined the oriented-line row index and the parameter selecting the compared point.",
+          "original_locator": {
+            "section": "6. Keeping the number of queries constant",
+            "passage_id": "pcp-expository-digit-encoding",
+            "quote": "A low-degree polynomial in many variables restricts to a low-degree\nunivariate polynomial on each line $u+Yv$. The prover supplies a",
+            "lines": [
+              383,
+              386
+            ],
+            "paragraph_id": "P051"
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-12",
+          "status": "alternative_applied",
+          "action": "Replaced the compressed internal proof sketch with the exact theorem contract and links to the long reconstruction. Did not duplicate that proof as another optional note.",
+          "original_locator": {
+            "section": "6. Keeping the number of queries constant",
+            "passage_id": "pcp-expository-digit-encoding",
+            "quote": "To prove this, compare two families of lines through a plane, giving\nrow and column descriptions of the same received",
+            "lines": [
+              398,
+              408
+            ],
+            "paragraph_id": "P053"
+          },
+          "review_kind": "overweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-13",
+          "status": "incorporated",
+          "action": "Replaced the finite-field example by Y⁴+2Y+3 over F₅, including its encoding, evaluation and obstruction to a quadratic representative.",
+          "original_locator": {
+            "section": "6. Keeping the number of queries constant",
+            "passage_id": "pcp-expository-digit-encoding",
+            "quote": "Here is the operation with two base-$3$ digits. Over $\\mathbb F_5$, take",
+            "lines": [
+              415,
+              415
+            ],
+            "paragraph_id": "P055"
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-14",
+          "status": "retained",
+          "action": "Preserved. Preserve this paragraph as a highlighted conceptual hinge.",
+          "original_locator": {
+            "section": "6. Keeping the number of queries constant",
+            "passage_id": "pcp-expository-digit-encoding",
+            "quote": "The test need not enforce its exact special form. A received table\nmay decode to an arbitrary polynomial of degree",
+            "lines": [
+              450,
+              455
+            ],
+            "paragraph_id": "P060"
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-15",
+          "status": "incorporated",
+          "action": "Explained bijective point sampling and worked recovery of p(3) from p(0), p(1), p(2); retained zero directions.",
+          "original_locator": {
+            "section": "6. Keeping the number of queries constant",
+            "passage_id": "pcp-expository-weighted-test",
+            "quote": "The same formula also corrects a value at a prescribed point. Suppose\n$f$ differs from a degree-$c$ polynomial $P$ on",
+            "lines": [
+              493,
+              499
+            ],
+            "paragraph_id": "P065"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-16",
+          "status": "incorporated",
+          "action": "Defined the homogeneous parity labels without a constant term and explained half-distance.",
+          "original_locator": {
+            "section": "7. A field value represented by many one-bit questions",
+            "passage_id": "pcp-expository-hadamard",
+            "quote": "This is the homogeneous linear part of a Hadamard encoding. It stores\neight answers about a message with only three",
+            "lines": [
+              532,
+              536
+            ],
+            "paragraph_id": "P070"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-17",
+          "status": "incorporated",
+          "action": "Used the fixed basis (1,ω), binary coordinates and coordinatewise addition.",
+          "original_locator": {
+            "section": "7. A field value represented by many one-bit questions",
+            "passage_id": "pcp-expository-cubic-labels",
+            "quote": "A field $F$ with $2^t$ elements can be represented as $t$ binary\ncoordinates using a fixed basis. An element $u$",
+            "lines": [
+              604,
+              607
+            ],
+            "paragraph_id": "P079"
+          },
+          "review_kind": "missing",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-18",
+          "status": "retained",
+          "action": "Preserved. Preserve; place it immediately after the worked genuine evaluation word so its failure is recognizable.",
+          "original_locator": {
+            "section": "7. A field value represented by many one-bit questions",
+            "passage_id": "pcp-expository-cubic-labels",
+            "quote": "Linearity in the labels alone is insufficient to establish that a\nreceived word represents a field element. For example, assign",
+            "lines": [
+              628,
+              634
+            ],
+            "paragraph_id": "P083"
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-19",
+          "status": "incorporated",
+          "action": "Added unit and product consistency, and preserved the formal ten-query versus source-paper eight-query distinction.",
+          "original_locator": {
+            "section": "7. A field value represented by many one-bit questions",
+            "passage_id": "pcp-expository-cubic-labels",
+            "quote": "The formal Hadamard test checks these properties using corrected\nanswers. Its degree-three version makes ten bit queries. The current\npaper",
+            "lines": [
+              636,
+              642
+            ],
+            "paragraph_id": "P084"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-20",
+          "status": "incorporated",
+          "action": "Added the address/returned-bit table for primary and auxiliary rows.",
+          "original_locator": {
+            "section": "8. Combining the encodings and returning to the grid",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "The construction now has two forms of redundancy. A line polynomial\nis encoded as a polynomial of fixed degree in",
+            "lines": [
+              648,
+              652
+            ],
+            "paragraph_id": "P085"
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-21",
+          "status": "incorporated",
+          "action": "Worked multiplication by ω as a transformation of the observed coordinate label.",
+          "original_locator": {
+            "section": "8. Combining the encodings and returning to the grid",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "The weight is incorporated into the queried label. Applying $L$ to a\nweighted field identity therefore produces an identity among",
+            "lines": [
+              662,
+              665
+            ],
+            "paragraph_id": "P087"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-22",
+          "status": "incorporated",
+          "action": "Added homogeneous, affine and full label counts plus a checked spoof showing full closeness need not imply restricted closeness. Both guarantees retain one decoded polynomial.",
+          "original_locator": {
+            "section": "8. Combining the encodings and returning to the grid",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "The combined low-degree theorem supplies **one** polynomial close to\nthe primary oracle on the label sets used later. It is",
+            "lines": [
+              667,
+              674
+            ],
+            "paragraph_id": "P088"
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-23",
+          "status": "incorporated",
+          "action": "Explained E, S and C by their roles on the main path; moved their exact formulas to a linked note after the exercises.",
+          "original_locator": {
+            "section": "8. Combining the encodings and returning to the grid",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "We need quantitative versions of these statements to know that the\nerrors will leave a positive gap. Fix a positive",
+            "lines": [
+              676,
+              679
+            ],
+            "paragraph_id": "P089"
+          },
+          "review_kind": "overweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-24",
+          "status": "incorporated",
+          "action": "Gave the corrector’s sampling, rejection and output procedure, followed by the three-source error budget.",
+          "original_locator": {
+            "section": "8. Combining the encodings and returning to the grid",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "The outer local corrector uses a random line through a prescribed\npoint. It checks the encoded line information and compares",
+            "lines": [
+              706,
+              715
+            ],
+            "paragraph_id": "P092"
+          },
+          "review_kind": "missing",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-25",
+          "status": "incorporated",
+          "action": "Moved the four-primary-table inventory to the start of composition and removed the later duplicate.",
+          "original_locator": {
+            "section": "9. From the seven checks to a colouring",
+            "passage_id": "pcp-expository-assembly",
+            "quote": "The proof contains four main polynomial tables, each accompanied by\nan encoded line table. They describe:",
+            "lines": [
+              767,
+              768
+            ],
+            "paragraph_id": "P099"
+          },
+          "review_kind": "misplaced",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-26",
+          "status": "incorporated",
+          "action": "Named the two decoded constraint polynomials and kept their common decoding witnesses explicit.",
+          "original_locator": {
+            "section": "9. From the seven checks to a colouring",
+            "passage_id": "pcp-expository-assembly",
+            "quote": "The two ZERO checks then force the two decoded colouring\npolynomials to vanish on their grids. Their primary values are",
+            "lines": [
+              808,
+              815
+            ],
+            "paragraph_id": "P105"
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-27",
+          "status": "incorporated",
+          "action": "Displayed the coupled-event inequality including fresh derived-read errors inside the multiplied rejection term.",
+          "original_locator": {
+            "section": "9. From the seven checks to a colouring",
+            "passage_id": "pcp-expository-assembly",
+            "quote": "The left side is the ideal rejection bound. On the right, replacing\nthe derived cubic read costs $2\\varepsilon$, so the",
+            "lines": [
+              855,
+              863
+            ],
+            "paragraph_id": "P110"
+          },
+          "review_kind": "missing",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-28",
+          "status": "incorporated",
+          "action": "Separated point and line coordinates from label coefficients, explained monomial counts, and derived polynomial address space.",
+          "original_locator": {
+            "section": "10. Randomness, proof length and repetition",
+            "passage_id": "pcp-expository-resources",
+            "quote": "A point of $F^m$ takes $m\\log_2|F|=s(12a+32)=O(\\log N)$\nbits to specify. The encoded line data uses $cs=4s$ extra\nfield coordinates, so",
+            "lines": [
+              923,
+              931
+            ],
+            "paragraph_id": "P118"
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-29",
+          "status": "incorporated",
+          "action": "Identified the four nonzero sampling requests as two correction calls in each of two ZERO tests.",
+          "original_locator": {
+            "section": "10. Randomness, proof length and repetition",
+            "passage_id": "pcp-expository-resources",
+            "quote": "Fair random bits give uniform field elements directly,\nsince $|F|$ is a power of two. Four correction parameters\noriginally range",
+            "lines": [
+              952,
+              960
+            ],
+            "paragraph_id": "P121"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-30",
+          "status": "incorporated",
+          "action": "Moved the flag-based clause calculation after the exercises; kept the exact reduction contract and proof destination on the main route.",
+          "original_locator": {
+            "section": "10. Randomness, proof length and repetition",
+            "passage_id": "pcp-expository-resources",
+            "quote": "The formal reduction represents each finite choice by\na block of bits with exactly one bit equal to one,\nthen",
+            "lines": [
+              1022,
+              1027
+            ],
+            "paragraph_id": "P129"
+          },
+          "review_kind": "overweighted",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-31",
+          "status": "incorporated",
+          "action": "Added an incidence list for the NAE triangle gadget alongside the palette and variable rules.",
+          "original_locator": {
+            "section": "10. Randomness, proof length and repetition",
+            "passage_id": "pcp-expository-resources",
+            "quote": "Now make a palette triangle whose colours we call\n$0,1,2$. A Boolean variable and its negation are\nadjacent vertices, each",
+            "lines": [
+              1069,
+              1081
+            ],
+            "paragraph_id": "P134"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-32",
+          "status": "incorporated",
+          "action": "Placed the reconstruction task before the solutions and added a solution tracking fixed M, correction, rejection and the polynomial identity.",
+          "original_locator": {
+            "section": "11. Answers and a reconstruction task",
+            "passage_id": "pcp-expository-answers",
+            "quote": "**Reconstruction task.** A received table is close to\na low-degree polynomial $M$, but all its erroneous\nentries might lie among",
+            "lines": [
+              1154,
+              1165
+            ],
+            "paragraph_id": "P141"
+          },
+          "review_kind": "missing",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-33",
+          "status": "incorporated",
+          "action": "Explained irreducibility of the displayed modulus and linked the executed checker for the generator and finite experiment.",
+          "original_locator": {
+            "section": "12. Why the low-degree test needed correction",
+            "passage_id": "pcp-expository-correction",
+            "quote": "For a concrete comparison, take\n$\\mathbb F_{16}=\\mathbb F_2[t]/(t^4+t+1)$.\nThis notation means that elements are binary polynomials\nof degree below four.",
+            "lines": [
+              1202,
+              1214
+            ],
+            "paragraph_id": "P146"
+          },
+          "review_kind": "line_edit",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "PA-34",
+          "status": "incorporated",
+          "action": "Used a readable pinned-source link and retained the full immutable revision in metadata and the long account.",
+          "original_locator": {
+            "section": "Sources and verification",
+            "passage_id": "pcp-expository-evidence",
+            "quote": "The mathematical construction is from\n[Amireddy, Behera, Srinivasan, Sudan and\nWillumsgaard, version 2][paper-v2]. The\nformal development discussed here is\n[Troy",
+            "lines": [
+              1230,
+              1242
+            ],
+            "paragraph_id": "P148"
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LA-01",
+          "status": "incorporated",
+          "action": "Retargeted the eight-position example to homogeneous linearEncode and its exact half-distance theorem.",
+          "original_locator": {
+            "section": "7",
+            "passage_id": "linked-source-18",
+            "quote": "Any two different\nmessages give words differing in exactly half their positions."
+          },
+          "review_kind": "unclear",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LA-03",
+          "status": "retained",
+          "action": "Preserved. Preserve the label-average qualification, arbitrary auxiliary data and actual rejection term through all rewrites.",
+          "original_locator": {
+            "section": "8",
+            "passage_id": "pcp-expository-binary-tests",
+            "quote": "This probability includes a uniformly random homogeneous label; it is\nnot a guarantee for every fixed label."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "LA-04",
+          "status": "retained",
+          "action": "Preserved. Keep “generator” and the strict field-size/error thresholds; do not replace them by arbitrary distinct nodes.",
+          "original_locator": {
+            "section": "6",
+            "passage_id": "pcp-expository-weighted-test",
+            "quote": "For the converse, use the stated generator nodes and $|F|>2c$."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "MA-01",
+          "status": "incorporated",
+          "action": "Displayed both masked queries, proved their conditional uniform marginals and averaged the row error; did not assume their independence.",
+          "original_locator": {
+            "section": "7 and 9",
+            "passage_id": "pcp-expository-cubic-labels",
+            "quote": "corresponding label and query that one position",
+            "lines": [
+              621,
+              626
+            ],
+            "related_lines": [
+              [
+                808,
+                811
+              ],
+              [
+                855,
+                863
+              ]
+            ]
+          },
+          "review_kind": "missing",
+          "review_severity": "major",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "KEEP-01",
+          "status": "retained",
+          "action": "Preserved. Retain the example and require both identities in every compressed occurrence.",
+          "original_locator": {
+            "section": "11",
+            "passage_id": "pcp-expository-answers",
+            "quote": "The second identity alone is insufficient."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "KEEP-02",
+          "status": "retained",
+          "action": "Preserved. Retain the distinction when shortening the resource section.",
+          "original_locator": {
+            "section": "11",
+            "passage_id": "pcp-expository-answers",
+            "quote": "This shows why that\nargument fails; it does not prove that the language\nis outside NP."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "KEEP-03",
+          "status": "retained",
+          "action": "Preserved. Keep 7/32 versus 3/8 and the strict kappa<1/16 statement; the event toy is an explanation, not a cheating PCP.",
+          "original_locator": {
+            "section": "11",
+            "passage_id": "pcp-expository-answers",
+            "quote": "equality\ngives no contradiction."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "KEEP-04",
+          "status": "retained",
+          "action": "Preserved. Keep the unbounded-family argument and the separation between finite enumeration, ordinary deduction and formal support.",
+          "original_locator": {
+            "section": "12",
+            "passage_id": "pcp-expository-correction",
+            "quote": "no priority claim for the example above is\nmade here."
+          },
+          "review_kind": "keep",
+          "review_severity": "keep",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "UI-01",
+          "status": "incorporated",
+          "action": "Fixed the closed-pane layout and tested companion/Back journeys at laptop and monitor widths.",
+          "original_locator": {
+            "section": "Pane-closed layout",
+            "passage_id": "live-pcp-exposition",
+            "quote": "Close"
+          },
+          "review_kind": "evidence_presentation",
+          "review_severity": "moderate",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        },
+        {
+          "id": "UI-02",
+          "status": "incorporated",
+          "action": "Gave inner weighted decoding and outer combined decoding distinct graph titles.",
+          "original_locator": {
+            "section": "Dependency graph",
+            "passage_id": "live-pcp-exposition",
+            "quote": "Decoding a low-degree polynomial"
+          },
+          "review_kind": "unclear",
+          "review_severity": "minor",
+          "authority": "author adjudication of an AI review; not Troy Lee approval"
+        }
+      ]
+    }
+  ]
+}

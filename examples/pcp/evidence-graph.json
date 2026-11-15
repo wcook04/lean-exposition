@@ -335,7 +335,7 @@
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
-      "sha256": "743563475ac1fb850d79537fb89291a03980a182d80115a94169988be30ee118",
+      "sha256": "76c817554ddb306694892eed54bbacadde3111d2b6588ba920335911c6375ef2",
       "path": "papers/pcp/expository/check_examples.py"
     },
     {
@@ -345,7 +345,7 @@
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
-      "sha256": "9fc951be4224ff73f209579dcf718edaf6a94895aff01429c2bf921fa5aa305d",
+      "sha256": "439df9f119bdf5faaecb40c183a4d15119e450183f56c79da925c1bcb502d49e",
       "path": "papers/pcp/expository/examples-output.txt"
     },
     {
@@ -975,7 +975,7 @@
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
-      "sha256": "b1c375fa0c8ab21ed9f415cbe375ac449252bdeefc074094539925e6e8016cfe",
+      "sha256": "207553be39243673afea1116a1d0233480b53570a25f6fb55b9e71258dcd95b4",
       "path": "papers/pcp/expository/check_exposition_examples.py"
     },
     {
@@ -985,7 +985,7 @@
       "revision": "working-tree-sha256",
       "license": "NOASSERTION",
       "redistribution": "reference_only",
-      "sha256": "550aff6fe4c7ff5ad727b8ca24f351d38d97c92930a4965fbf9ec14bbf019969",
+      "sha256": "c3fe0896fc6d4fc64a129834f1d57ecfafd96501a95e347ac8785d32ab7c6bfb",
       "path": "papers/pcp/expository/exposition-examples-output.txt"
     },
     {
@@ -6640,7 +6640,7 @@
       "status": "unverified",
       "source_id": "ordinary:exposition-script",
       "locator": "papers/pcp/expository/check_exposition_examples.py",
-      "statement": "The script checks finite K4 coloring and sampled-edge examples, F5 interpolation and grid identities, digit encoding, Hadamard label counterexample, Boolean NAE and palette gadget, OR-gate and prefix-mismatch cases, and toy soundness budgets, as enumerated in the source and output.",
+      "statement": "The script checks the finite examples enumerated in its source and retained stdout: graph dilution, F5 interpolation and grid certificates, formal digit substitution for Y^4+2Y+3 and exclusion of all 625 lower-degree representatives, F4 coordinate multiplication and the derived label, full/affine/homogeneous distances and two-read correction, Boolean clause and NAE gadgets, exact parameter constants, and toy soundness budgets.",
       "assumption_ids": [],
       "evidence_ids": [
         "exposition:python-rerun"
@@ -6731,6 +6731,62 @@
       "evidence_ids": [],
       "citation_ids": [],
       "boundary": "Pinned source transcription only. Active section variables, implicit binders and typeclass arguments require source inspection or Lean elaboration; no fresh Lean check or inferred dependency edge."
+    },
+    {
+      "id": "PCP.Algebraic.SetMultilinear.encode_injective_on",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.SetMultilinear.encode_injective_on",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/SetMultilinear.lean",
+      "locator": "PCP/Algebraic/SetMultilinear.lean:116",
+      "declaration": "PCP.Algebraic.SetMultilinear.encode_injective_on",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem encode_injective_on :\n    Set.InjOn (encode m c : Polynomial R → MvPolynomial (Variables m c) R)\n      {P | P.natDegree < m ^ c}\nSECTION VARIABLE DECLARATIONS:\nvariable {R : Type*} [CommSemiring R]\nvariable (m : ℕ) [NeZero m] (c : ℕ)",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Formal polynomial injectivity on the domain of natural degree strictly below the digit capacity. Applying decode to equal encodings uses formal recovery on both inputs. The signature is transcribed from source and has no new Lean extraction."
+    },
+    {
+      "id": "PCP.Algebraic.Hadamard.linearEncode",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.Hadamard.linearEncode",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/Hadamard.lean",
+      "locator": "PCP/Algebraic/Hadamard.lean:137",
+      "declaration": "PCP.Algebraic.Hadamard.linearEncode",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\nnoncomputable def linearEncode (x : Fin t → ZMod 2) :\n    (Fin t → ZMod 2) →ₗ[ZMod 2] ZMod 2 :=\n  ∑ i, x i • LinearMap.proj i\nSECTION VARIABLE DECLARATIONS:\nvariable {t r : ℕ}",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "A binary message defines a linear functional on its homogeneous linear labels. At three coordinates the domain consists of eight labels. The signature is transcribed from source and has no new Lean extraction."
+    },
+    {
+      "id": "PCP.Algebraic.Hadamard.linearEncode_apply",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.Hadamard.linearEncode_apply",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/Hadamard.lean",
+      "locator": "PCP/Algebraic/Hadamard.lean:141",
+      "declaration": "PCP.Algebraic.Hadamard.linearEncode_apply",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem linearEncode_apply (x w : Fin t → ZMod 2) :\n    linearEncode x w = ∑ i, x i * w i\nSECTION VARIABLE DECLARATIONS:\nvariable {t r : ℕ}",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "On a label vector, the linear functional evaluates to the dot product over two elements. The signature is transcribed from source and has no new Lean extraction."
+    },
+    {
+      "id": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+      "kind": "declaration",
+      "label": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+      "status": "unverified",
+      "source_id": "file:PCP/Algebraic/Hadamard.lean",
+      "locator": "PCP/Algebraic/Hadamard.lean:173",
+      "declaration": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+      "statement": "SOURCE EXCERPT, NOT ELABORATED:\ntheorem relativeDistance_linearEncode (x y : Fin t → ZMod 2) (hxy : x ≠ y) :\n    relativeDistance (linearEncode x) (linearEncode y) = (1 : ℚ) / 2\nSECTION VARIABLE DECLARATIONS:\nvariable {t r : ℕ}",
+      "assumption_ids": [],
+      "evidence_ids": [],
+      "citation_ids": [],
+      "boundary": "Distinct binary messages differ on half of the homogeneous linear labels. The two messages' difference is a nonzero binary linear functional. The signature is transcribed from source and has no new Lean extraction."
     }
   ],
   "edges": [
@@ -6905,6 +6961,42 @@
     {
       "from": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
       "to": "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.SetMultilinear.encode_injective_on",
+      "to": "PCP.Algebraic.SetMultilinear.decode_encode",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.Hadamard.linearEncode_apply",
+      "to": "PCP.Algebraic.Hadamard.linearEncode",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+      "to": "PCP.Algebraic.Hadamard.linearEncode",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.Hadamard.relativeDistance_homogeneous_queries",
+      "to": "PCP.Algebraic.Hadamard.relativeDistance_linearEncode",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+      "to": "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
+      "kind": "supports",
+      "evidence_ids": []
+    },
+    {
+      "from": "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
+      "to": "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound",
       "kind": "supports",
       "evidence_ids": []
     }

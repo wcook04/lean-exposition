@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-15",
+  "scope": "Revised explanatory papers and reader. No fresh full-library Lean build; no new dependency extraction, Comparator acceptance or human endorsement.",
+  "manuscripts": {
+    "long": {
+      "path": "papers/pcp/long/reasoning-record.md",
+      "sha256": "ea1535be69567887bbfb2fb6e82a8705aa6c8c67f38e34bff34a75f604babece"
+    },
+    "short": {
+      "path": "papers/pcp/short/paper.md",
+      "sha256": "a8c7cca605a352fae8bae3b6a2ff418c036a609f7d379da28ff5d3654ee52c48"
+    },
+    "expository": {
+      "path": "papers/pcp/expository/main.md",
+      "sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3"
+    }
+  },
+  "graph_sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
+  "pdfs": [
+    {
+      "stage": "long",
+      "pages": 44,
+      "sha256": "13884ff9194a058e75c37c4cdc976b02be7f615d4900014c436a4a5b975e7e94",
+      "layout_flags": []
+    },
+    {
+      "stage": "short",
+      "pages": 12,
+      "sha256": "cf3d650cd73c3a77659af1ba5b9244f1693c4f61cfcf65f1e1f201cdee789cb1",
+      "layout_flags": []
+    },
+    {
+      "stage": "expository",
+      "pages": 22,
+      "sha256": "0168dbfeaebd0a30be6181c4a8f83dabd9eae39ced0d4ac7b1960c7d0f12657c",
+      "layout_flags": []
+    }
+  ],
+  "pdf_visual_review": {
+    "status": "complete",
+    "coverage": "All 78 pages viewed in final contact sheets; enlarged checks of formal inverse, mixed-plane formulas, correction and worked binary-query pages. Source tables, headings, maths and page bounds inspected.",
+    "layout_flags": 0,
+    "companion_annotations_checked": 26,
+    "renderer_warnings": "Two underfull bibliography lines; no overfull boxes or missing glyphs observed."
+  },
+  "review_dispositions": {
+    "incorporated": 85,
+    "alternative_applied": 3,
+    "retained": 44,
+    "not_adopted_optional": 1
+  },
+  "checks": {
+    "authoring_tests": {
+      "passed": 708,
+      "skipped": 2,
+      "total": 710,
+      "skips": "opt-in pinned Lean fixtures"
+    },
+    "finite_examples": "Both maintained Python scripts rerun and matched retained stdout exactly.",
+    "bundle": "assemble and check-bundle passed; graph extraction remains not_run and semantic_certification false.",
+    "reading_relations": {
+      "authored": 36,
+      "kinds": {
+        "expands": 22,
+        "illustrates": 10,
+        "answers": 4
+      },
+      "ConsumerSession.query_reading": "All three stages queried; authored directions and target passages present, separately from shared-claim suggestions."
+    },
+    "reader_python_tests": 115,
+    "reader_source_tests": 11,
+    "reader_passage_associations": 88,
+    "pinned_lean_links": 95,
+    "browser_companion_sections": 15,
+    "reader_lean_snapshot": "Unchanged at a0ce13ed0fa264f051c1278e039596ce65557fa4",
+    "browser": {
+      "full_journey": 402,
+      "focused_final": 24,
+      "viewports": [
+        [
+          1440,
+          790
+        ],
+        [
+          1920,
+          953
+        ]
+      ],
+      "scope": "Full journey before the final index wrapping CSS; final focused journey and production build after it. All 15 companion section routes checked. Root inspected returned light/dark screenshots and the wrapped index."
+    },
+    "layout": "Working tree and Markdown destinations passed; staged layout checked before commit."
+  },
+  "evidence_limits": [
+    "AI reviews and author adjudications; not a human learning study.",
+    "Source associations are selected entry points, not complete semantic certification.",
+    "Small finite examples do not satisfy the full construction\u2019s large-field parameter regime.",
+    "Mathematical audit JSON retains the bytes it actually checked; subsequent author precision edits are bound separately here."
+  ]
+}

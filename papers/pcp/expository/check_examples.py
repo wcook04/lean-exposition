@@ -77,6 +77,23 @@ assert [prop(1,1),prop(1,7),prop(7,1)]==[1,0,0]
 print('GF4 colors:',colours,'edge residual matrix:',matrix)
 print('triangle proper residuals [0,0,0]; improper [1,0,0]')
 
+# Check the coordinate formula against multiplication in the subfield above.
+def from_coordinates(a, b):
+    return a ^ (w if b else 0)
+
+
+for a, b, c, d in product(range(2), repeat=4):
+    value = mul(from_coordinates(a, b), from_coordinates(c, d))
+    constant = (a * c + b * d) % 2
+    omega_coefficient = (a * d + b * c + b * d) % 2
+    assert value == from_coordinates(constant, omega_coefficient)
+for a, b in product(range(2), repeat=2):
+    u = from_coordinates(a, b)
+    assert mul(w, u) == from_coordinates(b, a ^ b)
+    cubic_label = (1 + a + b + a * b) % 2
+    assert (power(u, 3) ^ 1) == from_coordinates(cubic_label, 0)
+print('GF4 coordinates: all 16 products, four products by omega, and four cubic-residual labels checked.')
+
 # Independent repetitions, bound conditional on a fixed proof.
 assert (Fraction(3,4)**3)==Fraction(27,64)
 print('Toy repetition: (3/4)^3 =',Fraction(3,4)**3)

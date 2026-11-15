@@ -1,0 +1,959 @@
+{
+  "packet": "pcp-review-1-full-argument",
+  "edition_manifest_sha256": "c437cbb11a25c2b78c7742230ca87d86c0af93d1ecacbbe74a1a07662a0ecbcb",
+  "panel": [
+    {
+      "perspective": "source-owner interests",
+      "kind": "model analytical perspective; no source-owner contact or endorsement"
+    },
+    {
+      "perspective": "algebraic PCP researcher",
+      "kind": "model mathematical reconstruction and source analysis"
+    },
+    {
+      "perspective": "Lean-aware reader",
+      "kind": "model statement/definition/proof-interface audit; no kernel replay"
+    }
+  ],
+  "finding_field_contract": {
+    "required": [
+      "id",
+      "paper",
+      "perspective",
+      "locator",
+      "criterion",
+      "kind",
+      "severity",
+      "confidence",
+      "finding",
+      "why_it_matters",
+      "suggested_direction",
+      "evidence"
+    ],
+    "locator": [
+      "section",
+      "passage_id_if_present",
+      "quote_at_most_25_words",
+      "pdf_page_if_used"
+    ],
+    "severity": [
+      "critical",
+      "major",
+      "moderate",
+      "minor",
+      "keep"
+    ]
+  },
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "moderate": 6,
+    "minor": 16,
+    "keep": 18
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "proof-interface auditor",
+      "locator": {
+        "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+        "passage_id_if_present": "pcp-long-set-multilinear",
+        "quote_at_most_25_words": "This establishes both recovery of evaluations and injectivity on polynomials of degree strictly below $b^c$.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Evaluation recovery alone does not imply formal-polynomial injectivity over a finite field when b^c may exceed q. The injectivity theorem is true, and its formal left-inverse proof is already in the Lean source.",
+      "why_it_matters": "A reader must distinguish polynomial functions from formal polynomials; the text makes that distinction carefully elsewhere.",
+      "suggested_direction": "Move the formal Dec substitution before this inference, prove Dec(Enc(p))=p monomial by monomial, and infer injectivity before evaluation. Link decode_encode and encode_injective_on; do not add b^c<q.",
+      "evidence": [
+        "long MD lines 770–811",
+        "SetMultilinear.lean 67–69,89–107,116–121",
+        "If q<b^c then the nonzero formal polynomial Y^q−Y vanishes on all field inputs; hence evaluation recovery alone is insufficient."
+      ],
+      "originating_independent_finding": "LB-01"
+    },
+    {
+      "id": "F02",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "source-version auditor",
+      "locator": {
+        "section": "Binary labels for field elements",
+        "passage_id_if_present": "pcp-long-hadamard-composition",
+        "quote_at_most_25_words": "We do not require the paper's more general homogeneity assertion.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 5,
+      "kind": "error",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Bundled v2 Claim 3.7 states only the homogeneous scalar case P(Y)=eta Y, exactly the case used. Bundled v1 has no final homogeneity clause. A Lean comment alleges a broader false clause, but it does not describe these bundled editions.",
+      "why_it_matters": "A reader is incorrectly led to believe the corrected paper still asserts a known-false general statement. Mathematical source comments are not reliable edition history.",
+      "suggested_direction": "Delete the sentence or say that this is the scalar homogeneous case of corrected Claim 3.7. Identify another exact draft if a broader historical claim is intended.",
+      "evidence": [
+        "long MD line 864",
+        "v2 technical_tools.tex 168–188; appendix-claim-consistency.tex 1–99",
+        "v1 main.tex 829–853",
+        "HadamardComposition.lean 20–24"
+      ],
+      "originating_independent_finding": "LB-02"
+    },
+    {
+      "id": "F03",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Algebraic tests and correction / Point-versus-line soundness",
+        "passage_id_if_present": "pcp-long-algebra-mixed-plane",
+        "quote_at_most_25_words": "To apply crossing consistency, we bound its four errors.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "underweighted",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The four required discrepancies are not defined as formulas at the point where the mixed-plane proof invokes them. A reader must reconstruct which local discrepancy is transverse, which coordinate varies, and why only one uses the fixed-parameter estimate.",
+      "why_it_matters": "This is a genuine memory cost at the hardest transition; reversing the roles of the selected row and its own polynomial would change the hypotheses.",
+      "suggested_direction": "Replace this paragraph with the explicit R_y, C_z and four-error formulas supplied in review.md. Retain all distributions, the exceptional slices, Markov and the plurality factor.",
+      "evidence": "Long record A26–A28; formal/lean/PCP/Algebraic/PointLineEndpointConsistency.lean:33–124, especially crossing_errors_eq and endpoint_error_le.",
+      "originating_independent_finding": "ALG-01"
+    },
+    {
+      "id": "F04",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "The reverse inclusion",
+        "passage_id_if_present": "pcp-long-converse",
+        "quote_at_most_25_words": "That equivalence is a separate representation and simulation result.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 4,
+      "kind": "underweighted",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "The reference-NP equivalence is supported by concrete source constructions, but this final paragraph does not name the reference class or explain either direction.",
+      "why_it_matters": "A reader who reconstructed the algebra and finite-prefix converse still has to leave the long record to learn why its concrete NP class is standard nondeterministic NP.",
+      "suggested_direction": "Add a compact two-direction paragraph: bounded nondeterministic-choice words checked by a compiled path simulator; converse via translated decider and a machine enforcing the computed certificate bound. Preserve its imported-simulation boundary.",
+      "evidence": [
+        "long:1849",
+        "formal/lean/vendor/Complexitylib/Classes/NP.lean:24–27",
+        "formal/lean/vendor/Complexitylib/Classes/Time.lean:38–40",
+        "formal/lean/PCP/Complexity/ReferenceNPBridge.lean:36–88",
+        "formal/lean/PCP/Complexity/ReferenceNPConverse.lean:20–41",
+        "formal/lean/PCP/Complexity/ReferenceBoundedVerifier.lean:37–52"
+      ],
+      "originating_independent_finding": "LC-02"
+    },
+    {
+      "id": "F05",
+      "paper": "reader/edition.json",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "Global and declaration verification metadata",
+        "passage_id_if_present": null,
+        "quote_at_most_25_words": "Selected source declarations, read by hand.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Global source-read/unextracted status coexists with forward-theorem statement-compiled provenance and an analytics.free_of_axioms list containing declarations with empty axiom arrays. These are distinct evidence states; the report-generation code was not audited.",
+      "why_it_matters": "An unextracted report can be mistaken for an empty proved report, and retained statement elaboration for a fresh proof build.",
+      "suggested_direction": "Represent source-read, retained statement elaboration, proof build, dependency extraction and axiom report separately. Use unknown/unextracted rather than axiom-free when no proof report exists. Coordinate with the parent live-reader finding.",
+      "evidence": [
+        "reader/edition.json:/lean/scope",
+        "reader/edition.json:/lean/provenance",
+        "reader/edition.json:declarations[id=PCP.np_subset_pcp].provenance=statement-compiled",
+        "reader/edition.json:declarations[id=PCP.Algebraic.SetMultilinear.eval_encode].provenance=source-read",
+        "reader/edition.json:/analytics/free_of_axioms",
+        "EVIDENCE_BOUNDARIES.md:7"
+      ],
+      "originating_independent_finding": "LC-04"
+    },
+    {
+      "id": "F06",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Algebraic tests and correction / Point-versus-line soundness",
+        "passage_id_if_present": "pcp-long-algebra-ruled-surface",
+        "quote_at_most_25_words": "The expression for nonzero $z$ is affine in either variable when the other is fixed.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The geometric purpose of the surface can be said before its five-error accounting: the target line is the modified zero column, while every nonzero column is a uniformly sampled oriented line.",
+      "why_it_matters": "The algebra is correct, but the construction otherwise looks chosen for a later list of estimates rather than for a recoverable reason.",
+      "suggested_direction": "Add one sentence explaining the target-column/random-column mechanism; keep the candidate-row warning and the fixed-Q argument. Do not cut the five-event proof.",
+      "evidence": "Long record A29 and its sampling paragraph; formal/lean/PCP/Algebraic/RuledSurfaceRigidity.lean:34–71.",
+      "originating_independent_finding": "ALG-02"
+    },
+    {
+      "id": "F07",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "The polynomial-time implementation",
+        "passage_id_if_present": "pcp-long-runtime",
+        "quote_at_most_25_words": "The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does not provide this.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 4,
+      "kind": "missing",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The runtime section explains cost and semantic composition well. One concrete definition of its verifier step and ImplementedBy would connect that work to the endpoint signature.",
+      "why_it_matters": "The reader sees a compiled callback but may not recognize the exact equality ensuring this efficient algorithm implements this mathematical verifier on every answer history.",
+      "suggested_direction": "Add two sentences defining alg(input,seed,answers) as halt/next-address and ImplementedBy as equality of the generated bounded query tree. Avoid reproducing compiler state transitions.",
+      "evidence": [
+        "long:1687–1703",
+        "formal/lean/PCP/Complexity/CostModel.lean:16–64",
+        "formal/lean/PCP/Complexity/Machine.lean:33–73"
+      ],
+      "originating_independent_finding": "LC-03"
+    },
+    {
+      "id": "F08",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "Selected reader supports across algebra, encoded-line testing and assembly",
+        "passage_id_if_present": "pcp-long-encoded-line-test",
+        "quote_at_most_25_words": "Honest polynomials of degree strictly below $b^c$, with their actual encoded line restrictions, pass for every seed.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "Five selected cards support an ingredient or subclaim and one crossing card supports a specialization. These useful entry points should expose their roles; the digit injectivity inference is treated separately in F01.",
+      "why_it_matters": "Users opening only the card cannot tell whether completeness, the numeric budget, the described procedure or the four-polynomial selection is the precise theorem conclusion.",
+      "suggested_direction": "Retain relevant entry points and add role titles, narrower selections or supplemental declarations where needed. Prior canonical reviews already record rigidity_budget and the four applications of the single-pair decoder; do not relabel those as missing mathematics.",
+      "evidence": [
+        "claim_checks.json:LEAN-15,LEAN-17,LEAN-28,LEAN-30,LEAN-37",
+        "formal/lean/PCP/Algebraic/PointLineConstants.lean:62–72",
+        "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean:114–134",
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean:45–67",
+        "formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean:58 onward",
+        "Post-independent comparison: evidence/lean_prior_reconciliation.md; claim_checks.json LEAN-15,17,19,28,30,37."
+      ],
+      "originating_independent_finding": "LC-05"
+    },
+    {
+      "id": "F09",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "The corrected short low-degree test",
+        "passage_id_if_present": "pcp-long-algebra-generator-soundness",
+        "quote_at_most_25_words": "Apply this result to (A6), with $n=c+1$. If",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The selected source quote ends before the hypothesis and conclusion that the formal theorem supports.",
+      "why_it_matters": "A short lead-in is not a recognizable claim when viewed independently in the reader.",
+      "suggested_direction": "Select or add a complete prose assertion beside the displayed threshold, or explicitly label the current card an entry point. The prior review documents the renderer's inability to anchor display mathematics, so do not require a cross-block formula selection.",
+      "evidence": [
+        "long:300–314",
+        "reader/edition.json:passage pcp-long-algebra-generator-soundness",
+        "claim_checks.json:LEAN-06",
+        "Prior renderer limitation: humanizer/README.md and reader correspondence reviews; see evidence/lean_prior_reconciliation.md."
+      ],
+      "originating_independent_finding": "LC-06"
+    },
+    {
+      "id": "F10",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Testing a received Hadamard word",
+        "passage_id_if_present": "pcp-long-hadamard-soundness",
+        "quote_at_most_25_words": "For the product check, replace its three corrected answers by their $\\ell$-values.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The product-check paragraph should explicitly begin with r≥2. The text handles r=1 correctly later, but temporarily invokes a test that is absent in that case.",
+      "why_it_matters": "A reader verifying the endpoint case must read ahead to resolve the intended case split.",
+      "suggested_direction": "Begin the paragraph: For r≥2, use the top-degree product check and replace its three corrected answers by their ell-values. Keep the later r=1 conclusion.",
+      "evidence": "Long record B4 lists checks only for 2≤j≤r; B5 and the following r=1 paragraph.",
+      "originating_independent_finding": "ALG-03"
+    },
+    {
+      "id": "F11",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Soundness of the seven-check verifier",
+        "passage_id_if_present": "pcp-long-decoding-contract",
+        "quote_at_most_25_words": "a valid local-correction generator",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The final assembly changes terminology from the precisely defined GoodNodes correction parameter to a local-correction generator. GoodNodes need not mean a full multiplicative generator.",
+      "why_it_matters": "This may make the reader infer a stronger hidden hypothesis or forget that theta and zeta may differ.",
+      "suggested_direction": "Use a correction parameter satisfying GoodNodes, with a link back to the definition in binary inner correction.",
+      "evidence": "Long record pcp-long-binary-inner-correction; formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean:55–123 explicitly separates IsGeneratorNodes from GoodNodes.",
+      "originating_independent_finding": "ALG-05"
+    },
+    {
+      "id": "F12",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Testing a high-degree outer polynomial",
+        "passage_id_if_present": "pcp-long-encoded-line-soundness",
+        "quote_at_most_25_words": "It supplies a polynomial $P:F^k\\to F$ of total degree at most $D$",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The function-arrow notation for P partially undoes the chapter-opening distinction between a formal polynomial and its evaluation function. The later argument needs formal polynomial identities.",
+      "why_it_matters": "No false inference is made here, but consistent object types make the transition to polynomial separation easier to audit.",
+      "suggested_direction": "Write that the theorem supplies P in F[X_1,...,X_k] of total degree at most D, and use P(x) for evaluation.",
+      "evidence": "Long record pcp-long-algebra-scope and pcp-long-difference-soundness; EncodedLineLowDegreeSoundness.lean:325–369 returns an MvPolynomial.",
+      "originating_independent_finding": "ALG-07"
+    },
+    {
+      "id": "F13",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Soundness of the seven-check verifier",
+        "passage_id_if_present": "pcp-long-gap",
+        "quote_at_most_25_words": "An explicit positive gap makes all three inequalities hold at once.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The gap is correct, but a one-row c=4 constant table would avoid forcing readers to trace K, E, S and C across the preceding chapter to reproduce the displayed exact gap.",
+      "why_it_matters": "This makes the large rational value in amplification auditable without changing any mathematics.",
+      "suggested_direction": "Add or link a table K=105408, E=1054138, S=1054166, C=1054082, T=4444715947277. Keep the abstract formulas as the proof.",
+      "evidence": "Fresh Fraction computation in numerical_chain.json; ThreeColorSoundnessBudget.lean:27–39 and 142–155.",
+      "originating_independent_finding": "ALG-06",
+      "optional": true
+    },
+    {
+      "id": "F14",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Correcting an outer value at a prescribed point",
+        "passage_id_if_present": "pcp-long-outer-correction-soundness",
+        "quote_at_most_25_words": "Replacing its bit by the actual corrected origin costs another $e$, and accounting for rejection costs another $R_a$.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 2,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The two occurrences each of e and R_a are correct and have different causes; a compact event ledger would make C(c) memorable.",
+      "why_it_matters": "The reader can otherwise retain the formula without retaining which loss pays for rejection and which pays for comparison.",
+      "suggested_direction": "After the root inequality, collect sampled correction e, comparison R_a, primary error delta, origin correction e and rejection R_a, with the root loss. Preserve the proof of uniformity at a+zv.",
+      "evidence": "Long record B16–B18; formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222–313; supplied v2 appendix-local_correction.tex.",
+      "originating_independent_finding": "ALG-04",
+      "optional": true
+    },
+    {
+      "id": "F15",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "literature-transfer reader",
+      "locator": {
+        "section": "The corrected short low-degree test",
+        "passage_id_if_present": "pcp-long-algebra-weighted-plurality",
+        "quote_at_most_25_words": "applying that general theorem would additionally require checking its characterization hypotheses.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 4,
+      "kind": "credit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "Those hypotheses can be checked exactly: k=c+2, ell_1(u,v)=u, ell_(i+1)=u+a_i v, W={y_0=sum w_i y_i}; q>2c supplies the preceding exact characterization and a_i nonzero supplies 2-ary independence.",
+      "why_it_matters": "This turns a citation into a reusable, proved connection. The theorem denominator matches 2c^2+7c+5 exactly.",
+      "suggested_direction": "Add a short source note with the substitution; retain the direct weighted-grid proof in the long record because it explains fixed-center concentration.",
+      "evidence": [
+        "long MD 228–314",
+        "Kaufman–Sudan STOC manuscript, apt-conf.pdf, PDF page 5, Definitions 2.3,2.5,2.8 and Theorem 2.9",
+        "review.md shorter-proof section"
+      ],
+      "originating_independent_finding": "LB-05",
+      "optional": true
+    },
+    {
+      "id": "F16",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "teaching and failure-mode reader",
+      "locator": {
+        "section": "Binary labels for field elements",
+        "passage_id_if_present": "pcp-long-hadamard-labels",
+        "quote_at_most_25_words": "For an arbitrary received word, small full-label distance does not imply equally small distance on a much smaller subset of labels.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The two-metric warning is correct. A small example can make its role memorable: r=t=3 gives 256 full labels and eight homogeneous labels, so corrupting exactly the latter gives full error 1/32 and homogeneous error one.",
+      "why_it_matters": "The common decoded object must be controlled under two different sampling distributions; global closeness alone does not supply restricted closeness.",
+      "suggested_direction": "Optionally add the example here or in the worked exposition. Do not replace the simultaneous-metric theorem by unrelated witnesses.",
+      "evidence": [
+        "long MD 825–849",
+        "Boolean label count 2^(sum_{j<=r} binom(t,j)); homogeneous count 2^t",
+        "review.md binary-details section"
+      ],
+      "originating_independent_finding": "LB-06",
+      "optional": true
+    },
+    {
+      "id": "F17",
+      "paper": "papers/short/paper.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "7. Resources, implementation and the reverse inclusion",
+        "passage_id_if_present": "pcp-short-complexity",
+        "quote_at_most_25_words": "The program producing the queries and verdict is compiled into a finite multi-tape machine with a polynomial cost bound",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "line_edit",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The immediate PolyTimeAlg target is Mathlib FinTM2, described in the source as a finite multi-stack model. The separate reference-NP bridge uses a multitape model.",
+      "why_it_matters": "Conflating the immediate compiler target with the later equivalent model hides which representation theorem does the work.",
+      "suggested_direction": "Say “Mathlib’s finite FinTM2 machine model” here, and retain the separate reference-NP simulation sentence in formal correspondence.",
+      "evidence": [
+        "short:393,411",
+        "formal/lean/PCP/Complexity/Machine.lean:9–12,64–73",
+        "formal/lean/PCP/Complexity/ReferenceNPConverse.lean:20–41"
+      ],
+      "originating_independent_finding": "LC-07"
+    },
+    {
+      "id": "F18",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "The algebraic PCP theorem: a detailed account of the Lean proof",
+        "passage_id_if_present": "pcp-long-intro-theorem",
+        "quote_at_most_25_words": "The verifier, its implementation, the constants, and the proof-length polynomial are chosen for the language, before the input.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The prose accurately distinguishes language-uniform choices, input-dependent proof existence and a fixed proof before randomness. It also bounds addresses on all answer branches.",
+      "why_it_matters": "These clauses make the standard PCP endpoint and finite-prefix reverse valid; removing them would create genuine ambiguity.",
+      "suggested_direction": "Preserve in long and specialist theorem; keep a shorter reminder at repetition, where the quantifier matters again.",
+      "evidence": [
+        "long:23–40,1681",
+        "formal/lean/PCP/Theorem.lean:25–33",
+        "formal/lean/PCP/Verifier/Definition.lean:readsBelow/CompleteAt/SoundAt definitions",
+        "claim_checks.json:LEAN-01,LEAN-31,LEAN-46"
+      ],
+      "originating_independent_finding": "LC-08"
+    },
+    {
+      "id": "F19",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "counterexample quantifier auditor",
+      "locator": {
+        "section": "The corrected short low-degree test",
+        "passage_id_if_present": "pcp-long-algebra-old-test-counterexample",
+        "quote_at_most_25_words": "The earlier test's failure can be seen in a family of arbitrarily large fields, so it is not merely a small-field exception.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 3,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The family q=2^(2k), c=2, f(x)=x_1^4 defeats v1 for every proposed absolute field-size constant C by taking k sufficiently large. Its rejection is zero and distance from degree-two polynomials is at least 1−4/q.",
+      "why_it_matters": "This is a full refutation of the old local lemma, not a small-field accident or a claim that every check of the final PCP verifier accepts.",
+      "suggested_direction": "Keep the family, fibrewise root bound, and narrow scope. The GF(16) run may be used only as an illustration.",
+      "evidence": [
+        "long MD 318–341",
+        "v1 main.tex 716–742",
+        "counterexample_checks.py and counterexample_checks.json: 0/256 old rejection, 12/16 exact distance, 240/256 corrected rejection"
+      ],
+      "originating_independent_finding": "LB-03"
+    },
+    {
+      "id": "F20",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "proof-mechanism reader",
+      "locator": {
+        "section": "The corrected short low-degree test",
+        "passage_id_if_present": "pcp-long-algebra-generator-test",
+        "quote_at_most_25_words": "The initial nodes and induction include the exponents $1,\\ldots,q-1$, which exhaust $F^\\times$.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The propagation proof uses a full multiplicative orbit and a nonzero last interpolation coefficient; it also handles c=0. The q>2c hypothesis feeds the exact-line characterization.",
+      "why_it_matters": "Distinct nonzero nodes alone would not explain why this particular recurrence determines every field value.",
+      "suggested_direction": "Retain the propagation argument and its explicit full-generator hypothesis.",
+      "evidence": [
+        "long MD 197–224",
+        "GeneratorLowDegreeTest.lean, inspected full file"
+      ],
+      "originating_independent_finding": "LB-04"
+    },
+    {
+      "id": "F21",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Bivariate agreement",
+        "passage_id_if_present": "pcp-long-algebra-bivariate-statement",
+        "quote_at_most_25_words": "The approximating rows and columns need not be nearest approximations.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The statement identifies the exact strengthening used by the formal variant and supplies the construction rather than importing the strengthened theorem under the historical name.",
+      "why_it_matters": "This is substantive added value for the source owner and an independent reader.",
+      "suggested_direction": "Retain the positive-degree, cubic field-size, individual-degree and arbitrary-approximant qualifications together.",
+      "evidence": "BivariateAgreement.lean:150–178; freshly inspected ALMSS Theorem 69, author-hosted PDF p.48; Arora–Safra §5.2.",
+      "originating_independent_finding": "ALG-08"
+    },
+    {
+      "id": "F22",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Point-versus-line soundness",
+        "passage_id_if_present": "pcp-long-algebra-fixed-parameter",
+        "quote_at_most_25_words": "No global convention for choosing tied minimizers is required.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The proof transports nearest approximants only on good lines where separation proves uniqueness, paying for the bad lines.",
+      "why_it_matters": "Removing this qualification would hide a real issue with arbitrary nearest-polynomial ties.",
+      "suggested_direction": "Preserve the strict good-line condition and the exceptional-line term delta-prime/r.",
+      "evidence": "Long record A25; PointLineEndpointConsistency.lean:18–21 and 85–102 records the fixed-parameter dependency.",
+      "originating_independent_finding": "ALG-09"
+    },
+    {
+      "id": "F23",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Point-versus-line soundness",
+        "passage_id_if_present": "pcp-long-algebra-ruled-surface",
+        "quote_at_most_25_words": "This holds for each $y_0$, with the same previously chosen $Q$; hence the entire target line has degree at most $d$.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "This sentence prevents exchanging a parameter-dependent existence statement with the existence of one polynomial for the whole target line.",
+      "why_it_matters": "It is the exact logical hinge of the rigidity argument.",
+      "suggested_direction": "Retain it adjacent to the positive-probability calculation, including the fact that the two right-hand values are deterministic.",
+      "evidence": "RuledSurfaceRigidity.lean:34–90 constructs equality with the single bestApproximation before HasLowDegreeLines.",
+      "originating_independent_finding": "ALG-10"
+    },
+    {
+      "id": "F24",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "degree-budget auditor",
+      "locator": {
+        "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+        "passage_id_if_present": "pcp-long-set-multilinear",
+        "quote_at_most_25_words": "A low-degree test does not by itself prove that an arbitrary decoded polynomial has the special set-multilinear form of an honest encoding.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The honest degree bound <b^c and arbitrary decoded bound c b^c are correctly separated.",
+      "why_it_matters": "The adversary does not have to present a genuine set-multilinear encoding; later root bounds must use the larger degree.",
+      "suggested_direction": "Retain the distinction in all three accounts; do not force honest form without an additional test.",
+      "evidence": [
+        "long MD 797–811",
+        "SetMultilinearDecode.lean 1–82",
+        "short MD 101–108"
+      ],
+      "originating_independent_finding": "LB-09"
+    },
+    {
+      "id": "F25",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "query-model auditor",
+      "locator": {
+        "section": "Testing a received Hadamard word",
+        "passage_id_if_present": "pcp-long-hadamard-self-correction",
+        "quote_at_most_25_words": "At $r=3$, the formal query count is ten.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The v2 eight-query tester and the formal 2r+4-query tester are genuinely different algorithms. Retaining lower-degree multiplication checks accounts for ten queries at r=3, while soundness needs only the top check.",
+      "why_it_matters": "Conflating editions would give the wrong resource statement while obscuring which verifier has been formalized.",
+      "suggested_direction": "Keep the explicit difference. Describe final aggregate counts as upper bounds rather than distinct-address exact counts.",
+      "evidence": [
+        "long MD 922–936",
+        "HadamardTest.lean 59–96",
+        "v2 technical_tools.tex 309–348,389–414"
+      ],
+      "originating_independent_finding": "LB-08"
+    },
+    {
+      "id": "F26",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "proof-economy reader",
+      "locator": {
+        "section": "Testing a received Hadamard word",
+        "passage_id_if_present": "pcp-long-hadamard-row-decoding",
+        "quote_at_most_25_words": "The same $g$ occurs in both conclusions.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 2,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "Choosing one good-row witness and an arbitrary bad-row witness gives simultaneous pointwise bounds, then averaging. A single generic threshold lemma captures this and the later binary-polynomial row decoder.",
+      "why_it_matters": "The stronger no-global-smallness conclusion is useful; a Markov-only paraphrase can lose the common object or add avoidable uniqueness dependencies.",
+      "suggested_direction": "A named short lemma is optional. Preserve each local threshold, each metric, and the nonalgorithmic nature of selection.",
+      "evidence": [
+        "long MD 978–987,1039–1052",
+        "HadamardRowDecoding.lean 1–139",
+        "BinaryLocalRowDecoding.lean 1–178",
+        "v2 low_degree_test.tex 510–554"
+      ],
+      "originating_independent_finding": "LB-10"
+    },
+    {
+      "id": "F27",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "Soundness of the seven-check verifier",
+        "passage_id_if_present": "pcp-long-decoding-contract",
+        "quote_at_most_25_words": "These polynomials are chosen once for the received proof; the later argument uses those same choices.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The formal existential witnesses are reused for full and homogeneous distances and for all later consistency checks. The manuscript explicitly keeps this invariant.",
+      "why_it_matters": "Separate decodings could satisfy individual tests without giving a single colouring or valid certificates.",
+      "suggested_direction": "Retain the same-choice sentence and the companion exposition exercise. Do not replace restricted-label guarantees with a full-label-only distance.",
+      "evidence": [
+        "long:1052,1450–1456",
+        "short:204,338",
+        "expository:891–898",
+        "formal/lean/PCP/Algebraic/HadamardRowDecoding.lean:123–130",
+        "formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean:325–339"
+      ],
+      "originating_independent_finding": "LC-09"
+    },
+    {
+      "id": "F28",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "A binary version of the weighted low-degree test",
+        "passage_id_if_present": "pcp-long-binary-inner-correction",
+        "quote_at_most_25_words": "The guarantee is averaged over the requested homogeneous label as well as the direction.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The corrector guarantee preserves random label averaging; it does not assert correctness for every prescribed label of an arbitrary received table.",
+      "why_it_matters": "Uniform homogeneous labels are essential when errors may concentrate on a small set of questions.",
+      "suggested_direction": "Preserve this qualifier in every summary and in the outer-correction probability statement.",
+      "evidence": [
+        "long:1066–1073,1147–1157",
+        "short:210,262",
+        "expository:713–724",
+        "formal/lean/PCP/Algebraic/BinaryStandardLocalCorrection.lean:89–97",
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:222–236"
+      ],
+      "originating_independent_finding": "LC-10"
+    },
+    {
+      "id": "F29",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Correcting an outer value at a prescribed point",
+        "passage_id_if_present": "pcp-long-outer-correction-soundness",
+        "quote_at_most_25_words": "the probability of either rejection or a wrong returned bit",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The bound concerns the unconditional failure event, not correctness conditioned on acceptance and not merely accepted-wrong output.",
+      "why_it_matters": "ZERO can charge a corrector abort directly to its own rejection only because this event has been formulated correctly.",
+      "suggested_direction": "Preserve the event definition, no-smallness statement and absence of auxiliary proximity hypotheses.",
+      "evidence": "BinaryLocalCorrectionSoundness.lean:222–313, especially Option-valued relativeDistance in the conclusion.",
+      "originating_independent_finding": "ALG-13"
+    },
+    {
+      "id": "F30",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Checking that a polynomial vanishes on a grid",
+        "passage_id_if_present": "pcp-long-zero-actual-test",
+        "quote_at_most_25_words": "these points lie in special subsets that could contain all its errors.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The motivation correctly identifies why global proximity cannot justify reading certificate values on the two selected slices.",
+      "why_it_matters": "It explains the need for the outer corrector, rather than merely describing a subroutine.",
+      "suggested_direction": "Retain this motivating obstruction and the shared-point/shared-label description.",
+      "evidence": "Long record B19–B21; BinaryZeroOnGridSoundness.lean:210–298 derives the bound for the actual two-call verifier.",
+      "originating_independent_finding": "ALG-14"
+    },
+    {
+      "id": "F31",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Derived polynomial oracles and fresh correction randomness",
+        "passage_id_if_present": "pcp-long-derived-oracle-transfer",
+        "quote_at_most_25_words": "This polynomiality is a hypothesis: arbitrary dependence of $A_x$ on $x$ does not establish it.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The transfer separates the univariate degree bound in the queried value from polynomiality in the outer point.",
+      "why_it_matters": "Without it an arbitrary point-dependent family could be smuggled into a polynomial zero bound.",
+      "suggested_direction": "Preserve this hypothesis and its application through explicitly polynomial vertex and edge constraints.",
+      "evidence": "DerivedZeroOnGridSoundness.lean:246–285 includes formal P and hvalue separately from the family Q and its natDegree bound.",
+      "originating_independent_finding": "ALG-15"
+    },
+    {
+      "id": "F32",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Derived polynomial oracles and fresh correction randomness",
+        "passage_id_if_present": "pcp-long-derived-oracle-transfer",
+        "quote_at_most_25_words": "The replacement error is multiplied by $1+2C(c)$, because it enters through ZERO's rejection term.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 1,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The fresh-mask coupling is inserted into the actual ZERO rejection term, so the large coefficient is necessary for this argument.",
+      "why_it_matters": "Dropping it would invalidate the quantitative soundness calculation.",
+      "suggested_direction": "Retain the coupled-distribution explanation and this factor in all compressed occurrences.",
+      "evidence": "DerivedZeroOnGridSoundness.lean:187–199 and 246–285; ThreeColorDecodedSoundness.lean:58–87.",
+      "originating_independent_finding": "ALG-16"
+    },
+    {
+      "id": "F33",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Soundness of the seven-check verifier",
+        "passage_id_if_present": "pcp-long-assembled-zero-soundness",
+        "quote_at_most_25_words": "the common degree bound $5D$ is sufficient for the two ZERO arguments.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The 3D/5D inflation is carried through the root and certificate-substitution losses without redecoding primary tables.",
+      "why_it_matters": "A false repair could unnecessarily impose the point-versus-line cubic field bound at 5D. The existing application is valid.",
+      "suggested_direction": "Keep the separate primary degree D and constraint degree 5D roles.",
+      "evidence": "ThreeColorDecodedSoundness.lean:136–171 uses D:=5*D in the two ZERO applications after the primary witnesses have been supplied.",
+      "originating_independent_finding": "ALG-18"
+    },
+    {
+      "id": "F34",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "algebraic PCP researcher; Lean-aware source audit",
+      "locator": {
+        "section": "Repetition on one fixed proof",
+        "passage_id_if_present": "pcp-long-amplification",
+        "quote_at_most_25_words": "Repetition leaves the proof-length polynomial unchanged and multiplies the query and random-bit budgets by the fixed constant $R$.",
+        "pdf_page_if_used": null
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "The statement keeps the proof fixed and openly reports the enormous fixed constants, making the asymptotic nature of the construction clear.",
+      "why_it_matters": "This avoids conflating a class characterization with practical verification parameters.",
+      "suggested_direction": "Retain the exact rational gap and amplified count; a c=4 constant table may make their derivation easier to reproduce.",
+      "evidence": "Fresh exact arithmetic in numerical_chain.json; long record pcp-long-gap and pcp-long-fair-bits.",
+      "originating_independent_finding": "ALG-19"
+    },
+    {
+      "id": "F35",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "complexity theorist and formalization author; one model audit",
+      "locator": {
+        "section": "The polynomial-time implementation",
+        "passage_id_if_present": "pcp-long-runtime",
+        "quote_at_most_25_words": "Callback correctness",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high",
+      "finding": "Semantic callback correctness is asserted on arbitrary words, stored query sizes are bounded separately, and compiler micro-proofs are explicitly outside the explanatory derivation.",
+      "why_it_matters": "This gives a credible path from information-theoretic testing to actual machine time without presenting query count as a runtime proof or pretending to reproduce every compiler lemma.",
+      "suggested_direction": "Preserve the correctness/cost/compilation sequence and the explicit supporting-lemma boundary at long1703.",
+      "evidence": [
+        "long:1691–1703",
+        "formal/lean/PCP/Complexity/ThreeColorBaseCorrect.lean:14–40",
+        "formal/lean/PCP/Complexity/ThreeColorBasePolynomial.lean:20–60",
+        "formal/lean/PCP/Complexity/ThreeColorRuntime.lean:11 onward"
+      ],
+      "originating_independent_finding": "LC-11"
+    },
+    {
+      "id": "F36",
+      "paper": "papers/long/reasoning-record.md",
+      "perspective": "mathematical reader",
+      "locator": {
+        "section": "From the algebraic tests to the PCP theorem",
+        "passage_id_if_present": "pcp-long-final-target",
+        "quote_at_most_25_words": "From the algebraic tests to the PCP theorem",
+        "pdf_page_if_used": null
+      },
+      "criterion": 2,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "Several symbols change local roles between chapters: the digit base b becomes m, d becomes grid dimension, and Q becomes field cardinality after a polynomial use.",
+      "why_it_matters": "The meanings are locally stated, but a reader has to recover the changes while checking the final inequalities.",
+      "suggested_direction": "Add the short notation bridge in line_edits.md R11; keep the correct local definitions and avoid a mechanical global renaming.",
+      "evidence": [
+        "Long binary conventions and final-target/parameters passages; line_edits.md R11."
+      ]
+    },
+    {
+      "id": "F37",
+      "paper": "papers/long/reasoning-record.pdf",
+      "perspective": "source-owner and rendered-document reader",
+      "locator": {
+        "section": "Opening byline",
+        "passage_id_if_present": "pcp-long-intro-theorem",
+        "quote_at_most_25_words": "The algebraic PCP theorem: a detailed account of the Lean proof",
+        "pdf_page_if_used": 1
+      },
+      "criterion": 5,
+      "kind": "missing",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The supplied source frontmatter names the explanatory authorship and original-work attribution, but the rendered opening shows no byline. Full credit is present at page 42.",
+      "why_it_matters": "An isolated first page does not carry the authorship information already supplied in the source.",
+      "suggested_direction": "Render a compact byline using the existing metadata, retaining the fuller source account at the end. Do not invent human approval or original-theorem authorship.",
+      "evidence": [
+        "Long Markdown YAML lines 1–6; direct full-size PDF inspection pages 1 and 42."
+      ]
+    },
+    {
+      "id": "F38",
+      "paper": "papers/long/reasoning-record.pdf",
+      "perspective": "mathematical reader",
+      "locator": {
+        "section": "The eight tables and seven checks",
+        "passage_id_if_present": "pcp-long-eight-tables",
+        "quote_at_most_25_words": "Primary polynomial",
+        "pdf_page_if_used": 29
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The compact four-row primary-table comparison is split across pages 29–30, two rows on each page. Its header repeats and no clipping was observed.",
+      "why_it_matters": "The intended comparison is harder to perform when its four objects cannot be seen together.",
+      "suggested_direction": "Keep the table together in the next render if possible; retain its useful comparison and put long explanations in surrounding prose.",
+      "evidence": [
+        "Direct full-size visual inspection PDF pages 29 and 30; earlier PDF review also records the repeated-header split."
+      ]
+    },
+    {
+      "id": "F39",
+      "paper": "live proof reader",
+      "perspective": "reader navigation",
+      "locator": {
+        "section": "Reading this account",
+        "passage_id_if_present": "pcp-long-intro-readers",
+        "quote_at_most_25_words": "specialist paper",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "moderate",
+      "confidence": "high",
+      "finding": "Two normal clicks on the specialist companion link remained on the full-argument route in this session, whereas direct navigation to its stated href loaded the specialist destination.",
+      "why_it_matters": "The companion route promised by the reading guide was not usable through that click sequence.",
+      "suggested_direction": "Reproduce normal click and history behavior for the companion anchor before diagnosing the cause; check it again after any route repair. Scope this observation to the tested desktop session.",
+      "evidence": [
+        "evidence/browser_observations.json; route #/pcp-full-argument and href #/pcp-specialist; waitForURL timed out after a click; direct destination loaded."
+      ]
+    },
+    {
+      "id": "F40",
+      "paper": "live proof reader",
+      "perspective": "reader navigation",
+      "locator": {
+        "section": "A high-degree univariate polynomial as a low-degree multivariate polynomial",
+        "passage_id_if_present": "pcp-long-set-multilinear",
+        "quote_at_most_25_words": "← Back to §A",
+        "pdf_page_if_used": null
+      },
+      "criterion": 7,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high",
+      "finding": "The back label uses A from the English article at the beginning of a section title, creating an ambiguous apparent section number.",
+      "why_it_matters": "A user cannot tell whether A denotes a numbered section or the start of the title.",
+      "suggested_direction": "Use an explicit section identifier or a short unambiguous heading label; do not infer numbering from the first word of an unnumbered heading.",
+      "evidence": [
+        "evidence/browser_observations.json; observed after the section navigation and declaration-panel route."
+      ]
+    }
+  ],
+  "incorporation_status": "All are proposals or preservation decisions. No manuscript or reader changes were made."
+}

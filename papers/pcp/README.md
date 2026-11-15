@@ -24,8 +24,9 @@ Read the same accounts beside the linked Lean in Proof Reader:
 [full argument](https://wcook04.github.io/proof-reader/#/pcp-full-argument),
 [specialist paper](https://wcook04.github.io/proof-reader/#/pcp-specialist), and
 [worked exposition](https://wcook04.github.io/proof-reader/#/pcp-exposition).
-The [release checks](source-review/release-checks.json) record the clean-clone
-installation, bundle reproduction and deployed-reader verification.
+The [previous release checks](source-review/release-checks.json) retain the earlier
+clean-clone installation and deployment evidence. The current edition has its
+own [revision receipt](source-review/review-round-2/validation.json).
 
 ## Exact sources and scope
 
@@ -52,23 +53,21 @@ expression dependencies.
 
 ## Checks and review state
 
-The current prose and literature revision is documented in the
-[paragraph-review archive](source-review/humanizer/README.md). Final source,
-sequential-reading and mathematical-preservation reviews are complete. All 72
-revised PDF pages passed visual review, and all 20 companion annotations resolve
-in both the canonical and relocated packets. Finite examples and the source-package
-tests passed; two opt-in pinned Lean fixtures were skipped.
+The [returned-review revision](source-review/review-round-2/README.md) records
+all 133 review findings and the decisions made on each. The three papers received
+further mathematical, literature and humanizer revisions. The final reading
+edition has 44, 12 and 22 pages. Its 26 PDF companion annotations resolve to
+named destinations; the browser's companion routes are tested separately.
 
-A reader audit found overly broad paragraph-to-Lean associations. These were
-[corrected against the pinned statements](source-review/humanizer/mapping-review-corrected.md),
-and the [corrected bundle](source-review/humanizer/bundle-validation-corrected.json)
-passed structural validation. Reader links are selected source entry points,
-not exhaustive statement matching. Formula-only quote anchors unsupported by
-the reader are omitted; the declarations remain indexed and the manuscripts
-retain their source hyperlinks. The [review summary](source-review/review-summary.md)
-separates these checks and retains the earlier reports and mappings as historical
-evidence. Structural validation does not establish mathematical correspondence
-or a fresh Lean build.
+The updated source audit covers 88 selected reader associations and 95 pinned
+Lean links. These are source entry points, not exhaustive statement matching.
+The canonical bundle includes 36 authored reading relations between passages;
+those editorial relations remain distinct from proof dependencies. The reader
+now retains every passage-linked declaration and distinguishes source reading,
+statement compilation and proof extraction. The [validation receipt](source-review/review-round-2/validation.json)
+records exact hashes and check outcomes. Earlier reports in the
+[humanizer archive](source-review/humanizer/README.md) describe earlier editions.
+No fresh full-library Lean build or human expert acceptance is claimed.
 
 Run the finite examples from the repository root with ordinary Python 3:
 

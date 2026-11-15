@@ -87,20 +87,49 @@ def check_interpolation_and_grid():
     print("  P=M=1 shows why the first identity cannot be omitted.")
 
 
+def check_weighted_interpolation_and_slice():
+    nodes = tuple(pow(2, k, 5) for k in (1, 2, 3))
+    weights = []
+    for node in nodes:
+        weight = 1
+        for other in nodes:
+            if other != node:
+                weight = weight * (-other) * pow(node - other, -1, 5) % 5
+        weights.append(weight)
+    check((nodes, weights) == ((2, 4, 3), [1, 3, 2]), "weighted nodes and coefficients at zero")
+    for a, b, c in product(range(5), repeat=3):
+        predicted = sum(w * (a + b * x + c * x * x) for w, x in zip(weights, nodes)) % 5
+        check(predicted == a, "weighted interpolation gives the constant coefficient")
+
+    points = tuple(product(range(5), repeat=4))
+    slice_points = tuple(point for point in points if point[2:] == (0, 0))
+    check((len(points), len(slice_points)) == (625, 25), "zero certificate slice size")
+    print("F5: weights [1,3,2] at nodes (2,4,3) interpolate all 125 quadratics at zero;")
+    print("  all 25 zero-slice points can be corrupted with overall error 1/25.")
+
+
 def check_digit_encoding():
+    evaluations = []
     for value in range(5):
         first_block = (1, value, value * value % 5)
         second_block = (1, pow(value, 3, 5), pow(value, 6, 5))
-        encoded = (first_block[2] * second_block[1]
+        encoded = (first_block[1] * second_block[1]
                    + 2 * first_block[1] * second_block[0]
                    + 3 * first_block[0] * second_block[0]) % 5
-        original = (value ** 5 + 2 * value + 3) % 5
+        original = (value ** 4 + 2 * value + 3) % 5
+        evaluations.append(original)
         check(encoded == original, "base-three digit substitution")
         if value == 2:
             check(first_block == (1, 2, 4) and second_block == (1, 3, 4),
                   "displayed substitution blocks")
-            check(encoded == 4, "displayed substitution value")
-    print("Digit encoding: substitution equality checked at all five field elements; lambda=2 gives 4.")
+            check(encoded == 3, "displayed substitution value")
+
+    for coefficients in product(range(5), repeat=4):
+        cubic = [sum(a * value ** j for j, a in enumerate(coefficients)) % 5
+                 for value in range(5)]
+        check(cubic != evaluations, "no polynomial of degree at most three gives these values")
+    print("Digit encoding: substitution equality checked at all five field elements; lambda=2 gives 3;")
+    print("  none of the 625 polynomials of degree at most three has the same evaluations.")
 
 
 def check_label_counterexample():
@@ -115,6 +144,51 @@ def check_label_counterexample():
     for x, y in product(range(2), repeat=2):
         check((1, x, y, x * y) != (1, 0, 0, 1), "no evaluation point has these answers")
     print("Label counterexample: all 256 BLR pairs pass; none of four evaluation points matches.")
+
+
+def check_label_domains_and_correction():
+    messages = range(1 << 3)
+    # A monomial is its variable mask. Bit m of a label selects monomial m.
+    monomials = tuple(messages)
+    full_labels = range(1 << len(monomials))
+    full_label_set = set(full_labels)
+    linear_term_mask = sum(1 << m for m in monomials if m.bit_count() == 1)
+    affine_labels = tuple(label for label in full_labels if (label & ~(linear_term_mask | 1)) == 0)
+    homogeneous_labels = tuple(label for label in full_labels if (label & ~linear_term_mask) == 0)
+    check((len(full_labels), len(affine_labels), len(homogeneous_labels)) == (256, 16, 8),
+          "three-bit full, affine and homogeneous label counts")
+
+    def evaluate(label, message):
+        return sum((label >> m) & 1 for m in monomials if (message & m) == m) % 2
+
+    evaluations = {tuple(evaluate(label, x) for x in messages) for label in full_labels}
+    check(len(evaluations) == len(full_labels), "each full label has a distinct evaluation table")
+    for a, b in combinations(messages, 2):
+        for labels in (full_labels, affine_labels, homogeneous_labels):
+            disagreements = sum(evaluate(label, a) != evaluate(label, b) for label in labels)
+            check(2 * disagreements == len(labels), "half distance on each label domain")
+
+    honest = [evaluate(label, 0b101) for label in full_labels]
+    received = honest.copy()
+    for label in homogeneous_labels:
+        received[label] = evaluate(label, 0b001)
+    errors = sum(a != b for a, b in zip(honest, received))
+    homogeneous_errors = sum(received[label] != honest[label] for label in homogeneous_labels)
+    check((errors, homogeneous_errors) == (4, 4), "distance after replacing homogeneous answers")
+    print("Label domains: 256 full, 16 affine, 8 homogeneous; replacing four bits gives")
+    print("  error 1/64 on full labels and 1/2 on homogeneous labels.")
+
+    maximum_wrong = 0
+    for requested in full_labels:
+        check({mask ^ requested for mask in full_labels} == full_label_set,
+              "shifting a uniform mask preserves uniformity")
+        wrong = sum((received[mask] ^ received[mask ^ requested]) != honest[requested]
+                    for mask in full_labels)
+        check(wrong <= 2 * errors, "two-read correction obeys the union bound")
+        maximum_wrong = max(maximum_wrong, wrong)
+    check(maximum_wrong == 2 * errors, "the two-read correction bound is attained")
+    print("Label correction: all 256 requests and all 256 masks per request checked;")
+    print("  maximum error 1/32 equals twice the full-label error.")
 
 
 def check_nae_gadget():
@@ -155,13 +229,43 @@ def check_review_additions():
     print("  toy soundness budgets give 7/32 < 3/8 and equality 3/8 at the boundary.")
 
 
+def check_construction_constants():
+    c = 4
+    inner_decoding = 4 * (c + 2) ** 2 * (112 * (c + 2) + 60)
+    point_line = 2 * ((c + 1) * inner_decoding + 29)
+    outer_decoding = 28 + point_line
+    outer_correction = 2 + 2 * (c + 1) * inner_decoding
+    check((inner_decoding, point_line, outer_decoding, outer_correction)
+          == (105408, 1054138, 1054166, 1054082), "degree-four constants K, E, S, C")
+
+    difference_error = 1 + 3 * outer_decoding
+    two_correctors = 1 + 2 * outer_correction
+    derived_grid_error = two_correctors * (1 + 2 * outer_decoding) + 2 * outer_decoding
+    gap = min(Fraction(1, 4_000_000 * (point_line + 1)),
+              Fraction(1, 16 * difference_error),
+              Fraction(1, 16 * (derived_grid_error + 1)))
+    sampling_gap = gap / 16
+    repetitions = (sampling_gap.denominator + sampling_gap.numerator - 1) // sampling_gap.numerator
+    queries_per_run = 20 * c + 107
+    check(gap == Fraction(1, 71_115_455_156_448), "gap before fair-bit sampling")
+    check(sampling_gap == Fraction(1, 1_137_847_282_503_168), "gap after fair-bit sampling")
+    check(repetitions == 1_137_847_282_503_168 and queries_per_run == 187,
+          "repetitions and per-run queries")
+    check(repetitions * queries_per_run == 212_777_441_828_092_416, "amplified query bound")
+    print("Degree four: (K,E,S,C)=(105408,1054138,1054166,1054082);")
+    print("  fair-bit gap 1/1137847282503168, 1137847282503168 repetitions at 187 queries each.")
+
+
 def main():
     check_graph_examples()
     check_interpolation_and_grid()
+    check_weighted_interpolation_and_slice()
     check_digit_encoding()
     check_label_counterexample()
+    check_label_domains_and_correction()
     check_nae_gadget()
     check_review_additions()
+    check_construction_constants()
     print("All additional exposition checks passed.")
 
 

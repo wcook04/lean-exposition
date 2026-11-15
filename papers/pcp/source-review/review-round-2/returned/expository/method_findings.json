@@ -1,0 +1,27 @@
+{
+  "status": "assessed; no additional general rule warranted",
+  "proposals": [],
+  "explanation": "The supplied record-to-expository method already requires an executable unfamiliar representation, explicit fixed/random choices, a visible intermediate implication, changed-domain resets and exact example boundaries. This review found application failures of those rules, not evidence that a new production system or general workflow is needed.",
+  "existing_rules_applied": [
+    {
+      "rule": "Procedure 2, lines 151–178",
+      "donor": "F5 digit example and F4 coordinates",
+      "disposition": "Apply existing example-representativeness and convenient-symmetry checks; narrowly clarify register rule RG13."
+    },
+    {
+      "rule": "Procedure 3, lines 179–217",
+      "donor": "Actual-to-ideal ZERO inequality",
+      "disposition": "Show the missing event inclusion and consumer contract before optional technical proof."
+    },
+    {
+      "rule": "Procedure 4, lines 220–231",
+      "donor": "Fresh full-label mask and outer correction",
+      "disposition": "Name fixed witness/request, random choices, output and averaging domain."
+    }
+  ],
+  "transfer_cases": [
+    "A new probability conditioning or restricted query domain needs an explicit distribution check.",
+    "An unfamiliar encoding needs an example that starts at its input and ends at an actual requested output."
+  ],
+  "exception": "For a specialist audience already trained in the exact encoding, typed definitions and a precise theorem contract can suffice."
+}

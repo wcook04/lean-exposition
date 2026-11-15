@@ -1,0 +1,1998 @@
+{
+  "packet": "pcp-review-3-worked-exposition",
+  "edition_manifest_sha256": "407c865164a9161acc3e0aa49f750fb491ec2c9f8412785224fd895f786ab720",
+  "panel": [
+    {
+      "role": "stated learner",
+      "kind": "AI simulation; prior checklist exposure, no human outcome"
+    },
+    {
+      "role": "teacher",
+      "kind": "paragraph and operation audit"
+    },
+    {
+      "role": "source owner",
+      "kind": "reviewer perspective, not source-author endorsement"
+    }
+  ],
+  "adjudication": "Root synthesis merged duplicate component findings; prior repaired quantitative omissions are not reissued. PA-23 and PA-25 lowered to moderate; F5/Y4 alternative selected.",
+  "counts": {
+    "moderate": 26,
+    "keep": 11,
+    "major": 5,
+    "minor": 2
+  },
+  "findings": [
+    {
+      "id": "PA-01",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "An algebraic proof of the PCP theorem, through worked examples",
+        "passage_id": "pcp-expository-opening",
+        "quote": "The same statement holds for every problem whose proposed solutions can be\nchecked in polynomial time. The encoded certificate still",
+        "lines": [
+          16,
+          18
+        ],
+        "paragraph_id": "P002"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Define polynomial resources before using NP as the universal promise. Polynomial time and polynomial length are used before the non-complexity reader is told what they mean.",
+      "why_it_matters": "The reader cannot yet distinguish time, proof length and query cost when the opening extends the graph promise to all NP problems.",
+      "suggested_direction": "Add a brief definition in terms of input length and a fixed exponent, with the exact NP definition retained in Section 2.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-opening",
+          "lines": [
+            16,
+            18
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-theorem",
+          "lines": [
+            86,
+            89
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-theorem",
+          "lines": [
+            128,
+            133
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B014",
+        "B022"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-02",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "An algebraic proof of the PCP theorem, through worked examples",
+        "passage_id": "pcp-expository-opening",
+        "quote": "The constant bounds the number of **certificate bits read**. The checker may\nread the input and perform a polynomial amount",
+        "lines": [
+          20,
+          24
+        ],
+        "paragraph_id": "P003"
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Preserve the distinction between proof-bit queries and polynomial input processing. This prevents the central misleading interpretation that ordinary prose can be checked at a few places.",
+      "why_it_matters": "Confusing input computation with proof queries would change the theorem into a false claim about reading only a few input bits.",
+      "suggested_direction": "Preserve the distinction and the specific object queried.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-opening",
+          "lines": [
+            20,
+            24
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "preservation recommendation",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-03",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "1. Why checking a few edges is not enough",
+        "passage_id": "pcp-expository-colouring",
+        "quote": "Now add $t$ disjoint triangles, each properly coloured. The graph is still\nnot three-colourable, because it still contains $K_4$, but",
+        "lines": [
+          58,
+          61
+        ],
+        "paragraph_id": "P008"
+      },
+      "criterion": 4,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Preserve the growing edge-sampling counterexample. Disjoint triangles preserve the obstruction while diluting uniformly sampled original edges.",
+      "why_it_matters": "The unbounded family explains failure of a uniform constant gap; one fixed graph cannot establish that asymptotic obstruction.",
+      "suggested_direction": "Preserve the growing family; it does more work than one isolated K4 example.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colouring",
+          "lines": [
+            58,
+            61
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colouring",
+          "lines": [
+            67,
+            69
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "preservation recommendation",
+      "related_blocks": [
+        "B011"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-04",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "3. Why polynomial tables can reveal a hidden defect",
+        "passage_id": "pcp-expository-polynomial-distance",
+        "quote": "Consequently, two different polynomials of degree at most $d$ disagree at\nat least a fraction $1-d/Q$ of the elements of",
+        "lines": [
+          163,
+          167
+        ],
+        "paragraph_id": "P023"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Define total degree before using multivariate distance. Total degree is emphasized but not defined, and the multivariate statement is imported at the same moment as the term.",
+      "why_it_matters": "The reader needs the relevant degree convention to use the multivariate root bound and later substituted-degree estimates.",
+      "suggested_direction": "Define total degree using X^2Y, contrasting it with degree in one variable; retain the general bound as a stated input.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-polynomial-distance",
+          "lines": [
+            163,
+            167
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-interpolation",
+          "lines": [
+            228,
+            233
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B043"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-05",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "3. Why polynomial tables can reveal a hidden defect",
+        "passage_id": "pcp-expository-interpolation",
+        "quote": "Any table $f:H^m\\to\\mathbb F_Q$ has the extension",
+        "lines": [
+          221,
+          221
+        ],
+        "paragraph_id": "P031"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Show a two-dimensional grid basis term before the general interpolation sum. H^m, the tuple index s, the coordinate s_j, and the tensor-product basis all enter together without a concrete two-dimensional instance.",
+      "why_it_matters": "A product of one-variable bases is the first multivariate construction; without a small term the general sum can be merely symbolic.",
+      "suggested_direction": "Introduce H^m as m-tuples from H and show one basis product for H={0,1}, m=2 before the summation.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-interpolation",
+          "lines": [
+            221,
+            221
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colour-polynomials",
+          "lines": [
+            269,
+            272
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B049"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-06",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "4. Turning three colours into polynomial equations",
+        "passage_id": "pcp-expository-colour-polynomials",
+        "quote": "For the colouring construction we now change fields. We use characteristic\ntwo, where $1+1=0$, and a field containing an element",
+        "lines": [
+          239,
+          243
+        ],
+        "paragraph_id": "P033"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "major",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Teach the changed F4 arithmetic before the colouring equations. The text states F4 and its closure rather than teaching the arithmetic; a reader with polynomial arithmetic alone cannot yet compute omega minus omega squared or see why three nonzero elements suffice.",
+      "why_it_matters": "The declared prerequisites do not supply extension-field arithmetic; the colour residual and later binary basis depend on the omitted operation.",
+      "suggested_direction": "Work in {0,1,omega,1+omega}, with omega^2=omega+1 and u-v=u+v; calculate one nonzero difference and one cube, then introduce the larger field containing this copy.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colour-polynomials",
+          "lines": [
+            239,
+            243
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colour-polynomials",
+          "lines": [
+            249,
+            251
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B046"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-07",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "4. Turning three colours into polynomial equations",
+        "passage_id": "pcp-expository-colour-polynomials",
+        "quote": "For example, the triangle coloured $(1,\\omega,\\omega^2)$ gives three\nzero edge residuals. The assignment $(1,1,\\omega^2)$ gives residuals\n$(1,0,0)$ on edges $12,23,31$.",
+        "lines": [
+          259,
+          267
+        ],
+        "paragraph_id": "P035"
+      },
+      "criterion": 4,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Keep the invalid four-colour assignment that passes every edge equation. The K4 assignment using all four field elements is a strong changed-case example and establishes a separate necessity.",
+      "why_it_matters": "The example separates the two algebraic constraints and prevents an unjustified inference from edge equations alone.",
+      "suggested_direction": "Preserve both the honest triangle and the four-colour cheating example; the former may be shorter if the field arithmetic is expanded.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-colour-polynomials",
+          "lines": [
+            259,
+            267
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "preservation recommendation",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-08",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "5. A certificate for vanishing on a grid",
+        "passage_id": "pcp-expository-grid-certificate",
+        "quote": "with suitable degree bounds on the $Q_j$. Polynomial division in each\nvariable proves this result. After removing all multiples of",
+        "lines": [
+          322,
+          328
+        ],
+        "paragraph_id": "P042"
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Separate the grid-ideal argument from its quotient-degree budget. The paragraph moves from remainder elimination to a total-degree budget; these are two jobs at a delicate transition.",
+      "why_it_matters": "The learner must know both why the remainder vanishes and why quotient degrees stay within budget; these are distinct inferences.",
+      "suggested_direction": "Split after the remainder vanishes; add one line of division in the toy example or connect the quotients directly to Y+1 and X+2.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-grid-certificate",
+          "lines": [
+            322,
+            328
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-09",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "5. A certificate for vanishing on a grid",
+        "passage_id": "pcp-expository-grid-certificate",
+        "quote": "Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere\non the grid. At least one of the two",
+        "lines": [
+          364,
+          368
+        ],
+        "paragraph_id": "P049"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Name the degree increase caused by substituting Z_H before invoking distance. The composition M(X,Z_H(X)) has a different degree from M; invoking polynomial distance without naming this is an unsupported pedagogical shortcut.",
+      "why_it_matters": "The later factor h in the root loss otherwise arrives without a known substitution rule.",
+      "suggested_direction": "Add that substitution may multiply the degree by h and that the field is chosen large relative to that resulting degree; exact 5Dh/Q remains in Section 9.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-grid-certificate",
+          "lines": [
+            364,
+            368
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-10",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "5. A certificate for vanishing on a grid",
+        "passage_id": "pcp-expository-grid-certificate",
+        "quote": "The remaining problem is that a received table is only *close* to a\npolynomial, and the points $(x,0)$ and $(x,Z_H(x))$",
+        "lines": [
+          374,
+          377
+        ],
+        "paragraph_id": "P050"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Quantify the thin-slice obstruction to direct reads at prescribed points. The obstruction is correctly named, but a concrete density calculation would make the need for correction immediate.",
+      "why_it_matters": "Global average error can be tiny while every requested point is wrong; the corrector is needed for this precise reason.",
+      "suggested_direction": "Use H or a full ambient toy table to show that a thin slice can contain all errors, and promise recovery at a prescribed point rather than direct reads there.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-grid-certificate",
+          "lines": [
+            374,
+            377
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-11",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "6. Keeping the number of queries constant",
+        "passage_id": "pcp-expository-digit-encoding",
+        "quote": "A low-degree polynomial in many variables restricts to a low-degree\nunivariate polynomial on each line $u+Yv$. The prover supplies a",
+        "lines": [
+          383,
+          386
+        ],
+        "paragraph_id": "P051"
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Type a supplied line row before comparing its values. The domains and contents of T_(u,v) are not yet explicit; table could mean a full function table or a coefficient list.",
+      "why_it_matters": "Without a row domain and contents, a learner cannot say which supplied object is tested or distinguish arbitrary lines from one consistent polynomial.",
+      "suggested_direction": "Say the row indexed by (u,v) proposes a degree-d univariate polynomial, and specify that lambda selects the compared point.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            383,
+            386
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-12",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "6. Keeping the number of queries constant",
+        "passage_id": "pcp-expository-digit-encoding",
+        "quote": "To prove this, compare two families of lines through a plane, giving\nrow and column descriptions of the same received",
+        "lines": [
+          398,
+          408
+        ],
+        "paragraph_id": "P053"
+      },
+      "criterion": 3,
+      "kind": "overweighted",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Make the deep point-line proof sketch optional while retaining its theorem contract. Error locator, plurality, bivariate agreement and plane restrictions arrive without an operation the stated learner can perform; the sentence chain sounds explanatory but cannot be reconstructed locally.",
+      "why_it_matters": "Several new technical names interrupt the current query-cost problem without providing a locally reconstructible proof.",
+      "suggested_direction": "Move the proof sketch to an optional note linked to exact record sections; main route keeps the theorem's input, output and the role of line consistency.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            398,
+            408
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            388,
+            396
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B073"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-13",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "6. Keeping the number of queries constant",
+        "passage_id": "pcp-expository-digit-encoding",
+        "quote": "Here is the operation with two base-$3$ digits. Over $\\mathbb F_5$, take",
+        "lines": [
+          415,
+          415
+        ],
+        "paragraph_id": "P055"
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Disclose the finite-field collapse in the digit-encoding example. Over F5 the function Y^5 equals Y, so this example's evaluation table is already linear and does not display a genuine function-degree saving.",
+      "why_it_matters": "The example can suggest a functional degree obstruction that its evaluation table does not possess, despite a correct formal substitution.",
+      "suggested_direction": "Keep F5 and replace the example by Y^4+2Y+3, with encoded leading term X_{0,1}X_{1,1} and value 3 at lambda=2. Use complete R04.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            415,
+            415
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            429,
+            430
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            438,
+            440
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B080",
+        "B082"
+      ],
+      "supporting_derivation": "Every a in F5 satisfies a^5=a, so the original p evaluates as 3a+3. Its formal degree and substitution identity remain correct. The chosen degree-four replacement cannot agree everywhere with a degree-at-most-two polynomial, because their nonzero degree-four difference cannot have five roots.",
+      "proposed_checked_alternative": "R04 and audit_checks.json: all five evaluations and all 125 quadratic candidates checked.",
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-14",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "6. Keeping the number of queries constant",
+        "passage_id": "pcp-expository-digit-encoding",
+        "quote": "The test need not enforce its exact special form. A received table\nmay decode to an arbitrary polynomial of degree",
+        "lines": [
+          450,
+          455
+        ],
+        "paragraph_id": "P060"
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Preserve the enlarged soundness degree for arbitrary decoded encodings. This prevents a serious soundness shortcut and distinguishes completeness from soundness assumptions.",
+      "why_it_matters": "Soundness must cover received tables outside the honest encoding form; erasing the inflated degree would weaken the adversarial model.",
+      "suggested_direction": "Preserve this paragraph as a highlighted conceptual hinge.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            450,
+            455
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-digit-encoding",
+          "lines": [
+            457,
+            462
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "preservation recommendation",
+      "related_blocks": [
+        "B085"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-15",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "6. Keeping the number of queries constant",
+        "passage_id": "pcp-expository-weighted-test",
+        "quote": "The same formula also corrects a value at a prescribed point. Suppose\n$f$ differs from a degree-$c$ polynomial $P$ on",
+        "lines": [
+          493,
+          499
+        ],
+        "paragraph_id": "P065"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Make one prescribed-point interpolation query executable. This is the pivotal operation, but the affine bijection argument for uniformity and one actual weighted read are still implicit.",
+      "why_it_matters": "The transition from global distance to a fixed request relies on marginal uniformity, which the learner needs to justify rather than assume.",
+      "suggested_direction": "Explain v -> u+a_i v is a bijection because a_i is nonzero, and add one numerical request trace using the earlier interpolation example.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-weighted-test",
+          "lines": [
+            493,
+            499
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-weighted-test",
+          "lines": [
+            468,
+            474
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-weighted-test",
+          "lines": [
+            505,
+            507
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B086",
+        "B092"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-16",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "7. A field value represented by many one-bit questions",
+        "passage_id": "pcp-expository-hadamard",
+        "quote": "This is the homogeneous linear part of a Hadamard encoding. It stores\neight answers about a message with only three",
+        "lines": [
+          532,
+          536
+        ],
+        "paragraph_id": "P070"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Explain homogeneous linear functional as a parity with no constant. Homogeneous linear functional is introduced as a technical name before it is defined, and the pairing proof presupposes this binary linear algebra.",
+      "why_it_matters": "The absence of a constant term matters for additivity; an unfamiliar technical name hides the exact bit operation.",
+      "suggested_direction": "Say it is exactly a parity dot product with no added constant; show that two messages differ by another such dot product.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-hadamard",
+          "lines": [
+            532,
+            536
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-17",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "7. A field value represented by many one-bit questions",
+        "passage_id": "pcp-expository-cubic-labels",
+        "quote": "A field $F$ with $2^t$ elements can be represented as $t$ binary\ncoordinates using a fixed basis. An element $u$",
+        "lines": [
+          604,
+          607
+        ],
+        "paragraph_id": "P079"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "major",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Compute a field-expression query label in a fixed binary basis. A fixed basis is named but never made operational; the reader is asked to understand another representation change before seeing any coordinates.",
+      "why_it_matters": "The reader cannot manufacture the claimed one-bit query address from the displayed field expression.",
+      "suggested_direction": "Use the already introduced F4 basis (1,omega) to write u=a+b omega as (a,b) and show addition coordinatewise.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            604,
+            607
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            609,
+            610
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            616,
+            619
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            621,
+            626
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B111",
+        "B113",
+        "B114"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-18",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "7. A field value represented by many one-bit questions",
+        "passage_id": "pcp-expository-cubic-labels",
+        "quote": "Linearity in the labels alone is insufficient to establish that a\nreceived word represents a field element. For example, assign",
+        "lines": [
+          628,
+          634
+        ],
+        "paragraph_id": "P083"
+      },
+      "criterion": 4,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Preserve the linear-in-labels word that cannot be evaluation at any point. The four-label counterexample precisely explains why linearity testing alone is inadequate.",
+      "why_it_matters": "The counterexample proves that label additivity alone does not identify an evaluation word and gives a purpose to product/unit checks.",
+      "suggested_direction": "Preserve; place it immediately after the worked genuine evaluation word so its failure is recognizable.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            628,
+            634
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "preservation recommendation",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-19",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "7. A field value represented by many one-bit questions",
+        "passage_id": "pcp-expository-cubic-labels",
+        "quote": "The formal Hadamard test checks these properties using corrected\nanswers. Its degree-three version makes ten bit queries. The current\npaper",
+        "lines": [
+          636,
+          642
+        ],
+        "paragraph_id": "P084"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Show a product-consistency check before giving its version-specific query count. Products and the constant label are named as repairs, but their checked relations are not shown; ten versus eight queries currently has more detail than the operation itself.",
+      "why_it_matters": "Query counts do not explain what is tested; the student needs a concrete relation before assessing the imported robustness claim.",
+      "suggested_direction": "State one product consistency equation and H(1)=1, label them components of the imported soundness theorem, then retain the 10/8 distinction in a short source note.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-cubic-labels",
+          "lines": [
+            636,
+            642
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-20",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "8. Combining the encodings and returning to the grid",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "The construction now has two forms of redundancy. A line polynomial\nis encoded as a polynomial of fixed degree in",
+        "lines": [
+          648,
+          652
+        ],
+        "paragraph_id": "P085"
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Identify the address and returned bit at each layer of the nested encoding. Primary row, encoded line row and corrected line value are dense terms whose indexing is never shown together.",
+      "why_it_matters": "Nested row and label indices otherwise look like interchangeable “values”, hiding which errors are controlled by which distance.",
+      "suggested_direction": "Add a compact typed table or one end-to-end query trace: row key, polynomial label, returned bit and comparison.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            648,
+            652
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-21",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "8. Combining the encodings and returning to the grid",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "The weight is incorporated into the queried label. Applying $L$ to a\nweighted field identity therefore produces an identity among",
+        "lines": [
+          662,
+          665
+        ],
+        "paragraph_id": "P087"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Work one weighted linear label instead of only displaying composition notation. The identity is right, but no example shows how multiplying a field value changes the parity label rather than its stored answer.",
+      "why_it_matters": "The verifier observes a weighted value by changing a label, not by reading the whole field value and multiplying it afterwards.",
+      "suggested_direction": "Use the small fixed basis to compute one transformed label L composed with multiplication by eta; retain uniform label sampling.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            662,
+            665
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-22",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "8. Combining the encodings and returning to the grid",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "The combined low-degree theorem supplies **one** polynomial close to\nthe primary oracle on the label sets used later. It is",
+        "lines": [
+          667,
+          674
+        ],
+        "paragraph_id": "P088"
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Define full, affine and homogeneous label families alongside the shared witness. The key common-witness principle is explicit, but full, affine and homogeneous label families are not laid out in one usable definition.",
+      "why_it_matters": "Full-label average agreement cannot be restricted without a separate guarantee, and independent decoded witnesses would not assemble.",
+      "suggested_direction": "Give a two-row label-family table with whether a constant term is permitted and which later test consumes each guarantee; preserve that both guarantees use one polynomial. Add the checked 256/8-label example in R06: four changed homogeneous answers give full distance 1/64 but restricted distance 1/2.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            667,
+            674
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            698,
+            704
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        },
+        {
+          "source": "audit_checks.json",
+          "locator": "label_domain_restriction",
+          "role": "fresh finite check of proposed teaching example"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B126"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-23",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "8. Combining the encodings and returning to the grid",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "We need quantitative versions of these statements to know that the\nerrors will leave a positive gap. Fix a positive",
+        "lines": [
+          676,
+          679
+        ],
+        "paragraph_id": "P089"
+      },
+      "criterion": 3,
+      "kind": "overweighted",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Move expanded K,E,S,C constants behind an exact role-based theorem statement. K,E,S,C arrive before the reader has seen the four tables and before an instance of composed correction; four large formulas interrupt the only construction-level explanation.",
+      "why_it_matters": "Four expanded constants compete with newly introduced objects and make the roles of their errors harder to track.",
+      "suggested_direction": "Introduce S(c), E(c), C(c) by their error roles on the main route and place their exact unchanged expansions in a nearby parameter note or endnote with an exact destination.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            676,
+            679
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            689,
+            691
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B124"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made",
+      "severity_adjudication": "Allocation issue supports the major reconstruction repairs but is not independently a major fidelity failure."
+    },
+    {
+      "id": "PA-24",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "8. Combining the encodings and returning to the grid",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "The outer local corrector uses a random line through a prescribed\npoint. It checks the encoded line information and compares",
+        "lines": [
+          706,
+          715
+        ],
+        "paragraph_id": "P092"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "major",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Trace reject/return outcomes in the outer corrector before the bound. The correction theorem is named precisely but the algorithm is described at too high a level to distinguish its reject outcome from its returned bit in a worked reconstruction.",
+      "why_it_matters": "The reader cannot reconstruct why rejection is part of the error event or why arbitrary auxiliary rows remain controlled.",
+      "suggested_direction": "Trace a fixed target, a sampled line, the check, reject/return outcomes and the ideal bit; explain the bound as a three-source error budget before the formula.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            706,
+            715
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            722,
+            727
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            736,
+            740
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-binary-tests",
+          "lines": [
+            748,
+            756
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B129",
+        "B132",
+        "B134"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-25",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "9. From the seven checks to a colouring",
+        "passage_id": "pcp-expository-assembly",
+        "quote": "The proof contains four main polynomial tables, each accompanied by\nan encoded line table. They describe:",
+        "lines": [
+          767,
+          768
+        ],
+        "paragraph_id": "P099"
+      },
+      "criterion": 2,
+      "kind": "misplaced",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Introduce the four-table inventory before the composed testers need it. The reader learns the full inventory only after all combined-test constants; earlier references to primary and certificate rows lack this scaffold.",
+      "why_it_matters": "Earlier references to primary, certificate and line rows lack a concrete inventory tying them to the colouring constraints.",
+      "suggested_direction": "Move a compact inventory to the start of Section 8 and retain the seven-check assembly here.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            767,
+            768
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            776,
+            779
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            781,
+            785
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B138",
+        "B139"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made",
+      "severity_adjudication": "Allocation issue supports the major reconstruction repairs but is not independently a major fidelity failure."
+    },
+    {
+      "id": "PA-26",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "9. From the seven checks to a colouring",
+        "passage_id": "pcp-expository-assembly",
+        "quote": "The two ZERO checks then force the two decoded colouring\npolynomials to vanish on their grids. Their primary values are",
+        "lines": [
+          808,
+          815
+        ],
+        "paragraph_id": "P105"
+      },
+      "criterion": 1,
+      "kind": "unclear",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Name the derived constraint polynomials explicitly in the soundness conclusion. The phrase two decoded colouring polynomials can refer to chi and chi-prime or to the two derived constraints; they are different objects.",
+      "why_it_matters": "Colour and difference polynomials need not vanish; the derived constraint polynomials do, so this phrase risks identifying the wrong objects.",
+      "suggested_direction": "Name the two constraint polynomials Val_chi and Prop_chi-prime, and say their vanishing uses the same chi and chi-prime fixed by decoding.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            808,
+            815
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-27",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "9. From the seven checks to a colouring",
+        "passage_id": "pcp-expository-assembly",
+        "quote": "The left side is the ideal rejection bound. On the right, replacing\nthe derived cubic read costs $2\\varepsilon$, so the",
+        "lines": [
+          855,
+          863
+        ],
+        "paragraph_id": "P110"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "major",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Show the ideal-to-actual probability comparison as a chain of event bounds. Nearly every term is verbally attributed but the chain from actual test to one failed identity remains compressed; 'combined polynomial-root loss' is not itself a derivation.",
+      "why_it_matters": "The coefficient 1+2C and its multiplication of the derived-read error follow from a coupling step the learner is not yet shown.",
+      "suggested_direction": "Present the event coupling as a short three-line inequality with the two corrected reads accounted for, then substitute the already stated bounds; leave exact source theorem as support.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            855,
+            863
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            825,
+            833
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-assembly",
+          "lines": [
+            882,
+            888
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B145",
+        "B155"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-28",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "10. Randomness, proof length and repetition",
+        "passage_id": "pcp-expository-resources",
+        "quote": "A point of $F^m$ takes $m\\log_2|F|=s(12a+32)=O(\\log N)$\nbits to specify. The encoded line data uses $cs=4s$ extra\nfield coordinates, so",
+        "lines": [
+          923,
+          931
+        ],
+        "paragraph_id": "P118"
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Separate address counting from Boolean-label counting and justify both. Three different addresses and an exponential-versus-polynomial comparison are packed into one paragraph; the label-count formula assumes the reader recognizes squarefree monomial counts.",
+      "why_it_matters": "A polynomial number of geometric addresses and of Boolean label addresses are separate size obligations.",
+      "suggested_direction": "Split point/line coordinates from label coefficients; tie binomial coefficients to choosing variables in degree-0/1/2/3 monomials and explicitly deduce 2^(O(log N))=N^(O(1)).",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            923,
+            931
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            908,
+            909
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            916,
+            921
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B159",
+        "B161"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-29",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "10. Randomness, proof length and repetition",
+        "passage_id": "pcp-expository-resources",
+        "quote": "Fair random bits give uniform field elements directly,\nsince $|F|$ is a power of two. Four correction parameters\noriginally range",
+        "lines": [
+          952,
+          960
+        ],
+        "paragraph_id": "P121"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Identify the four nonzero correction parameters before charging their sampling loss. Four nonzero parameters are introduced only here without identifying the four correction calls, so their count is hard to recover.",
+      "why_it_matters": "The fourth power of the nonzero-parameter probability otherwise appears as an unexplained implementation adjustment.",
+      "suggested_direction": "Name the two correction calls in each of the two ZERO tests; keep immediate acceptance and the multiplicative gap loss explicit.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            952,
+            960
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-30",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "10. Randomness, proof length and repetition",
+        "passage_id": "pcp-expository-resources",
+        "quote": "The formal reduction represents each finite choice by\na block of bits with exactly one bit equal to one,\nthen",
+        "lines": [
+          1022,
+          1027
+        ],
+        "paragraph_id": "P129"
+      },
+      "criterion": 3,
+      "kind": "overweighted",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Move the clause compiler to an optional reduction route and retain the reduction contract. This detailed clause compiler is accurate but less central to the algebraic PCP mechanism than the missing field-label trace.",
+      "why_it_matters": "The detailed compiler takes attention after the PCP mechanism is complete; making it optional preserves the proof route while protecting the main payoff.",
+      "suggested_direction": "Move the flags construction to an optional reduction appendix; retain the reduction's exact guarantee and source on the main path.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1022,
+            1027
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1009,
+            1020
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1034,
+            1039
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1046,
+            1051
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1083,
+            1091
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B175",
+        "B178",
+        "B180",
+        "B185"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-31",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "10. Randomness, proof length and repetition",
+        "passage_id": "pcp-expository-resources",
+        "quote": "Now make a palette triangle whose colours we call\n$0,1,2$. A Boolean variable and its negation are\nadjacent vertices, each",
+        "lines": [
+          1069,
+          1081
+        ],
+        "paragraph_id": "P134"
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Make the NAE colouring gadget visible as an adjacency object. The gadget is given as a long verbal construction even though adjacency is the operation the reader must inspect.",
+      "why_it_matters": "A graph gadget is an adjacency object, and prose alone makes its legal colourings difficult to check.",
+      "suggested_direction": "Add a small labelled diagram or incidence list for one NAE clause; retain the palette, variable/negation edge, and fresh triangle rules.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-resources",
+          "lines": [
+            1069,
+            1081
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-32",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "11. Answers and a reconstruction task",
+        "passage_id": "pcp-expository-answers",
+        "quote": "**Reconstruction task.** A received table is close to\na low-degree polynomial $M$, but all its erroneous\nentries might lie among",
+        "lines": [
+          1154,
+          1165
+        ],
+        "paragraph_id": "P141"
+      },
+      "criterion": 4,
+      "kind": "missing",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Provide an independent solution rubric for the integrated reconstruction task. The task targets the right hard connection, but appears after all other answers and has no model solution or diagnostic rubric for independent users.",
+      "why_it_matters": "A solution adjacent to or preceding the task cannot supply evidence of independent reconstruction; the hard connection needs explicit assessment criteria.",
+      "suggested_direction": "Move the task before the answer section or state answer exposure explicitly; give a separate solution naming fixed M, target, randomized correction, rejection coupling and polynomial identity.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-answers",
+          "lines": [
+            1154,
+            1165
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-33",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "12. Why the low-degree test needed correction",
+        "passage_id": "pcp-expository-correction",
+        "quote": "For a concrete comparison, take\n$\\mathbb F_{16}=\\mathbb F_2[t]/(t^4+t+1)$.\nThis notation means that elements are binary polynomials\nof degree below four.",
+        "lines": [
+          1202,
+          1214
+        ],
+        "paragraph_id": "P146"
+      },
+      "criterion": 1,
+      "kind": "line_edit",
+      "severity": "moderate",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Separate F16 arithmetic setup from the enumeration and link the executable check. A new quotient-field construction, modulus irreducibility, generator and 256-pair count arrive together; the executable evidence is not linked locally.",
+      "why_it_matters": "The finite-field representation and exhaustive count are distinct evidence steps; the reader should know what was enumerated and how to rerun it.",
+      "suggested_direction": "Split the field representation from the experiment; give the checker filename/link and either verify the stated modulus/generator or label them supplied setup facts.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-correction",
+          "lines": [
+            1202,
+            1214
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-correction",
+          "lines": [
+            1179,
+            1182
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B196"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "id": "PA-34",
+      "paper": "papers/expository/main.md",
+      "perspective": "teacher; declared learner prerequisites treated as a constraint",
+      "locator": {
+        "section": "Sources and verification",
+        "passage_id": "pcp-expository-evidence",
+        "quote": "The mathematical construction is from\n[Amireddy, Behera, Srinivasan, Sudan and\nWillumsgaard, version 2][paper-v2]. The\nformal development discussed here is\n[Troy",
+        "lines": [
+          1230,
+          1242
+        ],
+        "paragraph_id": "P148"
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "minor",
+      "confidence": "high for textual location and pedagogical diagnosis; benefit for human learners unmeasured",
+      "finding": "Keep readable pinned source links and move raw revision text out of the teaching prose. The paragraph contains a raw revision hash and several verification nouns; the useful message is the formal source and the fact that links do not certify every prose sentence.",
+      "why_it_matters": "A raw revision identifier interrupts the explanation; a readable pinned link preserves exact source access with less prose burden.",
+      "suggested_direction": "Use a readable pinned link, keep the exact revision in metadata/full record, and state the source support versus prose correspondence distinction once.",
+      "evidence": [
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-evidence",
+          "lines": [
+            1230,
+            1242
+          ],
+          "role": "primary manuscript passage assessed directly"
+        },
+        {
+          "source": "papers/expository/main.md",
+          "passage_id": "pcp-expository-evidence",
+          "lines": [
+            1244,
+            1255
+          ],
+          "role": "related passage in the same assessed manuscript"
+        },
+        {
+          "source": "contract/REVIEW_RUBRIC.md",
+          "locator": "Sections 4–8 and first-time reader contract; applied selectively",
+          "role": "review criterion, not mathematical proof authority"
+        }
+      ],
+      "classification": "exposition finding, not an established error in the PCP theorem",
+      "related_blocks": [
+        "B203"
+      ],
+      "incorporation_status": "proposed; no manuscript edit made"
+    },
+    {
+      "paper": "papers/expository/main.md",
+      "perspective": "source owner and careful teacher",
+      "criterion": 6,
+      "confidence": "high",
+      "id": "LA-01",
+      "locator": {
+        "section": "7",
+        "passage_id": "linked-source-18",
+        "quote": "Any two different\nmessages give words differing in exactly half their positions."
+      },
+      "kind": "unclear",
+      "severity": "moderate",
+      "finding": "The selected reader theorem concerns full coefficient-label encodings, whereas the paragraph and its eight-bit word concern homogeneous linear labels.",
+      "why_it_matters": "The average is over a different domain; a learner following the link must reconstruct an unprovided restriction argument even though the exact local theorem exists.",
+      "suggested_direction": "Retarget the association to PCP.Algebraic.Hadamard.relativeDistance_linearEncode, Hadamard.lean:173–180, and index its linearEncode definition.",
+      "evidence": [
+        "reader/edition.json: linked-source-18",
+        "formal/lean/PCP/Algebraic/Hadamard.lean:119–123,136–180",
+        "formal/lean/PCP/Algebraic/BinaryPolynomialSpace.lean:23–28"
+      ]
+    },
+    {
+      "paper": "papers/expository/main.md",
+      "perspective": "source owner and careful teacher",
+      "criterion": 6,
+      "confidence": "high",
+      "id": "LA-03",
+      "locator": {
+        "section": "8",
+        "passage_id": "pcp-expository-binary-tests",
+        "quote": "This probability includes a uniformly random homogeneous label; it is\nnot a guarantee for every fixed label."
+      },
+      "kind": "keep",
+      "severity": "keep",
+      "finding": "The corrector guarantee retains its exact label quantification and rejection-sensitive failure event.",
+      "why_it_matters": "Omitting either condition would silently strengthen the theorem and break the later budget argument.",
+      "suggested_direction": "Preserve the label-average qualification, arbitrary auxiliary data and actual rejection term through all rewrites.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean:219–313"
+      ]
+    },
+    {
+      "paper": "papers/expository/main.md",
+      "perspective": "source owner and careful teacher",
+      "criterion": 6,
+      "confidence": "high",
+      "id": "LA-04",
+      "locator": {
+        "section": "6",
+        "passage_id": "pcp-expository-weighted-test",
+        "quote": "For the converse, use the stated generator nodes and $|F|>2c$."
+      },
+      "kind": "keep",
+      "severity": "keep",
+      "finding": "The low-degree converse states the formal theorem’s genuine generator and field-size hypotheses.",
+      "why_it_matters": "The preceding interpolation operation needs fewer hypotheses, so an overly smooth rewrite could erase the exact extra assumption that makes the converse true.",
+      "suggested_direction": "Keep “generator” and the strict field-size/error thresholds; do not replace them by arbitrary distinct nodes.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean:29–37,274–292"
+      ]
+    },
+    {
+      "id": "MA-01",
+      "paper": "papers/expository/main.md",
+      "perspective": "mathematical auditor and teacher",
+      "locator": {
+        "section": "7 and 9",
+        "passage_id": "pcp-expository-cubic-labels",
+        "quote": "corresponding label and query that one position",
+        "lines": [
+          621,
+          626
+        ],
+        "related_lines": [
+          [
+            808,
+            811
+          ],
+          [
+            855,
+            863
+          ]
+        ]
+      },
+      "criterion": 1,
+      "kind": "missing",
+      "severity": "major",
+      "confidence": "high for absence of displayed operation; no measured human effect",
+      "finding": "The exact-word query is introduced, but the later received-word derived read is only called freshly randomised self-correction. The text never displays the two full-label locations needed to justify its 2 epsilon replacement loss.",
+      "why_it_matters": "The later 2 epsilon error depends on fresh full-label randomness and conditional averaging; a direct special-label read is not justified by global distance.",
+      "suggested_direction": "Write g_x(R)+g_x(R+Lambda_{x,L}) for a fresh uniform full cubic label R, explain both marginals are uniform conditional on the requested label, then average the row error epsilon_x over uniform x. See R05.",
+      "evidence": [
+        "formal/lean/PCP/Algebraic/HadamardDerivedOracle.lean 31-45,68-96,102-145,147-195; literature/abssw-v2/tex/pcp-verifier.tex 80-88; technical_tools.tex 417-445",
+        "papers/short/paper.md 128–146, equations (8)–(9)",
+        "audit_checks.json: two_query_label_correction"
+      ],
+      "classification": "missing exposition, not false honest-encoding identity",
+      "incorporation_status": "proposed"
+    },
+    {
+      "id": "KEEP-01",
+      "paper": "papers/expository/main.md",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "11",
+        "passage_id": "pcp-expository-answers",
+        "quote": "The second identity alone is insufficient."
+      },
+      "criterion": 4,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high within stated evidence scope",
+      "finding": "Preserve the P=M=1 counterexample and both grid-certificate identities.",
+      "why_it_matters": "The example makes the reverse implication executable and prevents an invalid one-identity simplification.",
+      "suggested_direction": "Retain the example and require both identities in every compressed occurrence.",
+      "evidence": [
+        "main.md 1112–1117; GridVanishing source association"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    },
+    {
+      "id": "KEEP-02",
+      "paper": "papers/expository/main.md",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "11",
+        "passage_id": "pcp-expository-answers",
+        "quote": "This shows why that\nargument fails; it does not prove that the language\nis outside NP."
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high within stated evidence scope",
+      "finding": "Preserve the exact nonconclusion in Question 4.",
+      "why_it_matters": "A superpolynomial enumeration cost refutes this proof strategy, not membership in NP.",
+      "suggested_direction": "Retain the distinction when shortening the resource section.",
+      "evidence": [
+        "main.md 1138–1143; ordinary asymptotic argument"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    },
+    {
+      "id": "KEEP-03",
+      "paper": "papers/expository/main.md",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "11",
+        "passage_id": "pcp-expository-answers",
+        "quote": "equality\ngives no contradiction."
+      },
+      "criterion": 6,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high within stated evidence scope",
+      "finding": "Preserve the strict boundary and epistemic distinction in Question 5.",
+      "why_it_matters": "An upper bound equal to the lower bound is compatible with the available estimates and proves neither failure nor success of grid vanishing.",
+      "suggested_direction": "Keep 7/32 versus 3/8 and the strict kappa<1/16 statement; the event toy is an explanation, not a cheating PCP.",
+      "evidence": [
+        "main.md 1145–1152",
+        "audit_checks.json: question_5_boundary"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    },
+    {
+      "id": "KEEP-04",
+      "paper": "papers/expository/main.md",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "12",
+        "passage_id": "pcp-expository-correction",
+        "quote": "no priority claim for the example above is\nmade here."
+      },
+      "criterion": 5,
+      "kind": "keep",
+      "severity": "keep",
+      "confidence": "high within stated evidence scope",
+      "finding": "Preserve the scope and credit of the historical wrong-test example.",
+      "why_it_matters": "The counterexample concerns the earlier scalar test, while the corrected construction and priority attribution are different claims.",
+      "suggested_direction": "Keep the unbounded-family argument and the separation between finite enumeration, ordinary deduction and formal support.",
+      "evidence": [
+        "main.md 1168–1225",
+        "ABSSW v1/v2 source records",
+        "support/original_example_execution.json"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    },
+    {
+      "id": "UI-01",
+      "paper": "live reader: worked exposition route",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "Pane-closed layout",
+        "passage_id": "live-pcp-exposition",
+        "quote": "Close"
+      },
+      "criterion": 7,
+      "kind": "evidence_presentation",
+      "severity": "moderate",
+      "confidence": "high within stated evidence scope",
+      "finding": "Closing the proof pane expanded the contents navigation across the desktop viewport and pushed the article below it.",
+      "why_it_matters": "The intended prose-only route is harder to read at the tested viewport.",
+      "suggested_direction": "Fix the closed-pane layout; reproduce the graph→Close→companion→Back route at 1900×1052, then test other supported widths.",
+      "evidence": [
+        "reader_review.md: UI-01; observed navigation rectangle approximately 1900×516.10 at y≈46, article y≈771.81"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    },
+    {
+      "id": "UI-02",
+      "paper": "live reader: worked exposition route",
+      "perspective": "root synthesis",
+      "locator": {
+        "section": "Dependency graph",
+        "passage_id": "live-pcp-exposition",
+        "quote": "Decoding a low-degree polynomial"
+      },
+      "criterion": 7,
+      "kind": "unclear",
+      "severity": "minor",
+      "confidence": "high within stated evidence scope",
+      "finding": "Two different visible decoding cards share the same explanatory title.",
+      "why_it_matters": "The learner cannot identify inner weighted decoding versus outer combined decoding from the titles.",
+      "suggested_direction": "Use role-specific titles while keeping exact declarations in the detail views.",
+      "evidence": [
+        "reader_review.md: UI-02; observed graph cards"
+      ],
+      "incorporation_status": "proposed; no author adjudication"
+    }
+  ]
+}

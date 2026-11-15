@@ -1,0 +1,1059 @@
+# Paragraph decisions and replacement prose
+
+This is a consequential-paragraph review of the frozen long record, not a claim that every prose block needed alteration. The ledger covers every section and more than forty distinct prose paragraphs. Exact short quotations locate the paragraph; source line ranges are edition-bound. A retained paragraph is an affirmative decision. P1 means repair before reuse; P2 means a useful local explanatory revision; P3 means polish or an explicitly optional addition. These are proposed edits, not incorporated changes.
+
+The replacements preserve hypotheses, quantifiers, source credit and evidence boundaries. Formula notation is written in a readable mathematical form; the editor should preserve the manuscript's existing TeX macros and link syntax. Rebind affected reader selections and hashes after any actual edit.
+
+
+## LE-01 — The algebraic PCP theorem: a detailed account of the Lean proof
+
+**Locator:** pcp-long-intro-theorem, source lines 11–11.
+
+> A polynomial-time verifier can check membership in any NP language by reading a constant number of bits from
+
+**Paragraph job:** State the strongest theorem and explain whose construction is being reconstructed.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the direct theorem-first opening and its separate source credit. Render the already supplied explanatory byline on page 1; do not add a novelty claim.
+
+## LE-02 — The algebraic PCP theorem: a detailed account of the Lean proof
+
+**Locator:** pcp-long-intro-theorem, source lines 28–28.
+
+> The verifier may choose its next proof address using the bits already read. The proof is fixed before
+
+**Paragraph job:** Fix the order of language, verifier, input, proof and random seed.
+
+**Decision:** retain · **Priority:** keep.
+
+This paragraph excludes a seed-dependent proof and states the uniformity that the endpoint needs. Its repetition at amplification has a different local job.
+
+## LE-03 — How the proof is organized
+
+**Locator:** pcp-long-intro-roadmap, source lines 46–46.
+
+> The construction first treats graph three-colourability. A colouring is interpolated from a finite grid to a polynomial. Two
+
+**Paragraph job:** Explain why colouring, interpolation and vanishing certificates are the objects to be tested.
+
+**Decision:** retain · **Priority:** keep.
+
+The opening roadmap already gives a concrete reason for the later algebra. A second generic PCP introduction would dilute it.
+
+## LE-04 — Reading this account
+
+**Locator:** pcp-long-intro-readers, source lines 64–64.
+
+> This is the long account. It contains the intermediate estimates, reconstruction of the substantial algebraic inputs, parameter substitutions,
+
+**Paragraph job:** Allocate the long, specialist and worked-example reading routes.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the three purposes explicit. Repair the live specialist-link click separately; do not turn a navigation issue into a prose rewrite.
+
+## LE-05 — Algebraic tests and correction
+
+**Locator:** pcp-long-algebra-scope, source lines 87–87.
+
+> An assertion about the total degree of a polynomial refers to a formal polynomial in $F[X_1,\ldots,X_m]$. Equal evaluation
+
+**Paragraph job:** Set the formal-polynomial versus evaluation-function convention.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep this warning because several later root-bound arguments depend on it. Make the digit-injectivity proof meet this same standard.
+
+## LE-06 — 1. Polynomial distance, interpolation, and grid certificates
+
+**Locator:** pcp-long-algebra-polynomial-distance, source lines 96–96.
+
+> **Polynomial distance.** If $P\ne0$ has total degree at most $d$, then
+
+**Paragraph job:** Establish the separation bound that turns agreement into equality.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the induction and exceptional-base counting, including zero variables. The later uses require the actual degree ratio.
+
+## LE-07 — 1. Polynomial distance, interpolation, and grid certificates
+
+**Locator:** pcp-long-algebra-grid-interpolation, source lines 116–116.
+
+> **Grid extension.** Let $H\subseteq F$ be nonempty, and put $h=|H|$. For $a\in H$, define
+
+**Paragraph job:** Construct extensions of finite-grid assignments with controlled degrees.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve the coordinatewise interpolation formula and the distinction between individual and total degree.
+
+## LE-08 — 1. Polynomial distance, interpolation, and grid certificates
+
+**Locator:** pcp-long-algebra-grid-vanishing, source lines 134–134.
+
+> **Vanishing on the grid.** Set
+
+**Paragraph job:** Characterize grid vanishing by coordinate vanishing-polynomial certificates.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep nonempty-grid and degree conditions, monic division, and the converse for arbitrary certificates; these are consumed by ZERO.
+
+## LE-09 — 1. Polynomial distance, interpolation, and grid certificates
+
+**Locator:** pcp-long-algebra-line-characterization, source lines 174–174.
+
+> **From exact lines to total degree.** Suppose $q>2d$, and every function
+
+**Paragraph job:** Pass from exact low degree on all affine lines to one total-degree bound.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the homogeneous-component argument, the q>2d sufficient condition and the historical-edition distinction. No unverified historical theorem is needed to replace this derivation.
+
+## LE-10 — 2. The corrected short low-degree test
+
+**Locator:** pcp-long-algebra-generator-test, source lines 197–197.
+
+> Let $c\ge0$, assume $q>2c$, and choose a generator $\zeta$ of $F^\times$. Put
+
+**Paragraph job:** Define the corrected weighted test and explain the full generator.
+
+**Decision:** retain · **Priority:** keep.
+
+The orbit-propagation proof requires a full multiplicative generator, not merely distinct nodes. Preserve c=0 and arbitrary characteristic.
+
+## LE-11 — 2. The corrected short low-degree test
+
+**Locator:** pcp-long-algebra-weighted-plurality, source lines 229–229.
+
+> We first prove robustness for weighted affine constraints, before applying it to polynomials. Let $a_1,\ldots,a_n\in F^\times$, allow arbitrary
+
+**Paragraph job:** Turn a local weighted constraint into a fixed-center correction bound.
+
+**Decision:** explain · **Priority:** P3 optional.
+
+Add the exact Kaufman–Sudan parameter substitution after the direct proof. Keep the double grid as the main long-record argument. See replacement R6.
+
+## LE-12 — 2. The corrected short low-degree test
+
+**Locator:** pcp-long-algebra-generator-soundness, source lines 300–300.
+
+> Apply this result to (A6), with $n=c+1$. If
+
+**Paragraph job:** Collect the strict rejection threshold and distance conclusion.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve strictness. For the selected reader anchor, use a complete prose assertion or label the source card as an entry point rather than demanding a cross-display quote.
+
+## LE-13 — 2. The corrected short low-degree test
+
+**Locator:** pcp-long-algebra-old-test-counterexample, source lines 319–319.
+
+> The earlier test's failure can be seen in a family of arbitrarily large fields, so it is not
+
+**Paragraph job:** Refute the historical local lemma with an unbounded family.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the large-field quantifier, fibrewise root bound, zero rejection and limited claim. The finite GF(16) output is only an illustration.
+
+## LE-14 — 3. Recovering a specified value
+
+**Locator:** pcp-long-algebra-standard-correction, source lines 349–349.
+
+> Suppose $P$ has total degree at most $c$, $\Delta(f,P)=\eta$, and the nodes in (A6) are distinct and nonzero.
+
+**Paragraph job:** Recover a prescribed polynomial value using random nonzero nodes.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the every-center guarantee and union bound without pretending the sampled points have independent error events.
+
+## LE-15 — 3. Recovering a specified value
+
+**Locator:** pcp-long-algebra-line-table-correction, source lines 362–362.
+
+> A second corrector uses an auxiliary line table and may reject. Let $P$ have degree at most $d$,
+
+**Paragraph job:** Bound accepted-wrong output for an arbitrary auxiliary line table.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve this event's distinction from the later binary corrector's reject-or-wrong event. Do not impose an unstated closeness premise on the auxiliary table.
+
+## LE-16 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-bivariate-statement, source lines 389–389.
+
+> The point-versus-line theorem below needs a substantial agreement result. We prove the explicit form implemented in the formalization:
+
+**Paragraph job:** State the exact quantitative agreement input and its hypothesis strength.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep arbitrary approximants, positive degree, explicit field/error constants and individual-degree conclusion. ALMSS is a variant antecedent, not the literal constant source.
+
+## LE-17 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-column-selection, source lines 405–405.
+
+> First, the mean discrepancy between $R_y(x)$ and $C_x(y)$ is at most $2\varepsilon$. Markov's inequality therefore shows that at
+
+**Paragraph job:** Choose sufficiently many good columns and good rows for the locator system.
+
+**Decision:** retain · **Priority:** keep.
+
+The integer error count and Markov threshold are necessary data for the following linear system.
+
+## LE-18 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-error-locator, source lines 417–417.
+
+> To describe the inconsistent entries algebraically, we use the error-locator construction of [Arora–Safra, Lemma 5.2.5 and its polynomial
+
+**Paragraph job:** Build a polynomial object that organizes row disagreements.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the specialized kernel, maximal-minor construction and degree bound; these explain why one common rectangle exists.
+
+## LE-19 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-clean-rectangle, source lines 449–449.
+
+> At most $2d$ of the $10d$ selected columns have $E(a_i,Y)=0$ as a formal polynomial, again by the root
+
+**Paragraph job:** Remove locator roots and retain one rectangle shared by the reconstruction.
+
+**Decision:** retain · **Priority:** keep.
+
+Do not replace the common rectangle by unrelated good subsets for each row.
+
+## LE-20 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-coarse-agreement, source lines 466–466.
+
+> Interpolate the $d+1$ columns in $J$:
+
+**Paragraph job:** Interpolate a common bivariate candidate and obtain the initial error estimate.
+
+**Decision:** retain · **Priority:** keep.
+
+The coarse bound has a distinct role from the following 4ε boost and should not be silently combined with it.
+
+## LE-21 — 4. Bivariate agreement
+
+**Locator:** pcp-long-algebra-agreement-boost, source lines 487–487.
+
+> To sharpen (A19), put $\tau=d/q$ and $\rho=\Delta(f,P)$. A simple transverse estimate will be used twice. Given two families
+
+**Paragraph job:** Use transverse comparisons and polynomial separation to sharpen agreement.
+
+**Decision:** retain · **Priority:** keep.
+
+Retain the formal-row/evaluation-distance distinction and every coefficient contributing to the crossing lemma.
+
+## LE-22 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-point-line-statement, source lines 514–514.
+
+> A degree-$d$ line table assigns a polynomial $T_{u,v}\in F[T]$ of degree at most $d$ to each ordered pair
+
+**Paragraph job:** State the whole-field point-versus-line theorem and its exact output.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve the factor two, all-field line parameter, zero directions, and separate degree-zero case.
+
+## LE-23 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-nearest-lines, source lines 534–534.
+
+> Replace each $T_{u,v}$ by a nearest degree-$d$ polynomial $L_{u,v}$ to the received line $t\mapsto f(u+tv)$, choosing arbitrarily among
+
+**Paragraph job:** Choose nearest line polynomials without a false global tie convention.
+
+**Decision:** retain · **Priority:** keep.
+
+Retain uniqueness only on good lines and the error paid for bad lines.
+
+## LE-24 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-fixed-parameter, source lines 554–554.
+
+> First obtain an error bound for a **fixed** line parameter $t$. Let
+
+**Paragraph job:** Obtain control at a prescribed line parameter from averaged line error.
+
+**Decision:** retain · **Priority:** keep.
+
+The shifted-center bijection and uniqueness argument are necessary; ordinary average error alone does not prove the fixed-parameter estimate.
+
+## LE-25 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-crossing, source lines 579–579.
+
+> We need a consequence of bivariate agreement at one crossing. Assume $d>0$ and $q\ge1000d^3$. Suppose a received grid
+
+**Paragraph job:** Force equality of row and column predictions at one crossing.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the extra candidate-row error and explain the selected source theorem as a specialization when it assumes nearestness everywhere.
+
+## LE-26 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-mixed-plane, source lines 606–606.
+
+> To apply crossing consistency, we bound its four errors. A random affine expression $a+\lambda b$ is uniform in
+
+**Paragraph job:** Verify the four hypotheses of crossing consistency under a sampled plane.
+
+**Decision:** explain · **Priority:** P1.
+
+Replace the compressed paragraph by explicit error formulas, domains and marginal distributions. This is the main local exposition repair. See replacement R3.
+
+## LE-27 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-ruled-surface, source lines 622–622.
+
+> Fix a target line $y\mapsto x+yh$, and choose once and for all a nearest degree-$d$ polynomial $Q(y)$ to
+
+**Paragraph job:** Choose one target-line polynomial before proving equality at each point.
+
+**Decision:** explain · **Priority:** P2.
+
+Add the geometry's purpose before the grid. Preserve the fixed Q, parameter-dependent successful seed and five-error lemma. See replacement R4.
+
+## LE-28 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-point-line-constants, source lines 677–677.
+
+> We now verify the numerical bounds required by the crossing argument. For $d>0$, (A22) gives $q\ge10^6$ and $q\ge1000d^3$.
+
+**Paragraph job:** Discharge every quantitative crossing and exact-line premise.
+
+**Decision:** retain · **Priority:** keep.
+
+The displayed 0.482025 budget has been independently recomputed. Keep field_bounds and rigidity_budget distinct in source-card roles.
+
+## LE-29 — 5. Point-versus-line soundness
+
+**Locator:** pcp-long-algebra-degree-zero, source lines 696–696.
+
+> For $d=0$ there is a shorter proof requiring no large-field hypothesis. Every table polynomial is a constant $b_{u,v}$.
+
+**Paragraph job:** Handle constant polynomials without the positive-degree machinery.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the separate two-point bijection and zero-dimensional convention.
+
+## LE-30 — Source correspondence and scope
+
+**Locator:** pcp-long-algebra-source-boundary, source lines 709–709.
+
+> The short-test proof and the point-versus-line proof are separate components. The former uses only $q>2c$ and a weighted
+
+**Paragraph job:** Locate the historical antecedents and state exactly what was reconstructed.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve source versions and local adaptations; do not use this paragraph to claim a fresh kernel check.
+
+## LE-31 — From polynomial values to a constant number of bits
+
+**Locator:** pcp-long-binary-purpose, source lines 752–752.
+
+> The field-valued tests from the preceding part read a bounded number of field elements, but a field element
+
+**Paragraph job:** Explain why field queries and high line degree require two encodings.
+
+**Decision:** retain · **Priority:** keep.
+
+The two resource problems are clear and should remain before the encoding definitions.
+
+## LE-32 — A high-degree univariate polynomial as a low-degree multivariate polynomial
+
+**Locator:** pcp-long-set-multilinear, source lines 795–795.
+
+> Linearity now proves $\operatorname{Enc}(p)(\Phi(z))=p(z)$. This establishes both recovery of evaluations and injectivity on polynomials of degree strictly below
+
+**Paragraph job:** Recover evaluations and establish injectivity of digit encoding.
+
+**Decision:** move · **Priority:** P1.
+
+Move the Dec definition from lines 797–801 before the injectivity inference and give a formal left inverse, then evaluation recovery. No field-size assumption is added. See replacement R1.
+
+## LE-33 — A high-degree univariate polynomial as a low-degree multivariate polynomial
+
+**Locator:** pcp-long-set-multilinear, source lines 809–809.
+
+> The distinction between the honest degree bound $\deg p<b^c$ and the decoded bound $c b^c$ propagates through the
+
+**Paragraph job:** Separate honest line degree from arbitrary decoded line degree.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep <b^c for honest inputs and cb^c for arbitrary decoded polynomials. Low degree alone does not certify the special monomial pattern.
+
+## LE-34 — Binary labels for field elements
+
+**Locator:** pcp-long-hadamard-labels, source lines 819–819.
+
+> For $r\geq1$, let $\mathcal B_r$ be the vector space of squarefree Boolean polynomials in $t$ variables of degree
+
+**Paragraph job:** Define the full and restricted label spaces and binary encoding.
+
+**Decision:** explain · **Priority:** P3 optional.
+
+An eight-of-256 corrupted-label example can make the two-metric requirement memorable. Prefer the worked exposition if the long chapter becomes crowded. See replacement R7.
+
+## LE-35 — Binary labels for field elements
+
+**Locator:** pcp-long-hadamard-composition, source lines 864–864.
+
+> For $A(Y)=\eta Y$ and a homogeneous label $L$, the composed label is homogeneous. If $\eta\neq0$, multiplication by $\eta$
+
+**Paragraph job:** Explain when composition preserves homogeneous labels and credit its source.
+
+**Decision:** shorten · **Priority:** P1.
+
+Replace the inaccurate warning about the paper's more general assertion by the exact v2 scalar-case attribution. See replacement R2.
+
+## LE-36 — Testing a received Hadamard word
+
+**Locator:** pcp-long-blr-proof, source lines 872–872.
+
+> The first ingredient is the binary linearity test. For a function $h:V\to\mathbb F_2$, where $V$ is a finite
+
+**Paragraph job:** Recover a linear functional with the quantitative Fourier estimate.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the cubic-moment and maximum-coefficient argument. Preserve BLR credit for the test and the separate sharp-bound antecedent.
+
+## LE-37 — Testing a received Hadamard word
+
+**Locator:** pcp-long-hadamard-self-correction, source lines 936–936.
+
+> Products are squarefree-reduced. Shared answers are reused, so the query list has length $2r+4$. The corrected arXiv v2
+
+**Paragraph job:** Explain shared reads and the precise tester variant's query count.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the distinction between the formal 2r+4 tester and v2's eight-query tester; the formal count at r=3 is ten.
+
+## LE-38 — Testing a received Hadamard word
+
+**Locator:** pcp-long-hadamard-soundness, source lines 946–946.
+
+> For the product check, replace its three corrected answers by their $\ell$-values. The three replacements cost at most
+
+**Paragraph job:** Upgrade the BLR witness from a linear functional to an evaluation functional.
+
+**Decision:** explain · **Priority:** P3.
+
+Begin the product-check paragraph with For r≥2. Keep the later r=1 branch and the nonzero bilinear-defect argument. See replacement R8.
+
+## LE-39 — Testing a received Hadamard word
+
+**Locator:** pcp-long-hadamard-row-decoding, source lines 978–978.
+
+> We need this conclusion for a table whose individual rows can be arbitrarily bad. If a row has
+
+**Paragraph job:** Select one witness per row and average both metrics together.
+
+**Decision:** retain · **Priority:** keep.
+
+The bad-row fallback supplies an unconditional global bound. An abstract threshold lemma is optional, not a reason to delete the concrete thresholds.
+
+## LE-40 — A binary version of the weighted low-degree test
+
+**Locator:** pcp-long-binary-weighted-test, source lines 995–995.
+
+> Take a generator $\theta$ of $F^\times$, let $a_i=\theta^{i+1}$ for $0\leq i\leq c$, and assume $q>2c$. These nodes are
+
+**Paragraph job:** Transfer weighted field constraints through binary labels and decode once.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the branch factor, nonzero-weight permutations, exact half-distance factors and same decoded polynomial in both conclusions.
+
+## LE-41 — A binary version of the weighted low-degree test
+
+**Locator:** pcp-long-binary-inner-correction, source lines 1058–1058.
+
+> The weighted local corrector uses a node table $\alpha_i=\zeta^{i+1}$, required only to have distinct entries and $\zeta\ne0$. The
+
+**Paragraph job:** Define the correction parameter and its label-averaged guarantee.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep GoodNodes distinct from the full-generator tester hypothesis, and retain averaging over labels at every fixed spatial target.
+
+## LE-42 — Testing a high-degree outer polynomial
+
+**Locator:** pcp-long-encoded-line-test, source lines 1081–1081.
+
+> Let the primary table be $f:F^k\times\mathcal B_r\to\mathbb F_2$. For every oriented line $x=u+zv$, an auxiliary table is intended
+
+**Paragraph job:** Specify the physical binary procedure for testing outer low degree.
+
+**Decision:** retain · **Priority:** keep.
+
+The query-count source card is a useful entry point; label its role or supplement test_eval for completeness. No whole-paragraph identity is implied.
+
+## LE-43 — Testing a high-degree outer polynomial
+
+**Locator:** pcp-long-encoded-line-soundness, source lines 1121–1121.
+
+> It supplies a polynomial $P:F^k\to F$ of total degree at most $D$ for which $\Delta(g,P)\leq2E(c)\kappa$. Encoding halves this
+
+**Paragraph job:** Introduce the single outer polynomial returned by proximity testing.
+
+**Decision:** explain · **Priority:** P3.
+
+Introduce P as a formal polynomial and use its evaluation function only as shorthand. Preserve the total-degree and distance bounds. See replacement R9.
+
+## LE-44 — Correcting an outer value at a prescribed point
+
+**Locator:** pcp-long-outer-local-corrector, source lines 1139–1139.
+
+> Fix a target $a\in F^k$. A point oracle $f$ has degree-one labels, and an auxiliary table is supplied
+
+**Paragraph job:** Specify a bit-or-reject procedure at a prescribed spatial target.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep run/sample as the algorithm support and failure_le as its guarantee; a card can expose either with a clear role.
+
+## LE-45 — Correcting an outer value at a prescribed point
+
+**Locator:** pcp-long-outer-correction-soundness, source lines 1178–1178.
+
+> The factor one half again comes from the exact distance of two distinct field messages under homogeneous labels.
+
+**Paragraph job:** Accumulate two replacement errors, two rejection terms and the root loss.
+
+**Decision:** explain · **Priority:** P3 optional.
+
+The prose already proves the accounting. Add a compact sum only if it aids the reader; do not reinterpret the event as conditional-on-acceptance correctness. See replacement R10.
+
+## LE-46 — Checking that a polynomial vanishes on a grid
+
+**Locator:** pcp-long-zero-certificate, source lines 1188–1188.
+
+> Let $H\subset F$ be nonempty, let $h=|H|$, and put $Z_H(Y)=\prod_{a\in H}(Y-a)$. The algebraic part established that $P$ vanishes
+
+**Paragraph job:** Turn grid vanishing into two polynomial residual identities.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep both residuals and the degree bounds. Their failure alternatives are coupled by a union argument, not assumed independent.
+
+## LE-47 — Checking that a polynomial vanishes on a grid
+
+**Locator:** pcp-long-zero-actual-test, source lines 1218–1218.
+
+> The received certificate is only close to $M$ on the full domain. Directly reading it at $(x,0)$ or
+
+**Paragraph job:** Explain why certificate values on special slices require correction.
+
+**Decision:** retain · **Priority:** keep.
+
+This is necessary motivation: global closeness can coexist with all errors on the requested slices.
+
+## LE-48 — Checking that a polynomial vanishes on a grid
+
+**Locator:** pcp-long-zero-soundness, source lines 1230–1230.
+
+> Let $\delta_P$ and $\delta_M$ bound homogeneous distance of the received primary and certificate tables from $\mathcal H_1(P)$ and
+
+**Paragraph job:** Transfer correction failure bounds to the actual ZERO experiment.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the unconditional reject-or-wrong event, nonempty grid and possibly negative numerator qualification.
+
+## LE-49 — Derived polynomial oracles and fresh correction randomness
+
+**Locator:** pcp-long-derived-oracle-transfer, source lines 1260–1260.
+
+> The final verifier must apply ZERO to expressions such as $g(x)^3-1$, although its proof contains the degree-three encoding
+
+**Paragraph job:** Implement derived polynomial observations with fresh full-label masks.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve outer polynomiality as a hypothesis, arbitrary request distribution before the mask, actual joint randomness and the 1+2C multiplier.
+
+## LE-50 — From the algebraic tests to the PCP theorem
+
+**Locator:** pcp-long-final-target, source lines 1303–1303.
+
+> The preceding tests give a verifier for graph three-colourability. This chapter assembles that verifier and then transfers it
+
+**Paragraph job:** Restate the machine-level goal before assembling the verifier.
+
+**Decision:** explain · **Priority:** P2.
+
+Append a compact notation bridge at this chapter boundary so degree, dimension, digit base and field-size symbols can be recovered locally. See replacement R11.
+
+## LE-51 — Three colours as polynomial equations
+
+**Locator:** pcp-long-colour-equations, source lines 1318–1318.
+
+> Let $F$ be a finite field of characteristic two, of cardinality $Q$, containing a primitive cube root of
+
+**Paragraph job:** Encode three colours and show why both vertex and edge equations are necessary.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the K4/F4 counterexample to edge equations alone. It is an informative failure, not decorative illustration.
+
+## LE-52 — Three colours as polynomial equations
+
+**Locator:** pcp-long-grid-constraints, source lines 1347–1347.
+
+> Choose a nonempty set $H\subseteq F$, of size $h$, and a dimension $d$ large enough to place the
+
+**Paragraph job:** Interpolate the colouring and public adjacency and bound residual degrees.
+
+**Decision:** retain · **Priority:** keep.
+
+Preserve public input dependence of E, padding, certificate construction and coordinate flattening.
+
+## LE-53 — The eight tables and seven checks
+
+**Locator:** pcp-long-eight-tables, source lines 1373–1373.
+
+> The received proof contains four primary tables and four encoded line tables. An honest proof has the following
+
+**Paragraph job:** Expose the proof objects and the seven tests that consume them.
+
+**Decision:** retain · **Priority:** P3 layout only.
+
+Keep the table and shared physical certificate-line table. Keep its four primary rows together in the PDF if possible.
+
+## LE-54 — The eight tables and seven checks
+
+**Locator:** pcp-long-derived-constraints, source lines 1388–1388.
+
+> The constraint polynomials are not extra proof tables. Suppose $p(x,\Lambda)$ is the received degree-three row intended to encode
+
+**Paragraph job:** Realize constraint reads by two actual masked primary-bit queries.
+
+**Decision:** retain · **Priority:** keep.
+
+Retain the distinction between exact linearity in the label and nonlinear dependence on the field value.
+
+## LE-55 — The eight tables and seven checks
+
+**Locator:** pcp-long-query-budget, source lines 1402–1402.
+
+> The seven physical query bounds, in the order colour, vertex certificate, difference, edge certificate, vertex ZERO, edge ZERO,
+
+**Paragraph job:** Sum physical bit-query bounds across all seven checks.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the seven component counts and 187 upper bound at c=4. Do not relabel this as 187 distinct addresses on every seed.
+
+## LE-56 — Perfect completeness
+
+**Locator:** pcp-long-completeness, source lines 1415–1415.
+
+> Start with a proper colouring. Interpolate it to obtain $P$, put the exact difference polynomial $Q_P$ in the
+
+**Paragraph job:** Construct one honest proof accepted on every seed by all checks.
+
+**Decision:** retain · **Priority:** keep.
+
+The simultaneity of honest tables and shared objects proves perfect completeness, not just average correctness.
+
+## LE-57 — Soundness of the seven-check verifier
+
+**Locator:** pcp-long-decoding-contract, source lines 1442–1442.
+
+> with $c,m,h\ge1$, the prescribed generator nodes, a valid local-correction generator, and a primitive cube root of unity. Let
+
+**Paragraph job:** State the shared assumptions for decoding arbitrary received tables.
+
+**Decision:** explain · **Priority:** P3.
+
+Replace valid local-correction generator with a correction parameter satisfying GoodNodes; make q>2c's derivation visible if queried. See replacement R12.
+
+## LE-58 — Soundness of the seven-check verifier
+
+**Locator:** pcp-long-decoding-contract, source lines 1456–1457.
+
+> for $P,Q_*$, and homogeneous linear-label distance at most $\varepsilon$ for all four relevant primary tables. These polynomials are
+
+**Paragraph job:** Fix the four decoded polynomials once for every later comparison.
+
+**Decision:** retain · **Priority:** keep.
+
+The same-choice sentence is load-bearing. The selected one-pair theorem is used four times; this is a valid support role.
+
+## LE-59 — Soundness of the seven-check verifier
+
+**Locator:** pcp-long-difference-soundness, source lines 1460–1460.
+
+> First identify the decoded difference polynomial. Replace the three received bits in the difference test by their decoded
+
+**Paragraph job:** Identify the decoded difference polynomial with the difference of the decoded colour polynomial.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep homogeneous labels, the three distance losses and the strict polynomial-separation contradiction.
+
+## LE-60 — Soundness of the seven-check verifier
+
+**Locator:** pcp-long-assembled-zero-soundness, source lines 1472–1472.
+
+> Now consider the decoded vertex constraint $A_P=P^3-1$. Its degree is at most $3D$. For the edge constraint, the
+
+**Paragraph job:** Force both decoded constraints to vanish using the same certificates.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep degree inflation to 5D, fresh-read loss and both ZERO applications to fixed witnesses. No second degree-5D low-degree test is invoked.
+
+## LE-61 — Soundness of the seven-check verifier
+
+**Locator:** pcp-long-gap, source lines 1495–1495.
+
+> An explicit positive gap makes all three inequalities hold at once. Define
+
+**Paragraph job:** Choose one positive rejection gap satisfying all preceding inequalities.
+
+**Decision:** explain · **Priority:** P3.
+
+Add a compact c=4 substitution table near the gap or repetition. Keep symbolic constants in the proof and label the numbers as coarse existential bounds. See replacement R13.
+
+## LE-62 — Parameters for every finite graph
+
+**Locator:** pcp-long-parameters, source lines 1523–1523.
+
+> The formalization chooses a concrete parameter family different from the paper's asymptotic display. For a graph with $N$
+
+**Paragraph job:** Choose one concrete finite field, grid and capacity for every graph size.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep least admissible a, N=0,1 handling, bounded searches and non-subfield grid. These are a formal variant of the source's asymptotic choices.
+
+## LE-63 — From finite samples to fair random bits
+
+**Locator:** pcp-long-fair-bits, source lines 1573–1573.
+
+> Some mathematical correctors use uniformly distributed nonzero field parameters. Sampling uniformly from $F^{\times}$ with a fixed fair-bit budget
+
+**Paragraph job:** Convert nonzero-field sampling to exact fixed-length fair-bit sampling.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep early acceptance on zero parameters and exact conditioning. This is an algorithm change with a controlled rejection loss, not approximate sampling.
+
+## LE-64 — From finite samples to fair random bits
+
+**Locator:** pcp-long-resources, source lines 1589–1589.
+
+> Here is how polynomial proof length follows for the actual eight-table address space. A degree-$r$ Boolean label on
+
+**Paragraph job:** Count the actual eight address spaces and exact product-seed coordinates.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the cubic label-size bound, minimality of a and coarse polynomial/logarithmic estimates. The warning about impractical constants is correctly local.
+
+## LE-65 — Repetition on one fixed proof
+
+**Locator:** pcp-long-amplification, source lines 1681–1682.
+
+> The same honest proof still accepts on every repeated seed. Repetition leaves the proof-length polynomial unchanged and multiplies
+
+**Paragraph job:** Amplify soundness while preserving one proof and its length.
+
+**Decision:** retain · **Priority:** keep.
+
+Retain the same proof, independent seeds, unchanged proof length and explicit huge query bound.
+
+## LE-66 — The polynomial-time implementation
+
+**Locator:** pcp-long-runtime, source lines 1687–1687.
+
+> The information-theoretic verifier must be implemented by a polynomial-time machine; a bounded number of oracle queries alone does
+
+**Paragraph job:** Separate information-theoretic query complexity from an actual machine implementation.
+
+**Decision:** explain · **Priority:** P2.
+
+Add the verifier-step and ImplementedBy definitions in ordinary words before callback correctness and costs. Retain the imported compiler boundary. See replacement R14.
+
+## LE-67 — From every NP verifier to a graph
+
+**Locator:** pcp-long-np-tableau, source lines 1709–1709.
+
+> Fix an NP language $L$, a Boolean witness relation $R(x,w)$, a natural-coefficient witness bound $q$, and its concrete
+
+**Paragraph job:** Turn a bounded certificate computation into a bounded accepting tableau.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep witness lengths including zero, time/space bounds and explicit initial/transition/final constraints.
+
+## LE-68 — From every NP verifier to a graph
+
+**Locator:** pcp-long-local-constraints, source lines 1731–1731.
+
+> To make the tableau a bounded-arity constraint system, use a finite alphabet fixed by the source machine. Each
+
+**Paragraph job:** Show why the machine transition is fixed-arity and enforce consistent cell symbols.
+
+**Decision:** retain · **Priority:** keep.
+
+The fixed output-prefix and one-hot conditions explain locality. Do not replace this section with a generic appeal to Cook–Levin.
+
+## LE-69 — From every NP verifier to a graph
+
+**Locator:** pcp-long-clause-reduction, source lines 1760–1760.
+
+> A constraint over an alphabet of size $A$ is converted to Boolean constraints by one-hot coding. Each source
+
+**Paragraph job:** Convert fixed-arity finite relations into Boolean clauses with forced OR flags.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the constant-arity truth-table justification and the forcing semantics of flags; uncontrolled auxiliary choices would weaken the reduction.
+
+## LE-70 — From every NP verifier to a graph
+
+**Locator:** pcp-long-colouring-gadget, source lines 1779–1779.
+
+> A three-literal OR clause $a\lor b\lor c$ is equivalent to the existence of a fresh bit $z$ satisfying
+
+**Paragraph job:** Prove the NAE-to-three-colouring gadget in both directions.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the palette, complementary variable vertices and clause-triangle argument. The converse recovers one assignment.
+
+## LE-71 — From every NP verifier to a graph
+
+**Locator:** pcp-long-reduction-runtime, source lines 1798–1798.
+
+> The reduction is executable. The program computes $T(n)$, $S(n)$ and the fixed source dimensions, enumerates the tableau variables
+
+**Paragraph job:** State the one concrete reduction program with cost, output length and correctness.
+
+**Decision:** retain · **Priority:** keep.
+
+The source contract is stronger than abstract NP-completeness. Its imported implementation proof should remain identified.
+
+## LE-72 — Transporting the verifier through the reduction
+
+**Locator:** pcp-long-seed-transport, source lines 1806–1806.
+
+> Let the amplified graph verifier use exactly $A\lceil\log _2(n+2)\rceil+B$ random bits, and let $|f(x)|\le p(|x|)$, where $p\in\mathbb N[X]$.
+
+**Paragraph job:** Carry graph resources through a polynomial output bound.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep nonnegative coefficients, constant and zero polynomial cases, prefix sampling and language-uniform resource choices.
+
+## LE-73 — The reverse inclusion
+
+**Locator:** pcp-long-converse, source lines 1849–1850.
+
+> The finite-machine class used here is connected to the unchanged vendored Complexitylib definition of NP by [the reference-NP
+
+**Paragraph job:** Identify the concrete certificate class with the reference nondeterministic-machine class.
+
+**Decision:** explain · **Priority:** P2.
+
+Expand the final sentence into the two actual simulations and their cost/encoding roles. Keep the separate representation-theorem boundary. See replacement R5.
+
+## LE-74 — Source and verification account
+
+**Locator:** pcp-long-intro-source-editions, source lines 1892–1892.
+
+> The fixed formal source is [Lee's PCP development at the revision linked throughout this account][formal-source]. The primary paper
+
+**Paragraph job:** State editions, authorship, reconstruction and validation scope.
+
+**Decision:** retain · **Priority:** P3 layout only.
+
+Keep the full source account. Render its already supplied compact explanatory byline at the opening, leaving detailed AI/source credit here.
+
+## LE-75 — References
+
+**Locator:** References, source lines 1900–1900.
+
+> The version notes identify the copies consulted. Theorem and section numbers refer to those copies; a linked author
+
+**Paragraph job:** Explain which source copies and theorem numbering the bibliography uses.
+
+**Decision:** retain · **Priority:** keep.
+
+Keep the edition-aware preface and inspected rendered entries. Missing original-source verification is a review limit, not a reason to delete correct bibliographic context.
+
+# Complete replacement passages
+
+## R1 — Formal left inverse before evaluation (priority 1)
+
+**Source:** pcp-long-set-multilinear, lines 788–803. Move the existing definition at 797–801 before the inference at 795; replace the surrounding transition by the following passage. Keep the earlier Enc and Φ definitions and the later decoded-degree bound.
+
+For any formal polynomial Q in the variables X_(i,k), define
+\[
+\operatorname{Dec}(Q)(Y)=Q\bigl((Y^{k b^i})_{i,k}\bigr).
+\]
+The digit-monomial calculation holds before evaluating Y: substituting Y^(k b^i) into the encoding of Y^j gives Y^(Σ_i j_i b^i)=Y^j. By linearity,
+\[
+\operatorname{Dec}(\operatorname{Enc}(p))=p
+\quad\text{in }F[Y]\qquad(\deg p<b^c).
+\]
+Thus Dec is a left inverse of Enc on this bounded-degree domain, and Enc is injective there. Evaluating the identity at Y=z gives Enc(p)(Φ(z))=p(z). The strict degree bound matters because the encoding retains only c base-b digits. These are the formal left-inverse, evaluation-recovery and injectivity statements in the source.
+
+Soundness also uses Dec on arbitrary polynomials Q of total degree at most c, without assuming Q is set-multilinear. The next degree calculation therefore applies to every such Q, not just to honest encodings.
+
+**Source support and tradeoff:** SetMultilinear.decode_encode 89–98, eval_encode 101–107 and encode_injective_on 115–121. Add these source roles to the reader mapping. No new field-size hypothesis and no claim that Enc is a ring homomorphism. This uses the existing definition to remove an unsupported finite-field inference.
+
+## R2 — Correct the v2 attribution (priority 1)
+
+**Source:** final sentence of pcp-long-hadamard-composition, line 864. Replace only the inaccurate sentence:
+
+For scalar multiplication, this is exactly the homogeneous case stated in the corrected paper's Claim 3.7.
+
+**Tradeoff:** This retains the current proof and credit while removing an unsupported historical comparison. Bundled v2 technical_tools.tex 168–188 states the scalar case; bundled v1 main.tex 829–853 has no final homogeneity clause. If another draft is intended, name that edition before restoring a comparison.
+
+## R3 — Make the four mixed-plane errors inspectable (priority 1)
+
+**Source:** pcp-long-algebra-mixed-plane, line 606, after the row and column predictions have been introduced. Replace the compressed paragraph by:
+
+For each sampled grid M, write R_y for the nearest polynomial on row y and C_z for the nearest polynomial on column z. Thus
+\[
+R_y(Z)=L_{u+yv-sw,w}(Z),\qquad C_z(Y)=L_{u+(z-s)w,v}(Y).
+\]
+The four errors used at crossing (t,s) are
+\[
+\begin{aligned}
+e_R&=\Pr_{y,z}[M(y,z)\ne R_y(z)],&
+e_C&=\Pr_{y,z}[M(y,z)\ne C_z(y)],\\
+e_{t,\perp}&=\Pr_z[M(t,z)\ne C_z(t)],&
+e_{\perp,s}&=\Pr_y[M(y,s)\ne R_y(s)].
+\end{aligned}
+\]
+The last two are transverse comparisons with the polynomials crossing the selected row and column. Averaging over the independent uniform seed v,w,s gives
+\[
+\mathbb E e_R,\ \mathbb E e_C,\ \mathbb E e_{\perp,s}\le\delta'+1/q,
+\qquad
+\mathbb E e_{t,\perp}\le4\delta'+1/q.
+\]
+For e_R and e_{\perp,s}, discard y=0 and use the uniform center u+yv−sw conditional on w,s. For e_C and e_{t,\perp}, discard z=s and use the uniform pair (u+(z−s)w,v). The parameter t is fixed in e_{t,\perp}, so this last comparison uses (A25). Each discarded slice costs 1/q. The argument needs these uniform marginals, not independence of all grid entries.
+
+**Preserved continuation:** Keep the following Markov/union-bound paragraph and (A28). All four means are at most 4δ′+1/q, so its displayed bound is unchanged. The expanded derivation is also in transition_audit.md §4.
+
+## R4 — Explain the ruled surface's job before its formula (priority 2)
+
+**Source:** pcp-long-algebra-ruled-surface, after choosing Q and before fixing y₀:
+
+We place the target line in the zero column of a sampled surface. The other columns are random oriented lines, and each row is also an affine line. Replacing the zero column by g lets us compare its fixed nearest polynomial Q with the corrected value at any chosen crossing. This replacement may spoil nearestness of row candidates, so we use the five-error version of the crossing lemma.
+
+**Tradeoff:** Four purpose sentences precede the existing technical ledger. Retain the fixed-Q conclusion; do not introduce a simultaneous successful surface for all y₀.
+
+## R5 — Explain both reference-NP simulations (priority 2)
+
+**Source:** pcp-long-converse, final paragraph at line 1849. Replace its compressed equivalence sentence while retaining the existing source destination:
+
+The concrete certificate class is equivalent to the pinned Complexitylib class of languages decided by polynomial-time nondeterministic multitape machines. In one direction, a bounded word of nondeterministic choices serves as the certificate; a compiled path-checking program verifies it in polynomial time. In the other, the concrete certificate checker is translated to a reference decision machine, and a bounded-guess construction computes and enforces its polynomial witness bound before running that checker. The two simulations include the input encodings and their time bounds. Their equivalence theorem has no remaining machine-simulation premise. We use this separate representation theorem to identify the NP class in the forward and reverse constructions with the reference class.
+
+**Tradeoff:** Adds the mechanism and honest import boundary, not machine-state derivations. Source: ReferenceNPBridge.to_inNP; ReferenceNPConverse.of_inNP and mem_iff_inNP; ReferencePair.exists_decider; ReferenceBoundedVerifier.mem_NP_of_bounded_verifier.
+
+## R6 — Optional exact Kaufman–Sudan connection (priority 3)
+
+**Source:** after the weighted-plurality proof and its existing antecedent note:
+
+For this test the Kaufman–Sudan formulation uses k=c+2 forms: the center u and the points u+a_i v. The permitted value vectors satisfy y₀=Σ_i w_i y_i. The preceding propagation argument establishes exact characterization, and a_i≠0 gives the required 2-ary independence. The denominator in Theorem 2.9 becomes (2k+1)(k−1)=2c²+7c+5, the threshold used above.
+
+**Tradeoff:** This records a checked source bridge; it is not a replacement for the explanatory double grid in the long paper.
+
+## R7 — Optional two-metric example (priority 3)
+
+**Source:** after the explanation that full-label closeness does not imply homogeneous-label closeness, pcp-long-hadamard-labels; alternatively in the worked exposition beside its label-space example:
+
+For example, take r=t=3. There are 256 full polynomial labels but only eight homogeneous linear labels. Starting from an honest row, flip the answers at exactly those eight labels. The full-label error is 1/32, whereas the homogeneous-label error is one. This is why the proof obtains both distances for the same decoded value.
+
+**Tradeoff:** A finite illustration of a distributional obstruction, not a new tester theorem or a claim that the corrupted row passes HadTest.
+
+## R8 — Announce the product branch (priority 3)
+
+**Source:** first sentence at line 946:
+
+For r≥2, replace the product check's three corrected answers by their ℓ-values.
+
+Keep the rest of the paragraph, the bilinear-defect calculation and the separate r=1 conclusion unchanged.
+
+## R9 — Type the decoded polynomial (priority 3)
+
+**Source:** first sentence at line 1121:
+
+It supplies a formal polynomial P∈F[X₁,…,X_k] of total degree at most D whose evaluation function satisfies Δ(g,P)≤2E(c)κ. We use P for this evaluation function when it appears in a distance or a point query.
+
+Keep the following half-distance calculation and (B15) unchanged. The notation convention remains compatible with later formal identities.
+
+## R10 — Optional display for the correction ledger (priority 3)
+
+**Source:** after the existing final accounting sentence before (B16)'s source discussion:
+
+The combined bound is
+\[
+2R_a+2e+\delta+\frac{D}{2(q-1)}
+=\bigl(2+2(c+1)K(c)\bigr)R_a+\delta+\frac{D}{2(q-1)}.
+\]
+Here one R_a comes from the comparison check and the other from including rejection in the failure event. The two e terms replace the sampled-point and origin corrections.
+
+This display repeats an already valid derivation for auditability. It is optional; no independence or conditional-on-acceptance claim is added.
+
+## R11 — A chapter-boundary notation bridge (priority 2)
+
+**Source:** end of pcp-long-final-target, before the graph construction:
+
+In this chapter d denotes the grid dimension, h the grid size, m the digit base denoted b in the binary chapter, and Q the field cardinality. The constant inner degree remains c; D is the common degree bound for decoded primary polynomials. The concrete parameter choice will set c=4 and d=m=h=2^a.
+
+Retain the later local definitions and inequalities. This is a memory aid, not a global renaming or a new hypothesis.
+
+## R12 — Preserve the correction parameter's exact role (priority 3)
+
+**Source:** line 1442, replace the relevant clause:
+
+with c,m,h≥1, the prescribed full-generator nodes for the inner test, a correction parameter satisfying GoodNodes, and a primitive cube root of unity.
+
+The source's concrete parameter family may choose a generator that also meets GoodNodes; the abstract correctness contract should not conflate the two conditions.
+
+## R13 — Show one concrete substitution (priority 3)
+
+**Source:** append near pcp-long-gap or before the exact repetition constants, with a cross-reference from the other location:
+
+For c=4, the constants in the decoding and correction bounds are
+\[
+K=105408,\quad E=1054138,\quad S=1054166,\quad C=1054082.
+\]
+Thus A=1+2C=2108165 and the three denominator bounds defining g₄ are 4216556000000, 50599984 and 71115455156448. The last is largest, so g₄=1/71115455156448.
+
+These are coarse existence bounds. Keep the symbolic proof and exact later fair-bit factor; the arithmetic check does not establish the soundness argument by itself.
+
+## R14 — Define the implemented step (priority 2)
+
+**Source:** after the opening runtime paragraph, before listing operation costs:
+
+A verifier step takes the input, random seed and answers received so far, and returns either a final decision or the next proof address. The implementation relation says that repeatedly running this exact step function generates the verifier's bounded query tree on every input and seed, including arbitrary answer histories.
+
+Retain the subsequent correctness/cost/compiler sequence. This connects the source endpoint to ordinary algorithmic meaning without exposing compiler implementation detail in the proof route.

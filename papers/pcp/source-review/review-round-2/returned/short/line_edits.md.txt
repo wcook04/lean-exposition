@@ -1,0 +1,399 @@
+# Paragraph and display review
+
+The target is papers/short/paper.md, SHA256 c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377. Every paragraph was read in order. P001–P080 enumerate all non-heading prose blocks separated by blank lines, including the subtitle and sentence continuations around displays; this deliberately overcounts ordinary typographical paragraphs rather than omitting a continuation. D01–D38 enumerate every display. The nine bibliography entries and six direct source links are assessed separately below and in claim_checks.json. Line ranges refer to the unchanged packet source.
+
+The highest priorities are R01–R08: resource motivation, the same-message restricted bound, operational tester descriptions, the local-correction inequality and an unambiguous seven-check assembly. R09–R12 make the weighted sketch, credit, opening and implementation description more precise. All replacements are proposals for adjudication, not edits already incorporated into the manuscripts. Necessary attribution, quantifiers, probability events and resource bounds take precedence over fluency.
+
+## Complete paragraph decisions
+
+| Block / source lines | Exact short locator | Mathematical job | Decision and reader consequence |
+|---|---|---|---|
+| P001, 3–3 | *A specialist account of the PCP proof of Amireddy, Behera, Srinivasan, Sudan | Orient and attribute | **retain** — The subtitle accurately identifies a specialist reconstruction. Keep the five authors and Lee; add Cook as a modest byline if the house byline convention is enforced. Do not shorten the credit to an ambiguous “formal PCP proof”. |
+| P002, 8–9 | The PCP theorem states that every language in NP has a polynomial-time | State result and contribution | **shorten/explain** — Keep the five PCP properties and the implementation-specific scope. Bring the bit-cost obstacle and the soundness interface into the first two sentences; the current middle sentence lists ingredients without saying why both are needed. See R11. |
+| P003, 14–14 | **Theorem (PCP).** For every language $L\subseteq\{0,1\}^{*}$ in NP, there are a polynomial-time | State exact forward theorem | **retain** — The quantifier order and natural-coefficient polynomial are precise. Keep with D01 and P004; do not replace the exact randomness function by an unexplained O(log n). |
+| P004, 20–20 | fair random bits, makes at most $q_0$ proof-bit queries on every run, | Complete the verifier contract | **retain** — Keep the per-run query upper bound, bounded addresses, one proof for every seed, and universal soundness. These clauses are the meaning of the theorem. |
+| P005, 22–22 | The verifier, implementation, constants and polynomial are fixed for $L$ before the | Explain order and converse | **retain** — The proof-before-seed sentence is short for a reason. Retain it and the reverse direction; avoid adding generic praise for formal verification. |
+| P006, 28–28 | Arora–Lund–Motwani–Sudan–Szegedy [3] proved the constant-query theorem, building on Arora–Safra [2]. We consider | Credit theorem and expose bit-cost obstacle | **retain/explain** — History is proportionate, and the field-symbol versus bit distinction is the right entry point. A field value costs log2 q bits; a coefficient vector costs (d+1)log2 q. Add the separate proof-size obstacle in the next paragraph. |
+| P007, 30–30 | Two encodings reduce these costs. A base-$b$ digit expansion turns a degree-$O(b^c)$ | Motivate two encodings | **explain** — The sequence is correct but does not explain why direct encoding of the whole coefficient vector is too costly. R01 gives that missing resource reason while preserving the no-recursive-PCP-composition scope. |
+| P008, 32–33 | We give the construction for graph three-colourability, keeping the bit-level soundness argument | Define the short paper’s proof boundary | **retain** — The companion allocation is honest. Name the full argument’s relevant sections when it first supplies a hard lemma; do not imply this short text proves the bivariate theorem in full. |
+| P009, 38–38 | Let $F$ be a field of characteristic two, of cardinality $q$, containing | Choose colour field | **retain** — The characteristic and cube-root hypotheses are necessary and present. Keep the convention that the field contains the embedded four-element subfield. |
+| P010, 44–44 | For $u,v\in\mathcal C$, their difference satisfies $(u-v)^4=u-v$. Hence $u\ne v$ exactly when | Turn colours into polynomial constraints | **split** — The first two sentences explain the cubic relation; the rest introduces graph padding and interpolation. Split after the cubic identity so the grid construction has its own job. State that E is 1 on edges and 0 on non-edges of the padded graph. |
+| P011, 46–46 | Set | Introduce constraint display | **retain** — “Set” is a grammatical lead-in to D04. It is not evidence of an excessively short sentence; assess the complete sentence through the display. |
+| P012, 57–57 | An honest colouring makes $A_P$ vanish on $H^m$ and $B_P$ vanish on | Prove constraint equivalence and boundary | **retain** — The K4/F4 example earns its place: it exhibits the exact missing vertex condition. Attach each degree to its polynomial if the final triple is kept. Do not remove the zero-colour failure. |
+| P013, 59–59 | To certify vanishing on a grid, put $Z_H(T)=\prod_{u\in H}(T-u)$. Repeated monic division | Introduce grid certificate | **retain** — Repeated monic division and the precise Lemma 2.9 reference give an adequate specialist justification. Preserve nonempty H, already assumed in this section. |
+| P014, 65–65 | The remainder has degree below $h$ in every variable; if it vanishes | Explain zero remainder and packing | **retain** — The interpolation argument is short and sufficient for this audience. Keep with D06 and P015 instead of treating the display fragments as separate rhetorical sentences. |
+| P015, 71–71 | gives the two polynomial identities | Complete packing sentence | **retain** — This continues P014 through D06. Keep the two identities together in the typeset output. |
+| P016, 78–79 | Here $Z_H$ is applied coordinatewise, and $M$ can be chosen with degree | Explain certificate scope and oracle architecture | **split/explain** — Add deg U_i <= deg A-h for nonzero quotients, so multiplication by Y_i adds at most one. Keep the nonlinear-Y converse. Separate the four principal polynomials/public E sentence from the degree argument. |
+| P017, 84–84 | Fix positive integers $b,c$, and consider a univariate polynomial $T(Y)=\sum_{j<b^c}t_jY^j$. Write $j=\sum_{i=0}^{c-1}j_ib^i$, | Define digit encoding | **retain** — The explicit indices and recovery substitution make the construction inspectable. The target audience can follow this without a long base-expansion tutorial. |
+| P018, 93–93 | Every monomial of $\Psi(T)$ uses one variable from each of $c$ groups, | Prove degree and evaluation | **retain** — The one-variable-per-block observation supplies the degree bound. The display is a derivation, not decorative notation. |
+| P019, 101–101 | An honest line table consists of these encodings. In the soundness proof, | Switch from honest to decoded rows | **retain** — This is a crucial soundness distinction: arbitrary decoded U need not be set-multilinear. Keep “choose” clearly within proof analysis, not the verifier algorithm. |
+| P020, 108–109 | Indeed, a monomial of $U$ has at most $c$ variable occurrences, and | Explain degree inflation | **retain** — The loose bound D=cb^c is intentional. Keep the explicit separation from honest degree < b^c; optimizing it does not improve this account. |
+| P021, 112–112 | Fix a linear isomorphism $\rho:F\to\mathbb F_2^t$, where $q=2^t$. Let $\mathcal B_r$ be | Define binary code and positions | **explain** — Add that R is the address label, H_r(u)(R) is the bit stored there, and r is the degree of a Boolean label, not the outer degree D. The existing formula then has a literal operational meaning. |
+| P022, 119–119 | The word has $2^{\sum_{j=0}^{\min(r,t)}\binom tj}$ bits. Distinct field values disagree on exactly | Count code length and show half distance | **retain** — Pairing labels is the right proof. Name the product domain for encoding functions when f,g first appear, and keep the homogeneous-label version. |
+| P023, 126–126 | both on all labels and on homogeneous linear labels. Throughout, $\Delta$ and | Specify averaging convention | **retain** — Uniform finite averages are appropriate. Clarify that full and homogeneous distances average over the same point domain and different label domains; this matters later. |
+| P024, 128–128 | Identify affine binary labels with maps $L:F\to\mathbb F_2$ through $\rho$. Higher-degree labels | Compile nonlinear observations into labels | **retain** — The field-domain convention makes L(A(u)) type-correct. Keep squarefree reduction and the bound r; the previous historical type mismatch is no longer present. |
+| P025, 135–135 | Cubic labels suffice for the constraints in (1). To take a weighted | Explain cubic versus homogeneous labels | **retain** — The nonzero scalar permutation is the reason weighted observations retain uniformity. Add one short reminder that homogeneous labels have zero constant term, unlike affine labels. |
+| P026, 137–137 | A corrupted word can be wrong at every label produced by a | Motivate masked correction | **retain** — This identifies a genuine distributional failure of direct special-label queries. Keep it directly before (9). |
+| P027, 144–145 | where $R$ is a fresh uniform full label. If $w$ is $\epsilon$-close | Prove correction guarantee | **retain** — The fixed-Q guarantee and uniform marginal argument are sufficient; no independence between the two read positions is required. Preserve fresh uniform full-label masks. |
+| P028, 150–150 | The constant-degree inner polynomial is tested by a weighted interpolation identity. Assume | Specify weighted test parameters | **retain** — Full multiplicative generator, q>2c and the following weights are essential. Do not shorten “full group” to an unspecified element of high order. |
+| P029, 158–158 | The nodes are distinct and nonzero, and every weight is nonzero. A | State interpolation constraint | **retain** — Distinct nonzero nodes and nonzero weights do different work. Keep both facts before the constraint. |
+| P030, 165–165 | Conversely, satisfying (10) for every $u,v$ characterizes total degree at most $c$. | Explain exact characterization | **explain** — The zero-propagation argument is compact but reconstructible with the companion. Identify shifted powers as multiplicative rescalings, and state the characteristic-two implication q/2-1 >= c behind the Friedl–Sudan citation. |
+| P031, 167–167 | If (10) rejects with probability $\delta<1/[2(c+2)^2]$, then $f$ is within $2\delta$ of | Start robust correction argument | **explain** — Keep the plurality distance argument. Add the pointwise prediction estimate used to convert average success into exact constraints; R09 supplies it. |
+| P032, 174–174 | then shows that the corrected word satisfies every constraint exactly. The total | Finish robustness and credit antecedents | **split/explain** — Three jobs are crowded together: exact satisfaction, companion boundary, and literature lineage. Show the three probability losses, then put antecedent credit in its own short sentence. Add “formal” to the Kaufman–Sudan condition. |
+| P033, 176–176 | The weights and full generator are the correction in [1, v2, Fact | Introduce historical counterexample | **retain** — The scope is explicit: old unit weights and an order-three element. Keep the family q=2^(2k), k>=2, m>=1, and do not frame it as a failure of v2. |
+| P034, 183–184 | for every $u,v$. Yet every total-degree-two polynomial agrees with $f$ on at | Prove distance and limit historical claim | **retain** — The root-bound argument works for arbitrarily large fields and the final sentence prevents overclaiming. It should survive shortening. |
+| P035, 187–187 | To test a received row $w:\mathcal B_r\to\mathbb F_2$, combine the BLR additivity | Turn a passing row into an evaluation functional | **split** — Split the BLR/evaluation-structure proof from the restricted-label guarantee. Keep unit preservation and the three two-query replacements costing 6 epsilon. R02 retains the source distinction and supplies the missing second half. |
+| P036, 193–193 | is bilinear for $L\in\mathcal B_1$, $A\in\mathcal B_{r-1}$. For $r\ge2$, a nonzero defect | Identify decoded value and restricted distance | **explain** — The product defect argument establishes evaluation structure, but “bounds on both” skips affine consistency. Insert affine error <=3 epsilon, then homogeneous error <=6 epsilon, for the same value, before the bad-row fallback. |
+| P037, 195–195 | The implemented Hadamard test retains product checks at every degree from two | Compare formal and v2 query costs | **retain** — The distinction between ten-query implemented cubic testing and the eight-query v2 algorithm is useful. These are query bounds; retain shared read values and the extra degree checks. |
+| P038, 197–197 | The inner binary polynomial tester flips a fair coin between this Hadamard | Compose inner decoding | **explain** — Say that this decoding is an existence argument in soundness. The verifier performs only the specified tests. If a detailed bound is desired, show [112(c+2)+4] kappa before the scalar theorem, rather than leaving K unexplained. |
+| P039, 204–205 | There is no small-rejection premise in (11), and both bounds concern the | State same-polynomial and label boundary | **retain** — This is one of the best sentences in the paper. Keep the unconditional bound and warning that full proximity does not imply restricted proximity; the 16/32768 example gives it a concrete witness. |
+| P040, 208–208 | The outer test has a primary table $f(x,R)$ and an auxiliary encoded-line | Define outer experiment | **explain** — Specify that all three checks must pass, the primary row is at u, the auxiliary row belongs to the same (u,v), and the comparison uses a uniform homogeneous label. R03 gives the exact experiment. |
+| P041, 210–210 | The inner corrector uses (10) without reading its centre. At a prescribed | Explain correction at digit points | **retain/explain** — The marginal-uniformity reason is correct. “Received row” means the inner table on points and labels; make that type explicit. Zero direction is permitted; the nonzero nodes ensure shifted points are uniform. |
+| P042, 212–212 | Suppose the outer test rejects with probability $\kappa$. By the primary Hadamard | Assemble line disagreement bound | **explain** — Name the three contributions ((c+1)K, 1, 28) before introducing J. This lets the reader recover (12) rather than remembering a constant. |
+| P043, 221–221 | The factor two is exactly (7). No polynomial consistency among different auxiliary | Explain factor and auxiliary freedom | **retain** — Keep both sentences. The same primary polynomial does not require globally consistent auxiliary row decodings. |
+| P044, 223–223 | The point-versus-line theorem used here states that if | Introduce imported point-line theorem | **retain** — A displayed named interface is appropriate for a specialist account. Keep the field and error threshold with P045 and its conclusion. |
+| P045, 229–229 | and degree-$D$ line polynomials disagree with a point function on a fraction | State theorem and sketch its proof route | **split** — The imported theorem, historical role and ruled-surface proof sketch should be separate paragraphs. Identify the sketch as orientation; preserve arbitrary oriented rows, zero directions and explicit-constant attribution. |
+| P046, 231–231 | Applying this theorem to (12) and encoding the resulting field distance yields | Transfer field proximity to encoded proximity | **retain** — Keep the triangle inequality interpretation. In the PDF, prevent the lead-in on page 6 from being separated from D23 on page 7. |
+| P047, 241–242 | provided $J\kappa\le1/(4\cdot10^6)$. The restricted conclusion is for homogeneous linear labels. The stronger | Delimit homogeneous guarantee | **retain** — This is a valid and important weaker-than-v2 conclusion. A certificate has r=1, so its full label space is exactly the affine one. Preserve that exception. |
+| P048, 247–247 | The points $(x,0)$ and $(x,Z_H(x))$ in (2) occupy special subsets of the | Motivate correction at biased points | **retain** — This is the clearest local motivation in the manuscript. Keep the special subsets and the possibility of complete corruption there. |
+| P049, 249–249 | Fix a target $a$. Choose a random line $a+zv$ through it, with | Specify outer corrector | **explain** — Name uniform v, nonzero z and uniform homogeneous L; identify the auxiliary row by target and direction, and the shared inner direction. R04 makes the operation precise without changing the guarantee. |
+| P050, 251–251 | Let the primary table be within homogeneous distance $\delta$ of a degree-$D$ | State corrector contract | **retain** — The event is rejection OR wrong returned bit. Keep the target fixed, D>=cb^c and global homogeneous primary distance. The label average should be visible beside the bound, not only afterward. |
+| P051, 260–260 | To see the dependence on $R_a$, decode the auxiliary rows by (11). | Derive correction coefficient | **explain** — The field-origin root argument needs its averaged binary inequality. R05 displays it and the two correction/two rejection losses. This improves reconstruction more than adding another named constant. |
+| P052, 262–263 | This statement allows an arbitrary auxiliary table. Such a table may cause | Explain arbitrary auxiliary advice | **retain** — The rejection-dependent guarantee is exactly the useful conclusion. Retain arbitrary auxiliary tables and every-target/average-label quantifiers. |
+| P053, 266–266 | Now suppose $A$ and a proposed certificate $M$ have degree at most | Lower-bound ideal ZERO rejection | **explain** — Name the two residuals and say one nonzero residual suffices. A shared random homogeneous label detects that residual with probability one half; do not introduce an independence assumption. |
+| P054, 272–272 | The actual ZERO check reads one primary bit and makes two correction | Compare actual and ideal ZERO | **explain** — Give the two tested bit equalities and the shared x,L. Then the containment of each corrector rejection in ZERO rejection has an operational meaning. See R06. |
+| P055, 280–280 | Thus small observed rejection forces the decoded polynomial to vanish on the | State contradiction’s consequence | **retain** — This is a useful return to the goal after the error ledger. It is not an empty summary sentence. |
+| P056, 282–282 | For (1), the primary constraint bit is produced from a cubic-encoded colour | Transfer derived cubic read error | **retain/explain** — Keep actual fresh-mask coupling and zero ideal-primary distance. Add a direct source link to the derived theorem at (16); the existing selected ZERO link only asserts (15). |
+| P057, 290–291 | The factor $1+2C$ multiplies the derived-read error because that error enters through | Explain amplified error coefficient | **retain** — The multiplier and rejection route are easy to erase in copyediting. Preserve the distinction from choosing a favourable fixed mask; it describes this implementation, not a universal ban on averaging proofs. |
+| P058, 296–296 | The proof contains eight tables: degree-three Hadamard encodings of $P$ and $Q_P$, | List proof objects and checks | **explain** — Call these arbitrary received tables with intended honest contents. Use received-table bits for (17), postponing Q=P(X)-P(Y) until it is proved. R07 includes an early table inventory. |
+| P059, 303–303 | Each branch has its prescribed independent seed; acceptance requires all seven to | Specify conjunction and shared advice | **retain** — Independent branch seeds and acceptance of all seven tests imply each rejection is at most kappa. Keep the same physical certificate table in testing and correction. |
+| P060, 305–305 | Assume $q\ge10^6D^3$, $q\ge100Dh$ and $m(h-1)\le D$. When $J\kappa\le1/(4\cdot10^6)$, apply (13) to each | Fix decoded objects and force difference | **retain/explain** — “Fix these choices” is essential. Continue referring to Q as an independent decoded polynomial until (18). The root-bound and three replacement errors are already explicit. |
+| P061, 312–312 | forces the polynomial identity $Q=P(X)-P(Y)$. | Conclude difference identity | **retain** — Keep this as the conclusion of the previous display, not as an assumption in the earlier operational test. |
+| P062, 314–314 | The decoded vertex and edge constraints now have degree at most $3D$ | Transfer degree budget to ZERO | **retain** — The common 5D bound is conservative and sufficient. Keep the public adjacency degree 2D and do not silently treat the derived constraints as degree D. |
+| P063, 322–322 | All constants $J,S,C$ depend only on fixed $c$. For a sufficiently small | Choose a constant rejection gap | **shorten/move** — The existence of a fixed positive gap is central; the full minimum and decimal descendants need less main-route space. Retain one sufficient choice or move its evaluation to the existing long soundness/resource sections. |
+| P064, 336–336 | The field bound gives $5Dh/q\le1/4$ and $5D/(q-1)\le1/8$. The error depending on $\kappa$ | Close two contradictions | **retain** — The generous numerical slack makes the argument easy to inspect. If the gap definition moves, preserve these inequalities and a precise destination; do not merely say constants work. |
+| P065, 338–339 | For completeness, start with a proper colouring, its exact interpolants and exact | Supply honest witness and summarize common choice | **split** — Separate perfect completeness from the final soundness-invariant sentence. Both are necessary and worth retaining, but they prove different directions. |
+| P066, 344–344 | Take $c=4$. For a graph on $N$ vertices, let $a\ge2$ be least | Choose size parameters | **explain** — State the small-N convention literally: the ceiling-log value is zero at N=0,1. Explain that the least a gives enough grid points while keeping a2^a logarithmic. |
+| P067, 352–352 | The grid contains $s^s=2^{a2^a}\ge N$ points. Also $D=4s^4$ and | Check grid and field capacity | **retain** — These checks connect the construction to resources. Keep D=4s^4 and the comparison 64·10^6 <=2^32. |
+| P068, 359–359 | Since $s\ge4$, the honest degrees satisfy $5s(s-1)<s^4=b^c$. The extension degree $t$ is | Check honest degree and cube roots | **retain** — The two checks are short and appropriate. Divisibility by four is sufficient, although divisibility by two would suffice; optimization is unnecessary. |
+| P069, 366–366 | Equation (22) bounds the randomness and proof addresses. Field vectors in the | Prove logarithmic seed/address length | **explain** — Insert “since a^2=O(2^a)” for t^3=O(a2^a). Explain that logarithmic address length is what makes the proof polynomial, linking back to the opening resource obstacle. |
+| P070, 368–368 | Four corrector parameters were sampled from $F^\times$. For an exact fixed fair-bit | Implement fair-bit sampling | **retain** — This is a real exact-sampling issue, not bookkeeping. Keep immediate acceptance on a zero parameter and the conditional distribution statement. |
+| P071, 370–370 | The seven query bounds are | Introduce seven query budgets | **explain** — Replace the unlabeled vector with seven named rows, or explicitly give its order P, M_A, Q, M_B, vertex ZERO, edge ZERO, difference. See R08. |
+| P072, 376–376 | They sum to $20c+107=187$ physical proof-bit reads, including both bits of each | State base resource bounds | **shorten/explain** — Write “at most 187 physical proof-bit reads”. Name these as unamplified graph-verifier bounds; large decimal bounds can move to the full record while the asymptotic derivation stays. |
+| P073, 383–383 | These constants establish the complexity bounds; they are not useful numerical estimates | Give explicit fair-bit gap | **explain** — Write delta=g4/16 before the fraction so its source is visible. Its size illustrates conservative bounds; it should not displace the missing decoder explanation. |
+| P074, 389–390 | Repeat independently $R=1/\delta$ times on the same proof and accept only if | Amplify on one proof | **retain** — The repetition calculation is correct and the same proof is used throughout. Keep that point and clarify that 187 was the base bound, not the final amplified one. |
+| P075, 393–393 | The operations behind these queries are polynomial-time computations. The formal implementation constructs | Establish uniform polynomial implementation | **correct/split** — Replace finite multi-tape by finite multi-stack (FinTM2), the actual theorem target. Split the concrete arithmetic/search examples from the machine certificate. See R12. |
+| P076, 395–395 | For a fixed NP language, a bounded accepting computation tableau gives a | Extend from graphs to NP | **retain** — A standard gadget/reduction overview is sufficient for this reader. Use “a natural-coefficient size polynomial” before the ceiling-log inequality and avoid confusing this bound with the proof-address polynomial. |
+| P077, 403–403 | Padding the random string to the resulting fixed canonical length preserves its | Transport randomness and route to proof | **retain/explain** — The padding argument preserves the required law. Give separate explicit destinations for runtime, NP-to-graph reduction and transport; the current shared link starts at runtime only. |
+| P078, 405–406 | For the converse, guess the first $p(n)$ proof bits and simulate the | Prove reverse inclusion | **retain** — The finite-prefix/zero-extension argument is concise and correct. It earns its space by showing that the formal verifier definition does not hide extra power. |
+| P079, 411–411 | Using Lean, Lee proved the [forward PCP theorem][lean-forward] with an implemented verifier | Report formal evidence and scope | **shorten/retain** — This paragraph is truthful and useful. Keep concrete/reference NP, immutable links and implementation differences; do not add receipt counts. A direct reference-NP prerequisite in the reader would shorten the inspection route. |
+| P080, 413–414 | This account was prepared by Will Cook with AI assistance. The PCP | Assign contribution and responsibility | **correct** — The claim that both encodings originate with ABSSW is too broad. R10 credits their construction and set-multilinear variant, the established low-degree Hadamard layer, Lee’s proof and Cook’s AI-assisted account separately. |
+
+
+## Every display in its sentence
+
+| Display / source lines | Decision and checked interpretation |
+|---|---|
+| D01, 16–18 | Exact canonical randomness, not merely an asymptotic upper bound; verified against CanonicalRandomness. |
+| D02, 24–26 | Equality follows from the forward theorem and the later finite-prefix converse; retain both supports. |
+| D03, 40–42 | The three nonzero elements of the embedded F4; cube-root and characteristic hypotheses are present. |
+| D04, 48–55 | Degree bounds are d0 for Q_P, 3d0 for A_P, 5d0 for B_P. E must be the public adjacency indicator extension. |
+| D05, 61–63 | Grid-ideal certificate with nonempty H; monic division plus zero interpolation remainder supplies the equivalence. |
+| D06, 67–69 | Packing adds one Y-degree to quotient degree at most deg A-h. Explain this next to the display. |
+| D07, 73–76 | Honest M is linear in Y, but soundness only needs the two identities; nonlinear certificates are allowed. |
+| D08, 86–91 | Set-multilinear encoding and digit substitution have consistent indices and domains. |
+| D09, 95–99 | The exponent sum is precisely the base-b expansion; exact recovery holds. |
+| D10, 103–106 | Decoded U need not be set-multilinear, hence inflated bound cb^c; do not substitute honest degree. |
+| D11, 114–117 | R labels a codeword position. The field coordinate isomorphism is fixed. |
+| D12, 121–124 | Half-distance identity holds on full and homogeneous domains separately; it does not transfer arbitrary corrupted-word errors between them. |
+| D13, 130–133 | Field-domain L(A(u)) is type-correct; squarefree Boolean degree is at most r. |
+| D14, 139–142 | Q fixed, R uniform full label; both accessed positions have uniform marginals. No independence claim is required. |
+| D15, 152–156 | Nonzero distinct generator nodes and nonzero Lagrange weights; full generator is essential. |
+| D16, 160–163 | Exact weighted interpolation identity. Stated q>2c suffices for the exact-line implication. |
+| D17, 169–172 | The symmetric grid needs an accompanying pointwise prediction inequality; R09 supplies the omitted use. |
+| D18, 178–181 | For q=2^(2k), k>=2, quartic Frobenius passes the old unit-weight order-three test; limited counterexample scope. |
+| D19, 189–191 | The multiplicative defect is bilinear over F2 and any nonzero such form has support at least one quarter. |
+| D20, 199–202 | K=4(c+2)^2[112(c+2)+60] is an unconditional distance coefficient after good/bad cases, not a small-error premise. |
+| D21, 214–219 | J combines inner correction, comparison rejection and primary decoding, then doubles via half-distance. |
+| D22, 225–227 | Explicit formal point-line hypotheses; not attributed as the exact constants in ALMSS. |
+| D23, 233–239 | Both distances concern one P. Keep statement/condition together across the page-6/7 break. |
+| D24, 253–258 | Pointwise in target, averaged over uniform homogeneous label and corrector seed; failure includes abort. |
+| D25, 268–270 | One nonzero residual suffices for half the field rejection. No independence of the two residual bits is needed. |
+| D26, 274–278 | Base ZERO inequality (15), supported directly by the selected theorem. |
+| D27, 284–288 | Derived ZERO inequality (16): retain multiplier on 2 epsilon; separate derived theorem supports it. |
+| D28, 298–301 | True for honest/decoded difference, but received-bit operational test needs different notation before Q=P(X)-P(Y). |
+| D29, 307–310 | The three replacement errors and nonzero polynomial support force the difference identity under strict inequality. |
+| D30, 316–320 | Use 5D for derived constraints and certificates; retain the 5Dh/q and 5D/(q-1) losses. |
+| D31, 324–334 | Positive gap is correct; at c=4 the third term is the minimum. Exact evaluation is in evidence/arithmetic_checks.json. |
+| D32, 346–350 | Grid capacity, field size and cube roots all follow from the stated parameter family. |
+| D33, 354–357 | 64·10^6<=2^32 and s>=4 prove the field bounds; no numerical error found. |
+| D34, 361–364 | Minimal exponent gives the stated loose logarithmic-volume bound. Preserve small-N convention. |
+| D35, 372–374 | Correct seven upper bounds, but label each branch; order is not the immediately preceding list of polynomials. |
+| D36, 378–381 | Unamplified graph-verifier bounds; proof length is a readable-address bound. Separate N from input bit length. |
+| D37, 385–387 | Exactly g4/16=1/1137847282503168, independently recomputed with rational arithmetic. |
+| D38, 397–401 | Valid for natural-coefficient size polynomial, including zero/constant cases; supports canonical padding. |
+
+
+## Bibliography and direct source links
+
+All nine entries were inspected in the rendered bibliography on physical PDF page 11 and compared with the relevant source edition at use. This is targeted claim validation, not a claim to have read every cited paper in full.
+
+| Entry / lines | Decision and source role |
+|---|---|
+| 1 / 417 | Keep explicit v2/v1 separation. Supplied v2 is the current construction; v1 is only the historical scalar-test defect. The arXiv date and manuscript title date differ by one day; no conflation is needed. Correct blanket encoding credit in the prose, not the author list. |
+| 2 / 418 | Keep AS as the bivariate-method antecedent at §5.2. Do not assign Lee's exact constants to this source. Relevant journal-scan proof regions were sampled. |
+| 3 / 419 | Keep ALMSS constant-query and point-line roles with manuscript theorem numbers45/69. Bibliographic page range is absent; completing it from an authoritative edition is optional and was not fabricated here. |
+| 4 / 420 | Keep BLR for test provenance. Its extracted historical text was damaged; the sharp quantitative formulation was checked in BCHKS/v2, not silently attributed to BLR. |
+| 5 / 421 | Keep immutable Lean/source-guide pin and Lee's formalization credit. A source link supports inspection; it does not state that this review rebuilt the development. |
+| 6 / 422 | Keep BCHKS Theorem1.2 and the explicit v2 AppendixB formulation at use. Preserve the distinction between the source's stated regime and the formulation used by the proof. |
+| 7 / 423 | Keep prepublication §4 Theorem5 versus published Theorem4.1 distinction. It is useful edition information, not bibliography clutter. |
+| 8 / 424 | Keep exact Theorem2.9 locator. Add “formal” to the local-characterization hypothesis in the body. |
+| 9 / 425 | Keep corrected2013 manuscript identification of the1995 work and exact Lemma4. The characteristic-two sufficient hypothesis follows as explained in ED07. |
+
+The six immutable Lean URL definitions at lines428–433 were inspected and their propositions compared in the formal subreview. Preserve the reference-NP bridge and add a local derived ZERO route at (16), rather than claiming an existing nearby selected theorem proves every later sentence. The live companion section routes require RD01's repair; the corresponding packaged PDF named destinations exist.
+
+## Priority and integration
+
+R01–R08 repair the construction's central explanation and resource ledger; R09 supplies the weighted proof hinge; R10 and R12 are precise factual wording repairs; R11 improves the abstract. Incorporate the object inventory once, coordinate notation with (17), and do not use both a long protocol paragraph and a duplicate table if they repeat every fact. Keep existing hypotheses adjacent to replacements. Re-render and rebind selections after editing. These are proposed passages, not a claim that the source manuscripts have been changed.
+
+
+# Twelve proposed replacement passages
+
+These are complete proposed passages for the frozen specialist manuscript `papers/short/paper.md`, SHA-256 `c1f177680bbe01f2e4b7bdee82cd9fedf276cecb9ae0f258a2b6e5fe3115c377`. Line numbers and P-identifiers refer to that edition and the review's paragraph inventory. The source manuscript has not been edited. Preserve the surrounding hypotheses and passage markers when incorporating a replacement; re-render the manuscript and rebind any affected reader selections afterward. The mathematical checks below are source inspection and ordinary reasoning, with the stated rational arithmetic check. They are not a fresh Lean replay.
+
+## R01 — Explain both resource obstacles before the encodings
+
+**Target:** §1, `pcp-short-theorem`, P007, line 30. Replace the whole paragraph. Keep the theorem and the following companion-route paragraph.
+
+**Replacement:**
+
+The binary encoding must preserve polynomial proof length as well as reduce the number of queried bits. Applying a low-degree binary code directly to a whole line-coefficient vector gives a quasipolynomial-size proof in the construction considered in [1, §1]. The construction therefore first turns a line polynomial of degree strictly below $b^c$ into a polynomial of total degree at most $c$ in $cb$ variables, with $c$ fixed while $b$ grows. A low-degree Hadamard word then exposes the required binary observations of each field value. Testing the encoded line and correcting its value at the digit-substitution point make these observations usable despite errors. The parameters in §7 keep the resulting proof polynomially long. An auxiliary line oracle remains part of the proof; the verifier's acceptance computation is not recursively re-encoded through repeated PCP composition [1, §1].
+
+**Support and tradeoff:** Corrected ABSSW introduction, `literature/abssw-v2/tex/intro.tex`, lines 29–39 and 47–50; current §3 equations (3)–(5) and §7. This replaces the imprecise introductory honest degree `$O(b^c)$` by the exact strict capacity used later. It adds the resource reason without attributing invention of the established binary code to the 2026 authors.
+
+## R02 — Derive both row distances for the same decoded value
+
+**Target:** §4, `pcp-short-binary-decoding`, P035–P036 and the intervening defect display, lines 187–193. Replace the whole block. Retain the following paragraph comparing the implemented and v2 query counts.
+
+**Replacement:**
+
+For $r\ge1$, the test of a received row $w:\mathcal B_r\to\mathbb F_2$ conjoins BLR additivity [4], unit preservation, multiplicativity and consistency on affine degree-one labels. Let $e$ be its rejection probability. First suppose $e<1/28$. The characteristic-two bound of Bellare, Coppersmith, Håstad, Kiwi and Sudan [6, Theorem 1.2], in the form stated in [1, Theorem B.1], gives a linear functional $\ell$ with $\Delta(w,\ell)\le e$. The corrected unit check forces $\ell(1)=1$: otherwise its required answer and its $\ell$-value would differ on every seed, despite a total error bound $3e<1$.
+
+For $r\ge2$, replacing the three corrected values in the top-degree product check by their $\ell$-values costs at most $6e$. Including rejection of that check, the bilinear defect
+
+$$
+(L,A)\longmapsto\ell(LA)-\ell(L)\ell(A),
+\qquad L\in\mathcal B_1,\quad A\in\mathcal B_{r-1},
+$$
+
+is nonzero on at most $7e<1/4$ of its arguments. A nonzero bilinear form over $\mathbb F_2$ is nonzero on at least a quarter of its arguments, so this defect vanishes identically. Setting $z_i=\ell(Z_i)$ and inducting on squarefree monomials now gives $\ell(R)=R(z)$ for every label $R$. For $r=1$, linearity and unit preservation give the same conclusion without a product check. Thus $u=\rho^{-1}(z)$ is one decoded field value with full-label error at most $e$.
+
+The affine consistency check controls the same value on the labels used later. Its own rejection costs at most $e$, and replacing its corrected answer by $\ell(L)$ costs at most $2e$, so the affine degree-one error is at most $3e$. Homogeneous labels form half of that affine space; their normalized error is therefore at most $6e$. If instead $e\ge1/28$, choose any field value and use the bound $1\le28e$. In either case one decoded value has both full-label and homogeneous-label error at most $28e$. These choices belong to the soundness proof; the verifier performs only the stated local tests.
+
+**Support and tradeoff:** `HadamardSoundness.lean`, `test_soundness`, lines 29–61; `HadamardRowDecoding.lean`, `exists_row_message_distance_le`, lines 34–53; long record lines 942–989. The extra paragraph supplies the missing reason the restricted estimate refers to the same field value. It does not claim efficient global decoding or uniqueness of the decoded value.
+
+## R03 — Specify the outer tester as one experiment
+
+**Target:** §4, `pcp-short-outer-decoding`, P040, line 208. Replace the paragraph. The next paragraph continues to explain the inner corrector.
+
+**Replacement:**
+
+The outer test receives a primary table $f:F^k\times\mathcal B_r\to\mathbb F_2$, with $r\ge1$, and an auxiliary row indexed by each oriented line $(u,v)\in F^k\times F^k$. Auxiliary rows are indexed by inner points and degree-one Hadamard labels. Choose independent uniform $u,v\in F^k$, $z\in F$, a homogeneous label $L:F\to\mathbb F_2$, an inner correction direction, and the seeds for the following two tests. Run the Hadamard test on the primary row $f(u,\cdot)$ and the inner test on the auxiliary row belonging to this same $(u,v)$. Correct that auxiliary row at $\Phi(z)$ and compare the returned bit with $f(u+zv,L)$. All three checks must pass. In particular, $z=0$ and zero directions are allowed, and the auxiliary row used in the comparison is the one just tested.
+
+**Support and tradeoff:** `EncodedLineLowDegreeTest.lean`, `Sample` and `test`, lines 35–57; long record lines 1077–1090. The abbreviation $f(x,L)$ uses the existing identification of homogeneous field labels with their degree-$r$ label indices. No global consistency among the auxiliary rows is assumed.
+
+## R04 — State the corrector's label and sampling quantifiers
+
+**Target:** §5, `pcp-short-outer-correction`, P049, line 249. Replace the paragraph. Keep the following rejection-inclusive guarantee (14).
+
+**Replacement:**
+
+Fix a target $a\in F^k$, use the full-generator Lagrange nodes from (10), and assume $q>2c$. The primary table is indexed by degree-one labels. Choose independent uniform $v\in F^k$, $z\in F^\times$, a homogeneous label $L:F\to\mathbb F_2$, an inner correction direction and an inner-test seed. Test the auxiliary row for the oriented line $(a,v)$. Correct that row at $\Phi(z)$ and compare its answer with the primary bit at $(a+zv,L)$. If either check fails, reject. Otherwise return the correction at $\Phi(0)$, using the same inner correction direction and label as at $\Phi(z)$. This procedure makes at most $3c+9$ proof-bit queries. For honest primary and auxiliary tables encoding a polynomial $P$ of degree strictly below $b^c$, it returns $L(P(a))$ for every seed.
+
+**Support and tradeoff:** `BinaryLocalCorrection.lean`, `Sample`, `run`, `queries_length_le` and `run_eval`, lines 37–60, 82–90 and 144–165. Taking the same generator for testing and correction is a valid specialization of the more general source interface with separate `GoodNodes`. Reliability against corrupted tables remains averaged over $L$, as in (14); it is not a guarantee for every prescribed label.
+
+## R05 — Expose the origin-to-sample step in the correction proof
+
+**Target:** §5, `pcp-short-outer-correction`, P051, line 260. Replace this proof paragraph after the unchanged statement (14). Its hypotheses include primary homogeneous distance at most $\delta$, degree at most $D$, and $D\ge cb^c$.
+
+**Replacement:**
+
+Decode the auxiliary row for each direction $v$ using (11), and call the resulting line polynomial $T_v$. Its degree is at most $cb^c\le D$. Since inner-test failure forces the corrector to reject, the mean inner decoding error is at most $KR_a$. Thus replacing either corrected answer by its decoded line bit costs at most $e=(c+1)KR_a$.
+
+If $T_v(0)\ne P(a)$, then $T_v(Y)-P(a+Yv)$ is a nonzero polynomial of degree at most $D$. It has at most $D$ roots among the $q-1$ allowed nonzero parameters. Averaging over the uniform homogeneous label converts each nonzero field difference into binary disagreement with probability $1/2$. Consequently,
+
+$$
+\Pr_{v,L}\bigl[L(T_v(0))\ne L(P(a))\bigr]
+\le
+\Pr_{v,z,L}\bigl[L(T_v(z))\ne L(P(a+zv))\bigr]
++\frac{D}{2(q-1)}.
+$$
+
+The comparison test bounds disagreement between the decoded sampled-line bit and the received primary bit by $e+R_a$. For every nonzero $z$, the point $a+zv$ is uniform, so replacing that primary bit by $L(P(a+zv))$ costs at most $\delta$. Finally allow another $e$ for the returned origin bit and another $R_a$ for explicit rejection. The total is
+
+$$
+2e+2R_a+\delta+\frac{D}{2(q-1)}
+=\bigl(2+2(c+1)K\bigr)R_a+\delta+\frac{D}{2(q-1)},
+$$
+
+which is (14).
+
+**Support and tradeoff:** Long record (B16)–(B18), lines 1150–1180; `BinaryLocalCorrectionSoundness.lean`, `failure_le`, lines 222–313. The binary inequality is averaged over labels; it does not assert that one individual label detects the same difference at both parameters. The auxiliary polynomials are analysis choices and need not be unique or globally consistent.
+
+## R06 — Make the ZERO bit test explicit
+
+**Target:** §5, `pcp-short-zero`, P054 and display (15), lines 272–278. Replace the whole block; retain the preceding degree/nonvanishing argument and the following consequence.
+
+**Replacement:**
+
+The actual ZERO check chooses a uniform point $x$ and a uniform homogeneous label $L$, reads the primary bit $a_{\mathrm{bit}}$ at $(x,L)$, and corrects the certificate at $(x,0)$ and $(x,Z_H(x))$. Call the two returned bits $b_0$ and $b_Z$. The calls share $x,L$ and use independent remaining seeds. The check accepts exactly when both calls return a bit and
+
+$$
+b_0=0,\qquad b_Z=a_{\mathrm{bit}}.
+$$
+
+Let its rejection probability be $\kappa$, and let $\delta_A,\delta_M$ be the homogeneous distances of the primary and certificate tables from the encodings of the degree-at-most-$D$ polynomials $A,M$. Retain the local-correction assumptions, including $D\ge cb^c$, and suppose $A$ does not vanish on the nonempty grid. Each call's rejection event is contained in ZERO rejection. Applying (14) to the two calls and coupling the actual test to its ideal bit identities therefore gives
+
+$$
+\frac{1-Dh/q}{2}
+\le(1+2C)\kappa+\delta_A+2\delta_M+\frac{D}{q-1}.
+\tag{15}
+$$
+
+The lower bound uses the same label on both ideal residuals: whenever a residual is nonzero, that residual alone is detected with probability $1/2$. It does not require the two detections to be independent.
+
+**Support and tradeoff:** Long record lines 1184–1254; `BinaryZeroOnGridSoundness.lean`, `two_corrector_rejection_bound` and `rejectionRate_lower_bound`. The replacement introduces literal names for the three observed bits and preserves the existing soundness inequality. It does not replace the fresh derived-read analysis that follows at (16).
+
+## R07 — Separate received strings, honest contents and decoded polynomials
+
+**Target:** §6, `pcp-short-assembly`, P058–P059 and display (17), lines 296–303. Replace the whole opening block. Retain the next paragraph, which chooses and fixes the decoded $P,Q,M_A,M_B$.
+
+**Replacement:**
+
+The received proof consists of eight arbitrary binary tables: four primary tables and one auxiliary encoded-line table for each. Their intended contents in an honest proof are:
+
+| Primary table | Field-point domain | Intended polynomial | Hadamard label degree |
+|---|---|---|---:|
+| $f_P$ | $F^m$ | colour extension $P$ | $3$ |
+| $f_A$ | $F^{2m}$ | vertex certificate $M_A$ | $1$ |
+| $f_Q$ | $F^{2m}$ | difference $Q_P(X,Y)=P(X)-P(Y)$ | $3$ |
+| $f_B$ | $F^{4m}$ | edge certificate $M_B$ | $1$ |
+
+Each auxiliary line table uses degree-one labels for the inner encoding. The verifier runs four outer low-degree tests, one on each primary/auxiliary pair, and the two derived ZERO checks. Its seventh check chooses independent uniform $x,y\in F^m$ and a homogeneous label $L$, then compares the received bits:
+
+$$
+f_Q(x,y,L)=f_P(x,L)+f_P(y,L).
+\tag{17}
+$$
+
+Each of the seven checks has its prescribed independent seed, and acceptance requires all seven to pass. The same certificate line table is used by its low-degree test and its correction calls. Thus, if the whole verifier rejects with probability $\kappa$, every check rejects with probability at most $\kappa$. The decoded difference polynomial will be denoted by $Q$; the identity $Q=P(X)-P(Y)$ is a conclusion of soundness, not an assumption about the received tables.
+
+**Support and tradeoff:** Long record lines 1370–1400; `ThreeColorVerifierSoundness.lean`, lines 58–113; `ThreeColorDecodedSoundness.lean`, lines 86–163. The compact table defines the mathematical roles without claiming that arbitrary advice is already a codeword. In later uses of (17), the “three received bits” now refer literally to its displayed terms.
+
+## R08 — Name the seven query bounds and connect the two gaps
+
+**Target:** §7, `pcp-short-resources`, P071–P073 and their displays, lines 370–387. Replace the whole block. Retain the full-field sampling paragraph before it and repetition paragraph after it.
+
+**Replacement:**
+
+Before repetition, the seven checks have the following upper bounds on physical proof-bit queries:
+
+| Check | General bound | Bound at $c=4$ |
+|---|---:|---:|
+| Colour-table low-degree test | $2c+18$ | $26$ |
+| Vertex-certificate low-degree test | $2c+14$ | $22$ |
+| Difference-table low-degree test | $2c+18$ | $26$ |
+| Edge-certificate low-degree test | $2c+14$ | $22$ |
+| Vertex derived ZERO check | $6c+20$ | $44$ |
+| Edge derived ZERO check | $6c+20$ | $44$ |
+| Difference check | $3$ | $3$ |
+
+Their sum is $20c+107$, so the base graph verifier makes **at most $187$** physical proof-bit queries when $c=4$. These bounds include both bits of each fresh derived read. The corresponding unamplified bounds are
+
+$$
+r(N)\le32\,000\,000(\lceil\log_2N\rceil+1),\qquad
+\text{proof length}\le(4\max\{1,N\})^{4\,224\,000}.
+$$
+
+They establish the required complexity classes and are deliberately conservative numerical bounds. The seven-check argument gives rejection at least $g_4$ on every proof for a no-instance. The preceding conversion to fair random bits loses at most a factor of $16$, so a sufficient rejection gap for the base binary verifier is
+
+$$
+\delta=\frac{g_4}{16}
+=\frac1{1\,137\,847\,282\,503\,168}.
+$$
+
+**Support and tradeoff:** Long record lines 1402–1409 and 1570–1682; `ThreeColorSoundnessBudget.gap`; the implemented query-list and binary-verifier bounds. Exact rational substitution gives $g_4=1/71\,115\,455\,156\,448$. These are sufficient upper/lower bounds, not a claim of exactly 187 reads on every seed. Repetition still multiplies the query and randomness bounds by its fixed factor.
+
+## R09 — Include the pointwise estimate in weighted robustness
+
+**Target:** §4, `pcp-short-weighted-test`, P031–P032 and their grid display, lines 167–174. Replace the whole block. Keep the preceding exact characterization and the following historical counterexample.
+
+**Replacement:**
+
+Retain the full-generator nodes, Lagrange weights and hypothesis $q>2c$ from (10). Write
+
+$$
+A_f(u,v)=\sum_{i=1}^{c+1}\eta_i f(u+a_i v),\qquad
+g(u)=\mathop{\mathrm{plurality}}_v A_f(u,v),
+$$
+
+breaking ties arbitrarily. Let $\delta$ be the rejection probability of (10), and assume $\delta<1/[2(c+2)^2]$. If $g(u)\ne f(u)$, the prediction $f(u)$ has probability at most $1/2$, so $\Delta(f,g)\le2\delta$.
+
+To control predictions at each fixed centre, compare them through the symmetric weighted grid
+
+$$
+G_u(v,w,z)=\sum_{i,j}\eta_i\eta_j
+f(u+a_i v+a_j w+a_i a_j z).
+$$
+
+Every node $a_i$ is nonzero, so each shifted point/direction pair is uniform when its two random vectors are uniform. A union bound compares $A_f(u,v)$ with $G_u(v,w,z)$ at cost at most $(c+1)\delta$. Symmetry gives the same comparison with $A_f(u,w)$. Two independent predictions therefore disagree with probability at most $2(c+1)\delta$; plurality error is no larger, giving
+
+$$
+\Pr_v[A_f(u,v)\ne g(u)]\le2(c+1)\delta
+\quad\text{for every }u.
+$$
+
+Now fix a constraint $(u,v)$ and choose uniform independent $y,z$. Compare, in order,
+
+$$
+g(u),\quad A_f(u,y),\quad G_u(y,v,z),\quad
+\sum_i\eta_i g(u+a_i v).
+$$
+
+The three error bounds are $2(c+1)\delta$, $(c+1)\delta$ and $2(c+1)^2\delta$. Their sum is less than one, while the two endpoints are fixed. Some choice of $y,z$ therefore makes them equal. Thus $g$ satisfies every constraint exactly, and the preceding characterization makes it a degree-at-most-$c$ polynomial within $2\delta$ of $f$.
+
+The plurality and prediction argument follows Rubinfeld–Sudan [7, §4]. Kaufman–Sudan [8, Theorem 2.9] give a general testability theorem for linear-invariant families with a two-ary independent local formal characterization. As [1, §3.2] explains, these are antecedents of the weighted test. The [full weighted argument](../long/reasoning-record.md#2-the-corrected-short-low-degree-test) supplies the sampling details; the hypotheses and explicit constants used here follow Lee's formalized version.
+
+**Support and tradeoff:** `WeightedConstraintSoundness.lean`, `pair_error_le`, `prediction_error_le`, `correction_satisfies`; `GeneratorLowDegreeTest.exists_close`; long record lines 228–313. This expands the proof sketch at its actual hard transition. If space must remain fixed, move the exact numerical evaluation of the final gap to its existing long-record destination rather than dropping this pointwise/global distinction.
+
+## R10 — Correct the blanket attribution of both encodings
+
+**Target:** Formal correspondence and credits, `pcp-short-formal-correspondence`, line 413. Replace the whole credit paragraph.
+
+**Replacement:**
+
+This account was prepared by Will Cook with AI assistance. We follow the PCP construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard. It combines their set-multilinear form of inverse-Kronecker degree reduction with the established low-degree Hadamard encoding [1, §§1 and 3]; the formal proof is due to Troy Lee. The corrected paper acknowledges Lee's identification of the earlier low-degree-test error. This explanatory reconstruction claims no new PCP theorem.
+
+**Support and tradeoff:** Corrected ABSSW `intro.tex`, lines 29–39, and `technical_tools.tex`, lines 5 and 130–149. “Their set-multilinear form” credits the identified contribution without assigning invention of the inverse Kronecker map or the established Hadamard/low-degree-long-code lineage. This is an attribution repair, not a style-only change.
+
+## R11 — Make the abstract state the resource problem and recovered mechanism
+
+**Target:** Abstract, `pcp-short-abstract`, P002, line 8. Replace the entire abstract paragraph.
+
+**Replacement:**
+
+The PCP theorem gives every language in NP a polynomial-time verifier with logarithmic randomness, constantly many proof-bit queries, perfect completeness and constant soundness error. The algebraic construction of Amireddy, Behera, Srinivasan, Sudan and Willumsgaard achieves the bit-query bound while keeping the proof polynomially long: a set-multilinear encoding lowers the degree of each auxiliary line polynomial, and low-degree Hadamard words expose the binary observations used by the tests. We reconstruct the proof for three-colourability, concentrating on the corrected Lagrange-weighted test, correction at the nonuniform points required by grid-vanishing certificates, and the choice of one set of decoded primary polynomials for all seven checks. Together, they show that sufficiently small rejection forces the decoded colour polynomial to give a proper colouring. The quantitative statements follow Troy Lee's formal implementation, with its stated sampling conventions and query counts; the full companion supplies the underlying bivariate agreement proof and machine-model reductions.
+
+**Support and tradeoff:** Current theorem, §§3–7, and the existing companion allocation. This preserves the five PCP properties, names the specific soundness interface, and does not imply that this specialist text contains the full bivariate or runtime proof. It adds no novelty or fresh-verification claim.
+
+## R12 — Name the concrete compiler target accurately
+
+**Target:** §7, `pcp-short-complexity`, P075, line 393. Replace the whole paragraph, optionally splitting at the indicated paragraph break.
+
+**Replacement:**
+
+The operations behind these queries have polynomial-time implementations. The formal construction computes an irreducible polynomial for the field and obtains a full multiplicative generator and cube root by bounded search. The search bounds, including candidate testing, are polynomial in $q$, and $q$ is polynomially bounded in the input length. The public adjacency extension, label substitutions, seed codecs and packed proof addresses are computed explicitly.
+
+The program producing queries and the verdict is compiled into Mathlib's `FinTM2` model, whose machines have finitely many stacks, with a polynomial step bound in the encoded input length. This supplies the runtime guarantee in addition to the bound on proof queries. The separate machine simulations used to identify the concrete NP class with the reference class are described in the full argument.
+
+**Support and tradeoff:** `formal/lean/PCP/Complexity/Machine.lean`, lines 9–12 and 66–73; `ThreeColorRuntime.lean`, lines 10–15; long record `pcp-long-runtime`, lines 1687–1705. The actual compiler target is a finite multistack model. The correction leaves the polynomial-time conclusion intact and avoids conflating the target model with the separately related multitape model.
