@@ -1,0 +1,28 @@
+{
+  "schema": "pcp-review-response-validation/1",
+  "date": "2026-11-15",
+  "input_payload_files_unchanged": 1603,
+  "input_manifest_unchanged": true,
+  "input_zip_unchanged": true,
+  "repair_rows": 40,
+  "unique_complete_ids": true,
+  "allowed_statuses": true,
+  "status_counts": {
+    "alternative_successful": 2,
+    "fixed": 18,
+    "not_fixed": 2,
+    "retained_correctly": 18
+  },
+  "required_row_fields_present": true,
+  "retained_calculation_outputs_parsed": true,
+  "local_deliverable_links": "passed",
+  "zip_integrity": "passed: all entries match response bytes and ZIP CRCs; final receipt included and rebuilt archive rechecked",
+  "fresh_lean_build": false,
+  "frozen_static_browser_execution": false,
+  "live_browser_scope": "Limited observed paths recorded in support/browser_observations.json",
+  "authoritative_input_modified": false,
+  "proposed_replacements_merged": false,
+  "response_file_count": 20,
+  "review_word_count": 6524,
+  "replacement_word_count": 2841
+}

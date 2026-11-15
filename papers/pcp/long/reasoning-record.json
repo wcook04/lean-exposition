@@ -3,8 +3,8 @@
   "stage": "long",
   "state": "draft",
   "path": "papers/long.md",
-  "content_sha256": "ea1535be69567887bbfb2fb6e82a8705aa6c8c67f38e34bff34a75f604babece",
-  "graph_sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
+  "content_sha256": "cdd16f1c3887203894531a0d7d9525260c022e251bc09a52b9da1bfc775c4c4e",
+  "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
@@ -105,6 +105,7 @@
     "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints",
     "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
     "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorSeedSize.originalBits_eq_sum",
     "PCP.Algebraic.ThreeColorSoundnessBudget.field_ratio_bounds",
     "PCP.Algebraic.ThreeColorSoundnessBudget.gap",
     "PCP.Algebraic.ThreeColorSoundnessBudget.sufficient_budget",
@@ -283,6 +284,7 @@
     "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
     "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
     "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorSeedSize.originalBits_eq_sum",
     "PCP.Algebraic.ThreeColorSoundnessBudget.field_ratio_bounds",
     "PCP.Algebraic.ThreeColorSoundnessBudget.gap",
     "PCP.Algebraic.ThreeColorSoundnessBudget.sufficient_budget",
@@ -324,7 +326,7 @@
   "passages": [
     {
       "anchor": "pcp-long-intro-theorem",
-      "text_sha256": "50cdc6205be342dca4d1769d70f04a28e5a0ed65b542804cd51115c13e867c11",
+      "text_sha256": "1e4e1cbab736e2283b28b0941dcd175a258b2f7ba485189af1d7c15cfa6a62d2",
       "claim_ids": [
         "PCP.np_subset_pcp",
         "PCP.pcp_subset_np_concrete",
@@ -371,7 +373,7 @@
     },
     {
       "anchor": "pcp-long-intro-roadmap",
-      "text_sha256": "c183522f511d8df34478770b975dd6e131b37f70dbdd576787bf7f5271a553cb",
+      "text_sha256": "a3b0ebab44e8e4699dab9d787f1c930d66da55fa92531216504856b949f325c1",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_certificates",
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate"
@@ -386,12 +388,424 @@
     },
     {
       "anchor": "pcp-long-intro-readers",
-      "text_sha256": "b713baf5f7900cea3dd0911e40f83ecf3c30af4174fb6cb52133127ba2ffe10c",
+      "text_sha256": "2421668c9020ca6116a07f071ef9a338f1677bc7aa7f24a13cc357527061ecf5",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "context",
       "rationale": "Context or intermediate argument with no exact direct graph node; consult the explicit primary-source links in the manuscript. A direct correspondence remains to be added if needed."
+    },
+    {
+      "anchor": "pcp-long-implementation-contracts",
+      "text_sha256": "8f7046ae185542b09cfed7ea31f994d2722bb0a0c0aa7328e763fd3bcfb1e134",
+      "claim_ids": [
+        "PCP.Lang.ThreeColorBaseBranches.correct",
+        "PCP.Lang.ThreeColorBaseBranches.program_polynomial_cost",
+        "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
+        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
+        "PCP.pcp_subset_np_concrete",
+        "PCP.ReferenceNP.inNP_iff_mem"
+      ],
+      "citation_ids": [
+        "paper:1",
+        "paper:18",
+        "paper:2",
+        "paper:4"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Explicit machine results imported by the account. Bounded unfolding and runtime are distinct; source-level contracts, not a new Lean build."
+    },
+    {
+      "anchor": "pcp-long-final-target",
+      "text_sha256": "65e9171e964fcaf5648b5590a01a04bf56220f17b8e8f02b924903aa8d0c9c89",
+      "claim_ids": [
+        "PCP.np_subset_pcp"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:0",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:18",
+        "paper:19",
+        "paper:3",
+        "paper:4",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-colour-equations",
+      "text_sha256": "b101af41e6b754b383dc5ac211edd799b07e7c04fa6da8ca70009ada43ef5c7e",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorAlgebra.colorable_iff_exists_satisfies",
+        "PCP.Algebraic.ThreeColorAlgebra.cube_eq_one_iff",
+        "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne"
+      ],
+      "citation_ids": [
+        "paper:grid:2"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-grid-constraints",
+      "text_sha256": "b698e091d247b12fef581efda5ed2396bd4965ecca4a39964c4110e61040feae",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-eight-tables",
+      "text_sha256": "3b40e701cc1c3df709561b0b287f83dd5d5c1e541b3d698c46fe844e6c852467",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.Proof"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-derived-constraints",
+      "text_sha256": "d444656c70ee7743cbfe112e602a53822c009976c4199fa6005f99161258dbaa",
+      "claim_ids": [
+        "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
+        "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-query-budget",
+      "text_sha256": "6736e17e0bd4064fff0a22df922f5f071f773841ec00f2bb7fd0f2cc525b4f67",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.branchQueryBound",
+        "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
+        "PCP.Algebraic.ThreeColorVerifier.test_congr"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-completeness",
+      "text_sha256": "219ea2a1c8a130209ba7724a76a4effb60fc5a190b3bdcf3d3a407a5c650606f",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-decoding-contract",
+      "text_sha256": "289a58720c3a521b0beafe146ba4f9c728838ed4a6636f15489d35d4301eef77",
+      "claim_ids": [
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt",
+        "PCP.Algebraic.ThreeColorVerifier.exists_close_of_rejection_le"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:additional:0",
+        "paper:additional:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-difference-soundness",
+      "text_sha256": "f79cf03303fba3af6a08f78d6a9cb2ce4cd88905a5179f667686b171018ef6ff",
+      "claim_ids": [
+        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-assembled-zero-soundness",
+      "text_sha256": "2838db79dd692afe26ce00d8f86c8009dd48752dc1696d61b61580102b2b2453",
+      "claim_ids": [
+        "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
+      ],
+      "citation_ids": [
+        "paper:10",
+        "paper:12",
+        "paper:9",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:grid:0",
+        "paper:grid:1"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-gap",
+      "text_sha256": "267285c5ce38ad5d20e4959ecd1e69513f88dcd7bf6f1c2449ee1e8811768ea5",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorSoundnessBudget.field_ratio_bounds",
+        "PCP.Algebraic.ThreeColorSoundnessBudget.gap",
+        "PCP.Algebraic.ThreeColorSoundnessBudget.sufficient_budget",
+        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:7",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-parameters",
+      "text_sha256": "4eb76bbf188c9e75d76815fe4131ccac62b9ff9ed0d4f77226bf10265a29e340",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+        "PCP.Algebraic.ThreeColorParameterChoice.volume_le"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-fair-bits",
+      "text_sha256": "ad960d81ac4e1693739c76463e5acbf79d5af03482d11f304d8531f1bb2864d3",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-resources",
+      "text_sha256": "c9349e0404a578a4f1bd440bebfff702a7ca89a1359743fb7e31f1c9a393bac8",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorBinaryVerifier.verification_guarantees",
+        "PCP.Algebraic.ThreeColorSeedSize.originalBits_eq_sum"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification. This edition includes the seven branch seed exponents and their exact sum."
+    },
+    {
+      "anchor": "pcp-long-amplification",
+      "text_sha256": "1adc8fdbca753584720be809441dcf0d0d8c5f1065371ceeab95ac100b9afcd3",
+      "claim_ids": [
+        "PCP.Algebraic.RationalRepetitionBound.acceptance_pow_le_half",
+        "PCP.Algebraic.RationalRepetitionBound.linear_mul_pow_le_one",
+        "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
+      ],
+      "citation_ids": [
+        "almss:45",
+        "almss:69",
+        "blr:4",
+        "citation:bchks",
+        "paper:10",
+        "paper:11",
+        "paper:12",
+        "paper:13",
+        "paper:14",
+        "paper:15",
+        "paper:16",
+        "paper:17",
+        "paper:19",
+        "paper:5",
+        "paper:6",
+        "paper:7",
+        "paper:8",
+        "paper:9",
+        "paper:additional:0",
+        "paper:additional:1",
+        "paper:additional:2",
+        "paper:additional:3",
+        "paper:grid:0",
+        "paper:grid:1",
+        "paper:grid:2",
+        "paper:grid:3",
+        "safra:52"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-runtime",
+      "text_sha256": "6b0cfb87eb5a821813b977729195c8cbc99e207c8f55018c349e050d0f7844db",
+      "claim_ids": [
+        "PCP.Lang.ThreeColorBaseBranches.correct",
+        "PCP.Lang.ThreeColorBaseBranches.program_polynomial_cost",
+        "PCP.Lang.ThreeColorBaseBranches.program_polynomial_of_queries",
+        "PCP.Lang.ThreeColorContext.roots_cost",
+        "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
+      ],
+      "citation_ids": [
+        "paper:4"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-np-tableau",
+      "text_sha256": "1d3073fd4257fe5500f268e1340829bb639e8f967aa6d98674ab6a484da1891b",
+      "claim_ids": [
+        "PCP.Machine.NPTableau.exists_accepts_iff"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-local-constraints",
+      "text_sha256": "c07cb507c079a569b4a4f36dacf090ec7048b6b21080b2c05032bacf8e86fda8",
+      "claim_ids": [
+        "PCP.Machine.TableauCells.step_represents"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-clause-reduction",
+      "text_sha256": "a560c14225aafb06e337b1adb7eb88b0ee797c59984c55a89aa295f29a14f8a2",
+      "claim_ids": [
+        "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-colouring-gadget",
+      "text_sha256": "b1f10e99d7176a3fd1faa3fcb7d7cf982082e12fd25f68b73740d64812382d2e",
+      "claim_ids": [
+        "PCP.Reduction.NAEThreeColor.colorable_iff"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-reduction-runtime",
+      "text_sha256": "1be832018084e01eb77b51a1eb326a50bbe9191e02357b1889ad33a846a25a6c",
+      "claim_ids": [
+        "PCP.Reduction.NPThreeColorRuntime.costPoly",
+        "PCP.Reduction.NPThreeColorRuntime.exists_program",
+        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program"
+      ],
+      "citation_ids": [
+        "paper:18"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+    },
+    {
+      "anchor": "pcp-long-seed-transport",
+      "text_sha256": "459a05770021b4024e1875be280688dcc49bf42db715d5a5ed46bcf6016a8213",
+      "claim_ids": [
+        "PCP.Verifier.Reduction.clog_eval_add_two_le"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
+    },
+    {
+      "anchor": "pcp-long-converse",
+      "text_sha256": "f434104093321150b1bd4440030c7ef1faaef0777d6d2969e8a46c4768beb136",
+      "claim_ids": [
+        "PCP.ReferenceNP.inNP_iff_mem",
+        "PCP.pcp_subset_np",
+        "PCP.pcp_subset_np_concrete"
+      ],
+      "citation_ids": [
+        "paper:1",
+        "paper:2"
+      ],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
     },
     {
       "anchor": "pcp-long-algebra-scope",
@@ -488,7 +902,7 @@
     },
     {
       "anchor": "pcp-long-algebra-generator-soundness",
-      "text_sha256": "adc9c844cc0a4cda4ccbf21a113c25c29f05ca91f140b17bd09ef0720daa1af4",
+      "text_sha256": "1a2e67d4b6f63448490cef8456312915339c70eead3623f512f2e28960b14173",
       "claim_ids": [
         "PCP.Algebraic.GeneratorLowDegreeTest.exists_close"
       ],
@@ -498,19 +912,6 @@
       "assumption_ids": [],
       "evidence_class": "source_argument",
       "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-algebra-old-test-counterexample",
-      "text_sha256": "b15e545632bf176b728267f606ff8b89a1c6886095174010b3a84153b2a581d7",
-      "claim_ids": [
-        "ordinary:v1-old-test-counterexample"
-      ],
-      "citation_ids": [
-        "paper:v1:test"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "This passage explains the cited source-level statement or a local part of its argument; its precise hypothesis and scope remain in the source and passage. Citation closure includes recorded prerequisites; it is not a checked dependency graph."
     },
     {
       "anchor": "pcp-long-algebra-standard-correction",
@@ -563,7 +964,7 @@
     },
     {
       "anchor": "pcp-long-algebra-error-locator",
-      "text_sha256": "856e273c68e6d636c0b499245d9bd51220380010cb303de9b984ad90076335bf",
+      "text_sha256": "66d2fe9a2b816f32b89e9e6b374b4d7221eec236ed1316f28e7c90da6f6c69b1",
       "claim_ids": [
         "PCP.Algebraic.BerlekampWelchCertificate.exists_certificate_of_good_specializations"
       ],
@@ -979,7 +1380,7 @@
     },
     {
       "anchor": "pcp-long-derived-oracle-transfer",
-      "text_sha256": "a4d108bb5ac04e50dd05029ee721383f55d967136b68b622d7be9e5ffcbf523e",
+      "text_sha256": "8072418805a451c526e6466e052964519ab617fe6fd935539aa255d045274148",
       "claim_ids": [
         "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound",
         "PCP.Algebraic.DerivedZeroOnGrid.rejection_transfer",
@@ -1001,394 +1402,17 @@
       "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
     },
     {
-      "anchor": "pcp-long-final-target",
-      "text_sha256": "2db0d6a9c86f2c6732cb766138805e732a984bdf97543a5d989aa8be3e3fd454",
+      "anchor": "pcp-long-algebra-old-test-counterexample",
+      "text_sha256": "b15e545632bf176b728267f606ff8b89a1c6886095174010b3a84153b2a581d7",
       "claim_ids": [
-        "PCP.np_subset_pcp"
+        "ordinary:v1-old-test-counterexample"
       ],
       "citation_ids": [
-        "almss:45",
-        "almss:69",
-        "blr:4",
-        "citation:bchks",
-        "paper:0",
-        "paper:10",
-        "paper:11",
-        "paper:12",
-        "paper:13",
-        "paper:14",
-        "paper:15",
-        "paper:16",
-        "paper:17",
-        "paper:18",
-        "paper:19",
-        "paper:3",
-        "paper:4",
-        "paper:5",
-        "paper:6",
-        "paper:7",
-        "paper:8",
-        "paper:9",
-        "paper:additional:0",
-        "paper:additional:1",
-        "paper:additional:2",
-        "paper:additional:3",
-        "paper:grid:0",
-        "paper:grid:1",
-        "paper:grid:2",
-        "paper:grid:3",
-        "safra:52"
+        "paper:v1:test"
       ],
       "assumption_ids": [],
       "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-colour-equations",
-      "text_sha256": "b101af41e6b754b383dc5ac211edd799b07e7c04fa6da8ca70009ada43ef5c7e",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorAlgebra.colorable_iff_exists_satisfies",
-        "PCP.Algebraic.ThreeColorAlgebra.cube_eq_one_iff",
-        "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne"
-      ],
-      "citation_ids": [
-        "paper:grid:2"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-grid-constraints",
-      "text_sha256": "6de9f437917b980e74c099a65400f645651bdf13cef8c1ba1e44871f5facb951",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-eight-tables",
-      "text_sha256": "c8de3803e8d8a1084bd366629b973b2b4280ee10ad3ab6faece4062473a9d390",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorVerifier.Proof"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-derived-constraints",
-      "text_sha256": "796fcae7007f0f602bf3f7a2601fc9a985d86ee8adb9a2dd7ea14bfbb3864e1e",
-      "claim_ids": [
-        "PCP.Algebraic.HadamardDerivedOracle.answer_encode",
-        "PCP.Algebraic.HadamardDerivedOracle.averaged_failure_le"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-query-budget",
-      "text_sha256": "6736e17e0bd4064fff0a22df922f5f071f773841ec00f2bb7fd0f2cc525b4f67",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorVerifier.branchQueryBound",
-        "PCP.Algebraic.ThreeColorVerifier.queries_length_le",
-        "PCP.Algebraic.ThreeColorVerifier.test_congr"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-completeness",
-      "text_sha256": "219ea2a1c8a130209ba7724a76a4effb60fc5a190b3bdcf3d3a407a5c650606f",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-decoding-contract",
-      "text_sha256": "e613becf5384d69f460a344f40c8871622e4448db2bd2ef46debb2a6c3f795b2",
-      "claim_ids": [
-        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
-        "PCP.Algebraic.ThreeColorVerifier.colorable_of_rejection_lt",
-        "PCP.Algebraic.ThreeColorVerifier.exists_close_of_rejection_le"
-      ],
-      "citation_ids": [
-        "almss:45",
-        "almss:69",
-        "blr:4",
-        "citation:bchks",
-        "paper:11",
-        "paper:12",
-        "paper:13",
-        "paper:14",
-        "paper:15",
-        "paper:16",
-        "paper:17",
-        "paper:additional:0",
-        "paper:additional:3",
-        "safra:52"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-difference-soundness",
-      "text_sha256": "f79cf03303fba3af6a08f78d6a9cb2ce4cd88905a5179f667686b171018ef6ff",
-      "claim_ids": [
-        "PCP.Algebraic.BinaryDifferenceConsistency.rejectionRate_le_add_errors"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-assembled-zero-soundness",
-      "text_sha256": "7f95d75985a496c6c87273a56a5595f8d9fa1ce852316861814cf90d7f8c6ef1",
-      "claim_ids": [
-        "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound"
-      ],
-      "citation_ids": [
-        "paper:10",
-        "paper:12",
-        "paper:9",
-        "paper:additional:1",
-        "paper:additional:2",
-        "paper:grid:0",
-        "paper:grid:1"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-gap",
-      "text_sha256": "267285c5ce38ad5d20e4959ecd1e69513f88dcd7bf6f1c2449ee1e8811768ea5",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorSoundnessBudget.field_ratio_bounds",
-        "PCP.Algebraic.ThreeColorSoundnessBudget.gap",
-        "PCP.Algebraic.ThreeColorSoundnessBudget.sufficient_budget",
-        "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable"
-      ],
-      "citation_ids": [
-        "almss:45",
-        "almss:69",
-        "blr:4",
-        "citation:bchks",
-        "paper:10",
-        "paper:11",
-        "paper:12",
-        "paper:13",
-        "paper:14",
-        "paper:15",
-        "paper:16",
-        "paper:17",
-        "paper:7",
-        "paper:9",
-        "paper:additional:0",
-        "paper:additional:1",
-        "paper:additional:2",
-        "paper:additional:3",
-        "paper:grid:0",
-        "paper:grid:1",
-        "paper:grid:2",
-        "paper:grid:3",
-        "safra:52"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-parameters",
-      "text_sha256": "4eb76bbf188c9e75d76815fe4131ccac62b9ff9ed0d4f77226bf10265a29e340",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
-        "PCP.Algebraic.ThreeColorParameterChoice.volume_le"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-fair-bits",
-      "text_sha256": "ad960d81ac4e1693739c76463e5acbf79d5af03482d11f304d8531f1bb2864d3",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-resources",
-      "text_sha256": "c51c3a8dc7c4f91a3583215ec15d54b7df2f51a9ef45d8c8bc19da02b136b0f3",
-      "claim_ids": [
-        "PCP.Algebraic.ThreeColorBinaryVerifier.verification_guarantees"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-amplification",
-      "text_sha256": "c220306dbf8c1873b90a53c09e02ce7c69c53690578997568976eded8c43c501",
-      "claim_ids": [
-        "PCP.Algebraic.RationalRepetitionBound.acceptance_pow_le_half",
-        "PCP.Algebraic.RationalRepetitionBound.linear_mul_pow_le_one",
-        "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees"
-      ],
-      "citation_ids": [
-        "almss:45",
-        "almss:69",
-        "blr:4",
-        "citation:bchks",
-        "paper:10",
-        "paper:11",
-        "paper:12",
-        "paper:13",
-        "paper:14",
-        "paper:15",
-        "paper:16",
-        "paper:17",
-        "paper:19",
-        "paper:5",
-        "paper:6",
-        "paper:7",
-        "paper:8",
-        "paper:9",
-        "paper:additional:0",
-        "paper:additional:1",
-        "paper:additional:2",
-        "paper:additional:3",
-        "paper:grid:0",
-        "paper:grid:1",
-        "paper:grid:2",
-        "paper:grid:3",
-        "safra:52"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-runtime",
-      "text_sha256": "6b0cfb87eb5a821813b977729195c8cbc99e207c8f55018c349e050d0f7844db",
-      "claim_ids": [
-        "PCP.Lang.ThreeColorBaseBranches.correct",
-        "PCP.Lang.ThreeColorBaseBranches.program_polynomial_cost",
-        "PCP.Lang.ThreeColorBaseBranches.program_polynomial_of_queries",
-        "PCP.Lang.ThreeColorContext.roots_cost",
-        "PCP.Lang.ThreeColorRuntime.polyTimeAlg"
-      ],
-      "citation_ids": [
-        "paper:4"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-np-tableau",
-      "text_sha256": "1d3073fd4257fe5500f268e1340829bb639e8f967aa6d98674ab6a484da1891b",
-      "claim_ids": [
-        "PCP.Machine.NPTableau.exists_accepts_iff"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-local-constraints",
-      "text_sha256": "c07cb507c079a569b4a4f36dacf090ec7048b6b21080b2c05032bacf8e86fda8",
-      "claim_ids": [
-        "PCP.Machine.TableauCells.step_represents"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-clause-reduction",
-      "text_sha256": "a560c14225aafb06e337b1adb7eb88b0ee797c59984c55a89aa295f29a14f8a2",
-      "claim_ids": [
-        "PCP.Reduction.FiniteDomainConstraints.satisfiable_iff"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-colouring-gadget",
-      "text_sha256": "b1f10e99d7176a3fd1faa3fcb7d7cf982082e12fd25f68b73740d64812382d2e",
-      "claim_ids": [
-        "PCP.Reduction.NAEThreeColor.colorable_iff"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-reduction-runtime",
-      "text_sha256": "1be832018084e01eb77b51a1eb326a50bbe9191e02357b1889ad33a846a25a6c",
-      "claim_ids": [
-        "PCP.Reduction.NPThreeColorRuntime.costPoly",
-        "PCP.Reduction.NPThreeColorRuntime.exists_program",
-        "PCP.Reduction.NPThreeColorRuntime.of_inNP_program"
-      ],
-      "citation_ids": [
-        "paper:18"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
-    },
-    {
-      "anchor": "pcp-long-seed-transport",
-      "text_sha256": "459a05770021b4024e1875be280688dcc49bf42db715d5a5ed46bcf6016a8213",
-      "claim_ids": [
-        "PCP.Verifier.Reduction.clog_eval_add_two_le"
-      ],
-      "citation_ids": [],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "Direct correspondence to the source-level declaration(s) for the local assertion in this passage, selected by the source correspondence audit; explanatory context can extend beyond an individual declaration. This does not assert a Lean build or semantic certification."
-    },
-    {
-      "anchor": "pcp-long-converse",
-      "text_sha256": "f434104093321150b1bd4440030c7ef1faaef0777d6d2969e8a46c4768beb136",
-      "claim_ids": [
-        "PCP.ReferenceNP.inNP_iff_mem",
-        "PCP.pcp_subset_np",
-        "PCP.pcp_subset_np_concrete"
-      ],
-      "citation_ids": [
-        "paper:1",
-        "paper:2"
-      ],
-      "assumption_ids": [],
-      "evidence_class": "source_argument",
-      "rationale": "The linked source-locator declarations were identified in the chapter author’s evidence manifest for this exact passage. They support the indicated argument and retain source-only status; locator matches do not establish that every premise or proof step has been independently checked."
+      "rationale": "This passage explains the cited source-level statement or a local part of its argument; its precise hypothesis and scope remain in the source and passage. Citation closure includes recorded prerequisites; it is not a checked dependency graph."
     },
     {
       "anchor": "pcp-long-intro-source-editions",
@@ -1435,7 +1459,7 @@
     },
     {
       "anchor": "pcp-long-references",
-      "text_sha256": "5030da5defc17bcb7593c71be5f82acd9b51ec5af20985f468d205ab2de15373",
+      "text_sha256": "1a4621466cfb10f394f4f655770635b6718d658bfd25e2f78d6852cf5fcc5acf",
       "claim_ids": [],
       "citation_ids": [],
       "assumption_ids": [],
@@ -1454,15 +1478,16 @@
     "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
     "Citation-only successor reviewed for preservation; existing source mappings and claim scope retained. Passage hashes rebound to this edition.",
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
-    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed."
+    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
+    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed."
   ],
   "reading_links": [
     {
       "from_anchor": "pcp-long-intro-theorem",
-      "from_text_sha256": "50cdc6205be342dca4d1769d70f04a28e5a0ed65b542804cd51115c13e867c11",
+      "from_text_sha256": "1e4e1cbab736e2283b28b0941dcd175a258b2f7ba485189af1d7c15cfa6a62d2",
       "to_stage": "short",
       "to_anchor": "pcp-short-theorem",
-      "to_text_sha256": "a55a8186ea4655850eb4cd1e9fa3b2a8884b7338775663b94401246c31b65220",
+      "to_text_sha256": "47636a0f61566c1f165295b98ec7a0c5c70181187886b0968d4fc689749eaca3",
       "kind": "expands",
       "rationale": "Gives the exact endpoint and source-model context."
     },
@@ -1471,7 +1496,7 @@
       "from_text_sha256": "9816641e8bfd5d2b5c00603c9347f0d994e5d7b2147133b251f5ff3573398779",
       "to_stage": "short",
       "to_anchor": "pcp-short-colour-constraints",
-      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "to_text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
       "kind": "expands",
       "rationale": "Expands the grid certificate and its degree proof."
     },
@@ -1489,7 +1514,7 @@
       "from_text_sha256": "27971e929d8ce3f5d5b36eb81bb138c70acb8c8e5acaa9705b34a0b1848d2b38",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
       "kind": "expands",
       "rationale": "Derives the binary composition of a field polynomial."
     },
@@ -1498,7 +1523,7 @@
       "from_text_sha256": "c943cf5486da1600c7e9b796e83974c25f154d3415322049f202c3e8bc34f229",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
       "kind": "expands",
       "rationale": "Proves the two-read correction bound."
     },
@@ -1507,7 +1532,7 @@
       "from_text_sha256": "8abd2f05c7ca433ebc264dd8d3942286577a75e66da7caec73c3fb065d4e8e4b",
       "to_stage": "short",
       "to_anchor": "pcp-short-weighted-test",
-      "to_text_sha256": "3705c2f89538f95a250d55f885ed41f25f1c59b904280bf7b79502c3144fae23",
+      "to_text_sha256": "6d1a2720b1a7f59b73e09bcb27bb3c3b97a636437d37fdcf953ff8c831676a07",
       "kind": "expands",
       "rationale": "Proves the fixed-center estimate and weighted-grid comparison."
     },
@@ -1516,7 +1541,7 @@
       "from_text_sha256": "1d492ff4d1633fb820830c1e406c612b9649f7e0e01462e43c157a9a6aec40a3",
       "to_stage": "short",
       "to_anchor": "pcp-short-binary-decoding",
-      "to_text_sha256": "385cd3615ea47fec09980c7014d34bd4b767ec11e843175ff84ca84ade82c029",
+      "to_text_sha256": "d2bd050feeebb29fb93780d44847b0d30c6b919c256dfeaa958a7359b9798403",
       "kind": "expands",
       "rationale": "Derives simultaneous label-distance bounds for one witness."
     },
@@ -1525,7 +1550,7 @@
       "from_text_sha256": "8764fcbdddffc34826abac248c9df4df321c8a7940ea86f38558f462d24ac25f",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "63f07c2ad7a2dfa3fae88ab9e104029e44a299e6a512250e39164ae9916f37e2",
+      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
       "kind": "expands",
       "rationale": "States and proves the bivariate input used in line testing."
     },
@@ -1534,7 +1559,7 @@
       "from_text_sha256": "1bb230b2089e27cea95388ec358feb9d1e88b816b2bc89958b255736390d7eaa",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "63f07c2ad7a2dfa3fae88ab9e104029e44a299e6a512250e39164ae9916f37e2",
+      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
       "kind": "expands",
       "rationale": "Defines the crossing discrepancies and proves the sampled endpoint bound."
     },
@@ -1543,7 +1568,7 @@
       "from_text_sha256": "1f9a4a2c6cc52977e07df9bd444846bcc44e583764f8214934d9454e108cfaa6",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "63f07c2ad7a2dfa3fae88ab9e104029e44a299e6a512250e39164ae9916f37e2",
+      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
       "kind": "expands",
       "rationale": "Shows why one fixed polynomial agrees on a whole target line."
     },
@@ -1552,7 +1577,7 @@
       "from_text_sha256": "5d3530c6b023d231cd1580fccd60668db536300e64dd7684a539609bbf90d07f",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-decoding",
-      "to_text_sha256": "63f07c2ad7a2dfa3fae88ab9e104029e44a299e6a512250e39164ae9916f37e2",
+      "to_text_sha256": "ab9e4ae9946b95a1f41fcc357c772b1e967bb41672a569abe5d10b621b708392",
       "kind": "expands",
       "rationale": "Derives the quantitative combined decoding theorem."
     },
@@ -1561,7 +1586,7 @@
       "from_text_sha256": "7cb69d8517d41aa2147e9091e646cbfd7d2fc3bf7745fa875d7df397f4934ba5",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-correction",
-      "to_text_sha256": "22f3ece57fa44a833466e67e5e01bfd2411893fb85cc03bcd178e701faef876a",
+      "to_text_sha256": "7cc21b19ca124519631255d45c0a3bf5db296fccadd42118c2ee105a7cb0dcf4",
       "kind": "expands",
       "rationale": "Derives the rejection-inclusive fixed-target correction bound."
     },
@@ -1570,34 +1595,34 @@
       "from_text_sha256": "bafc34ee624b601515bcf6233d21570eddc191b48855b2701af5b38995b15242",
       "to_stage": "short",
       "to_anchor": "pcp-short-zero",
-      "to_text_sha256": "f1fbd1f9c21da06d8b4b8fd80dc086af3685c030ec0eb3a3d49b46bfe8b2e61a",
+      "to_text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
       "kind": "expands",
       "rationale": "Proves the base ZERO rejection comparison."
     },
     {
       "from_anchor": "pcp-long-derived-oracle-transfer",
-      "from_text_sha256": "a4d108bb5ac04e50dd05029ee721383f55d967136b68b622d7be9e5ffcbf523e",
+      "from_text_sha256": "8072418805a451c526e6466e052964519ab617fe6fd935539aa255d045274148",
       "to_stage": "short",
       "to_anchor": "pcp-short-zero",
-      "to_text_sha256": "f1fbd1f9c21da06d8b4b8fd80dc086af3685c030ec0eb3a3d49b46bfe8b2e61a",
+      "to_text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
       "kind": "expands",
       "rationale": "Proves the fresh-mask transfer to the derived ZERO test."
     },
     {
       "from_anchor": "pcp-long-decoding-contract",
-      "from_text_sha256": "e613becf5384d69f460a344f40c8871622e4448db2bd2ef46debb2a6c3f795b2",
+      "from_text_sha256": "289a58720c3a521b0beafe146ba4f9c728838ed4a6636f15489d35d4301eef77",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
-      "to_text_sha256": "b0bd505dbf2980db48fd927de0d38c2206f2ff268f32fd8e95def98916834a31",
+      "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
       "kind": "expands",
       "rationale": "Fixes the four decoded primary polynomials used by all subsequent checks."
     },
     {
       "from_anchor": "pcp-long-assembled-zero-soundness",
-      "from_text_sha256": "7f95d75985a496c6c87273a56a5595f8d9fa1ce852316861814cf90d7f8c6ef1",
+      "from_text_sha256": "2838db79dd692afe26ce00d8f86c8009dd48752dc1696d61b61580102b2b2453",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
-      "to_text_sha256": "b0bd505dbf2980db48fd927de0d38c2206f2ff268f32fd8e95def98916834a31",
+      "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
       "kind": "expands",
       "rationale": "Proves both grid consequences for the same decoded objects."
     },
@@ -1612,7 +1637,7 @@
     },
     {
       "from_anchor": "pcp-long-amplification",
-      "from_text_sha256": "c220306dbf8c1873b90a53c09e02ce7c69c53690578997568976eded8c43c501",
+      "from_text_sha256": "1adc8fdbca753584720be809441dcf0d0d8c5f1065371ceeab95ac100b9afcd3",
       "to_stage": "short",
       "to_anchor": "pcp-short-resources",
       "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",

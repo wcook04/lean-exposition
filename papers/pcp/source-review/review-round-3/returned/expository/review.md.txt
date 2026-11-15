@@ -1,0 +1,327 @@
+# Review of the worked PCP exposition
+
+15 November 2026 · Packet `pcp-review-round2-3-worked-exposition`
+
+## Judgment
+
+**Keep this paper and give it a more continuous mathematical spine. The repairs have substantially improved it, but it does not yet fully deliver the operational understanding promised to its stated reader.** Its strongest passages explain real obstacles and the mechanisms that overcome them. Its weakest transition asks the reader to assemble the actual verifier from several independently understandable examples, several kinds of addresses, and several imported robustness guarantees. That is the central remaining problem. Another round of isolated explanatory insertions will have diminishing returns.
+
+The examined calculations and theorem interfaces support the construction. I found no counterexample to the assembled argument in the portions checked. I did find an incorrect explanation of the Boolean degree of a cubic field expression, together with several identifiable omissions in the operational account. The degree error does not invalidate the degree-three encoding or the reported resource bound. The teaching diagnosis is therefore more specific than either “the mathematics is wrong” or “the paper only needs polish.”
+
+For the reader described in the brief—comfortable with polynomial arithmetic, finite sums and elementary probability, but without coding theory, complexity theory, Lean or graduate algebra—the appropriate goal is a **worked account of the verifier and of the architecture of its soundness proof**. The reader should be able to follow one colouring condition through its grid certificate to actual proof-bit addresses; explain the distributional obstacles; state the exact inputs supplied by the major testing theorems; and reconstruct why one decoded colouring satisfies all the graph conditions. The paper can accomplish that while importing the deeper testing results explicitly. It need not reproduce their entire proofs or the machine-level implementation.
+
+The current paper already achieves much of the local explanation needed for that goal. It does not yet complete the promised continuous example. This return supplies one, with independently checked arithmetic, rather than merely recommending that an example be added. It also supplies a conservative textual patch, a complete audit of the 44 original findings, and a paragraph map. None has been merged into the authoritative paper.
+
+Throughout this review, **[M]** denotes the frozen `papers/expository/main.md`, with the line numbers in the supplied packet. **[F]** denotes the supplied Lean sources under `formal/lean/PCP/`, identified by filename and declaration. **[A2]** denotes the actual enclosed ABSSW version-two TeX, and **[AB]** the enclosed January 8, 2007 Arora–Barak book. The source pins, hashes, reading scope and commands are in [coverage.md](coverage.md). Source inspection, finite execution and teaching judgment are distinguished there. This is an AI review with mathematical background, not an independent human learning study or a new Lean build.
+
+## 1. What the paper should teach
+
+The opening correctly distinguishes a constant number of certificate-bit reads from constant computation, fixes the certificate before randomness, and explains polynomial bounds before using them as promises. The theorem is quantified over a single verifier and fixed constants for each language. These are useful repairs. The diluted K4 example then gives the reader a concrete reason that checking a few ordinary constraints cannot establish the desired theorem. This opening should survive. [M, lines 8–146; repair audit PA-01–PA-03.]
+
+The stronger promise at lines 39–40 is that the reader will command the mechanism from colouring constraints to bits. That promise requires continuity between representations. A learner who understands each isolated calculation can still be unable to say which table is being queried, which polynomial is merely a witness in the analysis, and which apparently single query expands into two masked reads. Those distinctions determine both the algorithm and its soundness; they cannot be delegated entirely to the reader's reconstruction.
+
+At present the examples move from F5 root counting and interpolation, to F4 colours, to a separate F5 grid certificate, to a different F5 digit polynomial, to a three-bit Hadamard word, to an F4 cubic label, and finally to the general eight-table construction. Each example has a reason to exist. Their succession nevertheless stops short of carrying one object through the full chain. Section 8 is where the unpaid explanatory work accumulates: representations, oracle types, low-degree testing, binary encoding, weighted correction, same-witness guarantees and target-specific rejection all arrive close together. [M, §§3–8.]
+
+The remedy is to retain the examples that demonstrate genuinely different phenomena and add a continuing example that joins the main operations. Do not force every calculation into F4. The corrected F5 quartic is valuable precisely because its formal degree distinction survives as a function on that field. The 256/16/8 label-space example is valuable because it exhibits a change of measure. The small continuing example has a different job: show how the represented object persists while the addresses and queries change.
+
+After the revision, a reader should be able to do four things without consulting a Lean file:
+
+1. Describe the stored primary and auxiliary tables and execute the data reads of a specified honest ZERO branch.
+2. Explain why proximity on the ambient domain does not justify a direct read at a prescribed point, a particular auxiliary anchor, or a special derived label.
+3. State which theorem produces one common decoded polynomial and which theorem controls a rejecting corrector at a fixed target.
+4. Reconstruct the coupled inequality that turns rare actual rejection into exact polynomial identities, then into a proper colouring.
+
+Those are observable mathematical capabilities. They are more useful acceptance criteria than sentence-length statistics, a count of repaired comments, or whether an expert can paraphrase the theorem. They also establish a manageable boundary: the deep low-degree and generalized Hadamard arguments may remain explicit inputs, with routes to their proofs.
+
+## 2. Preserve the arguments that already do their jobs
+
+Sections 1–5 have a strong causal sequence. A sparse violation defeats naive sampling. Polynomial distance offers a way to spread disagreement, while the arbitrary-table warning blocks the illegitimate assumption that a received word already is a polynomial. Interpolation constructs the honest object. The colour equations distinguish valid colours from proper edges. The assignment of four field values to K4 shows why the vertex condition cannot be omitted. Grid vanishing is distinguished from ambient vanishing, and the two certificate identities are both justified. The thin-slice example then explains why ambient proximity alone cannot protect prescribed queries. These passages carry substantive teaching work. [M, lines 48–414.]
+
+The corrected digit example is also worth keeping. The polynomial is now quartic over F5, rather than an example whose displayed high degree collapses as a function through the identity Y^5=Y. The supplied check confirms that no polynomial of degree at most three has the same five evaluations. More importantly, the text retains the distinction between an honest set-multilinear encoding and an arbitrary polynomial produced by a low-degree test. Removing that distinction would make the subsequent degree bound false. [M, §6; PA-13, PA-14; `examples/check_exposition_examples.py`.]
+
+Section 7's progression from an actual Hadamard word to linearity testing, chosen-observation correction and nonlinear labels is productive. The false product assignment shows that linearity in the label coefficients does not force evaluation at one message. The mask argument fixes the requested point and label before drawing the mask, which is exactly the needed distributional statement. The full/affine/homogeneous example in Section 8 then demonstrates why restricting an error bound to a small label subset is an additional mathematical demand. [M, lines 559–830.]
+
+The soundness coupling in Section 9 should be the climax of the main route. It keeps the correction rejection terms, compares experiments with the same seeds, and derives an event containment rather than multiplying unjustified success probabilities. The text also distinguishes the decoded polynomials used in the argument from objects reconstructed by the verifier. Preserve that distinction and the actual inequality. A smoother narrative that deletes these qualifications would be a worse mathematical explanation. [M, lines 964–1056; F, `BinaryZeroOnGridSoundness.lean`.]
+
+Finally, preserve the version and credit boundaries. The old order-three/unit-weight test is genuinely defective; the corrected generator test is a different test. A finite F16 calculation illustrates the defect, while the family over F_(2^(2k)) shows that increasing the field size does not rescue the old characterization. The exposition correctly attributes the earlier correction and distinguishes the source paper's query count from the formal variant's. This is useful evidence about the construction, not a new priority claim by the exposition or this review. [M, §12; A2, `technical_tools.tex`; F, `HadamardTest.lean` and related soundness sources.]
+
+## 3. The original repair ledger is mostly resolved
+
+The audit covers all 44 original IDs, compares their original meaning with the current text, and checks nearby untouched material. It does not treat the author's action labels as verdicts. The resulting counts are:
+
+| Verdict | Count | Interpretation |
+| --- | ---: | --- |
+| `fixed` | 29 | The original defect is resolved in the current evidence. |
+| `retained_correctly` | 11 | A feature previously judged correct remains correct. |
+| `alternative_successful` | 2 | The revision solves the problem by a defensible alternative. |
+| `partly_fixed` | 2 | An identifiable part of the original need remains. |
+| Other statuses | 0 | No original item is left unassessed or classified as a regression. |
+
+The two partial findings are **PA-20**, where the oracle table and correction account still need an explicit definition of Phi and complete auxiliary address types, and **PA-33**, where the finite-field calculation is much improved but the reproducibility link still points to a moving `main` branch. A local command against the frozen packet and an immutable publication link would complete the latter repair. The current link is mutable; this review does not claim that it is broken.
+
+The successful alternatives are **PA-08** and **PA-12**. The current quotient construction and explicit theorem interface solve the relevant problems without mechanically following every old request about paragraph division or proof sketches. They should not be reopened merely because their wording differs from a proposed repair.
+
+Two distinctions prevent misuse of this result. First, 42 resolved or retained findings do not establish that the whole paper now achieves its teaching purpose: a ledger decomposes local issues, whereas continuity through representations is a whole-paper property. Second, the new Boolean-degree correction does not erase the successful repair of the earlier cubic-label calculation. The calculation is right; its newly supplied explanation has a different flaw. New issues are identified below as N1–N7, not relabelled as old failures. Details and exact current quotations are in [repair_audit.json](repair_audit.json).
+
+## 4. New findings and their consequences
+
+### N1. Complete one colouring-to-bits chain
+
+**Consequence: central to the advertised teaching goal.** The missing continuous example is a larger issue than any single notation error. It leaves the reader to infer how the polynomial residual, its certificate, the line encoding and the bit labels belong to one check. The replacement sample in [replacement_trace.md](replacement_trace.md) supplies this chain.
+
+Take H={0,1} in F4, colour the two endpoints of one edge by 1 and omega, and use
+
+\[
+\chi(X)=1+\omega^2X.
+\]
+
+Its vertex residual is
+
+\[
+P(X)=\chi(X)^3-1
+=(X^2+X)(X+\omega^2),
+\]
+
+so the actual colouring supplies the certificate
+
+\[
+M(X,U)=U(X+\omega^2),\qquad Z_H(X)=X^2+X.
+\]
+
+At the off-grid point x=omega, P(x)=1, M(x,0)=0 and M(x,Z_H(x))=1. That is an instructive choice: the colour polynomial is zero there, yet there is no invalid vertex because omega is not a vertex label. The two ambient identities still hold.
+
+The sample then follows one possible sampled homogeneous observation, its fresh mask, the two certificate lines, the digit substitution, the interpolation weights and their pulled-back bit labels. It lists all eight auxiliary data reads, both primary comparison reads, and the two masked colour reads. The returned certificate bits are 0 and 1, and ZERO checks exactly the identities just calculated.
+
+This is an honest branch trace with deliberately small parameters. It leaves the syntactic row tests at their honest-completeness guarantee and does not pretend to run the complete 187-query verifier or instantiate its large-field soundness regime. Equal displayed values of independently sampled seeds are identified as possible joint outcomes, not permission to share those random variables. The derivation and script were checked by a second mathematical implementation.
+
+The example does not replace the general multivariate quotient sum. Keep the explanation of M(X,U)=sum_j U_j Q_j and its degree bound. The existing two-variable F5 example can support that construction. It also should not be stretched into a tiny-field demonstration of every edge residual: in this graph the resulting edge expression has a finite-field function coincidence that would distract from the purpose. One continuous vertex condition is enough to make the operations visible; the general soundness argument handles both constraints.
+
+### N2. Make the addresses and ZERO interface unambiguous
+
+**Consequence: blocks reconstruction of the algorithm; overlaps the remaining part of PA-20.** Define the power-point map where it first arises:
+
+\[
+\Phi:F\longrightarrow F^{\{0,\ldots,c-1\}\times\{0,\ldots,b-1\}},
+\qquad \Phi(z)_{i,j}=z^{j b^i}.
+\]
+
+The coordinates with j=0 are one. Section 6 already explains this substitution, but Section 8 starts using its unnamed map at lines 752 and 762. Naming it beside the first worked tuple removes avoidable guesswork. [M, §§6 and 8.]
+
+Next type an auxiliary address as an oriented outer line, an inner point and a binary label. For an outer table on F^k, these components are (a,v) in F^k times F^k, w in F^(cb), and an **affine** Boolean label R. Auxiliary labels are affine even when the corresponding primary colour table has degree-three labels. Weighted labels are particular homogeneous members of that affine domain. The current four-pair inventory is useful, but it needs these types to become executable.
+
+Finally explain that p(x,L) in the generic ZERO interface is a bit oracle for the proposed residual. It is not an extra stored primary table. In the assembled vertex check it is implemented by two masked queries into chi; in the edge check it is implemented through chi-prime with the publicly computable adjacency factor incorporated in the requested label. This explains both why the stored inventory remains four primary/auxiliary pairs and why a nominal single generic query expands into two actual reads. [M, lines 881–885 and §9; F, `HadamardDerivedOracle.lean`.]
+
+### N3. Explain why the anchored auxiliary row is tested again
+
+**Consequence: hides the reason for a major algorithmic step and for the C R_a term.** The earlier low-degree test controls an average over oriented line indices (a,v). A corrector at a prescribed target a_* only samples the fibre (a_*,v). All rows in that fibre can be bad while their global proportion is only Q^(-k). Randomising the direction does not randomise the anchor.
+
+For Q=4 and k=2 there are 256 oriented indices. Corrupting the 16 rows at one anchor gives global fraction 1/16 and conditional fraction 1 at that target. This does not construct a cheating proof that passes: the row test or comparison may reject it. It explains precisely why global proximity alone cannot justify the correction and why the actual target-dependent rejection rate belongs in the bound.
+
+ABSSW v2 states this obstruction before Algorithm 5.1. Restore it before the exposition's four-step corrector. The reader then sees three different concentrations of error and their corresponding repairs:
+
+| Where errors can concentrate | What the construction uses |
+| --- | --- |
+| A special primary target slice | Random-line correction at the prescribed point |
+| All auxiliary rows at one fixed anchor | Retesting and the actual rejection term R_a |
+| A special subset of nonlinear labels | A fresh uniform mask after fixing the request |
+
+These explanations do different jobs. Combining them into a general assurance that redundancy corrects errors would lose the mechanism. [M, lines 391–414, 711–725 and 832–872; A2, `local_correction.tex`, “Expected Oracles and Queries”; [changed-case derivations](checks/changed_cases/DERIVATIONS.md).]
+
+### N4. Correct the reason that the cubic observation is quadratic
+
+**Consequence: a real false explanation, with a small local repair.** Lines 688–690 attribute the quadratic label in F4 to that field being tiny. In every characteristic-two extension, squaring is linear over F2. Field multiplication is bilinear in binary coordinates. Consequently u^3=u·u^2 has Boolean coordinate degree at most two, and a linear observation of u^3-1 has the same bound.
+
+The degree-three code remains sufficient and is the code used by the pinned formal verifier. Retain it and its resource accounting. An improved degree estimate alone does not define or verify an optimized protocol. Suggested wording:
+
+> Squaring is linear in binary coordinates in every characteristic-two field, so L(u^3-1) has Boolean degree at most two. We retain the degree-three encoding used by the source construction; the reported query bounds refer to that verifier.
+
+The shorter alternative is simply to say that the computed label belongs to the chosen degree-three space. Either repair distinguishes field-polynomial degree, Boolean degree and the code's chosen degree bound. [M, lines 647–709; [mathematical audit](mathematical_audit.md), §1.]
+
+### N5. State the imported contracts at the point of use
+
+**Consequence: the reader can otherwise confuse three different forms of robustness.** The exposition should not add full proofs of all imported results. It should expose their inputs and outputs consistently. A useful compact organization is:
+
+| Available information | Additional theorem or operation | What it gives |
+| --- | --- | --- |
+| Small point/line comparison rejection on arbitrary tables | Point-versus-line soundness | One ambient low-degree polynomial |
+| An inner row close to a fixed-degree polynomial | Weighted interpolation along a random direction | A chosen evaluation with error bounded by that distance |
+| Small binary syntactic-test rejection | Generalized Hadamard and encoded-line soundness | One common witness with the required label-domain bounds |
+| Homogeneous proximity of the primary table, arbitrary anchored auxiliary rows | Retest, compare away from the target, return or reject | A fixed-target failure bound containing actual rejection |
+| Rare rejection by the received-data ZERO experiment | Coupling and polynomial distance | Exact identities for the same decoded witnesses |
+
+The generalized Hadamard row test deserves one explicit box. It includes unit, affine-consistency and corrected product checks; the preceding BLR illustration and one displayed product identity do not specify the full test. The inspected theorem gives, for rejection at most delta<1/28, one message with full-label error at most delta and affine-restriction error at most 3 delta. State its exact domain and degree assumptions beside it. [F, `HadamardSoundness.test_soundness`, lines 28–61.]
+
+Preserve the actual randomization if adding pseudocode. The inner binary low-degree test is a fair-coin mixture between a row test and a weighted interpolation test. It does not run both on every seed. The outer encoded-line test combines a primary row test, that inner test, and a corrected comparison. An illustrative stronger procedure could be reasonable, but it would be a variant and could not inherit the pinned count automatically. [F, `BinaryLowDegreeTest.lean`, lines 25–55; `EncodedLineLowDegreeTest.lean`, lines 52–57.]
+
+### N6. Put the exact arithmetic after the conceptual conclusion
+
+**Consequence: competing endings dilute the main argument.** The current route ends soundness, begins parameter selection, teaches an NP reduction and graph gadgets, gives exercises and answers, prints large constants, adds clause conversion, and returns to correction history. Those are legitimate topics, but together they make the paper conclude several times.
+
+Keep the resource promises in the main route: polynomial proof length, logarithmic randomness, polynomial computation and constant query count. Move the detailed parameter inequalities, NAE/clause constructions and full old-test family calculation to clearly marked optional sections within the same paper. Retain a brief NP bridge and source credit where they matter. This changes the pedagogical boundary, so say plainly that the detailed reduction and testing proofs are supplied elsewhere. It does not weaken the stated theorem. [M, §§10–12; [paragraph map](paragraph_map.md).]
+
+The query count becomes more useful when tied to operations: at c=4 the seven branch bounds are 26, 22, 26, 22, 44, 44 and 3, summing to 187. Explain what those branches are. The exact expanded error constants can then live in the optional budget account. These are upper bounds, not a promise that every random seed performs exactly 187 reads. [F, `ThreeColorVerifier.branchQueryBound` and `queries_length_le`, lines 318–368.]
+
+### N7. Finish two small orientation repairs
+
+When the NP-to-colouring gadget uses colour names 0, 1 and 2, say that these are palette names, subsequently represented by the nonzero field values 1, omega and omega^2. Otherwise the reader has to reconcile an apparently allowed colour zero with the earlier invalid field value zero. The gadget itself is correct. [M, lines 1208–1211.]
+
+For the finite checker, give the frozen packet command `python3 examples/check_examples.py` and replace the publication link's moving branch with a verified immutable revision. The patch in this return supplies the local-file route; the final public URL still needs verification at publication. This is reproducibility housekeeping and the remaining part of PA-33, not a mathematical blocker. [M, line 1517.]
+
+## 5. Mathematical findings that constrain the redesign
+
+The new narrative must preserve several distinctions that the current text handles correctly. The supporting [mathematical audit](mathematical_audit.md) gives declaration-level evidence; the following are the consequences for the author.
+
+### Honest structure is stronger than the tested property
+
+The honest digit encoding is set-multilinear, but the nearby polynomial supplied by an inner low-degree theorem need not be. A changed example makes the difference exact. Take b=3 and c=2 and let the arbitrary inner polynomial be
+
+\[
+Q(W)=W_{1,2}^{\,2}.
+\]
+
+Its inner degree is two. Under Phi it becomes Y^12, exceeding the honest univariate capacity of degree below nine. It attains the sharper substitution bound c(b-1)b^(c-1)=12 and satisfies the convenient bound cb^c=18. On F16 no polynomial of degree below nine has the same evaluations: its difference with Y^12 would have degree twelve and sixteen roots. This is a root-bound deduction, not an exhaustive search through coefficient lists. The finite substitution was checked separately. [M, §6; [changed cases](checks/changed_cases/DERIVATIONS.md), §2.]
+
+Thus the paper is right to enlarge the decoded degree. A proposed simplification that treats a tested received row as an honest encoding would break the argument. The useful lesson is broader than this example: a property test supplies its stated property, not every structural feature of the honest prover's construction.
+
+### The same witness must satisfy both distance statements
+
+The combined low-degree theorem supplies one polynomial P with both the full degree-r-label and homogeneous-label distance bounds. Those are not two unrelated existential statements. The nonlinear residual tests and the homogeneous difference/correction tests have to constrain the same decoded colouring. Separately choosing witnesses would leave no single colouring known to satisfy all the identities. The current text and source preserve this dependency. [M, lines 783–830 and §9; F, `EncodedLineLowDegreeTest.exists_close`, `EncodedLineLowDegreeSoundness.lean`, lines 321–359.]
+
+Likewise, full-label proximity does not automatically imply comparable proximity on a thin subset. Changing four homogeneous positions in a 256-position full row gives full error 1/64 but homogeneous error 1/2. The example is doing essential measure-theoretic work at an elementary level. Keep the explicit domains, especially the distinction between homogeneous and affine labels.
+
+### A mask must be fresh conditionally, not merely uniform overall
+
+The current mask proof is correct. To test understanding, change the experiment. Let the label space have 256 elements, let h be the honest evaluation word, and corrupt only g(0), giving error 1/256. Draw U uniformly and set both the requested label and the mask to U. Both are individually uniform, but the translated query is always zero. The corrected answer is wrong for every U except zero, hence with probability 255/256.
+
+For a fixed nonzero request with a genuinely fresh uniform mask, exactly two masks cause an error, giving 2/256. The two reads need not be independent; they need the correct individual distributions conditional on the fixed request. This is a successful transfer of the paper's argument, not a counterexample to it. It is an excellent exercise because the words “uniform mask” alone no longer suffice. [M, lines 711–725; F, `HadamardDerivedOracle.answer_failure_le`, `labels_failure_le` and `averaged_failure_le`; [changed cases](checks/changed_cases/DERIVATIONS.md), §1.]
+
+### Fixed target, random observation, rejection included
+
+The outer corrector's theorem is target-specific, but it is not a guarantee for every fixed label. The ambient point a is prescribed and the homogeneous label is sampled uniformly. The failure event includes both rejection and a wrong returned bit. In the inspected notation its bound has the form
+
+\[
+\Pr[\text{reject or return the wrong bit at }a]
+\le C R_a+\delta+\frac{D}{2(Q-1)}.
+\]
+
+The primary table is close to the same P on homogeneous labels; P and the decoded line polynomials have the stipulated degree bounds; the interpolation nodes and field-size hypotheses hold. No premise assumes the auxiliary rows are honest or R_a is already small. The retest and nonzero comparison make the statement useful even for arbitrary anchored data. [F, `BinaryLocalCorrectionSoundness.failure_le`, lines 222–313.]
+
+ZERO uses a common random homogeneous label for the two calls and the appropriate independent remaining seeds. Each marginal call has the distribution required by the theorem. If either call rejects, ZERO rejects. Therefore the average target-dependent rejection cost is controlled by the enclosing test's rejection probability. The proof does not require independent failure events or uniformly small failure at every target. Those are exactly the quantifiers that a streamlined explanation must retain. [F, `BinaryZeroOnGridSoundness.twoCallCheck` and `two_corrector_rejection_bound`, lines 93–135.]
+
+### Why the coupled inequality works
+
+For the generic ZERO check, the inspected source gives
+
+\[
+\frac{1-Dh/Q}{2}
+\le (1+2C)r+\delta_P+2\delta_M+\frac{D}{Q-1}
+\]
+
+when a required identity is false. The left side comes from a nonzero polynomial being nonzero at many ambient points, followed by a random homogeneous observation detecting a nonzero field value with probability one half. The right side accounts for actual rejection, primary-answer error and both rejecting correctors. [F, `BinaryZeroOnGridSoundness.rejectionRate_lower_bound`, lines 249–267.]
+
+In the assembled construction the derived residual answer is first replaced by the ideal answer at cost at most 2 epsilon. The certificate retains homogeneous error epsilon, and 5D is a safe common degree bound. This yields the exposition's inequality
+
+\[
+\frac{1-5Dh/Q}{2}
+\le (1+2C)(\kappa+2\varepsilon)
++2\varepsilon+\frac{5D}{Q-1}.
+\]
+
+The event relation is simple and powerful: if the ideal test rejects but the received-data test accepts on the same seeds, some supplied answer changed the decision. A union bound controls that possibility. There is no need to assert that the different errors are independent. Under the displayed parameter conditions, the ideal lower bound is at least 3/8 while the remaining upper bound is strictly smaller. This forces the identities. The colour and edge residual bounds 3D and 5D, the substitution bound Dh, and the common bound 5Dh are consistent with the inspected source. [M, lines 964–1056; F, `ThreeColorSoundnessBudget.lean` and `ThreeColorVerifierSoundness.lean`.]
+
+Keep the toy budget exercise's strictness. At the proposed weaker boundary, the upper and lower bounds can both be 3/8, so no contradiction follows. Similarly, superpolynomial seed enumeration invalidates that proof of the reverse inclusion; it does not prove that the language lies outside NP. These are correct retained caveats, not qualifications to edit away. [M, §11; KEEP findings in the audit.]
+
+### Resource claims refer to one particular variant
+
+The seven branch bounds sum to 20c+107, or 187 at c=4. The fair-bit wrapper retains the exact rejection factor ((Q-1)/Q)^4, which is at least 1/16. The supplied arithmetic gives the one-run gap 1/1137847282503168. These statements refer to the pinned formal variant, including its degree-three row code and its testing procedure. The source paper's expanded appendix is useful for presentation, but it is not an interchangeable implementation from which to copy a total count. [F, `ThreeColorVerifier.lean`, `ThreeColorFullFieldSampling.rejectionRate_eq`, `ThreeColorBinaryVerifier.gap`; supplied finite-check stdout.]
+
+The parameter analysis also separates three issues correctly: how many proof addresses exist, how many random bits are sampled, and how much time the algorithm uses. Bounding address length alone is not a runtime proof. The theorem's bound covers addresses on arbitrary oracle answers, and the reverse inclusion uses a computable randomness budget and a finite proof prefix. These details matter to the actual PCP statement even if the exact constants move to an appendix. The runtime bridge was inspected at its program-bearing interface, not re-established by this review. [M, §§2 and 10; F, `PCP.np_subset_pcp`, `PCP.pcp_subset_np_concrete`, `NPThreeColorRuntime.of_inNP_program`.]
+
+## 6. What the literature suggests changing
+
+The useful literature comparison concerns how a source teaches the same operation, not whether its prose has similar sentence lengths. The exact enclosed versions governed these comparisons.
+
+**Arora–Barak, §§18.4.1–18.4.2.** The book defines the code, explains the limitation of exact testing from a few samples, states a proximity guarantee, and presents a chosen-value decoder as an executable procedure. It then keeps a particular represented object visible while describing what an honest proof contains and what the verifier does. The current Section 7 already has much of the first virtue. Extend that input–queries–output pattern to the outer corrector, and keep one colouring residual visible through the nested encodings. Importing the book's different QUADEQ construction would add work without solving this exposition's problem. [AB, PDF pp. 379–382, printed pp. 18.13–18.16.]
+
+**Arora–Barak, §19.3.2.** The deeper linearity proof appears with the Fourier framework it needs. This supports a sensible boundary for the current paper: teach the useful operation and state the sharp theorem, with its proof on another route. Requiring a Fourier primer in the main explanation would undermine the stated prerequisites. [AB, PDF pp. 406–407, printed pp. 19.6–19.7.]
+
+**ABSSW v2, §§3–5.** The source emphasizes that a long line record is used to obtain one evaluation, not to recover every coefficient. Its warmup distinguishes an arbitrary dishonest row from a low-degree row and distinguishes a power-point Phi(lambda) from a uniform ambient point. Its correction section explicitly explains the fixed-anchor fibre problem. Those are the causal explanations to restore around the exposition's compact algorithm; the complete technical proofs need not be copied. [A2, `technical_tools.tex`, `low_degree_test.tex`, `local_correction.tex`.]
+
+**ABSSW v2, Appendix A.** The explicit verifier and honest prover are useful models for making both sides of the protocol visible. Its warning about redundant all-cubic encodings also demonstrates why the formal variant must be tracked carefully. The new trace in this return uses the exposition's colour/certificate label distinction and avoids claiming a total protocol count. [A2, `appendix-full-verifier.tex`, lines 1–246.]
+
+**BLR, retained author version, §4.2.** The original group-valued self-testing and corrected-homomorphism argument is valuable proof and historical context. Its assumptions and notation are heavier than the current elementary binary example, so it is not the best prose template for this reader. Keep the distinction between the original test and the sharper bound credited to BCHKS. This review does not pretend that a teaching comparison with BLR independently verifies every theorem in the later literature. [BLR, retained PDF pp. 15–19; exact coverage in `evidence/teaching_coverage.md`.]
+
+**Lee's original reading guide.** That guide already explains what the Lean theorem says, how definitions correspond, how canonical randomness works, what the large constants are, and where the low-degree variants differ. The new exposition's distinctive contribution should be the mechanism: why the objects exist and how the verifier uses them. Reprinting more metadata would not supply that contribution. The teaching reviewer read the full enclosed guide; the mathematical review checked selected corresponding declarations.
+
+External research confirmed that the official ECCC record lists the corrected revision on 22 October 2026 and explicitly records the Lemma 3.3 correction and associated test changes. The local version-two source remains the authority for the technical comparison; live metadata is not evidence of a new Lean replay. See [ECCC TR26-134](https://eccc.weizmann.ac.il/report/2026/134/). Direct live retrieval of some other primary locations was blocked, so the coverage record identifies the retained originals actually used instead of suggesting that every web fetch succeeded.
+
+## 7. A concrete replacement opening and route
+
+The following opening would make the reader's task and the imported-proof boundary more explicit. It is proposed text, not an assertion that the current introduction contains no useful material:
+
+> A graph comes with a claim: its vertices can be coloured with three colours so that every edge joins different colours. An ordinary certificate lists the colours. Checking a few randomly chosen edges can miss a single bad edge, even when the graph has no proper colouring.
+>
+> The PCP theorem permits a different certificate. The prover fixes a redundant bit string before the checker chooses its random bits. A proper colouring has an encoding that always passes. If no proper colouring exists, every proposed encoding is rejected with a fixed positive probability; independent repetition makes that probability at least one half. The number of certificate bits read is bounded independently of the graph's size. The checker still reads the graph and performs polynomial computation.
+>
+> We will follow one colouring condition into its polynomial certificate and then into the bit addresses used to check it. Along the way we will see why low-degree testing, extra variables for line polynomials, binary observation labels and correction at prescribed points are needed. The small examples explain these operations. The general soundness argument uses stated testing and correction theorems, whose proofs are supplied in the full account. The final task is to show why the same decoded colouring must satisfy both the vertex and edge conditions.
+>
+> The construction is due to Amireddy, Behera, Srinivasan, Sudan and Willumsgaard; the formal version discussed here is Troy Lee's pinned development. We use the corrected October 2026 paper and identify consequential differences in the formal version where they matter.
+
+Follow this with the current quantified theorem and a route organized around the represented object:
+
+1. **The contract and failed sampler.** Preserve the K4 family and resource definitions.
+2. **A colouring becomes a polynomial.** Keep interpolation and the honest/received distinction.
+3. **Its grid certificate creates prescribed targets.** Carry the vertex residual forward; retain the general quotient-sum derivation.
+4. **The proof's stored objects.** Type the four primary/auxiliary pairs before using them.
+5. **A line evaluation becomes a few field observations and then bits.** Define Phi, show weighted correction, and explain the label code.
+6. **One complete honest ZERO data branch.** Use the replacement sample to join the operations.
+7. **What arbitrary received data can do.** Present the three concentration obstructions and the imported contracts that address them.
+8. **Coupled soundness and one proper colouring.** Preserve the inequality, the same witness and the difference identity.
+9. **Resources, repetition and the NP bridge.** Give the conceptual bounds in the main route; place exact arithmetic, gadgets and the correction-history case study in optional sections.
+
+This is one paper with selectable depth. It does not require a fourth companion or a new production system. The full [paragraph map](paragraph_map.md) assigns a job and editorial disposition to all 181 prose/list blocks, grouped into 56 decisions. A grouped keep is intentional. The display mathematics and tables were also read in context; the inventory is not a substitute for reading them.
+
+## 8. Revision order and how to judge the result
+
+**First, apply the narrow correctness and notation repairs.** Correct the Boolean-degree explanation; define Phi; type auxiliary labels; clarify the generic p oracle; distinguish palette names from field values; add the fixed-anchor explanation; complete the frozen-checker route. The supplied patch is limited to concrete edits of this kind and a branch-budget table. It preserves the current construction. Applying it does not complete the structural redesign.
+
+**Second, integrate the continuing example and rebuild the main route around it.** Remove duplicated setup that the example now performs, and move entire optional units together. Do not grow the paper by appending every proposed paragraph without cuts. Keep the multivariate certificate derivation, the genuine degree-inflation lesson, the mask conditioning, the same-witness contract and the coupled bound. The redesign succeeds by reducing the expert assembly required between these parts.
+
+**Third, expose each imported theorem as a usable contract.** A reader should know what data are arbitrary, what is sampled, what object exists, on which domain distance is measured, and whether rejection is included. This is the right place to spend precision. Expanding numerical constants is not a substitute for stating these contracts.
+
+**Fourth, use changed-case reconstruction to inspect the next edition.** A suitable reader should attempt the following before seeing solutions:
+
+| Task | What a successful answer must distinguish |
+| --- | --- |
+| List the stored tables and implement p(x,L) | A generic oracle interface versus an extra stored residual table |
+| Encode a new exponent and substitute Phi | Honest set-multilinearity versus the weaker property of a decoded row |
+| Trace a weighted bit query | Outer line index, inner point, binary label and returned bit |
+| Corrupt one target slice and one auxiliary anchor fibre | Two different failures of global-average reasoning |
+| Let the mask depend on the requested label | Conditional uniformity versus marginal uniformity; independence is not required between translated reads |
+| Reconstruct ZERO's probability bound | Shared observation, correct call marginals, rejection propagation and event coupling |
+| Give different witnesses to nonlinear and homogeneous tests | Why one colouring no longer follows |
+| Change a strict budget to equality | Why matching bounds do not contradict each other |
+
+The supplied scripts and derivations show these questions have mathematically discriminating answers. They do not show that an intended human reader can answer them. A future reader exercise should record exactly what was attempted before solutions, what hints were given, and which source routes were used. There is no need to invent a numerical comprehension score from this review.
+
+The first-reading records here are deliberately limited. I had the brief's pressure points and prior mathematical knowledge. A chunk locating the exercise accidentally exposed Answers 1–3 before my attempts were saved, so those three are not counted as preserved blind evidence. The reconstruction and Questions 4–5 were recorded before their displayed solutions; the changed masking case was independently posed. Other reviewers disclose their own exposure. These are useful checks on hypotheses, not novice-performance measurements.
+
+## 9. Reader, presentation and source-owner boundaries
+
+The delivered 22-page PDF was rendered and visually inspected on all pages. No clipping or overlapping content was found. Some dense later material and page breaks make the argument less easy to revisit, but the principal problem is conceptual organization, not a failed PDF export. The automated companion-link check passed for all three retained PDFs. That checks the listed destinations; it does not certify all mathematical claims or all navigation behavior.
+
+Fresh live desktop checks of the supplied proof-reader URL found the initial closed-Graph layout coherent, companion-section links landing at the expected heading, Back returning to the source section, the theorem/source views readable, and the final declaration in the long index reachable. The exact historical Graph→Close button sequence was not clicked. The attempted scratch localhost route exposed a different older reader through the browser environment, so it is not evidence that the frozen reader fails. The audit scopes its UI verdicts to the actual live observations and static frozen-source checks; it does not assert byte identity between the live service and the retained build, mobile quality, or a full accessibility audit. [coverage.md](coverage.md) records the precise routes.
+
+The useful checking burden for Troy as source owner is concrete: inspect the proposed trace and patch for the correct oracle domains, node assumptions, mask distribution, seed sharing, same-witness statements, rejection event and variant-specific query accounting. Check that the illustrative parameters are not presented as a soundness instance. The source-owner task is not to endorse a green ledger, a model's first reading, or a finite script as proof of teaching success. No reaction from him is assumed, and nobody was contacted.
+
+The return therefore makes a bounded but substantial recommendation: retain the repaired mathematical content, correct the small false explanation, and make one constraint's complete journey carry the exposition. The present draft is already useful to a reader who can supply some of the integration. The next draft should put that integration on the page.
+
+## Files that make the recommendation reviewable
+
+- [repair_audit.json](repair_audit.json): every original ID, verdict, exact current evidence, reader consequence and next action.
+- [replacement_trace.md](replacement_trace.md): substantive proposed teaching text carrying one colouring residual to actual bits.
+- [proposed_changes.patch](proposed_changes.patch) and [patch_notes.md](patch_notes.md): conservative edits against the frozen manuscript; separate from the structural rewrite.
+- [paragraph_map.md](paragraph_map.md) and [paragraph_ledger.json](paragraph_ledger.json): complete paragraph-level editorial coverage.
+- [mathematical_audit.md](mathematical_audit.md): more detailed source/quantifier/resource evidence.
+- [checks/changed_cases/DERIVATIONS.md](checks/changed_cases/DERIVATIONS.md): the three changed assumptions and their finite checks; `checks/worked_trace/` contains the trace checker and independent verification.
+- [coverage.md](coverage.md), `first_reading/` and `evidence/`: exact edition, reading and execution boundaries, preserved attempts and actual logs.

@@ -1,0 +1,56 @@
+# Targeted proposed patch
+
+`proposed_changes.patch` is a conservative unified diff against the frozen packet file `papers/expository/main.md`. It is separate from the recommended structural redesign and from the longer replacement trace. The authoritative input has not been edited.
+
+## Applying it
+
+From a copy of the packet root, where `papers/expository/main.md` exists:
+
+```bash
+patch -p1 < /path/to/proposed_changes.patch
+```
+
+The expected input SHA-256 is:
+
+```text
+476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3
+```
+
+This identifies the 15 November 2026 exposition at authored revision `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6`. Do not treat clean textual application to a different edition as a new mathematical review.
+
+## Exact changes
+
+| Frozen manuscript location | Proposed change | Reason and source |
+|---|---|---|
+| Section 6, after the general digit encoding, lines 477–483 | Names and types `Phi:F→F^(cb)`, with coordinates `z^(j b^i)` and the constant-coordinate convention | The later line tester and corrector use this map without a local definition. This only names the substitution already described. ABSSW v2 `technical_tools.tex`, lines 31–48; the source's `SetMultilinear.evaluationPoint` supplies the same coordinate map. |
+| Section 7, after the explicit GF4 residual label, lines 687–690 | Replaces the F4-specific explanation with the characteristic-two squaring argument | In every characteristic-two extension, `u↦u²` is binary-linear, so a binary observation of `u³−1` has Boolean degree at most two. The degree-three code and all reported query bounds remain the source construction's. This sharper observation is an ordinary mathematical explanation, not a new Lean theorem. |
+| Section 8 address table, line 760 | Types auxiliary inner points as `F^(cb)` and auxiliary labels as affine | `EncodedLineLowDegreeTest.Auxiliary` and `Query`, lines 31–40, use inner digit points and degree-one coefficient labels. A cubic primary row does not make its auxiliary label domain cubic. |
+| Section 8 before the fixed-target corrector, lines 828–833 | Adds the bad-anchor family of rows and its density `Q^(−ell)` | All rows with one fixed anchor can be corrupt despite small average auxiliary error. The selected row must be tested within the fixed-target procedure. `BinaryLocalCorrection.run`, lines 43–59, performs that test; `BinaryLocalCorrectionSoundness.average_inner_rejection_le` and `failure_le` turn its rejection into the error budget. |
+| Section 8 generic ZERO description, lines 881–888 | Calls `p(x,L)` a constraint input bit instead of suggesting it is another primary table | The generic helper accepts a primary constraint oracle, but the final verifier supplies the bit through a randomized derived read. |
+| Immediately after that generic description | Explains the two masked reads from the existing colour/difference table, including the public adjacency factor for the latter | Preserves four stored primary tables and the fresh-randomness qualification. `HadamardDerivedOracle.answer` and `averaged_failure_le`, lines 31–45 and 108–122; `ThreeColorVerifier`'s derived vertex and edge queries. The received-data derived answer is not silently treated as a fixed nearby word. |
+| Section 10 immediately before the numerical gap, lines 1133–1135 | Expands the existing 187 upper bound into seven proved branch bounds: 26, 22, 26, 22, 44, 44, 3 | These are exactly `ThreeColorVerifier.branchQueryBound` at `c=4`, lines 318–320. Their sum is 187; `queries_length_le`, lines 361–368, establishes the overall upper bound. The patch explicitly permits fewer actual reads on a run. |
+| Section 10 palette triangle, lines 1208–1211 | Distinguishes colour names 0, 1, 2 from algebraic representatives 1, omega, omega² | Prevents confusion with Section 4's invalid field colour zero. This relabelling changes neither graph nor satisfiability. |
+
+The root review additionally adds a frozen-packet checker link and the exact command `python3 examples/check_examples.py` to the sources paragraph. The existing public checker URL remains unchanged because its proposed immutable replacement has not been verified. This local route is valid for the supplied packet; publication must adapt or verify its public counterpart. The complete patch has nine diff hunks and adds approximately 318 whitespace-delimited words.
+
+## Preservation boundaries
+
+Existing mathematical displays, numerical parameters, algorithms, corrector sampling steps, 187-query upper bound, soundness gap and repetition count are retained. The added `Phi` display defines existing notation. The seven-row table expands an already claimed resource bound. This patch does not optimize the verifier, replace its degree-three encoding with a quadratic encoding, or substitute a deterministic label for the random homogeneous label.
+
+It retains the mutable public example-checker URL while adding a separate frozen-packet route. It does not edit any companion, modify the reader/site, or claim to implement the whole pedagogical redesign. In particular, the fair-coin internal tester interface and the complete continuous example still belong in the proposed structural revision. Applying only this patch would improve local accuracy and reconstructibility but would not demonstrate that the paper meets its full learner promise.
+
+## Validation actually performed
+
+1. Constructed the diff from the exact frozen source with relative labels `a/papers/expository/main.md` and `b/papers/expository/main.md`.
+2. Ran `patch --dry-run -p1` against an isolated copy; exit 0, no stderr.
+3. Applied the patch with `patch -p1` to that copy; exit 0, no stderr.
+4. Verified the resulting bytes equal the intended edited text.
+5. Verified the original input remains unchanged and retains its expected hash.
+
+The exact commands, results and hashes are in `evidence/patch_validation.json`. No PDF regeneration, browser rebuild, Lean compilation or whole-project test was performed for this proposed patch. Layout and reader associations would need regeneration if the author adopts it.
+
+Expected patched-file SHA-256:
+
+```text
+a0a18e2c7f9616e318bf196ba7827bff49213ce9525c4ce43126415e8ec226ef
+```

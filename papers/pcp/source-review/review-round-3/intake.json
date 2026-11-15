@@ -1,0 +1,228 @@
+{
+  "original_intake": [
+    {
+      "stage": "long",
+      "original": "/Users/willcook/Downloads/pcp-review-round2-1-full-argument-response.zip",
+      "sha256": "9c23f886ab173a0fb3a0722f030832ae088c3ad9de881afdc55c3bbdd0ad2f44",
+      "members": [
+        "README.md",
+        "checks/binary_checks.json",
+        "checks/check_algebra.json",
+        "checks/check_algebra.py",
+        "checks/check_binary_contracts.py",
+        "checks/check_final_arithmetic.json",
+        "checks/check_final_arithmetic.py",
+        "checks/packet_check.txt",
+        "checks/packet_examples.txt",
+        "checks/packet_exposition_examples.txt",
+        "checks/packet_pdf_check.txt",
+        "coverage.md",
+        "repair_audit.json",
+        "replacement_sections.md",
+        "response_manifest.json",
+        "review.md",
+        "support/browser_observations.json",
+        "support/first_readings.md",
+        "support/source_scope.md",
+        "validation.json"
+      ]
+    },
+    {
+      "stage": "short",
+      "original": "/Users/willcook/Downloads/pcp-review-round2-2-specialist-response.zip",
+      "sha256": "2ae36fcdffaf7f23065a8b7713e86d98054b11af963c706f92e2c0650dfa0bc5",
+      "members": [
+        "pcp-review-round2-2-specialist-response/README.md",
+        "pcp-review-round2-2-specialist-response/checks-output.json",
+        "pcp-review-round2-2-specialist-response/checks.py",
+        "pcp-review-round2-2-specialist-response/coverage.md",
+        "pcp-review-round2-2-specialist-response/execution_results.json",
+        "pcp-review-round2-2-specialist-response/first_reading.md",
+        "pcp-review-round2-2-specialist-response/package_validation.json",
+        "pcp-review-round2-2-specialist-response/paragraph_decisions.json",
+        "pcp-review-round2-2-specialist-response/paragraph_map.md",
+        "pcp-review-round2-2-specialist-response/proposed/papers/short/paper.md",
+        "pcp-review-round2-2-specialist-response/proposed-specialist.diff",
+        "pcp-review-round2-2-specialist-response/repair_audit.json",
+        "pcp-review-round2-2-specialist-response/response_manifest.json",
+        "pcp-review-round2-2-specialist-response/review.md"
+      ]
+    },
+    {
+      "stage": "expository",
+      "original": "/Users/willcook/Downloads/pcp-review-round2-3-worked-exposition-response.zip",
+      "sha256": "166a5e81ab86821b5c45798677cb23f143fdc0d613c75b34efb5e4a7eb9aed38",
+      "members": [
+        "pcp-review-round2-3-worked-exposition-response/README.md",
+        "pcp-review-round2-3-worked-exposition-response/checks/changed_cases/DERIVATIONS.md",
+        "pcp-review-round2-3-worked-exposition-response/checks/changed_cases/check_changed_cases.py",
+        "pcp-review-round2-3-worked-exposition-response/checks/changed_cases/execution.json",
+        "pcp-review-round2-3-worked-exposition-response/checks/changed_cases/stdout.json",
+        "pcp-review-round2-3-worked-exposition-response/checks/worked_trace/check_trace.py",
+        "pcp-review-round2-3-worked-exposition-response/checks/worked_trace/independent_verification.json",
+        "pcp-review-round2-3-worked-exposition-response/checks/worked_trace/trace_output.json",
+        "pcp-review-round2-3-worked-exposition-response/coverage.md",
+        "pcp-review-round2-3-worked-exposition-response/evidence/audit_validation.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/final_custody_check.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/history_integrity.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/patch_validation.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/response_validation.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/supplied_checks.json",
+        "pcp-review-round2-3-worked-exposition-response/evidence/teaching_coverage.md",
+        "pcp-review-round2-3-worked-exposition-response/first_reading/mathematics.md",
+        "pcp-review-round2-3-worked-exposition-response/first_reading/repair_audit.md",
+        "pcp-review-round2-3-worked-exposition-response/first_reading/root.md",
+        "pcp-review-round2-3-worked-exposition-response/first_reading/teaching.md",
+        "pcp-review-round2-3-worked-exposition-response/manifest.json",
+        "pcp-review-round2-3-worked-exposition-response/mathematical_audit.md",
+        "pcp-review-round2-3-worked-exposition-response/paragraph_ledger.json",
+        "pcp-review-round2-3-worked-exposition-response/paragraph_map.md",
+        "pcp-review-round2-3-worked-exposition-response/patch_notes.md",
+        "pcp-review-round2-3-worked-exposition-response/proposed_changes.patch",
+        "pcp-review-round2-3-worked-exposition-response/repair_audit.json",
+        "pcp-review-round2-3-worked-exposition-response/replacement_trace.md",
+        "pcp-review-round2-3-worked-exposition-response/review.md"
+      ]
+    }
+  ],
+  "retained_reviews": [
+    {
+      "paper": "long",
+      "original_member": "review.md",
+      "retained": "returned/long/review.md.txt",
+      "sha256": "12b7aea7b9f0026b23098645ffaad5ef7d0884f8749d19c4552fe9b9fc51c0a3"
+    },
+    {
+      "paper": "long",
+      "original_member": "repair_audit.json",
+      "retained": "returned/long/repair_audit.json",
+      "sha256": "2a8f42f0feeaf0fcf7ed5d1233b5fad7006e2f1c5d038c90b086bc6edcb8a2ea"
+    },
+    {
+      "paper": "long",
+      "original_member": "coverage.md",
+      "retained": "returned/long/coverage.md.txt",
+      "sha256": "57f7cb1068e9699309bde5a61167073718ec1a4475881470620300f462be14a6"
+    },
+    {
+      "paper": "long",
+      "original_member": "replacement_sections.md",
+      "retained": "returned/long/replacement_sections.md.txt",
+      "sha256": "14f3a10f4b8091e1292c687b9e5f71391a75577342508ce9a972e5a5ea0f45ea"
+    },
+    {
+      "paper": "long",
+      "original_member": "README.md",
+      "retained": "returned/long/README.md.txt",
+      "sha256": "ea812c63a3962e05dadd770b44d293e31d8f932ad1e58580536a6c86f58f4d1f"
+    },
+    {
+      "paper": "long",
+      "original_member": "validation.json",
+      "retained": "returned/long/validation.json",
+      "sha256": "e6b1ff2d7a4656bb87ef9cdab5e89769af79f6604958e74c15195a3ca5e68194"
+    },
+    {
+      "paper": "long",
+      "original_member": "response_manifest.json",
+      "retained": "returned/long/response_manifest.json",
+      "sha256": "dbed3866c4824fadb45232b469701920cce3481c7b04b6f9f848dc5fb5a4f98f"
+    },
+    {
+      "paper": "short",
+      "original_member": "review.md",
+      "retained": "returned/short/review.md.txt",
+      "sha256": "02f543112d1054a6c9694a3d3a1941c98e36982af643810d53f4fd091a62c136"
+    },
+    {
+      "paper": "short",
+      "original_member": "repair_audit.json",
+      "retained": "returned/short/repair_audit.json",
+      "sha256": "adfe5dc68db4e67d964c9c46ec662e51fc7103126dbbb93cf8298608b52a35dc"
+    },
+    {
+      "paper": "short",
+      "original_member": "coverage.md",
+      "retained": "returned/short/coverage.md.txt",
+      "sha256": "0479a23596e150ad1003c34a5f1aae732d993c215e19ad5149dfb4d8983360bd"
+    },
+    {
+      "paper": "short",
+      "original_member": "paragraph_map.md",
+      "retained": "returned/short/paragraph_map.md.txt",
+      "sha256": "7dc91278d34355aac4c694e60604d6d8ba049df82bb4fe16791988f82c3af0ee"
+    },
+    {
+      "paper": "short",
+      "original_member": "README.md",
+      "retained": "returned/short/README.md.txt",
+      "sha256": "06a2bc75ca7a893e2c638977e1792fe420dd68110a35d9a2a86e19fa7c3d54fc"
+    },
+    {
+      "paper": "short",
+      "original_member": "response_manifest.json",
+      "retained": "returned/short/response_manifest.json",
+      "sha256": "cea20aee050a19f49c36287d9e9ab74ca08e962e70b58725cf562ceb14548b0a"
+    },
+    {
+      "paper": "expository",
+      "original_member": "review.md",
+      "retained": "returned/expository/review.md.txt",
+      "sha256": "a4af74b94da04a8e63875e687e5d4ec6e7f89db25ff57edd47e47fcb3ac0af76"
+    },
+    {
+      "paper": "expository",
+      "original_member": "repair_audit.json",
+      "retained": "returned/expository/repair_audit.json",
+      "sha256": "06398b0ad170051329391dac148932df485ff42b5536d19828e8337598013afa"
+    },
+    {
+      "paper": "expository",
+      "original_member": "coverage.md",
+      "retained": "returned/expository/coverage.md.txt",
+      "sha256": "16723deea2f4324534ef76d3ddb5019d846a5d975f2737dd55d080c61eccacf5"
+    },
+    {
+      "paper": "expository",
+      "original_member": "paragraph_map.md",
+      "retained": "returned/expository/paragraph_map.md.txt",
+      "sha256": "36af1462bf374147f3f4cd47f239e59b1001868fb6b6ac4f76e28f2e325ebaf2"
+    },
+    {
+      "paper": "expository",
+      "original_member": "paragraph_ledger.json",
+      "retained": "returned/expository/paragraph_ledger.json",
+      "sha256": "590ce5190455a20c16a6b53900abb4b5e22f73d64e65e47412c0415ff88c3b04"
+    },
+    {
+      "paper": "expository",
+      "original_member": "replacement_trace.md",
+      "retained": "returned/expository/replacement_trace.md.txt",
+      "sha256": "f6a4e94a2fbc51e258a1032b68d08f9907302f80eaa465d5cd0f5f7c8666a70b"
+    },
+    {
+      "paper": "expository",
+      "original_member": "patch_notes.md",
+      "retained": "returned/expository/patch_notes.md.txt",
+      "sha256": "9c2332e1d30496e87ca8f7dd6a3417967f9b3f81472ae5041faa10a5c57ac1a5"
+    },
+    {
+      "paper": "expository",
+      "original_member": "mathematical_audit.md",
+      "retained": "returned/expository/mathematical_audit.md.txt",
+      "sha256": "48b041925d1c776af90d2ad0dc0188370ebd00499c6b2fba9d111d5b1977b4c0"
+    },
+    {
+      "paper": "expository",
+      "original_member": "README.md",
+      "retained": "returned/expository/README.md.txt",
+      "sha256": "42a4a801f50d58c8908a927aca71bed971981d61dd3d787601eb07b2d7e8b66d"
+    },
+    {
+      "paper": "expository",
+      "original_member": "manifest.json",
+      "retained": "returned/expository/manifest.json",
+      "sha256": "a992da5996c3c2177bcb54d25d51ac55f62a05de91a512ecf26c7b442b235f05"
+    }
+  ]
+}

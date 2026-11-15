@@ -1,0 +1,1153 @@
+{
+  "packet": "pcp-review-round2-3-worked-exposition",
+  "manifest_sha256": "cf8921fce7d2a6df9993d1784fb5b5f6b7d1d24e074b14daf76a6df21f59041d",
+  "primary_sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3",
+  "reviewer": "AI repair-audit subreview, including parent-reported fresh browser observations for UI-01 and UI-02",
+  "scope": "All 44 original findings and all current primary Markdown read. Historical findings and author dispositions were checked against the ledger; the retained diff was reproduced from exact old/current manuscripts. Source reading is not Lean replay. UI-01 and UI-02 incorporate the parent reviewer’s actual live desktop browser observations; they do not certify an exact frozen-runtime build or all viewports. Current PDF layout is outside this subreview.",
+  "status_policy": "Verdicts assess whether the original problem is resolved, not literal compliance with every suggested wording or paragraph break. New faults are identified separately and do not erase successful old repairs.",
+  "counts": {
+    "fixed": 29,
+    "retained_correctly": 11,
+    "alternative_successful": 2,
+    "partly_fixed": 2
+  },
+  "rows": [
+    {
+      "id": "PA-01",
+      "verdict": "fixed",
+      "original_finding": "Define polynomial resources before using NP as the universal promise. Polynomial time and polynomial length are used before the non-complexity reader is told what they mean.",
+      "author_status": "incorporated",
+      "author_action": "Defined polynomial time with an input-length bound and fixed exponent before the formal theorem.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            16,
+            26
+          ],
+          "quote": "The same statement holds for every problem whose proposed solutions can be\nchecked in polynomial time. A polynomial bound is at most $C(n+1)^k$\nfor fixed constants $C,k$, where $n$ is the input length. Both the checking\ntime and the encoded certificate length have such bounds. PCP stands for\n*probabilistically checkable proof*.\n\nThe constant bounds the number of **certificate bits read**. The checker may\nread the input and perform a polynomial amount of computation. The certificate\nis specially encoded; it is not an ordinary written proof read at a few\nrandomly selected places. The verifier checks relations among entries of\nthe encoding."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            90,
+            100
+          ],
+          "quote": "A decision problem is a set $L$ of finite bit strings; a string $x$ is a\nyes-instance when $x\\in L$. The class NP consists of problems for which\nmembership has a polynomial-length certificate that a deterministic\npolynomial-time algorithm can check. Three-colouring is one such problem.\n\nA verifier is one algorithm, fixed for the problem. The prover fixes its\ncertificate before the verifier chooses its random bits.\n\n**PCP theorem.** For every $L\\in\\mathrm{NP}$, there are a polynomial-time\nverifier $V$, natural-number constants $a,b,q$, and a polynomial $p$, such\nthat on every input $x$ of length $n$:"
+        }
+      ],
+      "reason": "The revision gives an input-length bound with fixed constants before the resource promise and retains a precise NP definition in Section 2. This resolves the missing elementary definition.",
+      "reader_consequence": "A reader can now distinguish polynomial work and certificate length from the separate constant query allowance.",
+      "next_action": "Keep the two distinct resource explanations; do not expand this into an introductory complexity course."
+    },
+    {
+      "id": "PA-02",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the distinction between proof-bit queries and polynomial input processing. This prevents the central misleading interpretation that ordinary prose can be checked at a few places.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve the distinction and the specific object queried.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            22,
+            26
+          ],
+          "quote": "The constant bounds the number of **certificate bits read**. The checker may\nread the input and perform a polynomial amount of computation. The certificate\nis specially encoded; it is not an ordinary written proof read at a few\nrandomly selected places. The verifier checks relations among entries of\nthe encoding."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            102,
+            108
+          ],
+          "quote": "* $V$ uses exactly $a\\lceil\\log_2(n+2)\\rceil+b$ independent fair random bits;\n* on every run it reads at most $q$ bits of a certificate, all at positions\n  below $p(n)$;\n* if $x\\in L$, some certificate is accepted for every choice of the random\n  bits;\n* if $x\\notin L$, every certificate is accepted with probability at most\n  $1/2$."
+        }
+      ],
+      "reason": "The explicit object queried remains certificate bits; input reading and polynomial computation are separately permitted. No regression in the theorem bullets was found.",
+      "reader_consequence": "The headline cannot reasonably be read as a claim that the verifier inspects only a few bits of its graph input or of arbitrary prose.",
+      "next_action": "Preserve this distinction in any new opening and query diagram."
+    },
+    {
+      "id": "PA-03",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the growing edge-sampling counterexample. Disjoint triangles preserve the obstruction while diluting uniformly sampled original edges.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve the growing family; it does more work than one isolated K4 example.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            55,
+            78
+          ],
+          "quote": "Consider the complete graph on four vertices, $K_4$. It has six edges and\ncannot be three-coloured: among four vertices, two must have the same\ncolour, and those two are joined by an edge. Give its vertices the colours\n$({\\rm red},{\\rm red},{\\rm green},{\\rm blue})$. Exactly one edge has equal\ncolours at its ends. A checker that samples one edge uniformly catches this\nfailure with probability $1/6$.\n\nNow add $t$ disjoint triangles, each properly coloured. The graph is still\nnot three-colourable, because it still contains $K_4$, but the displayed\nassignment has only one bad edge among $6+3t$ edges. Uniform edge sampling\nrejects with probability\n\n$$\n\\frac{1}{6+3t}.\n$$\n\nFor example, three added triangles reduce this to $1/15$. A fixed number\nof samples becomes ineffective as $t$ grows: the one bad edge accounts for\na smaller fraction of the sampled edges.\n\nIn the PCP construction, the prover supplies redundant tables related by\nalgebraic identities. The checker tests only a few entries, but the soundness\nproof shows that tables passing very often would determine a proper colouring\nof the original graph. For $K_4$, that is impossible."
+        }
+      ],
+      "reason": "The unbounded family and 1/(6+3t) rejection remain. Adding disjoint, correctly coloured triangles preserves the K4 obstruction and increases only good sampled edges.",
+      "reader_consequence": "This explains why a fixed number of uniformly sampled original edges loses its gap as size grows; the isolated K4 example alone would not.",
+      "next_action": "Keep the family. If cutting length, shorten the numerical t=3 sentence before deleting the family argument."
+    },
+    {
+      "id": "PA-04",
+      "verdict": "fixed",
+      "original_finding": "Define total degree before using multivariate distance. Total degree is emphasized but not defined, and the multivariate statement is imported at the same moment as the term.",
+      "author_status": "incorporated",
+      "author_action": "Defined total degree with X²Y and distinguished individual-variable degree.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            167,
+            183
+          ],
+          "quote": "Consequently, two different polynomials of degree at most $d$ disagree at\nat least a fraction $1-d/Q$ of the elements of a field with $Q$ elements.\nApply the root bound to their difference. For multivariate polynomials,\nthe corresponding bound uses **total degree**. For example, $X^2Y$ has\ntotal degree three, degree two in $X$, and degree one in $Y$. The total\ndegree of a polynomial is the largest sum of exponents in any of its\nnonzero monomials. If $P$ is a nonzero\npolynomial of total degree at most $d$ in $m$ variables, then\n\n$$\n\\Pr_{u\\in\\mathbb F_Q^m}[P(u)=0]\\leq\\frac dQ.\n$$\n\nThe probability is uniform over the whole ambient space. This is the\npolynomial distance estimate used throughout the proof; a proof by\ninduction on the number of variables is given in the full account.\nIt is informative when the field is large compared with the degree."
+        }
+      ],
+      "reason": "Total degree is now explicitly defined by monomial exponent sums and illustrated by X^2Y before the multivariate bound.",
+      "reader_consequence": "The subsequent D, 3D, 5D and 5Dh estimates refer to a degree convention already available to the reader.",
+      "next_action": "Retain the short example and whole-ambient-space sampling qualification."
+    },
+    {
+      "id": "PA-05",
+      "verdict": "fixed",
+      "original_finding": "Show a two-dimensional grid basis term before the general interpolation sum. H^m, the tuple index s, the coordinate s_j, and the tensor-product basis all enter together without a concrete two-dimensional instance.",
+      "author_status": "incorporated",
+      "author_action": "Defined grid tuples and worked the basis product X(1−Y) before the general interpolation sum.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            220,
+            245
+          ],
+          "quote": "For a set $H$ of $h$ distinct field elements, let $L_s(X)$ be the\ndegree-$(h-1)$ polynomial equal to one at $s\\in H$ and zero at the other\npoints of $H$:\n\n$$\nL_s(X)=\\prod_{t\\in H,\\ t\\ne s}\\frac{X-t}{s-t}.\n$$\n\nThe grid $H^m$ consists of $m$-tuples of elements of $H$. For $H=\\{0,1\\}$,\nthe one-variable basis polynomials are $L_0(X)=1-X$ and $L_1(X)=X$.\nOn the four-point grid $H^2$, the product $X(1-Y)$ is one at $(1,0)$\nand zero at the other three points. Multiplying it by $f(1,0)$ contributes\nexactly the entry at that point. Summing one such term per grid point gives\nthe general extension of a table $f:H^m\\to\\mathbb F_Q$:\n\n$$\n\\widehat f(X_1,\\ldots,X_m)\n=\\sum_{s\\in H^m}f(s)\\prod_{j=1}^m L_{s_j}(X_j).\n$$\n\nAt a grid point, all the basis products are zero except the one indexed\nby that point. The extension therefore agrees with $f$ on $H^m$, has\ndegree at most $h-1$ in each coordinate, and has total degree at most\n$m(h-1)$. This gives us an honest polynomial table from an ordinary colouring\ntable. The proof encodes its values throughout $\\mathbb F_Q^m$, not just on\nthe original grid."
+        }
+      ],
+      "reason": "The new H={0,1}, m=2 basis term X(1-Y) makes the product basis concrete, and H^m is defined as tuples before the general sum.",
+      "reader_consequence": "The learner can check a term at all four grid points and understand why only the matching term survives.",
+      "next_action": "Preserve the basis example; use it in a later reconstruction task rather than adding another unrelated interpolation example."
+    },
+    {
+      "id": "PA-06",
+      "verdict": "fixed",
+      "original_finding": "Teach the changed F4 arithmetic before the colouring equations. The text states F4 and its closure rather than teaching the arithmetic; a reader with polynomial arithmetic alone cannot yet compute omega minus omega squared or see why three nonzero elements suffice.",
+      "author_status": "incorporated",
+      "author_action": "Introduced the four-element field, characteristic-two subtraction and explicit difference/cube calculations.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            251,
+            280
+          ],
+          "quote": "For the colouring construction, use arithmetic with $1+1=0$. Begin with\nthe four elements $0,1,\\omega,1+\\omega$, adding their binary coefficients\nmodulo two and multiplying with the rule $\\omega^2=\\omega+1$. These\noperations form the field $\\mathbb F_4$. Subtraction equals addition.\nFor example,\n\n$$\n1-\\omega=1+\\omega=\\omega^2,\\qquad\n\\omega^3=\\omega(\\omega+1)=(\\omega+1)+\\omega=1.\n$$\n\nEvery element has the form $a+b\\omega$ with $a,b\\in\\{0,1\\}$, so it\nhas binary coordinates $(a,b)$. Addition is coordinatewise. Multiplication\nis also explicit:\n\n$$\n(a+b\\omega)(c+d\\omega)\n=(ac+bd)+(ad+bc+bd)\\omega.\n$$\n\nWe will use these coordinates again when constructing a bit query.\nThe full verifier works in a larger characteristic-two field containing\nthis four-element field. Its three chosen nonzero elements obey\n\n$$\n1^3=\\omega^3=(\\omega^2)^3=1.\n$$\n\nUse $1,\\omega,\\omega^2$ as the colours. A proposed value $u$ is one of\nthese colours exactly when $u^3-1=0$. If $u,v$ are valid colours,"
+        }
+      ],
+      "reason": "The F4 representation, characteristic-two subtraction, multiplication rule and explicit cube calculation are supplied before the colour equations. These are enough to perform the displayed field arithmetic.",
+      "reader_consequence": "The colour table and later binary basis no longer depend on an undeclared extension-field operation.",
+      "next_action": "Keep this carried F4 model. If revising, emphasise that the larger production field contains this particular three-colour subfield."
+    },
+    {
+      "id": "PA-07",
+      "verdict": "retained_correctly",
+      "original_finding": "Keep the invalid four-colour assignment that passes every edge equation. The K4 assignment using all four field elements is a strong changed-case example and establishes a separate necessity.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve both the honest triangle and the four-colour cheating example; the former may be shorter if the field arithmetic is expanded.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            289,
+            297
+          ],
+          "quote": "For example, the triangle coloured $(1,\\omega,\\omega^2)$ gives three\nzero edge residuals. The assignment $(1,1,\\omega^2)$ gives residuals\n$(1,0,0)$ on edges $12,23,31$. The colour-validity check remains necessary:\nthe edge identity was interpreted under the assumption that its two\narguments were allowed colours. To see what goes wrong without that\nassumption, give the four vertices of $K_4$ all four elements of\n$\\mathbb F_4$, including zero. Every edge difference is nonzero and has\ncube one, so every edge equation passes. The vertex assigned zero fails\n$u^3-1=0$, as it must: this graph cannot be three-coloured."
+        }
+      ],
+      "reason": "Both the honest triangle and the K4 assignment using all four field elements remain. Nonzero edge differences all have cube one, while the zero colour fails the vertex equation.",
+      "reader_consequence": "The example still proves that the edge check cannot replace the independent colour-validity check.",
+      "next_action": "Preserve the counterexample next to the two residual definitions."
+    },
+    {
+      "id": "PA-08",
+      "verdict": "alternative_successful",
+      "original_finding": "Separate the grid-ideal argument from its quotient-degree budget. The paragraph moves from remainder elimination to a total-degree budget; these are two jobs at a delicate transition.",
+      "author_status": "incorporated",
+      "author_action": "Identified the two toy quotients and connected polynomial division to the grid identity.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            352,
+            371
+          ],
+          "quote": "with suitable degree bounds on the $Q_j$. In our example the two quotients\nare visible: $Q_1=Y+1$ and $Q_2=X+2$. Polynomial division in each\nvariable proves this result. After removing all multiples of the\n$Z_H(X_j)$, the remainder has degree less than $|H|$ in every variable;\nif it is zero on the whole grid, repeated univariate interpolation makes\nthe remainder zero. Write $h=|H|\\geq1$. Division can choose each nonzero\nquotient with $\\deg Q_j+h\\leq\\deg P$: removing a multiple of the monic\ndegree-$h$ polynomial loses $h$ from its total degree.\n\nReading all $m$ terms would require a number of queries that grows with\nthe dimension. Following Corollary 2.10 of the [corrected paper][paper-v2],\npackage the sum into a single polynomial of two groups of variables:\n\n$$\nM(X,U)=\\sum_{j=1}^m U_jQ_j(X).\n$$\n\nIts degree is at most $\\deg P$, because multiplication by $U_j$ adds\none to $\\deg Q_j$ and $h\\geq1$. This bound will let the honest\ncertificate fit in the encoding used later."
+        }
+      ],
+      "reason": "The author did not literally split the paragraph, but identifying Q1=Y+1 and Q2=X+2 supplies the missing concrete quotients before the remainder and degree argument. At this length the combined paragraph is defensible; a mandatory paragraph split is not a mathematical repair.",
+      "reader_consequence": "The abstract quotients now refer to objects the reader has already evaluated. The degree claim remains compressed but has a clear local purpose: fit the honest encoding.",
+      "next_action": "No further expansion is required for this old finding. In a redesign, put the degree bookkeeping in the parameter margin rather than adding a second proof of division."
+    },
+    {
+      "id": "PA-09",
+      "verdict": "fixed",
+      "original_finding": "Name the degree increase caused by substituting Z_H before invoking distance. The composition M(X,Z_H(X)) has a different degree from M; invoking polynomial distance without naming this is an unsupported pedagogical shortcut.",
+      "author_status": "incorporated",
+      "author_action": "Explained substitution’s degree growth and the corresponding field-size requirement.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            395,
+            401
+          ],
+          "quote": "Now suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere\non the grid. At least one of the two identities must be false as a\npolynomial identity. A random ambient point detects that failure by the\npolynomial distance bound. Substituting $Z_H(X_j)$ can multiply degree by $h=|H|$;\nthe field must be large compared with this resulting degree. Section 9\nchecks that requirement. Thus a large collection of grid conditions\nhas become two random algebraic checks."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1017,
+            1021
+          ],
+          "quote": "A false grid condition makes one polynomial residual nonzero. Its degree\nis at most $5Dh$, so it is nonzero at at least a fraction $1-5Dh/Q$ of\npoints. One random homogeneous observation detects that residual with\nprobability one half. This proves the lower bound on ideal rejection;\nno independence between the two residual detections is needed."
+        }
+      ],
+      "reason": "The substitution cost h=|H| is now named before polynomial distance is invoked and then used in the explicit 5Dh residual degree estimate.",
+      "reader_consequence": "The h factor in the later root loss is motivated rather than appearing as a new unexplained constant.",
+      "next_action": "Retain both the local substitution warning and the later instantiated estimate."
+    },
+    {
+      "id": "PA-10",
+      "verdict": "fixed",
+      "original_finding": "Quantify the thin-slice obstruction to direct reads at prescribed points. The obstruction is correctly named, but a concrete density calculation would make the need for correction immediate.",
+      "author_status": "incorporated",
+      "author_action": "Added the thin-row concentration example and the need for correction at prescribed points.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            407,
+            413
+          ],
+          "quote": "The remaining problem is that a received table is only *close* to a\npolynomial, and the points $(x,0)$ and $(x,Z_H(x))$ are special points.\nAll its errors could lie there. For instance, in a table on $F^2$,\ncorrupting the entire row $F\\times\\{0\\}$ changes only a fraction\n$1/|F|$ of the entries but ruins every requested entry in that row.\nWe need to recover a value at a prescribed point through random\nlocations elsewhere in the table."
+        }
+      ],
+      "reason": "Corrupting F×{0} is now counted as 1/|F| of an F² table while corrupting every requested row entry. This is the right global-to-prescribed-point obstruction.",
+      "reader_consequence": "The need for randomized correction follows from a concrete adversarial concentration, not a generic warning that tables may be corrupt.",
+      "next_action": "Keep this example as the recurring target for the outer-correction and reconstruction sections."
+    },
+    {
+      "id": "PA-11",
+      "verdict": "fixed",
+      "original_finding": "Type a supplied line row before comparing its values. The domains and contents of T_(u,v) are not yet explicit; table could mean a full function table or a coefficient list.",
+      "author_status": "incorporated",
+      "author_action": "Defined the oriented-line row index and the parameter selecting the compared point.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            419,
+            433
+          ],
+          "quote": "A low-degree polynomial in many variables restricts to a low-degree\nunivariate polynomial on each line $u+Yv$. The prover supplies a table\nwhose row indexed by $(u,v)$ proposes a univariate polynomial\n$T_{u,v}$. A parameter $\\lambda$ selects the point $u+\\lambda v$.\nThe checker compares its point-table value with $T_{u,v}(\\lambda)$.\n\nThe point-versus-line theorem gives the converse needed for soundness.\nSuppose each supplied line polynomial has degree at most $d$, and sample\n$u,v$ and the line parameter $\\lambda$ uniformly, with $\\lambda$ allowed\nto be zero. Let $\\delta$ be the fraction of comparisons\n$f(u+\\lambda v)=T_{u,v}(\\lambda)$ that fail. The formal theorem says\nthat if $Q\\geq10^6d^3$ and $\\delta\\leq1/(4\\cdot10^6)$, then the point\ntable is within distance $2\\delta$ of one multivariate polynomial of\ntotal degree at most $d$. This conclusion requires no assumption that\nthe supplied line polynomials agree with one another."
+        }
+      ],
+      "reason": "The line row is indexed by the oriented pair (u,v), proposes T_(u,v), and the role of lambda is explicit. The immediately following paragraph supplies the degree bound and sampling distribution.",
+      "reader_consequence": "The learner can say what the point-line comparison means before encountering the implementation encodings.",
+      "next_action": "Preserve the distinction between a proposed polynomial in the conceptual theorem and the arbitrary bit table used by the actual verifier."
+    },
+    {
+      "id": "PA-12",
+      "verdict": "alternative_successful",
+      "original_finding": "Make the deep point-line proof sketch optional while retaining its theorem contract. Error locator, plurality, bivariate agreement and plane restrictions arrive without an operation the stated learner can perform; the sentence chain sounds explanatory but cannot be reconstructed locally.",
+      "author_status": "alternative_applied",
+      "author_action": "Replaced the compressed internal proof sketch with the exact theorem contract and links to the long reconstruction. Did not duplicate that proof as another optional note.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            425,
+            444
+          ],
+          "quote": "The point-versus-line theorem gives the converse needed for soundness.\nSuppose each supplied line polynomial has degree at most $d$, and sample\n$u,v$ and the line parameter $\\lambda$ uniformly, with $\\lambda$ allowed\nto be zero. Let $\\delta$ be the fraction of comparisons\n$f(u+\\lambda v)=T_{u,v}(\\lambda)$ that fail. The formal theorem says\nthat if $Q\\geq10^6d^3$ and $\\delta\\leq1/(4\\cdot10^6)$, then the point\ntable is within distance $2\\delta$ of one multivariate polynomial of\ntotal degree at most $d$. This conclusion requires no assumption that\nthe supplied line polynomials agree with one another.\n\nThis is the substantial testing theorem we take as an input. Its proof\nuses agreement between row and column polynomials to show that the local\nline predictions determine one polynomial. The full record supplies the\n[bivariate agreement construction](../long/reasoning-record.md#4-bivariate-agreement)\nand the [point-versus-line proof](../long/reasoning-record.md#5-point-versus-line-soundness).\nOur next task is to implement the comparison using a constant number of bits.\n\nA line polynomial of degree $d$ has $d+1$ coefficients. Reading all\nthose coefficients is not a constant number of bit queries when $d$\ngrows. The construction encodes the polynomial in a different set of"
+        }
+      ],
+      "reason": "The short, previously unlearnable proof-name chain is replaced by a precise contract plus exact companion headings. The author reasonably chose not to append another optional compressed sketch.",
+      "reader_consequence": "The main route can proceed to query cost while identifying the substantial theorem it assumes. This is an honest dependency, though it limits what “proof through examples” can mean.",
+      "next_action": "Keep the contract and exact deeper links. Make the overall title/promise conditional on imported testing theorems rather than putting the deleted sketch back."
+    },
+    {
+      "id": "PA-13",
+      "verdict": "fixed",
+      "original_finding": "Disclose the finite-field collapse in the digit-encoding example. Over F5 the function Y^5 equals Y, so this example's evaluation table is already linear and does not display a genuine function-degree saving.",
+      "author_status": "incorporated",
+      "author_action": "Replaced the finite-field example by Y⁴+2Y+3 over F₅, including its encoding, evaluation and obstruction to a quadratic representative.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            447,
+            475
+          ],
+          "quote": "Here is the operation with two base-$3$ digits. Over $\\mathbb F_5$, take\n\n$$\np(Y)=Y^4+2Y+3.\n$$\n\nSince $4=1+1\\cdot3$, replace $Y^4$ by $X_{0,1}X_{1,1}$.\nLikewise, $1=1+0\\cdot3$ and $0=0+0\\cdot3$. The encoded polynomial is\n\n$$\n\\widetilde p(X)=X_{0,1}X_{1,1}\n +2X_{0,1}X_{1,0}+3X_{0,0}X_{1,0}.\n$$\n\nIt has degree two, although $p$ has degree four. There are more variables,\none group for each digit position. To recover $p(\\lambda)$, substitute\n\n$$\n(X_{0,0},X_{0,1},X_{0,2})=(1,\\lambda,\\lambda^2),\n\\qquad\n(X_{1,0},X_{1,1},X_{1,2})=(1,\\lambda^3,\\lambda^6).\n$$\n\nAt $\\lambda=2$, these two triples are $(1,2,4)$ and $(1,3,4)$.\nThe encoded evaluation is $2\\cdot3+2\\cdot2+3=3$ modulo $5$,\nwhich agrees with $p(2)=2^4+2\\cdot2+3=3$ modulo $5$. No quadratic\nin the original variable can have these values at all five field elements:\nits difference from $p$ would be a nonzero degree-four polynomial with\nfive roots. The additional variables are doing real work."
+        }
+      ],
+      "reason": "The polynomial is now Y^4+2Y+3, its leading digit monomial is X_(0,1)X_(1,1), and its value at 2 is 3. A nonzero degree-four difference cannot have five roots, so there is no quadratic representative of this F5 function.",
+      "reader_consequence": "The example now demonstrates a genuine functional degree obstacle rather than only a syntactic rewriting of Y^5=Y on F5.",
+      "next_action": "Keep the replacement and root-count explanation; preserve the separation between this small calculation and the production field-size regime."
+    },
+    {
+      "id": "PA-14",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the enlarged soundness degree for arbitrary decoded encodings. This prevents a serious soundness shortcut and distinguishes completeness from soundness assumptions.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve this paragraph as a highlighted conceptual hinge.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            485,
+            497
+          ],
+          "quote": "The test need not enforce its exact special form. A received table\nmay decode to an arbitrary polynomial of degree at most $c$ in these\nvariables. Substituting the powers of $Y$ still gives a univariate\npolynomial, now with a somewhat larger degree bound. We use this larger\nbound in the soundness argument. A table which merely passes a low-degree\ntest is not assumed to have the form of an honest encoding.\n\nWe can calculate the larger bound. Each substituted variable is\n$Y^{j b^i}$, with $0\\leq j<b$ and $0\\leq i<c$, so its degree is at\nmost $(b-1)b^{c-1}$. A monomial of a degree-$c$ polynomial contains\nat most $c$ variable occurrences. Its degree after substitution is\ntherefore at most $c(b-1)b^{c-1}$, and the convenient upper bound\n$D=cb^c$ applies to the decoded univariate polynomial."
+        }
+      ],
+      "reason": "The arbitrary received table may still decode to any degree-c multivariate polynomial. The soundness bound c(b−1)b^(c−1)≤cb^c is derived without assuming honest set-multilinearity.",
+      "reader_consequence": "The enlarged degree D has a clear adversarial role and does not disappear when the honest example looks especially structured.",
+      "next_action": "Preserve this as a central distinction in every shorter outline."
+    },
+    {
+      "id": "PA-15",
+      "verdict": "fixed",
+      "original_finding": "Make one prescribed-point interpolation query executable. This is the pivotal operation, but the affine bijection argument for uniformity and one actual weighted read are still implicit.",
+      "author_status": "incorporated",
+      "author_action": "Explained bijective point sampling and worked recovery of p(3) from p(0), p(1), p(2); retained zero directions.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            528,
+            550
+          ],
+          "quote": "The same formula also corrects a value at a prescribed point. Suppose\n$f$ differs from a degree-$c$ polynomial $P$ on at most a fraction\n$\\varepsilon$ of the ambient space. Fix $u$, choose $v$ uniformly,\nand return the weighted sum of the $c+1$ surrounding values, without\nmaking a separate query at $u$ (a zero direction can still make a listed\npoint equal to $u$). Each point $u+a_i v$ is uniform because $a_i\\ne0$.\nThe inverse map is $w\\mapsto a_i^{-1}(w-u)$, so every point occurs\nwith equal probability. If all those values are correct, interpolation returns $P(u)$.\nBy the union bound, the probability of a wrong answer is at most\n\n$$\n(c+1)\\varepsilon.\n$$\n\nFor the earlier example $p(X)=X^2$, a request at $3$ can be answered\nfrom the surrounding values at $0,1,2$ as $0+2\\cdot1+3\\cdot4=4$\nmodulo five. None of those reads uses $p(3)$. This one choice illustrates\nthe interpolation; randomising the direction gives the guarantee against\ncorruption.\n\nThe sampled points need not be independent for this bound: they all\nlie on one line, but each individual error event has the required\nprobability."
+        }
+      ],
+      "reason": "The affine inverse map proves each correction sample uniform, a numerical p(3) recovery is given, and the text explicitly allows zero directions and dependent samples.",
+      "reader_consequence": "The fixed-target guarantee now rests on a visible sampling argument. No unjustified independence assumption or absolute promise never to read the target remains.",
+      "next_action": "Keep. An optional literal seed annotation is u=3, generator 2, v=1 in F5: the nodes 2,4,3 visit 0,2,1; this can help the later end-to-end trace without changing the theorem."
+    },
+    {
+      "id": "PA-16",
+      "verdict": "fixed",
+      "original_finding": "Explain homogeneous linear functional as a parity with no constant. Homogeneous linear functional is introduced as a technical name before it is defined, and the pairing proof presupposes this binary linear algebra.",
+      "author_status": "incorporated",
+      "author_action": "Defined the homogeneous parity labels without a constant term and explained half-distance.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            561,
+            586
+          ],
+          "quote": "Start with a three-bit message $s=101$. For every three-bit vector\n$x$, store the parity\n\n$$\nh_s(x)=s\\cdot x\\pmod2.\n$$\n\nThe positions of the word are themselves bit vectors. In order\n$000,001,010,011,100,101,110,111$, its contents are\n\n$$\n(0,1,0,1,1,0,1,0).\n$$\n\nThese labels are **homogeneous linear**: each is a parity dot product,\nwith no added constant. They form the homogeneous linear part of a\nHadamard encoding. It stores\neight answers about a message with only three bits. Any two different\nmessages give words differing in exactly half their positions. Indeed,\ntheir difference is a nonzero linear functional. Choose a vector on\nwhich it is one; adding that vector pairs every zero value with a one value.\n\nThus a uniformly random one-bit observation distinguishes two unequal\nmessages with probability $1/2$. To compare values, the checker queries\nthe same random linear functional on each and compares the resulting\nbits; it does not need to reconstruct either whole message."
+        }
+      ],
+      "reason": "Homogeneous labels are defined as parity dot products without a constant, before the half-distance pairing proof.",
+      "reader_consequence": "The relevant linearity operation is clear and can be distinguished from affine labels introduced later.",
+      "next_action": "Keep the no-constant qualification and matching label-domain source link."
+    },
+    {
+      "id": "PA-17",
+      "verdict": "fixed",
+      "original_finding": "Compute a field-expression query label in a fixed binary basis. A fixed basis is named but never made operational; the reader is asked to understand another representation change before seeing any coordinates.",
+      "author_status": "incorporated",
+      "author_action": "Used the fixed basis (1,ω), binary coordinates and coordinatewise addition.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            649,
+            690
+          ],
+          "quote": "In our four-element field, $u=a+b\\omega$ has coordinates $(a,b)$ in\nthe basis $(1,\\omega)$. More generally, fixing a basis represents a field\n$F$ of size $2^t$ by $t$ binary coordinates. Write $\\rho(u)$ for that\ncoordinate vector. To check the colouring identities, the\nverifier needs observations of expressions such as $u^3-1$.\n\nFor this purpose, it stores a larger word whose positions are Boolean\npolynomials $R$ of degree at most three:\n\n$$\nH_3(u)(R)=R(\\rho(u)).\n$$\n\nThe coefficients of $R$ specify the position; the stored answer is\none bit. Boolean variables satisfy $Z_i^2=Z_i$ when evaluated, so\nsquarefree monomials suffice. For fixed $u$, this word is linear in\nthe label $R$, even though $R$ may be cubic in the message coordinates.\n\nMultiplication in a finite field is bilinear in its binary coordinates.\nConsequently, a linear binary observation $L(u^3-1)$ is a polynomial\nof degree at most three in $\\rho(u)$. The verifier can compute the\ncorresponding label and query that one position of $H_3(u)$.\nIt learns the required bit about $u^3-1$ without reading all $t$\ncoordinates of $u$.\n\nHere is the address calculation in our four-element field. The product\nformula in Section 4 gives $u^2=(a+b)+b\\omega$, then\n\n$$\nu^3-1=(1+a+b+ab)+0\\omega.\n$$\n\nFor the observation $L(a+b\\omega)=a$, the requested label is therefore\n\n$$\n\\Lambda=1+Z_1+Z_2+Z_1Z_2.\n$$\n\nFor example, $u=\\omega$ has coordinates $(0,1)$, and this label returns\n$1+0+1+0=0$, as required by $\\omega^3-1=0$. The tiny field makes this\nparticular label quadratic; the degree-three bound works in the larger\nfields used by the construction too."
+        }
+      ],
+      "reason": "The revision now computes coordinates, u², u³−1 and the actual coefficient label Lambda, with an evaluated colour example. This resolves the missing address calculation. The new explanatory sentence about why its degree is quadratic has a separate defect.",
+      "reader_consequence": "A reader can manufacture the label for one nonlinear field query; however, the current generalisation misleadingly attributes quadratic Boolean degree to the small field.",
+      "next_action": "Keep the worked address. Correct the Frobenius explanation identified as RA-N01; do not change the pinned degree-three verifier merely because this label fits a smaller space.",
+      "related_new_findings": [
+        "RA-N01"
+      ]
+    },
+    {
+      "id": "PA-18",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the linear-in-labels word that cannot be evaluation at any point. The four-label counterexample precisely explains why linearity testing alone is inadequate.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve; place it immediately after the worked genuine evaluation word so its failure is recognizable.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            692,
+            702
+          ],
+          "quote": "Linearity in the labels alone is insufficient to establish that a\nreceived word represents a field element. For example, assign values\none to the labels $1$ and $Z_1Z_2$, and zero to $Z_1,Z_2$, then extend\nlinearly to every label in their span. This is a linear function of\nlabels, but no evaluation at a point has those values: $Z_1=Z_2=0$\nwould force $Z_1Z_2=0$. Evaluation words satisfy $H(1)=1$ and, for example,\n$H(Z_1Z_2)=H(Z_1)H(Z_2)$. The displayed false word violates the latter\nequation. The general test checks products of labels of the permitted\ndegrees, using corrected answers. The imported soundness theorem says\nthat these checks, linearity and affine-label consistency force proximity\nto one evaluation word."
+        }
+      ],
+      "reason": "The four-label functional with H(1)=H(Z1Z2)=1 and H(Z1)=H(Z2)=0 is retained and placed immediately after a genuine evaluation calculation. It is linear on labels and is not evaluation at any point.",
+      "reader_consequence": "The need for consistency beyond BLR additivity remains demonstrable rather than asserted.",
+      "next_action": "Preserve the false word and explain it as a component-level counterexample, not a complete cheating PCP."
+    },
+    {
+      "id": "PA-19",
+      "verdict": "fixed",
+      "original_finding": "Show a product-consistency check before giving its version-specific query count. Products and the constant label are named as repairs, but their checked relations are not shown; ten versus eight queries currently has more detail than the operation itself.",
+      "author_status": "incorporated",
+      "author_action": "Added unit and product consistency, and preserved the formal ten-query versus source-paper eight-query distinction.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            697,
+            710
+          ],
+          "quote": "would force $Z_1Z_2=0$. Evaluation words satisfy $H(1)=1$ and, for example,\n$H(Z_1Z_2)=H(Z_1)H(Z_2)$. The displayed false word violates the latter\nequation. The general test checks products of labels of the permitted\ndegrees, using corrected answers. The imported soundness theorem says\nthat these checks, linearity and affine-label consistency force proximity\nto one evaluation word.\n\nThe formal Hadamard test checks these properties using corrected\nanswers. Its degree-three version makes ten bit queries. The current\npaper gives an eight-query version which retains only the top-degree\nproduct check; the pinned Lean verifier also performs lower-degree\nchecks. We use the formal version's count when discussing its\nresources. The linearity example above explains one component, not\nthe whole degree-three test."
+        }
+      ],
+      "reason": "The unit relation and a concrete product relation are displayed before the version-specific counts. The text explicitly treats them as components of an imported evaluation-word theorem.",
+      "reader_consequence": "The reader now knows an operation being checked before being asked to distinguish eight and ten queries.",
+      "next_action": "Retain the relations; move the 10/8 historical count into a source note if the main route is shortened."
+    },
+    {
+      "id": "PA-20",
+      "verdict": "partly_fixed",
+      "original_finding": "Identify the address and returned bit at each layer of the nested encoding. Primary row, encoded line row and corrected line value are dense terms whose indexing is never shown together.",
+      "author_status": "incorporated",
+      "author_action": "Added the address/returned-bit table for primary and auxiliary rows.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            745,
+            764
+          ],
+          "quote": "The construction now has two forms of redundancy. A line polynomial\nis encoded as a polynomial of fixed degree in more variables. Each\nfield-valued entry is in turn encoded by binary questions. The\nchecker chooses $u,v$ uniformly from the ambient vector space and $z$\nuniformly from the whole field. Zero directions and parameters are included. It tests the\nprimary row at $u$, tests the auxiliary row for that same $(u,v)$,\nand compares the primary bit at $(u+zv,L)$ with a corrected auxiliary\nanswer at $(\\Phi(z),L)$. Here $L$ is a uniform homogeneous label.\nAll three checks must pass.\n\nThe two kinds of address are worth separating:\n\n| Table | Address | Returned object |\n| --- | --- | --- |\n| Primary | Ambient point $x$ and label $R$ | One bit about the value at $x$ |\n| Auxiliary | Oriented line $(u,v)$, inner point $w$, and label $R$ | One bit about its digit-encoded line value at $w$ |\n\nFor an honest auxiliary row, putting $w=\\Phi(z)$ recovers an observation\nof the original line value at $z$. Correction obtains that observation\nusing random addresses when the table is corrupt."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            792,
+            801
+          ],
+          "quote": "There are three label domains. For $t$ coordinate bits, homogeneous\nlinear labels are sums $\\sum_i a_iZ_i$; affine labels may also have a\nconstant term. Full degree-three labels may use every squarefree monomial\nof degree at most three.\n\n| Label domain | Number for $t=3$ | Later use |\n| --- | ---: | --- |\n| Homogeneous linear | $8$ | Weighted comparisons and the difference check |\n| Affine linear | $16$ | Full label domain of certificate rows |\n| Full degree-three | $256$ | Nonlinear derived queries from colour and difference rows |"
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/SetMultilinear.lean",
+          "lines": [
+            62,
+            64
+          ],
+          "quote": "/-- Equation (3.1): the point at which the encoded polynomial recovers `P(λ)`. -/\ndef evaluationPoint (x : R) : Variables m c → R :=\n  fun ij => x ^ ((ij.2 : ℕ) * m ^ (ij.1 : ℕ))"
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean",
+          "lines": [
+            29,
+            40
+          ],
+          "quote": "abbrev Lines (F σ : Type*) := (σ → F) × (σ → F)\n\n/-- The auxiliary oracle explicitly uses degree-one Hadamard labels. -/\nabbrev Auxiliary (F σ : Type*) (m c t : ℕ) := Lines F σ → RowOracle F m c t\n\n/-- Line, full-field parameter, correction direction and label, and both test seeds. -/\nabbrev Sample (F σ : Type*) (m c t r : ℕ) :=\n  Lines F σ × (F × ((InnerPoint F m c × (Fin t → ZMod 2)) ×\n    (Hadamard.TestRandomness t r × InnerSeed F m c t)))\n\nabbrev Query (F σ : Type*) (m c t r : ℕ) :=\n  ((σ → F) × Coefficients t r) ⊕ (Lines F σ × (InnerPoint F m c × Coefficients t 1))"
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+          "lines": [
+            29,
+            31
+          ],
+          "quote": "abbrev InnerPoint (F : Type*) (m c : ℕ) := SetMultilinear.Variables m c → F\n\nabbrev RowOracle (F : Type*) (m c t : ℕ) := InnerPoint F m c → Coefficients t 1 → ZMod 2"
+        }
+      ],
+      "reason": "The primary/auxiliary address table is a real repair, but Phi is first used without definition and the auxiliary label R is not assigned its domain. All auxiliary rows in the pinned implementation use affine degree-one labels, including those attached to cubic primary rows. The current table does not tell the reader this.",
+      "reader_consequence": "The intended typed query trace still requires expert inference at exactly the point where the reader must name a concrete address.",
+      "next_action": "Define Phi(z)_(i,j)=z^(j b^i), with domain F→F^(c×b), when the digit substitution is introduced. Type every auxiliary label as affine degree≤1 and show its homogeneous sublabels used by correction. Keep the existing table; add the missing types rather than another prose overview.",
+      "related_new_findings": [
+        "RA-N02"
+      ]
+    },
+    {
+      "id": "PA-21",
+      "verdict": "fixed",
+      "original_finding": "Work one weighted linear label instead of only displaying composition notation. The identity is right, but no example shows how multiplying a field value changes the parity label rather than its stored answer.",
+      "author_status": "incorporated",
+      "author_action": "Worked multiplication by ω as a transformation of the observed coordinate label.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            766,
+            781
+          ],
+          "quote": "Field coefficients in the interpolation formula do not require\nreading a whole field element. For a homogeneous binary linear\nlabel $L$ and a field weight $\\eta$,\n\n$$\nL(\\eta u)=(L\\circ(\\eta\\cdot))(u).\n$$\n\nFor example, multiplying $u=a+b\\omega$ by $\\omega$ gives\n$b+(a+b)\\omega$. If $L$ reads the first coordinate, then\n$L(\\omega u)=b$: the weighted observation asks the second-coordinate\nlabel of the original value. The weight changes the queried label,\nnot the stored bit after it has been read. Applying $L$ to a\nweighted field identity therefore produces an identity among a fixed\nnumber of bits. If the field identity is false, a uniform homogeneous\nlabel detects it with probability $1/2$."
+        }
+      ],
+      "reason": "The new omega multiplication maps the first-coordinate observation to the second coordinate. This directly illustrates composition of the label with multiplication.",
+      "reader_consequence": "It is clear that the verifier changes an address rather than multiplying a one-bit answer as though it were a field value.",
+      "next_action": "Keep the calculation and use the same label convention in the explicit binary correction sum."
+    },
+    {
+      "id": "PA-22",
+      "verdict": "fixed",
+      "original_finding": "Define full, affine and homogeneous label families alongside the shared witness. The key common-witness principle is explicit, but full, affine and homogeneous label families are not laid out in one usable definition.",
+      "author_status": "incorporated",
+      "author_action": "Added homogeneous, affine and full label counts plus a checked spoof showing full closeness need not imply restricted closeness. Both guarantees retain one decoded polynomial.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            783,
+            808
+          ],
+          "quote": "The combined low-degree theorem supplies **one** polynomial close to\nthe primary oracle on the label sets used later. It is not enough to\nobtain one polynomial for the cubic questions and an unrelated one for\nthe linear questions: both checks must refer to the same decoded\npolynomial. In the formal version, the additional degree-one guarantee\nconcerns homogeneous linear labels; this is the label family used for\nthe final difference check. A certificate table whose entire label\nspace has degree one also receives the full affine-label guarantee.\n\nThere are three label domains. For $t$ coordinate bits, homogeneous\nlinear labels are sums $\\sum_i a_iZ_i$; affine labels may also have a\nconstant term. Full degree-three labels may use every squarefree monomial\nof degree at most three.\n\n| Label domain | Number for $t=3$ | Later use |\n| --- | ---: | --- |\n| Homogeneous linear | $8$ | Weighted comparisons and the difference check |\n| Affine linear | $16$ | Full label domain of certificate rows |\n| Full degree-three | $256$ | Nonlinear derived queries from colour and difference rows |\n\nA small full-domain error can hide a large error on the first row of\nthis table. Begin with the full evaluation word of the message $(1,0,1)$.\nOn its eight homogeneous positions only, replace the answers by those\nfor $(1,0,0)$. Four answers change. The full error is $4/256=1/64$,\nbut the homogeneous error is $4/8=1/2$. This is why the testing theorem\nmust supply both bounds for the same polynomial."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            824,
+            830
+          ],
+          "quote": "there is one polynomial of degree at most $D$ whose encoding differs from the\nreceived primary table on at most a fraction $\\varepsilon=S\\kappa$\nof full labels, and on at most that fraction of homogeneous labels.\nBoth distances average over the ambient point as well as the indicated\nlabel. This is the precise combined testing result we use below; the\n[full account][long] derives the constants by summing the row-decoding,\nline-correction and comparison errors."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/BinaryPolynomialSpace.lean",
+          "lines": [
+            24,
+            28
+          ],
+          "quote": "/-- Squarefree monomials of total degree at most `r` in `t` variables. -/\nabbrev Monomials (t r : ℕ) := {s : Finset (Fin t) // s.card ≤ r}\n\n/-- A finite binary coefficient vector, including the coefficient of the empty monomial. -/\nabbrev Coefficients (t r : ℕ) := Monomials t r → ZMod 2"
+        }
+      ],
+      "reason": "Homogeneous, affine and full cubic spaces are defined, their 8/16/256 counts are given for t=3, and the 4/256 versus 4/8 spoof demonstrates the failure of restricting an average. Both guarantees still use one decoded polynomial.",
+      "reader_consequence": "The previously abstract common-witness and domain conditions now have a discriminating example. This is a successful repair even if the overall section remains crowded.",
+      "next_action": "Preserve the example and common-witness clause. Add auxiliary affine typing under PA-20 rather than repeating this full table."
+    },
+    {
+      "id": "PA-23",
+      "verdict": "fixed",
+      "original_finding": "Move expanded K,E,S,C constants behind an exact role-based theorem statement. K,E,S,C arrive before the reader has seen the four tables and before an instance of composed correction; four large formulas interrupt the only construction-level explanation.",
+      "author_status": "incorporated",
+      "author_action": "Explained E, S and C by their roles on the main path; moved their exact formulas to a linked note after the exercises.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            810,
+            830
+          ],
+          "quote": "We need quantitative versions of these statements to know that the\nerrors will leave a positive gap. Fix a positive inner degree $c$ and\na positive digit base $b$, put $D=cb^c$, and write $Q=|F|$. The analysis gives\nconstants $E,S,C$ depending only on $c$. Their roles are: $E$ controls\nthe field-valued line error, $S$ converts test rejection into code distance,\nand $C$ controls correction failure. Their [exact formulas](#the-error-constants)\nare collected after the exercises. With the prescribed interpolation nodes, if the complete\nencoded-line tester rejects with probability at most $\\kappa$, and\n\n$$\nQ\\geq10^6D^3,\n\\qquad E\\kappa\\leq\\frac1{4\\cdot10^6},\n$$\n\nthere is one polynomial of degree at most $D$ whose encoding differs from the\nreceived primary table on at most a fraction $\\varepsilon=S\\kappa$\nof full labels, and on at most that fraction of homogeneous labels.\nBoth distances average over the ambient point as well as the indicated\nlabel. This is the precise combined testing result we use below; the\n[full account][long] derives the constants by summing the row-decoding,\nline-correction and comparison errors."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1333,
+            1350
+          ],
+          "quote": "<!-- passage:pcp-expository-error-constants -->\n### The error constants\n\nThe constants used in Sections 8–9 depend only on the fixed inner degree $c$:\n\n$$\n\\begin{aligned}\nK&=4(c+2)^2\\bigl(112(c+2)+60\\bigr),\\\\\nE&=2\\bigl((c+1)K+29\\bigr),\\qquad S=28+E,\\\\\nC&=2+2(c+1)K.\n\\end{aligned}\n$$\n\nHere $K$ bounds inner decoding error, $E$ the line discrepancy, $S$ the\ncombined code distance and $C$ the rejection contribution to correction\nfailure. The [full correction argument](../long/reasoning-record.md#correcting-an-outer-value-at-a-prescribed-point)\nderives these coefficients. Their expansions are not additional choices of\nparameters; the same constants were used throughout the preceding proof."
+        }
+      ],
+      "reason": "The main route introduces E,S,C by their error roles; the unchanged expansions are in a named linked note after the exercises. The hypotheses and conclusion are still present at the point of use.",
+      "reader_consequence": "The reader can track what each coefficient controls without parsing all decimal-independent expansions before the corrector.",
+      "next_action": "Keep the role-based statement. A redesign should retain one exact contract rather than scattering the same constants into more summaries."
+    },
+    {
+      "id": "PA-24",
+      "verdict": "fixed",
+      "original_finding": "Trace reject/return outcomes in the outer corrector before the bound. The correction theorem is named precisely but the algorithm is described at too high a level to distinguish its reject outcome from its returned bit in a worked reconstruction.",
+      "author_status": "incorporated",
+      "author_action": "Gave the corrector’s sampling, rejection and output procedure, followed by the three-source error budget.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            832,
+            872
+          ],
+          "quote": "Now fix a target point $a$ whose bit we want to recover. The outer\ncorrector performs the following experiment.\n\n1. Independently choose a uniform direction $v$ from the whole ambient\n   vector space, a uniform nonzero $z\\in F^\\times$, and a uniform homogeneous\n   label $L$. Choose a separate uniform direction from the full inner digit\n   space and an independent seed for the inner test.\n2. Test the auxiliary row for the line $a+Yv$. Reject if it fails.\n3. Correct that row at $\\Phi(z)$ and compare the bit with the primary\n   answer at $(a+zv,L)$. Reject if they differ.\n4. Otherwise return its correction at $\\Phi(0)$, using the same inner\n   direction and label. Exact primary and auxiliary tables for $P$ of degree\n   strictly below $b^c$ return $L(P(a))$ for every seed.\n\nThus the output is either rejection or one bit. Suppose the primary table\nhas homogeneous distance at most $\\delta$ from a degree-$D$ polynomial\n$P$, and this procedure rejects with probability $R_a$. Then\n\n$$\n\\Pr[\\text{rejection or wrong returned bit}]\n\\leq C R_a+\\delta+\\frac{D}{2(Q-1)}.\n$$\n\nTo understand the three terms, decode the tested auxiliary rows to\ncandidate line polynomials. Poor auxiliary rows cause inner-test rejection,\nso their correction errors are bounded by a constant times $R_a$.\nIf a candidate line has the wrong value at zero, its difference from\n$P(a+Yv)$ is a nonzero degree-$D$ polynomial. It can hide that discrepancy\nat at most $D$ of the $Q-1$ nonzero comparison points. A random homogeneous\nobservation distinguishes unequal field values with probability one half;\nthis gives the displayed root loss. Finally, $a+zv$ is uniform for fixed\nnonzero $z$, so replacing its primary answer costs at most $\\delta$.\nThe full proof counts both auxiliary corrections and the rejection event\nin the coefficient $C$.\n\nThis probability includes a uniformly random homogeneous label; it is\nnot a guarantee for every fixed label. It assumes no honesty of the\nauxiliary line table and no smallness of $R_a$. The term $C R_a$ is\nuseful because a later test that rejects whenever correction rejects\nwill bound $R_a$ by its own rejection rate, after averaging over its\nrequested targets."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean",
+          "lines": [
+            45,
+            67
+          ],
+          "quote": "noncomputable def run (ρ : F ≃ₗ[ZMod 2] (Fin t → ZMod 2))\n    (nodes : Fin (c + 1) → F) (ζ : F)\n    (f : (σ → F) → Coefficients t 1 → ZMod 2)\n    (H : (σ → F) → RowOracle F m c t) (a b : σ → F) (z : Fˣ)\n    (v : InnerPoint F m c) (w : Fin t → ZMod 2) (s : InnerSeed F m c t) :\n    Option (ZMod 2) := by\n  classical\n  exact if BinaryLowDegreeTest.test (le_refl 1) ρ nodes (H b) s then\n    if BinaryStandardLocalCorrection.correct c ζ ρ (H b)\n        (SetMultilinear.evaluationPoint m c (z : F)) v w =\n        f (point a b (z : F)) (homogeneousIndex (le_refl 1) w) then\n      some (BinaryStandardLocalCorrection.correct c ζ ρ (H b)\n        (SetMultilinear.evaluationPoint m c 0) v w)\n    else none\n  else none\n\n/-- The corrector evaluated on its full finite sample. -/\nnoncomputable def sample (ρ : F ≃ₗ[ZMod 2] (Fin t → ZMod 2))\n    (nodes : Fin (c + 1) → F) (ζ : F)\n    (f : (σ → F) → Coefficients t 1 → ZMod 2)\n    (H : (σ → F) → RowOracle F m c t) (a : σ → F)\n    (s : Sample F σ m c t) : Option (ZMod 2) :=\n  run ρ nodes ζ f H a s.1 s.2.1 s.2.2.1.1 s.2.2.1.2 s.2.2.2"
+        }
+      ],
+      "reason": "The revised four-step experiment specifies target, independent samples, the auxiliary test, comparison rejection, returned origin bit, and exact honest capacity. It preserves arbitrary auxiliary data and the random-label qualification. The old missing reject/return trace has been supplied; its notation repair is separately tracked under PA-20.",
+      "reader_consequence": "A reader can distinguish rejection from a wrong returned bit and see which primary comparison checks the candidate line.",
+      "next_action": "Preserve the algorithm and rejection-sensitive bound. Apply the Phi/type fix from PA-20 and consider displaying the inner corrected sum once rather than adding more algorithm prose."
+    },
+    {
+      "id": "PA-25",
+      "verdict": "fixed",
+      "original_finding": "Introduce the four-table inventory before the composed testers need it. The reader learns the full inventory only after all combined-test constants; earlier references to primary and certificate rows lack this scaffold.",
+      "author_status": "incorporated",
+      "author_action": "Moved the four-primary-table inventory to the start of composition and removed the later duplicate.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            729,
+            743
+          ],
+          "quote": "## 8. Combining the encodings and returning to the grid\n\nThe prover supplies four primary tables and four auxiliary line tables.\nIn an honest proof, their intended contents are:\n\n| Primary polynomial | What it records | Binary labels |\n| --- | --- | --- |\n| $\\chi(x)$ | Colour at a vertex-grid point | Degree at most three |\n| $\\chi'(x,y)$ | Difference $\\chi(x)-\\chi(y)$ | Degree at most three |\n| $M_V(x,u)$ | Certificate for the vertex condition | Affine linear |\n| $M_E(x,y,u,v)$ | Certificate for the edge condition | Affine linear |\n\nEach auxiliary table supplies the encoded restrictions of its primary\npolynomial to lines. A received proof can contain arbitrary bits; the\ntests must establish proximity to polynomials with these roles."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            913,
+            924
+          ],
+          "quote": "## 9. From the seven checks to a colouring\n\nThe eight received tables were listed in Section 8. The verifier runs\nfour low-degree tests, one for each primary table and its line table;\ntwo ZERO tests, one for each colouring condition; and one difference\ncheck connecting $\\chi'$ to $\\chi$. It accepts only if all seven pass.\n\nThe separate difference table lets the verifier obtain binary\nobservations of the cube of a difference using the same local\noperations as for the colouring table. If the verifier accepts sufficiently often, the difference check forces\nits decoded polynomial to equal the difference of the decoded colouring\nvalues."
+        }
+      ],
+      "reason": "The four primary objects and their four auxiliary tables now appear before combined testing, and the later assembly refers back rather than duplicating the whole inventory.",
+      "reader_consequence": "Colour, difference, vertex certificate and edge certificate are available as stable objects when the composed tests are introduced.",
+      "next_action": "Keep this earlier inventory. Clarify primary domains and auxiliary label types under PA-20."
+    },
+    {
+      "id": "PA-26",
+      "verdict": "fixed",
+      "original_finding": "Name the derived constraint polynomials explicitly in the soundness conclusion. The phrase two decoded colouring polynomials can refer to chi and chi-prime or to the two derived constraints; they are different objects.",
+      "author_status": "incorporated",
+      "author_action": "Named the two decoded constraint polynomials and kept their common decoding witnesses explicit.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            947,
+            956
+          ],
+          "quote": "The two ZERO checks then force the constraint polynomials\n$\\operatorname{Val}_{\\chi}=\\chi^3-1$ and\n$\\operatorname{Prop}_{\\chi'}=\\widehat E((\\chi')^3-1)$\nto vanish on their grids. Their primary values are\nobtained from the cubic encodings using freshly randomised\nself-correction. The error estimates refer to the same decoded\n$\\chi$ and $\\chi'$ chosen by the low-degree tests. The certificate\narguments therefore imply that $\\chi$ assigns a valid colour at\nevery vertex and different colours at the ends of every edge.\nIt is a proper colouring."
+        }
+      ],
+      "reason": "The text now names Val_chi and Prop_chi-prime as the polynomials vanishing on their grids and explicitly reuses chi and chi-prime from decoding.",
+      "reader_consequence": "The reader is no longer asked to interpret vanishing of the colour polynomial itself, which would be wrong.",
+      "next_action": "Preserve the names and keep the difference identity visibly prior to interpreting the edge constraint."
+    },
+    {
+      "id": "PA-27",
+      "verdict": "fixed",
+      "original_finding": "Show the ideal-to-actual probability comparison as a chain of event bounds. Nearly every term is verbally attributed but the chain from actual test to one failed identity remains compressed; 'combined polynomial-root loss' is not itself a derivation.",
+      "author_status": "incorporated",
+      "author_action": "Displayed the coupled-event inequality including fresh derived-read errors inside the multiplied rejection term.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            996,
+            1021
+          ],
+          "quote": "Here is the event comparison behind that inequality. Let $r$ be the\nrejection rate after replacing the derived cubic answer by its ideal bit,\nbut keeping the two actual certificate corrections. Section 7's fresh-mask\nargument gives $r\\le\\kappa+2\\varepsilon$. In this modified test, rejection\nof either correction still forces rejection, so each correction has\naverage rejection at most $r$. Its failure probability is at most\n$Cr+\\varepsilon+5D/[2(Q-1)]$.\n\nCouple the ideal and modified tests using the same random choices. If the\nideal test rejects but the modified one accepts, a correction must have\nsupplied the wrong bit. Therefore\n\n$$\n\\begin{aligned}\n\\Pr[\\text{ideal rejects}]\n&\\le r+\\Pr[\\text{a correction fails}]\\\\\n&\\le r+2\\left(Cr+\\varepsilon+\\frac{5D}{2(Q-1)}\\right)\\\\\n&\\le(1+2C)(\\kappa+2\\varepsilon)+2\\varepsilon+\\frac{5D}{Q-1}.\n\\end{aligned}\n$$\n\nA false grid condition makes one polynomial residual nonzero. Its degree\nis at most $5Dh$, so it is nonzero at at least a fraction $1-5Dh/Q$ of\npoints. One random homogeneous observation detects that residual with\nprobability one half. This proves the lower bound on ideal rejection;\nno independence between the two residual detections is needed."
+        }
+      ],
+      "reason": "The coupled-event inequality is now displayed. The modified rejection r includes the fresh derived-read replacement, each corrector rejection is bounded by r after averaging, and both correction failures enter the union bound. The derived loss is correctly inside (1+2C).",
+      "reader_consequence": "The coefficient structure can be reconstructed from events rather than accepted as an unexplained sum. The residual lower bound uses one nonzero polynomial and needs no independent detections.",
+      "next_action": "Keep this derivation. If the final design becomes shorter, retain the event inclusions and put numeric constants in the optional budget note."
+    },
+    {
+      "id": "PA-28",
+      "verdict": "fixed",
+      "original_finding": "Separate address counting from Boolean-label counting and justify both. Three different addresses and an exponential-versus-polynomial comparison are packed into one paragraph; the label-count formula assumes the reader recognizes squarefree monomial counts.",
+      "author_status": "incorporated",
+      "author_action": "Separated point and line coordinates from label coefficients, explained monomial counts, and derived polynomial address space.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1081,
+            1094
+          ],
+          "quote": "A point of $F^m$ takes $m\\log_2|F|=s(12a+32)=O(\\log N)$\nbits to specify. The encoded line data uses $cs=4s$ extra\nfield coordinates, so it fits the same order of address\nlength.\n\nA label address has a different form: it specifies polynomial coefficients.\nThere is one constant monomial, $t$ single variables, $\\binom t2$ products\nof two distinct variables, and $\\binom t3$ products of three. Thus a\ndegree-three label uses $1+t+\\binom t2+\\binom t3$ bits for $t=12a+32$.\nThis is $O(a^3)$, which is also $O(a2^a)$ because\n$a^2=O(2^a)$. Thus an address or a random seed for any of\nthe fixed number of tests has $O(\\log N)$ bits. There\nare at most $2^{C\\log_2(N+2)}=(N+2)^C$ addresses for a fixed constant $C$,\nhence polynomially many in total."
+        }
+      ],
+      "reason": "Point/line coordinate lengths and Boolean coefficient-label lengths are now separate paragraphs. Squarefree monomial choices explain the binomial coefficients and 2^(C log(N+2))=(N+2)^C closes the counting step.",
+      "reader_consequence": "The two different address spaces have explicit size arguments rather than a shared unexplained “polynomial” conclusion.",
+      "next_action": "Preserve this distinction. Reuse K or another letter for the address-bound constant if avoiding collision with the earlier correction C is convenient; that is a notation preference, not a correctness repair."
+    },
+    {
+      "id": "PA-29",
+      "verdict": "fixed",
+      "original_finding": "Identify the four nonzero correction parameters before charging their sampling loss. Four nonzero parameters are introduced only here without identifying the four correction calls, so their count is hard to recover.",
+      "author_status": "incorporated",
+      "author_action": "Identified the four nonzero sampling requests as two correction calls in each of two ZERO tests.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1115,
+            1123
+          ],
+          "quote": "Fair random bits give uniform field elements directly,\nsince $|F|$ is a power of two. Each of the two ZERO tests makes two certificate-correction calls.\nThese four calls have one nonzero comparison parameter apiece. The\nimplementation instead samples each from the whole field\nand accepts immediately if any of these four is zero.\nConditioned on all four being nonzero, the distribution\nis exactly the original one. The rejection probability\nis multiplied by $(1-1/|F|)^4\\geq1/16$, so a fixed\npositive gap survives."
+        }
+      ],
+      "reason": "The four nonzero parameters are identified as two calls in each of the two ZERO tests. The zero-accept wrapper and its exact conditioning loss remain explicit.",
+      "reader_consequence": "The exponent four is recoverable from the actual verifier inventory rather than imported as an arbitrary implementation adjustment.",
+      "next_action": "Keep the count and conditional-distribution explanation."
+    },
+    {
+      "id": "PA-30",
+      "verdict": "fixed",
+      "original_finding": "Move the clause compiler to an optional reduction route and retain the reduction contract. This detailed clause compiler is accurate but less central to the algebraic PCP mechanism than the missing field-label trace.",
+      "author_status": "incorporated",
+      "author_action": "Moved the flag-based clause calculation after the exercises; kept the exact reduction contract and proof destination on the main route.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1185,
+            1190
+          ],
+          "quote": "An explicit polynomial-time reduction encodes these fixed-arity constraints\nas Boolean clauses of width at most three, and then as a graph. The\n[long record's clause construction](../long/reasoning-record.md#from-every-np-verifier-to-a-graph)\nproves the first conversion; the [optional clause calculation](#optional-calculation-converting-a-finite-relation-to-clauses)\nshows its finite-pattern method. The graph is three-colourable exactly when all\nthe original constraints can be satisfied."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1353,
+            1385
+          ],
+          "quote": "<!-- passage:pcp-expository-clause-calculation -->\n### Optional calculation: converting a finite relation to clauses\n\nThe formal reduction represents each finite choice by\na block of bits with exactly one bit equal to one,\nthen converts the fixed-arity relations into Boolean\nclauses of width at most three. Here is how that last\nstep works. For a relation $R$ on $k$ bits, consider\neach possible input pattern $p$ and introduce flags\n\n$$\nz_0=0,\\qquad z_{i+1}=z_i\\lor(x_i\\mathbin{\\mathrm{xor}}p_i),\n\\qquad R(p)\\lor z_k=1.\n$$\n\nThe flags record whether the actual input has yet\ndiffered from $p$. The last condition imposes $R(p)$\nonly when the actual input equals $p$. Because $p_i$\nis fixed, $x_i\\mathbin{\\mathrm{xor}}p_i$ is a literal,\neither $x_i$ or its negation. An OR equation $z=u\\lor v$\nis enforced by three clauses:\n\n$$\n(z\\lor\\neg u),\\qquad(z\\lor\\neg v),\\qquad\n(\\neg z\\lor u\\lor v).\n$$\n\nThe first two require $z=1$ if either input is one;\nthe third requires an input to be one if $z=1$.\nShort clauses are padded with the constant false.\nEnumerating $2^k$ patterns costs a constant depending\non the original machine because $k$ is fixed, so the\noutput remains polynomial in size."
+        }
+      ],
+      "reason": "The finite-pattern flags construction is moved to a genuinely labelled optional section; the main route retains the exact reduction equivalence and a precise long-record destination.",
+      "reader_consequence": "The algebraic mechanism can be read without the clause compiler, while an interested reader can still recover the omitted operation.",
+      "next_action": "Keep it optional. In a redesigned paper consider moving the NAE gadget with it so that the main theorem closes before the optional reduction details."
+    },
+    {
+      "id": "PA-31",
+      "verdict": "fixed",
+      "original_finding": "Make the NAE colouring gadget visible as an adjacency object. The gadget is given as a long verbal construction even though adjacency is the operation the reader must inspect.",
+      "author_status": "incorporated",
+      "author_action": "Added an incidence list for the NAE triangle gadget alongside the palette and variable rules.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1208,
+            1226
+          ],
+          "quote": "Now make a palette triangle whose colours we call\n$0,1,2$. A Boolean variable and its negation are\nadjacent vertices, each joined to palette vertex $2$.\nThey must take opposite colours $0$ and $1$. For\neach NAE relation on literal vertices $a,b,c$, add vertices $A,B,C$\nand the six edges\n\n$$\n\\{AB,BC,CA,Aa,Bb,Cc\\}.\n$$\n\nThe first three edges form a triangle; the last three connect its vertices\nto the corresponding literals. If all literal colours are equal,\nthe new triangle has only two colours available and\ncannot be coloured. For literal colours $(0,0,1)$,\nthe new triangle can use $(1,2,0)$ respectively:\nits colours are distinct, and each differs from\nits adjacent literal. Permuting and complementing\nthe literal colours covers every other NAE case."
+        }
+      ],
+      "reason": "The NAE gadget now has an explicit six-edge incidence list in addition to palette and variable constraints, and the displayed (0,0,1) case has a legal extension.",
+      "reader_consequence": "The reader can reconstruct and check the adjacency object without translating a long verbal description first.",
+      "next_action": "Keep the list or replace it with an equally exact small diagram; no additional graph formalism is required."
+    },
+    {
+      "id": "PA-32",
+      "verdict": "fixed",
+      "original_finding": "Provide an independent solution rubric for the integrated reconstruction task. The task targets the right hard connection, but appears after all other answers and has no model solution or diagnostic rubric for independent users.",
+      "author_status": "incorporated",
+      "author_action": "Placed the reconstruction task before the solutions and added a solution tracking fixed M, correction, rejection and the polynomial identity.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1255,
+            1270
+          ],
+          "quote": "## 11. A reconstruction task and answers\n\n**Reconstruction task.** A received table is close to\na low-degree polynomial $M$, but all its erroneous\nentries might lie among points $(x,0)$. Explain why\nreading those entries directly cannot establish the\nidentity $M(x,0)=0$. Then reconstruct the repair,\nincluding the role of line data, the possibility of\nrejection, and the final use of a polynomial identity.\nThe answer requires the connections between Sections\n5, 6, 8 and 9 rather than one numerical calculation.\nAn account of the general proof is successful only\nif it explains why the same decoded polynomial is\nused at each of these steps.\n\nTry the task before reading the solutions below."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1314,
+            1330
+          ],
+          "quote": "**Reconstruction solution.** Fix the certificate polynomial $M$ chosen\nby the low-degree test. At a target $(x,0)$, direct table error is uncontrolled,\nso use a random line through that target and the encoded auxiliary row.\nTest the row, compare a corrected answer at a random nonzero point,\nand either reject or return the corrected origin bit. The correction\ntheorem bounds rejection-or-wrong relative to this same $M$.\n\nZERO rejects whenever either correction rejects. Averaging over the targets\nZERO requests therefore bounds the correction rejection terms by its own\nrejection rate. Coupling to the ideal checks on $M$ bounds ideal rejection\nby actual rejection plus the answer-replacement errors. If $M(X,0)$ were\na nonzero polynomial, the root bound and a random homogeneous observation\nwould force larger ideal rejection than this budget allows. Thus\n$M(X,0)=0$ as a polynomial identity. The second certificate identity\nmust be established for the same $M$ and the same decoded constraint\npolynomial. A reconstruction missing the fixed witness, the rejection\nevent, or the averaging over requested targets has omitted a necessary step."
+        }
+      ],
+      "reason": "The reconstruction task precedes the solutions and has a separate model answer with fixed M, target sampling, rejection containment, averaged targets and both polynomial identities. It does not claim measured learner success.",
+      "reader_consequence": "An independent reader has an actual target and diagnostic criteria, rather than merely being told that the connections should be understood.",
+      "next_action": "Preserve the task and rubric. For a future learning check, collect an attempt before showing the adjacent solutions and use a changed target slice; the present audit is not such a study."
+    },
+    {
+      "id": "PA-33",
+      "verdict": "partly_fixed",
+      "original_finding": "Separate F16 arithmetic setup from the enumeration and link the executable check. A new quotient-field construction, modulus irreducibility, generator and 256-pair count arrive together; the executable evidence is not linked locally.",
+      "author_status": "incorporated",
+      "author_action": "Explained irreducibility of the displayed modulus and linked the executed checker for the generator and finite experiment.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1422,
+            1438
+          ],
+          "quote": "For a concrete comparison, take\n$\\mathbb F_{16}=\\mathbb F_2[t]/(t^4+t+1)$.\nThis notation means that elements are binary polynomials\nof degree below four. Add their coefficients modulo two;\nmultiply them and reduce using $t^4=t+1$ until the degree\nis below four again. The modulus is irreducible: it has no binary root, and its remainder\nmodulo the only monic irreducible binary quadratic, $t^2+t+1$, is one.\nA reducible quartic without a linear factor would have a quadratic\nfactor. Thus these 16 elements form a field.\nThe old order-three nodes accept $X^4$ on all\n$256$ pairs $(u,v)$. The corrected test uses\nthe generator $t$ and interpolation weights\nat $t,t^2,t^3$; it accepts only $16$ pairs.\nThe accompanying [finite-field checker][example-checker] verifies that\n$t$ has order 15, enumerates these cases, and checks the interpolation\nidentity. The enumeration illustrates the test; the preceding family\nargument establishes failure for unbounded field sizes."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1517,
+            1517
+          ],
+          "quote": "[example-checker]: https://github.com/wcook04/lean-exposition/blob/main/papers/pcp/expository/check_examples.py"
+        }
+      ],
+      "reason": "The mathematical setup is substantially repaired: irreducibility is justified and the text identifies generator/order and exhaustive checks. However, the executable link points to the mutable main branch, not to this frozen edition or its enclosed script. It also supplies no command or packet-relative location in the paper itself. The reproducibility portion therefore remains weaker than the exact-edition review contract.",
+      "reader_consequence": "A reader following the new link later may execute different bytes from those that generated the displayed 256/16 result. This is an evidence-navigation defect, not a defect in the finite calculation.",
+      "next_action": "Use an immutable revision URL and identify examples/check_examples.py with its invocation for the distributed packet. Splitting field setup from enumeration is optional; do not add more algebra just to satisfy the old paragraph instruction.",
+      "related_new_findings": [
+        "RA-N03"
+      ]
+    },
+    {
+      "id": "PA-34",
+      "verdict": "fixed",
+      "original_finding": "Keep readable pinned source links and move raw revision text out of the teaching prose. The paragraph contains a raw revision hash and several verification nouns; the useful message is the formal source and the fact that links do not certify every prose sentence.",
+      "author_status": "incorporated",
+      "author_action": "Used a readable pinned-source link and retained the full immutable revision in metadata and the long account.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1452,
+            1465
+          ],
+          "quote": "## Sources and verification\n\nThe mathematical construction is from\n[Amireddy, Behera, Srinivasan, Sudan and\nWillumsgaard, version 2][paper-v2]. The\nformal development discussed here is\n[Troy Lee's pinned PCP development][lean-project]. It includes the\nconcrete complexity argument as well as\nthe algebraic verifier. The full account\nrecords exact statements, proof correspondences\nand verification evidence; a Lean source\nlink by itself does not certify that every\nsentence of this exposition says the same\nthing as the formal statement."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1508,
+            1510
+          ],
+          "quote": "[lean-project]: https://github.com/troyjlee/tcs-formalizations/tree/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP\n[lean-theorem]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Theorem.lean\n[verifier-definitions]: https://github.com/troyjlee/tcs-formalizations/blob/a0ce13ed0fa264f051c1278e039596ce65557fa4/PCP/Verifier/Definition.lean"
+        }
+      ],
+      "reason": "The prose now uses a readable pinned-source label; its URL retains the complete revision. The distinction between formal source and sentence-level correspondence is still stated.",
+      "reader_consequence": "The evidence boundary is readable without sacrificing immutable access.",
+      "next_action": "Preserve this source-versus-prose distinction and apply the same immutable-link practice to the finite checker."
+    },
+    {
+      "id": "LA-01",
+      "verdict": "fixed",
+      "original_finding": "The selected reader theorem concerns full coefficient-label encodings, whereas the paragraph and its eight-bit word concern homogeneous linear labels.",
+      "author_status": "incorporated",
+      "author_action": "Retargeted the eight-position example to homogeneous linearEncode and its exact half-distance theorem.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            575,
+            586
+          ],
+          "quote": "These labels are **homogeneous linear**: each is a parity dot product,\nwith no added constant. They form the homogeneous linear part of a\nHadamard encoding. It stores\neight answers about a message with only three bits. Any two different\nmessages give words differing in exactly half their positions. Indeed,\ntheir difference is a nonzero linear functional. Choose a vector on\nwhich it is one; adding that vector pairs every zero value with a one value.\n\nThus a uniformly random one-bit observation distinguishes two unequal\nmessages with probability $1/2$. To compare values, the checker queries\nthe same random linear functional on each and compares the resulting\nbits; it does not need to reconstruct either whole message."
+        },
+        {
+          "file": "reader/primary/edition.json",
+          "locator": "passages linked-source-18 and pcp-expository-homogeneous-encoding; declarations PCP.Algebraic.Hadamard.relativeDistance_linearEncode and linearEncode",
+          "note": "The former maps to Hadamard.lean:173–180; the latter to 137–139."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/Hadamard.lean",
+          "lines": [
+            136,
+            143
+          ],
+          "quote": "/-- Homogeneous linear forms, parametrized by their `t` binary coefficients. -/\nnoncomputable def linearEncode (x : Fin t → ZMod 2) :\n    (Fin t → ZMod 2) →ₗ[ZMod 2] ZMod 2 :=\n  ∑ i, x i • LinearMap.proj i\n\ntheorem linearEncode_apply (x w : Fin t → ZMod 2) :\n    linearEncode x w = ∑ i, x i * w i := by\n  simp [linearEncode, smul_eq_mul]"
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/Hadamard.lean",
+          "lines": [
+            172,
+            180
+          ],
+          "quote": "/-- The homogeneous-linear variant of the element distance identity. -/\ntheorem relativeDistance_linearEncode (x y : Fin t → ZMod 2) (hxy : x ≠ y) :\n    relativeDistance (linearEncode x) (linearEncode y) = (1 : ℚ) / 2 := by\n  obtain ⟨i, hi⟩ := Function.ne_iff.mp hxy\n  let L := (linearEncode x - linearEncode y).toAddMonoidHom\n  have he : L (Pi.single i 1) ≠ 0 := by simpa [L, sub_eq_zero] using hi\n  have h := relativeDistance_addHom_zero L (Pi.single i 1) he\n  change relativeDistance (fun c => linearEncode x c - linearEncode y c) 0 = (1 : ℚ) / 2 at h\n  simpa only [relativeDistance, hammingDist, Pi.zero_apply, sub_ne_zero] using h"
+        }
+      ],
+      "reason": "The current association targets relativeDistance_linearEncode, whose domain is the homogeneous coefficient vector space. The matching linearEncode definition is separately indexed. I checked the exact signatures and verified that the embedded Hadamard source bytes equal the frozen Lean file; this is a semantic source check, not Lean replay.",
+      "reader_consequence": "Following the eight-position example now leads to exactly its half-distance theorem rather than to a theorem averaged over the larger affine coefficient domain.",
+      "next_action": "Keep this association and the definition route; ensure browser navigation displays the same declarations."
+    },
+    {
+      "id": "LA-03",
+      "verdict": "retained_correctly",
+      "original_finding": "The corrector guarantee retains its exact label quantification and rejection-sensitive failure event.",
+      "author_status": "retained",
+      "author_action": "Preserved. Preserve the label-average qualification, arbitrary auxiliary data and actual rejection term through all rewrites.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            846,
+            872
+          ],
+          "quote": "Thus the output is either rejection or one bit. Suppose the primary table\nhas homogeneous distance at most $\\delta$ from a degree-$D$ polynomial\n$P$, and this procedure rejects with probability $R_a$. Then\n\n$$\n\\Pr[\\text{rejection or wrong returned bit}]\n\\leq C R_a+\\delta+\\frac{D}{2(Q-1)}.\n$$\n\nTo understand the three terms, decode the tested auxiliary rows to\ncandidate line polynomials. Poor auxiliary rows cause inner-test rejection,\nso their correction errors are bounded by a constant times $R_a$.\nIf a candidate line has the wrong value at zero, its difference from\n$P(a+Yv)$ is a nonzero degree-$D$ polynomial. It can hide that discrepancy\nat at most $D$ of the $Q-1$ nonzero comparison points. A random homogeneous\nobservation distinguishes unequal field values with probability one half;\nthis gives the displayed root loss. Finally, $a+zv$ is uniform for fixed\nnonzero $z$, so replacing its primary answer costs at most $\\delta$.\nThe full proof counts both auxiliary corrections and the rejection event\nin the coefficient $C$.\n\nThis probability includes a uniformly random homogeneous label; it is\nnot a guarantee for every fixed label. It assumes no honesty of the\nauxiliary line table and no smallness of $R_a$. The term $C R_a$ is\nuseful because a later test that rejects whenever correction rejects\nwill bound $R_a$ by its own rejection rate, after averaging over its\nrequested targets."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            881,
+            894
+          ],
+          "quote": "The binary ZERO test chooses a uniform point $x$ and homogeneous label\n$L$, reads the primary bit $p(x,L)$, and calls the certificate corrector\nat $(x,0)$ and $(x,Z_H(x))$. Both calls use this $L$ and independent\nremaining seeds. If they return $b_0,b_Z$, acceptance requires\n$b_0=0$ and $b_Z=p(x,L)$; either rejection makes ZERO reject.\nConsequently ZERO's rejection rate bounds each correction's rejection\n*averaged over its requested targets*. It does not give that bound for\nevery fixed target separately.\n\nFor an honest zero-on-grid polynomial, the prover supplies its exact\nprimary encoding, an exact vanishing certificate and the honest encoded\nline data for that certificate. All corrections and both identity checks\nthen succeed for every seed. Honest primary values alone would not\nguarantee acceptance with an arbitrary certificate or arbitrary line data."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean",
+          "lines": [
+            219,
+            236
+          ],
+          "quote": "/-- Soundness against an honestly encoded outer polynomial. The distance on\nthe left counts both `none` and an incorrect returned bit as failures. The inner\npolynomials are decoded from arbitrary received rows without a small-error premise. -/\ntheorem failure_le\n    (hq : 2 * c < Fintype.card F)\n    (ρ : F ≃ₗ[ZMod 2] (Fin t → ZMod 2))\n    {nodes : Fin (c + 1) → F} (hnodes : GeneratorLowDegreeTest.IsGeneratorNodes nodes)\n    {ζ : F} (hζ : StandardLocalCorrection.GoodNodes c ζ)\n    {D : ℕ} (P : MvPolynomial σ F) (hP : P.totalDegree ≤ D)\n    (hdecode : c * m ^ c ≤ D)\n    (f : (σ → F) → Coefficients t 1 → ZMod 2)\n    (H : (σ → F) → RowOracle F m c t) {δ : ℚ}\n    (hnear : BinaryLagrangeConstraint.homogeneousDistance (le_refl 1) f\n      (fun x => encode 1 (ρ (MvPolynomial.eval x P))) ≤ δ) (a : σ → F) :\n    relativeDistance (sample ρ nodes ζ f H a)\n      (fun s : Sample F σ m c t => some (linearEncode (ρ (MvPolynomial.eval a P)) s.2.2.1.2)) ≤\n      soundnessConstant c * rejectionRate ρ nodes ζ f H a + δ +\n        (D : ℚ) / (2 * (Fintype.card F - 1 : ℕ)) := by"
+        }
+      ],
+      "reason": "The bound still includes rejection or a wrong returned bit; it averages the homogeneous label and does not require honest auxiliary data or a small rejection rate. The ZERO consumer explicitly averages over its requested targets.",
+      "reader_consequence": "No invalid fixed-label or per-target guarantee has replaced the actual theorem, and the downstream rejection argument remains usable.",
+      "next_action": "Keep these exact qualifications through every shortened explanation."
+    },
+    {
+      "id": "LA-04",
+      "verdict": "retained_correctly",
+      "original_finding": "The low-degree converse states the formal theorem’s genuine generator and field-size hypotheses.",
+      "author_status": "retained",
+      "author_action": "Preserved. Keep “generator” and the strict field-size/error thresholds; do not replace them by arbitrary distinct nodes.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            503,
+            526
+          ],
+          "quote": "For degree at most $c$, interpolation needs $c+1$ values, a fixed number.\nThe nonzero elements of a finite field form a cyclic multiplicative\ngroup: there is an element $\\zeta$ whose successive powers run through\nevery nonzero field element. We use this standard finite-field theorem\nas an algebraic input and call $\\zeta$ a generator. The formal\nconstruction chooses $a_i=\\zeta^{i+1}$ for $i=0,\\ldots,c$, and the\nLagrange weights $\\eta_i$ for evaluation at zero. It tests\n\n$$\nf(u)=\\sum_{i=0}^c\\eta_i f(u+a_i v)\n$$\n\nat uniformly random $u,v$. An honest polynomial of total degree at\nmost $c$ passes: along a line it is a univariate polynomial of degree\nat most $c$, so interpolation applies.\n\nFor the converse, use the stated generator nodes and $|F|>2c$.\nIf the rejection rate is $\\delta<1/[2(c+2)^2]$, the function is within\ndistance $2\\delta$ of some polynomial of total degree at most $c$.\nHere distance means the fraction of table entries that differ.\nPassing the relation rarely or at a few selected lines would not give\nthis conclusion. The [corrected paper][paper-v2], Section 3.2, develops\nthis weighted test and its correction procedure; the bounds stated here\nare those of the formal development."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+          "lines": [
+            15,
+            21
+          ],
+          "quote": "PCP-SOSA27, Fact 2.7 and Lemma 3.3. Interpolate at the consecutive nonzero\npowers of a generator and check at zero. The weights are Lagrange evaluations,\nincluding the constant-polynomial case.\n\nSoundness requires only `2*c < |F|`, over any finite field. This is stronger than\nthe paper's Lemma 3.3, which assumes `q` is a power of two larger than `C*c^3`; the\nrejection threshold `1/(2(c+2)^2)` and the distance bound `2δ` are the paper's."
+        },
+        {
+          "file": "formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean",
+          "lines": [
+            274,
+            292
+          ],
+          "quote": "theorem exists_close (hq : 2 * c < Fintype.card F)\n    (hζ : IsPrimitiveRoot ζ (Fintype.card F - 1)) (f : (σ → F) → F)\n    {δ : ℚ} (hrej : rejectionRate c ζ f ≤ δ) (hδ : δ < 1 / (2 * (c + 2 : ℚ) ^ 2)) :\n    ∃ P : MvPolynomial σ F, P.totalDegree ≤ c ∧\n      relativeDistance f (fun x => MvPolynomial.eval x P) ≤ 2 * δ := by\n  let g := WeightedConstraint.correction (nodes c ζ) (weights c ζ) f\n  have hpos : (0 : ℚ) < 2 * (c + 2 : ℚ) ^ 2 := by positivity\n  have hsmall : (2 * (Fintype.card (Fin (c + 1)) : ℚ) + 3) *\n      Fintype.card (Fin (c + 1)) * rejectionRate c ζ f < 1 := by\n    have hnonneg : 0 ≤ rejectionRate c ζ f := relativeDistance_nonneg _ _\n    have hbound := (lt_div_iff₀ hpos).mp (hrej.trans_lt hδ)\n    simp only [Fintype.card_fin, Nat.cast_add, Nat.cast_one]\n    have hc : (0 : ℚ) ≤ c := Nat.cast_nonneg _\n    nlinarith\n  obtain ⟨P, hP, he⟩ := exists_polynomial hq hζ g\n    (WeightedConstraint.correction_satisfies _ _ (nodes_ne_zero hζ) f hsmall)\n  refine ⟨P, hP, ?_⟩\n  have hd := WeightedConstraint.distance_correction_le (nodes c ζ) (weights c ζ) f\n  simpa only [he] using hd.trans (mul_le_mul_of_nonneg_left hrej (by norm_num))"
+        }
+      ],
+      "reason": "The generator hypothesis, strict |F|>2c and strict rejection threshold remain. I checked that the pinned theorem is over any finite field, so no additional characteristic-two hypothesis is missing from this scalar statement.",
+      "reader_consequence": "The learner is not invited to treat arbitrary distinct interpolation nodes as sufficient for the converse; completeness/correction and characterization remain distinct.",
+      "next_action": "Keep. If a proof sketch is shortened, do not erase the generator requirement."
+    },
+    {
+      "id": "MA-01",
+      "verdict": "fixed",
+      "original_finding": "The exact-word query is introduced, but the later received-word derived read is only called freshly randomised self-correction. The text never displays the two full-label locations needed to justify its 2 epsilon replacement loss.",
+      "author_status": "incorporated",
+      "author_action": "Displayed both masked queries, proved their conditional uniform marginals and averaged the row error; did not assume their independence.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            711,
+            725
+          ],
+          "quote": "The preceding address calculation concerned an honest row. For a received\nrow $g_x$, its special requested label $\\Lambda_{x,L}$ might always be\ncorrupt, even when the row has small average error. Use the same correction\nas before, now on the full polynomial-label space:\n\n$$\ng_x(R)+g_x(R+\\Lambda_{x,L}),\n$$\n\nwhere $R$ is a fresh uniform label. For fixed $x,L$, both queried labels\nare individually uniform, so row error $\\varepsilon_x$ gives answer error\nat most $2\\varepsilon_x$. The reads need not be independent. Averaging\nover uniform $x$ gives the $2\\varepsilon$ bound used in Section 9.\nNeither every row's error nor the distribution of the requested label\nhas been assumed uniform."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            996,
+            1002
+          ],
+          "quote": "Here is the event comparison behind that inequality. Let $r$ be the\nrejection rate after replacing the derived cubic answer by its ideal bit,\nbut keeping the two actual certificate corrections. Section 7's fresh-mask\nargument gives $r\\le\\kappa+2\\varepsilon$. In this modified test, rejection\nof either correction still forces rejection, so each correction has\naverage rejection at most $r$. Its failure probability is at most\n$Cr+\\varepsilon+5D/[2(Q-1)]$."
+        }
+      ],
+      "reason": "The two actual labels R and R+Lambda are now shown. Fresh uniform R makes each marginal uniform conditional on x,L; averaging epsilon_x over the uniform point gives 2epsilon. The text explicitly rejects a false independence assumption.",
+      "reader_consequence": "The later derived-read replacement loss now has an operational and probabilistic warrant for arbitrary received rows.",
+      "next_action": "Preserve the displayed mask operation and its conditional averaging; it is essential to the ZERO budget."
+    },
+    {
+      "id": "KEEP-01",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the P=M=1 counterexample and both grid-certificate identities.",
+      "author_status": "retained",
+      "author_action": "Preserved. Retain the example and require both identities in every compressed occurrence.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            373,
+            405
+          ],
+          "quote": "It satisfies two polynomial identities,\n\n$$\nM(X,0)=0,\n\\qquad M(X,Z_H(X))=P(X),\n$$\n\nwhere $Z_H$ is applied to each coordinate. These identities also imply\nthe desired grid condition: if $x\\in H^m$, then $Z_H(x)=0$, so both\nexpressions for $M$ give $P(x)=0$.\n\nIn the small example, the packaged certificate is\n\n$$\nM(X,Y,U,V)=U(Y+1)+V(X+2).\n$$\n\nAt $(X,Y)=(2,2)$ its two substitutions are\n$M(2,2,0,0)=0$ and $M(2,2,2,2)=4=P(2,2)$.\nThe polynomial $P$ is allowed to be nonzero there. The identity between\nthe certificate and $P$ holds everywhere.\n\nNow suppose a proposed low-degree pair $P,M$ has $P$ nonzero somewhere\non the grid. At least one of the two identities must be false as a\npolynomial identity. A random ambient point detects that failure by the\npolynomial distance bound. Substituting $Z_H(X_j)$ can multiply degree by $h=|H|$;\nthe field must be large compared with this resulting degree. Section 9\nchecks that requirement. Thus a large collection of grid conditions\nhas become two random algebraic checks.\n\n**Question 1.** Could the checker omit the first identity and test only\n$M(X,Z_H(X))=P(X)$? Test your answer with the nonvanishing polynomial\n$P=1$. Answers to the questions appear in Section 11."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1272,
+            1277
+          ],
+          "quote": "**Answer 1.** The second identity alone is insufficient.\nTake $P=1$ and let $M(X,U)=1$ independently of $U$.\nThen $M(X,Z_H(X))=P(X)$ holds everywhere, although\n$P$ never vanishes. The first identity excludes this\nchoice. With both identities, substituting a grid point\nforces $P(x)=M(x,0)=0$."
+        }
+      ],
+      "reason": "Both certificate identities and the P=M=1 counterexample remain. The second identity alone still admits a polynomial that never vanishes.",
+      "reader_consequence": "The logical necessity of the zero-input certificate check is concrete and survives compression.",
+      "next_action": "Keep both identities in every summary, diagram and alternative opening."
+    },
+    {
+      "id": "KEEP-02",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the exact nonconclusion in Question 4.",
+      "author_status": "retained",
+      "author_action": "Preserved. Retain the distinction when shortening the resource section.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1238,
+            1241
+          ],
+          "quote": "**Question 4.** If the verifier were allowed to use\n$\\sqrt n$ random bits instead, would the exhaustive-seed\nargument still prove that its language is in NP?\nIdentify the step that changes."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1298,
+            1303
+          ],
+          "quote": "**Answer 4.** The number of seeds would be\n$2^{\\sqrt n}$, which is not bounded by any fixed\npolynomial in $n$. The exhaustive verification could\ntake more than polynomial time. This shows why that\nargument fails; it does not prove that the language\nis outside NP."
+        }
+      ],
+      "reason": "The answer still says that 2^(sqrt n) invalidates this polynomial enumeration argument, not that the language is outside NP.",
+      "reader_consequence": "Failure of a proof strategy is not confused with a complexity separation.",
+      "next_action": "Retain the nonconclusion if moving or shortening the exercise."
+    },
+    {
+      "id": "KEEP-03",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the strict boundary and epistemic distinction in Question 5.",
+      "author_status": "retained",
+      "author_action": "Preserved. Keep 7/32 versus 3/8 and the strict kappa<1/16 statement; the event toy is an explanation, not a cheating PCP.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1243,
+            1251
+          ],
+          "quote": "**Question 5.** Consider a smaller hypothetical error budget of the\nkind used in Section 9. A false grid condition makes an ideal test\nreject with probability at least $3/8$. The actual test rejects with\nprobability at most $\\kappa$, and replacing its answers by ideal answers\nchanges the verdict with probability at most $4\\kappa+1/16$. Does\n$\\kappa\\leq1/32$ rule out a false grid condition? Does\n$\\kappa\\leq1/16$ do so by the same estimates? Explain what follows\nat the boundary; these toy constants do not replace the construction's\nproved constants."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1305,
+            1312
+          ],
+          "quote": "**Answer 5.** Ideal rejection is at most actual rejection plus\nthe probability that the verdict changes, hence at most\n$5\\kappa+1/16$. At $\\kappa\\leq1/32$, this is at most\n$7/32<12/32=3/8$, which contradicts a false grid condition.\nAt $\\kappa\\leq1/16$, the upper bound is $3/8$; equality\ngives no contradiction. These estimates then neither certify\ngrid vanishing nor demonstrate its failure. The strict bound\n$\\kappa<1/16$ would suffice for this hypothetical budget."
+        }
+      ],
+      "reason": "The 7/32 versus 3/8 calculation and equality boundary are retained correctly. The strict inequality kappa<1/16 is distinguished from the weak bound.",
+      "reader_consequence": "The exercise teaches what a numerical error budget can and cannot establish at its boundary.",
+      "next_action": "Keep the boundary explanation; label any changed constants as a toy example."
+    },
+    {
+      "id": "KEEP-04",
+      "verdict": "retained_correctly",
+      "original_finding": "Preserve the scope and credit of the historical wrong-test example.",
+      "author_status": "retained",
+      "author_action": "Preserved. Keep the unbounded-family argument and the separation between finite enumeration, ordinary deduction and formal support.",
+      "current_evidence": [
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1389,
+            1420
+          ],
+          "quote": "## 12. Why the low-degree test needed correction\n\nThe first version of the source paper used an element of order $c+1$\nand unit weights. For $c=2$, let $\\zeta$ have order three in a field\n$F$ of characteristic two. The old condition was\n\n$$\nf(u)=f(u+\\zeta v)+f(u+\\zeta^2v)+f(u+v).\n$$\n\nIt holds for quadratic polynomials, but its converse\nfails. Take $f(X)=X^4$. In characteristic two,\n$(u+av)^4=u^4+a^4v^4$. Since $\\zeta^4=\\zeta$\nand $1+\\zeta+\\zeta^2=0$, the right-hand side is\n\n$$\n3u^4+(\\zeta+\\zeta^2+1)v^4=u^4.\n$$\n\nThe test accepts every pair $(u,v)$, although\n$X^4$ cannot agree everywhere with a quadratic\nwhen $|F|>4$: their difference is a nonzero\ndegree-four polynomial with at most four roots.\nIn fact, their disagreement fraction is at least\n$1-4/|F|$.\n\nThe failure persists in arbitrarily large fields.\nFields $F=\\mathbb F_{2^{2k}}$, for $k\\geq2$, contain elements of order\nthree and have unbounded size. The example therefore survives any fixed\nfield-size threshold for this old degree-two test. It identifies a\ndefect in the old test's characterisation, not in the PCP theorem or\nthe corrected formal proof."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1435,
+            1448
+          ],
+          "quote": "The accompanying [finite-field checker][example-checker] verifies that\n$t$ has order 15, enumerates these cases, and checks the interpolation\nidentity. The enumeration illustrates the test; the preceding family\nargument establishes failure for unbounded field sizes.\n\nCompleteness requires honest low-degree polynomials\nto pass; the interpolation identity proves that\nthey do. Soundness must also rule out other\nfunctions that pass too often. The generator\nand its weights support that converse.\nThe corrected paper acknowledges Troy Lee\nfor finding an error in the earlier lemma;\nno priority claim for the example above is\nmade here."
+        },
+        {
+          "file": "papers/expository/main.md",
+          "lines": [
+            1467,
+            1478
+          ],
+          "quote": "AI agents wrote this exposition under Will\nCook's direction. The finite calculations\nwere checked by the accompanying Python\nprogram. They illustrate individual\noperations, and their small parameters do\nnot instantiate the large-field parameter\nregime of the complete PCP construction.\nThe family argument about the earlier test\nis an ordinary mathematical deduction,\nnot a Lean-checked theorem in this project.\nNo claim of independent human review or\nmeasured reader understanding is made."
+        }
+      ],
+      "reason": "The old-test counterexample remains an unbounded characteristic-two family, separate from the finite F16 enumeration and from the corrected theorem. Credit to Lee and the lack of a new priority or Lean-checking claim remain explicit.",
+      "reader_consequence": "A genuine failure of an earlier local test is not misrepresented as a failure of PCP or as independent formal proof work by this exposition.",
+      "next_action": "Preserve this scope and credit if the historical example becomes optional."
+    },
+    {
+      "id": "UI-01",
+      "verdict": "fixed",
+      "original_finding": "Closing the proof pane expanded the contents navigation across the desktop viewport and pushed the article below it.",
+      "author_status": "incorporated",
+      "author_action": "Fixed the closed-pane layout and tested companion/Back journeys at laptop and monitor widths.",
+      "current_evidence": [
+        {
+          "surface": "parent reviewer browser observation",
+          "edition": "live route, revised 15 November text observed; exact runtime byte identity not established",
+          "url": "https://wcook04.github.io/proof-reader/#/pcp-exposition",
+          "viewport": "1900×990",
+          "journeys": [
+            "Initial Graph-closed layout inspection",
+            "Browser Back returning to a closed proof pane",
+            "Exposition Section 6→bivariate agreement companion heading→browser Back"
+          ],
+          "observations": [
+            "Article in the intended reading area in the observed closed-pane states.",
+            "No full-width contents block or reserved empty graph rail.",
+            "Companion route /pcp-full-argument/@4-bivariate-agreement opened the intended heading at top≈70.",
+            "Back restored exposition Section 6 at top≈70.",
+            "No explicit Graph→Close button sequence was clicked."
+          ],
+          "scope": "Executed by the parent reviewer and reported to this subreview. The exact historical button sequence was not replayed. No local frozen-runtime request reached the packet server."
+        }
+      ],
+      "reason": "The parent reviewer freshly observed the live reader at 1900×990 in its initial Graph-closed state and after browser Back closed the proof pane. In those observed states the article occupied the intended reading area, without the old full-width contents block or a reserved empty graph rail. The bivariate-agreement companion link landed on the exact heading, and browser Back restored exposition Section 6 at the prior top position. The parent did not click an explicit Graph→Close sequence. This verdict covers the observed live desktop closed-pane layout and round trips, not an exact replay of every historical button action, all widths, or the frozen-build runtime.",
+      "reader_consequence": "The observed live closed-pane states provide a usable prose route, and the tested companion round trip preserves the reading position. The precise historical Graph→Close button sequence was not replayed.",
+      "next_action": "Preserve the observed layout repair. If claiming reproduction of the exact historical button sequence, separately exercise an explicit Graph→Close action; do not describe the present observations as that execution. Keep the live-versus-frozen edition and viewport limits explicit."
+    },
+    {
+      "id": "UI-02",
+      "verdict": "fixed",
+      "original_finding": "Two different visible decoding cards share the same explanatory title.",
+      "author_status": "incorporated",
+      "author_action": "Gave inner weighted decoding and outer combined decoding distinct graph titles.",
+      "current_evidence": [
+        {
+          "file": "reader/primary/edition.json",
+          "locator": "claims claim-5 and claim-8; declarations GeneratorLowDegreeTest.exists_close and EncodedLineLowDegreeTest.exists_close"
+        },
+        {
+          "file": "reader/primary/links.json",
+          "locator": "claims and plain title mappings for the same declarations"
+        },
+        {
+          "surface": "parent reviewer browser observation",
+          "url": "https://wcook04.github.io/proof-reader/#/pcp-exposition",
+          "viewport": "1900×990",
+          "observation": "Distinct inner/outer decoding titles visible in the live reader.",
+          "scope": "Live edition, not independently byte-bound to the enclosed runtime."
+        }
+      ],
+      "reason": "The frozen edition and link mapping use distinct role-specific names, “Decoding the inner weighted test” and “Decoding the outer encoded-line test”, with exact declarations retained. The parent browser run also observed both distinct titles in the revised live reader.",
+      "reader_consequence": "The two logical roles are distinguishable before opening their technical declarations.",
+      "next_action": "Preserve both distinct titles and their exact statement destinations."
+    }
+  ],
+  "integration_note": "UI verdicts were finalized using the parent reviewer’s fresh live-browser observations. The parent separately inspected all 22 current PDF pages; those observations belong in the combined review coverage rather than being represented as this subreview’s execution."
+}

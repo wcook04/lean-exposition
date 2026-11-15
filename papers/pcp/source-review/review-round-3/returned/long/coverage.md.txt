@@ -1,0 +1,93 @@
+# Coverage and evidence limits
+
+## Edition and preservation
+
+The reviewed input is `pcp-review-round2-1-full-argument.zip`, containing manifest schema `pcp-critique-packet/2`. The original packet and its extracted payload were kept unchanged. Proposed prose is delivered separately. The packet's own manifest status `review_unperformed` is an input-era label; it was not rewritten to describe this response.
+
+| Item | Exact identity |
+|---|---|
+| Authored revision | `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6` |
+| Reader revision | `f500810cd5de90b100940ea7d7d048f54f3bf7c7` |
+| Lean revision | `a0ce13ed0fa264f051c1278e039596ce65557fa4` |
+| Input ZIP SHA-256 | `36216803d337fff5af8bfc450792c9937dd1c95c65c3af4a8ce57ffe08d9d22b` |
+| Input manifest SHA-256 | `eebd3c702dbb1c17e64171cc455b4f9c2a33351825f9f987990d6fd93f359fba` |
+| Current long Markdown SHA-256 | `ea1535be69567887bbfb2fb6e82a8705aa6c8c67f38e34bff34a75f604babece` |
+| Current 44-page PDF SHA-256 | `13884ff9194a058e75c37c4cdc976b02be7f615d4900014c436a4a5b975e7e94` |
+| Frozen primary reader JSON SHA-256 | `960279773905016d1e9ebdc8ea1b693d5807ab54ee54905067064452595d75b7` |
+
+The packet validator checked 1,603 payload hashes, the presence of 23 retained literature PDFs, and all 40 historical finding IDs. Hash verification is custody evidence, not a claim that every payload file or all 23 papers were read.
+
+## Reading order and reviewer status
+
+The primary reviewer read the active brief, purpose, recipient context and evidence boundaries, then every paragraph of the current primary Markdown (1–1965), including the theorem, all three chapters, source account and references. The initial reconstruction was saved before opening the repair ledger, previous edition, returned review or author dispositions. The active brief already named pressure points, so this was not blinded. Three component reviewers separately read their assigned current material and saved initial notes before consulting history. The original notes are preserved in [support/first_readings.md](support/first_readings.md).
+
+History was then used to check changes: the exact forty original findings and author actions, old/current passages and all primary diff hunks across the team, and the prior long review. The component scopes distinguish full-row reading from enumeration of other row summaries. The final audit integrates all forty rows; it does not merely inherit the author's incorporated labels.
+
+These are four model perspectives, not four human participants or reports from Troy Lee. Familiarity with the proof techniques makes this review a poor proxy for an unfamiliar learner. No one was contacted. There were no hidden-solution exercise attempts in the assigned full argument. The finite examples and expected claims had been read before their independent recomputation; no unprompted learning success is inferred from the calculations.
+
+## Whole-primary coverage
+
+The following describes the inferences inspected, rather than claiming every imported source proof was independently reproved.
+
+| Primary region | Reconstruction/check performed |
+|---|---|
+| Opening, 1–77 | Endpoint, quantifier order, fixed proof, all-branch address bounds, exact seeds, reverse-prefix argument, scope and roadmap |
+| Polynomial tools, 95–195 | Root-distance induction; individual-degree grid interpolation; division/certificate degree bookkeeping; finite-field formal equality; exact-line and boundary cases |
+| Weighted test, 196–347 | Full-generator propagation; nonzero-node sampling; double-grid plurality; strict threshold; Kaufman–Sudan specialization; scope of old-test counterexample |
+| Specified-value correction, 348–387 | Separate error/accept-wrong events, correlated-sample union bound, nonzero-parameter denominator |
+| Bivariate agreement, 388–512 | Good-column counts; polynomial kernel and minor degrees; nonzero locator; clean rectangle; interpolation; coarse-to-sharp agreement |
+| Point-line proof and correspondence, 513–767 | Arbitrary minimizer ties; transverse crossing; four mixed-plane distributions; candidate-row fifth error; fixed-Q quantifier; constants and degree-zero case |
+| Digit and Hadamard encodings, 768–1012 | Formal left inverse; arbitrary decoded degree; composition and scalar homogeneity; full/affine/homogeneous labels; BLR and product cases; simultaneous row witness |
+| Binary tests, 1013–1156 | Weighted replacement and half-distance; arbitrary row threshold split; all-field outer parameter; same decoded polynomial and both metrics |
+| Correction, ZERO and derived oracles, 1157–1321 | Nonzero correction parameter; unconditional reject-or-wrong bound; two nonuniform certificate requests; fresh masks; polynomiality premise; multiplied replacement loss |
+| Colours, tables and soundness, 1322–1549 | Vertex/edge algebra; all eight tables and seven branches; completeness; four fixed witnesses; difference identity; 3D/5D constraints; strict gap |
+| Parameters, sampling and repetition, 1550–1713 | Least-parameter upper bound; degree/field inequalities; proof and seed sizes; exact fair-bit loss; fixed-proof repetition and large constants |
+| Implementation, NP reduction and transport, 1714–1862 | Bounded query-tree equality; separate runtime proof; tableau, bounded witness length, fixed constraint arity, gadgets, executable reduction and size/seed composition |
+| Reverse, reference models and credit, 1863–1965 | Finite prefix/all-seed checker; both concrete simulations; import boundary; attribution and evidence status |
+
+The specialist and exposition were sampled for the repairs and division of labor: specialist correction costs and machine terminology/resources; exposition label-domain example; companion links and PDF metadata. They were not independently read and reviewed in full. No separate all-paragraph verdict on either companion is claimed.
+
+## Formal source and primary literature
+
+The selected Lean statements, definitions and proof regions are listed in detail in [support/source_scope.md](support/source_scope.md). The core algebra files were read in full by the algebra reviewer. The binary reviewer read the encoding, composition, row-decoding and test definitions, with selected complete final soundness proofs. The complexity reviewer inspected the final soundness, resource, callback, reduction and reference-NP files, distinguishing complete files from excerpts. The primary reviewer additionally inspected frozen associations/provenance, the theorem and guide interfaces, and source regions needed to reconcile the final response. This is not a full transitive dependency audit.
+
+The existing reading guide and proof map were used as the source-owner comparator. The team read the guide's endpoint, model, implementation, constants and principal algebra-comparison sections. Its entire repository and every machine proof were not read.
+
+Actual original literature, not only the packet's summaries, was consulted: retained ABSSW v1/v2 TeX at the old/corrected short test, Claim 3.7, binary testing/correction, ZERO and verifier assembly; Kaufman–Sudan Definitions 2.3/2.5/2.8 and Theorem 2.9; Rubinfeld–Sudan §4; Friedl–Sudan's exact-line lemma; Arora–Safra §5.2; ALMSS's nearest-line/crossing and bivariate theorem; BCHKS's Fourier analysis. Exact pages and TeX ranges are in the component scope.
+
+Fresh primary web retrieval reached the ECCC revision notice and revised PDF, the author-hosted Kaufman–Sudan PDF, and the KTH author copy of BCHKS. The root reviewer opened and inspected the relevant Claim 3.7 and Kaufman–Sudan definitions/theorem, and the BCHKS source. Direct arXiv and some pinned GitHub opens failed; the attached originals supplied the needed exact text. No technical conclusion relies on secondary search results. Shoup's original theorem was not independently rechecked. No claim is made to have read the whole literature shelf or a later proceedings version of ABSSW.
+
+## PDF and browser scope
+
+All 44 pages of the current primary PDF were surveyed visually in low-resolution contact sheets. Pages 1, 12, 13, 30, 33 and 34 were also inspected at full size for byline, theorem pagination and the two tables. Other rendered page images were intermediate aids; generating an image is not counted as inspecting it. The PDF utility separately checked all three PDF page counts and companion file/destination links. The text of the primary paper was read from Markdown, so the visual survey is not presented as a separate full-resolution reading of all mathematical glyphs.
+
+Live desktop navigation was tested on `https://wcook04.github.io/proof-reader/` through the connected Chrome browser. The scope and action/result record are in [support/browser_observations.json](support/browser_observations.json). It includes two failed long-to-specialist clicks, a failed anchored specialist-to-long click, successful direct navigation, a successful selected-definition/whole-file return, current evidence disclosures, and the still-incomplete generator selection.
+
+The attempted frozen-site test did not reach the scratch server: browser localhost showed a different inventory and the server received no requests. That attempt is excluded from the defect evidence. The live deployment was not byte-compared to the frozen bundle. The entire companion-section-Back path was not completed because ordinary companion navigation failed. Mobile, keyboard-only, accessibility and all possible history states were not assessed. NP-bridge/ZERO index coverage was inspected offline rather than through a complete live route. No diagnosis of the click-handler cause is claimed.
+
+## Executions actually performed
+
+From the input packet root, the primary reviewer executed:
+
+```text
+python3 tools/check_packet.py
+python3 examples/check_examples.py
+python3 examples/check_exposition_examples.py
+python3 tools/check_pdfs.py papers
+```
+
+All completed with exit code zero. Their actual output is retained under `checks/packet_*.txt`. The packet validator's phrase “review still unperformed” describes what that utility tests; it is not the status of this completed review.
+
+The component reviewers executed three fresh self-contained Python checks, copied into this response with their actual JSON output:
+
+```text
+python3 work/algebra/check_algebra.py
+python3 work/binary/check_binary_contracts.py
+python3 work/complexity/check_final_arithmetic.py
+```
+
+The algebra script enumerates the GF(16) old/corrected test and quadratic-distance example, and uses exact fractions for the ruled-surface budget. The binary script checks the changed-label example, all distinct three-bit message pairs, all 256 Boolean functions on three bits for the BLR inequality, all 511 nonzero binary 3×3 bilinear forms, and two changed-case counterexamples to stronger claims. The final script checks the constant chain, seven-branch seed coefficient sum, finite parameter values and all Boolean gadget cases. These are finite discriminating checks; the universal statements still rest on the inspected arguments.
+
+Read-only source search/extraction, SHA-256 calculation and PDF rendering were performed locally. A temporary HTTP server was started for the unsuccessful localhost attempt and stopped after the browser work. Final response validation checks the forty unique IDs, required fields, allowed statuses, local artifact links, payload hashes and ZIP integrity; its receipt is included as `validation.json`.
+
+**No Lean, Lake or kernel replay was run.** Missing Mathlib/build caches were not installed. No full-project proof-dependency or axiom extraction was performed, no source-owner endorsement was obtained, no email or message was sent, and no published site or authoritative manuscript was modified.

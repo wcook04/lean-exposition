@@ -1,0 +1,152 @@
+# Coverage, editions and execution boundaries
+
+## What this return is
+
+A second-round model review of the supplied specialist paper, plus a complete proposed manuscript and diff. Mathematical/source checking, editorial/literature checking and reader/PDF checking were separated and then reconciled. These are additional AI reviews, not independent human testimony, source-owner endorsement, or measured specialist learning.
+
+The supplied paper was read before its author-response ledger. The active brief, PURPOSE, RECIPIENT_CONTEXT and list of known repair pressures had already been exposed. The preserved `first_reading.md` says what was reconstructed on that pass. The historical findings and returned review were consulted afterward. No pretending that later source assistance was part of an unassisted first reading.
+
+## Frozen input identity
+
+| Item | Exact value |
+| --- | --- |
+| Input ZIP | `pcp-review-round2-2-specialist.zip` |
+| Input ZIP SHA-256 | `d1be9d963c2006b40ed07ea294d8423930c823f1935a97d88bf85600fddb3be5` |
+| Manifest SHA-256 | `94ecabdb1047d7b078c38b31aed337cd3189e247af87601ed817f7dde3929a32` |
+| Manuscript revision | `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6` |
+| Reader revision | `f500810cd5de90b100940ea7d7d048f54f3bf7c7` |
+| Lean pin | `a0ce13ed0fa264f051c1278e039596ce65557fa4` |
+| Specialist Markdown SHA-256 | `a8c7cca605a352fae8bae3b6a2ff418c036a609f7d379da28ff5d3654ee52c48` |
+| Specialist PDF SHA-256 | `cf3d650cd73c3a77659af1ba5b9244f1693c4f61cfcf65f1e1f201cdee789cb1` |
+| Payload | 1,604 manifested files plus the manifest; 23 literature PDFs; 49 original primary-paper findings |
+
+No supplied manuscript, Lean source, historical return or published site was edited. The new manuscript lives under `proposed/`, and the diff targets its intended repository location. Its current-source citations retain the frozen source pin.
+
+## Primary paper and history
+
+Read the entire current specialist Markdown: abstract, sections 1–7, credits, all nine references, every display/table and associated prose. Inspected all 12 current PDF pages. The lead reviewer separately viewed every page rendered with PyMuPDF; the PDF reviewer used Poppler and three four-page overview sheets, with page 7 also inspected at full render resolution. The editorial reviewer independently inspected page 7.
+
+`paragraph_map.md` gives 58 grouped role/action decisions covering all prose. `paragraph_decisions.json` accounts for 85 detected prose segments, including display-connected clauses. Such clauses were not treated as separate grammatical faults merely because a formula breaks the text stream.
+
+Read the full current request/return/purpose/evidence-boundary documents, the literature route, reader instructions and original Lean reading guide. The mathematical and editorial subreviews read the complete specialist diff, original specialist review, all their assigned old findings and author actions. The root read the full 49-row ledger and targeted historical review regions. ED09 was checked by exact string comparison: old line 229 equals current line 244.
+
+The returned repair audit covers all 49 original IDs exactly once, including retained and optional decisions. Original author labels were not adopted as verdicts. The original positive findings can be retained correctly; that does not mean a new repair occurred.
+
+## Supporting manuscripts
+
+The long companion was consulted at the named weighted-test, Hadamard, outer-decoding, correction, ZERO, derived-read, assembly, resource, runtime, reduction and transport destinations needed to assess the short paper. The main source inspection concentrated on the corresponding Lean definitions/proofs. The entire long manuscript did not receive a new prose or mathematical audit.
+
+The worked exposition was used for its supplied finite checks and selected supporting examples. Its complete 22-page argument was not reviewed. Its companion-link destinations were validated by the supplied PDF tool. The existence of a check over all three PDFs does not turn this into three full paper reviews.
+
+## Lean sources actually consulted
+
+Paths below are relative to the input packet. Line ranges record inspected source, not newly compiled declarations.
+
+| Source | Inspected region and purpose |
+|---|---|
+| `formal/lean/PCP/Algebraic/WeightedConstraintSoundness.lean` | Whole file, especially 82–176: symmetric-grid comparison, fixed-centre estimate, three losses. |
+| `formal/lean/PCP/Algebraic/GeneratorLowDegreeTest.lean` | 200–292: exact characterization and threshold conversion. |
+| `formal/lean/PCP/Algebraic/HadamardSoundness.lean` | 29–82: unit/product/affine consistency for one decoded value. |
+| `formal/lean/PCP/Algebraic/HadamardRowDecoding.lean` | Whole file: good/bad rows and simultaneous full/homogeneous bounds. |
+| `formal/lean/PCP/Algebraic/BinaryLocalRowDecoding.lean` | 1–155: field-rejection coefficient, unconditional decoding constant and common polynomial. |
+| `formal/lean/PCP/Algebraic/EncodedLineLowDegreeTest.lean` | 25–130: actual sample, three conjunctive checks, shared row and query bound. |
+| `formal/lean/PCP/Algebraic/EncodedLineLowDegreeSoundness.lean` | 240–359: decoded line table and outer proximity theorem. |
+| `formal/lean/PCP/Algebraic/BinaryLocalCorrection.lean` | Whole file: sample, shared directions/labels, query list, completeness. |
+| `formal/lean/PCP/Algebraic/BinaryLocalCorrectionSoundness.lean` | 1–313: actual rejection, mean inner rejection, both correction errors and final failure bound. |
+| `formal/lean/PCP/Algebraic/LineTableLocalCorrection.lean` | 1–165: root counting, arbitrary line rows and nonzero-parameter sampling. |
+| `formal/lean/PCP/Algebraic/BinaryZeroOnGridSoundness.lean` | 90–298: two-call coupling with shared label and averaged target rejection. |
+| `formal/lean/PCP/Algebraic/DerivedZeroOnGridSoundness.lean` | Whole file: fresh masks, query increment, rejection transfer, multiplied error. |
+| `formal/lean/PCP/Algebraic/ThreeColorVerifierSoundness.lean` | 45–132: four witnesses chosen once and forwarded together. |
+| `formal/lean/PCP/Algebraic/ThreeColorDecodedSoundness.lean` | 38–163: difference identity, both derived constraints and final colouring. |
+| `formal/lean/PCP/Algebraic/ThreeColorSoundnessBudget.lean` | Whole file: the exact sufficient gap and field-ratio estimates. |
+| `formal/lean/PCP/Algebraic/GridVanishing.lean` | Whole file: nonzero quotient bound and grid-vanishing equivalence. |
+| `formal/lean/PCP/Algebraic/SetMultilinearDecode.lean` | Whole file: arbitrary degree-c polynomial substitution, without an honest-encoding premise. |
+| `formal/lean/PCP/Algebraic/ThreeColorVerifier.lean` | 319–368: seven bounds and their sum. |
+| `formal/lean/PCP/Algebraic/ThreeColorFullFieldSampling.lean` | 10–71 and 108–177: zero-seed acceptance, no queries, exact retention factor. |
+| `formal/lean/PCP/Complexity/Machine.lean` | 1–110: concrete model and encodings. |
+| `formal/lean/PCP/Complexity/ThreeColorRuntime.lean` | Whole file: implemented algorithm runtime endpoint. |
+| `formal/lean/PCP/Complexity/ReferenceNPConverse.lean` | Whole file: exact reference NP equivalence and its concrete hypotheses. |
+| `formal/lean/docs/pcp/reading-guide.md` | 1–440: headline, definitions, machine distinction, converse and low-degree interfaces. |
+| `reader/primary/edition.json` | Relevant theorem/derived-ZERO passages and declarations, and headline definition sheet. |
+| `literature/abssw-v2/tex/local_correction.tex` | Published substantive part 1–131: fixed spatial target/random homogeneous label motivation, protocol and theorem. |
+| `literature/abssw-v2/tex/appendix-local_correction.tex` | Substantive proof through 228: same random-label and root-counting route. |
+| `literature/abssw-v2/tex/technical_tools.tex` | Targeted encoding, characterization and Hadamard-test passages. |
+| `literature/text/friedl-sudan.txt` | Located Lemma 4 and its q−q/p−1 condition; direct Lean characterization was inspected separately. |
+
+
+The root additionally read `ThreeColorGap.lean` and the full soundness-budget source, the seven-check assembly through its final contrapositive, the correction theorem's probability definitions and shared-choice lemma, and the final derived-ZERO theorem and proof. The editorial review also read `HadamardTest.lean` 1–110 and the exact outer contract. The source inspection verifies correspondence of the prose to inspected definitions and proof steps; it is not a replay of the whole formal dependency closure.
+
+## Primary literature actually used
+
+| Source | Consulted material | Role |
+| --- | --- | --- |
+| ABSSW v2 | Complete supplied introduction TeX; technical_tools 1–90 and 125–155; preliminaries 118–136; Hadamard appendix opening; local_correction substantive section 1–131; appendix-local_correction through 228; zero-on-variety 1–105; acknowledgement in main | Encoding motivation and credit; corrected weighted test; correction task and quantifiers; division of proof responsibility |
+| ABSSW v1 | Old Fact 2.7/Lemma 3.3 regions, main 474–491 and 710–744 | The historical order-three/unit-weight scalar test only |
+| Arora–Safra | Original PDF physical pages 1–3 | Research-paper opening and proof-purpose comparison |
+| ALMSS | Original PDF pages 1–3; Theorem 45 at page 27; Appendix A chiefly pages 46–48, with related extracted regions through 53 | Point-line experiment, agreement route and writing allocation; not a whole-paper proof audit |
+| Friedl–Sudan | Corrected manuscript physical pages 1–3, especially Lemma 4 on page 2 | Exact field-size condition |
+| Kaufman–Sudan | Conference manuscript definitions on pages 4–5; Theorem 2.9 on page 5; proof context on pages 6–7 | Exact formal-characterization and two-ary-independence wording |
+| BCHKS | Theorem 1.2 on physical page 7; author-hosted proof on page 12 | Characteristic-two linearity rejection/distance guarantee |
+| Rubinfeld–Sudan | Rendered physical pages 10–11, §4, Theorem 5 and subsequent plurality/grid lemmas | Robust-characterization antecedent and numbering bridge |
+
+Rubinfeld–Sudan's text extraction was corrupt; relevant PDF pages were rendered and read instead. The supplied v2 TeX/PDF governs mathematical edition-specific claims. The original optional shelf was not read exhaustively, and no claim depends on a missing paper being silently replaced by a summary.
+
+Web retrieval was performed through both search engines and direct primary-source opens. The primary ECCC revision page confirms a 22 October 2026 revision fixing Lemma 3.3; its revised PDF was opened. Author-hosted Kaufman–Sudan and BCHKS PDFs and the Friedl–Sudan corrected-manuscript record were opened. Exact arXiv v2 and pinned GitHub opens returned DisabledError; the Princeton Rubinfeld–Sudan URL returned 403. Complete supplied sources resolved the mathematical reading need. No conclusion was based on the secondary mirrors surfaced by search.
+
+## Actual reader interactions
+
+**Surface tested:** https://wcook04.github.io/proof-reader/#/pcp-specialist and its supplied companion routes. **Observed browser viewport:** 1363×936. **Observation window:** after 21:13:47 and before 21:30:03 UTC on 15 November 2026, from check/notes timestamps rather than individual click timestamps. London was on UTC on this date.
+
+The connected browser extension was unavailable because its originating context was missing. The enclosed static server started, but the cloud browser could not reach the container's loopback address (`ERR_CONNECTION_REFUSED`). Therefore the actual UI journeys used the separately supplied live route. Frozen HTML/JSON/PDF artifacts were validated on disk. Selected live text, source pin and locators matched the packet, but live/frozen byte identity was not measured.
+
+Executed journeys:
+
+- Specialist “full weighted argument” → intended companion heading → browser Back, restoring the source scroll and theorem pane.
+- Runtime, NP-to-graph reduction and resource-transport links → the three distinct intended headings → Back.
+- Contextual NP phrase → `PCP.ReferenceNP.inNP_iff_mem` → `PCP.InNP` definition → Whole file → Back → Back, returning through the correct history states.
+- Equation (16) → `DerivedZeroOnGrid.rejectionRate_lower_bound`, with fresh randomness and the multiplied replacement loss visible.
+- Homogeneous-label qualification → `EncodedLineLowDegreeTest.exists_close`, with both distances for the same polynomial and an explicit distinction from affine labels.
+- Specialist and long declaration indexes inspected; long final `CanonicalRandomness` entry activated.
+- Graph → Close, preserving the article beside the contents rail.
+
+Observed index/evidence labels: specialist 39 retained declarations, 13 proofs without axiom reports; long 81 retained declarations, 52 proofs without axiom reports. Source-read, statement-only compilation and compiled-definition labels were distinguishable in sampled views. These are observed retained-index labels, not fresh proof-graph extraction or new axiom checking.
+
+One live-state defect was observed: a long history Back label overflows its navigation column when the proof pane is closed, causing controls to collide with the title. Exact measured bounds are preserved in `execution_results.json`. The same failure is not asserted for the frozen site without a frozen browser render. No mobile, other-width, screen-reader or exhaustive keyboard audit was performed. Screenshots were used for inspection only and are not included as deliverables.
+
+## Commands and outcomes actually observed
+
+All supplied validation scripts were read before execution. From the packet root:
+
+| Command | Observed result |
+| --- | --- |
+| `python tools/check_packet.py` | 1,604 payload hashes and target-presence checks passed; tool expressly says this is not a review verdict |
+| `python examples/check_examples.py` | “All checks passed,” including old/corrected GF(16) tests and finite coding/grid examples |
+| `python examples/check_exposition_examples.py` | “All additional exposition checks passed,” including label domains, masks, gadgets and c=4 arithmetic |
+| `python tools/check_pdfs.py papers` | JSON `ok=true`, no errors; specialist 12 pages, long 44, exposition 22; companion file/named destinations present |
+| `pdftoppm -scale-to 1600 -png papers/short/paper.pdf ...` | Exit 0; all 12 pages rendered |
+| `python tools/serve_reader.py --port 8765` | Server started; stopped intentionally with Ctrl-C after browser loopback failure, final exit 130 |
+
+The first four commands ran sequentially in one shell batch with captured exit code 0. Individual process exit codes were not separately instrumented. Their complete success stdout, rather than invented individual exit logs, is retained in `execution_results.json`.
+
+Additional execution:
+
+- Python/PyMuPDF rendering of all 12 specialist pages for the root's separate visual pass; Poppler renders of the relevant Rubinfeld–Sudan pages for source reading.
+- Standard-library HTML parsing of old and new section-link routes. An initial BeautifulSoup import failed because it was absent; `HTMLParser` completed the comparison. No installation was required.
+- `python checks.py`: final exit 0; exact rational output in `checks-output.json`. A first draft asserted an incorrect expected affine-consistency fraction (513/1024). Enumeration gave 1025/2048; the expectation and explanatory comment were corrected, and the final script passed. This did not change a paper theorem or its error coefficient.
+- Exact comparison of the old and current ED09 paragraph, the 49-ID audit, equation-tag preservation, original payload hashes and proposed diff application, as recorded in `package_validation.json`.
+
+Exploratory text/JSON/PDF reads and searches supported the review. One initial root lookup used a non-existent shorthand filename for the derived-ZERO source; the actual `DerivedZeroOnGridSoundness.lean` was then located and read. No inaccessible lookup was reported as a successful source read.
+
+## Scope of the new calculations
+
+The new script diagnoses label-domain concentration, full-mask correction, fixed-target versus uniform-start sampling, a tight half-root-loss example, and exact c=4 constants. The full/homogeneous case and constants overlap examples already in the old review or supplied scripts; their current reruns are identified as such. The spatial-sampling and root-loss examples are additional discriminating illustrations. None tests all adversarial PCP proofs, the large-field regime of the full construction, or the formal machine implementation.
+
+## Proposed manuscript review
+
+The full edited manuscript received a separate editorial reading and a focused mathematical comparison against the original and inspected source contracts. Those passes identified stale moved-example cross-references and three precision issues: tests must not be described as executing existential witness selection; the entire inner table must be typed before its decoding inequality; and row-error averaging must use an inequality when epsilon denotes an upper bound. All were corrected in the delivered proposal. The final correction/assembly equations and resource bounds were preserved.
+
+The proposal has not been rendered to a final PDF, integrated into the reader, published, or validated by Lean. Its companion links are the repository-relative links for its intended location `papers/short/paper.md`; they resolve after application in that tree. The diff is provided so these edits are concrete and reviewable. Changed line ranges and the new inventory passage require regeneration of reader associations before integration.
+
+## Not assessed or claimed
+
+No new Lean build/kernel replay, complete axiom report, proof-dependency extraction, formalization of the review's diagnostics, full review of the companions, exhaustive reading of all 23 PDFs, live/frozen deployment hash equivalence, PDF-viewer click-and-Back test, mobile/accessibility certification, human-learning experiment, source-owner endorsement, message to anyone, or publication action. These boundaries do not negate the completed source, manuscript, finite-calculation and observed UI checks above.

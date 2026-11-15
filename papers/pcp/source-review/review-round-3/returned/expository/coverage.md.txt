@@ -1,0 +1,97 @@
+# Coverage and evidence boundaries
+
+## Exact object reviewed
+
+The active packet is `pcp-review-round2-3-worked-exposition.zip`. The principal review target is its 22-page worked exposition, `papers/expository/main.md` and `main.pdf`. Historical prompts were treated as evidence, not as instructions to execute. The supplied files were kept unchanged.
+
+| Object | Exact revision or SHA-256 |
+| --- | --- |
+| Authored revision | `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6` |
+| Reader source revision | `f500810cd5de90b100940ea7d7d048f54f3bf7c7` |
+| Lean source revision | `a0ce13ed0fa264f051c1278e039596ce65557fa4` |
+| Packet `manifest.json` | `cf8921fce7d2a6df9993d1784fb5b5f6b7d1d24e074b14daf76a6df21f59041d` |
+| Exposition Markdown | `476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3` |
+| Exposition PDF | `0168dbfeaebd0a30be6181c4a8f83dabd9eae39ced0d4ac7b1960c7d0f12657c` |
+| Long companion PDF | `13884ff9194a058e75c37c4cdc976b02be7f615d4900014c436a4a5b975e7e94` |
+| Specialist companion PDF | `cf3d650cd73c3a77659af1ba5b9244f1693c4f61cfcf65f1e1f201cdee789cb1` |
+
+## Reading order and attribution
+
+The primary reviewer and three delegated reviewers read the complete current exposition, all 1,517 Markdown lines, before reviewing its repair history. The active brief exposed known pressure points; all reviewers have prior mathematical knowledge. These were not blind novice readings. The primary reviewer then examined all 44 audit results, the mathematical and teaching reports, the paragraph map and the worked replacement. The repair reviewer inspected the original findings, author dispositions, old/current manuscripts and retained diff, and reproduced the diff from those exact editions. Its integrity and output checks are retained in `evidence/`.
+
+The primary reviewer inspected every page of the delivered exposition PDF through six rendered contact sheets. The two companion PDFs were checked for the listed link destinations and consulted at selected relevant sections; this is not a claim that both companions or the entire 1,602-file payload were read end to end. The teaching reviewer assigned jobs and dispositions to all 181 prose/list blocks in the primary Markdown, grouped into 56 editorial decisions. Display equations and tables were read in context rather than treated as paragraphs in that count.
+
+The active purpose, return format, evidence boundaries, provenance, recipient context, bounded humanizer and literature-reading route informed the review. The literature and Lean source work below was divided between reviewers; it is not represented as four independent executions of all work.
+
+### Exercise and reconstruction exposure
+
+- **Primary reviewer:** Questions 1–3 were reasoned about before seeing their answers, but a later read chunk exposed Answers 1–3 before those attempts were saved. They do not count as preserved blind attempts. Questions 4–5 and the reconstruction were recorded before their displayed answers. The request-dependent mask case was independently posed and subsequently checked.
+- **Teaching reviewer:** Questions 1–2 were not saved before answer exposure; Question 3 and part of Answer 4 were exposed. Question 5, the reconstruction and a changed corrupt-slice case were recorded before their answers. No novice-performance claim follows.
+- **Mathematical and repair reviewers:** Their complete first reads included solutions before independent attempts were preserved. They do not claim unexposed exercise performance.
+
+The unaltered first-reading notes are in `first_reading/`. They record actual exposure, uncertainties and subsequent completion. Later agreement with an answer does not convert an exposed attempt into a blind one.
+
+## Sources actually consulted
+
+All mathematical citations refer to the retained edition unless a live source is explicitly identified.
+
+| Source | Portions used and purpose |
+| --- | --- |
+| ABSSW v1 TeX | `main.tex`, lines 478–515 and 716–742: original characterization/test and the target of the counterexample. |
+| ABSSW v2 TeX | `intro.tex` in full; `technical_tools.tex` lines 1–190 and 311–415; `low_degree_test.tex` lines 10–106 and 133–266; `local_correction.tex` lines 1–128; `zero-on-variety_test.tex` lines 1–124; `appendix-full-verifier.tex` lines 1–246. Used for encodings, test/correction contracts, fixed-anchor obstruction, weighted test, ZERO and variant distinctions. |
+| Arora–Barak retained January 8, 2007 PDF | PDF pp. 379–382 and 406–407, corresponding to §§18.4.1–18.4.2 and 19.3.2: operation-first presentation, represented-object continuity, and separation of using a test from proving it. |
+| BLR retained author PDF | §4.2 setup and initial corrected-homomorphism argument, pp. 15–19: original self-testing context and its pedagogical relation to the binary example. |
+| Troy Lee's original guide | Entire `formal/lean/docs/pcp/reading-guide.md` read by the teaching reviewer; selected passages also inspected by the primary and mathematical reviewers. Used to identify the new exposition's distinct contribution and the theorem/variant boundaries. |
+| Lean encoding and row tests | `SetMultilinear.lean`, its evaluation map; `HadamardTest.lean`, `HadamardSoundness.test_soundness` lines 28–61; homogeneous-distance declarations; `BinaryLowDegreeTest.lean` lines 25–55; `EncodedLineLowDegreeTest.lean` lines 31–57; `EncodedLineLowDegreeSoundness.lean` lines 321–359. |
+| Lean derived queries and correction | `HadamardDerivedOracle.lean` lines 31–45, 57–96, 108–122, 147–162; `BinaryLocalCorrection.lean` lines 33–67; `BinaryLocalCorrectionSoundness.lean` lines 222–313; `BinaryZeroOnGridSoundness.lean` lines 93–135 and 249–267. Used for conditional masking, target/label quantifiers, rejection, shared labels and coupling. |
+| Lean assembly and resources | `ThreeColorVerifier.lean` branch/query bounds, lines 318–368; `ThreeColorVerifierSoundness.lean` lines 58–112; relevant definitions and sufficient-budget theorem in `ThreeColorSoundnessBudget.lean`; parameter choices in `ThreeColorParameters.lean`; `ThreeColorFullFieldSampling.lean` lines 26–63 and 159–165; binary and amplified verifier guarantee interfaces. |
+| Lean complexity bridge | Main theorem/definition and reverse-inclusion interfaces; `NPThreeColorRuntime.of_inNP_program`, lines 257–265; `FiniteBooleanConstraints.lean` lines 43–62, 81–88 and 186–194. Used to check that the cited bridge includes a program, cost, length and equivalence, not to replay the complete runtime proof. |
+
+The fuller source locators are in `mathematical_audit.md` and `evidence/teaching_coverage.md`. The latter also distinguishes successful individual visual inspections of literature pages from attempted image outputs that were truncated. The entire literature shelf, every proof in the ABSSW appendix and every runtime declaration were not read. The BCHKS theorem was not independently reconstructed from its original paper; the formal testing interface and the exposition's attribution were inspected.
+
+### External research
+
+Public primary-source locations were searched. The official [ECCC TR26-134 page](https://eccc.weizmann.ac.il/report/2026/134/) was opened and confirmed the October 22, 2026 revision notice, author list and stated correction to Lemma 3.3/tests. Its revised PDF was also retrieved. The enclosed v2 TeX governed technical claims.
+
+Direct retrieval of the pinned arXiv v2 page was disabled, and direct retrieval of a Princeton book/chapter location returned 403. The retained original PDFs and TeX were therefore used for the actual comparisons. Secondary search results were not used as mathematical authority. This record does not imply successful web retrieval of all cited publications or new formal verification.
+
+## Commands and checks actually executed
+
+From the supplied packet root, the primary reviewer ran the following commands after source inspection. Each exited 0; full stdout/stderr and working directories are in `evidence/supplied_checks.json`.
+
+| Command | What the execution establishes |
+| --- | --- |
+| `python3 tools/check_packet.py` | 1,602 payload files matched the manifest, 23 retained literature PDFs and 44 findings were present. This is custody/target validation, not a review verdict. |
+| `python3 tools/check_pdfs.py papers` | The three PDFs have 44, 12 and 22 pages, and their listed companion-file destinations exist. |
+| `python3 examples/check_examples.py` | Finite GF16 old/new-test counts, Hadamard/BLR/correction counts, GF5 certificate evaluations, GF4 operations and toy repetition. |
+| `python3 examples/check_exposition_examples.py` | K4 and padding cases; all 125 F5 quadratics for interpolation; certificate identities; slices; digit substitution and non-representability; false label functional; label domains/distances; all 256×256 masks; NAE and clause examples; toy budget boundaries and exact formal constants. |
+
+The mathematical reviewer also executed the two example scripts. The report distinguishes those executions from prior runs reported inside the supplied packet.
+
+New checks in this response:
+
+- `checks/worked_trace/check_trace.py` was executed successfully. It checks the honest GF4 certificate, line restrictions and substitutions, weighted interpolation, masks and the displayed bit reads. A second implementation with carry-less binary polynomial multiplication independently verified the eight auxiliary reads, weights, comparisons and returned bits. Its record is `checks/worked_trace/independent_verification.json`.
+- `checks/changed_cases/check_changed_cases.py` was executed successfully. It checks 65,536 fixed-request/fresh-mask pairs, 256 request-dependent cases, F16 substitution and small-factor tests, and all 256 auxiliary row indices in the anchor example. The accompanying derivations distinguish general arguments from finite enumeration.
+- The complete proposed diff was dry-run and applied with `patch -p1` in an isolated copy. Resulting bytes matched the intended text; all 51 original displayed formulas were preserved unchanged and in order, with one new display defining Phi. `evidence/patch_validation.json` records exact commands and hashes. The original input remained unchanged.
+- Archive integration checks validate the 44 IDs, permitted verdicts, required fields, exact source quotes, paragraph coverage, local response links and ZIP integrity. Those are packaging checks, not theorem certification.
+
+No full Lean build, kernel replay, proof-dependency extraction, replacement PDF build or reader rebuild was performed. The supplied source snapshot itself notes missing build dependencies. Finite examples do not instantiate the complete large-field soundness regime.
+
+## Browser and presentation observations
+
+A fresh local server was started with `python3 tools/serve_reader.py --port 8765`. The connected browser's localhost surface resolved to a different older two-paper reader and made no request to this scratch server. That observation was treated as an environment-routing limitation, not as a frozen-reader defect.
+
+The supplied live reader at `https://wcook04.github.io/proof-reader/#/pcp-exposition` was then inspected at a desktop viewport of approximately 1900×990. It displayed the revised November 15 text and relevant source pins. That does not establish byte-for-byte live/frozen identity. Actual observations included:
+
+- The initial Graph-closed layout had a coherent article/TOC arrangement with no unused graph rail. Browser Back also returned from a proof view to a closed-pane article. The exact historical Graph→Close button sequence was not clicked.
+- The bivariate-agreement companion link was clicked from the exposition; it landed at the intended heading. Browser Back returned to the originating exposition section. The prescribed-point correction companion target also landed at its heading.
+- The point-versus-line theorem view opened; Whole file displayed its 88-line source; Back returned to the statement/paper route.
+- The main theorem's Names in statement link opened `PCP.Verifier.ReadsBelow`, showing its all-randomness/all-tree-addresses definition. Back returned through the theorem to the paper.
+- The long index rendered 81 declaration links. Its last `CanonicalRandomness` entry was clicked and showed the expected definition. The inner/outer decoding titles were distinct.
+- Source-only versus compiled-statement evidence labels were visible. The homogeneous half-distance association was checked in the retained data/source; it was not separately exercised as a live theorem-opening interaction.
+
+No mobile, full accessibility or every-link browser audit is claimed. No publication, message to Troy or other person-directed action occurred. The published site was not modified. Screenshot/contact-sheet intermediates and third-party source PDFs are not redistributed in this response.
+
+## What the review can and cannot conclude
+
+The review supports its identified local correction, the inspected source-fidelity judgments, the finite examples, the repair verdicts and a concrete structural redesign. Its reconstruction attempts can reveal missing hypotheses or unclear transitions. They cannot establish measured human learning, an independent person's endorsement, or comprehensive formal correctness beyond the examined source interfaces. The replacement is proposed teaching material and the patch is proposed text; neither is represented as an adopted authoritative edition.

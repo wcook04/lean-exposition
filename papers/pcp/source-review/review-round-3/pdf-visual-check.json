@@ -1,0 +1,23 @@
+{
+  "papers": [
+    {
+      "stage": "long",
+      "pages": 46,
+      "sha256": "f5fa697adbb6ac00f643ca18b6a6a7c293913f09ad8748c78d14ea6f8d0d5663",
+      "final_render_pixels_equal_inspected_render": true
+    },
+    {
+      "stage": "short",
+      "pages": 13,
+      "sha256": "4feb05afa6def20a72db949b410cedd3eed16f5c01e241a6f35ff56ed1bfcec1",
+      "final_render_pixels_equal_inspected_render": true
+    },
+    {
+      "stage": "expository",
+      "pages": 24,
+      "sha256": "77868dc00fa3ed3fd27f75bca63595103ffc6da95b80b726ce3b205f00a384e8",
+      "final_render_pixels_equal_inspected_render": true
+    }
+  ],
+  "scope": "All 83 pages inspected in ordered contact sheets; enlarged changed tables and trace. User-rejected trace layout was repaired, page 16 reinspected and pages 17\u201324 rechecked. Final fresh render has identical page pixels to the inspected renders."
+}

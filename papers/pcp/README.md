@@ -26,7 +26,7 @@ Read the same accounts beside the linked Lean in Proof Reader:
 [worked exposition](https://wcook04.github.io/proof-reader/#/pcp-exposition).
 The [previous release checks](source-review/release-checks.json) retain the earlier
 clean-clone installation and deployment evidence. The current edition has its
-own [revision receipt](source-review/review-round-2/validation.json).
+own [revision receipt](source-review/review-round-3/validation.json).
 
 ## Exact sources and scope
 
@@ -53,20 +53,20 @@ expression dependencies.
 
 ## Checks and review state
 
-The [returned-review revision](source-review/review-round-2/README.md) records
-all 133 review findings and the decisions made on each. The three papers received
-further mathematical, literature and humanizer revisions. The final reading
-edition has 44, 12 and 22 pages. Its 26 PDF companion annotations resolve to
-named destinations; the browser's companion routes are tested separately.
+The [latest revision](source-review/review-round-3/README.md) preserves the 133
+prior repair verdicts and records the further changes. The full argument now
+starts with the assembled verifier; the specialist paper introduces its tables
+before the tests; the exposition carries one colouring example through to bit
+reads. The final PDFs have 46, 13 and 24 pages, including references and optional
+appendices. The [PDF check](source-review/review-round-3/pdf-checks.json) verifies
+named destinations for the companion links.
 
-The updated source audit covers 88 selected reader associations and 95 pinned
-Lean links. These are source entry points, not exhaustive statement matching.
-The canonical bundle includes 36 authored reading relations between passages;
-those editorial relations remain distinct from proof dependencies. The reader
-now retains every passage-linked declaration and distinguishes source reading,
-statement compilation and proof extraction. The [validation receipt](source-review/review-round-2/validation.json)
-records exact hashes and check outcomes. Earlier reports in the
-[humanizer archive](source-review/humanizer/README.md) describe earlier editions.
+The canonical bundle includes 38 authored reading relations between passages.
+These editorial relations are separate from proof dependencies. Source cards
+retain their source-reading or compilation evidence, and new procedure links
+are distinguished from directly matching theorem claims. The
+[validation receipt](source-review/review-round-3/validation.json) records exact
+hashes and check outcomes. Earlier reports retain their own edition's evidence.
 No fresh full-library Lean build or human expert acceptance is claimed.
 
 Run the finite examples from the repository root with ordinary Python 3:
@@ -74,10 +74,14 @@ Run the finite examples from the repository root with ordinary Python 3:
 ```sh
 python3 papers/pcp/expository/check_examples.py
 python3 papers/pcp/expository/check_exposition_examples.py
+python3 papers/pcp/expository/check_trace.py
+python3 papers/pcp/expository/check_changed_cases.py
 ```
 
 Their retained outputs are [the initial calculations](expository/examples-output.txt)
-and [the expanded exposition calculations](expository/exposition-examples-output.txt).
+[the expanded exposition calculations](expository/exposition-examples-output.txt),
+[the colouring-to-bits trace](expository/trace-output.json), and
+[the changed-case checks](expository/changed_cases-output.json).
 These small examples do not instantiate the large-field hypotheses of the full
 verifier. The [unbounded counterexample to the old scalar test](source-review/old-test-counterexample.md)
 is a separate ordinary mathematical argument, not a conclusion proved by a

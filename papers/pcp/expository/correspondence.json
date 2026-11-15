@@ -3,8 +3,8 @@
   "stage": "expository",
   "state": "draft",
   "path": "papers/expository.md",
-  "content_sha256": "476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3",
-  "graph_sha256": "9f181f7155ea13922205c6338ba22ed06be053414181f184141cd43e85e22b68",
+  "content_sha256": "8fe580911bb36a94b0a92445bd5f3a04bcf4029e3faeb774064f0dcd331df7a0",
+  "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
   "selected_goal_ids": [
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
@@ -31,16 +31,23 @@
     "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
     "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
     "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+    "PCP.Algebraic.ThreeColorParameterChoice.choice_spec",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorVerifier.Proof",
     "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
     "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
     "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+    "PCP.Reduction.FiniteBooleanConstraints.pattern_spec",
     "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
     "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
     "PCP.ReferenceNP.inNP_iff_mem",
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
+    "ordinary:changed-cases-example",
     "ordinary:exposition-examples",
     "ordinary:finite-examples",
+    "ordinary:trace-example",
     "ordinary:v1-old-test-counterexample"
   ],
   "citation_ids": [
@@ -108,23 +115,30 @@
     "PCP.Algebraic.ThreeColorFields.chosen_parameters",
     "PCP.Algebraic.ThreeColorFinalAssembly.of_runtime",
     "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies",
+    "PCP.Algebraic.ThreeColorParameterChoice.choice_spec",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+    "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+    "PCP.Algebraic.ThreeColorVerifier.Proof",
     "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero",
     "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
     "PCP.Lang.ThreeColorRuntime.polyTimeAlg",
     "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+    "PCP.Reduction.FiniteBooleanConstraints.pattern_spec",
     "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
     "PCP.Reduction.NPThreeColorRuntime.of_inNP_program",
     "PCP.ReferenceNP.inNP_iff_mem",
     "PCP.np_subset_pcp",
     "PCP.pcp_subset_np_concrete",
+    "ordinary:changed-cases-example",
     "ordinary:exposition-examples",
     "ordinary:finite-examples",
+    "ordinary:trace-example",
     "ordinary:v1-old-test-counterexample"
   ],
   "passages": [
     {
       "anchor": "pcp-expository-opening",
-      "text_sha256": "fad7611a17a697d4a3d40755f274435ee50935821ddae3e974e1ea3288f4f458",
+      "text_sha256": "06ca38478facdaa20e46eb31a14ff5beca00e17faf4b9297d063a0ed4df2f311",
       "claim_ids": [
         "PCP.np_subset_pcp"
       ],
@@ -247,7 +261,7 @@
     },
     {
       "anchor": "pcp-expository-colour-polynomials",
-      "text_sha256": "14d92fc62c2a0461a6fcc7ada72893e5f44b5945fc684210bf26b92af651c628",
+      "text_sha256": "63b8eb6be393831e42e2fea3219b1d654deb85371d6dbe014bbbce9f958fa4b0",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAlgebra.sub_cube_eq_one_iff_ne",
         "ordinary:finite-examples",
@@ -263,11 +277,10 @@
     },
     {
       "anchor": "pcp-expository-grid-certificate",
-      "text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
+      "text_sha256": "4ebfe664bc3eff9a52742e0d76daf515abbcd9bda3fc190d084e8a9db23ef435",
       "claim_ids": [
         "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate",
-        "ordinary:exposition-examples",
-        "ordinary:finite-examples"
+        "ordinary:trace-example"
       ],
       "citation_ids": [
         "paper:grid:0",
@@ -278,8 +291,19 @@
       "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
     },
     {
+      "anchor": "pcp-expository-proof-inventory",
+      "text_sha256": "bf80a12cc27d0cab9cfea28d934989282540cbbd21602d58ce4fa9ece3eb03b1",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorVerifier.Proof"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "source_argument",
+      "rationale": "Ambient primary domains and the affine-label auxiliary domain; inventory, not a soundness assumption."
+    },
+    {
       "anchor": "pcp-expository-digit-encoding",
-      "text_sha256": "28c4856f3519f97588e3a6b4a783b5e6927e22a19566eddfc83a987086a4645c",
+      "text_sha256": "148940f21647b118d442399cf6bf77d960f71f887c61e161c08538a0ccdb08ce",
       "claim_ids": [
         "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection",
         "PCP.Algebraic.SetMultilinear.eval_encode",
@@ -347,7 +371,7 @@
     },
     {
       "anchor": "pcp-expository-cubic-labels",
-      "text_sha256": "5e1ba04ee31a9c46d84aada4496f7d481a384f976bb82942e7cf30cbba13150a",
+      "text_sha256": "6465d8fce980e127aa2beae3e62521f9be3bcde858ddae0d82d0045e8a9237e6",
       "claim_ids": [
         "ordinary:exposition-examples",
         "PCP.Algebraic.Hadamard.testQueries_length",
@@ -364,11 +388,12 @@
     },
     {
       "anchor": "pcp-expository-binary-tests",
-      "text_sha256": "7814f42fd767730ae703b8594e4925e7f821256006a1364f45d7b71d38087db8",
+      "text_sha256": "db1b8a340d43a49bc27c3fccce5a9a75723bc0e2f1c5fd1d0164331866e1e78a",
       "claim_ids": [
-        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
         "PCP.Algebraic.BinaryLocalCorrection.failure_le",
         "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge",
+        "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close",
+        "ordinary:changed-cases-example",
         "ordinary:exposition-examples"
       ],
       "citation_ids": [
@@ -396,8 +421,19 @@
       "rationale": "The direct records correspond to the passage’s named construction, theorem, or finite worked calculation. The examples are finite illustrations and do not assert the global parameter hypotheses; graph prerequisites and their citations are inherited for navigation, not a checked proof dependency. Reader-driven revision clarifies this existing interface; this binding does not certify the revised proof independently."
     },
     {
+      "anchor": "pcp-expository-worked-zero",
+      "text_sha256": "78dbcbe46799906aee41a1c0143eaa2162282a9c3dd8c8ced7bf34699a8e41f3",
+      "claim_ids": [
+        "ordinary:trace-example"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "example",
+      "rationale": "Finite F4 trace of weighted correction and ZERO identities. Omits the inner-test query lists and does not instantiate the full resource or soundness regime."
+    },
+    {
       "anchor": "pcp-expository-assembly",
-      "text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
+      "text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable",
         "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero"
@@ -434,7 +470,7 @@
     },
     {
       "anchor": "pcp-expository-resources",
-      "text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
+      "text_sha256": "5a398c69dc94bcda78053b9971f4ea09176ce8a336663342a47b5243103c9333",
       "claim_ids": [
         "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees",
         "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees",
@@ -477,14 +513,29 @@
     },
     {
       "anchor": "pcp-expository-answers",
-      "text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "claim_ids": [
+        "ordinary:changed-cases-example",
         "ordinary:exposition-examples"
       ],
       "citation_ids": [],
       "assumption_ids": [],
       "evidence_class": "example",
       "rationale": "The source-bound finite checker verifies the illustrative cases named in this passage. The examples do not establish the corresponding general theorem or its parameter conditions. Other selected records map the passage’s general construction or source statement."
+    },
+    {
+      "anchor": "pcp-expository-parameters",
+      "text_sha256": "e5072df2158a65889bde5ed6c6dc0f63c991a9f8869ee61f5810b7d0262bf7bc",
+      "claim_ids": [
+        "PCP.Algebraic.ThreeColorParameterChoice.choice_spec",
+        "PCP.Algebraic.ThreeColorParameterChoice.volume_le_log_add_one",
+        "PCP.Algebraic.ThreeColorParameterChoice.volume_le",
+        "ordinary:exposition-examples"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "example",
+      "rationale": "Optional parameter calculation; finite arithmetic illustrates the source-level bounds."
     },
     {
       "anchor": "pcp-expository-error-constants",
@@ -516,6 +567,20 @@
       "rationale": "Exact definitions and source-supported bounds for the constants previously used; no fresh Lean extraction."
     },
     {
+      "anchor": "pcp-expository-colouring-gadget",
+      "text_sha256": "70c1e5a1ac992891c53be7718d322a265780b3b99c089d984dcdfb2d9896d513",
+      "claim_ids": [
+        "PCP.Reduction.FiniteBooleanConstraints.orGate_iff",
+        "PCP.Reduction.FiniteBooleanConstraints.pattern_spec",
+        "PCP.Reduction.FiniteBooleanConstraints.satisfiable_iff",
+        "ordinary:exposition-examples"
+      ],
+      "citation_ids": [],
+      "assumption_ids": [],
+      "evidence_class": "example",
+      "rationale": "Optional graph gadget and its truth-table interpretation; source contracts are retained separately from the finite examples."
+    },
+    {
       "anchor": "pcp-expository-clause-calculation",
       "text_sha256": "aade5b5aee937d9cc1140efde637d6f2367cfccdbb5c4cb1499fb8220547664c",
       "claim_ids": [
@@ -530,7 +595,7 @@
     },
     {
       "anchor": "pcp-expository-correction",
-      "text_sha256": "191daee2ebbd6cb5ba737fbd7dbf017fa294b9f4f3ddaad0dffdd07ca5397241",
+      "text_sha256": "5d0caea51bc60d4760b32bc63228a5273e55461f9cc8dfd4544c229ccd8987d6",
       "claim_ids": [
         "ordinary:v1-old-test-counterexample",
         "ordinary:finite-examples"
@@ -593,7 +658,8 @@
     "Final source graph includes separately rerun exposition examples. Exposition reader-driven edits were rebound; mapping does not convert reader review or finite checks into Lean verification.",
     "Humanizer edition rebound after independent preservation review; passage identities and source claims retained. Source citations for BCHKS, Friedl–Sudan, Rubinfeld–Sudan and Kaufman–Sudan are recorded as attribution, with hypotheses distinguished. No fresh Lean compilation or semantic certification is asserted.",
     "Source correspondence audit replaced downstream fallback records with locally relevant declarations; attribution and source-only unverified status are retained. Passage text and hashes are unchanged.",
-    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed."
+    "Returned reviews adjudicated in source-review/round2. Root authored the revision; Sol High agents checked source correspondence, finite computations and reader plumbing. Changed mathematical explanations were checked against pinned statements. Source-only, ordinary and finite evidence remain distinct; no fresh Lean build or human learner study is claimed.",
+    "Second returned critique round assimilated in source-review/review-round-3. Root revised all manuscript prose; Sol High agents checked source conditions and reader bindings. Retained source-only status and finite-example limits; no fresh Lean build or human audience acceptance is claimed."
   ],
   "reading_links": [
     {
@@ -601,31 +667,31 @@
       "from_text_sha256": "ccc8921d42b87221f187c1a9b4c3f0899349f3538029f1d86354e85fbcdf1a8f",
       "to_stage": "short",
       "to_anchor": "pcp-short-colour-constraints",
-      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "to_text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
       "kind": "illustrates",
       "rationale": "Works the interpolation operation used for the colouring and edge tables."
     },
     {
       "from_anchor": "pcp-expository-colour-polynomials",
-      "from_text_sha256": "14d92fc62c2a0461a6fcc7ada72893e5f44b5945fc684210bf26b92af651c628",
+      "from_text_sha256": "63b8eb6be393831e42e2fea3219b1d654deb85371d6dbe014bbbce9f958fa4b0",
       "to_stage": "short",
       "to_anchor": "pcp-short-colour-constraints",
-      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "to_text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
       "kind": "illustrates",
       "rationale": "Computes the field equations for allowed colours and edges."
     },
     {
       "from_anchor": "pcp-expository-grid-certificate",
-      "from_text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
+      "from_text_sha256": "4ebfe664bc3eff9a52742e0d76daf515abbcd9bda3fc190d084e8a9db23ef435",
       "to_stage": "short",
       "to_anchor": "pcp-short-colour-constraints",
-      "to_text_sha256": "a0725b6b65fb2fb69beac0d5d3c4680cbbe2002494b6df6f9caa298ae5f93fdc",
+      "to_text_sha256": "04b5af2b6ff5bb54b1e9789994076d40275de99804969f6d17e06a36eb0dd6cc",
       "kind": "illustrates",
       "rationale": "Works both certificate identities and explains why both are needed."
     },
     {
       "from_anchor": "pcp-expository-digit-encoding",
-      "from_text_sha256": "28c4856f3519f97588e3a6b4a783b5e6927e22a19566eddfc83a987086a4645c",
+      "from_text_sha256": "148940f21647b118d442399cf6bf77d960f71f887c61e161c08538a0ccdb08ce",
       "to_stage": "short",
       "to_anchor": "pcp-short-digit-encoding",
       "to_text_sha256": "2ba3588f352c79c58324dc572b489e09c27b2c6e18d5c4c96b533d218b7d31f4",
@@ -637,7 +703,7 @@
       "from_text_sha256": "88293c84cedf9851d8ac4fee42c36248e8d190d293e758d33befe3b33077bd30",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
       "kind": "illustrates",
       "rationale": "Works an eight-position homogeneous word and corruption."
     },
@@ -646,40 +712,40 @@
       "from_text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
       "kind": "illustrates",
       "rationale": "Works the random two-read correction at a fixed requested location."
     },
     {
       "from_anchor": "pcp-expository-cubic-labels",
-      "from_text_sha256": "5e1ba04ee31a9c46d84aada4496f7d481a384f976bb82942e7cf30cbba13150a",
+      "from_text_sha256": "6465d8fce980e127aa2beae3e62521f9be3bcde858ddae0d82d0045e8a9237e6",
       "to_stage": "short",
       "to_anchor": "pcp-short-hadamard-encoding",
-      "to_text_sha256": "1b023178a485fce1bbb9fdee7b024357764075dc4c9048294acb3f2c42dfc9c4",
+      "to_text_sha256": "92ebdd662d6b42fb1b1a1881e515ed6a0e02b2c413413f826eab1d8f50301dff",
       "kind": "illustrates",
       "rationale": "Traces field coordinates into a derived bit address and a masked read."
     },
     {
       "from_anchor": "pcp-expository-binary-tests",
-      "from_text_sha256": "7814f42fd767730ae703b8594e4925e7f821256006a1364f45d7b71d38087db8",
+      "from_text_sha256": "db1b8a340d43a49bc27c3fccce5a9a75723bc0e2f1c5fd1d0164331866e1e78a",
       "to_stage": "short",
       "to_anchor": "pcp-short-outer-correction",
-      "to_text_sha256": "22f3ece57fa44a833466e67e5e01bfd2411893fb85cc03bcd178e701faef876a",
+      "to_text_sha256": "7cc21b19ca124519631255d45c0a3bf5db296fccadd42118c2ee105a7cb0dcf4",
       "kind": "illustrates",
       "rationale": "Explains the row addresses, rejection event and fixed-target correction."
     },
     {
       "from_anchor": "pcp-expository-assembly",
-      "from_text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
+      "from_text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
       "to_stage": "short",
       "to_anchor": "pcp-short-assembly",
-      "to_text_sha256": "b0bd505dbf2980db48fd927de0d38c2206f2ff268f32fd8e95def98916834a31",
+      "to_text_sha256": "852259f0cce3391471128f46d5b6050a65d0676ea260b80ff95800a84d76aea3",
       "kind": "illustrates",
       "rationale": "Derives the ideal-to-actual event comparison and strict error budget."
     },
     {
       "from_anchor": "pcp-expository-resources",
-      "from_text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
+      "from_text_sha256": "5a398c69dc94bcda78053b9971f4ea09176ce8a336663342a47b5243103c9333",
       "to_stage": "short",
       "to_anchor": "pcp-short-resources",
       "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
@@ -688,16 +754,16 @@
     },
     {
       "from_anchor": "pcp-expository-answers",
-      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "from_text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "to_stage": "expository",
       "to_anchor": "pcp-expository-grid-certificate",
-      "to_text_sha256": "8ca9b6e4f716edbbdee01d6ab2addfb86ba0cad3d34a1e7b56aff6fbe0eed230",
+      "to_text_sha256": "4ebfe664bc3eff9a52742e0d76daf515abbcd9bda3fc190d084e8a9db23ef435",
       "kind": "answers",
       "rationale": "Answers the question about omitting the first certificate identity."
     },
     {
       "from_anchor": "pcp-expository-answers",
-      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "from_text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "to_stage": "expository",
       "to_anchor": "pcp-expository-hadamard-correction",
       "to_text_sha256": "83bae220a20160e5f6de30cf15a66c6315c86dc1c707a5889774048d7b6572ff",
@@ -706,21 +772,39 @@
     },
     {
       "from_anchor": "pcp-expository-answers",
-      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "from_text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "to_stage": "expository",
       "to_anchor": "pcp-expository-assembly",
-      "to_text_sha256": "f9b73d87fdadac89265efd6feb9381282c5735ff3fab8f5d4a5393124aa15185",
+      "to_text_sha256": "99e8641d0eab615b99ad51d050696f0522c57ac29135a8a746f9dbef569f9db8",
       "kind": "answers",
       "rationale": "Explains why separate decoded witnesses cannot support the colouring deduction."
     },
     {
       "from_anchor": "pcp-expository-answers",
-      "from_text_sha256": "fdf506ae19c71a9a45d1b0d18282e709358e23ec24a2b063bcd264398617e34e",
+      "from_text_sha256": "fcca0ac45be7581afb690db03261a86f63e260cb0efff13a1d31cf063584598d",
       "to_stage": "expository",
       "to_anchor": "pcp-expository-resources",
-      "to_text_sha256": "ff1e46d70c7df510b033d892776f9e6448623415b84814ddeae6e92c5bfbcf5d",
+      "to_text_sha256": "5a398c69dc94bcda78053b9971f4ea09176ce8a336663342a47b5243103c9333",
       "kind": "answers",
       "rationale": "Checks seed enumeration and the strict toy error threshold."
+    },
+    {
+      "from_anchor": "pcp-expository-worked-zero",
+      "from_text_sha256": "78dbcbe46799906aee41a1c0143eaa2162282a9c3dd8c8ced7bf34699a8e41f3",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-zero",
+      "to_text_sha256": "9dd41d5e5df6e045310ae7abec55a9f78ff8a0728deed5d6ce61fc90aaa61cbf",
+      "kind": "illustrates",
+      "rationale": "Carries the same one-edge vertex certificate through weighted bit reads and ZERO acceptance; finite honest illustration, with inner-test reads omitted."
+    },
+    {
+      "from_anchor": "pcp-expository-parameters",
+      "from_text_sha256": "e5072df2158a65889bde5ed6c6dc0f63c991a9f8869ee61f5810b7d0262bf7bc",
+      "to_stage": "short",
+      "to_anchor": "pcp-short-resources",
+      "to_text_sha256": "6efb8485845ae11a83e4e6b9d6b252c0a18e59c4bcf46d8bedfca894da8d35d1",
+      "kind": "illustrates",
+      "rationale": "Supplies the optional parameter substitutions underlying the specialist resource bounds."
     }
   ]
 }

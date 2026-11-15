@@ -1,0 +1,18 @@
+{
+  "scope": "All three reading projections executed; editorial and shared-claim links remain distinct.",
+  "queries": {
+    "long": {
+      "source_passages": 73,
+      "returned_links_including_inferred": 109
+    },
+    "short": {
+      "source_passages": 16,
+      "returned_links_including_inferred": 110
+    },
+    "expository": {
+      "source_passages": 24,
+      "returned_links_including_inferred": 89
+    }
+  },
+  "authored_relations": 38
+}

@@ -1,0 +1,277 @@
+# Second review of the full argument
+
+**Edition reviewed:** the 44-page *The algebraic PCP theorem: a detailed account of the Lean proof*, authored revision `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6`, reader revision `f500810cd5de90b100940ea7d7d048f54f3bf7c7`, Lean source pin `a0ce13ed0fa264f051c1278e039596ce65557fa4`. Review completed 15 November 2026. This is an AI mathematical and editorial audit, with three parallel component analyses, not human feedback or a new Lean build. Exact reading and execution scope is in [coverage.md](coverage.md).
+
+## 1. Judgment: keep this account, change its first route
+
+This is a worthwhile paper with a substantially successful mathematical reconstruction. It adds things that Troy's existing theorem-and-definitions guide intentionally does not supply: the polynomial kernel and clean rectangle in bivariate agreement, the treatment of arbitrary nearest-line ties, the four mixed-plane errors, the fixed polynomial in ruled-surface rigidity, simultaneous binary distance guarantees, correction on nonuniform certificate slices, and the concrete composition of soundness and resource bounds. These are reasons to preserve a long account. They are also the places where a source owner can find explanatory work worth checking. [L, 388–725, 890–1320, 1456–1922; G, reading-guide §§7–9.]
+
+I found **no new mathematical blocker in the load-bearing argument inspected**. That conclusion has a defined scope: complete reading of the primary prose, reconstruction of its principal inferences, selected Lean statement and proof-region inspection, exact finite calculations, and comparison with selected original literature. It is not a certification of every dependency, a fresh kernel replay, or a claim that an unfamiliar human can learn the proof unaided. The source and calculation coverage is substantial, but those evidence classes must remain distinct.
+
+The current paper is strongest as a sequential proof record. It is less successful at the second job advertised in the brief: allowing a reader to enter one difficult result, recover exactly its interface, and return to the global argument. The eight tables first appear on PDF page 30. The first two pages do give a precise endpoint and a useful roadmap; it would be unfair to say that the construction has no motivation. What they do not give is a usable version of the verifier and its mathematical obligations. A reader accumulates nearly the whole algebraic and binary development before seeing exactly how those obligations fit together. [L, 13–69, 1394–1433; PDF p.30.]
+
+The right next edition is therefore a **complete account with the assembly and import contracts presented first**, followed by the existing detailed proofs. This can be achieved by moving and compressing material already written. It does not require a new proof, a new survey, an expansion of the entire compiler, or replacement of the long paper by the specialist companion. In particular, do not delete the algebra to make the opening faster: the algebra is much of the new explanatory value.
+
+The repair audit is favorable but not unanimous. Of the forty original findings, I judge eighteen fixed, eighteen retained correctly, two addressed by successful alternatives, and two not fixed. The unresolved items are the incomplete generator-theorem selection, F09, and the companion-click behavior reproduced in the live reader, F39. The latter verdict is scoped to the tested deployment and desktop session; I did not successfully execute the frozen static build. Neither finding refutes the mathematical argument. [repair_audit.json; support/browser_observations.json.]
+
+The earlier recommendation of a bounded local revision was reasonable for the defects it found. After reading this edition, I would go one step further on organization. The additional explanations make the local proofs better, but they do not by themselves provide the two promised reading routes. The next change should address that shared cause rather than add another explanatory paragraph at every interface.
+
+## 2. The endpoint and its legitimate boundary
+
+The opening gets the quantifiers right. For each language in the concrete certificate class, choose a verifier, its implementation, constants and a proof-address polynomial before choosing the input. A yes-instance has one proof accepted on every random seed. A no-instance has no proof accepted on more than half the seeds. The proof is fixed before randomness, and the address bound covers every answer branch. These qualifications are essential both to PCP soundness and to the reverse inclusion by checking a finite proof prefix. They should survive any reorganization. [L, 15–42; F/Verifier/Definition.lean; F/Theorem.lean.]
+
+The exact fair-bit schedule is also meaningful. A bare assertion that some seed-length function is bounded by a logarithm would not, by itself, ensure that the function is computable. An arbitrary unary predicate could be encoded in whether the supplied seed has length zero or one, and a zero-query algorithm could inspect that length. The canonical formula prevents this extra information channel. The present opening already says that the formula makes the budget computable, so the example is an optional improvement, not a missing theorem hypothesis. [L, 25, 42; F/Verifier/Definition.lean, `CanonicalRandomness`; G, reading-guide discussion of exact randomness.]
+
+The account proves the mathematical testing arguments and the high-level NP reduction, while importing proved implementation and machine-simulation results from the development. That is a defensible scope. The current implementation section explicitly says that detailed program-correctness and compilation lemmas are supporting results. The reference-NP section now describes both simulations. It would be wrong to call those results undisclosed assumptions or to reopen F04 simply because their machine-state proofs are not printed. [L, 1717–1733, 1879–1883.]
+
+What is still needed is an early, exact statement of this boundary. “Machine-level steps” in the opening and “complete argument” in the reader promise leave a first reader to discover the import policy much later. A paragraph near the theorem should say which work is reconstructed and which results are used through contracts. A small table should then state the contracts: the concrete machine model and public encodings; callback correctness; polynomial charged cost and compilation; executable graph reduction; the finite-witness checker; and the two reference-NP simulations. [replacement_sections.md, §§1 and 5.]
+
+One subtlety matters when making the implementation condition explicit. `ImplementedBy` equates the verifier with a **bounded unfolding** of its step function. The step function receives input, seed and answer history, and returns a verdict or the next address. At depth zero, another query request is converted into rejection. Thus this definition does not alone say that an unrestricted run of the raw callback voluntarily halts within the query budget. The present phrase “specified bounded query tree” is accurate. The proposed replacement preserves the cap rather than silently strengthening the assertion. [F/Complexity/CostModel.lean, `VerifierAlg`, `QueryTree.ofStep`, `Verifier.ImplementedBy`.]
+
+With that boundary made explicit, the current title is defensible. A slightly more informative subtitle would be “Mathematical reconstruction and implementation contracts.” I would not retitle it “fully self-contained proof”: that would enlarge the promise beyond the chosen treatment of machines and simulations.
+
+## 3. A concrete replacement architecture
+
+### The first route: see the verifier, then discharge its contracts
+
+Retain the precise theorem. Immediately afterward, state the model/import boundary and show the four primary polynomials, their four auxiliary line tables, and the seven checks. Explain the common-witness invariant before proving any local test: small rejection must supply four particular polynomials that continue to be used by every later check. Give the degree and label-domain information in the same place. Then prove completeness and outline the three strict soundness comparisons using named contracts whose proofs come later.
+
+This is a legitimate forward-reference proof organization. The contracts remain theorems proved in the same document, and the main route explicitly points to their complete derivations. It is not a proposal to turn the central algebra into unexplained imports. A reader who wants to derive every lemma before using it can still follow the detailed chapters in their current order.
+
+The early assembly should expose three obligations:
+
+1. Each outer low-degree test returns an actual polynomial with the right degree and both required binary distances, for the same decoded object.
+2. Difference consistency and the two corrected grid tests force the three polynomial constraints for those objects. The certificate reads are corrected because their targets are not uniformly distributed.
+3. One parameter family satisfies all hypotheses; exact sampling, repetition, address bounds and machine contracts then establish the stated endpoint.
+
+These are the reasons the later chapters exist. A general sentence saying “we combine the tests” cannot substitute for them. Conversely, the early assembly need not reproduce the determinant proof, Fourier calculation or every cost coefficient.
+
+### The second route: enter and leave an individual lemma
+
+Several current statements already do this well. The point-line theorem states concrete field and error bounds, and the local-correction section identifies a fixed spatial target and the averaged label. Preserve those statements. Add stable result names and a compact table of interfaces at the beginning of each technical chapter, rather than a new box after every paragraph.
+
+An entry should tell a reader the input object, exact hypotheses, output object, probability space and downstream consumer. For example, the outer-correction entry must say: a fixed degree-bounded polynomial; homogeneous-label proximity; arbitrary auxiliary table; every spatial target; nonzero outer parameter; failure means rejection or a wrong returned bit; the bound averages the requested homogeneous label. It must point to the full assumptions, including `GoodNodes`, the generator-node condition where used, and the arbitrary-decoding degree bound. A table that says only “corrects a value” would erase the central work. [L, 1157–1204; F/Algebraic/BinaryLocalCorrectionSoundness.lean, `failure_le`.]
+
+The return link should point to the actual use, not merely the next heading. B16 is used twice in B21; B25 is used for the vertex and edge constraints; the candidate-row crossing lemma is used in the modified ruled surface. These dependencies are more useful to the reference reader than a graph with only broad chapter names.
+
+### What moves, what stays, what can be cut
+
+| Current material | Revision action | Reason |
+|---|---|---|
+| Precise opening theorem, quantifiers and reverse-inclusion sketch | Keep at the front | Establishes the actual endpoint and the finite-prefix meaning of proofs |
+| Eight tables, seven checks, common decoded witnesses | Move a compact version immediately after the theorem | Gives every local result an identifiable consumer |
+| Detailed completeness and soundness assembly | Use as the first proof route after the contract table | This is the global argument the earlier machinery is preparing |
+| Polynomial, weighted-test, bivariate and point-line proofs | Keep complete in technical chapters | These are substantive reconstruction beyond the existing guide |
+| Digit encoding, BLR, simultaneous row decoding, correction, ZERO and fresh-mask transfer | Keep complete, with one entry table | Their distinctions are needed for soundness, not optional detail |
+| Old-test counterexample and edition history | Keep in a clearly marked variant/history note or appendix, with a short callout at the corrected test | Preserves attribution and the mathematical warning while avoiding a long historical detour in the main route |
+| Second full statement of the endpoint at the final chapter opening | Replace by a short pointer when assembly moves forward | Recovers space without deleting quantifier reminders where they are used |
+| Exact seed polynomial | Pair with the seven-branch count supplied in the replacement file, preferably in a resource appendix | The current isolated coefficients cannot all be reconstructed locally |
+| Large low-level field-setup cost constants | Keep with the implementation source account; summarize the polynomial bound in the main route | Makes the efficiency argument visible without interrupting its composition |
+| Source status and authorship | Compact front disclosure; full account retained at the end | The two occurrences serve different functions |
+
+This is a cut-and-move proposal, not an instruction to append all supplied replacement text. The present notation bridge at the final chapter is fixed and useful. A small translation row can accompany the early contracts: earlier digit radix `b` becomes `m`, field size `q` becomes `Q`, and final grid dimension is `d`. Mechanical renaming throughout would create avoidable source-correspondence work. [L, 1334; F36.]
+
+The specialist should remain a concise route through the same interfaces. The exposition should retain its worked examples. Neither companion should become a prerequisite for understanding a crucial hypothesis in the long account. The successful decision to place the label-domain example in the exposition, F16, is compatible with that principle: the long account already states and proves the necessary distinction.
+
+## 4. Mathematical reconstruction: what held up under checking
+
+### 4.1 Polynomial identities and the corrected weighted test
+
+The opening algebra uses the right types of equality. Grid uniqueness is based on individual degree bounds; the distance estimate is based on total degree. The vanishing certificate comes from division by the coordinate vanishing polynomials, with the total-degree bookkeeping retained. The converse correctly allows an arbitrary certificate polynomial because the two substitutions agree on the grid. The exact-line argument invokes a sufficiently large field before promoting evaluation equalities to formal identities. The zero-dimensional and degree-zero cases are addressed rather than silently excluded. [L, A1–A5; algebra source scope in support/source_scope.md.]
+
+The corrected short test needs a generator of the whole multiplicative group and the corresponding Lagrange weights. The propagation argument uses the nonzero final coefficient to determine the next value and then traverses the full orbit. Distinct nonzero interpolation nodes alone would not give that characterization. The robust weighted-constraint argument has a different, weaker node requirement: nonzero nodes make the affine sampling maps invertible; it does not require all weights to be nonzero or all nodes to be distinct. Keeping these two hypothesis sets separate is correct. [L, A6–A12; F/Algebraic/GeneratorLowDegreeTest.lean; WeightedConstraintSoundness.lean.]
+
+The plurality argument is recoverable. Two weighted predictions are compared through a symmetric double sum; the fixed-center estimate charges `2nδ`, and the subsequent comparisons charge `nδ` and `2n²δ`. A failure budget strictly below one gives one successful configuration, forcing equality of deterministic endpoints. The smaller threshold later used by the generator test is justified by
+
+\[
+2(c+2)^2-\bigl(2(c+1)^2+3(c+1)\bigr)=c+3>0.
+\]
+
+The new Kaufman–Sudan specialization is a real specialization, not a decorative citation. Its distinguished form is `u`, the remaining forms are `u+a_i v`, and accepted value vectors form the weighted linear subspace. Their definition of two-ary independence requires the first form to be independent of each other form, which follows from `a_i≠0`; it does not require independence of every pair of forms. With `k=c+2`, their denominator becomes `(2k+1)(k−1)=2c²+7c+5`. No additional all-pairs assumption should be demanded. [L, paragraph after A10; KS, Definitions 2.3, 2.5, 2.8 and Theorem 2.9, original PDF p.5.]
+
+The old-test counterexample remains correctly scoped. For `c=2`, characteristic-two fields of size `2^(2k)` admit the order-three nodes used in v1, and `x₁⁴` satisfies the old unit-weight test. A fibrewise root argument bounds its agreement with any degree-two polynomial by `4/q`. The arbitrarily large field family defeats the old local proximity claim; the finite example alone would not. It does not construct a cheating proof for the entire PCP verifier. My fresh GF(16) calculation gives zero old-test rejections out of 256 samples, 240 corrected-test rejections, and minimum quadratic distance `12/16`. [L, 323–344; V1 main.tex 716–742; checks/check_algebra.py and its output.]
+
+### 4.2 Bivariate agreement, crossing and ruled-surface rigidity
+
+The bivariate proof is one of the main reasons this account is useful. It deals with arbitrary approximating rows and columns and produces an individual-degree bound. The good-column count, polynomial matrix, nonzero minor, bounded polynomial kernel, clean rectangle, interpolation and final sharpening form an actual derivation. The proof does not replace an untracked rational kernel vector by a polynomial vector for free. The explicit cubic field bound is sufficient for the determinant and root-counting steps. [L, A15–A20; F/Algebraic/BivariateAgreement.lean and related regions; AS §5.2; ALMSS Theorem 69.]
+
+A local ordering improvement is available without expanding the proof: state the clean-rectangle target immediately after choosing the good columns, then construct the error locator that produces it. Arora–Safra's passage is useful here because it presents the rectangle and interpolation consequence before the locator machinery. That order tells the reader what the polynomial kernel is supposed to buy. It does not make their formulation identical to the current arbitrary-approximant theorem.
+
+The fixed-parameter line estimate correctly handles arbitrary ties among nearest polynomials. On lines inside the strict decoding radius the minimizer is unique, so transporting the line parameter transports the chosen polynomial. Exceptional lines are charged by the average-error bound. This yields the factor four at a fixed parameter without assuming a global coherent choice of minimizers. ALMSS's coherent-choice discussion does not eliminate the need for this extra argument in the formal variant. [L, A23–A25; F/Algebraic/PointLineParameterError.lean; ALMSS Remark 63.]
+
+The mixed-plane repair is substantive. The current text defines the row and column polynomials and all four discrepancies, so the reader can distinguish own-line errors from transverse comparisons. Three means use a free parameter and are bounded by `δ′+1/q`; one comparison is at a fixed parameter and needs `4δ′+1/q`. The exceptional coordinates and averaging over `v,w,s` are accounted for. Reversing the local row/column comparison would invalidate this calculation, so these formulas must survive compression. [L, 594–638; F/Algebraic/MixedPlaneSampling.lean; PointLineEndpointConsistency.lean.]
+
+The ruled-surface paragraph now explains the construction before the ledger: the zero column is the target corrected line, while nonzero columns have the sampled-line distribution. The modified row need not remain a nearest approximation, which is why the candidate-row crossing result has a fifth, own-row error. Most importantly, the polynomial `Q` is chosen before the target parameter `y₀`. A favorable random configuration may depend on `y₀`; the right-hand values it equates do not. Thus one fixed `Q` represents the whole target line. [L, 640–693; F/Algebraic/RuledSurfaceRigidity.lean.]
+
+At the displayed extremal values, exact rational arithmetic gives
+
+\[
+\gamma=\frac1{625},\qquad
+B=\frac{19217}{4{,}000{,}000},\qquad
+\frac B\varepsilon+\gamma=\frac{19281}{40000}=0.482025<1.
+\]
+
+That verifies the numerical slack used in this step; it does not replace the preceding probability argument. The degree-zero case is separately valid, including characteristic two and zero-dimensional domains. [L, A28–A30; checks/check_algebra.json.]
+
+### 4.3 Digit encoding and the two binary metrics
+
+The injectivity repair now proves the right thing in the right order. The monomial calculation establishes
+
+\[
+\operatorname{Dec}(\operatorname{Enc}(p))=p\quad\text{in }F[Y]
+\]
+
+before injectivity is inferred. Equality of finite-field evaluations alone would not justify it: when `q<b^c`, `Y^q−Y` is a nonzero polynomial in the allowed formal degree range with zero evaluation function. The current text avoids both the earlier gap and the unnecessary remedy of imposing a degree-below-field-size restriction. It also keeps the honest degree `<b^c` distinct from the looser `≤cb^c` bound for an arbitrary decoded polynomial. [L, 800–833; F/Algebraic/SetMultilinear.lean; SetMultilinearDecode.lean.]
+
+Full-label proximity cannot be substituted for homogeneous-label proximity. The latter label set can be very small inside the former. In the exposition's concrete three-coordinate example, there are 256 full cubic labels, 16 affine labels and 8 homogeneous labels. Replacing the homogeneous answers by another message changes four entries: full error `1/64`, homogeneous error `1/2`. I independently enumerated those counts. The long paper is justified in stating the distinction and leaving this optional worked example in the companion. [L, 869–871; exposition 797–808; F16; checks/binary_checks.json.]
+
+The BLR/Fourier calculation, product-defect argument and threshold split produce one decoded value with both required metrics. The `r≥2` qualification now appears before the product argument; the `r=1` case uses additivity and unit preservation. A nonzero bilinear defect has support at least one quarter, and the charged product errors give the stated threshold. The arbitrary-row decoder does not assume all rows are good, does not introduce an efficient decoding algorithm, and does not choose unrelated witnesses for the two metrics. [L, B3–B11; F/Algebraic/HadamardSoundness.lean, BilinearHadamard.lean, HadamardRowDecoding.lean, BinaryLocalRowDecoding.lean; BCHKS §2.]
+
+The corrected homogeneity attribution is also now accurate. Revised Claim 3.7 states the homogeneous conclusion for the scalar polynomial `P(Y)=ηY`. The current manuscript says that. The pinned Lean comment still describes a broader false clause absent from the two supplied editions. That comment is a separate historical-provenance issue: preserve the frozen source and annotate the mismatch if displaying it. A counterexample to the broad clause does not show that either retained paper printed the clause. F02 is fixed. [L, 886; V1 main.tex 829–853; V2 technical_tools.tex 168–198; F/Algebraic/HadamardComposition.lean 20–24.]
+
+### 4.4 Correction, nonuniform requests and fresh randomness
+
+The outer test and outer corrector intentionally use different parameter distributions. In the test, the line center is uniform, so `u+zv` is uniform even when `z=0`. In correction, the target `a` is fixed, so `z` must be nonzero for the direction map to make `a+zv` uniform. The manuscript keeps these distributions distinct. It also describes oriented pairs and allows the zero direction rather than claiming uniform sampling of nondegenerate geometric lines. [L, 1099–1204.]
+
+The correction guarantee is exactly the useful one:
+
+\[
+\Pr[\text{reject or return a wrong bit}]
+\le C(c)R_a+\delta+\frac{D}{2(q-1)}.
+\]
+
+It is unconditional, applies at every spatial target, and averages over the requested homogeneous label. It is not a guarantee for every fixed label and not correctness conditional on acceptance. In a small changed-case check, a table corrupted on one nonzero label at every point has small average label error but error one at that specified label. The qualifier therefore carries mathematical content. [L, B16–B18; F/Algebraic/BinaryLocalCorrectionSoundness.lean; checks/check_binary_contracts.py.]
+
+The existing derivation already identifies the two inner-correction losses and the two rejection losses. The specialist explicitly collects them. I accept the decision not to add another cost table to the long account, F14. Requiring the exact format suggested by a previous reviewer would confuse an optional presentation choice with a proof obligation.
+
+ZERO corrects both certificate requests because their target points can lie on exceptional slices where global average proximity says nothing. The paper preserves the common outer point and label and distinguishes the remaining independent call seeds of the formal variant. This gives a reason for the corrector, not just another named subroutine. [L, 1236–1276; F/Algebraic/BinaryZeroOnGridCorrection.lean; BinaryZeroOnGridSoundness.lean.]
+
+For derived answers, the fresh mask is part of the actual probability space. One cannot choose a favorable mask after the fact and analyze a different fixed oracle. The point-dependent expression must separately be the evaluation of a bounded-degree formal polynomial. The actual-to-ideal rejection transfer is then inserted into ZERO, so the replacement error is multiplied by `1+2C(c)`. Both the polynomiality premise and that multiplier survive into final soundness. These are among the most important qualifications to preserve. [L, B23–B25, 1502–1517; F/Algebraic/HadamardDerivedOracle.lean; DerivedZeroOnGridSoundness.lean.]
+
+### 4.5 One colouring from four fixed polynomials
+
+The final proof chooses the four polynomials once and retains them. The colour and difference tables have the full degree-three distance needed for derived cubic reads; all four have the homogeneous distance needed for weighted comparisons and certificate correction. Difference consistency forces the formal identity `Q_*(X,Y)=P(X)−P(Y)`. The two grid constraints then use the same choices. The proof would fail if these existential witnesses were silently reselected between checks; the current text does not do that. [L, 1466–1522; F/Algebraic/ThreeColorVerifierSoundness.lean; ThreeColorDecodedSoundness.lean.]
+
+The decoded constraints have degrees `3D` and `5D`, even though the four primary decoded polynomials have degree at most `D`. Using `5D` in the two ZERO arguments is correct. There is no need to redo the primary point-line decoding at degree `5D`: that work has already supplied the four witnesses. The `K₄` graph example also earns its place. Four field values in `F₄` can satisfy all the edge cube equations; the vertex condition is what restricts them to the three permitted colours. [L, 1359–1367, 1502–1517; F27, F33.]
+
+The exact constants check out:
+
+| Quantity | Recomputed value |
+|---|---:|
+| `K₄` | 105408 |
+| `E₄` | 1054138 |
+| `S₄` | 1054166 |
+| `C₄` | 1054082 |
+| `T₄` | 4444715947277 |
+| Original positive gap `g₄` | `1 / 71115455156448` |
+| Fair-bit gap `δ=g₄/16` | `1 / 1137847282503168` |
+| Repetition count `R` | 1137847282503168 |
+| Amplified query upper bound `187R` | 212777441828092416 |
+
+The unamplified count is an upper bound on listed physical reads, allowing repeated addresses. At `c=4`, the two cubic outer tests contribute `2·26`, the two degree-one outer tests `2·22`, the two derived ZERO checks `2·44`, and difference consistency three, totaling 187. This is not 187 distinct proof locations or a practical constant-query implementation. The formal Hadamard variant also uses a longer query list than the top-product-only tester in the corrected paper; the account explicitly distinguishes them. [L, 958, 1426–1431, 1533–1537, 1684–1711; checks/check_final_arithmetic.json.]
+
+### 4.6 Parameters, fair bits, repetition and the NP bridge
+
+The parameter family gets the asymptotics for the right reason. Choosing the least `a≥2` with `clog₂N≤a2^a` both accommodates the vertex set and, by failure at `a−1`, bounds the resources above by a logarithm. Merely finding a sufficiently large grid would not give that upper bound. The small-size convention, field inequality, honest-degree capacity, and natural-polynomial transport are retained. [L, 1550–1597, 1833–1861; F/Algebraic/ThreeColorResourceBounds.lean; F/Verifier/ReductionResources.lean.]
+
+Replacing four nonzero-field draws by whole-field draws and accepting invalid seeds changes the rejection probability by the exact valid-seed fraction. The lower bound of one sixteenth is conservative and valid. Repetition samples independently against the same fixed proof. The elementary amplification calculation and the enormous explicit constant are consistent. No numerical optimization is necessary for the explanatory task. [L, 1600–1711; F/Algebraic/ThreeColorFullFieldSampling.lean; ThreeColorAmplifiedVerifier.lean.]
+
+One locally incomplete explanation remains in the resource accounting: the exact seed polynomial is printed without enough branch accounting to derive every coefficient from the nearby prose. This is an explanation gap, not an asymptotic proof failure. I reconstructed the seven branches independently from the seed definitions. Their power-of-two exponents sum to
+
+\[
+35td+32tcm+69t+50+8\binom t2+6\binom t3;
+\]
+
+the four whole-field replacements add `4t`, giving the displayed `73t`. The replacement file supplies the complete table. Either include that table beside the formula or move both to an appendix and state the structural upper bound in the main route. [F/Algebraic/ThreeColorSeedSize.lean; replacement_sections.md §6; checks/check_final_arithmetic.py.]
+
+The machine bridge has three distinct layers: the finite mathematical verifier, callback correctness and charged cost on arbitrary input words, and compilation into `FinTM2` with public encodings. The text does not equate a query bound with a time bound. The NP reduction also gives more than the phrase “by Cook–Levin”: bounded witness length, the pair delimiter, a common clock, finite machine alphabets and fixed local constraint arity are all used. Fixed arity is what makes the relation-to-clauses expansion polynomial. The OR-to-NAE and triangle gadgets passed fresh exhaustive finite checks. [L, 1714–1830; F/Complexity/ThreeColorBaseCorrect.lean, ThreeColorBasePolynomial.lean; F/Reduction/NPThreeColorRuntime.lean.]
+
+Both reference-NP simulations are now explained at the requested level. In one direction an actual nondeterministic machine supplies a bounded choice word, and a deterministic path checker has its own polynomial runtime proof. Its runtime is not inferred merely from the witness bound. In the other, the concrete checker is translated to the reference pair format, malformed strings are guarded, and the bounded-guess machine computes and enforces the witness polynomial. It need not assume the original checker rejects overlong witnesses. These are concrete proved contracts, not supplied efficiency premises. [L, 1879–1883; F/Complexity/ReferenceNPBridge.lean, ReferencePairDecider.lean, ReferenceBoundedVerifier.lean, ReferenceNPConverse.lean.]
+
+## 5. Repairs, evidence and the actual reader
+
+### F09 is still the same incomplete selection
+
+The frozen association `pcp-long-algebra-generator-soundness` still selects the lead-in ending in “If”, at source line 302. It targets `GeneratorLowDegreeTest.exists_close`. The live source pane also displayed that same incomplete quoted passage. The new `pcp-long-rigidity-budget` association concerns `PointLineConstants.rigidity_budget`, a different theorem in a different proof. Adding it does not repair the generator selection. The author's incorporated status is therefore unsupported for F09. [R, named passages; evidence/current-associations.json; live observation B09.]
+
+A complete nearby prose assertion is sufficient:
+
+> Suppose `q>2c` and the test using a generator of `F×` with its Lagrange weights rejects with probability `δ<1/[2(c+2)²]`. Then a formal polynomial of total degree at most `c` agrees with the received function outside a set of relative size at most `2δ`.
+
+Anchor that assertion and retain the displays and proof. This does not require selecting across separate display blocks, and it does not alter the theorem. The complete proposed text is in the replacement file.
+
+### F39 failed again in the live deployment
+
+Two normal clicks on the specialist link from “Reading this account” stayed on the full-argument route. A URL wait after the second click timed out. Direct navigation to the observed specialist href loaded the specialist. From there, clicking the “bivariate error-locator construction” link stayed on the specialist at its outer-decoding passage, although the observed href pointed to the full argument's bivariate section. A separate observation confirmed the retained route. [support/browser_observations.json, B01–B05.]
+
+This reproduces the earlier symptom and adds one anchored-companion case. It does not identify the event-handling cause. It also does not prove that the frozen build has the defect: the browser's localhost did not reach the scratch server, so that attempted local test is excluded. The live paper had the current repairs I inspected, but I did not byte-compare the whole deployed bundle with the frozen reader revision. Keep the verdict `not_fixed` scoped to the live target, and leave the frozen-build behavior unassessed.
+
+The promised paper→companion section→Back route could not be completed through ordinary links because its first leg failed. This is a practical dependency of the proposed two-route design: accurate hrefs and correct JSON are insufficient if a reader cannot follow them. Fix and replay the ordinary click sequence before relying on companion routing. There is no reason to diagnose the cause from the symptom alone.
+
+### Other reader repairs are real
+
+F05 is fixed on the evidence inspected. Frozen analytics no longer promote unknown empty axiom arrays to an axiom-free list. In the live index, the disclosure explicitly distinguished retained compiled declaration data, the forward theorem's statement-only compilation, and other source-read records. It said that the forward proof was not built or axiom-reported by that extraction, and that 52 indexed proofs had no axiom report. The scoped statement about no `sorry` in extracted reports did not claim a whole-project result. [R, `lean.scope`, provenance and analytics; live observation B08.]
+
+F08 is also fixed in its intended sense. Completeness now has `test_eval`, the corrector procedure has `run` and `sample` separate from `failure_le`, the numeric rigidity budget has its own entry, and the four-decoding selection includes the final assembly context and the single-pair decoder. The crossing links expose complementary source roles: the general ingredient assumes a nearby polynomial, while the assembled nearest-approximation theorem obtains it under stronger line-choice assumptions. These are useful contextual entry points. I have not repeated the previous review's exhaustive classification of every reader association and do not claim that this paragraph does so. [R, the revised F08 passage/declaration records; repair_audit.json.]
+
+The PDF opening now renders its byline, F37, and the four-row primary-table comparison stays together on page 30, F38. The source panel and frozen section labels use the full digit-encoding heading rather than the misleading `§A`, F40. In the tested source→whole file→Back sequence, the whole-file view used “Back to The digit-substitution map”, and the return restored the selected definition. One browser automation locator timed out; the subsequent observed DOM action completed the return. That transient automation error is not a product finding. [PDF pp.1,30; R; live observations B06–B07.]
+
+Two small pagination improvements remain optional: the point-line theorem's assumptions are at the bottom of page 12 while its conclusion begins page 13, and the sentence introducing the `c=4` table ends page 33 while the table begins page 34. Neither clips text or reopens F38. If editing pagination anyway, keep a short theorem statement and its conclusion together, and keep a table's introducing sentence with the table. These are lower priority than navigation and proof architecture. [Direct full-size inspection of PDF pp.12–13 and 33–34.]
+
+## 6. What to learn from the literature and the existing guide
+
+The relevant writing comparisons are comparisons of mathematical jobs, not prose register scores. The revised ABSSW paper motivates its encoding by a concrete operation: the verifier needs one evaluation of a line polynomial without reading the entire high-degree object. Its later verifier section gives proof objects and checks before completeness and soundness. That order is a useful model for the proposed early assembly. It does not justify copying its asymptotic constants or its slightly different tester into this account. [V2 low_degree_test.tex, opening warmup; pcp-verifier.tex; ABSSW revised PDF §§4,7.]
+
+Arora–Safra's clean-rectangle and interpolation sequence shows how to reveal the intended intermediate object before constructing an error locator. The long account can adopt that local order while retaining its stronger arbitrary-approximant contract and explicit constants. ALMSS supplies important historical theorem and crossing context, but its best-fitting-line formulation and tie convention should not be presented as exact substitutes for the formal statements. [AS §5.2; ALMSS Remark 63 and Theorem 69.]
+
+Kaufman–Sudan is useful because it states a general testing contract whose hypotheses can actually be specialized. The newly added paragraph now performs that job. BCHKS is useful because its Fourier argument is compact and operational: rejection bias becomes a cubic Fourier moment, Parseval bounds that moment by the largest correlation, and the correlation supplies a nearby linear function. The current account preserves the calculation rather than replacing it by a vague invocation of linearity testing. [KS §2; BCHKS §2; L, 903–941.]
+
+Troy's guide already states the endpoint, definitions, quantifier order, concrete models, canonical randomness and implementation relation clearly. Reproducing that interface guide at greater length is not the principal contribution here. The additional value lies in showing why the formal variant's hypotheses and constants compose into the theorem. The source owner's checking burden should therefore concentrate on the translations where mistakes are plausible: changed sampling domains, code-label restrictions, arbitrary versus honest decoded objects, bounded unfolding, and the simulation/import boundary. [G, reading-guide §§1–9 and the selected proof map.]
+
+This also suggests a modest, reusable explanation method. For each difficult source result, record its exact mathematical contract, identify its consumer, read enough of the proof to recover the mechanism, and only then write the ordinary proof. Compare editions separately from comparing the formal statement. Attach source evidence with the right role: definition, ingredient, specialization, assembly or directly matching theorem. Finally test the route a reader actually takes. The digit-injectivity and homogeneity history demonstrate why all these steps matter: a valid evaluation theorem can be too weak for a prose inference, and a source comment can be unreliable about another edition's claim.
+
+This is an analytical source-owner perspective grounded in the supplied correspondence. It does not predict Troy's reaction, enlist him as a reviewer, or imply approval. No one was contacted.
+
+## 7. A bounded language edit after the structural edit
+
+The repaired technical passages are generally direct. Preserve phrases that carry the actual invariant, including “same polynomial”, “averaged over homogeneous labels”, “rejection or a wrong bit”, and “formal polynomial”. They are not repetitive decoration merely because they recur at different uses. Removing them to produce a smoother narrative would change the mathematics.
+
+The best language edits follow the reader's next operation. At the beginning of the binary chapter, say that the digit encoding lets the test recover one selected polynomial evaluation using boundedly many field-value probes, while the Hadamard layer exposes the needed observations as bit probes. At the bivariate proof, name the clean rectangle before the kernel. At the import boundary, say what the compiled machine computes and how its input is encoded. These edits clarify objects and actions rather than substituting simpler-sounding words for precise terminology. [replacement_sections.md §§3–5; contract/HUMANIZER_BOUNDARY.md.]
+
+Cut duplicated setup only where it performs the same job twice. The second full endpoint statement is expendable after moving assembly forward. The brief fixed-proof reminder at repetition is not. The large historical counterexample can move out of the main route; its unbounded-field quantifier cannot disappear. Exact cost coefficients can move to a resource appendix; the argument that they imply polynomial time must stay. No numerical register profile warrants a blanket rewrite of the mathematical prose.
+
+## 8. Coherent next revision and a test of whether it worked
+
+First, fix the two concrete reader defects: select a complete generator-soundness assertion and reproduce ordinary companion clicks and history return. These are small, directly testable changes. Keep the evidence-status repair intact, and do not change a source-read record into stronger provenance while adjusting selections.
+
+Second, reorganize the opening around the verifier and explicit imports. Use the existing final chapter as the global proof route; retain the full algebraic and binary derivations as later entries. Add the small contract table and return links at the actual consumers. Delete the redundant full endpoint restatement and move the historical and cost-detail material identified above. This is the principal editorial revision.
+
+Third, make exact resource accounting locally reproducible by placing the seven-branch table with the seed formula. Apply the small clean-rectangle and binary-introduction edits. Update companion links and notation translations to match the new structure. Fix the optional short theorem/table page breaks during the resulting render, without turning typography into a separate expansion project.
+
+A useful next review should ask for concrete reconstructions from the revised text, with the answers checked against the contracts:
+
+- Identify the eight physical tables and all seven checks, and say which four decoded witnesses are retained throughout soundness.
+- Recover the three label spaces and explain why a small error on full labels does not control homogeneous labels.
+- State the outer corrector's exact failure event and sampling domains; trace both correction losses and both rejection losses into B16 and then its two uses in ZERO.
+- Explain why the ruled-surface proof has one `Q` for the whole target line although the favorable random configuration can vary with the target parameter.
+- Derive the 187 read bound and the coefficient `73t` without opening Lean; identify which exact statements are imported to obtain polynomial-time machines and reference NP.
+- Follow a normal companion link to a named section and return, then follow a statement to its definition/whole file and return with an unambiguous label. Check source-read and statement-only evidence examples along that route.
+
+These tasks can be used as author checks or future evaluation tasks; they are not a new external approval gate. Record actual successes, failures and assistance rather than infer human learning from another model audit. A next edition that supports those reconstructions will have improved the reader's capabilities, not merely satisfied a list of inserted sentences.
+
+The complete replacement passages, machine-contract table and seed decomposition are supplied in [replacement_sections.md](replacement_sections.md). They are proposals, not edits merged into the reviewed edition. The original forty decisions, with current evidence and next actions, are in [repair_audit.json](repair_audit.json). The preserved initial readings, actual browser observations and executable calculations are supporting evidence for this review, not substitutes for its judgment.
+
+## Evidence key and selected primary sources
+
+Packet-relative citations above refer to the unchanged input edition:
+
+- **L:** `papers/long/reasoning-record.md`, with A/B equation numbers or current source lines; **PDF:** its 44-page render.
+- **F:** `formal/lean/PCP/` at the stated Lean pin; **G:** `formal/lean/docs/pcp/reading-guide.md` and selected `README.md` proof-map passages.
+- **R:** `reader/primary/edition.json`; related current associations are in `evidence/current-associations.json`.
+- **V1/V2:** the supplied original TeX in `literature/abssw-v1/tex/` and `literature/abssw-v2/tex/`. Exact edition comparisons use those texts. The ECCC revised PDF was also retrieved afresh.
+- **ABSSW:** [ECCC report and revision notice](https://eccc.weizmann.ac.il/report/2026/134/) and [revision 1 PDF](https://eccc.weizmann.ac.il/report/2026/134/revision/1/download), dated 22 October 2026. Claim 3.7 is on PDF p.17 / printed p.15; the scalar-bijection continuation is on PDF p.18 / printed p.16. No claim is made about a later proceedings version.
+- **KS:** [Kaufman–Sudan, Algebraic Property Testing: The Role of Invariance](https://people.csail.mit.edu/madhu/papers/2007/apt-conf.pdf), original PDF p.5, Definitions 2.3, 2.5, 2.8 and Theorem 2.9.
+- **AS:** [Arora–Safra, Probabilistic Checking of Proofs: A New Characterization of NP](https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf), §5.2, original PDF pp.39–43 / journal pp.108–112, read from the retained original.
+- **ALMSS:** [Arora–Lund–Motwani–Sudan–Szegedy, Proof Verification and the Hardness of Approximation Problems](https://people.seas.harvard.edu/~madhusudan/papers/1992/almss-journ.pdf), Remark 63 and Theorem 69, including original PDF p.48, read from the retained original.
+- **BCHKS:** [Bellare–Coppersmith–Håstad–Kiwi–Sudan, Linearity Testing in Characteristic Two](https://www.csc.kth.se/tcs/projects/publications/bchks.pdf), Theorem 1.2 and §2 Fourier proof, retrieved from the author-hosted copy.
+- The selected Rubinfeld–Sudan and Friedl–Sudan original-PDF reading, exact Lean regions, and exclusions are listed in [support/source_scope.md](support/source_scope.md). The full literature shelf was not read; Shoup's original theorem was not independently rechecked.

@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-15",
+  "scope": "Revised explanatory accounts, finite examples and reader bindings; no new full-library Lean build, dependency extraction, Comparator acceptance or human endorsement.",
+  "manuscripts": {
+    "long": {
+      "path": "papers/pcp/long/reasoning-record.md",
+      "sha256": "cdd16f1c3887203894531a0d7d9525260c022e251bc09a52b9da1bfc775c4c4e"
+    },
+    "short": {
+      "path": "papers/pcp/short/paper.md",
+      "sha256": "402e104d94c7b706d34f94c111541b7837ca071300fa1e7b31d57333f9037d70"
+    },
+    "expository": {
+      "path": "papers/pcp/expository/main.md",
+      "sha256": "8fe580911bb36a94b0a92445bd5f3a04bcf4029e3faeb774064f0dcd331df7a0"
+    }
+  },
+  "graph_sha256": "570757905eaf878988b22f25dd3ceb873c77d09839c3adcb06def939139758a8",
+  "pdfs": [
+    {
+      "stage": "long",
+      "pages": 46,
+      "sha256": "f5fa697adbb6ac00f643ca18b6a6a7c293913f09ad8748c78d14ea6f8d0d5663",
+      "final_render_pixels_equal_inspected_render": true
+    },
+    {
+      "stage": "short",
+      "pages": 13,
+      "sha256": "4feb05afa6def20a72db949b410cedd3eed16f5c01e241a6f35ff56ed1bfcec1",
+      "final_render_pixels_equal_inspected_render": true
+    },
+    {
+      "stage": "expository",
+      "pages": 24,
+      "sha256": "77868dc00fa3ed3fd27f75bca63595103ffc6da95b80b726ce3b205f00a384e8",
+      "final_render_pixels_equal_inspected_render": true
+    }
+  ],
+  "pdf_visual_review": {
+    "coverage": "All 83 pages inspected in ordered contact sheets; enlarged changed tables and trace. User-rejected trace layout was repaired, page 16 reinspected and pages 17\u201324 rechecked. Final fresh render has identical page pixels to the inspected renders.",
+    "companion_annotations_checked": 28,
+    "renderer_warnings": "Two underfull long-bibliography lines; no overfull box or missing-glyph warning. User-rejected trace-table wrapping corrected and reinspected."
+  },
+  "checks": {
+    "authoring_tests": {
+      "total": 710,
+      "passed": 708,
+      "skipped": 2,
+      "skips": "opt-in pinned Lean fixtures"
+    },
+    "layout": "working tree passed; staged check recorded in commit execution",
+    "markdown_links": "passed after final receipts written",
+    "finite_examples": "All four maintained Python scripts passed and matched retained output. Six supplied review scripts passed in the source audit.",
+    "bundle": "assemble/check-bundle passed; all three ConsumerSession reading queries executed",
+    "authored_reading_relations": 38,
+    "reader_python_tests": 115,
+    "reader_source_tests": 11,
+    "reader_full_browser_journey": 419,
+    "final_table_check": "After final table edit: 1440, 780 and 390px geometry, mobile horizontal scroll, no page errors, exact source copy and production build. Root inspected final desktop/tablet/mobile table screenshots after initial scroll-restoration race was fixed in the capture script.",
+    "reader_lean_snapshot": "a0ce13ed0fa264f051c1278e039596ce65557fa4"
+  },
+  "review_history": {
+    "prior_findings": 133,
+    "new_author_decisions": 16,
+    "source": "dispositions.json",
+    "navigation_F39": "not reproduced; regression checks retained"
+  },
+  "evidence_limits": [
+    "Source selections are selected entry points, not exhaustive semantic certification.",
+    "Small examples do not instantiate the full soundness parameter regime.",
+    "AI editorial and source reviews are not independent human audience acceptance.",
+    "The graph and papers retain unverified/draft states."
+  ]
+}

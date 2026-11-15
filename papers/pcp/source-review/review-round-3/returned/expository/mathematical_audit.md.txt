@@ -1,0 +1,158 @@
+# Mathematical and source-fidelity audit
+
+## Verdict and limits
+
+The examined exposition is mathematically sound at the level of its displayed finite calculations, stated theorem interfaces, and the chain from decoded polynomial tables to a colouring. I found one misleading explanation about Boolean degree, and several places where valid mathematical steps remain insufficiently operational for the promised learner. I did **not** find a counterexample to the assembled argument or a disagreement between its quantitative soundness inequalities and the inspected Lean source.
+
+This is source inspection and ordinary mathematical checking. I did not run Lean, reconstruct the dependencies, replay a kernel build, or certify every declaration in the development. I read every line of the current exposition Markdown; my first-reading note was saved before opening any repair history. The assignment itself identified pressure points, and the contiguous manuscript reading exposed the solutions before I recorded independent exercise attempts. No claim of blind beginner performance or human understanding follows.
+
+The primary edition is `papers/expository/main.md`, SHA-256 `476ea070f34a13eba34ffc0e23a42c203ab243b77635b5367bc932185bbd2df3`, at authored revision `f992ebd7fb9f16f921ec05c4c3f93f33ad933ad6`. The inspected Lean source is the supplied pin `a0ce13ed0fa264f051c1278e039596ce65557fa4`. Line numbers below refer to these frozen copies, not a moving public branch.
+
+## 1. A real explanatory correction: the quadratic label is not a special feature of F4
+
+At manuscript lines 688–690, the description attributes the quadratic expression for the cubic residual to the tiny field. The computation itself is right:
+
+\[
+u=a+b\omega \quad\Longrightarrow\quad u^3-1=1+a+b+ab.
+\]
+
+But the general Boolean degree bound is already two. In every characteristic-two extension, squaring is linear over the two-element field:
+
+\[
+(u+v)^2=u^2+v^2,\qquad (\alpha u)^2=\alpha u^2\quad(\alpha\in\mathbb F_2).
+\]
+
+In a chosen binary basis, the coordinates of `u²` are therefore linear forms in the coordinates of `u`. Field multiplication is bilinear in these coordinates. Thus `u³=u·u²` has quadratic coordinate functions; applying a binary linear observation and adding a constant preserves degree at most two. The same reasoning applies to a fixed public scalar times `u³−1`.
+
+The sentence is misleading rather than a refutation of the verifier. A degree-three code contains all these labels and is exactly the conservative code used by the pinned construction. It would be an error to change the formal ten-query or 187-query bounds merely because a sharper algebraic degree estimate is available. A protocol optimization would require its own definition, analysis and formal correspondence.
+
+Suggested replacement:
+
+> After reducing Boolean squares, this requested label has degree two. In fact, squaring is linear over the binary field in every characteristic-two extension, so the cubic field expressions used here also have Boolean degree at most two. We retain the degree-three encoding of the source construction; it contains these labels and is the encoding used for the formal resource bounds.
+
+If that observation distracts from the teaching route, a shorter faithful alternative is:
+
+> This label lies in the degree-three label space, so the chosen encoding contains the requested bit.
+
+The source's general-purpose label construction has the deliberately safe statement `Polynomial.natDegree ≤ r → label degree ≤ r`; see `HadamardDerivedOracle.lean`, lines 31–35 and 57–77. The stricter degree-two observation above is ordinary algebra, not a newly Lean-checked claim in this review.
+
+## 2. The difficult parts that now match the source
+
+### Common witness and two label domains
+
+The combined result at manuscript lines 783–830 is a correct account of `EncodedLineLowDegreeTest.exists_close` in `EncodedLineLowDegreeSoundness.lean`, lines 321–359. Its conclusion is one polynomial `P` of degree at most `c*m^c`, followed by two distance bounds for that same `P`: full degree-`r` labels and homogeneous linear labels. The exposition correctly does not upgrade the latter to all affine labels for a cubic oracle. When `r=1`, the full-label conclusion already is an affine-label conclusion. This distinction survives the assembly in `ThreeColorVerifierSoundness.lean`, lines 90–108: the colour and difference polynomials retain both bounds, while the two certificate witnesses retain their homogeneous bounds for the correctors.
+
+The 256/16/8 example is discriminating. A change in four homogeneous positions gives error `1/64` in the full label domain and `1/2` within the homogeneous domain. That example establishes why restricting the measure is a mathematical issue; it does not merely illustrate code redundancy. The received word remains arbitrary, and the theorem must construct one witness that satisfies both estimates.
+
+### Fresh masking of a derived label
+
+Manuscript lines 711–725 are correct. Fixing the ambient point and requested output observation fixes the derived polynomial label. A fresh uniform mask and its translate are each uniform in the **full** polynomial-label space. The resulting answer error is at most twice that row's full-domain error. Averaging is over uniform ambient points; individual rows need not have equal errors.
+
+The actual source makes these quantifiers especially explicit. `HadamardDerivedOracle.answer_failure_le`, lines 67–77, treats every fixed requested affine observation. `labels_failure_le`, lines 79–96, permits an arbitrary label map from other sampled data. `averaged_failure_le`, lines 108–122, samples the mask last and bounds the total error by twice the full distance. `decision_distance_le`, lines 147–162, then replaces the answer inside an arbitrary downstream decision. This is the appropriate source chain for the exposition's replacement of the derived cubic answer in ZERO.
+
+This passage should survive any shortening. Replacing it with an assertion that the derived label is uniform would be mathematically wrong.
+
+### Fixed target, random label, possible rejection
+
+The four-step outer corrector at manuscript lines 832–872 matches `BinaryLocalCorrection.run` and `sample`, lines 33–67. The ambient target is fixed. The outer direction, nonzero comparison parameter, inner correction direction and homogeneous label are random. The inner-test seed is separate. The corrections at `Phi(z)` and `Phi(0)` use the same inner correction direction and label.
+
+`BinaryLocalCorrectionSoundness.failure_le`, lines 222–236, bounds distance to `some(correct_bit)`, which includes both rejection (`none`) and wrong returned answers. Its target point is arbitrary; its label is uniformly random. Its premises include homogeneous proximity to the same `P`, `deg(P)≤D`, decoded auxiliary line degree `c*b^c≤D`, the generator nodes and `|F|>2c`. There is no premise that the auxiliary rows are honest or that the target's rejection rate is already small. The proof at lines 237–313 decodes arbitrary rows, bounds both correction errors, relates origin error to a random nonzero comparison point and explicitly adds rejection to the final failure event.
+
+The manuscript appropriately warns that this is not a bound for each fixed label. That is a necessary qualification, not optional formalism.
+
+### Two calls with a shared label
+
+The ZERO description at lines 881–909 is also faithful. `BinaryZeroOnGridSoundness.twoCallCheck`, lines 93–95, samples a common label and two remaining seeds. The two-corrector inequality at lines 98–135 derives the average rejection bound for each call from actual rejection of the whole test. No independence between the two *failure events* is needed. The marginal of each call has the correct distribution, and the union bound controls their combined failure.
+
+The generic theorem `rejectionRate_lower_bound`, lines 249–267, gives
+
+\[
+\frac{1-Dh/Q}{2}\le(1+2C)r+\delta_P+2\delta_M+\frac{D}{Q-1}.
+\]
+
+The exposition uses it conservatively at degree bound `5D`, replaces the randomized derived read first at cost `2ε`, and takes `δ_P=0`, `δ_M=ε` in the modified experiment. This gives exactly its displayed inequality
+
+\[
+\frac{1-5Dh/Q}{2}\le(1+2C)(\kappa+2\varepsilon)+2\varepsilon+\frac{5D}{Q-1}.
+\]
+
+The two experiments share the same seeds. If the ideal test rejects while the modified test accepts, at least one correction supplied a wrong answer. That event containment is enough; multiplying correction success probabilities would not be justified.
+
+### Degree bookkeeping and fixed gap
+
+The degree bounds in Section 9 are sound. The adjacency extension has degree at most `2m(h−1)≤2D`; the decoded colour and difference polynomials have degree at most `D`. Hence the vertex and edge residuals have degrees at most `3D` and `5D`. Substitution of the degree-`h` coordinate vanishing polynomials into a degree-`D` certificate has degree at most `Dh`, so the common residual bound `5Dh` is safe. The difference identity compares two polynomials each of degree at most `D`, not degree `3D`.
+
+With the paper's ratio assumptions, the ideal rejection lower bounds are at least `3/8`. Its remaining error terms are strictly below `1/16+1/8=3/16`, yielding the required contradiction. The source uses the same mechanism in `ThreeColorSoundnessBudget.lean`, especially definitions at lines 26–39 and `sufficient_budget`, and `ThreeColorVerifierSoundness.colorable_of_rejection_lt`, lines 58–112.
+
+## 3. The missing operational interface is identifiable
+
+The passage “the general test checks products” at lines 692–709 is valid but under-specified compared with the fully stated point-versus-line and generator-test interfaces. The formal degree-three row test is not just BLR plus the single displayed product identity. It has a unit check, an affine-label consistency check, and corrected product checks. Its precise theorem says: for `δ<1/28`, row-test rejection at most `δ` implies one message whose full degree-`r` evaluation word is within `δ` and whose affine restriction is within `3δ`. See `HadamardSoundness.test_soundness`, lines 28–61.
+
+The primary and auxiliary word layouts also differ: an auxiliary row has a full **affine** label domain regardless of the primary's degree-three labels. A learner attempting to implement the narrative needs this supplied in the address table.
+
+There is a further implementation detail that a replacement pseudocode must preserve. The inner binary low-degree test is a **fair-coin mixture** between a Hadamard row test and a weighted interpolation test (`BinaryLowDegreeTest.lean`, lines 25–55). It does not always run both. The outer encoded-line test then requires three checks to pass: primary Hadamard, that randomized inner test, and the corrected comparison (`EncodedLineLowDegreeTest.lean`, lines 52–57). The current phrase “test the auxiliary row” is compatible with this interface but does not teach it. An illustrative stronger test is possible, but must be labelled a variant and must not inherit the pinned resource counts automatically.
+
+One compact box could make the mechanism reconstructible without importing the whole proof: state each helper's input, random choices, output or rejection, and cost; then show which three helpers a single outer run calls. A theorem box for the Hadamard test can take the place of some later constant expansion. This is a request for a clearer interface, not for a fourth deep proof inside the exposition.
+
+## 4. Exact resource and theorem checks
+
+The explicit query and soundness constants refer to the same formal variant. The per-branch proved query budgets are
+
+| Branch | Bound |
+|---|---:|
+| Colour low-degree | `2c+18` |
+| Vertex certificate low-degree | `2c+14` |
+| Difference low-degree | `2c+18` |
+| Edge certificate low-degree | `2c+14` |
+| Vertex ZERO | `6c+20` |
+| Edge ZERO | `6c+20` |
+| Difference relation | `3` |
+
+They sum to `20c+107`, or 187 at `c=4`. These are conservative upper bounds, not an assertion that every seed reads exactly 187 bits. See `ThreeColorVerifier.branchQueryBound` and `queries_length_le`, lines 318–368. Zero comparison-parameter seeds read no bits and accept in `ThreeColorFullFieldSampling`, lines 26–63.
+
+The exact rejection retention factor is `((Q−1)/Q)^4`, proved in `ThreeColorFullFieldSampling.rejectionRate_eq`, lines 159–165, and is at least `1/16`. `ThreeColorBinaryVerifier.gap` is the soundness-budget gap at degree four divided by 16. The finite script confirms the rational value `1/1137847282503168`, and `ThreeColorAmplifiedVerifier.verification_guarantees` supplies the repeated count, canonical randomness, bounded proof addresses, perfect completeness and half soundness.
+
+The parameter choice `s=2^a`, `h=m=s`, `Q=2^32 s^12`, `c=4` agrees with `ThreeColorParameters.lean`. Its capacity estimate `5s(s−1)<s^4` and cubic field estimate `10^6(4s^4)^3≤Q` are valid. Minimality of `a` gives the needed logarithmic volume. The bit length of cubic labels is `O(a^3)=O(a2^a)`, so the number of addresses is polynomial. None of this establishes a runtime bound by itself; the manuscript correctly separates the certified implementation.
+
+The opening quantifiers agree with `PCP.np_subset_pcp`: one verifier/algorithm and fixed constants for a language, polynomial address bound on all randomness and all oracle answers, perfect completeness, and soundness against every fixed proof. The converse's finite-prefix guessing and exhaustive seed checking match `PCP.pcp_subset_np_concrete`; its canonical computable randomness budget is not a cosmetic assumption. No new verification of the complete machine-runtime implementation was performed here.
+
+The NP-to-graph passage is a high-level reconstruction rather than a complete Cook–Levin proof, but the cited source really does supply a program-bearing polynomial-time reduction. `NPThreeColorRuntime.of_inNP_program`, lines 257–265, contains the program, output equality, polynomial cost and output-length bounds, and exact colourability equivalence. The finite-pattern optional calculation matches `FiniteBooleanConstraints.clauses`, lines 81–88, `orGate_iff`, lines 43–62, and `satisfiable_iff`, lines 186–194. It correctly keeps arity fixed by the machine.
+
+One simple reader repair belongs in the NAE paragraph: “Here 0, 1 and 2 are colour names, later relabelled by 1, ω and ω² for the algebraic encoding.” This avoids confusing palette colour 0 with the forbidden field element 0 from Section 4. The gadget itself is correct.
+
+## 5. Literature versions and finite checks
+
+I compared the exposition against actual ABSSW TeX, including version 1 `main.tex` lines 478–515 and 716–742, and version 2 `technical_tools.tex` lines 12–82 and 311–415, `local_correction.tex` lines 1–128, and `zero-on-variety_test.tex` lines 1–124. The unit-weight/order-three counterexample targets the first version's stated characterization and low-degree test, not the corrected generator test. For `c=2`, `X^4` passes on every pair in characteristic two when the nodes are the cube roots of unity, while its distance from all quadratics is at least `1−4/Q`. The family `F_(2^(2k))`, `k≥2`, makes the failure unbounded in field size. The small `F16` enumeration is an illustration, not the proof of that family claim.
+
+The corrected paper's Hadamard algorithm samples one degree-`r−1` factor and has an eight-query list; the formal algorithm performs the lower-degree product iterations too and has `2r+4` queries, hence ten at degree three. The manuscript distinguishes these versions correctly. Its weighted low-degree theorem uses the formal `Q>2c` assumption, whereas the paper states a larger characteristic-two field hypothesis; that distinction is explicitly signalled.
+
+I executed both supplied Python programs, after reading their source:
+
+* `python3 examples/check_examples.py`: exit 0. Confirmed GF16 generator nodes and weights; old/new `X^4` acceptance 256/256 and 16/256; no quadratic representation; Hadamard and BLR counts; self-correction counts; GF5 grid evaluations; GF4 product/cubic labels; toy repetition.
+* `python3 examples/check_exposition_examples.py`: exit 0. Confirmed K4 and padded triangles; all 125 GF5 quadratics for interpolation; grid certificates; weighted interpolation; thin-slice counts; digit substitution and non-representability; false linear label functional; all three label-domain sizes and distances; masked correction; all NAE cases; OR clauses; toy strict/boundary inequalities; exact formal constants.
+
+These executions establish the enumerated finite checks only. They are not tests of the full PCP theorem, its enormous selected field, or Lean compilation. Stdout, stderr and exit codes are retained beside this memo.
+
+## 6. A useful continuous vertex example
+
+For the author's proposed redesign, take `H={0,1}⊂F4` and colours `χ(0)=1`, `χ(1)=ω`. The interpolant is
+
+\[
+\chi(X)=1+\omega^2X.
+\]
+
+Its validity residual is
+
+\[
+\operatorname{Val}(X)=\chi(X)^3-1
+=X^3+\omega X^2+\omega^2X
+=(X^2+X)(X+\omega^2).
+\]
+
+Thus use `Z_H(X)=X²+X` and `M_V(X,U)=U(X+ω²)`. At the ambient point `x=ω`, the colour polynomial has value zero, so the residual is one. The grid-vanishing certificate nevertheless works: `Z_H(ω)=1`, `M_V(ω,0)=0`, and `M_V(ω,1)=ω+ω²=1`. This gives a non-grid evaluation through the same object as the original colouring and supplies an actual bit request: the first-coordinate observation of the residual is one, addressed by `1+Z1+Z2+Z1Z2` at the received colour row for `x=ω`.
+
+This is an honest-object trace and not a small implementation of the soundness theorem. Keep that limitation at the example. Extending the same tiny example to every edge residual creates finite-field aliasing: for a single edge on grid points 0 and 1, the adjacency interpolant is `X+Y`; the edge residual becomes `(X+Y)^4+(X+Y)`, a nonzero formal polynomial that is zero as a function throughout F4. That is not an error, but it would distract from the intended main trace unless polynomial/function distinction is itself being taught. Keeping the continuous worked calculation to one vertex constraint is cleaner.
+
+## 7. What should survive revision
+
+Preserve the fixed-proof quantifier order; honest versus arbitrary received tables; nonzero-generator interpolation weights; received-degree inflation; full versus affine versus homogeneous labels; the same decoded witness; fresh independent masks; target-dependent correction rejection; averaging over requested targets; the coupled inequality; and the separation between exact finite examples, ordinary proofs and Lean evidence. These are the substance of the construction. A shorter narrative can succeed only if it gives these distinctions a clearer operational route, rather than deleting them as technical clutter.
