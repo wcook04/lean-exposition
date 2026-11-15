@@ -8,6 +8,7 @@ Requires matplotlib and cairosvg; no network or external font download.
 from pathlib import Path
 from xml.etree import ElementTree as ET
 import copy
+import re
 
 import cairosvg
 import matplotlib
@@ -157,6 +158,14 @@ def table_checks():
     fig.savefig(dest.with_suffix(".png"), dpi=300)
     fig.savefig(dest.with_suffix(".svg"), metadata={"Title": "Eight tables and seven checks",
                 "Description": "Incidence matrix showing which stored tables each verifier check may query. The worked trace follows vertex ZERO, column five."})
+    svg = dest.with_suffix(".svg")
+    markup = svg.read_text()
+    markup = markup.replace('<svg ', '<svg role="img" aria-labelledby="checks-title checks-desc" ', 1)
+    description = ('<title id="checks-title">Eight tables and seven checks</title>'
+                   '<desc id="checks-desc">Dots show which physical tables each check may query. '
+                   'Column five is vertex ZERO, the branch illustrated by the worked trace.</desc>')
+    markup = re.sub(r'(<svg[^>]*>)', lambda m: m.group(1) + description, markup, count=1)
+    svg.write_text(markup)
     plt.close(fig)
 
 
